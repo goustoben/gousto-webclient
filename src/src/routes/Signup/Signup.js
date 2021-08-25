@@ -348,7 +348,7 @@ class Signup extends PureComponent {
         />
         <DiscountAppliedBar
           promoModalVisible={promoModalVisible}
-          isPromoBarHidden={!basketPromo}
+          isPromoBarHidden={!basketPromo || promoModalVisible}
           trackDiscountVisibility={trackDiscountVisibility}
           wizardStep={currentStepName}
           signupDismissDiscountAppliedBar={signupDismissDiscountAppliedBar}

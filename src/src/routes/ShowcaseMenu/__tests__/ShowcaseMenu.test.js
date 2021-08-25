@@ -67,6 +67,7 @@ describe('ShowcaseMenu', () => {
       promoStore: Immutable.fromJS({}),
       user: Immutable.fromJS({}),
       pending: Immutable.fromJS({}),
+      menuBoxPrices: Immutable.fromJS({ 2: { 2: { gourmet: {} } } }),
     }
 
     const store = {

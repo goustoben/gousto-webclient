@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
+import { featuresSet } from 'actions/features'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { completeWizardPostcode, clickSeeThisWeeksMenu, signupSocialBelongingBanner } from 'actions/trackingKeys'
@@ -173,3 +174,9 @@ export const trackSocialBelongingBannerAppearance = () => (dispatch, getState) =
     },
   })
 }
+
+export const signupSetGoustoOnDemandEnabled = (featureValue) => (
+  dispatch => {
+    dispatch(featuresSet([{ feature: 'isGoustoOnDemandEnabled', value: featureValue }]))
+  }
+)

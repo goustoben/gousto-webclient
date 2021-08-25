@@ -161,9 +161,9 @@ describe('Signup', () => {
         )
       })
 
-      test('should show DiscountAppliedBar element', () => {
+      test('should not show DiscountAppliedBar element', () => {
         expect(wrapper.find(DiscountAppliedBar).prop('promoModalVisible')).toBe(true)
-        expect(wrapper.find(DiscountAppliedBar).prop('isPromoBarHidden')).toBe(false)
+        expect(wrapper.find(DiscountAppliedBar).prop('isPromoBarHidden')).toBe(true)
       })
 
       test('should add discountApplied css class', () => {

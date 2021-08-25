@@ -195,7 +195,7 @@ export const trackSubmitOrderEvent = () => (dispatch, getState) => {
   })
 }
 
-export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) => {
+export const trackUTMAndPromoCode = (keyType, additionalData = {}) => (dispatch, getState) => {
   const { promoCode, UTM } = getUTMAndPromoCode(getState())
   // eslint-disable-next-line import/namespace
   const type = trackingKeys[keyType] || keyType
@@ -204,7 +204,7 @@ export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) =
     type,
     trackingData: {
       actionType: type,
-      ...(section && { section }),
+      ...additionalData,
       ...UTM,
       promoCode,
     }

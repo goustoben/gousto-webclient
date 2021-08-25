@@ -32,7 +32,7 @@ describe('Given DiscountAppliedBar component', () => {
     })
   })
 
-  describe('when isHidden state is true and modal is visible', () => {
+  describe('when isHidden state is true', () => {
     beforeEach(() => {
       wrapper.setState({
         isHidden: true,
@@ -44,11 +44,36 @@ describe('Given DiscountAppliedBar component', () => {
     })
 
     test('then container should has isHidden class', () => {
-      expect(wrapper.find('.container.isHidden')).toBeTruthy()
+      expect(wrapper.find('.container.isHidden').exists()).toBeTruthy()
     })
 
-    test('should call trackDiscountVisibility', () => {
-      expect(props.trackDiscountVisibility).toHaveBeenCalledWith(props.wizardStep)
+    describe('and banner becomes visible', () => {
+      beforeEach(() => {
+        wrapper.setState({
+          isHidden: false,
+        })
+      })
+
+      test('should call trackDiscountVisibility', () => {
+        expect(props.trackDiscountVisibility).toHaveBeenCalledWith(props.wizardStep)
+      })
+    })
+  })
+
+  describe('when isPromoBarHidden is true', () => {
+    let instance
+
+    beforeEach(() => {
+      wrapper.instance().setState = jest.fn()
+      wrapper.setProps({
+        isPromoBarHidden: true,
+      })
+      wrapper.update()
+      instance = wrapper.instance()
+    })
+
+    test('then setState should be called', () => {
+      expect(instance.setState).toBeCalled()
     })
   })
 

@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { browserHistory } from 'react-router'
 import {
   clickClaimDiscountPopup,
   clickCloseDiscountPopup,
   clickCloseDiscountFailurePopup,
+  clickGodClaimDiscountPopup,
+  clickCloseGodDiscountPopup,
 } from 'actions/trackingKeys'
 import { CTA, Modal } from 'goustouicomponents'
 import headerImage from 'media/images/discount-modal-header.jpg'
@@ -11,16 +14,39 @@ import AgeVerify from './AgeVerify'
 import css from './PromoModal.css'
 
 class PromoModal extends React.Component {
-  handleClick = (eventType) => () => {
-    const { error, promoApply, justApplied, closeModal, trackUTMAndPromoCode } = this.props
+  handleClick = (type) => () => {
+    const {
+      error,
+      promoApply,
+      justApplied,
+      closeModal,
+      trackUTMAndPromoCode,
+      basketPromoCodeChange,
+      isGoustoOnDemandError,
+      isGoustoOnDemandEnabled,
+      percentageOff,
+      promoResetGoustoOnDemandFlow,
+    } = this.props
+
+    if (isGoustoOnDemandError) {
+      promoResetGoustoOnDemandFlow()
+
+      return browserHistory.push('/')
+    }
 
     if (error || justApplied) {
       const event = error ? clickCloseDiscountFailurePopup : clickCloseDiscountPopup
-      trackUTMAndPromoCode(event)
+      trackUTMAndPromoCode(isGoustoOnDemandEnabled ? clickCloseGodDiscountPopup : event)
+      if (!justApplied) {
+        basketPromoCodeChange('')
+      }
 
       return closeModal()
     } else {
-      trackUTMAndPromoCode(eventType)
+      const closeModalEvent = isGoustoOnDemandEnabled ? clickCloseGodDiscountPopup : clickCloseDiscountPopup
+      const claimDiscountEvent = isGoustoOnDemandEnabled ? clickGodClaimDiscountPopup : clickClaimDiscountPopup
+      const eventType = type === 'close' ? closeModalEvent : claimDiscountEvent
+      trackUTMAndPromoCode(eventType, isGoustoOnDemandEnabled ? { discount_amount: percentageOff } : null)
 
       return promoApply()
     }
@@ -35,6 +61,7 @@ class PromoModal extends React.Component {
       needsAgeVerification,
       isAgeVerified,
       pending,
+      isGoustoOnDemandError,
     } = this.props
 
     return (
@@ -44,20 +71,20 @@ class PromoModal extends React.Component {
           variant="floating"
           name="promo-modal"
           description="promo code modal"
-          handleClose={this.handleClick(clickCloseDiscountPopup)}
+          handleClose={this.handleClick('close')}
         >
           <div className={css.container} data-testing="promoModal">
-            {!error && <img className={css.header} src={headerImage} alt="Enjoy a tasty offer on us" />}
-            {error && <h4 className={css.errorSubHeader}>{title}</h4>}
+            {!error && !isGoustoOnDemandError && <img className={css.header} src={headerImage} alt="Enjoy a tasty offer on us" />}
+            {(error || isGoustoOnDemandError) && <h4 className={css.errorSubHeader}>{title}</h4>}
             <div className={css.contentContainer}>
-              {!error && <h4 className={css.subHeader}>{title}</h4>}
+              {!error && !isGoustoOnDemandError && <h4 className={css.subHeader}>{title}</h4>}
               {/* eslint-disable-next-line react/no-danger */}
               <p className={css.content} dangerouslySetInnerHTML={{ __html: text }} />
               {needsAgeVerification && !error ? <AgeVerify /> : null}
               <CTA
                 size="medium"
                 testingSelector="promoModalButton"
-                onClick={this.handleClick(clickClaimDiscountPopup)}
+                onClick={this.handleClick('claimDiscount')}
                 variant="primary"
                 isFullWidth
                 disabled={(needsAgeVerification && !isAgeVerified && !error) || pending}
@@ -84,6 +111,11 @@ PromoModal.propTypes = {
   justApplied: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
+  isGoustoOnDemandError: PropTypes.bool,
+  isGoustoOnDemandEnabled: PropTypes.bool,
+  basketPromoCodeChange: PropTypes.func,
+  percentageOff: PropTypes.string,
+  promoResetGoustoOnDemandFlow: PropTypes.func,
 }
 
 PromoModal.defaultProps = {
@@ -94,6 +126,11 @@ PromoModal.defaultProps = {
   justApplied: false,
   trackUTMAndPromoCode: () => {},
   error: '',
+  isGoustoOnDemandError: false,
+  isGoustoOnDemandEnabled: false,
+  basketPromoCodeChange: () => {},
+  percentageOff: '',
+  promoResetGoustoOnDemandFlow: () => {},
 }
 
 export { PromoModal }

@@ -4,12 +4,17 @@ import Immutable from 'immutable'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { promoToggleModalVisibility } from 'actions/promos'
+import { basketPromoCodeChange } from 'actions/basket'
+import { promoToggleModalVisibility, promoResetGoustoOnDemandFlow } from 'actions/promos'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { PromoModal } from './PromoModal'
 import css from './PromoModal.css'
 
 const mapStateToProps = (state) => {
   const promoCode = state.promoCurrent
+  const boxPrices = state.menuBoxPrices.getIn(['2', '2', 'gourmet'])
+  const isGoustoOnDemandEnabled = getIsGoustoOnDemandEnabled(state)
+  const isGoustoOnDemandError = boxPrices && !boxPrices.get('promoCodeValid') && isGoustoOnDemandEnabled
   const error = state.error.get(actionTypes.PROMO_GET) || state.error.get(actionTypes.PROMO_APPLY)
   let text = state.promoStore.getIn([promoCode, 'codeData', 'campaign', 'modalText'])
   let title = state.promoStore.getIn([promoCode, 'codeData', 'campaign', 'modalTitle'], null)
@@ -64,6 +69,12 @@ const mapStateToProps = (state) => {
       + `<p>Try again or contact our Customer Care team via our <a href=${client.helpCentre} class=${css.link} target="_blank" rel="noopener noreferrer">Help Centre</a>.</p>`
   }
 
+  if (isGoustoOnDemandError) {
+    title = 'Sorry, your offer could not be applied!'
+    buttonText = 'Go to the homepage'
+    text = '<p>Something went wrong and your offer could not be applied.</p><p>Try again or contact the person / organisation who gave you the offer.</p>'
+  }
+
   const isAgeVerified = state.promoAgeVerified || state.user.get('ageVerified', false)
 
   const pending = state.pending.get(actionTypes.PROMO_APPLY)
@@ -78,11 +89,16 @@ const mapStateToProps = (state) => {
     isAgeVerified,
     pending,
     justApplied: state.promoStore.getIn([promoCode, 'justApplied'], false),
+    isGoustoOnDemandError,
+    isGoustoOnDemandEnabled,
+    percentageOff: boxPrices && boxPrices.get('percentageOff'),
   }
 }
 
 export const PromoModalContainer = connect(mapStateToProps, {
   promoApply: actions.promoApply,
   trackUTMAndPromoCode,
-  closeModal: () => promoToggleModalVisibility(false)
+  closeModal: () => promoToggleModalVisibility(false),
+  basketPromoCodeChange,
+  promoResetGoustoOnDemandFlow,
 })(PromoModal)

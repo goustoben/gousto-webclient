@@ -526,7 +526,7 @@ describe('tracking actions', () => {
     })
 
     describe('when section is passed', () => {
-      const section = 'top'
+      const section = { section: 'top' }
 
       test('then trackUTMAndPromoCode should be dispatched with proper payload', () => {
         trackUTMAndPromoCode(clickCheckoutSecurely, section)(dispatch, getState)

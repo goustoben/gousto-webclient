@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { browserHistory } from 'react-router'
 import { PromoModal } from 'components/PromoModal/PromoModal'
 import { clickClaimDiscountPopup, clickCloseDiscountFailurePopup } from 'actions/trackingKeys'
 
@@ -36,7 +37,7 @@ describe('Given PromoModal component', () => {
     })
 
     test('then proper actions should be called', () => {
-      expect(trackUTMAndPromoCode).toBeCalledWith(clickClaimDiscountPopup)
+      expect(trackUTMAndPromoCode).toBeCalledWith(clickClaimDiscountPopup, null)
       expect(promoApply).toBeCalled()
     })
   })
@@ -62,6 +63,24 @@ describe('Given PromoModal component', () => {
         expect(trackUTMAndPromoCode).toBeCalledWith(clickCloseDiscountFailurePopup)
         expect(closeModal).toBeCalled()
       })
+    })
+  })
+
+  describe('when isGoustoOnDemandError prop is true', () => {
+    const promoResetGoustoOnDemandFlow = jest.fn()
+    browserHistory.push = jest.fn()
+
+    beforeEach(() => {
+      wrapper.setProps({
+        isGoustoOnDemandError: true,
+        promoResetGoustoOnDemandFlow,
+      })
+      wrapper.find('CTA').simulate('click')
+    })
+
+    test('then proper action should be invoked on CTA click', () => {
+      expect(promoResetGoustoOnDemandFlow).toBeCalled()
+      expect(browserHistory.push).toHaveBeenCalledWith('/')
     })
   })
 })

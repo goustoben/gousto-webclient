@@ -15,12 +15,12 @@ class DiscountAppliedBar extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isPromoBarHidden, promoModalVisible, trackDiscountVisibility, wizardStep } = this.props
+    const { isPromoBarHidden, trackDiscountVisibility, wizardStep } = this.props
     const { isHidden } = this.state
 
-    if (prevProps.promoModalVisible !== promoModalVisible) {
+    if (prevProps.isPromoBarHidden !== isPromoBarHidden) {
       this.setState({
-        isHidden: !promoModalVisible && isPromoBarHidden,
+        isHidden: isPromoBarHidden,
       })
     }
 

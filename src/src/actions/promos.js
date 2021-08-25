@@ -1,5 +1,6 @@
 import { fetchPromo, fetchPromocodeFromCampaignUrl } from 'apis/promos'
 import { legacyVerifyAge } from 'apis/legacy'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 import userActions from './user'
@@ -7,7 +8,8 @@ import pricingActions from './pricing'
 import productActions from './products'
 import { trackPromocodeChange } from './checkout'
 import { trackUTMAndPromoCode } from './tracking'
-import { discountPopupDisplayed } from './trackingKeys'
+import { signupSetGoustoOnDemandEnabled } from './signup'
+import { clickCloseGodFailureHomepage, discountPopupDisplayed } from './trackingKeys'
 import { menuLoadBoxPrices } from './menu'
 import {
   basketPromoCodeChange,
@@ -106,10 +108,17 @@ const promoCurrentSet = code => ({
 
 export const promoChange = code => (
   async (dispatch, getState) => {
-    if (!getState().promoStore.get(code, null)) {
+    const state = getState()
+    if (getIsGoustoOnDemandEnabled(state)) {
+      dispatch(basketPromoCodeChange(code))
+      await dispatch(menuLoadBoxPrices())
+    }
+
+    if (!state.promoStore.get(code, null)) {
       await dispatch(promoGet(code))
     }
-    if (!getState().error.get(actionTypes.PROMO_GET)) {
+
+    if (!state.error.get(actionTypes.PROMO_GET)) {
       dispatch(promoCurrentSet(code))
     }
   }
@@ -215,6 +224,16 @@ const promoAgeVerify = ageVerified => ({
   type: actionTypes.PROMO_AGE_VERIFY,
   ageVerified,
 })
+
+export const promoResetGoustoOnDemandFlow = () => (
+  dispatch => {
+    dispatch(basketPromoCodeChange(''))
+    dispatch(promoCurrentSet(''))
+    dispatch(trackUTMAndPromoCode(clickCloseGodFailureHomepage))
+    dispatch(signupSetGoustoOnDemandEnabled(false))
+    dispatch(promoToggleModalVisibility(false))
+  }
+)
 
 const promoActions = {
   promoChange,
