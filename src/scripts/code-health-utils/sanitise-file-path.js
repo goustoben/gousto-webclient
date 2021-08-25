@@ -1,1 +1,5 @@
-module.exports = (name) => name.match(/src\/\S+/)[0]
+module.exports = (name) => {
+  const [match = name] = name.match(/src\/\S+/) || []
+
+  return match
+}
