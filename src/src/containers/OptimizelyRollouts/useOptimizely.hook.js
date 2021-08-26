@@ -6,6 +6,12 @@ import { getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
 
 const withVersionPrefixAsFalse = false
 
+/*
+ * Hook to check if Optimizely is enabled, we can override the experiment using
+ * a cookie called `v1_gousto_optimizely_overwrites` with a value of `{%22${experiment_name}%22:true}`
+ *
+ * Example Value: {%22radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled%22:true}
+ */
 export const useIsOptimizelyFeatureEnabled = ({ name, userId, trackExperimentInSnowplow }) => {
   const sessionId = get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
   const userIdForOptimizely = userId || sessionId
@@ -21,6 +27,9 @@ export const useIsOptimizelyFeatureEnabled = ({ name, userId, trackExperimentInS
     return instance.isFeatureEnabled(name, userIdForOptimizely)
   }, [name, userIdForOptimizely, instance])
   const isEnabled = getIsFeatureEnabled()
+  const cookieOverwrite = get(Cookies, 'gousto_optimizely_overwrites')
+  const overwrite = cookieOverwrite && typeof cookieOverwrite === 'object' ? (cookieOverwrite[name] || null) : null
+  const hasOverwrite = overwrite !== null
 
   React.useEffect(() => {
     // If we don't have a userId or sessionId,
@@ -58,6 +67,10 @@ export const useIsOptimizelyFeatureEnabled = ({ name, userId, trackExperimentInS
     userId,
     sessionId
   ])
+
+  if (hasOverwrite) {
+    return overwrite
+  }
 
   return isEnabled
 }

@@ -11,6 +11,8 @@ describe('useIsOptimizelyFeatureEnabled', () => {
   let hasValidInstanceSpy
   let getOptimizelyInstanceSpy
   let trackExperimentInSnowplow
+  let goustoSessionId
+  let goustoOptimizelyOverwrites
 
   const isFeatureEnabled = jest.fn()
 
@@ -19,7 +21,21 @@ describe('useIsOptimizelyFeatureEnabled', () => {
     getOptimizelyInstanceSpy = jest.spyOn(optimizelySdk, 'getOptimizelyInstance')
       .mockResolvedValue({ isFeatureEnabled })
 
+    goustoSessionId = undefined
+    goustoOptimizelyOverwrites = undefined
     cookieGetSpy = jest.spyOn(cookieHelper, 'get')
+      .mockImplementation((_, key) => {
+        if (key === 'gousto_session_id') {
+          return goustoSessionId
+        }
+
+        if (key === 'gousto_optimizely_overwrites') {
+          return goustoOptimizelyOverwrites
+        }
+
+        return undefined
+      })
+
     trackExperimentInSnowplow = jest.fn()
   })
 
@@ -29,14 +45,13 @@ describe('useIsOptimizelyFeatureEnabled', () => {
 
   describe('when user and session are not present', () => {
     it('should return false', async () => {
-      cookieGetSpy.mockReturnValue(undefined)
-
       const { result } = renderHook(() => useIsOptimizelyFeatureEnabled({ name: 'flag', userId: undefined, trackExperimentInSnowplow }))
 
       const isEnabled = result.current
 
       expect(isEnabled).toBe(false)
-      expect(cookieGetSpy).toBeCalledWith(Cookies, 'gousto_session_id', false, false)
+      expect(cookieGetSpy).toHaveBeenNthCalledWith(1, Cookies, 'gousto_session_id', false, false)
+      expect(cookieGetSpy).toHaveBeenNthCalledWith(2, Cookies, 'gousto_optimizely_overwrites')
       expect(hasValidInstanceSpy).not.toBeCalled()
       expect(getOptimizelyInstanceSpy).not.toBeCalled()
       expect(trackExperimentInSnowplow).not.toBeCalled()
@@ -44,10 +59,6 @@ describe('useIsOptimizelyFeatureEnabled', () => {
   })
 
   describe('when the user has a valid user id', () => {
-    beforeEach(() => {
-      cookieGetSpy.mockReturnValue(undefined)
-    })
-
     describe('when optimizely does not load successfully', () => {
       it('should return false', async () => {
         hasValidInstanceSpy.mockReturnValue(false)
@@ -106,7 +117,7 @@ describe('useIsOptimizelyFeatureEnabled', () => {
       describe('when client has a valid session id', () => {
         describe('when the feature is enabled', () => {
           it('should return true', async () => {
-            cookieGetSpy.mockReturnValue('session_id')
+            goustoSessionId = 'session_id'
             isFeatureEnabled.mockReturnValue(true)
 
             const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled({ name: 'flag', userId: 'user_id', trackExperimentInSnowplow }))
@@ -124,9 +135,25 @@ describe('useIsOptimizelyFeatureEnabled', () => {
     })
   })
 
+  describe('when client has a valid overwrite cookie', () => {
+    describe('when overwrite is true', () => {
+      it('should return true', async () => {
+        goustoOptimizelyOverwrites = { flag: true}
+        isFeatureEnabled.mockReturnValue(false)
+
+        const { result } = renderHook(() => useIsOptimizelyFeatureEnabled({ name: 'flag', userId: undefined, trackExperimentInSnowplow }))
+
+        const isEnabled = result.current
+
+        expect(isEnabled).toBe(true)
+        expect(cookieGetSpy).toHaveBeenNthCalledWith(2, Cookies, 'gousto_optimizely_overwrites')
+      })
+    })
+  })
+
   describe('when client has a valid session id and loaded optimizely', () => {
     beforeEach(() => {
-      cookieGetSpy.mockReturnValue('session_id')
+      goustoSessionId = 'session_id'
       hasValidInstanceSpy.mockReturnValue(true)
     })
 
