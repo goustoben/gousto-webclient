@@ -216,7 +216,9 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
         const welcomePage = isPaymentBeforeChoosingEnabled ? client.checkoutWelcome : client.welcome
         dispatch(push(`${welcomePage}/${orderId}`))
       } else {
+        dispatch(loginVisibilityChange(false))
         dispatch(orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
+        dispatch(push(client.myGousto))
       }
     } else {
       setTimeout(() => {
