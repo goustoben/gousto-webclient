@@ -20,7 +20,7 @@ describe('ReferAFriend', () => {
       userFirstName: 'test',
       device: 'test',
       trackingReferFriend: jest.fn(),
-      trackingReferFriendSocialSharing: jest.fn()
+      trackingReferFriendSocialSharing: jest.fn(),
     }
 
     wrapper = shallow(<ReferAFriend rafOffer={rafOffer} {...testProps} />)
@@ -44,6 +44,8 @@ describe('ReferAFriend', () => {
   })
 
   test('should render SocialShareSheetCTA component', () => {
-    expect(wrapper.find('SocialShareSheetCTA').length).toEqual(1)
+    const socialShare = wrapper.find('SocialShareSheetCTA')
+    expect(socialShare.length).toEqual(1)
+    expect(socialShare.shallow().find('CTA').length).toEqual(1)
   })
 })

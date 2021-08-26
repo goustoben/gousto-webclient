@@ -21,7 +21,6 @@ import {
   getUserMenuVariant,
   getPromoOfferVariant,
   getIsSignupReductionEnabled,
-  getIsWelcomePageOnboardingEnabled,
   getIsCommunicationPanelEnabled,
   getBlockedResubscription,
   getBlockedTransactionalOrders,
@@ -66,7 +65,6 @@ describe('when features are defined', () => {
     [getGoToMyGousto, 'goToMyGousto'],
     [getIsCommunicationPanelEnabled, 'isCommunicationPanelEnabled'],
     [getIsSignupReductionEnabled, 'enableSignupReduction'],
-    [getIsWelcomePageOnboardingEnabled, 'isWelcomePageOnboardingEnabled'],
     [getLogoutUserDisabledSlots, 'logoutUserDisabledSlots', [
       [''], ['2020-01-20_08-19,2020-02-21_08-12']]
     ],

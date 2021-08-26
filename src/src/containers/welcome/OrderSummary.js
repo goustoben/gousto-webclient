@@ -4,7 +4,6 @@ import productActions from 'actions/products'
 import userUtils from 'utils/user'
 import OrderSummary from 'OrderSummary'
 import { actionTypes } from 'actions/actionTypes'
-import { getIsWelcomePageOnboardingEnabled } from 'selectors/features'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 
 function mapStateToProps(state) {
@@ -28,7 +27,6 @@ function mapStateToProps(state) {
     saving: state.pending.get(actionTypes.BASKET_CHECKOUT),
     surcharges: order.get('surcharges'),
     orderNumber: orderId,
-    isWelcomePageOnboardingEnabled: getIsWelcomePageOnboardingEnabled(state),
   }
 }
 

@@ -14,19 +14,10 @@
 	composes: paddingSMTop from 'sass-loader!styles/spacing.scss';
 }
 
-.textblock {
-	composes: marginSMTop marginZeroBottom from 'sass-loader!styles/spacing.scss';
-	font-size: 0.95rem;
-}
-
 .footer {
-	composes: textblock;
-	composes: textCenter from 'styles/typography.css';
-}
-
-.footerExperiment {
-	composes: textblock;
+	composes: marginSMTop marginZeroBottom from 'sass-loader!styles/spacing.scss';
 	composes: textLeft from 'styles/typography.css';
+	font-size: 0.95rem;
 	font-weight: bold;
 }
 
@@ -34,23 +25,6 @@
 	display: inline-block;
 	margin-left: 0.3rem;
 	font-weight: bold;
-}
-
-.error {
-	composes: textblock;
-	composes: textCenter from 'styles/typography.css';
-	composes: error from 'styles/layout.css';
-}
-
-.success {
-	composes: textblock;
-	composes: textCenter from 'styles/typography.css';
-	composes: success from 'styles/layout.css';
-	margin: 0;
-}
-
-.mobileOnly {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 }
 
 .mobileHide {

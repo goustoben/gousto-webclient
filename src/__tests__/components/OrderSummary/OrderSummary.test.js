@@ -4,8 +4,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import OrderSummary from 'OrderSummary'
 import Receipt from 'Receipt'
-import SaveButton from 'OrderSummary/SaveButton'
-import SectionHeader from 'SectionHeader/SectionHeader'
+import { SaveButton } from 'OrderSummary/SaveButton'
 
 describe('OrderSummary', () => {
   let wrapper
@@ -55,7 +54,7 @@ describe('OrderSummary', () => {
     }),
     removeProduct: () => {},
     showProductDetail: () => {},
-    onSave: () => (1),
+    onSave: () => 1,
     saving: true,
     saveError: false,
     orderSummaryCollapsed: true,
@@ -72,16 +71,12 @@ describe('OrderSummary', () => {
         {...PROPS}
         removeProduct={removeProduct}
         showProductDetail={showProductDetail}
-      />,
+      />
     )
   })
 
   test('should return section', () => {
     expect(wrapper.type()).toBe('section')
-  })
-
-  test('should contain 1 <SectionHeader>', () => {
-    expect(wrapper.find(SectionHeader).length).toBe(1)
   })
 
   test('should contain 1 footer', () => {
@@ -139,8 +134,8 @@ describe('OrderSummary', () => {
           total: '29.99',
           recipeDiscount: '14.99',
           percentageOff: '50',
-        }),
-      ),
+        })
+      )
     ).toBe(true)
   })
 
@@ -154,8 +149,8 @@ describe('OrderSummary', () => {
           line3: 'Neverland',
           town: 'London',
           postcode: 'F4 K3',
-        }),
-      ),
+        })
+      )
     ).toBe(true)
   })
 
@@ -170,8 +165,8 @@ describe('OrderSummary', () => {
         Immutable.fromJS({
           deliveryStart: '09:00:00',
           deliveryEnd: '16:59:59',
-        }),
-      ),
+        })
+      )
     ).toBe(true)
   })
 
@@ -189,12 +184,9 @@ describe('OrderSummary', () => {
   })
 
   test('should show vat disclaimer if vatable items in order', () => {
-    expect(
-      wrapper
-        .find('p')
-        .at(2)
-        .text(),
-    ).toContain('These items include VAT at 20%')
+    expect(wrapper.find(Receipt).render().find('p').text()).toContain(
+      'These items include VAT at 20%'
+    )
     const products = Immutable.fromJS({
       p1: { isVatable: false, title: 'p1 Title', listPrice: '2.00', images: {} },
     })
@@ -203,9 +195,7 @@ describe('OrderSummary', () => {
   })
 
   test('should pass the onSave to the SaveButton', () => {
-    expect(wrapper.find(SaveButton).prop('onSave')).toEqual(
-      wrapper.prop('onSave'),
-    )
+    expect(wrapper.find(SaveButton).prop('onSave')).toEqual(wrapper.prop('onSave'))
   })
 
   test('should pass the saveError to the SaveButton', () => {
@@ -232,49 +222,6 @@ describe('OrderSummary', () => {
   })
 })
 
-describe('OrderSummary SectionHeader', () => {
-  let wrapper
-  let header
-
-  beforeEach(() => {
-    wrapper = shallow(
-      <OrderSummary
-        deliveryDate="2016-05-06"
-        numPortions={2}
-        numRecipes={2}
-        products={{}}
-        recipes={{}}
-        deliveryTotalPrice="2.50"
-        onSave={() => { }}
-      />,
-    )
-
-    header = wrapper.find(SectionHeader)
-  })
-
-  test('should contain 2 <p>s', () => {
-    expect(header.find('p').length).toBe(2)
-  })
-
-  test('should contain delivery message with date formatted "dddd, Do MMM" in first p', () => {
-    expect(
-      header
-        .find('p')
-        .first()
-        .text(),
-    ).toBe('Your box will arrive Friday, 6th May')
-  })
-
-  test('should contain "Here\'s what\'s inside your box" in second p', () => {
-    expect(
-      header
-        .find('p')
-        .last()
-        .text(),
-    ).toBe('Here\'s what\'s inside your box')
-  })
-})
-
 describe('OrderSummary footer', () => {
   let wrapper
 
@@ -287,9 +234,9 @@ describe('OrderSummary footer', () => {
         products={{}}
         recipes={{}}
         deliveryTotalPrice="2.50"
-        onSave={() => { }}
+        onSave={() => {}}
         orderSummaryCollapsed
-      />,
+      />
     )
   })
 
@@ -298,7 +245,7 @@ describe('OrderSummary footer', () => {
   })
 
   test('should display text "View order details >" for link by default ', () => {
-    expect(wrapper.find('footer a').text()).toBe('View order details >')
+    expect(wrapper.find('footer a').text()).toBe('View order details<Icon />')
   })
 
   test('should set state.orderSummaryOpen to false by default', () => {
@@ -320,7 +267,7 @@ describe('OrderSummary footer', () => {
   test('should display text "Hide order details" for link if state.orderSummaryOpen', () => {
     wrapper.setState({ orderSummaryOpen: true })
 
-    expect(wrapper.find('footer a').text()).toBe('Hide order details')
+    expect(wrapper.find('footer a').text()).toBe('Hide order details<Icon />')
   })
   test('should not render footer when orderSumaryCollapsed is false', () => {
     wrapper.setProps({ orderSummaryCollapsed: false })

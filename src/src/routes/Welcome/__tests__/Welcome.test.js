@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import Welcome from '../Welcome'
+import { Welcome } from '../Welcome'
 
 describe('Welcome Page', () => {
   let context
@@ -29,15 +29,8 @@ describe('Welcome Page', () => {
           fetchData={fetchData}
         />, { context })
     })
-    it('should render Vertical Stages component', () => {
-      expect(wrapper.find('VerticalStages').length).toEqual(1)
-      expect(wrapper.find('VerticalStagesItem').length).toEqual(2)
-    })
-    it('should render AppPromo component', () => {
+    it('the it should render AppPromo component', () => {
       expect(wrapper.find('AppPromo').length).toEqual(1)
-    })
-    it('should pass expected props to the VerticalStagesItem', () => {
-      expect(wrapper.find('VerticalStagesItem').first().prop('title')).toEqual('Thanks User')
     })
   })
 })

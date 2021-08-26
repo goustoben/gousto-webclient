@@ -1,26 +1,26 @@
 import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import { Button } from 'goustouicomponents'
+import { CTA } from 'goustouicomponents'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import { TickList } from 'TickList'
 import config from 'config'
 import css from './AppPromo.css'
 
 const benefits = [
-  'Get notified when the new menu is out',
-  'Follow the status of your orders on the go',
-  'Find all your recipes in your own cookbook',
+  'Be the first to know when the menu is out',
+  'Track your orders on the go',
+  'Store all your recipes in your personal cookbook',
 ]
 
 const propTypes = {
   device: PropTypes.string,
-  trackWelcomeAppPromoClick: PropTypes.func
+  trackWelcomeAppPromoClick: PropTypes.func,
 }
 
 const defaultProps = {
   device: 'desktop',
-  trackWelcomeAppPromoClick: () => { }
+  trackWelcomeAppPromoClick: () => { },
 }
 
 const onAppLinkClick = (e, trackWelcomeAppPromoClick) => {
@@ -39,21 +39,21 @@ const mobileAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
     })}
     href={config.routes.client.appsRedirect}
   >
-    <Button className={css.getAppCTA} noDecoration>Get the app now</Button>
+    <CTA isFullWidth>Download the app</CTA>
   </a>
 )
 
 const desktopAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
-  <div className={classnames(css.desktopAppLink, { [css.hideElement]: device === 'mobile' })}>
+  <div className={classnames({ [css.hideElement]: device === 'mobile' })}>
     <AppStoreLinks onClick={(e) => onAppLinkClick(e, trackWelcomeAppPromoClick)} appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
   </div>
 )
 
 const AppPromo = ({ device, trackWelcomeAppPromoClick }) => (
-  <div className={css.container} data-testing="appPromo">
+  <div data-testing="appPromo">
     <div className={css.contentContainer}>
-      <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app-promo-phone.jpg')} alt="" /></div>
       <div className={css.content}>
+        <h2 className={css.header}>Download the Gousto app</h2>
         <TickList listItems={benefits} listItemClassName={css.list} />
         <div>
           {mobileAppStoreCTAs(device, trackWelcomeAppPromoClick)}

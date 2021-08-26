@@ -1,12 +1,8 @@
-@value Pomegranate from 'styles/colors.css';
-@value ScreenXXSMin, ScreenSMMin from 'styles/screenSizes.css';
-
-.container {
-  text-align: center;
-}
+@value Pomegranate, Haricot from 'styles/colors.css';
+@value ScreenXXSMin, ScreenSMMax from 'styles/screenSizes.css';
 
 .contentContainer {
-  align-items: center;
+  align-items: left;
   display: flex;
   flex-direction: column-reverse;
 
@@ -15,35 +11,24 @@
   }
 }
 
-.phoneImageContainer {
-  text-align: center;
-  overflow: hidden;
-  max-height: 410px;
-  max-width: 300px;
-  
-  @media ScreenXXSMin {
-    height: 285px;
-    margin-right: 20px;
-    width: 40%;
-  }
-}
-
-.phoneImage {
-  width: 100%;
-}
-
 .content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   flex: 1;
   text-align: initial;
-  justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  @media ScreenSMMax {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 0;
+  }
 }
 
 .list i {
-  color: Pomegranate;
+  color: Haricot;
 }
 
 .getAppCTA > div:last-child {
@@ -51,10 +36,10 @@
   font-weight: 600;
 }
 
-.desktopAppLink {
-  text-align: center;
-}
-
 .hideElement {
   display: none
+}
+
+.header {
+  margin-bottom: 1.5rem;
 }

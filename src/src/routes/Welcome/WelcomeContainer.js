@@ -5,23 +5,20 @@ import { userFetchReferralOffer } from 'actions/user'
 import { trackWelcomeAppPromoClick, fetchData } from 'actions/welcome'
 import { updateUserTasteProfile } from 'actions/tastePreferences'
 
-import { getIsWelcomePageOnboardingEnabled } from 'selectors/features'
-
-import { WelcomeExperimentSwitch } from './WelcomeExperimentSwitch'
+import { Welcome } from './Welcome'
 
 function mapStateToProps(state, ownProps) {
   const { products, user, request } = state
   const { params, location, query } = ownProps
 
-  return ({
+  return {
     orderId: params.orderId,
-    productDetailId: (location && location.query) ? location.query.productDetailId : '',
+    productDetailId: location && location.query ? location.query.productDetailId : '',
     products,
     user,
     device: request.get('browser'),
     query,
-    isWelcomePageOnboardingEnabled: getIsWelcomePageOnboardingEnabled(state),
-  })
+  }
 }
 
 const WelcomeContainer = connect(mapStateToProps, {
@@ -30,6 +27,6 @@ const WelcomeContainer = connect(mapStateToProps, {
   trackWelcomeAppPromoClick,
   updateUserTasteProfile,
   fetchData,
-})(WelcomeExperimentSwitch)
+})(Welcome)
 
 export { WelcomeContainer }

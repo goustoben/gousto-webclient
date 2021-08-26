@@ -1,4 +1,4 @@
-@value ScreenXSMax, ScreenSMMax, MaxBreakPointXS from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMin, ScreenMDMin, ScreenSMMax, MaxBreakPointXS from 'styles/screenSizes.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
 @value Coconut, White from 'styles/colors.css';
 @value gridGutterWidth from 'sass-loader!styles/bootstrap.scss';
@@ -11,6 +11,7 @@
 
 .contentContainer {
 	composes: pageContainerLG from 'styles/layout.css';
+	margin-top: 1.5rem;
 
 	@media ScreenSMMax {
 		max-width: MaxBreakPointXS;
@@ -20,6 +21,7 @@
 		max-width: none;
 		padding-left: 0;
 		padding-right: 0;
+		padding-bottom: -15px;
 	}
 }
 
@@ -60,16 +62,28 @@
 	@media ScreenXSMax {
 		margin: calc(gridGutterWidth / 2) 0 0;
 	}
+
+	@media ScreenXSMax {
+		margin: 0;
+		border: 0;
+	}
 }
 
-.welcomeColInnerVerticalStages {
+.appPromo {
+	@media ScreenSMMin {
+		margin: 0;
+		background: none;
+	}
+
+	@media ScreenMDMin {
+		border: 0;
+	}
+}
+
+.welcomeColInnerContainer {
 	composes: welcomeColInner;
 	background: transparent;
 	border: none;
-}
-
-.welcomeStageContent {
-	padding-bottom: 0;
 }
 
 .colTopXS {

@@ -14,30 +14,3 @@
 	padding: 12px 0;
 	z-index: 1000;
 }
-
-.fixedMobileCTA {
-	width: 80%;
-	padding: 14px 0;
-	margin: 0 auto;
-	border-radius: SpacingXXS;
-	background-color:BlueBase;
-	cursor: pointer;
-	text-align: center;
-}
-
-.mobileCTA {
-	border-radius: SpacingXXS;
-	composes: paddingSM marginMDLeft from 'sass-loader!styles/spacing.scss';
-	display: flex;
-	cursor: pointer;
-	background-color:BlueBase;
-}
-
-.shareYourLinkText {
-	color: White;
-	font-family: Avenir;
-	font-size: 16px;
-	font-weight: bold;
-	display: inline-block;
-	margin: 0 auto;
-}

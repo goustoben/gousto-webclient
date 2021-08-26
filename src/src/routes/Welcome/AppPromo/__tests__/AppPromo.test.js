@@ -8,18 +8,15 @@ describe('AppPromo', () => {
   beforeEach(() => {
     wrapper = shallow(<AppPromo />)
   })
-  it('should render an image', () => {
-    expect(wrapper.find('img').length).toEqual(1)
-  })
 
   it('should render a ticklist', () => {
     expect(wrapper.find('TickList').length).toEqual(1)
   })
 
-  it('should render a button and show if device is mobile', () => {
+  it('should render a cta and show if device is mobile', () => {
     wrapper = shallow(<AppPromo device="mobile" />)
 
-    expect(wrapper.find('Button').length).toEqual(1)
+    expect(wrapper.find('CTA').length).toEqual(1)
     expect(wrapper.find('.mobileAppLink.hideElement').length).toEqual(0)
   })
 
