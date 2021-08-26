@@ -3,7 +3,6 @@
 @value BreakpointToMedium from 'design-language/breakpoints.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value White from 'styles/colors.css';
-@value iconSize 1.5rem;
 @value grey #AEB7C0;
 
 .container {
@@ -51,12 +50,9 @@
   text-transform: uppercase;
 }
 
-/* ///////////////////////////////////////////////////////
-	REDESIGN
-/////////////////////////////////////////////////////// */
-
 .itemHeading {
-  composes: tabletL from 'styles/typography.css';
+  composes: fontStyleL from 'design-language/typography.css';
+  margin-bottom: 1rem;
 }
 
 .containerRedesign,
@@ -67,12 +63,6 @@
   background-color: White;
   border: 1px solid grey;
   width: 33%;
-
-  .suitableTitle {
-    font-weight: bold;
-    font-size: 16px;
-    margin: 0.5rem 0;
-  }
 
   @media BreakpointToMedium {
     width: 100%;
@@ -124,6 +114,11 @@
       margin-right: 0;
     }
   }
+}
+
+.subhead {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  margin: 0.5rem 0;
 }
 
 .list {
@@ -210,7 +205,7 @@
 .select {
   width: 100%;
   margin: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   padding: 0;
   display: inline-flex;
 }
@@ -236,33 +231,10 @@
   font-size: 20px;
 }
 
-.offer {
-  margin-top: 0.5rem;
+.ctaContainer {
   margin-bottom: 0.5rem;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
 }
 
-.offerOption {
-  padding-top: 0.313rem;
-}
-
-.offerOptionDetail {
-  font-weight: 600;
-}
-
-.icon {
-  margin-right: 0.5rem;
-  flex: 0 0 iconSize;
-  height: iconSize;
-  width: iconSize;
-}
-
-.lockInIcon {
-  background-image: url('media/svgs/icon-play-pause.svg');
-}
-
-.truckIcon {
-  background-image: url('media/svgs/icon-truck-right.svg');
+.benefitContainer {
+  margin-bottom: 1rem;
 }

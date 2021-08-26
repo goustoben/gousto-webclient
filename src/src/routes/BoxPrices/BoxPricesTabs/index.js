@@ -1,0 +1,1 @@
+export { BoxPricesTabs } from './BoxPricesTabs'

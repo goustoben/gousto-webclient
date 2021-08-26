@@ -4,7 +4,7 @@
 .container {
   padding: 0 0.75rem;
   composes: fontStyleBody from 'design-language/typography.css';
-  margin: 1rem auto;
+  margin: 0 auto 1rem;
   display: flex;
 
   @media ScreenSMMin {

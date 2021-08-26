@@ -1,0 +1,57 @@
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.css';
+@value CG-200 #AEB7C0;
+@value White, Mackerel from 'styles/colors.css';
+
+.goustoOnDemandCustomText {
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin-bottom: 1rem;
+}
+
+.tabsContainer {
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+  border-bottom: 1px solid CG-200;
+
+  @media BreakpointFromMedium {
+    display: none;
+  }
+}
+
+.boxSizeCards {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.goustoOnDemandBoxSizeItem {
+  background: White;
+  flex: 1 0 0;
+
+  @media BreakpointToMedium {
+    display: none;
+    padding-top: 1rem;
+  }
+
+  @media BreakpointFromMedium {
+    border: 1px solid Mackerel;
+    padding: 1rem;
+
+    &:not(:last-child) {
+      margin-right: 0.75rem;
+    }
+  }
+}
+
+.isActive {
+  @media BreakpointToMedium {
+    display: block;
+  }
+}
+
+.goustoOnDemandBoxSizeItemHeading {
+  composes: fontStyleL from 'design-language/typography.module.css';
+  margin-bottom: 1rem;
+
+  @media BreakpointToMedium {
+    display: none;
+  }
+}

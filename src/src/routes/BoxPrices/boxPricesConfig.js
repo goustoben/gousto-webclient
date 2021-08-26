@@ -29,13 +29,15 @@ export const boxTypes = {
 
 export const boxTypesRedesign = {
   2: {
-    type: 'regular box',
-    description: 'Our regular box is suitable for:',
+    title: 'Regular box',
+    ctaText: 'Choose regular box',
+    subhead: 'Our regular box is suitable for:',
     suitable: ['2 adults (or 1 + leftovers)', '1 adult and 1-2 children'],
   },
   4: {
-    type: 'large box',
-    description: 'Our large box is suitable for:',
+    title: 'Large box',
+    ctaText: 'Choose large box',
+    subhead: 'Our large box is suitable for:',
     suitable: ['4 adults (or 2-3 + leftovers)', '2 adults and 2-3 children'],
   },
 }

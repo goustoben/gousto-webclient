@@ -16,21 +16,11 @@ describe('Postcode Step', () => {
     )
   })
 
-  test('renders an image in the header', () => {
+  test('renders correctly', () => {
     expect(wrapper.find('SignupImage')).toHaveLength(1)
     expect(wrapper.find('SignupImage').prop('name')).toBe('where-to-deliver')
-  })
 
-  describe('when deliveryDaysError is set', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        deliveryDaysError: true,
-      })
-    })
-
-    test('then an error message should be rendered', () => {
-      expect(wrapper.find('.errorText').text()).toBe('Please enter a valid postcode')
-    })
+    expect(wrapper.find('PostcodeStepMessage').exists()).toBe(true)
   })
 
   describe('when the button is clicked', () => {

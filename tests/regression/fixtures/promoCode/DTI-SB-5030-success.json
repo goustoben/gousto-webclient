@@ -1,0 +1,32 @@
+{
+  "status": "ok",
+  "result": {
+    "data": {
+      "code": "DTI-SB-5030",
+      "details": {
+        "discount-whole-order-percent": "50"
+      },
+      "codeData": {
+        "code": "DTI-SB-5030",
+        "campaign": {
+          "id": 4580,
+          "media_id": null,
+          "landing_details_1": "",
+          "landing_details_2": "",
+          "landing_details_3": "",
+          "landing_url": "",
+          "modal_text": "<p class=\"lead\">Like your first box? <strong>Get 30% off all other boxes you order in your first month.</strong></p>\r\n<p class=\"lead\">Your discount will be automatically applied at checkout.</p>",
+          "raw_modal_text": "Like your first box? Get 30% off all other boxes you order in your first month.\nYour discount will be automatically applied at checkout.",
+          "modal_title": "Join today and get 50% off your first box!",
+          "enabled": true,
+          "is_for_existing": false,
+          "expiry_interval": "30 days",
+          "is_boost": false,
+          "boost_campaign_id": null
+        }
+      },
+      "addGiftOrderRules": []
+    },
+    "meta": []
+  }
+}

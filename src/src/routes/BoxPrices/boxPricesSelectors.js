@@ -24,6 +24,7 @@ export const getNumPersonsToBoxDescriptors = createSelector(getMenuBoxPrices, (m
           'pricePerPortion',
         ]),
         total: menuBoxPrices.getIn([numPersons, numPortionsStr, BOX_TYPE, 'recipeTotal']),
+        totalAfterDiscount: menuBoxPrices.getIn([numPersons, numPortionsStr, BOX_TYPE, 'total']),
       }))
 
       return [numPersons, boxDescriptors]

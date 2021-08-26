@@ -14,6 +14,11 @@ import {
   getStepFromPathname,
 } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
+import { menuLoadBoxPrices } from 'actions/menu'
+
+import { getPromoCode } from 'selectors/basket'
+import { promoGet } from 'actions/promos'
+import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
 
 import css from './Signup.css'
 
@@ -72,6 +77,7 @@ const propTypes = {
   isSocialBelongingEnabled: PropTypes.bool,
   signupSetStep: PropTypes.func,
   isBoxSizeVerticalLayoutEnabled: PropTypes.bool,
+  isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -101,6 +107,7 @@ const defaultProps = {
   isSocialBelongingEnabled: false,
   signupSetStep: () => {},
   isBoxSizeVerticalLayoutEnabled: false,
+  isGoustoOnDemandEnabled: false,
 }
 
 const contextTypes = {
@@ -114,6 +121,7 @@ class Signup extends PureComponent {
     let steps = Immutable.List(signupConfig.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []
     const promoCode = query.promo_code
+
     const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
     const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
     const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
@@ -121,6 +129,7 @@ class Signup extends PureComponent {
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams,
+      isGoustoOnDemandEnabled,
     } = options
 
     if (isPaymentBeforeChoosingEnabled) {
@@ -154,6 +163,18 @@ class Signup extends PureComponent {
     }
 
     store.dispatch(actions.signupSetStep(stepToSet))
+
+    if (isGoustoOnDemandEnabled) {
+      const state = store.getState()
+      if (state.menuBoxPrices.size === 0) {
+        store.dispatch(menuLoadBoxPrices())
+      }
+
+      const basketPromoCode = getPromoCode(state)
+      if (basketPromoCode && !getCurrentPromoCodeData(state)) {
+        await store.dispatch(promoGet(basketPromoCode))
+      }
+    }
 
     if (isPaymentBeforeChoosingV2Enabled) {
       return store.dispatch(
@@ -216,6 +237,7 @@ class Signup extends PureComponent {
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
       signupSetStep,
+      isGoustoOnDemandEnabled,
     } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
@@ -225,6 +247,7 @@ class Signup extends PureComponent {
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams: true,
+      isGoustoOnDemandEnabled,
     }
     Signup.fetchData({ store, query, params, options })
     this.unlistenHistory = browserHistory.listen(({ pathname }) => {
@@ -263,7 +286,7 @@ class Signup extends PureComponent {
   }
 
   renderStep = (name, nextStepName, currentStepNumber, isLastStep) => {
-    const { goToStep, stepName, isSocialBelongingEnabled } = this.props
+    const { goToStep, stepName, isSocialBelongingEnabled, isGoustoOnDemandEnabled } = this.props
     const Component = components[name]
 
     return (
@@ -275,6 +298,7 @@ class Signup extends PureComponent {
         isLastStep={isLastStep}
         active={stepName === name}
         isSocialBelongingEnabled={isSocialBelongingEnabled}
+        isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
       />
     )
   }
@@ -312,6 +336,7 @@ class Signup extends PureComponent {
       signupDismissDiscountAppliedBar,
       isSocialBelongingEnabled,
       isBoxSizeVerticalLayoutEnabled,
+      isGoustoOnDemandEnabled,
     } = this.props
 
     if (stepName === signupConfig.sellThePropositionPagePath) {
@@ -333,6 +358,7 @@ class Signup extends PureComponent {
         className={classNames(css.signupContainer, {
           [css.discountApplied]: isDiscountApplied,
           [css.socialBelongingContainer]: isSocialBelongingEnabled,
+          [css.goustoOnDemandContainer]: isGoustoOnDemandEnabled,
         })}
       >
         <Helmet

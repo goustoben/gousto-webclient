@@ -1,6 +1,4 @@
-@value BreakpointFromMedium from 'design-language/breakpoints.css';
-@value BreakpointToMedium from 'design-language/breakpoints.css';
-@value NewGrey from 'styles/colors.css';
+@value BreakpointFromLarge from 'design-language/breakpoints.css';
 
 .loadingOverlay {
   display: flex;
@@ -19,61 +17,12 @@
   filter: blur(3px);
 }
 
-/* ///////////////////////////////////////////////////////
-	REDESIGN
-/////////////////////////////////////////////////////// */
-
 .header {
-  composes: header4XL from 'styles/typography.css';
+  composes: fontStyle3XL from 'design-language/typography.css';
   text-align: center;
-  margin: 2.5rem 0;
+  margin: 1.5rem 0;
 
-  @media BreakpointToMedium {
-    composes: mobile4XL from 'styles/typography.css';
-    margin: 1.5rem 0;
-  }
-}
-
-.tabs {
-  display: none;
-  margin-top: 0.625rem;
-  composes: headerXL from 'styles/typography.css';
-  position: relative;
-  top: 1px;
-
-  .tab {
-    background: #f4f7fa;
-    border: 1px solid #aeb7c0;
-    padding: 0.875rem 0;
-    border-radius: 3px 3px 0px 0px;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 800;
-    font-size: 18px;
-    width: 100%;
-  }
-
-  .tab:first-child {
-    margin-left: 0.75rem;
-  }
-
-  .tab:last-child {
-    margin-left: 0.5rem;
-    margin-right: 0.75rem;
-  }
-
-  @media BreakpointToMedium {
-    display: flex;
-    justify-content: center;
-
-    .tab {
-      display: inline-block;
-    }
-
-    .tabActive {
-      background: #fff;
-      border-bottom: none;
-      color: #615cff;
-    }
+  @media BreakpointFromLarge {
+    margin: 2rem 0;
   }
 }

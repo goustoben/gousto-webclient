@@ -24,23 +24,40 @@ import { Image } from '../../Image'
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
 
-const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => {
+const formatPointInTime = (tempDate, time) => moment(`${tempDate} ${time}`).format('ha')
+
+const formatTime = (deliveryStartTime, deliveryEndTime, tempDate, isGoustoOnDemandEnabled) => {
   if (!tempDate) {
     return ''
   }
 
-  return `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(
-    `${tempDate} ${deliveryEndTime}`
-  ).format('ha')} `
+  if (isGoustoOnDemandEnabled) {
+    return `${formatPointInTime(tempDate, deliveryStartTime)} to ${formatPointInTime(
+      tempDate,
+      deliveryEndTime
+    )}`
+  }
+
+  return `${formatPointInTime(tempDate, deliveryStartTime)} - ${formatPointInTime(
+    tempDate,
+    deliveryEndTime
+  )}`
 }
 
-const formatDate = (date) => `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
+const formatDate = (date, isGoustoOnDemandEnabled) => {
+  if (isGoustoOnDemandEnabled) {
+    return date.format('dddd Do MMMM')
+  }
+
+  return `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
+}
 
 const getDeliveryDaysAndSlots = (
   boxSummaryDeliveryDays,
   tempDate,
   disabledSlots,
-  userHasAvailableSlots
+  userHasAvailableSlots,
+  options = {}
 ) => {
   const slots = {}
   const deliveryDays = boxSummaryDeliveryDays
@@ -53,10 +70,20 @@ const getDeliveryDaysAndSlots = (
             disabledSlots && disabledSlots.includes(slot.get('disabledSlotId'))
           )
 
+          let sublabel
+          if (!options.isGoustoOnDemandEnabled) {
+            sublabel =
+              slot.get('deliveryPrice') === '0.00' ? 'Free' : `£${slot.get('deliveryPrice')}`
+          }
+
           return {
-            label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
-            subLabel:
-              slot.get('deliveryPrice') === '0.00' ? 'Free' : `£${slot.get('deliveryPrice')}`,
+            label: formatTime(
+              slot.get('deliveryStartTime'),
+              slot.get('deliveryEndTime'),
+              tempDate,
+              options.isGoustoOnDemandEnabled
+            ),
+            subLabel: sublabel,
             value: slot.get('id'),
             coreSlotId: slot.get('coreSlotId'),
             disabled: isSlotDisabled,
@@ -68,7 +95,12 @@ const getDeliveryDaysAndSlots = (
         (dd && dd.get('alternateDeliveryDay') !== null) ||
         slots[date].every((slot) => slot.disabled)
 
-      return { date, value: date, disabled, label: formatDate(moment(date)) }
+      return {
+        date,
+        value: date,
+        disabled,
+        label: formatDate(moment(date), options.isGoustoOnDemandEnabled),
+      }
     })
     .toArray()
     .sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
@@ -100,12 +132,14 @@ const DeliveryStep = ({
   district,
   amountOfCustomers,
   trackSocialBelongingBannerAppearance,
+  isGoustoOnDemandEnabled,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
     tempDate,
     disabledSlots,
-    userHasAvailableSlots
+    userHasAvailableSlots,
+    { isGoustoOnDemandEnabled }
   )
   const showSocialBelongingBanner = isSocialBelongingEnabled && district && amountOfCustomers > 50
 
@@ -173,7 +207,11 @@ const DeliveryStep = ({
       <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
         <div className={signupCss.fullWidth}>
           <div className={signupCss.header}>
-            <Heading type="h1">{signupConfig.deliveryOptionsStep.title}</Heading>
+            <Heading type="h1">
+              {isGoustoOnDemandEnabled
+                ? signupConfig.deliveryOptionsStep.goustoOnDemandTitle
+                : signupConfig.deliveryOptionsStep.title}
+            </Heading>
             <Image name="delivery-day" />
           </div>
           <div className={signupCss.body}>
@@ -202,7 +240,11 @@ const DeliveryStep = ({
     <div className={signupCss.stepContainer} data-testing="signupDeliveryStep">
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
-          <Heading type="h1">{signupConfig.deliveryOptionsStep.title}</Heading>
+          <Heading type="h1">
+            {isGoustoOnDemandEnabled
+              ? signupConfig.deliveryOptionsStep.goustoOnDemandTitle
+              : signupConfig.deliveryOptionsStep.title}
+          </Heading>
           <Image name="delivery-day" />
         </div>
         {showSocialBelongingBanner && (
@@ -217,7 +259,7 @@ const DeliveryStep = ({
             <div className={classNames(css.left, css.dropdown)} data-testing="signupDeliveryDay">
               <DropdownInput
                 color="secondary"
-                uppercase
+                uppercase={!isGoustoOnDemandEnabled}
                 options={deliveryDays}
                 onChange={onTempDateChange}
                 value={tempDate}
@@ -229,7 +271,7 @@ const DeliveryStep = ({
             <div className={classNames(css.right, css.dropdown)} data-testing="signupDeliveryTime">
               <DropdownInput
                 color="secondary"
-                uppercase
+                uppercase={!isGoustoOnDemandEnabled}
                 options={slots[tempDate] ? slots[tempDate] : []}
                 onChange={onTempSlotChange}
                 value={tempSlotId}
@@ -238,9 +280,11 @@ const DeliveryStep = ({
               />
             </div>
           </div>
-          <div className={css.negativeMargin}>
-            <SubscriptionTransparencyText />
-          </div>
+          {!isGoustoOnDemandEnabled && (
+            <div className={css.negativeMargin}>
+              <SubscriptionTransparencyText />
+            </div>
+          )}
         </div>
       </div>
       <div className={signupCss.footer}>
@@ -276,6 +320,7 @@ DeliveryStep.propTypes = {
   district: PropTypes.string,
   amountOfCustomers: PropTypes.number,
   trackSocialBelongingBannerAppearance: PropTypes.func,
+  isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
 DeliveryStep.defaultProps = {
@@ -301,6 +346,7 @@ DeliveryStep.defaultProps = {
   district: null,
   amountOfCustomers: null,
   trackSocialBelongingBannerAppearance: () => {},
+  isGoustoOnDemandEnabled: false,
 }
 
 export { DeliveryStep }

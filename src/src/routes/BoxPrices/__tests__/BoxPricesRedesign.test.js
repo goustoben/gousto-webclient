@@ -15,7 +15,7 @@ describe('BoxPricesRedesign', () => {
 
   test('should be rendered correctly', () => {
     expect(wrapper.find('h1').exists()).toBeTruthy()
-    expect(wrapper.find('SelectButton').exists()).toBeTruthy()
+    expect(wrapper.find('BoxPricesTabs').exists()).toBeTruthy()
     expect(wrapper.find('BoxPricesListRedesign').exists()).toBeFalsy()
     expect(wrapper.find('BoxPricesContent').exists()).toBeTruthy()
   })

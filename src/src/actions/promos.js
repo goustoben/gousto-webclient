@@ -23,7 +23,7 @@ const promoReceive = promo => ({
   promo,
 })
 
-const promoGet = code => (
+export const promoGet = code => (
   async (dispatch, getState) => {
     dispatch(pending(actionTypes.PROMO_GET, true))
     dispatch(error(actionTypes.PROMO_GET, null))
@@ -48,9 +48,10 @@ const promoGet = code => (
       errored = true
     }
 
-    promo.hasAgeRestricted = false
-    promo.justApplied = false
-
+    if (promo) {
+      promo.hasAgeRestricted = false
+      promo.justApplied = false
+    }
     const isAuthenticated = getState().auth.get('isAuthenticated')
 
     if (promo && promo.addGiftOrderRules) {

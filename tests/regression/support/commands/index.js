@@ -41,6 +41,15 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
   cy.route('GET', /promo_code=DTI-SB-5030/, 'fixture:prices/2person2portionDiscount.json').as('pricesDiscount')
+
+  cy.route(
+    'GET',
+    /promocode\/DTI-SB-5030/,
+    withDiscount
+      ? 'fixture:promoCode/DTI-SB-5030-success.json'
+      : 'fixture:promoCode/DTI-SB-5030-failure.json'
+  ).as('getPromoCode')
+
   cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
   cy.route('GET', 'deliveries/v1.0/days**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
   cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
@@ -78,12 +87,18 @@ Cypress.Commands.add('applyPromoCode', () => {
   cy.get('[data-testing="promoModalButton"]').click()
 })
 
+Cypress.Commands.add('dismissPromoModal', () => {
+  cy.get('[data-testing="promoModalButton"]').click()
+})
+
 Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   const POSTCODE = 'W3 7UP'
 
   if (platform === 'WEB') {
     // Go to /menu
     cy.get("[href='/menu']").first().click()
+    cy.wait(['@getPromoCode'])
+    cy.dismissPromoModal()
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
@@ -92,6 +107,8 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     // Go to /menu
     cy.get('[data-testing="burgerMenu"]').click()
     cy.get("[href='/menu'] > li").first().click()
+    cy.wait(['@getPromoCode'])
+    cy.dismissPromoModal()
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()

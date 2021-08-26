@@ -4,6 +4,7 @@ import {
   getIsTastePreferencesEnabled,
   getIsPaymentBeforeChoosingEnabled,
   getIsPaymentBeforeChoosingV2Enabled,
+  getIsGoustoOnDemandEnabled,
 } from 'selectors/features'
 import { signupDismissDiscountAppliedBar, signupSetStep } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
@@ -31,6 +32,7 @@ const mapStateToProps = (state, ownProps) => ({
   isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
   isSocialBelongingEnabled: getIsSocialBelongingEnabled(state),
   isBoxSizeVerticalLayoutEnabled: getIsBoxSizeVerticalLayoutEnabled(state),
+  isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
 })
 
 const SignupContainer = connect(mapStateToProps, {

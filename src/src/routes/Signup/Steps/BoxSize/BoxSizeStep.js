@@ -4,19 +4,25 @@ import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { completeWizardBoxSize } from 'actions/trackingKeys'
-import { Button } from '../../Button'
+import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
+import { PrimaryButton } from './PrimaryButton'
+import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
 import css from './BoxSizeStep.css'
 import signupCss from '../../Signup.css'
 
-const BoxSizeStep = ({
+export const BoxSizeStep = ({
   numPortionChange,
   numPortionChangeTracking,
   next,
   trackSignupWizardAction,
   isBoxSizeVerticalLayoutEnabled,
+  isGoustoOnDemandEnabled,
+  numPersonsToBoxDescriptors,
+  isLoadingPrices,
+  goustoOnDemandCustomText,
 }) => {
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
-  const handleClick = (value) => {
+  const handlePrimaryButtonClick = (value) => {
     numPortionChange(value)
     numPortionChangeTracking(value)
     trackSignupWizardAction(completeWizardBoxSize, {
@@ -42,14 +48,11 @@ const BoxSizeStep = ({
             </li>
           ))}
         </ul>
-        <Button
-          disabled={false}
-          data-testing={`signupBoxSize${value}Portions`}
-          onClick={() => handleClick(value)}
-          width="full"
-        >
-          {ctaText}
-        </Button>
+        <PrimaryButton
+          value={value}
+          onPrimaryButtonClick={handlePrimaryButtonClick}
+          ctaText={ctaText}
+        />
       </div>
     ))
 
@@ -58,21 +61,30 @@ const BoxSizeStep = ({
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
           <Heading type="h1">{title}</Heading>
-          <p className={css.subtitle}>{subtitle}</p>
+          {isGoustoOnDemandEnabled ? null : <p className={css.subtitle}>{subtitle}</p>}
         </div>
-        <div
-          className={classNames(css.boxSizeCarousel, {
-            [css.verticalLayout]: isBoxSizeVerticalLayoutEnabled,
-          })}
-        >
+        {isGoustoOnDemandEnabled ? (
+          <GoustoOnDemandBoxSizeContent
+            onPrimaryButtonClick={handlePrimaryButtonClick}
+            numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
+            isLoadingPrices={isLoadingPrices}
+            goustoOnDemandCustomText={goustoOnDemandCustomText}
+          />
+        ) : (
           <div
-            className={classNames(css.boxSizeCarouselInner, {
-              [css.innerVerticalLayout]: isBoxSizeVerticalLayoutEnabled,
+            className={classNames(css.boxSizeCarousel, {
+              [css.verticalLayout]: isBoxSizeVerticalLayoutEnabled,
             })}
           >
-            {renderCarouselItems()}
+            <div
+              className={classNames(css.boxSizeCarouselInner, {
+                [css.innerVerticalLayout]: isBoxSizeVerticalLayoutEnabled,
+              })}
+            >
+              {renderCarouselItems()}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
@@ -84,10 +96,16 @@ BoxSizeStep.propTypes = {
   next: PropTypes.func.isRequired,
   trackSignupWizardAction: PropTypes.func.isRequired,
   isBoxSizeVerticalLayoutEnabled: PropTypes.bool,
+  isGoustoOnDemandEnabled: PropTypes.bool,
+  numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
+  isLoadingPrices: PropTypes.bool,
+  goustoOnDemandCustomText: PropTypes.string,
 }
 
 BoxSizeStep.defaultProps = {
   isBoxSizeVerticalLayoutEnabled: false,
+  isGoustoOnDemandEnabled: false,
+  numPersonsToBoxDescriptors: null,
+  isLoadingPrices: false,
+  goustoOnDemandCustomText: '',
 }
-
-export { BoxSizeStep }

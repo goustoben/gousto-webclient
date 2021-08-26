@@ -3,11 +3,11 @@ import React, { Fragment, useState } from 'react'
 import { hero } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
+import { BoxPricesTabs } from './BoxPricesTabs'
 import css from './BoxPrices.css'
 
 import { BoxPricesListRedesignContainer as BoxPricesListRedesign } from './BoxPricesList/BoxPricesListRedesign'
 import { BoxPricesContent } from './BoxPricesContent'
-import { SelectButton } from './SelectButton'
 
 const BoxPricesRedesign = ({
   loading,
@@ -15,8 +15,14 @@ const BoxPricesRedesign = ({
   boxPricesBoxSizeSelected,
   numPersonsToBoxDescriptors,
 }) => {
-  const [selectedBox, setSelectedBox] = useState(2)
-  const boxes = [2, 4]
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const data = [
+    { value: 2, label: 'Regular box' },
+    { value: 4, label: 'Large box' },
+  ]
+
+  const labels = data.map(({ label }) => label)
 
   return (
     <Fragment>
@@ -29,22 +35,16 @@ const BoxPricesRedesign = ({
         <h1 className={css.header}>{hero.header}</h1>
         {!loading && (
           <Fragment>
-            <div className={css.tabs}>
-              {boxes.map((item) => (
-                <SelectButton
-                  text={item === 2 ? 'Regular box' : 'Large box'}
-                  selectedBox={selectedBox}
-                  setSelectedBox={setSelectedBox}
-                  index={item}
-                  key={item}
-                />
-              ))}
-            </div>
+            <BoxPricesTabs
+              activeIndex={activeIndex}
+              labels={labels}
+              setActiveIndex={setActiveIndex}
+            />
             <BoxPricesListRedesign
               numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
               error={error}
               boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
-              selectedBox={selectedBox}
+              selectedBox={data[activeIndex].value}
             />
           </Fragment>
         )}

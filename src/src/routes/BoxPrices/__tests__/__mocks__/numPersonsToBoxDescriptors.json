@@ -3,16 +3,19 @@
     {
       "num_portions": 2,
       "price_per_portion": "6.25",
+      "totalAfterDiscount": "12.50",
       "total": "24.99"
     },
     {
       "num_portions": 3,
       "price_per_portion": "5.00",
+      "totalAfterDiscount": "15.00",
       "total": "29.99"
     },
     {
       "num_portions": 4,
       "price_per_portion": "4.37",
+      "totalAfterDiscount": "17.50",
       "total": "34.99"
     }
   ],
@@ -20,16 +23,19 @@
     {
       "num_portions": 2,
       "price_per_portion": "3.97",
+      "totalAfterDiscount": "15.88",
       "total": "31.75"
     },
     {
       "num_portions": 3,
       "price_per_portion": "3.56",
+      "totalAfterDiscount": "21.38",
       "total": "42.75"
     },
     {
       "num_portions": 4,
       "price_per_portion": "2.98",
+      "totalAfterDiscount": "23.88",
       "total": "47.75"
     }
   ]

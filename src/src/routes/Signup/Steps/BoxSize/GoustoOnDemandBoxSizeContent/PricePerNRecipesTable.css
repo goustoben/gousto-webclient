@@ -1,0 +1,41 @@
+@value NG-200 #C4C7C9;
+@value NG-50 #F4F7FA;
+@value CG-600 #516272;
+@value CG-800 #333D47;
+@value FE-700 #D82B39;
+
+.pricesPerRecipesTableContainer {
+  border: 1px solid NG-200;
+  background: NG-50;
+  color: CG-600;
+  margin-bottom: 1rem;
+}
+
+.row {
+  display: flex;
+  height: 6.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell {
+  padding: 1rem 0;
+  flex: 1 0 0;
+  text-align: center;
+}
+
+.nRecipesLine {
+  color: CG-600;
+  composes: fontStyleS from 'design-language/typography.css';
+}
+
+.priceLine {
+  color: CG-800;
+  composes: fontStyleL from 'design-language/typography.css';
+}
+
+.priceBeforeDiscountLine {
+  color: FE-700;
+  composes: fontStyleS from 'design-language/typography.css';
+  text-decoration: line-through;
+}

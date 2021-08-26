@@ -22,6 +22,8 @@ describe('BoxSizeStepContainer', () => {
   const initialState = {
     menuBoxPrices,
     boxPrices,
+    pending: Immutable.fromJS({}),
+    basket: Immutable.fromJS({}),
   }
 
   const store = {

@@ -161,7 +161,7 @@ describe('Delivery Step', () => {
     })
   })
 
-  describe('Delivery say dropdown', () => {
+  describe('Delivery slot dropdown', () => {
     let deliverySlotDropdown
 
     beforeEach(() => {
@@ -171,14 +171,14 @@ describe('Delivery Step', () => {
     test('should display correct dropdown options', () => {
       const expectedOptions = [
         {
-          label: '8am - 7pm ',
+          label: '8am - 7pm',
           subLabel: 'Free',
           value: '1',
           coreSlotId: '1',
           disabled: false,
         },
         {
-          label: '8am - 12pm ',
+          label: '8am - 12pm',
           subLabel: '£2.99',
           value: '2',
           coreSlotId: '2',
@@ -201,14 +201,14 @@ describe('Delivery Step', () => {
       test('should add disabled attribute to relevant slot', () => {
         const expectedOptions = [
           {
-            label: '8am - 7pm ',
+            label: '8am - 7pm',
             subLabel: 'Free',
             value: '1',
             coreSlotId: '1',
             disabled: false,
           },
           {
-            label: '8am - 12pm ',
+            label: '8am - 12pm',
             subLabel: '£2.99',
             value: '2',
             coreSlotId: '2',

@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 
 import { CTA } from 'goustouicomponents'
 import { boxTypesRedesign } from 'routes/BoxPrices/boxPricesConfig'
+import { Benefits } from 'routes/Home/Benefits'
+import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
-import { Offer } from './Offer'
 import css from './BoxPriceBlock.css'
 
 class BoxPriceBlock extends Component {
@@ -18,28 +19,17 @@ class BoxPriceBlock extends Component {
   render() {
     const { boxInfo, numPersons, boxPricesBoxSizeSelected, selectedBox } = this.props
     const { selected } = this.state
-    const boxType = boxTypesRedesign[numPersons]
-    const ctaTitle = `Choose ${boxType.type}`
-
-    function titleCase(string) {
-      return string[0].toUpperCase() + string.slice(1).toLowerCase()
-    }
+    const boxTypeConfig = boxTypesRedesign[numPersons]
+    const { title, ctaText } = boxTypeConfig
 
     return (
       <div
         className={numPersons === selectedBox ? css.containerRedesignActive : css.containerRedesign}
       >
         <div className={css.carouselItem}>
-          <h2 className={css.itemHeading}>{titleCase(boxType.type)}</h2>
-          <p className={css.suitableTitle}>{boxType.description}</p>
-          <ul className={css.list}>
-            {boxType.suitable.map((label) => (
-              <li key={`for-${label.charAt(0)}`} className={css.listItem}>
-                {label}
-              </li>
-            ))}
-          </ul>
-          <p className={css.suitableTitle}>Select number of recipes</p>
+          <h2 className={css.itemHeading}>{title}</h2>
+          <BoxPriceSuitableForSection numPersons={numPersons} />
+          <p className={css.subhead}>Select number of recipes</p>
           <div className={css.buttonGroup}>
             {boxInfo.map((item, index) => (
               <button
@@ -77,15 +67,17 @@ class BoxPriceBlock extends Component {
               per portion
             </div>
           </div>
-          <Offer icon="truckIcon" detailText="Free UK delivery" text=", 7 days a week" />
-          <CTA isFullWidth onClick={() => boxPricesBoxSizeSelected(numPersons)}>
-            {ctaTitle}
-          </CTA>
-          <Offer
-            icon="lockInIcon"
-            detailText="No lock in"
-            text=": pause or cancel for free anytime"
-          />
+          <div className={css.benefitContainer}>
+            <Benefits byId="freeDelivery" isCentered fontStyleS />
+          </div>
+          <div className={css.ctaContainer}>
+            <CTA isFullWidth onClick={() => boxPricesBoxSizeSelected(numPersons)}>
+              {ctaText}
+            </CTA>
+          </div>
+          <div className={css.benefitContainer}>
+            <Benefits byId="noLockIn" isCentered fontStyleS />
+          </div>
         </div>
       </div>
     )

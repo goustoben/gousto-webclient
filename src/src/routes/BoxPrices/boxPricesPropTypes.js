@@ -5,5 +5,6 @@ export const BoxDescriptorsPropType = PropTypes.arrayOf(
     num_portions: PropTypes.number,
     price_per_portion: PropTypes.string,
     total: PropTypes.string,
+    totalAfterDiscount: PropTypes.string,
   })
 )

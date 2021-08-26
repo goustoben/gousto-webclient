@@ -35,17 +35,13 @@ describe('Given BoxPriceBlockRedesign', () => {
     expect(wrapper.find('.itemHeading').exists()).toBeTruthy()
     expect(wrapper.find('.select').exists()).toBeTruthy()
     expect(wrapper.find('.selectDescription').exists()).toBeTruthy()
-    expect(wrapper.find('.list').exists()).toBeTruthy()
-    expect(wrapper.find('.listItem').exists()).toBeTruthy()
     expect(wrapper.find('.buttonGroup').exists()).toBeTruthy()
     expect(wrapper.find('.boxSizeButtonActive').exists()).toBeTruthy()
     expect(wrapper.find('.boxSizeButton').exists()).toBeTruthy()
-    expect(wrapper.find('.suitableTitle')).toHaveLength(2)
     expect(wrapper.find('.selectItem')).toHaveLength(2)
     expect(wrapper.find('.amount')).toHaveLength(2)
     expect(wrapper.find('h2').exists()).toBeTruthy()
     expect(wrapper.find('CTA').exists()).toBeTruthy()
-    expect(wrapper.find('Offer')).toHaveLength(2)
   })
 
   test('boxPricesBoxSizeSelected should be called', () => {

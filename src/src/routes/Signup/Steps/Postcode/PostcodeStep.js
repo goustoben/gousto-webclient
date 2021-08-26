@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import TextInput from 'Form/Input'
-import Svg from 'Svg'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
+import { PostcodeStepMessage } from './PostcodeStepMessage'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
 import { getDataForSocialBelonging } from '../signupUtils'
@@ -21,13 +21,23 @@ class PostcodeStep extends PureComponent {
   }
 
   render() {
-    const { tempPostcode, changeTempPostcode, postcodePending, deliveryDaysError } = this.props
+    const {
+      tempPostcode,
+      changeTempPostcode,
+      postcodePending,
+      deliveryDaysError,
+      isGoustoOnDemandEnabled,
+    } = this.props
 
     return (
       <div className={css.stepContainer} data-testing="signupPostcodeStep">
         <div className={css.fullWidth}>
           <div className={css.header}>
-            <Heading type="h1">{signupConfig.postCodeStep.title}</Heading>
+            <Heading type="h1">
+              {isGoustoOnDemandEnabled
+                ? signupConfig.postCodeStep.goustoOnDemandTitle
+                : signupConfig.postCodeStep.title}
+            </Heading>
             <Image name="where-to-deliver" />
           </div>
           <div className={css.body}>
@@ -70,26 +80,10 @@ class PostcodeStep extends PureComponent {
                 </div>
               </form>
             </div>
-            <div className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
-              {!deliveryDaysError && (
-                <Svg className={postcodeCss.tick} fileName="icon-success-tick" />
-              )}
-              {(() => {
-                let textMsg
-
-                if (deliveryDaysError) {
-                  if (deliveryDaysError === 'do-not-deliver') {
-                    textMsg = "Sorry, it looks like we don't currently deliver to your area."
-                  } else {
-                    textMsg = 'Please enter a valid postcode'
-                  }
-                } else {
-                  textMsg = signupConfig.postCodeStep.reminder
-                }
-
-                return textMsg
-              })()}
-            </div>
+            <PostcodeStepMessage
+              deliveryDaysError={deliveryDaysError}
+              isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+            />
           </div>
         </div>
       </div>
@@ -105,6 +99,7 @@ PostcodeStep.propTypes = {
   changePostcode: PropTypes.func,
   nextStepName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isSocialBelongingEnabled: PropTypes.bool,
+  isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
 PostcodeStep.defaultProps = {
@@ -115,6 +110,7 @@ PostcodeStep.defaultProps = {
   changePostcode: () => {},
   nextStepName: '',
   isSocialBelongingEnabled: false,
+  isGoustoOnDemandEnabled: false,
 }
 
 export { PostcodeStep }

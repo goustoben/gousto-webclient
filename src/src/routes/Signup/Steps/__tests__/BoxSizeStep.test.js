@@ -25,12 +25,12 @@ describe('given the user is at the Box Size Step', () => {
     expect(wrapper.find('.subtitle').exists()).toBeTruthy()
     expect(wrapper.find('.boxSizeCarousel').exists()).toBeTruthy()
     expect(wrapper.find('.carouselItem')).toHaveLength(2)
-    expect(wrapper.find('Connect(Button)')).toHaveLength(2)
+    expect(wrapper.find('PrimaryButton')).toHaveLength(2)
   })
 
   describe('when the user chooses the box size', () => {
     beforeEach(() => {
-      wrapper.find('Connect(Button)').at(0).simulate('click')
+      wrapper.find('PrimaryButton').at(0).prop('onPrimaryButtonClick')(2)
     })
 
     test('then proper amount of portions are set correctly', () => {
