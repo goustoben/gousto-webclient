@@ -60,7 +60,7 @@ const baseConfig = {
       path.resolve('./libs/goustouicomponents/src'),
       path.resolve('./node_modules'),
     ],
-    extensions: ['.js', '.json', '.css', '.scss'],
+    extensions: ['.js', '.json', '.css', '.scss', '.ts', '.tsx'],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],

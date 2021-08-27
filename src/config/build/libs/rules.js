@@ -25,26 +25,27 @@ const cssDevelopmentRules = [
 ]
 
 const javascriptProductionRule = {
-  test: /\.js$/,
+  test: /\.(js|ts|tsx)$/,
   exclude: /node_modules/,
   use: [
       {
-          // loader: 'babel-loader',
           loader: 'ts-loader',
-          options: {}  
+          options: {
+            transpileOnly: true
+          }  
       }
   ],
   include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
 }
 
 const javascriptDevelopmentRule = {
-  test: /\.js$/,
+  test: /\.(js|ts|tsx)$/,
   exclude: /node_modules/,
   use: [
       {
-          // loader: 'babel-loader',
           loader: 'ts-loader',
           options: {
+            transpileOnly: true            
           }
       }
   ],
@@ -52,16 +53,16 @@ const javascriptDevelopmentRule = {
 }
 
 const javascriptDevelopmentRuleWithReactRefresh = {
-  test: /\.js$/,
+  test: /\.(js|ts|tsx)$/,
   exclude: /node_modules/,
   use: [
       {
-          // loader: 'babel-loader',
           loader: 'ts-loader',
           options: {
-            plugins: [
-              require.resolve('react-refresh/babel'),
-            ].filter(Boolean),                  
+            transpileOnly: true
+            // plugins: [
+            //   require.resolve('react-refresh/babel'),
+            // ].filter(Boolean),                  
           }
       }
   ],

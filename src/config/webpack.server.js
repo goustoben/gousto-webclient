@@ -24,7 +24,6 @@ const config = {
   context: path.resolve(__dirname, '..'),
   target: 'node',
   entry: [
-    'babel-polyfill',
     './server/main.js',
   ],
   output: {
@@ -35,13 +34,11 @@ const config = {
   module: {
     rules: [
       {
-        test: /^(?!.*(test\.(t|j)s|spec\.js)).*\.(t|j)s$/,
-        // test: /\.(t|j)sx?$/
+        test: /^(?!.*(test\.(t|j)s|spec\.js)).*\.(tsx|ts|js)$/,
         exclude: /node_modules/,
-        // loader: 'babel-loader',
-        loader: 'ts-loader?module=es6',
+        loader: 'ts-loader',
         options: {
-          // cacheDirectory: true,
+          transpileOnly: true
         },
         include: [
           path.resolve(__dirname, '../src'),
@@ -115,7 +112,7 @@ const config = {
       path.resolve('./libs/goustouicomponents/src'),
       path.resolve(__dirname, '../node_modules/spinkit'),
     ],
-    extensions: ['.js', '.json', '.css'],
+    extensions: ['.js', '.json', '.css', '.ts', '.tsx'],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
