@@ -2,7 +2,7 @@
   "compilerOptions":{
      "target":"es6",
      "module": "es6",
-     "moduleResolution": "classic",
+     "moduleResolution": "node",
      "jsx": "react",
      "checkJs": false,
      "baseUrl":"./",
@@ -37,9 +37,12 @@
          "fixtures": ["../tests/regression/fixtures"],
      }
   },
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.js"],
   "exclude":[
      "node_modules",
      "dist",
-     "public"
-  ]
+     "public",
+     "./**/__tests__",
+     "./**/__regression__",
+  ],
 }

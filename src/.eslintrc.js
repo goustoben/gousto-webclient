@@ -38,6 +38,7 @@ module.exports = {
       // },
       node: {
         paths: ['.'],
+        extensions: ['.js', '.css', '.ts', '.tsx']
       },
       "alias": {
         map: [
@@ -53,7 +54,7 @@ module.exports = {
           ...srcFileAliases,
           ...componentFileAliases,
         ],
-        extensions: ['.js', '.css']
+        extensions: ['.js', '.css', '.ts', '.tsx']
       }
     }
   },
@@ -95,7 +96,16 @@ module.exports = {
       //beginning of gousto extended warnings
       "import/no-unresolved": 2,
       "import/named": 2,
-      "import/extensions": 2,
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "jsx": "never",
+          "ts": "never",
+          "tsx": "never"
+        }
+     ],
       "import/namespace": 2,
       "no-undef": 2,
       "import/no-default-export" : 1,
