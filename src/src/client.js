@@ -20,6 +20,7 @@ import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
 import { getIsAuthenticated } from 'selectors/auth'
 import { configureStore } from './store'
+import { Foo } from './Foo'
 
 if (__ENV__ !== 'production') {
   // eslint-disable-next-line global-require
@@ -59,11 +60,14 @@ window.docReady(() => {
 
   if (reactRootDOM && !(initialState.serverError && initialState.serverError === '500')) {
     ReactDOM.render(
-      <AppContainer
-        history={history}
-        routes={routes(store)}
-        store={store}
-      />,
+      <>
+        <Foo />
+        <AppContainer
+          history={history}
+          routes={routes(store)}
+          store={store}
+        />
+      </>,
       reactRootDOM
     )
   } else {
