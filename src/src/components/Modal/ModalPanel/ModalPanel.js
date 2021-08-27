@@ -89,7 +89,7 @@ class ModalPanel extends React.Component {
           {this.renderBackButton()}
           {showCloseButton && (
             <div
-              className={css.rightControl}
+              className={css.modalCloseButton}
               role="button"
               tabIndex="0"
               onClick={closeModal}
@@ -97,7 +97,7 @@ class ModalPanel extends React.Component {
               data-testing="modalClose"
               data-testid="modalClose"
             >
-              <span className={css.close} />
+              <span role="img" aria-label="Close Icon" className={css.modalCloseIcon} />
             </div>
           )}
           {children}

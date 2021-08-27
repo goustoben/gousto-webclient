@@ -2,6 +2,7 @@
 @value sizeXL from 'styles/typography.css';
 @value ScreenXSMax from 'styles/screenSizes.css';
 @value SpacingMD, SpacingXXL from 'sass-loader!styles/spacing.scss';
+@value ModalTop from 'styles/z-index.module.css';
 
 .modalOverlay {
 	position: fixed;
@@ -56,9 +57,22 @@
 	left: SpacingMD;
 }
 
-.rightControl {
+.modalCloseButton {
 	composes: controlContainer;
 	right: SpacingMD;
+	position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: ModalTop;
+    border: none;
+    line-height: 0;
+    padding: 9px;
+	background: White;
+    cursor: pointer;
+
+	&:focus {
+		outline: none;
+	}	
 }
 
 .icon {
@@ -68,12 +82,16 @@
 	cursor: pointer;
 }
 
-.close {
-	composes: icon;
-	composes: fa-basic-class fa-times from 'styles/vendor/font-awesome-module.css';
-}
-
 .back {
 	composes: icon;
 	composes: fa-basic-class fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+}
+
+.modalCloseIcon {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background-image: url("design-language/media/icon-X.svg");
+	background-position: center;
+	background-repeat: no-repeat;
 }
