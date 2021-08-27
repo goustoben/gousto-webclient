@@ -15,8 +15,8 @@ const baseConfig = {
   context: path.resolve(__dirname, '..'),
   devtool: false,
   entry: {
-    main: ['babel-polyfill', './src/client.js'],
-    legacy: ['babel-polyfill', './src/legacy.js'],
+    main: ['./src/client.js'],
+    // legacy: ['./src/legacy.js'],
   },
   mode: 'production',
   module: {
@@ -65,22 +65,22 @@ const baseConfig = {
   resolveLoader: {
     moduleExtensions: ['-loader'],
   },
-  stats: {
-    assets: false,
-    children: false,
-    chunks: false,
-    errorDetails: true,
-    errors: true,
-    hash: true,
-    modules: false,
-    performance: true,
-    publicPath: true,
-    reasons: false,
-    source: false,
-    timings: true,
-    version: true,
-    warnings: false,
-  },
+  // stats: {
+  //   assets: false,
+  //   children: false,
+  //   chunks: false,
+  //   errorDetails: true,
+  //   errors: true,
+  //   hash: true,
+  //   modules: false,
+  //   performance: true,
+  //   publicPath: true,
+  //   reasons: false,
+  //   source: false,
+  //   timings: true,
+  //   version: true,
+  //   warnings: false,
+  // },
   target: 'web',
 }
 
@@ -89,7 +89,7 @@ const addOverridesForDevBuildConfig = (webpackConfig, _clientDevServerEnabled = 
     ...webpackConfig,
     devtool: 'eval-cheap-module-source-map',
     entry: {
-      main: ['babel-polyfill', './src/client.js'],
+      main: './src/client.js',
     },
     mode: 'development',
     output: {

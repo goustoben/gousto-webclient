@@ -35,17 +35,20 @@ const config = {
   module: {
     rules: [
       {
-        test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
+        test: /^(?!.*(test\.(t|j)s|spec\.js)).*\.(t|j)s$/,
+        // test: /\.(t|j)sx?$/
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        // loader: 'babel-loader',
+        loader: 'ts-loader?module=es6',
         options: {
-          cacheDirectory: true,
+          // cacheDirectory: true,
         },
         include: [
           path.resolve(__dirname, '../src'),
           path.resolve(__dirname, '../server'),
           path.resolve(__dirname, '../libs/goustouicomponents/src'),
         ],
+        exclude: [/node_modules/]      
       },
       {
         test: /\.css$/,

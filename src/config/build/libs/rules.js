@@ -29,10 +29,9 @@ const javascriptProductionRule = {
   exclude: /node_modules/,
   use: [
       {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          }  
+          // loader: 'babel-loader',
+          loader: 'ts-loader',
+          options: {}  
       }
   ],
   include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
@@ -43,9 +42,9 @@ const javascriptDevelopmentRule = {
   exclude: /node_modules/,
   use: [
       {
-          loader: 'babel-loader',
+          // loader: 'babel-loader',
+          loader: 'ts-loader',
           options: {
-            cacheDirectory: true,
           }
       }
   ],
@@ -57,9 +56,9 @@ const javascriptDevelopmentRuleWithReactRefresh = {
   exclude: /node_modules/,
   use: [
       {
-          loader: 'babel-loader',
+          // loader: 'babel-loader',
+          loader: 'ts-loader',
           options: {
-            cacheDirectory: true,
             plugins: [
               require.resolve('react-refresh/babel'),
             ].filter(Boolean),                  
