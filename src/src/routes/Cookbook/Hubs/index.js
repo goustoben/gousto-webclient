@@ -1,1 +1,1 @@
-export default from './HubsContainer'
+export { default } from './HubsContainer'

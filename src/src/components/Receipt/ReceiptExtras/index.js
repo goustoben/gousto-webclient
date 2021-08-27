@@ -1,1 +1,1 @@
-export default from './ReceiptExtras'
+export { default } from './ReceiptExtras'

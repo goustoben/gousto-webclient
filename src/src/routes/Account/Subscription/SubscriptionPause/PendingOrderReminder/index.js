@@ -1,1 +1,1 @@
-export default from './PendingOrderReminderContainer'
+export { default } from './PendingOrderReminderContainer'

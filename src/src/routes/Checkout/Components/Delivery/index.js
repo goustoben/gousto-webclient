@@ -1,2 +1,2 @@
-export default from './DeliveryContainer'
+export { default } from './DeliveryContainer'
 export * from './DeliveryContainer'

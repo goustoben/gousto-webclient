@@ -1,1 +1,1 @@
-export default from './OrderCutoff'
+export { default } from './OrderCutoff'
