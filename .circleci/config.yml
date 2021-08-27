@@ -332,37 +332,10 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-      - jest-coverage-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - eslint-generate-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - publish-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - jest-coverage-report
-            - eslint-generate-report
-          filters:
-            branches:
-              only:
-                - /^env-.*/
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-webclient
-            - jest-coverage-report
-            - eslint-generate-report
           filters:
             branches:
               only:
