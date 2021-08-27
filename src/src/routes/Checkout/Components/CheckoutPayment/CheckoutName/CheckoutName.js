@@ -19,6 +19,7 @@ export const CheckoutName = ({ sectionName, receiveRef }) => (
         refId={`${sectionName}.cardName`}
         data-testing="checkoutCardNameInput"
         className={css.nameInput}
+        autoComplete="cc-name"
       />
     </div>
   </FormSection>

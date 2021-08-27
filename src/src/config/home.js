@@ -74,7 +74,7 @@ export const whyGousto = {
       img: QualityImg,
       list: [
         'Fresh ingredients from trusted suppliers',
-        '100% British meat',
+        '100% British fresh meat',
         'All recipes tried, tested and loved by our chefs and customers',
       ]
     },

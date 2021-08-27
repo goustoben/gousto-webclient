@@ -27,7 +27,6 @@ class ReduxFormInput extends React.PureComponent {
 
   static defaultProps = {
     input: {},
-    inputType: 'Input',
     label: '',
     subLabel: '',
     className: '',

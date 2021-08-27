@@ -132,6 +132,7 @@ class AboutYou extends PureComponent {
               name={item.name}
               component={ReduxFormInput}
               inputType={item.inputType}
+              autoComplete={item.autoComplete || 'off'}
               type={item.type || null}
               label={item.label || null}
               mask
@@ -150,25 +151,34 @@ class AboutYou extends PureComponent {
     })
   }
 
+  submitForm = (e) => {
+    if (e) {
+      e.preventDefault()
+    }
+    this.handleSubmit()
+  }
+
   render() {
     const { sectionName, submitting, checkoutValid, passwordValue, passwordErrors } = this.props
     const disableCTA =
       !passwordValue || !checkoutValid || (passwordErrors.length !== 0 && passwordValue)
 
     return (
-      <FormSection name={sectionName}>
-        <div className={checkoutCss.sectionContainer} data-testing="checkoutAboutYouSection">
-          <SectionHeader title="Create account" />
-          {this.renderFields()}
-          <CheckoutButton
-            onClick={this.handleSubmit}
-            submitting={submitting}
-            isDisabled={disableCTA}
-            stepName="Continue to Delivery"
-          />
-        </div>
-        <ErrorMessage />
-      </FormSection>
+      <form id="create-account" onSubmit={this.submitForm} autoComplete="on">
+        <FormSection name={sectionName}>
+          <div className={checkoutCss.sectionContainer} data-testing="checkoutAboutYouSection">
+            <SectionHeader title="Create account" />
+            {this.renderFields()}
+            <CheckoutButton
+              onClick={this.handleSubmit}
+              submitting={submitting}
+              isDisabled={disableCTA}
+              stepName="Continue to Delivery"
+            />
+          </div>
+          <ErrorMessage />
+        </FormSection>
+      </form>
     )
   }
 }

@@ -46,6 +46,7 @@ export const fieldsConfig = ({ loginCTA, sectionName, passState, trackPrivacyPol
       refId: `${sectionName}.email`,
       dataTesting: 'checkoutEmailInput',
       validate: emailValidator,
+      autoComplete: 'username',
     },
     {
       name: 'password',

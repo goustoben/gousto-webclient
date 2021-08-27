@@ -137,6 +137,8 @@ export class Delivery extends React.PureComponent {
                   name="firstName"
                   component={ReduxFormInput}
                   inputType="Input"
+                  autoComplete="given-name"
+                  type="text"
                   label="First name"
                   refId={`${sectionName}.firstName`}
                   dataTesting="checkoutFirstNameInput"
@@ -147,6 +149,8 @@ export class Delivery extends React.PureComponent {
                   name="lastName"
                   component={ReduxFormInput}
                   inputType="Input"
+                  autoComplete="family-name"
+                  type="text"
                   label="Last name"
                   refId={`${sectionName}.lastName`}
                   dataTesting="checkoutLastNameInput"

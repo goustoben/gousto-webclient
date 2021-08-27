@@ -14,7 +14,7 @@ export const DeliveryPhoneNumber = ({ receiveRef, sectionName }) => (
           name="phone"
           component={ReduxFormInput}
           inputType="Input"
-          autocomplete="tel"
+          autoComplete="tel"
           type="tel"
           subLabel="Used to update you on your delivery"
           label="UK phone number"
