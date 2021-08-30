@@ -110,8 +110,7 @@ export const seo = {
   ]
 }
 
-
-export default {
+export const homeConfig = {
   hero,
   subscription,
   CTA,

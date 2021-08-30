@@ -1,7 +1,7 @@
-import regExp from 'validations/regularExpressions'
+import { regularExpressions } from 'validations/regularExpressions'
 
 describe('validations/regularExpressions', () => {
-  const regex = regExp.name
+  const regex = regularExpressions.name
 
   test('should pass validation', () => {
     expect(regex.test('gfgf ghgh ń gñç')).toEqual(true)

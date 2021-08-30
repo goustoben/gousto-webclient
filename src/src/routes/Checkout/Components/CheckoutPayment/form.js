@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { addPrefix } from 'validations/util'
-import addressRules from 'validations/address'
+import { addressRules } from 'validations/address'
 import { validationRules } from 'validations/card-checkout'
 
 export const getValidationRules = (sectionName) => (formValues) => {

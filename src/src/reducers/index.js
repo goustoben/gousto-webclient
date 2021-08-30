@@ -6,7 +6,7 @@ import auth from './auth'
 import basket from './basket'
 import { boxPrices } from './boxPrices'
 import boxSummary from './boxSummary'
-import checkout from './checkout'
+import { checkoutReducers } from './checkout'
 import content from './content'
 import { cookbookRecipes } from './cookbookRecipes'
 import features from './features'
@@ -54,7 +54,7 @@ const reducers = {
   ...boxPrices,
   ...boxSummary,
   brand,
-  ...checkout,
+  ...checkoutReducers,
   ...checkoutUrgencyReducers,
   ...collections,
   ...cookbook,

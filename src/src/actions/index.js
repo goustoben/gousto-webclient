@@ -1,6 +1,6 @@
 import auth from './auth'
 import basket from './basket'
-import checkout from './checkout'
+import { checkoutActions } from './checkout'
 import content from './content'
 import filters from './filters'
 import * as log from './log'
@@ -12,7 +12,7 @@ import * as onScreenRecovery from './onScreenRecovery'
 import page from './page'
 import persist from './persist'
 import products from './products'
-import promos from './promos'
+import { promoActions } from './promos'
 import pricing from './pricing'
 import recipes from './recipes'
 import redirectActions from './redirect'
@@ -33,7 +33,7 @@ import { boxPricesActions } from './boxPrices'
 const actions = {
   ...auth,
   ...basket,
-  ...checkout,
+  ...checkoutActions,
   ...collectionsLoadCollectionBySlug,
   ...cookbook,
   ...content,
@@ -47,7 +47,7 @@ const actions = {
   ...page,
   ...persist,
   ...products,
-  ...promos,
+  ...promoActions,
   ...pricing,
   ...recipes,
   ...redirectActions,

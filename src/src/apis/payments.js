@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 
 const PAYMENTS_API = `${endpoint('payments')}/payments`

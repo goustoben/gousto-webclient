@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component, createRef } from 'react'
 import classNames from 'classnames'
-import home from 'config/home'
+import { homeConfig } from 'config/home'
 import { Heading } from 'goustouicomponents'
 import { CTAHomepageContainer } from '../CTA'
 import { Benefits } from '../Benefits'
@@ -77,7 +77,7 @@ class Hero extends Component {
           sectionForTracking={isHeroCTA ? 'hero' : 'stickyCTA'}
           dataTesting={isHeroCTA ? 'homepageHeroCTA' : 'stickyCTA'}
         >
-          {isSticky && !isHeroCTA && !isAuthenticated ? home.CTA.stickyCTA : ctaText}
+          {isSticky && !isHeroCTA && !isAuthenticated ? homeConfig.CTA.stickyCTA : ctaText}
         </CTAHomepageContainer>
         <Benefits isHomepageFreeDeliveryEnabled={isHomepageFreeDeliveryEnabled} />
       </div>
@@ -92,12 +92,12 @@ class Hero extends Component {
         <div className={css.textContainer}>
           <div className={css.title}>
             <Heading type="h1" size="fontStyle4XL" hasMargin={false}>
-              {home.hero.header}
+              {homeConfig.hero.header}
             </Heading>
           </div>
           <div className={css.subTitle}>
             <Heading type="h2" size="fontStyleL" hasMargin={false}>
-              {home.hero.subheader}
+              {homeConfig.hero.subheader}
             </Heading>
           </div>
           {this.renderGetStarted(true)}

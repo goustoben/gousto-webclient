@@ -40,7 +40,7 @@ const connectComponent = (sectionName) =>
     trackUTMAndPromoCode,
   })(Delivery)
 
-export default (sectionName) => connectComponent(sectionName)
+export const DeliveryContainer = (sectionName) => connectComponent(sectionName)
 
 export function validationMessages(sectionName) {
   return {

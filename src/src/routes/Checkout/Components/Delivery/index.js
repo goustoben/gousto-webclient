@@ -1,2 +1,1 @@
-export default from './DeliveryContainer'
-export * from './DeliveryContainer'
+export { DeliveryContainer, validationMessages, addInitialValues } from './DeliveryContainer'

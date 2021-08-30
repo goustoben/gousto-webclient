@@ -1,1 +1,1 @@
-export default from './CheckoutLayoutContainer'
+export { CheckoutLayout } from './CheckoutLayout'

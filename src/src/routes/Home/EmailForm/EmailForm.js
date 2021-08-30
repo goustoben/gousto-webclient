@@ -5,7 +5,7 @@ import { CTA } from 'goustouicomponents'
 import Form from 'Form'
 import { validateEmail } from 'utils/auth'
 import { newsletterSubscribe } from 'apis/customers'
-import config from 'config/home'
+import { homeConfig } from 'config/home'
 import css from './EmailForm.css'
 
 class EmailForm extends React.PureComponent {
@@ -41,11 +41,11 @@ class EmailForm extends React.PureComponent {
           this.setState({ emailSubmitted: true })
           this.setState({ errorMessage: '' })
         } else {
-          this.setState({ errorMessage: config.emailForm.serverError })
+          this.setState({ errorMessage: homeConfig.emailForm.serverError })
         }
       }
     } else {
-      this.setState({ errorMessage: config.emailForm.emailRequired })
+      this.setState({ errorMessage: homeConfig.emailForm.emailRequired })
     }
   }
 
@@ -62,7 +62,7 @@ class EmailForm extends React.PureComponent {
           <div>
             {emailSubmitted ? (
               <P className={`${css.text} ${css.mt05}`}>
-                <span>{config.emailForm.success}</span>
+                <span>{homeConfig.emailForm.success}</span>
               </P>
             ) : (
               <div>

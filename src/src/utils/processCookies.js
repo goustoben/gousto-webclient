@@ -4,7 +4,7 @@ import { appBannerDismiss } from 'actions/appBanner'
 import basketActions, { basketSetNumRecipes } from 'actions/basket'
 import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
-import promoActions from 'actions/promos'
+import { promoAgeVerify } from 'actions/promos'
 import authActions from 'actions/auth'
 import { cookiePolicyAcceptanceChange } from 'actions/cookies'
 import { setAffiliateSource } from 'actions/tracking'
@@ -113,7 +113,7 @@ const processCookies = (cookies, store) => {
   if (promoAgeVerified) {
     try {
       const verified = JSON.parse(promoAgeVerified)
-      store.dispatch(promoActions.promoAgeVerify(verified))
+      store.dispatch(promoAgeVerify(verified))
     } catch (e) {
       // do nothing
     }

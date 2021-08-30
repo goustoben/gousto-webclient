@@ -1,6 +1,4 @@
-import regExp from './regularExpressions'
-
-export default {
+export const ruleMessages = {
   isEmail: 'Please provide a valid email address',
   isLength: (field, { min, max }) => {
     let error = ''
@@ -14,19 +12,5 @@ export default {
 
     return error
   },
-  matches: (field, options) => {
-    let message
-    switch (options) {
-    case regExp.latin:
-      message = 'Please use only letters (a-z) and European special characters.'
-      break
-    case regExp.name:
-      message = 'Please use only letters (a-z), hyphens (-), apostrophes (\' and ‘) and European special characters.'
-      break
-    default:
-      message = 'Oops, this isn\'t a valid format, please double-check and try again.'
-    }
-
-    return message
-  },
+  matches: () => 'Please use only letters (a-z), hyphens (-), apostrophes (\' and ‘) and European special characters.',
 }

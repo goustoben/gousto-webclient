@@ -1,6 +1,6 @@
 import { addPrefix } from 'validations/util'
-import addressRules from 'validations/address'
-import regExp from './regularExpressions'
+import { addressRules } from 'validations/address'
+import { regularExpressions } from './regularExpressions'
 
 const rules = {
   firstName: {
@@ -8,7 +8,7 @@ const rules = {
     rules: [
       { name: 'isLength', options: { min: 1 } },
       { name: 'isLength', options: { max: 50 } },
-      { name: 'matches', options: regExp.name },
+      { name: 'matches', options: regularExpressions.name },
     ],
   },
   lastName: {
@@ -16,7 +16,7 @@ const rules = {
     rules: [
       { name: 'isLength', options: { min: 1 } },
       { name: 'isLength', options: { max: 50 } },
-      { name: 'matches', options: regExp.name },
+      { name: 'matches', options: regularExpressions.name },
     ],
   },
   deliveryInstruction: {
@@ -76,7 +76,7 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery') => {
  * @param formSectionName
  * @returns {{}}
  */
-export default formSectionName => (formValues) => {
+export const deliveryValidations = formSectionName => (formValues) => {
   const combinedRulesWithPrefix = addPrefix(formSectionName, {
     ...rules,
     ...deliveryExtraRules(formValues, formSectionName),

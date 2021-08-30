@@ -1,5 +1,5 @@
 import pricing from 'actions/pricing'
-import promoActions from 'actions/promos'
+import { promoActions } from 'actions/promos'
 import { trackPromocodeChange } from 'actions/checkout'
 
 const { promoApplyCheckoutCode } = promoActions

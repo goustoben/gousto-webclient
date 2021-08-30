@@ -4,8 +4,8 @@ import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 import userActions from './user'
-import pricingActions from './pricing'
-import productActions from './products'
+import { pricingRequest } from './pricing'
+import { productsLoadProductsById } from './products'
 import { trackPromocodeChange } from './checkout'
 import { trackUTMAndPromoCode } from './tracking'
 import { signupSetGoustoOnDemandEnabled } from './signup'
@@ -58,7 +58,7 @@ export const promoGet = code => (
       const productIds = promo.addGiftOrderRules
         .filter(rule => rule.type === 'Product')
         .map(rule => rule.id)
-      await dispatch(productActions.productsLoadProductsById(productIds))
+      await dispatch(productsLoadProductsById(productIds))
 
       const state = getState()
       const ageRestricted = productIds
@@ -171,7 +171,7 @@ const promoCloseModal = () => (
   }
 )
 
-const promoApply = () => (
+export const promoApply = () => (
   async (dispatch, getState) => {
     const state = getState()
 
@@ -212,7 +212,7 @@ const promoApplyCheckoutCode = () => (
 
     try {
       dispatch(basketPromoCodeChange(promoCode))
-      dispatch(pricingActions.pricingRequest())
+      dispatch(pricingRequest())
       dispatch(basketPromoCodeAppliedChange(true))
       dispatch(trackPromocodeChange(promoCode, true))
     } catch (e) {
@@ -221,7 +221,7 @@ const promoApplyCheckoutCode = () => (
   }
 )
 
-const promoAgeVerify = ageVerified => ({
+export const promoAgeVerify = ageVerified => ({
   type: actionTypes.PROMO_AGE_VERIFY,
   ageVerified,
 })
@@ -236,7 +236,7 @@ export const promoResetGoustoOnDemandFlow = () => (
   }
 )
 
-const promoActions = {
+export const promoActions = {
   promoChange,
   promoApply,
   promoCloseModal,
@@ -247,4 +247,8 @@ const promoActions = {
   promoApplyCheckoutCode
 }
 
+// src/src/legacy.js file uses the default export, and I'd rather not change
+// it.
+
+// eslint-disable-next-line import/no-default-export
 export default promoActions

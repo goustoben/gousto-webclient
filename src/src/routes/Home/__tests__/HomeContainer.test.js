@@ -1,18 +1,19 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import { getKnownVariant } from 'routes/Home/HomeContainer'
-import { HomeContainer } from '../HomeContainer'
+import { HomeContainer, getKnownVariant } from '../HomeContainer'
 
 jest.mock('config/home', () => ({
-  defaultVariant: 'default',
+  homeConfig: {
+    whyGousto: {
+      steps: [],
+    },
+    CTA: {
+      text: 'cta',
+    },
+  },
   knownVariants: ['default', 'test'],
-  whyGousto: {
-    steps: [],
-  },
-  CTA: {
-    text: 'cta',
-  },
+  defaultVariant: 'default',
 }))
 
 describe('HomeContainer', () => {

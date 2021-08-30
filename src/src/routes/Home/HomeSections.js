@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import homeConfig from 'config/home'
+import { homeConfig } from 'config/home'
 import routesConfig from 'config/routes'
 import { Hero } from './Hero'
 import { Carousel } from './Carousel'

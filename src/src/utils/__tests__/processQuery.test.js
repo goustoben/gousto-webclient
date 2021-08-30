@@ -3,7 +3,7 @@ import processQuery from 'utils/processQuery'
 import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
-import promosActions, { promoChange, promoToggleModalVisibility } from 'actions/promos'
+import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { setAffiliateSource } from 'actions/tracking'
 
 jest.mock('actions/signup',() => ({
@@ -95,8 +95,6 @@ describe('Given processQuery util function', () => {
 
   describe('When there are no errors', () => {
     describe('And noPromoModal parameter exists', () => {
-      const spyOnPromoApply = jest.spyOn(promosActions, 'promoApply')
-
       beforeEach(() => {
         query = {
           promo_code: 'DTI-PROMO-CODE',
@@ -106,7 +104,7 @@ describe('Given processQuery util function', () => {
       })
 
       test('Then should dispatch promoApply', () => {
-        expect(spyOnPromoApply).toBeCalled()
+        expect(promoApply).toBeCalled()
       })
     })
 

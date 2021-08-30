@@ -53,7 +53,7 @@ const checkoutInitialState = Immutable.fromJS({
   }
 })
 
-const checkout = {
+export const checkoutReducers = {
   checkout: (state, action) => {
     if (!state) {
       return checkoutInitialState
@@ -101,7 +101,8 @@ const checkout = {
     }
 
     case actionTypes.ERROR: {
-      if (action.hasOwnProperty('key') && action.hasOwnProperty('value')) {
+      if (Object.prototype.hasOwnProperty.call(action, 'key')
+          && Object.prototype.hasOwnProperty.call(action, 'value')) {
         if (errorsToCapture.indexOf(action.key) !== -1) {
           let { value } = action
 
@@ -146,5 +147,3 @@ const checkout = {
     }
   },
 }
-
-export default checkout

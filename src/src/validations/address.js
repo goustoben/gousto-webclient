@@ -108,7 +108,7 @@ const rules = {
  * @param formSectionName
  * @returns {{}}
  */
-export default formSectionName => () => (
+export const addressRules = formSectionName => () => (
   addPrefix(formSectionName, {
     ...rules
   })

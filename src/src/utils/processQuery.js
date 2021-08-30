@@ -1,6 +1,6 @@
 import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
-import promosActions, { promoChange, promoToggleModalVisibility } from 'actions/promos'
+import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { setAffiliateSource } from 'actions/tracking'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { getIsAuthenticated } from 'selectors/auth'
@@ -30,7 +30,7 @@ async function processQuery(query, store, { hashTag = '', }) {
     }
     if (!error) {
       if (query.noPromoModal === 'true') {
-        store.dispatch(promosActions.promoApply())
+        store.dispatch(promoApply())
       } else {
         const isOfNoLoginHashTag = hashTag.indexOf('login') === -1
         const isAuthenticated = getIsAuthenticated(store.getState())

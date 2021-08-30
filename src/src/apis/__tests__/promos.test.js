@@ -1,14 +1,15 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { fetchPromo, fetchPromocodeFromCampaignUrl } from '../promos'
 
 const mockFetchResult = { data: [1, 2, 3] }
-jest.mock('utils/fetch', () =>
-  jest.fn().mockImplementation(() => {
+
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockImplementation(() => {
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
   })
-)
+}))
 
 jest.mock('config/endpoint', () =>
   jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)

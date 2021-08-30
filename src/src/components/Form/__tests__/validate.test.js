@@ -1,10 +1,7 @@
-import sinon from 'sinon'
-
 import validate from 'Form/validate'
-const ruleMessages = require('validations/ruleMessages')
+import { regularExpressions } from 'validations/regularExpressions'
 
 describe('validate', () => {
-  let sandbox
   const rules = {
     email: {
       field: 'email',
@@ -14,8 +11,9 @@ describe('validate', () => {
     firstName: {
       field: 'first name',
       rules: [
-        { name: 'isLength', options: { min: 5 } },
+        { name: 'isLength', options: { min: 1 } },
         { name: 'isLength', options: { max: 20 } },
+        { name: 'matches', options: regularExpressions.name },
       ],
     },
     'deliveryAddress.postcode': {
@@ -26,29 +24,6 @@ describe('validate', () => {
       ],
     },
   }
-
-  beforeEach(() => {
-    sandbox = sinon.sandbox.create()
-    sandbox.stub(ruleMessages, 'default', {
-      isEmail: 'Please provide a valid email address',
-      isLength: (field, { min, max }) => {
-        let error = ''
-        if (min === 1) {
-          error = `${field} is required`
-        } else if (min > 1) {
-          error = `${field} needs to be at least ${min} characters`
-        } else {
-          error = `${field} needs to be under ${max} characters`
-        }
-
-        return error
-      },
-    })
-  })
-
-  afterEach(() => {
-    sandbox.restore()
-  })
 
   test('should not return an error if data is valid', () => {
     const data = {
@@ -73,7 +48,7 @@ describe('validate', () => {
     }
     expect(validate(rules, data)).toEqual({
       deliveryAddress: {
-        postcode: 'postcode needs to be at least 5 characters',
+        postcode: 'postcode must be at least 5 characters',
       },
     })
   })
@@ -84,11 +59,11 @@ describe('validate', () => {
         postcode: 'W37UP',
       },
       email: 'test@test.com',
-      firstName: 'shrt',
+      firstName: '',
       lastName: 'not-tested',
     }
     expect(validate(rules, data)).toEqual({
-      firstName: 'first name needs to be at least 5 characters',
+      firstName: 'first name is required',
     })
   })
 
@@ -102,7 +77,7 @@ describe('validate', () => {
       lastName: 'not-tested',
     }
     expect(validate(rules, data)).toEqual({
-      firstName: 'first name needs to be under 20 characters',
+      firstName: 'first name must be under 20 characters',
     })
   })
 
@@ -116,9 +91,23 @@ describe('validate', () => {
       lastName: 'not-tested',
     }
     expect(validate(rules, data)).toEqual({
-      deliveryAddress: { postcode: 'postcode needs to be under 8 characters' },
+      deliveryAddress: { postcode: 'postcode must be under 8 characters' },
       email: 'Please provide a valid email address',
-      firstName: 'first name needs to be under 20 characters',
+      firstName: 'first name must be under 20 characters',
+    })
+  })
+
+  test('should return correct error message for name regexp validation', () => {
+    const data = {
+      deliveryAddress: {
+        postcode: 'W37UP',
+      },
+      email: 'test@test.com',
+      firstName: 'gQ££@^£%',
+      lastName: 'not-tested',
+    }
+    expect(validate(rules, data)).toEqual({
+      firstName: "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters.",
     })
   })
 })

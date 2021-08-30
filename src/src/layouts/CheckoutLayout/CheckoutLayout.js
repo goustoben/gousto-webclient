@@ -4,7 +4,7 @@ import { Header } from 'Header'
 import Helmet from 'react-helmet'
 import css from './CheckoutLayout.css'
 
-class CheckoutLayout extends React.PureComponent {
+export class CheckoutLayout extends React.PureComponent {
   render() {
     const { children } = this.props
 
@@ -35,5 +35,3 @@ class CheckoutLayout extends React.PureComponent {
 CheckoutLayout.propTypes = {
   children: PropTypes.node.isRequired,
 }
-
-export default CheckoutLayout

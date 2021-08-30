@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import {
   authPayment,
   checkPayment,
@@ -58,8 +58,8 @@ const mock3dsCompliantTokenResponse = {
   }
 }
 
-jest.mock('utils/fetch', () => (
-  jest.fn().mockImplementation( (token, url) => {
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockImplementation( (token, url) => {
     const getData = async () => {
       if (url.indexOf('/token') >= 0) {
         return mockPayPalTokenResponse
@@ -78,7 +78,7 @@ jest.mock('utils/fetch', () => (
 
     return getData()
   })
-))
+}))
 
 describe('Payments API', () => {
   const expectedHeaders = { 'Content-Type': 'application/json'}

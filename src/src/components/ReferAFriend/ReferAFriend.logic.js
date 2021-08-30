@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import config from 'config/home'
+import { homeConfig } from 'config/home'
 import { validateEmail } from 'utils/auth'
 import { actionTypes } from 'actions/actionTypes'
 import { isSecretPingdomEmail } from 'utils/recaptcha'
@@ -81,7 +81,7 @@ class ReferAFriend extends PureComponent {
     const { isEmailValid } = this.state
 
     if (!isEmailValid) {
-      this.setState({ errorMessage: config.emailForm.emailRequired })
+      this.setState({ errorMessage: homeConfig.emailForm.emailRequired })
     } else if (this.captchaNeedsExecuting()) {
       this.recaptchaElement.execute()
     } else {

@@ -1,4 +1,4 @@
-import formSectionName from 'validations/delivery'
+import { deliveryValidations } from 'validations/delivery'
 
 const formValues = {
   delivery: {
@@ -22,12 +22,12 @@ function getRules() {
   }
 }
 
-describe('When formSectionName is called', () => {
+describe('When deliveryValidations is called', () => {
   let output
 
   describe('And formValues is {}', () => {
     beforeEach(() => {
-      output = formSectionName({})
+      output = deliveryValidations({})
     })
 
     test('Then validation rules should not have delivery.deliveryInstructionsCustom', () => {
@@ -37,7 +37,7 @@ describe('When formSectionName is called', () => {
 
   describe('And addressType is equal to "other"', () => {
     beforeEach(() => {
-      output = formSectionName('delivery')(formValues.customAddressType)
+      output = deliveryValidations('delivery')(formValues.customAddressType)
     })
 
     test('Then validation rules should have customAddressType rules', () => {
@@ -47,7 +47,7 @@ describe('When formSectionName is called', () => {
 
   describe('And formValues includes deliveryInstruction', () => {
     beforeEach(() => {
-      output = formSectionName('delivery')(formValues)
+      output = deliveryValidations('delivery')(formValues)
     })
 
     test('Then delivery.deliveryInstructionsCustom should have expected rules', () => {
@@ -65,7 +65,7 @@ describe('When formSectionName is called', () => {
     }
 
     beforeEach(() => {
-      output = formSectionName('delivery')(values)
+      output = deliveryValidations('delivery')(values)
     })
 
     test('Then delivery.phone and delivery.deliveryInstruction should have expected rules', () => {

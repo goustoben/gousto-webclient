@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import delivery from 'validations/delivery'
+import { deliveryValidations } from 'validations/delivery'
 import { formContainer } from '../../Components/formContainer'
-import DeliveryContainer, { addInitialValues, validationMessages } from '../../Components/Delivery'
+import { DeliveryContainer, addInitialValues, validationMessages } from '../../Components/Delivery'
 
 const sectionName = 'delivery'
 
@@ -29,7 +29,7 @@ DeliveryStep.defaultProps = {
 
 const DeliveryYouForm = formContainer(
   DeliveryStep,
-  delivery(sectionName),
+  deliveryValidations(sectionName),
   sectionName,
   validationMessages(sectionName)
 ) // eslint-disable-line import/no-mutable-exports

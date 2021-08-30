@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import home from 'config/home'
+import { homeConfig } from 'config/home'
 import { StepsGuide } from './StepsGuide'
 import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
@@ -20,7 +20,7 @@ const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
 
   return (
     <div className={css.whyGoustoContainer}>
-      <ModuleTitle title={home.whyGousto.title} subTitle={subtitle} />
+      <ModuleTitle title={homeConfig.whyGousto.title} subTitle={subtitle} />
       <StepsGuide />
       <div className={css.CTAContainer}>
         <CTAHomepageContainer ctaUri={ctaUri} sectionForTracking="whyChooseGousto">

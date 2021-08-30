@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import checkoutReducer from '../checkout'
+import { checkoutReducers } from '../checkout'
 
 describe('checkout reducer', () => {
   describe('given CHECKOUT_ERRORS_CLEAR action type', () => {
@@ -18,7 +18,7 @@ describe('checkout reducer', () => {
     })
 
     test('should reset errors', () => {
-      const result = checkoutReducer.checkout(initialState, action)
+      const result = checkoutReducers.checkout(initialState, action)
       const errors = result.get('errors').toJS()
 
       expect(errors).toEqual({})
@@ -40,7 +40,7 @@ describe('checkout reducer', () => {
     })
 
     test('should reset PayPal errors', () => {
-      const result = checkoutReducer.checkout(initialState, action)
+      const result = checkoutReducers.checkout(initialState, action)
       const errors = result.get('paypalErrors').toJS()
 
       expect(errors).toEqual({})
@@ -58,7 +58,7 @@ describe('checkout reducer', () => {
         goustoRef: null
       })
 
-      const result = checkoutReducer.checkout(initialState, action)
+      const result = checkoutReducers.checkout(initialState, action)
       expect(
         Immutable.is(
           result,
@@ -82,7 +82,7 @@ describe('checkout reducer', () => {
         }
       })
 
-      const result = checkoutReducer.checkout(state, action)
+      const result = checkoutReducers.checkout(state, action)
       const errors = result.get('errors').toJS()
 
       expect(errors).toEqual({})
@@ -100,7 +100,7 @@ describe('checkout reducer', () => {
         },
       })
 
-      const result = checkoutReducer.checkout(initialState, action)
+      const result = checkoutReducers.checkout(initialState, action)
       const errors = result.get('paypalErrors').toJS()
 
       expect(errors).toEqual({})
@@ -119,7 +119,7 @@ describe('checkout reducer', () => {
 
     describe('when the step is further than the lastReachedStepIndex', () => {
       test('then it should update the lastReachedStepIndex', () => {
-        const nextState = checkoutReducer.checkout(state, action)
+        const nextState = checkoutReducers.checkout(state, action)
         expect(nextState.get('lastReachedStepIndex')).toBe(2)
       })
     })
@@ -133,7 +133,7 @@ describe('checkout reducer', () => {
       })
 
       test('then it should not update the lastReachedStepIndex', () => {
-        const nextState = checkoutReducer.checkout(state, action)
+        const nextState = checkoutReducers.checkout(state, action)
         expect(nextState.get('lastReachedStepIndex')).toBe(1)
       })
     })
@@ -156,7 +156,7 @@ describe('checkout reducer', () => {
 
     describe('when validation rules are set', () => {
       test('then it should update errors and password value', () => {
-        const nextState = checkoutReducer.checkout(state, action)
+        const nextState = checkoutReducers.checkout(state, action)
         expect(nextState.getIn(['passwordInfo', 'errorCodes'])).toHaveLength(0)
         expect(nextState.getIn(['passwordInfo', 'value'])).toBe(password)
       })

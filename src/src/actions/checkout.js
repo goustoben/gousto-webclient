@@ -63,7 +63,7 @@ export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
 const { pending, error } = statusActions
 
 /* eslint-disable no-use-before-define */
-const checkoutActions = {
+export const checkoutActions = {
   checkoutClearErrors,
   checkoutCreatePreviewOrder,
   checkoutPostSignup,
@@ -701,5 +701,3 @@ export const sendRequestToUpdateOrderSummaryPrices = () => async (dispatch, getS
     await dispatch(pricingRequest())
   }
 }
-
-export default checkoutActions

@@ -20,7 +20,8 @@ import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliver
 import { basketResetPersistent } from 'utils/basket'
 import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 
-import checkoutActions, {
+import {
+  checkoutActions,
   trackPurchase,
   checkoutNon3DSSignup,
   checkout3DSSignup,

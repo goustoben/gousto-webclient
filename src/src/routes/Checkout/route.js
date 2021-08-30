@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router'
-import CheckoutLayout from 'layouts/CheckoutLayout'
+import { CheckoutLayout } from 'layouts/CheckoutLayout'
 import config from 'config/routes'
 import { checkGuest } from 'utils/routes'
 import { CheckoutContainer } from './CheckoutContainer'
