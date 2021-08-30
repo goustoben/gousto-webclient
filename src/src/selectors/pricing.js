@@ -39,3 +39,5 @@ export const arePricesLoaded = ({pricing}) => pricing.get('prices').size > 0
 export const getTotalDiscount = ({ pricing }) => pricing.getIn(['prices', 'totalDiscount'])
 
 export const getPricingPromoCode = ({ pricing }) => pricing.getIn(['prices', 'promoCode'])
+
+export const getPricingTotalAmount = ({ pricing }) => pricing.getIn(['prices', 'total'])

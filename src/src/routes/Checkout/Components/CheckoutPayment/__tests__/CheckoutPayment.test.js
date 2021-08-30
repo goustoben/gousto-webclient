@@ -252,4 +252,16 @@ describe('CheckoutPayment', () => {
       })
     })
   })
+
+  describe('when isGoustoOnDemandEnabled is enabled', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isGoustoOnDemandEnabled: true,
+      })
+    })
+
+    test('then SubscriptionTransparency should not be rendered', () => {
+      expect(wrapper.find('SubscriptionTransparency').exists()).toBeFalsy()
+    })
+  })
 })

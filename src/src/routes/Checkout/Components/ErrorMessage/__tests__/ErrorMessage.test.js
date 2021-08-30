@@ -22,9 +22,9 @@ describe('given ErrorMessage', () => {
       expect(wrapper.find('Alert').exists()).toBe(true)
     })
 
-    describe('and when the Log in link is clicked', () => {
+    describe('and when the Log in CTA is clicked', () => {
       beforeEach(() => {
-        wrapper.find('a').simulate('click', { preventDefault: jest.fn() })
+        wrapper.find('CTA').simulate('click', { preventDefault: jest.fn() })
       })
 
       test('then the onLoginClick callback should be invoked', () => {
@@ -59,13 +59,13 @@ describe('given ErrorMessage', () => {
 
     test('then it should render correctly', () => {
       expect(wrapper.find('CustomerCareDetails').exists()).toBeFalsy()
-      expect(wrapper.find('a').exists()).toBeTruthy()
-      expect(wrapper.find('a').prop('children')).toBe('Log in')
+      expect(wrapper.find('CTA').exists()).toBeTruthy()
+      expect(wrapper.find('CTA').prop('children')).toBe('Log in')
     })
 
-    describe('and when the Log in link is clicked', () => {
+    describe('and when the Log in CTA is clicked', () => {
       beforeEach(() => {
-        wrapper.find('a').simulate('click', { preventDefault: jest.fn() })
+        wrapper.find('CTA').simulate('click', { preventDefault: jest.fn() })
       })
 
       test('then the onLoginClick callback should be invoked', () => {

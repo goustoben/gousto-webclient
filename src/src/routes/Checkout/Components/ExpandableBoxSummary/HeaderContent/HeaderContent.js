@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import Svg from 'Svg'
-
+import { formatOrderPrice } from 'utils/pricing'
 import css from './HeaderContent.css'
 
 const poundSign = String.fromCharCode(163)
@@ -33,10 +33,7 @@ export const HeaderContent = ({
           </s>
         </span>
       )}
-      <span className={css.withDiscount}>
-        {poundSign}
-        {totalToPay}
-      </span>
+      <span className={css.withDiscount}>{formatOrderPrice(totalToPay)}</span>
       <Svg
         fileName="icon-chevron-small-right"
         className={classNames(css.icon, {

@@ -12,13 +12,13 @@ class SubmitButton extends React.PureComponent {
   }
 
   render() {
-    const { submitting, isDisabled } = this.props
+    const { submitting, isDisabled, isGoustoOnDemandEnabled } = this.props
 
     return (
       <div className={css.ctaContainer}>
         <CheckoutButton
           testingSelector="checkoutCTA"
-          stepName="Start your subscription"
+          stepName={isGoustoOnDemandEnabled ? 'Order your box' : 'Start your subscription'}
           onClick={this.handleClick}
           isLoading={submitting}
           isFullWidth
@@ -34,11 +34,13 @@ SubmitButton.propTypes = {
   trackSubmitOrderEvent: PropTypes.func,
   submitting: PropTypes.bool.isRequired,
   isDisabled: PropTypes.bool,
+  isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
 SubmitButton.defaultProps = {
   trackSubmitOrderEvent: () => {},
   isDisabled: false,
+  isGoustoOnDemandEnabled: false,
 }
 
 export { SubmitButton }

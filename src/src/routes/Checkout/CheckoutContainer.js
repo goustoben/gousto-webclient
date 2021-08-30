@@ -16,6 +16,7 @@ import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import {
   getIsPaymentBeforeChoosingEnabled,
   getIsPaymentBeforeChoosingV3Enabled,
+  getIsGoustoOnDemandEnabled,
 } from 'selectors/features'
 import { getIsCheckoutUrgencyEnabled } from 'routes/Checkout/checkoutSelectors'
 import { Checkout } from './Checkout'
@@ -34,6 +35,7 @@ function mapStateToProps(state, ownProps) {
     isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
     isPaymentBeforeChoosingV3Enabled: getIsPaymentBeforeChoosingV3Enabled(state),
     isCheckoutUrgencyEnabled: getIsCheckoutUrgencyEnabled(state),
+    isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
 }
 

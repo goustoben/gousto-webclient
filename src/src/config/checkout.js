@@ -140,9 +140,8 @@ module.exports = {
     },
     'user-exists': {
       header: 'Email already in use',
-      message: ' with this email or sign up with a different email.',
-      prependLoginLinkToMessage: true,
-      loginLinkText: 'Log in',
+      message: 'Log in with this email to add this offer to your existing Gousto account.',
+      showLoginCTA: true,
     },
     'payment-failure': {
       header: 'Payment failed',
@@ -151,6 +150,15 @@ module.exports = {
     'user-promo-invalid': {
       header: 'Discount removed',
       message: 'A discount has already been used by this account.',
+    },
+    'gousto-on-demand-user-promo-invalid': {
+      header: 'Offer could not be applied',
+      message: 'It looks like you already have a Gousto account. Log in with your Gousto email to add this offer to your account.',
+      showLoginCTA: true,
+    },
+    'offer-has-been-used': {
+      header: 'Offer has already been used',
+      message: 'It looks like your offer has already been used. If this doesn’t look right, contact the person / organisation who gave you the offer.',
     },
     'out-of-stock': {
       header: 'Cannot create order',
@@ -195,6 +203,10 @@ module.exports = {
     'generic': {
       header: 'An error occurred',
       message: 'Click "Start your subscription" to try again.',
+    },
+    'gousto-on-demand-generic': {
+      header: 'An error occurred',
+      message: 'Click "Order your box" to try again.',
     },
   },
   errorsThatClearOrderPreview: [

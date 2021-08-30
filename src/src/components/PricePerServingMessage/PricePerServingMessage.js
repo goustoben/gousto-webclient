@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { formatOrderPrice } from 'utils/pricing'
 
 import css from './PricePerServingMessage.css'
 
@@ -22,7 +23,11 @@ const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null, isPr
         {' '}
         {oldPrice}
         {isPriceInCheckout
-          ? <span className={css.newPriceInCheckout}>{`£${discountedPrice}`}</span>
+          ? (
+            <span className={css.newPriceInCheckout}>
+              {formatOrderPrice(discountedPrice)}
+            </span>
+          )
           : `£${discountedPrice}`}
       </p>
     )

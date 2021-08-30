@@ -119,3 +119,7 @@
 .hidePassword {
   background: url('media/svgs/icon-hide-password.svg') center center / contain no-repeat;
 }
+
+.isHidden {
+  display: none;
+}

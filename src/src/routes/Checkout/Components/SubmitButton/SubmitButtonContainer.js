@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { trackSubmitOrderEvent } from 'actions/tracking'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { isSubmitting } from 'routes/Checkout/utils/state'
 import { SubmitButton } from './SubmitButton'
 
@@ -11,6 +12,7 @@ function mapStateToProps(state, ownProps) {
     onClick: ownProps.onClick,
     submitting: isSubmitting(state),
     browser,
+    isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
 }
 

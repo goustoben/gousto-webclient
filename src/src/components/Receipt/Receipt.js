@@ -3,6 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
+import { formatOrderPrice } from 'utils/pricing'
 
 import css from './Receipt.css'
 import ReceiptLine from './ReceiptLine'
@@ -27,6 +28,7 @@ class Receipt extends React.Component {
     showTitleSection: PropTypes.bool,
     orderNumber: PropTypes.string,
     isReceiptInCheckout: PropTypes.bool,
+    isGoustoOnDemandEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -43,6 +45,7 @@ class Receipt extends React.Component {
     showTitleSection: false,
     orderNumber: '',
     isReceiptInCheckout: false,
+    isGoustoOnDemandEnabled: false,
   }
 
   dash = <span className={css.dash}>&mdash;</span>
@@ -66,6 +69,7 @@ class Receipt extends React.Component {
       deliveryDate,
       deliverySlot,
       children,
+      isGoustoOnDemandEnabled,
     } = this.props
     const showRecipeDiscount = parseFloat(recipeDiscountAmount) > 0 ? true : null
     const showExtrasTotalPrice = parseFloat(extrasTotalPrice) > 0 ? true : null
@@ -74,6 +78,9 @@ class Receipt extends React.Component {
     const deliveryLineStyleForCheckout = showFreeDelivery ? 'checkoutPrimary' : 'checkoutNormal'
     const deliveryLineStyleDefault = showFreeDelivery ? 'primary' : 'normal'
     const deliveryLineStyle = isReceiptInCheckout ? deliveryLineStyleForCheckout : deliveryLineStyleDefault
+    const totalPrice = isGoustoOnDemandEnabled
+      ? formatOrderPrice(totalToPay)
+      : formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)
 
     return (
       <div className={classNames(css.row, { [css.rowInCheckout]: isReceiptInCheckout })}>
@@ -131,7 +138,7 @@ class Receipt extends React.Component {
           dataTesting="totalPrice"
           isReceiptInCheckout={isReceiptInCheckout}
         >
-          {formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}
+          {totalPrice}
         </ReceiptLine>
         {shippingAddress && (
           <ReceiptLine label="Delivery" showLineAbove>

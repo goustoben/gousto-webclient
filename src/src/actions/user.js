@@ -22,6 +22,7 @@ import {
   getNDDFeatureValue,
   getIsNewSubscriptionApiEnabled,
   getIsDecoupledPaymentEnabled,
+  getIsGoustoOnDemandEnabled,
 } from 'selectors/features'
 import { getCardPaymentDetails, getPayPalPaymentDetails, isCardPayment } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
@@ -646,6 +647,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const { form, basket, promoAgeVerified } = state
 
   const isDecoupledPaymentEnabled = getIsDecoupledPaymentEnabled(state)
+  const isGoustoOnDemandEnabled = getIsGoustoOnDemandEnabled(state)
 
   const isCard = isCardPayment(state)
 
@@ -692,7 +694,8 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
     subscription: {
       interval_id: intervalId,
       delivery_slot_id: basket.get('slotId'),
-      box_id: basket.get('boxId')
+      box_id: basket.get('boxId'),
+      ...(isGoustoOnDemandEnabled && { paused: Number(isGoustoOnDemandEnabled || false) }),
     },
     decoupled: {
       payment: Number(isDecoupledPaymentEnabled || false),

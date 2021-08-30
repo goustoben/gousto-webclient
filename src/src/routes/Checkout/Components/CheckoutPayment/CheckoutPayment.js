@@ -235,14 +235,23 @@ class CheckoutPayment extends React.Component {
       isRecaptchaEnabled,
       ribbonTriggerName,
       hotjarTriggerName,
+      isGoustoOnDemandEnabled,
+      isFreeBox,
     } = this.props
+    const sectionSubtitle =
+      isGoustoOnDemandEnabled && isFreeBox ? (
+        <span>
+          Payment details will only be used for surcharge recipes or items from the Gousto Market.{' '}
+          <span className={css.bold}>If you don’t add these, no payment will be taken.</span>
+        </span>
+      ) : null
 
     return (
       <div
         className={classNames(css.paymentContainer, { [css.hide]: prerender })}
         data-testing="checkoutPaymentSection"
       >
-        <SectionHeader title="Payment method" />
+        <SectionHeader title="Payment method" subtitle={sectionSubtitle} />
         <PaymentMethodSelector
           currentPaymentMethod={currentPaymentMethod}
           setCurrentPaymentMethod={setCurrentPaymentMethod}
@@ -264,7 +273,7 @@ class CheckoutPayment extends React.Component {
         </div>
         {isPayPalReady && <PayPalConfirmation />}
         {this.renderOuterContent()}
-        <PaymentFooter />
+        <PaymentFooter isGoustoOnDemandEnabled={isGoustoOnDemandEnabled} />
         <Checkout3DSModal />
         <RibbonTriggerContainer name={ribbonTriggerName} probabilityPercentage={50} />
         {!prerender && <HotjarTrigger name={hotjarTriggerName} shouldInvoke />}
@@ -300,6 +309,8 @@ CheckoutPayment.propTypes = {
   onLoginClick: PropTypes.func,
   ribbonTriggerName: PropTypes.string,
   hotjarTriggerName: PropTypes.string,
+  isGoustoOnDemandEnabled: PropTypes.bool,
+  isFreeBox: PropTypes.bool,
 }
 
 CheckoutPayment.defaultProps = {
@@ -325,6 +336,8 @@ CheckoutPayment.defaultProps = {
   onLoginClick: () => {},
   ribbonTriggerName: '',
   hotjarTriggerName: '',
+  isGoustoOnDemandEnabled: false,
+  isFreeBox: false,
 }
 
 export { CheckoutPayment }

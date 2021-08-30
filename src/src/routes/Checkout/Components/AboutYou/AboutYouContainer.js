@@ -4,6 +4,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed, validatePassword } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { accountFormName, getPasswordValue } from 'selectors/checkout'
 import * as stateUtils from 'routes/Checkout/utils/state'
 import { AboutYou } from './AboutYou'
@@ -16,6 +17,7 @@ export function mapStateToProps(sectionName) {
     passwordErrors: state.checkout.getIn(['passwordInfo', 'errorCodes']),
     passwordValue: getPasswordValue(state),
     isMobile: state.request.get('browser') === 'mobile',
+    isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   })
 }
 

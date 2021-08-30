@@ -70,6 +70,7 @@ const propTypes = {
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   isPaymentBeforeChoosingV3Enabled: PropTypes.bool,
   isCheckoutUrgencyEnabled: PropTypes.bool,
+  isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -100,6 +101,7 @@ const defaultProps = {
   isPaymentBeforeChoosingEnabled: false,
   isPaymentBeforeChoosingV3Enabled: false,
   isCheckoutUrgencyEnabled: false,
+  isGoustoOnDemandEnabled: false,
 }
 
 const contextTypes = {
@@ -326,11 +328,11 @@ class Checkout extends PureComponent {
 
   renderSummaryAndYourBox = () => {
     const { isCreatingPreviewOrder } = this.state
-    const { isPaymentBeforeChoosingEnabled } = this.props
+    const { isPaymentBeforeChoosingEnabled, isGoustoOnDemandEnabled } = this.props
 
     return (
       <Fragment>
-        <Summary isLoading={isCreatingPreviewOrder} />
+        <Summary isLoading={isCreatingPreviewOrder} showPromocode={!isGoustoOnDemandEnabled} />
         {isPaymentBeforeChoosingEnabled ? <YourBoxDetailsContainer /> : <BoxDetailsContainer />}
       </Fragment>
     )

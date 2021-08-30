@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
+import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { checkoutClickContinueToDelivery, checkoutClickPrivacyPolicy } from 'actions/trackingKeys'
 import { ErrorMessage } from '../ErrorMessage'
@@ -36,12 +37,12 @@ class AboutYou extends PureComponent {
   }
 
   renderLoginButton = () => {
-    const { onLoginClick } = this.props
+    const { onLoginClick, isGoustoOnDemandEnabled } = this.props
 
     return (
       <span className={css.emailLabelContainer}>
         Email address
-        <span className={css.account}>
+        <span className={classNames(css.account, { [css.isHidden]: isGoustoOnDemandEnabled })}>
           Have an account?&nbsp;
           <span
             className={css.link}
@@ -163,15 +164,25 @@ class AboutYou extends PureComponent {
   }
 
   render() {
-    const { sectionName, submitting, checkoutValid, passwordValue, passwordErrors } = this.props
+    const {
+      sectionName,
+      submitting,
+      checkoutValid,
+      passwordValue,
+      passwordErrors,
+      isGoustoOnDemandEnabled,
+    } = this.props
     const disableCTA =
       !passwordValue || !checkoutValid || (passwordErrors.length !== 0 && passwordValue)
+    const sectionSubtitle = isGoustoOnDemandEnabled
+      ? 'Create an account to manage your order, track delivery or cancel/reschedule if needed.'
+      : ''
 
     return (
       <form id="create-account" onSubmit={this.submitForm} autoComplete="on">
         <FormSection name={sectionName}>
           <div className={checkoutCss.sectionContainer} data-testing="checkoutAboutYouSection">
-            <SectionHeader title="Create account" />
+            <SectionHeader title="Create account" subtitle={sectionSubtitle} />
             {this.renderFields()}
             <CheckoutButton
               onClick={this.handleSubmit}
@@ -200,6 +211,7 @@ AboutYou.propTypes = {
   checkoutValid: PropTypes.bool,
   passwordValue: PropTypes.string,
   validatePassword: PropTypes.func,
+  isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
 AboutYou.defaultProps = {
@@ -215,6 +227,7 @@ AboutYou.defaultProps = {
   checkoutValid: false,
   passwordValue: '',
   validatePassword: () => {},
+  isGoustoOnDemandEnabled: false,
 }
 
 export { AboutYou }

@@ -19,6 +19,8 @@ const propTypes = {
   showPromocode: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   numberOfRecipes: PropTypes.number,
+  isGoustoOnDemandEnabled: PropTypes.bool,
+  totalToPay: PropTypes.string,
 }
 
 const defaultProps = {
@@ -28,6 +30,8 @@ const defaultProps = {
   showPromocode: true,
   isPaymentBeforeChoosingEnabled: false,
   numberOfRecipes: 0,
+  isGoustoOnDemandEnabled: false,
+  totalToPay: '',
 }
 
 class Summary extends PureComponent {
@@ -39,6 +43,8 @@ class Summary extends PureComponent {
       showPromocode,
       isPaymentBeforeChoosingEnabled,
       numberOfRecipes,
+      isGoustoOnDemandEnabled,
+      totalToPay,
     } = this.props
     const numRecipes = isPaymentBeforeChoosingEnabled ? numberOfRecipes : basketSum(basketRecipes)
 
@@ -63,11 +69,12 @@ class Summary extends PureComponent {
                 surcharges={getSurchargeItems(prices.get('items'))}
                 surchargeTotal={prices.get('surchargeTotal')}
                 recipeTotalPrice={prices.get('recipeTotal')}
-                totalToPay={prices.get('total')}
+                totalToPay={totalToPay}
                 recipeDiscountAmount={prices.get('recipeDiscount')}
                 recipeDiscountPercent={prices.get('percentageOff')}
                 extrasTotalPrice={prices.get('productTotal')}
                 isReceiptInCheckout
+                isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
               />
               {showPromocode && <PromoCode />}
             </div>

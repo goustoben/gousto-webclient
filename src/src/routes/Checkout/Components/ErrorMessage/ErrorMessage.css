@@ -8,4 +8,9 @@
 
 .messageContainer {
   composes: fontStyleBody from 'design-language/typography.css';
+  margin-bottom: 1rem;
+}
+
+.ctaContainer {
+  margin: 0 0 0 -2rem;
 }

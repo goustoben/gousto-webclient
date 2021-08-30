@@ -16,6 +16,7 @@
 
 .title {
   composes: fontStyleSubHead from 'design-language/typography.css';
+  margin-right: 0.25rem;
 }
 
 .icon {

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { getNumRecipes } from 'selectors/basket'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import { getIsPaymentBeforeChoosingEnabled, getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { getPricingTotalAmount } from 'selectors/pricing'
 import { Summary } from './Summary'
 
 function mapStateToProps(state) {
@@ -12,6 +13,8 @@ function mapStateToProps(state) {
     slotId: state.basket.get('slotId'),
     numberOfRecipes: getNumRecipes(state),
     isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
+    isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
+    totalToPay: getPricingTotalAmount(state),
   }
 }
 

@@ -1,10 +1,19 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { SubscriptionTransparency } from '../../SubscriptionTransparency'
 import { TermsAndConditions } from '../../TermsAndConditions'
 
-export const PaymentFooter = () => (
+export const PaymentFooter = ({ isGoustoOnDemandEnabled }) => (
   <Fragment>
-    <SubscriptionTransparency />
+    {isGoustoOnDemandEnabled ? null : <SubscriptionTransparency />}
     <TermsAndConditions />
   </Fragment>
 )
+
+PaymentFooter.propTypes = {
+  isGoustoOnDemandEnabled: PropTypes.bool,
+}
+
+PaymentFooter.defaultProps = {
+  isGoustoOnDemandEnabled: false,
+}

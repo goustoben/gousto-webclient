@@ -202,6 +202,7 @@ label {
 .desktopOnly {
   border: 1px solid Mackerel;
   height: 100%;
+  background: White;
 
   @media BreakpointToMedium {
     display: none;
