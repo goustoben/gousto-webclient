@@ -1,1 +1,1 @@
-export { PasswordFieldContainer as PasswordField } from './PasswordFieldContainer'
+export { PasswordField } from './PasswordField'

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
-import React, { Component, createRef } from 'react'
+import React, { useState, useRef } from 'react'
 import classNames from 'classnames'
+import { useDebounce } from 'react-use'
 import checkoutCss from '../../../Checkout.css'
 
 const propTypes = {
@@ -29,82 +30,76 @@ const defaultProps = {
   passwordValue: '',
 }
 
-export class PasswordField extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      touched: false,
-      value: props.passwordValue,
-    }
-    this.inputRef = createRef()
-  }
+export const PasswordField = ({
+  name,
+  type,
+  dataTesting,
+  inputSuffix,
+  passwordErrors,
+  passwordValue,
+  onCustomPasswordBlur,
+  onFocus,
+  isMobile,
+  validatePassword,
+}) => {
+  const inputRef = useRef()
+  const [touched, setTouched] = useState(false)
+  const [value, setValue] = useState(passwordValue)
 
-  handleChange = (e) => {
-    const { validatePassword } = this.props
+  useDebounce(
+    () => {
+      validatePassword(value)
+    },
+    300,
+    [validatePassword, value]
+  )
+
+  const handleChange = (e) => {
     const { value: newValue } = e.target
-
-    this.setState({ value: newValue })
-
-    if (this.debounceTimeout) {
-      clearTimeout(this.debounceTimeout)
-    }
-
-    this.debounceTimeout = setTimeout(() => validatePassword(newValue), 300)
+    setValue(newValue)
   }
 
-  handleBlur = () => {
-    const { onCustomPasswordBlur } = this.props
-
-    this.setState({
-      touched: true,
-    })
-
+  const handleBlur = () => {
+    setTouched(true)
     onCustomPasswordBlur()
   }
 
-  handleFocus = () => {
-    const { onFocus, isMobile } = this.props
-
+  const handleFocus = () => {
     onFocus()
     if (isMobile) {
       window.scrollTo({
-        top: this.inputRef.current.getBoundingClientRect().top,
+        top: inputRef.current.getBoundingClientRect().top,
         left: 0,
         behavior: 'smooth',
       })
     }
   }
 
-  render = () => {
-    const { name, type, dataTesting, inputSuffix, passwordErrors } = this.props
-    const { touched, value } = this.state
-
-    return (
-      <div className={classNames({ [checkoutCss.relative]: inputSuffix })}>
-        <label htmlFor="password">
-          <p className={checkoutCss.label}>Password</p>
-          <input
-            id="password"
-            className={classNames(checkoutCss.password, checkoutCss.checkoutInput, {
-              [checkoutCss.checkoutInputError]:
-                (touched && !value) || (passwordErrors.length > 0 && value),
-              [checkoutCss.validPassword]: passwordErrors.length === 0 && value,
-            })}
-            name={name}
-            value={value}
-            type={type}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            data-testing={dataTesting}
-            onChange={this.handleChange}
-            ref={this.inputRef}
-            autoComplete="new-password"
-          />
-          {inputSuffix}
-        </label>
-      </div>
-    )
-  }
+  return (
+    <div className={classNames({ [checkoutCss.relative]: inputSuffix })}>
+      <label htmlFor="password">
+        <p className={checkoutCss.label}>Password</p>
+        <input
+          id="password"
+          className={classNames(checkoutCss.password, checkoutCss.checkoutInput, {
+            [checkoutCss.checkoutInputError]:
+              (touched && !value) || (passwordErrors.length > 0 && value),
+            [checkoutCss.validPassword]: passwordErrors.length === 0 && value,
+          })}
+          name={name}
+          value={value}
+          type={type}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          data-testing={dataTesting}
+          onChange={handleChange}
+          ref={inputRef}
+          autoComplete="new-password"
+        />
+        {inputSuffix}
+      </label>
+    </div>
+  )
 }
 
 PasswordField.propTypes = propTypes

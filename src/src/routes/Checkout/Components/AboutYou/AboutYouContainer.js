@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { isValid } from 'redux-form'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { trackCheckoutButtonPressed } from 'actions/checkout'
+import { trackCheckoutButtonPressed, validatePassword } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { accountFormName, getPasswordValue } from 'selectors/checkout'
 import * as stateUtils from 'routes/Checkout/utils/state'
@@ -24,6 +24,7 @@ function connectComponent(sectionName) {
     clearErrors: actions.checkoutClearErrors,
     trackCheckoutButtonPressed,
     trackUTMAndPromoCode,
+    validatePassword,
   })(AboutYou)
 }
 

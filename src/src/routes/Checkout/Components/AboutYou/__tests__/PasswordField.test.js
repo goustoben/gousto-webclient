@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { act } from 'react-dom/test-utils'
 import { PasswordField } from '../PasswordField/PasswordField'
 
 jest.useFakeTimers()
@@ -29,7 +30,9 @@ describe('Given PasswordField component', () => {
   describe('when password field is on Focus', () => {
     describe('and isMobile is false', () => {
       beforeEach(() => {
-        wrapper.find('.password').prop('onFocus')()
+        act(() => {
+          wrapper.find('.password').prop('onFocus')()
+        })
       })
 
       test('then onFocus should be called', () => {
@@ -48,7 +51,10 @@ describe('Given PasswordField component', () => {
         wrapper.setProps({
           isMobile: true,
         })
-        wrapper.find('.password').prop('onFocus')()
+
+        act(() => {
+          wrapper.find('.password').prop('onFocus')()
+        })
       })
 
       test('then should be trigger proper actions', () => {
@@ -60,12 +66,14 @@ describe('Given PasswordField component', () => {
 
   describe('when password value is changed', () => {
     beforeEach(() => {
-      wrapper.find('input').prop('onChange')({
-        target: {
-          value: 'test',
-        },
+      act(() => {
+        wrapper.find('input').prop('onChange')({
+          target: {
+            value: 'test',
+          },
+        })
+        jest.runAllTimers()
       })
-      jest.runAllTimers()
     })
 
     test('then proper actions should be made', () => {
@@ -73,19 +81,23 @@ describe('Given PasswordField component', () => {
     })
 
     test('then after changing value right after first change should clear timeout', () => {
-      wrapper.find('input').prop('onChange')({
-        target: {
-          value: 'testing',
-        },
+      act(() => {
+        wrapper.find('input').prop('onChange')({
+          target: {
+            value: 'testing',
+          },
+        })
       })
+
       expect(clearTimeout).toBeCalled()
     })
   })
 
   describe('when password field is not in focus', () => {
     beforeEach(() => {
-      wrapper.instance().setState = jest.fn()
-      wrapper.find('.password').prop('onBlur')()
+      act(() => {
+        wrapper.find('.password').prop('onBlur')()
+      })
     })
 
     test('then proper actions should be made', () => {

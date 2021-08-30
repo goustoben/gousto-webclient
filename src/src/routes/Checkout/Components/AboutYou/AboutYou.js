@@ -83,6 +83,7 @@ class AboutYou extends PureComponent {
       isMobile,
       passwordValue,
       trackUTMAndPromoCode,
+      validatePassword,
     } = this.props
     const { isPassVisible, isPassCriteriaVisible, showFailedCriteria } = this.state
     const passState = {
@@ -112,6 +113,9 @@ class AboutYou extends PureComponent {
                 onFocus={this.toggleCriteria}
                 onCustomPasswordBlur={this.toggleFailedCriteria}
                 isMobile={isMobile}
+                validatePassword={validatePassword}
+                passwordErrors={passwordErrors}
+                passwordValue={passwordValue}
               />
             </div>
             {isPassCriteriaVisible && isPasswordField && (
@@ -195,6 +199,7 @@ AboutYou.propTypes = {
   isMobile: PropTypes.bool,
   checkoutValid: PropTypes.bool,
   passwordValue: PropTypes.string,
+  validatePassword: PropTypes.func,
 }
 
 AboutYou.defaultProps = {
@@ -209,6 +214,7 @@ AboutYou.defaultProps = {
   isMobile: true,
   checkoutValid: false,
   passwordValue: '',
+  validatePassword: () => {},
 }
 
 export { AboutYou }
