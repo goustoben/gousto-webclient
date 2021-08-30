@@ -285,9 +285,19 @@ class Signup extends PureComponent {
     return signupSteps
   }
 
-  renderStep = (name, nextStepName, currentStepNumber, isLastStep) => {
-    const { goToStep, stepName, isSocialBelongingEnabled, isGoustoOnDemandEnabled } = this.props
-    const Component = components[name]
+  renderSteps = (steps, currentStepNumber) => {
+    const {
+      goToStep,
+      stepName,
+      isSocialBelongingEnabled,
+      isGoustoOnDemandEnabled,
+      isBoxSizeVerticalLayoutEnabled,
+    } = this.props
+    const step = steps.getIn([currentStepNumber, 'name'])
+    const name = components[stepName]
+    const isLastStep = currentStepNumber === steps.size - 1
+    const nextStepName = steps.getIn([currentStepNumber + 1, 'name'])
+    const Component = components[step]
 
     return (
       <Component
@@ -299,23 +309,10 @@ class Signup extends PureComponent {
         active={stepName === name}
         isSocialBelongingEnabled={isSocialBelongingEnabled}
         isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+        isBoxSizeVerticalLayoutEnabled={isBoxSizeVerticalLayoutEnabled}
       />
     )
   }
-
-  renderSteps = (steps, currentStepNumber) =>
-    steps
-      .map((step, stepNumber) => (
-        <div className={css.step} key={step.get('slug')}>
-          {this.renderStep(
-            step.get('name'),
-            steps.getIn([stepNumber + 1, 'name']),
-            currentStepNumber,
-            stepNumber === steps.size - 1
-          )}
-        </div>
-      ))
-      .toArray()
 
   getStepSize = (stepsSize) => {
     const { isTastePreferencesEnabled } = this.props
@@ -334,8 +331,6 @@ class Signup extends PureComponent {
       trackDiscountVisibility,
       isDiscountAppliedBarDismissed,
       signupDismissDiscountAppliedBar,
-      isSocialBelongingEnabled,
-      isBoxSizeVerticalLayoutEnabled,
       isGoustoOnDemandEnabled,
     } = this.props
 
@@ -357,7 +352,6 @@ class Signup extends PureComponent {
       <div
         className={classNames(css.signupContainer, {
           [css.discountApplied]: isDiscountApplied,
-          [css.socialBelongingContainer]: isSocialBelongingEnabled,
           [css.goustoOnDemandContainer]: isGoustoOnDemandEnabled,
         })}
       >
@@ -380,22 +374,9 @@ class Signup extends PureComponent {
           signupDismissDiscountAppliedBar={signupDismissDiscountAppliedBar}
           isDiscountAppliedBarDismissed={isDiscountAppliedBarDismissed}
         />
-        <div
-          className={classNames(css.stepsContainer, {
-            [css.stepsContainerVerticalLayout]: isBoxSizeVerticalLayoutEnabled,
-          })}
-        >
-          <div className={css.animationContainer}>
-            <div className={css.stepIndicatorContainer}>
-              <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />
-            </div>
-            <div
-              className={css.animation}
-              style={{ marginLeft: `-${stepNumber}00%`, width: `${steps.size + 1}00%` }}
-            >
-              {this.renderSteps(steps, stepNumber)}
-            </div>
-          </div>
+        <div className={css.stepsContainer}>
+          <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />
+          {this.renderSteps(steps, stepNumber)}
         </div>
       </div>
     )

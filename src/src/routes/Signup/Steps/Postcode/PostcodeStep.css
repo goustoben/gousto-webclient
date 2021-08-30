@@ -67,13 +67,12 @@
   align-items: flex-start;
   composes: fontStyleBody from 'design-language/typography.css';
   color: Haricot;
-  margin: 0 auto 1rem;
+  margin: 0 auto;
   max-width: 19rem;
 
   @media BreakpointFromMedium {
     align-items: center;
     color: Haricot;
-    margin: 0 auto 1.5rem;
     max-width: 19rem;
   }
 }

@@ -66,6 +66,7 @@ class PostcodeStep extends PureComponent {
                       data-testing="signupPostcodeInput"
                       isInCheckout
                       error={deliveryDaysError}
+                      autoComplete="postal-code"
                     />
                   </div>
                   <Button
@@ -103,7 +104,7 @@ PostcodeStep.propTypes = {
 }
 
 PostcodeStep.defaultProps = {
-  deliveryDaysError: false,
+  deliveryDaysError: '',
   postcodePending: false,
   tempPostcode: '',
   changeTempPostcode: () => {},

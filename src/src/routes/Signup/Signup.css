@@ -15,19 +15,24 @@
 }
 
 .stepsContainer {
+  display: flex;
+  flex-direction: column;
   border-top: 1px solid CG100;
   border-bottom: 1px solid CG100;
   margin: 0 auto;
-  position: relative;
   background: White;
+  padding: 1rem 0.75rem;
+  width: 100%;
 
   @media BreakpointFromMedium {
     border: 1px solid CG100;
     max-width: WizardWidthTablet;
+    padding: 1.5rem;
   }
 
   @media BreakpointFromLarge {
     max-width: WizardWidthDesktop;
+    padding: 2rem;
   }
 }
 
@@ -36,66 +41,15 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.75rem;
-
-  @media BreakpointFromMedium {
-    padding: 0 1.5rem;
-  }
-
-  @media BreakpointFromLarge {
-    padding: 0 2rem;
-  }
 }
 
 .fullWidth {
   width: 100%;
 }
 
-.step {
-  flex-direction: column;
-  padding: 0;
-  max-width: 100vw;
-
-  @media BreakpointFromMedium {
-    max-width: WizardWidthTablet;
-  }
-
-  @media BreakpointFromLarge {
-    max-width: WizardWidthDesktop;
-  }
-}
-
-.stepsContainer,
-.stepContainer,
-.step {
-  display: flex;
-  min-height: 38rem;
-  height: 100%;
-  width: 100%;
-  float: left;
-  justify-content: normal;
-  margin: 0;
-}
-
-.stepsContainerVerticalLayout {
-  min-height: 39rem;
-}
-
 .stepsContainer {
   @media BreakpointFromMedium {
     margin: 0 auto;
-  }
-}
-
-.socialBelongingContainer {
-  .stepsContainer,
-  .stepContainer,
-  .step {
-    min-height: 44rem;
-
-    @media BreakpointFromMedium {
-      min-height: 41rem;
-    }
   }
 }
 
@@ -128,18 +82,6 @@
   margin: 0 auto;
 }
 
-.stepIndicatorContainer {
-  padding: 1rem 0.75rem 0;
-
-  @media BreakpointFromMedium {
-    padding: 1.5rem 1.5rem 0;
-  }
-
-  @media BreakpointFromLarge {
-    padding: 2rem 2rem 0;
-  }
-}
-
 .animationContainer {
   position: absolute;
   top: 0;
@@ -157,38 +99,18 @@
   }
 }
 
-.animation {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-  margin-left: 0;
-}
-
 .discountApplied {
   padding-top: 0;
 }
 
 .goustoOnDemandContainer {
-  .stepsContainer, .step, .animationContainer {
+  .stepsContainer, .animationContainer {
     @media BreakpointFromMedium {
       max-width: WizardWidthTabletGoustoOnDemand;
     }
 
     @media BreakpointFromLarge {
       max-width: WizardWidthDesktop;
-    }
-  }
-
-  .stepsContainer, .stepContainer, .step {
-    min-height: 37rem;
-
-    @media BreakpointFromMedium {
-      min-height: 37rem;
-    }
-
-    @media BreakpointFromLarge {
-      min-height: 36.5rem;
     }
   }
 }

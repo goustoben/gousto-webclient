@@ -22,12 +22,10 @@ const signup = {
     }
 
     case actionTypes.SIGNUP_STEP_SET: {
-      const newState = state
+      return state
         .setIn(['wizard', 'currentStepName'], action.currentStepName)
         .setIn(['wizard', 'currentStepNumber'], action.currentStepNumber)
         .setIn(['wizard', 'isLastStep'], action.isLastStep)
-
-      return newState
     }
 
     case actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR: {
