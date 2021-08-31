@@ -11,10 +11,10 @@ import routesConfig from 'config/routes'
 import moment from 'moment'
 import Immutable from 'immutable'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
-import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled, getIsNewSubscriptionApiEnabled } from 'selectors/features'
+import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
 import * as trackingKeys from 'actions/trackingKeys'
 import { getUserId } from 'selectors/user'
-import { fetchSubscription, deactivateSubscription, deactivateSubscriptionV2 } from '../routes/Account/apis/subscription'
+import { fetchSubscription, deactivateSubscription } from '../routes/Account/apis/subscription'
 import statusActions from './status'
 import { actionTypes } from './actionTypes'
 
@@ -280,23 +280,18 @@ function subscriptionPauseApplyPromo(promo) {
   }
 }
 
-function subscriptionDeactivate(reason) {
+function subscriptionDeactivate() {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_DEACTIVATE, true))
     dispatch(statusActions.error(actionTypes.SUBSCRIPTION_DEACTIVATE, false))
     const accessToken = getState().auth.get('accessToken')
-    const data = reason ? { state_reason: reason } : {}
 
     try {
       const state = getState()
-      if (getIsNewSubscriptionApiEnabled(state)) {
-        const pauseDate = moment().format('YYYY-MM-DD')
-        const userId = getUserId(state)
+      const pauseDate = moment().format('YYYY-MM-DD')
+      const userId = getUserId(state)
 
-        await deactivateSubscriptionV2(accessToken, pauseDate, userId)
-      } else {
-        await deactivateSubscription(accessToken, data)
-      }
+      await deactivateSubscription(accessToken, pauseDate, userId)
     } catch (err) {
       dispatch(statusActions.error(actionTypes.SUBSCRIPTION_DEACTIVATE, 'deactivate-fail'))
     } finally {
@@ -483,7 +478,7 @@ function subscriptionPauseReasonSubmit(freeText) {
       }
 
       const reason = freeText || chosenReasonSlug
-      await dispatch(subPauseActions.subscriptionDeactivate(reason))
+      await dispatch(subPauseActions.subscriptionDeactivate())
 
       const subscriptionDeactivateError = getState().error.get(actionTypes.SUBSCRIPTION_DEACTIVATE)
 

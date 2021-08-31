@@ -39,10 +39,6 @@ export function unSkipDates(accessToken, userId, dates) {
   )
 }
 
-export function deactivateSubscription(accessToken, reqData = {}) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.deactivateSub}`, reqData, 'PUT')
-}
-
 export function fetchSubscription(accessToken, reqData = {}) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.currentSubscription}`, reqData, 'GET')
 }
@@ -65,7 +61,7 @@ export function fetchProjectedDeliveries(accessToken, userId) {
   )
 }
 
-export function deactivateSubscriptionV2(accessToken, pauseDate, userId) {
+export function deactivateSubscription(accessToken, pauseDate, userId) {
   return fetch(
     accessToken,
     `${buildSubscriptionCommandUrl(userId, routes.subscriptionCommand.deactivate)}`,

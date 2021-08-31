@@ -235,7 +235,7 @@ Order.defaultProps = {
   deliveryDay: '',
   portionsCount: '2',
   phase: '',
-  isNewSubscriptionApiEnabled: false,
+  isNewSubscriptionApiEnabled: true,
 }
 
 export default Order

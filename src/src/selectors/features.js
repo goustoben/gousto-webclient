@@ -128,6 +128,7 @@ export const getIsMultiSkipEnabled = ({ features }) => (
   features && features.getIn(['isMultiSkipEnabled', 'value'], false)
 )
 
+// todo TG-3740 delete code for 'false' state
 export const getIsNewSubscriptionApiEnabled = ({ features }) => (
   features && features.getIn(['isNewSubscriptionApiEnabled', 'value'], false)
 )

@@ -13,7 +13,7 @@ import * as subUtils from 'utils/subscription'
 import logger from 'utils/logger'
 import windowUtil from 'utils/window'
 import { flushPromises } from '../../_testing/utils'
-import { deactivateSubscription, deactivateSubscriptionV2 } from '../../routes/Account/apis/subscription'
+import { deactivateSubscription } from '../../routes/Account/apis/subscription'
 
 jest.mock('actions/status', () => ({
   error: jest.fn(),
@@ -335,60 +335,41 @@ describe('Subscription action', () => {
     let dispatch
 
     beforeEach(() => {
+      deactivateSubscription.mockReturnValue(Promise.resolve())
+
       getState = jest.fn().mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'token' }),
+        user: Immutable.fromJS({ id: '123' }),
       })
+
       dispatch = jest.fn()
-      deactivateSubscription.mockReturnValue(Promise.resolve())
     })
 
     test('should handle pending state', async () => {
-      await subPauseActions.subscriptionDeactivate('passed in reason')(dispatch, getState)
+      await subPauseActions.subscriptionDeactivate()(dispatch, getState)
 
       expect(statusActions.pending).toHaveBeenCalledWith(actionTypes.SUBSCRIPTION_DEACTIVATE, true)
       expect(statusActions.pending).toHaveBeenCalledWith(actionTypes.SUBSCRIPTION_DEACTIVATE, false)
     })
 
     test('should reset error state', async () => {
-      await subPauseActions.subscriptionDeactivate('passed in reason')(dispatch, getState)
+      await subPauseActions.subscriptionDeactivate()(dispatch, getState)
 
       expect(statusActions.error).toHaveBeenCalledWith(actionTypes.SUBSCRIPTION_DEACTIVATE, false)
     })
 
-    test(
-      'should call deactivateSubscription once with accessToken & reason',
-      async () => {
-        await subPauseActions.subscriptionDeactivate('passed in reason')(dispatch, getState)
+    test('should call deactivateSubscription once with accessToken & pauseDate', async () => {
+      jest.spyOn(Date, 'now').mockImplementation(() => '2021-03-24T14:48:00.000Z')
+      await subPauseActions.subscriptionDeactivate()(dispatch, getState)
 
-        expect(deactivateSubscription).toHaveBeenCalledTimes(1)
-        expect(deactivateSubscription).toHaveBeenCalledWith('token', { state_reason: 'passed in reason' })
-      }
-    )
-
-    describe('when isNewSubscriptionApiEnabled is set to true', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          features: Immutable.fromJS({ isNewSubscriptionApiEnabled: { value: true } }),
-          auth: Immutable.fromJS({ accessToken: 'token' }),
-          user: Immutable.fromJS({ id: '123' }),
-        })
-        deactivateSubscriptionV2.mockReturnValue(Promise.resolve())
-      })
-
-      test('should call deactivateSubscriptionV2 once with accessToken & pauseDate', async () => {
-        jest.spyOn(Date, 'now').mockImplementation(() => '2021-03-24T14:48:00.000Z')
-        await subPauseActions.subscriptionDeactivate()(dispatch, getState)
-
-        expect(deactivateSubscriptionV2).toHaveBeenCalledTimes(1)
-        expect(deactivateSubscriptionV2).toHaveBeenCalledWith('token', '2021-03-24', '123')
-      })
+      expect(deactivateSubscription).toHaveBeenCalledTimes(1)
+      expect(deactivateSubscription).toHaveBeenCalledWith('token', '2021-03-24', '123')
     })
 
     describe('when deactivation fails', () => {
       beforeEach(async () => {
         deactivateSubscription.mockReturnValue(Promise.reject('error from deactivateSubscription'))
-
-        await subPauseActions.subscriptionDeactivate('passed in reason')(dispatch, getState)
+        await subPauseActions.subscriptionDeactivate()(dispatch, getState)
       })
 
       test('should call error status with deactivate-fail', () => {
@@ -1880,11 +1861,11 @@ describe('Subscription action', () => {
       })
 
       test(
-        'should call deactivateSubscription with last chosenReasonIds\' slug from state as state_reason',
+        'should call deactivateSubscription',
         async () => {
           await subPauseActions.subscriptionPauseReasonSubmit()(dispatch, getState)
 
-          expect(subscriptionDeactivateSpy).toHaveBeenCalledWith('chosen_reason_slug')
+          expect(subscriptionDeactivateSpy).toHaveBeenCalled()
         }
       )
 

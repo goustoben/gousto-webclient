@@ -2,12 +2,11 @@
 import fetch from 'utils/fetch'
 import {
   deactivateSubscription,
+  fetchProjectedDeliveries,
   fetchSubscription,
+  fetchSubscriptionV2,
   skipDates,
   unSkipDates,
-  fetchProjectedDeliveries,
-  deactivateSubscriptionV2,
-  fetchSubscriptionV2,
 } from '../subscription'
 
 jest.mock('utils/fetch', () =>
@@ -20,7 +19,6 @@ jest.mock('utils/fetch', () =>
 
 jest.mock('config/routes', () => ({
   core: {
-    deactivateSub: '/deactivateSub',
     currentSubscription: '/currentSubscription'
   },
   subscriptionCommand: {
@@ -44,22 +42,8 @@ describe('subscription endpoints', () => {
 
     describe('deactivateSubscription', () => {
       test('should fetch the correct url', async () => {
-        const reqData = { a: 1, b: 2 }
-        await deactivateSubscription('token', reqData)
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/deactivateSub', reqData, 'PUT')
-      })
-
-      test('should return the results of the fetch unchanged', async () => {
-        const result = await deactivateSubscription('token', {})
-        expect(result).toEqual(mockFetchResult)
-      })
-    })
-
-    describe('deactivateSubscriptionV2', () => {
-      test('should fetch the correct url', async () => {
         const pauseDate = { pauseDate: '2020-03-25' }
-        await deactivateSubscriptionV2('token', pauseDate, 'user-id')
+        await deactivateSubscription('token', pauseDate, 'user-id')
 
         expect(fetch).toHaveBeenCalledWith(
           'token',
