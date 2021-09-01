@@ -9,7 +9,6 @@ import {
   getSelectedIngredients,
 } from '../selectors/selectors'
 import { trackIngredientsGetInTouchClick } from '../actions/getHelp'
-import { loadRefundAmount } from '../actions/loadRefundAmount'
 import { createComplaint } from '../actions/createComplaint'
 import { actionTypes } from '../actions/actionTypes'
 
@@ -21,16 +20,13 @@ const mapStateToProps = (state) => ({
     id: getUserId(state),
     accessToken: getAccessToken(state),
   },
-  isAnyPending: getPending(state, actionTypes.GET_HELP_LOAD_REFUND_AMOUNT)
-    || getPending(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
-  isAnyError: getIsError(state, actionTypes.GET_HELP_LOAD_REFUND_AMOUNT)
-    || getIsError(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
+  isAnyPending: getPending(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
+  isAnyError: getIsError(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
   numberOfIngredients: Object.keys(getSelectedIngredients(state)).length,
 })
 
 const RefundContainer = connect(mapStateToProps, {
   createComplaint,
-  loadRefundAmount,
   trackIngredientsGetInTouchClick,
 })(Refund)
 

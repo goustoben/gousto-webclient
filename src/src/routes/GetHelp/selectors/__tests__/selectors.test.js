@@ -4,6 +4,7 @@ import {
   getCompensation,
   getError,
   getIneligibleIngredientUuids,
+  getIsAutoAccept,
   getIsError,
   getIsLoadOrderError,
   getIsOrderLoading,
@@ -27,6 +28,7 @@ const COMPENSATION = {
 }
 const ERROR_MESSAGE = 'An error message'
 const INELIGIBLE_INGREDIENT_UUIDS = ['a', 'b', 'c']
+const IS_AUTO_ACCEPT = 'is auto accept can be true or false'
 const ORDER_PENDING_VALUE = 'order pending can be true or false'
 const ORDER_ID = '12345'
 const TRACKING_URL_PENDING_VALUE = 'trackingUrl pending can be true or false'
@@ -119,9 +121,10 @@ const STATE = {
   }),
   getHelp: fromJS({
     compensation: COMPENSATION,
+    ineligibleIngredientUuids: fromJS(INELIGIBLE_INGREDIENT_UUIDS),
+    isAutoAccept: IS_AUTO_ACCEPT,
     order: ORDER,
     recipes: RECIPES,
-    ineligibleIngredientUuids: fromJS(INELIGIBLE_INGREDIENT_UUIDS),
     selectedIngredients: SELECTED_INGREDIENTS,
   }),
   pending: fromJS({
@@ -137,6 +140,7 @@ describe('Get Help selectors', () => {
     ['getAccessToken', getAccessToken, ACCESS_TOKEN],
     ['getCompensation', getCompensation, COMPENSATION],
     ['getIneligibleIngredientUuids', getIneligibleIngredientUuids, INELIGIBLE_INGREDIENT_UUIDS],
+    ['getIsAutoAccept', getIsAutoAccept, IS_AUTO_ACCEPT],
     ['getIsOrderLoading', getIsOrderLoading, ORDER_PENDING_VALUE],
     ['getIsTrackingUrlLoading', getIsTrackingUrlLoading, TRACKING_URL_PENDING_VALUE],
     ['getOrder', getOrder, ORDER],

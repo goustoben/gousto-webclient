@@ -9,6 +9,7 @@ const getHelpInitialState = fromJS({
   },
   ingredientIssues: [],
   ingredientSubIssues: [],
+  isAutoAccept: null,
   order: {
     id: '',
     recipeItems: [],
@@ -208,7 +209,8 @@ const getHelp = (state, action) => {
     return state
   }
   case actionTypes.GET_HELP_LOAD_REFUND_AMOUNT: {
-    return state.setIn(['compensation', 'amount'], action.payload.amount)
+    return state.set('isAutoAccept', action.payload.isAutoAccept)
+      .setIn(['compensation', 'amount'], action.payload.amount)
       .setIn(['compensation', 'type'], action.payload.type)
   }
   default:

@@ -40,10 +40,6 @@ describe('<Refund />', () => {
     getHelpLayout2 = wrapper.find('GetHelpLayout2')
   })
 
-  test('should call loadRefundAmount', () => {
-    expect(loadRefundAmount).toHaveBeenCalled()
-  })
-
   describe('when isAnyPending is true', () => {
     beforeEach(() => {
       wrapper.setProps({isAnyPending: true})
@@ -81,8 +77,14 @@ describe('<Refund />', () => {
       expect(Button2.text()).toBe('Claim £7.77 credit')
     })
 
-    test('CTA has createComplaint as onClick attribute', () => {
-      expect(wrapper.find('CTA').prop('onClick')).toBe(createComplaint)
+    describe('and the claim CTA is clicked', () => {
+      beforeEach(() => {
+        wrapper.find('CTA').simulate('click')
+      })
+
+      test('createComplaint is called with isAutoAccept false', () => {
+        expect(createComplaint).toHaveBeenCalledWith(false)
+      })
     })
 
     test('renders IngredientsListContainer', () => {

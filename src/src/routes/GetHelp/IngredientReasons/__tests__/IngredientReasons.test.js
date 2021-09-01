@@ -198,8 +198,8 @@ describe('<IngredientReasons />', () => {
         expect(trackIngredientReasonsConfirmed).toHaveBeenCalledWith(INGREDIENTS_TRACKING_DATA)
       })
 
-      test('I am redirected to the refund page', () => {
-        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/refund')
+      test('I am redirected to the auto accept check page', () => {
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/auto-check')
       })
     })
   })

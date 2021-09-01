@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Link from 'Link'
 import Loading from 'Loading'
@@ -17,7 +17,6 @@ const propTypes = {
   createComplaint: PropTypes.func.isRequired,
   isAnyError: PropTypes.bool.isRequired,
   isAnyPending: PropTypes.bool.isRequired,
-  loadRefundAmount: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     accessToken: PropTypes.string.isRequired,
@@ -26,19 +25,16 @@ const propTypes = {
   trackIngredientsGetInTouchClick: PropTypes.func.isRequired,
 }
 
+const IS_AUTO_ACCEPT = false
+
 const Refund = ({
   compensation,
   createComplaint,
   isAnyError,
   isAnyPending,
-  loadRefundAmount,
   numberOfIngredients,
   trackIngredientsGetInTouchClick
 }) => {
-  useEffect(() => {
-    loadRefundAmount()
-  }, []) //eslint-disable-line
-
   const headingText = `We're so sorry to hear about the issue with your ingredient${numberOfIngredients > 1 ? 's' : ''}`
   const getHelpLayoutbody = (isAnyPending || isAnyError)
     ? (
@@ -72,7 +68,7 @@ const Refund = ({
           testingSelector="claimCTA"
           isFullWidth
           size="small"
-          onClick={createComplaint}
+          onClick={() => createComplaint(IS_AUTO_ACCEPT)}
         >
           Claim £
           {compensation.amount ? compensation.amount.toFixed(2) : ''}

@@ -1,9 +1,12 @@
 import Immutable from 'immutable'
+import { push } from 'react-router-redux'
+import { client } from 'config/routes'
 import { setComplaint } from 'apis/getHelp'
 import { trackAcceptIngredientsRefund } from 'actions/getHelp'
 import { createComplaint } from '../createComplaint'
 import * as getHelpActionsUtils from '../utils'
 
+jest.mock('react-router-redux')
 jest.mock('apis/getHelp')
 jest.mock('actions/getHelp')
 
@@ -113,5 +116,25 @@ describe('Given createComplaint action is called', () => {
 
   test('trackAcceptIngredientsRefund is called with amount', () => {
     expect(trackAcceptIngredientsRefund).toHaveBeenCalledWith(AMOUNT)
+  })
+})
+
+describe('Given the action is called with isAutoAccept false', () => {
+  beforeEach(async () => {
+    await createComplaint(false)(dispatch, getState)
+  })
+
+  test('redirects to the confirmation page', () => {
+    expect(push).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.confirmation}`)
+  })
+})
+
+describe('Given the action is called with isAutoAccept true', () => {
+  beforeEach(async () => {
+    await createComplaint(true)(dispatch, getState)
+  })
+
+  test('redirects to the auto accept confirmation page', () => {
+    expect(push).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.autoAcceptConfirmation}`)
   })
 })

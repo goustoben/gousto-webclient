@@ -32,6 +32,7 @@ module.exports = {
     rateRecipes2: '/rate-recipes',
 
     getHelp: {
+      autoAcceptCheck: 'auto-check',
       autoAcceptConfirmation: 'auto-confirmation',
       confirmation: 'confirmation',
       contact: 'contact',

@@ -2,6 +2,7 @@ import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
 import { fetchRefundAmount } from 'apis/getHelp'
 import { getOrderId, getSelectedIngredients } from '../selectors/selectors'
+import { trackIngredientsAutoAcceptCheck } from './getHelp'
 import { asyncAndDispatch } from './utils'
 import { actionTypes } from './actionTypes'
 
@@ -24,7 +25,15 @@ export const loadRefundAmount = () => async (dispatch, getState) => {
     const response = await fetchRefundAmount(accessToken, body)
     const { value, type } = response.data
 
-    return { amount: value, type }
+    const MAX_AUTO_ACCEPT_AMOUNT = 2.0
+    const MAX_AUTO_ACCEPT_INGREDIENTS = 1
+
+    const isAutoAccept = value <= MAX_AUTO_ACCEPT_AMOUNT
+      && ingredientUuids.length <= MAX_AUTO_ACCEPT_INGREDIENTS
+
+    dispatch(trackIngredientsAutoAcceptCheck(isAutoAccept))
+
+    return { amount: value, type, isAutoAccept }
   }
 
   await asyncAndDispatch({

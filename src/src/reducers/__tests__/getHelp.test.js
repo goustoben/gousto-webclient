@@ -518,17 +518,23 @@ describe('getHelp reducer', () => {
   })
 
   describe('given an action with type GET_HELP_CREATE_COMPLAINT is received', () => {
+    let IS_AUTO_ACCEPT
+
     beforeEach(() => {
+      IS_AUTO_ACCEPT = 'true or false'
+
       newState = getHelp(getHelpInitialState, {
         type: actionTypes.GET_HELP_LOAD_REFUND_AMOUNT,
         payload: {
           amount: COMPENSATION_AMOUNT,
-          type: COMPENSATION_TYPE
+          isAutoAccept: IS_AUTO_ACCEPT,
+          type: COMPENSATION_TYPE,
         },
       })
     })
 
-    test('the new state has compensation amount and type stored', () => {
+    test('the new state has isAutoAccept, compensation amount and compensation type stored', () => {
+      expect(newState.get('isAutoAccept')).toBe(IS_AUTO_ACCEPT)
       expect(newState.getIn(['compensation', 'amount'])).toEqual(COMPENSATION_AMOUNT)
       expect(newState.getIn(['compensation', 'type'])).toEqual(COMPENSATION_TYPE)
     })

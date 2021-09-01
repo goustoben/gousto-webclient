@@ -140,6 +140,15 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, delivery
   },
 })
 
+export const trackIngredientsAutoAcceptCheck = (isAutoAccept) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrIngredientsAutoAcceptCheck,
+    auto_accept: isAutoAccept,
+    seCategory: SE_CATEGORY_HELP,
+  }
+})
+
 export const trackIngredientsGetInTouchClick = (amount, isAutoAccept) => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {

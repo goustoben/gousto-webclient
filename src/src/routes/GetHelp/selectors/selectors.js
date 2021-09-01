@@ -13,6 +13,10 @@ export const getIneligibleIngredientUuids = (state) => (
   state.getHelp.get('ineligibleIngredientUuids').toJS()
 )
 
+export const getIsAutoAccept = (state) => (
+  state.getHelp.get('isAutoAccept')
+)
+
 export const getIsError = createSelector(getError,
   (error) => Boolean(error))
 

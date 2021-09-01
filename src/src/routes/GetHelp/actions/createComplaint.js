@@ -9,7 +9,7 @@ import { getCompensation, getOrderId, getSelectedIngredients } from '../selector
 import { asyncAndDispatch } from './utils'
 import { actionTypes } from './actionTypes'
 
-export const createComplaint = () => async (dispatch, getState) => {
+export const createComplaint = (isAutoAccept) => async (dispatch, getState) => {
   const state = getState()
   const accessToken = getAccessToken(state)
   const userId = getUserId(state)
@@ -44,7 +44,12 @@ export const createComplaint = () => async (dispatch, getState) => {
   const getPayload = async () => {
     await setComplaint(accessToken, body)
     trackAcceptIngredientsRefund(amount)
-    dispatch(push(`${client.getHelp.index}/${client.getHelp.confirmation}`))
+
+    if (isAutoAccept) {
+      dispatch(push(`${client.getHelp.index}/${client.getHelp.autoAcceptConfirmation}`))
+    } else {
+      dispatch(push(`${client.getHelp.index}/${client.getHelp.confirmation}`))
+    }
 
     return null
   }

@@ -64,7 +64,7 @@ class IngredientReasons extends PureComponent {
     storeIngredientIssueDescriptions(issueReasons)
     trackIngredientReasonsConfirmed(ingredientsTrackingData)
 
-    browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
+    browserHistory.push(`${client.getHelp.index}/${client.getHelp.autoAcceptCheck}`)
   }
 
   isSubmitDisabled = () => {
