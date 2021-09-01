@@ -8,8 +8,6 @@ import {
   fetchUserCredit,
   fetchUserOrders,
   fetchUserProjectedDeliveries,
-  skipDelivery,
-  restoreDelivery,
   reactivate,
   checkDuplicateUser,
   verifyAge,
@@ -38,7 +36,6 @@ jest.mock('config/routes', () => ({
     userOrders: '/userOrders',
     userProjectedDeliveries: '/userProjectedDeliveries',
     userOrder: '/userOrder',
-    userDelivery: '/userDelivery',
     user: '/user',
   },
   user: {
@@ -162,37 +159,6 @@ describe('user api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchUserProjectedDeliveries('token')
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('skipDelivery', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      const deliveryDayId = '1'
-      await skipDelivery(accessToken, deliveryDayId)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/userDelivery/disable', { delivery_day_id: deliveryDayId }, 'PUT')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await skipDelivery('token', '1')
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('restoreDelivery', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      const userId = '2'
-      const deliveryDayId = '1'
-      await restoreDelivery(accessToken, userId, deliveryDayId)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `https://production-api.gousto.co.uk/user/${userId}/subscription/delivery/enable`, { delivery_day_id: deliveryDayId }, 'PUT')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await restoreDelivery('token', '2', '1')
       expect(result).toEqual(mockFetchResult)
     })
   })

@@ -1,4 +1,3 @@
-
 describe('My Deliveries', () => {
   beforeEach(() => {
     cy.stubAll3rdParties()
@@ -36,6 +35,16 @@ describe('My Deliveries', () => {
     it('should take the user to the menu', () => {
       cy.get('[data-testing="addBoxButton"]').click()
       cy.url().should('include', 'menu')
+    })
+  })
+
+  describe('pending orders', () => {
+    it('should be cancellable', () => {
+      cy.get('[data-testing="pendingOrder"]').first().click()
+      cy.get('[data-testing="cancelButton"]').click()
+      cy.wait('@cancelPendingOrder')
+      cy.contains('You cannot restore this box').should('be.visible')
+      cy.get('[data-testing="pendingOrder"]').first().should('contain', 'Cancelled')
     })
   })
 

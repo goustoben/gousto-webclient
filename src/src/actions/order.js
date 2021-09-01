@@ -5,13 +5,8 @@ import logger from 'utils/logger'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { redirect } from 'utils/window'
-import {
-  getIsNewSubscriptionApiEnabled,
-  getNDDFeatureValue,
-} from 'selectors/features'
-import {
-  getUserId,
-} from 'selectors/user'
+import { getNDDFeatureValue } from 'selectors/features'
+import { getUserId } from 'selectors/user'
 import { orderTrackingActions } from 'config/order'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
 import { getOrderForUpdateOrderV1 } from 'routes/Menu/selectors/order'
@@ -29,7 +24,6 @@ import {
 } from '../apis/orders'
 
 import { fetchDeliveryDays } from '../apis/deliveries'
-import * as userApi from '../apis/user'
 import { unSkipDates, skipDates } from '../routes/Account/apis/subscription'
 import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { getBasketOrderId } from '../selectors/basket'
@@ -268,15 +262,10 @@ export const projectedOrderRestore = (orderId, userId, deliveryDayId, deliveryDa
     dispatch(tempActions.temp('osrOrderId', orderId))
     const state = getState()
     const accessToken = state.auth.get('accessToken')
-    const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
 
     try {
-      if (isNewSubscriptionApiEnabled) {
-        const deliveryDayDate = deliveryDay.split(' ')[0]
-        await unSkipDates(accessToken, userId, [deliveryDayDate])
-      } else {
-        await userApi.restoreDelivery(accessToken, userId, deliveryDayId)
-      }
+      const deliveryDayDate = deliveryDay.split(' ')[0]
+      await unSkipDates(accessToken, userId, [deliveryDayDate])
 
       dispatch({
         type: actionTypes.PROJECTED_ORDER_RESTORE,
@@ -453,17 +442,12 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
     const accessToken = state.auth.get('accessToken')
     const valueProposition = state.onScreenRecovery.get('valueProposition')
     const offer = state.onScreenRecovery.get('offer')
-    const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
 
     try {
-      if (isNewSubscriptionApiEnabled) {
-        const orderDate = state.onScreenRecovery.get('orderDate').split(' ')[0]
-        const userId = getUserId(state)
+      const orderDate = state.onScreenRecovery.get('orderDate').split(' ')[0]
+      const userId = getUserId(state)
 
-        await skipDates(accessToken, userId, [orderDate])
-      } else {
-        await userApi.skipDelivery(accessToken, deliveryDayId)
-      }
+      await skipDates(accessToken, userId, [orderDate])
 
       dispatch({
         type: actionTypes.PROJECTED_ORDER_CANCEL,
@@ -525,17 +509,14 @@ export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispat
   const accessToken = state.auth.get('accessToken')
   const valueProposition = state.onScreenRecovery.get('valueProposition')
   const offer = state.onScreenRecovery.get('offer')
-  const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
 
   try {
     const cancellations = selectedOrders.map((order) => {
       let request
 
-      if (order.isProjected && isNewSubscriptionApiEnabled) {
+      if (order.isProjected) {
         const deliveryDay = order.deliveryDay.split(' ')[0]
         request = skipDates(accessToken, userId, [deliveryDay])
-      } else if (order.isProjected) {
-        request = userApi.skipDelivery(accessToken, order.deliveryDayId)
       } else {
         request = deleteOrder(accessToken, order.id, userId)
       }

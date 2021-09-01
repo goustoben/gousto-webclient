@@ -34,16 +34,6 @@ export function fetchUserProjectedDeliveries(accessToken) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.userProjectedDeliveries}`, {}, 'GET')
 }
 
-export function skipDelivery(accessToken, deliveryDayId) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.userDelivery}/disable`, { delivery_day_id: deliveryDayId }, 'PUT')
-}
-
-export function restoreDelivery(accessToken, userId, deliveryDayId) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.user}/${userId}/subscription/delivery/enable`, {
-    delivery_day_id: deliveryDayId,
-  }, 'PUT')
-}
-
 export function reactivate(accessToken, reqData) {
   return fetch(accessToken, `${endpoint('core')}/user/${reqData.userId}/restore`, {}, 'PUT')
 }

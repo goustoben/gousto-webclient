@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { skipDelivery, serverReferAFriend, fetchUserCredit, applyPromo } from 'apis/user'
+import { serverReferAFriend, fetchUserCredit, applyPromo } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as prospectAPI from 'apis/prospect'
@@ -45,7 +45,6 @@ import * as orderV2Apis from 'routes/Account/MyDeliveries/apis/orderV2'
 jest.mock('selectors/features')
 
 jest.mock('apis/user', () => ({
-  skipDelivery: jest.fn(),
   serverReferAFriend: jest.fn(),
   fetchUserCredit: jest.fn(),
   applyPromo: jest.fn(),
@@ -1399,37 +1398,7 @@ describe('user actions', () => {
   })
 
   describe('userOrderSkipNextProjected', () => {
-    test('should call skipDelivery if isNewSubscriptionApiEnabled experiment is false', async () => {
-      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(false)
-      skipDelivery.mockResolvedValueOnce()
-      const dispatchSpy = jest.fn()
-      const getStateSpy = jest.fn().mockReturnValueOnce({
-        auth: Immutable.Map({
-          accessToken: 'access-token'
-        }),
-        user: Immutable.fromJS({
-          id: 'user-id',
-          orders: {},
-          projectedDeliveries: {
-            2443: {
-              id: '2443',
-              deliveryDate: '2021-04-14 00:00:00'
-            }
-          }
-        })
-      })
-
-      await userActions.userOrderSkipNextProjected()(dispatchSpy, getStateSpy)
-
-      expect(skipDelivery).toHaveBeenCalledWith('access-token', '2443')
-      expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
-        deliveryDayIds: ['2443'],
-      })
-    })
-
-    test('should call skipDates if isNewSubscriptionApiEnabled experiment is true', async () => {
-      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+    test('should call skipDates', async () => {
       skipDates.mockResolvedValueOnce()
       const dispatchSpy = jest.fn()
       const getStateSpy = jest.fn().mockReturnValueOnce({

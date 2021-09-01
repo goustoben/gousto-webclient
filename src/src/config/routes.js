@@ -118,7 +118,6 @@ module.exports = {
     userOrder: '/user/current/order',
     userProjectedDeliveries: '/user/current/projected-deliveries',
     userAddress: '/user/current/address',
-    userDelivery: '/user/current/subscription/delivery',
     userPromo: '/user/current/promotion-codes',
     currentUser: '/user/current',
     currentSubscription: '/user/current/subscription',

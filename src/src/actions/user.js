@@ -254,7 +254,6 @@ function userOrderSkipNextProjected() {
 
     try {
       const state = getState()
-      const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
       let projectedOrders = state.user.get('projectedDeliveries')
 
       if (!projectedOrders.size) {
@@ -274,14 +273,10 @@ function userOrderSkipNextProjected() {
       const accessToken = state.auth.get('accessToken')
 
       try {
-        if (isNewSubscriptionApiEnabled) {
-          const orderToSkipDate = projectedOrders.first().get('deliveryDate').split(' ')[0]
-          const userId = getUserId(state)
+        const orderToSkipDate = projectedOrders.first().get('deliveryDate').split(' ')[0]
+        const userId = getUserId(state)
 
-          await skipDates(accessToken, userId, [orderToSkipDate])
-        } else {
-          await userApi.skipDelivery(accessToken, orderToSkipId)
-        }
+        await skipDates(accessToken, userId, [orderToSkipDate])
 
         dispatch({
           type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,

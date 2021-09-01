@@ -12,10 +12,8 @@ import {
 import actionStatus from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
 import { trackAffiliatePurchase } from 'actions/tracking'
-import { restoreDelivery, skipDelivery } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
-import { getIsNewSubscriptionApiEnabled } from 'selectors/features'
 
 import {
   trackOrder,
@@ -906,7 +904,6 @@ describe('order actions', () => {
 
     beforeEach(() => {
       deleteOrder.mockResolvedValue(null)
-      skipDelivery.mockResolvedValue(null)
       skipDates.mockResolvedValue(null)
     })
 
@@ -967,30 +964,7 @@ describe('order actions', () => {
       expect(dispatch.mock.calls).toHaveLength(1)
     })
 
-    test('for each projected selected orders, calls the disable delivery day endpoint', async () => {
-      await cancelMultipleBoxes({
-        selectedOrders: [
-          { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-1' },
-          { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-2' }
-        ]
-      })(dispatch, getState)
-
-      await flushPromises()
-
-      expect(skipDelivery).toHaveBeenCalledTimes(2)
-      expect(skipDelivery).toHaveBeenNthCalledWith(1,
-        'access-token',
-        'delivery-day-1'
-      )
-      expect(skipDelivery).toHaveBeenNthCalledWith(2,
-        'access-token',
-        'delivery-day-2'
-      )
-    })
-
     test('for each projected selected orders, calls the skipDates day endpoint', async () => {
-      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
-
       await cancelMultipleBoxes({
         selectedOrders: [
           { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-1', deliveryDay: 'date1 time' },
@@ -1083,7 +1057,7 @@ describe('order actions', () => {
       beforeEach(() => {
         // First should succeed, second should fail
         deleteOrder.mockResolvedValueOnce(null)
-        skipDelivery.mockRejectedValueOnce(null)
+        skipDates.mockRejectedValueOnce(null)
       })
 
       test('only dispatches cancellation action for successes', async () => {
@@ -1189,7 +1163,6 @@ describe('order actions', () => {
 
     describe('projectedOrderRestore', () => {
       test('dispatches PROJECTED_ORDER_RESTORE and call unSkipDates', async () => {
-        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
         unSkipDates.mockResolvedValueOnce()
         const dispatchSpy = jest.fn()
         const getStateSpy = jest.fn().mockReturnValueOnce({
@@ -1201,25 +1174,6 @@ describe('order actions', () => {
         await projectedOrderRestore('order-id', 'user-id', 'delivery-day-id', '2021-04-14 00:00:00')(dispatchSpy, getStateSpy)
 
         expect(unSkipDates).toHaveBeenCalledWith('access-token', 'user-id', ['2021-04-14'])
-        expect(dispatchSpy).toHaveBeenCalledWith({
-          type: actionTypes.PROJECTED_ORDER_RESTORE,
-          orderId: 'order-id',
-        })
-      })
-
-      test('dispatches PROJECTED_ORDER_RESTORE and call restoreDelivery', async () => {
-        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(false)
-        restoreDelivery.mockResolvedValueOnce()
-        const dispatchSpy = jest.fn()
-        const getStateSpy = jest.fn().mockReturnValueOnce({
-          auth: Immutable.Map({
-            accessToken: 'access-token'
-          }),
-        })
-
-        await projectedOrderRestore('order-id', 'user-id', 'delivery-day-id', '2021-04-14 00:00:00')(dispatchSpy, getStateSpy)
-
-        expect(restoreDelivery).toHaveBeenCalledWith('access-token', 'user-id', 'delivery-day-id')
         expect(dispatchSpy).toHaveBeenCalledWith({
           type: actionTypes.PROJECTED_ORDER_RESTORE,
           orderId: 'order-id',

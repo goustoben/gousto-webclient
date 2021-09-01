@@ -14,7 +14,7 @@ import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
 import * as trackingKeys from 'actions/trackingKeys'
 import { getUserId } from 'selectors/user'
-import { fetchSubscription, deactivateSubscription } from '../routes/Account/apis/subscription'
+import { deactivateSubscription } from '../routes/Account/apis/subscription'
 import statusActions from './status'
 import { actionTypes } from './actionTypes'
 
