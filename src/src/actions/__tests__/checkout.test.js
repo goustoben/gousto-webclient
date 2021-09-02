@@ -615,7 +615,7 @@ describe('checkout actions', () => {
     describe('when an error triggers removal of the order preview', () => {
       beforeEach(() => {
         userSubscribe.mockImplementation(() => {
-          // This simulates a throw in src/src/utils/fetch.js.
+          // This simulates a throw in src/src/utils/fetch.ts.
           // eslint-disable-next-line no-throw-literal
           throw {
             code: '422-payment-failed'

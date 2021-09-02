@@ -13,7 +13,7 @@ describe('server/service/addressLookup', () => {
   }
 
   beforeEach(() => {
-    fetchMock = require('../../../src/utils/fetch').default
+    fetchMock = require('utils/fetch').default
     fetchMock.mockImplementation(() => dummyLookupResponse)
   })
 
