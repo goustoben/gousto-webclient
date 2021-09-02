@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
+import classNames from 'classnames'
+import { browserHistory } from 'react-router'
 import ImageSelection from 'ImageSelection'
 import LinkButton from 'LinkButton'
 import SectionHeader from 'SectionHeader'
@@ -9,14 +11,20 @@ import css from './List.css'
 
 const productsRoute = config.routes.client.orderConfirmation
 
-const ProductList = ({ orderId, products, number, onProductClick }) => (
-  <article className={css.content}>
-    <SectionHeader title="Gousto Market" type="minorArticle">
-      Here you can add lovely wines, craft beers, delicious desserts, staples, kitchen tools, and treats from artisan suppliers.
-    </SectionHeader>
+const ProductList = ({ orderId, products, number, onProductClick, isGoustoOnDemandEnabled }) => (
+  <article className={classNames(css.content, { [css.goustoOnDemandContainer]: isGoustoOnDemandEnabled })}>
+    {!isGoustoOnDemandEnabled && (
+      <SectionHeader title="Gousto Market" type="minorArticle">
+        Here you can add lovely wines, craft beers, delicious desserts, staples, kitchen tools, and treats from artisan suppliers.
+      </SectionHeader>
+    )}
     <ImageSelection
       content={products.slice(0, number).toArray()}
-      onImageClick={(itemId) => onProductClick(itemId)}
+      onImageClick={(itemId) => (
+        isGoustoOnDemandEnabled
+          ? browserHistory.push(productsRoute.replace(':orderId', orderId))
+          : onProductClick(itemId)
+      )}
     />
     <div className={css.button}>
       <LinkButton
@@ -37,11 +45,14 @@ ProductList.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
 ProductList.defaultProps = {
   products: new Immutable.List(),
   number: 6,
+  onProductClick: () => {},
+  isGoustoOnDemandEnabled: false,
 }
 
 export default ProductList

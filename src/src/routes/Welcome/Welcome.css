@@ -25,6 +25,10 @@
 	}
 }
 
+.goustoOnDemandContainer {
+  margin-top: 0;
+}
+
 .row {
 	composes: row from 'sass-loader!styles/bootstrap.scss';
 }
