@@ -1,24 +1,23 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { TextFrame } from '../TextFrame'
+import { SellThePropositionPage } from '../SellThePropositionPage'
 
-describe('TextFrame', () => {
+describe('SellThePropositionPage', () => {
   let wrapper
   const signupGoToMenu = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<TextFrame signupGoToMenu={signupGoToMenu} isFullWidth />)
+    wrapper = shallow(<SellThePropositionPage signupGoToMenu={signupGoToMenu} />)
   })
 
   test('renders correctly', () => {
-    expect(wrapper.find('.heading').exists()).toBe(true)
     expect(wrapper.find('.list').exists()).toBe(true)
-    expect(wrapper.find('CTA').exists()).toBe(true)
+    expect(wrapper.find('CheckoutButton').exists()).toBe(true)
   })
 
-  describe('when the CTA is clicked', () => {
+  describe('when the primary button is clicked', () => {
     beforeEach(() => {
-      wrapper.find('CTA').simulate('click')
+      wrapper.find('CheckoutButton').simulate('click')
     })
 
     test('then the signupGoToMenu action should be dispatched', () => {

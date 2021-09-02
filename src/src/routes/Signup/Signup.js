@@ -28,6 +28,7 @@ import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
+import { CheckAccountPageContainer } from './Components/CheckAccountPage'
 
 const components = {
   boxSize: BoxSizeStep,
@@ -212,6 +213,10 @@ class Signup extends PureComponent {
     if (
       params.stepName &&
       firstStep.get('slug') !== params.stepName &&
+      // This condition is for server rendering, where isGoustoOnDemandEnabled
+      // is not being set: don't redirect when landing directly on "check
+      // account" page.
+      params.stepName !== signupConfig.checkAccountPageSlug &&
       params.pathname !== postCodePath &&
       !shouldSetStepFromParams
     ) {
@@ -336,6 +341,8 @@ class Signup extends PureComponent {
 
     if (stepName === signupConfig.sellThePropositionPagePath) {
       return <SellThePropositionPageContainer />
+    } else if (stepName === signupConfig.checkAccountPageSlug) {
+      return <CheckAccountPageContainer />
     }
 
     const steps = this.getSteps()

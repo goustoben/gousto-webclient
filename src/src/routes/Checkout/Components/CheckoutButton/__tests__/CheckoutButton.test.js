@@ -7,7 +7,7 @@ describe('CheckoutButton', () => {
   const onClick = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<CheckoutButton stepName="go to delivery" onClick={onClick} />)
+    wrapper = shallow(<CheckoutButton onClick={onClick}>go to delivery</CheckoutButton>)
   })
 
   test('Should render correctly', () => {

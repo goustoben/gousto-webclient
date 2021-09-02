@@ -1,48 +1,86 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { TextFrame } from './TextFrame'
-import desktopImage from './assets/desktop-image.jpg'
-import topImage from './assets/mobile-tablet-top.jpg'
-import topImageGoustoOnDemand from './assets/mobile-tablet-top-gousto-on-demand.jpg'
-import bottomImage from './assets/tablet-bottom.jpg'
+import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
+import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 import css from './SellThePropositionPage.css'
 
-export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => (
-  <div className={css.container} data-testing="sellThePropositionPage">
-    <div className={css.mobileContainer}>
-      <img
-        className={css.image}
-        src={isGoustoOnDemandEnabled ? topImageGoustoOnDemand : topImage}
-        alt="Sample dishes offered by Gousto"
-      />
-      <TextFrame
-        signupGoToMenu={signupGoToMenu}
-        isFullWidth
-        ctaTestingSelector="sellThePropositionCTA_mobile"
-        isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
-      />
-      <img
-        className={classNames(css.image, css.bottomImage)}
-        src={bottomImage}
-        alt="More sample dishes offered by Gousto"
-      />
-    </div>
-    <div className={css.desktopContainer}>
-      <div className={css.column}>
-        <img className={css.image} src={desktopImage} alt="Sample dishes offered by Gousto" />
-      </div>
-      <div className={css.column}>
-        <TextFrame
-          signupGoToMenu={signupGoToMenu}
-          isFullWidth={false}
-          ctaTestingSelector="sellThePropositionCTA_desktop"
-          isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
-        />
-      </div>
-    </div>
-  </div>
-)
+export const items = [
+  {
+    key: 'itemValue',
+    className: css.itemValue,
+    strongText: 'Greater value',
+    normalText: 'the more recipes you add',
+  },
+  {
+    key: 'itemRecipes',
+    className: css.itemRecipes,
+    strongText: 'Over 60 recipes',
+    normalText: 'changing weekly',
+  },
+  {
+    key: 'itemSkip',
+    className: css.itemSkip,
+    strongText: 'Choose 2 to 4 recipes',
+    normalText: 'or skip a box',
+  },
+  {
+    key: 'itemDietary',
+    className: css.itemDietary,
+    strongText: 'Meals for every appetite',
+    normalText: 'and dietary need',
+  },
+]
+
+const goustoOnDemandItems = [
+  {
+    key: 'itemRecipes',
+    className: css.itemRecipes,
+    strongText: '60+ recipes',
+    normalText: 'with a new menu every week',
+  },
+  {
+    key: 'itemSelection',
+    className: css.itemSelection,
+    strongText: 'Choose 2, 3 or 4 recipes',
+    normalText: 'in your box',
+  },
+  {
+    key: 'itemEnvironmental',
+    className: css.itemEnvironmental,
+    strongText: '23% less carbon emissions',
+    normalText: 'than the same shop at a supermarket',
+  },
+  {
+    key: 'itemWorldCuisine',
+    className: css.itemWorldCuisine,
+    strongText: 'Meals for every appetite',
+    normalText: 'and dietary need',
+  },
+]
+
+export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => {
+  const displayedItems = isGoustoOnDemandEnabled ? goustoOnDemandItems : items
+
+  return (
+    <InformationalPageTemplate
+      testingSelector="sellThePropositionPage"
+      isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+      headerText="Get your taste buds ready..."
+    >
+      <ul className={css.list}>
+        {displayedItems.map(({ key, className, strongText, normalText }) => (
+          <li key={key} className={classNames(css.item, className)}>
+            <span className={css.strong}>{strongText}</span> {normalText}
+          </li>
+        ))}
+      </ul>
+      <CheckoutButton onClick={signupGoToMenu} isFullWidth testingSelector="sellThePropositionCTA">
+        See this week’s menu
+      </CheckoutButton>
+    </InformationalPageTemplate>
+  )
+}
 
 SellThePropositionPage.propTypes = {
   signupGoToMenu: PropTypes.func.isRequired,

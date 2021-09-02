@@ -6,15 +6,19 @@ import css from './CheckoutButton.css'
 
 const CheckoutButton = ({
   onClick,
-  stepName,
   isDisabled,
   testingSelector,
   isFullWidth,
   isLoading,
+  children,
+  variant,
+  noHorizontalPadding,
 }) => {
   const className = classNames(css.cta, {
     [css.isDisabled]: isDisabled,
     [css.isFullWidth]: isFullWidth,
+    [css.secondary]: variant === 'secondary',
+    [css.noHorizontalPadding]: noHorizontalPadding,
   })
 
   return (
@@ -31,28 +35,31 @@ const CheckoutButton = ({
           <Loader color="White" />
         </span>
       ) : (
-        stepName
+        children
       )}
     </button>
   )
 }
 
 CheckoutButton.propTypes = {
-  stepName: PropTypes.string,
   onClick: PropTypes.func,
   isDisabled: PropTypes.bool,
   testingSelector: PropTypes.string,
   isFullWidth: PropTypes.bool,
   isLoading: PropTypes.bool,
+  variant: PropTypes.oneOf(['primary', 'secondary']),
+  children: PropTypes.node.isRequired,
+  noHorizontalPadding: PropTypes.bool,
 }
 
 CheckoutButton.defaultProps = {
   onClick: () => {},
-  stepName: '',
   isDisabled: false,
   testingSelector: 'checkoutCTA',
   isFullWidth: true,
   isLoading: false,
+  variant: 'primary',
+  noHorizontalPadding: false,
 }
 
 export { CheckoutButton }

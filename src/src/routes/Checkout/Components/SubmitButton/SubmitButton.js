@@ -18,12 +18,13 @@ class SubmitButton extends React.PureComponent {
       <div className={css.ctaContainer}>
         <CheckoutButton
           testingSelector="checkoutCTA"
-          stepName={isGoustoOnDemandEnabled ? 'Order your box' : 'Start your subscription'}
           onClick={this.handleClick}
           isLoading={submitting}
           isFullWidth
           isDisabled={isDisabled}
-        />
+        >
+          {isGoustoOnDemandEnabled ? 'Order your box' : 'Start your subscription'}
+        </CheckoutButton>
       </div>
     )
   }

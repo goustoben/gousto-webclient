@@ -55,8 +55,9 @@ const Postcode = ({
             isDisabled={isFindAddressDisabled}
             width="auto"
             isFullWidth={false}
-            stepName="Search"
-          />
+          >
+            Search
+          </CheckoutButton>
         </div>
       </div>
       {!isAddressSelected ? (

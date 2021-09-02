@@ -13,7 +13,7 @@ class SignupLayout extends React.PureComponent {
         className={classNames(css.pageContainer, { [css.hasWhiteBackground]: hasWhiteBackground })}
       >
         <div className={css.headerContainer}>
-          <Header simple showLoginCTA={showLoginCTA} />
+          <Header simple hasLoginModal showLoginCTA={showLoginCTA} />
         </div>
         {children}
       </div>

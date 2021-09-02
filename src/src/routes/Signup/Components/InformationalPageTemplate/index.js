@@ -1,0 +1,1 @@
+export { InformationalPageTemplate } from './InformationalPageTemplate'

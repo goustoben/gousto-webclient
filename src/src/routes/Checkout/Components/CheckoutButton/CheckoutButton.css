@@ -1,4 +1,4 @@
-@value Oyster, White, Bluecheese from 'styles/colors.css';
+@value Oyster, White, Bluecheese, BluecheeseLighter, Blueberry from 'styles/colors.css';
 
 .cta {
   composes: fontStyleButtonL from 'design-language/typography.css';
@@ -11,11 +11,31 @@
   padding: 0.5rem 1.5rem;
   border-radius: 3px;
   cursor: pointer;
+  border: 1px solid Bluecheese;
 
-  &,
-  &:hover {
-    border: none;
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
+    background-color: Blueberry;
+    border-color: Blueberry;
   }
+}
+
+.secondary {
+  background: White;
+  color: Bluecheese;
+
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
+    border-color: Bluecheese;
+    color: Blueberry;
+    background: BluecheeseLighter;
+  }
+}
+
+.secondary.isDisabled {
+  background-color: White;
+  border-color: Oyster;
+  color: Oyster;
 }
 
 .isDisabled {
@@ -27,6 +47,11 @@
   &:hover {
     color: White;
   }
+}
+
+.noHorizontalPadding {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .isFullWidth {

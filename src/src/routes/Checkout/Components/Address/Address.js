@@ -418,8 +418,9 @@ export class Address extends React.PureComponent {
               onClick={this.handleAddressConfirm}
               submitting={addressesPending}
               isDisabled={isCTADisabled}
-              stepName="Continue to Payment"
-            />
+            >
+              Continue to Payment
+            </CheckoutButton>
           </Fragment>
         )}
       </Fragment>

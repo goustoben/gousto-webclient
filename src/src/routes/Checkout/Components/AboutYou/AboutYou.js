@@ -188,8 +188,9 @@ class AboutYou extends PureComponent {
               onClick={this.handleSubmit}
               submitting={submitting}
               isDisabled={disableCTA}
-              stepName="Continue to Delivery"
-            />
+            >
+              Continue to Delivery
+            </CheckoutButton>
           </div>
           <ErrorMessage />
         </FormSection>

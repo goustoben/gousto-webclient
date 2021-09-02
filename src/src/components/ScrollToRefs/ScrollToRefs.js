@@ -5,7 +5,7 @@ import * as domHelper from 'utils/DOMhelper'
 const propTypes = {
   refKeys: PropTypes.array,
   scrollToRef: PropTypes.bool,
-  Component: PropTypes.node
+  Component: PropTypes.elementType
 }
 
 const defaultProps = {

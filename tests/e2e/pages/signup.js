@@ -102,14 +102,14 @@ module.exports = {
       selector: '*[data-testing="sellThePropositionPage"]',
 
       elements: {
-        CTA_desktop: {
-          selector: '*[data-testing="sellThePropositionCTA_desktop"]'
+        CTA: {
+          selector: '*[data-testing="sellThePropositionCTA"]'
         },
       },
 
       commands: [{
         goToNextStep: function () {
-          clickElement.call(this, '@CTA_desktop')
+          clickElement.call(this, '@CTA')
         }
       }],
     }

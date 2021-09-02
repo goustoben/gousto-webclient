@@ -67,5 +67,9 @@ GoustoOnDemandBoxSizeContent.propTypes = {
   onPrimaryButtonClick: PropTypes.func.isRequired,
   numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType).isRequired,
   isLoadingPrices: PropTypes.bool.isRequired,
-  goustoOnDemandCustomText: PropTypes.string.isRequired,
+  goustoOnDemandCustomText: PropTypes.string,
+}
+
+GoustoOnDemandBoxSizeContent.defaultProps = {
+  goustoOnDemandCustomText: null,
 }

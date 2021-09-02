@@ -385,6 +385,7 @@ class Header extends React.PureComponent {
       isAppAwarenessEnabled,
       showLoginCTA,
       isPaymentBeforeChoosingEnabled,
+      hasLoginModal,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen } = this.state
@@ -411,7 +412,7 @@ class Header extends React.PureComponent {
             showLoginCTA={showLoginCTA}
             onLoginClick={this.onLoginClick}
           />
-          {showLoginCTA && this.renderLoginModal()}
+          {(showLoginCTA || hasLoginModal) && this.renderLoginModal()}
         </Fragment>
       )
     }
@@ -518,6 +519,7 @@ Header.propTypes = {
   postCode: PropTypes.string,
   showLoginCTA: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
+  hasLoginModal: PropTypes.bool,
 }
 
 Header.defaultProps = {
@@ -541,6 +543,7 @@ Header.defaultProps = {
   postCode: '',
   showLoginCTA: false,
   isPaymentBeforeChoosingEnabled: false,
+  hasLoginModal: false,
 }
 
 export { Header }
