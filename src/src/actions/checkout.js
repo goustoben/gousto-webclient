@@ -255,13 +255,17 @@ export function checkout3DSSignup() {
       }
 
       const reqData = getPaymentAuthData(state)
-
-      const { data } = await authPayment(reqData)
-      dispatch({
-        type: actionTypes.PAYMENT_SHOW_MODAL,
-        challengeUrl: data.responsePayload.redirectLink,
-      })
-      dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
+      if (reqData.order_id) {
+        const { data } = await authPayment(reqData)
+        dispatch({
+          type: actionTypes.PAYMENT_SHOW_MODAL,
+          challengeUrl: data.responsePayload.redirectLink,
+        })
+        dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
+      } else {
+        const error = { message: 'order_id is required', name: 'auth is not sent' }
+        dispatch(trackFailedCheckoutFlow('Order_id does not exist for payment-auth', error))
+      }
     } catch (err) {
       await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck: true })
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
@@ -284,13 +288,17 @@ export function checkoutDecoupledPaymentSignup() {
 
       if (is3DSCardPayment(state)) {
         const reqData = getPaymentAuthData(state)
-
-        const { data } = await authPayment(reqData)
-        dispatch({
-          type: actionTypes.PAYMENT_SHOW_MODAL,
-          challengeUrl: data.responsePayload.redirectLink,
-        })
-        dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
+        if (reqData.order_id) {
+          const { data } = await authPayment(reqData)
+          dispatch({
+            type: actionTypes.PAYMENT_SHOW_MODAL,
+            challengeUrl: data.responsePayload.redirectLink,
+          })
+          dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
+        } else {
+          const error = { message: 'order_id is required', name: 'auth is not sent' }
+          dispatch(trackFailedCheckoutFlow('Order_id does not exist for payment-auth', error, { decoupling: true }))
+        }
       } else {
         await dispatch(checkoutActions.checkoutSignupPayment())
       }
