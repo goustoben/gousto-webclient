@@ -1,7 +1,11 @@
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { redirect } from 'actions/redirect'
 import loginActions from 'actions/login'
-import { signupCheckAccountGoToBoxPrices, signupCheckAccountLogin } from '../signupActions'
+import {
+  signupCheckAccountGoToBoxPrices,
+  signupCheckAccountLogin,
+  signupApplyVoucherGoToDeliveries,
+} from '../signupActions'
 
 jest.mock('actions/tracking', () => ({
   trackUTMAndPromoCode: jest.fn(),
@@ -41,6 +45,17 @@ describe('signupActions', () => {
     test('then it should dispatch correct actions', () => {
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith('click_god_existing_customer')
       expect(loginActions.loginVisibilityChange).toHaveBeenCalledWith(true)
+    })
+  })
+
+  describe('given signupApplyVoucherGoToDeliveries is dispatched', () => {
+    beforeEach(() => {
+      signupApplyVoucherGoToDeliveries()(dispatch)
+    })
+
+    test('then it should dispatch correct actions', () => {
+      expect(trackUTMAndPromoCode).toHaveBeenCalledWith('click_apply_voucher_existing_account')
+      expect(redirect).toHaveBeenCalledWith('/my-deliveries')
     })
   })
 })

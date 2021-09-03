@@ -9,7 +9,7 @@ import windowUtils from 'utils/window'
 import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import { getUserId } from 'selectors/user'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import { getIsPaymentBeforeChoosingEnabled, getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import pricingActions from './pricing'
@@ -187,6 +187,14 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     const location = documentLocation()
     const onCheckout = location.pathname.includes('check-out')
     let destination = false
+
+    const isGoustoOnDemandJourneyEnabled = getIsGoustoOnDemandEnabled(state) && location.pathname.includes(`${client.signup}/start`)
+    if (isGoustoOnDemandJourneyEnabled) {
+      redirect(`${client.signup}/apply-voucher`)
+
+      return
+    }
+
     if (!onCheckout) {
       destination = loginRedirect(location, userIsAdmin, features, userId)
       if (destination && destination !== client.myDeliveries) {

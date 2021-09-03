@@ -30,3 +30,14 @@ export const getCurrentPromoCodeCustomText1 = createSelector(
     return promoCodeData.getIn(['campaign', 'landingDetails1'], null)
   }
 )
+
+export const getCurrentPromoCodeCustomText2 = createSelector(
+  [getCurrentPromoCodeData],
+  (promoCodeData) => {
+    if (!promoCodeData) {
+      return null
+    }
+
+    return promoCodeData.getIn(['campaign', 'landingDetails2'], null)
+  }
+)

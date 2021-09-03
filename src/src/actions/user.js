@@ -377,8 +377,9 @@ function userLoadOrder(orderId, forceRefresh = false) {
 
 function userLoadNewOrders() {
   return async (dispatch, getState) => {
+    const forceRefresh = getIsGoustoOnDemandEnabled(getState())
     // eslint-disable-next-line no-use-before-define
-    await Promise.all([dispatch(userActions.userLoadOrders()), dispatch(userActions.userLoadProjectedDeliveries())])
+    await Promise.all([dispatch(userActions.userLoadOrders(forceRefresh)), dispatch(userActions.userLoadProjectedDeliveries())])
 
     let projectedDeliveries
     const state = getState()

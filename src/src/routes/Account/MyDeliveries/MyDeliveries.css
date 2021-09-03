@@ -10,6 +10,15 @@
   }
 }
 
+.bannerContainer {
+  padding: 0 0.75rem;
+  margin-bottom: -1rem;
+
+  @media BreakpointFromMedium {
+    padding: 0 0.75rem;
+  }
+}
+
 .subTitleContainer {
 	display: flex;
 	justify-content: space-between;

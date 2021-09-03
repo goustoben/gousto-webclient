@@ -5,18 +5,22 @@ import MyDeliveries from 'routes/Account/MyDeliveries/MyDeliveries'
 
 const userLoadAddressesMock = jest.fn()
 const userLoadNewOrdersMock = jest.fn()
+const userLoadData = jest.fn()
 
 describe('MyDeliveries', () => {
-  describe('fetchOrdersAndAddresses', () => {
-    beforeEach(() => {
-      shallow(<MyDeliveries
-        userLoadAddresses={userLoadAddressesMock}
-        userLoadNewOrders={userLoadNewOrdersMock}
-        userId="user-test-id"
-        userLoadData={() => {}}
-      />)
-    })
+  let wrapper
+  const requiredProps = {
+    userLoadAddresses: userLoadAddressesMock,
+    userLoadNewOrders: userLoadNewOrdersMock,
+    userId: 'user-test-id',
+    userLoadData,
+  }
 
+  beforeEach(() => {
+    wrapper = shallow(<MyDeliveries {...requiredProps} />)
+  })
+
+  describe('fetchOrdersAndAddresses', () => {
     afterEach(() => {
       jest.clearAllMocks()
     })
@@ -30,15 +34,8 @@ describe('MyDeliveries', () => {
     })
 
     describe('when user id is undefined', () => {
-      const userLoadData = jest.fn()
-
       beforeEach(() => {
-        shallow(<MyDeliveries
-          userLoadAddresses={userLoadAddressesMock}
-          userLoadNewOrders={userLoadNewOrdersMock}
-          userId=""
-          userLoadData={userLoadData}
-        />)
+        shallow(<MyDeliveries {...requiredProps} userId="" />)
       })
 
       test('should call userLoadData', () => {
@@ -48,28 +45,22 @@ describe('MyDeliveries', () => {
   })
 
   describe('rendering', () => {
-    const expectAlertAndRetryButton = function (wrapper) {
-      const alert = wrapper.find('Alert')
-      const buttons = wrapper.find('Button')
+    const expectAlertAndRetryButton = (container) => {
+      const alert = container.find('Alert')
+      const buttons = container.find('Button')
       expect(alert.length).toEqual(1)
       expect(alert.find('p').prop('children')).toEqual('We\'re not able to display your deliveries right now. Please try again later.')
       expect(buttons.length).toEqual(1)
       expect(buttons.at(0).childAt(0).text()).toEqual('Retry')
     }
 
-    let wrapper
-
     beforeEach(() => {
-      wrapper = shallow(<MyDeliveries
-        isFetchingOrders={false}
-        isFetchingAddresses={false}
-        didErrorFetchingOrders={null}
-        didErrorFetchingAddresses={null}
-        userLoadAddresses={userLoadAddressesMock}
-        userLoadNewOrders={userLoadNewOrdersMock}
-        userId="user-test-id"
-        userLoadData={() => {}}
-      />)
+      wrapper.setProps({
+        isFetchingOrders: false,
+        isFetchingAddresses: false,
+        didErrorFetchingOrders: null,
+        didErrorFetchingAddresses: null,
+      })
     })
 
     test('should render a <div> with no props', () => {
@@ -88,60 +79,50 @@ describe('MyDeliveries', () => {
     })
 
     test('should render the Loading component instead of OrderList one when fetching orders is pending', () => {
-      wrapper = shallow(<MyDeliveries
-        isFetchingOrders
-        userLoadAddresses={userLoadAddressesMock}
-        userLoadNewOrders={userLoadNewOrdersMock}
-        userId="user-test-id"
-        userLoadData={() => {}}
-      />)
+      wrapper.setProps({ isFetchingOrders: true })
       expect(wrapper.find('Connect(OrdersList)').length).toEqual(0)
       expect(wrapper.find('Loading').length).toEqual(1)
     })
 
     test('should NOT render the Loading component when fetching addresses is pending', () => {
-      wrapper = shallow(<MyDeliveries
-        isFetchingAddresses
-        userLoadAddresses={userLoadAddressesMock}
-        userLoadNewOrders={userLoadNewOrdersMock}
-        userId="user-test-id"
-        userLoadData={() => {}}
-      />)
+      wrapper.setProps({
+        isFetchingAddresses: true
+      })
       expect(wrapper.find('Connect(OrdersList)').length).toEqual(1)
       expect(wrapper.find('Loading').length).toEqual(0)
     })
 
     test('should render an error Alert and retry button when fetching orders fails', () => {
-      wrapper = shallow(<MyDeliveries
-        didErrorFetchingPendingOrders="error"
-        userLoadAddresses={userLoadAddressesMock}
-        userLoadNewOrders={userLoadNewOrdersMock}
-        userId="user-test-id"
-        userLoadData={() => {}}
-      />)
+      wrapper.setProps({
+        didErrorFetchingPendingOrders: 'error'
+      })
       expectAlertAndRetryButton(wrapper)
     })
 
     test('should render an error Alert and retry button when fetching projected orders fails', () => {
-      wrapper = shallow(<MyDeliveries
-        didErrorFetchingProjectedOrders="error"
-        userLoadAddresses={userLoadAddressesMock}
-        userLoadNewOrders={userLoadNewOrdersMock}
-        userId="user-test-id"
-        userLoadData={() => {}}
-      />)
+      wrapper.setProps({
+        didErrorFetchingProjectedOrders: 'error'
+      })
       expectAlertAndRetryButton(wrapper)
     })
 
     test('should render an error Alert and retry button when fetching addresses fails', () => {
-      wrapper = shallow(<MyDeliveries
-        didErrorFetchingAddresses="error"
-        userLoadAddresses={userLoadAddressesMock}
-        userLoadNewOrders={userLoadNewOrdersMock}
-        userId="user-test-id"
-        userLoadData={() => {}}
-      />)
+      wrapper.setProps({
+        didErrorFetchingAddresses: 'error'
+      })
       expectAlertAndRetryButton(wrapper)
+    })
+  })
+
+  describe('when isGoustoOnDemandEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isGoustoOnDemandEnabled: true
+      })
+    })
+
+    test('then should render DeliveryCard', () => {
+      expect(wrapper.find('DeliveryCard').exists()).toBeTruthy()
     })
   })
 })

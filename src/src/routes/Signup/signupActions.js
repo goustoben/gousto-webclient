@@ -1,6 +1,7 @@
 import {
   signupCheckAccountNewCustomer,
   signupCheckAccountExistingCustomer,
+  signupApplyVoucher,
 } from 'actions/trackingKeys'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { redirect } from 'actions/redirect'
@@ -17,4 +18,9 @@ export const signupCheckAccountLogin = () => (dispatch) => {
 
   const { loginVisibilityChange } = loginActions
   dispatch(loginVisibilityChange(true))
+}
+
+export const signupApplyVoucherGoToDeliveries = () => (dispatch) => {
+  dispatch(trackUTMAndPromoCode(signupApplyVoucher))
+  dispatch(redirect(`${routes.client.myDeliveries}`))
 }

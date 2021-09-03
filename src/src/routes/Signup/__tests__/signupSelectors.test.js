@@ -3,6 +3,7 @@ import {
   getIsSocialBelongingEnabled,
   getIsBoxSizeVerticalLayoutEnabled,
   getCurrentPromoCodeCustomText1,
+  getCurrentPromoCodeCustomText2,
 } from '../signupSelectors'
 
 describe('signupSelectors', () => {
@@ -79,6 +80,47 @@ describe('signupSelectors', () => {
 
       test('then it should return null', () => {
         expect(getCurrentPromoCodeCustomText1(state)).toBe(null)
+      })
+    })
+  })
+
+  describe('given getCurrentPromoCodeCustomText2 is called', () => {
+    let state
+
+    beforeEach(() => {
+      state = {
+        basket: Immutable.fromJS({
+          promoCode: 'TEST-PROMO-CODE',
+        }),
+        promoStore: Immutable.fromJS({
+          'TEST-PROMO-CODE': {
+            code: 'TEST-PROMO-CODE',
+            codeData: {
+              campaign: {
+                landingDetails2: 'custom text',
+              },
+            },
+          },
+        }),
+      }
+    })
+
+    test('then it should return the correct value', () => {
+      expect(getCurrentPromoCodeCustomText2(state)).toEqual('custom text')
+    })
+
+    describe('when promo code data is missing', () => {
+      beforeEach(() => {
+        state = {
+          basket: Immutable.fromJS({
+            promoCode: 'TEST-PROMO-CODE',
+          }),
+          promoStore: Immutable.fromJS({}),
+        }
+      })
+
+      test('then it should return null', () => {
+        expect(getCurrentPromoCodeCustomText2(state)).toBe(null)
       })
     })
   })

@@ -77,4 +77,5 @@ export const signupConfig = {
   discountAppliedText: 'View this when you reach the checkout.',
   sellThePropositionPagePath: 'about',
   checkAccountPageSlug: 'start',
+  applyVoucherPageSlug: 'apply-voucher',
 }

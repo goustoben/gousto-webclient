@@ -12,7 +12,7 @@ function mapStateToProps(state) {
   return {
     deliveryDate: order.get('deliveryDate'),
     whenCutoff: order.get('whenCutoff'),
-    interval: subscription.get('interval').title,
+    interval: subscription ? subscription.get('interval').title : '',
     nameFirst,
   }
 }

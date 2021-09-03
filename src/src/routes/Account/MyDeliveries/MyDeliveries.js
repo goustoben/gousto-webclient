@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router'
 import routes from 'config/routes'
 import Loading from 'Loading'
 import logger from 'utils/logger'
+import { DeliveryCard } from 'routes/Checkout/Components/Delivery/DeliveryCard'
 import OrdersList from './OrdersList'
 import css from './MyDeliveries.css'
 import accountCss from '../Account/Account.css'
@@ -13,6 +14,11 @@ import accountCss from '../Account/Account.css'
 class MyDeliveries extends React.PureComponent {
   componentDidMount() {
     this.fetchOrdersAndAddresses()
+  }
+
+  componentWillUnmount() {
+    const { signupSetGoustoOnDemandEnabled } = this.props
+    signupSetGoustoOnDemandEnabled(false)
   }
 
   fetchOrdersAndAddresses = async () => {
@@ -72,6 +78,22 @@ class MyDeliveries extends React.PureComponent {
     return <OrdersList />
   }
 
+  renderGoustoOnDemandBanner = () => {
+    const { isGoustoOnDemandEnabled } = this.props
+
+    if (isGoustoOnDemandEnabled) {
+      return (
+        <div className={css.bannerContainer}>
+          <DeliveryCard iconName="icon-gousto-on-demand-offer" cardStyle="blue">
+            Voucher will be applied to your next order
+          </DeliveryCard>
+        </div>
+      )
+    }
+
+    return null
+  }
+
   render() {
     return (
       <div className={accountCss.accountContainer} data-testing="myDeliveries">
@@ -92,6 +114,7 @@ class MyDeliveries extends React.PureComponent {
             </CTA>
           </div>
         </div>
+        {this.renderGoustoOnDemandBanner()}
         {this.renderOrders()}
       </div>
     )
@@ -107,6 +130,8 @@ MyDeliveries.propTypes = {
   userLoadData: PropTypes.func.isRequired,
   userLoadNewOrders: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
+  isGoustoOnDemandEnabled: PropTypes.bool,
+  signupSetGoustoOnDemandEnabled: PropTypes.func,
 }
 
 MyDeliveries.defaultProps = {
@@ -114,6 +139,8 @@ MyDeliveries.defaultProps = {
   didErrorFetchingPendingOrders: null,
   didErrorFetchingProjectedOrders: null,
   didErrorFetchingAddresses: null,
+  isGoustoOnDemandEnabled: false,
+  signupSetGoustoOnDemandEnabled: () => {},
 }
 
 export default MyDeliveries
