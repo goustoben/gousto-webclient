@@ -1,20 +1,22 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import { AwinPixel } from 'AwinPixel'
 
 describe('AwinPixel', () => {
   let wrapper
 
+  const dispatch = jest.fn()
+
   test('should render nothing by default', () => {
-    wrapper = shallow(<AwinPixel />)
+    wrapper = shallow(<AwinPixel dispatch={dispatch} />)
 
     expect(wrapper.type()).toEqual(null)
   })
 
   describe('when show is true', () => {
     test('should render an image pixel', () => {
-      wrapper = shallow(<AwinPixel show />)
+      wrapper = shallow(<AwinPixel show dispatch={dispatch} />)
 
       expect(wrapper.type()).toEqual('img')
     })
@@ -22,7 +24,7 @@ describe('AwinPixel', () => {
 
   describe('without props', () => {
     test('should render an image pixel with the correct target', () => {
-      wrapper = shallow(<AwinPixel show />)
+      wrapper = shallow(<AwinPixel show dispatch={dispatch} />)
 
       const { searchParams } = new URL(wrapper.prop('src'))
 
@@ -58,6 +60,7 @@ describe('AwinPixel', () => {
           orderId={orderId}
           promoCode={promoCode}
           commissionGroup={commissionGroup}
+          dispatch={dispatch}
         />
       )
 
@@ -75,17 +78,19 @@ describe('AwinPixel', () => {
       })
 
       test('should render an image pixel with the correct target including a vc query parameter', () => {
-        wrapper = shallow(
+        wrapper = mount(
           <AwinPixel
             show
             total={total}
             orderId={orderId}
             promoCode={promoCode}
             commissionGroup={commissionGroup}
+            dispatch={dispatch}
           />
         )
 
-        const { searchParams } = new URL(wrapper.prop('src'))
+        const image = wrapper.find('img')
+        const { searchParams } = new URL(image.prop('src'))
 
         expect(searchParams.get('ref')).toEqual(orderId)
         expect(searchParams.get('amount')).toEqual(total)

@@ -38,6 +38,13 @@ import {
 } from 'selectors/payment'
 import { getUserId } from 'selectors/user'
 
+import {
+  trackFailedCheckoutFlow,
+  trackSuccessfulCheckoutFlow,
+  feLoggingLogEvent,
+  logLevels,
+} from 'actions/log'
+
 import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
 import {
@@ -54,7 +61,6 @@ import {
 } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
-import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from './log'
 import { pricingRequest } from './pricing'
 import tempActions from './temp'
 import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
@@ -392,12 +398,12 @@ export const trackPurchase = ({ orderId }) => (
       ga('gousto.send', 'pageview')
     }
 
-    trackAffiliatePurchase({
+    dispatch(trackAffiliatePurchase({
       orderId,
       total: prices.get('total', ''),
       commissionGroup: 'FIRSTPURCHASE',
       promoCode,
-    })
+    }))
   }
 )
 
@@ -480,12 +486,21 @@ export function fetchGoustoRef() {
         type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
         goustoRef,
       })
+      await dispatch(feLoggingLogEvent(logLevels.info, 'fetchGoustoRef: fetched'))
+    } else {
+      await dispatch(feLoggingLogEvent(logLevels.info, 'fetchGoustoRef: already present'))
     }
   }
 }
 
 export function clearGoustoRef() {
-  return { type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null }
+  return async (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+      goustoRef: null
+    })
+    await dispatch(feLoggingLogEvent(logLevels.info, 'clearGoustoRef'))
+  }
 }
 
 export function trackSignupPageChange(step) {

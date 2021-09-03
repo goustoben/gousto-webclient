@@ -39,7 +39,7 @@ export const getPromoCodeValidationDetails = state => {
 export const getCheckoutLastReachedStepIndex = state => state.checkout.get('lastReachedStepIndex')
 export const getPasswordValue = state => state.checkout.getIn(['passwordInfo', 'value'])
 
-export const getCheckoutLogData = state => ({
+export const getFeLoggingCorrelationData = state => ({
   session_id: get(Cookies, 'gousto_session_id', false, false),
   gousto_ref: state.checkout.get('goustoRef'),
 })

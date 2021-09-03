@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
   const promoCode = order.getIn(['prices', 'promoCode'])
 
   return {
-    show: orderId && total && order,
+    show: Boolean(orderId && total && order),
     commissionGroup: 'FIRSTPURCHASE',
     orderId,
     total,

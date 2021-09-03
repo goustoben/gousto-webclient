@@ -1,77 +1,32 @@
 import {
-  logInfo,
-  logError,
-  logCritical,
+  feLoggingLogEvent,
   trackSuccessfulCheckoutFlow,
   trackFailedCheckoutFlow,
+  logLevels,
 } from 'actions/log'
 import { log } from 'apis/log'
 
 jest.mock('apis/log', () => ({
-  log: jest.fn(() => Promise.resolve())
+  log: jest.fn(() => Promise.resolve()),
 }))
 
 jest.mock('selectors/checkout', () => ({
-  getCheckoutLogData: jest.fn(() => ({
+  getFeLoggingCorrelationData: jest.fn(() => ({
     session_id: 'fake_session_id',
     gousto_ref: 'fake_gousto_ref',
-  }))
+  })),
 }))
 
 describe('log actions', () => {
   const getState = () => {}
   const dispatch = (action) => {
-    action()
+    action(dispatch, getState)
   }
   const message = 'Test message'
   const data = { foo: 'bar' }
 
   beforeEach(() => {
     log.mockClear()
-  })
-
-  describe('logInfo', () => {
-    test('should log with info level', async () => {
-      await logInfo(message, data)(dispatch, getState)
-
-      expect(log).toHaveBeenCalledWith('info', 'Test message', { foo: 'bar' })
-    })
-  })
-
-  describe('logError', () => {
-    test('should log with error level', async () => {
-      const error = new Error('Test error')
-      const expectedData = {
-        foo: 'bar',
-        error: {
-          message: 'Test error',
-          stack: expect.any(String),
-          name: 'Error'
-        }
-      }
-
-      await logError(message, error, data)(dispatch, getState)
-
-      expect(log).toHaveBeenCalledWith('error', 'Test message', expectedData)
-    })
-  })
-
-  describe('logCritical', () => {
-    test('should log with critical level', async () => {
-      const error = new Error('Test error')
-      const expectedData = {
-        foo: 'bar',
-        error: {
-          message: 'Test error',
-          stack: expect.any(String),
-          name: 'Error'
-        }
-      }
-
-      await logCritical(message, error, data)(dispatch, getState)
-
-      expect(log).toHaveBeenCalledWith('critical', 'Test message', expectedData)
-    })
   })
 
   describe('trackSuccessfulCheckoutFlow', () => {
@@ -95,7 +50,7 @@ describe('log actions', () => {
         error: {
           message: 'Test error',
           stack: expect.any(String),
-          name: 'Error'
+          name: 'Error',
         },
         foo: 'bar',
         session_id: 'fake_session_id',
@@ -114,7 +69,7 @@ describe('log actions', () => {
     })
 
     test('should catch the error', async () => {
-      await logInfo(message, data)(dispatch, getState)
+      await feLoggingLogEvent(logLevels.info, message, data)(dispatch, getState)
 
       expect(log).toHaveBeenCalled()
     })

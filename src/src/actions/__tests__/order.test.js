@@ -170,7 +170,6 @@ describe('order actions', () => {
             trackOrder('affiliate-no-action', order)(dispatch, getState)
 
             expect(getState).toHaveBeenCalled()
-            expect(dispatch).not.toHaveBeenCalled()
             expect(trackAffiliatePurchase).toHaveBeenCalledWith({
               orderId: '735702932',
               total: 31.99,
@@ -185,7 +184,6 @@ describe('order actions', () => {
             trackOrder('affiliate-no-action', order)(dispatch, getState)
 
             expect(getState).toHaveBeenCalled()
-            expect(dispatch).not.toHaveBeenCalled()
             expect(trackAffiliatePurchase).toHaveBeenCalled()
           })
         })
@@ -230,7 +228,6 @@ describe('order actions', () => {
             trackOrder('affiliate-no-action', order)(dispatch, getState)
 
             expect(getState).toHaveBeenCalled()
-            expect(dispatch).not.toHaveBeenCalled()
             expect(trackAffiliatePurchase).toHaveBeenCalledWith({
               orderId: '735702932',
               total: 31.99,
@@ -245,7 +242,6 @@ describe('order actions', () => {
             trackOrder('affiliate-no-action', order)(dispatch, getState)
 
             expect(getState).toHaveBeenCalled()
-            expect(dispatch).not.toHaveBeenCalled()
             expect(trackAffiliatePurchase).toHaveBeenCalled()
           })
         })

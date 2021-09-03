@@ -285,6 +285,11 @@ describe('tracking actions', () => {
   })
 
   describe('trackAffiliatePurchase', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getState = jest.fn()
+    })
+
     describe('if not on the client', () => {
       const Sale = {
         amount: '',
@@ -304,13 +309,13 @@ describe('tracking actions', () => {
         }
       })
 
-      test('should not modify AWIN', () => {
-        trackAffiliatePurchase({
+      test('should not modify AWIN', async () => {
+        await trackAffiliatePurchase({
           orderId: 9010320,
           total: '34.99',
           commissionGroup: 'EXISTING',
           promoCode: '',
-        })
+        })(dispatch, getState)
 
         expect(global.AWIN).toEqual({
           Tracking: {
@@ -330,7 +335,14 @@ describe('tracking actions', () => {
           global.AWIN = undefined
         })
 
-        test('then it should not do anything as the tracking method is unavailable', () => {
+        test('then it should not do anything as the tracking method is unavailable', async () => {
+          await trackAffiliatePurchase({
+            orderId: 9010320,
+            total: '34.99',
+            commissionGroup: 'EXISTING',
+            promoCode: '',
+          })(dispatch, getState)
+
           expect(global.AWIN).toBe(undefined)
         })
       })
@@ -349,13 +361,13 @@ describe('tracking actions', () => {
           global.AWIN = AWIN
         })
 
-        test('should save order as Tracking.Sale and invoke run', () => {
-          trackAffiliatePurchase({
+        test('then should save order as Tracking.Sale and invoke run', async () => {
+          await trackAffiliatePurchase({
             orderId: 9010321,
             total: '24.50',
             commissionGroup: 'FIRSTPURCHASE',
             promoCode: 'DTI-SB-P30M',
-          })
+          })(dispatch, getState)
 
           expect(global.AWIN.Tracking.Sale).toEqual({
             amount: '24.50',
@@ -363,10 +375,42 @@ describe('tracking actions', () => {
             currency: 'GBP',
             orderRef: 9010321,
             parts: 'FIRSTPURCHASE:24.50',
-            voucher: 'DTI-SB-P30M'
+            voucher: 'DTI-SB-P30M',
+            test: '0',
           })
 
           expect(global.AWIN.Tracking.run).toHaveBeenCalled()
+        })
+
+        describe('and when on a non-production environment', () => {
+          let originalEnv
+          beforeEach(() => {
+            originalEnv = globals.env
+            globals.env = 'development'
+          })
+
+          afterEach(() => {
+            globals.env = originalEnv
+          })
+
+          test('then it should fill the "test" field correctly', async () => {
+            await trackAffiliatePurchase({
+              orderId: 9010321,
+              total: '24.50',
+              commissionGroup: 'FIRSTPURCHASE',
+              promoCode: 'DTI-SB-P30M',
+            })(dispatch, getState)
+
+            expect(global.AWIN.Tracking.Sale).toEqual({
+              amount: '24.50',
+              channel: '',
+              currency: 'GBP',
+              orderRef: 9010321,
+              parts: 'FIRSTPURCHASE:24.50',
+              voucher: 'DTI-SB-P30M',
+              test: '1',
+            })
+          })
         })
       })
     })

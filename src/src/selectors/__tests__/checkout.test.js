@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { hasCheckoutError, getPromoCodeValidationDetails, getCheckoutLogData } from 'selectors/checkout'
+import { hasCheckoutError, getPromoCodeValidationDetails, getFeLoggingCorrelationData } from 'selectors/checkout'
 
 jest.mock('utils/cookieHelper2', () => ({
   get: () => 'fake_session_id'
@@ -98,7 +98,7 @@ describe('checkout selectors', () => {
     })
   })
 
-  describe('getCheckoutLogData', () => {
+  describe('getFeLoggingCorrelationData', () => {
     const state = {
       checkout: Immutable.fromJS({
         goustoRef: '105979923'
@@ -111,7 +111,7 @@ describe('checkout selectors', () => {
         gousto_ref: '105979923',
       }
 
-      const result = getCheckoutLogData(state)
+      const result = getFeLoggingCorrelationData(state)
 
       expect(result).toEqual(expected)
     })

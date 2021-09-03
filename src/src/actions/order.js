@@ -59,7 +59,7 @@ export const trackOrder = (orderAction, order) => (
           promoCode: promoCode || basket.get('promoCode') || '',
         }
 
-        trackAffiliatePurchase(affiliateTracking)
+        dispatch(trackAffiliatePurchase(affiliateTracking))
       }
 
       if (actionType) {

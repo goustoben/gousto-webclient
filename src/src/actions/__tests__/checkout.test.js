@@ -573,6 +573,8 @@ describe('checkout actions', () => {
   describe('checkoutNon3DSSignup', () => {
     beforeEach(() => {
       getState.mockReturnValue(createState())
+
+      jest.spyOn(checkoutActions, 'clearGoustoRef')
     })
 
     test('should subscribe user', async () => {
@@ -584,7 +586,7 @@ describe('checkout actions', () => {
     test('should clear gousto ref', async () => {
       await checkoutNon3DSSignup()(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
     })
 
     describe('when there is an error', () => {
@@ -609,7 +611,7 @@ describe('checkout actions', () => {
       test('should clear gousto reference', async () => {
         await checkoutNon3DSSignup()(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
     })
 
@@ -688,6 +690,7 @@ describe('checkout actions', () => {
       getState.mockReturnValue(createState({
         checkout: checkoutState
       }))
+      jest.spyOn(checkoutActions, 'clearGoustoRef')
     })
 
     describe('when promo code is not applied', () => {
@@ -766,7 +769,7 @@ describe('checkout actions', () => {
       test('should not clear gousto reference', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
-        expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+        expect(checkoutActions.clearGoustoRef).not.toHaveBeenCalled()
       })
     })
 
@@ -805,7 +808,7 @@ describe('checkout actions', () => {
     test('should not clear gousto reference', async () => {
       await checkout3DSSignup()(dispatch, getState)
 
-      expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      expect(checkoutActions.clearGoustoRef).not.toHaveBeenCalled()
     })
 
     describe('when auth payment request failed', () => {
@@ -816,7 +819,7 @@ describe('checkout actions', () => {
       test('should clear gousto reference', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
     })
   })
@@ -862,7 +865,7 @@ describe('checkout actions', () => {
       test('should clear gousto reference', async () => {
         await checkPaymentAuth(successSessionId)(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
 
       describe('when decoupled payment enabled', () => {
@@ -946,7 +949,7 @@ describe('checkout actions', () => {
       test('should clear gousto reference', async () => {
         await checkPaymentAuth(failedSessionId)(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
 
       test('should reset preview order id', async () => {
@@ -1029,7 +1032,7 @@ describe('checkout actions', () => {
       test('should clear gousto reference', async () => {
         await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
     })
 
@@ -1085,7 +1088,7 @@ describe('checkout actions', () => {
     test('should clear gousto reference', async () => {
       await checkoutSignupPayment()(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
     })
 
     test('should reset CHECKOUT_SIGNUP state', async () => {

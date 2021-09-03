@@ -11,6 +11,7 @@ import { getPreviewOrderId } from 'selectors/basket'
 import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode } from 'selectors/tracking'
+import { feLoggingLogEvent, logLevels } from 'actions/log'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -69,24 +70,40 @@ export const setAffiliateSource = asource => (
   }
 )
 
-export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) => {
-  if (!(globals.client && window.AWIN)) {
-    return
-  }
+export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) =>
+  async (dispatch) => {
+    if (!(globals.client && window.AWIN)) {
+      await dispatch(
+        feLoggingLogEvent(
+          logLevels.error,
+          'trackAffiliatePurchase: Awin not in execution context',
+          { orderId, total, commissionGroup, promoCode }
+        )
+      )
 
-  // Example #2 from
-  // https://wiki.awin.com/index.php/Advertiser_Tracking_Guide/Standard_Implementation#Conversion_Tag
-  window.AWIN.Tracking.Sale = {
-    amount: total,
-    channel: '',
-    orderRef: orderId,
-    parts: `${commissionGroup}:${total}`,
-    voucher: promoCode,
-    currency: 'GBP',
-  }
+      return
+    }
 
-  window.AWIN.Tracking.run()
-}
+    const sale = {
+      amount: total,
+      channel: '',
+      orderRef: orderId,
+      parts: `${commissionGroup}:${total}`,
+      voucher: promoCode,
+      currency: 'GBP',
+      test: globals.env === 'production' ? '0' : '1',
+    }
+
+    // Example #2 from
+    // https://wiki.awin.com/index.php/Advertiser_Tracking_Guide/Standard_Implementation#Conversion_Tag
+    window.AWIN.Tracking.Sale = sale
+
+    await dispatch(
+      feLoggingLogEvent(logLevels.info, 'trackAffiliatePurchase: sending awin request', { sale })
+    )
+
+    window.AWIN.Tracking.run()
+  }
 
 export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
   (dispatch, getState) => {
