@@ -27,14 +27,6 @@
   font: FontStyleBody !important;
 }
 
-.isHomepageFreeDeliveryEnabled {
-  composes: fontStyleS from 'design-language/typography.css';
-
-  @media BreakpointFromMedium {
-    font: FontStyleBody !important;
-  }
-}
-
 .row {
   display: flex;
   min-height: iconSize;

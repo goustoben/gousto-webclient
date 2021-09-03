@@ -43,12 +43,6 @@
   }
 }
 
-.heroImageHomepageFreeDeliveryEnabled {
-  @media BreakpointFromMedium {
-    max-height: 32.75rem;
-  }
-}
-
 .textContainer {
   width: 100%;
   position: relative;

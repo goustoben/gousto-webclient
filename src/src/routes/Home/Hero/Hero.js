@@ -56,7 +56,7 @@ class Hero extends Component {
   }
 
   renderGetStarted = (isHeroCTA) => {
-    const { ctaUri, ctaText, isAuthenticated, isHomepageFreeDeliveryEnabled } = this.props
+    const { ctaUri, ctaText, isAuthenticated } = this.props
     const { isSticky, maxHeight } = this.state
     const className = isHeroCTA
       ? css.stickyContainer
@@ -79,13 +79,13 @@ class Hero extends Component {
         >
           {isSticky && !isHeroCTA && !isAuthenticated ? homeConfig.CTA.stickyCTA : ctaText}
         </CTAHomepageContainer>
-        <Benefits isHomepageFreeDeliveryEnabled={isHomepageFreeDeliveryEnabled} />
+        <Benefits byId="noLockIn" />
       </div>
     )
   }
 
   render() {
-    const { dataTesting, isHomepageFreeDeliveryEnabled } = this.props
+    const { dataTesting } = this.props
 
     return (
       <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
@@ -103,13 +103,7 @@ class Hero extends Component {
           {this.renderGetStarted(true)}
           <div role="img" aria-label="cooking image" className={css.processImage} />
         </div>
-        <div
-          role="img"
-          aria-label="cooking image"
-          className={classNames(css.heroImage, {
-            [css.heroImageHomepageFreeDeliveryEnabled]: isHomepageFreeDeliveryEnabled,
-          })}
-        />
+        <div role="img" aria-label="cooking image" className={css.heroImage} />
         {this.renderGetStarted(false)}
       </div>
     )
@@ -121,13 +115,11 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
   isAuthenticated: PropTypes.bool,
-  isHomepageFreeDeliveryEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
   dataTesting: 'hero',
   isAuthenticated: false,
-  isHomepageFreeDeliveryEnabled: false,
 }
 
 export { Hero }

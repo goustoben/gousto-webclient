@@ -20,25 +20,12 @@ const allBenefits = [
   },
 ]
 
-export const Benefits = ({
-  byId,
-  isHomepageFreeDeliveryEnabled,
-  isCentered,
-  fontStyleS,
-  fontStyleBody,
-}) => {
-  let benefits
-
-  if (byId) {
-    benefits = allBenefits.filter((benefit) => benefit.id === byId)
-  } else {
-    benefits = isHomepageFreeDeliveryEnabled ? allBenefits : allBenefits.slice(0, 1)
-  }
+export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody }) => {
+  const benefits = allBenefits.filter((benefit) => benefit.id === byId)
 
   return (
     <div
       className={classNames(css.container, {
-        [css.isHomepageFreeDeliveryEnabled]: isHomepageFreeDeliveryEnabled,
         [css.isCentered]: isCentered,
         [css.fontStyleS]: fontStyleS,
         [css.fontStyleBody]: fontStyleBody,
@@ -60,16 +47,13 @@ export const Benefits = ({
 }
 
 Benefits.propTypes = {
-  byId: PropTypes.string,
-  isHomepageFreeDeliveryEnabled: PropTypes.bool,
+  byId: PropTypes.string.isRequired,
   isCentered: PropTypes.bool,
   fontStyleS: PropTypes.bool,
   fontStyleBody: PropTypes.bool,
 }
 
 Benefits.defaultProps = {
-  byId: null,
-  isHomepageFreeDeliveryEnabled: false,
   isCentered: false,
   fontStyleS: false,
   fontStyleBody: false,

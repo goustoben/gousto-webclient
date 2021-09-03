@@ -7,9 +7,3 @@
     max-width: 17.5rem;
   }
 }
-
-.isHomepageFreeDeliveryEnabled {
-  @media BreakpointFromMedium {
-    max-width: 22rem;
-  }
-}
