@@ -24,7 +24,6 @@ const config = {
   context: path.resolve(__dirname, '..'),
   target: 'node',
   entry: [
-    'babel-polyfill',
     './server/main.js',
   ],
   output: {
@@ -37,10 +36,8 @@ const config = {
       {
         test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
-        },
+        loader: 'ts-loader',
+        options: {},
         include: [
           path.resolve(__dirname, '../src'),
           path.resolve(__dirname, '../server'),
