@@ -90,8 +90,7 @@ const addOverridesForDevBuildConfig = (webpackConfig, _clientDevServerEnabled = 
     ...webpackConfig,
     devtool: 'eval-cheap-module-source-map',
     entry: {
-      main: ['babel-polyfill', './src/client.js'],
-      performanceTracker: ['./src/performanceTracker/entry.js'],
+      main: ['./src/client.js'],
     },
     mode: 'development',
     output: {
