@@ -42,6 +42,7 @@
   "dependencies": {
     "@axe-core/react": "^4.1.1",
     "@optimizely/optimizely-sdk": "^4.1.0",
+    "@types/jest": "^27.0.1",
     "actual": "0.4.0",
     "airbnb-prop-types": "^2.16.0",
     "babel-polyfill": "6.26.0",
@@ -98,6 +99,7 @@
     "swr": "^0.5.6",
     "transit-immutable-js": "0.7.0",
     "transit-js": "0.8.861",
+    "ts-jest": "^27.0.5",
     "url": "0.11.0",
     "uuid": "3.3.2",
     "validator": "10.4.0"
@@ -146,7 +148,7 @@
     "identity-obj-proxy": "3.0.0",
     "ignore": "^5.1.8",
     "image-webpack-loader": "4.6.0",
-    "jest": "23.6.0",
+    "jest": "^27.1.0",
     "jest-fetch-mock": "^3.0.3",
     "jsdom": "11.3.0",
     "json5": "^2.2.0",
@@ -202,6 +204,8 @@
     ]
   },
   "jest": {
+    "testEnvironment": "jsdom",
+    "preset": "ts-jest",    
     "coverageReporters": [
       "json",
       "lcov",
@@ -225,7 +229,7 @@
       "libs/goustouicomponents"
     ],
     "transform": {
-      "^.+\\.js?$": "babel-jest",
+      "^.+\\.js?$": "ts-jest",
       "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/.fileTransformer.js"
     },
     "collectCoverageFrom": [
@@ -260,7 +264,11 @@
       "__TEST__": true,
       "process.env.NODE_ENV": "production",
       "__GIT_HASH__": "production",
-      "__ENDPOINTS__": {}
+      "__ENDPOINTS__": {},
+      "ts-jest": {
+        "tsconfig": "./tsconfig.tests.json",
+        "isolatedModules": true
+      }
     }
   },
   "husky": {
