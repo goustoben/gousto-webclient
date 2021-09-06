@@ -1446,7 +1446,6 @@ describe('user actions', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
         projectedDeliveries: {},
-        isNewSubscriptionApiEnabled: true
       })
     })
   })

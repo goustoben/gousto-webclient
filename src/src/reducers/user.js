@@ -72,15 +72,9 @@ const user = {
 
     case actionTypes.USER_LOAD_PROJECTED_DELIVERIES:
       return state.set('projectedDeliveries', Immutable.fromJS(action.projectedDeliveries).reduce((workingDeliveries, projectedDelivery) => {
-        if (action.isNewSubscriptionApiEnabled) {
-          return workingDeliveries.set(projectedDelivery.get('deliveryDate'), projectedDelivery)
-        } else {
-          // Some fields need to be added to the projected deliveries to match the orders format
-          let projectedOrder = projectedDelivery.set('deliveryDate', projectedDelivery.get('date'))
-          projectedOrder = projectedOrder.get('active') === '1' ? projectedOrder.set('state', 'scheduled') : projectedOrder.set('state', 'cancelled')
+        const projectedDate = projectedDelivery.get('deliveryDate')
 
-          return workingDeliveries.set(projectedOrder.get('id'), projectedOrder)
-        }
+        return workingDeliveries.set(projectedDate, projectedDelivery)
       }, Immutable.Map({})))
 
     case actionTypes.USER_UNLOAD_ORDERS: {

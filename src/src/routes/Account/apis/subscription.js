@@ -39,11 +39,7 @@ export function unSkipDates(accessToken, userId, dates) {
   )
 }
 
-export function fetchSubscription(accessToken, reqData = {}) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.currentSubscription}`, reqData, 'GET')
-}
-
-export function fetchSubscriptionV2(accessToken, userId) {
+export function fetchSubscription(accessToken, userId) {
   return fetch(
     accessToken,
     buildSubscriptionQueryUrl(userId, routes.subscriptionQuery.subscriptions),

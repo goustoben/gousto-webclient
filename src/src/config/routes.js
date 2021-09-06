@@ -116,7 +116,6 @@ module.exports = {
     recipesStock: '/stock/recipe',
     userOrders: '/user/current/orders',
     userOrder: '/user/current/order',
-    userProjectedDeliveries: '/user/current/projected-deliveries',
     userAddress: '/user/current/address',
     userPromo: '/user/current/promotion-codes',
     currentUser: '/user/current',
