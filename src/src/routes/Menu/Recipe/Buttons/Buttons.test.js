@@ -391,8 +391,9 @@ describe('ButtonsContainer', () => {
         }
       }
     })
-    test('should render Buttons component', () => {
-      expect(wrapper.find('Buttons')).toHaveLength(1)
-    })
+  })
+
+  test('should render Buttons component', () => {
+    expect(wrapper.find('Buttons')).toHaveLength(1)
   })
 })
