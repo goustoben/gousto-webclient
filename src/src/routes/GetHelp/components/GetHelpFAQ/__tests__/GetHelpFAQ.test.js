@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { client } from '../../../../../config/routes'
 import { GetHelpFAQ } from '../GetHelpFAQ'
 
 describe('GetHelpFAQ', () => {
@@ -17,6 +18,20 @@ describe('GetHelpFAQ', () => {
   })
 
   test('renders without crashing', () => {})
+
+  describe('when I click the "Where can I view my credit?" section', () => {
+    beforeEach(() => {
+      wrapper.find('Card').at(0).find('Item').simulate('click')
+    })
+
+    test('the expanded content has a link pointing to My Details', () => {
+      const link = wrapper.find('Card').at(0).find('GoustoLink')
+
+      expect(link.prop('to')).toBe(client.myDetails)
+      expect(link.prop('clientRouted')).toBe(false)
+      expect(link.text()).toBe('Account Details')
+    })
+  })
 
   describe('when none of the issueIDs match known issues', () => {
     beforeEach(() => {
