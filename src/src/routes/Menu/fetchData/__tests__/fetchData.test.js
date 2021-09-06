@@ -308,7 +308,7 @@ describe('menu fetchData', () => {
             }])
           })
 
-          describe('when there is no default shipping address', async () => {
+          describe('when there is no default shipping address', () => {
             const secondShippingAddress = { id: 'shipping-3', shippingDefault: false }
 
             beforeEach(() => {
