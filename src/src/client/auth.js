@@ -32,8 +32,13 @@ export function refresh(store) {
       const refreshAt = moment(expiresAt).subtract(config.expiresThreshold, 'minutes')
       const ttl = Math.max(1, Math.round(moment.duration(refreshAt.diff(now)).asSeconds()))
 
+      // https://stackoverflow.com/questions/3468607/why-does-settimeout-break-for-large-millisecond-delay-values
+      const timeoutMs = Math.min(2147483647, ttl * 1000)
+
       clearTimeout(timeOutRef)
-      timeOutRef = setTimeout(() => { refreshClient(store) }, ttl * 1000)
+      timeOutRef = setTimeout(() => {
+        refreshClient(store)
+      }, timeoutMs)
     }
   } catch (err) {
     // refresh failed
