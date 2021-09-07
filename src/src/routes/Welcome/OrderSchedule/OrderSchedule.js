@@ -32,7 +32,7 @@ const OrderSchedule = ({
   const isValidWhenCutoff = isValidDate(deliveryDate)
 
   return (
-    <div className={css.container}>
+    <div data-testing="orderScheduleContainer" className={css.container}>
       <div className={css.header}>
         <h2>
           {`Congrats on ordering your first box, ${capitalizeFirstLetter(nameFirst)}!`}
