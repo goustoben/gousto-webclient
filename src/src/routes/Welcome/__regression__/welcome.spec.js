@@ -1,4 +1,4 @@
-describe('Given I am logged in', () => {
+describe.skip('Given I am logged in', () => {
   beforeEach(() => {
     cy.stubAll3rdParties()
     cy.server()
