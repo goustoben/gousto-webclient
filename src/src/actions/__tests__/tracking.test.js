@@ -288,6 +288,7 @@ describe('tracking actions', () => {
     beforeEach(() => {
       dispatch = jest.fn()
       getState = jest.fn()
+      jest.clearAllMocks()
     })
 
     describe('if not on the client', () => {
@@ -410,6 +411,23 @@ describe('tracking actions', () => {
               voucher: 'DTI-SB-P30M',
               test: '1',
             })
+          })
+        })
+
+        describe('and when attempting to track with empty orderId', () => {
+          beforeEach(() => {
+            global.AWIN = AWIN
+          })
+
+          test('then it should not do anything as this is a double-counted transaction', async () => {
+            await trackAffiliatePurchase({
+              orderId: '',
+              total: '34.99',
+              commissionGroup: 'FIRSTPURCHASE',
+              promoCode: '',
+            })(dispatch, getState)
+
+            expect(global.AWIN.Tracking.run).not.toHaveBeenCalled()
           })
         })
       })

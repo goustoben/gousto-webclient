@@ -84,6 +84,18 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
       return
     }
 
+    if (!orderId) {
+      await dispatch(
+        feLoggingLogEvent(
+          logLevels.error,
+          'trackAffiliatePurchase: missing orderId',
+          { orderId, total, commissionGroup, promoCode }
+        )
+      )
+
+      return
+    }
+
     const sale = {
       amount: total,
       channel: '',
