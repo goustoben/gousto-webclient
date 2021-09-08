@@ -228,6 +228,22 @@ Cypress.Commands.add('stubAll3rdParties', () => {
   cy.intercept('https://s3-gousto-staging-media.s3-eu-west-1.amazonaws.com/features.json**', {
     isRecaptchaEnabled: false
   }).as('disableRecaptcha')
+
+  const more = [
+    { url: 'https://www.ribbonapp.com/**', alias: 'ribbonNoOp' },
+    { url: 'http://snplw.gousto.co.uk/**', alias: 'snplwNoOp' },
+    { url: 'https://s.yimg.com/**', alias: 'sYimgNoOp' },
+    { url: 'https://ekr.zdassets.com/**', alias: 'ekrZdassetsNoOp' },
+    { url: 'https://in.hotjar.com/**', alias: 'hotjarNoOp' },
+    { url: 'https://ct.pinterest.com/**', alias: 'pinterestNoOp' },
+    { url: 'https://gousto.zendesk.com/**', alias: 'zendeskNoOp' },
+    { url: 'https://cdn.optimizely.com/**', alias: 'cdnOptimizelyNoOp' },
+  ]
+
+  for (const item of more) {
+    const { url, alias } = item
+    cy.intercept(url, { statusCode: 200, body: '//Cypress forced no-op', }).as(alias)
+  }
 })
 
 Cypress.Commands.add('stubAllApis', () => {
