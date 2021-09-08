@@ -5,7 +5,7 @@ describe('Promo Code', () => {
     describe('and the user is logged out', () => {
       beforeEach(() => {
         cy.stubAll3rdParties()
-        cy.server()
+        cy.serverOverride()
         cy.fixture('promoCode/promoCodeDetails').as('promoCodeDetails')
         cy.route('GET', /promocode\/RET-REACTFEB19EMOB/, '@promoCodeDetails').as('promoCodeDetails')
       })
@@ -19,7 +19,7 @@ describe('Promo Code', () => {
 
     describe('and the user is logged in', () => {
       beforeEach(() => {
-        cy.server()
+        cy.serverOverride()
         cy.fixture('promoCode/promoCodeDetails').as('promoCodeDetails')
         cy.route('GET', /promocode\/RET-REACTFEB19EMOB/, '@promoCodeDetails').as('promoCodeDetails')
         cy.fixture('promoCode/failToApply').as('failToApply')

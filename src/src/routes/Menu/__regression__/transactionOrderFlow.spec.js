@@ -9,7 +9,7 @@ describe('when the user is logged out', () => {
       cy.stubAll3rdParties()
       cy.mockDate()
 
-      cy.server()
+      cy.serverOverride()
 
       cy.route(/user\/current/, 'fixture:user/userCurrent.json').as('userCurrent')
       cy.route(/user\/current\/projected-deliveries/, 'fixture:user/userCurrentProjectedDeliveries.json').as('projectedDeliveries')
@@ -137,7 +137,7 @@ describe('when the user is logged out', () => {
 
     describe('when the user checks out', () => {
       before(() => {
-        cy.server()
+        cy.serverOverride()
 
         // Mocks for creating a transactional order
         cy.route('POST', 'order/preview', 'fixture:order/preview.json').as('getPreviewOrder')

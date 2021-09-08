@@ -27,7 +27,7 @@ describe("Examples", () => {
   })
 
   it("should login through the ui", () => {
-    cy.server()
+    cy.serverOverride()
 
     cy.fixture('auth/login').as('login')
     cy.route('POST', /login/, '@login')
@@ -64,7 +64,7 @@ describe("Examples", () => {
   })
 
   it("shows box prices with mocked backend api", () => {
-    cy.server()
+    cy.serverOverride()
     cy.fixture('boxPrices').as('boxPrices')
     cy.visit("/box-prices")
     cy.get("span")

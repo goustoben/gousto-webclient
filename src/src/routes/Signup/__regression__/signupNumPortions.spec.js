@@ -9,7 +9,7 @@ describe('Given I am a logged out user', () => {
     describe('And I choose a 2 person box size', () => {
       before(() => {
         cy.stubAll3rdParties()
-        cy.server()
+        cy.serverOverride()
         cy.clearCookies()
         cy.clearLocalStorage()
         cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as(
@@ -41,7 +41,7 @@ describe('Given I am a logged out user', () => {
     describe('And I choose a 4 person box size', () => {
       before(() => {
         cy.stubAll3rdParties()
-        cy.server()
+        cy.serverOverride()
         cy.clearCookies()
         cy.clearLocalStorage()
         cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as(

@@ -8,8 +8,15 @@ Cypress.Commands.add('mockDate', () => {
   cy.clock(DATE, ['Date'])
 })
 
+Cypress.Commands.add('serverOverride', () => {
+  cy.stubAll3rdParties()
+  cy.server({
+    force404: true,
+  })
+})
+
 Cypress.Commands.add('login', () => {
-  cy.server()
+  cy.serverOverride()
   cy.fixture('auth/login').as('login')
   cy.route('POST', /login/, '@login')
   cy.fixture('auth/identify').as('identify')
@@ -36,7 +43,7 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
     ? 'prices/2person2portionDiscount'
     : 'prices/2person2portionNoDiscount'
 
-  cy.server()
+  cy.serverOverride()
   cy.clearCookies()
   cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
@@ -150,7 +157,7 @@ Cypress.Commands.add('setFeatures', (features) => {
 })
 
 Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, isNewSubscriptionApiEnabled, features = [] }) => {
-  cy.server()
+  cy.serverOverride()
   cy.route('POST', /identify/, 'fixture:auth/identify')
   cy.route('POST', /loggingmanager/, 'fixture:loggingmanager/log')
 

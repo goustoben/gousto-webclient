@@ -3,7 +3,7 @@ import { withPlatformTags, MOBILE, WEB } from '../../../utils/regression/tags'
 describe('Menu-BrowseCTA', () => {
   before(() => {
     cy.stubAll3rdParties()
-    cy.server()
+    cy.serverOverride()
     cy.mockDate()
     cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
     cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
@@ -45,4 +45,3 @@ describe('Menu-BrowseCTA', () => {
     })
   })
 })
-

@@ -1,7 +1,7 @@
 describe.skip('Given I am logged in', () => {
   beforeEach(() => {
     cy.stubAll3rdParties()
-    cy.server()
+    cy.serverOverride()
     cy.fixture('user/userCurrent').as('userCurrent')
     cy.route('GET', /user\/current/, '@userCurrent').as('userCurrentRequest')
     cy.fixture('user/userCurrentProjectedDeliveries').as('userCurrentProjectedDeliveries')

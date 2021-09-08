@@ -10,7 +10,7 @@ describe('Given I am a logged out user', () => {
   describe('When I land on the menu', () => {
     before(() => {
       cy.stubAll3rdParties()
-      cy.server()
+      cy.serverOverride()
       cy.mockDate()
       cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
       cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')

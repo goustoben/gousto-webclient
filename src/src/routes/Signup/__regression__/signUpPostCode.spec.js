@@ -10,7 +10,7 @@ describe('Given I land on postcode slide of the wizard', () => {
 
   before(() => {
     cy.stubAll3rdParties()
-    cy.server()
+    cy.serverOverride()
     cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
     cy.route(
       'GET',
@@ -49,7 +49,7 @@ describe('Given I land on postcode slide of the wizard', () => {
 
   describe('And I entered a postcode with less than 6 characters ', () => {
     before(() => {
-      cy.server()
+      cy.serverOverride()
       cy.route(
         'GET',
         /^(?=.*\bdeliveries\/v1.0\/days\b)(?=.*\bpostcode\b).*$/,
@@ -68,7 +68,7 @@ describe('Given I land on postcode slide of the wizard', () => {
 
   describe('And I entered a postcode with more than 6 characters ', () => {
     before(() => {
-      cy.server()
+      cy.serverOverride()
       cy.route(
         'GET',
         /^(?=.*\bdeliveries\/v1.0\/days\b)(?=.*\bpostcode\b).*$/,

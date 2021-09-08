@@ -12,7 +12,7 @@ import {
 
 describe('Given the customer is logged in', () => {
   beforeEach(() => {
-    cy.server()
+    cy.serverOverride()
     cy.fixture('user/userCurrent').as('userCurrent')
     cy.route('GET', /user\/current/, '@userCurrent').as('userCurrentRequest')
     cy.fixture('user/userCurrentActiveSubscription').as('userCurrentSubscription')
