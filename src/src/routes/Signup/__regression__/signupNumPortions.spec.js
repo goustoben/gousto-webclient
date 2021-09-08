@@ -6,27 +6,25 @@ const getNumPortions = (win) =>
 
 describe('Given I am a logged out user', () => {
   describe('When I land on the num portions code slide of the wizard', () => {
-    before(() => {
-      cy.stubAll3rdParties()
-      cy.server()
-      cy.clearCookies()
-      cy.clearLocalStorage()
-      cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as(
-        'getPrices'
-      )
-      cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
-      cy.route(
-        'GET',
-        '/userbucketing/v1/user/experiments',
-        'fixture:userbucketing/userbucketing.json'
-      ).as('getExperiments')
-      cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
-      cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
-      cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')
-    })
-
     describe('And I choose a 2 person box size', () => {
       before(() => {
+        cy.stubAll3rdParties()
+        cy.server()
+        cy.clearCookies()
+        cy.clearLocalStorage()
+        cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as(
+          'getPrices'
+        )
+        cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
+        cy.route(
+          'GET',
+          '/userbucketing/v1/user/experiments',
+          'fixture:userbucketing/userbucketing.json'
+        ).as('getExperiments')
+        cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
+        cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
+        cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')
+
         cy.visit(PAGE_URL)
         cy.get('[data-testing="signupBoxSize2Portions"]').click()
       })
@@ -42,6 +40,23 @@ describe('Given I am a logged out user', () => {
 
     describe('And I choose a 4 person box size', () => {
       before(() => {
+        cy.stubAll3rdParties()
+        cy.server()
+        cy.clearCookies()
+        cy.clearLocalStorage()
+        cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as(
+          'getPrices'
+        )
+        cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
+        cy.route(
+          'GET',
+          '/userbucketing/v1/user/experiments',
+          'fixture:userbucketing/userbucketing.json'
+        ).as('getExperiments')
+        cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
+        cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
+        cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')
+
         cy.visit(PAGE_URL)
         cy.get('[data-testing="signupBoxSize4Portions"]').click()
       })

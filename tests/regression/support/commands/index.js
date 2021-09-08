@@ -234,10 +234,11 @@ Cypress.Commands.add('stubAll3rdParties', () => {
     { url: 'http://snplw.gousto.co.uk/**', alias: 'snplwNoOp' },
     { url: 'https://s.yimg.com/**', alias: 'sYimgNoOp' },
     { url: 'https://ekr.zdassets.com/**', alias: 'ekrZdassetsNoOp' },
-    { url: 'https://in.hotjar.com/**', alias: 'hotjarNoOp' },
+    { url: 'https://**.hotjar.com/**', alias: 'hotjarNoOp' },
     { url: 'https://ct.pinterest.com/**', alias: 'pinterestNoOp' },
-    { url: 'https://gousto.zendesk.com/**', alias: 'zendeskNoOp' },
+    { url: 'https://**.zendesk.com/**', alias: 'zendeskNoOp' },
     { url: 'https://cdn.optimizely.com/**', alias: 'cdnOptimizelyNoOp' },
+    { url: 'http://**.pingdom.net/**', alias: 'pingdomNoOp' },
   ]
 
   for (const item of more) {
