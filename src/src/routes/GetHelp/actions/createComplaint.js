@@ -43,7 +43,7 @@ export const createComplaint = (isAutoAccept) => async (dispatch, getState) => {
 
   const getPayload = async () => {
     await setComplaint(accessToken, body)
-    trackAcceptIngredientsRefund(amount)
+    dispatch(trackAcceptIngredientsRefund(amount))
 
     if (isAutoAccept) {
       dispatch(push(`${client.getHelp.index}/${client.getHelp.autoAcceptConfirmation}`))
