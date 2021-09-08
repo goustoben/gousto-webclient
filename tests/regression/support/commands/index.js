@@ -242,7 +242,7 @@ Cypress.Commands.add('stubAll3rdParties', () => {
 
   for (const item of more) {
     const { url, alias } = item
-    cy.intercept(url, { statusCode: 200, body: '//Cypress forced no-op', }).as(alias)
+    cy.intercept(url, { statusCode: 200, body: '{}', }).as(alias)
   }
 })
 
