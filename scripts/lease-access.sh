@@ -24,8 +24,8 @@ echo "export ipsetId=$ipsetId" >> $BASH_ENV
 echo "export nextLockToken=$nextLockToken" >> $BASH_ENV
 echo "export ipsetAddresses='$ipsetAddresses'" >> $BASH_ENV
 
-echo "Adding 60s sleep due to WAF update time :-("
-sleep 60
+echo "Adding 120s sleep due to WAF update time :-("
+sleep 120
 
 later=$(date +"%T")
 echo "Finished leasing access at: $later"
