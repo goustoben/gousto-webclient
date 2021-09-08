@@ -2,19 +2,18 @@ import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
 import { basketNumPortionChange } from 'actions/basket'
+import {
+  getIsNewSubscriptionApiEnabled
+} from 'selectors/features'
 import logger from 'utils/logger'
 
 import { subscriptionLoadData } from 'actions/subscription'
-import { fetchSubscription } from '../../routes/Account/apis/subscription'
-import { mapSubscriptionV2Payload } from '../../routes/Account/Subscription/utils/mapping'
+import { fetchSubscription, fetchSubscriptionV2 } from '../../routes/Account/apis/subscription'
 
 jest.mock('../../routes/Account/apis/subscription', () => ({
   fetchSubscription: jest.fn(),
+  fetchSubscriptionV2: jest.fn(),
 }))
-
-jest.mock('../../routes/Account/apis/subscription')
-
-jest.mock('../../routes/Account/Subscription/utils/mapping')
 
 jest.mock('actions/basket', () => ({
   basketNumPortionChange: jest.fn(),
@@ -22,6 +21,10 @@ jest.mock('actions/basket', () => ({
 
 jest.mock('utils/logger', () => ({
   notice: jest.fn(),
+}))
+
+jest.mock('selectors/features', () => ({
+  getIsNewSubscriptionApiEnabled: jest.fn().mockReturnValue(false),
 }))
 
 describe('subscription actions', () => {
@@ -35,136 +38,137 @@ describe('subscription actions', () => {
       id: 'user-id',
     }),
   }
-
-  const mockSubscriptionResponse = {
-    data: {
-      subscription: {
-        interval: 2,
-        deliverySlotStartTime: '08:00:00',
-        deliverySlotEndTime: '19:00:00',
-        status: 'active',
-        numPortions: 4,
-        authUserId: 'auth-user-id',
-        deliverySlotDay: 3,
-        boxType: 'vegetarian',
-        userId: '1233',
-        numRecipes: 4,
-      },
-    },
-  }
-
-  beforeEach(() => {
-    getState.mockReturnValueOnce(state)
-  })
+  let data
 
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   describe('subscriptionLoadData', () => {
-    test('calls the subscription API method fetchSubscription', () => {
+    beforeEach(() => {
+      getState.mockReturnValueOnce(state)
+    })
+
+    test('should dispatch a fetchSubscription call', () => {
       subscriptionLoadData()(dispatch, getState)
-      expect(fetchSubscription)
-        .toHaveBeenCalledWith('subscription-load-data', 'user-id')
+
+      expect(fetchSubscription).toHaveBeenCalledWith('subscription-load-data')
     })
 
-    describe('if API call succeeds', () => {
-      beforeEach(() => {
-        fetchSubscription.mockResolvedValueOnce({
-          data: mockSubscriptionResponse,
-        })
-      })
-
-      test('maps the API response into SUBSCRIPTION_LOAD_DATA action', async () => {
-        const mapped = Symbol('mapped-data')
-        mapSubscriptionV2Payload.mockReturnValue(mapped)
-
-        await subscriptionLoadData()(dispatch, getState)
-
-        expect(dispatch)
-          .toHaveBeenCalledWith(expect.objectContaining({
-            type: actionTypes.SUBSCRIPTION_LOAD_DATA,
-            data: mapped,
-          }))
-      })
-
-      test('logs no error', async () => {
-        await subscriptionLoadData()(dispatch, getState)
-
-        expect(logger.notice)
-          .not
-          .toHaveBeenCalled()
-      })
-    })
-
-    describe('if API response contains subscription numPortions', () => {
-      const subscriptionValue = Symbol('subscription-data')
-      const basketAction = Symbol('basket-action')
-
-      beforeEach(() => {
-        fetchSubscription.mockResolvedValueOnce({
-          data: mockSubscriptionResponse,
-        })
-        basketNumPortionChange.mockReturnValue(basketAction)
-        mapSubscriptionV2Payload.mockReturnValue({
-          box: {
-            numPortions: subscriptionValue
-          }
-        })
-      })
-
-      test('updates basket with subscription numPortions', async () => {
-        await subscriptionLoadData()(dispatch, getState)
-
-        expect(basketNumPortionChange)
-          .toHaveBeenCalledWith(subscriptionValue)
-        expect(dispatch)
-          .toHaveBeenCalledWith(basketAction)
-      })
-    })
-
-    describe('if API response contains no subscription numPortions', () => {
-      const basketAction = Symbol('basket-action')
-
-      beforeEach(() => {
-        fetchSubscription.mockResolvedValueOnce({
-          data: mockSubscriptionResponse,
-        })
-        basketNumPortionChange.mockReturnValue(basketAction)
-        mapSubscriptionV2Payload.mockReturnValue({})
-      })
-
-      test('does not update basket numPortions', async () => {
-        await subscriptionLoadData()(dispatch, getState)
-
-        expect(dispatch)
-          .not
-          .toHaveBeenCalledWith(basketAction)
-      })
-    })
-
-    describe('if API call fails', () => {
+    describe('when fetchSubscription fails', () => {
       beforeEach(() => {
         fetchSubscription.mockReturnValue(Promise.reject(
           new Error('fetch-subscription-fail')
         ))
       })
 
-      test('dispatches no actions', async () => {
+      test('should not dispatch any actions', async () => {
         await subscriptionLoadData()(dispatch, getState)
 
-        expect(dispatch)
-          .not
-          .toHaveBeenCalled()
+        expect(dispatch).not.toHaveBeenCalled()
       })
 
-      test('logs a "Subscription load error"', async () => {
+      test('should log a notice with the error', async () => {
         await subscriptionLoadData()(dispatch, getState)
 
-        expect(logger.notice)
-          .toHaveBeenCalledWith(
-            'Subscription load error: Error: fetch-subscription-fail'
-          )
+        expect(logger.notice).toHaveBeenCalledWith(
+          'Subscription load error: Error: fetch-subscription-fail'
+        )
+      })
+    })
+
+    describe('when fetchSubscription succeeds with data', () => {
+      beforeEach(() => {
+        data = { test: 'test-value' }
+        fetchSubscription.mockReturnValue(Promise.resolve({
+          data,
+        }))
+      })
+
+      test('should dispatch a SUBSCRIPTION_LOAD_DATA action with returned data', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(logger.notice).not.toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+          type: actionTypes.SUBSCRIPTION_LOAD_DATA,
+          data,
+        }))
+      })
+    })
+
+    describe('when data does not contain box numPortions', () => {
+      beforeEach(() => {
+        data = { test: 'test-value' }
+        fetchSubscription.mockReturnValue(Promise.resolve({
+          data,
+        }))
+      })
+
+      test('should not call basketNumPortionChange', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(basketNumPortionChange).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when data contains box numPortions', () => {
+      const numPortions = 4
+
+      beforeEach(() => {
+        data = {
+          box: {
+            numPortions,
+          }
+        }
+        fetchSubscription.mockReturnValue(Promise.resolve({
+          data,
+        }))
+      })
+
+      test('should call basketNumPortionChange', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(basketNumPortionChange).toHaveBeenCalledWith(numPortions)
+      })
+    })
+
+    describe('when isNewSubscriptionApiEnabled is true', () => {
+      const mockSubscriptionRepsonse = {
+        data: {
+          subscription: {
+            interval: 2,
+            deliverySlotStartTime: '08:00:00',
+            deliverySlotEndTime: '19:00:00',
+            status: 'active',
+            numPortions: 4,
+            authUserId: 'auth-user-id',
+            deliverySlotDay: 3,
+            boxType: 'vegetarian',
+            userId: '1233',
+            numRecipes: 4,
+          },
+        },
+      }
+
+      beforeEach(() => {
+        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+        fetchSubscriptionV2.mockResolvedValueOnce({
+          data: mockSubscriptionRepsonse,
+        })
+      })
+
+      test('should dispatch a fetchSubscriptionV2 call', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(fetchSubscriptionV2).toHaveBeenCalledWith('subscription-load-data', 'user-id')
+      })
+
+      test('should call basketNumPortionChange', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(basketNumPortionChange).toHaveBeenCalledWith(
+          mockSubscriptionRepsonse.data.subscription.numPortions
+        )
       })
     })
   })

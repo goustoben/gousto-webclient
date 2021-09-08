@@ -131,16 +131,22 @@ export function userLoadProjectedDeliveries(forceRefresh = false) {
       const state = getState()
       const accessToken = state.auth.get('accessToken')
       const userId = getUserId(state)
+      const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
 
       const dispatchProjectedDeliveries = (projectedDeliveries) => {
         dispatch({
           type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
-          projectedDeliveries
+          projectedDeliveries,
+          isNewSubscriptionApiEnabled
         })
       }
 
       if (forceRefresh || !state.user.get('projectedDeliveries').size) {
-        if (userId) {
+        if (!isNewSubscriptionApiEnabled) {
+          const { data } = await userApi.fetchUserProjectedDeliveries(accessToken)
+
+          dispatchProjectedDeliveries(data)
+        } else if (userId) {
           const { data } = await fetchProjectedDeliveries(accessToken, userId)
 
           dispatchProjectedDeliveries(data.data.projectedDeliveries)

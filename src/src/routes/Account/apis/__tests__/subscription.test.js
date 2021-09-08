@@ -4,6 +4,7 @@ import {
   deactivateSubscription,
   fetchProjectedDeliveries,
   fetchSubscription,
+  fetchSubscriptionV2,
   skipDates,
   unSkipDates,
 } from '../subscription'
@@ -54,6 +55,20 @@ describe('subscription endpoints', () => {
       })
     })
 
+    describe('fetchSubscription', () => {
+      test('should fetch the correct url', async () => {
+        const reqData = { c: 3, d: 4 }
+        await fetchSubscription('token', reqData)
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/currentSubscription', reqData, 'GET')
+      })
+
+      test('should return the results of the fetch unchanged', async () => {
+        const result = await fetchSubscription('token', {})
+        expect(result).toEqual(mockFetchResult)
+      })
+    })
+
     describe('skipDates', () => {
       test('should fetch the correct url', async () => {
         const reqData = ['2020-02-20']
@@ -86,9 +101,9 @@ describe('subscription endpoints', () => {
       })
     })
 
-    describe('fetchSubscription', () => {
+    describe('fetchSubscriptionV2', () => {
       test('should fetch the correct url', async () => {
-        await fetchSubscription('token', 'user-id')
+        await fetchSubscriptionV2('token', 'user-id')
 
         expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/subscriptionquery/v1/subscriptions/user-id', {}, 'GET')
       })

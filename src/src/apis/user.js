@@ -30,6 +30,10 @@ export function fetchUserOrders(accessToken, reqData) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.userOrders}`, reqData, 'GET')
 }
 
+export function fetchUserProjectedDeliveries(accessToken) {
+  return fetch(accessToken, `${endpoint('core')}${routes.core.userProjectedDeliveries}`, {}, 'GET')
+}
+
 export function reactivate(accessToken, reqData) {
   return fetch(accessToken, `${endpoint('core')}/user/${reqData.userId}/restore`, {}, 'PUT')
 }
