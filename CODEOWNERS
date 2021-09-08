@@ -166,7 +166,6 @@
 /src/__tests__/reducers/auth.test.js       @Gousto/squad-rockets
 /src/src/apis/auth.js       @Gousto/squad-rockets
 /src/src/apis/__tests__/auth.test.js       @Gousto/squad-rockets
-/tests/regression/fixtures/welcome/        @Gousto/squad-rockets
 
 # squad-beetroots ownership
 /src/src/routes/BoxPrices/                              @Gousto/squad-beetroots

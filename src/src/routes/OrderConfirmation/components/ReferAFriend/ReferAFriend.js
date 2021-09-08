@@ -28,7 +28,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
   const theirMonthOffer = rafOffer.get('firstMonthDiscountFormatted')
 
   return (
-    <section data-testing="referAFriendSection" className={css.rafContainer}>
+    <section className={css.rafContainer}>
       <h3 className={classnames(css.rafTitle, css.mobileHide)}>Invite your friends to try Gousto</h3>
       <h2 className={classnames(css.rafTitleMobile, css.mobileShow)}>Invite your friends to try Gousto</h2>
       <div className={css.offerContainer}>

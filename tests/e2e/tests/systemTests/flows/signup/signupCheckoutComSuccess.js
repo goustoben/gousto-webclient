@@ -22,8 +22,6 @@ module.exports = {
       })
       .perform(function (done) {
         welcome.section.welcomeContainer.checkIfWelcomePageVisible()
-        welcome.section.welcomeContainer.checkIfOrderScheduleContainerVisible()
-        welcome.section.welcomeContainer.checkIfRafSectionVisible()
         done()
       })
       .end()
