@@ -75,6 +75,9 @@ export function fetchUserExperiments() {
       dispatch(storeUserExperiments(data))
     } catch (error) {
       logger.error({ message: 'Failed to retrieve user experiments', extra: { error } })
+      dispatch({
+        type: actionTypes.EXPERIMENTS_FETCH_ERROR,
+      })
     } finally {
       dispatch(pending(actionTypes.EXPERIMENTS_FETCHING, false))
     }

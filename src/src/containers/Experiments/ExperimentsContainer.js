@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 import { fetchOrAssignUserToExperiment } from 'actions/experiments'
-import { makeGetExperimentByName, isFetchingExperiments} from 'selectors/experiments'
+import {
+  makeGetExperimentByName,
+  isFetchingExperiments,
+  hasExperimentsFetchError,
+} from 'selectors/experiments'
 import { Experiments } from './Experiments'
 
 const mapStateToProps = (state, props) => {
@@ -8,7 +12,8 @@ const mapStateToProps = (state, props) => {
 
   return {
     experiment: getExperimentByName(state, props),
-    isFetchingExperiments: isFetchingExperiments(state)
+    isFetchingExperiments: isFetchingExperiments(state),
+    hasFetchError: hasExperimentsFetchError(state),
   }
 }
 

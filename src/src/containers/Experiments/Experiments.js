@@ -12,9 +12,15 @@ export class Experiments extends React.PureComponent {
   }
 
   updateExperiments() {
-    const { experiment, isFetchingExperiments, fetchOrAssignUserToExperiment, experimentName } = this.props
+    const {
+      experiment,
+      isFetchingExperiments,
+      fetchOrAssignUserToExperiment,
+      experimentName,
+      hasFetchError,
+    } = this.props
 
-    if (!experiment && !isFetchingExperiments) {
+    if (!experiment && !isFetchingExperiments && !hasFetchError) {
       fetchOrAssignUserToExperiment(experimentName)
     }
   }
@@ -32,7 +38,7 @@ export class Experiments extends React.PureComponent {
 
 Experiments.defaultProps = {
   experiment: null,
-  children: () => null
+  children: () => null,
 }
 
 Experiments.propTypes = {
@@ -43,6 +49,6 @@ Experiments.propTypes = {
   experiment: ImmutablePropTypes.contains({
     name: PropTypes.string,
     withinExperiment: PropTypes.bool,
-    bucket: PropTypes.string
-  })
+    bucket: PropTypes.string,
+  }),
 }

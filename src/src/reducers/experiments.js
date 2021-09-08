@@ -4,6 +4,7 @@ import { actionTypes } from '../actions/actionTypes'
 export const initialState = () => Immutable.fromJS({
   experiments: Immutable.Map(),
   fetchedExperiments: false,
+  hasFetchError: false,
 })
 
 export const experimentsReducer = {
@@ -15,6 +16,10 @@ export const experimentsReducer = {
       return state
         .setIn(['experiments'], experiments.reduce((acc, experiment) => acc.set(experiment.name, Immutable.fromJS(experiment)), Immutable.Map()))
         .setIn(['fetchedExperiments'], true)
+    }
+
+    case actionTypes.EXPERIMENTS_FETCH_ERROR: {
+      return state.set('hasFetchError', true)
     }
 
     case actionTypes.EXPERIMENTS_APPEND: {
