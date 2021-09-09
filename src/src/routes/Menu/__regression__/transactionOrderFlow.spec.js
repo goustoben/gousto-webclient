@@ -3,7 +3,7 @@ import { withPlatformTags, WEB } from '../../../utils/regression/tags'
 // eslint-disable-next-line no-underscore-dangle
 const getRecipes = (win) => win.__store__.getState().basket.get('recipes').toArray()
 
-describe.skip('when the user is logged out', () => {
+describe('when the user is logged out', () => {
   describe('when the user navigate to the menu page', () => {
     before(() => {
       cy.stubAll3rdParties()
@@ -15,6 +15,7 @@ describe.skip('when the user is logged out', () => {
       cy.route(/user\/current\/projected-deliveries/, 'fixture:user/userCurrentProjectedDeliveries.json').as('projectedDeliveries')
       cy.route(/user\/current\/address/, 'fixture:user/userCurrentAddress.json').as('currentAddress')
       cy.route(/user\/current\/subscription/, 'fixture:user/userCurrentActiveSubscription.json').as('currentSubscription')
+      cy.route(/subscriptionquery\/v1\/subscriptions/, 'fixture:subscription/subscriptionQueryResponse.json').as('subscriptionQueryResponse')
       cy.route('/customers/v1/customers/17247344/addresses', 'fixture:user/userAddresses.json')
       cy.route(/orderskiprecovery/, 'fixture:orderSkipRecovery.json')
       cy.route('POST', /user\/current\/subscription\/delivery\/disable/, 'fixture:user/userCurrentSubscriptionDelivery.json').as('cancelProjectedDelivery')
@@ -23,11 +24,16 @@ describe.skip('when the user is logged out', () => {
       cy.route(/prices/, 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')
       cy.route('boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
       cy.route('brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
-      cy.route('brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
+      cy.route('brand/v1/menu-headers', 'fixture:brand/brandHeaders.json').as('getBrandMenuHeaders')
       cy.route('deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
       cy.route('delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
       cy.route(/menu\/v1/, 'fixture:menu/twoWeeksDetails.json').as('getMenu')
       cy.route('/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
+      cy.route('POST', '**/userbucketing/v1/user/experiments/**', { foo: 'bar '}).as('postExperiments')
+
+      cy.route('POST', '**/loggingmanager/**', 'ok').as('loggingmanager')
+
+      cy.route('POST', 'https://www.ribbonapp.com/api/recruit/**', 'No call to recruit').as('ribbonRecruit')
 
       cy.login()
 
@@ -138,6 +144,8 @@ describe.skip('when the user is logged out', () => {
     describe('when the user checks out', () => {
       before(() => {
         cy.server()
+
+        cy.route('POST', '**/felogging/**', { foo: 'bar' }).as('felogging')
 
         // Mocks for creating a transactional order
         cy.route('POST', 'order/preview', 'fixture:order/preview.json').as('getPreviewOrder')
