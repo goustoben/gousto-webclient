@@ -16,7 +16,7 @@ describe('Given the customer is logged in', () => {
     cy.fixture('user/userCurrent').as('userCurrent')
     cy.route('GET', /user\/current/, '@userCurrent').as('userCurrentRequest')
     cy.fixture('user/userCurrentActiveSubscription').as('userCurrentSubscription')
-    cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('userCurrentSubscriptionRequest')
+    cy.route('GET', /subscriptionquery\/v1\/subscriptions/, '@userCurrentSubscription').as('userCurrentSubscriptionRequest')
     cy.fixture('getHelp/order/order26May20').as('currentOrder')
     cy.route('GET', /order\/16269494/, '@currentOrder')
 

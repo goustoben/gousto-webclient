@@ -7,7 +7,6 @@ import {
   fetchShippingAddresses,
   fetchUserCredit,
   fetchUserOrders,
-  fetchUserProjectedDeliveries,
   reactivate,
   checkDuplicateUser,
   verifyAge,
@@ -34,7 +33,6 @@ jest.mock('config/routes', () => ({
     currentUser: '/currentUser',
     userAddress: '/userAddress',
     userOrders: '/userOrders',
-    userProjectedDeliveries: '/userProjectedDeliveries',
     userOrder: '/userOrder',
     user: '/user',
   },
@@ -145,20 +143,6 @@ describe('user api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchUserOrders('token', {})
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('fetchUserProjectedDeliveries', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      await fetchUserProjectedDeliveries(accessToken)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/userProjectedDeliveries', {}, 'GET')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchUserProjectedDeliveries('token')
       expect(result).toEqual(mockFetchResult)
     })
   })

@@ -194,47 +194,9 @@ describe('user reducer', () => {
       const result = user(defaultInitialState, {
         type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
         projectedDeliveries: [
-          { id: '1', name: 'one', date: 'date1', active: '1' },
-          { id: '2', name: 'two', date: 'date2', active: '0' },
-        ],
-      })
-
-      const expected = defaultInitialState.merge(
-        Immutable.fromJS({
-          projectedDeliveries: {
-            1: {
-              id: '1',
-              name: 'one',
-              date: 'date1',
-              active: '1',
-              deliveryDate: 'date1',
-              state: 'scheduled',
-            },
-            2: {
-              id: '2',
-              name: 'two',
-              date: 'date2',
-              active: '0',
-              deliveryDate: 'date2',
-              state: 'cancelled',
-            },
-          },
-        }),
-      )
-
-      expect(Immutable.is(result, expected)).toBe(true)
-    })
-  })
-
-  describe('USER_LOAD_PROJECTED_DELIVERIES action type with isNewSubscriptionApiEnabled', () => {
-    test('should set projected deliveries to Immutable map keyed by action.projectedDeliveries array ids, adding the fields deliveryDate and state', () => {
-      const result = user(defaultInitialState, {
-        type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
-        projectedDeliveries: [
           { deliveryDate: 'date1', skipped: false },
           { deliveryDate: 'date2', skipped: true },
-        ],
-        isNewSubscriptionApiEnabled: true,
+        ]
       })
 
       const expected = defaultInitialState.merge(
