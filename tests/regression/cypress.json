@@ -11,5 +11,20 @@
   "experimentalFetchPolyfill": true,
   "env": {
     "WAF_ACCESS_TOKEN": "MOCK_TOKEN_VALUE"
-  }
+  },
+  "blockHosts": [
+    "*googletagmanager.com",
+    "*optimizely.com",
+    "*facebook.net",
+    "*trustpilot.net",
+    "*braintreegateway.com",
+    "*ribbonapp.com",
+    "snplw.gousto.co.uk",
+    "*yimg.com",
+    "*zdassets.com",
+    "*hotjar.com",
+    "*pinterest.com",
+    "*zendesk.com",
+    "*pingdom.net"
+  ]
 }

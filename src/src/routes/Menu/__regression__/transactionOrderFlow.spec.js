@@ -3,7 +3,7 @@ import { withPlatformTags, WEB } from '../../../utils/regression/tags'
 // eslint-disable-next-line no-underscore-dangle
 const getRecipes = (win) => win.__store__.getState().basket.get('recipes').toArray()
 
-describe('when the user is logged out', () => {
+describe.skip('when the user is logged out', () => {
   describe('when the user navigate to the menu page', () => {
     before(() => {
       cy.stubAll3rdParties()
