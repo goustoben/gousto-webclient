@@ -1,3 +1,5 @@
+const { loggableError } = require('../../../utils/loggableError')
+
 module.exports = {
   'Successful login from /menu': function (browser) {
     const menu = browser.page.menu()
@@ -11,7 +13,7 @@ module.exports = {
           user = userData
           done()
         }).catch(function (error) {
-          browser.assert.fail(error)
+          browser.assert.fail(loggableError(error))
           done()
         })
       })

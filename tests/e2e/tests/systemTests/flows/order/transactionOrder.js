@@ -1,3 +1,5 @@
+const { loggableError } = require('../../../../utils/loggableError')
+
 module.exports = {
   'Order transaction box': function (browser) {
     const shared = browser.page.shared()
@@ -12,7 +14,9 @@ module.exports = {
           shared.section.body.login(user.customer.email, user.customer.password)
           done()
         }).catch(error => {
-          browser.assert.fail(error)
+          browser.assert.fail(
+            loggableError(error)
+          )
           done()
         })
       })
