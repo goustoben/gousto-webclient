@@ -6,6 +6,22 @@ import './commands'
 import './overwrites'
 import { checkoutAccountBot, loginFormBot, menuBot } from '../bots'
 
+Cypress.on('window:before:load', function (window) {
+  const original = window.EventTarget.prototype.addEventListener
+
+  window.EventTarget.prototype.addEventListener = function () {
+    if (arguments && arguments[0] === 'beforeunload') {
+      return
+    }
+    return original.apply(this, arguments)
+  }
+
+  Object.defineProperty(window, 'onbeforeunload', {
+    get: function () { },
+    set: function () { }
+  })
+})
+
 Cypress.on('test:after:run', (test, runnable) => {
   if (test.state === 'failed') {
     let item = runnable
