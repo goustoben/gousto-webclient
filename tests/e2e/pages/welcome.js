@@ -6,6 +6,12 @@ module.exports = {
       elements: {
         appPromo: {
           selector: '*[data-testing=appPromo]',
+        },
+        rafContainer: {
+          selector: '*[data-testing=referAFriendSection]'
+        },
+        orderScheduleContainer: {
+          selector: '*[data-testing=orderScheduleContainer]'
         }
       },
 
@@ -14,6 +20,14 @@ module.exports = {
           this
             .waitForElementVisible('@appPromo', 60000)
         },
+        checkIfRafSectionVisible: function () {
+          this
+            .waitForElementVisible('@rafContainer', 60000)
+        },
+        checkIfOrderScheduleContainerVisible: function () {
+          this
+            .waitForElementVisible('@orderScheduleContainer', 60000)
+        }
       }],
     },
   }
