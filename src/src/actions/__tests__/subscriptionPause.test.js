@@ -3052,8 +3052,12 @@ describe('Subscription action', () => {
     })
 
     test.skip('should dispatch the expected actions to load start screen if necessary', async () => {
-      /* 
-      TODO: Resinstate test 
+      /*
+      TODO: Fix and reinstate this #BROKEN_TEST
+        Current test results in
+        thrown: "Exceeded timeout of 5000 ms for a test.
+        Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
+
       */
       await fetchData()(dispatch, getState)
       await flushPromises()
@@ -3061,21 +3065,24 @@ describe('Subscription action', () => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'PS_START_MODAL_VIEWED' })
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS',
-        reasons: Immutable.fromJS([{ id: 123, steps: [{ id: 456 }] }])
+        reasons: Immutable.fromJS([{ id: 123, steps: [{ id: 456 }] }]),
       })
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_CHOICE',
-        chosenReasonIds: Immutable.List([123])
+        chosenReasonIds: Immutable.List([123]),
       })
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_STEP',
-        activeStepId: 456
+        activeStepId: 456,
       })
     })
 
     test.skip('should dispatch expected actions to display pause reasons screen', async () => {
-      /* 
-      TODO: Resinstate test 
+      /*
+      TODO: Fix and reinstate this #BROKEN_TEST
+        Current test results in
+        thrown: "Exceeded timeout of 5000 ms for a test.
+        Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
       */
       getState = () => ({
         ...mockState,
@@ -3083,9 +3090,9 @@ describe('Subscription action', () => {
           startScreen: [],
           reasons: ['some', 'reasons'],
           metaData: {
-            some: 'metadata'
-          }
-        })
+            some: 'metadata',
+          },
+        }),
       })
 
       await fetchData()(dispatch, getState)
@@ -3093,7 +3100,7 @@ describe('Subscription action', () => {
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS',
-        reasons: Immutable.fromJS(['some', 'reasons'])
+        reasons: Immutable.fromJS(['some', 'reasons']),
       })
 
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'PS_REASON_CATEGORY_MODAL_VIEWED' })
