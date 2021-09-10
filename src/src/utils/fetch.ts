@@ -3,22 +3,54 @@ import logger from 'utils/logger'
 import isomorphicFetch from 'isomorphic-fetch'
 import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
-import { getStore } from 'store'
+import { getStore } from 'store' //webpack aliasing?
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 
-const DEFAULT_TIME_OUT = 50000
-const STATUS_CODES_WITH_NO_CONTENT = [204]
+type ResponseDataWithIncludedMeta = {
+  data: object,
+  included: boolean,
+  meta: string
+}
 
-export const dataDefault = {}
-export const methodDefault = 'GET'
-export const cacheDefault = 'default'
-export const headerDefault = {}
-export const timeoutDefault = null
-export const includeCookiesDefault = false
-export const useMenuServiceDefault = false
-export const useOverwriteRequestMethodDefault = true
+type ResponseData = {
+  result: object & {
+    data: object
+  }
+} &
+{
+  data: object
+}
 
-export function fetchRaw(url, data = {}, options) {
+type ErrorObj = {
+  code: number,
+  message: string,
+  errors: {
+    [key: number]: string
+    // key: value pairs of errors such as errCode: errMessage
+  }
+}
+
+type ParsedJSON = {
+  response: ResponseData,
+  meta: string | null
+} & {
+  response: ResponseDataWithIncludedMeta,
+  meta: never
+}
+
+const DEFAULT_TIME_OUT: number = 50000
+const STATUS_CODES_WITH_NO_CONTENT: Array<number> = [204]
+
+export const dataDefault: {} = {}
+export const methodDefault: string = 'GET'
+export const cacheDefault: RequestCache = 'default'
+export const headerDefault: HeadersInit = {}
+export const timeoutDefault: number = null
+export const includeCookiesDefault: boolean = false
+export const useMenuServiceDefault: boolean = false
+export const useOverwriteRequestMethodDefault: boolean = true
+
+export function fetchRaw(url: string, data = {}, options: { accessToken: any; method: any; cache?: any; headers: any; timeout?: any; includeCookies?: any; useMenuService?: any }) {
   return fetch(
     options.accessToken,
     url,
@@ -32,42 +64,44 @@ export function fetchRaw(url, data = {}, options) {
 }
 
 export function fetch(
-  accessToken,
-  url,
-  data = dataDefault,
-  method = methodDefault,
-  cache = cacheDefault,
-  headers = headerDefault,
-  timeout = timeoutDefault,
-  includeCookies = includeCookiesDefault,
-  useMenuService = useMenuServiceDefault,
-  useOverwriteRequestMethod = useOverwriteRequestMethodDefault
+  accessToken: string,
+  url: string,
+  data: {} = dataDefault,
+  method: string = methodDefault,
+  cache: RequestCache = cacheDefault,
+  headers: HeadersInit = headerDefault,
+  timeout: number = timeoutDefault,
+  includeCookies: boolean = includeCookiesDefault,
+  useMenuService: boolean = useMenuServiceDefault,
+  useOverwriteRequestMethod: boolean = useOverwriteRequestMethodDefault
 ) {
-  const requestData = {
+  const requestData: {
+    _method?: string
+  } = {
     ...data,
   }
 
-  let httpMethod = method.toUpperCase()
+  let httpMethod: string = method.toUpperCase()
   if (useOverwriteRequestMethod && (method === 'PUT' || method === 'PATCH')) {
     requestData._method = httpMethod // eslint-disable-line no-underscore-dangle
     httpMethod = 'POST'
   }
 
-  let body = ''
-  let requestUrl = url
+  let body: string = ''
+  let requestUrl: string = url
   if (requestUrl[requestUrl.length - 1] === '/') {
     requestUrl = requestUrl.substr(0, requestUrl.length - 1)
   }
-  let requestHeaders = headers
-  let queryString
+  let requestHeaders: HeadersInit = headers
+  let queryString: string
   if (httpMethod === 'GET') {
     queryString = qs.stringify(requestData)
     if (queryString) {
       requestUrl += `?${queryString}`
     }
   } else {
-    const contentType = requestHeaders['Content-Type']
-    const isContentTypeJSON = (contentType === 'application/json')
+    const contentType: string = requestHeaders['Content-Type']
+    const isContentTypeJSON: boolean = (contentType === 'application/json')
 
     body = (isContentTypeJSON)
       ? JSON.stringify(requestData)
@@ -80,7 +114,7 @@ export function fetch(
       }
     }
   }
-  const { uuid } = getStore().getState().logger || {}
+  const { uuid } : { uuid: string | undefined } = getStore().getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
       logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid })
@@ -96,7 +130,7 @@ export function fetch(
     }
   }
 
-  const requestDetails = {
+  const requestDetails: RequestInit = {
     method: httpMethod,
     headers: requestHeaders,
     cache,
@@ -117,20 +151,17 @@ export function fetch(
     requestDetails.body = body
   }
 
-  if (timeout) {
-    requestDetails.timeout = timeout
-  }
 
-  const startTime = new Date()
+  const startTime: number = new Date().getTime()
   logger.notice({message: '[fetch start]', requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
-  let responseStatus
-  let responseRedirected
-  let responseUrl
+  let responseStatus: number
+  let responseRedirected: boolean
+  let responseUrl: string
 
   const fetchPromise = isomorphicFetch(requestUrl, requestDetails)
 
   return fetchWithTimeout(fetchPromise, timeout || DEFAULT_TIME_OUT)
-    .then(response => {
+    .then((response: Response) => {
       const { status, redirected, url: endpointOrRedirectedUrl } = response
       responseStatus = status
       responseRedirected = redirected
@@ -138,8 +169,8 @@ export function fetch(
 
       return response
     })
-    .then(response => response.text())
-    .then(response => {
+    .then((response: Response) => response.text())
+    .then((response: string) => {
       if (!response && STATUS_CODES_WITH_NO_CONTENT.includes(responseStatus) ) {
         return [{}, responseStatus]
       }
@@ -147,8 +178,8 @@ export function fetch(
       return [JSONParse(response, useMenuService), responseStatus]
     }) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
-    .then(({ response, meta }) => {
-      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
+    .then(({ response, meta }: ParsedJSON) => {
+      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date().getTime() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
 
       if ( useMenuService ) {
         return { data: response.data, included: response.included, meta: response.meta }
@@ -156,8 +187,8 @@ export function fetch(
 
       return { data: response, meta }
     })
-    .catch(e => {
-      const message = (e instanceof Error || e.message) ? e.message : e
+    .catch((e: ErrorObj | Error | string)  => {
+      const message = (typeof e === "string") ? e : e.message
       let log = logger.error
 
       if (url.indexOf('oauth/identify') > -1 || url.indexOf('oauth/refresh-token') > -1 || responseStatus === 422) {
@@ -167,20 +198,21 @@ export function fetch(
       log({
         message: '[fetch end]',
         status: responseStatus,
-        elapsedTime: `${(new Date() - startTime)}ms`,
+        elapsedTime: `${(new Date().getTime() - startTime)}ms`,
         requestUrl,
-        errors: [e],
+        errors: [e as Error], //This is total BS and purely to make this work with Lumberjack. Please fix this.
         uuid,
         extra: { serverSide: __SERVER__ === true },
       })
 
-      if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {
+      if (e && (typeof e === "string") && e.toLowerCase &&
+          e.toLowerCase().indexOf('unable to determine') > -1) {
         log(JSON.stringify(requestDetails.headers))
       }
 
       throw {
-        code: e.code || 500,
-        errors: e.errors || [],
+        code: (e as ErrorObj).code || 500,
+        errors: (e as ErrorObj).errors || [],
         message,
         status: responseStatus || 500,
         redirected: responseRedirected,
