@@ -1,5 +1,23 @@
 import logger from 'utils/logger'
 
+// Roughly correct but unused, only defined to help determine the arguments of a reject call
+// type ResponseWithErrors = {
+//   errors: Array<{
+//     error: number,
+//     message: string
+//   }> & Array<Error>,
+// } & {
+//   data: Array<Error>
+// }
+//
+// type ResponseWithError = {
+//   error: string,
+//   "error-details"?: {
+//     code: number
+//     failures?: Array<string>
+//   }
+// }
+
 export function formatArrayErrors(errors) {
   return errors.reduce((str, error) => `${str} ${error.message}`, '')
 }
@@ -115,7 +133,7 @@ export function processJSON([response, status]) {
     } else if (typeof response === 'object' && status < 400) {
       resolve({ response, meta })
     } else if (typeof response === 'object') {
-      reject(response, meta)
+      reject(response)
     } else {
       return reject('Response is malformed')
     }
