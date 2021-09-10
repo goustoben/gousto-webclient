@@ -187,7 +187,7 @@ describe('Notification component', () => {
   })
 
   describe('notifications', () => {
-    let mockAssign 
+    let mockAssign
     const { location } = window.location
 
     beforeEach(() => {

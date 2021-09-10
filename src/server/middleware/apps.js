@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 const { appStoreLink, playStoreLink } = require('config/apps')
 
-const convertQueryKeys = (querystring) => querystring ? querystring.replace('utm_source', 'referrer') : querystring
+const convertQueryKeys = (querystring) => (querystring ? querystring.replace('utm_source', 'referrer') : querystring)
 
 const isContainingQuery = (url) => url.indexOf('?') !== -1
 
