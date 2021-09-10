@@ -28,5 +28,5 @@ module.exports = {
       })
       .end()
   },
-  tags: ['sign-up', 'menu', 'checkout', 'sign-up-success'],
+  tags: ['sign-up', 'menu', 'checkout', 'sign-up-success', 'unstable'],
 };
