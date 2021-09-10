@@ -13,7 +13,7 @@ import {
 } from '../helpers'
 
 import { NotificationLogic as Notification } from '../Notification.logic'
-import { mockWindowLocationAssign } from '../../../../../../__tests__/utils/mockWindowLocationAssign'
+import { mockWindowLocationAssign } from '../../../../../../jest/mockWindowLocationAssign'
 
 config.referAFriend.startDate = '2019-01-01'
 config.referAFriend.endDate = '2019-01-01'

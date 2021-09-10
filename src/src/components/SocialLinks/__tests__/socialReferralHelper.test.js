@@ -10,7 +10,7 @@ import {
   getFacebookReferralLink,
   SOCIAL_TYPES,
 } from '../socialReferralHelper'
-import { mockWindowLocationAssign } from '../../../../__tests__/utils/mockWindowLocationAssign'
+import { mockWindowLocationAssign } from '../../../../jest/mockWindowLocationAssign'
 
 jest.mock('actions/loggingmanager', () => ({
   trackUserFreeFoodLinkShare: jest.fn(),

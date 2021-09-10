@@ -34,7 +34,7 @@ import * as rocketsOrderV2 from '../../routes/Account/MyDeliveries/apis/orderV2'
 import { safeJestMock } from '../../_testing/mocks'
 
 import { flushPromises } from '../../_testing/utils'
-import { mockWindowLocationAssign } from '../../../__tests__/utils/mockWindowLocationAssign'
+import { mockWindowLocationAssign } from '../../../jest/mockWindowLocationAssign'
 
 jest.mock('../../routes/Account/apis/subscription')
 jest.mock('apis/user')

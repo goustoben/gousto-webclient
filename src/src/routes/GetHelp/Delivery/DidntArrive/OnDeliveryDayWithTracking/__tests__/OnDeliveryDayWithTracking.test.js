@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { OnDeliveryDayWithTracking } from '..'
-import { mockWindowLocationAssign } from '../../../../../../../__tests__/utils/mockWindowLocationAssign'
+import { mockWindowLocationAssign } from '../../../../../../../jest/mockWindowLocationAssign'
 
 describe('OnDeliveryDayWithTracking', () => {
   const TRACK_MY_BOX_LINK = 'https://courier.com/trackbox/order=1234'
