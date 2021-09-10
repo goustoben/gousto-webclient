@@ -7,7 +7,7 @@ describe('transformRecipesWithIngredients', () => {
     attributes: {
       name: 'Pasta',
       core_recipe_id: '998',
-      gousto_reference: '889'
+      gousto_reference: 889
     },
     relationships: {
       ingredients: {
@@ -24,7 +24,7 @@ describe('transformRecipesWithIngredients', () => {
     attributes: {
       name: 'Rice',
       core_recipe_id: '778',
-      gousto_reference: '667'
+      gousto_reference: 667
     },
     relationships: {
       ingredients: {

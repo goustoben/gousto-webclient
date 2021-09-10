@@ -15,6 +15,6 @@ export const transformRecipesWithIngredients = (recipes, ingredientsData) => (
       }
     )
 
-    return { id, uuid, title, goustoReference, ingredients }
+    return { id, uuid, title, goustoReference: goustoReference.toString(), ingredients }
   })
 )
