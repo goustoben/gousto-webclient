@@ -1,1 +1,1 @@
-export const transformIngredientImgSrcSet = (urls = []) => urls.map(({ src, width }) => `${src} ${width}w`).join(', ')
+export const transformIngredientImgSrcSet = (urls = []) => urls.map(({ url, width }) => `${url} ${width}w`).join(', ')

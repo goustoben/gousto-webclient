@@ -299,73 +299,55 @@ describe('getHelp reducer', () => {
         },
       }
     }
-    const FETCH_RECIPES_RESPONSE = {
-      data: [
-        {
-          id: '2871',
-          title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
-          url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
-          ingredients: [
-            { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0',
-              label: '1 shallot',
-              media: {
-                images: [{
-                  urls: [{
-                    src: 'ingredient-shallot-image-url',
-                    width: 50
-                  }]
-                }]
-              }
-            },
-            { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
-              label: 'mozzarella',
-              media: {
-                images: [{
-                  urls: [{
-                    src: 'ingredient-mozzarella-image-url',
-                    width: 50
-                  }]
-                }]
-              }
-            },
-          ],
-          goustoReference: '2145',
-        },
-        {
-          id: '1783',
-          title: 'Sesame Tofu Nuggets, Wedges & Spicy Dipping Sauce',
-          url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce',
-          ingredients: [
-            { uuid: 'f0273bb0-bb2b-46e5-8ce4-7e09f413c97b',
-              label: '1 spring onion',
-              media: {
-                images: [{
-                  urls: [{
-                    src: 'ingredient-onion-image-url',
-                    width: 50
-                  }]
-                }]
-              } },
-            { uuid: '4cd305c4-d372-4d9f-8110-dae88209ce57',
-              label: '1 carrot',
-              media: {
-                images: [{
-                  urls: [{
-                    src: 'ingredient-carrot-image-url',
-                    width: 50
-                  }]
-                }]
-              } },
-          ],
-          goustoReference: '5678',
-        },
-      ]
-    }
+    const RECIPES = [
+      {
+        id: '2871',
+        title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
+        ingredients: [
+          { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0',
+            label: '1 shallot',
+            urls: [{
+              url: 'ingredient-shallot-image-url',
+              width: 50
+            }]
+          },
+          { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
+            label: 'mozzarella',
+            urls: [{
+              url: 'ingredient-mozzarella-image-url',
+              width: 50
+            }]
+          },
+        ],
+        goustoReference: '2145',
+      },
+      {
+        id: '1783',
+        title: 'Sesame Tofu Nuggets, Wedges & Spicy Dipping Sauce',
+        ingredients: [
+          { uuid: 'f0273bb0-bb2b-46e5-8ce4-7e09f413c97b',
+            label: '1 spring onion',
+            urls: [{
+              url: 'ingredient-onion-image-url',
+              width: 50
+            }]
+          },
+          { uuid: '4cd305c4-d372-4d9f-8110-dae88209ce57',
+            label: '1 carrot',
+            urls: [{
+              url: 'ingredient-carrot-image-url',
+              width: 50
+            }]
+          },
+        ],
+        goustoReference: '5678',
+      },
+    ]
 
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {
         type: actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS,
-        payload: { order: FETCH_ORDER_RESPONSE.data, recipes: FETCH_RECIPES_RESPONSE.data },
+        payload: { order: FETCH_ORDER_RESPONSE.data, recipes: RECIPES },
       })
     })
 
@@ -387,59 +369,7 @@ describe('getHelp reducer', () => {
     })
 
     test('the new state.recipes has the recipes of the action stored', () => {
-      const EXPECTED_REDUCED_RECIPES = fromJS([
-        {
-          id: '2871',
-          title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
-          ingredients: [
-            { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0',
-              label: '1 shallot',
-              urls: [
-                {
-                  src: 'ingredient-shallot-image-url',
-                  width: 50,
-                },
-              ]
-            },
-            { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
-              label: 'mozzarella',
-              urls: [
-                {
-                  src: 'ingredient-mozzarella-image-url',
-                  width: 50,
-                },
-              ],
-            }
-          ],
-          url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
-          goustoReference: '2145',
-        },
-        {
-          id: '1783',
-          title: 'Sesame Tofu Nuggets, Wedges & Spicy Dipping Sauce',
-          ingredients: [
-            { uuid: 'f0273bb0-bb2b-46e5-8ce4-7e09f413c97b',
-              label: '1 spring onion',
-              urls: [
-                {
-                  src: 'ingredient-onion-image-url',
-                  width: 50,
-                },
-              ] },
-            { uuid: '4cd305c4-d372-4d9f-8110-dae88209ce57',
-              label: '1 carrot',
-              urls: [
-                {
-                  src: 'ingredient-carrot-image-url',
-                  width: 50,
-                },
-              ] },
-          ],
-          url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce',
-          goustoReference: '5678',
-        },
-      ])
-      expect(newState.get('recipes')).toEqual(EXPECTED_REDUCED_RECIPES)
+      expect(newState.get('recipes')).toEqual(fromJS(RECIPES))
     })
   })
 

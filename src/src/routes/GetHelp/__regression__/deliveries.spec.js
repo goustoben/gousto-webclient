@@ -15,7 +15,8 @@ describe('Given I am logged in and visit the home page', () => {
   describe('When I visit My Gousto and click "Any issues with this box?" on last delivery', () => {
     beforeEach(() => {
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
-      cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients').as('recipesWithIngredientsRoute')
+      cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
+      cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
       cy.fixture('getHelp/order/order26May20').as('currentOrder')
       cy.route('GET', /order\/16269494/, '@currentOrder')
 
@@ -93,7 +94,8 @@ describe('Given I am logged in and visit the home page', () => {
       cy.fixture('getHelp/order/order26May20').as('currentOrder')
       cy.route('GET', /order\/16269494/, '@currentOrder')
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
-      cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients').as('recipesWithIngredientsRoute')
+      cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
+      cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
       cy.clock(dateBoxDeliveryToday.getTime(), ['Date'])
     })
 

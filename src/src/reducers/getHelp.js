@@ -26,24 +26,6 @@ const getHelpInitialState = fromJS({
   ineligibleIngredientUuids: [],
 })
 
-const reduceRecipes = (recipes) => (
-  Object.keys(recipes).map((recipeId) => {
-    const recipe = recipes[recipeId]
-    const { id, goustoReference, title, url } = recipe
-    const ingredients = recipe.ingredients.map(
-      ({ label: ingredientLabel, media, uuid: ingredientUuid }) => {
-        const urls = media.images[0] ? media.images[0].urls : []
-
-        return (
-          { label: ingredientLabel, urls, uuid: ingredientUuid }
-        )
-      }
-    )
-
-    return { id, title, ingredients, url, goustoReference }
-  })
-)
-
 const getHelp = (state, action) => {
   if (!state) {
     return getHelpInitialState
@@ -128,7 +110,6 @@ const getHelp = (state, action) => {
 
     recipeItems.forEach((recipeId) => {
       const recipe = recipes.find(r => r.id === recipeId)
-
       recipeDetailedItems[recipeId] = recipe.goustoReference
     })
 
@@ -140,7 +121,7 @@ const getHelp = (state, action) => {
         deliveryStart: order.deliverySlot.deliveryStart,
       }))
       .setIn(['order', 'deliveryDate'], fromJS(order.deliveryDate))
-      .set('recipes', fromJS(reduceRecipes(recipes)))
+      .set('recipes', fromJS(recipes))
   }
   case webClientActionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES: {
     const formattedIssues = action.ingredientIssues.data

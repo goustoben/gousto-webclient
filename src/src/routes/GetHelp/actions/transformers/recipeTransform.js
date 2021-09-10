@@ -1,0 +1,20 @@
+export const transformRecipesWithIngredients = (recipes, ingredientsData) => (
+  recipes.map((recipe) => {
+    const { id: uuid, attributes, relationships } = recipe
+    const { name: title, core_recipe_id: id, gousto_reference: goustoReference } = attributes
+    const { ingredients: { data: recipeIngredients } } = relationships
+
+    const ingredients = recipeIngredients.map(
+      ({ id: ingredientId, labels: { for2 } }) => {
+        const ingredient = ingredientsData.find(item => item.id === ingredientId)
+        const urls = ingredient.attributes.images[0] ? ingredient.attributes.images[0].crops : []
+
+        return (
+          { label: for2, urls, uuid: ingredientId }
+        )
+      }
+    )
+
+    return { id, uuid, title, goustoReference, ingredients }
+  })
+)

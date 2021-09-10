@@ -2,7 +2,6 @@ import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
 import * as userApi from 'apis/user'
 import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
@@ -10,10 +9,12 @@ import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
+import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getOrder, getRecipes } from '../selectors/selectors'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
+import { transformRecipesWithIngredients } from './transformers/recipeTransform'
 
 const SE_CATEGORY_HELP = 'help'
 
@@ -97,24 +98,20 @@ export const loadOrderAndRecipesByIds = (orderId) => (
       let order = getOrder(state)
       let recipes = getRecipes(state)
       // recipeItems in the store is an array of recipe IDs
-      let recipeIds = order.recipeItems
+      let { recipeItems: recipeIds, recipeUuids } = order
 
       if (recipeIds.length === 0) {
         const response = await fetchOrder(accessToken, orderId)
         // copying the object so we do not mutate test's mocked response
         order = {...response.data}
         recipeIds = order.recipeItems.map(item => item.recipeId)
+        recipeUuids = order.recipeItems.map(item => item.recipeUuid)
         order.recipeItems = recipeIds
       }
 
-      const params = {
-        includes: ['ingredients'],
-        'filters[recipe_ids]': recipeIds,
-      }
-
       if (!recipes.length) {
-        const response = await fetchRecipes(accessToken, '', params)
-        recipes = response.data
+        const response = await fetchRecipesWithIngredients(recipeUuids)
+        recipes = transformRecipesWithIngredients(response.data, response.included)
       }
 
       return { order, recipes }

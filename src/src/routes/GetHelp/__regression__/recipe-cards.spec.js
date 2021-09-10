@@ -17,15 +17,16 @@ describe('Given the customer is logged in', () => {
       cy.route('GET', /order\/16269494/, '@urlOrder')
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
       cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
+      cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
 
       cy.visit('get-help/user/17247344/order/16269494/recipe-cards')
     })
 
     it('shows the Recipe Cards page with the recipes loaded', () => {
-      cy.get('[data-testing="getHelpRecipe"]').eq(0).contains('Charlie Bigham\'s Moussaka')
-      cy.get('[data-testing="getHelpRecipe"]').eq(1).contains('Pulled Hoisin Chicken & Sesame Noodles')
-      cy.get('[data-testing="getHelpRecipe"]').eq(2).contains('10-Min Pesto Chicken Caprese Salad With Croutons')
-      cy.get('[data-testing="getHelpRecipe"]').eq(3).contains('Sweet Chilli Jumbo Prawn Cali-Style Sushi Bowl')
+      cy.get('[data-testing="getHelpRecipe"]').eq(0).contains('Pesto Chicken Caprese Salad With Croutons')
+      cy.get('[data-testing="getHelpRecipe"]').eq(1).contains('Pulled Hoisin Chicken And Sesame Noodles')
+      cy.get('[data-testing="getHelpRecipe"]').eq(2).contains('Sweet Chilli Jumbo Prawn Cali-Style Sushi Bowl')
+      cy.get('[data-testing="getHelpRecipe"]').eq(3).contains('Charlie Bigham\'s Moussaka')
     })
   })
 })

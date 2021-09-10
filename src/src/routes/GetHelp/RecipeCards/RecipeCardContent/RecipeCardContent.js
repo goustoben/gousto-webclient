@@ -14,7 +14,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  recipe: { id: '', title: '', ingredients: [], url: '' }
+  recipe: { id: '', title: '', ingredients: [] }
 }
 
 const redirectToContactPage = () => {

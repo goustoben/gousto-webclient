@@ -48,13 +48,12 @@ const RECIPES = [
   {
     id: '2871',
     title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
-    url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
     ingredients: [
       { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
         label: '40g Cornish clotted cream',
         urls: [
           {
-            src: 'ingredient-cornish-image-url',
+            url: 'ingredient-cornish-image-url',
             width: 50,
           },
         ] },
@@ -64,14 +63,13 @@ const RECIPES = [
   {
     id: '385',
     title: 'Recipe 2',
-    url: 'gousto.co.uk/cookbook/recipes/recipe-2',
     ingredients: [
       {
         uuid: '3c07d126-f655-437c-aa1d-c38dbbae0398',
         label: '8ml soy sauce',
         urls: [
           {
-            src: 'ingredient-soy-image-url',
+            url: 'ingredient-soy-image-url',
             width: 50,
           },
         ]

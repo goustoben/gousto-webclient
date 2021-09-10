@@ -41,6 +41,7 @@ describe('Given the customer is logged in', () => {
       cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('userCurrentOrdersRequest')
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
       cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
+      cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
       cy.fixture('getHelp/ssr/validate').as('validate')
       cy.route('POST', /ssr\/v1\/ssr\/validate/, '@validate')
 
@@ -175,6 +176,7 @@ describe('Given the customer is logged in', () => {
       cy.route('GET', /order\/16269494/, '@urlOrder')
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
       cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
+      cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
 
       cy.visit('get-help/user/17247344/order/16269494/ingredients')
     })

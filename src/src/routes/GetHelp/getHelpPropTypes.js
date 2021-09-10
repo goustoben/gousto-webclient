@@ -10,7 +10,6 @@ export const recipePropType = PropTypes.shape({
       label: PropTypes.string,
     })
   ),
-  url: PropTypes.string,
 })
 
 export const orderPropType = PropTypes.shape({

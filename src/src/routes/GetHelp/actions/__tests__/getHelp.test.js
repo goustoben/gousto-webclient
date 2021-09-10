@@ -5,10 +5,10 @@ import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'
 import { fetchUserOrders } from 'apis/user'
 import * as getHelpApi from 'apis/getHelp'
-import * as recipesAPI from 'apis/recipes'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
+import * as menuApi from '../../apis/menu'
 import * as getHelpActionsUtils from '../utils'
 import {
   applyDeliveryRefund,
@@ -41,6 +41,7 @@ import {
   validateDeliveryAction,
   validateLatestOrder,
 } from '../getHelp'
+import { transformRecipesWithIngredients } from '../transformers/recipeTransform'
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
@@ -48,9 +49,10 @@ jest.mock('utils/logger', () => ({
 jest.mock('apis/deliveries')
 jest.mock('apis/orders')
 jest.mock('apis/user')
+jest.mock('../transformers/recipeTransform')
 const applyDeliveryCompensation = safeJestMock(getHelpApi, 'applyDeliveryCompensation')
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
-const fetchRecipes = safeJestMock(recipesAPI, 'fetchRecipes')
+const fetchRecipesWithIngredients = safeJestMock(menuApi, 'fetchRecipesWithIngredients')
 const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
 const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
 
@@ -165,7 +167,6 @@ describe('GetHelp action generators and thunks', () => {
       {
         id: '2871',
         title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
-        url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
         ingredients: [
           { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0', label: '1 shallot' },
           { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4', label: 'mozzarella' },
@@ -175,7 +176,6 @@ describe('GetHelp action generators and thunks', () => {
       {
         id: '1783',
         title: 'Sesame Tofu Nuggets, Wedges & Spicy Dipping Sauce',
-        url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce',
         ingredients: [
           { uuid: 'f0273bb0-bb2b-46e5-8ce4-7e09f413c97b', label: '1 spring onion' },
           { uuid: '4cd305c4-d372-4d9f-8110-dae88209ce57', label: '1 carrot' },
@@ -183,11 +183,12 @@ describe('GetHelp action generators and thunks', () => {
         goustoReference: '5678',
       },
     ]
+
     const FETCH_ORDER_RESPONSE = {
       data: {
         recipeItems: [
-          { recipeId: '2871', recipeGoustoReference: '2145' },
-          { recipeId: '1783', recipeGoustoReference: '5678' },
+          { recipeId: '2871', recipeUuid: 'uuid1', recipeGoustoReference: '2145' },
+          { recipeId: '1783', recipeUuid: 'uuid2', recipeGoustoReference: '5678' },
         ],
         deliveryDate: '2021-05-01 00:00:00',
         deliverySlot: {
@@ -195,6 +196,11 @@ describe('GetHelp action generators and thunks', () => {
           deliveryStart: '08:00:00',
         },
       }
+    }
+
+    const FETCH_RECIPES_RESPONSE = {
+      data: [],
+      included: [],
     }
 
     const ORDER_PAYLOAD = {
@@ -206,9 +212,6 @@ describe('GetHelp action generators and thunks', () => {
       },
     }
 
-    const FETCH_RECIPES_RESPONSE = {
-      data: MOCK_RECIPES,
-    }
     const ORDER_ID = '12345'
 
     describe('when the action is called and the order details are not in the store', () => {
@@ -222,10 +225,12 @@ describe('GetHelp action generators and thunks', () => {
               recipeItems: [],
             },
             recipes: [],
+            ingredients: [],
           })
         })
         fetchOrder.mockResolvedValueOnce(FETCH_ORDER_RESPONSE)
-        fetchRecipes.mockResolvedValueOnce(FETCH_RECIPES_RESPONSE)
+        fetchRecipesWithIngredients.mockResolvedValueOnce(FETCH_RECIPES_RESPONSE)
+
         await loadOrderAndRecipesByIds(ORDER_ID)(dispatch, getState)
       })
 
@@ -237,14 +242,17 @@ describe('GetHelp action generators and thunks', () => {
         expect(fetchOrder).toHaveBeenCalled()
       })
 
-      test('fetchRecipes is called', () => {
-        expect(fetchRecipes).toHaveBeenCalled()
+      test('fetchRecipesWithIngredients is called', () => {
+        expect(fetchRecipesWithIngredients).toHaveBeenCalledWith(['uuid1', 'uuid2'])
       })
 
       test('dispatch is called with the right action type and payload', () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: 'GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS',
-          payload: { order: ORDER_PAYLOAD, recipes: FETCH_RECIPES_RESPONSE.data },
+          payload: {
+            order: ORDER_PAYLOAD,
+            recipes: transformRecipesWithIngredients(FETCH_RECIPES_RESPONSE, FETCH_RECIPES_RESPONSE.included),
+          },
         })
       })
 
@@ -269,7 +277,7 @@ describe('GetHelp action generators and thunks', () => {
               id: ORDER_ID,
               recipeItems: ['2871', '1783'],
             },
-            recipes: [ MOCK_RECIPES[0], MOCK_RECIPES[1] ]
+            recipes: [ MOCK_RECIPES[0], MOCK_RECIPES[1] ],
           })
         })
         await loadOrderAndRecipesByIds(ORDER_ID)(dispatch, getState)
@@ -283,8 +291,8 @@ describe('GetHelp action generators and thunks', () => {
         expect(fetchOrder).not.toHaveBeenCalled()
       })
 
-      test('fetchRecipes is not called', () => {
-        expect(fetchRecipes).not.toHaveBeenCalled()
+      test('fetchRecipesWithIngredients is not called', () => {
+        expect(fetchRecipesWithIngredients).not.toHaveBeenCalled()
       })
 
       test('dispatch is called with the right action type and payload', () => {

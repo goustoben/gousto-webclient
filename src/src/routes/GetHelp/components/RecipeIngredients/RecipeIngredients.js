@@ -94,7 +94,7 @@ RecipeIngredients.propTypes = {
 
 RecipeIngredients.defaultProps = {
   ineligibleIngredientUuids: [],
-  recipe: { id: '', title: '', ingredients: [], url: '' }
+  recipe: { id: '', title: '', ingredients: [] }
 }
 
 export { RecipeIngredients }
