@@ -465,10 +465,7 @@ describe('order actions', () => {
       expect(mockAssign).toHaveBeenCalledWith('redirect-url')
     })
 
-    test.skip('redirect is not called when redirected parameter is not set', async () => {
-      /*
-      TODO: reinstate this test
-      */
+    test('redirect is not called when redirected parameter is not set', async () => {
       checkoutOrder.mockRejectedValueOnce({
         status: 'error',
         message: 'error api',
