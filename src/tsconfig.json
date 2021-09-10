@@ -132,7 +132,6 @@
     "./",
   ],
   "exclude": [
-    "./__tests__",
     "./config",
     "./dist",
     "./public",
@@ -143,9 +142,7 @@
     "./libs/goustouicomponents/.storybook",
     "./libs/goustouicomponents/dist",
     "./libs/goustouicomponents/setup",
-    "./server/__tests__",
     "./server/config",
-    "./server/**/__tests__",
     "./**/node_modules",
   ]
 }
