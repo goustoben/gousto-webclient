@@ -22,7 +22,7 @@ module.exports = {
         },
         checkIfRafSectionVisible: function () {
           this
-            .waitForElementVisible('@rafContainer', 60000)
+            .waitForElementPresent('@rafContainer', 60000)
         },
         checkIfOrderScheduleContainerVisible: function () {
           this
