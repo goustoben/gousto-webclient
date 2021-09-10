@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Card, ItemExpandable } from 'goustouicomponents'
+import { client } from '../../../../config/routes'
+import Link from '../../../../components/Link'
 
 const ISSUE_TYPES_MAPPING = {
   MISSING_INGREDIENTS: ['3'],
@@ -38,7 +40,11 @@ const GetHelpFAQ = ({ issuesIDs, onClick }) => {
           <p>
             <strong>On the website:</strong>
             <br />
-            Log in to &apos;My Gousto&apos; amd select the &apos;Account Details&apos; tab.
+            Log in to &apos;My Gousto&apos; and select the&nbsp;
+            <Link to={client.myDetails} clientRouted={false}>
+              Account Details
+            </Link>
+            &nbsp;tab.
           </p>
 
           <p>
