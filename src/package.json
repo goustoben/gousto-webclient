@@ -205,7 +205,7 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "preset": "ts-jest",    
+    "preset": "ts-jest",
     "coverageReporters": [
       "json",
       "lcov",
@@ -245,7 +245,9 @@
       "<rootDir>/src",
       "<rootDir>/src/components"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/jest/.setup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest/.setup.js"
+    ],
     "globals": {
       "__DEV__": false,
       "__PROD__": true,
