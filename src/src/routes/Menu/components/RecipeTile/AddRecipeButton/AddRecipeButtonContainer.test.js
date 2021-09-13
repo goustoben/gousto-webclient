@@ -48,7 +48,7 @@ describe('<AddRecipeButtonContainer />', () => {
     }
   }
 
-  let wrapper = shallow(
+  const wrapper = shallow(
     <AddRecipeButtonContainer recipeId={recipeId} />,
     wrapperOptions
   )
@@ -58,108 +58,5 @@ describe('<AddRecipeButtonContainer />', () => {
     expect(wrapper.prop('isBasketLimitReached')).toEqual(false)
     expect(wrapper.prop('buttonProps')).toEqual({buttonClassName: 'addButton', buttonText: 'Add recipe', lineClassName: 'addButtonLine'})
     expect(wrapper.prop('recipeVariants')).toEqual(null)
-    expect(wrapper.prop('hasSideAddedToBasket')).toEqual(false)
-    expect(wrapper.prop('firstSideRecipeId')).toEqual(null)
-  })
-
-  describe('when recipe has sides', () => {
-    beforeEach(() => {
-      wrapperOptions.context.store.getState = () => ({
-        ...defaultState,
-        menu: Immutable.fromJS({
-          menuVariants: Immutable.fromJS({
-            321: {
-              [recipeId]: {
-                sides: [
-                  {
-                    coreRecipeId: 1000
-                  }
-                ]
-              }
-            }
-          }),
-        }),
-      })
-
-      wrapper = shallow(
-        <AddRecipeButtonContainer recipeId={recipeId} />,
-        wrapperOptions
-      )
-    })
-    test('should set recipeVariants', () => {
-      expect(wrapper.prop('recipeVariants')).toEqual({
-        type: 'sides',
-        sides: Immutable.fromJS([{coreRecipeId: 1000}]),
-        variantsList: Immutable.fromJS([{coreRecipeId: 1000}]),
-      })
-    })
-  })
-
-  describe('when recipe has no side added to basket', () => {
-    beforeEach(() => {
-      wrapperOptions.context.store.getState = () => ({
-        ...defaultState,
-        menu: Immutable.fromJS({
-          menuVariants: Immutable.fromJS({
-            321: {
-              [recipeId]: {
-                sides: [
-                  {
-                    coreRecipeId: '1000'
-                  }
-                ]
-              }
-            }
-          }),
-        }),
-        basket: Immutable.fromJS({
-          numPortions: 2,
-          currentMenuId: menuId,
-          recipes: Immutable.Map([['2000', 1]]),
-        }),
-      })
-
-      wrapper = shallow(
-        <AddRecipeButtonContainer recipeId={recipeId} />,
-        wrapperOptions
-      )
-    })
-    test('should set recipeVariants', () => {
-      expect(wrapper.prop('buttonProps')).toEqual({buttonClassName: 'addButton', buttonText: 'Add recipe', lineClassName: 'addButtonLine'})
-    })
-  })
-
-  describe('when recipe has side added to basket', () => {
-    beforeEach(() => {
-      wrapperOptions.context.store.getState = () => ({
-        ...defaultState,
-        menu: Immutable.fromJS({
-          menuVariants: Immutable.fromJS({
-            321: {
-              [recipeId]: {
-                sides: [
-                  {
-                    coreRecipeId: '1000'
-                  }
-                ]
-              }
-            }
-          }),
-        }),
-        basket: Immutable.fromJS({
-          numPortions: 2,
-          currentMenuId: menuId,
-          recipes: Immutable.Map([['1000', 1]]),
-        }),
-      })
-
-      wrapper = shallow(
-        <AddRecipeButtonContainer recipeId={recipeId} />,
-        wrapperOptions
-      )
-    })
-    test('should set recipeVariants', () => {
-      expect(wrapper.prop('buttonProps')).toEqual({buttonClassName: 'removeButton', buttonText: 'Remove recipe', lineClassName: 'removeButtonLine'})
-    })
   })
 })

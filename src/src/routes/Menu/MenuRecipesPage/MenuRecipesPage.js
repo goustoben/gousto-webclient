@@ -12,7 +12,6 @@ import Loading from '../Loading'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
-import { RecipeSidesModalContainer } from './RecipeSidesModal'
 import { VariantRecipeListModalContainer, VariantRecipeListDesktopModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
@@ -124,7 +123,6 @@ export class MenuRecipesPage extends PureComponent {
         <JustForYouTutorial />
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
-        <RecipeSidesModalContainer />
 
         <MenuSidesModalContainer />
 

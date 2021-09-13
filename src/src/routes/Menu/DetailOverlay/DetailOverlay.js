@@ -14,7 +14,6 @@ import { RecipeContextProvider } from '../context/recipeContext'
 const propTypes = {
   showOverlay: PropTypes.bool,
   menuRecipeDetailShow: PropTypes.string,
-  chosenSideRecipeId: PropTypes.string,
   position: PropTypes.number,
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -27,7 +26,6 @@ const propTypes = {
 const defaultProps = {
   showOverlay: false,
   menuRecipeDetailShow: '',
-  chosenSideRecipeId: null,
   position: null,
   isFromShowcaseMenu: false,
 }
@@ -80,7 +78,7 @@ class DetailOverlay extends PureComponent {
   }
 
   render() {
-    const { showOverlay, menuRecipeDetailShow, chosenSideRecipeId, recipesStore, numPortions, position, browserType, isOutOfStock, isFromShowcaseMenu } = this.props
+    const { showOverlay, menuRecipeDetailShow, recipesStore, numPortions, position, browserType, isOutOfStock, isFromShowcaseMenu } = this.props
     const recipeId = menuRecipeDetailShow
     const detailRecipe = recipesStore.get(recipeId)
 
@@ -102,7 +100,6 @@ class DetailOverlay extends PureComponent {
         <RecipeContextProvider value={detailRecipe}>
           <DetailContainer
             id={detailRecipe.get('id')}
-            chosenSideRecipeId={chosenSideRecipeId}
             view={view}
             media={media}
             title={detailRecipe.get('title', '')}

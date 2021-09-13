@@ -13,7 +13,7 @@ import {
   getRecipeAllergensProps,
   getRecipePerPortionProps,
   getRecipePer100gProps, getRecipeSidesSurcharge,
-  getSelectedRecipeSidesFromMenu, getTaglineByRecipeId, getBrandAvailabilityByRecipeId
+  getTaglineByRecipeId, getBrandAvailabilityByRecipeId
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -874,18 +874,6 @@ describe('menu recipe selectors', () => {
 
         expect(result).toEqual(true)
       })
-    })
-  })
-
-  describe('getSelectedRecipeSidesFromMenu', () => {
-    test('should return selectedRecipeSides from state.menu', () => {
-      const state = {
-        menu: Immutable.fromJS({
-          selectedRecipeSides: []
-        })
-      }
-      const result = getSelectedRecipeSidesFromMenu(state)
-      expect(result).toEqual(Immutable.List([]))
     })
   })
 

@@ -224,7 +224,6 @@ describe('VariantRecipeListContainer', () => {
         123: [],
         234: []
       }),
-      selectedRecipeSides: {}
     })
   }
 

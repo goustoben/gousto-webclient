@@ -5,43 +5,24 @@ import { AddRecipeButton } from './AddRecipeButton'
 import { basketRecipeAddAttempt, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { getRecipeIdInBasket } from '../../../selectors/recipe'
 import { getRecipeButtonProps } from './recipeButtonPropsSelector'
-import { setSidesModalRecipe } from '../../../actions/menuRecipeSidesModal'
-import { getVariantsForRecipe, getSidesData } from '../../../selectors/variants'
+import { getVariantsForRecipe } from '../../../selectors/variants'
 
 const mapStateToProps = (state, ownProps) => {
-  const {
-    firstSideRecipeId,
-    hasSideAddedToBasket,
-  } = getSidesData(state, ownProps)
   const isInBasket = getRecipeIdInBasket(state, ownProps)
   const buttonProps = getRecipeButtonProps(state, ownProps)
-  const sideAddedToBasketButtonProps = {
-    buttonClassName: 'removeButton',
-    lineClassName: 'removeButtonLine',
-    buttonText: 'Remove recipe',
-  }
   const hasBasketPostcode = Boolean(getBasketPostcode(state))
-
-  let formattedButtonProps = buttonProps
-
-  if (hasSideAddedToBasket) {
-    formattedButtonProps = sideAddedToBasketButtonProps
-  }
 
   return {
     isInBasket,
     isBasketLimitReached: getBasketTotalRecipes(state) === 4,
-    buttonProps: formattedButtonProps,
+    buttonProps,
     recipeVariants: getVariantsForRecipe(state, ownProps),
-    hasSideAddedToBasket,
-    firstSideRecipeId,
     hasBasketPostcode
   }
 }
 const mapDispatchToProps = {
   basketRecipeAddAttempt,
   basketRecipeRemove,
-  setSidesModalRecipe,
   recipeVariantDropdownExpanded
 }
 

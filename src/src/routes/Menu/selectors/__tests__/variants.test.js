@@ -232,7 +232,6 @@ describe('getSidesForRecipe', () => {
         menuVariants: Immutable.fromJS({
           [menuId]: {}
         }),
-        selectedRecipeSides: {},
       }),
       auth: Immutable.Map({
         isAuthenticated: false,
@@ -288,7 +287,6 @@ describe('getSidesForRecipe', () => {
             }
           }
         }),
-        selectedRecipeSides: {},
       }),
       auth: Immutable.Map({
         isAuthenticated: false,

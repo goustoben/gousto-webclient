@@ -25,10 +25,6 @@ describe('the Buttons component', () => {
     surchargePerPortion: null,
     score: null,
     basketPostcode: 'W3',
-    setSidesModalRecipe: jest.fn(),
-    hasSideAddedToBasket: false,
-    hasSides: false,
-    selectedRecipeSide: 'mockSelectedRecipeSide'
   }
 
   afterEach(() => {
@@ -209,7 +205,7 @@ describe('the Buttons component', () => {
   })
 
   describe('the functionality', () => {
-    const { recipeId, view, position, score, onAdd, onRemove, setSidesModalRecipe, selectedRecipeSide } = buttonsProps
+    const { recipeId, view, position, score, onAdd, onRemove } = buttonsProps
     const menuBrowseCTAVisibilityChangeSpy = jest.fn()
     const newButtonProps = {
       ...buttonsProps,
@@ -224,7 +220,7 @@ describe('the Buttons component', () => {
         describe('when the disable prop is false', () => {
           describe('and clicking to adding a recipe', () => {
             test('then it adds the recipe', () => {
-              wrapper = mount(<Buttons {...buttonsProps} selectedRecipeSide={null} />)
+              wrapper = mount(<Buttons {...buttonsProps} />)
               buttonContent = wrapper.find('Tooltip').find('Segment')
               buttonContent.simulate('click')
               expect(onAdd).toHaveBeenCalledWith(
@@ -236,42 +232,10 @@ describe('the Buttons component', () => {
           })
         })
 
-        describe('When the recipe has sides', () => {
-          describe('When the user is not on the sides modal or the detail screen', () => {
-            test('then it should call setSidesModalRecipe', () => {
-              wrapper = mount(<Buttons {...buttonsProps} isOnSidesModal={false} isOnDetailScreen={false} hasSides />)
-              buttonContent = wrapper.find('Tooltip').find('Segment')
-              buttonContent.simulate('click')
-              expect(setSidesModalRecipe).toHaveBeenCalledWith({
-                recipeId: '12345',
-                view: 'grid',
-                position: 10,
-                score: null
-              }
-              )
-            })
-          })
-
-          describe('When selectedRecipeSide is true', () => {
-            test('then it adds the selected recipe side', () => {
-              wrapper = mount(<Buttons {...buttonsProps} isOnDetailsScreen selectedRecipeSide="mockSelectedRecipeSide" />)
-              buttonContent = wrapper.find('Tooltip').find('Segment')
-              buttonContent.simulate('click')
-              expect(onAdd).toHaveBeenCalledWith(
-                selectedRecipeSide,
-                view,
-                { position, score },
-                undefined,
-                recipeId,
-              )
-            })
-          })
-        })
-
         describe('When the disable prop is true', () => {
           describe('and clicking to add a recipe', () => {
             test('then the recipe is not added', () => {
-              wrapper = mount(<Buttons {...buttonsProps} selectedRecipeSide={null} disable />)
+              wrapper = mount(<Buttons {...buttonsProps} disable />)
               buttonContent = wrapper.find('Tooltip').find('Segment')
               buttonContent.simulate('click')
               expect(onAdd).not.toHaveBeenCalled()
@@ -283,7 +247,7 @@ describe('the Buttons component', () => {
       describe('When the stock is null', () => {
         describe('and clicking to add a recipe', () => {
           test('then the recipe is not added', () => {
-            wrapper = mount(<Buttons {...buttonsProps} selectedRecipeSide={null} stock={null} />)
+            wrapper = mount(<Buttons {...buttonsProps} stock={null} />)
             buttonContent = wrapper.find('Tooltip').find('Segment')
             buttonContent.simulate('click')
             expect(onAdd).not.toHaveBeenCalled()
@@ -309,7 +273,7 @@ describe('the Buttons component', () => {
         describe('When the stock is not null', () => {
           describe('and clicking to add a recipe', () => {
             test('then it should add the recipe', () => {
-              wrapper = mount(<Buttons {...buttonsProps} selectedRecipeSide={null} qty={2} />)
+              wrapper = mount(<Buttons {...buttonsProps} qty={2} />)
               segmentRemove = wrapper.find('Segment').at(1)
               segmentAdd = wrapper.find('Segment').at(3)
               segmentAdd.simulate('click')
@@ -323,7 +287,7 @@ describe('the Buttons component', () => {
 
           describe('When clicking to remove a recipe', () => {
             test('then it should remove the recipe', () => {
-              wrapper = mount(<Buttons {...buttonsProps} selectedRecipeSide={null} qty={2} />)
+              wrapper = mount(<Buttons {...buttonsProps} qty={2} />)
               segmentRemove = wrapper.find('Segment').at(1)
               segmentRemove.simulate('click')
               expect(onRemove).toHaveBeenCalledWith(
@@ -364,7 +328,7 @@ describe('the Buttons component', () => {
       describe('When the disable prop is true', () => {
         describe('and clicking to add a recipe', () => {
           test('then the recipe is not added', () => {
-            wrapper = mount(<Buttons {...buttonsProps} selectedRecipeSide={null} disable qty={2} />)
+            wrapper = mount(<Buttons {...buttonsProps} disable qty={2} />)
             segmentAdd = wrapper.find('Segment').at(3)
             segmentAdd.simulate('click')
             expect(onAdd).not.toHaveBeenCalled()
@@ -373,7 +337,7 @@ describe('the Buttons component', () => {
 
         describe('and clicking to remove a recipe', () => {
           test('removes the recipe', () => {
-            wrapper = mount(<Buttons {...buttonsProps} selectedRecipeSide={null} disable qty={2} />)
+            wrapper = mount(<Buttons {...buttonsProps} disable qty={2} />)
             segmentRemove = wrapper.find('Segment').at(1)
             segmentRemove.simulate('click')
             expect(onRemove).toHaveBeenCalledWith(
@@ -383,37 +347,6 @@ describe('the Buttons component', () => {
               score
             )
           })
-        })
-      })
-    })
-
-    describe('the functionality with variants', () => {
-      const recipeVariants = {
-        type: 'sides',
-      }
-      const buttonsPropsWithRecipeVariants = {
-        ...buttonsProps,
-        recipeVariants,
-        hasSides: true
-      }
-
-      beforeEach(() => {
-        wrapper = mount(<Buttons { ...buttonsPropsWithRecipeVariants} />)
-      })
-
-      describe('when the recipe has sides', () => {
-        test('should set setSidesModalRecipe to recipe data', () => {
-          const buttonContent = wrapper.find('Tooltip').find('Segment')
-          buttonContent.simulate('click')
-
-          expect(setSidesModalRecipe).toHaveBeenCalledWith(
-            {
-              position: 10,
-              recipeId: '12345',
-              score: null,
-              view: 'grid'
-            }
-          )
         })
       })
     })
@@ -439,12 +372,6 @@ describe('ButtonsContainer', () => {
             surcharge: null
           }]
         }
-      }),
-      menu: Immutable.fromJS({
-        menuVariants: {
-          321: {}
-        },
-        selectedRecipeSides: {}
       }),
       menuRecipeStock: Immutable.fromJS({
         1: {

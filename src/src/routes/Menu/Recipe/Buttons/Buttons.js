@@ -32,7 +32,7 @@ class Buttons extends React.Component {
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surchargePerPortion, buttonText, hasSides } = this.props
+    const { numPortions, qty, surchargePerPortion, buttonText } = this.props
     const { tooltipVisible } = this.state
     const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected', 'sentenceCaseSegment')
 
@@ -82,7 +82,7 @@ class Buttons extends React.Component {
             hover={this.tooltipHover}
             disabledClick={this.disabledClick}
             size="small"
-            disabled={disabled || hasSides}
+            disabled={disabled}
             className={segmentSelectedClass}
           >
             <Control>+</Control>
@@ -134,11 +134,6 @@ class Buttons extends React.Component {
       menuRecipeDetailVisibilityChange,
       menuBrowseCTAVisibilityChange,
       basketPostcode,
-      hasSides,
-      setSidesModalRecipe,
-      isOnSidesModal,
-      isOnDetailScreen,
-      selectedRecipeSide,
       closeOnAdd,
       recipeVariantDropdownExpanded,
     } = this.props
@@ -148,15 +143,9 @@ class Buttons extends React.Component {
     }
 
     if (stock !== null && Boolean(basketPostcode)) {
-      if (hasSides && !isOnSidesModal && !isOnDetailScreen) {
-        setSidesModalRecipe({ recipeId, view, position, score })
-      } else if (selectedRecipeSide) {
-        onAdd(selectedRecipeSide, view, { position, score }, undefined, recipeId)
-      } else {
-        onAdd(recipeId, view, { position, score })
-        if (closeOnAdd) {
-          recipeVariantDropdownExpanded(null)
-        }
+      onAdd(recipeId, view, { position, score })
+      if (closeOnAdd) {
+        recipeVariantDropdownExpanded(null)
       }
     } else if (config.recipeDetailViews.includes(view)) {
       menuRecipeDetailVisibilityChange()
@@ -167,8 +156,8 @@ class Buttons extends React.Component {
   }
 
   handleRemove = () => {
-    const { onRemove, recipeId, view, position, score, firstSideRecipeId ,hasSideAddedToBasket } = this.props
-    onRemove(hasSideAddedToBasket ? firstSideRecipeId : recipeId, view, position, score)
+    const { onRemove, recipeId, view, position, score } = this.props
+    onRemove(recipeId, view, position, score)
   }
 
   tooltipToggle = (visible) => {
@@ -249,18 +238,6 @@ Buttons.propTypes = {
   score: PropTypes.number,
   buttonText: PropTypes.string,
   basketPostcode: PropTypes.string,
-  recipeVariants: PropTypes.shape({
-    type: PropTypes.string,
-    alternatives: PropTypes.arrayOf(PropTypes.shape),
-    sides: PropTypes.arrayOf(PropTypes.shape),
-  }),
-  setSidesModalRecipe: PropTypes.func.isRequired,
-  isOnSidesModal: PropTypes.bool,
-  isOnDetailScreen: PropTypes.bool,
-  selectedRecipeSide: PropTypes.string,
-  firstSideRecipeId: PropTypes.string,
-  hasSideAddedToBasket: PropTypes.bool.isRequired,
-  hasSides: PropTypes.bool.isRequired,
   closeOnAdd: PropTypes.bool,
   recipeVariantDropdownExpanded: PropTypes.bool.isRequired,
 }
@@ -269,11 +246,6 @@ Buttons.defaultProps = {
   buttonText: 'Add recipe',
   basketPostcode: '',
   isOutOfStock: false,
-  recipeVariants: null,
-  isOnSidesModal: false,
-  selectedRecipeSide: null,
-  firstSideRecipeId: null,
-  isOnDetailScreen: false,
   surchargePerPortion: null,
   closeOnAdd: false,
 }

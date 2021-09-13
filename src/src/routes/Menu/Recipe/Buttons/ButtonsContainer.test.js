@@ -51,7 +51,6 @@ describe('<ButtonsContainer />', () => {
       menuVariants: Immutable.fromJS({
         [menuId]: {}
       }),
-      selectedRecipeSides: {},
     }),
     auth: Immutable.Map({
       isAuthenticated: false,
@@ -71,7 +70,7 @@ describe('<ButtonsContainer />', () => {
     }
   }
 
-  let wrapper = shallow(
+  const wrapper = shallow(
     <ButtonsContainer recipeId={recipeId1} />,
     wrapperOptions
   )
@@ -80,58 +79,5 @@ describe('<ButtonsContainer />', () => {
     expect(wrapper.prop('qty')).toEqual(0)
     expect(wrapper.prop('numPortions')).toEqual(2)
     expect(wrapper.prop('surchargePerPortion')).toEqual(null)
-    expect(wrapper.prop('recipeVariants')).toEqual(null)
-    expect(wrapper.prop('selectedRecipeSide')).toEqual(null)
-    expect(wrapper.prop('hasSides')).toEqual(false)
-    expect(wrapper.prop('hasSideAddedToBasket')).toEqual(false)
-    expect(wrapper.prop('firstSideRecipeId')).toEqual(null)
-  })
-
-  describe('when has sides', () => {
-    beforeEach(() => {
-      wrapperOptions.context.store.getState = () => ({
-        ...defaultState,
-        menu: Immutable.fromJS({
-          menuVariants: Immutable.fromJS({
-            [menuId]: {
-              [recipeId2]: {
-                sides: [
-                  {
-                    coreRecipeId: '1000'
-                  }
-                ]
-              }
-            }
-          }),
-          selectedRecipeSides: {},
-        }),
-        basket: Immutable.fromJS({
-          numPortions: 2,
-          currentMenuId: menuId,
-          recipes: Immutable.Map([['1000', 1]]),
-        }),
-
-      })
-
-      wrapper = shallow(
-        <ButtonsContainer recipeId={recipeId2} />,
-        wrapperOptions
-      )
-    })
-
-    test('should pass down correct props', () => {
-      expect(wrapper.prop('qty')).toEqual(1)
-      expect(wrapper.prop('surchargePerPortion')).toEqual(0.75)
-      expect(wrapper.prop('hasSides')).toEqual(true)
-      expect(wrapper.prop('recipeVariants')).toEqual({
-        type: 'sides',
-        sides: Immutable.fromJS([
-          { coreRecipeId: '1000' },
-        ]),
-        variantsList: Immutable.fromJS([
-          { coreRecipeId: '1000' },
-        ]),
-      })
-    })
   })
 })
