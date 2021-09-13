@@ -1,4 +1,6 @@
 import * as fetchModule from 'utils/fetch'
+import * as cookieHelper from 'utils/cookieHelper2'
+import Cookies from 'cookies-js'
 import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
 
 const mockFetchResult = { data: [1, 2, 3] }
@@ -14,6 +16,7 @@ jest.mock('config/routes', () => ({
 
 describe('menus', () => {
   let fetchRawSpy
+  let cookieGetSpy
 
   beforeEach(() => {
     fetchRawSpy = jest.spyOn(fetchModule, 'fetchRaw').mockImplementation(() => {
@@ -21,6 +24,8 @@ describe('menus', () => {
 
       return getData()
     })
+
+    cookieGetSpy = jest.spyOn(cookieHelper, 'get').mockReturnValue('session_id')
   })
 
   afterEach(() => {
@@ -35,13 +40,18 @@ describe('menus', () => {
 
     test('should fetch the correct url', async () => {
       await fetchMenus('token', query)
+
+      expect(cookieGetSpy).toBeCalledWith(Cookies, 'gousto_session_id', false, false)
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
       expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
         { addAlternatives: true, include: 'ingredients' },
         {
           accessToken: 'token',
           cache: 'default',
-          headers: {},
+          headers: {
+            'Content-Type': 'application/json',
+            'x-gousto-device-id': 'session_id',
+          },
           includeCookies: false,
           method: 'GET',
           timeout: null,
@@ -51,6 +61,7 @@ describe('menus', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchMenus('token', query)
+
       expect(result).toEqual(mockFetchResult)
     })
 
@@ -111,14 +122,20 @@ describe('menus', () => {
     })
 
     test('should fetch the correct url', async () => {
-      await fetchMenusWithUserId('token', query, 'e34rder')
+      await fetchMenusWithUserId('token', query, 'user_id')
+
+      expect(cookieGetSpy).toBeCalledWith(Cookies, 'gousto_session_id', false, false)
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
       expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
-        { addAlternatives: true, include: 'ingredients', userId: 'e34rder' },
+        { addAlternatives: true, include: 'ingredients', userId: 'user_id' },
         {
           accessToken: 'token',
           cache: 'default',
-          headers: {},
+          headers: {
+            'Content-Type': 'application/json',
+            'x-gousto-device-id': 'session_id',
+            'x-gousto-user-id': 'user_id',
+          },
           includeCookies: false,
           method: 'GET',
           timeout: null,
@@ -127,7 +144,7 @@ describe('menus', () => {
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchMenusWithUserId('token', query, 'e34rder')
+      const result = await fetchMenusWithUserId('token', query, 'user_id')
       expect(result).toEqual(mockFetchResult)
     })
 
@@ -139,7 +156,7 @@ describe('menus', () => {
       })
 
       test('should pass tasteProfileId', async () => {
-        await fetchMenusWithUserId('token', query, 'e34rder')
+        await fetchMenusWithUserId('token', query, 'user_id')
 
         expect(fetchRawSpy).toHaveBeenCalledWith(
           expect.any(String),
@@ -154,16 +171,22 @@ describe('menus', () => {
 
   describe('fetchSimpleMenu', () => {
     test('should fetch the correct url', async () => {
-      await fetchSimpleMenu('token', 'user-id')
+      await fetchSimpleMenu('token', 'user_id')
+
+      expect(cookieGetSpy).toBeCalledWith(Cookies, 'gousto_session_id', false, false)
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
       expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
         {
           includeMenuRelationships: false,
-          userId: 'user-id', },
+          userId: 'user_id', },
         {
           accessToken: 'token',
           cache: 'default',
-          headers: {},
+          headers: {
+            'Content-Type': 'application/json',
+            'x-gousto-device-id': 'session_id',
+            'x-gousto-user-id': 'user_id',
+          },
           includeCookies: false,
           method: 'GET',
           timeout: null,

@@ -1,5 +1,6 @@
 import { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
+import { getRequestHeaders } from 'routes/Menu/apis/_utils'
 
 const options = {
   method: 'GET',
@@ -21,7 +22,11 @@ const getTasteProfileIdFromQuery = (query) => {
 export function fetchMenus(accessToken, query) {
   const fetchOptions = {
     ...options,
-    accessToken
+    accessToken,
+    headers: {
+      ...options.headers,
+      ...getRequestHeaders()
+    }
   }
 
   let adminLinkData
@@ -52,7 +57,11 @@ export function fetchMenus(accessToken, query) {
 export function fetchMenusWithUserId(accessToken, query, userId) {
   const fetchOptions = {
     ...options,
-    accessToken
+    accessToken,
+    headers: {
+      ...options.headers,
+      ...getRequestHeaders(userId)
+    }
   }
 
   const requestQueryParams = {
@@ -73,7 +82,11 @@ export function fetchMenusWithUserId(accessToken, query, userId) {
 export function fetchSimpleMenu(accessToken, userId) {
   const fetchOptions = {
     ...options,
-    accessToken
+    accessToken,
+    headers: {
+      ...options.headers,
+      ...getRequestHeaders(userId)
+    }
   }
 
   const requestQueryParams = {
