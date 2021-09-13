@@ -3,18 +3,18 @@ import {
   checkoutUrgencySetCurrentStatus,
   trackCheckoutUrgencyAction,
 } from 'routes/Checkout/checkoutActions'
-import {
-  getCheckoutUrgencyCurrentStatus,
-  getCheckoutUrgencyStartSeconds,
-  getCheckoutUrgencyModalSeconds,
-} from 'routes/Checkout/checkoutSelectors'
+import { getCheckoutUrgencyCurrentStatus } from 'routes/Checkout/checkoutSelectors'
 import { isSubmitting } from 'routes/Checkout/utils/state'
+import {
+  checkoutUrgencyDefaultStartSeconds,
+  checkoutUrgencyDefaultModalSeconds,
+} from 'routes/Checkout/checkoutUrgencyConfig'
 import { CheckoutUrgencyController } from './CheckoutUrgencyController'
 
 const mapStateToProps = (state) => ({
   currentStatus: getCheckoutUrgencyCurrentStatus(state),
-  startSeconds: getCheckoutUrgencyStartSeconds(state),
-  modalSeconds: getCheckoutUrgencyModalSeconds(state),
+  startSeconds: checkoutUrgencyDefaultStartSeconds,
+  modalSeconds: checkoutUrgencyDefaultModalSeconds,
   submitting: isSubmitting(state),
 })
 

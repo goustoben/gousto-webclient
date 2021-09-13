@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
-import {
-  getCheckoutUrgencyCurrentStatus,
-  getCheckoutUrgencyModalSeconds,
-} from 'routes/Checkout/checkoutSelectors'
+import { getCheckoutUrgencyCurrentStatus } from 'routes/Checkout/checkoutSelectors'
 import {
   checkoutUrgencySetCurrentStatus,
   trackCheckoutUrgencyAction,
 } from 'routes/Checkout/checkoutActions'
+import { checkoutUrgencyDefaultModalSeconds } from 'routes/Checkout/checkoutUrgencyConfig'
 import { redirect } from 'actions/redirect'
 import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 import routes from 'config/routes'
@@ -18,7 +16,7 @@ const mapStateToProps = (state) => {
   return {
     isOpen: currentStatus === 'runningAndModalOpen' || currentStatus === 'finishedAndModalOpen',
     isLoading: currentStatus === 'loading',
-    modalSeconds: getCheckoutUrgencyModalSeconds(state),
+    modalSeconds: checkoutUrgencyDefaultModalSeconds,
   }
 }
 

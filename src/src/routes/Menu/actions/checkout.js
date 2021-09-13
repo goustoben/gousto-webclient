@@ -15,7 +15,6 @@ import { getPreviewOrderId } from 'selectors/basket'
 import { getUserStatus } from 'selectors/user'
 import { checkoutUrgencySetCurrentStatus } from 'routes/Checkout/checkoutActions'
 import { checkoutUrgencyStatuses } from 'routes/Checkout/checkoutUrgencyConfig'
-import { getIsCheckoutUrgencyEnabled } from 'routes/Checkout/checkoutSelectors'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getCouldBasketBeExpired,
@@ -37,10 +36,7 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
 
   const state = getState()
 
-  const isCheckoutUrgencyEnabled = getIsCheckoutUrgencyEnabled(state)
-  if (isCheckoutUrgencyEnabled) {
-    dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.loading))
-  }
+  dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.loading))
 
   if (!slot) {
     logger.error({ message: `Can't find any slot with id: ${slotId}`, actor: userId })
@@ -83,9 +79,7 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
       dispatch(pricingSuccess(previewOrder.prices))
     }
 
-    if (isCheckoutUrgencyEnabled) {
-      dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.running))
-    }
+    dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.running))
   } catch (e) {
     const { message, code } = e
     logger.warning(message)

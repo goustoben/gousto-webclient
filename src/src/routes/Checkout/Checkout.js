@@ -69,7 +69,6 @@ const propTypes = {
   lastReachedStepIndex: PropTypes.number,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   isPaymentBeforeChoosingV3Enabled: PropTypes.bool,
-  isCheckoutUrgencyEnabled: PropTypes.bool,
   isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
@@ -100,7 +99,6 @@ const defaultProps = {
   lastReachedStepIndex: 0,
   isPaymentBeforeChoosingEnabled: false,
   isPaymentBeforeChoosingV3Enabled: false,
-  isCheckoutUrgencyEnabled: false,
   isGoustoOnDemandEnabled: false,
 }
 
@@ -454,7 +452,7 @@ class Checkout extends PureComponent {
     )
   }
 
-  renderCheckoutUrgencyVariant() {
+  render() {
     const {
       params: { stepName },
       prices,
@@ -486,45 +484,6 @@ class Checkout extends PureComponent {
         <CheckoutUrgencyModalContainer />
       </CheckoutUrgencyControllerContainer>
     )
-  }
-
-  renderControl() {
-    const {
-      params: { stepName },
-      prices,
-      trackUTMAndPromoCode,
-    } = this.props
-
-    return (
-      <Div data-testing="checkoutContainer">
-        <Div className={css.checkoutContent}>
-          {stepName !== 'order-summary' && (
-            <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
-              <ExpandableBoxSummary
-                totalToPay={prices.get('total')}
-                totalWithoutDiscount={prices.get('recipeTotal')}
-                trackUTMAndPromoCode={trackUTMAndPromoCode}
-                promoCodeValid={prices.get('promoCodeValid')}
-              >
-                {this.renderSummaryAndYourBox()}
-              </ExpandableBoxSummary>
-            </div>
-          )}
-          {stepName !== 'order-summary' && this.renderProgressBar(stepName)}
-          {this.renderCheckoutSteps()}
-          {this.renderLoginModal()}
-        </Div>
-      </Div>
-    )
-  }
-
-  render() {
-    const { isCheckoutUrgencyEnabled } = this.props
-    if (isCheckoutUrgencyEnabled) {
-      return this.renderCheckoutUrgencyVariant()
-    }
-
-    return this.renderControl()
   }
 }
 
