@@ -20,7 +20,6 @@ import {
 import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
-  getIsNewSubscriptionApiEnabled,
   getIsDecoupledPaymentEnabled,
   getIsGoustoOnDemandEnabled,
 } from 'selectors/features'
@@ -31,7 +30,7 @@ import logger from 'utils/logger'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
-import { transformPendingOrders, transformProjectedDeliveries, transformProjectedDeliveriesNew } from 'utils/myDeliveries'
+import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 import { getAuthUserId } from 'selectors/auth'
 import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscription'
@@ -375,18 +374,9 @@ function userLoadNewOrders() {
     // eslint-disable-next-line no-use-before-define
     await Promise.all([dispatch(userActions.userLoadOrders(forceRefresh)), dispatch(userActions.userLoadProjectedDeliveries())])
 
-    let projectedDeliveries
     const state = getState()
-    const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
-
     const pendingOrders = transformPendingOrders(state.user.get('orders'))
-
-    if (isNewSubscriptionApiEnabled) {
-      projectedDeliveries = transformProjectedDeliveriesNew(state.user.get('projectedDeliveries'))
-    } else {
-      projectedDeliveries = transformProjectedDeliveries(state.user.get('projectedDeliveries'))
-    }
-
+    const projectedDeliveries = transformProjectedDeliveries(state.user.get('projectedDeliveries'))
     const ordersCombined = pendingOrders.merge(projectedDeliveries)
 
     dispatch({ type: actionTypes.MYDELIVERIES_ORDERS, orders: ordersCombined })

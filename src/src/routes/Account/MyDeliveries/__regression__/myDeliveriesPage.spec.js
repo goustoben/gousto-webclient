@@ -16,8 +16,6 @@ describe('My Deliveries', () => {
     cy.fixture('orderSkipRecovery').as('orderSkipRecovery')
     cy.route('GET', /orderskiprecovery/, '@orderSkipRecovery')
     cy.fixture('user/userCurrentSubscriptionDelivery').as('userCurrentSubscriptionDelivery')
-    cy.route('POST', /user\/current\/subscription\/delivery\/disable/, '@userCurrentSubscriptionDelivery').as('cancelProjectedDelivery')
-    cy.route('POST', /user\/(.*)\/subscription\/delivery\/enable/, '@userCurrentSubscriptionDelivery').as('restoreProjectedDelivery')
     cy.fixture('subscription/subscriptionUpdateResponse').as('subscriptionUpdateResponse')
     cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/skip?/, '@subscriptionUpdateResponse').as('skipDates')
     cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/unskip?/, '@subscriptionUpdateResponse').as('unSkipDates')
@@ -26,7 +24,6 @@ describe('My Deliveries', () => {
 
     cy.login()
     cy.visit('/')
-    cy.setFeatures([{ feature: 'isNewSubscriptionApiEnabled', value: true }])
     cy.visit('/my-deliveries')
     cy.wait(['@currentOrders', '@user', '@projectedDeliveries', '@currentAddress', '@currentSubscription'])
   })

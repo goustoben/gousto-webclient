@@ -33,7 +33,6 @@ import { deliveryTariffTypes } from 'utils/deliveries'
 import {
   transformPendingOrders,
   transformProjectedDeliveries,
-  transformProjectedDeliveriesNew,
 } from 'utils/myDeliveries'
 import {
   getIsNewSubscriptionApiEnabled,
@@ -109,7 +108,6 @@ jest.mock('utils/logger', () => ({
 jest.mock('utils/myDeliveries', () => ({
   transformPendingOrders: jest.fn(),
   transformProjectedDeliveries: jest.fn(),
-  transformProjectedDeliveriesNew: jest.fn(),
 }))
 
 const formValues = {
@@ -190,7 +188,6 @@ describe('user actions', () => {
     userActions.userLoadProjectedDeliveries = jest.fn().mockReturnValue(() => { })
     transformPendingOrders.mockReturnValue(Immutable.Map())
     transformProjectedDeliveries.mockReturnValue(Immutable.Map())
-    transformProjectedDeliveriesNew.mockReturnValue(Immutable.Map())
 
     test('should dispatch userLoadOrders and userLoadProjectedDeliveries actions', async () => {
       await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
@@ -219,16 +216,6 @@ describe('user actions', () => {
       expect(dispatchSpy.mock.calls[2][0]).toEqual({
         type: actionTypes.MYDELIVERIES_ORDERS,
         orders: pendingOrders,
-      })
-    })
-
-    describe('when isNewSubscriptionApiEnabled is set to true', () => {
-      test('should call transformProjectedDeliveriesNew function with the correct params', async () => {
-        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
-
-        await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
-
-        expect(transformProjectedDeliveriesNew).toHaveBeenCalledWith(getStateSpy().user.get('projectedDeliveries'))
       })
     })
   })
