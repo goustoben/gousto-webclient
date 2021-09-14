@@ -37,7 +37,9 @@ const config = {
         test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
         exclude: /node_modules/,
         loader: 'ts-loader',
-        options: {},
+        options: {
+          configFile: path.resolve(__dirname, '../server/tsconfig.json')
+        },
         include: [
           path.resolve(__dirname, '../src'),
           path.resolve(__dirname, '../server'),

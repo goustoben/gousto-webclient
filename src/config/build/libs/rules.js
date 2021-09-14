@@ -24,41 +24,19 @@ const cssDevelopmentRules = [
       },    
 ]
 
-const javascriptProductionRule = {
+const typescriptRule = (tsconfigPath = "../../../tsconfig.json") => ({
   test: /\.js$/,
   exclude: /node_modules/,
   use: [
       {
           loader: 'ts-loader',
-          options: {}  
+          options: {
+            "configFile": path.resolve(process.cwd(), tsconfigPath)
+          }  
       }
   ],
   include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
-}
-
-const javascriptDevelopmentRule = {
-  test: /\.js$/,
-  exclude: /node_modules/,
-  use: [
-      {
-          loader: 'ts-loader',
-          options: {}
-      }
-  ],
-  include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
-}
-
-const javascriptDevelopmentRuleWithReactRefresh = {
-  test: /\.js$/,
-  exclude: /node_modules/,
-  use: [
-      {
-          loader: 'ts-loader',
-          options: {}
-      }
-  ],
-  include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
-}
+})
 
 const fontRules = [
   {
@@ -95,11 +73,9 @@ const combineRules = (jsRule, cssRules) => ([
     ...imageRules,
   ])
 
-const getClientRules = (isDevelopmentBuild = false, isHmrEnabled = false) => {
+const getClientRules = (tsconfigPath = "./tsconfig.json", isDevelopmentBuild = false, isHmrEnabled = false) => {
   const cssRules = isDevelopmentBuild ? cssDevelopmentRules : cssProductionRules
-  const developmentJavascriptRule = isHmrEnabled ? javascriptDevelopmentRuleWithReactRefresh : javascriptDevelopmentRule
-  const javascriptRule = isDevelopmentBuild ? developmentJavascriptRule : javascriptProductionRule
-  return combineRules(javascriptRule, cssRules)
+  return combineRules(typescriptRule(tsconfigPath), cssRules)
 }
 
 module.exports = {

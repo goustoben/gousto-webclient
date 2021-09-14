@@ -21,7 +21,7 @@ const baseConfig = {
   },
   mode: 'production',
   module: {
-    rules: getClientRules(isDevelopmentBuild, hmrEnabled),
+    rules: getClientRules('./tsconfig.json', isDevelopmentBuild, hmrEnabled),
   },
   name: 'client',
   node: {
