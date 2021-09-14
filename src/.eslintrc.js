@@ -16,7 +16,12 @@ const componentFileAliases = fs.readdirSync('./src/components', { withFileTypes:
 });
 
 module.exports = {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+  },
   "extends": [
     "airbnb",
     "eslint:recommended",
@@ -173,7 +178,8 @@ module.exports = {
       "no-unneeded-ternary": 1,
       "no-unused-expressions": 1,
       "no-unused-vars": [1, { "argsIgnorePattern": "^_" }],
-      "no-use-before-define": 1,
+      "no-use-before-define": 0,
+      "@typescript-eslint/no-use-before-define": 1,
       "no-useless-escape": 1,
       "no-useless-return": 1,
       "no-var": 1,
@@ -254,7 +260,7 @@ module.exports = {
     "after": true,
     "Cypress": true
   },
-  "plugins": ["prettier"],
+  "plugins": ["react", "prettier", '@typescript-eslint'],
   "overrides": [
     {
       "files": [
@@ -306,6 +312,28 @@ module.exports = {
         "react/jsx-wrap-multilines": 0,
         "react/jsx-curly-newline": 0
       }
+    },
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "env": { "browser": true, "es2021": true, "node": true },
+      "parserOptions": {
+        "ecmaFeatures": { "jsx": true },
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+      },
+      "extends": [
+        'airbnb',
+        "airbnb-typescript",
+        "plugin:react/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:import/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:prettier/recommended",
+      ],
     }
   ]
 }
