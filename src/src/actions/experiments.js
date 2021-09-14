@@ -114,9 +114,9 @@ export function fetchOrAssignUserToExperiment(experimentName) {
     const assignUser = shouldAssignUserToExperiment(currentState, { experimentName })
 
     if (fetchExperiments) {
-      dispatch(exports.fetchUserExperiments())
+      dispatch(fetchUserExperiments())
     } else if (assignUser) {
-      dispatch(exports.assignUserToExperiment(experimentName))
+      dispatch(assignUserToExperiment(experimentName))
     }
   }
 }
