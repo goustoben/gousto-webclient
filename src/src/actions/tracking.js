@@ -125,6 +125,8 @@ export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
     const browseMode = getState().menuBrowseCtaShow
     const recommended = getState().recipes.some(recipe => recipe.get('isRecommended', false))
     const collectionId = getState().filters.get('currentCollectionId')
+    const menuServiceData = getState().menuService.meta
+    const recommenderVersion = menuServiceData.recommendations && menuServiceData.recommendations.version
 
     dispatch({
       type: actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING,
@@ -135,6 +137,7 @@ export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
       orderId,
       recommended,
       browseMode,
+      recommenderVersion,
     })
   }
 )

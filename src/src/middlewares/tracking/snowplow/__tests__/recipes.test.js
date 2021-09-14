@@ -1,7 +1,5 @@
-import * as trackingKeys from 'actions/trackingKeys'
 import {
   recipeListViewed,
-  recipeCollectionSelected,
 } from '../recipes/recipes'
 
 describe('snowplow recipe tracking events', () => {
@@ -17,6 +15,7 @@ describe('snowplow recipe tracking events', () => {
       orderId: '9191919',
       recommended: true,
       browseMode: false,
+      recommenderVersion: '1'
     }
 
     test('should return an object with type view_recipe_list', () => {
@@ -36,24 +35,7 @@ describe('snowplow recipe tracking events', () => {
           order_id: '9191919',
           recommended: true,
           browse_mode: false,
-        },
-      })
-    })
-  })
-
-  describe('recipeCollectionSelected', () => {
-    const action = {
-      collectionId: '4321',
-    }
-
-    test('should return an object with type RecipeCollection Select', () => {
-      expect(recipeCollectionSelected(action)).toMatchObject({ type: trackingKeys.selectRecipeCollection })
-    })
-
-    test('should return an object with data extracted from the action', () => {
-      expect(recipeCollectionSelected(action)).toMatchObject({
-        data: {
-          collection_id: '4321',
+          recommender_version: '1'
         },
       })
     })

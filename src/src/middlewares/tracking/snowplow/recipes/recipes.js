@@ -13,17 +13,6 @@ export const recipeListViewed = (action) => ({
     order_id: action.orderId,
     recommended: action.recommended,
     browse_mode: action.browseMode,
+    recommender_version: action.recommenderVersion,
   },
 })
-
-export const recipeCollectionSelected = (action) => ({
-  type: trackingKeys.selectRecipeCollection,
-  data: {
-    collection_id: action.collectionId,
-  },
-})
-
-export default {
-  recipeListViewed,
-  recipeCollectionSelected,
-}

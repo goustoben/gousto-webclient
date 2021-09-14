@@ -190,6 +190,13 @@ describe('tracking actions', () => {
       filters: Immutable.Map({
         currentCollectionId: '678',
       }),
+      menuService: {
+        meta: {
+          recommendations: {
+            version: '1'
+          }
+        }
+      }
     }
 
     beforeEach(() => {
@@ -207,7 +214,7 @@ describe('tracking actions', () => {
       )
     })
 
-    test('should dispatch correct arguements', () => {
+    test('should dispatch correct arguments', () => {
       getState.mockReturnValue(state)
 
       trackRecipeOrderDisplayed(
@@ -226,6 +233,7 @@ describe('tracking actions', () => {
         browseMode: false,
         deliveryDayId: 'test-day-id',
         orderId: '1234567',
+        recommenderVersion: '1'
       })
     })
 
@@ -248,6 +256,13 @@ describe('tracking actions', () => {
           filters: Immutable.Map({
             currentCollectionId: '910',
           }),
+          menuService: {
+            meta: {
+              recommendations: {
+                version: '1'
+              }
+            }
+          }
         }
         getState.mockReturnValue(state)
 
@@ -274,6 +289,13 @@ describe('tracking actions', () => {
           filters: Immutable.Map({
             currentCollectionId: '112',
           }),
+          menuService: {
+            meta: {
+              recommendations: {
+                version: '1'
+              }
+            }
+          }
         }
         getState.mockReturnValue(state)
 
