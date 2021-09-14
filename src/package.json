@@ -45,7 +45,6 @@
     "@types/jest": "^27.0.1",
     "actual": "0.4.0",
     "airbnb-prop-types": "^2.16.0",
-    "babel-polyfill": "6.26.0",
     "bower": "1.8.8",
     "classnames": "2.2.6",
     "cookies-js": "1.2.3",
@@ -112,6 +111,7 @@
     "@testing-library/react-hooks": "^3.4.2",
     "@types/node": "^16.7.10",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
+<<<<<<< HEAD
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.6",
     "babel-jest": "23.6.0",
@@ -126,6 +126,8 @@
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
+=======
+>>>>>>> 23fa145e2 (remove babel references)
     "codeowners": "^4.2.0",
     "concat-stream": "^2.0.0",
     "css-loader": "1.0.1",

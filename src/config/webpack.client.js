@@ -15,9 +15,8 @@ const baseConfig = {
   context: path.resolve(__dirname, '..'),
   devtool: false,
   entry: {
-    main: ['babel-polyfill', './src/client.js'],
-    legacy: ['babel-polyfill', './src/legacy.js'],
-    performanceTracker: ['./src/performanceTracker/entry.js'],
+    main: ['./src/client.js'],
+    legacy: ['./src/legacy.js'],
   },
   mode: 'production',
   module: {
