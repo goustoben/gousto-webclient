@@ -1,10 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import * as jest from 'jest'
-
 export const mockWindowLocationAssign = () => {
   delete window.location
 
   window.location = {
+    // TODO: Fix the eslint rules for this
+    // eslint-disable-next-line no-undef
     assign: jest.fn(),
   }
 
