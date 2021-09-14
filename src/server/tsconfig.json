@@ -4,5 +4,9 @@
     "lib": [
       "ES2015",
     ], 
-  }
+  },
+  "exclude": [
+    "./config",
+    "./**/node_modules",
+  ]  
 }
