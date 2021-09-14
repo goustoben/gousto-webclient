@@ -3,12 +3,12 @@ import logger from 'utils/logger'
 import isomorphicFetch from 'isomorphic-fetch'
 import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
-import { getStore } from 'store' //webpack aliasing?
+import { getStore } from 'store' // webpack aliasing?
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 
 type ResponseDataWithIncludedMeta = {
-  data: object,
-  included: boolean,
+  data: object
+  included: boolean
   meta: string
 }
 
@@ -16,14 +16,13 @@ type ResponseData = {
   result: object & {
     data: object
   }
-} &
-{
+} & {
   data: object
 }
 
 type ErrorObj = {
-  code: number,
-  message: string,
+  code: number
+  message: string
   errors: {
     [key: number]: string
     // key: value pairs of errors such as errCode: errMessage
@@ -31,10 +30,10 @@ type ErrorObj = {
 }
 
 type ParsedJSON = {
-  response: ResponseData,
+  response: ResponseData
   meta: string | null
 } & {
-  response: ResponseDataWithIncludedMeta,
+  response: ResponseDataWithIncludedMeta
   meta: never
 }
 
@@ -50,7 +49,19 @@ export const includeCookiesDefault: boolean = false
 export const useMenuServiceDefault: boolean = false
 export const useOverwriteRequestMethodDefault: boolean = true
 
-export function fetchRaw(url: string, data = {}, options: { accessToken: any; method: any; cache?: any; headers: any; timeout?: any; includeCookies?: any; useMenuService?: any }) {
+export function fetchRaw(
+  url: string,
+  data = {},
+  options: {
+    accessToken: any
+    method: any
+    cache?: any
+    headers: any
+    timeout?: any
+    includeCookies?: any
+    useMenuService?: any
+  }
+) {
   return fetch(
     options.accessToken,
     url,
@@ -60,7 +71,8 @@ export function fetchRaw(url: string, data = {}, options: { accessToken: any; me
     options.headers,
     options.timeout,
     options.includeCookies,
-    options.useMenuService)
+    options.useMenuService
+  )
 }
 
 export function fetch(
@@ -101,23 +113,24 @@ export function fetch(
     }
   } else {
     const contentType: string = requestHeaders['Content-Type']
-    const isContentTypeJSON: boolean = (contentType === 'application/json')
+    const isContentTypeJSON: boolean = contentType === 'application/json'
 
-    body = (isContentTypeJSON)
-      ? JSON.stringify(requestData)
-      : qs.stringify(requestData)
+    body = isContentTypeJSON ? JSON.stringify(requestData) : qs.stringify(requestData)
 
     if (!contentType) {
       requestHeaders = {
         ...requestHeaders,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
       }
     }
   }
-  const { uuid } : { uuid: string | undefined } = getStore().getState().logger || {}
+  const { uuid }: { uuid: string | undefined } = getStore().getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
-      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid })
+      logger.error({
+        message: `accessToken in fetch.js does not look valid (${accessToken})`,
+        uuid,
+      })
     }
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
@@ -126,7 +139,7 @@ export function fetch(
     if (env && env.apiToken) {
       requestHeaders['API-Token'] = env.apiToken
     } else {
-      logger.error({message: 'Missing env.apiToken', uuid })
+      logger.error({ message: 'Missing env.apiToken', uuid })
     }
   }
 
@@ -141,19 +154,25 @@ export function fetch(
   }
 
   if (cache === 'no-store' || cache === 'reload' || cache === 'no-cache') {
-    requestUrl += (queryString) ? '&' : '?'
+    requestUrl += queryString ? '&' : '?'
     requestUrl += `_=${Date.now()}`
   } else if (typeof cache === 'boolean') {
-    logger.warning(`boolean value passed to gousto fetch for ${requestUrl}. a valid cache mode should be provided.`)
+    logger.warning(
+      `boolean value passed to gousto fetch for ${requestUrl}. a valid cache mode should be provided.`
+    )
   }
 
   if (body) {
     requestDetails.body = body
   }
 
-
   const startTime: number = new Date().getTime()
-  logger.notice({message: '[fetch start]', requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
+  logger.notice({
+    message: '[fetch start]',
+    requestUrl,
+    uuid,
+    extra: { serverSide: __SERVER__ === true },
+  })
   let responseStatus: number
   let responseRedirected: boolean
   let responseUrl: string
@@ -171,7 +190,7 @@ export function fetch(
     })
     .then((response: Response) => response.text())
     .then((response: string) => {
-      if (!response && STATUS_CODES_WITH_NO_CONTENT.includes(responseStatus) ) {
+      if (!response && STATUS_CODES_WITH_NO_CONTENT.includes(responseStatus)) {
         return [{}, responseStatus]
       }
 
@@ -179,34 +198,49 @@ export function fetch(
     }) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }: ParsedJSON) => {
-      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date().getTime() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
+      logger.notice({
+        message: '[fetch end]',
+        status: responseStatus,
+        elapsedTime: `${new Date().getTime() - startTime}ms`,
+        requestUrl,
+        uuid,
+        extra: { serverSide: __SERVER__ === true },
+      })
 
-      if ( useMenuService ) {
+      if (useMenuService) {
         return { data: response.data, included: response.included, meta: response.meta }
       }
 
       return { data: response, meta }
     })
-    .catch((e: ErrorObj | Error | string)  => {
-      const message = (typeof e === "string") ? e : e.message
+    .catch((e: ErrorObj | Error | string) => {
+      const message = typeof e === 'string' ? e : e.message
       let log = logger.error
 
-      if (url.indexOf('oauth/identify') > -1 || url.indexOf('oauth/refresh-token') > -1 || responseStatus === 422) {
+      if (
+        url.indexOf('oauth/identify') > -1 ||
+        url.indexOf('oauth/refresh-token') > -1 ||
+        responseStatus === 422
+      ) {
         log = logger.warning
       }
 
       log({
         message: '[fetch end]',
         status: responseStatus,
-        elapsedTime: `${(new Date().getTime() - startTime)}ms`,
+        elapsedTime: `${new Date().getTime() - startTime}ms`,
         requestUrl,
-        errors: [e as Error], //This is total BS and purely to make this work with Lumberjack. Please fix this.
+        errors: [e as Error], // This is total BS and purely to make this work with Lumberjack. Please fix this.
         uuid,
         extra: { serverSide: __SERVER__ === true },
       })
 
-      if (e && (typeof e === "string") && e.toLowerCase &&
-          e.toLowerCase().indexOf('unable to determine') > -1) {
+      if (
+        e &&
+        typeof e === 'string' &&
+        e.toLowerCase &&
+        e.toLowerCase().indexOf('unable to determine') > -1
+      ) {
         log(JSON.stringify(requestDetails.headers))
       }
 
