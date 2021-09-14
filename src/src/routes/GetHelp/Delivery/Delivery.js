@@ -8,6 +8,7 @@ import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
 import { DeliverySimple } from './DeliverySimple'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
 
 const propTypes = {
   isNewSSRDeliveriesEnabled: PropTypes.bool.isRequired,
@@ -78,7 +79,10 @@ class Delivery extends PureComponent {
 
     return (
       <GetHelpLayout2 headingText="Get help with box issue?">
-        <Card>
+        <Card
+          hasLateralBordersOnSmallScreens={false}
+          className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+        >
           <List>
             <ItemLink
               label="I don't know when my box will arrive"

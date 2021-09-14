@@ -6,6 +6,7 @@ import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import { deliveryComplaintCategoryId } from '../../../config'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './DeliveryCompensation.css'
 
 class DeliveryCompensation extends PureComponent {
@@ -38,7 +39,10 @@ class DeliveryCompensation extends PureComponent {
 
     return (
       <GetHelpLayout2 backUrl={backUrl} headingText="Get help with your box">
-        <Card>
+        <Card
+          hasLateralBordersOnSmallScreens={false}
+          className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+        >
           <Heading size="fontStyleM" type="h2">
             We&apos;re sorry to hear your box didn&apos;t arrive
           </Heading>

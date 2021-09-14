@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './BeforeDeliveryDay.css'
 
 const redirectToMyGousto = () => {
@@ -12,7 +13,10 @@ const redirectToMyGousto = () => {
 
 const BeforeDeliveryDay = ({ trackClickMyGoustoInSSRDeliveries }) => (
   <GetHelpLayout2 headingText="Get help with your box">
-    <Card>
+    <Card
+      hasLateralBordersOnSmallScreens={false}
+      className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+    >
       <Heading size="fontStyleM" type="h2">
         My box didn&apos;t arrive
       </Heading>

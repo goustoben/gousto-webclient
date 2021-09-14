@@ -9,6 +9,7 @@ import { findNewestOrder, isOrderBeingDeliveredToday } from 'utils/order'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './DeliverySimple.css'
 
 const propTypes = {
@@ -71,7 +72,10 @@ class DeliverySimple extends PureComponent {
 
     return (
       <GetHelpLayout2 headingText="Get help with box issue?">
-        <Card>
+        <Card
+          hasLateralBordersOnSmallScreens={false}
+          className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+        >
           <List>
             <ItemExpandable
               label="Day of delivery tracking"

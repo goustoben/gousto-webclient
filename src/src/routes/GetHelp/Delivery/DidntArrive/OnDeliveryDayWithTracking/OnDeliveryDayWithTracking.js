@@ -5,6 +5,7 @@ import { client } from 'config/routes'
 import humanTimeFormat from 'utils/timeFormat'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './OnDeliveryDayWithTracking.css'
 
 const redirectToInternal = (link) => {
@@ -28,7 +29,10 @@ const OnDeliveryDayWithTracking = ({
 
   return (
     <GetHelpLayout2 headingText="Get help with your box">
-      <Card>
+      <Card
+        hasLateralBordersOnSmallScreens={false}
+        className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+      >
         <Heading size="fontStyleM" type="h2">
           Your box may still be on its way
         </Heading>

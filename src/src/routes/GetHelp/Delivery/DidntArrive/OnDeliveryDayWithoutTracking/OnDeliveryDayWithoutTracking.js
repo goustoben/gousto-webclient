@@ -5,6 +5,7 @@ import { client } from 'config/routes'
 import humanTimeFormat from 'utils/timeFormat'
 import { Card, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './OnDeliveryDayWithoutTracking.css'
 
 const OnDeliveryDayWithoutTracking = ({
@@ -18,7 +19,10 @@ const OnDeliveryDayWithoutTracking = ({
 
   return (
     <GetHelpLayout2 headingText="Get help with your box">
-      <Card>
+      <Card
+        hasLateralBordersOnSmallScreens={false}
+        className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+      >
         <Heading size="fontStyleM" type="h2">
           My box didn&apos;t arrive
         </Heading>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { client } from 'config/routes'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './DeliveryPreContact.css'
 
 const redirectToContactPage = () => {
@@ -12,7 +13,10 @@ const redirectToContactPage = () => {
 
 const DeliveryPreContact = ({ backUrl, trackClickGetInTouchInSSRDeliveries }) => (
   <GetHelpLayout2 backUrl={backUrl} headingText="Get help with your box">
-    <Card>
+    <Card
+      hasLateralBordersOnSmallScreens={false}
+      className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+    >
       <Heading size="fontStyleM" type="h2">
         We&apos;re sorry to hear your box did not arrive
       </Heading>

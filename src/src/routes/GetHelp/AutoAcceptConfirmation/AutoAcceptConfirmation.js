@@ -6,6 +6,7 @@ import { client } from 'config/routes'
 import Link from 'components/Link'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { GetHelpFAQ } from '../components/GetHelpFAQ/GetHelpFAQ'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './AutoAcceptConfirmation.css'
 
 const IS_AUTO_ACCEPT = true
@@ -32,7 +33,10 @@ const AutoAcceptConfirmation = ({
 
   return (
     <GetHelpLayout2 headingText={headingText} hasBackButton={false}>
-      <Card>
+      <Card
+        hasLateralBordersOnSmallScreens={false}
+        className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+      >
         <p>
           {nameFirst}
           , we’ve gone ahead and added £

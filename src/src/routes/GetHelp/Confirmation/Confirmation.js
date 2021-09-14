@@ -5,6 +5,7 @@ import Svg from 'Svg'
 import { client as routes } from 'config/routes'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { GetHelpFAQ } from '../components/GetHelpFAQ/GetHelpFAQ'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './Confirmation.css'
 
 const propTypes = {
@@ -34,7 +35,10 @@ const Confirmation = ({
 
   return (
     <GetHelpLayout2 headingText={`${nameFirst}, thanks for your feedback`} hasBackButton={false}>
-      <Card>
+      <Card
+        hasLateralBordersOnSmallScreens={false}
+        className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+      >
         <p>
           We really appreciate you letting us know about the issue.
           Credit will be automatically taken off your next order as an apology.

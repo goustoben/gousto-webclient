@@ -1,4 +1,6 @@
 @value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.css';
+@value Mackerel, White from 'styles/colors.css';
+@value GetHelpLayoutMaxWidth 560px;
 
 :global #react-root {
   height: 100%;
@@ -16,7 +18,7 @@
 
 .wrapper {
   margin: 0 auto;
-  max-width: 560px;
+  max-width: GetHelpLayoutMaxWidth;
 }
 
 .contentWrapper {
@@ -32,5 +34,12 @@
 .noCTABack {
   @media BreakpointFromMedium {
     padding-top: calc(4rem + 1px);
+  }
+}
+
+.sideBordersWhenGetHelpLayoutHasMargins {
+  @media (min-width: GetHelpLayoutMaxWidth) {
+    border-left: 1px solid Mackerel;
+    border-right: 1px solid Mackerel;
   }
 }

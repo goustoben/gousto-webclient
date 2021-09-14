@@ -5,6 +5,7 @@ import { recipePropType } from '../getHelpPropTypes'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { RecipeCardContent } from './RecipeCardContent'
 import { RecipeList } from '../components/RecipeList'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './RecipeCards.css'
 
 const propTypes = {
@@ -19,7 +20,10 @@ const RecipeCards = ({
   trackRecipeCardGetInTouchClick
 }) => (
   <GetHelpLayout2 headingText="Get help with your box">
-    <Card>
+    <Card
+      hasLateralBordersOnSmallScreens={false}
+      className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+    >
       <p className={css.copy}>
         Which recipe had a recipe card issue?
       </p>

@@ -6,6 +6,7 @@ import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapp
 import { RecipeList } from '../components/RecipeList'
 import { RecipeIngredientsContainer } from '../components/RecipeIngredients'
 import { recipePropType } from '../getHelpPropTypes'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './Ingredients.css'
 
 const propTypes = {
@@ -26,7 +27,10 @@ const IngredientsPresentation = ({
   selectedIngredients,
 }) => (
   <GetHelpLayout2 headingText="Get help with your box">
-    <Card>
+    <Card
+      hasLateralBordersOnSmallScreens={false}
+      className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+    >
       <p className={css.copy}>
         Which ingredient(s) had an issue? Select meal to see ingredients.
       </p>

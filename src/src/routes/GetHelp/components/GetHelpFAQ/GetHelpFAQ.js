@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Card, ItemExpandable } from 'goustouicomponents'
 import { client } from '../../../../config/routes'
 import Link from '../../../../components/Link'
+import layoutCss from '../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 
 const ISSUE_TYPES_MAPPING = {
   MISSING_INGREDIENTS: ['3'],
@@ -33,7 +34,11 @@ const GetHelpFAQ = ({ issuesIDs, onClick }) => {
 
   return (
     <section>
-      <Card hasLateralBordersOnSmallScreens={false} hasPaddingVertical={false}>
+      <Card
+        hasLateralBordersOnSmallScreens={false}
+        hasPaddingVertical={false}
+        className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+      >
         <ItemExpandable trackClick={trackClick(ARTICLE_NAME_1)} label={ARTICLE_NAME_1}>
           <p>If you&apos;d like to check how much credit is on your account:</p>
 
@@ -59,7 +64,11 @@ const GetHelpFAQ = ({ issuesIDs, onClick }) => {
         </ItemExpandable>
       </Card>
       {hasIssueTypes && (
-        <Card hasLateralBordersOnSmallScreens={false} hasPaddingVertical={false}>
+        <Card
+          hasLateralBordersOnSmallScreens={false}
+          hasPaddingVertical={false}
+          className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
+        >
           <ItemExpandable trackClick={trackClick(ARTICLE_NAME_2)} label={ARTICLE_NAME_2}>
             {
               (
