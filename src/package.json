@@ -111,23 +111,6 @@
     "@testing-library/react-hooks": "^3.4.2",
     "@types/node": "^16.7.10",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
-<<<<<<< HEAD
-    "babel-core": "6.26.3",
-    "babel-eslint": "8.2.6",
-    "babel-jest": "23.6.0",
-    "babel-loader": "7.1.5",
-    "babel-plugin-lodash": "3.3.4",
-    "babel-plugin-syntax-dynamic-import": "6.18.0",
-    "babel-plugin-transform-async-to-generator": "6.24.1",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-plugin-transform-strict-mode": "6.24.1",
-    "babel-preset-env": "1.7.0",
-    "babel-preset-react": "6.24.1",
-    "babel-preset-stage-0": "6.24.1",
-=======
->>>>>>> 23fa145e2 (remove babel references)
     "codeowners": "^4.2.0",
     "concat-stream": "^2.0.0",
     "css-loader": "1.0.1",
