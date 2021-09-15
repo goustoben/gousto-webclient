@@ -55,10 +55,6 @@
   }
 }
 
-.pushUp {
-  bottom: 2.5em;
-}
-
 @keyframes progress {
   0% {
     stroke-dasharray: 0 100;

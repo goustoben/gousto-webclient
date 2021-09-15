@@ -13,7 +13,6 @@ export const AddRecipeButton = ({
   isBasketLimitReached,
   buttonProps,
   recipeVariants,
-  mandatoryVariantFeatureEnabled,
   hasBasketPostcode
 }) => {
   const disabled = isBasketLimitReached && !isInBasket
@@ -23,7 +22,7 @@ export const AddRecipeButton = ({
   const buttonAction = (e) => {
     if (isInBasket) {
       basketRecipeRemove(recipeId)
-    } else if (hasAlternatives && mandatoryVariantFeatureEnabled && hasBasketPostcode) {
+    } else if (hasAlternatives && hasBasketPostcode) {
       recipeVariantDropdownExpanded({ recipeId, originalId, categoryId })
     } else {
       basketRecipeAddAttempt(recipeId)
@@ -81,10 +80,8 @@ AddRecipeButton.propTypes = {
     alternatives: PropTypes.arrayOf(PropTypes.shape),
     sides: PropTypes.arrayOf(PropTypes.shape),
   }),
-  mandatoryVariantFeatureEnabled: PropTypes.bool,
 }
 
 AddRecipeButton.defaultProps = {
   recipeVariants: null,
-  mandatoryVariantFeatureEnabled: false
 }

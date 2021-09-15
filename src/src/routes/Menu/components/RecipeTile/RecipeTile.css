@@ -83,13 +83,6 @@
     }
 }
 
-.variantPushUp {
-    padding-bottom: 30px;
-    @media ScreenSMMin {
-        padding-top: 0;
-    }
-}
-
 .recipeTileIsFineDineIn {
     background: Blackberry;
     color: White;

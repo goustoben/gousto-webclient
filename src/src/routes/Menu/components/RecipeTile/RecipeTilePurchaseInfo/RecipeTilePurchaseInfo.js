@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import css from './RecipeTilePurchaseInfo.css'
-import { DropdownArrowContainer } from '../DropdownArrow'
 
 export const RecipeTilePurchaseInfo = ({
   recipeId,
@@ -14,7 +13,6 @@ export const RecipeTilePurchaseInfo = ({
   isOutOfStock,
   isFineDineIn,
   fdiStyling,
-  inMandatoryVariantExperimentBucket
 }) => {
   if (isOutOfStock) {
     return null
@@ -46,9 +44,7 @@ export const RecipeTilePurchaseInfo = ({
         </div>
       ) : null}
       <div className={css.buttonsWrapper}>
-        <AddRecipeButtonContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} mandatoryVariantFeatureEnabled={inMandatoryVariantExperimentBucket} />
-
-        {!inMandatoryVariantExperimentBucket && <DropdownArrowContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />}
+        <AddRecipeButtonContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
       </div>
     </div>
   )
@@ -62,8 +58,7 @@ RecipeTilePurchaseInfo.propTypes = {
   surcharge: PropTypes.number,
   isOutOfStock: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool.isRequired,
-  inMandatoryVariantExperimentBucket: PropTypes.bool,
-  fdiStyling: PropTypes.bool
+  fdiStyling: PropTypes.bool,
 }
 
 RecipeTilePurchaseInfo.defaultProps = {
@@ -72,5 +67,4 @@ RecipeTilePurchaseInfo.defaultProps = {
   recipeVariants: null,
   categoryId: null,
   fdiStyling: false,
-  inMandatoryVariantExperimentBucket: false
 }

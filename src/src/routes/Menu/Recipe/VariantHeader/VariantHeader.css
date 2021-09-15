@@ -14,25 +14,11 @@
     text-align: left;
 }
 
-.textRight {
-    padding-right: 0.75rem;
-    text-align: right;
-}
-
 .themeBlue {
     background: Bluecheese;
-}
-
-.themeGrey {
-    background: Blackberry;
 }
 
 .positionTop {
     position: absolute;
     top: 0;
-}
-
-.positionBottom {
-    position: absolute;
-    bottom: 0;
 }

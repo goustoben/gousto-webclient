@@ -17,7 +17,6 @@ import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
 import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
-import { SignpostingExperimentWrapper, isMandatoryBucket, SignpostingExperimentContext } from '../context/uiSignpostingContext'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
 
 const contextTypes = {
@@ -128,9 +127,7 @@ export class MenuRecipesPage extends PureComponent {
 
         <VariantRecipeListModalContainer />
 
-        <SignpostingExperimentContext.Consumer>
-          {bucket => isMandatoryBucket(bucket) && <VariantRecipeListDesktopModalContainer />}
-        </SignpostingExperimentContext.Consumer>
+        <VariantRecipeListDesktopModalContainer />
 
         <ExperimentsContainer experimentName="allocation-experiment-one" />
         <ExperimentsContainer experimentName="allocation-experiment-two" />
@@ -158,18 +155,16 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div data-testing="menuRecipes">
-        <SignpostingExperimentWrapper>
-          {
-            showLoading
-              ? (
-                <Loading
-                  loading={showLoading}
-                  showTastePreferencesLoading={showTastePreferencesLoading}
-                />
-              )
-              : <div className={fadeCss}>{this.getMenuContent()}</div>
-          }
-        </SignpostingExperimentWrapper>
+        {
+          showLoading
+            ? (
+              <Loading
+                loading={showLoading}
+                showTastePreferencesLoading={showTastePreferencesLoading}
+              />
+            )
+            : <div className={fadeCss}>{this.getMenuContent()}</div>
+        }
       </div>
     )
   }

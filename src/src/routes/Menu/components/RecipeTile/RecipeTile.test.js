@@ -100,23 +100,6 @@ describe('RecipeTile', () => {
       test('should contain an RecipeTilePurchaseInfoContainer ', () => {
         expect(wrapper.find(RecipeTilePurchaseInfoContainer)).toHaveLength(1)
       })
-
-      describe('when showVariantDropdown is true', () => {
-        beforeEach(() => {
-          wrapper.setProps({ showVariantDropdown: true })
-        })
-
-        describe('when inMandatoryVariantExperimentBucket is false', () => {
-          beforeEach(() => {
-            wrapper.setProps({ inMandatoryVariantExperimentBucket: false })
-          })
-
-          test('then it should render variant dropdown', () => {
-            expect(wrapper.find('.variantDropdownContainer')).toHaveLength(1)
-            expect(wrapper.find(VariantRecipeListContainer)).toHaveLength(1)
-          })
-        })
-      })
     })
 
     describe('when a recipe is not in stock', () => {

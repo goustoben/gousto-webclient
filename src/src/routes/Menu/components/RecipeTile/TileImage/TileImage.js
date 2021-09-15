@@ -14,7 +14,6 @@ const TileImage = ({
   title,
   isOutOfStock,
   onClick,
-  pushUpCookingTime
 }) => (
   <button
     onClick={onClick}
@@ -26,7 +25,7 @@ const TileImage = ({
     <div className={css.recipeImageAndCookingTimeWrapper}>
       <Image lazy title={title} className={css.imageStyle} />
 
-      <CookingTimeIconContainer recipeId={recipeId} pushUp={pushUpCookingTime} />
+      <CookingTimeIconContainer recipeId={recipeId} />
     </div>
 
     {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />}
@@ -40,14 +39,12 @@ TileImage.propTypes = {
   isOutOfStock: PropTypes.bool,
   onClick: PropTypes.func,
   showVariantHeader: PropTypes.bool.isRequired,
-  pushUpCookingTime: PropTypes.bool,
 }
 
 TileImage.defaultProps = {
   title: '',
   onClick: () => { },
   isOutOfStock: false,
-  pushUpCookingTime: false,
 }
 
 export { TileImage }

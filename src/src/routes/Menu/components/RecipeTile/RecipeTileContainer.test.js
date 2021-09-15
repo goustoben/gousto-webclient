@@ -124,6 +124,5 @@ describe('<RecipeTileContainer />', () => {
     expect(wrapper.prop('brandTagline')).toEqual(expectedTagline)
     expect(wrapper.prop('brandAvailability')).toEqual(expectedAvailability)
     expect(wrapper.prop('browserType')).toEqual('desktop')
-    expect(wrapper.prop('showVariantDropdown')).toEqual(true)
   })
 })
