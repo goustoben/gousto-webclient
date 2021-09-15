@@ -26,5 +26,9 @@
     "*pinterest.com",
     "*zendesk.com",
     "*pingdom.net"
-  ]
+  ],
+  "retries": {
+    "runMode": 2,
+    "openMode": 2
+  }
 }
