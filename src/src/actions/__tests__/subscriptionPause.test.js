@@ -3051,7 +3051,7 @@ describe('Subscription action', () => {
       })
     })
 
-    test.skip('should dispatch the expected actions to load start screen if necessary', async () => {
+    test('should dispatch the expected actions to load start screen if necessary', async () => {
       /*
       TODO: Fix and reinstate this #BROKEN_TEST
         Current test results in
@@ -3077,7 +3077,7 @@ describe('Subscription action', () => {
       })
     })
 
-    test.skip('should dispatch expected actions to display pause reasons screen', async () => {
+    test('should dispatch expected actions to display pause reasons screen', async () => {
       /*
       TODO: Fix and reinstate this #BROKEN_TEST
         Current test results in
