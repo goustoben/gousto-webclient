@@ -49,8 +49,10 @@ $ npm run test:jest
 
 # watch an unit tests
 $ npm run test:jest:watch ./path/to/file.js
+```
 
 ### Cypress tests
+
 ```bash
 
 # 1. build and run the website (server and client)
