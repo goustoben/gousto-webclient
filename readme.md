@@ -35,7 +35,7 @@ $ npm run dev
 <!--This should be covered by running `npm run init --local` but in the event it's not working ...-->
 * You'll need to have a `development-local.json5` config file for everything to run correctly [Follow this guide](./detailed-setup.md#step-1-add-a-secrets-file-to-point-to-the-staging-environment)
 * You will have to run the site on `frontend.gousto.local` you can do this by [Setting up your local hosts file to run webclient](./detailed-setup.md#step-2-add-an-entry-to-your-local-host-file)
-* You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See  [Node version management](./detailed-setup.md##node-version-management) for further details.
+* You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See  [Node version management](./detailed-setup.md#node-version-management) for further details.
   * Note: M1 Mac owners - you'll need to update your version of node to be >= version 15 for now
 * If you're not in the office you'll need to be connected to the VPN
 
