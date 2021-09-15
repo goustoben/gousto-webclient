@@ -119,7 +119,6 @@ module.exports = {
     userAddress: '/user/current/address',
     userPromo: '/user/current/promotion-codes',
     currentUser: '/user/current',
-    currentSubscription: '/user/current/subscription',
     user: '/user',
     activateSub: '/user/current/subscription/activate',
     cancelPending: '/user/current/cancel-pending-orders',

@@ -10,8 +10,6 @@ import routes from 'config/routes'
 import { buildSubscriptionQueryUrl } from '../../apis/subscription'
 import { useFetch } from '../../../../hooks/useFetch'
 import {
-} from '../context'
-import {
   getCurrentUserId,
   getCurrentUserPostcode,
   getCurrentUserDeliveryTariffId
@@ -27,7 +25,6 @@ export const useSubscriptionData = (
   state
 ) => {
   const userId = getCurrentUserId(state)
-  const { isNewSubscriptionApiEnabled } = state
   const postcode = getCurrentUserPostcode(state)
   const deliveryTariffId = getCurrentUserDeliveryTariffId(state)
   const deliveriesUrl = `${endpoint('deliveries')}${routes.deliveries.days}`
@@ -42,17 +39,13 @@ export const useSubscriptionData = (
     direction: 'asc',
     delivery_tariff_id: deliveryTariffId
   }), [postcode, deliveryTariffId])
-  const subscriptionUrl = (isNewSubscriptionApiEnabled)
-    ? buildSubscriptionQueryUrl(userId, routes.subscriptionQuery.subscriptions)
-    : `${endpoint('core')}${routes.core.currentSubscription}`
+  const subscriptionUrl = buildSubscriptionQueryUrl(userId, routes.subscriptionQuery.subscriptions)
 
   useEffect(() => {
-    if (!isNewSubscriptionApiEnabled) {
-      triggerSubscription.setShouldRequest(true)
-    } else if (userId) {
+    if (userId) {
       triggerSubscription.setShouldRequest(true)
     }
-  }, [userId, isNewSubscriptionApiEnabled, triggerSubscription])
+  }, [userId, triggerSubscription])
 
   useEffect(() => {
     if (postcode) {
@@ -83,12 +76,10 @@ export const useSubscriptionData = (
     if (!hasAnyErrors && allRequestsComplete) {
       const data = {
         deliveries: deliveriesResponse.data,
-        subscription: (isNewSubscriptionApiEnabled)
-          ? mapSubscriptionAndDeliverySlots(
-            mapSubscriptionV2Payload(subscriptionResponse.data.subscription),
-            deliveriesResponse.data,
-          )
-          : subscriptionResponse.result.data
+        subscription: mapSubscriptionAndDeliverySlots(
+          mapSubscriptionV2Payload(subscriptionResponse.data.subscription), // todo TG-4896 rename this
+          deliveriesResponse.data,
+        )
       }
 
       dispatch({
@@ -102,6 +93,5 @@ export const useSubscriptionData = (
     dispatch,
     deliveriesError,
     subscriptionError,
-    isNewSubscriptionApiEnabled
   ])
 }

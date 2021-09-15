@@ -1,9 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { buildSubscriptionCommandUrl } from 'routes/Account/apis/subscription'
 
-import endpoint from 'config/endpoint'
-import routes from 'config/routes'
-import logger from 'utils/logger'
 import { parseObjectKeysToCamelCase } from 'utils/jsonHelper'
 import { useFetch } from '../../../../hooks/useFetch'
 import { SubscriptionContext } from '../context'
@@ -11,7 +8,6 @@ import { SubscriptionContext } from '../context'
 import { actionTypes } from '../context/reducers'
 
 import {
-  getSubscriptionUpdatePayload,
   getSubscriptionUpdateV2Payload,
 } from '../context/selectors/subscription'
 import { getDeliverySlots } from '../context/selectors/deliveries'
@@ -23,41 +19,17 @@ import {
   mapSubscriptionUpdateV2RequestPayload,
 } from '../utils/mapping'
 
-const validateUpdateSubscriptionPayload = (payload) => {
-  const payloadKeys = Object.keys(payload)
-  const requiredKeys = ['num_portions', 'num_recipes', 'box_type', 'delivery_slot_id', 'interval']
-
-  return (
-    requiredKeys.every((requiredKey) => payloadKeys.includes(requiredKey))
-    && requiredKeys.length === payloadKeys.length
-  )
-}
-
 export const useUpdateSubscription = ({ accessToken, data, trigger, settingName }) => {
   const context = useContext(SubscriptionContext)
   const { state, dispatch } = context
   const slots = getDeliverySlots(state)
 
-  const restPayload = getSubscriptionUpdatePayload(state)
-  const body = {
+  const body = { // todo TG-4896 rename and refactor these
     ...getSubscriptionUpdateV2Payload(state),
     ...mapSubscriptionUpdateV2RequestPayload(parseObjectKeysToCamelCase(data), slots),
   }
-  const payload = {
-    ...restPayload,
-    ...data,
-  }
-  const isValidPayload = validateUpdateSubscriptionPayload(payload)
 
-  if (!isValidPayload) {
-    logger.warning(`Update subscription payload not valid: ${JSON.stringify(payload)}`)
-  }
-
-  const { isNewSubscriptionApiEnabled } = state
-
-  const url = isNewSubscriptionApiEnabled
-    ? buildSubscriptionCommandUrl(getCurrentUserId(state))
-    : `${endpoint('core')}${routes.core.currentSubscription}`
+  const url = buildSubscriptionCommandUrl(getCurrentUserId(state))
 
   const [isLoading, response, error] = useFetch({
     url,
@@ -66,19 +38,14 @@ export const useUpdateSubscription = ({ accessToken, data, trigger, settingName 
     accessToken,
     options: {
       method: 'PUT',
-      ...(isNewSubscriptionApiEnabled && { body: JSON.stringify(body) }),
+      body: JSON.stringify(body),
     },
-    ...(!isNewSubscriptionApiEnabled && { parameters: payload }),
   })
 
   useEffect(() => {
     if (!isLoading && response && !error) {
-      let subscription
-      if (isNewSubscriptionApiEnabled) {
-        subscription = mapSubscriptionUpdateV2Payload(response.data.subscription, slots)
-      } else {
-        subscription = response.result.data
-      }
+      const subscription = mapSubscriptionUpdateV2Payload(response.data.subscription, slots) // todo TG-4896 rename and refactor this
+
       dispatch({
         type: actionTypes.SUBSCRIPTION_UPDATE_DATA_RECEIVED,
         data: {
@@ -90,7 +57,7 @@ export const useUpdateSubscription = ({ accessToken, data, trigger, settingName 
     } else if (error) {
       trackSubscriptionSettingsChange({ settingName, action: 'update_error' })()
     }
-  }, [dispatch, response, error, isLoading, isNewSubscriptionApiEnabled, settingName, slots])
+  }, [dispatch, response, error, isLoading, settingName, slots])
 
   return [isLoading, response, error]
 }

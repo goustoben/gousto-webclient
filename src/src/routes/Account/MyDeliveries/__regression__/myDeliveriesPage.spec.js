@@ -15,7 +15,6 @@ describe('My Deliveries', () => {
     cy.route('GET', '/customers/v1/customers/17247344/addresses', '@userAdresses')
     cy.fixture('orderSkipRecovery').as('orderSkipRecovery')
     cy.route('GET', /orderskiprecovery/, '@orderSkipRecovery')
-    cy.fixture('user/userCurrentSubscriptionDelivery').as('userCurrentSubscriptionDelivery')
     cy.fixture('subscription/subscriptionUpdateResponse').as('subscriptionUpdateResponse')
     cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/skip?/, '@subscriptionUpdateResponse').as('skipDates')
     cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/unskip?/, '@subscriptionUpdateResponse').as('unSkipDates')

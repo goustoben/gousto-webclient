@@ -19,7 +19,6 @@ const mockTriggerSubscription = {
   setShouldRequest: () => {},
 }
 const mockState = {
-  isNewSubscriptionApiEnabled: false,
   currentUser: {
     id: '1233',
     shippingAddress: {
@@ -32,10 +31,38 @@ const mockDispatch = jest.fn()
 const getCurrentUserPostcodeSpy = jest.spyOn(getCurrentUserPostcode, 'getCurrentUserPostcode')
 
 describe('Given useSubscriptionData is invoked', () => {
+  const mockDeliveriesResponse = { data: [{
+    slots: [
+      {
+        id: 123,
+        core_slot_id: 2,
+        default_day: 3,
+        delivery_start_time: '08:00:00',
+        delivery_end_time: '19:00:00',
+      }
+    ]
+  }] }
+
+  const mockSubscriptionResponse = {
+    data: {
+      subscription: {
+        interval: 2,
+        deliverySlotStartTime: '08:00:00',
+        deliverySlotEndTime: '19:00:00',
+        status: 'active',
+        numPortions: 4,
+        authUserId: 'auth-user-id',
+        deliverySlotDay: 3,
+        boxType: 'vegetarian',
+        userId: '1233',
+        numRecipes: 4,
+      },
+    },
+  }
+
   beforeEach(() => {
     jest.clearAllMocks()
 
-    useFetch.mockReturnValue([true, undefined, false])
     moment.mockImplementation(() => ({
       startOf: () => ({
         toISOString: () => 'start of day',
@@ -44,6 +71,10 @@ describe('Given useSubscriptionData is invoked', () => {
         })
       })
     }))
+
+    useFetch
+      .mockReturnValueOnce([true, mockSubscriptionResponse, false])
+      .mockReturnValueOnce([true, mockDeliveriesResponse, false])
 
     renderHook(() => useSubscriptionData(
       mockAccessToken,
@@ -58,7 +89,7 @@ describe('Given useSubscriptionData is invoked', () => {
     expect(useFetch).toHaveBeenNthCalledWith(1, {
       accessToken: 'mock-access-token',
       needsAuthorization: true,
-      url: 'localhost/user/current/subscription',
+      url: 'localhost/subscriptions/1233',
       trigger: mockTriggerSubscription,
     })
 
@@ -81,41 +112,36 @@ describe('Given useSubscriptionData is invoked', () => {
     expect(getCurrentUserPostcodeSpy).toHaveBeenCalled()
   })
 
-  test('Then dispatch is not yet invoked', () => {
-    expect(mockDispatch).not.toHaveBeenCalled()
-  })
-
-  describe('When both http requests resolve data', () => {
-    const mockDeliveriesResponse = { data: 'delivery data' }
-    const mockSubscriptionRepsonse = { result: { data: 'subscription data' } }
-
-    beforeEach(() => {
-      useFetch.mockReturnValueOnce([false, mockSubscriptionRepsonse, false])
-      useFetch.mockReturnValueOnce([false, mockDeliveriesResponse, false])
-
-      renderHook(() => useSubscriptionData(
-        mockAccessToken,
-        mockDispatch,
-        mockTriggerDeliveryDays,
-        mockTriggerSubscription,
-        mockState
-      ))
-    })
-
-    test('Then the expected action is dispatched', () => {
-      expect(mockDispatch).toHaveBeenCalledTimes(1)
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: 'SUBSCRIPTION_DATA_RECEIVED',
-        data: {
-          deliveries: mockDeliveriesResponse.data,
-          subscription: mockSubscriptionRepsonse.result.data
+  test('And the expected action is dispatched', () => {
+    expect(mockDispatch).toHaveBeenCalledTimes(1)
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: 'SUBSCRIPTION_DATA_RECEIVED',
+      data: {
+        deliveries: mockDeliveriesResponse.data,
+        subscription: {
+          box: {
+            box_type: 'vegetarian',
+            num_portions: 4,
+            num_recipes: 4,
+          },
+          subscription: {
+            delivery_slot_id: 2,
+            interval: 2,
+            state: 'active',
+            delivery_slot_day: 3,
+            delivery_slot_start_time: '08:00:00',
+            delivery_slot_end_time: '19:00:00',
+          },
+          projected: [],
         }
-      })
+      }
     })
   })
 
   describe('When there is an error', () => {
     beforeEach(() => {
+      jest.resetAllMocks()
+
       useFetch.mockReturnValue([false, undefined, true])
 
       renderHook(() => useSubscriptionData(
@@ -127,106 +153,8 @@ describe('Given useSubscriptionData is invoked', () => {
       ))
     })
 
-    test('Then dispath is not invoked', () => {
+    test('Then dispatch is not invoked', () => {
       expect(mockDispatch).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('When isNewSubscriptionApiEnabled is true', () => {
-    const mockDeliveriesResponse = { data: [{
-      slots: [
-        {
-          id: 123,
-          core_slot_id: 2,
-          default_day: 3,
-          delivery_start_time: '08:00:00',
-          delivery_end_time: '19:00:00',
-        }
-      ]
-    }] }
-    const mockSubscriptionRepsonse = {
-      data: {
-        subscription: {
-          interval: 2,
-          deliverySlotStartTime: '08:00:00',
-          deliverySlotEndTime: '19:00:00',
-          status: 'active',
-          numPortions: 4,
-          authUserId: 'auth-user-id',
-          deliverySlotDay: 3,
-          boxType: 'vegetarian',
-          userId: '1233',
-          numRecipes: 4,
-        },
-      },
-    }
-
-    beforeEach(() => {
-      useFetch.mockClear()
-
-      useFetch
-        .mockReturnValueOnce([true, mockSubscriptionRepsonse, false])
-        .mockReturnValueOnce([true, mockDeliveriesResponse, false])
-
-      renderHook(() => useSubscriptionData(
-        mockAccessToken,
-        mockDispatch,
-        mockTriggerDeliveryDays,
-        mockTriggerSubscription,
-        {
-          ...mockState,
-          isNewSubscriptionApiEnabled: true,
-        },
-      ))
-    })
-
-    test('Then useFetch makes the expected requests', () => {
-      expect(useFetch).toHaveBeenNthCalledWith(1, {
-        accessToken: 'mock-access-token',
-        needsAuthorization: true,
-        url: 'localhost/subscriptions/1233',
-        trigger: mockTriggerSubscription,
-      })
-
-      expect(useFetch).toHaveBeenNthCalledWith(2, {
-        accessToken: 'mock-access-token',
-        parameters: {
-          direction: 'asc',
-          'filters[cutoff_datetime_from]': 'start of day',
-          'filters[cutoff_datetime_until]': '7 days later',
-          postcode: 'W1A',
-          delivery_tariff_id: 'a1b2c3-d4e5f6',
-          sort: 'date'
-        },
-        url: 'localhost/days',
-        trigger: mockTriggerDeliveryDays,
-      })
-    })
-
-    test('And the expected action is dispatched', () => {
-      expect(mockDispatch).toHaveBeenCalledTimes(1)
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: 'SUBSCRIPTION_DATA_RECEIVED',
-        data: {
-          deliveries: mockDeliveriesResponse.data,
-          subscription: {
-            box: {
-              box_type: 'vegetarian',
-              num_portions: 4,
-              num_recipes: 4,
-            },
-            subscription: {
-              delivery_slot_id: 2,
-              interval: 2,
-              state: 'active',
-              delivery_slot_day: 3,
-              delivery_slot_start_time: '08:00:00',
-              delivery_slot_end_time: '19:00:00',
-            },
-            projected: [],
-          }
-        }
-      })
     })
   })
 })

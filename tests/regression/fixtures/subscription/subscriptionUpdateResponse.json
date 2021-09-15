@@ -10,7 +10,7 @@
       "deliverySlotDay": 2,
       "deliverySlotEndTime": "string",
       "deliverySlotStartTime": "string",
-      "interval": 0,
+      "interval": 4,
       "intervalUnit": "week",
       "lastChangeType": "activated",
       "lastOrder": {

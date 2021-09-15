@@ -29,7 +29,7 @@ describe('Given I am logged in', () => {
         beforeEach(() => {
           cy.route(
             'PUT',
-            /user\/current\/subscription/,
+            /subscriptioncommand\/v1\/subscriptions\/(.*)/,
             'fixture:user/userUpdateCurrentSubscription.json')
             .as('updateCurrentSubscription')
 

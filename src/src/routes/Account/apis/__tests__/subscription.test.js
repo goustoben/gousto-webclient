@@ -17,9 +17,6 @@ jest.mock('utils/fetch', () =>
 )
 
 jest.mock('config/routes', () => ({
-  core: {
-    currentSubscription: '/currentSubscription'
-  },
   subscriptionCommand: {
     skip: '/skip',
     unSkip: '/unskip',

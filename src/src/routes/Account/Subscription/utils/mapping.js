@@ -18,6 +18,7 @@ export const mapSubscriptionAndDeliverySlots = (mappedSubscription, deliveries) 
   }
 }
 
+// todo TG-4896 rename these + do any necessary refactoring
 export const mapSubscriptionV2Payload = (subscription) => ({
   subscription: {
     interval: subscription.interval,

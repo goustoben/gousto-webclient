@@ -1,6 +1,5 @@
 import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
-import logger from 'utils/logger'
 import { useUpdateSubscription } from '../useUpdateSubscription'
 import { useFetch } from '../../../../../hooks/useFetch'
 
@@ -11,13 +10,6 @@ import {
 jest.mock('../../../../../hooks/useFetch')
 jest.mock('config/endpoint', () => () => 'localhost')
 jest.mock('../../context/selectors/subscription', () => ({
-  getSubscriptionUpdatePayload: () => ({
-    num_portions: 2,
-    num_recipes: 2,
-    box_type: 'vegetarian',
-    delivery_slot_id: '11',
-    interval: 1
-  }),
   getSubscriptionUpdateV2Payload: () => ({
     numRecipes: 2,
     numPortions: 2,
@@ -75,31 +67,18 @@ describe('useUpdateSubscription', () => {
   }
 
   const response = {
-    result: {
-      data: {
-        box: {
-          box_type: 'gourmet',
-          num_portions: 2,
-          num_recipes: 4,
-        },
-        frequency: 'Weekly',
+    data: {
+      subscription: {
+        numRecipes: 3,
+        numPortions: 2,
+        boxType: 'vegetarian',
         interval: 1,
-        slot: {
-          cutoff_day: 6,
-          cutoff_time: '11:59:59',
-          default_day: 2,
-          delivery_end: '18:59:59',
-          delivery_start: '08:00:00',
-          human_delivery_day_time: 'Tuesday 08:00 - 18:59',
-          id: 11,
-          number: 4,
-        },
-        state: {
-          description: 'Active'
-        }
+        intervalUnit: 'week',
+        deliverySlotStartTime: '08:00:00',
+        deliverySlotEndTime: '18:59:59',
+        deliverySlotDay: 1,
       }
     }
-
   }
 
   beforeEach(() => {
@@ -110,7 +89,7 @@ describe('useUpdateSubscription', () => {
     mockDispatch = jest.fn()
 
     React.useContext = jest.fn().mockImplementation(() => ({
-      state: {},
+      state: {currentUser: {id: 3}},
       dispatch: mockDispatch
     }))
 
@@ -135,21 +114,24 @@ describe('useUpdateSubscription', () => {
       )
 
       const useFetchArgs = {
-        url: 'localhost/user/current/subscription',
+        url: 'localhost/subscriptions/3',
         trigger,
         needsAuthorization: true,
         accessToken,
         options: {
           method: 'PUT',
+          body: JSON.stringify({
+            numRecipes: 2,
+            numPortions: 2,
+            boxType: 'vegetarian',
+            interval: 1,
+            intervalUnit: 'weeks',
+            deliverySlotStartTime: '08:00:00',
+            deliverySlotEndTime: '18:59:59',
+            deliverySlotDay: 2,
+            ...data
+          })
         },
-        parameters: {
-          num_portions: 2,
-          num_recipes: 2,
-          box_type: 'vegetarian',
-          delivery_slot_id: '11',
-          interval: 1,
-          ...data
-        }
       }
 
       expect(useFetch).toHaveBeenCalledWith(useFetchArgs)
@@ -209,7 +191,31 @@ describe('useUpdateSubscription', () => {
       const dispatchedData = {
         type: actionTypes.SUBSCRIPTION_UPDATE_DATA_RECEIVED,
         data: {
-          subscription: response.result.data
+          subscription: {
+            box: {
+              box_type: 'vegetarian',
+              num_portions: 2,
+              num_recipes: 3,
+            },
+            delivery_slot_day: 1,
+            delivery_slot_end_time: '18:59:59',
+            delivery_slot_start_time: '08:00:00',
+            interval: 1,
+            projected: [],
+            slot: {
+              cutoff_day: undefined,
+              cutoff_time: undefined,
+              default: undefined,
+              default_day: 1,
+              delivery_end: '18:59:59',
+              delivery_price: undefined,
+              delivery_start: '08:00:00',
+              id: 'mock-delivery-slot-id-2',
+            },
+            state: {
+              description: undefined,
+            },
+          }
         }
       }
 
@@ -261,98 +267,6 @@ describe('useUpdateSubscription', () => {
         action: 'update_error',
         settingName,
       })
-    })
-  })
-
-  describe('when data is invalid', () => {
-    let warningSpy
-    let newData
-    beforeEach(() => {
-      newData = {
-        nonValidProp: 'text'
-      }
-      warningSpy = jest.spyOn(logger, 'warning')
-    })
-
-    test('then should call logger warning', () => {
-      renderHook(
-        () => useUpdateSubscription({
-          accessToken,
-          data: newData,
-          trigger,
-          settingName
-        }),
-        fetchWrapper,
-      )
-      const payload = {
-        num_portions: 2,
-        num_recipes: 2,
-        box_type: 'vegetarian',
-        delivery_slot_id: '11',
-        interval: 1,
-        nonValidProp: 'text'
-      }
-
-      expect(warningSpy).toHaveBeenCalledWith(`Update subscription payload not valid: ${JSON.stringify(payload)}`)
-    })
-  })
-
-  describe('when new subscription api is enabled', () => {
-    beforeEach(() => {
-      React.useContext = jest.fn().mockImplementation(() => ({
-        state: {currentUser: {id: 3}, isNewSubscriptionApiEnabled: true},
-        dispatch: mockDispatch
-      }))
-      const subscriptionFunctionResponse = {
-        data: {
-          subscription: {
-            numRecipes: 3,
-            numPortions: 2,
-            boxType: 'vegetarian',
-            interval: 1,
-            intervalUnit: 'week',
-            deliverySlotStartTime: '08:00:00',
-            deliverySlotEndTime: '18:59:59',
-            deliverySlotDay: 1,
-          }
-        }
-      }
-      mockFetchData = [isLoading, subscriptionFunctionResponse, error]
-      useFetch.mockReturnValue(mockFetchData)
-    })
-    test('should call useFetch with expected arguments', async () => {
-      renderHook(
-        () => useUpdateSubscription({
-          accessToken,
-          data,
-          trigger,
-          settingName
-        }),
-        fetchWrapper,
-      )
-
-      const useFetchArgs = {
-        url: 'localhost/subscriptions/3',
-        trigger,
-        needsAuthorization: true,
-        accessToken,
-        options: {
-          method: 'PUT',
-          body: JSON.stringify({
-            numRecipes: 2,
-            numPortions: 2,
-            boxType: 'vegetarian',
-            interval: 1,
-            intervalUnit: 'weeks',
-            deliverySlotStartTime: '08:00:00',
-            deliverySlotEndTime: '18:59:59',
-            deliverySlotDay: 2,
-            ...data
-          })
-        },
-      }
-
-      expect(useFetch).toHaveBeenCalledWith(useFetchArgs)
     })
   })
 })

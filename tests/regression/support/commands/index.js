@@ -149,7 +149,7 @@ Cypress.Commands.add('setFeatures', (features) => {
     })
 })
 
-Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, isNewSubscriptionApiEnabled, features = [] }) => {
+Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, features = [] }) => {
   cy.server()
   cy.route('POST', /identify/, 'fixture:auth/identify')
   cy.route('POST', /loggingmanager/, 'fixture:loggingmanager/log')
@@ -158,10 +158,8 @@ Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, i
   cy.route('GET', /user\/current/, '@userCurrent')
 
   if (isSubscriptionActive) {
-    cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentActiveSubscription.json').as('currentActiveSubscription')
     cy.route('GET', /subscriptionquery\/v1\/subscriptions\/(.*)/, 'fixture:subscription/subscriptionQueryResponse').as('subscriptionQueryResponse')
   } else {
-    cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentPausedSubscription.json').as('currentPausedSubscription')
     cy.route('GET', /subscriptionquery\/v1\/subscriptions\/(.*)/, 'fixture:subscription/inactiveSubscriptionQueryResponse').as('inactiveSubscriptionQueryResponse')
   }
 
@@ -191,13 +189,9 @@ Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, i
   cy.setFeatures(features)
 
   if (isSubscriptionActive) {
-    isNewSubscriptionApiEnabled
-      ? cy.wait('@subscriptionQueryResponse')
-      : cy.wait('@currentActiveSubscription')
+    cy.wait('@subscriptionQueryResponse')
   } else {
-    isNewSubscriptionApiEnabled
-      ? cy.wait('@inactiveSubscriptionQueryResponse')
-      : cy.wait('@currentPausedSubscription')
+    cy.wait('@inactiveSubscriptionQueryResponse')
   }
 
   cy.wait('@deliveryDays')

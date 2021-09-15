@@ -25,17 +25,6 @@ export const getShowResubscriptionModal = createSelector(
   (subscription) => subscription.showResubscriptionModal
 )
 
-export const getSubscriptionUpdatePayload = createSelector(
-  [getNumPortions, getMealsPerBox, getDietaryPreference, getCurrentDeliverySlot, getDeliveryFrequency],
-  (numPortions, mealsPerBox, dietaryPreference, currentDeliverySlot, deliveryFrequency) => ({
-    num_portions: numPortions,
-    num_recipes: mealsPerBox,
-    box_type: dietaryPreference,
-    delivery_slot_id: currentDeliverySlot.coreSlotId,
-    interval: deliveryFrequency
-  })
-)
-
 export const getSubscriptionUpdateV2Payload = createSelector(
   [
     getNumPortions,
