@@ -10,7 +10,7 @@ import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
 import { fetchRecipesWithIngredients } from '../apis/menu'
-import { getOrder, getRecipes } from '../selectors/selectors'
+import { getCompensation, getIsAutoAccept, getOrder, getRecipes } from '../selectors/selectors'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
@@ -137,33 +137,47 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, delivery
   },
 })
 
-export const trackIngredientsAutoAcceptCheck = (isAutoAccept) => ({
+export const trackIngredientsAutoAcceptCheck = (isAutoAccept, isMultiComplaint) => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.ssrIngredientsAutoAcceptCheck,
     auto_accept: isAutoAccept,
+    is_second_complaint: isMultiComplaint,
     seCategory: SE_CATEGORY_HELP,
   }
 })
 
-export const trackIngredientsGetInTouchClick = (amount, isAutoAccept) => ({
-  type: webClientActionTypes.TRACKING,
-  trackingData: {
-    actionType: trackingKeys.ssrIngredientsClickGetInTouch,
-    amount,
-    auto_accept: isAutoAccept,
-    seCategory: SE_CATEGORY_HELP,
-  }
-})
+export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
+  const isAutoAccept = getIsAutoAccept(getState())
+  const { amount, totalAmount } = getCompensation(getState())
+  const isMultiComplaint = Boolean(totalAmount)
 
-export const trackConfirmationCTA = (isAutoAccept) => ({
-  type: webClientActionTypes.TRACKING,
-  trackingData: {
-    actionType: trackingKeys.ssrClickDoneRefundAccepted,
-    auto_accept: isAutoAccept,
-    seCategory: SE_CATEGORY_HELP,
-  }
-})
+  dispatch({
+    type: webClientActionTypes.TRACKING,
+    trackingData: {
+      actionType: trackingKeys.ssrIngredientsClickGetInTouch,
+      amount,
+      auto_accept: isAutoAccept,
+      is_second_complaint: isMultiComplaint,
+      seCategory: SE_CATEGORY_HELP,
+    }
+  })
+}
+
+export const trackConfirmationCTA = () => (dispatch, getState) => {
+  const isAutoAccept = getIsAutoAccept(getState())
+  const isMultiComplaint = Boolean(getCompensation(getState()).totalAmount)
+
+  dispatch({
+    type: webClientActionTypes.TRACKING,
+    trackingData: {
+      actionType: trackingKeys.ssrClickDoneRefundAccepted,
+      auto_accept: isAutoAccept,
+      is_second_complaint: isMultiComplaint,
+      seCategory: SE_CATEGORY_HELP,
+    }
+  })
+}
 
 export const trackClickGetHelpWithThisBox = (orderId) => ({
   type: webClientActionTypes.TRACKING,
@@ -357,11 +371,12 @@ export const validateLatestOrder = ({
         },
       })
     )
-    const { ineligibleIngredientUuids } = response.data
+    const { massIssueIneligibleIngredientUuids, otherIssueIneligibleIngredientUuids } = response.data
 
     dispatch({
       type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
-      ineligibleIngredientUuids,
+      massIssueIneligibleIngredientUuids,
+      otherIssueIneligibleIngredientUuids,
     })
   } catch (error) {
     dispatch(webClientStatusActions.error(webClientActionTypes.GET_HELP_VALIDATE_ORDER, error.message))

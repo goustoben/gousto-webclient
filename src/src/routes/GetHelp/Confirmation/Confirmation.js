@@ -16,8 +16,6 @@ const propTypes = {
   trackRefundFAQClick: PropTypes.func.isRequired,
 }
 
-const IS_AUTO_ACCEPT = false
-
 const Confirmation = ({
   creditAmount,
   issuesIDs,
@@ -29,7 +27,7 @@ const Confirmation = ({
     trackRefundFAQClick({
       compensationAmount: creditAmount,
       articleName,
-      isAutoAccept: IS_AUTO_ACCEPT,
+      isAutoAccept: false,
     })
   }
 
@@ -67,7 +65,7 @@ const Confirmation = ({
           isFullWidth
           size="small"
           onClick={() => {
-            trackConfirmationCTA(IS_AUTO_ACCEPT)
+            trackConfirmationCTA()
             window.location.assign(routes.myGousto)
           }}
         >

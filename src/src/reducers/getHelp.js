@@ -5,6 +5,7 @@ import { fromJS, Map, OrderedMap } from 'immutable'
 const getHelpInitialState = fromJS({
   compensation: {
     amount: null,
+    totalAmount: null,
     type: '',
   },
   ingredientIssues: [],
@@ -23,7 +24,8 @@ const getHelpInitialState = fromJS({
   orders: Map(),
   recipes: [],
   selectedIngredients: {},
-  ineligibleIngredientUuids: [],
+  massIssueIneligibleIngredientUuids: [],
+  otherIssueIneligibleIngredientUuids: [],
 })
 
 const getHelp = (state, action) => {
@@ -183,15 +185,13 @@ const getHelp = (state, action) => {
   }
 
   case webClientActionTypes.GET_HELP_VALIDATE_ORDER: {
-    if (action.ineligibleIngredientUuids) {
-      return state.set('ineligibleIngredientUuids', fromJS(action.ineligibleIngredientUuids))
-    }
-
-    return state
+    return state.set('massIssueIneligibleIngredientUuids', fromJS(action.massIssueIneligibleIngredientUuids))
+      .set('otherIssueIneligibleIngredientUuids', fromJS(action.otherIssueIneligibleIngredientUuids))
   }
   case actionTypes.GET_HELP_LOAD_REFUND_AMOUNT: {
     return state.set('isAutoAccept', action.payload.isAutoAccept)
       .setIn(['compensation', 'amount'], action.payload.amount)
+      .setIn(['compensation', 'totalAmount'], action.payload.totalAmount)
       .setIn(['compensation', 'type'], action.payload.type)
   }
   default:

@@ -58,13 +58,13 @@ const renderIneligibleIngredients = (ineligibleIngredients, recipe ) => (
 )
 
 const RecipeIngredients = ({
-  ineligibleIngredientUuids,
+  massIssueIneligibleIngredientUuids,
   onChange,
   recipe,
   selectedIngredients,
   trackMassIssueAlertDisplayed,
 }) => {
-  const isEligible = (bool) => ({ uuid }) => ineligibleIngredientUuids.includes(uuid) !== bool
+  const isEligible = (bool) => ({ uuid }) => massIssueIneligibleIngredientUuids.includes(uuid) !== bool
 
   const eligible = recipe.ingredients.filter(isEligible(true))
   const ineligible = recipe.ingredients.filter(isEligible(false))
@@ -85,7 +85,7 @@ const RecipeIngredients = ({
 }
 
 RecipeIngredients.propTypes = {
-  ineligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string),
+  massIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string),
   recipe: recipePropType,
   onChange: PropTypes.func.isRequired,
   selectedIngredients: PropTypes.instanceOf(Map).isRequired,
@@ -93,7 +93,7 @@ RecipeIngredients.propTypes = {
 }
 
 RecipeIngredients.defaultProps = {
-  ineligibleIngredientUuids: [],
+  massIssueIneligibleIngredientUuids: [],
   recipe: { id: '', title: '', ingredients: [] }
 }
 

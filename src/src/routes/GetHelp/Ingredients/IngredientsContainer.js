@@ -9,11 +9,11 @@ import {
   trackSelectIngredient,
   validateLatestOrder,
 } from '../actions/getHelp'
-import { getIneligibleIngredientUuids, getOrder, getRecipes } from '../selectors/selectors'
+import { getMassIssueIneligibleIngredientUuids, getOrder, getRecipes } from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({
-  ineligibleIngredientUuids: getIneligibleIngredientUuids(state),
+  massIssueIneligibleIngredientUuids: getMassIssueIneligibleIngredientUuids(state),
   isOrderValidationError: getIsOrderValidationError(state),
   isValidateOrderLoading: getOrderValidationPendingState(state),
   order: getOrder(state),

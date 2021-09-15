@@ -13,7 +13,7 @@ const propTypes = {
   cannotContinue: PropTypes.bool.isRequired,
   changeHandler: PropTypes.func.isRequired,
   continueClick: PropTypes.func.isRequired,
-  ineligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  massIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
   recipes: PropTypes.arrayOf(recipePropType).isRequired,
   selectedIngredients: PropTypes.instanceOf(Map).isRequired,
 }
@@ -22,7 +22,7 @@ const IngredientsPresentation = ({
   cannotContinue,
   changeHandler,
   continueClick,
-  ineligibleIngredientUuids,
+  massIssueIneligibleIngredientUuids,
   recipes,
   selectedIngredients,
 }) => (
@@ -36,7 +36,7 @@ const IngredientsPresentation = ({
       </p>
       <RecipeList recipes={recipes}>
         <RecipeIngredientsContainer
-          ineligibleIngredientUuids={ineligibleIngredientUuids}
+          massIssueIneligibleIngredientUuids={massIssueIneligibleIngredientUuids}
           selectedIngredients={selectedIngredients}
           onChange={changeHandler}
         />

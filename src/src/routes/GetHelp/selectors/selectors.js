@@ -9,8 +9,12 @@ export const getCompensation = (state) => state.getHelp.get('compensation').toJS
 
 export const getError = (state, actionType) => state.error.get(actionType, null)
 
-export const getIneligibleIngredientUuids = (state) => (
-  state.getHelp.get('ineligibleIngredientUuids').toJS()
+export const getMassIssueIneligibleIngredientUuids = (state) => (
+  state.getHelp.get('massIssueIneligibleIngredientUuids').toJS()
+)
+
+export const getOtherIssueIneligibleIngredientUuids = (state) => (
+  state.getHelp.get('otherIssueIneligibleIngredientUuids').toJS()
 )
 
 export const getIsAutoAccept = (state) => (

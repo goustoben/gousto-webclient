@@ -18,7 +18,7 @@ describe('the RecipeIngredients component', () => {
   }
   const INELIGIBLE_INGREDIENT_UUIDS = ['2', '3']
   const testProps = {
-    ineligibleIngredientUuids: [],
+    massIssueIneligibleIngredientUuids: [],
     recipe: TEST_RECIPE,
     selectedIngredients: new Map(),
     onChange: jest.fn(),
@@ -52,10 +52,10 @@ describe('the RecipeIngredients component', () => {
     })
   })
 
-  describe('when ineligible ingredients uuids are passed', () => {
+  describe('when mass issue ineligible ingredients uuids are passed', () => {
     beforeEach(() => {
       wrapper = mount(
-        <RecipeIngredients {...testProps} ineligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS} />
+        <RecipeIngredients {...testProps} massIssueIneligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS} />
       )
     })
 

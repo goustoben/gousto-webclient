@@ -379,15 +379,29 @@ describe('GetHelp action generators and thunks', () => {
   })
 
   describe('trackIngredientsGetInTouchClick with autoAccept true', () => {
-    test('creates the tracking action', () => {
-      const amount = '12345'
+    beforeEach(() => {
+      const PARAMS = {
+        ...GET_STATE_PARAMS,
+        getHelp: Immutable.fromJS({
+          isAutoAccept: true,
+          compensation: {
+            totalAmount: 0,
+            amount: 4
+          }
+        })
+      }
+      getState = jest.fn().mockReturnValue(PARAMS)
+    })
 
-      expect(trackIngredientsGetInTouchClick(amount, true)).toEqual({
+    test('creates the tracking action', () => {
+      trackIngredientsGetInTouchClick()(dispatch, getState)
+      expect(dispatch.mock.calls[0][0]).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'ssr_ingredients_click_get_in_touch',
-          amount,
+          amount: 4,
           auto_accept: true,
+          is_second_complaint: false,
           seCategory: 'help',
         }
       })
@@ -395,41 +409,76 @@ describe('GetHelp action generators and thunks', () => {
   })
 
   describe('trackIngredientsGetInTouchClick with autoAccept false', () => {
-    test('creates the tracking action', () => {
-      const amount = '12345'
+    beforeEach(() => {
+      const PARAMS = {
+        ...GET_STATE_PARAMS,
+        getHelp: Immutable.fromJS({
+          isAutoAccept: false,
+          compensation: {
+            totalAmount: 0,
+            amount: 4
+          }
+        })
+      }
+      getState = jest.fn().mockReturnValue(PARAMS)
+    })
 
-      expect(trackIngredientsGetInTouchClick(amount, false)).toEqual({
+    test('creates the tracking action', () => {
+      trackIngredientsGetInTouchClick()(dispatch, getState)
+      expect(dispatch.mock.calls[0][0]).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'ssr_ingredients_click_get_in_touch',
-          amount,
+          amount: 4,
           auto_accept: false,
+          is_second_complaint: false,
           seCategory: 'help',
         }
       })
     })
   })
 
-  describe('trackIngredientsAutoAcceptCheck with autoAccept true', () => {
+  describe('trackIngredientsGetInTouchClick with is_second_complaint true', () => {
+    beforeEach(() => {
+      const PARAMS = {
+        ...GET_STATE_PARAMS,
+        getHelp: Immutable.fromJS({
+          isAutoAccept: false,
+          compensation: {
+            totalAmount: 6,
+            amount: 4
+          }
+        })
+      }
+      getState = jest.fn().mockReturnValue(PARAMS)
+    })
+
     test('creates the tracking action', () => {
-      expect(trackIngredientsAutoAcceptCheck(true)).toEqual({
+      trackIngredientsGetInTouchClick()(dispatch, getState)
+      expect(dispatch.mock.calls[0][0]).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
-          actionType: 'ssr_ingredients_auto_accept_check',
-          auto_accept: true,
+          actionType: 'ssr_ingredients_click_get_in_touch',
+          amount: 4,
+          auto_accept: false,
+          is_second_complaint: true,
           seCategory: 'help',
         }
       })
     })
   })
 
-  describe('trackIngredientsAutoAcceptCheck with autoAccept false', () => {
-    test('creates the tracking action', () => {
-      expect(trackIngredientsAutoAcceptCheck(false)).toEqual({
+  describe('trackIngredientsAutoAcceptCheck', () => {
+    const IS_AUTO_ACCEPT = 'true or false'
+    const IS_MULTI_COMPLAINT = 'true or false'
+
+    test('creates the tracking action with the right isAutoAccept and isMultiComplaint values', () => {
+      expect(trackIngredientsAutoAcceptCheck(IS_AUTO_ACCEPT, IS_MULTI_COMPLAINT)).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'ssr_ingredients_auto_accept_check',
-          auto_accept: false,
+          auto_accept: IS_AUTO_ACCEPT,
+          is_second_complaint: IS_MULTI_COMPLAINT,
           seCategory: 'help',
         }
       })
@@ -437,16 +486,85 @@ describe('GetHelp action generators and thunks', () => {
   })
 
   describe('trackConfirmationCTA', () => {
-    const IS_AUTO_ACCEPT = 'true or false'
+    beforeEach(() => {
+      const PARAMS = {
+        ...GET_STATE_PARAMS,
+        getHelp: Immutable.fromJS({
+          isAutoAccept: false,
+          compensation: {
+            totalAmount: 0
+          }
+        })
+      }
+      getState = jest.fn().mockReturnValue(PARAMS)
+    })
 
-    test('creates the tracking action with the right isAutoAccept value', () => {
-      expect(trackConfirmationCTA(IS_AUTO_ACCEPT)).toEqual({
+    test('creates the tracking action with isAutoAccept and isMultiComplaint false', () => {
+      trackConfirmationCTA()(dispatch, getState)
+      expect(dispatch.mock.calls[0][0]).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'ssr_ingredients_done_click',
-          auto_accept: IS_AUTO_ACCEPT,
+          auto_accept: false,
+          is_second_complaint: false,
           seCategory: 'help'
         }
+      })
+    })
+
+    describe('when isAutoAccept true', () => {
+      beforeEach(() => {
+        const PARAMS = {
+          ...GET_STATE_PARAMS,
+          getHelp: Immutable.fromJS({
+            isAutoAccept: true,
+            compensation: {
+              totalAmount: 0
+            }
+          })
+        }
+        getState = jest.fn().mockReturnValue(PARAMS)
+      })
+
+      test('creates the tracking action with the auto_accept true', () => {
+        trackConfirmationCTA()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_done_click',
+            auto_accept: true,
+            is_second_complaint: false,
+            seCategory: 'help'
+          }
+        })
+      })
+    })
+
+    describe('when it is a multi complaint', () => {
+      beforeEach(() => {
+        const PARAMS = {
+          ...GET_STATE_PARAMS,
+          getHelp: Immutable.fromJS({
+            isAutoAccept: false,
+            compensation: {
+              totalAmount: 2
+            }
+          })
+        }
+        getState = jest.fn().mockReturnValue(PARAMS)
+      })
+
+      test('creates the tracking action with is_second_complaint set to true', () => {
+        trackConfirmationCTA()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_done_click',
+            auto_accept: false,
+            is_second_complaint: true,
+            seCategory: 'help'
+          }
+        })
       })
     })
   })
@@ -856,7 +974,8 @@ describe('GetHelp action generators and thunks', () => {
       }
       const validationResponse = {
         valid: true,
-        ineligibleIngredientUuids: ['a', 'b'],
+        massIssueIneligibleIngredientUuids: ['a', 'b'],
+        otherIssueIneligibleIngredientUuids: ['c', 'd']
       }
       const expectedParams = [
         ACCESS_TOKEN,
@@ -885,7 +1004,8 @@ describe('GetHelp action generators and thunks', () => {
         test('the ineligible ingredient uuids are dispatched correctly', () => {
           expect(dispatch).toHaveBeenCalledWith({
             type: 'GET_HELP_VALIDATE_ORDER',
-            ineligibleIngredientUuids: validationResponse.ineligibleIngredientUuids,
+            massIssueIneligibleIngredientUuids: validationResponse.massIssueIneligibleIngredientUuids,
+            otherIssueIneligibleIngredientUuids: validationResponse.otherIssueIneligibleIngredientUuids,
           })
         })
       })

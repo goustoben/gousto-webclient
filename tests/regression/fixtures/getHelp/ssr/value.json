@@ -2,6 +2,7 @@
   "status": "ok",
   "data": {
     "value": 5.0,
-    "type": "credit"
+    "type": "credit",
+    "multi_complaint_total_value": 0
   }
 }

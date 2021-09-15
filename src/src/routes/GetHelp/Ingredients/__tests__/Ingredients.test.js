@@ -9,7 +9,7 @@ import thunk from 'redux-thunk'
 jest.mock('apis/getHelp')
 
 describe('<Ingredients />', () => {
-  const INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
+  const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
   const recipes = [
     { id: '1', title: 'Fish Curry', ingredients: [{ uuid: '1', label: 'fish' }] },
     {
@@ -45,7 +45,7 @@ describe('<Ingredients />', () => {
   const mockStore = configureStore([thunk])
 
   const PROPS = {
-    ineligibleIngredientUuids: INELIGIBLE_INGREDIENT_UUIDS,
+    massIssueIneligibleIngredientUuids: MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
     isOrderValidationError: false,
     isValidateOrderLoading: false,
     order,
@@ -125,9 +125,9 @@ describe('<Ingredients />', () => {
       expect(getHelpLayout.find('RecipeList').prop('recipes')).toBe(recipes)
     })
 
-    test('RecipeIngredients are rendered with the ineligible ingredient uuids', () => {
-      expect(wrapper.find('RecipeList').prop('children').props.ineligibleIngredientUuids)
-        .toBe(INELIGIBLE_INGREDIENT_UUIDS)
+    test('RecipeIngredients are rendered with the mass issue ineligible ingredient uuids', () => {
+      expect(wrapper.find('RecipeList').prop('children').props.massIssueIneligibleIngredientUuids)
+        .toBe(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS)
     })
   })
 

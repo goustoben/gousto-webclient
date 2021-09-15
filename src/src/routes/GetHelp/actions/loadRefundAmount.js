@@ -23,7 +23,7 @@ export const loadRefundAmount = () => async (dispatch, getState) => {
 
   const getPayload = async () => {
     const response = await fetchRefundAmount(accessToken, body)
-    const { value, type } = response.data
+    const { value, type, multiComplaintTotalValue } = response.data
 
     const MAX_AUTO_ACCEPT_AMOUNT = 2.0
     const MAX_AUTO_ACCEPT_INGREDIENTS = 1
@@ -31,9 +31,16 @@ export const loadRefundAmount = () => async (dispatch, getState) => {
     const isAutoAccept = value <= MAX_AUTO_ACCEPT_AMOUNT
       && ingredientUuids.length <= MAX_AUTO_ACCEPT_INGREDIENTS
 
-    dispatch(trackIngredientsAutoAcceptCheck(isAutoAccept))
+    const isMultiComplaint = Boolean(multiComplaintTotalValue)
 
-    return { amount: value, type, isAutoAccept }
+    dispatch(trackIngredientsAutoAcceptCheck(isAutoAccept, isMultiComplaint))
+
+    return {
+      amount: value,
+      totalAmount: multiComplaintTotalValue,
+      type,
+      isAutoAccept
+    }
   }
 
   await asyncAndDispatch({

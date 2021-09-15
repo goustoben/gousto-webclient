@@ -109,8 +109,8 @@ describe('<Confirmation />', () => {
       locationAssignSpy.mockClear()
     })
 
-    test('calls the function passed through trackConfirmationCTA prop with isAutoAccept set to false', () => {
-      expect(TRACK_CONFIRMATION_CTA_FUNCTION).toHaveBeenCalledWith(false)
+    test('calls the function passed through trackConfirmationCTA ', () => {
+      expect(TRACK_CONFIRMATION_CTA_FUNCTION).toHaveBeenCalled()
     })
 
     test('redirects to My Gousto', () => {

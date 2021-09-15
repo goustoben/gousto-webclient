@@ -21,6 +21,7 @@ describe('<AutoAcceptConfirmation />', () => {
     wrapper = mount(
       <AutoAcceptConfirmation
         creditAmount={CREDIT}
+        totalCreditAmount={0}
         issuesIDs={ISSUES_IDS}
         nameFirst={USER_NAME}
         trackConfirmationCTA={TRACK_CONFIRMATION_CTA_FUNCTION}
@@ -37,7 +38,7 @@ describe('<AutoAcceptConfirmation />', () => {
   })
 
   test('renders the copy with the customer name and credit amount inside the Card component', () => {
-    expect(getHelpLayout.find('Card').at(0).text()).toContain(
+    expect(wrapper.find('Card').at(0).text()).toContain(
       `${USER_NAME}, we’ve gone ahead and added £${CREDIT} credit to your account as an apology. This will be automatically taken off your next order.`
     )
   })
@@ -67,6 +68,24 @@ describe('<AutoAcceptConfirmation />', () => {
     test('renders the header specifying the number of ingredients', () => {
       expect(wrapper.find('GetHelpLayout2').prop('headingText'))
         .toBe('We’re so sorry to hear about your 3 issues with your ingredients')
+    })
+  })
+
+  describe('when this is a multicomplaint', () => {
+    beforeEach(() => {
+      wrapper.setProps({ totalCreditAmount: 2 })
+    })
+
+    test('renders additional text', () => {
+      expect(wrapper.find('Card').at(0).text()).toContain(
+        `${USER_NAME}, we’ve gone ahead and added an additional £${CREDIT} credit to your account as an apology, bringing your total compensation to £2. This will be automatically taken off your next order.`
+      )
+    })
+
+    test('renders Extra text on the alert', () => {
+      expect(wrapper.find('Alert').text()).toContain(
+        `Extra £${CREDIT} credit added`
+      )
     })
   })
 
@@ -136,7 +155,7 @@ describe('<AutoAcceptConfirmation />', () => {
     })
 
     test('calls the function passed through trackConfirmationCTA prop with isAutoAccept set to true', () => {
-      expect(TRACK_CONFIRMATION_CTA_FUNCTION).toHaveBeenCalledWith(true)
+      expect(TRACK_CONFIRMATION_CTA_FUNCTION).toHaveBeenCalledWith()
     })
 
     test('redirects to My Gousto', () => {
@@ -164,7 +183,7 @@ describe('<AutoAcceptConfirmation />', () => {
     })
 
     test('calls the function passed through trackConfirmationCTA prop with the right amount and isAutoAccept set to true', () => {
-      expect(TRACK_INGREDIENTS_GET_IN_TOUCH).toHaveBeenCalledWith(CREDIT, true)
+      expect(TRACK_INGREDIENTS_GET_IN_TOUCH).toHaveBeenCalled()
     })
   })
 })

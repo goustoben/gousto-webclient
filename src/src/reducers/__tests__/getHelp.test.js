@@ -69,6 +69,7 @@ const ISSUE_REASONS = {
   }
 }
 const COMPENSATION_AMOUNT = 25
+const TOTAL_COMPENSATION_AMOUNT = 30
 const COMPENSATION_TYPE = 'credit'
 
 describe('getHelp reducer', () => {
@@ -419,30 +420,24 @@ describe('getHelp reducer', () => {
   })
 
   describe('given an action with type GET_HELP_VALIDATE_ORDER is received', () => {
-    describe('when the payload does not contain ineligibleIngredientUuids', () => {
-      beforeEach(() => {
-        newState = getHelp(getHelpInitialState, {
-          type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
-        })
-      })
-
-      test('ineligibleIngredientUuids state is set as an empty array', () => {
-        expect(newState.get('ineligibleIngredientUuids').toJS()).toEqual([])
-      })
-    })
-
     describe('when there is a payload', () => {
-      const INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
+      const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
+      const OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['25949ce8-d92c-43fa-8c0d-110d903d6e60', '7893dfhgjk-204c-4ded-9dac-12df03f265d6']
 
       beforeEach(() => {
         newState = getHelp(getHelpInitialState, {
           type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
-          ineligibleIngredientUuids: INELIGIBLE_INGREDIENT_UUIDS
+          massIssueIneligibleIngredientUuids: MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
+          otherIssueIneligibleIngredientUuids: OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS
         })
       })
 
-      test('ineligibleIngredientUuids state is set as that payload', () => {
-        expect(newState.get('ineligibleIngredientUuids').toJS()).toEqual(INELIGIBLE_INGREDIENT_UUIDS)
+      test('massIssueIneligibleIngredientUuids state is set as that payload', () => {
+        expect(newState.get('massIssueIneligibleIngredientUuids').toJS()).toEqual(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS)
+      })
+
+      test('otherIssueIneligibleIngredientUuids state is set as that payload', () => {
+        expect(newState.get('otherIssueIneligibleIngredientUuids').toJS()).toEqual(OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS)
       })
     })
   })
@@ -457,15 +452,17 @@ describe('getHelp reducer', () => {
         type: actionTypes.GET_HELP_LOAD_REFUND_AMOUNT,
         payload: {
           amount: COMPENSATION_AMOUNT,
+          totalAmount: TOTAL_COMPENSATION_AMOUNT,
           isAutoAccept: IS_AUTO_ACCEPT,
           type: COMPENSATION_TYPE,
         },
       })
     })
 
-    test('the new state has isAutoAccept, compensation amount and compensation type stored', () => {
+    test('the new state has correct properties stored', () => {
       expect(newState.get('isAutoAccept')).toBe(IS_AUTO_ACCEPT)
       expect(newState.getIn(['compensation', 'amount'])).toEqual(COMPENSATION_AMOUNT)
+      expect(newState.getIn(['compensation', 'totalAmount'])).toEqual(TOTAL_COMPENSATION_AMOUNT)
       expect(newState.getIn(['compensation', 'type'])).toEqual(COMPENSATION_TYPE)
     })
   })

@@ -7,7 +7,7 @@ import { IngredientsPresentation } from './Ingredients.presentation'
 import { recipePropType } from '../getHelpPropTypes'
 
 const propTypes = {
-  ineligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  massIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
   isOrderValidationError: PropTypes.bool.isRequired,
   isValidateOrderLoading: PropTypes.bool.isRequired,
   order: PropTypes.shape({
@@ -124,7 +124,7 @@ class Ingredients extends PureComponent {
   }
 
   render() {
-    const { recipes, ineligibleIngredientUuids, isValidateOrderLoading } = this.props
+    const { recipes, massIssueIneligibleIngredientUuids, isValidateOrderLoading } = this.props
     const { selectedIngredients } = this.state
     const hasSelectAnyIngredient = selectedIngredients.size > 0
     const buttonLeftUrl = client.getHelp.index
@@ -138,7 +138,7 @@ class Ingredients extends PureComponent {
           changeHandler={this.changeHandler}
           cannotContinue={!hasSelectAnyIngredient}
           continueClick={this.continueClickHandler}
-          ineligibleIngredientUuids={ineligibleIngredientUuids}
+          massIssueIneligibleIngredientUuids={massIssueIneligibleIngredientUuids}
           recipes={recipes}
           selectedIngredients={selectedIngredients}
         />

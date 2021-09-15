@@ -3,7 +3,8 @@ import {
   getAccessToken,
   getCompensation,
   getError,
-  getIneligibleIngredientUuids,
+  getMassIssueIneligibleIngredientUuids,
+  getOtherIssueIneligibleIngredientUuids,
   getIsAutoAccept,
   getIsError,
   getIsLoadOrderError,
@@ -27,7 +28,8 @@ const COMPENSATION = {
   type: 'credit'
 }
 const ERROR_MESSAGE = 'An error message'
-const INELIGIBLE_INGREDIENT_UUIDS = ['a', 'b', 'c']
+const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a', 'b', 'c']
+const OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a324', 'b345', 'c3454']
 const IS_AUTO_ACCEPT = 'is auto accept can be true or false'
 const ORDER_PENDING_VALUE = 'order pending can be true or false'
 const ORDER_ID = '12345'
@@ -119,7 +121,8 @@ const STATE = {
   }),
   getHelp: fromJS({
     compensation: COMPENSATION,
-    ineligibleIngredientUuids: fromJS(INELIGIBLE_INGREDIENT_UUIDS),
+    massIssueIneligibleIngredientUuids: fromJS(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
+    otherIssueIneligibleIngredientUuids: fromJS(OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
     isAutoAccept: IS_AUTO_ACCEPT,
     order: ORDER,
     recipes: RECIPES,
@@ -137,7 +140,8 @@ describe('Get Help selectors', () => {
   describe.each([
     ['getAccessToken', getAccessToken, ACCESS_TOKEN],
     ['getCompensation', getCompensation, COMPENSATION],
-    ['getIneligibleIngredientUuids', getIneligibleIngredientUuids, INELIGIBLE_INGREDIENT_UUIDS],
+    ['getMassIssueIneligibleIngredientUuids', getMassIssueIneligibleIngredientUuids, MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
+    ['getOtherIssueIneligibleIngredientUuids', getOtherIssueIneligibleIngredientUuids, OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
     ['getIsAutoAccept', getIsAutoAccept, IS_AUTO_ACCEPT],
     ['getIsOrderLoading', getIsOrderLoading, ORDER_PENDING_VALUE],
     ['getIsTrackingUrlLoading', getIsTrackingUrlLoading, TRACKING_URL_PENDING_VALUE],

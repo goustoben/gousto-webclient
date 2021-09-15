@@ -12,6 +12,7 @@ const AutoAcceptConfirmationContainer = connect((state) => ({
   creditAmount: getCompensation(state).amount,
   issuesIDs: getSelectedIngredientIssuesIDs(state) || [],
   nameFirst: getUserFirstName(state) || '',
+  totalCreditAmount: getCompensation(state).totalAmount,
 }), {
   trackConfirmationCTA,
   trackIngredientsGetInTouchClick,

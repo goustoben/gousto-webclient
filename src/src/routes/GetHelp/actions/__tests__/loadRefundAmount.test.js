@@ -15,11 +15,8 @@ const RESPONSE = {
   status: 'ok',
   data: {
     value: AMOUNT,
-    num_orders: 4,
-    num_orders_compensated: 0,
-    multi_complaint_total_value: 0,
+    multiComplaintTotalValue: 0,
     type: TYPE,
-    key_ingredients: [],
   }
 }
 
@@ -27,11 +24,8 @@ const RESPONSE_WITH_AUTO_ACCEPT_AMOUNT = {
   status: 'ok',
   data: {
     value: LOW_AMOUNT,
-    num_orders: 4,
-    num_orders_compensated: 0,
-    multi_complaint_total_value: 0,
+    multiComplaintTotalValue: 0,
     type: TYPE,
-    key_ingredients: [],
   }
 }
 
@@ -120,6 +114,7 @@ describe('Given loadRefundAmount action is called', () => {
           amount: AMOUNT,
           isAutoAccept: false,
           type: TYPE,
+          totalAmount: 0,
         },
       })
     })
@@ -162,6 +157,7 @@ describe('Given loadRefundAmount action is called', () => {
             amount: LOW_AMOUNT,
             isAutoAccept: true,
             type: TYPE,
+            totalAmount: 0,
           },
         })
       })
@@ -172,6 +168,7 @@ describe('Given loadRefundAmount action is called', () => {
           trackingData: {
             actionType: 'ssr_ingredients_auto_accept_check',
             auto_accept: true,
+            is_second_complaint: false,
             seCategory: 'help',
           }
         })
@@ -191,6 +188,7 @@ describe('Given loadRefundAmount action is called', () => {
             amount: AMOUNT,
             isAutoAccept: false,
             type: TYPE,
+            totalAmount: 0,
           },
         })
       })
@@ -201,6 +199,7 @@ describe('Given loadRefundAmount action is called', () => {
           trackingData: {
             actionType: 'ssr_ingredients_auto_accept_check',
             auto_accept: false,
+            is_second_complaint: false,
             seCategory: 'help',
           }
         })
@@ -222,6 +221,7 @@ describe('Given loadRefundAmount action is called', () => {
             amount: LOW_AMOUNT,
             isAutoAccept: false,
             type: TYPE,
+            totalAmount: 0,
           },
         })
       })
@@ -232,6 +232,7 @@ describe('Given loadRefundAmount action is called', () => {
           trackingData: {
             actionType: 'ssr_ingredients_auto_accept_check',
             auto_accept: false,
+            is_second_complaint: false,
             seCategory: 'help',
           }
         })

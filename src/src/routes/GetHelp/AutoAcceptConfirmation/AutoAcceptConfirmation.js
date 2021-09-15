@@ -15,6 +15,7 @@ const AutoAcceptConfirmation = ({
   creditAmount,
   issuesIDs,
   nameFirst,
+  totalCreditAmount,
   trackConfirmationCTA,
   trackIngredientsGetInTouchClick,
   trackRefundFAQClick
@@ -26,6 +27,8 @@ const AutoAcceptConfirmation = ({
       isAutoAccept: IS_AUTO_ACCEPT,
     })
   }
+
+  const isMultiComplaint = Boolean(totalCreditAmount)
 
   const headingText = issuesIDs.length > 1
     ? `We’re so sorry to hear about your ${issuesIDs.length} issues with your ingredients`
@@ -39,10 +42,21 @@ const AutoAcceptConfirmation = ({
       >
         <p>
           {nameFirst}
-          , we’ve gone ahead and added £
-          {creditAmount}
+          , we’ve gone ahead and added
+          {isMultiComplaint && ' an additional'}
           {' '}
-          credit to your account as an apology.
+          <strong>
+            £
+            {creditAmount}
+          </strong>
+          {' '}
+          credit to your account as an apology
+          {
+            isMultiComplaint && ', bringing your'
+          }
+          { isMultiComplaint
+          && <strong>{` total compensation to £${totalCreditAmount}`}</strong>}
+          .
           This will be automatically taken off your next order.
         </p>
         <Alert type="success" hasIcon={false}>
@@ -51,6 +65,7 @@ const AutoAcceptConfirmation = ({
               <Svg fileName="icon-pound" className={css.alertIcon} />
             </div>
             <p className={css.alertText}>
+              {isMultiComplaint && 'Extra '}
               £
               {creditAmount}
               {' '}
@@ -73,7 +88,7 @@ const AutoAcceptConfirmation = ({
           className={css.getInTouchLink}
           clientRouted
           to={`${client.getHelp.index}/${client.getHelp.contact}`}
-          tracking={() => trackIngredientsGetInTouchClick(creditAmount, true)}
+          tracking={() => trackIngredientsGetInTouchClick()}
         >
           Get in touch
         </Link>
@@ -84,7 +99,7 @@ const AutoAcceptConfirmation = ({
           isFullWidth
           size="small"
           onClick={() => {
-            trackConfirmationCTA(IS_AUTO_ACCEPT)
+            trackConfirmationCTA()
             window.location.assign(client.myGousto)
           }}
         >
@@ -99,6 +114,7 @@ AutoAcceptConfirmation.propTypes = {
   creditAmount: PropTypes.number.isRequired,
   issuesIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   nameFirst: PropTypes.string.isRequired,
+  totalCreditAmount: PropTypes.number.isRequired,
   trackConfirmationCTA: PropTypes.func.isRequired,
   trackIngredientsGetInTouchClick: PropTypes.func.isRequired,
   trackRefundFAQClick: PropTypes.func.isRequired,
