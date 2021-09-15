@@ -60,7 +60,7 @@ describe('EmailForm', () => {
     )
   })
 
-  test.skip('should catch server error', () => {
+  test('should catch server error', () => {
     /*
       TODO: Fix and reinstate this #BROKEN_TEST
         reference error setImmediate  undefined
@@ -73,13 +73,13 @@ describe('EmailForm', () => {
     )
     wrapper.find(TextInput).simulate('change', emailAddress)
     wrapper.find(CTA).simulate('click', { preventDefault: (e) => e })
-    setImmediate(() => {
+    setTimeout(() => {
       expect(wrapper.state()).toStrictEqual({
         emailSubmitted: true,
         emailValid: true,
         errorMessage: '',
         email: emailAddress,
-      })
+      }, 0)
     })
   })
 })
