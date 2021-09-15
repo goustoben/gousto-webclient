@@ -1,10 +1,7 @@
 ## Getting Started
 
 * Your IDE is setup following the [Code editor setup](#code-editor-setup)
-* If running locally, install Node.js.
-
-We use nvm to control the version of node devs use and there is an .nvmrc in the repo root that should be picked up by nvm and states the current version of node we use. So using a node version manager such as nvm or fnm (if you use fish shell) to install node is advised.
-* Please see below the [Automatic Node Version Control](#automatic-node-version-control)
+* If running locally, ensure the correct version of node is installed. See [Node Version Management](#node-version-management).
 
 ### Run application for development
 
@@ -47,11 +44,11 @@ Webclient can either be run without G2FE as a standalone on port 80, or as part 
 To access the service simply navigate to `frontend.gousto.local:8080` or if running with G2FE as well, simply navigate to `frontend.gousto.local`.
 
 #### Running Webclient with HMR
-* `npm run dev` will build the server and then run it with HMR enabled. 
+* `npm run dev` will build the server and then run it with HMR enabled.
   You'll see output from the server build initially and then the server will start, as it starts the HMR middleware will be invoked and this will build the client for the first time and should result in HMR being enabled for the client. (This process can take upwards of two minutes the first time you do it, so please be patient)
-  *PLEASE NOTE*: Using this option does not have a watch on the server files or use nodemon so changes to the server will involve restarting and rebuilding. It might be possible to start the server with nodemon and have changes update automatically but this is not currently included. 
+  *PLEASE NOTE*: Using this option does not have a watch on the server files or use nodemon so changes to the server will involve restarting and rebuilding. It might be possible to start the server with nodemon and have changes update automatically but this is not currently included.
 
-There are three other ways to run Webclient. The service can be run in docker, or run outside which will be faster. 
+There are three other ways to run Webclient. The service can be run in docker, or run outside which will be faster.
 
 **You will need these options to run Webclient alongside G2FE**
 
@@ -76,11 +73,16 @@ When running with `./run.sh dev --docker` the app will rebuild by itself thanks 
 
 All files that this script uses can be found under the folder `dev-env`.
 
-## [Automatic Node Version Control](#node-version)
-### ZSH
-Sometimes NVM doesn’t set the correct default version, this is cause your terminal isn't looking for .nvm files and loading the correct version of node.
+## [Node version management](#node-version-management)
 
-You can fix this by adding a hook into your ~/.zshrc after nvm directory is setup.
+We use nvm to control the version of node devs use and there is an `.nvmrc` in the repo root that should be picked up by nvm and states the current version of node we use. So using a node version manager such as nvm or fnm (if you use fish shell) to install node is advised.
+
+### Installing nvm
+Follow the [official installation guidance](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+### Configuring automatic version selection (zsh)
+To ensure the correct version of node when issuing terminal commands from inside the project directory tree, you can add a hook into your ~/.zshrc file after nvm directory is setup.
+
 ```shell
 export NVM_DIR=~/.nvm
  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -108,7 +110,23 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 ```
 
-###FNM
+### Troubleshooting
+
+#### Compilation issues when installing a new version of node via nvm
+When installing node with nvm, if you encounter `gyp: No Xcode or CLT version detected`, try reinstalling XCode Command Line Tools as follows:
+
+```
+# check XCode CLT directory location
+xcode-select --print-path
+
+# remove XCode CLT directory
+sudo rm -rf $(xcode-select --print-path)
+
+# reinstall XCode CLT
+xcode-select --install
+```
+
+### fnm (alternative to nvm)
 Copy and paste the output of `fnm env --use-on-cd` into `~/.config/fish/conf.d/fnm.fish`. See more [here](https://github.com/Schniz/fnm).
 
 ## Ignore bulk-change revisions (optional)
