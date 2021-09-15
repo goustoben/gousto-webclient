@@ -16,7 +16,7 @@ const defaultPlugins = (webpackEnvVars) => [
   new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
   new LodashModuleReplacementPlugin(),
   new webpack.DefinePlugin(webpackEnvVars),
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only include moment in English
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only inlcude moment in English,
 ]
 
 const productionClientPlugins = [
@@ -69,7 +69,6 @@ const productionClientPlugins = [
       },
     },
   }),
-  new webpack.IgnorePlugin(/^@axe-core/),
   ExitCodePlugin,
 ]
 
@@ -91,12 +90,12 @@ const developmentHmrClientPlugins = [
 
 const getClientPlugins = (isDevelopmentBuild = false, isHmrEnabled = false) => {
   const webpackEnvVars = isDevelopmentBuild ? webpackEnvVarsDev : webpackEnvVarsClient
-  const hmrToggledDevelopmentClientPlugins = isHmrEnabled ? developmentHmrClientPlugins : developmentClientPlugins
-
+  const hmrToggledDevelopmentClientPlugins = isHmrEnabled ? developmentHmrClientPlugins : developmentClientPlugins 
+  
   const buildSpecificPlugins = isDevelopmentBuild
     ? hmrToggledDevelopmentClientPlugins
     : productionClientPlugins
-
+    
   return [...defaultPlugins(webpackEnvVars), ...buildSpecificPlugins]
 }
 
