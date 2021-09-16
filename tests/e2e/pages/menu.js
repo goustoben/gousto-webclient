@@ -95,12 +95,27 @@ module.exports = {
         addRecipes: function () {
           this.api.execute(function () {
             const getButtons = () => document.querySelectorAll("*[data-testing='menuRecipeAdd']")
+            const getPopupButton = () => document.querySelector('.ReactModalPortal [data-testing="menuRecipeAdd"]')
             let addRecipeButtons = getButtons()
+            let popupButton
 
             addRecipeButtons[0].click()
-            addRecipeButtons[1].click()
+            popupButton = getPopupButton()
+
+            if(popupButton) popupButton.click()
+
             addRecipeButtons = getButtons()
+            addRecipeButtons[1].click()
+            popupButton = getPopupButton()
+
+            if(popupButton) popupButton.click()
+
+            addRecipeButtons = getButtons()
+
             addRecipeButtons[2].click()
+            popupButton = getPopupButton()
+
+            if(popupButton) popupButton.click()
           })
         },
       }],
