@@ -1,5 +1,5 @@
 import logger from 'utils/logger'
-let env // eslint-disable-line import/no-mutable-exports
+const env = {}
 
 if (__SERVER__) {
   try {
@@ -7,12 +7,10 @@ if (__SERVER__) {
     const envPath = `${process.cwd()}/config/env.json`
     const configEnvFromFile = readFileSync(envPath)
 
-    env = {
-      apiToken: configEnvFromFile.apiToken || __API_TOKEN__,
-      authClientId: configEnvFromFile.authClientId || __AUTH_CLIENT_ID__,
-      authClientSecret: configEnvFromFile.authClientSecret || __AUTH_CLIENT_SECRET__,
-      recaptchaReferralPrivateKey: configEnvFromFile.recaptchaReferralPrivateKey || __RECAPTCHA_RAF_PVTK__,
-    }
+    env.apiToken = configEnvFromFile.apiToken || __API_TOKEN__
+    env.authClientId = configEnvFromFile.authClientId || __AUTH_CLIENT_ID__
+    env.authClientSecret = configEnvFromFile.authClientSecret || __AUTH_CLIENT_SECRET__
+    env.recaptchaReferralPrivateKey = configEnvFromFile.recaptchaReferralPrivateKey || __RECAPTCHA_RAF_PVTK__
   } catch (err) {
     logger.critical({ message: 'Reading config/env.json' })
   }

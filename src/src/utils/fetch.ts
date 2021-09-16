@@ -3,90 +3,88 @@ import logger from 'utils/logger'
 import isomorphicFetch from 'isomorphic-fetch'
 import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
+// @ts-ignore
 import { getStore } from 'store' // webpack aliasing?
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 
 type ResponseDataWithIncludedMeta = {
-  data: object
+  data: Record<string, unknown>
   included: boolean
   meta: string
 }
 
-type ResponseData = {
-  result: object & {
-    data: object
-  }
-} & {
-  data: object
-}
+type ResponseData =
+  | {
+      // wtf is this pipe?
+      result:
+        | Record<string, unknown>
+        | {
+            data: Record<string, unknown>
+          }
+    }
+  | {
+      data: Record<string, unknown>
+    }
 
 type ErrorObj = {
   code: number
   message: string
-  errors: {
-    [key: number]: string
-    // key: value pairs of errors such as errCode: errMessage
-  }
+  errors: Record<number, string>
 }
 
-type ParsedJSON = {
-  response: ResponseData
-  meta: string | null
-} & {
-  response: ResponseDataWithIncludedMeta
-  meta: never
-}
+export type ParsedPayload =
+  | {
+      response: ResponseData
+      meta: string | null
+    }
+  | {
+      response: ResponseDataWithIncludedMeta
+      meta: never
+    }
 
-const DEFAULT_TIME_OUT: number = 50000
-const STATUS_CODES_WITH_NO_CONTENT: Array<number> = [204]
+export type FetchResult =
+  | {
+      data: Record<string, unknown>
+      included: boolean
+      meta: string
+    }
+  | {
+      data: ResponseData
+      meta: string | null
+    }
 
-export const dataDefault: {} = {}
-export const methodDefault: string = 'GET'
+// export type FetchResult <T> =
+//   | { data: T, meta: string | null }
+//   | {
+//     data: T,
+//     included: true,
+//     meta: string
+//   }
+
+const DEFAULT_TIME_OUT = 50000
+const STATUS_CODES_WITH_NO_CONTENT = [204]
+
+export const dataDefault = {}
+export const methodDefault = 'GET'
 export const cacheDefault: RequestCache = 'default'
-export const headerDefault: HeadersInit = {}
-export const timeoutDefault: number = null
-export const includeCookiesDefault: boolean = false
-export const useMenuServiceDefault: boolean = false
-export const useOverwriteRequestMethodDefault: boolean = true
-
-export function fetchRaw(
-  url: string,
-  data = {},
-  options: {
-    accessToken: any
-    method: any
-    cache?: any
-    headers: any
-    timeout?: any
-    includeCookies?: any
-    useMenuService?: any
-  }
-) {
-  return fetch(
-    options.accessToken,
-    url,
-    data,
-    options.method,
-    options.cache,
-    options.headers,
-    options.timeout,
-    options.includeCookies,
-    options.useMenuService
-  )
-}
+export const headerDefault: Record<string, string> = {}
+export const timeoutDefault = 0
+export const includeCookiesDefault = false
+export const useMenuServiceDefault = false
+export const useOverwriteRequestMethodDefault = true
 
 export function fetch(
-  accessToken: string,
+  accessToken: string | null | undefined, // Can't make optional as a required param can not follow an optional
   url: string,
-  data: {} = dataDefault,
-  method: string = methodDefault,
-  cache: RequestCache = cacheDefault,
-  headers: HeadersInit = headerDefault,
-  timeout: number = timeoutDefault,
-  includeCookies: boolean = includeCookiesDefault,
-  useMenuService: boolean = useMenuServiceDefault,
-  useOverwriteRequestMethod: boolean = useOverwriteRequestMethodDefault
-) {
+  data = dataDefault,
+  method = methodDefault,
+  cache = cacheDefault,
+  headers = headerDefault,
+  timeout = timeoutDefault,
+  includeCookies = includeCookiesDefault,
+  useMenuService = useMenuServiceDefault,
+  useOverwriteRequestMethod = useOverwriteRequestMethodDefault
+): Promise<FetchResult> {
   const requestData: {
     _method?: string
   } = {
@@ -105,15 +103,15 @@ export function fetch(
     requestUrl = requestUrl.substr(0, requestUrl.length - 1)
   }
   let requestHeaders: HeadersInit = headers
-  let queryString: string
+  let queryString: string = ''
   if (httpMethod === 'GET') {
     queryString = qs.stringify(requestData)
     if (queryString) {
       requestUrl += `?${queryString}`
     }
   } else {
-    const contentType: string = requestHeaders['Content-Type']
-    const isContentTypeJSON: boolean = contentType === 'application/json'
+    const contentType = requestHeaders['Content-Type']
+    const isContentTypeJSON = contentType === 'application/json'
 
     body = isContentTypeJSON ? JSON.stringify(requestData) : qs.stringify(requestData)
 
@@ -124,7 +122,7 @@ export function fetch(
       }
     }
   }
-  const { uuid }: { uuid: string | undefined } = getStore().getState().logger || {}
+  const { uuid }: { uuid?: string } = getStore().getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
       logger.error({
@@ -157,6 +155,7 @@ export function fetch(
     requestUrl += queryString ? '&' : '?'
     requestUrl += `_=${Date.now()}`
   } else if (typeof cache === 'boolean') {
+    // TS will and should complain about this, but the condition has been left due to JS interop and safety.
     logger.warning(
       `boolean value passed to gousto fetch for ${requestUrl}. a valid cache mode should be provided.`
     )
@@ -171,7 +170,7 @@ export function fetch(
     message: '[fetch start]',
     requestUrl,
     uuid,
-    extra: { serverSide: __SERVER__ === true },
+    extra: { serverSide: __SERVER__ },
   })
   let responseStatus: number
   let responseRedirected: boolean
@@ -189,7 +188,7 @@ export function fetch(
       return response
     })
     .then((response: Response) => response.text())
-    .then((response: string) => {
+    .then((response: string): [Record<string, unknown>, number] => {
       if (!response && STATUS_CODES_WITH_NO_CONTENT.includes(responseStatus)) {
         return [{}, responseStatus]
       }
@@ -197,17 +196,17 @@ export function fetch(
       return [JSONParse(response, useMenuService), responseStatus]
     }) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
-    .then(({ response, meta }: ParsedJSON) => {
+    .then(({ response, meta }: ParsedPayload) => {
       logger.notice({
         message: '[fetch end]',
         status: responseStatus,
         elapsedTime: `${new Date().getTime() - startTime}ms`,
         requestUrl,
         uuid,
-        extra: { serverSide: __SERVER__ === true },
+        extra: { serverSide: __SERVER__ },
       })
 
-      if (useMenuService) {
+      if (useMenuService && 'included' in response) {
         return { data: response.data, included: response.included, meta: response.meta }
       }
 
@@ -232,7 +231,7 @@ export function fetch(
         requestUrl,
         errors: [e as Error], // This is total BS and purely to make this work with Lumberjack. Please fix this.
         uuid,
-        extra: { serverSide: __SERVER__ === true },
+        extra: { serverSide: __SERVER__ },
       })
 
       if (
@@ -244,6 +243,8 @@ export function fetch(
         log(JSON.stringify(requestDetails.headers))
       }
 
+      // Really should have an error library in this project.
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw {
         code: (e as ErrorObj).code || 500,
         errors: (e as ErrorObj).errors || [],
@@ -253,6 +254,34 @@ export function fetch(
         url: responseUrl,
       }
     })
+}
+
+export function fetchRaw(
+  url: string,
+  data = {},
+  options: {
+    accessToken?: string
+    method?: string
+    cache?: RequestCache
+    headers?: Record<string, string>
+    timeout?: number
+    includeCookies?: boolean
+    useMenuService?: boolean
+    useOverwriteRequestMethod?: boolean
+  }
+) {
+  return fetch(
+    options.accessToken,
+    url,
+    data,
+    options.method,
+    options.cache,
+    options.headers,
+    options.timeout,
+    options.includeCookies,
+    options.useMenuService,
+    options.useOverwriteRequestMethod
+  )
 }
 
 export default fetch
