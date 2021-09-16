@@ -641,7 +641,7 @@ describe('<SideModal />', () => {
               // Total price of sides
               6.75
             )
-          })
+          }, 10000)
         })
       })
     })

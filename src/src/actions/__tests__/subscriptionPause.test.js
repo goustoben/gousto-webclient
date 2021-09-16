@@ -3052,15 +3052,7 @@ describe('Subscription action', () => {
     })
 
     test('should dispatch the expected actions to load start screen if necessary', async () => {
-      /*
-      TODO: Fix and reinstate this #BROKEN_TEST
-        Current test results in
-        thrown: "Exceeded timeout of 5000 ms for a test.
-        Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-
-      */
       await fetchData()(dispatch, getState)
-      await flushPromises()
 
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'PS_START_MODAL_VIEWED' })
       expect(mockDispatch).toHaveBeenCalledWith({
@@ -3078,12 +3070,6 @@ describe('Subscription action', () => {
     })
 
     test('should dispatch expected actions to display pause reasons screen', async () => {
-      /*
-      TODO: Fix and reinstate this #BROKEN_TEST
-        Current test results in
-        thrown: "Exceeded timeout of 5000 ms for a test.
-        Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-      */
       getState = () => ({
         ...mockState,
         subscriptionPause: Immutable.fromJS({
@@ -3096,7 +3082,7 @@ describe('Subscription action', () => {
       })
 
       await fetchData()(dispatch, getState)
-      await flushPromises()
+      // await flushPromises()
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS',
@@ -3106,13 +3092,8 @@ describe('Subscription action', () => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'PS_REASON_CATEGORY_MODAL_VIEWED' })
     })
 
-    test('should dispatch action to load orders if there are none in the store', () => {
-      getState = () => ({
-        ...mockState,
-        user: Immutable.fromJS({
-          orders: []
-        })
-      })
+    afterEach(() => {
+      jest.clearAllMocks()
     })
   })
 })
