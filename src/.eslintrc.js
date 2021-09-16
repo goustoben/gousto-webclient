@@ -16,8 +16,9 @@ const componentFileAliases = fs.readdirSync('./src/components', { withFileTypes:
 });
 
 module.exports = {
-  "parser": "babel-eslint",
+  "parser": '@typescript-eslint/parser',
   "extends": [
+    "plugin:@typescript-eslint/recommended",
     "airbnb",
     "eslint:recommended",
     "plugin:react/recommended",
@@ -25,7 +26,8 @@ module.exports = {
     "plugin:jsx-a11y/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended"
   ],
   "settings": {
     "import/resolver": {
@@ -128,6 +130,9 @@ module.exports = {
       "import/no-dynamic-require" : 1,
       "import/no-self-import" : 1,
       "import/no-extraneous-dependencies": 1,
+      "jest/valid-expect-in-promise": 2,
+      "jest/valid-title": 1,
+      "jest/no-identical-title": 1,
       "jsx-a11y/click-events-have-key-events": 1,
       "jsx-a11y/no-static-element-interactions": 1,
       "jsx-a11y/anchor-is-valid": 1,
@@ -136,6 +141,7 @@ module.exports = {
       "jsx-a11y/anchor-has-content": 1,
       "jsx-a11y/no-noninteractive-element-interactions": 1,
       "jsx-quotes": 1,
+      "quotes": 1,
       "key-spacing": 1,
       "keyword-spacing": 1,
       "prefer-promise-reject-errors": 1,
@@ -162,7 +168,7 @@ module.exports = {
       "no-unneeded-ternary": 1,
       "no-unused-expressions": 1,
       "no-unused-vars": [1, { "argsIgnorePattern": "^_" }],
-      "no-use-before-define": 1,
+      "no-use-before-define": "off",
       "no-useless-escape": 1,
       "no-useless-return": 1,
       "no-var": 1,
@@ -180,6 +186,7 @@ module.exports = {
       "react/jsx-closing-tag-location": 1,
       "react/jsx-curly-brace-presence": 1,
       "react/jsx-curly-newline": 1,
+      "react/jsx-fragments" : ["off", "element"],
       "react/jsx-indent": 1,
       "react/jsx-key": 1,
       "react/jsx-no-target-blank": [1, { "enforceDynamicLinks": "always" }],
@@ -209,6 +216,10 @@ module.exports = {
       "space-before-function-paren": 1,
       "switch-colon-spacing": 1,
       "symbol-description": 1,
+      "@typescript-eslint/ban-ts-comment": "warn",
+      "@typescript-eslint/no-empty-function": 1,
+      "@typescript-eslint/no-var-requires": 1,
+      "@typescript-eslint/no-use-before-define": ["warn"],
       "vars-on-top": 1,
       "quotes": 1,
       "react/jsx-fragments" : ["off", "element"],
@@ -247,7 +258,7 @@ module.exports = {
     "after": true,
     "Cypress": true
   },
-  "plugins": ["prettier"],
+  "plugins": [ "@typescript-eslint", "prettier", "jest"],
   "overrides": [
     {
       "files": [
