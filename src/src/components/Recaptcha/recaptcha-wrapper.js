@@ -10,8 +10,8 @@ const lang = typeof window !== "undefined" && (window.recaptchaOptions && window
 const URL = `https://www.google.com/recaptcha/api.js?onload=${callbackName}&render=explicit${lang}`;
 const globalName = "grecaptcha";
 
-export default makeAsyncScriptLoader(ReCAPTCHA, URL, {
+export default makeAsyncScriptLoader(URL, {
   callbackName,
   globalName,
   exposeFuncs: ["getValue", "reset", "execute"],
-});
+})(ReCAPTCHA);
