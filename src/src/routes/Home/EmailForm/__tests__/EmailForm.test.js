@@ -74,12 +74,15 @@ describe('EmailForm', () => {
     wrapper.find(TextInput).simulate('change', emailAddress)
     wrapper.find(CTA).simulate('click', { preventDefault: (e) => e })
     setTimeout(() => {
-      expect(wrapper.state()).toStrictEqual({
-        emailSubmitted: true,
-        emailValid: true,
-        errorMessage: '',
-        email: emailAddress,
-      }, 0)
+      expect(wrapper.state()).toStrictEqual(
+        {
+          emailSubmitted: true,
+          emailValid: true,
+          errorMessage: '',
+          email: emailAddress,
+        },
+        0
+      )
     })
   })
 })
