@@ -7,23 +7,23 @@ import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store' // webpack aliasing?
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 
-type ResponseDataWithIncludedMeta = {
-  data: Record<string, unknown>
+type ResponseDataWithIncludedMeta<T> = {
+  data: T
   included: boolean
   meta: string
 }
 
-type ResponseData =
+type ResponseData<T> =
   | {
       // wtf is this pipe?
       result:
-        | Record<string, unknown>
+        | T
         | {
-            data: Record<string, unknown>
+            data: T
           }
     }
   | {
-      data: Record<string, unknown>
+      data: T
     }
 
 type ErrorObj = {
@@ -32,34 +32,23 @@ type ErrorObj = {
   errors: Record<number, string>
 }
 
-export type ParsedPayload =
+export type ParsedPayload<T> =
   | {
-      response: ResponseData
+      response: ResponseData<T>
       meta: string | null
     }
   | {
-      response: ResponseDataWithIncludedMeta
+      response: ResponseDataWithIncludedMeta<T>
       meta: never
     }
 
-export type FetchResult =
+export type FetchResult<T> =
+  | { data: ResponseData<T>; meta: string | null }
   | {
-      data: Record<string, unknown>
+      data: T
       included: boolean
       meta: string
     }
-  | {
-      data: ResponseData
-      meta: string | null
-    }
-
-// export type FetchResult <T> =
-//   | { data: T, meta: string | null }
-//   | {
-//     data: T,
-//     included: true,
-//     meta: string
-//   }
 
 const DEFAULT_TIME_OUT = 50000
 const STATUS_CODES_WITH_NO_CONTENT = [204]
@@ -73,7 +62,7 @@ export const includeCookiesDefault = false
 export const useMenuServiceDefault = false
 export const useOverwriteRequestMethodDefault = true
 
-export function fetch(
+export function fetch<T>(
   accessToken: string | null | undefined, // Can't make optional as a required param can not follow an optional
   url: string,
   data = dataDefault,
@@ -84,7 +73,7 @@ export function fetch(
   includeCookies = includeCookiesDefault,
   useMenuService = useMenuServiceDefault,
   useOverwriteRequestMethod = useOverwriteRequestMethodDefault
-): Promise<FetchResult> {
+): Promise<FetchResult<T>> {
   const requestData: {
     _method?: string
   } = {
@@ -196,7 +185,7 @@ export function fetch(
       return [JSONParse(response, useMenuService), responseStatus]
     }) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
-    .then(({ response, meta }: ParsedPayload) => {
+    .then(({ response, meta }: ParsedPayload<T>) => {
       logger.notice({
         message: '[fetch end]',
         status: responseStatus,
