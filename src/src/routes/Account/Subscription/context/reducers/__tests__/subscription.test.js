@@ -177,7 +177,9 @@ describe('subscription reducers', () => {
           ...mockReducedState,
           isSubscriberPricingEnabled: false,
         }, {
-          state: 'inactive'
+          subscription: {
+            status: 'inactive'
+          }
         })
       })
 

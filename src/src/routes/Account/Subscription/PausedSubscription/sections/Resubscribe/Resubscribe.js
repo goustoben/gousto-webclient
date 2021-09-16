@@ -9,16 +9,23 @@ import { getCurrentUserId } from 'routes/Account/Subscription/context/selectors/
 import { Section } from '../../../components/Section'
 import { resubscribeSection } from '../../../subscriptionsSectionsContent'
 import { useFetch } from '../../../../../../hooks/useFetch'
-import { isCoreRequestSuccessful } from '../../../utils/response'
 import { SubscriptionContext } from '../../../context'
 import { actionTypes } from '../../../context/reducers'
 import { SubscriberPricingInfoPanel } from '../../../../AccountComponents/SubscriberPricingInfoPanel'
 import { trackSubscriptionSettingsChange } from '../../../tracking'
 import css from './Resubscribe.css'
 
+const getResult = (loading, response, error) => {
+  if (!error && !loading && response && response.status && response.status.toLowerCase() === 'ok') {
+    return response.data
+  } else {
+    return null
+  }
+}
+
 export const Resubscribe = ({ accessToken }) => {
   const { dispatch, state = {}} = useContext(SubscriptionContext)
-  const { isSubscriberPricingEnabled, isNewSubscriptionApiEnabled } = state
+  const { isSubscriberPricingEnabled } = state
 
   const [shouldResubscribe, setShouldResubscribe] = useState(false)
   const reactivateSubscription = () => {
@@ -31,17 +38,10 @@ export const Resubscribe = ({ accessToken }) => {
 
   const userId = getCurrentUserId(state)
 
-  let reactivateSubscriptionUrl
-  let method
-  if (isNewSubscriptionApiEnabled) {
-    reactivateSubscriptionUrl = `${endpoint('subscriptioncommand')}/subscriptions/${userId}${routes.subscriptionCommand.activate}`
-    method = 'POST'
-  } else {
-    reactivateSubscriptionUrl = `${endpoint('core')}${routes.core.activateSub}`
-    method = 'PUT'
-  }
+  const reactivateSubscriptionUrl = `${endpoint('subscriptioncommand')}/subscriptions/${userId}${routes.subscriptionCommand.activate}`
+  const method = 'POST'
 
-  const [, resubscribeResponse] = useFetch({
+  const [loading, response, error] = useFetch({
     url: reactivateSubscriptionUrl,
     needsAuthorization: true,
     accessToken,
@@ -54,12 +54,9 @@ export const Resubscribe = ({ accessToken }) => {
     },
   })
 
-  const isSuccess = isCoreRequestSuccessful(resubscribeResponse)
+  const data = getResult(loading, response, error)
 
-  if (isSuccess) {
-    const data = isNewSubscriptionApiEnabled
-      ? resubscribeResponse.data
-      : resubscribeResponse.result.data
+  if (data) {
     setTimeout(() => {
       dispatch({
         type: actionTypes.SUBSCRIPTION_STATUS_UPDATE_RECEIVED,

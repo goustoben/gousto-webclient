@@ -128,11 +128,6 @@ export const getIsMultiSkipEnabled = ({ features }) => (
   features && features.getIn(['isMultiSkipEnabled', 'value'], false)
 )
 
-// todo TG-4896 delete code for 'false' state
-export const getIsNewSubscriptionApiEnabled = ({ features }) => (
-  features && features.getIn(['isNewSubscriptionApiEnabled', 'value'], false)
-)
-
 export const getIsMenuRedirectPageEnabled = ({ features }) => (
   features && features.getIn(['isMenuRedirectPageEnabled', 'value'], false)
 )

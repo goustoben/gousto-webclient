@@ -35,7 +35,6 @@ import {
   transformProjectedDeliveries,
 } from 'utils/myDeliveries'
 import {
-  getIsNewSubscriptionApiEnabled,
   getIsDecoupledPaymentEnabled,
 } from 'selectors/features'
 import { skipDates } from 'routes/Account/apis/subscription'
@@ -1426,8 +1425,6 @@ describe('user actions', () => {
     })
 
     test('should dispatch action for USER_LOAD_PROJECTED_DELIVERIES', async () => {
-      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
-
       await userLoadProjectedDeliveries()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({

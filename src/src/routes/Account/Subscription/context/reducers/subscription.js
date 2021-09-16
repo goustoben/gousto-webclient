@@ -89,12 +89,9 @@ export const reduceSubscriptionUpdateData = (state, data) => {
 
 export const reduceSubscriptionStatusUpdate = (state, data) => {
   try {
-    const subscriptionStatus = state.isNewSubscriptionApiEnabled
-      ? data.subscription.status
-      : data.state
     const reducedSubscriptionState = {
       ...state.subscription,
-      status: subscriptionStatus,
+      status: data.subscription.status,
       showResubscriptionModal: state.isSubscriberPricingEnabled,
     }
 

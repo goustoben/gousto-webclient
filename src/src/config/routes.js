@@ -120,7 +120,6 @@ module.exports = {
     userPromo: '/user/current/promotion-codes',
     currentUser: '/user/current',
     user: '/user',
-    activateSub: '/user/current/subscription/activate',
     cancelPending: '/user/current/cancel-pending-orders',
     applyPromo: '/user/current/applyPromotionCode',
   },

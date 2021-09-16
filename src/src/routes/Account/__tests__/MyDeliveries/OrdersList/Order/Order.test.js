@@ -53,26 +53,11 @@ describe('Order', () => {
         userToggleEditDateSection: () => { },
         isProjected: true
       }
+      wrapper = shallow(<Order {...orderProps} />)
     })
 
-    describe('When isNewSubscriberApiEnabled is set to true', () => {
-      beforeEach(() => {
-        wrapper = shallow(<Order isNewSubscriptionApiEnabled {...orderProps} />)
-      })
-
-      test('then the order slot should not be displayed', () => {
-        expect(wrapper.find('OrderTime').exists()).toBeFalsy()
-      })
-    })
-
-    describe('When isNewSubscriberApiEnabled is set to false', () => {
-      beforeEach(() => {
-        wrapper = shallow(<Order isNewSubscriptionApiEnabled={false} {...orderProps} />)
-      })
-
-      test('then the order slot should be displayed', () => {
-        expect(wrapper.find('OrderTime').exists()).toBeTruthy()
-      })
+    test('then the order slot should not be displayed', () => {
+      expect(wrapper.find('OrderTime').exists()).toBeFalsy()
     })
   })
 })

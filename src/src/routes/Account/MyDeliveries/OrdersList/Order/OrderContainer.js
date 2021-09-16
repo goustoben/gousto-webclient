@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
 import actions from 'actions/user'
-import { getIsNewSubscriptionApiEnabled } from 'selectors/features'
 
 import Order from './Order'
 
@@ -38,7 +37,6 @@ function mapStateToProps(state, ownProps) {
     recipesPeriodStockFetchError: state.error.get(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE),
     portionsCount: order.get('portionsCount'),
     phase: order.get('phase'),
-    isNewSubscriptionApiEnabled: getIsNewSubscriptionApiEnabled(state),
   }
 }
 

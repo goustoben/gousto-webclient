@@ -29,8 +29,8 @@ jest.mock('../../../../../../../hooks/useFetch')
 jest.mock('../../../../tracking')
 jest.mock('config/endpoint', () => () => 'localhost')
 
-const mockSuccessfulResponse = { status: 'ok', result: { data: 'SUCCESS' } }
-const mockErrorResponse = { status: 'ok', result: { data: 'ERROR' } }
+const mockSuccessfulResponse = { status: 'ok', data: 'SUCCESS' }
+const mockErrorResponse = { status: 'error', errors: ['error'] }
 
 describe('Resubscribe', () => {
   beforeEach(() => {
@@ -45,7 +45,7 @@ describe('Resubscribe', () => {
     beforeEach(async () => {
       useFetch.mockReturnValue([false, mockSuccessfulResponse, false])
 
-      mountWithPropsAndState()
+      mountWithPropsAndState({}, { currentUser: { id: '12345' } })
 
       await act(async () => {
         wrapper
@@ -60,43 +60,20 @@ describe('Resubscribe', () => {
       wrapper.update()
     })
 
-    describe('And the isNewSubscriptionApiEnabled flag is set to true', () => {
-      beforeEach(async () => {
-        mountWithPropsAndState({}, { currentUser: { id: '12345' }, isNewSubscriptionApiEnabled: true })
-      })
-      test('Then useFetch is invoked as expected', () => {
-        expect(useFetch).toHaveBeenCalledWith(
-          expect.objectContaining({
-            url: 'localhost/subscriptions/12345/activate',
-            needsAuthorization: true,
-            accessToken: 'foo',
-            options: {
-              method: 'POST',
-            },
-          })
-        )
-      })
+    test('Then useFetch is invoked as expected', () => {
+      expect(useFetch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: 'localhost/subscriptions/12345/activate',
+          needsAuthorization: true,
+          accessToken: 'foo',
+          options: {
+            method: 'POST',
+          },
+        })
+      )
     })
 
-    describe('And the isNewSubscriptionApiEnabled flag is set to false', () => {
-      beforeEach(async () => {
-        mountWithPropsAndState({}, { isNewSubscriptionApiEnabled: false })
-      })
-      test('Then useFetch is invoked as expected', () => {
-        expect(useFetch).toHaveBeenCalledWith(
-          expect.objectContaining({
-            url: 'localhost/user/current/subscription/activate',
-            needsAuthorization: true,
-            accessToken: 'foo',
-            options: {
-              method: 'PUT',
-            },
-          })
-        )
-      })
-    })
-
-    describe('And the request is successful', () => {
+    describe('And if the request is successful', () => {
       test('Then the expected action is dispatched', () => {
         expect(mockDispatch).toHaveBeenCalledWith({
           data: 'SUCCESS',
@@ -105,8 +82,9 @@ describe('Resubscribe', () => {
       })
     })
 
-    describe('And the request is unsuccessful', () => {
+    describe('And if the request is unsuccessful', () => {
       beforeEach(async () => {
+        jest.resetAllMocks()
         useFetch.mockReturnValue([false, mockErrorResponse, false])
 
         mountWithPropsAndState()
@@ -122,11 +100,8 @@ describe('Resubscribe', () => {
         wrapper.update()
       })
 
-      test('Then the expected action is dispatched', () => {
-        expect(mockDispatch).toHaveBeenCalledWith({
-          data: 'ERROR',
-          type: 'SUBSCRIPTION_STATUS_UPDATE_RECEIVED'
-        })
+      test('Then the action is *not* dispatched', () => {
+        expect(mockDispatch).not.toHaveBeenCalled()
       })
     })
   })
