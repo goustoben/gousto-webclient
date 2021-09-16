@@ -24,7 +24,7 @@ describe('processJSON', () => {
     expect(response).rejects.toEqual(rejectionObj)
   })
 
-  test('handle errors response as an array', () => {
+  test('handle errors response as an array', async () => {
     const serverResponse = {
       error: 'Validation error',
       status: 422,
@@ -36,12 +36,13 @@ describe('processJSON', () => {
       ],
     }
 
-    const rejectionObj = {
+    const expectation = {
       code: '401',
-      message: '401 - Auth Exception!',
+      errors: [{ error: '401', message: 'Auth Exception!' }],
+      message: ', 401 - Auth Exception!',
     }
-    const response = processJSON([serverResponse, 500])
-    expect(response).rejects.toEqual(rejectionObj)
+    const actual = processJSON([serverResponse, 500])
+    await expect(actual).rejects.toEqual(expectation)
   })
 
   test('handle payment-required error response', () => {
