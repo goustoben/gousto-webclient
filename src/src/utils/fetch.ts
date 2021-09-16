@@ -7,23 +7,19 @@ import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store' // webpack aliasing?
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 
-type ResponseDataWithIncludedMeta<T> = {
-  data: T
+type ResponseDataWithIncludedMeta<T> = Data<T> & {
   included: boolean
   meta: string
 }
 
+type Data<T> = {
+  data: T
+}
+
 type ResponseData<T> =
+  | Data<T>
   | {
-      // wtf is this pipe?
-      result:
-        | T
-        | {
-            data: T
-          }
-    }
-  | {
-      data: T
+      result: T | Data<T>
     }
 
 type ErrorObj = {
@@ -39,16 +35,11 @@ export type ParsedPayload<T> =
     }
   | {
       response: ResponseDataWithIncludedMeta<T>
-      meta: never
     }
 
 export type FetchResult<T> =
   | { data: ResponseData<T>; meta: string | null }
-  | {
-      data: T
-      included: boolean
-      meta: string
-    }
+  | ResponseDataWithIncludedMeta<T>
 
 const DEFAULT_TIME_OUT = 50000
 const STATUS_CODES_WITH_NO_CONTENT = [204]
@@ -185,7 +176,7 @@ export function fetch<T>(
       return [JSONParse(response, useMenuService), responseStatus]
     }) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
-    .then(({ response, meta }: ParsedPayload<T>) => {
+    .then((parsed: ParsedPayload<T>) => {
       logger.notice({
         message: '[fetch end]',
         status: responseStatus,
@@ -195,11 +186,17 @@ export function fetch<T>(
         extra: { serverSide: __SERVER__ },
       })
 
-      if (useMenuService && 'included' in response) {
-        return { data: response.data, included: response.included, meta: response.meta }
+      if ('meta' in parsed) {
+        return {
+          data: parsed.response,
+          meta: parsed.meta,
+        }
       }
-
-      return { data: response, meta }
+      return {
+        data: parsed.response.data,
+        meta: parsed.response.meta,
+        included: parsed.response.included,
+      }
     })
     .catch((e: ErrorObj | Error | string) => {
       const message = typeof e === 'string' ? e : e.message
