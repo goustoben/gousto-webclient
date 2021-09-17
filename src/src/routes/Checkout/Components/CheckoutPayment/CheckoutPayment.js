@@ -252,11 +252,13 @@ class CheckoutPayment extends React.Component {
         data-testing="checkoutPaymentSection"
       >
         <SectionHeader title="Payment method" subtitle={sectionSubtitle} />
-        <PaymentMethodSelector
-          currentPaymentMethod={currentPaymentMethod}
-          setCurrentPaymentMethod={setCurrentPaymentMethod}
-          isPayPalReady={isPayPalReady}
-        />
+        {!isGoustoOnDemandEnabled && (
+          <PaymentMethodSelector
+            currentPaymentMethod={currentPaymentMethod}
+            setCurrentPaymentMethod={setCurrentPaymentMethod}
+            isPayPalReady={isPayPalReady}
+          />
+        )}
         {this.renderCardContent()}
         {this.renderPaypalContent()}
         <div className={css.row}>

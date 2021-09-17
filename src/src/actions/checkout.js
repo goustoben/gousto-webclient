@@ -92,6 +92,7 @@ export const checkoutActions = {
 
 const errorCodes = {
   duplicateDetails: '409-duplicate-details',
+  promoCodeHasBeenUsed: '409-offer-has-been-used',
   challengeFailed: '3ds-challenge-failed',
 }
 
@@ -183,7 +184,7 @@ export const handleCheckoutError = async (err, initiator, dispatch, getState, op
 
   dispatch(trackCheckoutError(errorName, code, initiator))
   dispatch(error(errorName, code))
-  if (code === errorCodes.duplicateDetails) {
+  if (code === errorCodes.duplicateDetails || code === errorCodes.promoCodeHasBeenUsed) {
     if (options.skipPromoCodeRemovedCheck) {
       return
     }
@@ -273,7 +274,8 @@ export function checkout3DSSignup() {
         dispatch(trackFailedCheckoutFlow('Order_id does not exist for payment-auth', error))
       }
     } catch (err) {
-      await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck: true })
+      const skipPromoCodeRemovedCheck = err.code !== errorCodes.promoCodeHasBeenUsed
+      await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck })
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
       dispatch(checkoutActions.clearGoustoRef())
     }

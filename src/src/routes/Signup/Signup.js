@@ -166,7 +166,7 @@ class Signup extends PureComponent {
 
     store.dispatch(actions.signupSetStep(stepToSet))
 
-    if (isGoustoOnDemandEnabled) {
+    if (isGoustoOnDemandEnabled && params.stepName !== signupConfig.checkAccountPageSlug) {
       const state = store.getState()
       if (state.menuBoxPrices.size === 0) {
         store.dispatch(menuLoadBoxPrices())

@@ -147,6 +147,10 @@ module.exports = {
       header: 'Payment failed',
       message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
+    'gousto-on-demand-payment-failure': {
+      header: 'Payment failed',
+      message: 'Try again or use a different card. If you’re still experiencing difficulties, contact your bank.',
+    },
     'user-promo-invalid': {
       header: 'Discount removed',
       message: 'A discount has already been used by this account.',
@@ -172,6 +176,10 @@ module.exports = {
       header: 'Payment failed',
       message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
+    'gousto-on-demand-3ds-challenge-failed': {
+      header: 'Payment failed',
+      message: 'Try again or use a different card. If you’re still experiencing difficulties, contact your bank.',
+    },
     'valid-card-details-not-provided': {
       header: 'Payment failed',
       message: 'Please check your card details and try again.'
@@ -180,9 +188,17 @@ module.exports = {
       header: 'Insufficient funds',
       message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
+    'gousto-on-demand-422-insufficient-funds': {
+      header: 'Insufficient funds',
+      message: 'Use a different card. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
     '422-declined-do-not-honour': {
       header: 'Bank declined payment',
       message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
+    'gousto-on-demand-422-declined-do-not-honour': {
+      header: 'Bank declined payment',
+      message: 'Use a different card. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
     'signup-payments-payment-failure': {
       header: 'Payment failed',

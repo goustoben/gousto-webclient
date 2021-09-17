@@ -33,14 +33,14 @@ export function getAddress(form) {
 const getCheckoutSignupMapping = (code, isGoustoOnDemandEnabled) => {
   const maps = {
     'validation.phone.customer.phone_number': 'user-phone-number-invalid',
-    '3ds-challenge-failed': '3ds-challenge-failed',
+    '3ds-challenge-failed': isGoustoOnDemandEnabled ? 'gousto-on-demand-3ds-challenge-failed' : '3ds-challenge-failed',
     '401-auth-error': 'user-exists',
     '409-duplicate-details': isGoustoOnDemandEnabled ? 'gousto-on-demand-user-promo-invalid' : 'user-promo-invalid',
     '409-offer-has-been-used': 'offer-has-been-used',
     '409-missing-preview-order': 'out-of-stock',
-    '422-declined-do-not-honour': '422-declined-do-not-honour',
-    '422-insufficient-funds': '422-insufficient-funds',
-    '422-payment-failed': 'payment-failure',
+    '422-declined-do-not-honour': isGoustoOnDemandEnabled ? 'gousto-on-demand-422-declined-do-not-honour' : '422-declined-do-not-honour',
+    '422-insufficient-funds': isGoustoOnDemandEnabled ? 'gousto-on-demand-422-insufficient-funds' : '422-insufficient-funds',
+    '422-payment-failed': isGoustoOnDemandEnabled ? 'gousto-on-demand-payment-failure' : 'payment-failure',
     '422-registration-failed': 'user-exists',
   }
 
@@ -49,10 +49,10 @@ const getCheckoutSignupMapping = (code, isGoustoOnDemandEnabled) => {
 
 const getSignupPaymentMappings = (code, isGoustoOnDemandEnabled) => {
   const maps = {
-    '3ds-challenge-failed': 'signup-payments-challenge-failed',
-    '422-declined-do-not-honour': 'signup-payments-declined-do-not-honour',
-    '422-insufficient-funds': 'signup-payments-insufficient-funds',
-    '422-payment-failed': 'signup-payments-payment-failure',
+    '3ds-challenge-failed': isGoustoOnDemandEnabled ? 'gousto-on-demand-3ds-challenge-failed' : 'signup-payments-challenge-failed',
+    '422-declined-do-not-honour': isGoustoOnDemandEnabled ? 'gousto-on-demand-422-declined-do-not-honour' : 'signup-payments-declined-do-not-honour',
+    '422-insufficient-funds': isGoustoOnDemandEnabled ? 'gousto-on-demand-422-insufficient-funds' : 'signup-payments-insufficient-funds',
+    '422-payment-failed': isGoustoOnDemandEnabled ? 'gousto-on-demand-payment-failure' : 'signup-payments-payment-failure',
   }
 
   return maps[code] || getCheckoutSignupMapping(code, isGoustoOnDemandEnabled)

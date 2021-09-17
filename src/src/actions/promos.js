@@ -1,6 +1,7 @@
 import { fetchPromo, fetchPromocodeFromCampaignUrl } from 'apis/promos'
 import { legacyVerifyAge } from 'apis/legacy'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { getIsAuthenticated } from 'selectors/auth'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 import userActions from './user'
@@ -110,7 +111,7 @@ const promoCurrentSet = code => ({
 export const promoChange = code => (
   async (dispatch, getState) => {
     const state = getState()
-    if (getIsGoustoOnDemandEnabled(state)) {
+    if (getIsGoustoOnDemandEnabled(state) && !getIsAuthenticated(state)) {
       dispatch(basketPromoCodeChange(code))
       await dispatch(menuLoadBoxPrices())
     }
