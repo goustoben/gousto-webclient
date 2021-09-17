@@ -22,7 +22,6 @@ module.exports = {
     checkout: '/checkout',
     'check-out': '/check-out',
     checkoutWelcome: '/check-out/welcome-to-gousto',
-    choosePlan: '/choose-subscription-plan',
     cookbook: '/cookbook',
     cookbookRecipeById: '/cookbook/recipe-by-id',
 

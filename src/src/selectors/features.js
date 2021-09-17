@@ -58,10 +58,6 @@ export const getPromoBannerCode = ({ features }) => (
   features && features.getIn(['promoBannerCode', 'value'], '')
 )
 
-export const isChoosePlanEnabled = ({ features }) => (
-  features && features.getIn(['choosePlanRoute', 'value'], false)
-)
-
 export const getShowUserCredit = ({ features }) => (
   features && features.getIn(['showUserCredit', 'value'], false)
 )

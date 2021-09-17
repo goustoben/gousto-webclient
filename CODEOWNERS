@@ -123,16 +123,8 @@
 
 # squad-turnips ownership
 /src/src/containers/Experiments/                    @Gousto/squad-turnips
-/src/__tests__/router/Cookbook.test.js              @Gousto/squad-turnips
-/src/__tests__/utils/cookbook.test.js               @Gousto/squad-turnips
-/src/src/actions/__tests__/cookbook.test.js         @Gousto/squad-turnips
-/src/src/actions/cookbook.js                        @Gousto/squad-turnips
-/src/src/reducers/__tests__/cookbook.test.js        @Gousto/squad-turnips
-/src/src/reducers/cookbook.js                       @Gousto/squad-turnips
 /src/src/reducers/cookbookRecipes.js                @Gousto/squad-turnips
-/src/src/routes/Cookbook/                           @Gousto/squad-turnips
 /src/src/routes/Ratings/                            @Gousto/squad-turnips
-/src/src/utils/cookbook.js                          @Gousto/squad-turnips
 
 # squad-rockets ownership
 /src/src/routes/Account/       @Gousto/squad-rockets

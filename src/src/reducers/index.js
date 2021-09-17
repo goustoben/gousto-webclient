@@ -31,7 +31,6 @@ import { tutorial } from './tutorial'
 import user from './user'
 import request from './request'
 import collections from './collections'
-import cookbook from './cookbook'
 import pricing from './pricing'
 import cookies from './cookies'
 import onScreenRecovery from './onScreenRecovery'
@@ -57,7 +56,6 @@ const reducers = {
   ...checkoutReducers,
   ...checkoutUrgencyReducers,
   ...collections,
-  ...cookbook,
   ...cookbookRecipes,
   ...cookies,
   ...content,

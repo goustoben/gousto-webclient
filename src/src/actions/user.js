@@ -18,7 +18,6 @@ import {
   getSignupE2ETestName,
 } from 'selectors/checkout'
 import {
-  isChoosePlanEnabled,
   getNDDFeatureValue,
   getIsDecoupledPaymentEnabled,
   getIsGoustoOnDemandEnabled,
@@ -680,13 +679,6 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
     decoupled: {
       payment: Number(isDecoupledPaymentEnabled || false),
     }
-  }
-
-  if (
-    isChoosePlanEnabled(state)
-    && basket.get('subscriptionOption') === signupConfig.subscriptionOptions.transactional
-  ) {
-    reqData.subscription.paused = 1
   }
 
   if (!isDecoupledPaymentEnabled) {

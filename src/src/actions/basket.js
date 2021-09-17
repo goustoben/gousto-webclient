@@ -8,7 +8,6 @@ import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
 import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
-import { isChoosePlanEnabled } from 'selectors/features'
 import { getUserOrders } from 'selectors/user'
 import { getBasketRecipes } from 'selectors/basket'
 import statusActions from './status'
@@ -534,12 +533,7 @@ export const basketProceedToCheckout = () => (
     dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, false))
 
     try {
-      const isChoosePlanFeatureEnabled = isChoosePlanEnabled(getState())
-      if (isChoosePlanFeatureEnabled) {
-        dispatch(push(config.routes.client.choosePlan))
-      } else {
-        dispatch(push(config.routes.client['check-out']))
-      }
+      dispatch(push(config.routes.client['check-out']))
     } catch (err) {
       logger.error(err)
       dispatch(push(config.routes.client.menu))

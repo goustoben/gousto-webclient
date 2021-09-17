@@ -3,8 +3,6 @@ import basket, { basketReset } from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
-import { push } from 'react-router-redux'
-import config from 'config'
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
 
 import * as basketUtils from 'utils/basket'
@@ -324,29 +322,6 @@ describe('basket actions', () => {
           }),
         },
       })
-    })
-
-    test('should proceed to choose plan if choosePlan feature is enabled', () => {
-      getState = () => ({
-        basket: Immutable.fromJS({
-          orderId: '179',
-        }),
-        filters: Immutable.fromJS({
-        }),
-        features: Immutable.fromJS({
-          choosePlanRoute: {
-            value: true
-          }
-        })
-      })
-
-      basketProceedToCheckout()(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith(push(config.routes.client.choosePlan))
-    })
-
-    test("should proceed to checkout if choosePlan feature isn't enabled", () => {
-      basketProceedToCheckout()(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith(push(config.routes.client['check-out']))
     })
   })
 

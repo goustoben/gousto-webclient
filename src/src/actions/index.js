@@ -24,7 +24,6 @@ import temp from './temp'
 import * as tracking from './tracking'
 import user from './user'
 import { collectionsLoadCollectionBySlug } from './collections'
-import cookbook from './cookbook'
 import deliveries from './deliveries'
 import * as welcome from './welcome'
 import { homeActions } from './home'
@@ -35,7 +34,6 @@ const actions = {
   ...basket,
   ...checkoutActions,
   ...collectionsLoadCollectionBySlug,
-  ...cookbook,
   ...content,
   ...filters,
   ...log,

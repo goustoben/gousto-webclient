@@ -33,24 +33,6 @@ describe('router', () => {
     })
   })
 
-  test('should 200 when given a known route', async () => {
-    const ctx = {
-      request: {
-        url: '/cookbook',
-        path: '/cookbook',
-      },
-      req: {
-        headers: {
-          'user-agent': 'cookbook',
-        },
-      },
-    }
-    await processRequest(ctx, function() {
-      expect(ctx.body.indexOf('Nothing to see here')).toEqual(-1)
-      expect(ctx.status).toEqual(200)
-    })
-  })
-
   test('should throw an error to the server-side handler on error', async () => {
     const ctx = {
       request: {
