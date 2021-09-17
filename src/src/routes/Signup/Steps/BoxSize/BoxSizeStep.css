@@ -19,27 +19,10 @@
   }
 }
 
-.boxSizeCarousel {
-  overflow-x: scroll;
-  max-width: calc(100vw - 1.5rem);
-
-  @media BreakpointFromMedium {
-    overflow: hidden;
-    max-width: 100%;
-  }
-}
-
-.verticalLayout {
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.boxSizeCarouselInner {
+.boxSizeInner {
   display: flex;
   justify-content: space-between;
-}
 
-.innerVerticalLayout {
   @media BreakpointToMedium {
     display: block;
   }
@@ -55,6 +38,11 @@
 
   &:first-child {
     margin-right: 0.75rem;
+
+    @media BreakpointToMedium {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
   }
 
   @media BreakpointFromLarge {
@@ -63,15 +51,6 @@
 
     &:first-child {
      margin-right: 0;
-    }
-  }
-}
-
-.verticalLayoutItem {
-  &:first-child {
-    @media BreakpointToMedium {
-      margin-right: 0;
-      margin-bottom: 1rem;
     }
   }
 }

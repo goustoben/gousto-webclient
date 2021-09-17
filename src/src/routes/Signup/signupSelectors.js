@@ -4,9 +4,6 @@ import { getPromoCode } from 'selectors/basket'
 export const getIsSocialBelongingEnabled = ({ features }) =>
   features && features.getIn(['isSocialBelongingEnabled', 'value'], false)
 
-export const getIsBoxSizeVerticalLayoutEnabled = ({ features }) =>
-  features && features.getIn(['isBoxSizeVerticalLayoutEnabled', 'value'], false)
-
 export const getPromoStore = ({ promoStore }) => promoStore
 
 export const getCurrentPromoCodeData = createSelector(

@@ -78,7 +78,6 @@ const propTypes = {
   signupDismissDiscountAppliedBar: PropTypes.func,
   isSocialBelongingEnabled: PropTypes.bool,
   signupSetStep: PropTypes.func,
-  isBoxSizeVerticalLayoutEnabled: PropTypes.bool,
   isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
@@ -108,7 +107,6 @@ const defaultProps = {
   signupDismissDiscountAppliedBar: () => {},
   isSocialBelongingEnabled: false,
   signupSetStep: () => {},
-  isBoxSizeVerticalLayoutEnabled: false,
   isGoustoOnDemandEnabled: false,
 }
 
@@ -293,13 +291,7 @@ class Signup extends PureComponent {
   }
 
   renderSteps = (steps, currentStepNumber) => {
-    const {
-      goToStep,
-      stepName,
-      isSocialBelongingEnabled,
-      isGoustoOnDemandEnabled,
-      isBoxSizeVerticalLayoutEnabled,
-    } = this.props
+    const { goToStep, stepName, isSocialBelongingEnabled, isGoustoOnDemandEnabled } = this.props
     const step = steps.getIn([currentStepNumber, 'name'])
     const name = components[stepName]
     const isLastStep = currentStepNumber === steps.size - 1
@@ -316,7 +308,6 @@ class Signup extends PureComponent {
         active={stepName === name}
         isSocialBelongingEnabled={isSocialBelongingEnabled}
         isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
-        isBoxSizeVerticalLayoutEnabled={isBoxSizeVerticalLayoutEnabled}
       />
     )
   }

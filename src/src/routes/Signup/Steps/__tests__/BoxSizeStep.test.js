@@ -23,7 +23,7 @@ describe('given the user is at the Box Size Step', () => {
   test('then the component renders correctly', () => {
     expect(wrapper.find('Heading').exists()).toBeTruthy()
     expect(wrapper.find('.subtitle').exists()).toBeTruthy()
-    expect(wrapper.find('.boxSizeCarousel').exists()).toBeTruthy()
+    expect(wrapper.find('.boxSizeInner').exists()).toBeTruthy()
     expect(wrapper.find('.carouselItem')).toHaveLength(2)
     expect(wrapper.find('PrimaryButton')).toHaveLength(2)
   })
