@@ -61,7 +61,6 @@ module.exports = {
     login: '/login',
     logout: '/logout',
     menu: '/menu',
-    menu2: '/menu2',
 
     myGousto: '/my-gousto',
     myDeliveries: '/my-deliveries',

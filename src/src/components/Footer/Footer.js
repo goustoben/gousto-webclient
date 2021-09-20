@@ -4,11 +4,9 @@ import moment from 'moment'
 import config from 'config'
 import * as trackingKeys from 'actions/trackingKeys'
 import { client as clientRoutes } from 'config/routes'
-import { trustPilotReviews } from 'config/home'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
-import Svg from 'components/Svg'
 import Link from 'Link'
 import css from './Footer.css'
 
@@ -66,8 +64,6 @@ const Footer = ({
   simple,
   type,
   trackNavigationClick,
-  isMenuRedirectPageEnabled,
-  postCode,
 }) => {
   const renderTermsLink = () => (
     <li className={css.menuItem}>
@@ -104,7 +100,6 @@ const Footer = ({
     </ul>
   )
 
-  const isRedirectToNewMenu = !isAuthenticated && !postCode && isMenuRedirectPageEnabled
   const trackWeeklyRecipesClick = () => trackNavigationClick({ actionType: trackingKeys.clickRecipeNavigationFooter })
   const renderFullList = () => (
     <ul className={css.menuList}>
@@ -115,7 +110,7 @@ const Footer = ({
         {/* eslint-disable-next-line */}
         <span data-test="week-recipes" onClick={trackWeeklyRecipesClick} role="button" tabIndex={0}>
           <Link
-            to={isRedirectToNewMenu ? clientRoutes.menu2 : clientRoutes.menu}
+            to={clientRoutes.menu}
             data-selid="footer-this-weeks-recipes"
             title="This Week's Recipes"
             clientRouted
@@ -212,26 +207,6 @@ const Footer = ({
     </div>
   )
 
-  const renderCheckoutFooter = () => (
-    <div className={css.checkoutFooterContainer}>
-      <div className={css.footerFlexContainer}>
-        <div className={css.greatValue}>
-          <h3 className={css.greatValueTitle}>9 / 10</h3>
-          <Svg fileName="icon-5-stars-trustpilot" className={css.icon5Stars} />
-          <div className={css.greatValueDescription}>
-            {`Based on ${trustPilotReviews}+ reviews`}
-          </div>
-        </div>
-        <div className={css.trustpilotContainer}>
-          <Svg fileName="icon-trustpilot-logo-darkbg" className={css.iconTrustpilot} />
-        </div>
-        <div className={css.copyrightCheckout}>
-          {copyrightText}
-        </div>
-      </div>
-    </div>
-  )
-
   const renderFooter = () => {
     let footer = null
 
@@ -249,9 +224,6 @@ const Footer = ({
       break
     case 'large':
       footer = renderLargeFooter()
-      break
-    case 'checkout':
-      footer = renderCheckoutFooter()
       break
     default: {
       footer = renderMediumFooter()
@@ -276,8 +248,6 @@ Footer.propTypes = {
   simple: PropTypes.bool,
   type: PropTypes.string,
   trackNavigationClick: PropTypes.func.isRequired,
-  isMenuRedirectPageEnabled: PropTypes.bool,
-  postCode: PropTypes.string,
 }
 
 Footer.defaultProps = {
@@ -285,8 +255,6 @@ Footer.defaultProps = {
   isAuthenticated: false,
   simple: false,
   type: 'medium',
-  isMenuRedirectPageEnabled: false,
-  postCode: '',
 }
 
 // eslint-disable-next-line

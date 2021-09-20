@@ -1,11 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { client as clientRoutes } from 'config/routes'
-
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import * as trackingKeys from 'actions/trackingKeys'
 import { AppStoreLinks } from 'components/AppStoreLinks'
-import css from 'components/Footer/Footer.css'
 import Footer from 'Footer/Footer'
 
 jest.mock('actions/login')
@@ -106,16 +103,6 @@ describe('<Footer />', () => {
     expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(1)
     // Render app store links
     expect(wrapper.find(AppStoreLinks).length).toEqual(1)
-  })
-
-  test("should display checkout footer then type props id 'checkout'", () => {
-    const wrapper = shallow(<Footer type="checkout" />)
-    expect(
-      wrapper
-        .children()
-        .prop('className')
-        .includes(css.checkoutFooterContainer),
-    ).toBe(true)
   })
 
   test('should not display copyright if set to false', () => {
@@ -224,60 +211,6 @@ describe('<Footer />', () => {
 
       test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
         expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
-      })
-    })
-  })
-
-  describe('isMenuRedirectPageEnabled', () => {
-    const wrapper = shallow(
-      <Footer
-        trackNavigationClick={trackNavigationClick}
-        helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
-      />
-    )
-    const recipesSelector = '[data-selid="footer-this-weeks-recipes"]'
-    const weekRecipes = wrapper.find(recipesSelector)
-    const menuRoute = clientRoutes.menu
-
-    describe('when isMenuRedirectPageEnabled is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isMenuRedirectPageEnabled: false })
-      })
-
-      test('then "This weeks menu" link should be equal to "/menu"', () => {
-        expect(weekRecipes.prop('to')).toBe(menuRoute)
-      })
-    })
-
-    describe('when isMenuRedirectPageEnabled is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isMenuRedirectPageEnabled: true })
-      })
-
-      describe('and postCode is not defined', () => {
-        test('then "This weeks menu" link should be equal to "/menu2"', () => {
-          expect(wrapper.find(recipesSelector).prop('to')).toBe(clientRoutes.menu2)
-        })
-      })
-
-      describe('and postCode is defined', () => {
-        beforeEach(() => {
-          wrapper.setProps({ postCode: 'W3 7UP' })
-        })
-
-        test('then "This weeks menu" link should be equal to "/menu"', () => {
-          expect(weekRecipes.prop('to')).toBe(menuRoute)
-        })
-      })
-
-      describe('and a user is authenticated', () => {
-        beforeEach(() => {
-          wrapper.setProps({ isAuthenticated: true })
-        })
-
-        test('then "This weeks menu" link should be equal to "/menu"', () => {
-          expect(weekRecipes.prop('to')).toBe(menuRoute)
-        })
       })
     })
   })

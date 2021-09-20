@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
-import { getLinkURL } from 'utils/header'
 import Link from 'Link'
 import * as trackingKeys from 'actions/trackingKeys'
 import css from '../MobileMenu.css'
@@ -29,8 +28,6 @@ class BurgerMobileMenu extends React.PureComponent {
       promoCodeUrl,
       trackNavigationClick,
       isAuthenticated,
-      isMenuRedirectPageEnabled,
-      postCode,
       trackClickRateRecipes
     } = this.props
 
@@ -96,12 +93,11 @@ class BurgerMobileMenu extends React.PureComponent {
       }
 
       const isHelpLink = menuItem.name === 'Help'
-      const url = getLinkURL({ menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
 
       if (rateRecipesItem) {
         return (
           <Link
-            to={url}
+            to={menuItem.url}
             className={css.menuItem}
             key={menuItem.name}
             clientRouted={menuItem.clientRouted}
@@ -120,7 +116,7 @@ class BurgerMobileMenu extends React.PureComponent {
 
       return (
         <Link
-          to={url}
+          to={menuItem.url}
           data-optimizely={isHelpLink ? 'mobile-header-help-link' : null}
           className={css.menuItem}
           key={menuItem.name}
@@ -172,16 +168,13 @@ BurgerMobileMenu.propTypes = {
   promoCodeUrl: PropTypes.string,
   show: PropTypes.bool.isRequired,
   trackNavigationClick: PropTypes.func.isRequired,
-  isMenuRedirectPageEnabled: PropTypes.bool,
-  postCode: PropTypes.string,
   trackClickRateRecipes: PropTypes.func
 }
 
 BurgerMobileMenu.defaultProps = {
   isAuthenticated: false,
-  postCode: '',
-  isMenuRedirectPageEnabled: false,
-  trackClickRateRecipes: () => {}
+  trackClickRateRecipes: () => {},
+  promoCodeUrl: '',
 }
 
 export { BurgerMobileMenu }

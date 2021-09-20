@@ -6,7 +6,6 @@ import { getIsAuthenticated } from 'selectors/auth'
 import {
   getAbandonBasket,
   getIsMobileTopBannerAppAwarenessEnabled,
-  getIsMenuRedirectPageEnabled,
   getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
@@ -27,9 +26,7 @@ const mapStateToProps = (state) => ({
   abandonBasketFeature: getAbandonBasket(state),
   showAppAwareness: getIsAppAwarenessLoginEnabled(state),
   isAppAwarenessEnabled: getIsMobileTopBannerAppAwarenessEnabled(state),
-  isMenuRedirectPageEnabled: getIsMenuRedirectPageEnabled(state),
   isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
-  postCode: state.basket.get('postcode'),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

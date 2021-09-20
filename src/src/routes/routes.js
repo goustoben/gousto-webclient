@@ -19,7 +19,6 @@ import OrderConfirmation from './OrderConfirmation'
 import { Payment } from './Payment'
 import { PrivacyStatement } from './PrivacyStatement'
 import { ModernSlaveryStatement } from './ModernSlaveryStatement'
-import { MenuRedirectRoute } from './MenuRedirect'
 
 const routes = (store) => (
   <Route path="/" component={Page}>
@@ -33,7 +32,6 @@ const routes = (store) => (
     {GetHelp(store)}
     {ModernSlaveryStatement}
     {Payment}
-    {MenuRedirectRoute}
 
     <Route component={MainLayout}>
       {Welcome(store)}

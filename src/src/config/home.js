@@ -56,7 +56,6 @@ export const knownVariants = [
 ]
 
 export const defaultVariant=  'default';
-export const trustPilotReviews = '13,700';
 
 export const whyGousto = {
   steps: [
@@ -118,7 +117,6 @@ export const homeConfig = {
   emailForm,
   knownVariants,
   defaultVariant,
-  trustPilotReviews,
   whyGousto,
   joeWicks,
   carousel,

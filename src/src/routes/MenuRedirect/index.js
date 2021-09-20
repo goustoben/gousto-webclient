@@ -1,1 +1,0 @@
-export { MenuRedirectRoute } from './route'

@@ -466,15 +466,6 @@ export const trackClickBuildMyBox = (boxSize, destination) => (dispatch, getStat
   })
 }
 
-export const trackLoginClickOnHungryPage = (type) => (dispatch) => {
-  dispatch({
-    type,
-    trackingData: {
-      actionType: type
-    }
-  })
-}
-
 export const trackDiscountVisibilityBannerAppearance = (wizardStep) => (dispatch, getState) => {
   const { UTM, promoCode } = getUTMAndPromoCode(getState())
   const type = trackingKeys.discountVisibilityBannerDisplayed

@@ -20,7 +20,6 @@ import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
-import { getLinkURL } from 'utils/header'
 import * as trackingKeys from 'actions/trackingKeys'
 import { MobileMenu } from './MobileMenu'
 import { getDeepClonedMenuItems, showcaseMenuItem } from './menuItemsHelper'
@@ -249,12 +248,7 @@ class Header extends React.PureComponent {
   }
 
   renderMenuItems = (menu, hideNav) => {
-    const {
-      isAuthenticated,
-      trackNavigationClick,
-      postCode,
-      isMenuRedirectPageEnabled,
-    } = this.props
+    const { isAuthenticated, trackNavigationClick } = this.props
 
     if (hideNav) {
       return null
@@ -300,14 +294,13 @@ class Header extends React.PureComponent {
       }
 
       const isHelpLink = menuItem.name === 'Help'
-      const url = getLinkURL({ menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
       const trackingData = isHelpLink ? helpNavTrackingData : { actionType: menuItem.tracking }
 
       return (
         <Link
           key={menuItem.name}
           data-optimizely={isHelpLink ? 'desktop-header-help-link' : null}
-          to={url}
+          to={menuItem.url}
           className={css.linkDesktop}
           clientRouted={menuItem.clientRouted}
           tracking={() => trackNavigationClick(trackingData)}
@@ -515,8 +508,6 @@ Header.propTypes = {
   trackNavigationClick: PropTypes.func,
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
-  isMenuRedirectPageEnabled: PropTypes.bool,
-  postCode: PropTypes.string,
   showLoginCTA: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   hasLoginModal: PropTypes.bool,
@@ -539,8 +530,6 @@ Header.defaultProps = {
   trackNavigationClick: () => { },
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
-  isMenuRedirectPageEnabled: false,
-  postCode: '',
   showLoginCTA: false,
   isPaymentBeforeChoosingEnabled: false,
   hasLoginModal: false,

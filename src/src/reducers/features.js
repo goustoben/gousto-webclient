@@ -72,9 +72,6 @@ const defaultFeatures = () => ({
   isNewSSRDeliveriesEnabled: {
     value: false
   },
-  isMenuRedirectPageEnabled: {
-    value: false
-  },
   isDecoupledPaymentEnabled: {
     value: false
   },
