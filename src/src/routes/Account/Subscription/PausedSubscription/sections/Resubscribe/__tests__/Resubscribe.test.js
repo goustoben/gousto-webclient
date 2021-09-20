@@ -11,7 +11,7 @@ import { flushPromises } from '../../../../../../../_testing/utils'
 
 let wrapper
 
-const mockDispatch = jest.fn()
+let mockDispatch = jest.fn()
 
 const mountWithPropsAndState = (props, state = {}) => {
   wrapper = mount(
@@ -85,6 +85,7 @@ describe('Resubscribe', () => {
     describe('And if the request is unsuccessful', () => {
       beforeEach(async () => {
         jest.resetAllMocks()
+        mockDispatch = jest.fn()
         useFetch.mockReturnValue([false, mockErrorResponse, false])
 
         mountWithPropsAndState()
