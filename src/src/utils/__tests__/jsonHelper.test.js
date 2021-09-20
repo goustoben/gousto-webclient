@@ -45,7 +45,6 @@ describe('processJSON', () => {
     await expect(actual).rejects.toEqual(expectation)
   })
 
-  // eslint-disable-next-line jest/no-disabled-tests
   test.skip('handle payment-required error response', () => {
     /*
     SKIPPED THIS TEST - it's failing with this error:

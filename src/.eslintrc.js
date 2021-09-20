@@ -1,36 +1,36 @@
 const path = require('path')
-const fs = require('fs');
+const fs = require('fs')
 
-const srcFileAliases = fs.readdirSync('./src', { withFileTypes: true }).
-  filter(dirent => dirent.isDirectory()).
+const srcFileAliases = fs
+  .readdirSync('./src', { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
   // We load `style` manually to highligh that its a shared alias
-  filter(dirent => dirent.name !== 'style').
-  map(({ name }) => {
-  return [name, './src/' + name]
-});
+  .filter((dirent) => dirent.name !== 'style')
+  .map(({ name }) => {
+    return [name, './src/' + name]
+  })
 
-const componentFileAliases = fs.readdirSync('./src/components', { withFileTypes: true })
-.filter(dirent => dirent.isDirectory())
-.map(({ name }) => {
-  return [name, './src/components/' + name]
-});
+const componentFileAliases = fs
+  .readdirSync('./src/components', { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
+  .map(({ name }) => {
+    return [name, './src/components/' + name]
+  })
 
 module.exports = {
-  "parser": '@typescript-eslint/parser',
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "airbnb",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:you-dont-need-lodash-underscore/compatible",
-    "plugin:jsx-a11y/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:react-hooks/recommended",
-    "plugin:jest/recommended"
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'airbnb',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:you-dont-need-lodash-underscore/compatible',
+    'plugin:jsx-a11y/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:react-hooks/recommended',
   ],
-  "settings": {
-    "import/resolver": {
+  settings: {
+    'import/resolver': {
       // Resolving to our webpack config didn't work within the time-box
       // for this change, but is the preferred solutions.
       // "webpack": {
@@ -41,82 +41,88 @@ module.exports = {
       node: {
         paths: ['.'],
       },
-      "alias": {
+      alias: {
         map: [
-          ["store", "./src/store.js"],
-          ["jsdom", "./fallbacks/jsdom"],
-          ["goustouicomponents", "./libs/goustouicomponents/src/main"],
-          ["zest", "./libs/goustouicomponents/dist"],
-          ["design-language", "./libs/goustouicomponents/dist/design-language"],
-          ["server", "./server"],
-          ["styles", "./libs/goustouicomponents/dist/styles"],
-          ["styles", "./src/styles"],
-          ["fixtures", "../tests/regression/fixtures"],
+          ['store', './src/store.js'],
+          ['jsdom', './fallbacks/jsdom'],
+          ['goustouicomponents', './libs/goustouicomponents/src/main'],
+          ['zest', './libs/goustouicomponents/dist'],
+          ['design-language', './libs/goustouicomponents/dist/design-language'],
+          ['server', './server'],
+          ['styles', './libs/goustouicomponents/dist/styles'],
+          ['styles', './src/styles'],
+          ['fixtures', '../tests/regression/fixtures'],
           ...srcFileAliases,
           ...componentFileAliases,
         ],
-        extensions: ['.js', '.css']
-      }
-    }
+        extensions: ['.js', '.css'],
+      },
+    },
   },
-  "rules": {
-      "react/no-children-prop": 2,
-      "react/prop-types": 2,
-      "newline-before-return": 2,
-      "no-sparse-arrays": 2,
-      "no-multi-spaces": 2,
-      "no-multiple-empty-lines": [2, { "max": 1}],
-      "indent": [2, 2, {"ignoredNodes": ["JSXElement"]}],
-      "semi": [2, "never"],
-      "no-shadow": [2, {
-        "allow": ["resolve", "reject", "done", "cb", "e", "err", "error", "mapStateToProps"]
-      }],
-      "no-extra-boolean-cast": 2,
-      "react/no-unused-prop-types": 2,
-      "padded-blocks": 2,
-      "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
-      "import/prefer-default-export": 0,
-      "import/newline-after-import": 0,
-      "react/jsx-curly-spacing": 0,
-      "react/jsx-indent-props": 0,
-      "react/jsx-filename-extension": 0,
-      "react/no-did-update-set-state": 0, // React says it's ok to do this: https://github.com/yannickcr/eslint-plugin-react/issues/1707
-      "object-curly-spacing": 0,
-      "array-bracket-spacing": 0,
-      "computed-property-spacing": 0,
-      "comma-spacing": 0,
-      "space-in-parens": 0,
-      "function-paren-newline": 0,
-      "object-curly-newline": 0,
-      "arrow-parens": 0,
-      "max-len": 0,
-      "implicit-arrow-linebreak": 0,
-      "no-else-return": 0,
-      "space-unary-ops": 0,
-      "comma-dangle": 0,
-      //beginning of gousto extended warnings
-      "import/no-unresolved": 2,
-      "import/named": 2,
-      "import/extensions": 2,
-      "import/namespace": 2,
-      "no-undef": 2,
-      "import/no-default-export" : 1,
-      "no-underscore-dangle": [1, {
-        "allow": ["__initialState__"]
-      }],
-      "no-tabs": 1,
-      "no-mixed-spaces-and-tabs" : 1,
-      "no-restricted-globals": 1,
-      "eol-last": 1,
-      "new-cap": 1,
-      "new-parens":1,
-      "prefer-destructuring": 1,
-      "operator-linebreak": 1,
-      "lines-between-class-members": 1,
-      "comma-style": 1,
-      "prefer-const": 1,
-      "class-methods-use-this": 1,
-      //end of gousto extended warnings
+  rules: {
+    'react/no-children-prop': 2,
+    'react/prop-types': 2,
+    'newline-before-return': 2,
+    'no-sparse-arrays': 2,
+    'no-multi-spaces': 2,
+    'no-multiple-empty-lines': [2, { max: 1 }],
+    indent: [2, 2, { ignoredNodes: ['JSXElement'] }],
+    semi: [2, 'never'],
+    'no-shadow': [
+      2,
+      {
+        allow: ['resolve', 'reject', 'done', 'cb', 'e', 'err', 'error', 'mapStateToProps'],
+      },
+    ],
+    'no-extra-boolean-cast': 2,
+    'react/no-unused-prop-types': 2,
+    'padded-blocks': 2,
+    'no-plusplus': [2, { allowForLoopAfterthoughts: true }],
+    'import/prefer-default-export': 0,
+    'import/newline-after-import': 0,
+    'react/jsx-curly-spacing': 0,
+    'react/jsx-indent-props': 0,
+    'react/jsx-filename-extension': 0,
+    'react/no-did-update-set-state': 0, // React says it's ok to do this: https://github.com/yannickcr/eslint-plugin-react/issues/1707
+    'object-curly-spacing': 0,
+    'array-bracket-spacing': 0,
+    'computed-property-spacing': 0,
+    'comma-spacing': 0,
+    'space-in-parens': 0,
+    'function-paren-newline': 0,
+    'object-curly-newline': 0,
+    'arrow-parens': 0,
+    'max-len': 0,
+    'implicit-arrow-linebreak': 0,
+    'no-else-return': 0,
+    'space-unary-ops': 0,
+    'comma-dangle': 0,
+    //beginning of gousto extended warnings
+    'import/no-unresolved': 2,
+    'import/named': 2,
+    'import/extensions': 2,
+    'import/namespace': 2,
+    'no-undef': 2,
+    'import/no-default-export': 1,
+    'no-underscore-dangle': [
+      1,
+      {
+        allow: ['__initialState__'],
+      },
+    ],
+    'no-tabs': 1,
+    'no-mixed-spaces-and-tabs': 1,
+    'no-restricted-globals': 1,
+    'eol-last': 1,
+    'new-cap': 1,
+    'new-parens': 1,
+    'prefer-destructuring': 1,
+    'operator-linebreak': 1,
+    'lines-between-class-members': 1,
+    'comma-style': 1,
+    'prefer-const': 1,
+    'class-methods-use-this': 1,
+    //end of gousto extended warnings
 
       //beginning of warnings that are recommended as errors by our eslint plugins
       "array-callback-return": 1,
@@ -127,12 +133,10 @@ module.exports = {
       "eqeqeq": 1,
       "global-require": 1,
       "guard-for-in": 1,
+      "import/no-cycle": 1,
       "import/no-dynamic-require" : 1,
       "import/no-self-import" : 1,
       "import/no-extraneous-dependencies": 1,
-      "jest/valid-expect-in-promise": 2,
-      "jest/valid-title": 1,
-      "jest/no-identical-title": 1,
       "jsx-a11y/click-events-have-key-events": 1,
       "jsx-a11y/no-static-element-interactions": 1,
       "jsx-a11y/anchor-is-valid": 1,
@@ -228,89 +232,117 @@ module.exports = {
       "import/no-cycle": 0, // takes 90+ seconds to run due to size of codebase
 
   },
-  "env" : {
-    "jasmine": true
+  env: {
+    jasmine: true,
   },
-  "globals": {
-    "document": true,
-    "navigator": true,
-    "require": false,
-    "window": true,
-    "__DEV__": false,
-    "__PROD__": false,
-    "__HMR__": false,
-    "__SERVER__": false,
-    "__CLIENT__": false,
-    "__ENV__": false,
-    "__DOMAIN__": false,
-    "__CLIENT_PROTOCOL__": false,
-    "__CLOUDFRONT_URL__": false,
-    "__CHECKOUT_PK__": false,
-    "__RECAPTCHA_RAF_PUBK__": false,
-    "__RECAPTCHA_RAF_PVTK__": false,
-    "__TEST__": false,
-    "__GIT_HASH__": false,
-    "__API_TOKEN__": false,
-    "__AUTH_CLIENT_SECRET__": false,
-    "__AUTH_CLIENT_ID__": false,
-    "ga": false,
-    "hj": true,
-    "after": true,
-    "Cypress": true
+  globals: {
+    document: true,
+    navigator: true,
+    require: false,
+    window: true,
+    __DEV__: false,
+    __PROD__: false,
+    __HMR__: false,
+    __SERVER__: false,
+    __CLIENT__: false,
+    __ENV__: false,
+    __DOMAIN__: false,
+    __CLIENT_PROTOCOL__: false,
+    __CLOUDFRONT_URL__: false,
+    __CHECKOUT_PK__: false,
+    __RECAPTCHA_RAF_PUBK__: false,
+    __RECAPTCHA_RAF_PVTK__: false,
+    __TEST__: false,
+    __GIT_HASH__: false,
+    __API_TOKEN__: false,
+    __AUTH_CLIENT_SECRET__: false,
+    __AUTH_CLIENT_ID__: false,
+    ga: false,
+    hj: true,
+    after: true,
+    Cypress: true,
   },
-  "plugins": [ "@typescript-eslint", "prettier", "jest"],
-  "overrides": [
+  plugins: ['@typescript-eslint', 'prettier'],
+  overrides: [
     {
-      "files": [
-        "**/*.test.js"
+      "files": ["**/*.ts", "**/*.tsx"],
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'airbnb',
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:you-dont-need-lodash-underscore/compatible',
+        'plugin:jsx-a11y/recommended',
+        'plugin:import/errors',
+        'plugin:import/warnings',
+        'plugin:react-hooks/recommended',
       ],
-      "env": {
-        "jest": true
+      'globals': { 'Atomics': 'readonly', 'SharedArrayBuffer': 'readonly' },
+      'parser': '@typescript-eslint/parser',
+      'parserOptions': {
+        'ecmaFeatures': { 'jsx': true },
+        'ecmaVersion': 2018,
+        'sourceType': 'module',
+        'project': './tsconfig.json'
       },
-      "rules": {
-        "react/display-name": 0,
-        "react/jsx-props-no-spreading": 0
-      }
-    }, {
-      "files": [
-        "**/__regression__/**/*.js"
-      ],
-      "globals": {
-        "Cypress": "readonly",
-        "cy": "readonly",
-        "before": "readonly"
+      'plugins': ['@typescript-eslint', 'prettier', 'react'],
+      'rules': {
+        '@typescript-eslint/ban-ts-comment': 'warn',
+        '@typescript-eslint/no-empty-function': 1,
+        '@typescript-eslint/no-var-requires': 1,
+        '@typescript-eslint/no-use-before-define': ['warn'],
       }
     },
     {
+      files: ['**/*.test.js'],
+      env: {
+        jest: true,
+      },
+      rules: {
+        'react/display-name': 0,
+        'react/jsx-props-no-spreading': 0,
+      },
+    },
+    {
+      files: ['**/__regression__/**/*.js'],
+      globals: {
+        Cypress: 'readonly',
+        cy: 'readonly',
+        before: 'readonly',
+      },
+    },
+    {
       // Make eslint rules agree with prettier.
-      "files": [
-        "src/routes/Checkout/**/*.js",
-        "src/routes/Home/**/*.js",
-        "src/routes/Payment/**/*.js",
-        "src/routes/Signup/**/*.js",
-        "src/routes/ShowcaseMenu/**/*.js",
-        "src/middlewares/tracking/dataLayerTracker/*.js",
-        "src/routes/BoxPrices/**/*.js",
+      files: [
+        'src/routes/Checkout/**/*.js',
+        'src/routes/Home/**/*.js',
+        'src/routes/Payment/**/*.js',
+        'src/routes/Signup/**/*.js',
+        'src/routes/ShowcaseMenu/**/*.js',
+        'src/middlewares/tracking/dataLayerTracker/*.js',
+        'src/routes/BoxPrices/**/*.js',
         "src/performanceTracker/**/*.js",
       ],
-      "rules": {
-        "prettier/prettier": "error",
-        "operator-linebreak": [
-          1, "after", {
-            "overrides": {
-              "?": "before",
-              ":": "before"
-            }
-          }
+      rules: {
+        'prettier/prettier': 'error',
+        'operator-linebreak': [
+          1,
+          'after',
+          {
+            overrides: {
+              '?': 'before',
+              ':': 'before',
+            },
+          },
         ],
-        "indent": 0,
-        "newline-per-chained-call": 0,
-        "no-confusing-arrow": 0,
-        "react/jsx-indent": 0,
-        "react/jsx-one-expression-per-line": 0,
-        "react/jsx-wrap-multilines": 0,
-        "react/jsx-curly-newline": 0
-      }
-    }
-  ]
+        indent: 0,
+        'newline-per-chained-call': 0,
+        'no-confusing-arrow': 0,
+        'react/jsx-indent': 0,
+        'react/jsx-one-expression-per-line': 0,
+        'react/jsx-wrap-multilines': 0,
+        'react/jsx-curly-newline': 0,
+      },
+    },
+  ],
 }
