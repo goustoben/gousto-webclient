@@ -1,4 +1,4 @@
-import { getIsSubscriptionLoaded, getSubscriptionUpdateV2Payload, getIsSubscriptionActive, getShowResubscriptionModal } from '../subscription'
+import { getIsSubscriptionLoaded, getSubscriptionUpdatePayload, getIsSubscriptionActive, getShowResubscriptionModal } from '../subscription'
 
 describe('subscription selectors', () => {
   let contextState
@@ -25,7 +25,7 @@ describe('subscription selectors', () => {
     })
   })
 
-  describe('getSubscriptionUpdateV2Payload', () => {
+  describe('getSubscriptionUpdatePayload', () => {
     const numPortions = 2
     const numRecipes = 3
     const dietaryPreference = 'vegetarian'
@@ -43,7 +43,7 @@ describe('subscription selectors', () => {
         deliverySlotDay: '3',
       }
       expect(
-        getSubscriptionUpdateV2Payload.resultFunc(
+        getSubscriptionUpdatePayload.resultFunc(
           numRecipes,
           numPortions,
           dietaryPreference,

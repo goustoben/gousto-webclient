@@ -8,16 +8,19 @@ const mockState = {
 
 const mockBoxData = {
   box: {
-    box_type: 'gourmet',
-    num_portions: 2,
-    num_recipes: 3,
+    boxType: 'gourmet',
+    numPortions: 2,
+    numRecipes: 3,
   },
 }
 
 const mockBoxPricesData = {
   2: {
     2: {
-      gourmet: {}
+      gourmet: {
+        price_per_portion: '3.45',
+        price_per_portion_discounted: '2.34'
+      }
     }
   }
 }
@@ -91,7 +94,10 @@ describe('box reducers', () => {
             boxPrices: {
               2: {
                 2: {
-                  gourmet: {}
+                  gourmet: {
+                    pricePerPortion: '3.45',
+                    pricePerPortionDiscounted: '2.34'
+                  }
                 }
               },
               requestState: {

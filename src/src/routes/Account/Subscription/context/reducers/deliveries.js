@@ -1,5 +1,4 @@
 import { parseTimeRange } from 'utils/deliverySlot'
-import { parseObjectKeysToCamelCase } from 'utils/jsonHelper'
 import { dayNumberMap } from '../../enum/day'
 
 const reduceUpdateFrequency = (state, subscription) => {
@@ -23,11 +22,10 @@ export const reduceCurrentDeliverySlot = (state, reducedSlots) => {
 }
 
 export const reduceDeliverySlot = (slot) => {
-  const camelCaseSlot = parseObjectKeysToCamelCase(slot)
-  const { deliveryStartTime, deliveryEndTime, defaultDay } = camelCaseSlot
+  const { deliveryStartTime, deliveryEndTime, defaultDay } = slot
 
   return {
-    ...camelCaseSlot,
+    ...slot,
     timeRange: parseTimeRange(deliveryStartTime, deliveryEndTime),
     day: dayNumberMap[defaultDay],
 

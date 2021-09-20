@@ -1,10 +1,9 @@
 import logger from 'utils/logger'
 import { getUserId } from 'selectors/user'
-import { parseObjectKeysToCamelCase } from 'utils/jsonHelper'
 import { fetchSubscription } from '../routes/Account/apis/subscription'
 import { basketNumPortionChange } from './basket'
 import { actionTypes } from './actionTypes'
-import { mapSubscriptionV2Payload } from '../routes/Account/Subscription/utils/mapping'
+import { mapSubscriptionPayload } from '../routes/Account/Subscription/utils/mapping'
 
 export const subscriptionLoadData = () => (
   async (dispatch, getState) => {
@@ -15,8 +14,8 @@ export const subscriptionLoadData = () => (
       const userId = getUserId(state)
       const subscriptionResponse = await fetchSubscription(accessToken, userId)
 
-      const payload = mapSubscriptionV2Payload(subscriptionResponse.data.data.subscription)
-      const data = parseObjectKeysToCamelCase(payload)
+      const { subscription } = subscriptionResponse.data.data
+      const data = mapSubscriptionPayload(subscription)
 
       dispatch({
         type: actionTypes.SUBSCRIPTION_LOAD_DATA,

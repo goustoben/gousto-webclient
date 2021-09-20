@@ -10,7 +10,7 @@ export const reduceSubscriptionData = (state, data) => {
     return state
   }
 
-  const { delivery_slot_id: deliverySlotId, state: subscriptionStatus } = data.subscription
+  const { deliverySlotId, state: subscriptionStatus } = data.subscription
 
   return {
     ...state,
@@ -67,7 +67,7 @@ export const reduceSubscriptionUpdateData = (state, data) => {
 
     const reducedSubscriptionState = reduceSubscriptionData(state, {
       subscription: {
-        delivery_slot_id: `${id}`,
+        deliverySlotId: `${id}`,
         state: description.toLowerCase()
       }
     })

@@ -1,7 +1,7 @@
-import { mapSubscriptionUpdateV2RequestPayload, mapSubscriptionUpdateV2Payload } from '../mapping'
+import { mapSubscriptionUpdateRequestPayload, mapSubscriptionUpdatePayload } from '../mapping'
 
 describe('mapping', () => {
-  test('Expect payload of subscription update response to be mapped correctly to v2', () => {
+  test('Expect payload of subscription update response to be mapped correctly', () => {
     const subscription = {
       numRecipes: 2,
       numPortions: 3,
@@ -28,27 +28,31 @@ describe('mapping', () => {
         whenCutoff: '2020-11-25T11:59:59+00:00',
       },
     ]
-    expect(mapSubscriptionUpdateV2Payload(subscription, slots)).toEqual({
-      box: { box_type: 'vegetarian', num_portions: 3, num_recipes: 2 },
-      delivery_slot_day: 6,
-      delivery_slot_end_time: '19:00:00',
-      delivery_slot_start_time: '08:00:00',
+    expect(mapSubscriptionUpdatePayload(subscription, slots)).toEqual({
+      box: {
+        boxType: 'vegetarian',
+        numPortions: 3,
+        numRecipes: 2
+      },
+      deliverySlotDay: 6,
+      deliverySlotEndTime: '19:00:00',
+      deliverySlotStartTime: '08:00:00',
       interval: 2,
       projected: [],
       slot: {
-        cutoff_day: 3,
-        cutoff_time: '11:59:59',
+        cutoffDay: 3,
+        cutoffTime: '11:59:59',
         default: true,
-        default_day: 6,
-        delivery_end: '19:00:00',
-        delivery_price: '0.00',
-        delivery_start: '08:00:00',
+        defaultDay: 6,
+        deliveryEnd: '19:00:00',
+        deliveryPrice: '0.00',
+        deliveryStart: '08:00:00',
         id: '123',
       },
       state: { description: undefined },
     })
   })
-  test('Expect payload of subscription update response to be mapped correctly to v2', () => {
+  test('Expect subscription update request to be mapped correctly', () => {
     const subscription = {
       numRecipes: 2,
       numPortions: 3,
@@ -73,7 +77,7 @@ describe('mapping', () => {
         whenCutoff: '2020-11-25T11:59:59+00:00',
       },
     ]
-    expect(mapSubscriptionUpdateV2RequestPayload(subscription, slots)).toEqual({
+    expect(mapSubscriptionUpdateRequestPayload(subscription, slots)).toEqual({
       numRecipes: 2,
       numPortions: 3,
       boxType: 'vegetarian',

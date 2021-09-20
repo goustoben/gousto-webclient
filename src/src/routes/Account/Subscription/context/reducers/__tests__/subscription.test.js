@@ -30,7 +30,7 @@ const mockReducedState = {
 const mockData = {
   subscription: {
     subscription: {
-      delivery_slot_id: 'mock-delivery-slot-id',
+      deliverySlotId: 'mock-delivery-slot-id',
       state: 'active'
     }
   }

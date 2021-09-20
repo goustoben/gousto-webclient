@@ -17,15 +17,15 @@ const mockSubscriptionData = {
 
 const mockSlots = [
   {
-    core_slot_id: 'mock-delivery-slot-id',
-    delivery_start_time: '08:00:00',
-    delivery_end_time: '19:00:00',
-    default_day: 1
+    coreSlotId: 'mock-delivery-slot-id',
+    deliveryStartTime: '08:00:00',
+    deliveryEndTime: '19:00:00',
+    defaultDay: 1
   }, {
-    core_slot_id: 'mock-delivery-slot-id-2',
-    delivery_start_time: '09:00:00',
-    delivery_end_time: '12:00:00',
-    default_day: 2
+    coreSlotId: 'mock-delivery-slot-id-2',
+    deliveryStartTime: '09:00:00',
+    deliveryEndTime: '12:00:00',
+    defaultDay: 2
   },
 ]
 

@@ -10,7 +10,7 @@ import {
 jest.mock('../../../../../hooks/useFetch')
 jest.mock('config/endpoint', () => () => 'localhost')
 jest.mock('../../context/selectors/subscription', () => ({
-  getSubscriptionUpdateV2Payload: () => ({
+  getSubscriptionUpdatePayload: () => ({
     numRecipes: 2,
     numPortions: 2,
     boxType: 'vegetarian',
@@ -193,23 +193,23 @@ describe('useUpdateSubscription', () => {
         data: {
           subscription: {
             box: {
-              box_type: 'vegetarian',
-              num_portions: 2,
-              num_recipes: 3,
+              boxType: 'vegetarian',
+              numPortions: 2,
+              numRecipes: 3,
             },
-            delivery_slot_day: 1,
-            delivery_slot_end_time: '18:59:59',
-            delivery_slot_start_time: '08:00:00',
+            deliverySlotDay: 1,
+            deliverySlotEndTime: '18:59:59',
+            deliverySlotStartTime: '08:00:00',
             interval: 1,
             projected: [],
             slot: {
-              cutoff_day: undefined,
-              cutoff_time: undefined,
+              cutoffDay: undefined,
+              cutoffTime: undefined,
               default: undefined,
-              default_day: 1,
-              delivery_end: '18:59:59',
-              delivery_price: undefined,
-              delivery_start: '08:00:00',
+              defaultDay: 1,
+              deliveryEnd: '18:59:59',
+              deliveryPrice: undefined,
+              deliveryStart: '08:00:00',
               id: 'mock-delivery-slot-id-2',
             },
             state: {

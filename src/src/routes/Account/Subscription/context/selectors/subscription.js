@@ -25,7 +25,7 @@ export const getShowResubscriptionModal = createSelector(
   (subscription) => subscription.showResubscriptionModal
 )
 
-export const getSubscriptionUpdateV2Payload = createSelector(
+export const getSubscriptionUpdatePayload = createSelector(
   [
     getNumPortions,
     getMealsPerBox,

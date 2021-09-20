@@ -7,16 +7,14 @@ import { SubscriptionContext } from '../context'
 
 import { actionTypes } from '../context/reducers'
 
-import {
-  getSubscriptionUpdateV2Payload,
-} from '../context/selectors/subscription'
+import { getSubscriptionUpdatePayload } from '../context/selectors/subscription'
 import { getDeliverySlots } from '../context/selectors/deliveries'
 import { getCurrentUserId } from '../context/selectors/currentUser'
 
 import { trackSubscriptionSettingsChange } from '../tracking/subscriptionSettings'
 import {
-  mapSubscriptionUpdateV2Payload,
-  mapSubscriptionUpdateV2RequestPayload,
+  mapSubscriptionUpdatePayload,
+  mapSubscriptionUpdateRequestPayload,
 } from '../utils/mapping'
 
 export const useUpdateSubscription = ({ accessToken, data, trigger, settingName }) => {
@@ -24,9 +22,9 @@ export const useUpdateSubscription = ({ accessToken, data, trigger, settingName 
   const { state, dispatch } = context
   const slots = getDeliverySlots(state)
 
-  const body = { // todo TG-4896 rename and refactor these
-    ...getSubscriptionUpdateV2Payload(state),
-    ...mapSubscriptionUpdateV2RequestPayload(parseObjectKeysToCamelCase(data), slots),
+  const body = {
+    ...getSubscriptionUpdatePayload(state),
+    ...mapSubscriptionUpdateRequestPayload(parseObjectKeysToCamelCase(data), slots),
   }
 
   const url = buildSubscriptionCommandUrl(getCurrentUserId(state))
@@ -44,7 +42,7 @@ export const useUpdateSubscription = ({ accessToken, data, trigger, settingName 
 
   useEffect(() => {
     if (!isLoading && response && !error) {
-      const subscription = mapSubscriptionUpdateV2Payload(response.data.subscription, slots) // todo TG-4896 rename and refactor this
+      const subscription = mapSubscriptionUpdatePayload(response.data.subscription, slots)
 
       dispatch({
         type: actionTypes.SUBSCRIPTION_UPDATE_DATA_RECEIVED,

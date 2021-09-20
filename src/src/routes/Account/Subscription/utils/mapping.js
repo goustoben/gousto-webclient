@@ -1,41 +1,56 @@
-export const mapSubscriptionAndDeliverySlots = (mappedSubscription, deliveries) => {
-  const [deliverySlot] = deliveries.find((delivery) => (
-    delivery.slots.find((slot) => {
-      const { subscription } = mappedSubscription
+/**
+ * API response type
+ *
+ * SubscriptionResponse = {
+ *   boxType: string,
+ *   createdAt: DateString,
+ *   deliverySlotDay: number,
+ *   deliverySlotEndTime: TimeString,
+ *   deliverySlotStartTime: TimeString,
+ *   interval: number,
+ *   numPortions: number,
+ *   numRecipes: number,
+ *   status: string
+ * }
+ */
 
-      return slot.default_day === subscription.delivery_slot_day
-        && slot.delivery_start_time === subscription.delivery_slot_start_time
-        && slot.delivery_end_time === subscription.delivery_slot_end_time
-    })
-  )).slots
+// Given (mapped subscription) returns function: (camelcased slot) => fits subscription?
+const subscriptionSlotMatcher = (subscription) => (slot) => slot.defaultDay === subscription.deliverySlotDay
+    && slot.deliveryStartTime === subscription.deliverySlotStartTime
+    && slot.deliveryEndTime === subscription.deliverySlotEndTime
 
-  return {
-    ...mappedSubscription,
-    subscription: {
-      ...mappedSubscription.subscription,
-      delivery_slot_id: deliverySlot.core_slot_id
-    },
-  }
+// Given mapped subscription and mapped (camelCased) deliveries, gets matching Core delivery slot ID
+export const getSubscriptionDeliverySlot = (subscription, deliveries) => {
+  const matchingDelivery = deliveries.find(
+    delivery => delivery.slots.find(
+      subscriptionSlotMatcher(subscription)
+    )
+  )
+
+  const [ firstSlot ] = matchingDelivery.slots
+
+  return firstSlot.coreSlotId
 }
 
-// todo TG-4896 rename these + do any necessary refactoring
-export const mapSubscriptionV2Payload = (subscription) => ({
+// Normalises subscription query response to a structure usable in the Redux store
+export const mapSubscriptionPayload = (subscription) => ({
+  // Avoiding spreads to be explicit about structure
   subscription: {
     interval: subscription.interval,
     state: subscription.status,
-    delivery_slot_day: subscription.deliverySlotDay,
-    delivery_slot_start_time: subscription.deliverySlotStartTime,
-    delivery_slot_end_time: subscription.deliverySlotEndTime,
+    deliverySlotDay: subscription.deliverySlotDay,
+    deliverySlotStartTime: subscription.deliverySlotStartTime,
+    deliverySlotEndTime: subscription.deliverySlotEndTime,
   },
   box: {
-    box_type: subscription.boxType,
-    num_portions: subscription.numPortions,
-    num_recipes: subscription.numRecipes,
+    boxType: subscription.boxType,
+    numPortions: subscription.numPortions,
+    numRecipes: subscription.numRecipes,
   },
   projected: [],
 })
 
-export const mapSubscriptionUpdateV2RequestPayload = (coreParameters, deliverySlots) => {
+export const mapSubscriptionUpdateRequestPayload = (coreParameters, deliverySlots) => {
   const parametersCopy = {...coreParameters}
   if (parametersCopy.deliverySlotId) {
     const { deliveryStartTime, deliveryEndTime, defaultDay } = deliverySlots.find(
@@ -61,34 +76,33 @@ export const mapSubscriptionUpdateV2RequestPayload = (coreParameters, deliverySl
   return parametersCopy
 }
 
-export const mapSubscriptionUpdateV2Payload = (subscription, slots) => {
-  const appropriateSlot = slots.find(
-    (slot) =>
-      slot.defaultDay === subscription.deliverySlotDay
-      && slot.deliveryStartTime === subscription.deliverySlotStartTime
-      && slot.deliveryEndTime === subscription.deliverySlotEndTime
+// Normalises subscription command response to a structure usable in the Account Subscription Context store
+export const mapSubscriptionUpdatePayload = (subscription, slots) => {
+  const slot = slots.find(
+    subscriptionSlotMatcher(subscription)
   )
 
+  // Avoiding spreads to be explicit about structure
   return {
     interval: subscription.interval,
     state: { description: subscription.status },
-    delivery_slot_day: subscription.deliverySlotDay,
-    delivery_slot_start_time: subscription.deliverySlotStartTime,
-    delivery_slot_end_time: subscription.deliverySlotEndTime,
+    deliverySlotDay: subscription.deliverySlotDay,
+    deliverySlotStartTime: subscription.deliverySlotStartTime,
+    deliverySlotEndTime: subscription.deliverySlotEndTime,
     box: {
-      box_type: subscription.boxType,
-      num_portions: subscription.numPortions,
-      num_recipes: subscription.numRecipes,
+      boxType: subscription.boxType,
+      numPortions: subscription.numPortions,
+      numRecipes: subscription.numRecipes,
     },
     slot: {
-      id: appropriateSlot.coreSlotId,
-      default_day: appropriateSlot.defaultDay,
-      cutoff_day: appropriateSlot.cutoffDay,
-      cutoff_time: appropriateSlot.cutoffTime,
-      delivery_start: appropriateSlot.deliveryStartTime,
-      delivery_end: appropriateSlot.deliveryEndTime,
-      default: appropriateSlot.isDefault,
-      delivery_price: appropriateSlot.deliveryPrice,
+      id: slot.coreSlotId,
+      defaultDay: slot.defaultDay,
+      cutoffDay: slot.cutoffDay,
+      cutoffTime: slot.cutoffTime,
+      deliveryStart: slot.deliveryStartTime,
+      deliveryEnd: slot.deliveryEndTime,
+      default: slot.isDefault,
+      deliveryPrice: slot.deliveryPrice,
     },
     projected: [],
   }

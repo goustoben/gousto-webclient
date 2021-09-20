@@ -117,20 +117,32 @@ describe('Given useSubscriptionData is invoked', () => {
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'SUBSCRIPTION_DATA_RECEIVED',
       data: {
-        deliveries: mockDeliveriesResponse.data,
+        deliveries: [
+          {
+            slots: [
+              {
+                coreSlotId: 2,
+                defaultDay: 3,
+                deliveryEndTime: '19:00:00',
+                deliveryStartTime: '08:00:00',
+                id: 123,
+              }
+            ]
+          }
+        ],
         subscription: {
           box: {
-            box_type: 'vegetarian',
-            num_portions: 4,
-            num_recipes: 4,
+            boxType: 'vegetarian',
+            numPortions: 4,
+            numRecipes: 4,
           },
           subscription: {
-            delivery_slot_id: 2,
+            deliverySlotId: 2,
             interval: 2,
             state: 'active',
-            delivery_slot_day: 3,
-            delivery_slot_start_time: '08:00:00',
-            delivery_slot_end_time: '19:00:00',
+            deliverySlotDay: 3,
+            deliverySlotStartTime: '08:00:00',
+            deliverySlotEndTime: '19:00:00',
           },
           projected: [],
         }

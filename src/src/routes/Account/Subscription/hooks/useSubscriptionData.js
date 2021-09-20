@@ -7,6 +7,7 @@ import moment from 'moment'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
+import { parseObjectKeysToCamelCase } from 'utils/jsonHelper'
 import { buildSubscriptionQueryUrl } from '../../apis/subscription'
 import { useFetch } from '../../../../hooks/useFetch'
 import {
@@ -15,7 +16,7 @@ import {
   getCurrentUserDeliveryTariffId
 } from '../context/selectors/currentUser'
 import { actionTypes } from '../context/reducers'
-import { mapSubscriptionV2Payload, mapSubscriptionAndDeliverySlots } from '../utils/mapping'
+import { mapSubscriptionPayload, getSubscriptionDeliverySlot } from '../utils/mapping'
 
 export const useSubscriptionData = (
   accessToken,
@@ -74,12 +75,19 @@ export const useSubscriptionData = (
     const allRequestsComplete = deliveriesResponse && subscriptionResponse
 
     if (!hasAnyErrors && allRequestsComplete) {
+      const { subscription, box, projected } = mapSubscriptionPayload(subscriptionResponse.data.subscription)
+      const deliveries = deliveriesResponse.data.map(parseObjectKeysToCamelCase)
+
       const data = {
-        deliveries: deliveriesResponse.data,
-        subscription: mapSubscriptionAndDeliverySlots(
-          mapSubscriptionV2Payload(subscriptionResponse.data.subscription), // todo TG-4896 rename this
-          deliveriesResponse.data,
-        )
+        deliveries,
+        subscription: {
+          subscription: {
+            ...subscription,
+            deliverySlotId: getSubscriptionDeliverySlot(subscription, deliveries),
+          },
+          box,
+          projected
+        },
       }
 
       dispatch({

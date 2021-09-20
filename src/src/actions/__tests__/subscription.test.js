@@ -6,7 +6,7 @@ import logger from 'utils/logger'
 
 import { subscriptionLoadData } from 'actions/subscription'
 import { fetchSubscription } from '../../routes/Account/apis/subscription'
-import { mapSubscriptionV2Payload } from '../../routes/Account/Subscription/utils/mapping'
+import { mapSubscriptionPayload } from '../../routes/Account/Subscription/utils/mapping'
 
 jest.mock('../../routes/Account/apis/subscription', () => ({
   fetchSubscription: jest.fn(),
@@ -77,7 +77,7 @@ describe('subscription actions', () => {
 
       test('maps the API response into SUBSCRIPTION_LOAD_DATA action', async () => {
         const mapped = Symbol('mapped-data')
-        mapSubscriptionV2Payload.mockReturnValue(mapped)
+        mapSubscriptionPayload.mockReturnValue(mapped)
 
         await subscriptionLoadData()(dispatch, getState)
 
@@ -106,7 +106,7 @@ describe('subscription actions', () => {
           data: mockSubscriptionResponse,
         })
         basketNumPortionChange.mockReturnValue(basketAction)
-        mapSubscriptionV2Payload.mockReturnValue({
+        mapSubscriptionPayload.mockReturnValue({
           box: {
             numPortions: subscriptionValue
           }
@@ -131,7 +131,7 @@ describe('subscription actions', () => {
           data: mockSubscriptionResponse,
         })
         basketNumPortionChange.mockReturnValue(basketAction)
-        mapSubscriptionV2Payload.mockReturnValue({})
+        mapSubscriptionPayload.mockReturnValue({})
       })
 
       test('does not update basket numPortions', async () => {
