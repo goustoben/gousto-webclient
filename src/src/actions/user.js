@@ -412,14 +412,13 @@ function userProspect() {
     const { routing } = state
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
-      const account = Immutable.fromJS(state.form[accountFormName].values).get('account')
-      const deliveryForm = Immutable.fromJS(state.form[deliveryFormName])
-      const delivery = deliveryForm ? deliveryForm.getIn(['values', 'delivery']) : {}
+      const account = Immutable.fromJS(getState().form[accountFormName].values).get('account')
+      const delivery = Immutable.fromJS(getState().form[deliveryFormName].values).get('delivery')
 
       const reqData = {
         email: account.get('email'),
-        user_name_first: deliveryForm ? delivery.get('firstName').trim() : '',
-        user_name_last: deliveryForm ? delivery.get('lastName').trim() : '',
+        user_name_first: delivery.get('firstName').trim() || '',
+        user_name_last: delivery.get('lastName').trim() || '',
         promocode: getPromoCode(state),
         allow_marketing_email: account.get('allowEmail'),
         preview_order_id: getPreviewOrderId(state),

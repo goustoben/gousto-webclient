@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { useState, useRef } from 'react'
-import Immutable from 'immutable'
 import classNames from 'classnames'
 import { useDebounce } from 'react-use'
 import checkoutCss from '../../../Checkout.css'
@@ -10,10 +9,7 @@ const propTypes = {
   passwordValue: PropTypes.string,
   type: PropTypes.oneOf(['password', 'text']),
   dataTesting: PropTypes.string,
-  passwordErrors: PropTypes.oneOfType([
-    PropTypes.instanceOf(Immutable.List),
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
+  passwordErrors: PropTypes.arrayOf(PropTypes.string),
   onFocus: PropTypes.func,
   onCustomPasswordBlur: PropTypes.func,
   validatePassword: PropTypes.func,
@@ -24,7 +20,7 @@ const propTypes = {
 const defaultProps = {
   name: '',
   type: 'text',
-  passwordErrors: Immutable.List([]),
+  passwordErrors: [],
   onFocus: () => {},
   onCustomPasswordBlur: () => {},
   validatePassword: () => {},
