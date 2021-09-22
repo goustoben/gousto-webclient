@@ -20,6 +20,6 @@
     "selenium-download": "2.0.7"
   },
   "devDependencies": {
-    "chromedriver": "^92.0.1"
+    "chromedriver": "^93.0.1"
   }
 }
