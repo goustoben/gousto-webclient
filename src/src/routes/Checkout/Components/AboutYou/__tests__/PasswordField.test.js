@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import { PasswordField } from '../PasswordField/PasswordField'
@@ -12,7 +13,7 @@ describe('Given PasswordField component', () => {
   const validatePassword = jest.fn()
   const props = {
     passwordValue: '',
-    passwordErrors: [],
+    passwordErrors: Immutable.List([]),
     onFocus,
     onCustomPasswordBlur,
     validatePassword,

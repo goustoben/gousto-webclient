@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Immutable from 'immutable'
 import classNames from 'classnames'
 import { passwordCriteria } from './errors'
 import css from './PasswordCriteria.css'
@@ -35,13 +36,16 @@ export const PasswordCriteria = ({ password, passwordErrors, showFailedCriteria 
 }
 
 PasswordCriteria.propTypes = {
-  passwordErrors: PropTypes.arrayOf(PropTypes.string),
+  passwordErrors: PropTypes.oneOfType([
+    PropTypes.instanceOf(Immutable.List),
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   password: PropTypes.string,
   showFailedCriteria: PropTypes.bool,
 }
 
 PasswordCriteria.defaultProps = {
-  passwordErrors: [],
+  passwordErrors: Immutable.List([]),
   password: '',
   showFailedCriteria: false,
 }

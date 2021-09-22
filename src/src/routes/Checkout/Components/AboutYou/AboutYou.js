@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
+import Immutable from 'immutable'
 import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import classNames from 'classnames'
@@ -29,10 +30,11 @@ class AboutYou extends PureComponent {
   }
 
   handleSubmit = () => {
-    const { submit, trackUTMAndPromoCode, checkoutValid } = this.props
+    const { submit, trackUTMAndPromoCode, checkoutValid, userProspect } = this.props
     if (checkoutValid) {
       trackUTMAndPromoCode(checkoutClickContinueToDelivery)
     }
+    userProspect()
     submit()
   }
 
@@ -207,12 +209,16 @@ AboutYou.propTypes = {
   submitting: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
   onLoginClick: PropTypes.func,
-  passwordErrors: PropTypes.arrayOf(PropTypes.string),
+  passwordErrors: PropTypes.oneOfType([
+    PropTypes.instanceOf(Immutable.List),
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   isMobile: PropTypes.bool,
   checkoutValid: PropTypes.bool,
   passwordValue: PropTypes.string,
   validatePassword: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
+  userProspect: PropTypes.func,
 }
 
 AboutYou.defaultProps = {
@@ -223,12 +229,13 @@ AboutYou.defaultProps = {
   trackUTMAndPromoCode: () => {},
   submitting: false,
   onLoginClick: () => {},
-  passwordErrors: [],
+  passwordErrors: Immutable.List([]),
   isMobile: true,
   checkoutValid: false,
   passwordValue: '',
   validatePassword: () => {},
   isGoustoOnDemandEnabled: false,
+  userProspect: () => {},
 }
 
 export { AboutYou }
