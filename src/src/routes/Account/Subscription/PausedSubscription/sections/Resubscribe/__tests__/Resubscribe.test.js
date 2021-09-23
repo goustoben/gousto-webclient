@@ -33,14 +33,6 @@ const mockSuccessfulResponse = { status: 'ok', data: 'SUCCESS' }
 const mockErrorResponse = { status: 'error', errors: ['error'] }
 
 describe('Resubscribe', () => {
-  beforeEach(() => {
-    jest.resetAllMocks()
-
-    trackSubscriptionSettingsChange.mockReturnValue(() => { })
-    useFetch.mockReturnValue([])
-    mountWithPropsAndState()
-  })
-
   describe('When I click the Resubscribe CTA', () => {
     beforeEach(async () => {
       useFetch.mockReturnValue([false, mockSuccessfulResponse, false])
@@ -81,33 +73,36 @@ describe('Resubscribe', () => {
         })
       })
     })
+  })
 
-    describe('And if the request is unsuccessful', () => {
-      beforeEach(async () => {
-        jest.resetAllMocks()
-        useFetch.mockReturnValue([false, mockErrorResponse, false])
+  describe('And if the request is unsuccessful', () => {
+    beforeEach(async () => {
+      jest.resetAllMocks()
+      useFetch.mockReturnValue([false, mockErrorResponse, false])
 
-        mountWithPropsAndState()
+      mountWithPropsAndState()
 
-        await act(async () => {
-          wrapper
-            .find('[data-testing="resubscribe-cta"]')
-            .simulate('click')
+      await act(async () => {
+        wrapper
+          .find('[data-testing="resubscribe-cta"]')
+          .simulate('click')
 
-          await flushPromises()
-        })
-
-        wrapper.update()
+        await flushPromises()
       })
 
-      test('Then the action is *not* dispatched', () => {
-        expect(mockDispatch).not.toHaveBeenCalled()
-      })
+      wrapper.update()
+    })
+
+    test('Then the action is *not* dispatched', () => {
+      expect(mockDispatch).not.toHaveBeenCalled()
     })
   })
 
   describe('When subscriber pricing is enabled', () => {
     beforeEach(async () => {
+      jest.resetAllMocks()
+
+      trackSubscriptionSettingsChange.mockReturnValue(() => { })
       useFetch.mockReturnValue([false, mockSuccessfulResponse, false])
 
       mountWithPropsAndState(null, { isSubscriberPricingEnabled: true })
