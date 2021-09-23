@@ -128,7 +128,6 @@ const DeliveryStep = ({
   isPaymentBeforeChoosingEnabled,
   trackSignupWizardAction,
   showcaseMenuSeen,
-  isSocialBelongingEnabled,
   district,
   amountOfCustomers,
   trackSocialBelongingBannerAppearance,
@@ -141,7 +140,7 @@ const DeliveryStep = ({
     userHasAvailableSlots,
     { isGoustoOnDemandEnabled }
   )
-  const showSocialBelongingBanner = isSocialBelongingEnabled && district && amountOfCustomers > 50
+  const showSocialBelongingBanner = district && amountOfCustomers > 50
 
   if (nextDayDeliveryPaintedDoorFeature) {
     const nextDayDeliveryDays = createNextDayDeliveryDays()
@@ -316,7 +315,6 @@ DeliveryStep.propTypes = {
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   trackSignupWizardAction: PropTypes.func.isRequired,
   showcaseMenuSeen: PropTypes.bool,
-  isSocialBelongingEnabled: PropTypes.bool,
   district: PropTypes.string,
   amountOfCustomers: PropTypes.number,
   trackSocialBelongingBannerAppearance: PropTypes.func,
@@ -342,7 +340,6 @@ DeliveryStep.defaultProps = {
   isTastePreferencesEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
   showcaseMenuSeen: false,
-  isSocialBelongingEnabled: false,
   district: null,
   amountOfCustomers: null,
   trackSocialBelongingBannerAppearance: () => {},

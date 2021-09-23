@@ -1,13 +1,16 @@
 import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
+import { fetchCountByPostcode } from 'apis/signup'
 import { featuresSet } from 'actions/features'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { completeWizardPostcode, clickSeeThisWeeksMenu, signupSocialBelongingBanner } from 'actions/trackingKeys'
 import { stepByName } from 'utils/signup'
 import { signupConfig } from 'config/signup'
+import { getAccessToken } from 'selectors/auth'
 import { getUTMAndPromoCode } from 'selectors/tracking'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import logger from 'utils/logger'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
 
@@ -138,13 +141,22 @@ export const signupSetSocialBelongingOptions = (socialBelongingOptions) => ({
   ...socialBelongingOptions,
 })
 
-export function signupChangePostcode(postcode, nextStepName, socialBelongingOptions) {
+export const signupGetCountByPostcode = (postcode) => async (dispatch, getState) => {
+  let socialBelongingOptions = {}
+  try {
+    const accessToken = getAccessToken(getState())
+    const { data } = await fetchCountByPostcode(accessToken, { postcode })
+    socialBelongingOptions = data
+  } catch (e) {
+    logger.error('No users found in current area')
+  } finally {
+    dispatch(signupSetSocialBelongingOptions(socialBelongingOptions))
+  }
+}
+
+export function signupChangePostcode(postcode, nextStepName) {
   return async (dispatch, getState) => {
     await dispatch(basketPostcodeChange(postcode))
-
-    if (socialBelongingOptions) {
-      dispatch(signupSetSocialBelongingOptions(socialBelongingOptions))
-    }
 
     if (!getState().error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false)) {
       dispatch(trackSignupWizardAction(completeWizardPostcode, { postcode }))

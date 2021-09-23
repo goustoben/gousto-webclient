@@ -22,6 +22,11 @@ describe('Given I land on postcode slide of the wizard', () => {
     cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')
     cy.route(
       'GET',
+      'customers/customers/district/count-by-postcode',
+      'fixture:signup/countByPostcode.json'
+    )
+    cy.route(
+      'GET',
       /^(?=.*\bdeliveries\/v1.0\/days\b)(?!.*\bpostcode\b).*$/,
       'fixture:deliveries/deliveryDays.json'
     )

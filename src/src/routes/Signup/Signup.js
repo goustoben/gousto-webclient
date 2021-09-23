@@ -76,7 +76,6 @@ const propTypes = {
   isPaymentBeforeChoosingV2Enabled: PropTypes.bool,
   isDiscountAppliedBarDismissed: PropTypes.bool,
   signupDismissDiscountAppliedBar: PropTypes.func,
-  isSocialBelongingEnabled: PropTypes.bool,
   signupSetStep: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
 }
@@ -105,7 +104,6 @@ const defaultProps = {
   isPaymentBeforeChoosingV2Enabled: false,
   isDiscountAppliedBarDismissed: false,
   signupDismissDiscountAppliedBar: () => {},
-  isSocialBelongingEnabled: false,
   signupSetStep: () => {},
   isGoustoOnDemandEnabled: false,
 }
@@ -291,7 +289,7 @@ class Signup extends PureComponent {
   }
 
   renderSteps = (steps, currentStepNumber) => {
-    const { goToStep, stepName, isSocialBelongingEnabled, isGoustoOnDemandEnabled } = this.props
+    const { goToStep, stepName, isGoustoOnDemandEnabled } = this.props
     const step = steps.getIn([currentStepNumber, 'name'])
     const name = components[stepName]
     const isLastStep = currentStepNumber === steps.size - 1
@@ -306,7 +304,6 @@ class Signup extends PureComponent {
         stepNumber={currentStepNumber}
         isLastStep={isLastStep}
         active={stepName === name}
-        isSocialBelongingEnabled={isSocialBelongingEnabled}
         isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
       />
     )

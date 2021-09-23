@@ -5,6 +5,7 @@ import { PostcodeStep } from '../Postcode/PostcodeStep'
 describe('Postcode Step', () => {
   let wrapper
   const changePostcode = jest.fn()
+  const signupGetCountByPostcode = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
@@ -12,6 +13,7 @@ describe('Postcode Step', () => {
         changePostcode={changePostcode}
         tempPostcode="temp_postcode"
         nextStepName="next_step"
+        signupGetCountByPostcode={signupGetCountByPostcode}
       />
     )
   })
@@ -29,7 +31,11 @@ describe('Postcode Step', () => {
     })
 
     test('then changePostcode should be called', () => {
-      expect(changePostcode).toHaveBeenCalledWith('temp_postcode', 'next_step', null)
+      expect(changePostcode).toHaveBeenCalledWith('temp_postcode', 'next_step')
+    })
+
+    test('then signupGetCountByPostcode should be called', () => {
+      expect(signupGetCountByPostcode).toHaveBeenCalledWith('temp_postcode')
     })
   })
 })

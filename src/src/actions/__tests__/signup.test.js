@@ -16,7 +16,14 @@ import {
   signupGoToMenu,
   trackSignupWizardAction,
   trackSocialBelongingBannerAppearance,
+  signupGetCountByPostcode,
 } from 'actions/signup'
+import { fetchCountByPostcode } from 'apis/signup'
+import logger from 'utils/logger'
+
+jest.mock('utils/logger', () => ({
+  error: jest.fn(),
+}))
 
 jest.mock('actions/basket', () => ({
   basketPostcodeChange: jest.fn(),
@@ -25,6 +32,8 @@ jest.mock('actions/basket', () => ({
 jest.mock('actions/tracking', () => ({
   trackUTMAndPromoCode: jest.fn(),
 }))
+
+jest.mock('apis/signup')
 
 jest.mock('react-router-redux', () => ({
   push: jest.fn(),
@@ -402,6 +411,57 @@ describe('signup actions', () => {
           district: 'District',
           number_of_customers: 100,
         },
+      })
+    })
+  })
+
+  describe('given signupGetCountByPostcode is called', () => {
+    describe('when count is successfully fetched', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          auth: Immutable.fromJS({
+            accessToken: 'token',
+          }),
+        })
+        fetchCountByPostcode.mockResolvedValue(
+          new Promise(resolve => {
+            resolve({
+              data: {
+                count: 100,
+                district: 'district',
+              },
+            })
+          }))
+      })
+
+      test('then it should dispatch correct data', async () => {
+        await signupGetCountByPostcode('postcode')(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'SIGNUP_SET_SOCIAL_BELONGING_OPTIONS',
+          count: 100,
+          district: 'district',
+        })
+      })
+    })
+
+    describe('when count does not exist', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          auth: Immutable.fromJS({
+            accessToken: 'token',
+          }),
+        })
+        fetchCountByPostcode.mockRejectedValue({
+          error: 'error',
+          message: 'there are no people in current district',
+        })
+      })
+
+      test('then logger error should be called', async () => {
+        await signupGetCountByPostcode('postcode')(dispatch, getState)
+
+        expect(logger.error).toHaveBeenCalledWith('No users found in current area')
       })
     })
   })

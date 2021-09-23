@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "meta": {
+    "offset": 0,
+    "limit": 1,
+    "count": 1,
+    "total": 1
+  },
+  "data": {
+    "postcode": "AB167XR",
+    "district": "Aberdeen City",
+    "count": 1169
+  }
+}

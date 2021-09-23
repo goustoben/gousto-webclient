@@ -38,8 +38,8 @@ const signup = {
 
     case actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS: {
       return state
-        .setIn(['wizard', 'amountOfCustomers'], action.amountOfCustomers)
-        .setIn(['wizard', 'district'], action.district)
+        .setIn(['wizard', 'amountOfCustomers'], action.count || null)
+        .setIn(['wizard', 'district'], action.district || null)
     }
 
     default: {

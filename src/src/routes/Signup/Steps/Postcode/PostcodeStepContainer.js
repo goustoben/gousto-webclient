@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import tempActions from 'actions/temp'
-import { signupChangePostcode } from 'actions/signup'
+import { signupChangePostcode, signupGetCountByPostcode } from 'actions/signup'
 import { PostcodeStep } from './PostcodeStep'
 
 function mapStateToProps(state) {
@@ -15,6 +15,7 @@ function mapStateToProps(state) {
 const PostcodeStepContainer = connect(mapStateToProps, {
   changeTempPostcode: (postcode) => tempActions.temp('postcode', postcode.toUpperCase()),
   changePostcode: signupChangePostcode,
+  signupGetCountByPostcode,
 })(PostcodeStep)
 
 export { PostcodeStepContainer }

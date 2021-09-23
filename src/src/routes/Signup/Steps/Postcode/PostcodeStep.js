@@ -6,18 +6,15 @@ import { Heading } from 'goustouicomponents'
 import { PostcodeStepMessage } from './PostcodeStepMessage'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
-import { getDataForSocialBelonging } from '../signupUtils'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
 
 class PostcodeStep extends PureComponent {
   handleClick = () => {
-    const { tempPostcode, nextStepName, changePostcode, isSocialBelongingEnabled } = this.props
-    const socialBelongingData = isSocialBelongingEnabled
-      ? getDataForSocialBelonging(tempPostcode.replace(' ', ''))
-      : null
+    const { tempPostcode, nextStepName, changePostcode, signupGetCountByPostcode } = this.props
 
-    changePostcode(tempPostcode, nextStepName, socialBelongingData)
+    signupGetCountByPostcode(tempPostcode)
+    changePostcode(tempPostcode, nextStepName)
   }
 
   render() {
@@ -97,10 +94,10 @@ PostcodeStep.propTypes = {
   postcodePending: PropTypes.bool,
   tempPostcode: PropTypes.string,
   changeTempPostcode: PropTypes.func,
-  changePostcode: PropTypes.func,
+  changePostcode: PropTypes.func.isRequired,
   nextStepName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isSocialBelongingEnabled: PropTypes.bool,
   isGoustoOnDemandEnabled: PropTypes.bool,
+  signupGetCountByPostcode: PropTypes.func.isRequired,
 }
 
 PostcodeStep.defaultProps = {
@@ -108,9 +105,7 @@ PostcodeStep.defaultProps = {
   postcodePending: false,
   tempPostcode: '',
   changeTempPostcode: () => {},
-  changePostcode: () => {},
   nextStepName: '',
-  isSocialBelongingEnabled: false,
   isGoustoOnDemandEnabled: false,
 }
 

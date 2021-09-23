@@ -40,7 +40,7 @@ describe('signup reducer', () => {
   describe('given SIGNUP_SET_SOCIAL_BELONGING_OPTIONS is dispatched', () => {
     const action = {
       type: actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS,
-      amountOfCustomers: 100,
+      count: 100,
       district: 'District',
     }
     let initialState
