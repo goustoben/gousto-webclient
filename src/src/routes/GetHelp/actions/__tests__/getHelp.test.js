@@ -36,11 +36,13 @@ import {
   trackRefundFAQClick,
   trackIngredientsAutoAcceptCheck,
   trackIngredientsGetInTouchClick,
+  trackIngredientsGoToMyGousto,
   trackSelectDeliveryCategory,
   trackSelectIngredient,
   validateDeliveryAction,
   validateLatestOrder,
 } from '../getHelp'
+import * as orderSelectors from '../../selectors/orderSelectors'
 import { transformRecipesWithIngredients } from '../transformers/recipeTransform'
 
 jest.mock('utils/logger', () => ({
@@ -55,6 +57,7 @@ const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
 const fetchRecipesWithIngredients = safeJestMock(menuApi, 'fetchRecipesWithIngredients')
 const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
 const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
+const getIsMultiComplaintLimitReachedLastFourWeeks = safeJestMock( orderSelectors, 'getIsMultiComplaintLimitReachedLastFourWeeks')
 
 const ACCESS_TOKEN = 'access-token'
 const GET_STATE_PARAMS = {
@@ -464,6 +467,69 @@ describe('GetHelp action generators and thunks', () => {
           is_second_complaint: true,
           seCategory: 'help',
         }
+      })
+    })
+  })
+
+  describe('trackIngredientsGetInTouchClick with isMultiComplaintLimitReachedLastFourWeeks true', () => {
+    beforeEach(() => {
+      getIsMultiComplaintLimitReachedLastFourWeeks.mockReturnValue(true)
+      const PARAMS = {
+        ...GET_STATE_PARAMS,
+        getHelp: Immutable.fromJS({
+          isAutoAccept: false,
+          compensation: {}
+        })
+      }
+      getState = jest.fn().mockReturnValue(PARAMS)
+    })
+
+    test('dispatch the tracking action with reason multi_complaint_limit_last_four_week', () => {
+      trackIngredientsGetInTouchClick()(dispatch, getState)
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_ingredients_click_get_in_touch',
+          reason: 'multi_complaint_limit_last_four_week',
+          auto_accept: false,
+          is_second_complaint: false,
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackIngredientsGoToMyGousto', () => {
+    describe('when isMultiComplaintLimitReachedLastFourWeeks is true', () => {
+      beforeEach(() => {
+        getIsMultiComplaintLimitReachedLastFourWeeks.mockReturnValue(true)
+      })
+
+      test('dispatch the tracking action with reason multi_complaint_limit_last_four_week', () => {
+        trackIngredientsGoToMyGousto()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_click_go_to_my_gousto',
+            reason: 'multi_complaint_limit_last_four_week'
+          }
+        })
+      })
+    })
+
+    describe('when isMultiComplaintLimitReachedLastFourWeeks is false', () => {
+      beforeEach(() => {
+        getIsMultiComplaintLimitReachedLastFourWeeks.mockReturnValue(false)
+      })
+
+      test('dispatch the tracking action with reason multi_complaint_limit_last_four_week', () => {
+        trackIngredientsGoToMyGousto()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_click_go_to_my_gousto',
+          }
+        })
       })
     })
   })

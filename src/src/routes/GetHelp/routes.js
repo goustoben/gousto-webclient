@@ -10,6 +10,7 @@ import { GetHelpContainer } from './GetHelpContainer'
 import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
+import { IneligibleIngredientsContainer } from './IneligibleIngredients'
 import { DeliveryContainer } from './Delivery'
 import { DeliveryValidationContainer } from './Delivery/DeliveryValidation'
 import { DontKnowWhen } from './Delivery/DontKnowWhen'
@@ -31,6 +32,7 @@ const getHelpRoutes = (store) => {
     deliveryDidntArriveValidation,
     deliveryDontKnowWhen,
     ingredients,
+    multipleIngredientsIssues,
     recipeCards,
   } = configRoutes.client.getHelp
 
@@ -67,24 +69,28 @@ const getHelpRoutes = (store) => {
           component={AutoAcceptConfirmationContainer}
         />
         <Route
-          path={delivery({userId: ':userId', orderId: ':orderId'})}
+          path={delivery({ userId: ':userId', orderId: ':orderId' })}
           component={DeliveryContainer}
         />
         <Route
-          path={deliveryDidntArriveValidation({userId: ':userId', orderId: ':orderId'})}
+          path={deliveryDidntArriveValidation({ userId: ':userId', orderId: ':orderId' })}
           component={DeliveryValidationContainer}
         />
         <Route
-          path={deliveryDontKnowWhen({userId: ':userId', orderId: ':orderId'})}
+          path={deliveryDontKnowWhen({ userId: ':userId', orderId: ':orderId' })}
           component={DontKnowWhen}
         />
         <Route
-          path={deliveryDidntArrive({userId: ':userId', orderId: ':orderId'})}
+          path={deliveryDidntArrive({ userId: ':userId', orderId: ':orderId' })}
           component={DidntArriveContainer}
         />
         <Route
           path={ingredients({ userId: ':userId', orderId: ':orderId' })}
           component={IngredientsContainer}
+        />
+        <Route
+          path={multipleIngredientsIssues}
+          component={IneligibleIngredientsContainer}
         />
         <Route
           path={recipeCards({ userId: ':userId', orderId: ':orderId' })}

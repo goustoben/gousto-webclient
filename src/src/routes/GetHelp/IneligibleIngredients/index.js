@@ -1,0 +1,1 @@
+export { IneligibleIngredientsContainer } from './IneligibleIngredientsContainer'

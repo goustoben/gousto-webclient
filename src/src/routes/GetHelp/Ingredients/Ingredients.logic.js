@@ -8,6 +8,7 @@ import { recipePropType } from '../getHelpPropTypes'
 
 const propTypes = {
   massIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isMultiComplaintLimitReachedLastFourWeeks: PropTypes.bool.isRequired,
   isOrderValidationError: PropTypes.bool.isRequired,
   isValidateOrderLoading: PropTypes.bool.isRequired,
   order: PropTypes.shape({
@@ -51,9 +52,11 @@ class Ingredients extends PureComponent {
   }
 
   componentDidUpdate() {
-    const { isOrderValidationError } = this.props
+    const { isOrderValidationError, isMultiComplaintLimitReachedLastFourWeeks } = this.props
 
-    if (isOrderValidationError) {
+    if (isMultiComplaintLimitReachedLastFourWeeks) {
+      this.redirectToIneligibleIngredientsPage()
+    } else if (isOrderValidationError) {
       this.redirectToContactPage()
     }
   }
@@ -121,6 +124,10 @@ class Ingredients extends PureComponent {
 
   redirectToContactPage = () => {
     browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
+  }
+
+  redirectToIneligibleIngredientsPage = () => {
+    browserHistory.push(`${client.getHelp.index}/${client.getHelp.multipleIngredientsIssues}`)
   }
 
   render() {

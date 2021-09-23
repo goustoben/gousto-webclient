@@ -46,6 +46,7 @@ describe('<Ingredients />', () => {
 
   const PROPS = {
     massIssueIneligibleIngredientUuids: MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
+    isMultiComplaintLimitReachedLastFourWeeks: false,
     isOrderValidationError: false,
     isValidateOrderLoading: false,
     order,
@@ -303,6 +304,21 @@ describe('<Ingredients />', () => {
 
         test('redirects to /contact', () => {
           expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
+        })
+      })
+
+      describe('and order validation errors is multiComplaintLimitReachedLastFourWeeks', () => {
+        beforeEach(() => {
+          wrapper = mount(
+            <Ingredients
+              {...PROPS}
+            />
+          )
+          wrapper.setProps({ isMultiComplaintLimitReachedLastFourWeeks: true })
+        })
+
+        test('redirects to /multiple-ingredients-issues', () => {
+          expect(browserHistory.push).toHaveBeenCalledWith('/get-help/multiple-ingredients-issues')
         })
       })
 
