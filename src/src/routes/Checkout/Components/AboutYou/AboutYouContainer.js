@@ -27,6 +27,7 @@ function connectComponent(sectionName) {
     trackCheckoutButtonPressed,
     trackUTMAndPromoCode,
     validatePassword,
+    userProspect: actions.userProspect,
   })(AboutYou)
 }
 
