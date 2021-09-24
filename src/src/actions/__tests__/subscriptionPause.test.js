@@ -3082,7 +3082,6 @@ describe('Subscription action', () => {
       })
 
       await fetchData()(dispatch, getState)
-      // await flushPromises()
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS',
