@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import TextInput from 'Form/Input'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
@@ -24,20 +25,29 @@ class PostcodeStep extends PureComponent {
       postcodePending,
       deliveryDaysError,
       isGoustoOnDemandEnabled,
+      isWizardWithoutImagesEnabled,
     } = this.props
 
     return (
       <div className={css.stepContainer} data-testing="signupPostcodeStep">
         <div className={css.fullWidth}>
-          <div className={css.header}>
+          <div
+            className={classNames(css.header, {
+              [css.wizardWithoutImagesHeader]: isWizardWithoutImagesEnabled,
+            })}
+          >
             <Heading type="h1">
               {isGoustoOnDemandEnabled
                 ? signupConfig.postCodeStep.goustoOnDemandTitle
                 : signupConfig.postCodeStep.title}
             </Heading>
-            <Image name="where-to-deliver" />
+            {!isWizardWithoutImagesEnabled && <Image name="where-to-deliver" />}
           </div>
-          <div className={css.body}>
+          <div
+            className={classNames(css.body, {
+              [postcodeCss.wizardWithoutImagesBody]: isWizardWithoutImagesEnabled,
+            })}
+          >
             <div className={postcodeCss.inputContainer}>
               <form
                 onSubmit={(e) => {
@@ -49,8 +59,16 @@ class PostcodeStep extends PureComponent {
                 action="#"
                 className={postcodeCss.row}
               >
-                <div className={postcodeCss.container}>
-                  <div className={postcodeCss.postcodeContainer}>
+                <div
+                  className={classNames(postcodeCss.container, {
+                    [postcodeCss.wizardWithoutImagesContainer]: isWizardWithoutImagesEnabled,
+                  })}
+                >
+                  <div
+                    className={classNames(postcodeCss.postcodeContainer, {
+                      [postcodeCss.wizardWithoutImagesCodeContainer]: isWizardWithoutImagesEnabled,
+                    })}
+                  >
                     <div className={postcodeCss.postcodeLabel}>Postcode</div>
                     <TextInput
                       isFixed
@@ -81,6 +99,7 @@ class PostcodeStep extends PureComponent {
             <PostcodeStepMessage
               deliveryDaysError={deliveryDaysError}
               isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+              isWizardWithoutImagesEnabled={isWizardWithoutImagesEnabled}
             />
           </div>
         </div>
@@ -98,6 +117,7 @@ PostcodeStep.propTypes = {
   nextStepName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isGoustoOnDemandEnabled: PropTypes.bool,
   signupGetCountByPostcode: PropTypes.func.isRequired,
+  isWizardWithoutImagesEnabled: PropTypes.bool,
 }
 
 PostcodeStep.defaultProps = {
@@ -107,6 +127,7 @@ PostcodeStep.defaultProps = {
   changeTempPostcode: () => {},
   nextStepName: '',
   isGoustoOnDemandEnabled: false,
+  isWizardWithoutImagesEnabled: false,
 }
 
 export { PostcodeStep }

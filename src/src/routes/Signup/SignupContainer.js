@@ -9,6 +9,7 @@ import {
 import { signupDismissDiscountAppliedBar, signupSetStep } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
+import { getIsWizardWithoutImagesEnabled } from 'routes/Signup/signupSelectors'
 import { Signup } from './Signup'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -27,6 +28,7 @@ const mapStateToProps = (state, ownProps) => ({
   isPaymentBeforeChoosingV2Enabled: getIsPaymentBeforeChoosingV2Enabled(state),
   isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
   isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
+  isWizardWithoutImagesEnabled: getIsWizardWithoutImagesEnabled(state),
 })
 
 const SignupContainer = connect(mapStateToProps, {

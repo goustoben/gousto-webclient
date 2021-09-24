@@ -63,6 +63,12 @@
   margin-bottom: 1rem;
 }
 
+.wizardWithoutImagesHeader {
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
 .body {
   text-align: center;
 }

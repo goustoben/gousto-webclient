@@ -132,6 +132,7 @@ const DeliveryStep = ({
   amountOfCustomers,
   trackSocialBelongingBannerAppearance,
   isGoustoOnDemandEnabled,
+  isWizardWithoutImagesEnabled,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
@@ -205,13 +206,17 @@ const DeliveryStep = ({
     return (
       <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
         <div className={signupCss.fullWidth}>
-          <div className={signupCss.header}>
+          <div
+            className={classNames(signupCss.header, {
+              [signupCss.wizardWithoutImagesHeader]: isWizardWithoutImagesEnabled,
+            })}
+          >
             <Heading type="h1">
               {isGoustoOnDemandEnabled
                 ? signupConfig.deliveryOptionsStep.goustoOnDemandTitle
                 : signupConfig.deliveryOptionsStep.title}
             </Heading>
-            <Image name="delivery-day" />
+            {!isWizardWithoutImagesEnabled && <Image name="delivery-day" />}
           </div>
           <div className={signupCss.body}>
             <div className={css.container}>
@@ -238,19 +243,24 @@ const DeliveryStep = ({
   return (
     <div className={signupCss.stepContainer} data-testing="signupDeliveryStep">
       <div className={signupCss.fullWidth}>
-        <div className={signupCss.header}>
+        <div
+          className={classNames(signupCss.header, {
+            [signupCss.wizardWithoutImagesHeader]: isWizardWithoutImagesEnabled,
+          })}
+        >
           <Heading type="h1">
             {isGoustoOnDemandEnabled
               ? signupConfig.deliveryOptionsStep.goustoOnDemandTitle
               : signupConfig.deliveryOptionsStep.title}
           </Heading>
-          <Image name="delivery-day" />
+          {!isWizardWithoutImagesEnabled && <Image name="delivery-day" />}
         </div>
         {showSocialBelongingBanner && (
           <SocialBelongingBanner
             amountOfCustomers={amountOfCustomers}
             district={district}
             trackBannerAppearance={trackSocialBelongingBannerAppearance}
+            isWizardWithoutImagesEnabled={isWizardWithoutImagesEnabled}
           />
         )}
         <div className={signupCss.body}>
@@ -319,6 +329,7 @@ DeliveryStep.propTypes = {
   amountOfCustomers: PropTypes.number,
   trackSocialBelongingBannerAppearance: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
+  isWizardWithoutImagesEnabled: PropTypes.bool,
 }
 
 DeliveryStep.defaultProps = {
@@ -344,6 +355,7 @@ DeliveryStep.defaultProps = {
   amountOfCustomers: null,
   trackSocialBelongingBannerAppearance: () => {},
   isGoustoOnDemandEnabled: false,
+  isWizardWithoutImagesEnabled: false,
 }
 
 export { DeliveryStep }

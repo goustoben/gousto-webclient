@@ -1,11 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import Svg from 'Svg'
 import { Benefits } from 'routes/Home/Benefits'
 import postcodeCss from './PostcodeStep.css'
 
-export const PostcodeStepMessage = ({ isGoustoOnDemandEnabled, deliveryDaysError }) => {
+export const PostcodeStepMessage = ({
+  isGoustoOnDemandEnabled,
+  deliveryDaysError,
+  isWizardWithoutImagesEnabled,
+}) => {
   if (isGoustoOnDemandEnabled && !deliveryDaysError) {
     return <Benefits isCentered byId="freeDelivery" fontStyleBody />
   }
@@ -19,7 +24,13 @@ export const PostcodeStepMessage = ({ isGoustoOnDemandEnabled, deliveryDaysError
   }
 
   return (
-    <div className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
+    <div
+      className={classNames({
+        [postcodeCss.errorText]: deliveryDaysError,
+        [postcodeCss.bodyText]: !deliveryDaysError,
+        [postcodeCss.wizardWithoutImages]: isWizardWithoutImagesEnabled,
+      })}
+    >
       {!deliveryDaysError && <Svg className={postcodeCss.tick} fileName="icon-success-tick" />}
       {text}
     </div>
@@ -29,9 +40,11 @@ export const PostcodeStepMessage = ({ isGoustoOnDemandEnabled, deliveryDaysError
 PostcodeStepMessage.propTypes = {
   isGoustoOnDemandEnabled: PropTypes.bool,
   deliveryDaysError: PropTypes.string,
+  isWizardWithoutImagesEnabled: PropTypes.bool,
 }
 
 PostcodeStepMessage.defaultProps = {
   isGoustoOnDemandEnabled: false,
   deliveryDaysError: '',
+  isWizardWithoutImagesEnabled: false,
 }

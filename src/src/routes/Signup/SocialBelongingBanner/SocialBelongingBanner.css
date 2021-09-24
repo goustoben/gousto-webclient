@@ -9,6 +9,10 @@
   }
 }
 
+.wizardWithoutImagesContainer {
+  max-width: 100%;
+}
+
 .bold {
   composes: fontBold from 'design-language/typography.css';
 }

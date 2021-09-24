@@ -1,6 +1,9 @@
 import { createSelector } from 'reselect'
 import { getPromoCode } from 'selectors/basket'
 
+export const getIsWizardWithoutImagesEnabled = ({ features }) =>
+  features && features.getIn(['isWizardWithoutImagesEnabled', 'value'], false)
+
 export const getPromoStore = ({ promoStore }) => promoStore
 
 export const getCurrentPromoCodeData = createSelector(

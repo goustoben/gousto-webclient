@@ -11,6 +11,10 @@
   }
 }
 
+.wizardWithoutImagesBody {
+  max-width: 22rem;
+}
+
 .row {
   white-space: nowrap;
 }
@@ -23,6 +27,10 @@
   button {
     max-width: 8.25rem;
   }
+}
+
+.wizardWithoutImagesContainer {
+  justify-content: flex-start;
 }
 
 .postcodeContainer {
@@ -42,6 +50,10 @@
   > div {
     width: 100%;
   }
+}
+
+.wizardWithoutImagesCodeContainer {
+  flex: 1;
 }
 
 .postcodeLabel {
@@ -75,4 +87,9 @@
     color: Haricot;
     max-width: 19rem;
   }
+}
+
+.wizardWithoutImages {
+  margin-left: 0;
+  justify-content: flex-start;
 }

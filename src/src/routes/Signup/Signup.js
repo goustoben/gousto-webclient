@@ -78,6 +78,7 @@ const propTypes = {
   signupDismissDiscountAppliedBar: PropTypes.func,
   signupSetStep: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
+  isWizardWithoutImagesEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -106,6 +107,7 @@ const defaultProps = {
   signupDismissDiscountAppliedBar: () => {},
   signupSetStep: () => {},
   isGoustoOnDemandEnabled: false,
+  isWizardWithoutImagesEnabled: false,
 }
 
 const contextTypes = {
@@ -289,7 +291,7 @@ class Signup extends PureComponent {
   }
 
   renderSteps = (steps, currentStepNumber) => {
-    const { goToStep, stepName, isGoustoOnDemandEnabled } = this.props
+    const { goToStep, stepName, isGoustoOnDemandEnabled, isWizardWithoutImagesEnabled } = this.props
     const step = steps.getIn([currentStepNumber, 'name'])
     const name = components[stepName]
     const isLastStep = currentStepNumber === steps.size - 1
@@ -305,6 +307,7 @@ class Signup extends PureComponent {
         isLastStep={isLastStep}
         active={stepName === name}
         isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+        isWizardWithoutImagesEnabled={isWizardWithoutImagesEnabled}
       />
     )
   }

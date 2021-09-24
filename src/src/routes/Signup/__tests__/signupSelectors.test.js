@@ -1,5 +1,9 @@
 import Immutable from 'immutable'
-import { getCurrentPromoCodeCustomText1, getCurrentPromoCodeCustomText2 } from '../signupSelectors'
+import {
+  getCurrentPromoCodeCustomText1,
+  getCurrentPromoCodeCustomText2,
+  getIsWizardWithoutImagesEnabled,
+} from '../signupSelectors'
 
 describe('signupSelectors', () => {
   describe('given getCurrentPromoCodeCustomText1 is called', () => {
@@ -81,6 +85,24 @@ describe('signupSelectors', () => {
       test('then it should return null', () => {
         expect(getCurrentPromoCodeCustomText2(state)).toBe(null)
       })
+    })
+  })
+
+  describe('given getIsWizardWithoutImagesEnabled is called', () => {
+    let state
+
+    beforeEach(() => {
+      state = {
+        features: Immutable.fromJS({
+          isWizardWithoutImagesEnabled: {
+            value: true,
+          },
+        }),
+      }
+    })
+
+    test('then it should return true', () => {
+      expect(getIsWizardWithoutImagesEnabled(state)).toBeTruthy()
     })
   })
 })
