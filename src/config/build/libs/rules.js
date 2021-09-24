@@ -73,7 +73,7 @@ const combineRules = (jsRule, cssRules) => ([
     ...imageRules,
   ])
 
-const getClientRules = (tsconfigPath = "./tsconfig.json", isDevelopmentBuild = false, isHmrEnabled = false) => {
+const getClientRules = (tsconfigPath = "../tsconfig.client.json", isDevelopmentBuild = false, isHmrEnabled = false) => {
   const cssRules = isDevelopmentBuild ? cssDevelopmentRules : cssProductionRules
   return combineRules(typescriptRule(tsconfigPath), cssRules)
 }
