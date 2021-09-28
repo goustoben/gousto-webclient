@@ -3,8 +3,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
-    "checkJs": false,
-    "emitDecoratorMetadata": true,
+    "checkJs": true,
     "esModuleInterop": true,
     "experimentalDecorators": false,
     "forceConsistentCasingInFileNames": true,
@@ -55,6 +54,7 @@
     "./config",
     "./dist",
     "./jest",
+    "./node_modules",
     "./libs",
     "./libs/goustouicomponents/.github",
     "./libs/goustouicomponents/.storybook",
@@ -64,5 +64,5 @@
     "./scripts",
     "./server",
   ],
-  "include": ["./"]
+  "include": ["./**/*"]
 }
