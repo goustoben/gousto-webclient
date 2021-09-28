@@ -456,6 +456,79 @@ describe('order selectors', () => {
       })
     })
 
+    describe('when recipes in the basket is missing from recipes', () => {
+      test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
+        const state = createState({
+          slot: {
+            daySlotLeadTimeId: null
+          },
+          basket: {
+            recipes: {
+              'recipe-id-1': 1,
+              'recipe-id-2': 2,
+              'recipe-id-is-missing-from-this-week': 2,
+            },
+          }
+        })
+
+        const orderDetails = getOrderV2(state)
+
+        expect(orderDetails).toEqual({
+          type: 'order',
+          attributes: {
+            menu_id: '433',
+          },
+          relationships: {
+            components: {
+              data: [{
+                id: 'recipe-uuid-1',
+                meta: {
+                  portion_for: 2
+                },
+                type: 'recipe'
+              },
+              {
+                id: 'recipe-uuid-2',
+                meta: {
+                  portion_for: 2
+                },
+                type: 'recipe'
+              },
+              {
+                id: 'recipe-uuid-2',
+                meta: {
+                  portion_for: 2
+                },
+                type: 'recipe'
+              }
+              ]
+            },
+            delivery_day: {
+              data: {
+                id: 'delivery-days-id',
+                type: 'delivery-day'
+              }
+            },
+            delivery_slot: {
+              data: {
+                id: 'slot-core-id',
+                type: 'delivery-slot',
+                meta: {
+                  uuid: 'slot-uuid',
+                },
+              }
+            },
+            delivery_tariff: {
+              data: {
+                id: deliveryTariffTypes.NON_NDD,
+                type: 'delivery-tariff'
+              }
+            }
+          }
+        })
+      })
+    })
+
     describe('when menu-service recipes are not defined (have not been fetched)', () => {
       test('returns an order without recipes', () => {
         const state = createState({

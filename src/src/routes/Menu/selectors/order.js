@@ -162,19 +162,22 @@ const getRecipesV2 = createSelector([
 ], (recipes, basketRecipes, quantity) => {
   // We check if we have the recipe data, this might not
   // be in the store yet as we are making the request
+
   if (!recipes) return []
 
   return basketRecipes.reduce((memo, recipeAmount, id) => [
     ...memo,
     ...Array.from(Array(recipeAmount).keys())
       .map(() => ({
-        id: recipes[id].id,
+        id: recipes[id] ? recipes[id].id : '',
         type: ResourceType.Recipe,
         meta: {
           portion_for: quantity,
         },
       })
-      )
+      // We can have recipes in your basket that we don't have menu
+      // due to switch over other states. So we want to exclude these.
+      ).filter((recipe) => Boolean(recipe.id))
   ], [])
 })
 
