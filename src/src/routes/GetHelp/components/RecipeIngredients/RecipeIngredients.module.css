@@ -9,3 +9,7 @@
   border-top: 1px solid Mackerel;
   padding-top: 1rem;
 }
+
+.ineligibleIngredientsInfoTip {
+  padding-bottom: 1rem;
+}

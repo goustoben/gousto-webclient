@@ -5,6 +5,7 @@ import { Ingredients } from 'routes/GetHelp/Ingredients/Ingredients.logic'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import { fromJS } from 'immutable'
 
 jest.mock('apis/getHelp')
 
@@ -32,7 +33,10 @@ describe('<Ingredients />', () => {
   let getHelpLayout
   let store
   let wrapper
-  const initialState = {}
+  const initialState = {
+    getHelp: fromJS({
+      otherIssueIneligibleIngredientUuids: []
+    })}
 
   const storeSelectedIngredients = jest.fn()
   const trackDeselectIngredient = jest.fn()

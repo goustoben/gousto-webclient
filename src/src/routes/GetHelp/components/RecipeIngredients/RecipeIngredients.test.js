@@ -19,6 +19,7 @@ describe('the RecipeIngredients component', () => {
   const INELIGIBLE_INGREDIENT_UUIDS = ['2', '3']
   const testProps = {
     massIssueIneligibleIngredientUuids: [],
+    otherIssueIneligibleIngredientUuids: [],
     recipe: TEST_RECIPE,
     selectedIngredients: new Map(),
     onChange: jest.fn(),
@@ -79,6 +80,32 @@ describe('the RecipeIngredients component', () => {
 
     test('tracks mass issue Alert visibility', () => {
       expect(testProps.trackMassIssueAlertDisplayed).toHaveBeenCalled()
+    })
+  })
+
+  describe('when other issue ineligible ingredients uuids are passed', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <RecipeIngredients {...testProps} otherIssueIneligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS} />
+      )
+    })
+
+    test('other ineligible ingredients have disabled prop set to true', () => {
+      const disabledFields = wrapper.find('InputCheck').getElements().filter(el => el.props.disabled === true)
+      disabledFields.forEach((disabledField, index) => {
+        const [, ingredientUuid] = disabledField.props.id.split('&')
+        expect(ingredientUuid).toBe(INELIGIBLE_INGREDIENT_UUIDS[index])
+      })
+    })
+
+    test('correct number of eligible ingredients have disabled prop set to false', () => {
+      const enabledFields = wrapper.find('InputCheck').getElements().filter(el => el.props.disabled === false)
+      const [, ingredientUuid] = enabledFields[0].props.id.split('&')
+      expect(ingredientUuid).toBe('1')
+    })
+
+    test('info tip is rendered for other ingredients issue', () => {
+      expect(wrapper.find('.ineligibleIngredientsInfoTip')).toHaveLength(2)
     })
   })
 
