@@ -1189,7 +1189,7 @@ describe('checkout actions', () => {
 
       await checkoutPostSignup()(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledTimes(10)
+      expect(dispatch).toHaveBeenCalledTimes(12)
     })
 
     test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {

@@ -38,7 +38,7 @@ import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
-import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from './log'
+import { feLoggingLogEvent, logLevels, trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from './log'
 import recipeActions from './recipes'
 import statusActions from './status'
 // eslint-disable-next-line import/no-cycle
@@ -879,12 +879,14 @@ export const userCheck3dsCompliantToken = () => async (dispatch, getState) => {
     const goustoRef = user.get('goustoReference')
     dispatch(statusActions.pending(actionTypes.USER_GET_3DS_COMPLIANT_TOKEN, true))
     const { data } = await get3DSCompliantToken(goustoRef)
+    dispatch(feLoggingLogEvent(logLevels.info, 'fetch 3ds token success'))
     dispatch({
       type: actionTypes.USER_GET_3DS_COMPLIANT_TOKEN,
       isCardTokenNotCompliantFor3ds: data.displayModal,
     })
     dispatch(statusActions.pending(actionTypes.USER_GET_3DS_COMPLIANT_TOKEN, false))
   } catch (err) {
+    dispatch(feLoggingLogEvent(logLevels.error, `fetch 3ds token failed: ${err.message}`))
     logger.error({ message: 'Failed to fetch 3ds compliant token', errors: [err] })
   }
 }

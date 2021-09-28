@@ -39,8 +39,6 @@ import {
 import { getUserId } from 'selectors/user'
 
 import {
-  trackFailedCheckoutFlow,
-  trackSuccessfulCheckoutFlow,
   feLoggingLogEvent,
   logLevels,
 } from 'actions/log'
@@ -200,6 +198,8 @@ export const handleCheckoutError = async (err, initiator, dispatch, getState, op
 
 export function checkoutSignup() {
   return async (dispatch, getState) => {
+    dispatch(feLoggingLogEvent(logLevels.info, 'signup started'))
+
     const state = getState()
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
     await dispatch(checkoutActions.fetchGoustoRef())
@@ -228,6 +228,7 @@ export function checkoutNon3DSSignup() {
       await dispatch(userSubscribe(false, null))
       await dispatch(checkoutActions.checkoutPostSignup())
     } catch (err) {
+      dispatch(feLoggingLogEvent(logLevels.error, `Non3ds signup failed: ${err.message}`))
       needClearGoustoRef = err.code !== errorCodes.duplicateDetails
       await handleCheckoutError(err, 'checkoutNon3DSSignup', dispatch, getState)
     } finally {
@@ -270,10 +271,10 @@ export function checkout3DSSignup() {
         })
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
       } else {
-        const error = { message: 'order_id is required', name: 'auth is not sent' }
-        dispatch(trackFailedCheckoutFlow('Order_id does not exist for payment-auth', error))
+        dispatch(feLoggingLogEvent(logLevels.error, 'auth payment failed: order_id does not exist'))
       }
     } catch (err) {
+      dispatch(feLoggingLogEvent(logLevels.error, `auth payment failed: ${err.message}`))
       const skipPromoCodeRemovedCheck = err.code !== errorCodes.promoCodeHasBeenUsed
       await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck })
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
@@ -304,13 +305,13 @@ export function checkoutDecoupledPaymentSignup() {
           })
           dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
         } else {
-          const error = { message: 'order_id is required', name: 'auth is not sent' }
-          dispatch(trackFailedCheckoutFlow('Order_id does not exist for payment-auth', error, { decoupling: true }))
+          dispatch(feLoggingLogEvent(logLevels.error, 'decoupled auth payment failed: order_id does not exist'))
         }
       } else {
         await dispatch(checkoutActions.checkoutSignupPayment())
       }
     } catch (err) {
+      dispatch(feLoggingLogEvent(logLevels.error, `Decoupled signup failed: ${err.message}`))
       needClearGoustoRef = err.code !== errorCodes.duplicateDetails
       await handleCheckoutError(err, 'checkoutDecoupledPaymentSignup', dispatch, getState)
     } finally {
@@ -338,6 +339,7 @@ export function checkoutSignupPayment(sourceId = null) {
       await signupPayment(reqData, provider.payment_provider)
       await dispatch(checkoutActions.checkoutPostSignup())
     } catch (err) {
+      dispatch(feLoggingLogEvent(logLevels.error, `signup payment failed: ${err.message}`))
       await handleCheckoutError(err, 'checkoutSignupPayment', dispatch, getState)
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
@@ -356,6 +358,7 @@ export const checkPaymentAuth = (sessionId) => (
       if (data && data.approved) {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeSuccessful))
 
+        dispatch(feLoggingLogEvent(logLevels.info, 'signup 3ds challenge success'))
         if (getIsDecoupledPaymentEnabled(getState())) {
           await dispatch(checkoutActions.checkoutSignupPayment(data.sourceId))
         } else {
@@ -364,12 +367,14 @@ export const checkPaymentAuth = (sessionId) => (
           await dispatch(checkoutActions.checkoutPostSignup())
         }
       } else {
+        dispatch(feLoggingLogEvent(logLevels.info, 'signup 3ds challenge failed'))
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
         dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed, 'checkPaymentAuth'))
         dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed))
         await dispatch(checkoutCreatePreviewOrder())
       }
     } catch (err) {
+      dispatch(feLoggingLogEvent(logLevels.error, `check 3ds payment failed: ${err.message}`))
       await handleCheckoutError(err, 'checkPaymentAuth', dispatch, getState)
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
@@ -411,11 +416,13 @@ export const trackPurchase = ({ orderId }) => (
 
 export function checkoutPostSignup() {
   return async (dispatch, getState) => {
+    dispatch(feLoggingLogEvent(logLevels.info, 'signup successful'))
     dispatch(trackSubscriptionCreated())
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     const state = getState()
     const signupTestName = getSignupE2ETestName(state)
+    const signupTestData = signupTestName ? { testName: signupTestName } : undefined
     try {
       const { form, pricing } = state
       const recaptchaToken = getSignupRecaptchaToken(state)
@@ -433,16 +440,12 @@ export function checkoutPostSignup() {
       dispatch(tempActions.temp('originalNetTotal', netTotal))
       dispatch(trackPurchase({ orderId }))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes }) // used for data layer tracking
-      if (signupTestName) {
-        dispatch(trackSuccessfulCheckoutFlow('PostSignup succeeded', { testName: signupTestName }))
-      }
+      dispatch(feLoggingLogEvent(logLevels.info, 'signup login success', signupTestData))
     } catch (err) {
+      dispatch(feLoggingLogEvent(logLevels.info, `signup login failed: ${err.message}`, signupTestData))
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
       dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, err.code, 'checkoutPostSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
-      if (signupTestName) {
-        dispatch(trackFailedCheckoutFlow('PostSignup failed', err, { testName: signupTestName }))
-      }
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
       basketResetPersistent(Cookies)
@@ -488,9 +491,9 @@ export function fetchGoustoRef() {
         type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
         goustoRef,
       })
-      await dispatch(feLoggingLogEvent(logLevels.info, 'fetchGoustoRef: fetched'))
+      dispatch(feLoggingLogEvent(logLevels.info, 'fetchGoustoRef: fetched'))
     } else {
-      await dispatch(feLoggingLogEvent(logLevels.info, 'fetchGoustoRef: already present'))
+      dispatch(feLoggingLogEvent(logLevels.info, 'fetchGoustoRef: already present'))
     }
   }
 }
@@ -501,7 +504,7 @@ export function clearGoustoRef() {
       type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
       goustoRef: null
     })
-    await dispatch(feLoggingLogEvent(logLevels.info, 'clearGoustoRef'))
+    dispatch(feLoggingLogEvent(logLevels.info, 'clearGoustoRef'))
   }
 }
 
