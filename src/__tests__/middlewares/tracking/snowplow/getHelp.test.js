@@ -73,16 +73,17 @@ describe('snowplow get help tracking events', () => {
   test('acceptIngredientRefund works correctly', () => {
     const action = {
       type: actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND,
-      amount: 2
+      amount: 2,
+      isMultiComplaints: false
     }
 
     expect(acceptIngredientRefund(action)).toEqual({
       data: {
-        amount: 2
+        amount: 2,
+        is_second_complaint: false,
       },
       seCategory: 'help',
       type: 'ssr_ingredients_accept_refund'
     })
   })
 })
-

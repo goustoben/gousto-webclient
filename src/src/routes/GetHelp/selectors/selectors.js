@@ -5,8 +5,6 @@ import { transformIngredientImgSrcSet } from '../utils/transformIngredientImgSrc
 
 export const getAccessToken = (state) => state.auth.get('accessToken')
 
-export const getCompensation = (state) => state.getHelp.get('compensation').toJS()
-
 export const getError = (state, actionType) => state.error.get(actionType, null)
 
 export const getMassIssueIneligibleIngredientUuids = (state) => (

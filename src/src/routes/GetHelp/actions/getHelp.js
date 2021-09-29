@@ -11,7 +11,8 @@ import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
 import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getIsMultiComplaintLimitReachedLastFourWeeks } from '../selectors/orderSelectors'
-import { getCompensation, getIsAutoAccept, getOrder, getRecipes } from '../selectors/selectors'
+import { getIsAutoAccept, getOrder, getRecipes } from '../selectors/selectors'
+import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
@@ -150,8 +151,8 @@ export const trackIngredientsAutoAcceptCheck = (isAutoAccept, isMultiComplaint) 
 
 export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
   const isAutoAccept = getIsAutoAccept(getState())
-  const { amount, totalAmount } = getCompensation(getState())
-  const isMultiComplaint = Boolean(totalAmount)
+  const { amount } = getCompensation(getState())
+  const isMultiComplaint = getIsMultiComplaints(getState())
   const isMultiComplaintLimitReachedLastFourWeeks = getIsMultiComplaintLimitReachedLastFourWeeks(getState())
 
   dispatch({
@@ -181,7 +182,7 @@ export const trackIngredientsGoToMyGousto = () => (dispatch, getState) => {
 
 export const trackConfirmationCTA = () => (dispatch, getState) => {
   const isAutoAccept = getIsAutoAccept(getState())
-  const isMultiComplaint = Boolean(getCompensation(getState()).totalAmount)
+  const isMultiComplaint = getIsMultiComplaints(getState())
 
   dispatch({
     type: webClientActionTypes.TRACKING,

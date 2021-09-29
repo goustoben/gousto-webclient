@@ -5,7 +5,8 @@ import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
 import { sanitize } from 'utils/sanitizer'
 import { setComplaint } from 'apis/getHelp'
-import { getCompensation, getOrderId, getSelectedIngredients } from '../selectors/selectors'
+import { getOrderId, getSelectedIngredients } from '../selectors/selectors'
+import { getCompensation } from '../selectors/compensationSelectors'
 import { asyncAndDispatch } from './utils'
 import { actionTypes } from './actionTypes'
 
@@ -43,7 +44,7 @@ export const createComplaint = (isAutoAccept) => async (dispatch, getState) => {
 
   const getPayload = async () => {
     await setComplaint(accessToken, body)
-    dispatch(trackAcceptIngredientsRefund(amount))
+    dispatch(trackAcceptIngredientsRefund())
 
     if (isAutoAccept) {
       dispatch(push(`${client.getHelp.index}/${client.getHelp.autoAcceptConfirmation}`))

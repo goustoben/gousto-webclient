@@ -9,6 +9,7 @@ import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
 import {
   fetchIngredientIssues as fetchOrderIssuesAction,
   validateSelectedIngredients,
+  trackAcceptIngredientsRefund
 } from 'actions/getHelp'
 
 jest.mock('apis/getHelp')
@@ -113,6 +114,51 @@ describe('getHelp actions', () => {
 
     test('the validateIngredients is being called correctly', () => {
       expect(validateIngredients).toHaveBeenCalledWith(...expectedParams)
+    })
+  })
+
+  describe('trackAcceptIngredientsRefund', () => {
+    beforeEach(() => {
+      getState = jest.fn().mockReturnValue({
+        ...GET_STATE_PARAMS,
+        getHelp: Immutable.fromJS({
+          compensation: {
+            amount: 2,
+          }
+        })
+      })
+      trackAcceptIngredientsRefund()(dispatch, getState)
+    })
+
+    test('dispatch is called with amount', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND,
+        amount: 2,
+        isMultiComplaints: false
+      })
+    })
+
+    describe('when isMultiComplaint', () => {
+      beforeEach(() => {
+        getState = jest.fn().mockReturnValue({
+          ...GET_STATE_PARAMS,
+          getHelp: Immutable.fromJS({
+            compensation: {
+              amount: 2,
+              totalAmount: 4
+            }
+          })
+        })
+        trackAcceptIngredientsRefund()(dispatch, getState)
+      })
+
+      test('dispatch is called with amount and isMultiComplaints', () => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND,
+          amount: 2,
+          isMultiComplaints: true
+        })
+      })
     })
   })
 })

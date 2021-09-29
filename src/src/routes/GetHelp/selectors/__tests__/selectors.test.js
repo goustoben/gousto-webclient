@@ -1,7 +1,6 @@
 import { fromJS } from 'immutable'
 import {
   getAccessToken,
-  getCompensation,
   getError,
   getMassIssueIneligibleIngredientUuids,
   getOtherIssueIneligibleIngredientUuids,
@@ -23,10 +22,6 @@ import {
 } from '../selectors'
 
 const ACCESS_TOKEN = 'shhh-its-a-secret'
-const COMPENSATION = {
-  amount: 5,
-  type: 'credit'
-}
 const ERROR_MESSAGE = 'An error message'
 const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a', 'b', 'c']
 const OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a324', 'b345', 'c3454']
@@ -120,7 +115,6 @@ const STATE = {
     GET_HELP_LOAD_ORDERS_BY_ID: ERROR_MESSAGE,
   }),
   getHelp: fromJS({
-    compensation: COMPENSATION,
     massIssueIneligibleIngredientUuids: fromJS(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
     otherIssueIneligibleIngredientUuids: fromJS(OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
     isAutoAccept: IS_AUTO_ACCEPT,
@@ -139,7 +133,6 @@ describe('Get Help selectors', () => {
 
   describe.each([
     ['getAccessToken', getAccessToken, ACCESS_TOKEN],
-    ['getCompensation', getCompensation, COMPENSATION],
     ['getMassIssueIneligibleIngredientUuids', getMassIssueIneligibleIngredientUuids, MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
     ['getOtherIssueIneligibleIngredientUuids', getOtherIssueIneligibleIngredientUuids, OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
     ['getIsAutoAccept', getIsAutoAccept, IS_AUTO_ACCEPT],

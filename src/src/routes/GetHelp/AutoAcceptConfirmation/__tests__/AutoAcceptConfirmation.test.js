@@ -23,6 +23,7 @@ describe('<AutoAcceptConfirmation />', () => {
         creditAmount={CREDIT}
         totalCreditAmount={0}
         issuesIDs={ISSUES_IDS}
+        isMultiComplaints={false}
         nameFirst={USER_NAME}
         trackConfirmationCTA={TRACK_CONFIRMATION_CTA_FUNCTION}
         trackIngredientsGetInTouchClick={TRACK_INGREDIENTS_GET_IN_TOUCH}
@@ -73,7 +74,7 @@ describe('<AutoAcceptConfirmation />', () => {
 
   describe('when this is a multicomplaint', () => {
     beforeEach(() => {
-      wrapper.setProps({ totalCreditAmount: 2 })
+      wrapper.setProps({ totalCreditAmount: 2, isMultiComplaints: true })
     })
 
     test('renders additional text', () => {

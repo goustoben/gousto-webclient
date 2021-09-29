@@ -13,11 +13,13 @@ import css from './Refund.css'
 const propTypes = {
   compensation: PropTypes.shape({
     amount: PropTypes.number,
+    totalAmount: PropTypes.number,
     type: PropTypes.string
   }).isRequired,
   createComplaint: PropTypes.func.isRequired,
   isAnyError: PropTypes.bool.isRequired,
   isAnyPending: PropTypes.bool.isRequired,
+  isMultiComplaints: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     accessToken: PropTypes.string.isRequired,
@@ -33,10 +35,40 @@ const Refund = ({
   createComplaint,
   isAnyError,
   isAnyPending,
+  isMultiComplaints,
   numberOfIngredients,
   trackIngredientsGetInTouchClick
 }) => {
   const headingText = `We're so sorry to hear about the issue with your ingredient${numberOfIngredients > 1 ? 's' : ''}`
+  const refundCreditText = isMultiComplaints ? (
+    <p className={css.confirmationBody}>
+      We would like to offer you an additional
+      {' '}
+      <strong className={css.confirmationBodyAmount}>
+        £
+        {compensation.amount}
+      </strong>
+      {' '}
+      credit to your account as an apology, bringing your
+      <strong className={css.confirmationBodyAmount}>
+        {` total compensation to £${compensation.totalAmount}.`}
+      </strong>
+    </p>
+  ) : (
+    <p className={css.confirmationBody}>
+      We would like to give you
+      {' '}
+      <span className={css.confirmationBodyAmount}>
+        £
+        {compensation.amount}
+        {' '}
+        credit
+      </span>
+      {' '}
+      off your next order as an apology for the issues with:
+    </p>
+  )
+
   const getHelpLayoutbody = (isAnyPending || isAnyError)
     ? (
       <p className={css.confirmationBody}>
@@ -45,18 +77,7 @@ const Refund = ({
     )
     : (
       <Fragment>
-        <p className={css.confirmationBody}>
-          We would like to give you
-          {' '}
-          <span className={css.confirmationBodyAmount}>
-            £
-            {compensation.amount ? compensation.amount.toFixed(2) : ''}
-            {' '}
-            credit
-          </span>
-          {' '}
-          off your next order as an apology for the issues with:
-        </p>
+        {refundCreditText}
         <IngredientsListContainer />
       </Fragment>
     )
@@ -71,8 +92,11 @@ const Refund = ({
           size="small"
           onClick={() => createComplaint(IS_AUTO_ACCEPT)}
         >
-          Claim £
-          {compensation.amount ? compensation.amount.toFixed(2) : ''}
+          Claim
+          {' '}
+          {isMultiComplaints && 'additional '}
+          £
+          {compensation.amount}
           {' '}
           credit
         </CTA>
@@ -123,7 +147,7 @@ const Refund = ({
                 data-testing="getInTouch"
                 to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
                 clientRouted
-                tracking={() => trackIngredientsGetInTouchClick(compensation.amount, false)}
+                tracking={trackIngredientsGetInTouchClick}
               >
                 Get in touch
               </Link>

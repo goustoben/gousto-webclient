@@ -4,7 +4,10 @@ const seCategory = 'help'
 
 const acceptIngredientRefund = (action) => ({
   type: seActions[action.type],
-  data: { amount: action.amount },
+  data: {
+    amount: action.amount,
+    is_second_complaint: action.isMultiComplaints
+  },
   seCategory,
 })
 

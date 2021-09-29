@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { getUserFirstName } from 'selectors/user'
 import { trackConfirmationCTA, trackRefundFAQClick } from '../actions/getHelp'
-import { getCompensation, getSelectedIngredientIssuesIDs } from '../selectors/selectors'
+import { getSelectedIngredientIssuesIDs } from '../selectors/selectors'
+import { getCompensation } from '../selectors/compensationSelectors'
 import { Confirmation } from './Confirmation'
 
 const ConfirmationContainer = connect((state) => ({

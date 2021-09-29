@@ -14,6 +14,7 @@ const IS_AUTO_ACCEPT = true
 const AutoAcceptConfirmation = ({
   creditAmount,
   issuesIDs,
+  isMultiComplaints,
   nameFirst,
   totalCreditAmount,
   trackConfirmationCTA,
@@ -28,8 +29,6 @@ const AutoAcceptConfirmation = ({
     })
   }
 
-  const isMultiComplaint = Boolean(totalCreditAmount)
-
   const headingText = issuesIDs.length > 1
     ? `We’re so sorry to hear about your ${issuesIDs.length} issues with your ingredients`
     : 'We’re so sorry to hear about your issue with your ingredient'
@@ -43,7 +42,7 @@ const AutoAcceptConfirmation = ({
         <p>
           {nameFirst}
           , we’ve gone ahead and added
-          {isMultiComplaint && ' an additional'}
+          {isMultiComplaints && ' an additional'}
           {' '}
           <strong>
             £
@@ -52,9 +51,9 @@ const AutoAcceptConfirmation = ({
           {' '}
           credit to your account as an apology
           {
-            isMultiComplaint && ', bringing your'
+            isMultiComplaints && ', bringing your'
           }
-          { isMultiComplaint
+          { isMultiComplaints
           && <strong>{` total compensation to £${totalCreditAmount}`}</strong>}
           .
           This will be automatically taken off your next order.
@@ -65,7 +64,7 @@ const AutoAcceptConfirmation = ({
               <Svg fileName="icon-pound" className={css.alertIcon} />
             </div>
             <p className={css.alertText}>
-              {isMultiComplaint && 'Extra '}
+              {isMultiComplaints && 'Extra '}
               £
               {creditAmount}
               {' '}
@@ -113,6 +112,7 @@ const AutoAcceptConfirmation = ({
 AutoAcceptConfirmation.propTypes = {
   creditAmount: PropTypes.number.isRequired,
   issuesIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isMultiComplaints: PropTypes.bool.isRequired,
   nameFirst: PropTypes.string.isRequired,
   totalCreditAmount: PropTypes.number.isRequired,
   trackConfirmationCTA: PropTypes.func.isRequired,

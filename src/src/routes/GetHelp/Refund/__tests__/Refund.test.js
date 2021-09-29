@@ -31,6 +31,7 @@ describe('<Refund />', () => {
         createComplaint={createComplaint}
         isAnyError={false}
         isAnyPending
+        isMultiComplaints={false}
         loadRefundAmount={loadRefundAmount}
         user={user}
         numberOfIngredients={1}
@@ -77,6 +78,29 @@ describe('<Refund />', () => {
       expect(Button2.text()).toBe('Claim £7.77 credit')
     })
 
+    describe('and isMultiComplaints true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isMultiComplaints: true,
+          compensation: {
+            ...compensation,
+            totalAmount: 15
+          } })
+      })
+
+      test('layout is rendering correct text', async () => {
+        const confirmationBody = wrapper.find('.confirmationBody')
+        getHelpLayout2 = wrapper.find('GetHelpLayout2')
+
+        expect(getHelpLayout2).toHaveLength(1)
+        expect(confirmationBody.text()).toContain('We would like to offer you an additional £7.77 credit to your account as an apology, bringing your total compensation to £15.')
+      })
+
+      test('CTA has correct text', async () => {
+        const CTA = wrapper.find('CTA')
+
+        expect(CTA.text()).toBe('Claim additional £7.77 credit')
+      })
+    })
     describe('and the claim CTA is clicked', () => {
       beforeEach(() => {
         wrapper.find('CTA').simulate('click')
@@ -94,7 +118,7 @@ describe('<Refund />', () => {
     describe('when click on Get in touch', () => {
       test('calls trackIngredientsGetInTouchClick with amount and false for auto_accept', () => {
         GetInTouchLink.simulate('click')
-        expect(trackIngredientsGetInTouchClick).toHaveBeenCalledWith(compensation.amount, false)
+        expect(trackIngredientsGetInTouchClick).toHaveBeenCalled()
       })
     })
 

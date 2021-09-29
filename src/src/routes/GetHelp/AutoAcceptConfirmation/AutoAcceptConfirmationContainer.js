@@ -5,7 +5,8 @@ import {
   trackRefundFAQClick,
   trackIngredientsGetInTouchClick
 } from '../actions/getHelp'
-import { getCompensation, getSelectedIngredientIssuesIDs } from '../selectors/selectors'
+import { getSelectedIngredientIssuesIDs } from '../selectors/selectors'
+import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
 import { AutoAcceptConfirmation } from './AutoAcceptConfirmation'
 
 const AutoAcceptConfirmationContainer = connect((state) => ({
@@ -13,6 +14,7 @@ const AutoAcceptConfirmationContainer = connect((state) => ({
   issuesIDs: getSelectedIngredientIssuesIDs(state) || [],
   nameFirst: getUserFirstName(state) || '',
   totalCreditAmount: getCompensation(state).totalAmount,
+  isMultiComplaints: getIsMultiComplaints(state)
 }), {
   trackConfirmationCTA,
   trackIngredientsGetInTouchClick,

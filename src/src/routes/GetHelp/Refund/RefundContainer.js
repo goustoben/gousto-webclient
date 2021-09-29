@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { getUserId } from '../../../selectors/user'
 import { getAccessToken } from '../../../selectors/auth'
 import {
-  getCompensation,
   getIsError,
   getPending,
   getSelectedIngredients,
 } from '../selectors/selectors'
+import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
 import { trackIngredientsGetInTouchClick } from '../actions/getHelp'
 import { createComplaint } from '../actions/createComplaint'
 import { actionTypes } from '../actions/actionTypes'
@@ -22,6 +22,7 @@ const mapStateToProps = (state) => ({
   },
   isAnyPending: getPending(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
   isAnyError: getIsError(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
+  isMultiComplaints: getIsMultiComplaints(state),
   numberOfIngredients: Object.keys(getSelectedIngredients(state)).length,
 })
 

@@ -2,6 +2,7 @@ import {
   validateIngredients,
   fetchOrderIssues as fetchOrderIssuesApi,
 } from 'apis/getHelp'
+import { getCompensation, getIsMultiComplaints } from 'routes/GetHelp/selectors/compensationSelectors'
 import { appendFeatureToRequest } from 'routes/GetHelp/utils/appendFeatureToRequest'
 import { getSelectedIngredients } from '../routes/GetHelp/selectors/selectors'
 import { actionTypes } from './actionTypes'
@@ -18,10 +19,15 @@ const trackIngredientIssues = (ingredientIssuesInfo) => ({
   ingredientIssuesInfo
 })
 
-const trackAcceptIngredientsRefund = (amount) => ({
-  type: actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND,
-  amount
-})
+const trackAcceptIngredientsRefund = () => (dispatch, getState) => {
+  const { amount } = getCompensation(getState())
+  const isMultiComplaints = getIsMultiComplaints(getState())
+  dispatch({
+    type: actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND,
+    amount,
+    isMultiComplaints
+  })
+}
 
 const selectContactChannel = (channel) => ({
   type: actionTypes.GET_HELP_CONTACT_CHANNEL_SELECT,

@@ -115,7 +115,7 @@ describe('Given createComplaint action is called', () => {
   })
 
   test('trackAcceptIngredientsRefund is called with amount', () => {
-    expect(trackAcceptIngredientsRefund).toHaveBeenCalledWith(AMOUNT)
+    expect(trackAcceptIngredientsRefund).toHaveBeenCalled()
   })
 })
 
