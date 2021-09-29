@@ -256,7 +256,7 @@ module.exports = {
           this
             .waitForElementVisible('@promoModalButton')
             .click('@promoModalButton')
-          this.api.pause(ANIMATION_DELAY)
+            .waitForElementNotPresent('@promoModalButton')
 
           return this
         },
