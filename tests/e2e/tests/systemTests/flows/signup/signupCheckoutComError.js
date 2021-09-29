@@ -1,7 +1,6 @@
 const { performSignUpFlowUpToPaymentStep } = require('./signupCommon')
 
 module.exports = {
-  '@tags': ['unstable'],
   'Sign-up error for card name with checkout.com from /': function (browser) {
     const checkout = browser.page.checkoutV2()
     const welcome = browser.page.welcome()
@@ -20,7 +19,7 @@ module.exports = {
       })
       // 2: no card number
       .perform(function (done) {
-        checkout.section.checkoutContainer.submitPaymentSectionWithoutCardNumber(browser)
+        checkout.section.checkoutContainer.enterAllCardDetailsExceptCardNumber(browser)
         done()
       })
       .perform(function (done) {
@@ -33,7 +32,12 @@ module.exports = {
       })
       // 3: wrong CVV
       .perform(function (done) {
-        checkout.section.checkoutContainer.enterCardDetailsWithWrongCvv(browser)
+        checkout.section.checkoutContainer.enterCardNumber(browser)
+        done()
+      })
+      // 3: wrong CVV
+      .perform(function (done) {
+        checkout.section.checkoutContainer.enterIncorrectCVV(browser)
         done()
       })
       .perform(function (done) {
@@ -41,11 +45,11 @@ module.exports = {
         done()
       })
       .perform(function (done) {
-        checkout.section.checkoutContainer.asyncCheckPaymentFailed(browser, done)
+        checkout.section.checkoutContainer.checkCardVerificationFailed(browser, done)
       })
       // 4: proceed successfully
       .perform(function (done) {
-        checkout.section.checkoutContainer.changeAndSubmitPaymentSection(browser)
+        checkout.section.checkoutContainer.enterCorrectCVV(browser)
         done()
       })
       .perform(function (done) {

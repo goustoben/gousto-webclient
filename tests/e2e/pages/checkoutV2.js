@@ -25,8 +25,8 @@ module.exports = {
         cardInfoMissing: {
           selector: '*[data-testing="valid-card-details-not-provided"]',
         },
-        paymentFailed: {
-          selector: '*[data-testing="payment-failure"]',
+        cardVerificationFailed: {
+          selector: '*[data-testing="3ds-challenge-failed"]',
         },
         promoCodeError: {
           selector: '*[data-testing="user-promo-invalid"]',
@@ -419,7 +419,7 @@ module.exports = {
           this.section.payment.startYourSubscription()
           return this
         },
-        submitPaymentSectionWithoutCardNumber: function (browser) {
+        enterAllCardDetailsExceptCardNumber: function (browser) {
           this.section.payment.setCardName(browser)
           browser.pause(SMALL_DELAY)
           this.section.payment.changeCardExpiryDate(browser)
@@ -427,22 +427,15 @@ module.exports = {
           this.section.payment.changeCardSecurityCode(browser)
           return this
         },
-        enterCardDetailsWithWrongCvv: function (browser) {
+        enterCardNumber: function (browser) {
           this.section.payment.setCardNumber(browser)
-          browser.pause(SMALL_DELAY)
-          this.section.payment.setCardName(browser)
-          browser.pause(SMALL_DELAY)
-          this.section.payment.changeCardExpiryDate(browser)
-          browser.pause(SMALL_DELAY)
+          return this
+        },
+        enterIncorrectCVV: function (browser) {
           this.section.payment.changeCardSecurityCode(browser, '101')
           return this
         },
-        changeAndSubmitPaymentSection: function (browser) {
-          browser.pause(SMALL_DELAY)
-          this.section.payment.changeCardNumber(browser)
-          browser.pause(SMALL_DELAY)
-          this.section.payment.changeCardExpiryDate(browser)
-          browser.pause(SMALL_DELAY)
+        enterCorrectCVV: function (browser) {
           this.section.payment.changeCardSecurityCode(browser)
 
           return this
@@ -454,10 +447,9 @@ module.exports = {
         checkIfErrorForCardDetailsVisible: function (browser) {
           this.waitForElementVisible('@cardInfoMissing')
             .expect.element('@cardInfoMissing').to.be.present.before(SMALL_DELAY)
-          this.section.payment.changeCardExpiryDateToEmpty(browser)
           return this
         },
-        asyncCheckPaymentFailed: function(browser, done) {
+        checkCardVerificationFailed: function(browser, done) {
           // "Promo code removed" error is reported earlier than payment
           // failed; and it is shown only in certain cases (1st run: not shown,
           // all subsequent runs: shown because of the address clash).  If we
@@ -471,9 +463,9 @@ module.exports = {
               }
             },
             {
-              tag: 'paymentFailed',
+              tag: 'cardVerificationFailed',
               checkFn: (callback) => {
-                const selector = this.elements.paymentFailed.selector
+                const selector = this.elements.cardVerificationFailed.selector
                 asyncIsElementBySelectorPresent(browser, selector, callback)
               }
             }
@@ -481,20 +473,20 @@ module.exports = {
 
           const onPollDone = (pollResult, passedTag) => {
             if (pollResult === 'timeRanOut') {
-              browser.assert.fail('Expected either promo code error or payment failed error to be visible')
+              browser.assert.fail('Expected either promo code error or card verification failed error to be visible')
               done()
             } else if (passedTag === 'promoCodeError') {
-              this.asyncResubmitAndExpectOnlyPaymentFailed(browser, done)
-            } else if (passedTag === 'paymentFailed') {
+              this.asyncResubmitAndExpectOnlyCardVerificationFailed(browser, done)
+            } else if (passedTag === 'cardVerificationFailed') {
               done()
             }
           }
 
           pollRace(conditions, onPollDone)
         },
-        asyncResubmitAndExpectOnlyPaymentFailed: function(browser, done) {
+        asyncResubmitAndExpectOnlyCardVerificationFailed: function(browser, done) {
           this.goToNextStep()
-          this.waitForElementVisible('@paymentFailed')
+          this.waitForElementVisible('@cardVerificationFailed')
           done()
         },
         asyncSkipPromoCodeErrorIfPresent: function (browser, done) {
