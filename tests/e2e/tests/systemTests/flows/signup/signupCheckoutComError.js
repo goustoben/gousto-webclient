@@ -30,12 +30,12 @@ module.exports = {
         checkout.section.checkoutContainer.checkIfErrorForCardDetailsVisible(browser)
         done()
       })
-      // 3: wrong CVV
+      // 3: Setup card details
       .perform(function (done) {
         checkout.section.checkoutContainer.enterCardNumber(browser)
         done()
       })
-      // 3: wrong CVV
+      // 4: wrong CVV
       .perform(function (done) {
         checkout.section.checkoutContainer.enterIncorrectCVV(browser)
         done()
@@ -47,7 +47,7 @@ module.exports = {
       .perform(function (done) {
         checkout.section.checkoutContainer.checkCardVerificationFailed(browser, done)
       })
-      // 4: proceed successfully
+      // 5: proceed successfully
       .perform(function (done) {
         checkout.section.checkoutContainer.enterCorrectCVV(browser)
         done()

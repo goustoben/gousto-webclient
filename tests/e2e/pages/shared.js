@@ -263,8 +263,8 @@ module.exports = {
         isRememberMeCheckboxVisible: function () {
           this.waitForElementVisible('@loginButton')
             .click('@loginButton')
-
-          this.expect.element('@loginCheckbox').to.be.selected
+            .waitForElementPresent('@loginCheckbox')
+            .expect.element('@loginCheckbox').to.be.selected
         },
       }],
     },
