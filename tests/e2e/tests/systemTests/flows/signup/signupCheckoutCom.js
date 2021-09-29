@@ -1,14 +1,14 @@
 const { performSignUpFlowUpToPaymentStep } = require('./signupCommon')
 
 module.exports = {
-  'Sign-up error for card name with checkout.com from /': function (browser) {
+  'Sign-up with checkout.com from /': function (browser) {
     const checkout = browser.page.checkoutV2()
     const welcome = browser.page.welcome()
 
     performSignUpFlowUpToPaymentStep(browser)
 
     browser
-      // 1: no fields entered at all
+      .execute("window.__loadFeatures__({ features: { signupE2ETestName: { value: 'checkoutV2' }}})")
       .perform(function (done) {
         checkout.section.checkoutContainer.signupWithoutPaymentInfo(browser)
         done()
@@ -17,7 +17,6 @@ module.exports = {
         checkout.section.checkoutContainer.checkIfErrorsAreVisible(browser)
         done()
       })
-      // 2: no card number
       .perform(function (done) {
         checkout.section.checkoutContainer.enterAllCardDetailsExceptCardNumber(browser)
         done()
@@ -30,12 +29,10 @@ module.exports = {
         checkout.section.checkoutContainer.checkIfErrorForCardDetailsVisible(browser)
         done()
       })
-      // 3: Setup card details
       .perform(function (done) {
         checkout.section.checkoutContainer.enterCardNumber(browser)
         done()
       })
-      // 4: wrong CVV
       .perform(function (done) {
         checkout.section.checkoutContainer.enterIncorrectCVV(browser)
         done()
@@ -47,7 +44,6 @@ module.exports = {
       .perform(function (done) {
         checkout.section.checkoutContainer.checkCardVerificationFailed(browser, done)
       })
-      // 5: proceed successfully
       .perform(function (done) {
         checkout.section.checkoutContainer.enterCorrectCVV(browser)
         done()
@@ -61,11 +57,12 @@ module.exports = {
         checkout.section.checkoutContainer.asyncSkipPromoCodeErrorIfPresent(browser, done)
       })
       .perform(function (done) {
-        browser.pause(3000)
         welcome.section.welcomeContainer.checkIfWelcomePageVisible()
+        welcome.section.welcomeContainer.checkIfOrderScheduleContainerVisible()
+        welcome.section.welcomeContainer.checkIfRafSectionVisible()
         done()
       })
       .end()
   },
-  tags: ['sign-up', 'menu', 'checkout', 'sign-up-error'],
+  tags: ['sign-up', 'menu', 'checkout', 'sign-up-error', 'sign-up-success'],
 }

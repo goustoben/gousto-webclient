@@ -1,7 +1,9 @@
+const { loggableError } = require('../../../utils/loggableError')
+
 module.exports = {
   'Successfully remember me on login': function (browser) {
-    const shared = browser.page.shared()
     const menu = browser.page.menu()
+    const shared = browser.page.shared()
 
     let user
 
@@ -11,7 +13,7 @@ module.exports = {
           user = userData
           done()
         }).catch(function (error) {
-          browser.assert.fail(error)
+          browser.assert.fail(loggableError(error))
           done()
         })
       })
@@ -20,19 +22,21 @@ module.exports = {
         shared.section.body.submitPromo()
         shared.section.body.isRememberMeCheckboxVisible()
         shared.section.body.login(user.customer.email, user.customer.password)
-        browser.pause(5000)
         shared.section.header.checkUserLoggedIn()
+        browser.assert.urlContains("/menu")
         done()
       })
     browser
       .perform(function (browser, done) {
         shared.section.header.goToAccount()
         shared.section.body.logout()
-        browser.pause(10000)
+        browser.pause(3000)
+        shared.section.header.checkUserLoggedOut()
+        browser.assert.title('Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto')
         shared.section.body.isRememberMeCheckboxVisible()
         done()
       })
       .end()
   },
-  tags: ['login', 'login-remember'],
+  tags: ['login', 'logout'],
 };

@@ -187,29 +187,9 @@ module.exports = {
 
               browser.keys(browser.Keys.TAB)
             },
-            changeCardNumber: function (browser, cardNumber = '4485040371536584') {
-              this
-                .waitForElementVisible('@cardNumber')
-                .setValue('@cardNumber', '')
-
-              browser.keys(browser.Keys.BACK_SPACE.repeat(16))
-              browser.keys(cardNumber)
-            },
             setCardExpiryDate: function (browser) {
               browser.keys('01')
               browser.keys('25')
-            },
-            changeCardExpiryDate: function (browser, month = '01', year = '25') {
-              this
-                .waitForElementVisible('@cardExpiryDate')
-                .setValue('@cardExpiryDate', '')
-
-              browser.keys(browser.Keys.BACK_SPACE.repeat(4))
-              browser.keys(month)
-              browser.keys(year)
-            },
-            changeCardExpiryDateToEmpty: function (browser) {
-              this.changeCardExpiryDate(browser, '', '')
             },
             setCardSecurityCode: function (browser) {
               browser.keys('100')
@@ -221,9 +201,6 @@ module.exports = {
 
               browser.keys(browser.Keys.BACK_SPACE.repeat(4))
               browser.keys(cvv)
-            },
-            setInvalidCardDetails: function () {
-              clickElement.call(this, '@billingAddressChange')
             },
             checkIfErrorForName: function () {
               this
@@ -396,17 +373,6 @@ module.exports = {
 
           return this
         },
-        submitPaymentSection: function (browser) {
-          this.section.payment.setCardNumber(browser)
-          browser.pause(SMALL_DELAY)
-          this.section.payment.setCardName(browser)
-          browser.pause(SMALL_DELAY)
-          this.section.payment.setCardExpiryDate(browser)
-          browser.pause(SMALL_DELAY)
-          this.section.payment.setCardSecurityCode(browser)
-
-          return this
-        },
         checkIfErrorsAreVisible: function (browser) {
           browser.pause(SMALL_DELAY)
           this.section.payment.checkIfErrorForCardNumber()
@@ -422,9 +388,9 @@ module.exports = {
         enterAllCardDetailsExceptCardNumber: function (browser) {
           this.section.payment.setCardName(browser)
           browser.pause(SMALL_DELAY)
-          this.section.payment.changeCardExpiryDate(browser)
+          this.section.payment.setCardExpiryDate(browser)
           browser.pause(SMALL_DELAY)
-          this.section.payment.changeCardSecurityCode(browser)
+          this.section.payment.setCardSecurityCode(browser)
           return this
         },
         enterCardNumber: function (browser) {
