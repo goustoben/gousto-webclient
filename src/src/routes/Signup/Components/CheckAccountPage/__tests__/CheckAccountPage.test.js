@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import { CheckAccountPage } from '../CheckAccountPage'
 
 describe('CheckAccountPage', () => {
@@ -7,12 +7,15 @@ describe('CheckAccountPage', () => {
 
   const signupCheckAccountGoToBoxPrices = jest.fn()
   const signupCheckAccountLogin = jest.fn()
+  const redirect = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
       <CheckAccountPage
         signupCheckAccountGoToBoxPrices={signupCheckAccountGoToBoxPrices}
         signupCheckAccountLogin={signupCheckAccountLogin}
+        redirect={redirect}
+        isAuthenticated={false}
       />
     )
   })
@@ -42,6 +45,27 @@ describe('CheckAccountPage', () => {
 
     test('then it should open the login modal', () => {
       expect(signupCheckAccountLogin).toHaveBeenCalled()
+    })
+  })
+
+  describe('when the user is logged in', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <CheckAccountPage
+          signupCheckAccountGoToBoxPrices={signupCheckAccountGoToBoxPrices}
+          signupCheckAccountLogin={signupCheckAccountLogin}
+          redirect={redirect}
+          isAuthenticated
+        />
+      )
+    })
+
+    test('then it should not render a page', () => {
+      expect(wrapper.find('CheckoutButton')).toHaveLength(0)
+    })
+
+    test('instead, it should redirect to apply-voucher', () => {
+      expect(redirect).toHaveBeenCalledWith('/signup/apply-voucher')
     })
   })
 })
