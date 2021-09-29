@@ -319,7 +319,7 @@ module.exports = {
                 clickElement.call(this, 'button[value="Login"]')
 
                 const consentButtonSelector = this.elements.consentButton.selector
-                browser.waitForElementVisible(consentButtonSelector, 60000)
+                browser.waitForElementPresent(consentButtonSelector, 60000)
                 browser.execute(`document.querySelector('${consentButtonSelector}').scrollIntoView()`)
                 browser.pause(SMALL_DELAY)
                 clickElement.call(this, consentButtonSelector)
