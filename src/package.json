@@ -201,8 +201,8 @@
       "json-summary"
     ],
     "testMatch": [
-      "**/__tests__/**/[^.]*.js?(x)",
-      "**/?(*.)(test).js?(x)"
+      "**/__tests__/**/[^.]*.(j|t)s?(x)",
+      "**/?(*.)(test).(j|t)s?(x)"
     ],
     "moduleNameMapper": {
       "fixtures/(.*)$": "<rootDir>/../tests/regression/fixtures/$1",
@@ -256,8 +256,7 @@
       "__GIT_HASH__": "production",
       "__ENDPOINTS__": {},
       "ts-jest": {
-        "tsconfig": "./tsconfig.tests.json",
-        "isolatedModules": true
+        "tsconfig": "./tsconfig.tests.json"
       }
     }
   },

@@ -63,6 +63,8 @@
     "./scripts",
     "./server/config"
   ],
-  "include": ["./"]
-  
+  "include": [
+    "**/__tests__/**/(.)+.(j|t)s?(x)",
+    "**/?(*.)(test).(j|t)s?(x)"
+  ]
 }
