@@ -462,7 +462,7 @@ describe('order actions', () => {
         checkoutOrderApiParams
       )(dispatch, getState)
 
-      expect(mockAssign).toHaveBeenCalledWith('redirect-url')
+      expect(window.location.assign).toHaveBeenCalledWith('redirect-url')
     })
 
     test('redirect is not called when redirected parameter is not set', async () => {
