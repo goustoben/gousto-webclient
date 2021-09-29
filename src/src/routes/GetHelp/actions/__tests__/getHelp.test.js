@@ -770,13 +770,15 @@ describe('GetHelp action generators and thunks', () => {
   describe('trackRefundFAQClick', () => {
     const COMPENSATION_AMOUNT = 7.89
     const ARTICLE_NAME = 'An article title'
-    const IS_AUTO_ACCEPT = 'true or false'
+    const IS_AUTO_ACCEPT = 'isAutoAccept true or false'
+    const IS_MULTI_COMPLAINTS = 'isMultiComplaints true or false'
 
     test('creates the tracking action with the right isAutoAccept value', () => {
       expect(trackRefundFAQClick({
         compensationAmount: COMPENSATION_AMOUNT,
         articleName: ARTICLE_NAME,
         isAutoAccept: IS_AUTO_ACCEPT,
+        isMultiComplaints: IS_MULTI_COMPLAINTS,
       })).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
@@ -785,6 +787,7 @@ describe('GetHelp action generators and thunks', () => {
           amount: COMPENSATION_AMOUNT,
           article_name: ARTICLE_NAME,
           auto_accept: IS_AUTO_ACCEPT,
+          is_second_complaint: IS_MULTI_COMPLAINTS,
         }
       })
     })

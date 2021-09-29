@@ -14,6 +14,7 @@ describe('<Confirmation />', () => {
   const wrapper = mount(
     <Confirmation
       creditAmount={CREDIT}
+      isMultiComplaints={false}
       issuesIDs={ISSUES_IDS}
       nameFirst={USER_NAME}
       trackConfirmationCTA={TRACK_CONFIRMATION_CTA_FUNCTION}
@@ -63,6 +64,16 @@ describe('<Confirmation />', () => {
     test('with the credit amount', () => {
       expect(alert.text()).toBe('£2 credit added')
     })
+
+    describe('when it is part of multiple complaints on the same order', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isMultiComplaints: true })
+      })
+
+      test('renders the word Extra', () => {
+        expect(alert.text()).toBe('Extra £2 credit added')
+      })
+    })
   })
 
   test('renders a copy about credit inside the Card', () => {
@@ -87,6 +98,7 @@ describe('<Confirmation />', () => {
         articleName: ARTICLE_NAME,
         compensationAmount: CREDIT,
         isAutoAccept: false,
+        isMultiComplaints: false,
       })
     })
   })

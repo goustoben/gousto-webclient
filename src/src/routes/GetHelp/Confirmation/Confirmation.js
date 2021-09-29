@@ -10,6 +10,7 @@ import css from './Confirmation.css'
 
 const propTypes = {
   creditAmount: PropTypes.number.isRequired,
+  isMultiComplaints: PropTypes.bool.isRequired,
   issuesIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   nameFirst: PropTypes.string.isRequired,
   trackConfirmationCTA: PropTypes.func.isRequired,
@@ -18,6 +19,7 @@ const propTypes = {
 
 const Confirmation = ({
   creditAmount,
+  isMultiComplaints,
   issuesIDs,
   nameFirst,
   trackConfirmationCTA,
@@ -28,6 +30,7 @@ const Confirmation = ({
       compensationAmount: creditAmount,
       articleName,
       isAutoAccept: false,
+      isMultiComplaints,
     })
   }
 
@@ -47,6 +50,7 @@ const Confirmation = ({
               <Svg fileName="icon-pound" className={css.alertIcon} />
             </div>
             <p className={css.alertText}>
+              {isMultiComplaints && 'Extra '}
               £
               {creditAmount}
               {' '}

@@ -272,7 +272,12 @@ export const trackRecipeCardGetInTouchClick = () => ({
   }
 })
 
-export const trackRefundFAQClick = ({ compensationAmount, articleName, isAutoAccept }) => ({
+export const trackRefundFAQClick = ({
+  compensationAmount,
+  articleName,
+  isAutoAccept,
+  isMultiComplaints,
+}) => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.ssrIngredientsOpenRefundArticle,
@@ -280,6 +285,7 @@ export const trackRefundFAQClick = ({ compensationAmount, articleName, isAutoAcc
     amount: compensationAmount,
     article_name: articleName,
     auto_accept: isAutoAccept,
+    is_second_complaint: isMultiComplaints,
   }
 })
 
