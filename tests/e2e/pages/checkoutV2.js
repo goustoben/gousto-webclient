@@ -268,6 +268,9 @@ module.exports = {
         paypalWindow: {
           selector: 'n/a', // nightwatch requires it, but we never use it
           elements: {
+            acceptAllCookiesButton: {
+              selector: 'button#acceptAllButton'
+            },
             consentButton: {
               selector: 'button#consentButton,input#confirmButtonTop'
             },
@@ -325,6 +328,8 @@ module.exports = {
                     browser.switchWindow(paypalWindowHandle)
                   })
                   // Nightwatch's @-notation for elements doesn't seem to work inside the PayPal window
+                  .waitForElementVisible(this.elements.acceptAllCookiesButton.selector)
+                  .click(this.elements.acceptAllCookiesButton.selector)
                   .waitForElementVisible(this.elements.emailField.selector)
                   .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
                   .click(this.elements.nextButton.selector)
