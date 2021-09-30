@@ -1,6 +1,5 @@
 import {
   reduceCurrentDeliverySlot,
-  reduceDeliverySlot,
   reduceDeliveryFrequency,
   reduceDeliverySlots,
   reduceDeliveriesData,

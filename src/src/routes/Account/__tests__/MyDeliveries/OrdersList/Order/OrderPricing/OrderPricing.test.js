@@ -35,7 +35,6 @@ describe('OrderPricing', () => {
       wrapper = shallow(
         <OrderPricing pricing={pricing} orderState={orderState} />,
       )
-      console.log(wrapper.html())
       expect(wrapper.type()).toEqual('div')
       expect(wrapper.find('.fullPrice').text()).toContain(`£${pricing.get('grossOrderPrice')}.00`)
       expect(wrapper.find('.total').text()).toContain(`£${pricing.get('netOrderPrice')}.00`)

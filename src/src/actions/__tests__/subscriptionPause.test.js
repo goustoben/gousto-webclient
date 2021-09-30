@@ -5,14 +5,13 @@ import subPauseActions, { fetchData } from 'actions/subscriptionPause'
 import statusActions from 'actions/status'
 import userActions from 'actions/user'
 import { cancelExistingOrders } from 'apis/orders'
-import customersApi from 'apis/customers'
-import redirectActions from 'actions/redirect'
+import * as customersApi from 'apis/customers'
+import * as redirectActions from 'actions/redirect'
 import config from 'config/subscription'
 import routesConfig from 'config/routes'
 import * as subUtils from 'utils/subscription'
 import logger from 'utils/logger'
 import windowUtil from 'utils/window'
-import { flushPromises } from '../../_testing/utils'
 import { deactivateSubscription } from '../../routes/Account/apis/subscription'
 
 jest.mock('actions/status', () => ({
@@ -368,6 +367,7 @@ describe('Subscription action', () => {
 
     describe('when deactivation fails', () => {
       beforeEach(async () => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         deactivateSubscription.mockReturnValue(Promise.reject('error from deactivateSubscription'))
         await subPauseActions.subscriptionDeactivate()(dispatch, getState)
       })
@@ -1348,6 +1348,7 @@ describe('Subscription action', () => {
 
     describe('when fetch fails', () => {
       beforeEach(async () => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         customersApi.fetchPauseReasons.mockReturnValue(Promise.reject('response from deactivateSubscription'))
         await subPauseActions.subscriptionPauseFetchReasons()(dispatch, getState)
       })
@@ -2170,6 +2171,7 @@ describe('Subscription action', () => {
           features: Immutable.fromJS({}),
           auth: Immutable.fromJS({ accessToken: 'token' }),
         })
+        // eslint-disable-next-line prefer-promise-reject-errors
         cancelExistingOrders.mockReturnValue(Promise.reject('response from cancelExistingOrders'))
 
         await subPauseActions.subscriptionPauseCancelPendingOrders()(dispatch, getState)

@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { renderHook, act } from '@testing-library/react-hooks'
+// eslint-disable-next-line import/no-named-as-default
 import SaveButton, { useSaving } from 'OrderSummary/SaveButton'
 
 import { Button } from 'goustouicomponents'
@@ -12,7 +13,7 @@ describe('useSaving', () => {
     jest.clearAllMocks()
   })
 
-  describe(`when saving isn't required`, () => {
+  describe('when saving isn\'t required', () => {
     it('should set showButton to false', () => {
       const saveRequired = false
       const saving = false
