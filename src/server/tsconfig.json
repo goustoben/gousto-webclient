@@ -8,5 +8,7 @@
   "exclude": [
     "./config",
     "./**/node_modules",
+    "./**/__tests/*.*",
+    "./**/*.test.*",
   ]  
 }

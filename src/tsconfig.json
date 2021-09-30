@@ -63,6 +63,8 @@
     "./public",
     "./scripts",
     "./server",
+    "./**/__tests/*.*",
+    "./**/*.test.*"
   ],
   "include": ["./**/*"]
 }
