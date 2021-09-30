@@ -125,12 +125,11 @@ export function fetchOrAssignUserToExperiment(experimentName) {
       /*
        having to ignore the 'exports.' syntax
        Typescript doesn't like it
-       but removing it causes a problem with the mocks in the associated unit tests.  
+       but removing it causes a problem with the mocks in the associated unit tests.
       */
-      // @ts-ignore
+
       dispatch(exports.fetchUserExperiments())
     } else if (assignUser) {
-      // @ts-ignore
       dispatch(exports.assignUserToExperiment(experimentName))
     }
   }
