@@ -55,7 +55,7 @@ module.exports = {
           ...srcFileAliases,
           ...componentFileAliases,
         ],
-        extensions: ['.js', '.css'],
+        extensions: ['.js', '.ts', '.tsx', '.css'],
       },
     },
   },
@@ -100,7 +100,16 @@ module.exports = {
     //beginning of gousto extended warnings
     'import/no-unresolved': 2,
     'import/named': 2,
-    'import/extensions': 2,
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     'import/namespace': 2,
     'no-undef': 2,
     'import/no-default-export': 1,
@@ -265,7 +274,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   overrides: [
     {
-      "files": ["**/*.ts", "**/*.tsx"],
+      files: ['**/*.ts', '**/*.tsx'],
       extends: [
         'plugin:@typescript-eslint/recommended',
         'airbnb',
@@ -277,21 +286,21 @@ module.exports = {
         'plugin:import/warnings',
         'plugin:react-hooks/recommended',
       ],
-      'globals': { 'Atomics': 'readonly', 'SharedArrayBuffer': 'readonly' },
-      'parser': '@typescript-eslint/parser',
-      'parserOptions': {
-        'ecmaFeatures': { 'jsx': true },
-        'ecmaVersion': 2018,
-        'sourceType': 'module',
-        'project': './tsconfig.json'
+      globals: { Atomics: 'readonly', SharedArrayBuffer: 'readonly' },
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+        ecmaVersion: 2018,
+        sourceType: 'module',
+        project: './tsconfig.json',
       },
-      'plugins': ['@typescript-eslint', 'prettier', 'react'],
-      'rules': {
+      plugins: ['@typescript-eslint', 'prettier', 'react'],
+      rules: {
         '@typescript-eslint/ban-ts-comment': 'warn',
         '@typescript-eslint/no-empty-function': 1,
         '@typescript-eslint/no-var-requires': 1,
         '@typescript-eslint/no-use-before-define': ['warn'],
-      }
+      },
     },
     {
       files: ['**/*.test.js'],

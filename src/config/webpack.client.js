@@ -20,7 +20,7 @@ const baseConfig = {
   },
   mode: 'production',
   module: {
-    rules: getClientRules('./tsconfig.client.json', isDevelopmentBuild, hmrEnabled),
+    rules: getClientRules('./tsconfig.client.json', isDevelopmentBuild),
   },
   name: 'client',
   node: {
@@ -60,7 +60,7 @@ const baseConfig = {
       path.resolve('./libs/goustouicomponents/src'),
       path.resolve('./node_modules'),
     ],
-    extensions: ['.js', '.json', '.css', '.scss'],
+    extensions: ['.js', '.json', '.ts', '.tsx', '.css', '.scss'],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
