@@ -48,6 +48,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2015",
+    "types": ["jest", "node"]
   },
   "exclude": [
     "./**/node_modules",

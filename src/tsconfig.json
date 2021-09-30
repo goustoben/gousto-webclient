@@ -47,7 +47,6 @@
     "sourceMap": true,
     "strict": true,
     "target": "es5",
-    "typeRoots": []
   },
   "exclude": [
     "./**/node_modules",
@@ -63,8 +62,8 @@
     "./public",
     "./scripts",
     "./server",
-    "./**/__tests/*.*",
-    "./**/*.test.*"
+    "**/__tests__/**/(.)+.(j|t)s?(x)",
+    "**/?(*.)(test).(j|t)s?(x)"
   ],
   "include": ["./**/*"]
 }
