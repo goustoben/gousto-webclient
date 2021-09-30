@@ -20,7 +20,7 @@ describe('<CollectionItem />', () => {
       const contents = wrapper.find('.item').children()
 
       expect(contents.at(0).text()).toContain('All Recipes')
-      expect(contents.at(1).text()).toContain(25)
+      expect(contents.at(1).text()).toContain('25')
     })
   })
 

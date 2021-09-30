@@ -1,4 +1,4 @@
-const newAssetPath = require('utils/media').newAssetPath
+const {newAssetPath} = require('utils/media')
 const head = require('./head').default
 const encodeState = require('./encodeState')
 

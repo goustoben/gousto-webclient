@@ -1,1 +1,1 @@
-export default from './ExpiredBillingModalContainer'
+export { default } from './ExpiredBillingModalContainer'

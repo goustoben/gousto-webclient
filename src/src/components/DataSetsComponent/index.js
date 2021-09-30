@@ -1,2 +1,2 @@
-export default from './DataSetsComponent'
+export { default } from './DataSetsComponent'
 export * from './DataSetsComponent'

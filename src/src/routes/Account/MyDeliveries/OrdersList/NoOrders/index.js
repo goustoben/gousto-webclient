@@ -1,1 +1,1 @@
-export default from './NoOrders'
+export { default } from './NoOrders'

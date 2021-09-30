@@ -26,7 +26,6 @@ const config = {
   context: path.resolve(__dirname, '..'),
   target: 'node',
   entry: [
-    'babel-polyfill',
     './src/e2e.js',
   ],
   output: {
@@ -40,10 +39,8 @@ const config = {
     rules: [
       {
         test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
-        },
+        loader: 'ts-loader',
+        options: {},
         include: [
           path.resolve(__dirname, '../src'),
           path.resolve(__dirname, '../server'),

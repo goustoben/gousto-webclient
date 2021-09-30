@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { OnDeliveryDayWithTracking } from '..'
+import { mockWindowLocationAssign } from '../../../../../../../jest/mockWindowLocationAssign'
 
 describe('OnDeliveryDayWithTracking', () => {
   const TRACK_MY_BOX_LINK = 'https://courier.com/trackbox/order=1234'
@@ -10,6 +11,7 @@ describe('OnDeliveryDayWithTracking', () => {
   browserHistory.push = jest.fn()
   const trackClickGetInTouchInSSRDeliveries = jest.fn()
   const trackClickTrackMyBoxInSSRDeliveries = jest.fn()
+  const { location } = window.location
 
   beforeEach(() => {
     wrapper = shallow(
@@ -87,10 +89,10 @@ describe('OnDeliveryDayWithTracking', () => {
   })
 
   describe('when the primary CTA is clicked', () => {
-    const originalAssign = window.location.assign
+    let mockAssign
 
-    beforeAll(() => {
-      window.location.assign = jest.fn()
+    beforeEach(() => {
+      mockAssign = mockWindowLocationAssign()
     })
 
     beforeEach(() => {
@@ -99,11 +101,11 @@ describe('OnDeliveryDayWithTracking', () => {
     })
 
     afterAll(() => {
-      window.location.assign = originalAssign
+      window.location = location
     })
 
     test('redirects to the box tracking link passed as a prop', () => {
-      expect(window.location.assign).toHaveBeenCalledWith(TRACK_MY_BOX_LINK)
+      expect(mockAssign).toHaveBeenCalledWith(TRACK_MY_BOX_LINK)
     })
 
     test('trackClickTrackMyBoxInSSRDeliveries is called correctly', () => {

@@ -1,1 +1,1 @@
-export default from './OrderWhenMenuOpen'
+export { default } from './OrderWhenMenuOpen'

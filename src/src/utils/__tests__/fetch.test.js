@@ -205,33 +205,6 @@ describe('fetch', () => {
     expect(mockFetch).toHaveBeenCalledWith('test?id=1&include%5B0%5D=test1&include%5B1%5D=test2', expectedRequest)
   })
 
-  describe('experiments in fetch parameters', () => {
-    beforeEach(() => {
-      const data = {
-        status: 'ok',
-        data: { recipe: 'Test Recipe' },
-      }
-
-      setMockFetchResult(JSON.stringify(data))
-      mockGetState.mockReturnValue({
-        features: Immutable.fromJS({
-          feature1: {
-            value: 'feature1Value',
-            experiment: true,
-          },
-          feature2: {
-            value: 'feature2Value',
-            experiment: false,
-          },
-          feature3: {
-            value: true,
-            experiment: true,
-          },
-        }),
-      })
-    })
-  })
-
   test('should have body and content-type set for non-GET requests', async () => {
     const data = {
       status: 'ok',

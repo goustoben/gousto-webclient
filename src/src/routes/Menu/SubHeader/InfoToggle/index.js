@@ -1,1 +1,1 @@
-export default from './InfoToggle'
+export { default } from './InfoToggle'

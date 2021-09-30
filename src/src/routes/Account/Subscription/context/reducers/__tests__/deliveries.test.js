@@ -1,6 +1,5 @@
 import {
   reduceCurrentDeliverySlot,
-  reduceDeliverySlot,
   reduceDeliveryFrequency,
   reduceDeliverySlots,
   reduceDeliveriesData,
@@ -105,12 +104,6 @@ describe('deliveries reducers', () => {
   })
 
   describe('reduceDeliverySlot', () => {
-    describe('Given slot is passed', () => {
-      beforeEach(() => {
-        result = reduceDeliverySlot(mockSlots[0])
-      })
-    })
-
     test('Then slot is reduced as expected', () => {
       expect(result).toEqual(mockReducedSlots[0])
     })

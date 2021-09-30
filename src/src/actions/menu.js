@@ -37,32 +37,6 @@ import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
 import { setLowestPricePerPortion } from './boxPricesPricePerPortion'
 
-/**
- * menuActions should only be used for the tests
- * to mock methods and internal to call other methods
- * defined. Please don't use outside.
- */
-/* eslint-disable no-use-before-define */
-const menuActions = {
-  menuLoadMenu,
-  menuLoadBoxPrices,
-  menuLoadOrderDetails,
-  menuCutoffUntilReceive,
-  menuClearStock,
-  menuLoadStock,
-  menuLoadDays,
-  menuBrowseCTAVisibilityChange,
-  menuReceiveMenuPending,
-  menuReceiveBoxPrices,
-  trackViewSidesModal,
-  trackSidesContinueClicked,
-  trackAddSide,
-  trackCancelSide,
-  trackViewSidesAllergens,
-  trackCloseSidesAllergens,
-  menuChangeRecipeStock,
-}
-
 function handleReloadMenuError({ dispatch }) {
   unset(Cookies, 'reload_invalid_delivery_date')
   dispatch(menuLoadingError('Cannot load menu, try changing delivery date below.'))
@@ -473,5 +447,31 @@ export const trackCloseSidesAllergens = () => ({
     event_type: sideEventTypes.closeScreen
   }
 })
+
+/**
+ * menuActions should only be used for the tests
+ * to mock methods and internal to call other methods
+ * defined. Please don't use outside.
+ */
+/* eslint-disable no-use-before-define */
+const menuActions = {
+  menuLoadMenu,
+  menuLoadBoxPrices,
+  menuLoadOrderDetails,
+  menuCutoffUntilReceive,
+  menuClearStock,
+  menuLoadStock,
+  menuLoadDays,
+  menuBrowseCTAVisibilityChange,
+  menuReceiveMenuPending,
+  menuReceiveBoxPrices,
+  trackViewSidesModal,
+  trackSidesContinueClicked,
+  trackAddSide,
+  trackCancelSide,
+  trackViewSidesAllergens,
+  trackCloseSidesAllergens,
+  menuChangeRecipeStock,
+}
 
 export default menuActions

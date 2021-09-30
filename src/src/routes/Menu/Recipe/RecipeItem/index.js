@@ -1,1 +1,1 @@
-export default from './RecipeItem'
+export { default } from './RecipeItem'
