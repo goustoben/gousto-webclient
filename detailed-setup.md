@@ -225,7 +225,7 @@ brew install watchman
 ```
 
 ### Running regression tests
-The regression tests have their own `package.json` which can be found under tests/regression. All commands assume you are within that directory.
+The regression tests have their own `package.json` which can be found under `tests/regression`. All commands assume you are within that directory and have already started the server locally with `npm run dev` command in `src` folder.
 
 ```shell
 npm install

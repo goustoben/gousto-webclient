@@ -57,8 +57,7 @@ $ npm run test:jest:watch ./path/to/file.js
 
 # 1. build and run the website (server and client)
 $ cd src
-$ npm run build
-$ npm run start
+$ npm run dev
 
 # 2. in a new terminal window run Cypress tests
 $ cd test/regression
