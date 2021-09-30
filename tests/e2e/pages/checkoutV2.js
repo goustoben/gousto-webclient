@@ -269,7 +269,19 @@ module.exports = {
           selector: 'n/a', // nightwatch requires it, but we never use it
           elements: {
             consentButton: {
-              selector: 'button#consentButton'
+              selector: 'button#consentButton,input#confirmButtonTop'
+            },
+            emailField: {
+              selector: 'input#email'
+            },
+            nextButton: {
+              selector: 'button[value="Next"]'
+            },
+            passwordField: {
+              selector: 'input#password'
+            },
+            loginButton: {
+              selector: 'button[value="Login"]'
             }
           },
           props: {
@@ -295,36 +307,7 @@ module.exports = {
             },
             asyncLoginAndConfirmPayment: async function (browser, done) {
               try {
-                const mainWindowHandle = await promisifyNightwatchCommand(browser, 'windowHandle')
-
-                const windowHandles = await promisifyNightwatchCommand(browser, 'windowHandles')
-
-                browser.assert.equal(windowHandles.length, 2, 'The PayPal window is open')
-
-                const paypalWindowHandle = windowHandles[0] === mainWindowHandle
-                      ? windowHandles[1]
-                      : windowHandles[0]
-
-                await promisifyNightwatchCommand(browser, 'switchWindow', paypalWindowHandle)
-
-                // For some reason, at this point the nightwatch's @reference
-                // mechanism is not working, hence the selector values are
-                // inlined rather than defined in the `elements` section.
-                waitAndSetValue.call(this, 'input#email', this.props.paypalUserEmail)
-
-                clickElement.call(this, 'button[value="Next"]')
-
-                waitAndSetValue.call(this, 'input#password', this.props.paypalUserPassword)
-
-                clickElement.call(this, 'button[value="Login"]')
-
-                const consentButtonSelector = this.elements.consentButton.selector
-                browser.waitForElementPresent(consentButtonSelector, 60000)
-                browser.execute(`document.querySelector('${consentButtonSelector}').scrollIntoView()`)
-                browser.pause(SMALL_DELAY)
-                clickElement.call(this, consentButtonSelector)
-
-                await promisifyNightwatchCommand(browser, 'switchWindow', mainWindowHandle)
+                let mainWindowHandle, windowHandles, paypalWindowHandle;
 
                 const isPaypalWindowClosed = function (callback) {
                   browser.windowHandles(function (commandResult) {
@@ -333,13 +316,35 @@ module.exports = {
                   })
                 }
 
-                pollCondition(isPaypalWindowClosed, function (pollResult) {
-                  if (pollResult === 'conditionMet') {
-                    done()
-                  } else {
-                    browser.assert.fail('Expected the PayPal window to close')
-                  }
-                })
+                browser
+                  .windowHandle(result => mainWindowHandle = result.value)
+                  .windowHandles(result => windowHandles = result.value)
+                  .perform(() => {
+                    browser.assert.equal(windowHandles.length, 2, 'The PayPal window is open')
+                    paypalWindowHandle = windowHandles[0] === mainWindowHandle ? windowHandles[1] : windowHandles[0];
+                    browser.switchWindow(paypalWindowHandle)
+                  })
+                  // Nightwatch's @-notation for elements doesn't seem to work inside the PayPal window
+                  .waitForElementVisible(this.elements.emailField.selector)
+                  .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
+                  .click(this.elements.nextButton.selector)
+                  .waitForElementVisible(this.elements.passwordField.selector)
+                  .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
+                  .click(this.elements.loginButton.selector)
+                  .waitForElementVisible(this.elements.consentButton.selector)
+                  .execute(`document.querySelector('${this.elements.consentButton.selector}').scrollIntoView()`)
+                  .pause(SMALL_DELAY)
+                  .click(this.elements.consentButton.selector)
+                  .perform(() => browser.switchWindow(mainWindowHandle))
+                  .perform(() => {
+                    pollCondition(isPaypalWindowClosed, function (pollResult) {
+                      if (pollResult === 'conditionMet') {
+                        done()
+                      } else {
+                        browser.assert.fail('Expected the PayPal window to close')
+                      }
+                    })
+                  })
               }
               catch (e) {
                 console.warn('Failed PayPal flow with error', e)
