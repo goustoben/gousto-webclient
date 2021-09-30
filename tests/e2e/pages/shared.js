@@ -253,9 +253,18 @@ module.exports = {
         },
 
         submitPromo: function () {
+          let clickSucceeded;
+
           this
             .waitForElementVisible('@promoModalButton')
-            .click('@promoModalButton')
+            .click('@promoModalButton', result => clickSucceeded = result.status === 0)
+            .api.perform(() => {
+              if (!clickSucceeded) {
+                console.warn('Will shortly make a second attempt to click @promoModalButton since the first attempt failed...')
+                this.pause(500)
+                this.click()
+              }
+            })
             .waitForElementNotPresent('@promoModalButton')
 
           return this
