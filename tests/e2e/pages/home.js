@@ -1,4 +1,4 @@
-const clickElement = require('../commands/clickElement');
+const clickElement = require('../utils/clickElement');
 
 module.exports = {
   url: function () {

@@ -20,19 +20,20 @@ module.exports = {
       .perform(function (browser, done) {
         menu.navigate()
         shared.section.body.submitPromo()
+        shared.section.body.openLoginDialog()
         shared.section.body.isRememberMeCheckboxVisible()
-        shared.section.body.login(user.customer.email, user.customer.password)
+        shared.section.body.completeLogin(user.customer.email, user.customer.password)
         shared.section.header.checkUserLoggedIn()
         browser.assert.urlContains("/menu")
         done()
       })
     browser
       .perform(function (browser, done) {
-        shared.section.header.goToAccount()
         shared.section.body.logout()
         browser.pause(3000)
         shared.section.header.checkUserLoggedOut()
         browser.assert.title('Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto')
+        shared.section.body.openLoginDialog()
         shared.section.body.isRememberMeCheckboxVisible()
         done()
       })

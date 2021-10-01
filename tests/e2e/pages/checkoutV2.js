@@ -1,6 +1,5 @@
 const faker = require('faker')
-const clickElement = require('../commands/clickElement')
-const waitAndSetValue = require('../commands/waitAndSetValue')
+const clickElement = require('../utils/clickElement')
 const { pollRace, pollCondition } = require('../utils/pollUtils')
 const { asyncIsElementBySelectorPresent } = require('../utils/asyncIsElementBySelectorPresent')
 const { promisifyNightwatchCommand } = require('../utils/promisifyNightwatchCommand')
@@ -325,30 +324,32 @@ module.exports = {
                   .perform(() => {
                     browser.assert.equal(windowHandles.length, 2, 'The PayPal window is open')
                     paypalWindowHandle = windowHandles[0] === mainWindowHandle ? windowHandles[1] : windowHandles[0];
-                    browser.switchWindow(paypalWindowHandle)
-                  })
-                  // Nightwatch's @-notation for elements doesn't seem to work inside the PayPal window
-                  .waitForElementVisible(this.elements.acceptAllCookiesButton.selector)
-                  .click(this.elements.acceptAllCookiesButton.selector)
-                  .waitForElementVisible(this.elements.emailField.selector)
-                  .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
-                  .click(this.elements.nextButton.selector)
-                  .waitForElementVisible(this.elements.passwordField.selector)
-                  .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
-                  .click(this.elements.loginButton.selector)
-                  .waitForElementVisible(this.elements.consentButton.selector)
-                  .execute(`document.querySelector('${this.elements.consentButton.selector}').scrollIntoView()`)
-                  .pause(SMALL_DELAY)
-                  .click(this.elements.consentButton.selector)
-                  .perform(() => browser.switchWindow(mainWindowHandle))
-                  .perform(() => {
-                    pollCondition(isPaypalWindowClosed, function (pollResult) {
-                      if (pollResult === 'conditionMet') {
-                        done()
-                      } else {
-                        browser.assert.fail('Expected the PayPal window to close')
-                      }
-                    })
+
+                    browser
+                      .switchWindow(paypalWindowHandle)
+                      .waitForElementVisible(this.elements.emailField.selector)
+                      // Nightwatch's @-notation for elements doesn't seem to work inside the PayPal window
+                      .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
+                      // Using javascript to click button to avoid other elements (e.g. cookie acceptance banner) intercepting click
+                      // This is an anti-pattern when testing our own UI but acceptable here since we just need the PayPal transaction to complete
+                      .execute(`document.querySelector('${this.elements.nextButton.selector}').click()`)
+                      .waitForElementVisible(this.elements.passwordField.selector)
+                      .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
+                      // See earlier comment about javascript button clicking
+                      .execute(`document.querySelector('${this.elements.nextButton.selector}').click()`)
+                      .waitForElementVisible(this.elements.consentButton.selector)
+                      // See earlier comment about javascript button clicking
+                      .execute(`document.querySelector('${this.elements.consentButton.selector}').click()`)
+                      .switchWindow(mainWindowHandle)
+                      .perform(() => {
+                        pollCondition(isPaypalWindowClosed, function (pollResult) {
+                          if (pollResult === 'conditionMet') {
+                            done()
+                          } else {
+                            browser.assert.fail('Expected the PayPal window to close')
+                          }
+                        })
+                      })
                   })
               }
               catch (e) {

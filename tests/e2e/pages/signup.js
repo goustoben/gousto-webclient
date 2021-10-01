@@ -1,4 +1,4 @@
-const clickElement = require('../commands/clickElement');
+const clickElement = require('../utils/clickElement');
 const goToNextStep = function () { clickElement.call(this, '@CTA') }
 
 module.exports = {

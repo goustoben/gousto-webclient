@@ -1,7 +1,6 @@
 const faker = require('faker')
 const webclient = require('../../../src/dist/webclient').default
 const Immutable = require('immutable')
-const RandExp = require('randexp')
 
 const ANIMATION_DELAY = 500
 
@@ -219,18 +218,29 @@ module.exports = {
               throw error
             })
         },
-
-        login: function (userName, password) {
-          this.waitForElementVisible('@loginButton')
+        openLoginDialog: function () {
+          this
+            .waitForElementVisible('@loginButton')
             .click('@loginButton')
+            .waitForElementVisible('@loginFormSubmit')
+            .waitForElementToStopMoving('@loginFormSubmit')
 
-          this.waitForElementVisible('@loginModal')
-            .waitForElementVisible('@loginEmail')
+          return this
+        },
+        completeLogin: function (userName, password) {
+          this
             .clearValue('@loginEmail').setValue('@loginEmail', userName)
             .clearValue('@loginPassword').setValue('@loginPassword', password)
             .click('@loginFormSubmit')
 
           this.api.pause(ANIMATION_DELAY)
+
+          return this
+        },
+        login: function (userName, password) {
+          this
+            .openLoginDialog()
+            .completeLogin(userName, password)
 
           return this
         },
@@ -253,27 +263,16 @@ module.exports = {
         },
 
         submitPromo: function () {
-          let clickSucceeded;
-
           this
-            .waitForElementVisible('@promoModalButton')
-            .click('@promoModalButton', result => clickSucceeded = result.status === 0)
-            .api.perform(() => {
-              if (!clickSucceeded) {
-                console.warn('Will shortly make a second attempt to click @promoModalButton since the first attempt failed...')
-                this.pause(500)
-                this.click()
-              }
-            })
+            .waitForElementVisible('@promoModalButton', 60000)
+            .waitForElementToStopMoving('@promoModalButton', 5000)
+            .click('@promoModalButton')
             .waitForElementNotPresent('@promoModalButton')
 
           return this
         },
         isRememberMeCheckboxVisible: function () {
-          this.waitForElementVisible('@loginButton')
-            .click('@loginButton')
-            .waitForElementPresent('@loginCheckbox')
-            .expect.element('@loginCheckbox').to.be.selected
+          this.expect.element('@loginCheckbox').to.be.selected
         },
       }],
     },
@@ -319,7 +318,6 @@ module.exports = {
             .click('@burgerMenuLogout')
           return this
         },
-        goToAccount: function () {},
         checkUserLoggedIn: function () {
           this.waitForElementVisible('@myGoustoButtonLink')
           this.expect.element('@myGoustoButtonLink').to.be.visible.before()

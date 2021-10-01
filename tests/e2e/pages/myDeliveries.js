@@ -1,4 +1,4 @@
-const clickElement = require('../commands/clickElement');
+const clickElement = require('../utils/clickElement');
 const openRecipesChosenCard = function () { clickElement.call(this, '@recipesChosenCard') }
 const checkIfSectionsVisible = function () {
   this
