@@ -1,1 +1,1 @@
-export { default } from './ReduxFormInput'
+export default from './ReduxFormInput'

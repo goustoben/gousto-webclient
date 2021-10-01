@@ -277,7 +277,7 @@ describe('productsLoadProducts', () => {
     expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoff, { period_id: '1234', sort: 'position' }, 'auth-1234-user-id', '1234')
   })
 
-  describe('when reload is true', () => {
+  describe('when reload is true', async () => {
     test('should still fetch products if there are all products in product store & no cutoffDate is passed in ', async () => {
       getStateSpy = () => ({
         auth: Immutable.fromJS({ accessToken: 'accessToken', id: 'auth-1234-user-id' }),

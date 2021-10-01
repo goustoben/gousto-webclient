@@ -1,1 +1,1 @@
-export { default } from './ReceiptLine'
+export default from './ReceiptLine'

@@ -21,6 +21,7 @@
 /.github/        @Gousto/frontend-foundations
 /.gitignore        @Gousto/frontend-foundations
 /.git-blame-ignore-revs        @Gousto/frontend-foundations
+/src/.babelrc        @Gousto/frontend-foundations
 /src/.bowerrc        @Gousto/frontend-foundations
 /src/.eslintignore        @Gousto/frontend-foundations
 /src/.eslintrc        @Gousto/frontend-foundations
@@ -28,6 +29,7 @@
 /src/config/        @Gousto/frontend-foundations
 /src/scripts/        @Gousto/frontend-foundations
 /src/server/        @Gousto/frontend-foundations
+/src/__tests__/.babelrc        @Gousto/frontend-foundations
 /src/__tests__/.eslintrc        @Gousto/frontend-foundations
 /src/src/routes/index.js        @Gousto/frontend-foundations
 /src/src/_testing/        @Gousto/frontend-foundations

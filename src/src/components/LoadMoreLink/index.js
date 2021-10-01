@@ -1,1 +1,1 @@
-export { default } from './LoadMoreLink'
+export default from './LoadMoreLink'

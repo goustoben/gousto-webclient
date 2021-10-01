@@ -1,1 +1,1 @@
-export { default } from './ModalScreen'
+export default from './ModalScreen'

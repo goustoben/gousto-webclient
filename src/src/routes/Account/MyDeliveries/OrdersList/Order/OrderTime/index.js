@@ -1,1 +1,1 @@
-export { default } from './OrderTime'
+export default from './OrderTime'

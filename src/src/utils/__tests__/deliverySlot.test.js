@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
-import { toTimeRange, isAfterCutoff, getDateOffset, createNextDayDeliveryDays, formatDeliveryTime , parseTimeRange } from 'utils/deliverySlot'
+import { toTimeRange, isAfterCutoff, getDateOffset, createNextDayDeliveryDays, formatDeliveryTime } from 'utils/deliverySlot'
+import { parseTimeRange } from '../deliverySlot'
 
 describe('utils/deliverySlot', () => {
   describe('toTimeRange', () => {

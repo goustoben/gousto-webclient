@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 
-import { isRecipeInBasket, getMenuLimits , getMenuVariants, switchSelectedVariants } from 'utils/menu'
+import { isRecipeInBasket, getMenuLimits } from 'utils/menu'
+import { getMenuVariants, switchSelectedVariants } from '../menu'
 
 describe('menu utils', () => {
   describe('isRecipeInBasket', () => {

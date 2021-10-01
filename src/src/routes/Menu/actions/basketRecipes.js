@@ -124,7 +124,7 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, order
       return
     }
 
-    dispatch(validBasketRecipeAdd(recipeId, view, recipeInfo, maxRecipesNum, orderId))
+    dispatch(exports.validBasketRecipeAdd(recipeId, view, recipeInfo, maxRecipesNum, orderId))
     dispatch(trackUserAddRemoveRecipe())
   }
 )
@@ -181,8 +181,8 @@ export const basketRecipeSwap = () =>
       const recipeFromBasket = basketNotValidError.rules[0].items[0]
       const recipeToReplace = basketNotValidError.recipeId
 
-      dispatch(basketRecipeRemove(recipeFromBasket, 'swapModal'))
-      dispatch(validBasketRecipeAdd(recipeToReplace, 'swapModal'))
+      dispatch(exports.basketRecipeRemove(recipeFromBasket, 'swapModal'))
+      dispatch(exports.validBasketRecipeAdd(recipeToReplace, 'swapModal'))
       dispatch(clearBasketNotValidError())
     }
   }
@@ -192,7 +192,7 @@ export const basketRecipeAddAttempt = (recipeId) => (
     const basketPostcode = getBasketPostcode(getState())
 
     if (basketPostcode) {
-      dispatch(basketRecipeAdd(recipeId))
+      dispatch(exports.basketRecipeAdd(recipeId))
     } else {
       dispatch(menuBrowseCTAVisibilityChange(true))
     }

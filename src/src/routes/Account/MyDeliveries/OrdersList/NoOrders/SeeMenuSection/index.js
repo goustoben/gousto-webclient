@@ -1,1 +1,1 @@
-export { default } from './SeeMenuSection'
+export default from './SeeMenuSection'

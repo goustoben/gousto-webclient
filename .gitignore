@@ -27,4 +27,3 @@ src/config/*-local.json5
 .vs
 .idea
 src/config/env.json
-lib

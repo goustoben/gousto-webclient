@@ -1,1 +1,1 @@
-export { default } from './OrderRestoreButtonContainer'
+export default from './OrderRestoreButtonContainer'

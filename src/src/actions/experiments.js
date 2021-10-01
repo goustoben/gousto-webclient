@@ -13,8 +13,8 @@ export function storeUserExperiments(experiments) {
   return {
     type: actionTypes.EXPERIMENTS_RECEIVED,
     payload: {
-      experiments,
-    },
+      experiments
+    }
   }
 }
 
@@ -22,8 +22,8 @@ export function appendUserExperiment(experiment) {
   return {
     type: actionTypes.EXPERIMENTS_APPEND,
     payload: {
-      experiment,
-    },
+      experiment
+    }
   }
 }
 
@@ -34,16 +34,16 @@ export function appendDefaultUserExperiment(experimentName) {
       experiment: {
         name: experimentName,
         bucket: 'control',
-        withinExperiment: false,
-      },
-    },
+        withinExperiment: false
+      }
+    }
   }
 }
 
 export function removeUserExperiments() {
   return {
     type: actionTypes.EXPERIMENTS_REMOVE,
-    payload: {},
+    payload: {}
   }
 }
 
@@ -54,8 +54,8 @@ export function trackBucketedUser({ experimentName, withinExperiment, bucket }) 
       actionType: experimentBucketedUser,
       experimentName,
       withinExperiment,
-      bucket,
-    },
+      bucket
+    }
   }
 }
 
@@ -94,19 +94,11 @@ export function assignUserToExperiment(experimentName) {
     try {
       dispatch(pending(actionTypes.EXPERIMENTS_ASSIGNING_USER, true))
       const { data } = await updateUserExperiment(experimentName, sessionId, userId)
-      dispatch(
-        trackBucketedUser({
-          experimentName,
-          withinExperiment: data.withinExperiment,
-          bucket: data.bucket,
-        })
-      )
+      dispatch(trackBucketedUser({ experimentName, withinExperiment: data.withinExperiment, bucket: data.bucket }))
       dispatch(appendUserExperiment(data))
     } catch (error) {
       logger.error({ message: 'Failed to assign user to an experiment', extra: { error } })
-      logger.info({
-        message: `Defaulting user to control bucket for experiment: ${experimentName}`,
-      })
+      logger.info({ message: `Defaulting user to control bucket for experiment: ${experimentName}` })
 
       dispatch(appendDefaultUserExperiment(experimentName))
     } finally {
@@ -122,12 +114,6 @@ export function fetchOrAssignUserToExperiment(experimentName) {
     const assignUser = shouldAssignUserToExperiment(currentState, { experimentName })
 
     if (fetchExperiments) {
-      /*
-       having to ignore the 'exports.' syntax
-       Typescript doesn't like it
-       but removing it causes a problem with the mocks in the associated unit tests.
-      */
-
       dispatch(exports.fetchUserExperiments())
     } else if (assignUser) {
       dispatch(exports.assignUserToExperiment(experimentName))

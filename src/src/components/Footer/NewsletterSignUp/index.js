@@ -1,1 +1,1 @@
-export { default } from './NewsletterSignUpContainer'
+export default from './NewsletterSignUpContainer'

@@ -1,9 +1,10 @@
 import logger from 'utils/logger'
-import { getAccessToken , getAuthUserId } from 'selectors/auth'
+import { getAccessToken } from 'selectors/auth'
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { fetchBrandMenuHeaders, fetchBrandInfo } from 'apis/brand'
 import { actionTypes } from '../../../actions/actionTypes'
+import { getAuthUserId } from '../../../selectors/auth'
 
 export function brandDataReceived(response) {
   return ({

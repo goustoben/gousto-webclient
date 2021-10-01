@@ -1,1 +1,1 @@
-export { default } from './OrderRescheduledNotification'
+export default from './OrderRescheduledNotification'

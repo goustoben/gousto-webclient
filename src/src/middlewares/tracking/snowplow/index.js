@@ -1,1 +1,1 @@
-export { default } from './snowplow'
+export default from './snowplow'

@@ -1,1 +1,1 @@
-export { default } from './Gel'
+export default from './Gel'

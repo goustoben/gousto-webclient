@@ -1,4 +1,4 @@
-const {fbAppID} = require('config/template').head
+const fbAppID = require('config/template').head.fbAppID
 
 function fbTracking() {
   return (

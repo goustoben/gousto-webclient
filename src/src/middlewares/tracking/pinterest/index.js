@@ -1,2 +1,2 @@
 export * from './pinterest'
-export { default } from './pinterest'
+export default from './pinterest'

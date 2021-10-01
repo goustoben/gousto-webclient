@@ -1,1 +1,1 @@
-export { default } from './AgeVerifyContainer'
+export default from './AgeVerifyContainer'

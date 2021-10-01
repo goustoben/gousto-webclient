@@ -1,1 +1,1 @@
-export { default } from './ContentMask'
+export default from './ContentMask'

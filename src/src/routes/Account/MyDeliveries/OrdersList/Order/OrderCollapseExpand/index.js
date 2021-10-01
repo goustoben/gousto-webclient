@@ -1,1 +1,1 @@
-export { default } from './OrderCollapseExpand'
+export default from './OrderCollapseExpand'

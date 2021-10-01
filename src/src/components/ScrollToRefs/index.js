@@ -1,2 +1,2 @@
-export { default } from './ScrollToRefs'
+export default from './ScrollToRefs'
 export * from './ScrollToRefs'
