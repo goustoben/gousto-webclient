@@ -41,12 +41,7 @@ const config = {
       {
         test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
         loader: 'ts-loader',
-        options: {
-          logLevel: "error",
-          onlyCompileBundledFiles: true,
-          /*transpile Javascript but don't typecheck at build time */
-          transpileOnly: true
-        },
+        options: {},
         include: [
           path.resolve(__dirname, '../src'),
           path.resolve(__dirname, '../server'),
