@@ -14,7 +14,6 @@ module.exports = ({ ARTIFACTS_PATH = "./screenshots", globalWaitTimeout }) => ({
   },
   request_timeout_options: {
     timeout: 15000,
-    retry_attempts: 3,
   },
   screenshots: {
     enabled: true,
