@@ -40,8 +40,10 @@ const config = {
     rules: [
       {
         test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
-        loader: 'ts-loader',
-        options: {},
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+        },
         include: [
           path.resolve(__dirname, '../src'),
           path.resolve(__dirname, '../server'),
