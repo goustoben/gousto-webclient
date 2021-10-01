@@ -30,6 +30,9 @@ module.exports = {
         promoCodeError: {
           selector: '*[data-testing="user-promo-invalid"]',
         },
+        totalPrice: {
+          selector: '*[data-testing=totalPrice]'
+        }
       },
 
       sections: {
@@ -336,7 +339,7 @@ module.exports = {
                       .waitForElementVisible(this.elements.passwordField.selector)
                       .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
                       // See earlier comment about javascript button clicking
-                      .execute(`document.querySelector('${this.elements.nextButton.selector}').click()`)
+                      .execute(`document.querySelector('${this.elements.loginButton.selector}').click()`)
                       .waitForElementVisible(this.elements.consentButton.selector)
                       // See earlier comment about javascript button clicking
                       .execute(`document.querySelector('${this.elements.consentButton.selector}').click()`)
@@ -362,6 +365,9 @@ module.exports = {
       },
 
       commands: [{
+        ensureCheckoutLoaded: function () {
+          this.waitForElementPresent('@totalPrice')
+        },
         submitBoxDetailsSection: function () {
           this.section.boxdetails.checkIfRecipeSummaryVisible()
 
