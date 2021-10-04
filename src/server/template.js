@@ -19,6 +19,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
       ${(helmetHead && helmetHead.title) ? helmetHead.title.toString() : ''}
       ${(helmetHead && helmetHead.meta) ? helmetHead.meta.toString() : ''}
       ${scripts.optimizely ? head.optimizely(initialState.features) : ''}
+      <script src="${newAssetPath('performanceTracker.js')}"></script>
       <script src="${newAssetPath('vendors.js')}" defer></script>
       <script src="${newAssetPath('main.js')}" defer></script>
       ${head.favicon()}

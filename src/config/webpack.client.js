@@ -17,6 +17,7 @@ const baseConfig = {
   entry: {
     main: ['babel-polyfill', './src/client.js'],
     legacy: ['babel-polyfill', './src/legacy.js'],
+    performanceTracker: ['./src/performanceTracker/entry.js'],
   },
   mode: 'production',
   module: {
@@ -90,12 +91,13 @@ const addOverridesForDevBuildConfig = (webpackConfig, _clientDevServerEnabled = 
     devtool: 'eval-cheap-module-source-map',
     entry: {
       main: ['babel-polyfill', './src/client.js'],
+      performanceTracker: ['./src/performanceTracker/entry.js'],
     },
     mode: 'development',
     output: {
       path: path.resolve('./public'),
-      filename: '[name].bundle.js', 
-      publicPath,    
+      filename: '[name].bundle.js',
+      publicPath,
     },
   }
 
