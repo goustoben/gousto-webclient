@@ -58,6 +58,7 @@ const fetchRecipesWithIngredients = safeJestMock(menuApi, 'fetchRecipesWithIngre
 const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
 const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
 const getIsMultiComplaintLimitReachedLastFourWeeks = safeJestMock( orderSelectors, 'getIsMultiComplaintLimitReachedLastFourWeeks')
+const getIsBoxDailyComplaintLimitReached = safeJestMock( orderSelectors, 'getIsBoxDailyComplaintLimitReached')
 
 const ACCESS_TOKEN = 'access-token'
 const GET_STATE_PARAMS = {
@@ -522,7 +523,56 @@ describe('GetHelp action generators and thunks', () => {
         getIsMultiComplaintLimitReachedLastFourWeeks.mockReturnValue(false)
       })
 
-      test('dispatch the tracking action with reason multi_complaint_limit_last_four_week', () => {
+      test('dispatch the tracking action without reason', () => {
+        trackIngredientsGoToMyGousto()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_click_go_to_my_gousto',
+          }
+        })
+      })
+    })
+  })
+
+  describe('trackIngredientsGoToMyGousto', () => {
+    describe('when isBoxDailyComplaintLimitReached is true', () => {
+      beforeEach(() => {
+        getIsBoxDailyComplaintLimitReached.mockReturnValue(true)
+      })
+
+      test('dispatch the tracking action with reason box_daily_complaint_limit_reached', () => {
+        trackIngredientsGoToMyGousto()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_click_go_to_my_gousto',
+            reason: 'box_daily_complaint_limit_reached'
+          }
+        })
+      })
+    })
+
+    describe('when isBoxDailyComplaintLimitReached is false', () => {
+      beforeEach(() => {
+        getIsBoxDailyComplaintLimitReached.mockReturnValue(false)
+      })
+
+      test('dispatch the tracking action without reason', () => {
+        trackIngredientsGoToMyGousto()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_click_go_to_my_gousto',
+          }
+        })
+      })
+    })
+  })
+
+  describe('trackIngredientsGoToMyGousto', () => {
+    describe('when called with unknown error', () => {
+      test('dispatch the tracking action without a reason', () => {
         trackIngredientsGoToMyGousto()(dispatch, getState)
         expect(dispatch.mock.calls[0][0]).toEqual({
           type: webClientActionTypes.TRACKING,

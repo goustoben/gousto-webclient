@@ -20,6 +20,7 @@ import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
 import { getIsAuthenticated } from 'selectors/auth'
 import { configureStore } from './store'
+import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
 
 if (__ENV__ !== 'production') {
   // eslint-disable-next-line global-require
@@ -54,6 +55,8 @@ window.docReady(() => {
   refresh(store)
 
   browserType(store)
+
+  initializePerformanceTrackerSender(store)
 
   const reactRootDOM = document.getElementById('react-root')
 

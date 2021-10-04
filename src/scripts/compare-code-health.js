@@ -103,6 +103,11 @@ const run = async (changedFiles) => {
     const failures = []
 
     changedFiles.forEach(parsed => {
+      // Ignore client.js because it is not possible to unit-test it.
+      if (parsed.path === 'src/src/client.js') {
+        return
+      }
+
       const failure = compareHealth(parsed.status, parsed.path, benchmarkCodeHealth, newCodeHealth)
 
       if (failure === null) {

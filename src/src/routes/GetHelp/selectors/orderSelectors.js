@@ -21,3 +21,8 @@ export const getIsMultiComplaintLimitReachedLastFourWeeks = createSelector(
   getIneligibleIngredientsError,
   (errorCriteria) => Boolean(errorCriteria && errorCriteria.multiComplaintLimitReachedLastFourWeeks)
 )
+
+export const getIsBoxDailyComplaintLimitReached = createSelector(
+  getIneligibleIngredientsError,
+  (errorCriteria) => Boolean(errorCriteria && errorCriteria.boxDailyComplaintLimitReached)
+)

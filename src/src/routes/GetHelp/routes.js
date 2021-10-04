@@ -11,6 +11,7 @@ import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
 import { IneligibleIngredientsContainer } from './IneligibleIngredients'
+import { IneligibleIngredientsSameDayContainer } from './IneligibleIngredientsSameDay'
 import { DeliveryContainer } from './Delivery'
 import { DeliveryValidationContainer } from './Delivery/DeliveryValidation'
 import { DontKnowWhen } from './Delivery/DontKnowWhen'
@@ -34,6 +35,7 @@ const getHelpRoutes = (store) => {
     ingredients,
     multipleIngredientsIssues,
     recipeCards,
+    sameDayIngredientIssues
   } = configRoutes.client.getHelp
 
   const allowNotLoggedInToSomeRoutes = (routes, next) => {
@@ -95,6 +97,10 @@ const getHelpRoutes = (store) => {
         <Route
           path={recipeCards({ userId: ':userId', orderId: ':orderId' })}
           component={RecipeCardsContainer}
+        />
+        <Route
+          path={sameDayIngredientIssues}
+          component={IneligibleIngredientsSameDayContainer}
         />
         {Confirmation}
         {Contact}
