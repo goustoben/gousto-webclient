@@ -50,6 +50,7 @@ describe('<Ingredients />', () => {
 
   const PROPS = {
     massIssueIneligibleIngredientUuids: MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
+    isBoxDailyComplaintLimitReached: false,
     isMultiComplaintLimitReachedLastFourWeeks: false,
     isOrderValidationError: false,
     isValidateOrderLoading: false,
@@ -303,6 +304,7 @@ describe('<Ingredients />', () => {
               {...PROPS}
             />
           )
+          // setting props here so componentDidUpdate() will run
           wrapper.setProps({ isOrderValidationError: true })
         })
 
@@ -318,11 +320,28 @@ describe('<Ingredients />', () => {
               {...PROPS}
             />
           )
+          // setting props here so componentDidUpdate() will run
           wrapper.setProps({ isMultiComplaintLimitReachedLastFourWeeks: true })
         })
 
         test('redirects to /multiple-ingredients-issues', () => {
           expect(browserHistory.push).toHaveBeenCalledWith('/get-help/multiple-ingredients-issues')
+        })
+      })
+
+      describe('and order validation errors is isBoxDailyComplaintLimitReached', () => {
+        beforeEach(() => {
+          wrapper = mount(
+            <Ingredients
+              {...PROPS}
+            />
+          )
+          // setting props here so componentDidUpdate() will run
+          wrapper.setProps({ isBoxDailyComplaintLimitReached: true })
+        })
+
+        test('redirects to /same-day-ingredient-issues', () => {
+          expect(browserHistory.push).toHaveBeenCalledWith('/get-help/same-day-ingredient-issues')
         })
       })
 

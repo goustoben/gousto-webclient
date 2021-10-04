@@ -3,7 +3,8 @@ import {
   getIsOrderValidationPending,
   getIsOrderValidationError,
   getIneligibleIngredientsError,
-  getIsMultiComplaintLimitReachedLastFourWeeks
+  getIsMultiComplaintLimitReachedLastFourWeeks,
+  getIsBoxDailyComplaintLimitReached,
 } from '../orderSelectors'
 
 describe('orderSelectors selectors', () => {
@@ -142,6 +143,40 @@ describe('orderSelectors selectors', () => {
 
       test('should return true', () => {
         expect(getIsMultiComplaintLimitReachedLastFourWeeks(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('getIsBoxDailyComplaintLimitReached', () => {
+    let state
+
+    beforeEach(() => {
+      state = {
+        error: Map({})
+      }
+    })
+
+    test('should return false', () => {
+      expect(getIsBoxDailyComplaintLimitReached(state)).toEqual(false)
+    })
+
+    describe('when we have GET_HELP_VALIDATE_ORDER errors', () => {
+      beforeEach(() => {
+        state = {
+          error: Map({
+            GET_HELP_VALIDATE_ORDER: {
+              errors: {
+                criteria: {
+                  boxDailyComplaintLimitReached: true
+                }
+              }
+            }
+          })
+        }
+      })
+
+      test('should return true', () => {
+        expect(getIsBoxDailyComplaintLimitReached(state)).toEqual(true)
       })
     })
   })

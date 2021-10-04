@@ -10,7 +10,7 @@ import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
 import { fetchRecipesWithIngredients } from '../apis/menu'
-import { getIsMultiComplaintLimitReachedLastFourWeeks } from '../selectors/orderSelectors'
+import { getIsMultiComplaintLimitReachedLastFourWeeks, getIsBoxDailyComplaintLimitReached } from '../selectors/orderSelectors'
 import { getIsAutoAccept, getOrder, getRecipes } from '../selectors/selectors'
 import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
@@ -170,12 +170,25 @@ export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
 
 export const trackIngredientsGoToMyGousto = () => (dispatch, getState) => {
   const isMultiComplaintLimitReachedLastFourWeeks = getIsMultiComplaintLimitReachedLastFourWeeks(getState())
+  const isBoxDailyComplaintLimitReached = getIsBoxDailyComplaintLimitReached(getState())
+  let reason
+
+  switch (true) {
+  case isMultiComplaintLimitReachedLastFourWeeks:
+    reason = 'multi_complaint_limit_last_four_week'
+    break
+  case isBoxDailyComplaintLimitReached:
+    reason = 'box_daily_complaint_limit_reached'
+    break
+  default:
+    break
+  }
 
   dispatch({
     type: webClientActionTypes.TRACKING,
     trackingData: {
       actionType: trackingKeys.ssrIngredientsClickGoToMyGousto,
-      reason: isMultiComplaintLimitReachedLastFourWeeks ? 'multi_complaint_limit_last_four_week' : undefined
+      reason
     }
   })
 }

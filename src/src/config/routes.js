@@ -47,6 +47,7 @@ module.exports = {
       orderIssue: 'order-issue',
       recipeCards: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/recipe-cards`,
       refund: 'refund',
+      sameDayIngredientIssues: 'same-day-ingredient-issues'
     },
 
     help: '/help',

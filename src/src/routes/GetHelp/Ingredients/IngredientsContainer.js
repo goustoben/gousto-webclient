@@ -8,7 +8,12 @@ import {
   trackSelectIngredient,
   validateLatestOrder,
 } from '../actions/getHelp'
-import { getIsOrderValidationPending, getIsOrderValidationError, getIsMultiComplaintLimitReachedLastFourWeeks } from '../selectors/orderSelectors'
+import {
+  getIsOrderValidationPending,
+  getIsOrderValidationError,
+  getIsMultiComplaintLimitReachedLastFourWeeks,
+  getIsBoxDailyComplaintLimitReached
+} from '../selectors/orderSelectors'
 import { getMassIssueIneligibleIngredientUuids, getOrder, getRecipes } from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
 
@@ -16,6 +21,7 @@ const mapStateToProps = (state) => ({
   massIssueIneligibleIngredientUuids: getMassIssueIneligibleIngredientUuids(state),
   isOrderValidationError: getIsOrderValidationError(state),
   isMultiComplaintLimitReachedLastFourWeeks: getIsMultiComplaintLimitReachedLastFourWeeks(state),
+  isBoxDailyComplaintLimitReached: getIsBoxDailyComplaintLimitReached(state),
   isValidateOrderLoading: getIsOrderValidationPending(state),
   order: getOrder(state),
   recipes: getRecipes(state),
