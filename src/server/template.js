@@ -15,7 +15,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
       ******************************************************************** -->
       <meta charset="utf-8" />
       <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
       ${(helmetHead && helmetHead.title) ? helmetHead.title.toString() : ''}
       ${(helmetHead && helmetHead.meta) ? helmetHead.meta.toString() : ''}
       ${scripts.optimizely ? head.optimizely(initialState.features) : ''}
