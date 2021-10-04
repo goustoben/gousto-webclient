@@ -6,13 +6,13 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
   `<!doctype html>
    <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
-      <!-- ********************************************************************
+      <!-- **********************************************************************************
         Well hello there! You're a curious person, aren't you?
-        Are you also curious about React? Or maybe Python, NodeJS, PHP?
-        Or are you more the AWS type?
-        We're always looking for talented engineers. Email us!
-        jobs [at] gousto.co.uk
-      ******************************************************************** -->
+        Are you also curious about React, Python, NodeJS or TypeScript?
+        Gousto builds high-availability distributed systems to put dinner on Britain's table.
+        We're always seeking talented engineers. Take a look!
+        https://www.gousto.co.uk/jobs
+      *********************************************************************************** -->
       <meta charset="utf-8" />
       <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
       <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">

@@ -26,12 +26,11 @@ async function init() {
   loaded = true
   let initialState = {}
   try {
-    initialState = decodeURIComponent(window.atob(window.__initialState__))
+    initialState = transit.fromJSON(window.__initialState__)
   } catch (error) {
     //
   }
 
-  initialState = transit.fromJSON(initialState)
   const store = configureStore(browserHistory, initialState, Cookies)
   const persist = store.getState().persist.get('simpleHeader', false)
 
