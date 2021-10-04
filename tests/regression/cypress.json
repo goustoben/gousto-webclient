@@ -3,10 +3,11 @@
   "integrationFolder": "../..",
   "testFiles": ["src/src/**/__regression__/*.spec.*"],
   "screenshotsFolder": "screenshots",
+  "videosFolder": "videos",
   "fixturesFolder": "fixtures",
   "supportFile": "support/index.js",
   "pluginsFile": false,
-  "video": false,
+  "video": true,
   "chromeWebSecurity": false,
   "experimentalFetchPolyfill": true,
   "env": {
