@@ -19,7 +19,7 @@ const quantityMessage = (gift, quantity, disclaimerKey, type) => {
         {' '}
         {typeLabel}
         {amountLabel}
-        {disclaimerKey !== undefined ? ` ${disclaimerKey}` : ''}
+        {disclaimerKey ? ` ${disclaimerKey}` : ''}
       </p>
     )
   }
