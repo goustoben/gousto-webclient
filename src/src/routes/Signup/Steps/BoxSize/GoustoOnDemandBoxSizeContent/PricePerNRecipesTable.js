@@ -16,11 +16,15 @@ export const PricePerNRecipesTable = ({ isLoadingPrices, boxDescriptors }) => (
           const { totalAfterDiscount } = boxDescriptor
           const totalBeforeDiscount = boxDescriptor.total
 
+          const isDiscounted = totalAfterDiscount !== totalBeforeDiscount
+
           return (
             <div className={css.cell} key={nRecipes}>
               <div className={css.nRecipesLine}>{nRecipes} recipes</div>
               <div className={css.priceLine}>{formatPrice(totalAfterDiscount)}</div>
-              <div className={css.priceBeforeDiscountLine}>{formatPrice(totalBeforeDiscount)}</div>
+              <div className={css.priceBeforeDiscountLine}>
+                {isDiscounted && formatPrice(totalBeforeDiscount)}
+              </div>
             </div>
           )
         })
