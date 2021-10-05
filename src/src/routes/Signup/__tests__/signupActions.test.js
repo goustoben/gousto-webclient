@@ -1,6 +1,7 @@
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { redirect } from 'actions/redirect'
 import loginActions from 'actions/login'
+import { menuLoadBoxPrices } from 'actions/menu'
 import {
   signupCheckAccountGoToBoxPrices,
   signupCheckAccountLogin,
@@ -19,6 +20,10 @@ jest.mock('actions/login', () => ({
   loginVisibilityChange: jest.fn(),
 }))
 
+jest.mock('actions/menu', () => ({
+  menuLoadBoxPrices: jest.fn(),
+}))
+
 describe('signupActions', () => {
   const dispatch = jest.fn()
 
@@ -34,6 +39,7 @@ describe('signupActions', () => {
     test('then it should dispatch correct actions', () => {
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith('click_god_new_customer')
       expect(redirect).toHaveBeenCalledWith('/signup/box-size')
+      expect(menuLoadBoxPrices).toHaveBeenCalled()
     })
   })
 
