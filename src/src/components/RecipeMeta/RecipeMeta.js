@@ -62,4 +62,8 @@ RecipeMeta.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map),
 }
 
+RecipeMeta.defaultProps = {
+  recipe: null,
+}
+
 export { RecipeMeta }

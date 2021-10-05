@@ -13,4 +13,8 @@ DuplicateOrderModalWrapper.propTypes = {
   visible: PropTypes.bool,
 }
 
+DuplicateOrderModalWrapper.defaultProps = {
+  visible: false,
+}
+
 export default DuplicateOrderModalWrapper

@@ -106,4 +106,14 @@ Detail.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
+Detail.defaultProps = {
+  isOpened: false,
+  attributes: Immutable.List(),
+  inProgress: false,
+  onAdd: () => {},
+  onRemove: () => {},
+  onVerifyAge: () => {},
+  onVisibilityChange: () => {},
+}
+
 export default Detail

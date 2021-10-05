@@ -37,6 +37,7 @@ AgeVerificationCheckBox.defaultProps = {
   disabled: false,
   onCheckBoxChange: () => {},
   onTooltipVisibleChange: () => {},
+  showError: false,
   tooltipVisible: false,
 }
 

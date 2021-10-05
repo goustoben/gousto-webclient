@@ -19,7 +19,7 @@ const quantityMessage = (gift, quantity, disclaimerKey, type) => {
         {' '}
         {typeLabel}
         {amountLabel}
-        {disclaimerKey !== undefined ? ` ${disclaimerKey}` : ''}
+        {disclaimerKey ? ` ${disclaimerKey}` : ''}
       </p>
     )
   }
@@ -72,17 +72,21 @@ Item.propTypes = {
   ]).isRequired,
   title: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
-  onImageClick: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.oneOf([false]),
-  ]),
-  onRemove: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.oneOf([false]),
-  ]),
+  onImageClick: PropTypes.func,
+  onRemove: PropTypes.func,
   available: PropTypes.bool,
   gift: PropTypes.bool,
   url: PropTypes.string,
+}
+
+Item.defaultProps = {
+  disclaimerKey: null,
+  type: 'product',
+  onImageClick: null,
+  onRemove: null,
+  available: false,
+  gift: false,
+  url: null,
 }
 
 export default Item

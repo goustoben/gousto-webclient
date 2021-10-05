@@ -15,3 +15,9 @@ Label.propTypes = {
   label: PropTypes.node,
   subLabel: PropTypes.node,
 }
+
+Label.defaultProps = {
+  children: null,
+  label: null,
+  subLabel: null,
+}

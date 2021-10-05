@@ -3,8 +3,8 @@ import transit from 'transit-immutable-js'
 import encodeState from 'server/encodeState'
 
 describe('encodeState', () => {
-  test('should encode the given object', () => {
-    const state = Immutable.fromJS({
+  test('should serialise the immutablejs state tree', () => {
+    const input = Immutable.fromJS({
       object: {
         nested: {
           value: 'value1',
@@ -12,10 +12,10 @@ describe('encodeState', () => {
         },
       },
     })
-    const expected = JSON.stringify(
-      Buffer.from(encodeURIComponent(transit.toJSON(state))).toString('base64'),
-    )
 
-    expect(encodeState(state)).toBe(expected)
+    const serialised = encodeState(input)
+    const deserialised = transit.fromJSON(JSON.parse(serialised))
+
+    expect(deserialised).toEqual(input)
   })
 })

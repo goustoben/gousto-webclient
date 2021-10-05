@@ -10,14 +10,13 @@ const ModalScreen = ({ children, title }) => (
   </div>
 )
 
-ModalScreen.defaultProps = {
-  title: '',
-  children: '',
-}
-
 ModalScreen.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
+}
+
+ModalScreen.defaultProps = {
+  title: null,
 }
 
 export default ModalScreen

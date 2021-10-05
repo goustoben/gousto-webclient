@@ -9,8 +9,10 @@ import ModalPanel from 'Modal/ModalPanel'
 describe('DuplicateOrderModal', () => {
   let wrapper
 
+  const close = jest.fn()
+
   beforeEach(() => {
-    wrapper = shallow(<DuplicateOrderModal />)
+    wrapper = shallow(<DuplicateOrderModal close={close} />)
   })
 
   test('should return a <ModalPanel>', () => {
@@ -50,7 +52,7 @@ describe('DuplicateOrderModal', () => {
           },
         },
       })
-      wrapper = shallow(<DuplicateOrderModal closeOrders={closeOrders} />)
+      wrapper = shallow(<DuplicateOrderModal closeOrders={closeOrders} close={close} />)
     })
 
     test('should render as many Order components as there are closeOrders passed in', () => {

@@ -44,15 +44,16 @@ const Spotlight = ({ x, y, onClick }) => {
   )
 }
 
-Spotlight.defaultProps = {
-  x: 0,
-  y: 0,
-}
-
 Spotlight.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   onClick: PropTypes.func,
+}
+
+Spotlight.defaultProps = {
+  x: 0,
+  y: 0,
+  onClick: null,
 }
 
 export {

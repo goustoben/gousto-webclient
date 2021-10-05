@@ -25,17 +25,20 @@ ProductItem.propTypes = {
   images: PropTypes.instanceOf(Immutable.Map).isRequired,
   title: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
-  onImageClick: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.oneOf([false]),
-  ]),
-  onRemove: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.oneOf([false]),
-  ]),
+  onImageClick: PropTypes.func,
+  onRemove: PropTypes.func,
   available: PropTypes.bool,
   gift: PropTypes.bool,
   url: PropTypes.string,
+}
+
+ProductItem.defaultProps = {
+  disclaimerKey: null,
+  onImageClick: () => {},
+  onRemove: () => {},
+  available: false,
+  gift: false,
+  url: null,
 }
 
 export default ProductItem

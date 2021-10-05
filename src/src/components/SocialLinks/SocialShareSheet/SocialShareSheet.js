@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
 import Svg from 'Svg'
@@ -11,16 +12,6 @@ import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferra
 
 class SocialShareSheet extends React.PureComponent {
   state = { isEmailFormOpen: false }
-
-  static propTypes = {
-    onClose: PropTypes.func.isRequired,
-    referralCode: PropTypes.string.isRequired,
-    trackingReferFriendSocialSharing: PropTypes.func.isRequired,
-    trackingReferFriend: PropTypes.func.isRequired,
-    userFirstName: PropTypes.string.isRequired,
-    rafOffer: PropTypes.shape({}),
-    trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
-  }
 
   toggleEmailModal = () => {
     const { trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare } = this.props
@@ -90,4 +81,19 @@ class SocialShareSheet extends React.PureComponent {
     )
   }
 }
+
+SocialShareSheet.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  referralCode: PropTypes.string.isRequired,
+  trackingReferFriendSocialSharing: PropTypes.func.isRequired,
+  trackingReferFriend: PropTypes.func.isRequired,
+  userFirstName: PropTypes.string.isRequired,
+  rafOffer: PropTypes.instanceOf(Immutable.Map),
+  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
+}
+
+SocialShareSheet.defaultProps = {
+  rafOffer: null,
+}
+
 export { SocialShareSheet }

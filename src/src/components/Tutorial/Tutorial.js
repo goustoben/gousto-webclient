@@ -5,18 +5,6 @@ import { isElementHidden } from 'Tutorial/helpers'
 import { Step } from './Step'
 
 export class Tutorial extends PureComponent {
-  static propTypes = {
-    children: PropTypes.arrayOf(
-      PropTypes.instanceOf(Step)
-    ),
-    onClose: PropTypes.func,
-    trackStepViewed: PropTypes.func,
-  }
-
-  static defaultProps = {
-    children: [],
-  }
-
   constructor(props) {
     super(props)
     const { children } = props
@@ -75,4 +63,17 @@ export class Tutorial extends PureComponent {
       })
     )
   }
+}
+
+Tutorial.propTypes = {
+  children: PropTypes.arrayOf(
+    PropTypes.instanceOf(Step)
+  ),
+  onClose: PropTypes.func,
+  trackStepViewed: PropTypes.func.isRequired,
+}
+
+Tutorial.defaultProps = {
+  children: [],
+  onClose: null,
 }

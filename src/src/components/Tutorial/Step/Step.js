@@ -9,17 +9,6 @@ import { isElementHidden, getSpotlightLocation, getTooltipProperties } from 'Tut
 import css from './Step.css'
 
 export class Step extends PureComponent {
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    last: PropTypes.bool,
-    next: PropTypes.func,
-    onClose: PropTypes.func,
-    selector: PropTypes.string.isRequired,
-  }
-
   state = {
     x: 0,
     y: 0,
@@ -92,4 +81,22 @@ export class Step extends PureComponent {
       </div>
     )
   }
+}
+
+Step.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  last: PropTypes.bool,
+  next: PropTypes.func,
+  onClose: PropTypes.func,
+  selector: PropTypes.string.isRequired,
+}
+
+Step.defaultProps = {
+  children: null,
+  last: false,
+  next: null,
+  onClose: null,
 }

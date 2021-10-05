@@ -10,4 +10,8 @@ ModalHeader.propTypes = {
   children: PropTypes.node,
 }
 
+ModalHeader.defaultProps = {
+  children: null
+}
+
 export default ModalHeader

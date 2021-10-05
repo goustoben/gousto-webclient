@@ -6,26 +6,16 @@ import css from './ExpiredBillingModal.css'
 import BillingForm from './BillingForm'
 
 class ExpiredBillingModal extends React.PureComponent {
-  static propTypes = {
-    expiredBillingModalOpen: PropTypes.bool,
-    closeExpiredBillingModal: PropTypes.func,
-  }
-
-  static defaultProps = {
-    expiredBillingModalOpen: false,
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   onCloseExpiredBillingModal = () => {
-    this.props.closeExpiredBillingModal(false)
+    const { closeExpiredBillingModal } = this.props
+    closeExpiredBillingModal(false)
   }
 
   render() {
+    const { expiredBillingModalOpen } = this.props
+
     return (
-      <Overlay open={Boolean(this.props.expiredBillingModalOpen)} contentClassName={css.mobileModalContent} from="top">
+      <Overlay open={Boolean(expiredBillingModalOpen)} contentClassName={css.mobileModalContent} from="top">
         <ModalPanel closePortal={this.onCloseExpiredBillingModal} disableOverlay disableClickOutside>
           <div className={css.body}>
             <h2 className={css.modalTitle}>Your account is on hold</h2>
@@ -40,6 +30,19 @@ class ExpiredBillingModal extends React.PureComponent {
       </Overlay>
     )
   }
+}
+
+ExpiredBillingModal.propTypes = {
+  expiredBillingModalOpen: PropTypes.bool,
+  closeExpiredBillingModal: PropTypes.func.isRequired,
+}
+
+ExpiredBillingModal.defaultProps = {
+  expiredBillingModalOpen: false,
+}
+
+ExpiredBillingModal.contextTypes = {
+  store: PropTypes.instanceOf(Object).isRequired
 }
 
 export default ExpiredBillingModal

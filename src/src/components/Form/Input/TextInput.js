@@ -51,6 +51,14 @@ const defaultProps = {
   isInCheckout: false,
   inputPrefix: null,
   onFocus: () => {},
+  onChange: () => {},
+  onBlur: () => {},
+  onKeyUp: () => {},
+  onEnter: () => {},
+  placeholder: null,
+  maxLength: null,
+  validator: null,
+  'data-testing': null,
 }
 
 export class TextInput extends Component {

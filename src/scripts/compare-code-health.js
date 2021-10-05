@@ -4,6 +4,7 @@ const getCodeHealthBenchmark = require('./code-health-utils/get-benchmark-file')
 const getCodeHealth = require('./code-health-utils/get-code-health')
 const sanitiseFilePath = require('./code-health-utils/sanitise-file-path')
 const getFailureMessages = require('./code-health-utils/get-failure-messages')
+const ignoredFiles = require('./code-health-utils/ignored-files')
 
 if (!process.env.CIRCLECI_ACCESS_TOKEN) {
   console.log('error! process.env.CIRCLECI_ACCESS_TOKEN not set')
@@ -102,20 +103,17 @@ const run = async (changedFiles) => {
 
     const failures = []
 
-    changedFiles.forEach(parsed => {
-      // Ignore client.js because it is not possible to unit-test it.
-      if (parsed.path === 'src/src/client.js') {
-        return
-      }
+    changedFiles
+      .filter(file => !ignoredFiles.includes(file.path))
+      .forEach(parsed => {
+        const failure = compareHealth(parsed.status, parsed.path, benchmarkCodeHealth, newCodeHealth)
 
-      const failure = compareHealth(parsed.status, parsed.path, benchmarkCodeHealth, newCodeHealth)
+        if (failure === null) {
+          return
+        }
 
-      if (failure === null) {
-        return
-      }
-
-      failures.push(failure)
-    })
+        failures.push(failure)
+      })
 
     if (failures.length > 0) {
       printFailures(failures)

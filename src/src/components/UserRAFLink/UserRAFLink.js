@@ -9,16 +9,6 @@ import css from './UserRAFLink.css'
 class UserRAFLink extends React.PureComponent {
   state = { copiedMessageVisible: false }
 
-  static propTypes = {
-    referralCode: PropTypes.string.isRequired,
-    classContainer: PropTypes.string.isRequired,
-    classLinkContainer: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired,
-    trackingReferFriend: PropTypes.func,
-    isModal: PropTypes.bool.isRequired,
-    trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
-  }
-
   static fetchData = async ({ store }) => Promise.all([
     store.dispatch(actions.userLoadReferralDetails()),
   ])
@@ -59,6 +49,16 @@ class UserRAFLink extends React.PureComponent {
       </div>
     )
   }
+}
+
+UserRAFLink.propTypes = {
+  referralCode: PropTypes.string.isRequired,
+  classContainer: PropTypes.string.isRequired,
+  classLinkContainer: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  trackingReferFriend: PropTypes.func.isRequired,
+  isModal: PropTypes.bool.isRequired,
+  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
 export { UserRAFLink }

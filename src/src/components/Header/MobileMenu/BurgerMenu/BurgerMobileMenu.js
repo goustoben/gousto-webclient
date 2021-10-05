@@ -174,7 +174,7 @@ BurgerMobileMenu.propTypes = {
 BurgerMobileMenu.defaultProps = {
   isAuthenticated: false,
   trackClickRateRecipes: () => {},
-  promoCodeUrl: '',
+  promoCodeUrl: null,
 }
 
 export { BurgerMobileMenu }

@@ -21,6 +21,7 @@ SectionHeader.propTypes = {
 }
 
 SectionHeader.defaultProps = {
+  children: null,
   contentAlign: '',
   contentSizeMax: '',
   type: 'page',

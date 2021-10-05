@@ -10,23 +10,6 @@ import css from './Page.css'
 const imageUrl = require('media/photos/gousto-share-box.jpg')
 
 class Page extends React.PureComponent {
-  static propTypes = {
-    children: PropTypes.object.isRequired,
-    email: PropTypes.string,
-    goustoReference: PropTypes.string,
-    isAuthenticated: PropTypes.bool.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    loginVisibilityChange: PropTypes.func.isRequired,
-    contentFetchPending: PropTypes.bool.isRequired,
-    isSignupReductionEnabled: PropTypes.bool,
-    trackUserAttributes: PropTypes.func.isRequired,
-    userLoadData: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    isSignupReductionEnabled: false,
-  }
-
   static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus-3'
 
   componentDidMount() {
@@ -113,6 +96,25 @@ class Page extends React.PureComponent {
       </span>
     )
   }
+}
+
+Page.propTypes = {
+  children: PropTypes.object.isRequired,
+  email: PropTypes.string,
+  goustoReference: PropTypes.string,
+  isAuthenticated: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  loginVisibilityChange: PropTypes.func.isRequired,
+  contentFetchPending: PropTypes.bool.isRequired,
+  isSignupReductionEnabled: PropTypes.bool,
+  trackUserAttributes: PropTypes.func.isRequired,
+  userLoadData: PropTypes.func.isRequired,
+}
+
+Page.defaultProps = {
+  isSignupReductionEnabled: false,
+  email: null,
+  goustoReference: null,
 }
 
 export default Page

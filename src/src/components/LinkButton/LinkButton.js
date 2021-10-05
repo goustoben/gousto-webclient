@@ -32,11 +32,12 @@ LinkButton.propTypes = {
 }
 
 LinkButton.defaultProps = {
+  children: null,
+  color: 'primary',
+  fill: true,
   to: '#',
   disabled: false,
   width: 'auto',
-  color: 'primary',
-  fill: true,
   clientRouted: true,
 }
 

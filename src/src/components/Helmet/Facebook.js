@@ -24,10 +24,6 @@ const Facebook = ({ admins, appID, domainVerification }) => {
   return <Helmet meta={metaData} />
 }
 
-Facebook.defaultProps = {
-  admins: [],
-}
-
 Facebook.propTypes = {
   admins: PropTypes.array.isRequired,
   appID: PropTypes.string.isRequired,

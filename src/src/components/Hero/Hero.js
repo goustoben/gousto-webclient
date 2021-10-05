@@ -12,14 +12,14 @@ const Hero = ({ imageUrl, headerText, style }) => (
   </div>
 )
 
-Hero.defaultProps = {
-  style: {},
+Hero.propTypes = {
+  imageUrl: PropTypes.string.isRequired,
+  headerText: PropTypes.string.isRequired,
+  style: PropTypes.object,
 }
 
-Hero.propTypes = {
-  imageUrl: PropTypes.string,
-  headerText: PropTypes.string,
-  style: PropTypes.object,
+Hero.defaultProps = {
+  style: {},
 }
 
 export default Hero

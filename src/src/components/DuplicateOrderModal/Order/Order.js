@@ -26,9 +26,9 @@ const Order = ({ date, numPeople, numRecipes }) => (
 )
 
 Order.propTypes = {
-  date: PropTypes.string,
-  numPeople: PropTypes.string,
-  numRecipes: PropTypes.string,
+  date: PropTypes.string.isRequired,
+  numPeople: PropTypes.string.isRequired,
+  numRecipes: PropTypes.string.isRequired,
 }
 
 export default Order

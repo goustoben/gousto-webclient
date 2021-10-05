@@ -129,4 +129,14 @@ StyledElement.propTypes = {
   ]).isRequired,
 }
 
+StyledElement.defaultProps = {
+  backgroundColor: null,
+  color: null,
+  children: null,
+  className: null,
+  margin: undefined,
+  padding: undefined,
+  style: {},
+}
+
 export default StyledElement

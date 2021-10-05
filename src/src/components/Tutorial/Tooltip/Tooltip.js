@@ -21,10 +21,6 @@ const Tooltip = ({ arrow, children, style, arrowStyle, contentStyle, onClose }) 
   </div>
 )
 
-Tooltip.defaultProps = {
-  arrow: 'top',
-}
-
 Tooltip.propTypes = {
   arrow: PropTypes.string,
   children: PropTypes.node,
@@ -41,6 +37,15 @@ Tooltip.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]))
+}
+
+Tooltip.defaultProps = {
+  arrow: 'top',
+  children: null,
+  onClose: null,
+  style: null,
+  arrowStyle: null,
+  contentStyle: null,
 }
 
 export {

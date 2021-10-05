@@ -236,6 +236,9 @@ jobs:
       - store_artifacts:
           path: /mnt/ramdisk/tests/regression/reports/html
           destination: ./
+      - store_artifacts:
+          path: /mnt/ramdisk/tests/regression/videos
+          destination: ./
 
   test-regression-mobile:
     docker: *circleci_node_browsers_image
@@ -265,6 +268,9 @@ jobs:
           command: npm run report
       - store_artifacts:
           path: /mnt/ramdisk/tests/regression/reports/html
+          destination: ./
+      - store_artifacts:
+          path: /mnt/ramdisk/tests/regression/videos
           destination: ./
 
   deploy-infrastructure-and-webclient-image:

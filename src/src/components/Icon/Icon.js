@@ -23,6 +23,9 @@ Icon.propTypes = {
 }
 
 Icon.defaultProps = {
+  className: null,
+  fixedWidth: false,
+  size: null,
   style: {},
 }
 

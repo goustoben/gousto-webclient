@@ -7,12 +7,6 @@ import css from './AgeVerification.css'
 import { modalTitle, underAgeModalText, modalText } from './config'
 
 class AgeVerificationPopUp extends PureComponent {
-  static propTypes = {
-    isUnderAge: PropTypes.bool,
-    onClose: PropTypes.func.isRequired,
-    onAgeConfirmation: PropTypes.func.isRequired
-  }
-
   constructor() {
     super()
     this.state = {
@@ -82,6 +76,16 @@ class AgeVerificationPopUp extends PureComponent {
 
     )
   }
+}
+
+AgeVerificationPopUp.propTypes = {
+  isUnderAge: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  onAgeConfirmation: PropTypes.func.isRequired
+}
+
+AgeVerificationPopUp.defaultProps = {
+  isUnderAge: false,
 }
 
 export { AgeVerificationPopUp }

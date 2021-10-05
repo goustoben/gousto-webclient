@@ -45,7 +45,11 @@ const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
 
 DuplicateOrderModal.propTypes = {
   closeOrders: PropTypes.instanceOf(Immutable.Map),
-  close: PropTypes.func,
+  close: PropTypes.func.isRequired,
+}
+
+DuplicateOrderModal.defaultProps = {
+  closeOrders: Immutable.Map(),
 }
 
 export default DuplicateOrderModal

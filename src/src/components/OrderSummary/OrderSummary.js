@@ -39,10 +39,18 @@ const propTypes = {
 }
 
 const defaultProps = {
+  prices: Immutable.Map({}),
+  deliverySlot: Immutable.Map(),
   giftItems: Immutable.Map(),
   productItems: Immutable.Map(),
   recipeItems: Immutable.Map(),
-  prices: Immutable.Map({}),
+  removeProduct: null,
+  shippingAddress: Immutable.Map(),
+  showProductDetail: null,
+  saveError: false,
+  saveRequired: false,
+  saving: false,
+  surcharges: Immutable.List(),
   orderNumber: '',
   orderSummaryCollapsed: true,
 }
