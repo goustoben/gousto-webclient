@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import productUtils from 'utils/products'
+import { getProductsByCutoff } from 'utils/products'
 
 describe('utils/products', () => {
   describe('getProductsByCutoff', () => {
@@ -26,7 +26,7 @@ describe('utils/products', () => {
     })
 
     test('should return products containing requested cutoff date', () => {
-      let foundProducts = productUtils.getProductsByCutoff('date-1', products)
+      let foundProducts = getProductsByCutoff('date-1', products)
       let expectedResult = Immutable.fromJS([
         { id: '1', title: 'Product 1', cutoffDates: ['date-1', 'date-2'] },
         {
@@ -38,7 +38,7 @@ describe('utils/products', () => {
         { id: '6', title: 'Product 6', cutoffDates: ['date-2'] },
       ])
 
-      foundProducts = productUtils.getProductsByCutoff('date-3', products)
+      foundProducts = getProductsByCutoff('date-3', products)
       expectedResult = Immutable.fromJS([
         {
           id: '3',
@@ -55,7 +55,7 @@ describe('utils/products', () => {
     })
 
     test('should return an empty list if no products were found', () => {
-      const foundProducts = productUtils.getProductsByCutoff('date-5', products)
+      const foundProducts = getProductsByCutoff('date-5', products)
 
       expect(Immutable.is(foundProducts, Immutable.List())).toBe(true)
     })
