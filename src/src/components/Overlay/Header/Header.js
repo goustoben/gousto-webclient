@@ -21,4 +21,9 @@ Header.propTypes = {
   title: PropTypes.string,
 }
 
+Header.defaultProps = {
+  children: null,
+  title: null,
+}
+
 export default Header

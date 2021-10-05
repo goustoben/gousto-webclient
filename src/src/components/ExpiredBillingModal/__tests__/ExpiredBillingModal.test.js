@@ -7,8 +7,20 @@ import css from 'ExpiredBillingModal/ExpiredBillingModal.css'
 describe('CancelOrderModal', () => {
   let wrapper
 
+  const closeExpiredBillingModal = jest.fn()
+
+  const store = {
+    dispatch: jest.fn(),
+    getState: jest.fn(),
+    subscribe: jest.fn(),
+  }
+
   beforeEach(() => {
-    wrapper = shallow(<ExpiredBillingModal />)
+    wrapper = shallow(<ExpiredBillingModal closeExpiredBillingModal={closeExpiredBillingModal} />, {
+      context: {
+        store
+      }
+    })
   })
 
   test('should return an Overlay', () => {

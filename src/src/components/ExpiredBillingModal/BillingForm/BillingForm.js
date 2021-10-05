@@ -22,7 +22,7 @@ const divisor = String.fromCharCode(47)
 class BillingForm extends React.PureComponent {
   static propTypes = {
     isPosting: PropTypes.bool,
-    submitCardDetails: PropTypes.func,
+    submitCardDetails: PropTypes.func.isRequired,
   }
 
   static defaultProps = {

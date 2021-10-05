@@ -24,4 +24,8 @@ Attributes.propTypes = {
   attributes: PropTypes.instanceOf(Immutable.List),
 }
 
+Attributes.defaultProps = {
+  attributes: Immutable.List(),
+}
+
 export default Attributes

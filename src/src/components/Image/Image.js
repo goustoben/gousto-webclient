@@ -28,11 +28,14 @@ class Image extends React.PureComponent {
 
   static defaultProps = {
     contain: true,
+    className: null,
     onClick: () => {},
     title: '',
+    maxMediaSize: null,
     lazy: false,
     once: true,
-    offset: 200
+    offset: 200,
+    placeholder: null,
   }
 
   getSrcSet = srcs =>

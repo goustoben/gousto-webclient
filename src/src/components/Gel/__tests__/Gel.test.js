@@ -14,7 +14,7 @@ describe('<Gel />', () => {
     expect(wrapper.find('div').length).toBeGreaterThanOrEqual(1)
   })
 
-  test("should render it's children", () => {
+  test("should render its children", () => {
     const TestComponent = () => (
       <div>
         <p>A Test Component</p>
@@ -46,7 +46,7 @@ describe('<Gel />', () => {
       const tree = renderer
         .create(
           <Gel>
-            <h1>A Gel's child</h1>
+            <h1>A Gel&apos;s child</h1>
           </Gel>,
         )
         .toJSON()

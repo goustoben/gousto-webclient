@@ -1,17 +1,10 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  unstable_renderSubtreeIntoContainer,
-  unmountComponentAtNode,
-} from 'react-dom'
+import { unstable_renderSubtreeIntoContainer, unmountComponentAtNode } from 'react-dom'
 
 export class Portal extends Component {
   node = null
-
-  static propTypes = {
-    children: PropTypes.element,
-  }
 
   componentDidMount() {
     this.renderWrapper()
@@ -49,4 +42,8 @@ export class Portal extends Component {
   render() {
     return null
   }
+}
+
+Portal.propTypes = {
+  children: PropTypes.element.isRequired,
 }

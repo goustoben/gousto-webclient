@@ -9,11 +9,13 @@ import Svg from 'Svg'
 import BillingForm from '../BillingForm/BillingForm'
 import css from '../BillingForm/BillingForm.css'
 
+const submitCardDetails = jest.fn()
+
 describe('BillingForm', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<BillingForm />)
+    wrapper = shallow(<BillingForm submitCardDetails={submitCardDetails} />)
   })
 
   test('should return all the relevant input fields + titles', () => {
@@ -105,8 +107,9 @@ describe('BillingForm validateFormSubmit', () => {
 
 describe('BillingForm validateOnBlur', () => {
   let wrapper
+
   beforeEach(() => {
-    wrapper = shallow(<BillingForm />)
+    wrapper = shallow(<BillingForm submitCardDetails={submitCardDetails} />)
   })
   test('should return true if the value is empty', () => {
     wrapper.instance().validateOnBlur('securityCodeError', null)
@@ -129,7 +132,7 @@ describe('BillingForm validateOnBlur', () => {
 describe('BillingForm handleInputChange', () => {
   let wrapper
   beforeEach(() => {
-    wrapper = shallow(<BillingForm />)
+    wrapper = shallow(<BillingForm submitCardDetails={submitCardDetails} />)
   })
   test('should store the value in state against the label given', () => {
     wrapper.instance().handleInputChange('payment_type', 'CARD')
@@ -172,7 +175,7 @@ describe('BillingForm handleInputChange', () => {
 describe('BillingForm paymentOptions', () => {
   let wrapper
   beforeEach(() => {
-    wrapper = shallow(<BillingForm />)
+    wrapper = shallow(<BillingForm submitCardDetails={submitCardDetails} />)
   })
   test('should process config giving giving the same number of cards as the config file', () => {
     const result = wrapper.instance().paymentOptions()

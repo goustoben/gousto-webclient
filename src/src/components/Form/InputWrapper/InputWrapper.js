@@ -38,4 +38,10 @@ InputWrapper.propTypes = {
   ]),
 }
 
+InputWrapper.defaultProps = {
+  childLabel: null,
+  mask: null,
+  value: null,
+}
+
 export default Component => props => InputWrapper(Component, props)

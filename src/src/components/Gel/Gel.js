@@ -24,6 +24,8 @@ Gel.propTypes = {
 Gel.defaultProps = {
   size: 'medium',
   color: 'white',
+  className: null,
+  children: null,
 }
 
 export default Gel

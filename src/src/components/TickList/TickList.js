@@ -2,11 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import css from './TickList.css'
 
-const propTypes = {
-  listItems: PropTypes.arrayOf(PropTypes.string),
-  listItemClassName: PropTypes.string
-}
-
 const TickList = ({ listItems, listItemClassName }) => (
   <ul className={css.list}>
     {listItems.map(listItem => (
@@ -18,6 +13,14 @@ const TickList = ({ listItems, listItemClassName }) => (
   </ul>
 )
 
-TickList.propTypes = propTypes
+TickList.propTypes = {
+  listItems: PropTypes.arrayOf(PropTypes.string),
+  listItemClassName: PropTypes.string
+}
+
+TickList.defaultProps = {
+  listItems: [],
+  listItemClassName: null,
+}
 
 export { TickList }

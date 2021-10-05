@@ -25,12 +25,10 @@ const propTypes = {
 }
 
 const defaultProps = {
-  isAuthenticated: false,
   orders: Immutable.fromJS({}),
   shippingAddresses: Immutable.List([]),
-  route: {
-
-  },
+  menuLoadingBoxPrices: false,
+  route: {},
 }
 
 class MainLayout extends React.Component {

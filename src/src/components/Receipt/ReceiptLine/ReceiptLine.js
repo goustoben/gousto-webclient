@@ -55,10 +55,12 @@ ReceiptLine.propTypes = {
 }
 
 ReceiptLine.defaultProps = {
+  label: null,
+  children: null,
+  lineStyle: 'small',
   showLineAbove: false,
   dataTesting: null,
   isReceiptInCheckout: false,
-  lineStyle: 'small',
 }
 
 export default ReceiptLine

@@ -24,14 +24,17 @@ const Guide = ({ steps, header, description, graphicType }) => (
 )
 
 Guide.propTypes = {
-  header: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  header: PropTypes.string,
+  description: PropTypes.node,
   steps: PropTypes.array,
-  graphicType: PropTypes.string,
+  graphicType: PropTypes.oneOf(['img', 'svg']),
 }
 
 Guide.defaultProps = {
+  header: null,
+  description: null,
   steps: [],
+  graphicType: 'img',
 }
 
 export default Guide

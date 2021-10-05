@@ -31,6 +31,10 @@ class ReduxFormInput extends React.PureComponent {
     subLabel: '',
     className: '',
     onFocus: () => {},
+    inputPrefix: null,
+    inputSuffix: null,
+    dataTesting: null,
+    'data-testing': null,
   }
 
   debounceTouch(dispatch, formName, field) {

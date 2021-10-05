@@ -17,7 +17,11 @@ const AgeVerify = ({ verified, onChange }) => (
 
 AgeVerify.propTypes = {
   verified: PropTypes.bool,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+}
+
+AgeVerify.defaultProps = {
+  verified: false,
 }
 
 export default AgeVerify
