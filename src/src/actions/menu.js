@@ -12,7 +12,6 @@ import menuConfig from 'config/menu'
 import Cookies from 'utils/GoustoCookies'
 import { set, unset, get } from 'utils/cookieHelper2'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
-import { shouldUseWizardPricePerServing } from 'selectors/menu'
 import { getPromoCode, getBasketOrderId, getBasketTariffId } from 'selectors/basket'
 import statusActions from './status'
 import { redirect } from './redirect'
@@ -35,7 +34,6 @@ import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import tempActions from './temp'
 import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
-import { setLowestPricePerPortion } from './boxPricesPricePerPortion'
 
 /**
  * menuActions should only be used for the tests
@@ -217,7 +215,6 @@ export function menuLoadBoxPrices() {
       const orderId = getBasketOrderId(state)
       const tariffId = getBasketTariffId(state)
       const reqData = {}
-      const useWizardPricePerServing = shouldUseWizardPricePerServing(state)
 
       if (orderId) {
         reqData.order_id = orderId
@@ -235,9 +232,6 @@ export function menuLoadBoxPrices() {
       try {
         const { data: recipePrices } = await boxPricesApi.fetchBoxPrices(getState().auth.get('accessToken'), reqData)
         dispatch(menuActions.menuReceiveBoxPrices(recipePrices, tariffId))
-        if (useWizardPricePerServing) {
-          dispatch(setLowestPricePerPortion(recipePrices))
-        }
       } catch (err) {
         dispatch(menuActions.menuReceiveBoxPrices({}))
 

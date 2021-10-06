@@ -10,18 +10,8 @@ describe('BoxSizeStepContainer', () => {
     testMenuBoxPrices: 1,
   })
 
-  const lowestPricePerPortion = {
-    forTwo: {},
-    forFour: {},
-  }
-
-  const boxPrices = Immutable.Map({
-    lowestPricePerPortion,
-  })
-
   const initialState = {
     menuBoxPrices,
-    boxPrices,
     pending: Immutable.fromJS({}),
     basket: Immutable.fromJS({}),
   }
@@ -39,7 +29,6 @@ describe('BoxSizeStepContainer', () => {
   test('should be rendered properly', () => {
     const expected = {
       menuBoxPrices,
-      lowestPricePerPortion,
     }
     expect(wrapper.props()).toEqual(expect.objectContaining(expected))
   })

@@ -387,11 +387,6 @@ describe('menu actions', () => {
       test('then updates store with received prices', async () => {
         const getStateForPrice = () => ({
           ...state,
-          features: Immutable.fromJS({
-            isWizardPricePerServingEnabled: {
-              value: true,
-            }
-          }),
           basket: Immutable.fromJS({
             promoCode: 'promo',
             tariffId: 'id'

@@ -8,7 +8,6 @@ import { BoxSizeStep } from './BoxSizeStep'
 
 const mapStateToProps = (state) => ({
   menuBoxPrices: state.menuBoxPrices,
-  lowestPricePerPortion: state.boxPrices.toJS().lowestPricePerPortion,
   numPersonsToBoxDescriptors: getNumPersonsToBoxDescriptors(state),
   isLoadingPrices:
     state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE) || state.menuBoxPrices.size === 0,
