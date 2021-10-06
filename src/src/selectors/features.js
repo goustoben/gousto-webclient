@@ -132,10 +132,6 @@ export const getIsMyGoustoBannerSubscriberPricingEnabled = ({ features }) => (
   features && features.getIn(['isMyGoustoBannerSubscriberPricingEnabled', 'value'], false)
 )
 
-export const getIsWizardPricePerServingEnabled = ({ features }) => (
-  features && features.getIn(['isWizardPricePerServingEnabled', 'value'], false)
-)
-
 export const getIsPaymentBeforeChoosingV1Enabled = ({ features }) => (
   features && features.getIn(['isPaymentBeforeChoosingV1Enabled', 'value'], false)
 )

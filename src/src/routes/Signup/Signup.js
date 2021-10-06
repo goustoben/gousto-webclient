@@ -62,16 +62,6 @@ const propTypes = {
     basketPromo: PropTypes.string,
   }),
   trackDiscountVisibility: PropTypes.func,
-  lowestPricePerPortion: PropTypes.shape({
-    forTwo: PropTypes.shape({
-      priceDiscounted: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
-    }),
-    forFour: PropTypes.shape({
-      priceDiscounted: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
-    }),
-  }),
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   isPaymentBeforeChoosingV2Enabled: PropTypes.bool,
   isDiscountAppliedBarDismissed: PropTypes.bool,
@@ -100,7 +90,6 @@ const defaultProps = {
   isTastePreferencesEnabled: false,
   orderDiscount: '',
   trackDiscountVisibility: () => {},
-  lowestPricePerPortion: {},
   isPaymentBeforeChoosingEnabled: false,
   isPaymentBeforeChoosingV2Enabled: false,
   isDiscountAppliedBarDismissed: false,
@@ -238,7 +227,6 @@ class Signup extends PureComponent {
       location,
       params,
       orderDiscount,
-      lowestPricePerPortion,
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
       signupSetStep,
@@ -247,7 +235,6 @@ class Signup extends PureComponent {
     const { store } = this.context
     const query = location ? location.query : {}
     const options = {
-      lowestPricePerPortion,
       orderDiscount,
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,

@@ -23,7 +23,6 @@ const mapStateToProps = (state, ownProps) => ({
   ]),
   promoModalVisible: state.promoModalVisible,
   promoBannerState: getPromoBannerState(state),
-  lowestPricePerPortion: state.boxPrices.toJS().lowestPricePerPortion,
   isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   isPaymentBeforeChoosingV2Enabled: getIsPaymentBeforeChoosingV2Enabled(state),
   isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
