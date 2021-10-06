@@ -277,6 +277,7 @@ module.exports = {
         "src/routes/ShowcaseMenu/**/*.js",
         "src/middlewares/tracking/dataLayerTracker/*.js",
         "src/routes/BoxPrices/**/*.js",
+        "src/performanceTracker/**/*.js",
       ],
       "rules": {
         "prettier/prettier": "error",

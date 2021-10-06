@@ -1,5 +1,9 @@
 import Perfume from 'perfume.js'
-import { trackerVarName, PerformanceTracker, createTrackerInitializePerfume } from '../performanceTracker'
+import {
+  trackerVarName,
+  PerformanceTracker,
+  createTrackerInitializePerfume,
+} from '../performanceTracker'
 
 jest.mock('perfume.js', () => ({
   __esModule: true,
@@ -29,8 +33,8 @@ describe('PerformanceTracker', () => {
       test('then it should send the saved metrics', () => {
         tracker.setSender(sender)
 
-        expect(sender.sendPerformanceMetric).toHaveBeenNthCalledWith(1, 'fcp', 123)
-        expect(sender.sendPerformanceMetric).toHaveBeenNthCalledWith(2, 'lcp', 456)
+        expect(sender.sendPerformanceMetric).toHaveBeenNthCalledWith(1, 'fcp', 123, '/')
+        expect(sender.sendPerformanceMetric).toHaveBeenNthCalledWith(2, 'lcp', 456, '/')
       })
     })
   })
@@ -43,13 +47,13 @@ describe('PerformanceTracker', () => {
       tracker.setSender(sender)
     })
 
-    const cases = [['ttfb'] , ['fcp'], ['fid'], ['lcp'], ['cls']]
+    const cases = [['ttfb'], ['fcp'], ['fid'], ['lcp'], ['cls']]
 
     describe.each(cases)('when metric is "%s"', (metricName) => {
       test('then it should send the metric', () => {
         tracker.onPerfumeMetric({ metricName, data: 123 })
 
-        expect(sender.sendPerformanceMetric).toHaveBeenCalledWith(metricName, 123)
+        expect(sender.sendPerformanceMetric).toHaveBeenCalledWith(metricName, 123, '/')
       })
     })
 
