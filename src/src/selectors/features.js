@@ -161,7 +161,3 @@ export const getIsDecoupledPaymentEnabled = ({ features }) => (
 export const getIsGoustoOnDemandEnabled = ({ features }) => (
   features && features.getIn(['isGoustoOnDemandEnabled', 'value'], false)
 )
-
-export const getIsTrackPerformanceEnabled = ({ features }) => (
-  features && features.getIn(['trackPerformance', 'value'], false)
-)

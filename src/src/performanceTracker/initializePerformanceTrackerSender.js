@@ -1,23 +1,18 @@
-import { feLoggingLogEvent, logLevels } from 'actions/log'
-import { getIsTrackPerformanceEnabled } from 'selectors/features'
+import { recordPerformanceMetric } from 'actions/trackingKeys'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import { trackerVarName, createTrackerInitializePerfume } from './performanceTracker'
 
-const sendPerformanceMetric = (store, metricName, value) => {
+const sendPerformanceMetric = (store, metricName, value, pathname) => {
   store.dispatch(
-    feLoggingLogEvent(logLevels.info, 'performance metric', {
+    trackUTMAndPromoCode(recordPerformanceMetric, {
       metricName,
       value,
-      pathname: window.location.pathname,
-      userAgent: window.navigator.userAgent,
+      page: pathname,
     })
   )
 }
 
 export const initializePerformanceTrackerSender = (store) => {
-  if (!getIsTrackPerformanceEnabled(store.getState())) {
-    return
-  }
-
   let tracker = window[trackerVarName]
   if (!tracker) {
     // Edge case: performanceTracker entry point didn't load, or loaded slower
@@ -27,8 +22,8 @@ export const initializePerformanceTrackerSender = (store) => {
   }
 
   tracker.setSender({
-    sendPerformanceMetric(metricName, value) {
-      sendPerformanceMetric(store, metricName, value)
+    sendPerformanceMetric(metricName, value, pathname) {
+      sendPerformanceMetric(store, metricName, value, pathname)
     },
   })
 }

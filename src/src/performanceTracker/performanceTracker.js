@@ -1,12 +1,11 @@
 import Perfume from 'perfume.js'
 
-const metricsToTrack = [
-  'ttfb', 'fcp', 'fid', 'lcp', 'cls'
-]
+const metricsToTrack = ['ttfb', 'fcp', 'fid', 'lcp', 'cls']
 
 export class PerformanceTracker {
   constructor() {
     this.metrics = []
+    this.pathname = window.location.pathname
   }
 
   setSender(sender) {
@@ -28,14 +27,14 @@ export class PerformanceTracker {
   }
 
   sendSavedMetrics() {
-    this.metrics.forEach(metric => {
+    this.metrics.forEach((metric) => {
       const { metricName, data } = metric
       this.sendPerformanceMetric(metricName, data)
     })
   }
 
   sendPerformanceMetric(metricName, data) {
-    this.sender.sendPerformanceMetric(metricName, data)
+    this.sender.sendPerformanceMetric(metricName, data, this.pathname)
   }
 }
 

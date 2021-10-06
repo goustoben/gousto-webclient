@@ -15,3 +15,4 @@
 !src/routes/ShowcaseMenu/**/*
 !src/middlewares/tracking/dataLayerTracker/**/*
 !src/routes/BoxPrices/**/*
+!src/performanceTracker/**/*
