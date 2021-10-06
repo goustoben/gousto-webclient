@@ -1,5 +1,3 @@
-const clickElement = require('../utils/clickElement');
-
 module.exports = {
   url: function () {
     return this.api.launchUrl + '/menu'
@@ -13,35 +11,28 @@ module.exports = {
         {
           goFromMenuToCheckout: function () {
             this
-              .api.execute(function () {
+              .executeAndThrowOnFailure(function () {
                 const checkoutButton = document.querySelector('[data-testing="boxSummaryButton"]')
                 checkoutButton.click()
-              })
+            })
           },
           clickNextButton: function () {
             this
-              .api.execute(function () {
+              .executeAndThrowOnFailure(function () {
                 const checkoutButton = document.querySelector('[data-testing="boxSummaryArrow"]')
                 checkoutButton.click()
               })
           },
           clickContinueButton: function () {
             this
-              .api.execute(function () {
+              .executeAndThrowOnFailure(function () {
                 const continueButton = document.querySelector('[data-testing="boxSummaryContinueButton"]')
                 continueButton.click()
               })
           },
-          clickBackToAllRecipesButton: function () {
-            this
-              .api.execute(function () {
-                const backToAllRecipesButton = document.querySelector('[data-testing="backToAllRecipes"]')
-                backToAllRecipesButton.click()
-              })
-          },
           clickDateOfExistingOrder: function () {
             this
-              .api.execute(function () {
+              .executeAndThrowOnFailure(function () {
                 const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
                 let dates = Array.from(getDateSlots())
                 let firstAvailableDate = dates.find(date => date.querySelector("*[data-testing='icon-full-box']"))
@@ -49,7 +40,7 @@ module.exports = {
               })
           },
           clickDateOfNewOrder: function () {
-            this.api.execute(function () {
+            this.executeAndThrowOnFailure(function () {
               const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
               let dates = Array.from(getDateSlots())
               let firstAvailableDate = dates.find(date => !date.querySelector("*[data-testing='icon-full-box']"))
@@ -87,13 +78,13 @@ module.exports = {
           return this
         },
         addRecipe: function () {
-          this.api.execute(function() {
+          this.executeAndThrowOnFailure(function() {
             const firstAddRecipe = document.querySelector("*[data-testing='menuRecipesList'] *[data-testing='menuRecipeAdd']")
             firstAddRecipe.click()
           })
         },
         addRecipes: function () {
-          this.api.execute(function () {
+          this.executeAndThrowOnFailure(function () {
             const getButtons = () => document.querySelectorAll("*[data-testing='menuRecipeAdd']")
             const getPopupButton = () => document.querySelector('.ReactModalPortal [data-testing="menuRecipeAdd"]')
             let addRecipeButtons = getButtons()
@@ -141,12 +132,6 @@ module.exports = {
           return this
         },
 
-        submit: function () {
-          this.
-            click('@menuSubmitPostcode')
-
-          return this
-        },
       }],
     },
 
@@ -170,7 +155,7 @@ module.exports = {
 
           return this
         },
-        clickBrowseCTA: function () { clickElement.call(this, '@menuBrowseCTAButton') },
+        clickBrowseCTA: function () { this.safelyClick('@menuBrowseCTAButton') },
       }],
     },
   },

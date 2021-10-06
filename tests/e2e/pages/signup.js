@@ -1,5 +1,4 @@
-const clickElement = require('../utils/clickElement');
-const goToNextStep = function () { clickElement.call(this, '@CTA') }
+const goToNextStep = function () { this.safelyClick('@CTA') }
 
 module.exports = {
   url: function () {
@@ -54,7 +53,7 @@ module.exports = {
           return this
         },
         goToNextStep: function () {
-          clickElement.call(this, '@CTA')
+          this.safelyClick('@CTA')
         },
       }],
     },
@@ -109,7 +108,7 @@ module.exports = {
 
       commands: [{
         goToNextStep: function () {
-          clickElement.call(this, '@CTA')
+          this.safelyClick('@CTA')
         }
       }],
     }

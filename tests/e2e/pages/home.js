@@ -1,5 +1,3 @@
-const clickElement = require('../utils/clickElement');
-
 module.exports = {
   url: function () {
     return this.api.launchUrl
@@ -17,7 +15,7 @@ module.exports = {
 
       commands: [{
         goToSignUp: function () {
-          clickElement.call(this, '@CTA')
+          this.safelyClick('@CTA')
         }
       }],
     },

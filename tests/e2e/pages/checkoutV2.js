@@ -1,12 +1,11 @@
 const faker = require('faker')
-const clickElement = require('../utils/clickElement')
 const { pollRace, pollCondition } = require('../utils/pollUtils')
 const { asyncIsElementBySelectorPresent } = require('../utils/asyncIsElementBySelectorPresent')
 const { promisifyNightwatchCommand } = require('../utils/promisifyNightwatchCommand')
 
 const SMALL_DELAY = 2000
 
-const goToNextStep = function () { clickElement.call(this, '@CTA') }
+const goToNextStep = function () { this.safelyClick( '@CTA') }
 
 module.exports = {
   url: function () {
@@ -65,17 +64,17 @@ module.exports = {
           },
 
           commands: [{
-            setEmail: function () {
+            setEmail: function (email) {
               this
                 .waitForElementVisible('@emailInput')
-                .setValue('@emailInput', faker.internet.email())
+                .setValue('@emailInput', email)
 
               return this
             },
-            setPassword: function () {
+            setPassword: function (password) {
               this
                 .waitForElementVisible('@passwordInput')
-                .setValue('@passwordInput', 'ValidPassword1!')
+                .setValue('@passwordInput', password)
 
               return this
             },
@@ -124,15 +123,15 @@ module.exports = {
               return this
             },
             setAddress: function () {
-              clickElement.call(this, '@addressDropdown')
-              clickElement.call(this, '@secondOption')
+              this.safelyClick( '@addressDropdown')
+              this.safelyClick( '@secondOption')
             },
             setPhoneNumber: function () {
               this.setValue('@phoneNumberInput', '2030111002')
             },
             selectDeliveryOption: function () {
-              clickElement.call(this, '@deliveryOptionsDropdown')
-              clickElement.call(this, '@deliveryOption')
+              this.safelyClick( '@deliveryOptionsDropdown')
+              this.safelyClick( '@deliveryOption')
             },
           }],
         },
@@ -175,6 +174,9 @@ module.exports = {
           },
 
           commands: [{
+            waitUntilReadyToAcceptCardDetails: function () {
+              this.waitForElementVisible('@cardNumber')
+            },
             setCardName: function (browser) {
               this
                 .waitForElementVisible('@cardNameInput')
@@ -225,10 +227,10 @@ module.exports = {
                 .expect.element('@cardCvvError').to.be.present.before(SMALL_DELAY)
             },
             startYourSubscription: function () {
-              clickElement.call(this, '@CTA')
+              this.safelyClick( '@CTA')
             },
             selectPaypalPaymentMethod: function (browser) {
-              clickElement.call(this, '@paymentMethodPaypal')
+              this.safelyClick( '@paymentMethodPaypal')
             },
             asyncClickPaypalSetupButton: async function (browser, done) {
               const selector = this.elements.paypalSetupIframe.selector
@@ -254,7 +256,7 @@ module.exports = {
               // know when they're ready.
               browser.pause(SMALL_DELAY)
 
-              clickElement.call(browser, '.paypal-button')
+              this.safelyClick('.paypal-button')
 
               await promisifyNightwatchCommand(browser, 'frameParent')
 
@@ -335,14 +337,14 @@ module.exports = {
                       .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
                       // Using javascript to click button to avoid other elements (e.g. cookie acceptance banner) intercepting click
                       // This is an anti-pattern when testing our own UI but acceptable here since we just need the PayPal transaction to complete
-                      .execute(`document.querySelector('${this.elements.nextButton.selector}').click()`)
+                      .executeAndThrowOnFailure(`document.querySelector('${this.elements.nextButton.selector}').click()`)
                       .waitForElementVisible(this.elements.passwordField.selector)
                       .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
                       // See earlier comment about javascript button clicking
-                      .execute(`document.querySelector('${this.elements.loginButton.selector}').click()`)
+                      .executeAndThrowOnFailure(`document.querySelector('${this.elements.loginButton.selector}').click()`)
                       .waitForElementVisible(this.elements.consentButton.selector)
                       // See earlier comment about javascript button clicking
-                      .execute(`document.querySelector('${this.elements.consentButton.selector}').click()`)
+                      .executeAndThrowOnFailure(`document.querySelector('${this.elements.consentButton.selector}').click()`)
                       .switchWindow(mainWindowHandle)
                       .perform(() => {
                         pollCondition(isPaypalWindowClosed, function (pollResult) {
@@ -373,11 +375,9 @@ module.exports = {
 
           return this
         },
-        submitAccountSection: function (browser) {
-          this.section.account.setEmail()
-          this.section.account.setPassword()
-
-          browser.pause(SMALL_DELAY)
+        submitAccountSection: function (accountCredentials, browser) {
+          this.section.account.setEmail(accountCredentials.email)
+          this.section.account.setPassword(accountCredentials.password)
 
           return this
         },
