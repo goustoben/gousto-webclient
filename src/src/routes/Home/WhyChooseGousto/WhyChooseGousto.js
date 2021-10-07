@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { formatPrice } from 'utils/format'
 import { homeConfig } from 'config/home'
 import { StepsGuide } from './StepsGuide'
 import { CTAHomepageContainer } from '../CTA'
@@ -10,9 +9,10 @@ import css from './WhyChooseGousto.css'
 const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
   const subtitle = (
     <Fragment>
-      Impressively easy meals from just{' '}
+      Impressively easy meals from just
       <span className={css.pricePerServing}>
-        {pricePerServing ? formatPrice(pricePerServing) : ''} per serving
+        {' £'}
+        {pricePerServing} per serving
       </span>
       . All of the flavour, none of the fuss.
     </Fragment>

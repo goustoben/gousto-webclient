@@ -43,10 +43,4 @@ export const getNumPersonsToBoxDescriptors = createSelector(getMenuBoxPrices, (m
   return result
 })
 
-export const getPricePerServing = createSelector(getMenuBoxPrices, (menuBoxPrices) => {
-  if (!menuBoxPrices) {
-    return null
-  }
-
-  return menuBoxPrices.getIn(['4', '4', 'gourmet', 'pricePerPortion'])
-})
+export const getPricePerServing = (state) => state.boxPrices.get('pricePerServing')

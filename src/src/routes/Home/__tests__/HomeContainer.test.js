@@ -1,7 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import menuBoxPrices from 'routes/BoxPrices/__tests__/__mocks__/menuBoxPrices.json'
 import { HomeContainer, getKnownVariant } from '../HomeContainer'
 
 jest.mock('config/home', () => ({
@@ -23,7 +22,9 @@ describe('HomeContainer', () => {
     auth: Immutable.fromJS({
       isAuthenticated: false,
     }),
-    menuBoxPrices: Immutable.fromJS(menuBoxPrices),
+    boxPrices: Immutable.fromJS({
+      pricePerServing: '2.87',
+    }),
     features: Immutable.Map({
       isSignupReductionEnabled: Immutable.fromJS({
         value: false,
@@ -51,7 +52,7 @@ describe('HomeContainer', () => {
 
   test('should pass pricePerServing', () => {
     const expected = {
-      pricePerServing: '2.98',
+      pricePerServing: '2.87',
     }
 
     expect(wrapper.props()).toEqual(expect.objectContaining(expected))

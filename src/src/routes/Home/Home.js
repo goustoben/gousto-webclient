@@ -5,7 +5,6 @@ import menuFetchData from 'routes/Menu/fetchData'
 import { CTA, seo } from 'config/home'
 import routesConfig from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
-import { menuLoadBoxPrices } from 'actions/menu'
 import { PromoBanner } from './PromoBanner'
 import { HomeSections } from './HomeSections'
 
@@ -19,6 +18,7 @@ const propTypes = {
   redirectLoggedInUser: PropTypes.func,
   isSignupReductionEnabled: PropTypes.bool,
   pricePerServing: PropTypes.string,
+  updatePricePerServing: PropTypes.func,
 }
 
 const defaultProps = {
@@ -27,21 +27,15 @@ const defaultProps = {
   redirectLoggedInUser: () => {},
   isSignupReductionEnabled: false,
   pricePerServing: null,
+  updatePricePerServing: () => {},
 }
 
 class Home extends Component {
-  static fetchData = async ({ store, options = {} }) => {
-    const { pricePerServing } = options
-    if (!pricePerServing) {
-      await store.dispatch(menuLoadBoxPrices())
-    }
-  }
-
   componentDidMount() {
     const { store } = this.context
-    const { redirectLoggedInUser, pricePerServing } = this.props
+    const { redirectLoggedInUser, updatePricePerServing } = this.props
     redirectLoggedInUser()
-    Home.fetchData({ store, options: { pricePerServing } })
+    updatePricePerServing()
 
     this.prefetchTimer = setTimeout(() => {
       store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))

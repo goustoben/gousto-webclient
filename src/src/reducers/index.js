@@ -4,6 +4,7 @@ import { appBanner } from './appBanner'
 import account from './account'
 import auth from './auth'
 import basket from './basket'
+import { boxPrices } from './boxPrices'
 import boxSummary from './boxSummary'
 import { checkoutReducers } from './checkout'
 import content from './content'
@@ -49,6 +50,7 @@ const reducers = {
   ...account,
   ...auth,
   ...basket,
+  ...boxPrices,
   ...boxSummary,
   brand,
   ...checkoutReducers,

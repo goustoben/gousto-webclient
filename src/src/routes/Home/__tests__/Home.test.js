@@ -44,9 +44,16 @@ describe('Home', () => {
   })
 
   describe('componentDidMount', () => {
+    let updatePricePerServing
+
     beforeEach(() => {
+      updatePricePerServing = jest.fn()
+
       jest.useFakeTimers()
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
+      wrapper = shallow(
+        <Home redirectLoggedInUser={jest.fn()} updatePricePerServing={updatePricePerServing} />,
+        { context: { store } }
+      )
     })
 
     afterEach(() => {
@@ -57,6 +64,10 @@ describe('Home', () => {
       expect(menuFetchData).not.toHaveBeenCalled()
       jest.advanceTimersByTime(4000)
       expect(menuFetchData).toHaveBeenCalled()
+    })
+
+    test('should update price per service', () => {
+      expect(updatePricePerServing).toHaveBeenCalled()
     })
   })
 
