@@ -1,6 +1,6 @@
 /* eslint-disable import/no-named-as-default-member */
 import Immutable from 'immutable'
-
+import * as cookieHelper from 'utils/cookieHelper2'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { fetchReference, fetchPromoCodeValidity } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
@@ -328,6 +328,8 @@ describe('checkout actions', () => {
   const getState = jest.fn()
   const ga = jest.fn()
   let addressCollection
+  const sessionId = 'session_id'
+  jest.spyOn(cookieHelper, 'get').mockReturnValue('session_id')
 
   beforeEach(() => {
     getState.mockReturnValue(createState())
@@ -787,7 +789,7 @@ describe('checkout actions', () => {
 
       await checkout3DSSignup()(dispatch, getState)
 
-      expect(authPayment).toHaveBeenCalledWith(expected)
+      expect(authPayment).toHaveBeenCalledWith(expected, sessionId)
     })
 
     test('should show 3ds challenge modal', async () => {
@@ -830,131 +832,109 @@ describe('checkout actions', () => {
     })
 
     describe('when payment authorization successful', () => {
-      const successSessionId = 'success_session_id'
+      const checkoutSuccessfulSessionId = 'success_session_id'
 
-      test('should hide 3ds challenge modal', async () => {
-        await checkPaymentAuth(successSessionId)(dispatch, getState)
+      beforeEach(async () => {
+        await checkPaymentAuth(checkoutSuccessfulSessionId, sessionId)(dispatch, getState)
+      })
 
+      test('should hide 3ds challenge modal', () => {
         expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.PAYMENT_HIDE_MODAL })
       })
 
-      test('should check payment result', async () => {
-        await checkPaymentAuth(successSessionId)(dispatch, getState)
-
-        expect(checkPayment).toHaveBeenCalledWith(successSessionId)
+      test('should check payment result', () => {
+        expect(checkPayment).toHaveBeenCalledWith(checkoutSuccessfulSessionId, sessionId)
       })
 
-      test('should subscribe user', async () => {
-        await checkPaymentAuth(successSessionId)(dispatch, getState)
-
+      test('should subscribe user', () => {
         expect(userSubscribe).toHaveBeenCalledWith(true, 'src_qvgsjghtdjjuhdznipp5najdza')
       })
 
-      test('should trigger 3ds_success event', async () => {
-        await checkPaymentAuth(successSessionId)(dispatch, getState)
-
+      test('should trigger 3ds_success event', () => {
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeSuccessful)
       })
 
-      test('should not trigger 3ds_failed event', async () => {
-        await checkPaymentAuth(successSessionId)(dispatch, getState)
-
+      test('should not trigger 3ds_failed event', () => {
         expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
       })
 
-      test('should clear gousto reference', async () => {
-        await checkPaymentAuth(successSessionId)(dispatch, getState)
-
+      test('should clear gousto reference', () => {
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
+    })
 
-      describe('when decoupled payment enabled', () => {
-        beforeEach(() => {
-          getState.mockReturnValue(createState({
-            features: Immutable.fromJS({
-              isDecoupledPaymentEnabled: {
-                value: true
-              }
-            })
-          }))
+    describe('when decoupled payment enabled and payment authorization is successful', () => {
+      const checkoutSuccessfulSessionId = 'success_session_id'
 
-          jest.spyOn(checkoutActions, 'checkoutSignupPayment')
-          jest.spyOn(checkoutActions, 'resetDuplicateCheck')
-          jest.spyOn(checkoutActions, 'checkoutPostSignup')
-        })
+      beforeEach(async () => {
+        getState.mockReturnValue(createState({
+          features: Immutable.fromJS({
+            isDecoupledPaymentEnabled: {
+              value: true
+            }
+          })
+        }))
 
-        afterEach(() => {
-          jest.clearAllMocks()
-        })
+        jest.spyOn(checkoutActions, 'checkoutSignupPayment')
+        jest.spyOn(checkoutActions, 'resetDuplicateCheck')
+        jest.spyOn(checkoutActions, 'checkoutPostSignup')
 
-        test('should continue decoupled payment', async () => {
-          await checkPaymentAuth(successSessionId)(dispatch, getState)
+        await checkPaymentAuth(checkoutSuccessfulSessionId, sessionId)(dispatch, getState)
+      })
 
-          expect(checkoutActions.checkoutSignupPayment).toHaveBeenCalledWith('src_qvgsjghtdjjuhdznipp5najdza')
-        })
+      afterEach(() => {
+        jest.clearAllMocks()
+      })
 
-        test('should not reset duplicate check', async () => {
-          await checkPaymentAuth(successSessionId)(dispatch, getState)
+      test('should continue decoupled payment', async () => {
+        expect(checkoutActions.checkoutSignupPayment).toHaveBeenCalledWith('src_qvgsjghtdjjuhdznipp5najdza')
+      })
 
-          expect(checkoutActions.resetDuplicateCheck).not.toHaveBeenCalled()
-        })
+      test('should not reset duplicate check', async () => {
+        expect(checkoutActions.resetDuplicateCheck).not.toHaveBeenCalled()
+      })
 
-        test('should not subscribe user', async () => {
-          await checkPaymentAuth(successSessionId)(dispatch, getState)
+      test('should not subscribe user', () => {
+        expect(userSubscribe).not.toHaveBeenCalled()
+      })
 
-          expect(userSubscribe).not.toHaveBeenCalled()
-        })
-
-        test('should trigger post signup', async () => {
-          await checkPaymentAuth(successSessionId)(dispatch, getState)
-
-          expect(checkoutActions.checkoutPostSignup).not.toHaveBeenCalled()
-        })
+      test('should trigger post signup', () => {
+        expect(checkoutActions.checkoutPostSignup).not.toHaveBeenCalled()
       })
     })
 
     describe('when payment authorization failed', () => {
-      const failedSessionId = 'failed_session_id'
+      const checkoutFailedSessionId = 'failed_session_id'
 
-      test('should hide 3ds challenge modal', async () => {
-        await checkPaymentAuth(failedSessionId)(dispatch, getState)
+      beforeEach(async () => {
+        await checkPaymentAuth(checkoutFailedSessionId, sessionId)(dispatch, getState)
+      })
 
+      test('should hide 3ds challenge modal', () => {
         expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.PAYMENT_HIDE_MODAL })
       })
 
-      test('should check payment result', async () => {
-        await checkPaymentAuth(failedSessionId)(dispatch, getState)
-
-        expect(checkPayment).toHaveBeenCalledWith(failedSessionId)
+      test('should check payment result', () => {
+        expect(checkPayment).toHaveBeenCalledWith(checkoutFailedSessionId, sessionId)
       })
 
-      test('should trigger signup error', async () => {
-        await checkPaymentAuth(failedSessionId)(dispatch, getState)
-
+      test('should trigger signup error', () => {
         expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed')
       })
 
-      test('should not trigger 3ds_success event', async () => {
-        await checkPaymentAuth(failedSessionId)(dispatch, getState)
-
+      test('should not trigger 3ds_success event', () => {
         expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeSuccessful)
       })
 
-      test('should trigger 3ds_failed event', async () => {
-        await checkPaymentAuth(failedSessionId)(dispatch, getState)
-
+      test('should trigger 3ds_failed event', () => {
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
       })
 
-      test('should clear gousto reference', async () => {
-        await checkPaymentAuth(failedSessionId)(dispatch, getState)
-
+      test('should clear gousto reference', () => {
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
 
-      test('should reset preview order id', async () => {
-        await checkPaymentAuth(failedSessionId)(dispatch, getState)
-
+      test('should reset preview order id', () => {
         expect(checkoutCreatePreviewOrder).toHaveBeenCalled()
       })
     })
@@ -1000,7 +980,7 @@ describe('checkout actions', () => {
 
       await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
-      expect(authPayment).toHaveBeenCalledWith(expected)
+      expect(authPayment).toHaveBeenCalledWith(expected, sessionId)
     })
 
     test('should show 3ds challenge modal', async () => {
@@ -1076,7 +1056,7 @@ describe('checkout actions', () => {
 
       await checkoutSignupPayment()(dispatch, getState)
 
-      expect(signupPayment).toHaveBeenCalledWith(expected, 'checkout')
+      expect(signupPayment).toHaveBeenCalledWith(expected, 'checkout', sessionId)
     })
 
     test('should trigger checkoutPostSignup', async () => {

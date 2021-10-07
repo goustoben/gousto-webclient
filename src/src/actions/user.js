@@ -32,6 +32,7 @@ import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 import { getAuthUserId } from 'selectors/auth'
 import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
+import { getSessionId } from 'selectors/cookies'
 import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscription'
 import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 
@@ -646,6 +647,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const reqData = {
     order_id: getPreviewOrderId(state),
     promocode: promoCode,
+    session_id: getSessionId(),
     customer: {
       tariff_id: basket.get('tariffId', ''),
       phone_number: getFormattedPhoneNumber(state),
