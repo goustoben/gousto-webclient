@@ -1,5 +1,3 @@
-const clickElement = require('../utils/clickElement');
-
 module.exports = {
   url: function () {
     return this.api.launchUrl + '/'
@@ -22,7 +20,7 @@ module.exports = {
         checkIfCookieBannerNotPresent: function () {
           this.waitForElementNotPresent('@CTA', 2000)
         },
-        clickCookiePolicyBannerBtn: function () { clickElement.call(this, '@CTA') }
+        clickCookiePolicyBannerBtn: function () { this.safelyClick('@CTA') }
       }]
     }
   }

@@ -26,7 +26,7 @@ function createRecursiveGetLocationCallbackFor(selector, timeoutTime, pollInterv
   return recursiveGetLocationCallback
 }
 
-function waitForElementToStopMoving(selector, timeoutMilliseconds = 3000, pollInterval = 10) {
+function waitForElementToStopMoving(selector, timeoutMilliseconds = 5000, pollInterval = 10) {
   const timeoutTime = Date.now() + timeoutMilliseconds
 
   this.getLocation(selector, createRecursiveGetLocationCallbackFor(selector, timeoutTime, pollInterval))

@@ -29,6 +29,7 @@ import {
   getPasswordValue,
   getSignupE2ETestName,
 } from 'selectors/checkout'
+import { getSessionId } from 'selectors/cookies'
 import { getIsPaymentBeforeChoosingEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
 import {
   getDecoupledPaymentData,
@@ -263,8 +264,9 @@ export function checkout3DSSignup() {
       }
 
       const reqData = getPaymentAuthData(state)
+      const sessionId = getSessionId()
       if (reqData.order_id) {
-        const { data } = await authPayment(reqData)
+        const { data } = await authPayment(reqData, sessionId)
         dispatch({
           type: actionTypes.PAYMENT_SHOW_MODAL,
           challengeUrl: data.responsePayload.redirectLink,
@@ -297,8 +299,9 @@ export function checkoutDecoupledPaymentSignup() {
 
       if (is3DSCardPayment(state)) {
         const reqData = getPaymentAuthData(state)
+        const sessionId = getSessionId()
         if (reqData.order_id) {
-          const { data } = await authPayment(reqData)
+          const { data } = await authPayment(reqData, sessionId)
           dispatch({
             type: actionTypes.PAYMENT_SHOW_MODAL,
             challengeUrl: data.responsePayload.redirectLink,
@@ -328,6 +331,7 @@ export function checkoutSignupPayment(sourceId = null) {
     try {
       const state = getState()
       const reqData = getDecoupledPaymentData(state)
+      const sessionId = getSessionId()
       const provider = isCardPayment(state)
         ? getCardPaymentDetails(state)
         : getPayPalPaymentDetails(state)
@@ -336,7 +340,7 @@ export function checkoutSignupPayment(sourceId = null) {
         reqData.card_token = sourceId
       }
 
-      await signupPayment(reqData, provider.payment_provider)
+      await signupPayment(reqData, provider.payment_provider, sessionId)
       await dispatch(checkoutActions.checkoutPostSignup())
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.error, `signup payment failed: ${err.message}`))
@@ -354,7 +358,8 @@ export const checkPaymentAuth = (sessionId) => (
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
 
     try {
-      const { data } = await checkPayment(sessionId)
+      const goustoSessionId = getSessionId()
+      const { data } = await checkPayment(sessionId, goustoSessionId)
       if (data && data.approved) {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeSuccessful))
 

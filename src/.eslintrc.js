@@ -125,7 +125,6 @@ module.exports = {
       "eqeqeq": 1,
       "global-require": 1,
       "guard-for-in": 1,
-      "import/no-cycle": 1,
       "import/no-dynamic-require" : 1,
       "import/no-self-import" : 1,
       "import/no-extraneous-dependencies": 1,
@@ -212,7 +211,11 @@ module.exports = {
       "symbol-description": 1,
       "vars-on-top": 1,
       "quotes": 1,
-      "react/jsx-fragments" : ["off", "element"]
+      "react/jsx-fragments" : ["off", "element"],
+
+      //Disable rules added by 'Recommended' rulesets
+      "import/no-cycle": 0, // takes 90+ seconds to run due to size of codebase
+
   },
   "env" : {
     "jasmine": true

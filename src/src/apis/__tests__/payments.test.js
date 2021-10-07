@@ -82,6 +82,7 @@ jest.mock('utils/fetch', () => ({
 
 describe('Payments API', () => {
   const expectedHeaders = { 'Content-Type': 'application/json'}
+  const sessionId = 'session_id'
 
   afterEach(() => {
     fetch.mockClear()
@@ -96,34 +97,36 @@ describe('Payments API', () => {
       success_url: 'https://goust.co.uk/payments/success',
       failure_url: 'https://goust.co.uk/payments/failure',
     }
+    let result
 
-    test('should send payment auth request', async () => {
-      await authPayment(request)
-
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/payment-auth', request, 'POST', undefined, expectedHeaders)
+    beforeEach(async () => {
+      result = await authPayment(request, sessionId)
     })
 
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await authPayment(request)
+    test('should send payment auth request', () => {
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/payment-auth?session_id=session_id', request, 'POST', undefined, expectedHeaders)
+    })
 
+    test('should return the results of the fetch unchanged', () => {
       expect(result).toEqual(mockPaymentAuthResponse)
     })
   })
 
   describe('checkPayment', () => {
-    const sessionId = 'sid_uc5jwt6ox4ue7bi2l5tpcnvr4i'
+    const checkoutSessionId = 'sid_uc5jwt6ox4ue7bi2l5tpcnvr4i'
+    let result
 
-    test('should fetch payment auth request status', async () => {
-      await checkPayment(sessionId)
-
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, `https://production-api.gousto.co.uk/payments/v1/payments/payments/${sessionId}`, null, 'GET', undefined, expectedHeaders)
+    beforeEach(async () => {
+      result = await checkPayment(checkoutSessionId, sessionId)
     })
 
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await checkPayment(sessionId)
+    test('should fetch payment auth request status', () => {
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(null, `https://production-api.gousto.co.uk/payments/v1/payments/payments/${checkoutSessionId}?session_id=session_id`, null, 'GET', undefined, expectedHeaders)
+    })
 
+    test('should return the results of the fetch unchanged', () => {
       expect(result).toEqual(mockPaymentCheckResponse)
     })
   })
@@ -154,10 +157,10 @@ describe('Payments API', () => {
     }
 
     test('should send payment auth request', async () => {
-      await signupPayment(request, 'paypal')
+      await signupPayment(request, 'paypal', sessionId)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/signup-payments?provider=paypal', request, 'POST', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/signup-payments?provider=paypal&session_id=session_id', request, 'POST', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {

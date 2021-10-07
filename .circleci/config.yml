@@ -183,10 +183,6 @@ jobs:
           aws-secret-access-key: AWS_ERC_SECRET_KEY
           aws-region: AWS_DEFAULT_REGION
       - run:
-          name: Build webclient E2E helpers
-          working_directory: src
-          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build:e2e
-      - run:
           name: Install E2E test dependencies
           working_directory: tests/e2e
           command: npm ci

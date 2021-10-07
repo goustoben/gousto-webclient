@@ -273,13 +273,6 @@ npm ci
 #### Local environment (for your local machine, even if you point to Staging)
 First, have the application running and pointing to Staging
 
-Then build the e2e tests:
-```shell
-cd src
-npm run build:e2e:local
-```
-Always build after changes have been made in your code.
-
 Then run the e2e tests:
 ```shell
 cd ~/code/goustowebclient/tests/e2e
@@ -288,8 +281,6 @@ npm test
 
 #### Staging environment (only for CircleCI)
 ```shell
-cd src
-npm run build:e2e
 cd ../tests/e2e
 npm run test:staging
 ```
