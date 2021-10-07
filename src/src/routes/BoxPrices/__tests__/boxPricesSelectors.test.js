@@ -10,20 +10,6 @@ import menuBoxPrices from './__mocks__/menuBoxPrices.json'
 describe('boxPricesSelectors', () => {
   let state
 
-  describe('given getPricePerServing is called', () => {
-    test('then it should return price per serving', () => {
-      state = {
-        boxPrices: Immutable.Map({
-          pricePerServing: '2.35',
-        }),
-      }
-
-      const result = getPricePerServing(state)
-
-      expect(result).toEqual('2.35')
-    })
-  })
-
   describe('given getIsBoxPricesRedesignEnabled is called', () => {
     beforeEach(() => {
       state = {
@@ -119,6 +105,34 @@ describe('boxPricesSelectors', () => {
           ],
         }
         expect(result).toStrictEqual(expected)
+      })
+    })
+  })
+
+  describe('given getPricePerServing is called', () => {
+    describe('when menuBoxPrices is not loaded yet', () => {
+      beforeEach(() => {
+        state = {
+          menuBoxPrices: null,
+        }
+      })
+
+      test('then it should return null', () => {
+        const result = getPricePerServing(state)
+        expect(result).toBeNull()
+      })
+    })
+
+    describe('when menuBoxPrices exists', () => {
+      beforeEach(() => {
+        state = {
+          menuBoxPrices: Immutable.fromJS(menuBoxPrices),
+        }
+      })
+
+      test('then it should extract correct information', () => {
+        const result = getPricePerServing(state)
+        expect(result).toBe('2.98')
       })
     })
   })
