@@ -60,11 +60,7 @@ module.exports = {
         featured: {
           selector: '*[data-reactid="171"]',
         },
-        recipe1Add: {
-          selector: '*[data-testing="menuRecipeAdd"]',
-          index: 2,
-        },
-        recipe2Add: {
+        addRecipeButton: {
           selector: '*[data-testing="menuRecipeAdd"]',
         },
       },
@@ -84,29 +80,23 @@ module.exports = {
           })
         },
         addRecipes: function () {
-          this.executeAndThrowOnFailure(function () {
-            const getButtons = () => document.querySelectorAll("*[data-testing='menuRecipeAdd']")
-            const getPopupButton = () => document.querySelector('.ReactModalPortal [data-testing="menuRecipeAdd"]')
-            let addRecipeButtons = getButtons()
-            let popupButton
+          const nightwatchContext = this
 
-            addRecipeButtons[0].click()
-            popupButton = getPopupButton()
+          const addRecipeButtonSelector = nightwatchContext.elements.addRecipeButton.selector
 
-            if(popupButton) popupButton.click()
+          nightwatchContext.api.elements('css selector', addRecipeButtonSelector, result => {
 
-            addRecipeButtons = getButtons()
-            addRecipeButtons[1].click()
-            popupButton = getPopupButton()
+            const status = result.status
 
-            if(popupButton) popupButton.click()
+            if (status !== 0){
+              throw new Error(`Unexpected status ${status} when retrieving elements matching css selector "${addRecipeButtonSelector}". Full result was: ${JSON.stringify(result)}`)
+            }
 
-            addRecipeButtons = getButtons()
+            const addRecipeButtonElements = result.value
 
-            addRecipeButtons[2].click()
-            popupButton = getPopupButton()
-
-            if(popupButton) popupButton.click()
+            for (let i = 0; i < 3; i++) {
+              addRecipe(i, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext)
+            }
           })
         },
       }],
@@ -168,4 +158,26 @@ module.exports = {
         .setPostcode(postcode)
     },
   }],
+}
+
+function clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonElementId, dismissableInterceptingElementSelectors, nightwatchContext, firstClickAttempt = true) {
+  nightwatchContext.api.elementIdClick(addRecipeButtonElementId, result => {
+    const status = result.status
+
+    if (status !== 0) {
+      if (firstClickAttempt && status === -1 && result.errorStatus === 64 && result.value.message.startsWith('element click intercepted')) {
+        dismissableInterceptingElementSelectors.map(selectors => nightwatchContext.optionallyClickToDismiss(selectors))
+        clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonElementId, dismissableInterceptingElementSelectors, nightwatchContext, false)
+      } else {
+        throw new Error(`Unexpected status ${status} when clicking element with ID "${addRecipeButtonElementId}". Full result was: ${JSON.stringify(result)}`)
+      }
+    }
+  })
+}
+
+function addRecipe(recipeIndex, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext) {
+  const addRecipeButtonElementId = addRecipeButtonElements[recipeIndex].ELEMENT
+
+  nightwatchContext.executeAndThrowOnFailure(`document.querySelectorAll('${addRecipeButtonSelector}')[${recipeIndex}].scrollIntoView({ block: "center" })`, [])
+  clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonElementId, ['[data-testing="tutorialStepCta"]','.ReactModalPortal [data-testing="menuRecipeAdd"]'], nightwatchContext)
 }

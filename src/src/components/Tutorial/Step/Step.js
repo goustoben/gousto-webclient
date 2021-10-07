@@ -65,7 +65,7 @@ export class Step extends PureComponent {
         <div className={css.tooltip} style={style}>
           <Tooltip arrow={arrow} onClose={onClose}>
             {children}
-            <div className={css.cta} onClick={next}>
+            <div className={css.cta} onClick={next} data-testing="tutorialStepCta">
               {(last) ? (
                 <p>OK</p>
               ) : (
