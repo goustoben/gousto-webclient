@@ -20,6 +20,19 @@ orbs:
   aws-cli: circleci/aws-cli@1.4.1
 
 jobs:
+  performance-budget:
+    docker: *circleci_node_browsers_image
+    working_directory: ~/project/mnt/ramdisk
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - browser-tools/install-chrome
+      - run:
+          name: Install Lighthouse CLI
+          command: npm install -g @lhci/cli
+      - run:
+          name: Execute Lighthouse performance audit
+          command: lhci autorun
 
   jest-coverage-report:
     docker: *circleci_node_image
