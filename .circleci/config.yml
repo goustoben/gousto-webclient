@@ -155,8 +155,10 @@ jobs:
           command: |
             source ~/.circlerc
             ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
-            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/latest/ --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public
-            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/${CI_BUILD_NUMBER}/ --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/latest/ --exclude "*.ico" --exclude "*.jpg" --exclude "*.png" --exclude "*.gif" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/latest/ --exclude "*" --include "*.jpg" --include "*.png" --include "*.gif" --recursive --cache-control max-age=315360000,no-transform,public
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/${CI_BUILD_NUMBER}/ --exclude "*.ico" --exclude "*.jpg" --exclude "*.png" --exclude "*.gif" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/${CI_BUILD_NUMBER}/ --exclude "*" --include "*.jpg" --include "*.png" --include "*.gif" --recursive --cache-control max-age=315360000,no-transform,public
       - persist_to_workspace:
           root: /
           paths:
