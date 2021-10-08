@@ -6,7 +6,7 @@ on:
     branches:
       - 'develop'
 
-concurrency: 
+concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: true
 
@@ -21,7 +21,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - uses: pioug/la-cle@v1.0.0 # set up a git ssh key so npm can install our private git repo dependencies (gousto-gulp and gousto-lumberjack-js)
+    - uses: pioug/la-cle@v1.0.0 # set up a git ssh key so npm can install our private git repo dependencies (gousto-lumberjack-js)
       with:
         GH_SSH_KEY: ${{ secrets.GH_SSH_KEY }}
     - name: Cache node modules
