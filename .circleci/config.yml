@@ -24,6 +24,8 @@ jobs:
     docker: *circleci_node_browsers_image
     working_directory: /mnt/ramdisk
     steps:
+      - attach_workspace:
+          at: /
       - browser-tools/install-chrome
       - aws-cli/setup:
           aws-access-key-id: AWS_ERC_ACCESS_KEY
