@@ -121,7 +121,7 @@ jobs:
             - root/.circlerc
 
   build-webclient:
-    docker: *circleci_node_image
+    docker: *gousto_platform_image
     resource_class: large
     working_directory: /mnt/ramdisk
     steps:
@@ -141,12 +141,9 @@ jobs:
           name: Upload webclient resources to S3
           working_directory: src
           command: |
-            source ~/.circlerc
             ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
-            echo "${ASSETS_BUCKET}"
-            npm config set goustowebclient_asset_bucket "${ASSETS_BUCKET}"
-            npm run deploy
-            npm run upload -- --upload_dir=${CI_BUILD_NUMBER}
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/latest/ --recursive
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/${CI_BUILD_NUMBER}/ --recursive
       - persist_to_workspace:
           root: /
           paths:
