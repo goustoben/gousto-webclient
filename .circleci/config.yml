@@ -332,6 +332,8 @@ workflows:
             branches:
               only: TECH-10-perf-budget
       - performance-budget:
+          requires:
+            - setup-ci-variables-scripts-and-npm-dependencies
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
