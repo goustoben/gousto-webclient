@@ -143,8 +143,8 @@ jobs:
           command: |
             source ~/.circlerc
             ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
-            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/latest/ --recursive --debug
-            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/${CI_BUILD_NUMBER}/ --recursive --debug
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/latest/ --recursive
+            aws s3 cp public/ s3://${ASSETS_BUCKET}/build/${CI_BUILD_NUMBER}/ --recursive
       - persist_to_workspace:
           root: /
           paths:
