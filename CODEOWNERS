@@ -2,8 +2,8 @@
 *       @Gousto/guild-frontend
 
 # Global ownership
-/src/dangerfile.js @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
-/.github/workflows/danger.yml @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
+/src/dangerfile.js @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets-frontend @Gousto/squad-beetroots
+/.github/workflows/danger.yml @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets-frontend @Gousto/squad-beetroots
 
 # frontend guild ownership
 /src/bower.json @Gousto/guild-frontend
@@ -127,38 +127,38 @@
 /src/src/routes/Ratings/                            @Gousto/squad-turnips
 
 # squad-rockets ownership
-/src/src/routes/Account/       @Gousto/squad-rockets
-/src/src/routes/Welcome/       @Gousto/squad-rockets
-/src/src/routes/Join/       @Gousto/squad-rockets
-/src/src/actions/loggingmanager.js       @Gousto/squad-rockets
-/src/src/apis/loggingManager.js       @Gousto/squad-rockets
-/src/src/actions/__tests__/loggingmanager.test.js       @Gousto/squad-rockets
-/src/src/apis/__tests__/loggingManager.test.js       @Gousto/squad-rockets
-/src/src/actions/user.js       @Gousto/squad-rockets
-/src/src/actions/__tests__/user.test.js       @Gousto/squad-rockets
-/src/src/actions/subscription.js       @Gousto/squad-rockets
-/src/src/actions/__tests__/subscription.test.js       @Gousto/squad-rockets
-/src/src/actions/subscriptionPause.js       @Gousto/squad-rockets
-/src/src/actions/__tests__/subscriptionPause.test.js       @Gousto/squad-rockets
-/src/src/reducers/subscriptionPause.js       @Gousto/squad-rockets
-/src/__tests__/reducers/subscriptionPause.test.js       @Gousto/squad-rockets
-/src/src/reducers/subscription.js       @Gousto/squad-rockets
-/src/__tests__/reducers/subscription.test.js       @Gousto/squad-rockets
-/src/src/apis/__tests__/subscription.test.js       @Gousto/squad-rockets
-/src/src/actions/__tests__/tastePreferences.test.js       @Gousto/squad-rockets
-/src/src/actions/tastePreferences.js       @Gousto/squad-rockets
-/src/src/apis/tastePreferences.js       @Gousto/squad-rockets
-/src/src/actions/welcome.js       @Gousto/squad-rockets
-/src/src/containers/welcome/       @Gousto/squad-rockets
-/src/src/apis/boxPrices.js       @Gousto/squad-rockets
-/src/src/apis/__tests__/boxPrices.test.js       @Gousto/squad-rockets
-/src/src/actions/auth.js       @Gousto/squad-rockets
-/src/src/actions/__tests__/auth.test.js       @Gousto/squad-rockets
-/src/src/reducers/auth.js       @Gousto/squad-rockets
-/src/__tests__/reducers/auth.test.js       @Gousto/squad-rockets
-/src/src/apis/auth.js       @Gousto/squad-rockets
-/src/src/apis/__tests__/auth.test.js       @Gousto/squad-rockets
-/tests/regression/fixtures/welcome/        @Gousto/squad-rockets
+/src/src/routes/Account/                                @Gousto/squad-rockets-frontend
+/src/src/routes/Welcome/                                @Gousto/squad-rockets-frontend
+/src/src/routes/Join/                                   @Gousto/squad-rockets-frontend
+/src/src/actions/loggingmanager.js                      @Gousto/squad-rockets-frontend
+/src/src/apis/loggingManager.js                         @Gousto/squad-rockets-frontend
+/src/src/actions/__tests__/loggingmanager.test.js       @Gousto/squad-rockets-frontend
+/src/src/apis/__tests__/loggingManager.test.js          @Gousto/squad-rockets-frontend
+/src/src/actions/user.js                                @Gousto/squad-rockets-frontend
+/src/src/actions/__tests__/user.test.js                 @Gousto/squad-rockets-frontend
+/src/src/actions/subscription.js                        @Gousto/squad-rockets-frontend
+/src/src/actions/__tests__/subscription.test.js         @Gousto/squad-rockets-frontend
+/src/src/actions/subscriptionPause.js                   @Gousto/squad-rockets-frontend
+/src/src/actions/__tests__/subscriptionPause.test.js    @Gousto/squad-rockets-frontend
+/src/src/reducers/subscriptionPause.js                  @Gousto/squad-rockets-frontend
+/src/__tests__/reducers/subscriptionPause.test.js       @Gousto/squad-rockets-frontend
+/src/src/reducers/subscription.js                       @Gousto/squad-rockets-frontend
+/src/__tests__/reducers/subscription.test.js            @Gousto/squad-rockets-frontend
+/src/src/apis/__tests__/subscription.test.js            @Gousto/squad-rockets-frontend
+/src/src/actions/__tests__/tastePreferences.test.js     @Gousto/squad-rockets-frontend
+/src/src/actions/tastePreferences.js                    @Gousto/squad-rockets-frontend
+/src/src/apis/tastePreferences.js                       @Gousto/squad-rockets-frontend
+/src/src/actions/welcome.js                             @Gousto/squad-rockets-frontend
+/src/src/containers/welcome/                            @Gousto/squad-rockets-frontend
+/src/src/apis/boxPrices.js                              @Gousto/squad-rockets-frontend
+/src/src/apis/__tests__/boxPrices.test.js               @Gousto/squad-rockets-frontend
+/src/src/actions/auth.js                                @Gousto/squad-rockets-frontend
+/src/src/actions/__tests__/auth.test.js                 @Gousto/squad-rockets-frontend
+/src/src/reducers/auth.js                               @Gousto/squad-rockets-frontend
+/src/__tests__/reducers/auth.test.js                    @Gousto/squad-rockets-frontend
+/src/src/apis/auth.js                                   @Gousto/squad-rockets-frontend
+/src/src/apis/__tests__/auth.test.js                    @Gousto/squad-rockets-frontend
+/tests/regression/fixtures/welcome/                     @Gousto/squad-rockets-frontend
 
 # squad-beetroots ownership
 /src/src/routes/BoxPrices/                              @Gousto/squad-beetroots
