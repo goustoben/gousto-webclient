@@ -152,6 +152,9 @@ jobs:
       - run:
           name: Upload webclient resources to S3
           working_directory: src
+          # The two s3 uploads below are split into two
+          # one for uncompressed assets (excludes content-encoding flag)
+          # one for compressed assets (includes content-encoding flag)
           command: |
             source ~/.circlerc
             ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
