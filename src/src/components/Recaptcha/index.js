@@ -1,2 +1,1 @@
-/* eslint-disable */
-export default from './recaptcha-wrapper'
+export { default } from './recaptcha-wrapper'
