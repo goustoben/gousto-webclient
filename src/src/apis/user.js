@@ -1,7 +1,7 @@
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 import { fetch } from 'utils/fetch'
-import { factory as unsubscribeFromMarketingFactory } from "../adapters/unsubscribeFromMarketing"
+import { factory as unsubscribeUserFromMarketingFactory } from '../adapters/unsubscribeUserFromMarketing'
 
 export function applyPromo(accessToken, promoCode) {
   return fetch(accessToken, `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
@@ -64,8 +64,8 @@ export function fetchUserAddresses(accessToken, userId) {
 }
 
 export function deleteMarketingSubscription(authUserId, marketingType, marketingUnsubscribeToken) {
-  const unsubscribeFromMarketing = unsubscribeFromMarketingFactory(endpoint('core'))
+  const unsubscribeUserFromMarketing = unsubscribeUserFromMarketingFactory(endpoint('core'))
 
-  return unsubscribeFromMarketing(authUserId, marketingType, marketingUnsubscribeToken)
+  return unsubscribeUserFromMarketing(authUserId, marketingType, marketingUnsubscribeToken)
 }
 

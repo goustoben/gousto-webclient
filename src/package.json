@@ -103,6 +103,7 @@
     "validator": "10.4.0"
   },
   "devDependencies": {
+    "@pact-foundation/pact": "^9.16.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@sheerun/mutationobserver-shim": "^0.3.3",
     "@testing-library/jest-dom": "^5.14.1",
@@ -136,6 +137,7 @@
     "ignore": "^5.1.8",
     "image-webpack-loader": "4.6.0",
     "jest": "^27.1.0",
+    "jest-environment-node": "^27.2.5",
     "jest-fetch-mock": "^3.0.3",
     "jsdom": "11.3.0",
     "json5": "^2.2.0",
@@ -267,5 +269,8 @@
   },
   "engines": {
     "node": "12.x"
+  },
+  "config": {
+    "pact_do_not_track": true
   }
 }
