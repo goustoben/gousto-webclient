@@ -169,7 +169,6 @@
 /src/src/routes/ShowcaseMenu/                           @Gousto/squad-beetroots
 /src/src/layouts/CheckoutLayout/                        @Gousto/squad-beetroots
 /src/src/config/checkout.js                             @Gousto/squad-beetroots
-/src/src/config/boxprices.js                            @Gousto/squad-beetroots
 /src/src/config/promoCode.js                            @Gousto/squad-beetroots
 /src/src/config/home.js                                 @Gousto/squad-beetroots
 /src/src/config/signup.js                               @Gousto/squad-beetroots
@@ -177,9 +176,6 @@
 /src/src/apis/payments.js                               @Gousto/squad-beetroots
 /src/src/apis/__tests__/payments.test.js                @Gousto/squad-beetroots
 /src/src/apis/__tests__/checkout.test.js                @Gousto/squad-beetroots
-/src/src/actions/boxPrices.js                           @Gousto/squad-beetroots
-/src/src/actions/boxPricesPricePerPortion.js            @Gousto/squad-beetroots
-/src/src/actions/__tests__/boxPricesPricePerPortion.test.js       @Gousto/squad-beetroots
 /src/src/actions/checkout.js                            @Gousto/squad-beetroots
 /src/src/actions/promos.js                              @Gousto/squad-beetroots
 /src/src/actions/signup.js                              @Gousto/squad-beetroots
@@ -213,13 +209,9 @@
 /src/src/selectors/__tests__/checkout.test.js           @Gousto/squad-beetroots
 /src/src/selectors/__tests__/payment.test.js            @Gousto/squad-beetroots
 /src/src/selectors/__tests__/tracking.test.js           @Gousto/squad-beetroots
-/src/src/selectors/__tests__/boxPrices.test.js          @Gousto/squad-beetroots
-/src/src/selectors/boxPrices.js                         @Gousto/squad-beetroots
 /src/src/reducers/checkout.js                           @Gousto/squad-beetroots
 /src/src/reducers/payment.js                            @Gousto/squad-beetroots
 /src/src/reducers/signup.js                             @Gousto/squad-beetroots
-/src/src/reducers/boxPrices.js                          @Gousto/squad-beetroots
-/src/src/reducers/__tests__/boxPrices.test.js           @Gousto/squad-beetroots
 /src/src/reducers/__tests__/payment.test.js             @Gousto/squad-beetroots
 /src/src/reducers/__tests__/checkout.test.js            @Gousto/squad-beetroots
 /tests/e2e/pages/signup.js                              @Gousto/squad-beetroots

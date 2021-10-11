@@ -1,12 +1,10 @@
 import Immutable from 'immutable'
-import { actionTypes } from 'actions/actionTypes'
-import { boxPricesBoxSizeSelected, updatePricePerServing } from 'actions/boxPrices'
+import { boxPricesBoxSizeSelected } from 'actions/boxPrices'
 import { basketNumPortionChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { signupNextStep } from 'actions/signup'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import { applyPromoCodeAndShowModal } from 'actions/home'
-import { fetchBoxPrices } from 'apis/boxPrices'
 import { getPromoBannerState } from 'utils/home'
 
 jest.mock('actions/basket', () => ({
@@ -86,99 +84,6 @@ describe('boxPrices actions', () => {
         expect(trackClickBuildMyBox).toHaveBeenCalledWith('4 people', 'menu')
         expect(basketNumPortionChange).toHaveBeenCalledWith(4)
         expect(redirect).toHaveBeenCalledWith('/menu')
-      })
-    })
-  })
-
-  describe('given updatePricePerServing() action', () => {
-    const state = {
-      basket: Immutable.Map({
-        orderId: null,
-        promoCode: 'DTI-CHECKOUT30',
-        tariffId: '123',
-      }),
-      auth: Immutable.Map({
-        isAuthenticated: false,
-        accessToken: 'fake_token',
-      }),
-    }
-
-    describe('when successfully executed', () => {
-      beforeEach(() => {
-        fetchBoxPrices.mockResolvedValue({
-          data: {
-            4: {
-              4: {
-                gourmet: {
-                  pricePerPortion: '2.33',
-                  pricePerPortionDiscounted: '4.04'
-                }
-              }
-            },
-            2: {
-              4: {
-                gourmet: {
-                  pricePerPortion: '2.04',
-                  pricePerPortionDiscounted: '2.04'
-                }
-              }
-            }
-          }
-        })
-        getState.mockReturnValue(state)
-      })
-
-      test('should fetch box prices', async () => {
-        const expectedRequest = {
-          promocode: 'DTI-CHECKOUT30',
-          tariff_id: '123',
-        }
-
-        await updatePricePerServing()(dispatch, getState)
-
-        expect(fetchBoxPrices).toHaveBeenCalledWith('fake_token', expectedRequest)
-      })
-
-      test('should dispatch BOXPRICE_SET_PRICE_PER_SERVING action', async () => {
-        const expected = {
-          type: actionTypes.BOXPRICE_SET_PRICE_PER_SERVING,
-          price: '2.33',
-          lowestPricePerPortion: {
-            forTwo: {
-              price: '2.04',
-              priceDiscounted: '2.04'
-            },
-            forFour: {
-              price: '2.33',
-              priceDiscounted: '4.04'
-            }
-          }
-        }
-
-        await updatePricePerServing()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith(expected)
-      })
-    })
-
-    describe('when fetch request failed', () => {
-      beforeEach(() => {
-        fetchBoxPrices.mockRejectedValue(new Error('Failed'))
-        getState.mockReturnValue({
-          ...state,
-          basket: state.basket.set('orderId', '234')
-        })
-      })
-
-      test('should dispatch BOXPRICE_SET_PRICE_PER_SERVING action with hardcoded value', async () => {
-        const expected = {
-          type: actionTypes.BOXPRICE_SET_PRICE_PER_SERVING,
-          price: '2.87',
-        }
-
-        await updatePricePerServing()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith(expected)
       })
     })
   })
