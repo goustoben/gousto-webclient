@@ -5,7 +5,6 @@ export const hero = {
   image: require('media/images/box-prices/box-prices-hero.png'),
 }
 
-export const pricePerServing = '2.87'
 export const cta = 'Build My Box'
 export const ctaRedesign = 'Get started'
 
