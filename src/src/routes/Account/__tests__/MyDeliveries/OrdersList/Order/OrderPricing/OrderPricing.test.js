@@ -22,15 +22,6 @@ describe('OrderPricing', () => {
     })
 
     test('should render prices when state is confirmed', () => {
-      /*
-      TODO: Fix and reinstate this #BROKEN_TEST
-        Current test results
-        Expected has type:  number
-        Expected has value: 15
-        Received has type:  string
-        Received has value: "£15.00£12.00"
-
-      */
       const orderState = 'confirmed'
       wrapper = shallow(
         <OrderPricing pricing={pricing} orderState={orderState} />,
