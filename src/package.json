@@ -31,6 +31,7 @@
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci -w=2 --coverage",
+    "test:gousto-adapters": "rm -rf pact && npm run test:jest -- --testPathIgnorePatterns=src/adapters/__tests__/gousto/__support__ --testPathPattern=src/adapters/__tests__/gousto",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "deploy": "npm run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
@@ -216,7 +217,8 @@
       "^.+\\.(css|scss)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
-      "libs/goustouicomponents"
+      "libs/goustouicomponents",
+      "src/adapters/__tests__/gousto"
     ],
     "transform": {
       "^.+\\.js?$": "ts-jest",

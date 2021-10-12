@@ -1,9 +1,9 @@
 /**
- * @jest-environment ./src/adapters/__tests__/support/goustoServiceAdapterTestEnvironment
+ * @jest-environment ./src/adapters/__tests__/gousto/__support__/goustoServiceAdapterTestEnvironment
  */
 
 import { factory } from '../../../unsubscribeUserFromMarketing'
-import { givenInitialState, givenNoInitialState} from '../../support/pactUtils'
+import { givenInitialState, givenNoInitialState} from '../__support__/pactUtils'
 
 describe('Unsubscribe user from marketing', () => {
   let unsubscribeUserFromMarketing
