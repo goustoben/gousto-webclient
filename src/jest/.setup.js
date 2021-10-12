@@ -22,12 +22,14 @@ if (global.adapterTest) {
 function configureAdapterTestEnvironment() {
   jest.setTimeout(30 * 1000)
 
+  const pathOutputDirectoryPath = path.join(__dirname, '..', 'pact')
+
   const pact = new Pact({
     consumer: 'webclient',
     provider: global.pactProvider,
-    dir: path.resolve(process.cwd(), 'pact', 'pacts'),
+    dir: path.join(pathOutputDirectoryPath, 'pacts'),
     pactfileWriteMode: 'update',
-    log: path.resolve(process.cwd(), 'pact', 'logs', 'pact.log'),
+    log: path.join(pathOutputDirectoryPath, 'logs', 'pact.log'),
     logLevel: process.env.PACT_LOG_LEVEL ? process.env.PACT_LOG_LEVEL : 'error'
   })
 
