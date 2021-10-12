@@ -22,8 +22,8 @@ export function appendUserExperiment(experiment) {
   return {
     type: actionTypes.EXPERIMENTS_APPEND,
     payload: {
-      experiment,
-    },
+      experiment
+    }
   }
 }
 
@@ -43,7 +43,7 @@ export function appendDefaultUserExperiment(experimentName) {
 export function removeUserExperiments() {
   return {
     type: actionTypes.EXPERIMENTS_REMOVE,
-    payload: {},
+    payload: {}
   }
 }
 
@@ -54,8 +54,8 @@ export function trackBucketedUser({ experimentName, withinExperiment, bucket }) 
       actionType: experimentBucketedUser,
       experimentName,
       withinExperiment,
-      bucket,
-    },
+      bucket
+    }
   }
 }
 
@@ -122,12 +122,6 @@ export function fetchOrAssignUserToExperiment(experimentName) {
     const assignUser = shouldAssignUserToExperiment(currentState, { experimentName })
 
     if (fetchExperiments) {
-      /*
-       having to ignore the 'exports.' syntax
-       Typescript doesn't like it
-       but removing it causes a problem with the mocks in the associated unit tests.
-      */
-
       dispatch(exports.fetchUserExperiments())
     } else if (assignUser) {
       dispatch(exports.assignUserToExperiment(experimentName))

@@ -3079,15 +3079,15 @@ describe('Subscription action', () => {
           reasons: ['some', 'reasons'],
           metaData: {
             some: 'metadata',
-          },
-        }),
+          }
+        })
       })
 
       await fetchData()(dispatch, getState)
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS',
-        reasons: Immutable.fromJS(['some', 'reasons']),
+        reasons: Immutable.fromJS(['some', 'reasons'])
       })
 
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'PS_REASON_CATEGORY_MODAL_VIEWED' })
