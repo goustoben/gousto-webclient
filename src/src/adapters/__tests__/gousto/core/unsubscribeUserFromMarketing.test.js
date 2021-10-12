@@ -2,14 +2,14 @@
  * @jest-environment ./src/adapters/__tests__/gousto/__support__/goustoServiceAdapterTestEnvironment
  */
 
-import { factory } from '../../../unsubscribeUserFromMarketing'
+import { createAdapter } from '../../../unsubscribeUserFromMarketing'
 import { givenInitialState, givenNoInitialState} from '../__support__/pactUtils'
 
 describe('Unsubscribe user from marketing', () => {
   let unsubscribeUserFromMarketing
 
   beforeEach(() => {
-    unsubscribeUserFromMarketing = factory(pact.mockService.baseUrl)
+    unsubscribeUserFromMarketing = createAdapter(pact.mockService.baseUrl)
   })
 
   test('should unsubscribe user from marketing', async () => {
