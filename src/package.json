@@ -200,9 +200,7 @@
   },
   "jest": {
     "coverageReporters": [
-      "json",
       "lcov",
-      "text",
       "json-summary"
     ],
     "testMatch": [
