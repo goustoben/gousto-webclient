@@ -1,6 +1,6 @@
 import { fetch } from 'utils/fetch'
 
-export function factory(coreBaseUrl) {
+export function createAdapter(coreBaseUrl) {
   return (authUserId, marketingType, marketingUnsubscribeToken) => fetch(
     null,
     `${coreBaseUrl}/user/${authUserId}/marketing/${marketingType}`,

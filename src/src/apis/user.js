@@ -1,7 +1,7 @@
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 import { fetch } from 'utils/fetch'
-import { factory as unsubscribeUserFromMarketingFactory } from '../adapters/gousto/core/unsubscribeUserFromMarketing'
+import { createAdapter as unsubscribeUserFromMarketingFactory } from '../adapters/gousto/core/unsubscribeUserFromMarketing'
 
 export function applyPromo(accessToken, promoCode) {
   return fetch(accessToken, `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')

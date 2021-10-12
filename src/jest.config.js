@@ -22,7 +22,7 @@ module.exports = {
   },
   testPathIgnorePatterns: [
     '<rootDir>/libs/goustouicomponents',
-    '<rootDir>/src/adapters/__tests__/gousto'
+    '<rootDir>/src/adapters/gousto/__tests__/'
   ],
   transform: {
     '^.+\\.js?$': 'ts-jest',
