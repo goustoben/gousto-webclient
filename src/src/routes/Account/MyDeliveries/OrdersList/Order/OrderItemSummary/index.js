@@ -1,1 +1,1 @@
-export default from './OrderItemSummary'
+export { default } from './OrderItemSummary'

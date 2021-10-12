@@ -6,7 +6,7 @@ import restrictProps from 'utils/restrictProps'
 import InputWrapper from 'Form/InputWrapper'
 // eslint-disable-next-line import/no-unresolved
 import formsCss from 'styles/forms.css'
-import globalCss from './reactSelect.css' // eslint-disable-line no-unused-vars
+import './reactSelect.css'
 import css from './DropdownInput.css'
 
 export class DropdownInput extends React.Component {
