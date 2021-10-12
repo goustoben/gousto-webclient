@@ -9,6 +9,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const { webpackEnvVarsClient, webpackEnvVarsDev } = require('./webpack-env-vars')
 
@@ -72,6 +73,12 @@ const productionClientPlugins = [
   ExitCodePlugin,
 ]
 
+if (process.env.GW_ENABLE_BUNDLE_ANALYZER) {
+  productionClientPlugins.push(
+    new BundleAnalyzerPlugin({ analyzerMode: 'disabled', generateStatsFile: true })
+  )
+}
+
 const developmentClientPlugins = [
   new SimpleProgressWebpackPlugin({
     format: 'compact'
@@ -82,7 +89,7 @@ const developmentHmrClientPlugins = [
   new SimpleProgressWebpackPlugin({
     format: 'compact'
   }),
-  
+
   new ReactRefreshWebpackPlugin({
     overlay: false,
   }),
@@ -90,12 +97,12 @@ const developmentHmrClientPlugins = [
 
 const getClientPlugins = (isDevelopmentBuild = false, isHmrEnabled = false) => {
   const webpackEnvVars = isDevelopmentBuild ? webpackEnvVarsDev : webpackEnvVarsClient
-  const hmrToggledDevelopmentClientPlugins = isHmrEnabled ? developmentHmrClientPlugins : developmentClientPlugins 
-  
+  const hmrToggledDevelopmentClientPlugins = isHmrEnabled ? developmentHmrClientPlugins : developmentClientPlugins
+
   const buildSpecificPlugins = isDevelopmentBuild
     ? hmrToggledDevelopmentClientPlugins
     : productionClientPlugins
-    
+
   return [...defaultPlugins(webpackEnvVars), ...buildSpecificPlugins]
 }
 
