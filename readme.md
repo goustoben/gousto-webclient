@@ -93,3 +93,13 @@ Then in `src` run:
 ```
 ./scripts/compare-code-health.sh
 ```
+
+## Webpack bundle analyzer
+
+### Usage
+
+In top `src`, invoke `GW_ENABLE_BUNDLE_ANALYZER=1 npm run build`. It will
+generate a file `src/public/stats.json`.
+
+Invoke `npm run bundle-analyzer`. It will open a browser window at
+http://127.0.0.1:8888 with the size stats for each bundle and its dependencies.
