@@ -65,6 +65,7 @@ const getDeliveryDaysAndSlots = (
       const date = dd.get('date')
       slots[date] = dd
         .get('slots')
+        .sort((a, b) => a.get('deliveryStartTime').localeCompare(b.get('deliveryStartTime')))
         .map((slot) => {
           const isSlotDisabled = !!(
             disabledSlots && disabledSlots.includes(slot.get('disabledSlotId'))
@@ -268,7 +269,6 @@ const DeliveryStep = ({
             <div className={classNames(css.left, css.dropdown)} data-testing="signupDeliveryDay">
               <DropdownInput
                 color="secondary"
-                uppercase={!isGoustoOnDemandEnabled}
                 options={deliveryDays}
                 onChange={onTempDateChange}
                 value={tempDate}
@@ -277,10 +277,14 @@ const DeliveryStep = ({
                 isInCheckout
               />
             </div>
-            <div className={classNames(css.right, css.dropdown)} data-testing="signupDeliveryTime">
+            <div
+              className={classNames(css.right, css.dropdown, {
+                [css.disableClick]: slots[tempDate] && slots[tempDate].length === 1,
+              })}
+              data-testing="signupDeliveryTime"
+            >
               <DropdownInput
                 color="secondary"
-                uppercase={!isGoustoOnDemandEnabled}
                 options={slots[tempDate] ? slots[tempDate] : []}
                 onChange={onTempSlotChange}
                 value={tempSlotId}
