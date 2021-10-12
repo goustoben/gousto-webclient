@@ -259,6 +259,7 @@ module.exports = {
     hj: true,
     after: true,
     Cypress: true,
+    pact: true
   },
   plugins: ['@typescript-eslint', 'prettier'],
   overrides: [

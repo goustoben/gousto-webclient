@@ -10,6 +10,8 @@ const Enzyme = require('enzyme');
 const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
 
 import Modal from 'react-modal'
+import { Pact } from "@pact-foundation/pact"
+import path from "path"
 
 if (global.adapterTest) {
   configureAdapterTestEnvironment()
@@ -19,6 +21,23 @@ if (global.adapterTest) {
 
 function configureAdapterTestEnvironment() {
   jest.setTimeout(30 * 1000)
+
+  const pact = new Pact({
+    consumer: 'webclient',
+    provider: global.pactProvider,
+    dir: path.resolve(process.cwd(), 'pact', 'pacts'),
+    pactfileWriteMode: 'update',
+    log: path.resolve(process.cwd(), 'pact', 'logs', 'pact.log'),
+    logLevel: process.env.PACT_LOG_LEVEL ? process.env.PACT_LOG_LEVEL : 'error'
+  })
+
+  global.pact = pact
+
+  beforeAll(() => pact.setup())
+
+  afterEach(() => pact.verify())
+
+  afterAll(() => pact.finalize())
 }
 
 function configureEmulatedBrowserEnvironment() {

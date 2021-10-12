@@ -1,17 +1,12 @@
 /**
- * @jest-environment ./src/adapters/__tests__/support/adapterTestEnvironment
+ * @jest-environment ./src/adapters/__tests__/support/goustoServiceAdapterTestEnvironment
  */
 
-import { factory } from '../unsubscribeUserFromMarketing'
-import { givenInitialState, givenNoInitialState, pactBetween } from './support/pactUtils'
+import { factory } from '../../../unsubscribeUserFromMarketing'
+import { givenInitialState, givenNoInitialState} from '../../support/pactUtils'
 
 describe('Unsubscribe user from marketing', () => {
-  let pact
   let unsubscribeUserFromMarketing
-
-  beforeAll(async () => {
-    pact = await pactBetween('webclient', 'core')
-  })
 
   beforeEach(() => {
     unsubscribeUserFromMarketing = factory(pact.mockService.baseUrl)
@@ -89,8 +84,4 @@ describe('Unsubscribe user from marketing', () => {
 
     await expect(unsubscribeUserFromMarketing('the-user-id', 'the-marketing-type', 'non-existent-marketing-unsubscribe-token')).rejects.toBeDefined()
   })
-
-  afterEach(() => pact.verify())
-
-  afterAll(() => pact.finalize())
 })
