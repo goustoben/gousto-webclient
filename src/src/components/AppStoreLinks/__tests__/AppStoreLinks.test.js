@@ -7,13 +7,14 @@ describe('<AppStoreLinks />', () => {
   const onClick = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(
-      <AppStoreLinks
-        appStoreId="test-app-store-id"
-        playStoreId="test-play-store-id"
-        onClick={onClick}
-      />
-    )
+    wrapper = shallow(<AppStoreLinks appStoreId="12345" playStoreId="67890" onClick={onClick} />)
+  })
+
+  test('should inject the specified app store IDs into the markup', () => {
+    expect(wrapper.type()).toEqual('div')
+
+    expect(wrapper.find('a').get(0).props.href.includes('id=67890')).toBe(true)
+    expect(wrapper.find('a').get(1).props.href.includes('id12345')).toBe(true)
   })
 
   describe('when clicking on play store button', () => {

@@ -25,15 +25,17 @@ console.log('')
 const [, , argBranch, argCodeHealthFile] = process.argv
 
 const parseGitDiffLine = (line) => {
-  const result = /^(\w{1})\s+(.+)$/.exec(line)
+  const result = /^(\S+)\s+(\S+)(\s+(\S+))?$/.exec(line)
 
   if (result === null) {
     return null
   }
 
+  const status = result[1]
+
   return {
-    status: result[1],
-    path: result[2]
+    status,
+    path: status[0] === 'R' ? result[4] : result[2],
   }
 }
 

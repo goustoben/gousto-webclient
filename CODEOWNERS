@@ -29,8 +29,6 @@
 /src/config/        @Gousto/frontend-foundations
 /src/scripts/        @Gousto/frontend-foundations
 /src/server/        @Gousto/frontend-foundations
-/src/__tests__/.babelrc        @Gousto/frontend-foundations
-/src/__tests__/.eslintrc        @Gousto/frontend-foundations
 /src/src/routes/index.js        @Gousto/frontend-foundations
 /src/src/_testing/        @Gousto/frontend-foundations
 /src/src/store.js        @Gousto/frontend-foundations
@@ -101,9 +99,8 @@
 /src/src/routes/OrderConfirmation/                      @Gousto/squad-radishes
 
 # squad-haricots ownership
-/src/__tests__/actions/getHelp.test.js                              @Gousto/squad-haricots
-/src/__tests__/middlewares/tracking/snowplow/getHelp.test.js        @Gousto/squad-haricots
 /src/src/actions/__tests__/getHelp.test.js                          @Gousto/squad-haricots
+/src/src/middlewares/tracking/snowplow/__tests__/getHelp.test.js    @Gousto/squad-haricots
 /src/src/actions/getHelp.js                                         @Gousto/squad-haricots
 /src/src/apis/__mocks__/getHelp.js                                  @Gousto/squad-haricots
 /src/src/apis/__tests__/getHelp.test.js                             @Gousto/squad-haricots

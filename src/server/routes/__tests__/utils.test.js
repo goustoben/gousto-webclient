@@ -1,9 +1,10 @@
-import { set } from 'utils/cookieHelper2'
+import { get, set } from 'utils/cookieHelper2'
 
-import { addSessionCookies } from '../utils'
+import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from '../utils'
 
 jest.mock('utils/cookieHelper2', () => ({
   set: jest.fn(),
+  get: jest.fn(),
 }))
 
 jest.mock('moment', () => {
@@ -16,14 +17,20 @@ jest.mock('moment', () => {
   return jest.fn(() => momentMethods)
 })
 
+const getRoutingCtx = ({ path, method }) => ({
+  path,
+  method,
+})
+
 describe('utils', () => {
+  let ctx
+
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   describe('addSessionCookies', () => {
     describe('given an authenticated session request', () => {
-      const ctx = { cookies: {} }
       const response = {
         data: {
           accessToken: 'mock-access-token',
@@ -31,6 +38,10 @@ describe('utils', () => {
           expiresAt: '123456789',
         }
       }
+
+      beforeEach(() => {
+        ctx = { cookies: {} }
+      })
 
       describe('when addSessionCookies is called and rememberMe is true', () => {
         beforeEach(() => {
@@ -67,6 +78,78 @@ describe('utils', () => {
           ])
         })
       })
+    })
+  })
+
+  describe('removeSessionCookies', () => {
+    test('should reset session cookies', () => {
+      beforeEach(() => {
+        ctx = { cookies: {} }
+      })
+
+      removeSessionCookies(ctx)
+
+      expect(set.mock.calls).toEqual([
+        [{}, 'oauth_token', { access_token: '' }, null, true, true, true],
+        [{}, 'oauth_recipe_feedback_token', { access_token: '' }, null, true, true, true, '/rate-my-recipes'],
+        [{}, 'oauth_help_centre_token', { access_token: '' }, null, true, true, true, '/help-centre'],
+        [{}, 'oauth_taste_profile_token', { access_token: '' }, null, true, true, true, '/taste-profile'],
+        [{}, 'oauth_expiry', { expires_at: '' }],
+        [{}, 'oauth_refresh', { refresh_token: '' }, null, true, true, true],
+        [{}, 'oauth_remember', { remember_me: false }],
+      ])
+    })
+  })
+
+  describe('routeMatches', () => {
+    test('should return false if ctx does not match given method and path', () => {
+      ctx = getRoutingCtx({ path: '/refresh', method: 'GET' })
+
+      expect(routeMatches(ctx, '/login', 'POST')).toBeFalsy()
+    })
+
+    test('should return false if ctx matches given path, not method', () => {
+      ctx = getRoutingCtx({ path: '/login', method: 'GET' })
+
+      expect(routeMatches(ctx, '/login', 'POST')).toBeFalsy()
+    })
+
+    test('should return false if ctx matches given method, not path', () => {
+      ctx = getRoutingCtx({ path: '/refresh', method: 'POST' })
+
+      expect(routeMatches(ctx, '/login', 'POST')).toBeFalsy()
+    })
+
+    test('should return true if ctx matches given path and method', () => {
+      ctx = getRoutingCtx({ path: '/login', method: 'POST' })
+
+      expect(routeMatches(ctx, '/login', 'POST')).toBeTruthy()
+    })
+  })
+
+  describe('getCookieValue', () => {
+    const testValue = 'test_value'
+
+    beforeEach(() => {
+      ctx = {
+        cookies: {
+          valid_cookie: { valid_property: testValue }
+        }
+      }
+
+      get.mockImplementation((cookies, key) => cookies[key])
+    })
+
+    test('should return undefined for a non-existent cookie', () => {
+      expect(getCookieValue(ctx, 'invalid_cookie', 'invalid_property')).toBeUndefined()
+    })
+
+    test('should return undefined for an existing cookie with wrong property', () => {
+      expect(getCookieValue(ctx, 'valid_cookie', 'invalid_property')).toBeUndefined()
+    })
+
+    test('should return the value for an existing cookie with property', () => {
+      expect(getCookieValue(ctx, 'valid_cookie', 'valid_property')).toEqual(testValue)
     })
   })
 })

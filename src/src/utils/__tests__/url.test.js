@@ -9,6 +9,8 @@ describe('URL utils',() => {
       [' hello world ', 'hello-world'],
       ['multiple    spaces', 'multiple-spaces'],
       ['special characters!', 'special-characters'],
+      ["Dave's Fish & Chips", 'daves-fish-chips'],
+      ['Dave says "hi"', 'dave-says-hi'],
     ]
 
     describe.each(cases)("given an input of '%s'", (input, expected) => {
