@@ -32,6 +32,7 @@
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci -w=2 --coverage",
     "test:gousto-adapters": "rm -rf pact && jest --config=src/adapters/gousto/__tests__/jest.config.js",
+    "test:gousto-emulation": "jest --config=gousto-emulation/__tests__/jest.config.js",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "deploy": "npm run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
@@ -104,6 +105,7 @@
     "validator": "10.4.0"
   },
   "devDependencies": {
+    "@koa/router": "^10.1.1",
     "@pact-foundation/pact": "^9.16.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@sheerun/mutationobserver-shim": "^0.3.3",
@@ -142,6 +144,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jsdom": "11.3.0",
     "json5": "^2.2.0",
+    "koa-logger": "^3.2.1",
     "koa-webpack": "^6.0.0",
     "lodash-webpack-plugin": "0.11.5",
     "mockdate": "^2.0.5",

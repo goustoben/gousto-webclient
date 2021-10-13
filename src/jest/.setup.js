@@ -29,7 +29,7 @@ function configureAdapterTestEnvironment() {
     provider: global.pactProvider,
     dir: path.join(pathOutputDirectoryPath, 'pacts'),
     pactfileWriteMode: 'update',
-    log: path.join(pathOutputDirectoryPath, 'logs', 'pact.log'),
+    log: path.join(pathOutputDirectoryPath, 'logs', 'pact-file-generation', 'pact.log'),
     logLevel: process.env.PACT_LOG_LEVEL ? process.env.PACT_LOG_LEVEL : 'error'
   })
 
