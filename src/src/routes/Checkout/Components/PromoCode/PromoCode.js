@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import logger from 'utils/logger'
 import classNames from 'classnames'
-import configCheckout from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 import css from './PromoCode.css'
 import checkoutCss from '../../Checkout.css'
 
@@ -165,7 +165,7 @@ class PromoCode extends PureComponent {
     const { hasError } = this.state
 
     if (hasError) {
-      return <p className={css.errorMsg}>{configCheckout.errorMessage.invalidPromocode}</p>
+      return <p className={css.errorMsg}>{checkoutConfig.errorMessage.invalidPromocode}</p>
     }
 
     return null

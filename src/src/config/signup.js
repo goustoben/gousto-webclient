@@ -7,15 +7,10 @@ export const signupConfig = {
   defaultSteps: ['boxSize', 'postcode', 'delivery'],
   paymentBeforeChoosingSteps: ['boxSize', 'recipesPerBox', 'postcode', 'delivery'],
   steps: [
-    { name: 'welcome', slug: 'welcome' },
     { name: 'boxSize', slug: 'box-size' },
     { name: 'recipesPerBox', slug: 'recipes-per-box' },
-    { name: 'kidsCookFor', slug: 'cook-for-children' },
     { name: 'postcode', slug: 'postcode' },
     { name: 'delivery', slug: 'delivery-options' },
-    { name: 'finish', slug: 'finish' },
-    { name: 'foodPref', slug: 'food-pref' },
-    { name: 'adultsCookFor', slug: 'cook-for-adults' },
   ],
   payment_types: {
     card: 'card',
@@ -24,10 +19,6 @@ export const signupConfig = {
   address_types: {
     billing: 'billing',
     shipping: 'shipping',
-  },
-  subscriptionOptions: {
-    subscription: 'subscription',
-    transactional: 'transactional'
   },
   boxSizeStep: {
     title: 'Choose your box size',

@@ -1,12 +1,12 @@
 import React from 'react'
 import configRoutes from 'config/routes'
-import config from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 import Link from 'Link'
 import css from './TermsAndConditions.css'
 
 export const TermsAndConditions = () => (
   <div className={css.termsAndConditions}>
-    <span>{config.terms}</span>
+    <span>{checkoutConfig.terms}</span>
     <br />
     <Link
       to={configRoutes.client.termsAndConditions}

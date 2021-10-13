@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
+import { BillingFormContainer } from './BillingForm'
 import css from './ExpiredBillingModal.css'
-import BillingForm from './BillingForm'
 
 class ExpiredBillingModal extends React.PureComponent {
   onCloseExpiredBillingModal = () => {
@@ -23,7 +23,7 @@ class ExpiredBillingModal extends React.PureComponent {
               Your card has expired. Update your payment info now to order more recipes
             </div>
             <div>
-              <BillingForm />
+              <BillingFormContainer />
             </div>
           </div>
         </ModalPanel>
