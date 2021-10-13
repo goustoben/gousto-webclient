@@ -10,25 +10,6 @@ export const hero = {
   subheader: 'Over 60 recipes every week',
 }
 
-export const  subscription = {
-  header: 'How does Gousto work?',
-  description: '',
-  graphicType: 'svg',
-  steps: [{
-    path: 'icon-choose-redesign',
-    title: '',
-    description: 'Discover 50+ tasty recipes each week including new cuisines, family favourites, and ten minute meals.',
-  }, {
-    path: 'icon-delivery-redesign',
-    title: '',
-    description: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.',
-  }, {
-    path: 'icon-cook-redesign',
-    title: '',
-    description: 'Cook up impressive meals from just £2.98 per serving, with all of the flavour and none of the fuss.',
-  }],
-}
-
 export const CTA = {
   text: 'Get started',
   stickyCTA: 'Get started with 50% off',
@@ -111,7 +92,6 @@ export const seo = {
 
 export const homeConfig = {
   hero,
-  subscription,
   CTA,
   promo,
   emailForm,

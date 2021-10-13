@@ -1,12 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import config from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 import { Button } from 'goustouicomponents'
 import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import Svg from 'Svg'
 
-import BillingForm from '../BillingForm/BillingForm'
+import { BillingForm } from '../BillingForm/BillingForm'
 import css from '../BillingForm/BillingForm.css'
 
 const submitCardDetails = jest.fn()
@@ -179,6 +179,6 @@ describe('BillingForm paymentOptions', () => {
   })
   test('should process config giving giving the same number of cards as the config file', () => {
     const result = wrapper.instance().paymentOptions()
-    expect(result.length).toEqual(config.cardTypeOptions.length)
+    expect(result.length).toEqual(checkoutConfig.cardTypeOptions.length)
   })
 })

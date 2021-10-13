@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Segment, Control, Tooltip } from 'goustouicomponents'
-import config from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 import css from './Buttons.css'
 
 class Buttons extends React.Component {
@@ -111,9 +111,9 @@ class Buttons extends React.Component {
     const { outOfstock, limitReached, showControl, qty, numPortions } = this.props
     let tooltipMessage = ''
     if (outOfstock) {
-      tooltipMessage = config.tooltip.outOfstock
+      tooltipMessage = checkoutConfig.tooltip.outOfstock
     } else if (limitReached) {
-      tooltipMessage = config.tooltip.limitReached
+      tooltipMessage = checkoutConfig.tooltip.limitReached
     }
     const segment = (
       <Segment

@@ -3,11 +3,7 @@ import { getFormSyncErrors } from 'redux-form'
 
 import gaID from 'config/head/gaTracking'
 import { PaymentMethod } from 'config/signup'
-import {
-  errorsThatClearOrderPreview,
-  errorsToHandleForDecoupledPayment,
-  passwordRules,
-} from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
@@ -66,6 +62,7 @@ import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
 export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
 
 const { pending, error } = statusActions
+const { errorsThatClearOrderPreview, errorsToHandleForDecoupledPayment, passwordRules } = checkoutConfig
 
 /* eslint-disable no-use-before-define */
 export const checkoutActions = {

@@ -3,7 +3,7 @@ import React from 'react'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
 import { inferCardType } from 'utils/checkout'
-import config from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import Svg from 'Svg'
@@ -20,23 +20,21 @@ const YEARS = ['YYYY', ...Array.from({ length: 10 }, (v, k) => k + CURRENT_YEAR)
 const divisor = String.fromCharCode(47)
 
 class BillingForm extends React.PureComponent {
-  static propTypes = {
-    isPosting: PropTypes.bool,
-    submitCardDetails: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    isPosting: false,
-  }
-
-  paymentOptions() {
-    return config.cardTypeOptions.map((option) =>
-      ({ ...option, subLabel: (<span className={css[option.icon]} aria-hidden="true" />)})
+  static validateFormSubmit(formInput) {
+    return !!(
+      formInput.payment_type
+      && formInput.card_holder
+      && formInput.card_number
+      && formInput.card_type
+      && formInput.card_cvv2
+      && formInput.card_cvv2.length === 3
+      && formInput.formCardExpiryYear
+      && formInput.formCardExpiryMonth
     )
   }
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       payment_type: 'card',
       card_holder: '',
@@ -68,7 +66,7 @@ class BillingForm extends React.PureComponent {
     if (label === 'card_number') {
       this.setState({ [label]: onlyDigits })
       const cardType = inferCardType(onlyDigits)
-      if (config.supportedCardTypes.indexOf(cardType) !== -1 || cardType === '') {
+      if (checkoutConfig.supportedCardTypes.indexOf(cardType) !== -1 || cardType === '') {
         return this.setState({ card_type: cardType })
       }
     }
@@ -83,16 +81,9 @@ class BillingForm extends React.PureComponent {
     return this.setState({ [label]: value })
   }
 
-  static validateFormSubmit(formInput) {
-    return !!(
-      formInput.payment_type
-      && formInput.card_holder
-      && formInput.card_number
-      && formInput.card_type
-      && formInput.card_cvv2
-      && formInput.card_cvv2.length === 3
-      && formInput.formCardExpiryYear
-      && formInput.formCardExpiryMonth
+  paymentOptions() {
+    return checkoutConfig.cardTypeOptions.map((option) =>
+      ({ ...option, subLabel: (<span className={css[option.icon]} aria-hidden="true" />)})
     )
   }
 
@@ -192,10 +183,10 @@ class BillingForm extends React.PureComponent {
                   <div className={css.securityCodeTooltip}>
                     <CheckoutTooltip version="Desktop">
                       <Svg fileName="icon-card-reverse" className={css.iconCardReverse} />
-                      {config.tooltip.security}
+                      {checkoutConfig.tooltip.security}
                     </CheckoutTooltip>
                     <CheckoutTooltip version="Mobile" placement="top">
-                      {config.tooltip.security}
+                      {checkoutConfig.tooltip.security}
                     </CheckoutTooltip>
                   </div>
                 </div>
@@ -257,4 +248,15 @@ class BillingForm extends React.PureComponent {
   }
 }
 
-export default BillingForm
+BillingForm.propTypes = {
+  isPosting: PropTypes.bool,
+  submitCardDetails: PropTypes.func.isRequired,
+}
+
+BillingForm.defaultProps = {
+  isPosting: false,
+}
+
+export {
+  BillingForm
+}

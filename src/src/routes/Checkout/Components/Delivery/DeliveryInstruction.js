@@ -3,11 +3,11 @@ import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import classNames from 'classnames'
-import configCheckout from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 import css from './Delivery.css'
 import checkoutCss from '../../Checkout.css'
 
-const LEAVE_BOX_OPTIONS = configCheckout.leaveBoxOptions
+const LEAVE_BOX_OPTIONS = checkoutConfig.leaveBoxOptions
   .filter((option) => option)
   .map((option) => ({ value: option, label: option }))
 

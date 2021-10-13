@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import checkoutConfig from 'config/checkout'
+import { checkoutConfig } from 'config/checkout'
 import { ErrorMessage } from '../ErrorMessage'
 
 describe('given ErrorMessage', () => {
