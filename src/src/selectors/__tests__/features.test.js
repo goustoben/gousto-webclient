@@ -39,6 +39,7 @@ import {
   getIsPaymentBeforeChoosingEnabled,
   getIsDecoupledPaymentEnabled,
   getIsGoustoOnDemandEnabled,
+  getIsAutoAcceptEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -93,6 +94,7 @@ describe('when features are defined', () => {
     [getIsPaymentBeforeChoosingV2Enabled, 'isPaymentBeforeChoosingV2Enabled'],
     [getIsDecoupledPaymentEnabled, 'isDecoupledPaymentEnabled'],
     [getIsGoustoOnDemandEnabled, 'isGoustoOnDemandEnabled'],
+    [getIsAutoAcceptEnabled, 'isAutoAcceptEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

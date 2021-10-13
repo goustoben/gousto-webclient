@@ -2,6 +2,7 @@ import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
 import { fetchRefundAmount } from 'apis/getHelp'
 import { getOrderId, getSelectedIngredients } from '../selectors/selectors'
+import { getIsAutoAcceptEnabled } from '../../../selectors/features'
 import { trackIngredientsAutoAcceptCheck } from './getHelp'
 import { asyncAndDispatch } from './utils'
 import { actionTypes } from './actionTypes'
@@ -12,6 +13,7 @@ export const loadRefundAmount = () => async (dispatch, getState) => {
   const userId = getUserId(state)
   const orderId = getOrderId(state)
   const selectedIngredients = getSelectedIngredients(state)
+  const isAutoAcceptEnabled = getIsAutoAcceptEnabled(state)
   const ingredientUuids = Object.keys(selectedIngredients).map(
     key => selectedIngredients[key].ingredientUuid
   )
@@ -28,7 +30,8 @@ export const loadRefundAmount = () => async (dispatch, getState) => {
     const MAX_AUTO_ACCEPT_AMOUNT = 2.0
     const MAX_AUTO_ACCEPT_INGREDIENTS = 1
 
-    const isAutoAccept = value <= MAX_AUTO_ACCEPT_AMOUNT
+    const isAutoAccept = isAutoAcceptEnabled
+      && value <= MAX_AUTO_ACCEPT_AMOUNT
       && ingredientUuids.length <= MAX_AUTO_ACCEPT_INGREDIENTS
 
     const isMultiComplaint = Boolean(multiComplaintTotalValue)

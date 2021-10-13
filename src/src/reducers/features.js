@@ -78,6 +78,9 @@ const defaultFeatures = () => ({
   isGoustoOnDemandEnabled: {
     value: false
   },
+  isAutoAcceptEnabled: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

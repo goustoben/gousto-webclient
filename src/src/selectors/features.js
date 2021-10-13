@@ -157,3 +157,7 @@ export const getIsDecoupledPaymentEnabled = ({ features }) => (
 export const getIsGoustoOnDemandEnabled = ({ features }) => (
   features && features.getIn(['isGoustoOnDemandEnabled', 'value'], false)
 )
+
+export const getIsAutoAcceptEnabled = ({ features }) => (
+  features && features.getIn(['isAutoAcceptEnabled', 'value'], false)
+)
