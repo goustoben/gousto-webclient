@@ -1,5 +1,5 @@
 module.exports = () => ({
-  launch_url: "https://staging-frontend.gousto.info",
+  launch_url: "https://stagingdr-frontend.gousto.info",
   desiredCapabilities: {
     browserName: "chrome",
     acceptSslCerts: true,

@@ -1,7 +1,8 @@
 import fetch, { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 
-const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1'
+const SSR_URL_LOCAL = 'https://stagingdr-api.gousto.info/ssr/v1'
+// const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1'
 
 const fetchRefundAmount = (accessToken, body) => {
   const url = `${endpoint('ssr',2)}/value`

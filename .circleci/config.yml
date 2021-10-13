@@ -2,7 +2,7 @@
 version: 2.1
 
 gousto_platform_image: &gousto_platform_image
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${ECR_AWS_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
       aws_auth:
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
@@ -470,6 +470,100 @@ workflows:
             branches:
               only:
                 - develop
+
+  stagingdr-environment:
+    jobs:
+      - setup-ci-variables-scripts-and-npm-dependencies:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - build-webclient:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts-and-npm-dependencies
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - jest-coverage-report:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts-and-npm-dependencies
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - eslint-generate-report:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts-and-npm-dependencies
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - publish-code-health:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - jest-coverage-report
+            - eslint-generate-report
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - create-and-upload-webclient-docker-image-to-ecr:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - build-webclient
+            - jest-coverage-report
+            - eslint-generate-report
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - deploy-infrastructure-and-webclient-image:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - create-and-upload-webclient-docker-image-to-ecr
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - install-regression-test-dependencies:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts-and-npm-dependencies
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - test-regression:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - test-regression-mobile:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+          filters:
+            branches:
+              only:
+                - stagingdr
+      - test-e2e:
+          context: gousto-eu-west-2-beta-aws-app-circleci
+          requires:
+            - deploy-infrastructure-and-webclient-image
+          filters:
+            branches:
+              only:
+                - stagingdr
 
   production-environment:
     jobs:

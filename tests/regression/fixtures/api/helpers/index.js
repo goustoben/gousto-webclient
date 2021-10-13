@@ -1,5 +1,5 @@
 export const FIXTURES_API_ROOT = '/api' //TODO: Move to config
-export const API_ORIGIN = 'https://staging-api.gousto.info' //TODO: Move to config
+export const API_ORIGIN = 'https://stagingdr-api.gousto.info' //TODO: Move to config
 export const HTTP_METHODS = {
   DELETE: 'DELETE',
   GET: 'GET',
@@ -27,16 +27,16 @@ export const apiPath = (path) => `${API_ORIGIN}/${path}`
 const createRouteHandler = (noFixture, path, scenario, statusCode, requestHandlerAdditions) => {
   const fixture = noFixture ? null : fixtureScenarioPath(path, scenario)
   const routeHandler = {
-    statusCode, fixture, ...requestHandlerAdditions 
+    statusCode, fixture, ...requestHandlerAdditions
   }
   return routeHandler
 }
 
 /**
- * fake an API endpoint and 
+ * fake an API endpoint and
  * automatically assign an alias in the form:
  * [METHOD][API_ORIGIN][path] - ie: https://api.gousto.info/users/v1/1928/addresses
- * 
+ *
  * @param {*} path the API path - /user/v1/1928/addresses
  * @param {*} scenario the name of the scenario (and stub file suffix) - three-addresses (maps to three-addresses.json)
  * @param {*} [method=HTTP_METHODS.GET] the HTTP method to use
@@ -52,7 +52,7 @@ const createRouteHandler = (noFixture, path, scenario, statusCode, requestHandle
   method = HTTP_METHODS.GET,
   statusCode = HTTP_STATUS_CODES.OK,
   noFixture = false,
-  requestHandlerAdditions = {}, 
+  requestHandlerAdditions = {},
   alternativeAlias = null
 ) => {
   const routeHandler = createRouteHandler(noFixture, path, scenario, statusCode, requestHandlerAdditions)
@@ -65,7 +65,7 @@ const createRouteHandler = (noFixture, path, scenario, statusCode, requestHandle
  * fake an API endpoint along with a query string and
  * automatically assign an alias in the form:
  * [METHOD][API_ORIGIN][path] - ie: https://api.gousto.info/users/v1/1928/addresses
- * 
+ *
  * @param {*} path the API path - /user/v1/1928/addresses
  * @param {*} query a match for the querystring
  * @param {*} scenario the name of the scenario (and stub file suffix) - three-addresses (maps to three-addresses.json)
