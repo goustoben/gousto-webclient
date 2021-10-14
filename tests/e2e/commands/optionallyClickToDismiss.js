@@ -12,7 +12,7 @@ function optionallyClickToDismiss(elementSelector) {
   this.perform(() => {
     if (elementVisible) {
       this.safelyClick(elementSelector)
-      this.waitForElementNotPresent(elementSelector, 1000)
+      this.waitForElementNotPresent(elementSelector, 3000)
     }
   })
 
