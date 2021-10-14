@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Lease CI node access to public ALB
           working_directory: scripts
-          command: source ~/.circlerc && lease-access.sh
+          command: source ~/.circlerc && ./lease-access.sh
       - run:
           name: Execute Lighthouse performance audit
           command: lhci autorun --config ./.lighthouserc.js
