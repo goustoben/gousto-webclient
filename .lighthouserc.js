@@ -1,7 +1,7 @@
 module.exports = {
   ci: {
     collect: {
-      url: ["https://staging-www.gousto.info/"],
+      url: ["https://staging-frontend.gousto.info/"],
       numberOfRuns: 3,
       onlyCategories: ["performance"],
       settings: {
