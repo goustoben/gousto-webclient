@@ -12,6 +12,7 @@ import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
+import { sendAwinS2SData } from 'actions/awin'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -70,8 +71,17 @@ export const setAffiliateSource = asource => (
   }
 )
 
+export const setAwinClickChecksum = (awc) => (
+  dispatch => {
+    dispatch({
+      type: actionTypes.AWIN_CLICK_CHECKSUM_SET,
+      awc,
+    })
+  }
+)
+
 export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     if (!(globals.client && window.AWIN)) {
       await dispatch(
         feLoggingLogEvent(
@@ -106,6 +116,19 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
       test: globals.env === 'production' ? '0' : '1',
     }
 
+    const state = getState()
+    const awc = state.tracking.get('awc', '')
+    const awinServerToServerParams = {
+      merchant: '5070',
+      amount: total,
+      ref: orderId,
+      cr: 'GBR',
+      vc: promoCode,
+      parts: `${commissionGroup}:${total}`,
+      cks: awc,
+      user_id: state.user.get('id'),
+    }
+
     // Example #2 from
     // https://wiki.awin.com/index.php/Advertiser_Tracking_Guide/Standard_Implementation#Conversion_Tag
     window.AWIN.Tracking.Sale = sale
@@ -115,6 +138,9 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
     )
 
     window.AWIN.Tracking.run()
+    if (awc) {
+      dispatch(sendAwinS2SData(awinServerToServerParams))
+    }
   }
 
 export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (

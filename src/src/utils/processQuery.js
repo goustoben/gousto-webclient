@@ -1,7 +1,7 @@
 import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
-import { setAffiliateSource } from 'actions/tracking'
+import { setAffiliateSource, setAwinClickChecksum } from 'actions/tracking'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { getIsAuthenticated } from 'selectors/auth'
 
@@ -45,6 +45,10 @@ async function processQuery(query, store, { hashTag = '', }) {
 
   if (query.asource) {
     store.dispatch(setAffiliateSource(query.asource))
+  }
+
+  if (query.awc) {
+    store.dispatch(setAwinClickChecksum(query.awc))
   }
 }
 

@@ -7,7 +7,7 @@ import { featuresSet } from 'actions/features'
 import { promoAgeVerify } from 'actions/promos'
 import authActions from 'actions/auth'
 import { cookiePolicyAcceptanceChange } from 'actions/cookies'
-import { setAffiliateSource } from 'actions/tracking'
+import { setAffiliateSource, setAwinClickChecksum } from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
 import { initSelectedRecipeVariantAction } from 'routes/Menu/actions/menuRecipeDetails'
@@ -25,6 +25,7 @@ const processCookies = (cookies, store) => {
   const promoCodeUrl = cookies.get('promo_url')
   const fromJoin = cookies.get('from_join')
   let affiliateSource = cookies.get('asource')
+  let awc = cookies.get('awc')
 
   try {
     const refreshCookie = get(cookies, 'oauth_refresh')
@@ -133,6 +134,7 @@ const processCookies = (cookies, store) => {
   if (tracking) {
     try {
       affiliateSource = JSON.parse(tracking).asource || affiliateSource
+      awc = JSON.parse(tracking).awc || awc
     } catch (err) {
       logger.error({ message: 'error parsing tracking asource cookie value', errors: [err] })
     }
@@ -140,6 +142,10 @@ const processCookies = (cookies, store) => {
 
   if (affiliateSource) {
     store.dispatch(setAffiliateSource(affiliateSource))
+  }
+
+  if (awc) {
+    store.dispatch(setAwinClickChecksum(awc))
   }
 
   if (promoCodeUrl) {

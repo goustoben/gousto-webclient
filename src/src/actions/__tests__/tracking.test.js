@@ -308,7 +308,15 @@ describe('tracking actions', () => {
   describe('trackAffiliatePurchase', () => {
     beforeEach(() => {
       dispatch = jest.fn()
-      getState = jest.fn()
+      getState = jest.fn().mockReturnValue({
+        tracking: Immutable.fromJS({
+          asource: 'test-source',
+          awc: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3'
+        }),
+        user: Immutable.fromJS({
+          id: '123456',
+        }),
+      })
       jest.clearAllMocks()
     })
 
