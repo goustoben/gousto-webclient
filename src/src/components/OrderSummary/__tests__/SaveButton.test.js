@@ -1,11 +1,12 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { renderHook, act } from '@testing-library/react-hooks'
+// eslint-disable-next-line import/no-named-as-default
 import { SaveButton, useSaving } from 'OrderSummary/SaveButton'
 
 import { Button } from 'goustouicomponents'
 
-jest.useFakeTimers()
+jest.useFakeTimers('legacy')
 
 describe('useSaving', () => {
   afterEach(() => {
@@ -18,9 +19,7 @@ describe('useSaving', () => {
       const saving = false
       const error = null
 
-      const { result } = renderHook(
-        () => useSaving(saveRequired, saving, error)
-      )
+      const { result } = renderHook(() => useSaving(saveRequired, saving, error))
 
       expect(result.current.showButton).toEqual(false)
       expect(result.current.showSuccess).toEqual(false)
@@ -34,9 +33,7 @@ describe('useSaving', () => {
       const saving = false
       const error = false
 
-      const { result } = renderHook(
-        () => useSaving(saveRequired, saving, error)
-      )
+      const { result } = renderHook(() => useSaving(saveRequired, saving, error))
 
       expect(result.current.showButton).toEqual(true)
       expect(result.current.showSuccess).toEqual(false)
@@ -49,8 +46,8 @@ describe('useSaving', () => {
         let saving = true
         const error = false
 
-        const { result, rerender, waitFor } = renderHook(
-          () => useSaving(saveRequired, saving, error)
+        const { result, rerender, waitFor } = renderHook(() =>
+          useSaving(saveRequired, saving, error)
         )
 
         expect(result.current.showButton).toEqual(true)
@@ -83,8 +80,8 @@ describe('useSaving', () => {
         let saving = true
         let error = false
 
-        const { result, rerender, waitFor } = renderHook(
-          () => useSaving(saveRequired, saving, error)
+        const { result, rerender, waitFor } = renderHook(() =>
+          useSaving(saveRequired, saving, error)
         )
 
         expect(result.current.showButton).toEqual(true)
@@ -159,7 +156,9 @@ describe('SaveButton', () => {
 
     expect(wrapper.find('Button').length).toEqual(0)
 
-    act(() => { wrapper.setProps({ saveRequired: true }) })
+    act(() => {
+      wrapper.setProps({ saveRequired: true })
+    })
     wrapper.update()
 
     expect(wrapper.find('Button').length).toEqual(1)
@@ -170,7 +169,9 @@ describe('SaveButton', () => {
 
     expect(wrapper.find('div').length).toEqual(1)
 
-    act(() => { wrapper.setProps({ saving: false }) })
+    act(() => {
+      wrapper.setProps({ saving: false })
+    })
     wrapper.update()
 
     expect(wrapper.find('div').at(1).text()).toEqual('SAVED')
@@ -181,7 +182,9 @@ describe('SaveButton', () => {
 
     expect(wrapper.find('div').length).toEqual(1)
 
-    act(() => { wrapper.setProps({ error: true, saving: false }) })
+    act(() => {
+      wrapper.setProps({ error: true, saving: false })
+    })
     wrapper.update()
 
     expect(wrapper.find('div').at(1).text()).toEqual('ERROR SAVING CHOICES')

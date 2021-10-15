@@ -13,8 +13,8 @@ export function storeUserExperiments(experiments) {
   return {
     type: actionTypes.EXPERIMENTS_RECEIVED,
     payload: {
-      experiments
-    }
+      experiments,
+    },
   }
 }
 
@@ -34,9 +34,9 @@ export function appendDefaultUserExperiment(experimentName) {
       experiment: {
         name: experimentName,
         bucket: 'control',
-        withinExperiment: false
-      }
-    }
+        withinExperiment: false,
+      },
+    },
   }
 }
 
@@ -94,11 +94,19 @@ export function assignUserToExperiment(experimentName) {
     try {
       dispatch(pending(actionTypes.EXPERIMENTS_ASSIGNING_USER, true))
       const { data } = await updateUserExperiment(experimentName, sessionId, userId)
-      dispatch(trackBucketedUser({ experimentName, withinExperiment: data.withinExperiment, bucket: data.bucket }))
+      dispatch(
+        trackBucketedUser({
+          experimentName,
+          withinExperiment: data.withinExperiment,
+          bucket: data.bucket,
+        })
+      )
       dispatch(appendUserExperiment(data))
     } catch (error) {
       logger.error({ message: 'Failed to assign user to an experiment', extra: { error } })
-      logger.info({ message: `Defaulting user to control bucket for experiment: ${experimentName}` })
+      logger.info({
+        message: `Defaulting user to control bucket for experiment: ${experimentName}`,
+      })
 
       dispatch(appendDefaultUserExperiment(experimentName))
     } finally {

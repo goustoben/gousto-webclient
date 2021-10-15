@@ -15,7 +15,8 @@ jest.mock('Tutorial/helpers', () => ({
 }))
 
 const generateSteps = (length) => (
-  [...Array(length).keys()].map(index => (
+  [...Array(length)].map((val, index) => (
+    // eslint-disable-next-line react/no-array-index-key
     <Step key={`test-step-${index}`} selector=".test">{`Step #${index}`}</Step>
   ))
 )
@@ -24,13 +25,18 @@ describe('Tutorial', () => {
   let wrapper
 
   describe('state', () => {
-    test('should only hold visible children', () => {
+    test('should not show children when hidden', () => {
       isElementHidden.mockReturnValueOnce(true)
       wrapper = shallow(<Tutorial trackStepViewed={jest.fn()}>{generateSteps(1)}</Tutorial>)
       expect(wrapper.state().children.length).toBe(0)
+    })
 
+    test('should only hold visible children', () => {
+      const dummySteps = generateSteps(1)
+      // eslint-disable-next-line no-console
+      // expect(dummySteps.length).toBe(1)
       isElementHidden.mockReturnValueOnce(false)
-      wrapper = shallow(<Tutorial trackStepViewed={jest.fn()}>{generateSteps(1)}</Tutorial>)
+      wrapper = shallow(<Tutorial trackStepViewed={jest.fn()}>{dummySteps}</Tutorial>)
       expect(wrapper.state().children.length).toBe(1)
     })
   })
@@ -41,10 +47,13 @@ describe('Tutorial', () => {
     })
 
     test('should display first child step by default', () => {
+      const threeSteps = generateSteps(3)
+
       wrapper = shallow(
-        <Tutorial trackStepViewed={jest.fn()}>{generateSteps(3)}</Tutorial>
+        <Tutorial trackStepViewed={jest.fn()}>{threeSteps}</Tutorial>
       )
 
+      expect(threeSteps.length).toEqual(3)
       expect(wrapper.children()).toHaveLength(1)
       expect(wrapper.state().children).toHaveLength(3)
       expect(wrapper.children().first().text()).toEqual('Step #0')

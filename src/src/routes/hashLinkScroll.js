@@ -3,7 +3,7 @@ import globals from 'config/globals'
 
 function hashLink() {
   if (globals.client) {
-    const hash = windowLocation().hash
+    const {hash} = windowLocation()
     if (hash) {
       const id = hash.replace('#', '')
       const element = getDocumentElement(id)

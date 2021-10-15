@@ -15,13 +15,12 @@ const baseConfig = {
   context: path.resolve(__dirname, '..'),
   devtool: false,
   entry: {
-    main: ['babel-polyfill', './src/client.js'],
-    legacy: ['babel-polyfill', './src/legacy.js'],
-    performanceTracker: ['./src/performanceTracker/entry.js'],
+    main: ['./src/client.js'],
+    legacy: ['./src/legacy.js'],
   },
   mode: 'production',
   module: {
-    rules: getClientRules(isDevelopmentBuild, hmrEnabled),
+    rules: getClientRules('./tsconfig.client.json', isDevelopmentBuild),
   },
   name: 'client',
   node: {
@@ -61,7 +60,7 @@ const baseConfig = {
       path.resolve('./libs/goustouicomponents/src'),
       path.resolve('./node_modules'),
     ],
-    extensions: ['.js', '.json', '.css', '.scss'],
+    extensions: ['.js', '.json', '.ts', '.tsx', '.css', '.scss'],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
@@ -90,8 +89,7 @@ const addOverridesForDevBuildConfig = (webpackConfig, _clientDevServerEnabled = 
     ...webpackConfig,
     devtool: 'eval-cheap-module-source-map',
     entry: {
-      main: ['babel-polyfill', './src/client.js'],
-      performanceTracker: ['./src/performanceTracker/entry.js'],
+      main: ['./src/client.js'],
     },
     mode: 'development',
     output: {
