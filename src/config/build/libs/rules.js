@@ -16,49 +16,58 @@ const cssProductionRules = [
 const cssDevelopmentRules = [
     {
         test: /\.css$/,
-        use: ['style-loader', ...cssLoaders]
+        use: ['style-loader', ...cssLoaders] 
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', ...scssLoaders]
-      },
+        use: ['style-loader', ...scssLoaders] 
+      },    
 ]
 
-const typescriptRule = (tsconfigPath = "./tsconfig.json") => ({
-  test: /\.ts(x){0,1}$/,
+const javascriptProductionRule = {
+  test: /\.js$/,
   exclude: /node_modules/,
   use: [
       {
-          loader: 'ts-loader',
+          loader: 'babel-loader',
           options: {
-            "configFile": path.resolve(process.cwd(), tsconfigPath),
-            logLevel: "error",
-            onlyCompileBundledFiles: true,
-            /*transpile and typecheck typescript at build time */
-            transpileOnly: false
-          }
+            cacheDirectory: true,
+          }  
       }
   ],
   include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
-})
+}
 
-const javascriptRule = (tsconfigPath = "../../../tsconfig.json") => ({
-  test: /\.js(x){0,1}$/,
+const javascriptDevelopmentRule = {
+  test: /\.js$/,
   exclude: /node_modules/,
   use: [
       {
-          loader: 'ts-loader',
+          loader: 'babel-loader',
           options: {
-            "configFile": path.resolve(process.cwd(), tsconfigPath),
-            logLevel: "error",
-            onlyCompileBundledFiles: true,
-            /*transpile Javascript but don't typecheck at build time */
-            transpileOnly: true
+            cacheDirectory: true,
           }
       }
   ],
   include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
-})
+}
+
+const javascriptDevelopmentRuleWithReactRefresh = {
+  test: /\.js$/,
+  exclude: /node_modules/,
+  use: [
+      {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            plugins: [
+              require.resolve('react-refresh/babel'),
+            ].filter(Boolean),                  
+          }
+      }
+  ],
+  include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
+}
 
 const fontRules = [
   {
@@ -88,17 +97,18 @@ const imageRules = [
   { test: /\.svg$/, loaders: ['svg-url-loader', 'image-webpack'] },
 ]
 
-const combineRules = (tsRule, jsRule, cssRules) => ([
-    tsRule,
+const combineRules = (jsRule, cssRules) => ([
     jsRule,
     ...cssRules,
     ...fontRules,
     ...imageRules,
   ])
 
-const getClientRules = (tsconfigPath = "./tsconfig.client.json", isDevelopmentBuild = false) => {
+const getClientRules = (isDevelopmentBuild = false, isHmrEnabled = false) => {
   const cssRules = isDevelopmentBuild ? cssDevelopmentRules : cssProductionRules
-  return combineRules(typescriptRule(tsconfigPath), javascriptRule(tsconfigPath), cssRules)
+  const developmentJavascriptRule = isHmrEnabled ? javascriptDevelopmentRuleWithReactRefresh : javascriptDevelopmentRule
+  const javascriptRule = isDevelopmentBuild ? developmentJavascriptRule : javascriptProductionRule
+  return combineRules(javascriptRule, cssRules)
 }
 
 module.exports = {

@@ -63,7 +63,7 @@ export function persistStore(state, parentKey = '') {
     Object.keys(state).forEach(key => {
       const newKey = (parentKey) ? `${parentKey}_${key}` : key
       if (typeof state[key] === 'object') {
-        cookies = { ...cookies, ...persistStore(state[key], newKey)}
+        cookies = Object.assign({}, cookies, persistStore(state[key], newKey))
       } else {
         cookies[newKey] = state[key]
       }

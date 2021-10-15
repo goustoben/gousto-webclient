@@ -59,7 +59,7 @@ function recoveryAttemptModalViewed(action) {
 
 function subscriptionKeptActive(action) {
   const seRecoveryType = action.seRecoveryType || seRecoveryAttemptTypesByModalType[action.modalType]
-  let {seModal} = action
+  let seModal = action.seModal
   if (!seModal) {
     switch (action.modalType) {
     case 'startOsr':

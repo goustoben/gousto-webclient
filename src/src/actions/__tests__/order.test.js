@@ -34,7 +34,6 @@ import * as rocketsOrderV2 from '../../routes/Account/MyDeliveries/apis/orderV2'
 import { safeJestMock } from '../../_testing/mocks'
 
 import { flushPromises } from '../../_testing/utils'
-import { mockWindowLocationAssign } from '../../../jest/mockWindowLocationAssign'
 
 jest.mock('../../routes/Account/apis/subscription')
 jest.mock('apis/user')
@@ -350,15 +349,8 @@ describe('order actions', () => {
       disallowRedirectToSummary: true,
       recipes: ['recipe-id-1', 'recipe-id-2'],
     }
-    let mockAssign
-    const { location } = window
 
-    beforeEach(() => {
-      mockAssign = mockWindowLocationAssign()
-    })
-    afterEach(() => {
-      window.location = location
-    })
+    window.location.assign = jest.fn()
 
     test('api is being called correctly', async () => {
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
@@ -473,7 +465,7 @@ describe('order actions', () => {
 
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
-      expect(mockAssign).toHaveBeenCalledTimes(0)
+      expect(window.location.assign).toHaveBeenCalledTimes(0)
     })
   })
 

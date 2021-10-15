@@ -10,7 +10,6 @@ import {
   getFacebookReferralLink,
   SOCIAL_TYPES,
 } from '../socialReferralHelper'
-import { mockWindowLocationAssign } from '../../../../jest/mockWindowLocationAssign'
 
 jest.mock('actions/loggingmanager', () => ({
   trackUserFreeFoodLinkShare: jest.fn(),
@@ -33,27 +32,20 @@ describe('Social Referral Helper', () => {
   const firstName = 'FirstName'
   const UTM = '&utm_source=test'
   const mockTrackingFunc = jest.fn()
-  const { location } = window.location
 
   describe('getMessage', () => {
     test('should return the correct referral code text', () => {
-      expect(getMessage(offer)).toEqual(
-        'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\n'
-      )
+      expect(getMessage(offer)).toEqual('I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\n')
     })
 
     test('should return the correct referral code with default offer when no raf offer is provided', () => {
-      expect(getMessage()).toEqual(
-        'I love Gousto and I think you will too! Use my link to get an exclusive 60% off your first box, PLUS 30% off for a whole month. \r\n'
-      )
+      expect(getMessage()).toEqual('I love Gousto and I think you will too! Use my link to get an exclusive 60% off your first box, PLUS 30% off for a whole month. \r\n')
     })
   })
 
   describe('getReferralLink', () => {
     test('should return correct referral link', () => {
-      expect(getReferralLink(referralCode, firstName, UTM)).toEqual(
-        'cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=test'
-      )
+      expect(getReferralLink(referralCode, firstName, UTM)).toEqual('cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=test')
     })
 
     test('should return correct referral link when first name and UTM not provided', () => {
@@ -62,29 +54,21 @@ describe('Social Referral Helper', () => {
   })
 
   describe('getWhatsappReferralLink', () => {
-    let mockAssign
-
+    const mockAssign = jest.fn()
     beforeEach(() => {
-      mockAssign = mockWindowLocationAssign(location)
-
+      window.location.assign = mockAssign
       getWhatsappReferralLink(
         referralCode,
         firstName,
         offer,
         mockTrackingFunc,
-        trackUserFreeFoodLinkShare
+        trackUserFreeFoodLinkShare,
       )
     })
 
-    afterEach(() => {
-      window.location = location
-    })
     test('should return correct referral link', () => {
-      const message = 'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\n'
-        + 'cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=whatsapp&utm_medium=sharebutton_raf_page&utm_campaign=raf_whatsapp_share'
-      expect(mockAssign).toHaveBeenCalledWith(
-        `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`
-      )
+      const message = 'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\ncook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=whatsapp&utm_medium=sharebutton_raf_page&utm_campaign=raf_whatsapp_share'
+      expect(mockAssign).toHaveBeenCalledWith(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`)
     })
 
     test('should call tracking event link', () => {
@@ -93,27 +77,20 @@ describe('Social Referral Helper', () => {
   })
 
   describe('getTextMessageReferralLink', () => {
-    let mockAssign
-
+    const mockAssign = jest.fn()
     beforeEach(() => {
-      mockAssign = mockWindowLocationAssign(location)
-
+      window.location.assign = mockAssign
       getTextMessageReferralLink(
         referralCode,
         firstName,
         offer,
         mockTrackingFunc,
-        trackUserFreeFoodLinkShare
+        trackUserFreeFoodLinkShare,
       )
     })
 
-    afterEach(() => {
-      window.location = location
-    })
-
     test('should return correct referral link', () => {
-      const message = 'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\n'
-        + 'cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=text_message&utm_medium=sharebutton_raf_page&utm_campaign=raf_text_message_share'
+      const message = 'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\ncook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=text_message&utm_medium=sharebutton_raf_page&utm_campaign=raf_text_message_share'
       expect(mockAssign).toHaveBeenCalledWith(`sms:?&body=${encodeURIComponent(message)}`)
     })
 
@@ -129,7 +106,7 @@ describe('Social Referral Helper', () => {
         firstName,
         trackingReferFriendSocialSharing,
         'mobile',
-        trackUserFreeFoodLinkShare
+        trackUserFreeFoodLinkShare,
       )
     })
 
@@ -144,7 +121,7 @@ describe('Social Referral Helper', () => {
         referralCode,
         firstName,
         trackingReferFriendSocialSharing,
-        trackUserFreeFoodLinkShare
+        trackUserFreeFoodLinkShare,
       )
     })
 

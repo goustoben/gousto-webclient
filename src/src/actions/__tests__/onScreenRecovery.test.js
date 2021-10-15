@@ -874,7 +874,7 @@ describe('onScreenRecovery', () => {
       }))
     }
     )
-    describe('when modalType is subscription', () => {
+    describe('when modalType is subscription', async () => {
       test('should toggle OSR modal visibility with Subscription KeptActive tracking action', async () => {
         getStateSpy.mockReturnValue({
           onScreenRecovery: Immutable.Map({
@@ -895,7 +895,7 @@ describe('onScreenRecovery', () => {
         }))
       })
 
-      describe('when offer has a promo code', () => {
+      describe('when offer has a promo code', async () => {
         test('should toggle OSR modal visibility with Subscription KeptActive tracking action when it applies the promo code successfully ', async () => {
           getStateSpy.mockReturnValue({
             onScreenRecovery: Immutable.Map({

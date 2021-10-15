@@ -82,11 +82,11 @@ describe('utils', () => {
   })
 
   describe('removeSessionCookies', () => {
-    beforeEach(() => {
-      ctx = { cookies: {} }
-    })
-
     test('should reset session cookies', () => {
+      beforeEach(() => {
+        ctx = { cookies: {} }
+      })
+
       removeSessionCookies(ctx)
 
       expect(set.mock.calls).toEqual([

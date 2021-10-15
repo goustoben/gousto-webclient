@@ -8,8 +8,7 @@ import css from './Confirm.css'
 const Confirm = ({ pending, unsubscribeClick, isError, copy }) => (
   <div>
     <p>
-      {copy.body1}
-      <br />
+      {copy.body1}<br />
       {copy.body2}
     </p>
     <Button
