@@ -3,7 +3,8 @@ import { actionTypes } from 'actions/actionTypes'
 
 const initialState = Immutable.fromJS({
   asource: undefined,
-  utmSource: undefined
+  utmSource: undefined,
+  awc: '',
 })
 
 const tracking = {
@@ -15,6 +16,10 @@ const tracking = {
 
     case actionTypes.SET_UTM_SOURCE: {
       return state.set('utmSource', action.payload)
+    }
+
+    case actionTypes.AWIN_CLICK_CHECKSUM_SET: {
+      return state.set('awc', action.awc)
     }
 
     default: {

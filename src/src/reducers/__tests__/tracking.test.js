@@ -5,7 +5,8 @@ import tracking from 'reducers/tracking'
 describe('tracking reducers', () => {
   const initialState = Immutable.Map({
     asource: undefined,
-    utmSource: undefined
+    utmSource: undefined,
+    awc: '',
   })
 
   describe('tracking', () => {
@@ -31,7 +32,8 @@ describe('tracking reducers', () => {
       }
       const expected = Immutable.Map({
         asource: 'something',
-        utmSource: undefined
+        utmSource: undefined,
+        awc: '',
       })
       const result = tracking.tracking(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
@@ -45,7 +47,23 @@ describe('tracking reducers', () => {
       }
       const expected = Immutable.Map({
         asource: undefined,
-        utmSource: 'google.com'
+        utmSource: 'google.com',
+        awc: '',
+      })
+      const result = tracking.tracking(state, action)
+      expect(Immutable.is(expected, result)).toEqual(true)
+    })
+
+    test('should handle AWIN_CLICK_CHECKSUM_SET action types', () => {
+      const state = undefined
+      const action = {
+        type: actionTypes.AWIN_CLICK_CHECKSUM_SET,
+        awc: '5070-awin-click-checksum',
+      }
+      const expected = Immutable.Map({
+        asource: undefined,
+        utmSource: undefined,
+        awc: '5070-awin-click-checksum',
       })
       const result = tracking.tracking(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
