@@ -18,8 +18,6 @@ const recaptchaReferralPrivateKey = nodeConfig.get('recaptcha_referral_private_k
 const recaptchaReferralPublicKey = nodeConfig.get('recaptcha_referral_public_key')
 const runningEnv = nodeConfig.get('running_env')
 
-const GIT_HASH = `${childProcess.execSync("git rev-parse --short HEAD | tr -d '\n'").toString()}`
-
 const publicPath = cloudfrontUrl
   ? `${clientProtocol}://${cloudfrontUrl}/build/latest/`
   : '/nsassets/'
@@ -32,7 +30,6 @@ const webpackEnvVarsBase = {
   __DOMAIN__: JSON.stringify(domain),
   __ENDPOINTS__: JSON.stringify(endpoints),
   __ENV__: JSON.stringify(envName),
-  __GIT_HASH__: JSON.stringify(GIT_HASH),
   __HMR__: hmrEnabled,
   __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
@@ -75,10 +72,10 @@ const webpackEnvVarsServer = {
   'process.env.NODE_ENV': JSON.stringify(build),
 }
 
-module.exports = { 
-    webpackEnvVarsDev, 
-    webpackEnvVarsClient, 
-    webpackEnvVarsServer, 
+module.exports = {
+    webpackEnvVarsDev,
+    webpackEnvVarsClient,
+    webpackEnvVarsServer,
     apiName,
     apiToken,
     authClientId,

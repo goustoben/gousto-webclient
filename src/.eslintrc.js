@@ -238,7 +238,6 @@ module.exports = {
     "__RECAPTCHA_RAF_PUBK__": false,
     "__RECAPTCHA_RAF_PVTK__": false,
     "__TEST__": false,
-    "__GIT_HASH__": false,
     "__API_TOKEN__": false,
     "__AUTH_CLIENT_SECRET__": false,
     "__AUTH_CLIENT_ID__": false,
