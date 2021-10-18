@@ -1,4 +1,4 @@
-FROM node:12.21.0-buster-slim
+FROM node:fermium-buster-slim
 
 RUN apt-get update -y
 RUN apt-get install -y git

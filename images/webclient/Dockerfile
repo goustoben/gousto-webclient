@@ -1,4 +1,4 @@
-FROM node:12.21.0-buster-slim
+FROM node:fermium-buster-slim
 
 # AWS CLI to download secrets and libcap for port 80 permission
 RUN apt-get update && apt-get install -y \
