@@ -19,8 +19,18 @@ orbs:
   browser-tools: circleci/browser-tools@1.1.3
   aws-cli: circleci/aws-cli@1.4.1
 
-jobs:
+commands:
+  install-src-dependencies:
+    description: Install dependencies
+    steps:
+      - run:
+          workdir: src
+          command: |
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            npm ci
+            npm run postinstall
 
+jobs:
   jest-coverage-report:
     docker: *circleci_node_image
     resource_class: large
@@ -30,6 +40,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
+      - install-src-dependencies
       - run:
           name: Test coverage
           working_directory: src
@@ -49,6 +60,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /
+      - install-src-dependencies
       - run:
           name: eslint report
           working_directory: src
@@ -70,6 +82,7 @@ jobs:
       - run:
           name: Setup output folder
           command: mkdir /tmp/artifacts
+      - install-src-dependencies
       - run:
           name: Generate code health
           working_directory: src
@@ -78,7 +91,7 @@ jobs:
           path: /tmp/artifacts
 
 
-  setup-ci-variables-scripts-and-npm-dependencies:
+  setup-ci-variables-scripts:
     docker: *gousto_platform_image #stock image missing /gousto directory
     resource_class: large
     working_directory: /mnt/ramdisk
@@ -122,13 +135,7 @@ jobs:
           docker_layer_caching: true
       - attach_workspace:
           at: /
-      - run:
-          name: Install npm dependencies
-          workdir: src
-          command: |
-            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            npm ci
-            npm run postinstall
+      - install-src-dependencies
       - run:
           name: Setup environment and npm variables for build
           command: source ~/.circlerc && setup/setup-common.sh
@@ -303,7 +310,7 @@ workflows:
 
   e2e-manual:
     jobs:
-      - setup-ci-variables-scripts-and-npm-dependencies:
+      - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
@@ -312,7 +319,7 @@ workflows:
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
@@ -320,7 +327,7 @@ workflows:
 
   lower-environment:
     jobs:
-      - setup-ci-variables-scripts-and-npm-dependencies:
+      - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
@@ -329,7 +336,7 @@ workflows:
       - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
@@ -353,7 +360,7 @@ workflows:
       - install-regression-test-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
@@ -379,7 +386,7 @@ workflows:
 
   staging-environment:
     jobs:
-      - setup-ci-variables-scripts-and-npm-dependencies:
+      - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
@@ -388,7 +395,7 @@ workflows:
       - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
@@ -396,7 +403,7 @@ workflows:
       - jest-coverage-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
@@ -404,7 +411,7 @@ workflows:
       - eslint-generate-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
@@ -439,7 +446,7 @@ workflows:
       - install-regression-test-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
@@ -473,7 +480,7 @@ workflows:
 
   production-environment:
     jobs:
-      - setup-ci-variables-scripts-and-npm-dependencies:
+      - setup-ci-variables-scripts:
           context: gousto-prod-aws-app-circleci
           filters:
             branches:
@@ -482,7 +489,7 @@ workflows:
       - build-webclient:
           context: gousto-prod-aws-app-circleci
           requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
