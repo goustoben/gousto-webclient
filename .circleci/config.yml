@@ -38,6 +38,8 @@ jobs:
     environment:
       TZ: "Europe/London"
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
       - attach_workspace:
           at: ~/project
       - install-src-dependencies
@@ -58,6 +60,8 @@ jobs:
     environment:
       TZ: "Europe/London"
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
       - attach_workspace:
           at: /
       - install-src-dependencies
@@ -77,6 +81,8 @@ jobs:
     environment:
       TZ: "Europe/London"
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
       - attach_workspace:
           at: /
       - run:
