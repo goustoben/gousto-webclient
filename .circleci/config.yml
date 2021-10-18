@@ -8,11 +8,11 @@ gousto_platform_image: &gousto_platform_image
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 circleci_node_image: &circleci_node_image
-  - image: cimg/node:12.22.4
+  - image: cimg/node:14.18.1
     user: root
 
 circleci_node_browsers_image: &circleci_node_browsers_image #image has browser dependencies installed, but not browsers themselves
-  - image: cimg/node:12.22.4-browsers
+  - image: cimg/node:14.18.1-browsers
     user: root
 
 orbs:
@@ -92,13 +92,6 @@ jobs:
           command: |
             source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=$AWS_DEFAULT_REGION)
             echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
-      - run:
-          name: Install npm dependencies
-          workdir: src
-          command: |
-            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            npm ci
-            npm run postinstall
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
@@ -129,6 +122,13 @@ jobs:
           docker_layer_caching: true
       - attach_workspace:
           at: /
+      - run:
+          name: Install npm dependencies
+          workdir: src
+          command: |
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            npm ci
+            npm run postinstall
       - run:
           name: Setup environment and npm variables for build
           command: source ~/.circlerc && setup/setup-common.sh

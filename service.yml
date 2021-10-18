@@ -1,6 +1,5 @@
 ---
 serviceName: webclient
-region: eu-west-1
 exposure: public
 dns: webclient
 owner: squad-radishes
