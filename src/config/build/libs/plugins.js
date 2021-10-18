@@ -13,97 +13,86 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const { webpackEnvVarsClient, webpackEnvVarsDev } = require('./webpack-env-vars')
 
-const defaultPlugins = (webpackEnvVars) => [
+const getDefaultPlugins = (webpackEnvVars) => [
   new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
   new LodashModuleReplacementPlugin(),
   new webpack.DefinePlugin(webpackEnvVars),
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only inlcude moment in English,
 ]
 
-const productionClientPlugins = [
-  new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
-  new webpack.optimize.OccurrenceOrderPlugin(),
-  new OptimizeCssAssetsPlugin({
-    cssProcessor: require('cssnano'),
-    cssProcessorPluginOptions: {
-      preset: [
-        'advanced',
-        {
-          discardComments: { removeAll: true },
-          autoprefixer: {
-            browsers: [
-              'safari >= 7',
-              'iOS >= 7',
-              'chrome >= 34',
-              'and_chr >= 34',
-              'android >= 36',
-              'explorer >= 11',
-              'firefox >= 48',
-              'edge >= 13',
-              'samsung >= 3.3',
-              'opera >= 36',
-            ],
+const getProductionClientPlugins = () => {
+  const result = [
+    new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new OptimizeCssAssetsPlugin({
+      cssProcessor: require('cssnano'),
+      cssProcessorPluginOptions: {
+        preset: [
+          'advanced',
+          {
+            discardComments: { removeAll: true },
+            mergeIdents: {
+              exclude: true,
+            },
+            reduceIdents: {
+              exclude: true,
+            },
+            zindex: {
+              exclude: true,
+            },
           },
-          mergeIdents: {
-            exclude: true,
-          },
-          reduceIdents: {
-            exclude: true,
-          },
-          zindex: {
-            exclude: true,
-          },
-        },
-      ],
-    },
-    canPrint: true,
-  }),
-  new TerserPlugin({
-    parallel: true,
-    sourceMap: false,
-    terserOptions: {
-      mangle: true,
-      compress: true,
-      warnings: false,
-      output: {
-        comments: false,
+        ],
       },
-    },
-  }),
-  ExitCodePlugin,
-]
+      canPrint: true,
+    }),
+    new TerserPlugin({
+      parallel: true,
+      sourceMap: false,
+      terserOptions: {
+        mangle: true,
+        compress: true,
+        warnings: false,
+        output: {
+          comments: false,
+        },
+      },
+    }),
+    ExitCodePlugin,
+  ]
 
-if (process.env.GW_ENABLE_BUNDLE_ANALYZER) {
-  productionClientPlugins.push(
-    new BundleAnalyzerPlugin({ analyzerMode: 'disabled', generateStatsFile: true })
-  )
+  if (process.env.GW_ENABLE_BUNDLE_ANALYZER) {
+    result.push(
+      new BundleAnalyzerPlugin({ analyzerMode: 'disabled', generateStatsFile: true })
+    )
+  }
+
+  return result
 }
 
-const developmentClientPlugins = [
-  new SimpleProgressWebpackPlugin({
-    format: 'compact'
-  }),
-]
+const getDevelopmentClientPlugins = (isHmrEnabled) => {
+  const result = [
+    new SimpleProgressWebpackPlugin({
+      format: 'compact'
+    }),
+  ]
 
-const developmentHmrClientPlugins = [
-  new SimpleProgressWebpackPlugin({
-    format: 'compact'
-  }),
+  if (isHmrEnabled) {
+    result.push(new ReactRefreshWebpackPlugin({
+      overlay: false,
+    }))
+  }
 
-  new ReactRefreshWebpackPlugin({
-    overlay: false,
-  }),
-]
+  return result
+}
 
 const getClientPlugins = (isDevelopmentBuild = false, isHmrEnabled = false) => {
   const webpackEnvVars = isDevelopmentBuild ? webpackEnvVarsDev : webpackEnvVarsClient
-  const hmrToggledDevelopmentClientPlugins = isHmrEnabled ? developmentHmrClientPlugins : developmentClientPlugins
 
   const buildSpecificPlugins = isDevelopmentBuild
-    ? hmrToggledDevelopmentClientPlugins
-    : productionClientPlugins
+    ? getDevelopmentClientPlugins(isHmrEnabled)
+    : getProductionClientPlugins()
 
-  return [...defaultPlugins(webpackEnvVars), ...buildSpecificPlugins]
+  return [...getDefaultPlugins(webpackEnvVars), ...buildSpecificPlugins]
 }
 
 module.exports = {

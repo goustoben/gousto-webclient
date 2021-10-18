@@ -22,7 +22,7 @@
     "build:server": "webpack --config config/webpack.server.js --config-name=server --bail",
     "build:client:prod": "rm -rf public/* && NODE_ENV=production webpack --config config/webpack.client.js --bail",
     "build:server:prod": "rm -rf dist/* && NODE_ENV=production webpack --config config/webpack.server.js --bail",
-    "build": "rm -rf dist/* && rm -rf public/* && NODE_CONFIG_ENV=\"${NODE_CONFIG_ENV:=production}\"  NODE_APP_INSTANCE=\"${NODE_APP_INSTANCE:=live}\" NODE_ENV=production run-p build:server build:client",
+    "build": "rm -rf dist/* && rm -rf public/* && NODE_CONFIG_ENV=\"${NODE_CONFIG_ENV:=production}\"  NODE_APP_INSTANCE=\"${NODE_APP_INSTANCE:=live}\" NODE_ENV=production run-p -l build:server build:client",
     "build:docker:dev": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production npm_config_gousto_webclient_environment_name=local npm_config_gousto_webclient_domain=gousto.local run-p build:server build:client",
     "test:jest": "jest",
     "test:jest:ci": "jest --ci -w=4",
@@ -254,7 +254,6 @@
       "__DOMAIN__": "gousto.local",
       "__TEST__": true,
       "process.env.NODE_ENV": "production",
-      "__GIT_HASH__": "production",
       "__ENDPOINTS__": {}
     }
   },
