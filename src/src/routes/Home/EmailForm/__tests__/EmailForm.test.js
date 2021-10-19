@@ -60,11 +60,7 @@ describe('EmailForm', () => {
     )
   })
 
-  test.skip('should catch server error', () => {
-    /*
-     // TODO: Skipping this test until we segregate the client/server test code.
-     // Suggest moving the server tests out into a
-     */
+  test('should catch server error', () => {
     newsletterSubscribe.mockImplementation(() =>
       // eslint-disable-next-line prefer-promise-reject-errors
       Promise.reject({

@@ -275,4 +275,4 @@ async function processRequest(ctx, next) {
   await next()
 }
 
-export { processRequest, fetchAllData, configureHistoryAndStore, renderHTML }
+module.exports = { processRequest, fetchAllData, configureHistoryAndStore, renderHTML }

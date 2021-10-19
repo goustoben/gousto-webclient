@@ -103,7 +103,7 @@ describe('Menu > apis > fetch', () => {
       }))
     })
 
-    describe('when accessToken not provided', () => {
+    describe('when accessToken not provided', async () => {
       test('should not attach authorisation header', async () => {
         await post({
           ...authOptions,

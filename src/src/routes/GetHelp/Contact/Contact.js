@@ -30,8 +30,8 @@ const Contact = ({
   selectContactChannel,
   userId,
 }) => {
-  const ctaBackUrl = orderId
-    ? `${client.getHelp.index}?orderId=${orderId}`
+  const ctaBackUrl = orderId ?
+    `${client.getHelp.index}?orderId=${orderId}`
     : client.myGousto
 
   return (

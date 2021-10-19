@@ -1,5 +1,5 @@
 const requestActions = require('actions/request')
-const {browserTypeChange} = requestActions
+const browserTypeChange = requestActions.browserTypeChange
 
 const formatHeaderNames = headers => {
   const matchedHeaders = Object.keys(headers).filter(header => headers[header] === 'true' && header.includes('cloudfront-is'))

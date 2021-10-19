@@ -24,6 +24,7 @@ const config = {
   context: path.resolve(__dirname, '..'),
   target: 'node',
   entry: [
+    'babel-polyfill',
     './server/main.js',
   ],
   output: {
@@ -34,28 +35,17 @@ const config = {
   module: {
     rules: [
       {
-        test: /^(?!.*(test\.js|spec\.js)).*\.js(x){0,1}$/,
+        test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
+        loader: 'babel-loader',
         options: {
-          configFile: path.resolve(__dirname, '../server/tsconfig.json'),
-          logLevel: "error",
-          onlyCompileBundledFiles: true,
-          /*transpile Javascript but don't typecheck at build time */
-          transpileOnly: true
-        }
-      },      
-      {
-        test: /^(?!.*(test\.ts|spec\.ts)).*\.ts(x){0,1}$/,
-        exclude: /node_modules/,
-        loader: 'ts-loader',
-        options: {
-          configFile: path.resolve(__dirname, '../server/tsconfig.json'),
-          logLevel: "error",
-          onlyCompileBundledFiles: true,
-          /* transpile and typecheck Typescript */
-          transpileOnly: false
-        }
+          cacheDirectory: true,
+        },
+        include: [
+          path.resolve(__dirname, '../src'),
+          path.resolve(__dirname, '../server'),
+          path.resolve(__dirname, '../libs/goustouicomponents/src'),
+        ],
       },
       {
         test: /\.css$/,
@@ -122,7 +112,7 @@ const config = {
       path.resolve('./libs/goustouicomponents/src'),
       path.resolve(__dirname, '../node_modules/spinkit'),
     ],
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css'],
+    extensions: ['.js', '.json', '.css'],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],

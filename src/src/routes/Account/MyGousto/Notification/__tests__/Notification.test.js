@@ -13,7 +13,6 @@ import {
 } from '../helpers'
 
 import { NotificationLogic as Notification } from '../Notification.logic'
-import { mockWindowLocationAssign } from '../../../../../../jest/mockWindowLocationAssign'
 
 config.referAFriend.startDate = '2019-01-01'
 config.referAFriend.endDate = '2019-01-01'
@@ -187,9 +186,6 @@ describe('Notification component', () => {
   })
 
   describe('notifications', () => {
-    let mockAssign
-    const { location } = window.location
-
     beforeEach(() => {
       const currentMonth = moment().format('YYYY-MM')
       config.referAFriend.startDate = '2019-01-01'
@@ -204,20 +200,16 @@ describe('Notification component', () => {
           originalDeliveryDay: true,
         }
       })
-      mockAssign = mockWindowLocationAssign()
-    })
-
-    afterEach(() => {
-      window.location = location
     })
 
     it('should call tracking action on click if notification has linkTrackingType', () => {
       const mockTrackNotificationLinkClick = jest.fn()
+      window.location.assign = jest.fn()
       wrapper = mount(<Notification card={card} orders={orders} trackNotificationLinkClick={mockTrackNotificationLinkClick} />)
 
       wrapper.find('[href="my-referrals"]').simulate('click')
       expect(mockTrackNotificationLinkClick).toHaveBeenCalledWith(config.referAFriend.linkTrackingType)
-      expect(mockAssign).toHaveBeenCalledWith(config.referAFriend.url)
+      expect(window.location.assign).toHaveBeenCalledWith(config.referAFriend.url)
     })
   })
 })

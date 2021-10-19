@@ -2,16 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import Slider from 'react-slick'
-/*
-Using require on the next few lines as there is an issue importing global styles
-with our current configuration and ts-loader.
-*/
-// eslint-disable-next-line no-unused-vars
-const reactSlickGlobalStyles = require('./ReactSlick.css')
-// eslint-disable-next-line no-unused-vars
-const carouselScssGlobalStyles = require('./Carousel.scss')
-// eslint-disable-next-line no-unused-vars
-const carouselCssGlobalStyles = require('./Carousel.css')
+import './ReactSlick.css'
+import './Carousel.scss'
+import './Carousel.css'
 
 class Carousel extends React.PureComponent {
   static propTypes = {

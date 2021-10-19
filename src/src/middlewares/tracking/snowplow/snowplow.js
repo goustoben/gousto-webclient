@@ -8,14 +8,13 @@ export default (action, state = {}) => {
       .forEach(key => {
         actionValue[key] = action[key]
       })
-    const event = {
-
-      ...state,
-      event: 'userAction',
-      actionType ,
-      category,
-      actionValue: JSON.stringify(actionValue)
-    }
+    const event = Object.assign(
+      {},
+      state,
+      { event: 'userAction' },
+      { actionType , category },
+      { actionValue: JSON.stringify(actionValue) }
+    )
     window.dataLayer.push(event)
   }
 }

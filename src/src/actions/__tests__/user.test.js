@@ -306,6 +306,20 @@ describe('user actions', () => {
       )
     })
 
+    describe('when order is submitted', () => {
+      beforeEach(() => {
+        const localState = {
+          ...state,
+          features: Immutable.fromJS({
+            ndd: {
+              value: false,
+            },
+          })
+        }
+        getState.mockReturnValue(localState)
+      })
+    })
+
     describe('when card method is selected', () => {
       const sca3ds = true
       const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
