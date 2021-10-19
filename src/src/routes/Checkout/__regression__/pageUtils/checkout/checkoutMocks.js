@@ -6,7 +6,9 @@ export const setMocks = ({ validPostcode }) => {
   })
   cy.intercept('GET', 'brand/v1/theme', { fixture: 'brand/brand.json' })
   cy.intercept('GET', 'brand/v1/menu-headers', { fixture: 'brand/brandHeaders.json' })
-  cy.intercept('GET', 'deliveries/v1.0/**', { fixture: 'deliveries/deliveryDays.json' })
+  cy.intercept('GET', 'deliveries/v1.0/**', { fixture: 'deliveries/deliveryDays.json' }).as(
+    'getDeliveryDays'
+  )
   cy.intercept('GET', '/customers/v1/intervals', { fixture: 'customers/intervals.json' })
   cy.intercept('POST', /order\/preview/, { fixture: 'order/preview.json' })
   cy.intercept('GET', 'delivery_day/**/stock', { fixture: 'stock/deliveryDayStock.json' })
