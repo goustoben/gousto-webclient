@@ -16,7 +16,7 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
         color="gray"
         label="House number or name"
         mask
-        forwardRef
+        withRef
         ref={receiveRef}
         refId={`${sectionName}.houseNo`}
         data-testing="houseNo"
@@ -32,7 +32,7 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
         color="gray"
         label="Street"
         mask
-        forwardRef
+        withRef
         ref={receiveRef}
         refId={`${sectionName}.street`}
         data-testing="street"
@@ -48,7 +48,7 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
         color="gray"
         label="City"
         mask
-        forwardRef
+        withRef
         ref={receiveRef}
         refId={`${sectionName}.town`}
         data-testing="town"

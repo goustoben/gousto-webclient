@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
-import configureMockStore from 'redux-mock-store'
+
 import { MultiSkipScreenContainer } from '../MultiSkipScreenContainer'
 
 jest.mock('routes/Account/actions/multiSkip', () => ({
@@ -28,21 +28,23 @@ jest.mock('selectors/user', () => ({
 }))
 
 const mockDispatch = jest.fn()
-const mockStore = configureMockStore()
+
+const mockReduxContext = {
+  context: {
+    store: {
+      dispatch: mockDispatch,
+      getState: () => { },
+      subscribe: () => { },
+    }
+  }
+}
 
 let wrapper
 
 describe('Given I render the MultiSkipScreenContainer', () => {
-  let store
-
   beforeEach(() => {
     jest.resetAllMocks()
-
-    store = mockStore({})
-
-    store.dispatch = mockDispatch
-
-    wrapper = mount(<MultiSkipScreenContainer handleContinueToPause={() => { }} store={store} />)
+    wrapper = mount(<MultiSkipScreenContainer handleContinueToPause={() => { }} />, mockReduxContext)
   })
 
   test('Then the MultiSkipScreen displays the expected tiles', () => {

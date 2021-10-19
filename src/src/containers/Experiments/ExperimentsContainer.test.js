@@ -2,13 +2,21 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { safeJestMock } from '_testing/mocks'
-import configureMockStore from 'redux-mock-store'
 import * as experimentSelectors from 'selectors/experiments'
 import { ExperimentsContainer } from './ExperimentsContainer'
 import { Experiments } from './Experiments'
 
 const mockedMakeGetExperimentByName = safeJestMock(experimentSelectors, 'makeGetExperimentByName')
 const mockedIsFetchingExperiments = safeJestMock(experimentSelectors, 'isFetchingExperiments')
+const wrapperOptions = {
+  context: {
+    store: {
+      getState: () => {},
+      dispatch: () => {},
+      subscribe: () => {},
+    }
+  }
+}
 
 describe('ExperimentsContainer', () => {
   let wrapper
@@ -20,13 +28,11 @@ describe('ExperimentsContainer', () => {
 
     mockedIsFetchingExperiments.mockReturnValue(false)
 
-    const mockStore = configureMockStore()
-    const store = mockStore({})
-
     wrapper = shallow(
-      <ExperimentsContainer experimentName="mock-experiment" store={store}>
+      <ExperimentsContainer experimentName="mock-experiment">
         {() => null}
-      </ExperimentsContainer>
+      </ExperimentsContainer>,
+      wrapperOptions
     )
   })
 

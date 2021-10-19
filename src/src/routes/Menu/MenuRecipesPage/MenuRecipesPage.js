@@ -3,7 +3,6 @@ import { CommunicationPanel } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import { CoronaVirusBanner } from 'CoronaVirusBanner'
 import menuConfig from 'config/menu'
-import { ReactReduxContext } from 'react-redux'
 import { AppModalContainer } from 'components/AppModal'
 import { CollectionsNavContainer } from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
@@ -20,6 +19,9 @@ import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
 
+const contextTypes = {
+  store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
+}
 export class MenuRecipesPage extends PureComponent {
   async componentDidMount() {
     const {
@@ -207,4 +209,4 @@ MenuRecipesPage.defaultProps = {
   shouldShowCapacityInfo: false,
   menuLoadingErrorMessage: '',
 }
-MenuRecipesPage.contextType = ReactReduxContext
+MenuRecipesPage.contextTypes = contextTypes

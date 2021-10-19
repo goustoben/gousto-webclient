@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import configureMockStore from 'redux-mock-store'
+
 import { JustForYouTutorial } from '../JustForYouTutorial'
 import { JustForYouTutorialContainer } from '../JustForYouTutorialContainer'
 
@@ -59,10 +59,10 @@ describe('JustForYouTutorial Component', () => {
 })
 
 describe('Check browser to show JFY', () => {
+  let getState
   let wrapper
   it('should not render JFY if browser Edge', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore({
+    getState = () => ({
       tutorial: Immutable.fromJS({
         visible: {
           justforyou: true,
@@ -76,19 +76,25 @@ describe('Check browser to show JFY', () => {
       }),
       request: Immutable.fromJS({
         userAgent: 'Edge'
-      })
-    })
+      }
+      )})
 
     wrapper = shallow(
-      <JustForYouTutorialContainer store={store} />
+      <JustForYouTutorialContainer />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
+        }
+      }
     )
 
     expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(false)
   })
 
   it('should not render JFY if browser IE', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore({
+    getState = () => ({
       tutorial: Immutable.fromJS({
         visible: {
           justforyou: true,
@@ -102,18 +108,24 @@ describe('Check browser to show JFY', () => {
       }),
       request: Immutable.fromJS({
         userAgent: 'Trident'
-      })
-    })
+      }
+      )})
 
     wrapper = shallow(
-      <JustForYouTutorialContainer store={store} />
+      <JustForYouTutorialContainer />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
+        }
+      }
     )
     expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(false)
   })
 
   it('should not render JFY if browser Chrome but justforyou not present', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore({
+    getState = () => ({
       tutorial: Immutable.fromJS({
         visible: {
           justforyou: false,
@@ -131,14 +143,20 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-      <JustForYouTutorialContainer store={store} />
+      <JustForYouTutorialContainer />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
+        }
+      }
     )
     expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(false)
   })
 
   it('should render JFY if browser Chrome', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore({
+    getState = () => ({
       tutorial: Immutable.fromJS({
         visible: {
           justforyou: true,
@@ -156,7 +174,14 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-      <JustForYouTutorialContainer store={store} />
+      <JustForYouTutorialContainer />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
+        }
+      }
     )
     expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(true)
   })

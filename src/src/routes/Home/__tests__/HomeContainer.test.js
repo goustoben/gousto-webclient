@@ -2,7 +2,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import menuBoxPrices from 'routes/BoxPrices/__tests__/__mocks__/menuBoxPrices.json'
-import configureMockStore from 'redux-mock-store'
 import { HomeContainer, getKnownVariant } from '../HomeContainer'
 
 jest.mock('config/home', () => ({
@@ -20,8 +19,7 @@ jest.mock('config/home', () => ({
 
 describe('HomeContainer', () => {
   let wrapper
-  const mockStore = configureMockStore()
-  const store = mockStore({
+  const initialState = {
     auth: Immutable.fromJS({
       isAuthenticated: false,
     }),
@@ -31,8 +29,14 @@ describe('HomeContainer', () => {
         value: false,
       }),
     }),
-  })
+  }
   const redirectLoggedInUser = jest.fn()
+
+  const store = {
+    getState: jest.fn(() => initialState),
+    dispatch: jest.fn(),
+    subscribe: jest.fn(),
+  }
 
   beforeEach(() => {
     wrapper = shallow(<HomeContainer store={store} redirectLoggedInUser={redirectLoggedInUser} />)
@@ -42,7 +46,7 @@ describe('HomeContainer', () => {
     const expected = {
       isAuthenticated: false,
     }
-    expect(wrapper.find('Home').props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
   })
 
   test('should pass pricePerServing', () => {
@@ -50,7 +54,7 @@ describe('HomeContainer', () => {
       pricePerServing: '2.98',
     }
 
-    expect(wrapper.find('Home').props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
   })
 
   describe('getKnownVariant', () => {

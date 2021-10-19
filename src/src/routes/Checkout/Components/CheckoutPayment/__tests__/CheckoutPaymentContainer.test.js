@@ -1,7 +1,11 @@
+import React from 'react'
 import Immutable from 'immutable'
-import { mapStateToProps } from '../CheckoutPaymentContainer'
+import { shallow } from 'enzyme'
+import { CheckoutPaymentContainer, mapStateToProps } from '../CheckoutPaymentContainer'
 
 describe('CheckoutPaymentContainer', () => {
+  let wrapper
+
   const initialState = {
     auth: Immutable.fromJS({
       isRecaptchaEnabled: true,
@@ -37,6 +41,20 @@ describe('CheckoutPaymentContainer', () => {
     dispatch: jest.fn(),
     subscribe: jest.fn(),
   }
+
+  beforeEach(() => {
+    wrapper = shallow(<CheckoutPaymentContainer store={store} />, {
+      context: store,
+    })
+  })
+
+  test('should be rendered properly', () => {
+    const expected = {
+      initialValues: { payment: { cardName: '', isBillingAddressDifferent: false } },
+      sectionName: 'payment',
+    }
+    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+  })
 
   describe('when mapStateToProps is invoked', () => {
     let output

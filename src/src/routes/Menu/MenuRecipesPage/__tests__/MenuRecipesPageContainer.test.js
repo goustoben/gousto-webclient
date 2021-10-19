@@ -2,15 +2,18 @@ import Immutable from 'immutable'
 import React from 'react'
 import { shallow } from 'enzyme'
 import { actionTypes } from 'actions/actionTypes'
-import configureMockStore from 'redux-mock-store'
 import { MenuRecipesPageContainer } from '../MenuRecipesPageContainer'
 
 describe('Test MenuRecipesPageContainer', () => {
   let wrapper
+  let state
+  let dispatch
+  let context
+  let subscribe
+  let getState
 
   beforeEach(() => {
-    const mockStore = configureMockStore()
-    const store = mockStore({
+    state = {
       boxSummaryShow: Immutable.fromJS({
         show: ''
       }),
@@ -38,18 +41,33 @@ describe('Test MenuRecipesPageContainer', () => {
           }
         }
       }
-    })
+    }
+    getState = () => (state)
+    dispatch = jest.fn()
+    subscribe = jest.fn()
+    context = {
+      store: {
+        getState,
+        dispatch,
+        state,
+        subscribe,
+        ownProperties: { location: {} },
+        ownProps: { location: {} },
+        props: { location: {} },
+      }
+    }
     const location = {}
     const params = {}
 
     wrapper = shallow(
-      <MenuRecipesPageContainer params={params} location={location} store={store} />,
+      <MenuRecipesPageContainer params={params} location={location} />,
+      { context }
     )
   })
 
   describe('MenuRecipesPageContainer', () => {
     test('should not fail, empty test', () => {
-      expect(wrapper.find('MenuRecipesPage').props().isLoading).toBe(false)
+      expect(wrapper.props().isLoading).toBe(false)
     })
   })
 })

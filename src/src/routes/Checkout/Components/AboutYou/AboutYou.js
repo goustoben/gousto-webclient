@@ -143,7 +143,7 @@ class AboutYou extends PureComponent {
               type={item.type || null}
               label={item.label || null}
               mask
-              forwardRef
+              withRef
               ref={receiveRef || null}
               refId={item.refId || null}
               dataTesting={item.dataTesting}

@@ -1,7 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import configureMockStore from 'redux-mock-store'
 
 import { TileImageContainer } from './TileImageContainer'
 
@@ -34,18 +34,25 @@ describe('<TileImageContainer />', () => {
     })
   }
 
-  const mockStore = configureMockStore()
-  const store = mockStore(state)
-
+  const wrapperOptions = {
+    context: {
+      store: {
+        getState: () => state,
+        dispatch: () => {},
+        subscribe: () => {},
+      }
+    }
+  }
   const mouseEnter = jest.fn()
   const mouseLeave = jest.fn()
   const wrapper = shallow(
-    <TileImageContainer recipeId={recipeId} mouseEnter={mouseEnter} mouseLeave={mouseLeave} store={store} />,
+    <TileImageContainer recipeId={recipeId} mouseEnter={mouseEnter} mouseLeave={mouseLeave} />,
+    wrapperOptions
   )
 
   test('should pass down correct props', () => {
-    expect(wrapper.find('TileImage').prop('isOutOfStock')).toEqual(false)
-    expect(wrapper.find('TileImage').prop('mouseEnter')).toEqual(mouseEnter)
-    expect(wrapper.find('TileImage').prop('mouseLeave')).toEqual(mouseLeave)
+    expect(wrapper.prop('isOutOfStock')).toEqual(false)
+    expect(wrapper.prop('mouseEnter')).toEqual(mouseEnter)
+    expect(wrapper.prop('mouseLeave')).toEqual(mouseLeave)
   })
 })

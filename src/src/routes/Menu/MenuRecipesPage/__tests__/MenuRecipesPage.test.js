@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { SubHeaderContainer } from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { CollectionsNavContainer } from '../../CollectionsNav'
@@ -33,6 +34,7 @@ describe('initial render', () => {
 
       }
       checkQueryParamsSpy = jest.fn()
+      SubHeaderContainer.mockReturnValue(<div />)
 
       wrapper = shallow(
         <MenuRecipes
@@ -46,7 +48,7 @@ describe('initial render', () => {
       )
     })
     test('should render 1 SubHeaderContainer', () => {
-      expect(wrapper.find('Memo(Connect(SubHeader))').length).toBe(1)
+      expect(wrapper.find(SubHeaderContainer).length).toBe(1)
     })
 
     test('should render a mobile-only MenuDateRange', () => {

@@ -1,7 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import configureMockStore from 'redux-mock-store'
-import PropTypes from 'prop-types'
 import menuFetchData from 'routes/Menu/fetchData'
 import Link from 'Link'
 import { Cookbook } from '../Cookbook'
@@ -19,20 +17,9 @@ describe('MyGousto', () => {
   const trackClickRateRecipesSpy = jest.fn()
   const userCheck3dsCompliantToken = jest.fn()
   const userReset3dsCompliantToken = jest.fn()
-  const mockStore = configureMockStore()
-  const store = mockStore({})
 
   beforeEach(() => {
     jest.useFakeTimers()
-
-    // We add legacy context to access the store to test the MyGousto
-    // component. This is cause enzyme only supports legacy context
-    // MyGousto.contextType = undefined
-    MyGousto.contextTypes = {
-      // eslint-disable-next-line react/forbid-prop-types
-      store: PropTypes.any,
-    }
-
     wrapper = shallow(
       <MyGousto
         isMobileViewport={false}
@@ -40,9 +27,14 @@ describe('MyGousto', () => {
         userGetReferralDetails={userGetReferralDetails}
         userCheck3dsCompliantToken={userCheck3dsCompliantToken}
         userReset3dsCompliantToken={userReset3dsCompliantToken}
-        store={store}
       />,
-      { context: { store: { dispatch: jest.fn() } } }
+      {
+        context: {
+          store: {
+            dispatch: jest.fn(),
+          },
+        },
+      }
     )
   })
 
@@ -166,7 +158,6 @@ describe('MyGousto', () => {
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
             isMobileViewport={false}
-            store={store}
           />,
           {
             context: {
@@ -222,7 +213,6 @@ describe('MyGousto', () => {
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
             isCapacityLimited
-            store={store}
           />,
           {
             context: {
@@ -244,7 +234,6 @@ describe('MyGousto', () => {
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
             isCapacityLimited
-            store={store}
           />
         )
         const rateRecipeLink = wrapper
@@ -285,7 +274,6 @@ describe('MyGousto', () => {
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
             isCapacityLimited
-            store={store}
           />,
           {
             context: {

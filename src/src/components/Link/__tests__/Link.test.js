@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import PropTypes from 'prop-types'
+
 import Link from 'Link/Link'
-import { Link as ReactRouterLink } from 'react-router'
+import { Link as rrLink } from 'react-router'
 
 const router = {
   push: () => {},
@@ -15,13 +15,6 @@ const router = {
   createHref: location => location,
 }
 
-// We add legacy context to access the store to test the AbandonBasketModal
-// component. This is cause enzyme only supports legacy context
-Link.contextTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  router: PropTypes.any,
-}
-
 describe('Link', () => {
   test("should render an <a> element if there's no router in it's context", () => {
     const wrapper = shallow(<Link to="/page">Page</Link>)
@@ -32,7 +25,7 @@ describe('Link', () => {
     const wrapper = shallow(<Link to="/page">Page</Link>, {
       context: { router },
     })
-    expect(wrapper.type()).toEqual(ReactRouterLink)
+    expect(wrapper.type()).toEqual(rrLink)
   })
 
   test("should render an <a> element if there's a router in it's context but clientRouted=false", () => {

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ReactReduxContext } from 'react-redux'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import { BillingFormContainer } from './BillingForm'
@@ -42,6 +41,8 @@ ExpiredBillingModal.defaultProps = {
   expiredBillingModalOpen: false,
 }
 
-ExpiredBillingModal.contextType = ReactReduxContext
+ExpiredBillingModal.contextTypes = {
+  store: PropTypes.instanceOf(Object).isRequired
+}
 
 export default ExpiredBillingModal

@@ -41,7 +41,7 @@ class DeliveryInstruction extends React.PureComponent {
                 inputType="DropDown"
                 label="Where can we leave your box if you're not in?"
                 mask
-                forwardRef
+                withRef
                 ref={receiveRef}
                 refId={`${sectionName}.deliveryInstruction`}
                 color="secondary"
@@ -61,7 +61,7 @@ class DeliveryInstruction extends React.PureComponent {
                 required
                 color="gray"
                 mask
-                forwardRef
+                withRef
                 ref={receiveRef}
                 refId={`${sectionName}.deliveryInstructionsCustom`}
                 placeholder={otherInputPlaceholder}

@@ -26,7 +26,7 @@ describe('YourBoxDetailsContainer', () => {
   describe('Given initialState to YourBoxDetailsContainer component', () => {
     describe('When component is rendered', () => {
       test('Then should display data properly', () => {
-        const { numPortions, numRecipes } = wrapper.find('YourBoxDetails').props()
+        const { numPortions, numRecipes } = wrapper.props()
         expect(numPortions).toBe(2)
         expect(numRecipes).toBe(3)
       })

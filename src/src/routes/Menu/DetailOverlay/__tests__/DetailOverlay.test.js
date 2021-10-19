@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+
 import Modal from 'Modal'
 import { DetailContainer } from 'routes/Menu/Recipe/Detail'
 import { DetailOverlay } from 'routes/Menu/DetailOverlay/DetailOverlay'
@@ -52,6 +53,8 @@ describe('DetailOverlay file', () => {
           onCloseOverlay={onCloseOverlaySpy}
         />
       )
+
+      DetailContainer.mockReturnValue(<div />)
     })
 
     afterEach(() => {

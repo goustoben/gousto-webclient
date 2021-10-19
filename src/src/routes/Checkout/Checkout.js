@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { ReactReduxContext } from 'react-redux'
 import logger from 'utils/logger'
 import routesConfig from 'config/routes'
 import actions from 'actions'
@@ -21,7 +20,7 @@ import { loadPayPalScripts } from './loadPayPalScripts'
 import { CreateAccount } from './Steps/CreateAccount'
 import { Delivery } from './Steps/Delivery'
 import { OrderSummary } from './Steps/OrderSummary'
-import { CheckoutPaymentContainer } from './Components/CheckoutPayment'
+import { CheckoutPayment } from './Components/CheckoutPayment'
 
 import { Breadcrumbs } from './Components/Breadcrumbs'
 import { Summary } from './Components/Summary'
@@ -36,7 +35,7 @@ const stepMapping = {
   'order-summary': { component: OrderSummary, humanName: 'Summary' },
   account: { component: CreateAccount, humanName: 'Account' },
   delivery: { component: Delivery, humanName: 'Delivery' },
-  payment: { component: CheckoutPaymentContainer, humanName: 'Payment' },
+  payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
 const propTypes = {
@@ -101,6 +100,12 @@ const defaultProps = {
   isPaymentBeforeChoosingEnabled: false,
   isPaymentBeforeChoosingV3Enabled: false,
   isGoustoOnDemandEnabled: false,
+}
+
+const contextTypes = {
+  store: PropTypes.shape({
+    getState: PropTypes.func.isRequired,
+  }),
 }
 
 class Checkout extends PureComponent {
@@ -306,7 +311,7 @@ class Checkout extends PureComponent {
     const { checkoutScriptReady, paypalScriptsReady } = this.state
 
     return (
-      <CheckoutPaymentContainer
+      <CheckoutPayment
         submitOrder={submitOrder}
         checkoutScriptReady={checkoutScriptReady}
         paypalScriptsReady={paypalScriptsReady}
@@ -486,6 +491,6 @@ Checkout.propTypes = propTypes
 
 Checkout.defaultProps = defaultProps
 
-Checkout.contextType = ReactReduxContext
+Checkout.contextTypes = contextTypes
 
 export { Checkout }

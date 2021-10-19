@@ -1,4 +1,3 @@
-import React from 'react'
 import { getFormAsyncErrors, getFormSyncErrors, touch } from 'redux-form'
 import { connect } from 'react-redux'
 import { storeSignupRecaptchaToken } from 'actions/auth'
@@ -55,10 +54,7 @@ const ConnectedCheckoutPaymentContainer = connect(
   mapDispatchToProps
 )(CheckoutPayment)
 
-// eslint-disable-next-line react/jsx-props-no-spreading
-const Plain = (props) => <ConnectedCheckoutPaymentContainer {...props} />
-
 export const CheckoutPaymentContainer = addInitialValues(
-  formContainer(Plain, getValidationRules(sectionName), sectionName),
+  formContainer(ConnectedCheckoutPaymentContainer, getValidationRules(sectionName), sectionName),
   { sectionName }
 )

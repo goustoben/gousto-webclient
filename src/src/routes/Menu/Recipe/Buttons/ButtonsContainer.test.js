@@ -1,7 +1,8 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import configureMockStore from 'redux-mock-store'
+
 import ButtonsContainer from './ButtonsContainer'
 
 describe('<ButtonsContainer />', () => {
@@ -59,16 +60,24 @@ describe('<ButtonsContainer />', () => {
     }),
   }
 
-  const mockStore = configureMockStore()
-  const store = mockStore(defaultState)
+  const wrapperOptions = {
+    context: {
+      store: {
+        getState: () => defaultState,
+        dispatch: () => {},
+        subscribe: () => {},
+      }
+    }
+  }
+
+  const wrapper = shallow(
+    <ButtonsContainer recipeId={recipeId1} />,
+    wrapperOptions
+  )
 
   test('should pass down correct props', () => {
-    const wrapper = shallow(
-      <ButtonsContainer recipeId={recipeId1} store={store} />,
-    )
-
-    expect(wrapper.find('Buttons').prop('qty')).toEqual(0)
-    expect(wrapper.find('Buttons').prop('numPortions')).toEqual(2)
-    expect(wrapper.find('Buttons').prop('surchargePerPortion')).toEqual(null)
+    expect(wrapper.prop('qty')).toEqual(0)
+    expect(wrapper.prop('numPortions')).toEqual(2)
+    expect(wrapper.prop('surchargePerPortion')).toEqual(null)
   })
 })

@@ -54,19 +54,19 @@ describe('<MenuSidesModalContainer/>', () => {
   })
 
   test('should provide an access token', () => {
-    expect(wrapper.find('SidesModal').props().accessToken).toBe('auth-access-token')
+    expect(wrapper.props().accessToken).toBe('auth-access-token')
   })
 
   test('should provide a user id', () => {
-    expect(wrapper.find('SidesModal').props().userId).toBe('user-id')
+    expect(wrapper.props().userId).toBe('user-id')
   })
 
   test('should provide an if the modal is open', () => {
-    expect(wrapper.find('SidesModal').props().isOpen).toBe(true)
+    expect(wrapper.props().isOpen).toBe(true)
   })
 
   test('should provide an order', () => {
-    expect(wrapper.find('SidesModal').props().order).toEqual(expect.objectContaining({
+    expect(wrapper.props().order).toEqual(expect.objectContaining({
       type: 'order',
       id: '1234',
       attributes: {
@@ -79,38 +79,38 @@ describe('<MenuSidesModalContainer/>', () => {
     const closeSidesModalMock = jest.fn().mockImplementation(fakeActionResponse)
     closeSidesModalSpy.mockReturnValue(closeSidesModalMock)
 
-    wrapper.find('SidesModal').props().onClose()
+    wrapper.props().onClose()
 
     expect(closeSidesModalMock).toHaveBeenCalled()
     expect(closeSidesModalSpy).toHaveBeenCalled()
   })
 
   test('should provide on submit method that calls checkoutWithSides with products', () => {
-    wrapper.find('SidesModal').props().onSubmit('sides-modal-with-sides', { product_id: 2 })
+    wrapper.props().onSubmit('sides-modal-with-sides', { product_id: 2 })
 
     expect(checkoutWithSidesSpy).toBeCalledWith('menu', 'sides-modal-with-sides', { product_id: 2 })
   })
 
   test('should provide a track add side method that calls trackAddSide', () => {
-    wrapper.find('SidesModal').props().trackAddSide('side-id', 'order-id')
+    wrapper.props().trackAddSide('side-id', 'order-id')
 
     expect(trackAddSideSpy).toBeCalledWith('side-id', 'order-id')
   })
 
   test('should provide a track show allergens method that calls trackViewSidesAllergens', () => {
-    wrapper.find('SidesModal').props().trackViewSidesAllergens()
+    wrapper.props().trackViewSidesAllergens()
 
     expect(trackViewSidesAllergensSpy).toBeCalledTimes(1)
   })
 
   test('should provide a track add side method that calls trackCloseSidesAllergens', () => {
-    wrapper.find('SidesModal').props().trackCloseSidesAllergens()
+    wrapper.props().trackCloseSidesAllergens()
 
     expect(trackCloseSidesAllergensSpy).toBeCalledTimes(1)
   })
 
   test('should provide a track add side method that calls trackSidesContinueClicked', () => {
-    wrapper.find('SidesModal').props().trackSidesContinueClicked(['side-id'], 1 , 2)
+    wrapper.props().trackSidesContinueClicked(['side-id'], 1 , 2)
 
     expect(trackSidesContinueClickedSpy).toBeCalledWith(['side-id'], 1 , 2)
   })

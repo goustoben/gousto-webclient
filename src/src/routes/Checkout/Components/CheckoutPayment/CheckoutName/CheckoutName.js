@@ -14,7 +14,7 @@ export const CheckoutName = ({ sectionName, receiveRef }) => (
         component={ReduxFormInput}
         inputType="Input"
         mask
-        forwardRef
+        withRef
         ref={receiveRef}
         refId={`${sectionName}.cardName`}
         data-testing="checkoutCardNameInput"

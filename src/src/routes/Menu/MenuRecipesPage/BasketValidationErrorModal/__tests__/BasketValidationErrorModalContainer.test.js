@@ -1,7 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import configureMockStore from 'redux-mock-store'
 import * as statusSelectors from 'selectors/status'
 import { safeJestMock } from '../../../../../_testing/mocks'
 import * as basketSelectors from '../../../selectors/basket'
@@ -11,24 +10,28 @@ describe('BasketValidationErrorModalContainer', () => {
   let wrapper
   describe('when no breaking rules', () => {
     beforeEach(() => {
-      const mockStore = configureMockStore()
-      const store = mockStore({
-        error: Immutable.fromJS({})
+      wrapper = shallow(<BasketValidationErrorModalContainer />, {
+        context: {
+          store: {
+            getState: () => ({
+              error: Immutable.fromJS({})
+            }),
+            dispatch: () => {},
+            subscribe: () => {}
+          }
+        }
       })
-
-      wrapper = shallow(<BasketValidationErrorModalContainer store={store} />)
     })
 
     test('should render BasketValidationErrorModal with the right props', () => {
-      expect(wrapper.find('BasketValidationErrorModal').props()).toEqual(
-        expect.objectContaining({
-          brokenRulesToDisplay: [],
-          closeModal: expect.any(Function),
-          shouldShow: false,
-          shouldShowSwapButton: false,
-          basketRecipeSwap: expect.any(Function),
-          title: 'Basket Not Valid'
-        }))
+      expect(wrapper.find('BasketValidationErrorModal').props()).toEqual({
+        brokenRulesToDisplay: [],
+        closeModal: expect.any(Function),
+        shouldShow: false,
+        shouldShowSwapButton: false,
+        basketRecipeSwap: expect.any(Function),
+        title: 'Basket Not Valid'
+      })
     })
   })
 
@@ -58,35 +61,39 @@ describe('BasketValidationErrorModalContainer', () => {
             items: ['123']
           }]
         })
-        const mockStore = configureMockStore()
-        const store = mockStore({
-          error: Immutable.fromJS({})
+        wrapper = shallow(<BasketValidationErrorModalContainer />, {
+          context: {
+            store: {
+              getState: () => ({
+                error: Immutable.fromJS({})
+              }),
+              dispatch: () => {},
+              subscribe: () => {}
+            }
+          }
         })
-
-        wrapper = shallow(<BasketValidationErrorModalContainer store={store} />)
       })
       test('should render BasketValidationErrorModal with the right props', () => {
-        expect(wrapper.find('BasketValidationErrorModal').props()).toEqual(
-          expect.objectContaining({
-            brokenRulesToDisplay: [{
-              description: 'Only 1 oven ready meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'}]
-            },
-            {
-              description: 'Only 1 new-rule meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'
-              }]
-            }],
-            closeModal: expect.any(Function),
-            shouldShow: true,
-            shouldShowSwapButton: false,
-            basketRecipeSwap: expect.any(Function),
-            title: 'Basket Not Valid'
-          }))
+        expect(wrapper.find('BasketValidationErrorModal').props()).toEqual({
+          brokenRulesToDisplay: [{
+            description: 'Only 1 oven ready meal is available per order',
+            recipes: [{
+              imageUrl: 'url-for-image',
+              title: 'Chicken'}]
+          },
+          {
+            description: 'Only 1 new-rule meal is available per order',
+            recipes: [{
+              imageUrl: 'url-for-image',
+              title: 'Chicken'
+            }]
+          }],
+          closeModal: expect.any(Function),
+          shouldShow: true,
+          shouldShowSwapButton: false,
+          basketRecipeSwap: expect.any(Function),
+          title: 'Basket Not Valid'
+        })
       })
     })
 
@@ -116,36 +123,39 @@ describe('BasketValidationErrorModalContainer', () => {
             items: ['123']
           }]
         })
-
-        const mockStore = configureMockStore()
-        const store = mockStore({
-          error: Immutable.fromJS({})
+        wrapper = shallow(<BasketValidationErrorModalContainer />, {
+          context: {
+            store: {
+              getState: () => ({
+                error: Immutable.fromJS({})
+              }),
+              dispatch: () => {},
+              subscribe: () => {}
+            }
+          }
         })
-
-        wrapper = shallow(<BasketValidationErrorModalContainer store={store} />)
       })
       test('should render BasketValidationErrorModal with the right props', () => {
-        expect(wrapper.find('BasketValidationErrorModal').props()).toEqual(
-          expect.objectContaining({
-            brokenRulesToDisplay: [{
-              description: 'Only 1 oven ready meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'}]
-            },
-            {
-              description: 'Only 1 new-rule meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'
-              }]
-            }],
-            closeModal: expect.any(Function),
-            shouldShow: true,
-            shouldShowSwapButton: true,
-            basketRecipeSwap: expect.any(Function),
-            title: 'Basket Not Valid'
-          }))
+        expect(wrapper.find('BasketValidationErrorModal').props()).toEqual({
+          brokenRulesToDisplay: [{
+            description: 'Only 1 oven ready meal is available per order',
+            recipes: [{
+              imageUrl: 'url-for-image',
+              title: 'Chicken'}]
+          },
+          {
+            description: 'Only 1 new-rule meal is available per order',
+            recipes: [{
+              imageUrl: 'url-for-image',
+              title: 'Chicken'
+            }]
+          }],
+          closeModal: expect.any(Function),
+          shouldShow: true,
+          shouldShowSwapButton: true,
+          basketRecipeSwap: expect.any(Function),
+          title: 'Basket Not Valid'
+        })
       })
     })
   })

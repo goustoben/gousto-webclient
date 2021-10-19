@@ -1,7 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { mount, shallow } from 'enzyme'
-import configureMockStore from 'redux-mock-store'
+
 import { AppModalContainer } from '../AppModalContainer'
 
 jest.mock('selectors/appBanner', () => ({
@@ -12,8 +12,7 @@ jest.mock('utils/window')
 
 const mockDispatch = jest.fn()
 
-const mockStore = configureMockStore()
-const store = mockStore({
+const mockState = {
   request: Immutable.fromJS({
     browser: 'mobile'
   }),
@@ -32,14 +31,23 @@ const store = mockStore({
       value: true
     }
   })
-})
-store.dispatch = mockDispatch
+}
+
+const mockReduxContext = {
+  context: {
+    store: {
+      getState: () => mockState,
+      dispatch: mockDispatch,
+      subscribe: () => { }
+    }
+  }
+}
 
 let wrapper
 
 describe('AppModalContainer', () => {
   test('maps state to props as expected', () => {
-    wrapper = shallow(<AppModalContainer store={store} />)
+    wrapper = shallow(<AppModalContainer />, mockReduxContext)
 
     const expectedStateProps = {
       isMobileViewport: true,
@@ -51,14 +59,16 @@ describe('AppModalContainer', () => {
       ratings: '1234',
     }
 
-    expect(wrapper.find('AppModal').props()).toEqual(expect.objectContaining(expectedStateProps))
+    const { trackAppModalView, trackClickAppModalInstall, ...actualStateProps } = wrapper.props()
+
+    expect(expectedStateProps).toEqual(actualStateProps)
   })
 
   test('dispatches expected action on view', () => {
     expect.assertions(1)
 
     jest.useFakeTimers()
-    wrapper = mount(<AppModalContainer store={store} />)
+    wrapper = mount(<AppModalContainer />, mockReduxContext)
     jest.runOnlyPendingTimers()
     wrapper.update()
 
@@ -69,7 +79,7 @@ describe('AppModalContainer', () => {
     expect.assertions(1)
 
     jest.useFakeTimers()
-    wrapper = mount(<AppModalContainer store={store} />)
+    wrapper = mount(<AppModalContainer />, mockReduxContext)
     jest.runOnlyPendingTimers()
     wrapper.update()
 

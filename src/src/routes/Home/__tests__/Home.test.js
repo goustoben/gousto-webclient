@@ -1,7 +1,5 @@
 import React from 'react'
 import Immutable from 'immutable'
-import PropTypes from 'prop-types'
-import configureMockStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import Helmet from 'react-helmet'
 import menuFetchData from 'routes/Menu/fetchData'
@@ -9,62 +7,49 @@ import { Home } from '../Home'
 
 jest.mock('routes/Menu/fetchData')
 
-// We add legacy context to access the store to test the Home
-// component. This is cause enzyme only supports legacy context
-Home.contextTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  store: PropTypes.any,
-}
-
 describe('Home', () => {
   let store
   let wrapper
+  let dispatch
 
   beforeEach(() => {
-    menuFetchData.mockImplementation(
-      jest.fn(() => ({
-        type: 'action',
-      }))
-    )
-
-    const mockStore = configureMockStore()
-    store = mockStore({
-      homeCarouselRecipes: Immutable.OrderedMap({
-        a: Immutable.fromJS({ availability: [], title: 'title' }),
-        b: Immutable.fromJS({ availability: [], title: 'title' }),
-        c: Immutable.fromJS({ availability: [], title: 'title' }),
-        d: Immutable.fromJS({ availability: [], title: 'title' }),
-        e: Immutable.fromJS({ availability: [], title: 'title' }),
-        f: Immutable.fromJS({ availability: [], title: 'title' }),
-        g: Immutable.fromJS({ availability: [], title: 'title' }),
-        h: Immutable.fromJS({ availability: [], title: 'title' }),
-        i: Immutable.fromJS({ availability: [], title: 'title' }),
+    dispatch = jest.fn()
+    store = {
+      getState: () => ({
+        homeCarouselRecipes: Immutable.OrderedMap({
+          a: Immutable.fromJS({ availability: [], title: 'title' }),
+          b: Immutable.fromJS({ availability: [], title: 'title' }),
+          c: Immutable.fromJS({ availability: [], title: 'title' }),
+          d: Immutable.fromJS({ availability: [], title: 'title' }),
+          e: Immutable.fromJS({ availability: [], title: 'title' }),
+          f: Immutable.fromJS({ availability: [], title: 'title' }),
+          g: Immutable.fromJS({ availability: [], title: 'title' }),
+          h: Immutable.fromJS({ availability: [], title: 'title' }),
+          i: Immutable.fromJS({ availability: [], title: 'title' }),
+        }),
+        persist: { get: jest.fn() },
+        auth: { get: jest.fn() },
+        basket: { get: jest.fn() },
       }),
-      persist: { get: jest.fn() },
-      auth: { get: jest.fn() },
-      basket: { get: jest.fn() },
-    })
+      subscribe: jest.fn(),
+      unsubscribe: jest.fn(),
+      dispatch,
+    }
 
-    wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} store={store} />, {
-      context: { store },
-    })
+    wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    menuFetchData.mockClear()
   })
 
   describe('componentDidMount', () => {
     beforeEach(() => {
       jest.useFakeTimers()
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} store={store} />, {
-        context: { store },
-      })
-      wrapper.instance().context = store
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
     })
 
     afterEach(() => {
-      jest.clearAllMocks()
       jest.clearAllTimers()
     })
 
