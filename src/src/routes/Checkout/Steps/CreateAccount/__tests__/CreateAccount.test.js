@@ -1,10 +1,11 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
+import { Provider } from 'react-redux'
 import { CreateAccount } from '../CreateAccount'
 
 describe('CreateAccount', () => {
-  let wrapper
   const userProspect = jest.fn()
   const receiveRef = jest.fn()
   const submit = jest.fn()
@@ -19,7 +20,8 @@ describe('CreateAccount', () => {
     onLoginClick,
   }
 
-  const state = {
+  const mockStore = configureMockStore()
+  const store = mockStore({
     form: {},
     request: Immutable.fromJS({
       browser: 'mobile',
@@ -27,23 +29,15 @@ describe('CreateAccount', () => {
     checkout: Immutable.fromJS({
       errors: {},
     }),
-  }
-
-  const options = {
-    context: {
-      store: {
-        getState: () => state,
-        dispatch: () => {},
-        subscribe: () => {},
-      },
-    },
-  }
-
-  beforeEach(() => {
-    wrapper = mount(<CreateAccount {...props} />, options)
   })
 
   test('should render CreateAccount component', () => {
+    const wrapper = mount(
+      <Provider store={store}>
+        <CreateAccount {...props} />
+      </Provider>
+    )
+
     expect(wrapper).toBeDefined()
   })
 })

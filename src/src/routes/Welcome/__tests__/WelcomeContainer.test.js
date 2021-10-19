@@ -36,12 +36,12 @@ describe('Given WelcomeContainer', () => {
     wrapper = shallow(<WelcomeContainer store={store} params={{ orderId: '12345' }} />)
   })
 
-  describe('When CTAHomePage is rendered', () => {
+  describe('When WelcomeContainer is rendered', () => {
     test('Then should be rendered properly', () => {
       const expected = {
         isGoustoOnDemandEnabled: false,
       }
-      expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+      expect(wrapper.find('Welcome').props()).toEqual(expect.objectContaining(expected))
     })
   })
 })

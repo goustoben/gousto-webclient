@@ -1,7 +1,7 @@
 import React from 'react'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
 
 import { RecipeTileContainer } from './RecipeTileContainer'
 
@@ -96,33 +96,25 @@ describe('<RecipeTileContainer />', () => {
     })
   }
 
-  const wrapperOptions = {
-    context: {
-      store: {
-        getState: () => state,
-        dispatch: () => {},
-        subscribe: () => {},
-      }
-    }
-  }
-
   let wrapper
 
   beforeEach(() => {
+    const mockStore = configureMockStore()
+    const store = mockStore(state)
+
     wrapper = shallow(
-      <RecipeTileContainer recipeId={recipeId} />,
-      wrapperOptions
+      <RecipeTileContainer recipeId={recipeId} store={store} />,
     )
   })
 
   test('should pass down correct props', () => {
-    expect(wrapper.prop('recipe')).toEqual(recipe)
-    expect(wrapper.prop('isOutOfStock')).toEqual(false)
-    expect(wrapper.prop('title')).toEqual('Chicken curry')
-    expect(wrapper.prop('showDetailRecipe')).toEqual(expect.any(Function))
-    expect(wrapper.prop('isFineDineIn')).toEqual(true)
-    expect(wrapper.prop('brandTagline')).toEqual(expectedTagline)
-    expect(wrapper.prop('brandAvailability')).toEqual(expectedAvailability)
-    expect(wrapper.prop('browserType')).toEqual('desktop')
+    expect(wrapper.find('RecipeTile').prop('recipe')).toEqual(recipe)
+    expect(wrapper.find('RecipeTile').prop('isOutOfStock')).toEqual(false)
+    expect(wrapper.find('RecipeTile').prop('title')).toEqual('Chicken curry')
+    expect(wrapper.find('RecipeTile').prop('showDetailRecipe')).toEqual(expect.any(Function))
+    expect(wrapper.find('RecipeTile').prop('isFineDineIn')).toEqual(true)
+    expect(wrapper.find('RecipeTile').prop('brandTagline')).toEqual(expectedTagline)
+    expect(wrapper.find('RecipeTile').prop('brandAvailability')).toEqual(expectedAvailability)
+    expect(wrapper.find('RecipeTile').prop('browserType')).toEqual('desktop')
   })
 })

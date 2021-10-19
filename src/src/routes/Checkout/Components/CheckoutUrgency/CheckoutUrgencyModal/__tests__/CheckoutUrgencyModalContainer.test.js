@@ -36,13 +36,13 @@ describe('CheckoutUrgencyModalContainer', () => {
   }
 
   beforeAll(() => {
-    wrapper = shallow(<CheckoutUrgencyModalContainer />, { context: { store } })
+    wrapper = shallow(<CheckoutUrgencyModalContainer store={store} />)
   })
 
   test('renders correctly', () => {
-    expect(wrapper.prop('isOpen')).toBe(false)
-    expect(wrapper.prop('isLoading')).toBe(false)
-    expect(wrapper.prop('modalSeconds')).toBe(3 * 60)
+    expect(wrapper.find('CheckoutUrgencyModal').prop('isOpen')).toBe(false)
+    expect(wrapper.find('CheckoutUrgencyModal').prop('isLoading')).toBe(false)
+    expect(wrapper.find('CheckoutUrgencyModal').prop('modalSeconds')).toBe(3 * 60)
   })
 
   beforeEach(() => {
@@ -51,7 +51,7 @@ describe('CheckoutUrgencyModalContainer', () => {
 
   describe('when redirectToMenu is called from child component', () => {
     beforeEach(() => {
-      wrapper.prop('redirectToMenu')()
+      wrapper.find('CheckoutUrgencyModal').prop('redirectToMenu')()
     })
 
     test('then it should dispatch the correct action', () => {
@@ -67,7 +67,7 @@ describe('CheckoutUrgencyModalContainer', () => {
 
   describe('when checkoutCreatePreviewOrder is called from child component', () => {
     beforeEach(() => {
-      wrapper.prop('checkoutCreatePreviewOrder')()
+      wrapper.find('CheckoutUrgencyModal').prop('checkoutCreatePreviewOrder')()
     })
 
     test('then it should dispatch the correct action', () => {
@@ -77,7 +77,7 @@ describe('CheckoutUrgencyModalContainer', () => {
 
   describe('when checkoutUrgencySetCurrentStatus is called from child component', () => {
     beforeEach(() => {
-      wrapper.prop('checkoutUrgencySetCurrentStatus')('running')
+      wrapper.find('CheckoutUrgencyModal').prop('checkoutUrgencySetCurrentStatus')('running')
     })
 
     test('then it should dispatch the correct action', () => {
@@ -87,7 +87,7 @@ describe('CheckoutUrgencyModalContainer', () => {
 
   describe('when trackCheckoutUrgencyAction is called from child component', () => {
     beforeEach(() => {
-      wrapper.prop('trackCheckoutUrgencyAction')('tracking_key')
+      wrapper.find('CheckoutUrgencyModal').prop('trackCheckoutUrgencyAction')('tracking_key')
     })
 
     test('then it should dispatch the correct action', () => {

@@ -1,6 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import configureMockStore from 'redux-mock-store'
 import { getPromoBannerState } from 'utils/home'
 import { PromoBannerContainer } from '../PromoBannerContainer'
 
@@ -16,19 +17,14 @@ jest.mock('utils/home', () => ({
 
 describe('PromoBannerContainer', () => {
   let wrapper
-  const initialState = {
+  const mockStore = configureMockStore()
+  const store = mockStore({
     features: Immutable.Map({
       promoBannerText: Immutable.fromJS({
         value: '',
       }),
     }),
-  }
-
-  const store = {
-    getState: jest.fn(() => initialState),
-    dispatch: jest.fn(),
-    subscribe: jest.fn(),
-  }
+  })
 
   beforeEach(() => {
     getPromoBannerState.mockReturnValue({
@@ -44,6 +40,6 @@ describe('PromoBannerContainer', () => {
       promoCode: '',
       canApplyPromo: true,
     }
-    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.find('PromoBanner').props()).toEqual(expect.objectContaining(expected))
   })
 })

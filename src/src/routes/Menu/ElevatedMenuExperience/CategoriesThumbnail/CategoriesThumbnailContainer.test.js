@@ -1,13 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
 import { CategoriesThumbnailContainer } from './CategoriesThumbnailContainer'
 
 describe('CategoriesThumbnailContainer', () => {
   let wrapper
 
   test('should map thumbnail from state to prop', () => {
-    const state = {
+    const mockStore = configureMockStore()
+    const store = mockStore({
       routing: {
         locationBeforeTransitions: {
           query: {
@@ -45,16 +47,9 @@ describe('CategoriesThumbnailContainer', () => {
           thumbnail: 'imageTwoURL'
         },
       }),
-    }
-    wrapper = shallow(<CategoriesThumbnailContainer collectionId="222" />, {
-      context: {
-        store: {
-          getState: () => state,
-          dispatch: () => {},
-          subscribe: () => {}
-        }
-      }
     })
+
+    wrapper = shallow(<CategoriesThumbnailContainer collectionId="222" store={store} />)
 
     expect(wrapper.find('CategoriesThumbnail').prop('thumbnail')).toEqual('imageUrl')
   })

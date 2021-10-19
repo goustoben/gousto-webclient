@@ -31,7 +31,7 @@ describe('CTAHomepageContainer', () => {
           sectionForTracking: null,
           dataTesting: '',
         }
-        expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+        expect(wrapper.find('CTA').props()).toEqual(expect.objectContaining(expected))
       })
     })
   })

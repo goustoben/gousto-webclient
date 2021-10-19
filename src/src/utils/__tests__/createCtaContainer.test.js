@@ -1,8 +1,7 @@
 import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
-
+import configureMockStore from 'redux-mock-store'
 import createCtaContainer from 'utils/createCtaContainer'
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
@@ -11,19 +10,15 @@ describe('createCtaContainer', () => {
   let ConnectContainer
   let wrapper
 
-  const store = {
-    default: () => {},
-    subscribe: () => {},
-    dispatch: () => {},
-    getState: () => {},
-  }
+  const mockStore = configureMockStore()
+  const store = mockStore({})
 
   test('should return connected Button by default', () => {
     ConnectContainer = createCtaContainer()
 
     wrapper = shallow(<ConnectContainer store={store} />)
 
-    expect(wrapper.type()).toEqual(Button)
+    expect(wrapper.find(Button)).toBeDefined()
   })
 
   test('should return connected Link if type is "Link"', () => {
@@ -31,7 +26,7 @@ describe('createCtaContainer', () => {
 
     wrapper = shallow(<ConnectContainer store={store} />)
 
-    expect(wrapper.type()).toEqual(Link)
+    expect(wrapper.find(Link)).toBeDefined()
   })
 
   test('should map children to text by default', () => {
@@ -39,7 +34,7 @@ describe('createCtaContainer', () => {
 
     wrapper = shallow(<ConnectContainer store={store} />)
 
-    expect(wrapper.prop('children')).toEqual('Sample Text')
+    expect(wrapper.find(Button).prop('children')).toEqual('Sample Text')
   })
 
   test('should map children to passed in prop "text" if set', () => {
@@ -47,7 +42,7 @@ describe('createCtaContainer', () => {
 
     wrapper = shallow(<ConnectContainer store={store} text="Override Text" />)
 
-    expect(wrapper.prop('children')).toEqual('Override Text')
+    expect(wrapper.find(Button).prop('children')).toEqual('Override Text')
   })
 
   test('should map onClick to passed in action', () => {
@@ -55,7 +50,8 @@ describe('createCtaContainer', () => {
     ConnectContainer = createCtaContainer({ action: actionSpy })
 
     wrapper = shallow(<ConnectContainer store={store} />)
-    wrapper.simulate('click')
+
+    wrapper.find(Button).simulate('click')
 
     expect(actionSpy.callCount).toEqual(1)
   })

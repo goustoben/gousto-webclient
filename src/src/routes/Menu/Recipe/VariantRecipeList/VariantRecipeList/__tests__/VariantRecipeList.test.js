@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
+import configureMockStore from 'redux-mock-store'
 import { VariantRecipeList } from '../VariantRecipeList'
 import { VariantRecipeListContainer } from '../VariantRecipeListContainer'
 import { VariantRecipeListItemContainer } from '../../VariantRecipeListItem'
@@ -230,22 +231,18 @@ describe('VariantRecipeListContainer', () => {
   describe('when getting variants', () => {
     beforeEach(() => {
       getSidesDataMock.mockReturnValue([])
-      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" />, {
-        context: {
-          store: {
-            dispatch: () => { },
-            getState: () => ({
-              ...state,
-              basket: Immutable.fromJS({
-                numPortion: 2,
-                currentMenuId: '373'
-              }),
-              menuRecipeDetails: Immutable.Map({})
-            }),
-            subscribe: () => { }
-          }
-        }
+
+      const mockStore = configureMockStore()
+      const store = mockStore({
+        ...state,
+        basket: Immutable.fromJS({
+          numPortion: 2,
+          currentMenuId: '373'
+        }),
+        menuRecipeDetails: Immutable.Map({})
       })
+
+      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" store={store} />)
     })
 
     test('should call getSidesDataMock with recipeId', () => {
@@ -257,22 +254,18 @@ describe('VariantRecipeListContainer', () => {
     beforeEach(() => {
       getSidesDataMock.mockReset()
       getSidesDataMock.mockReturnValue([])
-      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" categoryId="category-1" />, {
-        context: {
-          store: {
-            dispatch: () => { },
-            getState: () => ({
-              ...state,
-              basket: Immutable.fromJS({
-                numPortion: 2,
-                currentMenuId: '373'
-              }),
-              menuRecipeDetails: Immutable.Map({})
-            }),
-            subscribe: () => { }
-          }
-        }
+
+      const mockStore = configureMockStore()
+      const store = mockStore({
+        ...state,
+        basket: Immutable.fromJS({
+          numPortion: 2,
+          currentMenuId: '373'
+        }),
+        menuRecipeDetails: Immutable.Map({})
       })
+
+      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" categoryId="category-1" store={store} />,)
     })
 
     test('should call getSidesDataMock with recipeId', () => {

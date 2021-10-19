@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
+import { ReactReduxContext } from 'react-redux'
 import Helmet from 'react-helmet'
 import { browserHistory } from 'react-router'
 import Immutable from 'immutable'
@@ -97,10 +98,6 @@ const defaultProps = {
   signupSetStep: () => {},
   isGoustoOnDemandEnabled: false,
   isWizardWithoutImagesEnabled: false,
-}
-
-const contextTypes = {
-  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 const postCodePath = '/signup/postcode'
@@ -241,6 +238,7 @@ class Signup extends PureComponent {
       shouldSetStepFromParams: true,
       isGoustoOnDemandEnabled,
     }
+
     Signup.fetchData({ store, query, params, options })
     this.unlistenHistory = browserHistory.listen(({ pathname }) => {
       const step = getStepFromPathname(pathname)
@@ -378,6 +376,6 @@ class Signup extends PureComponent {
 
 Signup.propTypes = propTypes
 Signup.defaultProps = defaultProps
-Signup.contextTypes = contextTypes
+Signup.contextType = ReactReduxContext
 
 export { Signup }

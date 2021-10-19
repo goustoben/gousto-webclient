@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import configureMockStore from 'redux-mock-store'
 import { Button } from 'goustouicomponents'
 import ModalPanel from 'Modal/ModalPanel'
 import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
@@ -69,7 +71,7 @@ const deliveryDays = Immutable.fromJS({ '01/01/2019': {} })
 const trackAbandonBasketEligibilitySpy = jest.fn()
 
 let wrapper
-const store = {
+const initialState = {
   auth: Immutable.fromJS({
     isAuthenticated: true
   }),
@@ -77,25 +79,33 @@ const store = {
   recipes: Immutable.Map()
 }
 
-const getState = jest.fn().mockReturnValue(store)
-const subscribe = jest.fn().mockReturnValue(Promise.resolve())
-const dispatch = jest.fn().mockReturnValue(Promise.resolve())
+const mockStore = configureMockStore()
+const store = mockStore(initialState)
 
-const context = {
-  store: {
-    getState,
-    subscribe,
-    dispatch
-  }
+store.subscribe = jest.fn().mockReturnValue(Promise.resolve())
+store.dispatch = jest.fn().mockReturnValue(Promise.resolve())
+
+// We add legacy context to access the store to test the AbandonBasketModal
+// component. This is cause enzyme only supports legacy context
+AbandonBasketModal.contextTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  store: PropTypes.any,
 }
+
 describe('Abandon Basket Modal', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   describe('render', () => {
-    beforeEach(async () => {
-      wrapper = shallow(<AbandonBasketModal redirect={jest.fn()} getAbandonBasketSessionState={jest.fn()} basketRecipesClear={jest.fn()} basketRecipes={basketRecipes} recipes={recipes} />)
+    beforeEach(() => {
+      wrapper = shallow(<AbandonBasketModal
+        redirect={jest.fn()}
+        getAbandonBasketSessionState={jest.fn()}
+        basketRecipesClear={jest.fn()}
+        basketRecipes={basketRecipes}
+        recipes={recipes}
+      />, { context: { store }})
     })
 
     test('should render a modal if showModal state is true and basket recipes exist in recipes object', () => {
@@ -111,7 +121,8 @@ describe('Abandon Basket Modal', () => {
           redirect={jest.fn()}
           getAbandonBasketSessionState={jest.fn()}
           basketRecipesClear={jest.fn()}
-        />
+          store={store}
+        />, { context: { store }}
       )
       wrapper.setState({ showModal: true })
       expect(wrapper.find(RecipeItem).length).toEqual(basketRecipes.size)
@@ -128,7 +139,16 @@ describe('Abandon Basket Modal', () => {
     })
 
     test('should not render if the basket recipes exist in recipes object', () => {
-      wrapper = shallow(<AbandonBasketModal redirect={jest.fn()} getAbandonBasketSessionState={jest.fn()} basketRecipesClear={jest.fn()} basketRecipes={basketRecipes} />)
+      wrapper = shallow(
+        <AbandonBasketModal
+          redirect={jest.fn()}
+          getAbandonBasketSessionState={jest.fn()}
+          basketRecipesClear={jest.fn()}
+          basketRecipes={basketRecipes}
+          store={store}
+        />,
+        { context: { store } })
+
       wrapper.setState({ showModal: true })
 
       expect(wrapper.find(ModalPanel).length).toEqual(0)
@@ -137,7 +157,7 @@ describe('Abandon Basket Modal', () => {
 
   describe('component did mount', () => {
     beforeEach(async () => {
-      wrapper = await shallow(
+      wrapper = shallow(
         <AbandonBasketModal
           redirect={jest.fn()}
           getAbandonBasketSessionState={jest.fn()}
@@ -147,9 +167,12 @@ describe('Abandon Basket Modal', () => {
           orderDate="01/01/2019"
           deliveryDays={deliveryDays}
           trackAbandonBasketEligibility={trackAbandonBasketEligibilitySpy}
+          store={store}
         />,
-        { context }
+        { context: { store } },
       )
+
+      await wrapper.instance().componentDidMount()
     })
 
     test('should set show modal state', () => {
@@ -161,43 +184,57 @@ describe('Abandon Basket Modal', () => {
   })
 
   describe('fetch data', () => {
-    beforeEach(async () => {
-      wrapper = shallow(<AbandonBasketModal redirect={jest.fn()} getAbandonBasketSessionState={jest.fn()} basketRecipesClear={jest.fn()} />, { context })
+    beforeEach(() => {
+      wrapper = shallow(<AbandonBasketModal
+        redirect={jest.fn()}
+        getAbandonBasketSessionState={jest.fn()}
+        basketRecipesClear={jest.fn()}
+        store={store}
+      />, { context: { store } })
     })
 
-    test('should call userLoadOrders if authenticated', () => {
-      AbandonBasketModal.fetchData({ store })
+    test('should call userLoadOrders if authenticated', async () => {
+      await AbandonBasketModal.fetchData({ store })
+
       expect(userActions.userLoadOrders).toHaveBeenCalled()
     })
 
-    test('should call loadMenuServiceDataIfDeepLinked if authenticated and no deliveryDays', () => {
-      AbandonBasketModal.fetchData({ store })
+    test('should call loadMenuServiceDataIfDeepLinked if authenticated and no deliveryDays', async () => {
+      await AbandonBasketModal.fetchData({ store })
+
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
     })
 
-    test('should call menuLoadDays if authenticated and no deliveryDays', () => {
-      AbandonBasketModal.fetchData({ store })
+    test('should call menuLoadDays if authenticated and no deliveryDays', async () => {
+      await AbandonBasketModal.fetchData({ store })
 
       expect(menuLoadDays).toHaveBeenCalled()
     })
 
-    test('should call boxSummaryDeliveryDaysLoad if authenticated and no deliveryDays', () => {
-      AbandonBasketModal.fetchData({ store })
+    test('should call boxSummaryDeliveryDaysLoad if authenticated and no deliveryDays', async () => {
+      await AbandonBasketModal.fetchData({ store })
 
       expect(boxSummaryActions.boxSummaryDeliveryDaysLoad).toHaveBeenCalled()
     })
 
-    test('should call loadRecipes if authenticated and no recipes', () => {
-      AbandonBasketModal.fetchData({ store })
+    test('should call loadRecipes if authenticated and no recipes', async () => {
+      await AbandonBasketModal.fetchData({ store })
 
       expect(loadRecipes).toHaveBeenCalled()
     })
 
-    test('should not call anything if not authenticated', () => {
-      store.auth = Immutable.fromJS({ isAuthenticated: false })
+    test('should not call anything if not authenticated', async () => {
+      const notAuthenticatedStore = mockStore({
+        auth: Immutable.fromJS({
+          isAuthenticated: false
+        }),
+        boxSummaryDeliveryDays: Immutable.Map(),
+        recipes: Immutable.Map()
+      })
       jest.clearAllMocks()
 
-      AbandonBasketModal.fetchData({ store })
+      await AbandonBasketModal.fetchData({ store: notAuthenticatedStore })
+
       expect(userActions.userLoadOrders).not.toHaveBeenCalled()
       expect(menuLoadDays).not.toHaveBeenCalled()
       expect(boxSummaryActions.boxSummaryDeliveryDaysLoad).not.toHaveBeenCalled()
@@ -207,7 +244,14 @@ describe('Abandon Basket Modal', () => {
 
   describe('get confirmed orders on day', () => {
     beforeEach(() => {
-      wrapper = shallow(<AbandonBasketModal redirect={jest.fn()} getAbandonBasketSessionState={jest.fn()} basketRecipesClear={jest.fn()} orders={orders} />)
+      wrapper = shallow(
+        <AbandonBasketModal
+          redirect={jest.fn()}
+          getAbandonBasketSessionState={jest.fn()}
+          basketRecipesClear={jest.fn()}
+          orders={orders}
+          store={store}
+        />, { context: { store } })
     })
     test('should return a list of users orders on the same day as the abandoned order', () => {
       wrapper.setProps({ orderDate: '07/07/07' })

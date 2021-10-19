@@ -39,7 +39,7 @@ const Postcode = ({
             color="gray"
             label="Postcode"
             mask
-            withRef
+            forwardRef
             ref={receiveRef}
             data-testing="checkoutPostcode"
             onChange={() => setIsFindAddressDisabled(false)}
@@ -73,7 +73,7 @@ const Postcode = ({
             inputType="DropDown"
             color="secondary"
             mask
-            withRef
+            forwardRef
             ref={receiveRef}
             dataTesting="houseNo"
             isMobile={isMobile}

@@ -1,8 +1,6 @@
 import React from 'react'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-
 import { AddRecipeButtonContainer } from './AddRecipeButtonContainer'
 
 describe('<AddRecipeButtonContainer />', () => {
@@ -38,25 +36,21 @@ describe('<AddRecipeButtonContainer />', () => {
     }),
   }
 
-  const wrapperOptions = {
-    context: {
-      store: {
-        getState: () => defaultState,
-        dispatch: () => {},
-        subscribe: () => {},
-      }
-    }
+  const store = {
+    getState: () => defaultState,
+    dispatch: () => {},
+    subscribe: () => {},
   }
 
   const wrapper = shallow(
-    <AddRecipeButtonContainer recipeId={recipeId} />,
-    wrapperOptions
+    <AddRecipeButtonContainer recipeId={recipeId} store={store} />,
   )
 
   test('should pass down correct props', () => {
-    expect(wrapper.prop('isInBasket')).toEqual(false)
-    expect(wrapper.prop('isBasketLimitReached')).toEqual(false)
-    expect(wrapper.prop('buttonProps')).toEqual({buttonClassName: 'addButton', buttonText: 'Add recipe', lineClassName: 'addButtonLine'})
-    expect(wrapper.prop('recipeVariants')).toEqual(null)
+    const button = wrapper.find('AddRecipeButton')
+    expect(button.prop('isInBasket')).toEqual(false)
+    expect(button.prop('isBasketLimitReached')).toEqual(false)
+    expect(button.prop('buttonProps')).toEqual({buttonClassName: 'addButton', buttonText: 'Add recipe', lineClassName: 'addButtonLine'})
+    expect(button.prop('recipeVariants')).toEqual(null)
   })
 })
