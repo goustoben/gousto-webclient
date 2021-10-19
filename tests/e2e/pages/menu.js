@@ -179,5 +179,14 @@ function addRecipe(recipeIndex, addRecipeButtonElements, addRecipeButtonSelector
   const addRecipeButtonElementId = addRecipeButtonElements[recipeIndex].ELEMENT
 
   nightwatchContext.executeAndThrowOnFailure(`document.querySelectorAll('${addRecipeButtonSelector}')[${recipeIndex}].scrollIntoView({ block: "center" })`, [])
-  clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonElementId, ['[data-testing="tutorialStepCta"]','.ReactModalPortal [data-testing="menuRecipeAdd"]'], nightwatchContext)
+  clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(
+    addRecipeButtonElementId,
+    [
+      '[data-testing="promoModal"] [data-testing="modal-close-button"]',
+      '[data-testing="spotlight-overlay"]',
+      '[data-testing="tutorialStepCta"]',
+      '.ReactModalPortal [data-testing="menuRecipeAdd"]',
+    ],
+    nightwatchContext
+  );
 }
