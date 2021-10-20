@@ -1,6 +1,6 @@
 module.exports = {
   url: function () {
-    return this.api.launchUrl + '/'
+    return this.api.launchUrl + "/";
   },
 
   sections: {
@@ -13,15 +13,15 @@ module.exports = {
         },
       },
 
-      commands: [{
-        checkIfCookieBannerVisible: function () {
-          this.waitForElementVisible('@CTA', 2000)
+      commands: [
+        {
+          dismissCookieBannerIfPresent: function () {
+            this.optionallyClickToDismiss(
+              '*[data-testing="cookiePolicyBannerBtn"]'
+            );
+          },
         },
-        checkIfCookieBannerNotPresent: function () {
-          this.waitForElementNotPresent('@CTA', 2000)
-        },
-        clickCookiePolicyBannerBtn: function () { this.safelyClick('@CTA') }
-      }]
-    }
-  }
-}
+      ],
+    },
+  },
+};

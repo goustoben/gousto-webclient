@@ -17,15 +17,7 @@ module.exports = {
       .logJourneyStep('Begin sign-up but stop at payment')
       .url(home.api.launchUrl)
       .perform(function (done) {
-        cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerVisible()
-        done()
-      })
-      .perform(function (done) {
-        cookiePolicy.section.cookiePolicyBanner.clickCookiePolicyBannerBtn()
-        done()
-      })
-      .perform(function (done) {
-        cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerNotPresent()
+        cookiePolicy.section.cookiePolicyBanner.dismissCookieBannerIfPresent()
         done()
       })
       .perform(function (done) {

@@ -1,16 +1,6 @@
-const chromedriver = require("chromedriver");
-
 module.exports = ({ ARTIFACTS_PATH = "./screenshots", globalWaitTimeout }) => ({
   globals: {
     waitForConditionTimeout: globalWaitTimeout,
-    before: (done) => {
-      chromedriver.start();
-      done();
-    },
-    after: (done) => {
-      chromedriver.stop();
-      done();
-    },
   },
   request_timeout_options: {
     timeout: 15000,

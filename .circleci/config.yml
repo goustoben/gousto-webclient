@@ -189,7 +189,8 @@ jobs:
       - run:
           name: Install CI dependencies
           command: apt-get -y update && apt-get -y install jq
-      - browser-tools/install-chrome
+      - browser-tools/install-chrome:
+          chrome-version: 90.0.4430.72
       - browser-tools/install-chromedriver
       - aws-cli/setup:
           aws-access-key-id: AWS_ERC_ACCESS_KEY
@@ -198,7 +199,7 @@ jobs:
       - run:
           name: Install E2E test dependencies
           working_directory: tests/e2e
-          command: npm ci
+          command: npm install --only=prod
       - run:
           name: Lease CI node access to public ALB
           working_directory: scripts
@@ -206,7 +207,7 @@ jobs:
       - run:
           name: Run E2E tests
           working_directory: tests/e2e
-          command: npm run test:staging
+          command: chromedriver start & npm run test:staging
       - store_test_results:
           path: tests/e2e/reports
       - store_artifacts:
