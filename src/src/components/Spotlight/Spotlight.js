@@ -17,6 +17,7 @@ const Spotlight = ({ x, y, onClick }) => {
 
   return (
     <div
+      data-testing="spotlight-overlay"
       className={css.spotlight}
       style={{
         height: getDocumentHeight(),
@@ -56,8 +57,4 @@ Spotlight.defaultProps = {
   onClick: null,
 }
 
-export {
-  Spotlight,
-  RADIUS,
-  accuracy,
-}
+export { Spotlight, RADIUS, accuracy }

@@ -10,6 +10,9 @@ import { getIsRecaptchaEnabled } from '../../../../../selectors/auth'
 
 export const goToPayment = () => {
   goToCheckout()
+
+  cy.wait('@getDeliveryDays')
+
   clearAndFillAccountForm({
     email: '123@456.com',
     password: '1234abcd',

@@ -15,6 +15,8 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       cy.mockDate()
       goToCheckout()
 
+      cy.wait('@getDeliveryDays')
+
       clearAndFillAccountForm({
         email: 'test@email.com',
         password: '1234abcd',

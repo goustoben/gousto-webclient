@@ -28,6 +28,12 @@ describe('Given I am a logged out user', () => {
     describe('And I choose a 2 person box size', () => {
       before(() => {
         cy.visit(PAGE_URL)
+
+        // wait for step to be visible
+        cy.get('[data-testing="signupBoxSizeStep"]')
+
+        cy.wait(5000)
+
         cy.get('[data-testing="signupBoxSize2Portions"]').click()
       })
 
@@ -43,6 +49,12 @@ describe('Given I am a logged out user', () => {
     describe('And I choose a 4 person box size', () => {
       before(() => {
         cy.visit(PAGE_URL)
+
+        // wait for step to be visible
+        cy.get('[data-testing="signupBoxSizeStep"]')
+
+        cy.wait(5000)
+
         cy.get('[data-testing="signupBoxSize4Portions"]').click()
       })
 
