@@ -21,7 +21,6 @@ module.exports = {
     "airbnb",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:you-dont-need-lodash-underscore/compatible",
     "plugin:jsx-a11y/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",

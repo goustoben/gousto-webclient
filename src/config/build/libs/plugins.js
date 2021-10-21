@@ -3,7 +3,6 @@ const path = require('path')
 
 const ExitCodePlugin = require('../../exitCode')
 const ExtractPlugin = require('extract-text-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
@@ -15,9 +14,8 @@ const { webpackEnvVarsClient, webpackEnvVarsDev } = require('./webpack-env-vars'
 
 const getDefaultPlugins = (webpackEnvVars) => [
   new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
-  new LodashModuleReplacementPlugin(),
   new webpack.DefinePlugin(webpackEnvVars),
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only inlcude moment in English,
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only include moment in English
 ]
 
 const getProductionClientPlugins = () => {
@@ -58,6 +56,7 @@ const getProductionClientPlugins = () => {
       },
     }),
     ExitCodePlugin,
+    new webpack.IgnorePlugin(/^@axe-core/),
   ]
 
   if (process.env.GW_ENABLE_BUNDLE_ANALYZER) {

@@ -1,3 +1,5 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
@@ -49,6 +51,12 @@ async function processQuery(query, store, { hashTag = '', }) {
 
   if (query.awc) {
     store.dispatch(setAwinClickChecksum(query.awc))
+  }
+
+  if (query.axe) {
+    // eslint-disable-next-line global-require
+    const axe = require('@axe-core/react')
+    axe(React, ReactDOM, 1000)
   }
 }
 

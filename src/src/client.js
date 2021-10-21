@@ -22,12 +22,6 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { configureStore } from './store'
 import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
 
-if (__ENV__ !== 'production') {
-  // eslint-disable-next-line global-require
-  const axe = require('@axe-core/react')
-  axe(React, ReactDOM, 1000)
-}
-
 docReady('docReady', window)
 
 let initialState = {}

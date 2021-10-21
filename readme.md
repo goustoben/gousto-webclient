@@ -105,3 +105,9 @@ generate a file `src/public/stats.json`.
 
 Invoke `npm run bundle-analyzer`. It will open a browser window at
 http://127.0.0.1:8888 with the size stats for each bundle and its dependencies.
+
+## Axe - accessibility testing engine
+
+In local development, open the browser window at
+http://frontend.gousto.local:8080/?axe=1 in order to enable Axe. This will show
+the accessibility-related warnings on the pages.
