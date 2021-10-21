@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import * as orderConfirmation from 'actions/orderConfirmation'
 import * as menuCheckoutClick from '../menuCheckoutClick'
 import { checkoutWithSides } from '../menuSidesCheckoutClick'
 import * as sidesAction from '../sides'
@@ -8,28 +9,35 @@ describe('checkoutWithSides', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
   let closeSidesModalSpy
-  let checkoutBasketSpy
+  let orderConfirmationSpy
+  let orderConfirmationRedirectMock
 
   const products = {
     product_1: 2,
     product_2: 2,
   }
+  const orderId = 'order-id'
 
   beforeEach(() => {
     state = {
       basket: Immutable.fromJS({
-        orderId: '',
+        orderId,
       }),
       auth: Immutable.fromJS({
         id: 'user_id',
         isAuthenticated: true
       }),
+      user: Immutable.fromJS({
+        orders: Immutable.List([]),
+      }),
     }
+
     getState.mockReturnValue(state)
 
+    orderConfirmationRedirectMock = jest.fn()
     closeSidesModalSpy = jest.spyOn(sidesAction, 'closeSidesModal').mockImplementation()
-    checkoutBasketSpy = jest.spyOn(menuCheckoutClick, 'checkoutBasket').mockImplementation()
     jest.spyOn(menuCheckoutClick, 'isOrderApiUpdateEnabled').mockResolvedValue(true)
+    orderConfirmationSpy = jest.spyOn(orderConfirmation, 'orderConfirmationRedirect').mockReturnValue(orderConfirmationRedirectMock)
   })
 
   afterEach(() => {
@@ -49,6 +57,8 @@ describe('checkoutWithSides', () => {
     expect(dispatch).toBeCalledTimes(3)
     expect(closeSidesModalSpy).toHaveBeenCalled()
     expect(dispatch).toHaveBeenCalledWith(closeSidesModalMock)
+    expect(orderConfirmationSpy).toBeCalledWith('order-id', 'recipe-choice')
+    expect(dispatch).toHaveBeenCalledWith(orderConfirmationRedirectMock)
   })
 
   test('should dispatch products update', async () => {
@@ -67,27 +77,13 @@ describe('checkoutWithSides', () => {
     })
   })
 
-  test('should dispatch checkoutBasket with with section and view', async () => {
-    const checkoutBasketMock = jest.fn()
-    checkoutBasketSpy.mockReturnValue(checkoutBasketMock)
-
-    await checkoutWithSides('menu', 'view', products)(dispatch, getState)
-
-    expect(dispatch).toBeCalledTimes(3)
-    expect(checkoutBasketSpy).toHaveBeenCalledWith('menu', 'view')
-    expect(dispatch).toHaveBeenCalledWith(checkoutBasketMock)
-  })
-
   describe('when no products are submitted', () => {
     test('should dispatch checkoutBasket with with section and view', async () => {
-      const checkoutBasketMock = jest.fn()
-      checkoutBasketSpy.mockReturnValue(checkoutBasketMock)
-
       await checkoutWithSides('menu', 'view', null)(dispatch, getState)
 
       expect(dispatch).toBeCalledTimes(2)
-      expect(checkoutBasketSpy).toHaveBeenCalledWith('menu', 'view')
-      expect(dispatch).toHaveBeenCalledWith(checkoutBasketMock)
+      expect(orderConfirmationSpy).toBeCalledWith('order-id', 'recipe-choice')
+      expect(dispatch).toHaveBeenCalledWith(orderConfirmationRedirectMock)
     })
   })
 })

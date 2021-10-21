@@ -6,11 +6,13 @@ import { checkoutTransactionalOrder as checkoutTransactionalOrderV1 } from 'acti
 import status from 'actions/status'
 import { orderUpdate } from 'actions/order'
 import { getIsAuthenticated } from 'selectors/auth'
-import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 import { sendUpdateOrder } from 'routes/Menu/actions/order'
 import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 import { validateMenuLimitsForBasket } from '../selectors/menu'
 import { isBasketTransactionalOrder } from '../../../selectors/basket'
+
+export const getIsSidesEnabled = isOptimizelyFeatureEnabledFactory('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled')
 
 export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_create_web_enabled')
 
@@ -56,11 +58,12 @@ export const checkoutBasket = (section, view) => async (dispatch, getState) => {
   }
 
   const isUpdateV2Enabled = await isOrderApiUpdateEnabled(dispatch, getState)
+  const isSidesEnabled = await getIsSidesEnabled(dispatch, getState)
 
   if (isUpdateV2Enabled) {
-    dispatch(sendUpdateOrder())
+    dispatch(sendUpdateOrder(isSidesEnabled))
   } else {
-    dispatch(orderUpdate())
+    dispatch(orderUpdate(isSidesEnabled))
   }
 }
 

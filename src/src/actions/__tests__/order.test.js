@@ -32,6 +32,7 @@ import { skipDates, unSkipDates } from '../../routes/Account/apis/subscription'
 import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
 import * as rocketsOrderV2 from '../../routes/Account/MyDeliveries/apis/orderV2'
 import { safeJestMock } from '../../_testing/mocks'
+import * as SidesActions from '../../routes/Menu/actions/sides'
 
 import { flushPromises } from '../../_testing/utils'
 
@@ -323,6 +324,20 @@ describe('order actions', () => {
         'order_id',
         'order_action',
       )
+    })
+
+    test('should open the sides modal if isSidesEnabled is passed in as true', async () => {
+      spyGetOrderForUpdateOrderV1.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
+      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
+      ))
+      const openSidesModalMock = jest.fn()
+      const openSidesModalSpy = jest.spyOn(SidesActions, 'openSidesModal').mockReturnValueOnce(openSidesModalMock)
+
+      await orderUpdate(true)(dispatch, getState)
+
+      expect(openSidesModalSpy).toHaveBeenCalled()
+      expect(dispatch).toHaveBeenCalledWith(openSidesModalMock)
     })
 
     test('should call sendClientMetric with correct details', async () => {
