@@ -1,4 +1,4 @@
-@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value BreakpointToMedium from 'design-language/breakpoints.module.css';
 @value LightestAccessible, BlueBase, White, Basa from 'styles/colors.css';
 @value FontFamilyAxiformaSemiBold from 'design-language/typography.module.css';
 
@@ -7,6 +7,12 @@
     border: 1px solid #C4C7C9;
     margin-bottom: 0.75rem;
     border-radius: 2px;
+}
+
+.overlayContentForMobile {
+    @media BreakpointToMedium {
+        min-height: calc(100vh - 90px);
+    }
 }
 
 .sidesModalSidesImageContainer {
@@ -33,6 +39,10 @@
 .sidesModalPanelContainer {
     max-height: calc(100vh - 1.875rem);
     height: auto;
+
+    @media BreakpointToMedium {
+        max-height: calc(100vh - 6.5rem);
+    }
 }
 
 .sidesModalSidesHeader {
@@ -99,6 +109,11 @@
     height: calc(100% - 14.5rem);
     max-height: calc(100vh - 14.5rem);
     margin-bottom: 8.5rem;
+
+    @media BreakpointToMedium {
+        height: calc(100% - 18.5rem);
+        max-height: calc(100vh - 18.5rem);
+    }
 
     @media (min-height: 900px) {
         height: calc(900px - 14.5rem);
