@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
+import { ReactReduxContext } from 'react-redux'
 import { basketSum } from 'utils/basket'
 import recipesActions from 'actions/recipes'
 import { OrderedRecipes } from './OrderedRecipe'
@@ -67,8 +68,6 @@ RecipeSummary.defaultProps = {
   numPortions: 2,
 }
 
-RecipeSummary.contextTypes = {
-  store: PropTypes.objectOf(PropTypes.object).isRequired,
-}
+RecipeSummary.contextType = ReactReduxContext
 
 export { RecipeSummary }

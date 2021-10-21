@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
+import { ReactReduxContext } from 'react-redux'
 import menuFetchData from 'routes/Menu/fetchData'
 import { CTA, seo } from 'config/home'
 import routesConfig from 'config/routes'
@@ -8,10 +9,6 @@ import { generateHref } from 'Helmet/GoustoHelmet'
 import { menuLoadBoxPrices } from 'actions/menu'
 import { PromoBanner } from './PromoBanner'
 import { HomeSections } from './HomeSections'
-
-const contextTypes = {
-  store: PropTypes.instanceOf(Object).isRequired,
-}
 
 const propTypes = {
   isAuthenticated: PropTypes.bool,
@@ -110,6 +107,6 @@ class Home extends Component {
 
 Home.propTypes = propTypes
 Home.defaultProps = defaultProps
-Home.contextTypes = contextTypes
+Home.contextType = ReactReduxContext
 
 export { Home }

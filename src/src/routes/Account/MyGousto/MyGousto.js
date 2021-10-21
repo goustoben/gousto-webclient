@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Link from 'Link'
 import Helmet from 'react-helmet'
+import { ReactReduxContext } from 'react-redux'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
 import { LimitedCapacityNotice } from './LimitedCapacityNotice'
@@ -35,11 +36,6 @@ const propTypes = {
   track3dsCompliantClick: PropTypes.func,
   userReset3dsCompliantToken: PropTypes.func,
   pending: PropTypes.bool,
-}
-
-const contextTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  store: PropTypes.object.isRequired,
 }
 
 const defaultProps = {
@@ -201,6 +197,6 @@ class MyGousto extends React.PureComponent {
 
 MyGousto.propTypes = propTypes
 MyGousto.defaultProps = defaultProps
-MyGousto.contextTypes = contextTypes
+MyGousto.contextType = ReactReduxContext
 
 export { MyGousto }

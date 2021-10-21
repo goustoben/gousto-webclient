@@ -1,8 +1,7 @@
 import React from 'react'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-
+import configureMockStore from 'redux-mock-store'
 import { VariantRecipeListItem } from '../VariantRecipeListItem'
 import { VariantRecipeListItemContainer } from '../VariantRecipeListItemContainer'
 
@@ -44,19 +43,11 @@ describe('<VariantRecipeListItemContainer />', () => {
     })
   }
 
-  const wrapperOptions = {
-    context: {
-      store: {
-        getState: () => state,
-        dispatch: () => {},
-        subscribe: () => {},
-      }
-    }
-  }
+  const mockStore = configureMockStore()
+  const store = mockStore(state)
 
   const wrapper = shallow(
-    <VariantRecipeListItemContainer recipeId={recipeId} />,
-    wrapperOptions
+    <VariantRecipeListItemContainer recipeId={recipeId} store={store} />,
   )
 
   test('should pass down correct props', () => {

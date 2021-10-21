@@ -1,7 +1,7 @@
 import React from 'react'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
 
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfoContainer'
 
@@ -22,7 +22,8 @@ describe('<RecipeTilePurchaseInfoContainer />', () => {
     ]
   })
 
-  const state = {
+  const mockStore = configureMockStore()
+  const store = mockStore({
     recipes: Immutable.fromJS({
       [recipeId]: recipe
     }),
@@ -41,26 +42,15 @@ describe('<RecipeTilePurchaseInfoContainer />', () => {
         375: {}
       })
     })
-  }
-
-  const wrapperOptions = {
-    context: {
-      store: {
-        getState: () => state,
-        dispatch: () => {},
-        subscribe: () => {},
-      }
-    }
-  }
+  })
 
   const wrapper = shallow(
-    <RecipeTilePurchaseInfoContainer recipeId={recipeId} />,
-    wrapperOptions
+    <RecipeTilePurchaseInfoContainer recipeId={recipeId} store={store} />
   )
 
   test('should pass down correct props', () => {
-    expect(wrapper.prop('isOutOfStock')).toEqual(false)
-    expect(wrapper.prop('surcharge')).toEqual(0.75)
-    expect(wrapper.prop('isFineDineIn')).toEqual(true)
+    expect(wrapper.find('RecipeTilePurchaseInfo').prop('isOutOfStock')).toEqual(false)
+    expect(wrapper.find('RecipeTilePurchaseInfo').prop('surcharge')).toEqual(0.75)
+    expect(wrapper.find('RecipeTilePurchaseInfo').prop('isFineDineIn')).toEqual(true)
   })
 })

@@ -48,4 +48,6 @@ const AccountForm = formContainer(CreateAccountStep, [], sectionName, {}, {}) //
 
 const CreateAccount = addInitialValues(AccountForm, { sectionName })
 
+CreateAccount.displayName = 'CreateAccount'
+
 export { CreateAccount }

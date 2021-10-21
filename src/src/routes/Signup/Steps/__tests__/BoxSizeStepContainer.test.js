@@ -30,6 +30,6 @@ describe('BoxSizeStepContainer', () => {
     const expected = {
       menuBoxPrices,
     }
-    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.find('BoxSizeStep').props()).toEqual(expect.objectContaining(expected))
   })
 })

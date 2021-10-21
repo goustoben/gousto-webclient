@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
+import { ReactReduxContext } from 'react-redux'
 import { menuLoadBoxPrices } from 'actions/menu'
 import { hero, seo } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
@@ -85,10 +86,6 @@ BoxPrices.defaultProps = {
   numPersonsToBoxDescriptors: null,
 }
 
-BoxPrices.contextTypes = {
-  store: PropTypes.shape({
-    dispatch: PropTypes.func,
-  }).isRequired,
-}
+BoxPrices.contextType = ReactReduxContext
 
 export { BoxPrices }

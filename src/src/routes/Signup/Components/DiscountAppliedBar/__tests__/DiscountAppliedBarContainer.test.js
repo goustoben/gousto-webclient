@@ -1,12 +1,14 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import configureMockStore from 'redux-mock-store'
 import { DiscountAppliedBarContainer } from '../DiscountAppliedBarContainer'
 
 describe('given DiscountAppliedBarContainer is rendered', () => {
   let wrapper
 
-  const state = {
+  const mockStore = configureMockStore()
+  const store = mockStore({
     promoModalVisible: false,
     auth: Immutable.fromJS({
       isAuthenticated: false,
@@ -14,20 +16,14 @@ describe('given DiscountAppliedBarContainer is rendered', () => {
     basket: Immutable.fromJS({}),
     error: Immutable.fromJS({}),
     signup: Immutable.fromJS({}),
-  }
-
-  const store = {
-    getState: () => state,
-    dispatch: jest.fn(),
-    subscribe: jest.fn(),
-  }
+  })
 
   beforeEach(() => {
     wrapper = shallow(<DiscountAppliedBarContainer store={store} />)
   })
 
   test('then it should pass the correct props', () => {
-    expect(wrapper.props()).toMatchObject({
+    expect(wrapper.find('DiscountAppliedBar').props()).toMatchObject({
       promoModalVisible: false,
       isPromoBarHidden: false,
       isDiscountAppliedBarDismissed: false,

@@ -1,6 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import configureMockStore from 'redux-mock-store'
 import { DeliveryAddressContainer } from '../DeliveryAddress/DeliveryAddressContainer'
 
 const deliveryDays = Immutable.fromJS({
@@ -75,12 +76,8 @@ describe('DeliveryAddressContainer', () => {
       ndd: { value: false },
     }),
   }
-
-  const store = {
-    getState: jest.fn(() => initialState),
-    dispatch: jest.fn(),
-    subscribe: jest.fn(),
-  }
+  const mockStore = configureMockStore()
+  const store = mockStore(initialState)
 
   beforeEach(() => {
     wrapper = shallow(<DeliveryAddressContainer store={store} />)
@@ -90,6 +87,6 @@ describe('DeliveryAddressContainer', () => {
     const expected = {
       isMobile: true,
     }
-    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.find('Address').props()).toEqual(expect.objectContaining(expected))
   })
 })

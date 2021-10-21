@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-
+import configureMockStore from 'redux-mock-store'
 import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { Detail } from '../Detail'
@@ -211,6 +211,18 @@ describe('<Detail />', () => {
 describe('DetailContainer', () => {
   let wrapper
   beforeEach(() => {
+    const mockStore = configureMockStore()
+    const store = mockStore({
+      basket: Immutable.fromJS({
+        currentMenuId: '377'
+      }),
+      recipes: Immutable.fromJS({
+        123: {
+          id: '123',
+        }
+      })
+    })
+
     wrapper = shallow(
       <DetailContainer
         isOutOfStock={false}
@@ -226,24 +238,8 @@ describe('DetailContainer', () => {
         stock={100}
         inBasket={false}
         description="Recipe description"
-      />, {
-        context: {
-          store: {
-            dispatch: () => {},
-            subscribe: () => {},
-            getState: () => ({
-              basket: Immutable.fromJS({
-                currentMenuId: '377'
-              }),
-              recipes: Immutable.fromJS({
-                123: {
-                  id: '123',
-                }
-              })
-            }),
-          }
-        }
-      })
+        store={store}
+      />)
   })
   test('should send menuWithSides as false', () => {
     expect(wrapper.find('Detail').prop('menuWithSides')).toBe(false)
