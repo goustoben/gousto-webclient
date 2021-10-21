@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-
+import { ReactReduxContext } from 'react-redux'
 import OrderCancelButton from './OrderCancelButton'
 
 import css from './OrderDetail.css'
@@ -113,9 +113,7 @@ OrderDetail.propTypes = {
   portionsCount: PropTypes.string,
 }
 
-OrderDetail.contextTypes = {
-  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-}
+OrderDetail.contextType = ReactReduxContext
 
 OrderDetail.defaultProps = {
   orderId: '',

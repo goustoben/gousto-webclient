@@ -1,7 +1,7 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
-import { Provider } from 'react-redux'
+import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
 import { CTAHomepageContainer } from 'routes/Home/CTA'
 import { Hero } from '../Hero'
 
@@ -166,18 +166,16 @@ describe('Hero', () => {
     })
 
     describe('onScroll', () => {
-      const initialState = {
+      const mockStore = configureMockStore()
+
+      const store = mockStore({
         features: Immutable.Map({
           isHomePageRedesignEnabled: Immutable.fromJS({
             value: false,
           }),
         }),
-      }
-      const store = {
-        getState: jest.fn(() => initialState),
-        dispatch: jest.fn(),
-        subscribe: jest.fn(),
-      }
+      })
+
       const stickyCTARef = {
         current: {
           offsetHeight: 150,
@@ -201,11 +199,7 @@ describe('Hero', () => {
       })
 
       beforeEach(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <Hero />
-          </Provider>
-        )
+        wrapper = shallow(<Hero store={store} />)
       })
 
       describe('when window scroll is equal to offsetTop', () => {
@@ -215,7 +209,7 @@ describe('Hero', () => {
         })
 
         test('then should return isSticky = false', () => {
-          expect(wrapper.find(Hero).state('isSticky')).toBeFalsy()
+          expect(wrapper.state('isSticky')).toBe(false)
         })
       })
 
@@ -226,7 +220,7 @@ describe('Hero', () => {
         })
 
         test('then should return isSticky = true', () => {
-          expect(wrapper.find(Hero).state('isSticky')).toBeTruthy()
+          expect(wrapper.state('isSticky')).toBe(true)
         })
       })
     })

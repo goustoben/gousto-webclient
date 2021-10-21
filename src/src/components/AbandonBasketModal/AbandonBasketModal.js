@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import { ReactReduxContext } from 'react-redux'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
 import ModalPanel from 'Modal/ModalPanel'
@@ -40,9 +41,7 @@ class AbandonBasketModal extends PureComponent {
     trackAbandonBasketContinueToMenu: () => { }
   }
 
-  static contextTypes = {
-    store: PropTypes.instanceOf(Immutable.Map).isRequired
-  }
+  static contextType = ReactReduxContext
 
   static fetchData = async ({ store }) => {
     const state = store.getState()

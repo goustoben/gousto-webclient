@@ -1,8 +1,7 @@
 import React from 'react'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-
+import configureMockStore from 'redux-mock-store'
 import { CookingTimeIconContainer } from './CookingTimeIconContainer'
 
 describe('<CookingTimeIconContainer />', () => {
@@ -15,7 +14,8 @@ describe('<CookingTimeIconContainer />', () => {
   })
 
   describe('when numPortions is 2', () => {
-    const state = {
+    const mockStore = configureMockStore()
+    const store = mockStore({
       recipes: Immutable.fromJS({
         [recipeId]: recipe
       }),
@@ -26,30 +26,20 @@ describe('<CookingTimeIconContainer />', () => {
       menuRecipeStock: Immutable.fromJS({
         [recipeId]: { 2: 1000, 4: 1000 }
       }),
-    }
-
-    const wrapperOptions = {
-      context: {
-        store: {
-          getState: () => state,
-          dispatch: () => { },
-          subscribe: () => { },
-        }
-      }
-    }
+    })
 
     const wrapper = shallow(
-      <CookingTimeIconContainer recipeId={recipeId} />,
-      wrapperOptions
+      <CookingTimeIconContainer recipeId={recipeId} store={store} />
     )
 
     test('should pass down correct props using cookingTime', () => {
-      expect(wrapper.prop('cookingTime')).toEqual(30)
+      expect(wrapper.find('CookingTimeIcon').prop('cookingTime')).toEqual(30)
     })
   })
 
   describe('when numPortions is 4', () => {
-    const state = {
+    const mockStore = configureMockStore()
+    const store = mockStore({
       recipes: Immutable.fromJS({
         [recipeId]: recipe
       }),
@@ -60,25 +50,14 @@ describe('<CookingTimeIconContainer />', () => {
       menuRecipeStock: Immutable.fromJS({
         [recipeId]: { 2: 1000, 4: 1000 }
       }),
-    }
-
-    const wrapperOptions = {
-      context: {
-        store: {
-          getState: () => state,
-          dispatch: () => { },
-          subscribe: () => { },
-        }
-      }
-    }
+    })
 
     const wrapper = shallow(
-      <CookingTimeIconContainer recipeId={recipeId} />,
-      wrapperOptions
+      <CookingTimeIconContainer recipeId={recipeId} store={store} />,
     )
 
     test('should pass down correct props using cookingTimeFamily', () => {
-      expect(wrapper.prop('cookingTime')).toEqual(40)
+      expect(wrapper.find('CookingTimeIcon').prop('cookingTime')).toEqual(40)
     })
   })
 })

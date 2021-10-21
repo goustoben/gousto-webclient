@@ -74,9 +74,28 @@ const configureHistoryAndStore = (url, initialState) => {
 
 const renderHTML = (store, renderProps, url, userAgent, scripts) => {
   let startTime = new Date()
+
+  const {
+    routes: renderPropsRoutes,
+    param,
+    location,
+    components: renderPropsComponents,
+    router,
+    matchContext,
+    ...rest
+  } = renderProps
   const components = (
     <Provider store={store}>
-      <RouterContext {...renderProps} />
+      <RouterContext
+        routes={renderPropsRoutes}
+        param={param}
+        location={location}
+        components={renderPropsComponents}
+        router={router}
+        matchContext={matchContext}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...rest}
+      />
     </Provider>
   )
 

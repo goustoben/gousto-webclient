@@ -84,7 +84,7 @@ CheckBox.propTypes = {
   className: PropTypes.string,
   'data-testing': PropTypes.string,
   disabled: PropTypes.bool,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  label: PropTypes.node.isRequired,
   labelClassName: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,

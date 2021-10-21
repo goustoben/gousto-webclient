@@ -1,6 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import configureMockStore from 'redux-mock-store'
 import { VariantRecipeListModalContainer } from '../VariantRecipeListModalContainer'
 
 jest.mock('actions/menu', () => ({
@@ -12,32 +13,26 @@ describe('VariantRecipeListModalContainer', () => {
 
   describe('when no currentExpandedRecipeVariantsDropdown', () => {
     beforeEach(() => {
-      const state = {
+      const mockStore = configureMockStore()
+      const store = mockStore({
         menu: Immutable.fromJS({
           currentExpandedRecipeVariantsDropdown: null,
         }),
         request: Immutable.fromJS({
           browser: 'mobile',
         }),
-      }
-
-      wrapper = shallow(<VariantRecipeListModalContainer />, {
-        context: {
-          store: {
-            getState: () => state,
-            dispatch: () => {},
-            subscribe: () => {}
-          }
-        }
       })
+
+      wrapper = shallow(<VariantRecipeListModalContainer store={store} />)
     })
 
     test('should set correct props', () => {
-      expect(wrapper.props()).toEqual({
+      expect(wrapper.find('VariantRecipeListModal').props()).toEqual(expect.objectContaining({
         browserType: 'mobile',
         currentExpandedRecipeVariantsDropdown: null,
         recipeVariantDropdownExpanded: expect.any(Function),
       })
+      )
     })
   })
 
@@ -48,32 +43,26 @@ describe('VariantRecipeListModalContainer', () => {
       categoryId: '789',
     }
     beforeEach(() => {
-      const state = {
+      const mockStore = configureMockStore()
+      const store = mockStore({
         menu: Immutable.fromJS({
           currentExpandedRecipeVariantsDropdown,
         }),
         request: Immutable.fromJS({
           browser: 'mobile',
         }),
-      }
-
-      wrapper = shallow(<VariantRecipeListModalContainer />, {
-        context: {
-          store: {
-            getState: () => state,
-            dispatch: () => {},
-            subscribe: () => {}
-          }
-        }
       })
+
+      wrapper = shallow(<VariantRecipeListModalContainer store={store} />)
     })
 
     test('should set correct props', () => {
-      expect(wrapper.props()).toEqual({
+      expect(wrapper.find('VariantRecipeListModal').props()).toEqual(expect.objectContaining({
         browserType: 'mobile',
         currentExpandedRecipeVariantsDropdown: Immutable.fromJS(currentExpandedRecipeVariantsDropdown),
         recipeVariantDropdownExpanded: expect.any(Function),
       })
+      )
     })
   })
 })

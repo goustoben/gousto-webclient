@@ -96,16 +96,21 @@ app.use(async (ctx, next) => {
 
     await next()
   } catch (err) {
+    // If the error we want to render the error page
+
     if (err.networkError) {
       err.status = err.networkError.statusCode
     }
     logger.critical({message: err.message, status: err.status, uuid, errors: [err]})
 
-    if (Number(err.status) === 200) {
+    const status = Number(err.status || 500)
+
+    if (status === 200 || Number.isNaN(status)) {
       ctx.status = 500
     } else {
-      ctx.status = Number(err.status)
+      ctx.status = status
     }
+
     clearPersistentStore(ctx.cookies)
 
     const { store } = configureHistoryAndStore(url, { serverError: `${ctx.status}` })

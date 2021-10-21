@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
 import { actionTypes } from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
 import { CheckoutFrameContainer } from '../CheckoutFrameContainer'
@@ -631,7 +632,9 @@ describe('CheckoutFrame', () => {
 
 describe('CheckoutFrameContainer', () => {
   let wrapper
-  const initialState = {
+  const mockStore = configureMockStore()
+
+  const store = mockStore({
     checkout: Immutable.fromJS({
       errors: [],
     }),
@@ -649,15 +652,12 @@ describe('CheckoutFrameContainer', () => {
         },
       },
     }),
-  }
-  const store = {
-    getState: jest.fn(() => initialState),
-    dispatch: jest.fn(),
-    subscribe: jest.fn(),
-  }
+  })
+
   beforeEach(() => {
     wrapper = shallow(<CheckoutFrameContainer store={store} next={jest.fn()} />)
   })
+
   test('should be rendered properly', () => {
     const expected = {
       sectionName: 'payment',
@@ -665,6 +665,6 @@ describe('CheckoutFrameContainer', () => {
       hasCheckoutError: false,
       billingAddress: {},
     }
-    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.find('CheckoutFrame').props()).toEqual(expect.objectContaining(expected))
   })
 })

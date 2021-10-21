@@ -1,14 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-
+import PropTypes from 'prop-types'
+import configureMockStore from 'redux-mock-store'
 import config from 'config/routes'
 import { PaymentMethod } from 'config/signup'
 import { Summary } from 'routes/Checkout/Components/Summary'
 import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
 import { BoxDetailsContainer } from 'routes/Checkout/Components/BoxDetails'
-import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
+import { CheckoutPaymentContainer } from 'routes/Checkout/Components/CheckoutPayment'
 /* eslint-disable import/named */
 import {
   menuLoadDays,
@@ -67,12 +68,8 @@ jest.mock('utils/logger', () => ({
 
 describe('Given Checkout component', () => {
   let wrapper
+  let mockedStore
   let store
-  let context
-  let dispatch
-  let getState
-  let subscribe
-  let unsubscribe
   let onCheckoutSpy
   let fetchData
   let fetchPayPalClientToken
@@ -82,6 +79,9 @@ describe('Given Checkout component', () => {
   let fetchGoustoRef
 
   beforeEach(() => {
+    const mockStore = configureMockStore()
+    mockedStore = mockStore({})
+
     store = {
       basket: Immutable.Map({
         stepsOrder: Immutable.List(),
@@ -124,26 +124,24 @@ describe('Given Checkout component', () => {
       ribbon: Immutable.Map({}),
     }
 
-    getState = jest.fn().mockReturnValue(store)
-    subscribe = jest.fn().mockReturnValue(Promise.resolve())
-    unsubscribe = jest.fn().mockReturnValue(Promise.resolve())
-    dispatch = jest.fn().mockReturnValue(Promise.resolve())
+    mockedStore.getState = jest.fn().mockReturnValue(store)
+    mockedStore.subscribe = jest.fn().mockReturnValue(Promise.resolve())
+    mockedStore.unsubscribe = jest.fn().mockReturnValue(Promise.resolve())
+    mockedStore.dispatch = jest.fn().mockReturnValue(Promise.resolve())
     fetchPayPalClientToken = jest.fn()
     trackSuccessfulCheckoutFlow = jest.fn()
     trackFailedCheckoutFlow = jest.fn()
     changeRecaptcha = jest.fn()
     fetchGoustoRef = jest.fn()
 
-    context = {
-      store: {
-        dispatch,
-        getState,
-        subscribe,
-        unsubscribe,
-      },
-    }
-
     onCheckoutSpy = jest.fn()
+
+    // We add legacy context to access the store to test the Checkout
+    // component. This is cause enzyme only supports legacy context
+    Checkout.contextTypes = {
+      // eslint-disable-next-line react/forbid-prop-types
+      store: PropTypes.any,
+    }
 
     wrapper = shallow(
       <Checkout
@@ -156,8 +154,9 @@ describe('Given Checkout component', () => {
         trackFailedCheckoutFlow={trackFailedCheckoutFlow}
         changeRecaptcha={changeRecaptcha}
         fetchGoustoRef={fetchGoustoRef}
+        store={mockedStore}
       />,
-      { context }
+      { context: { store: mockedStore } }
     )
   })
 
@@ -223,22 +222,22 @@ describe('Given Checkout component', () => {
 
     test('should redirect to the first checkout step', async () => {
       await Checkout.fetchData({
-        store: context.store,
+        store: mockedStore,
         query: {},
         params: {},
       })
-      expect(dispatch).toHaveBeenCalled()
+      expect(mockedStore.dispatch).toHaveBeenCalled()
       expect(replace).toHaveBeenCalledWith('/check-out/account')
     })
 
     test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, pricingRequest', async () => {
       await Checkout.fetchData({
-        store: context.store,
+        store: mockedStore,
         query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalled()
+      expect(mockedStore.dispatch).toHaveBeenCalled()
       expect(menuLoadDays).toHaveBeenCalledTimes(4)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
@@ -255,18 +254,15 @@ describe('Given Checkout component', () => {
         menuCutoffUntil: '2019-02-22T11:59:59+00:00',
         error: Immutable.Map({}),
       }
-      getState = jest.fn().mockReturnValue(store)
+      mockedStore.getState = jest.fn().mockReturnValue(store)
       await Checkout.fetchData({
-        store: {
-          dispatch,
-          getState,
-        },
+        store: mockedStore,
         query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalled()
+      expect(mockedStore.dispatch).toHaveBeenCalled()
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
@@ -289,18 +285,15 @@ describe('Given Checkout component', () => {
           },
         }),
       }
-      getState = jest.fn().mockReturnValue(store)
+      mockedStore.getState = jest.fn().mockReturnValue(store)
       await Checkout.fetchData({
-        store: {
-          dispatch,
-          getState,
-        },
+        store: mockedStore,
         query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
-      expect(dispatch.mock.calls.length).toBeGreaterThan(4)
+      expect(mockedStore.dispatch.mock.calls.length).toBeGreaterThan(4)
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
@@ -323,18 +316,15 @@ describe('Given Checkout component', () => {
           },
         }),
       }
-      getState = jest.fn().mockReturnValue(store)
+      mockedStore.getState = jest.fn().mockReturnValue(store)
       await Checkout.fetchData({
-        store: {
-          dispatch,
-          getState,
-        },
+        store: mockedStore,
         query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
-      expect(dispatch.mock.calls.length).toBeGreaterThan(4)
+      expect(mockedStore.dispatch.mock.calls.length).toBeGreaterThan(4)
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
@@ -356,18 +346,15 @@ describe('Given Checkout component', () => {
           BASKET_PREVIEW_ORDER_CHANGE: true,
         }),
       }
-      getState = jest.fn().mockReturnValue(store)
+      mockedStore.getState = jest.fn().mockReturnValue(store)
       await Checkout.fetchData({
-        store: {
-          dispatch,
-          getState,
-        },
+        store: mockedStore,
         query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
-      expect(dispatch.mock.calls.length).toBeGreaterThan(4)
+      expect(mockedStore.dispatch.mock.calls.length).toBeGreaterThan(4)
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
@@ -389,15 +376,14 @@ describe('Given Checkout component', () => {
         }),
         boxSummaryDeliveryDays: {},
       }
-      getState = jest.fn().mockReturnValue(store)
-      dispatch.mockImplementationOnce(() => Promise.resolve())
-      dispatch.mockImplementation(() => Promise.reject(new Error('something went wrong')))
+      mockedStore.getState = jest.fn().mockReturnValue(store)
+      mockedStore.dispatch.mockImplementationOnce(() => Promise.resolve())
+      mockedStore.dispatch.mockImplementation(() =>
+        Promise.reject(new Error('something went wrong'))
+      )
 
       await Checkout.fetchData({
-        store: {
-          dispatch,
-          getState,
-        },
+        store: mockedStore,
         query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
@@ -411,6 +397,7 @@ describe('Given Checkout component', () => {
     beforeEach(() => {
       fetchData = jest.fn().mockReturnValue(Promise.resolve())
       Checkout.fetchData = fetchData
+      wrapper.instance().context = store
     })
 
     test('should call fetchData', () => {
@@ -418,7 +405,7 @@ describe('Given Checkout component', () => {
 
       expect(fetchData).toHaveBeenCalled()
       expect(fetchData).toHaveBeenCalledWith({
-        store: context.store,
+        store: mockedStore.store,
         query: { steps: [] },
         params: { stepName: 'account' },
       })
@@ -466,23 +453,23 @@ describe('Given Checkout component', () => {
   })
 
   describe('payment component', () => {
-    test('should render a CheckoutPayment component', () => {
-      expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
+    test('should render a CheckoutPaymentContainer component', () => {
+      expect(wrapper.find(CheckoutPaymentContainer)).toHaveLength(1)
     })
 
-    describe('CheckoutPayment props', () => {
+    describe('CheckoutPaymentContainer props', () => {
       describe('when stepName is "payment"', () => {
         beforeEach(() => {
           wrapper.setProps({ params: { stepName: 'payment' } })
         })
 
         test('then should return prerender = false', () => {
-          expect(wrapper.find(CheckoutPayment).props().prerender).toBeFalsy()
+          expect(wrapper.find(CheckoutPaymentContainer).props().prerender).toBeFalsy()
         })
 
         test('then should return isLastStep = true and nextStepName is empty', () => {
-          expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeTruthy()
-          expect(wrapper.find(CheckoutPayment).props().nextStepName).toEqual('')
+          expect(wrapper.find(CheckoutPaymentContainer).props().isLastStep).toBeTruthy()
+          expect(wrapper.find(CheckoutPaymentContainer).props().nextStepName).toEqual('')
         })
       })
 
@@ -492,12 +479,12 @@ describe('Given Checkout component', () => {
         })
 
         test('then should return prerender = true', () => {
-          expect(wrapper.find(CheckoutPayment).props().prerender).toBeTruthy()
+          expect(wrapper.find(CheckoutPaymentContainer).props().prerender).toBeTruthy()
         })
 
         test('then should return isLastStep = false and nextStepName is not empty', () => {
-          expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeFalsy()
-          expect(wrapper.find(CheckoutPayment).props().nextStepName).not.toEqual('')
+          expect(wrapper.find(CheckoutPaymentContainer).props().isLastStep).toBeFalsy()
+          expect(wrapper.find(CheckoutPaymentContainer).props().nextStepName).not.toEqual('')
         })
       })
     })
@@ -746,15 +733,15 @@ describe('Given Checkout component', () => {
           const expected = {
             account: {
               humanName: 'Account',
-              component: expect.any(Function),
+              component: expect.any(Object),
             },
             delivery: {
               humanName: 'Delivery',
-              component: expect.any(Function),
+              component: expect.any(Object),
             },
             payment: {
               humanName: 'Payment',
-              component: expect.any(Function),
+              component: expect.any(Object),
             },
           }
           expect(wrapper.instance().getStepMapping()).toEqual(expect.objectContaining(expected))
@@ -766,15 +753,15 @@ describe('Given Checkout component', () => {
           const expected = {
             account: {
               humanName: 'Account',
-              component: expect.any(Function),
+              component: expect.any(Object),
             },
             delivery: {
               humanName: 'Delivery',
-              component: expect.any(Function),
+              component: expect.any(Object),
             },
             payment: {
               humanName: 'Payment',
-              component: expect.any(Function),
+              component: expect.any(Object),
             },
             recipes: {
               humanName: 'Recipes',
