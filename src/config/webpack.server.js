@@ -4,7 +4,6 @@ const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
 const nodeExternals = require('webpack-node-externals')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
@@ -95,7 +94,6 @@ const config = {
   },
   plugins: [
     ExitCodePlugin,
-    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin(webpackEnvVarsServer),
   ],
   resolve: {
