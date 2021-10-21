@@ -27,7 +27,7 @@ import { fetchDeliveryDays } from '../apis/deliveries'
 import { unSkipDates, skipDates } from '../routes/Account/apis/subscription'
 import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { getBasketOrderId } from '../selectors/basket'
-
+import { openSidesModal } from '../routes/Menu/actions/sides'
 import { deleteOrder } from '../routes/Account/MyDeliveries/apis/orderV2'
 
 const getTrackingInformationForV1 = (order) => ({
@@ -86,7 +86,7 @@ export const cancelledAllBoxesModalToggleVisibility = (visibility) => ({
   visibility,
 })
 
-export const orderUpdate = () => async (dispatch, getState) => {
+export const orderUpdate = (isSidesEnabled = false) => async (dispatch, getState) => {
   dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
 
@@ -107,7 +107,11 @@ export const orderUpdate = () => async (dispatch, getState) => {
 
       sendClientMetric('menu-edit-complete', 1, 'Count')
 
-      dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
+      if (isSidesEnabled) {
+        dispatch(openSidesModal())
+      } else {
+        dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
+      }
     }
   } catch (err) {
     logger.error({ message: 'saveOrder api call failed, logging error below...' })

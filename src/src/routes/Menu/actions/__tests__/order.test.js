@@ -15,6 +15,7 @@ import { saveUserOrder, updateUserOrder } from '../../apis/core'
 import * as orderSelectors from '../../selectors/order'
 import { orderAssignToUser, sendUpdateOrder } from '../order'
 import * as basketSelectors from '../../../../selectors/basket'
+import * as SidesActions from '../sides'
 
 import { safeJestMock } from '../../../../_testing/mocks'
 
@@ -327,6 +328,21 @@ describe('order actions', () => {
         'order-id',
         'order_action',
       )
+    })
+
+    test('should open the sides modal if isSidesEnabled is passed in as true', async () => {
+      getOrderActionSpy.mockReturnValue('order_action')
+      getOrderV2Spy.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
+      jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
+        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
+      ))
+      const openSidesModalMock = jest.fn()
+      const openSidesModalSpy = jest.spyOn(SidesActions, 'openSidesModal').mockReturnValueOnce(openSidesModalMock)
+
+      await sendUpdateOrder(true)(dispatch, getState)
+
+      expect(openSidesModalSpy).toHaveBeenCalledWith()
+      expect(dispatch).toHaveBeenCalledWith(openSidesModalMock)
     })
 
     test('should call sendClientMetric with correct details', async () => {

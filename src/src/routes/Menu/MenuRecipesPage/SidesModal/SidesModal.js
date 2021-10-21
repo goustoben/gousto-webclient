@@ -222,6 +222,9 @@ export const SidesModal = ({
     <Overlay
       open={isOpen}
       from="top"
+      contentClassName={classnames([
+        css.overlayContentForMobile,
+      ])}
     >
       <ModalPanel closePortal={onModalClose} className={css.sidesModalPanelContainer}>
         <ModalHeader align="left" withSeparator>

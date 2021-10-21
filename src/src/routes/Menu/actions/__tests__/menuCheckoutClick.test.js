@@ -11,6 +11,7 @@ import {
   isOrderApiUpdateEnabled,
   checkoutBasket,
   clearBasketNotValidError,
+  getIsSidesEnabled,
 } from '../menuCheckoutClick'
 
 // The first spec to create optimizely instance will point to this function.
@@ -23,7 +24,6 @@ describe('feature flags', () => {
   const dispatch = jest.fn()
 
   beforeEach(() => {
-    isFeatureEnabled.mockReturnValue(true)
     jest.spyOn(optimizelySdk, 'createInstance')
       .mockReturnValue({ onReady: () => ({ success: true }), isFeatureEnabled })
   })
@@ -34,6 +34,8 @@ describe('feature flags', () => {
 
   describe('isOrderApiCreateEnabled', () => {
     test('it calls feature enabled with the correct flag', async () => {
+      isFeatureEnabled.mockResolvedValueOnce(true)
+
       const isEnabled = await isOrderApiCreateEnabled(dispatch, getState)
 
       expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_create_web_enabled', 'user_id')
@@ -43,9 +45,22 @@ describe('feature flags', () => {
 
   describe('isOrderApiUpdateEnabled', () => {
     test('it calls feature enabled with the correct flag', async () => {
+      isFeatureEnabled.mockResolvedValueOnce(true)
+
       const isEnabled = await isOrderApiUpdateEnabled(dispatch, getState)
 
       expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
+      expect(isEnabled).toBe(true)
+    })
+  })
+
+  describe('getIsSidesEnabled', () => {
+    test('it calls feature enabled with the correct flag', async () => {
+      isFeatureEnabled.mockResolvedValueOnce(true)
+
+      const isEnabled = await getIsSidesEnabled(dispatch, getState)
+
+      expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
       expect(isEnabled).toBe(true)
     })
   })
@@ -141,7 +156,11 @@ describe('checkoutBasket', () => {
         })
 
         test('should dispatch orderUpdate', async () => {
-          isFeatureEnabled.mockReturnValue(false)
+          isFeatureEnabled
+          // `radishes_order_api_create_web_enabled`
+            .mockResolvedValueOnce(false)
+          // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
+            .mockResolvedValueOnce(false)
 
           const orderUpdateMock = jest.fn()
           const orderUpdateSpy = jest.spyOn(orderActions, 'orderUpdate').mockReturnValue(orderUpdateMock)
@@ -149,13 +168,18 @@ describe('checkoutBasket', () => {
           await checkoutBasket('menu', 'orderUpdate')(dispatch, getState)
 
           expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-          expect(orderUpdateSpy).toBeCalled()
+          expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
+          expect(orderUpdateSpy).toBeCalledWith(false)
           expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
         })
 
         describe('when update OrderAPI V1 feature flag returns true', () => {
           test('should dispatch sendUpdateOrder', async () => {
-            isFeatureEnabled.mockReturnValue(true)
+            isFeatureEnabled
+            // `radishes_order_api_create_web_enabled`
+              .mockResolvedValueOnce(true)
+            // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
+              .mockResolvedValueOnce(false)
 
             const sendUpdateOrderMock = jest.fn()
             const sendUpdateOrderSpy = jest.spyOn(menuActions, 'sendUpdateOrder').mockReturnValue(sendUpdateOrderMock)
@@ -163,8 +187,49 @@ describe('checkoutBasket', () => {
             await checkoutBasket('menu', 'sendUpdateOrder')(dispatch, getState)
 
             expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-            expect(sendUpdateOrderSpy).toBeCalled()
+            expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
+            expect(sendUpdateOrderSpy).toBeCalledWith(false)
             expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)
+          })
+        })
+
+        describe('when Sides feature flag returns true', () => {
+          test('should dispatch orderUpdate', async () => {
+            isFeatureEnabled
+              // `radishes_order_api_create_web_enabled`
+              .mockResolvedValueOnce(false)
+              // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
+              .mockResolvedValueOnce(true)
+
+            const orderUpdateMock = jest.fn()
+            const orderUpdateSpy = jest.spyOn(orderActions, 'orderUpdate').mockReturnValue(orderUpdateMock)
+
+            await checkoutBasket('menu', 'orderUpdate')(dispatch, getState)
+
+            expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
+            expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
+            expect(orderUpdateSpy).toBeCalledWith(true)
+            expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
+          })
+
+          describe('when update OrderAPI V1 feature flag returns true', () => {
+            test('should dispatch sendUpdateOrder', async () => {
+              isFeatureEnabled
+              // `radishes_order_api_create_web_enabled`
+                .mockResolvedValueOnce(true)
+              // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
+                .mockResolvedValueOnce(true)
+
+              const sendUpdateOrderMock = jest.fn()
+              const sendUpdateOrderSpy = jest.spyOn(menuActions, 'sendUpdateOrder').mockReturnValue(sendUpdateOrderMock)
+
+              await checkoutBasket('menu', 'sendUpdateOrder')(dispatch, getState)
+
+              expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
+              expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
+              expect(sendUpdateOrderSpy).toBeCalledWith(true)
+              expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)
+            })
           })
         })
       })

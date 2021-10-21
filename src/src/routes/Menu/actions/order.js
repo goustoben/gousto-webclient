@@ -9,6 +9,7 @@ import * as coreApi from '../apis/core'
 import { updateOrder } from '../apis/orderV2'
 import { getOrderDetails, getOrderV2, getOrderAction } from '../selectors/order'
 import { getBasketOrderId } from '../../../selectors/basket'
+import { openSidesModal } from './sides'
 
 const handleErrorForOrder = (message) => (dispatch) => {
   dispatch(statusActions.error(actionTypes.ORDER_SAVE, message))
@@ -90,7 +91,7 @@ export const orderAssignToUser = (orderAction, existingOrderId) => async (dispat
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
 }
 
-export const sendUpdateOrder = () => async (dispatch, getState) => {
+export const sendUpdateOrder = (isSidesEnabled = false) => async (dispatch, getState) => {
   dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
 
@@ -112,7 +113,11 @@ export const sendUpdateOrder = () => async (dispatch, getState) => {
 
       sendClientMetric('menu-edit-complete-order-api-v2', 1, 'Count')
 
-      dispatch(orderConfirmationRedirect(orderId, orderAction))
+      if (isSidesEnabled) {
+        dispatch(openSidesModal())
+      } else {
+        dispatch(orderConfirmationRedirect(orderId, orderAction))
+      }
     }
   } catch (err) {
     logger.error({ message: 'saveOrder api call failed, logging error below...' })
