@@ -15,7 +15,7 @@ const { webpackEnvVarsClient, webpackEnvVarsDev } = require('./webpack-env-vars'
 const getDefaultPlugins = (webpackEnvVars) => [
   new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
   new webpack.DefinePlugin(webpackEnvVars),
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only inlcude moment in English,
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only include moment in English
 ]
 
 const getProductionClientPlugins = () => {
@@ -56,6 +56,7 @@ const getProductionClientPlugins = () => {
       },
     }),
     ExitCodePlugin,
+    new webpack.IgnorePlugin(/^@axe-core/),
   ]
 
   if (process.env.GW_ENABLE_BUNDLE_ANALYZER) {

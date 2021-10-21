@@ -5,6 +5,7 @@ import { basketPromoCodeChange } from 'actions/basket'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { setAffiliateSource } from 'actions/tracking'
+import axe from '@axe-core/react'
 
 jest.mock('actions/signup',() => ({
   signupSetGoustoOnDemandEnabled: jest.fn(),
@@ -27,6 +28,8 @@ jest.mock('actions/promos',() => ({
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
 }))
+
+jest.mock('@axe-core/react')
 
 describe('Given processQuery util function', () => {
   let mockStore
@@ -161,6 +164,19 @@ describe('Given processQuery util function', () => {
 
     test('Then should dispatch setAffiliateSource', () => {
       expect(setAffiliateSource).toHaveBeenCalledWith('www.source.com')
+    })
+  })
+
+  describe('when axe parameter is supplied', () => {
+    beforeEach(() => {
+      query = {
+        axe: 1,
+      }
+      processQuery(query, mockStore, {})
+    })
+
+    test('then it should enable the Axe engine', () => {
+      expect(axe).toHaveBeenCalled()
     })
   })
 })
