@@ -7,7 +7,7 @@ import {
 import { trackProductFiltering } from './products'
 import { getDisplayedCollections } from '../routes/Menu/selectors/collections'
 
-const filtersCollectionChange = (collectionName, collectionId) => ({
+export const filtersCollectionChange = (collectionName, collectionId) => ({
   type: actionTypes.FILTERS_COLLECTION_CHANGE,
   collectionName,
   collectionId,
