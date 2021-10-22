@@ -465,7 +465,9 @@ module.exports = {
             }
           }
 
-          pollRace(conditions, onPollDone)
+          const POLL_TIMEOUT_MS = 60000
+
+          pollRace(conditions, onPollDone, POLL_TIMEOUT_MS)
         },
         asyncResubmitAndExpectOnlyCardVerificationFailed: function(browser, done) {
           this.goToNextStep()
@@ -507,7 +509,9 @@ module.exports = {
             }
           }
 
-          pollRace(conditions, onPollDone)
+          const POLL_TIMEOUT_MS = 60000
+
+          pollRace(conditions, onPollDone, POLL_TIMEOUT_MS)
         },
         goToNextStep,
       }],
