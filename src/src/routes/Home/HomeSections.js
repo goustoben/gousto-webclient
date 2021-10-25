@@ -16,6 +16,7 @@ const propTypes = {
   pricePerServing: PropTypes.string,
   isAuthenticated: PropTypes.bool,
   isSignupReductionEnabled: PropTypes.bool,
+  isJpgImagesEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -25,15 +26,22 @@ const defaultProps = {
   isAuthenticated: false,
   isSignupReductionEnabled: false,
   pricePerServing: null,
+  isJpgImagesEnabled: false,
 }
 
 class HomeSections extends Component {
   mapModules = () => {
-    const { isAuthenticated, isSignupReductionEnabled, pricePerServing } = this.props
+    const { isAuthenticated, isSignupReductionEnabled, pricePerServing, isJpgImagesEnabled } =
+      this.props
 
     return {
       hero: (props) => (
-        <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />
+        <Hero
+          ctaText={props.ctaText}
+          ctaUri={props.ctaUri}
+          isAuthenticated={isAuthenticated}
+          isHomeJpgEnabled={isJpgImagesEnabled}
+        />
       ),
       trustPilot: () => <TrustPilot />,
       whyChooseGousto: (props) => (
@@ -41,9 +49,10 @@ class HomeSections extends Component {
           ctaText={props.ctaText}
           ctaUri={props.ctaUri}
           pricePerServing={pricePerServing}
+          isHomeJpgEnabled={isJpgImagesEnabled}
         />
       ),
-      joeWicks: () => <JoeWicks />,
+      joeWicks: () => <JoeWicks isHomeJpgEnabled={isJpgImagesEnabled} />,
       recipes: (props) => <Carousel ctaText={props.ctaText} ctaUri={props.ctaUri} />,
       ...(isSignupReductionEnabled ? { emailForm: () => <EmailForm /> } : {}),
     }

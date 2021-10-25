@@ -3,7 +3,7 @@ import { knownVariants, defaultVariant } from 'config/home'
 import actions from 'actions/auth'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getPricePerServing } from 'routes/BoxPrices/boxPricesSelectors'
-import { getIsSignupReductionEnabled } from 'selectors/features'
+import { getIsSignupReductionEnabled, getIsJpgImagesEnabled } from 'selectors/features'
 
 import { Home } from './Home'
 
@@ -18,6 +18,7 @@ const mapStateToProps = (state, props) => ({
       : defaultVariant,
   isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
   pricePerServing: getPricePerServing(state),
+  isJpgImagesEnabled: getIsJpgImagesEnabled(state),
 })
 
 const mapDispatchToProps = {

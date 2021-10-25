@@ -3,7 +3,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { ReactReduxContext } from 'react-redux'
 import { menuLoadBoxPrices } from 'actions/menu'
-import { hero, seo } from 'routes/BoxPrices/boxPricesConfig'
+import { getHeroDetails, seo } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
 import Hero from 'Hero'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
@@ -30,7 +30,9 @@ class BoxPrices extends React.PureComponent {
       numPersonsToBoxDescriptors,
       loading,
       error,
+      isJpgImagesEnabled,
     } = this.props
+    const { image, header } = getHeroDetails(isJpgImagesEnabled)
 
     return isBoxPricesRedesignEnabled ? (
       <div>
@@ -53,8 +55,8 @@ class BoxPrices extends React.PureComponent {
         <div className={loading ? css.loading : ''}>
           <Hero
             style={{ backgroundPosition: '0 66%', backgroundSize: 'cover' }}
-            imageUrl={hero.image}
-            headerText={hero.header}
+            imageUrl={image}
+            headerText={header}
           />
           {!loading && (
             <BoxPricesList
@@ -76,6 +78,7 @@ BoxPrices.propTypes = {
   isBoxPricesRedesignEnabled: PropTypes.bool,
   boxPricesBoxSizeSelected: PropTypes.func,
   numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
+  isJpgImagesEnabled: PropTypes.bool,
 }
 
 BoxPrices.defaultProps = {
@@ -84,6 +87,7 @@ BoxPrices.defaultProps = {
   isBoxPricesRedesignEnabled: false,
   boxPricesBoxSizeSelected: () => {},
   numPersonsToBoxDescriptors: null,
+  isJpgImagesEnabled: false,
 }
 
 BoxPrices.contextType = ReactReduxContext

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Fragment, useState } from 'react'
-import { hero } from 'routes/BoxPrices/boxPricesConfig'
+import { getHeroDetails } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 import { BoxPricesTabs } from './BoxPricesTabs'
@@ -32,7 +32,7 @@ const BoxPricesRedesign = ({
         </div>
       )}
       <div className={loading ? css.loading : ''}>
-        <h1 className={css.header}>{hero.header}</h1>
+        <h1 className={css.header}>{getHeroDetails(false).header}</h1>
         {!loading && (
           <Fragment>
             <BoxPricesTabs

@@ -16,6 +16,7 @@ const propTypes = {
   redirectLoggedInUser: PropTypes.func,
   isSignupReductionEnabled: PropTypes.bool,
   pricePerServing: PropTypes.string,
+  isJpgImagesEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -24,6 +25,7 @@ const defaultProps = {
   redirectLoggedInUser: () => {},
   isSignupReductionEnabled: false,
   pricePerServing: null,
+  isJpgImagesEnabled: false,
 }
 
 class Home extends Component {
@@ -62,7 +64,13 @@ class Home extends Component {
     ].filter(Boolean)
 
   render() {
-    const { isAuthenticated, variant, isSignupReductionEnabled, pricePerServing } = this.props
+    const {
+      isAuthenticated,
+      variant,
+      isSignupReductionEnabled,
+      pricePerServing,
+      isJpgImagesEnabled,
+    } = this.props
     const modules = this.getModules(isSignupReductionEnabled)
     const { menu, signup, home } = routesConfig.client
     let ctaUri = signup
@@ -99,6 +107,7 @@ class Home extends Component {
           isAuthenticated={isAuthenticated}
           isSignupReductionEnabled={isSignupReductionEnabled}
           pricePerServing={pricePerServing}
+          isJpgImagesEnabled={isJpgImagesEnabled}
         />
       </div>
     )
