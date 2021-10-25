@@ -1,9 +1,11 @@
 /* eslint-disable global-require */
 
-export const hero = {
+export const getHeroDetails = (isJpgImagesEnabled) => ({
   header: 'Box Prices',
-  image: require('media/images/box-prices/box-prices-hero.png'),
-}
+  image: isJpgImagesEnabled
+    ? require('media/images/box-prices/box-prices-hero.jpg')
+    : require('media/images/box-prices/box-prices-hero.png'),
+})
 
 export const cta = 'Build My Box'
 export const ctaRedesign = 'Get started'

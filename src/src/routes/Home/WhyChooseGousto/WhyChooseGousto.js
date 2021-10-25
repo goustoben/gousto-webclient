@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { formatPrice } from 'utils/format'
-import { homeConfig } from 'config/home'
+import { getWhyGoustoConfig } from 'config/home'
 import { StepsGuide } from './StepsGuide'
 import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
 import css from './WhyChooseGousto.css'
 
-const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
+const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing, isHomeJpgEnabled }) => {
   const subtitle = (
     <Fragment>
       Impressively easy meals from just{' '}
@@ -17,11 +17,12 @@ const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
       . All of the flavour, none of the fuss.
     </Fragment>
   )
+  const { title } = getWhyGoustoConfig(isHomeJpgEnabled)
 
   return (
     <div className={css.whyGoustoContainer}>
-      <ModuleTitle title={homeConfig.whyGousto.title} subTitle={subtitle} />
-      <StepsGuide />
+      <ModuleTitle title={title} subTitle={subtitle} />
+      <StepsGuide isHomeJpgEnabled={isHomeJpgEnabled} />
       <div className={css.CTAContainer}>
         <CTAHomepageContainer ctaUri={ctaUri} sectionForTracking="whyChooseGousto">
           {ctaText}
@@ -34,7 +35,13 @@ const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
 WhyChooseGousto.propTypes = {
   ctaUri: PropTypes.string.isRequired,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  pricePerServing: PropTypes.string.isRequired,
+  pricePerServing: PropTypes.string,
+  isHomeJpgEnabled: PropTypes.bool,
+}
+
+WhyChooseGousto.defaultProps = {
+  pricePerServing: '',
+  isHomeJpgEnabled: false,
 }
 
 export { WhyChooseGousto }

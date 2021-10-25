@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
 import React, { Component, createRef } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { homeConfig } from 'config/home'
 import { Heading } from 'goustouicomponents'
@@ -85,7 +85,7 @@ class Hero extends Component {
   }
 
   render() {
-    const { dataTesting } = this.props
+    const { dataTesting, isHomeJpgEnabled } = this.props
 
     return (
       <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
@@ -101,9 +101,17 @@ class Hero extends Component {
             </Heading>
           </div>
           {this.renderGetStarted(true)}
-          <div role="img" aria-label="cooking image" className={css.processImage} />
+          <div
+            role="img"
+            aria-label="cooking image"
+            className={classNames(css.processImage, { [css.isHomeJpgEnabled]: isHomeJpgEnabled })}
+          />
         </div>
-        <div role="img" aria-label="cooking image" className={css.heroImage} />
+        <div
+          role="img"
+          aria-label="cooking image"
+          className={classNames(css.heroImage, { [css.isHomeJpgEnabled]: isHomeJpgEnabled })}
+        />
         {this.renderGetStarted(false)}
       </div>
     )
@@ -115,11 +123,13 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
   isAuthenticated: PropTypes.bool,
+  isHomeJpgEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
   dataTesting: 'hero',
   isAuthenticated: false,
+  isHomeJpgEnabled: false,
 }
 
 export { Hero }

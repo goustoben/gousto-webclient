@@ -1,10 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
 
-import VarietyImg from 'routes/Home/WhyChooseGousto/variety.png'
-import QualityImg from 'routes/Home/WhyChooseGousto/quality.png'
-import SimplicityImg from 'routes/Home/WhyChooseGousto/simplicity.png'
-
 export const hero = {
   header: 'Endless choice in a recipe box',
   subheader: 'Over 60 recipes every week',
@@ -13,10 +9,28 @@ export const hero = {
 export const CTA = {
   text: 'Get started',
   stickyCTA: 'Get started with 50% off',
-  join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
+  join: (
+    <span>
+      Get started{' '}
+      <Icon
+        name="fa-angle-right"
+        size="1.5rem"
+        style={{ marginLeft: '8px', verticalAlign: 'text-top' }}
+      />
+    </span>
+  ),
   loggedIn: {
     text: 'See Menu',
-    join: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
+    join: (
+      <span>
+        See Menu{' '}
+        <Icon
+          name="fa-angle-right"
+          size="1.5rem"
+          style={{ marginLeft: '8px', verticalAlign: 'text-top' }}
+        />
+      </span>
+    ),
   },
 }
 
@@ -31,63 +45,69 @@ export const emailForm = {
   success: 'Hooray! We’ll let you know as soon as you can place your order.',
 }
 
-export const knownVariants = [
-  'default',
-  'tv',
-]
+export const knownVariants = ['default', 'tv']
 
-export const defaultVariant=  'default';
+export const defaultVariant = 'default'
 
-export const whyGousto = {
+export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
   steps: [
     {
       title: 'Variety',
-      img: VarietyImg,
+      img: isHomeJpgEnabled
+        ? require('routes/Home/WhyChooseGousto/variety.jpg')
+        : require('routes/Home/WhyChooseGousto/variety.png'),
       list: [
         '60+ recipes a week, cooked from 10 mins',
         'Family classics, global cuisines plus Joe Wicks’s health range',
         'Tasty plant based and gluten free options too',
-      ]
+      ],
     },
     {
       title: 'Quality',
-      img: QualityImg,
+      img: isHomeJpgEnabled
+        ? require('routes/Home/WhyChooseGousto/quality.jpg')
+        : require('routes/Home/WhyChooseGousto/quality.png'),
       list: [
         'Fresh ingredients from trusted suppliers',
         '100% British fresh meat',
         'All recipes tried, tested and loved by our chefs and customers',
-      ]
+      ],
     },
     {
       title: 'Simplicity',
-      img: SimplicityImg,
+      img: isHomeJpgEnabled
+        ? require('routes/Home/WhyChooseGousto/simplicity.jpg')
+        : require('routes/Home/WhyChooseGousto/simplicity.png'),
       list: [
         'Easy-to-follow recipe cards',
         'Precise ingredients with zero food waste',
         'Free, contactless delivery, any day you like',
-      ]
-    }
+      ],
+    },
   ],
   title: 'So why Gousto?',
-}
+})
 
-export const joeWicks = '“I love coming home to a Gousto box with four different banging recipes each week. With so many dishes to choose from there\'s always something new to try!”'
+export const joeWicks =
+  "“I love coming home to a Gousto box with four different banging recipes each week. With so many dishes to choose from there's always something new to try!”"
 export const carousel = {
   title: 'Who says Tuesday can’t taste like Saturday?',
-  subtitle: 'Tuck into our 60 dish menu, filled with global cuisines, family favourites and Joe Wicks approved healthy options. Meals for every appetite – sorted.',
-};
+  subtitle:
+    'Tuck into our 60 dish menu, filled with global cuisines, family favourites and Joe Wicks approved healthy options. Meals for every appetite – sorted.',
+}
 export const seo = {
   title: 'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',
   meta: [
     {
       name: 'description',
-      content: 'Change the way you eat with our easy to follow recipes. We deliver fresh boxes of ingredients and delicious recipes 7 days a week. Get started now!',
+      content:
+        'Change the way you eat with our easy to follow recipes. We deliver fresh boxes of ingredients and delicious recipes 7 days a week. Get started now!',
     },
     {
       name: 'keywords',
       content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking, recipe box',
     },
-  ]
+  ],
 }
 
 export const homeConfig = {
@@ -97,8 +117,7 @@ export const homeConfig = {
   emailForm,
   knownVariants,
   defaultVariant,
-  whyGousto,
   joeWicks,
   carousel,
-  seo
+  seo,
 }

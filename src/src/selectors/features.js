@@ -161,3 +161,7 @@ export const getIsGoustoOnDemandEnabled = ({ features }) => (
 export const getIsAutoAcceptEnabled = ({ features }) => (
   features && features.getIn(['isAutoAcceptEnabled', 'value'], false)
 )
+
+export const getIsJpgImagesEnabled = ({ features }) => (
+  features && features.getIn(['isJpgImagesEnabled', 'value'], false)
+)

@@ -27,7 +27,6 @@
   width: 100%;
   max-width: 22rem;
   height: 22rem;
-  background: url('routes/Home/JoeWicks/joe-wicks.png') center center / contain no-repeat;
   margin: 0 auto 1.5rem;
 
   @media BreakpointFromMedium {
@@ -40,6 +39,14 @@
   @media BreakpointFromXLarge {
     margin-right: 6.25rem;
   }
+}
+
+.joeWicksImage:not(.isHomeJpgEnabled) {
+  background: url('routes/Home/JoeWicks/joe-wicks.png') center center / contain no-repeat;
+}
+
+.isHomeJpgEnabled {
+  background: url('routes/Home/JoeWicks/joe-wicks.jpg') center center / contain no-repeat;
 }
 
 .textContainer {
