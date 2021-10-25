@@ -94,7 +94,7 @@ class Postcode extends React.PureComponent {
             className={css.textInput}
             value={tempPostcode}
             textAlign="center"
-            data-testing="menuPostcodeInput"
+            dataTesting="menuPostcodeInput"
           />
         </div>
         <div className={css.row}>

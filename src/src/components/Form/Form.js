@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Form.css'
 
-const Form = (props) => (
+const Form = ({ children, ...props }) => (
   <form { ...props }>
-    {props.children}
+    {children}
     <input type="submit" name="submit" value="submit" className={css.hideSubmit} />
   </form>
 )

@@ -41,7 +41,7 @@ const Postcode = ({
             mask
             forwardRef
             ref={receiveRef}
-            data-testing="checkoutPostcode"
+            dataTesting="checkoutPostcode"
             onChange={() => setIsFindAddressDisabled(false)}
             autocompleteOff
           />

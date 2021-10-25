@@ -4,17 +4,17 @@ import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import CancelOrderModalContent from './CancelOrderModalContent'
 
+const propTypes = {
+  close: PropTypes.func,
+  cancelOrderModalOpen: PropTypes.bool,
+}
+
+const defaultProps = {
+  close: () => {},
+  cancelOrderModalOpen: false,
+}
+
 class CancelOrderModal extends React.PureComponent {
-  static propTypes = {
-    close: PropTypes.func,
-    cancelOrderModalOpen: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    close: () => {},
-    cancelOrderModalOpen: false,
-  }
-
   render() {
     const { cancelOrderModalOpen, close } = this.props
 
@@ -27,5 +27,8 @@ class CancelOrderModal extends React.PureComponent {
     )
   }
 }
+
+CancelOrderModal.propTypes = propTypes
+CancelOrderModal.defaultProps = defaultProps
 
 export default CancelOrderModal

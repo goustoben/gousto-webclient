@@ -65,7 +65,7 @@ class DeliveryInstruction extends React.PureComponent {
                 ref={receiveRef}
                 refId={`${sectionName}.deliveryInstructionsCustom`}
                 placeholder={otherInputPlaceholder}
-                data-testing="checkoutDeliveryDetailsExtraInfo"
+                dataTesting="checkoutDeliveryDetailsExtraInfo"
               />
             </div>
           </div>

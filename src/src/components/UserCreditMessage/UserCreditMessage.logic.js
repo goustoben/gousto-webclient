@@ -2,19 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { UserCreditMessagePresentation } from './UserCreditMessage.presentation'
 
+const propTypes = {
+  shouldFetchUserCredit: PropTypes.bool.isRequired,
+  showUserCredit: PropTypes.bool,
+  userCredit: PropTypes.string,
+  userFetchCredit: PropTypes.func.isRequired,
+}
+
+const defaultProps = {
+  showUserCredit: false,
+  userCredit: false,
+}
+
 class UserCreditMessage extends Component {
-  static propTypes = {
-    shouldFetchUserCredit: PropTypes.bool.isRequired,
-    showUserCredit: PropTypes.bool,
-    userCredit: PropTypes.string,
-    userFetchCredit: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    showUserCredit: false,
-    userCredit: false,
-  }
-
   componentDidMount() {
     const {
       shouldFetchUserCredit,
@@ -39,6 +39,9 @@ class UserCreditMessage extends Component {
     )
   }
 }
+
+UserCreditMessage.propTypes = propTypes
+UserCreditMessage.defaultProps = defaultProps
 
 export {
   UserCreditMessage

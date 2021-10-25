@@ -12,28 +12,28 @@ import { PageContent, PageHeader } from 'Page'
 import css from './ResetPassword.css'
 import { FormAlert } from './FormAlert'
 
+const propTypes = {
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      token: PropTypes.string,
+    }),
+  }).isRequired,
+  errorResetPassword: PropTypes.string,
+  authResetPassword: PropTypes.func,
+  isRecaptchaEnabled: PropTypes.bool.isRequired,
+  changeRecaptcha: PropTypes.func
+}
+
+const defaultProps = {
+  location: { query: { token: '' } },
+  isValidPassword: true,
+  errorResetPassword: null,
+  authResetPassword: () => {},
+  isRecaptchaEnabled: false,
+  changeRecaptcha: () => {}
+}
+
 class ResetPassword extends React.PureComponent {
-  static propTypes = {
-    location: PropTypes.shape({
-      query: PropTypes.shape({
-        token: PropTypes.string,
-      }),
-    }).isRequired,
-    errorResetPassword: PropTypes.string,
-    authResetPassword: PropTypes.func,
-    isRecaptchaEnabled: PropTypes.bool.isRequired,
-    changeRecaptcha: PropTypes.func
-  }
-
-  static defaultProps = {
-    location: { query: { token: '' } },
-    isValidPassword: true,
-    errorResetPassword: null,
-    authResetPassword: () => {},
-    isRecaptchaEnabled: false,
-    changeRecaptcha: () => {}
-  }
-
   state = {
     passwordValue: '',
     isPasswordLengthError: false,
@@ -49,18 +49,28 @@ class ResetPassword extends React.PureComponent {
     changeRecaptcha()
   }
 
+  handlePasswordChange(passwordValue) {
+    const { isPasswordLengthError } = this.state
+    this.setState({ passwordValue })
+    if (isPasswordLengthError) {
+      this.validatePasswordLength(passwordValue)
+    }
+  }
+
+  captchaChanges = (value) => {
+    // only call processReset callback if the captcha value isn't null (otherwise this is being called due to the captcha expiring)
+    const callback = value === null ? undefined : this.processReset
+
+    this.setState({
+      recaptchaValue: value
+    }, callback)
+  }
+
   validatePasswordLength(passwordValue) {
     const isPasswordLengthError = !ResetPassword.isPasswordLengthValid(passwordValue)
     this.setState({ isPasswordLengthError })
 
     return isPasswordLengthError
-  }
-
-  handlePasswordChange(passwordValue) {
-    this.setState({ passwordValue })
-    if (this.state.isPasswordLengthError) {
-      this.validatePasswordLength(passwordValue)
-    }
   }
 
   validateAndSubmit(passwordValue) {
@@ -85,15 +95,6 @@ class ResetPassword extends React.PureComponent {
     const { passwordValue, recaptchaValue } = this.state
 
     authResetPassword(passwordValue, token, recaptchaValue)
-  }
-
-  captchaChanges = (value) => {
-    // only call processReset callback if the captcha value isn't null (otherwise this is being called due to the captcha expiring)
-    const callback = value === null ? undefined : this.processReset
-
-    this.setState({
-      recaptchaValue: value
-    }, callback)
   }
 
   render() {
@@ -141,5 +142,8 @@ class ResetPassword extends React.PureComponent {
     )
   }
 }
+
+ResetPassword.propTypes = propTypes
+ResetPassword.defaultProps = defaultProps
 
 export default ResetPassword

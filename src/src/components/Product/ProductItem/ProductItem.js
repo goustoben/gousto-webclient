@@ -3,20 +3,18 @@ import React from 'react'
 import Immutable from 'immutable'
 import Item from 'Item'
 
-const emptyArray = []
-
-const ProductItem = (props) => (
+const ProductItem = ({ disclaimerKey, images, title, quantity, onImageClick, onRemove, available, gift, url }) => (
   <Item
-    disclaimerKey={props.disclaimerKey}
+    disclaimerKey={disclaimerKey}
     type="product"
-    media={props.images ? props.images.toList() : emptyArray}
-    title={props.title}
-    quantity={props.quantity}
-    onImageClick={props.onImageClick}
-    onRemove={props.onRemove}
-    available={props.available}
-    gift={props.gift}
-    url={props.url}
+    media={images ? images.toList() : []}
+    title={title}
+    quantity={quantity}
+    onImageClick={onImageClick}
+    onRemove={onRemove}
+    available={available}
+    gift={gift}
+    url={url}
   />
 )
 

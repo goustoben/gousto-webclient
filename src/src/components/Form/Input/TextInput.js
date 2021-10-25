@@ -28,7 +28,7 @@ const propTypes = {
   value: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['password', 'text', 'email', 'tel', 'number']),
   pattern: PropTypes.string,
-  'data-testing': PropTypes.string,
+  dataTesting: PropTypes.string,
   error: PropTypes.bool,
   isInCheckout: PropTypes.bool,
   inputPrefix: PropTypes.node,
@@ -58,7 +58,7 @@ const defaultProps = {
   placeholder: null,
   maxLength: null,
   validator: null,
-  'data-testing': null,
+  dataTesting: null,
 }
 
 export class TextInput extends Component {
@@ -123,7 +123,7 @@ export class TextInput extends Component {
   }
 
   render = () => {
-    const { additionalProps, autoComplete, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isInCheckout, inputPrefix } = this.props
+    const { additionalProps, autoComplete, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, dataTesting, isInCheckout, inputPrefix } = this.props
 
     return (
       <div className={classNames({ [checkoutCss.relative]: isInCheckout && inputPrefix })}>

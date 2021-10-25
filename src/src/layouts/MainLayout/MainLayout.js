@@ -43,7 +43,7 @@ class MainLayout extends React.Component {
         if (orders.size < 1) {
           userLoadOrders()
         }
-      } else if (this.props.isAuthenticated) {
+      } else if (isAuthenticated) {
         userClearData()
       }
     }

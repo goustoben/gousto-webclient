@@ -5,27 +5,27 @@ import { BurgerMobileMenu } from './BurgerMenu'
 import { LinkMobileMenu } from './LinksMobileMenu'
 import css from '../Header.css'
 
-class MobileMenu extends React.PureComponent {
-  static propTypes = {
-    hideMobileMenu: PropTypes.func.isRequired,
-    hideNav: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    mobileMenuItems: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      url: PropTypes.string,
-      clientRouted: PropTypes.bool,
-      tracking: PropTypes.string
-    })).isRequired,
-    mobileMenuOpen: PropTypes.bool.isRequired,
-    onLoginClick: PropTypes.func.isRequired,
-    onLogoutClick: PropTypes.func.isRequired,
-    promoCodeUrl: PropTypes.string.isRequired,
-    serverError: PropTypes.bool.isRequired,
-    shouldRenderAccountLink: PropTypes.bool.isRequired,
-    showMobileMenu: PropTypes.func.isRequired,
-    trackNavigationClick: PropTypes.func.isRequired,
-  }
+const propTypes = {
+  hideMobileMenu: PropTypes.func.isRequired,
+  hideNav: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  mobileMenuItems: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    url: PropTypes.string,
+    clientRouted: PropTypes.bool,
+    tracking: PropTypes.string
+  })).isRequired,
+  mobileMenuOpen: PropTypes.bool.isRequired,
+  onLoginClick: PropTypes.func.isRequired,
+  onLogoutClick: PropTypes.func.isRequired,
+  promoCodeUrl: PropTypes.string.isRequired,
+  serverError: PropTypes.bool.isRequired,
+  shouldRenderAccountLink: PropTypes.bool.isRequired,
+  showMobileMenu: PropTypes.func.isRequired,
+  trackNavigationClick: PropTypes.func.isRequired,
+}
 
+class MobileMenu extends React.PureComponent {
   renderBurgerMenu = () => {
     const {
       hideMobileMenu,
@@ -85,5 +85,7 @@ class MobileMenu extends React.PureComponent {
     )
   }
 }
+
+MobileMenu.propTypes = propTypes
 
 export { MobileMenu }

@@ -19,7 +19,7 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
         forwardRef
         ref={receiveRef}
         refId={`${sectionName}.houseNo`}
-        data-testing="houseNo"
+        dataTesting="houseNo"
       />
     </div>
     <div className={checkoutCss.inputContainer}>
@@ -35,7 +35,7 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
         forwardRef
         ref={receiveRef}
         refId={`${sectionName}.street`}
-        data-testing="street"
+        dataTesting="street"
       />
     </div>
     <div className={checkoutCss.inputContainer}>
@@ -51,7 +51,7 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
         forwardRef
         ref={receiveRef}
         refId={`${sectionName}.town`}
-        data-testing="town"
+        dataTesting="town"
       />
     </div>
   </Fragment>

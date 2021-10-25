@@ -2,24 +2,29 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import css from './ProductImage.css'
 
+const propTypes = {
+  src: PropTypes.string,
+  alt: PropTypes.string,
+}
+
+const defaultProps = {
+  src: '',
+  alt: '',
+}
+
 class ProductImage extends React.PureComponent {
-  static propTypes = {
-    src: PropTypes.string,
-    alt: PropTypes.string,
-  }
-
-  static defaultProps = {
-    src: '',
-    alt: '',
-  }
-
   render() {
+    const { src, alt } = this.props
+
     return (
       <div className={css.imageContainer}>
-        <img src={this.props.src} className={css.image} alt={this.props.alt} />
+        <img src={src} className={css.image} alt={alt} />
       </div>
     )
   }
 }
+
+ProductImage.propTypes = propTypes
+ProductImage.defaultProps = defaultProps
 
 export default ProductImage

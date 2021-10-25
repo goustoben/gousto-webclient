@@ -78,7 +78,7 @@ class PostcodeStep extends PureComponent {
                       maxLength={8}
                       value={tempPostcode}
                       mask
-                      data-testing="signupPostcodeInput"
+                      dataTesting="signupPostcodeInput"
                       isInCheckout
                       error={deliveryDaysError}
                       autoComplete="postal-code"

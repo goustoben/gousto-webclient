@@ -18,11 +18,12 @@ class Buttons extends React.PureComponent {
   }
 
   getTooltipMessage = () => {
-    if (this.props.outOfStock) {
+    const { outOfStock, limitReached } = this.props
+    if (outOfStock) {
       return 'Sorry, we don\'t have any more in stock'
     }
 
-    if (this.props.limitReached) {
+    if (limitReached) {
       return this.getLimitReachedMessage()
     }
 
@@ -30,10 +31,11 @@ class Buttons extends React.PureComponent {
   }
 
   getLimitReachedMessage = () => {
+    const { limitReached } = this.props
     let message = ''
 
-    if (this.props.limitReached) {
-      switch (this.props.limitReached.type) {
+    if (limitReached) {
+      switch (limitReached.type) {
       case 'box':
         message = 'Sorry, we can\'t fit anymore items in your box'
         break
@@ -41,7 +43,7 @@ class Buttons extends React.PureComponent {
         message = 'Sorry, we can\'t fit anymore of this item in your box'
         break
       case 'category':
-        message = `Sorry, we can't fit anymore "${this.props.limitReached.value}" items in your box`
+        message = `Sorry, we can't fit anymore "${limitReached.value}" items in your box`
         break
       default:
         return message
@@ -62,8 +64,9 @@ class Buttons extends React.PureComponent {
 
   handleAgeVerify = (verified) => {
     this.setState({ ageVerifyTooltipVisible: !verified }, async () => {
+      const { onVerifyAge } = this.props
       try {
-        await this.props.onVerifyAge(verified, true)
+        await onVerifyAge(verified, true)
       } catch (err) {
         this.setState({ ageVerifyShowError: true }, () => {
           setTimeout(() => { this.setState({ ageVerifyShowError: false }) }, 5000)
@@ -73,17 +76,20 @@ class Buttons extends React.PureComponent {
   }
 
   handleRemove = () => {
-    this.props.onRemove(this.props.productId)
+    const { onRemove, productId } = this.props
+    onRemove(productId)
   }
 
   tooltipToggle = (visible) => {
-    if (!this.props.isAvailable) {
+    const { isAvailable } = this.props
+    if (!isAvailable) {
       this.setState({ tooltipVisible: visible })
     }
   }
 
   tooltipHover = (event) => {
-    if (!this.props.isAvailable) {
+    const { isAvailable } = this.props
+    if (!isAvailable) {
       if (event.type === 'mouseenter') {
         this.setState({ tooltipVisible: true })
       } else if (event.type === 'mouseleave') {
@@ -93,8 +99,10 @@ class Buttons extends React.PureComponent {
   }
 
   disabledClick = () => {
-    if (!this.props.isAvailable) {
-      if (this.state.visible) {
+    const { isAvailable } = this.props
+    const { visible } = this.state
+    if (!isAvailable) {
+      if (visible) {
         this.setState({ tooltipVisible: false })
       } else {
         this.setState({ tooltipVisible: true })
@@ -118,7 +126,7 @@ class Buttons extends React.PureComponent {
   }
 
   render() {
-    const { qty, isAvailable, inProgress, ageVerificationPending, fullWidth, outOfStock } = this.props
+    const { qty, isAvailable, inProgress, ageVerificationPending, fullWidth, outOfStock, fill } = this.props
     const { tooltipVisible } = this.state
     const tooltipMessage = !isAvailable ? this.getTooltipMessage() : ''
     const cssSegmentController = classnames({ [css.segmentControler]: !fullWidth })
@@ -182,7 +190,7 @@ class Buttons extends React.PureComponent {
             hover={this.tooltipHover}
             disabledClick={this.disabledClick}
             disabled={!isAvailable}
-            fill={this.props.fill}
+            fill={fill}
             width="auto"
             className={cssAddButton}
           >

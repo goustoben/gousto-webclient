@@ -3,23 +3,23 @@ import React from 'react'
 import { Alert, Button } from 'goustouicomponents'
 import css from './CancelOrderModalContent.css'
 
+const propTypes = {
+  orderId: PropTypes.string,
+  didCancelOrderError: PropTypes.bool,
+  close: PropTypes.func,
+  orderCancel: PropTypes.func,
+  cancelOrderModalToggleVisibility: PropTypes.func,
+}
+
+const defaultProps = {
+  orderId: '',
+  didCancelOrderError: false,
+  close: () => {},
+  orderCancel: () => {},
+  cancelOrderModalToggleVisibility: () => {},
+}
+
 class CancelOrderModalContent extends React.PureComponent {
-  static propTypes = {
-    orderId: PropTypes.string,
-    didCancelOrderError: PropTypes.bool,
-    close: PropTypes.func,
-    orderCancel: PropTypes.func,
-    cancelOrderModalToggleVisibility: PropTypes.func,
-  }
-
-  static defaultProps = {
-    orderId: '',
-    didCancelOrderError: false,
-    close: () => {},
-    orderCancel: () => {},
-    cancelOrderModalToggleVisibility: () => {},
-  }
-
   handleCancelBox = () => {
     const { orderCancel, cancelOrderModalToggleVisibility, orderId } = this.props
     orderCancel(orderId)
@@ -52,5 +52,8 @@ class CancelOrderModalContent extends React.PureComponent {
     )
   }
 }
+
+CancelOrderModalContent.propTypes = propTypes
+CancelOrderModalContent.defaultProps = defaultProps
 
 export default CancelOrderModalContent

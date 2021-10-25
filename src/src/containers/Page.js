@@ -62,9 +62,11 @@ class Page extends React.PureComponent {
   }
 
   render() {
+    const { contentFetchPending, children } = this.props
+
     return (
       <span>
-        <div className={classnames(css.container, this.props.contentFetchPending ? css.blurStyle : '')}>
+        <div className={classnames(css.container, contentFetchPending ? css.blurStyle : '')}>
           <Helmet
             title={config.template.head.title}
             meta={[
@@ -90,9 +92,9 @@ class Page extends React.PureComponent {
               },
             ]}
           />
-          {this.props.children}
+          {children}
         </div>
-        {this.props.contentFetchPending && <div className={css.loadingContainer}><LoadingOverlay /></div>}
+        {contentFetchPending && <div className={css.loadingContainer}><LoadingOverlay /></div>}
       </span>
     )
   }

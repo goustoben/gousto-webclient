@@ -9,37 +9,42 @@ import formsCss from 'styles/forms.css'
 import './reactSelect.css'
 import css from './DropdownInput.css'
 
+const propTypes = {
+  additionalProps: PropTypes.object,
+  options: PropTypes.array,
+  onChange: PropTypes.func,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  color: PropTypes.oneOf(['primary', 'secondary']),
+  value: PropTypes.any,
+  subLabelClassName: PropTypes.string,
+  labelClassName: PropTypes.string,
+  required: PropTypes.bool,
+  className: PropTypes.string,
+  uppercase: PropTypes.bool,
+  dataTesting: PropTypes.string,
+  error: PropTypes.bool,
+  isInCheckout: PropTypes.bool,
+}
+
+const defaultProps = {
+  additionalProps: {},
+  options: [],
+  required: false,
+  color: 'primary',
+  uppercase: false,
+  error: false,
+  onOpen: () => { },
+  onClose: () => { },
+  isInCheckout: false,
+  onChange: () => {},
+  subLabelClassName: '',
+  labelClassName: '',
+  className: '',
+  dataTesting: '',
+}
+
 export class DropdownInput extends React.Component {
-  static propTypes = {
-    additionalProps: PropTypes.object,
-    options: PropTypes.array,
-    onChange: PropTypes.func,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func,
-    color: PropTypes.oneOf(['primary', 'secondary']),
-    value: PropTypes.any,
-    subLabelClassName: PropTypes.string,
-    labelClassName: PropTypes.string,
-    required: PropTypes.bool,
-    className: PropTypes.string,
-    uppercase: PropTypes.bool,
-    dataTesting: PropTypes.string,
-    error: PropTypes.bool,
-    isInCheckout: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    additionalProps: {},
-    options: [],
-    required: false,
-    color: 'primary',
-    uppercase: false,
-    error: false,
-    onOpen: () => { },
-    onClose: () => { },
-    isInCheckout: false,
-  }
-
   handleChange = (obj) => {
     const { onChange } = this.props
 
@@ -117,7 +122,7 @@ export class DropdownInput extends React.Component {
   getSelectProps = () => {
     const { onOpen } = this.props
 
-    const defaultProps = {
+    const defaultOptions = {
       clearable: false,
       searchable: false,
       placeholder: '',
@@ -140,7 +145,7 @@ export class DropdownInput extends React.Component {
       'onBlur'
     ]
 
-    return restrictProps(this.props, ourProps, defaultProps)
+    return restrictProps(this.props, ourProps, defaultOptions)
   }
 
   getValue = () => {
@@ -196,5 +201,8 @@ export class DropdownInput extends React.Component {
     )
   }
 }
+
+DropdownInput.propTypes = propTypes
+DropdownInput.defaultProps = defaultProps
 
 export default InputWrapper(DropdownInput)
