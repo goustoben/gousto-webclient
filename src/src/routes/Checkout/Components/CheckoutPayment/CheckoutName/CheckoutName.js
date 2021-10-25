@@ -17,7 +17,7 @@ export const CheckoutName = ({ sectionName, receiveRef }) => (
         forwardRef
         ref={receiveRef}
         refId={`${sectionName}.cardName`}
-        data-testing="checkoutCardNameInput"
+        dataTesting="checkoutCardNameInput"
         className={css.nameInput}
         autoComplete="cc-name"
       />

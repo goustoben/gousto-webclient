@@ -3,18 +3,18 @@ import React from 'react'
 import Immutable from 'immutable'
 import Item from 'Item'
 
-const RecipeItem = (props) => (
+const RecipeItem = ({ media, title, numPortions, onRemove, available, url, onImageClick, recipeId, fromBox }) => (
   <Item
     type="recipe"
-    media={props.media.getIn(['images', 0, 'urls'], Immutable.List([]))}
-    title={props.title}
-    quantity={props.numPortions}
-    onRemove={props.onRemove}
-    available={props.available}
-    url={props.url}
-    onImageClick={props.onImageClick}
-    recipeId={props.recipeId}
-    fromBox={props.fromBox}
+    media={media.getIn(['images', 0, 'urls'], Immutable.List([]))}
+    title={title}
+    quantity={numPortions}
+    onRemove={onRemove}
+    available={available}
+    url={url}
+    onImageClick={onImageClick}
+    recipeId={recipeId}
+    fromBox={fromBox}
   />
 )
 

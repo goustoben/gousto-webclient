@@ -9,49 +9,49 @@ import css from './Receipt.css'
 import ReceiptLine from './ReceiptLine'
 import DeliveryDetails from './DeliveryDetails'
 
+const propTypes = {
+  prices: PropTypes.instanceOf(Immutable.Map),
+  children: PropTypes.node,
+  numRecipes: PropTypes.number,
+  deliveryTotalPrice: PropTypes.string,
+  shippingAddress: PropTypes.instanceOf(Immutable.Map),
+  deliveryDate: PropTypes.string,
+  deliverySlot: PropTypes.instanceOf(Immutable.Map),
+  surcharges: PropTypes.instanceOf(Immutable.List),
+  surchargeTotal: PropTypes.string,
+  totalToPay: PropTypes.string,
+  recipeTotalPrice: PropTypes.string,
+  recipeDiscountAmount: PropTypes.string,
+  recipeDiscountPercent: PropTypes.string,
+  extrasTotalPrice: PropTypes.string,
+  showTitleSection: PropTypes.bool,
+  orderNumber: PropTypes.string,
+  isReceiptInCheckout: PropTypes.bool,
+  isGoustoOnDemandEnabled: PropTypes.bool,
+}
+
+const defaultProps = {
+  prices: Immutable.Map({}),
+  children: null,
+  numRecipes: 0,
+  deliveryTotalPrice: '',
+  shippingAddress: null,
+  deliveryDate: null,
+  deliverySlot: Immutable.Map(),
+  surcharges: Immutable.List([]),
+  surchargeTotal: '',
+  totalToPay: '',
+  recipeTotalPrice: '',
+  recipeDiscountAmount: '',
+  recipeDiscountPercent: '',
+  extrasTotalPrice: '',
+  showTitleSection: false,
+  orderNumber: '',
+  isReceiptInCheckout: false,
+  isGoustoOnDemandEnabled: false,
+}
+
 class Receipt extends React.Component {
-  static propTypes = {
-    prices: PropTypes.instanceOf(Immutable.Map),
-    children: PropTypes.node,
-    numRecipes: PropTypes.number,
-    deliveryTotalPrice: PropTypes.string,
-    shippingAddress: PropTypes.instanceOf(Immutable.Map),
-    deliveryDate: PropTypes.string,
-    deliverySlot: PropTypes.instanceOf(Immutable.Map),
-    surcharges: PropTypes.instanceOf(Immutable.List),
-    surchargeTotal: PropTypes.string,
-    totalToPay: PropTypes.string,
-    recipeTotalPrice: PropTypes.string,
-    recipeDiscountAmount: PropTypes.string,
-    recipeDiscountPercent: PropTypes.string,
-    extrasTotalPrice: PropTypes.string,
-    showTitleSection: PropTypes.bool,
-    orderNumber: PropTypes.string,
-    isReceiptInCheckout: PropTypes.bool,
-    isGoustoOnDemandEnabled: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    prices: Immutable.Map({}),
-    children: null,
-    numRecipes: 0,
-    deliveryTotalPrice: '',
-    shippingAddress: null,
-    deliveryDate: null,
-    deliverySlot: Immutable.Map(),
-    surcharges: Immutable.List([]),
-    surchargeTotal: '',
-    totalToPay: '',
-    recipeTotalPrice: '',
-    recipeDiscountAmount: '',
-    recipeDiscountPercent: '',
-    extrasTotalPrice: '',
-    showTitleSection: false,
-    orderNumber: '',
-    isReceiptInCheckout: false,
-    isGoustoOnDemandEnabled: false,
-  }
-
   dash = <span className={css.dash}>&mdash;</span>
 
   render() {
@@ -167,5 +167,8 @@ class Receipt extends React.Component {
     )
   }
 }
+
+Receipt.propTypes = propTypes
+Receipt.defaultProps = defaultProps
 
 export default Receipt

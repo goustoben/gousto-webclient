@@ -3,21 +3,25 @@ import React from 'react'
 import { Header } from 'Header'
 import css from './WizardLayout.css'
 
-class WizardLayout extends React.PureComponent {
-  static propTypes = {
-    children: PropTypes.object.isRequired,
-  }
+const propTypes = {
+  children: PropTypes.object.isRequired,
+}
 
+class WizardLayout extends React.PureComponent {
   render() {
+    const { children } = this.props
+
     return (
       <div className={css.pageContainer}>
         <div className={css.headerContainer}>
           <Header simple />
         </div>
-        {this.props.children}
+        {children}
       </div>
     )
   }
 }
+
+WizardLayout.propTypes = propTypes
 
 export default WizardLayout

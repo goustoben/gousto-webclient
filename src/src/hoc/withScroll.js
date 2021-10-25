@@ -10,6 +10,16 @@ const withScroll = ({ propName, height }) => (Component) =>
       this.ticking = false
     }
 
+    componentDidMount() {
+      window.addEventListener('scroll', this.scrollListener)
+    }
+
+    componentWillUnmount() {
+      const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame
+      window.removeEventListener('scroll', this.scrollListener)
+      cancelAnimationFrame(this.requestAnimationFrame)
+    }
+
     scrollListener = () => {
       // Polyfill for different browser requestAnimationFrame API
       const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame
@@ -29,18 +39,9 @@ const withScroll = ({ propName, height }) => (Component) =>
       }
     }
 
-    componentDidMount() {
-      window.addEventListener('scroll', this.scrollListener)
-    }
-
-    componentWillUnmount() {
-      const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame
-      window.removeEventListener('scroll', this.scrollListener)
-      cancelAnimationFrame(this.requestAnimationFrame)
-    }
-
     render() {
-      const scrollProp = { [propName || 'scrolledPastPoint']: this.state.scrolledPastPoint }
+      const { scrolledPastPoint } = this.state
+      const scrollProp = { [propName || 'scrolledPastPoint']: scrolledPastPoint }
 
       return <Component {...this.props} {...scrollProp } />
     }

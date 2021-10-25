@@ -8,17 +8,17 @@ import InfoToggle from './InfoToggle'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './SubHeader.css'
 
+const propTypes = {
+  fromJoin: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+}
+
+const defaultProps = {
+  isAuthenticated: false,
+  fromJoin: false,
+}
+
 export class SubHeader extends React.PureComponent {
-  static propTypes = {
-    fromJoin: PropTypes.bool,
-    isAuthenticated: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    isAuthenticated: false,
-    fromJoin: false,
-  }
-
   deliveryInfo = (mobile) => (
     <InfoToggle>
       <div className={mobile ? css.mobileDeliveryInfo : css.deliveryInfo}>
@@ -94,3 +94,6 @@ export class SubHeader extends React.PureComponent {
     )
   }
 }
+
+SubHeader.propTypes = propTypes
+SubHeader.defaultProps = defaultProps

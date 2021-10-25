@@ -6,33 +6,31 @@ import './ReactSlick.css'
 import './Carousel.scss'
 import './Carousel.css'
 
+const propTypes = {
+  arrows: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  dots: PropTypes.bool,
+  infinite: PropTypes.bool,
+  speed: PropTypes.number,
+  slidesToShow: PropTypes.number,
+  slidesToScroll: PropTypes.number,
+  variableWidth: PropTypes.bool,
+}
+
+const defaultProps = {
+  arrows: false,
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  variableWidth: false,
+}
+
 class Carousel extends React.PureComponent {
-  static propTypes = {
-    arrows: PropTypes.bool,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]).isRequired,
-    dots: PropTypes.bool,
-    infinite: PropTypes.bool,
-    speed: PropTypes.number,
-    slidesToShow: PropTypes.number,
-    slidesToScroll: PropTypes.number,
-    variableWidth: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    arrows: false,
-    autoplay: true,
-    dots: true,
-    infinite: true,
-    speed: 500,
-    autoplaySpeed: 8000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    variableWidth: false,
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -50,13 +48,14 @@ class Carousel extends React.PureComponent {
 
   render() {
     const { children, ...settings } = this.props
+    const { isClient } = this.state
     const childrenCount = React.Children.count(children)
 
     return (
       <div
         className={classnames(
           `carousel-items-${childrenCount}`,
-          { 'carousel-no-js': !this.state.isClient },
+          { 'carousel-no-js': !isClient },
           { 'carousel-dotted': settings.dots },
         )}
       >
@@ -67,5 +66,8 @@ class Carousel extends React.PureComponent {
     )
   }
 }
+
+Carousel.propTypes = propTypes
+Carousel.defaultProps = defaultProps
 
 export default Carousel

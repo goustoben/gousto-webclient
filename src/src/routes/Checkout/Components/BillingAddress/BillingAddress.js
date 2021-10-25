@@ -26,7 +26,7 @@ export class BillingAddress extends React.PureComponent {
         <CheckBox
           checked={!isBillingAddressDifferent}
           childLabelClassName={css.checkboxLabel}
-          data-testing="checkoutBillingAddressToggle"
+          dataTesting="checkoutBillingAddressToggle"
           label="My billing address is the same as my delivery address"
           onChange={this.toggleDeliveryAddress}
         />

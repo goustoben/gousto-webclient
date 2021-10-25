@@ -10,31 +10,38 @@ import InputError from 'Form/InputError'
 import { Label } from 'Form/Label'
 import css from './ReduxFormInput.css'
 
-class ReduxFormInput extends React.PureComponent {
-  static propTypes = {
-    input: PropTypes.object,
-    meta: PropTypes.object.isRequired,
-    inputType: PropTypes.oneOf(['CheckBox', 'DropDown', 'Input']).isRequired,
-    inputPrefix: PropTypes.node,
-    inputSuffix: PropTypes.node,
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    subLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    dataTesting: PropTypes.string,
-    'data-testing': PropTypes.string,
-    className: PropTypes.string,
-    onFocus: PropTypes.func,
-  }
+const propTypes = {
+  input: PropTypes.object,
+  meta: PropTypes.object.isRequired,
+  inputType: PropTypes.oneOf(['CheckBox', 'DropDown', 'Input']).isRequired,
+  inputPrefix: PropTypes.node,
+  inputSuffix: PropTypes.node,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  subLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  dataTesting: PropTypes.string,
+  className: PropTypes.string,
+  onFocus: PropTypes.func,
+}
 
-  static defaultProps = {
-    input: {},
-    label: '',
-    subLabel: '',
-    className: '',
-    onFocus: () => {},
-    inputPrefix: null,
-    inputSuffix: null,
-    dataTesting: null,
-    'data-testing': null,
+const defaultProps = {
+  input: {},
+  label: '',
+  subLabel: '',
+  className: '',
+  onFocus: () => {},
+  inputPrefix: null,
+  inputSuffix: null,
+  dataTesting: null,
+}
+
+class ReduxFormInput extends React.PureComponent {
+  onChange = (value) => {
+    const { input, meta } = this.props
+    if (value) {
+      this.debounceTouch(meta.dispatch, meta.form, input.name)
+    }
+
+    input.onChange(value)
   }
 
   debounceTouch(dispatch, formName, field) {
@@ -45,18 +52,8 @@ class ReduxFormInput extends React.PureComponent {
     this.debounceTimeout = setTimeout(() => dispatch(touch(formName, field)), 1000)
   }
 
-  onChange = (value) => {
-    const { input, meta } = this.props
-    if (value) {
-      this.debounceTouch(meta.dispatch, meta.form, input.name)
-    }
-
-    input.onChange(value)
-  }
-
   render() {
-    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, onFocus, ...inputProps } = this.props
-    const dataTesting = this.props.dataTesting || this.props['data-testing']
+    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, onFocus, dataTesting, ...inputProps } = this.props
 
     let Component
     switch (inputType) {
@@ -85,6 +82,7 @@ class ReduxFormInput extends React.PureComponent {
       error,
       inputType,
       'data-testing': dataTesting,
+      dataTesting,
       onChange: this.onChange,
       isInCheckout: true,
       inputPrefix,
@@ -109,5 +107,8 @@ class ReduxFormInput extends React.PureComponent {
     )
   }
 }
+
+ReduxFormInput.propTypes = propTypes
+ReduxFormInput.defaultProps = defaultProps
 
 export default ReduxFormInput

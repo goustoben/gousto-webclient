@@ -180,7 +180,7 @@ class LoginForm extends React.PureComponent {
             </div>
             <div className={css.rememberMe}>
               <CheckBox
-                data-testing="loginCheckbox"
+                dataTesting="loginCheckbox"
                 label="Remember me"
                 textSize="Medium"
                 onChange={this.checkboxChanges}

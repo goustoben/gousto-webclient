@@ -4,12 +4,12 @@ import ModalPanel from 'Modal/ModalPanel'
 import ReferAFriend from 'components/ReferAFriend'
 import css from './ReferAFriendModal.css'
 
-class ReferAFriendModal extends PureComponent {
-  static propTypes = {
-    onClose: PropTypes.func.isRequired,
-    credit: PropTypes.string.isRequired
-  }
+const propTypes = {
+  onClose: PropTypes.func.isRequired,
+  credit: PropTypes.string.isRequired
+}
 
+class ReferAFriendModal extends PureComponent {
   render() {
     const { onClose, credit } = this.props
 
@@ -32,5 +32,7 @@ class ReferAFriendModal extends PureComponent {
     )
   }
 }
+
+ReferAFriendModal.propTypes = propTypes
 
 export { ReferAFriendModal }

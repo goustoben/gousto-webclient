@@ -6,38 +6,38 @@ import classNames from 'classnames'
 import LazyLoad from 'react-lazyload'
 import css from './Image.css'
 
+const propTypes = {
+  contain: PropTypes.bool,
+  className: PropTypes.string,
+  media: PropTypes.oneOfType([
+    PropTypes.instanceOf(Immutable.List),
+    PropTypes.string
+  ]).isRequired,
+  onClick: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.oneOf([false]),
+  ]),
+  title: PropTypes.string,
+  maxMediaSize: PropTypes.number,
+  lazy: PropTypes.bool,
+  once: PropTypes.bool,
+  offset: PropTypes.number,
+  placeholder: PropTypes.node
+}
+
+const defaultProps = {
+  contain: true,
+  className: null,
+  onClick: () => {},
+  title: '',
+  maxMediaSize: null,
+  lazy: false,
+  once: true,
+  offset: 200,
+  placeholder: null,
+}
+
 class Image extends React.PureComponent {
-  static propTypes = {
-    contain: PropTypes.bool,
-    className: PropTypes.string,
-    media: PropTypes.oneOfType([
-      PropTypes.instanceOf(Immutable.List),
-      PropTypes.string
-    ]).isRequired,
-    onClick: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.oneOf([false]),
-    ]),
-    title: PropTypes.string,
-    maxMediaSize: PropTypes.number,
-    lazy: PropTypes.bool,
-    once: PropTypes.bool,
-    offset: PropTypes.number,
-    placeholder: PropTypes.node
-  }
-
-  static defaultProps = {
-    contain: true,
-    className: null,
-    onClick: () => {},
-    title: '',
-    maxMediaSize: null,
-    lazy: false,
-    once: true,
-    offset: 200,
-    placeholder: null,
-  }
-
   getSrcSet = srcs =>
     srcs.reduce(
       (str, src) => `${str} ${src.get('src')} ${src.get('width')}w,`,
@@ -137,5 +137,8 @@ class Image extends React.PureComponent {
     )
   }
 }
+
+Image.propTypes = propTypes
+Image.defaultProps = defaultProps
 
 export default Image

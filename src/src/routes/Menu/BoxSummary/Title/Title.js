@@ -8,36 +8,36 @@ import { isMobile } from 'utils/view'
 import { Price } from '../Price'
 import css from './Title.css'
 
+const propTypes = {
+  date: PropTypes.string,
+  view: PropTypes.string,
+  spinnerClassName: PropTypes.string,
+  spinnerContainerClassName: PropTypes.string,
+  pending: PropTypes.bool,
+  recipeTotal: PropTypes.number,
+  recipeDiscount: PropTypes.number,
+  recipeTotalDiscounted: PropTypes.number,
+  slotTime: PropTypes.string,
+}
+
+const defaultProps = {
+  date: '',
+  view: '',
+  spinnerClassName: '',
+  spinnerContainerClassName: '',
+  slotTime: '',
+  pending: false,
+  recipeTotal: 0,
+  recipeDiscount: 0,
+  recipeTotalDiscounted: 0,
+}
+
 class Title extends React.PureComponent {
-  static propTypes = {
-    date: PropTypes.string,
-    view: PropTypes.string,
-    spinnerClassName: PropTypes.string,
-    spinnerContainerClassName: PropTypes.string,
-    pending: PropTypes.bool,
-    recipeTotal: PropTypes.number,
-    recipeDiscount: PropTypes.number,
-    recipeTotalDiscounted: PropTypes.number,
-    slotTime: PropTypes.string,
-  }
-
-  static defaultProps = {
-    date: '',
-    view: '',
-    spinnerClassName: '',
-    spinnerContainerClassName: '',
-    slotTime: '',
-    pending: false,
-    recipeTotal: 0,
-    recipeDiscount: 0,
-    recipeTotalDiscounted: 0,
-  }
-
   render() {
-    const { recipeTotal, recipeDiscount, recipeTotalDiscounted, slotTime, date, view, pending } = this.props
+    const { recipeTotal, recipeDiscount, recipeTotalDiscounted, slotTime, date, view, pending, spinnerClassName, spinnerContainerClassName } = this.props
     const spinnerClassNames = {
       [css.spinnerContainer]: true,
-      [this.props.spinnerContainerClassName]: true,
+      spinnerContainerClassName,
       [css.spinnerShow]: pending,
     }
 
@@ -56,7 +56,7 @@ class Title extends React.PureComponent {
           {
             pending ? isMobile(view) && (
               <div className={classNames(spinnerClassNames)}>
-                <span className={classNames(css.spinner, this.props.spinnerClassName)}>
+                <span className={classNames(css.spinner, spinnerClassName)}>
                   <Spinner />
                 </span>
               </div>
@@ -73,4 +73,8 @@ class Title extends React.PureComponent {
     )
   }
 }
+
+Title.propTypes = propTypes
+Title.defaultProps = defaultProps
+
 export { Title }

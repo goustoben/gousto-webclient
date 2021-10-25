@@ -15,34 +15,34 @@ import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
 import { loadMenuServiceDataIfDeepLinked } from '../../routes/Menu/fetchData/menuService'
 import css from './AbandonBasketModal.css'
 
+const propTypes = {
+  basketRecipes: PropTypes.instanceOf(Immutable.Map),
+  orders: PropTypes.instanceOf(Immutable.Map),
+  deliveryDays: PropTypes.instanceOf(Immutable.Map),
+  recipes: PropTypes.instanceOf(Immutable.Map),
+  orderDate: PropTypes.string,
+  numPortions: PropTypes.number,
+  trackAbandonBasketEligibility: PropTypes.func,
+  trackAbandonBasketContinueToMenu: PropTypes.func,
+  redirect: PropTypes.func.isRequired,
+  getAbandonBasketSessionState: PropTypes.func.isRequired,
+  basketRecipesClear: PropTypes.func.isRequired
+}
+
+const defaultProps = {
+  basketRecipes: Immutable.Map(),
+  orders: Immutable.Map(),
+  deliveryDays: Immutable.Map(),
+  recipes: Immutable.Map(),
+  orderDate: '',
+  numPortions: 0,
+  trackAbandonBasketEligibility: () => { },
+  trackAbandonBasketContinueToMenu: () => { }
+}
+
+const contextType = ReactReduxContext
+
 class AbandonBasketModal extends PureComponent {
-  static propTypes = {
-    basketRecipes: PropTypes.instanceOf(Immutable.Map),
-    orders: PropTypes.instanceOf(Immutable.Map),
-    deliveryDays: PropTypes.instanceOf(Immutable.Map),
-    recipes: PropTypes.instanceOf(Immutable.Map),
-    orderDate: PropTypes.string,
-    numPortions: PropTypes.number,
-    trackAbandonBasketEligibility: PropTypes.func,
-    trackAbandonBasketContinueToMenu: PropTypes.func,
-    redirect: PropTypes.func.isRequired,
-    getAbandonBasketSessionState: PropTypes.func.isRequired,
-    basketRecipesClear: PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    basketRecipes: Immutable.Map(),
-    orders: Immutable.Map(),
-    deliveryDays: Immutable.Map(),
-    recipes: Immutable.Map(),
-    orderDate: '',
-    numPortions: 0,
-    trackAbandonBasketEligibility: () => { },
-    trackAbandonBasketContinueToMenu: () => { }
-  }
-
-  static contextType = ReactReduxContext
-
   static fetchData = async ({ store }) => {
     const state = store.getState()
     const promises = []
@@ -175,5 +175,9 @@ class AbandonBasketModal extends PureComponent {
     ) : null
   }
 }
+
+AbandonBasketModal.propTypes = propTypes
+AbandonBasketModal.defaultProps = defaultProps
+AbandonBasketModal.contextType = contextType
 
 export { AbandonBasketModal }

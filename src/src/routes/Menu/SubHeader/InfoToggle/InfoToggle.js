@@ -3,11 +3,11 @@ import React from 'react'
 import { Tooltip } from 'goustouicomponents'
 import css from './InfoToggle.css'
 
-class InfoToggle extends React.Component {
-  static propTypes = {
-    children: PropTypes.arrayOf(PropTypes.node),
-  }
+const propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node),
+}
 
+class InfoToggle extends React.Component {
   constructor() {
     super()
 
@@ -20,28 +20,37 @@ class InfoToggle extends React.Component {
     this.setState({ visible })
   }
 
-  message = () => (
-    <div className={css.message}>
-      <span className={css.close} onClick={() => this.toggleVisibility(false)} />
-      {this.props.children[1]}
-    </div>
-  )
+  message = () => {
+    const { children } = this.props
+
+    return (
+      <div className={css.message}>
+        <span className={css.close} onClick={() => this.toggleVisibility(false)} />
+        {children[1]}
+      </div>
+    )
+  }
 
   render() {
+    const { visible } = this.state
+    const { children } = this.props
+
     return (
       <Tooltip
         placement="bottom"
         message={this.message()}
-        visible={this.state.visible}
+        visible={visible}
         onVisibleChange={this.toggleVisibility}
         triggers={['click']}
       >
         <span className={css.title}>
-          {this.props.children[0]}
+          {children[0]}
         </span>
       </Tooltip>
     )
   }
 }
+
+InfoToggle.propTypes = propTypes
 
 export default InfoToggle
