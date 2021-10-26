@@ -1,10 +1,7 @@
 import Immutable from 'immutable'
 import { getStockAvailability, loadMenuCollectionsWithMenuService } from 'actions/menuActionHelper'
-import { safeJestMock } from '_testing/mocks'
-import * as landingCollectionImport from '../../routes/Menu/actions/menuSetLandingCollection'
 
 const mockActiveMenuForDate = {}
-const menuSetLandingCollection = safeJestMock(landingCollectionImport, 'menuSetLandingCollection')
 
 jest.mock('routes/Menu/selectors/menu', () => ({
   activeMenuForDate: () => mockActiveMenuForDate,
@@ -36,7 +33,6 @@ describe('loadMenuCollectionsWithMenuService', () => {
 
     await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', background)
 
-    expect(menuSetLandingCollection).toHaveBeenCalled()
     expect(dispatch).toHaveBeenCalledWith({
       type: 'MENU_COLLECTIONS_RECEIVE',
       collections: 'mock collection'

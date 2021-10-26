@@ -1,1 +1,1 @@
-export { MenuRecipesPageContainer } from './MenuRecipesPageContainer'
+export { MenuRecipesPageWrapper } from './MenuRecipesPageWrapper'

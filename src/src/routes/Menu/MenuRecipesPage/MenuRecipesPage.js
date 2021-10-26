@@ -5,7 +5,7 @@ import { CoronaVirusBanner } from 'CoronaVirusBanner'
 import menuConfig from 'config/menu'
 import { ReactReduxContext } from 'react-redux'
 import { AppModalContainer } from 'components/AppModal'
-import { CollectionsNavContainer } from '../CollectionsNav'
+import { CollectionsNavWrapper } from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import { JustForYouTutorial } from '../JustForYouTutorial'
 import { SubHeaderContainer } from '../SubHeader'
@@ -52,17 +52,12 @@ export class MenuRecipesPage extends PureComponent {
     const {
       shouldJfyTutorialBeVisible,
       isLoading,
-      menuCurrentCollectionId,
-      selectCurrentCollection,
       loadOptimizelySDK,
       orderId,
       query,
       params,
       fetchMenuData,
     } = this.props
-    if (prevProps.menuCurrentCollectionId && prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
-      selectCurrentCollection(menuCurrentCollectionId)
-    }
     if (!isLoading && prevProps.isLoading !== isLoading) {
       shouldJfyTutorialBeVisible()
     }
@@ -108,7 +103,7 @@ export class MenuRecipesPage extends PureComponent {
         <MenuDateRangeContainer variant="mobile" />
         <BannerTastePreferencesContainer />
 
-        {!showLoading && <CollectionsNavContainer />}
+        {!showLoading && <CollectionsNavWrapper />}
         <CollectionHeaderWrapperContainer />
 
         {stateRecipeCount ? <RecipeGrid query={query} /> : null}
@@ -171,8 +166,6 @@ MenuRecipesPage.propTypes = {
   showTastePreferencesLoading: PropTypes.bool.isRequired,
   showLoading: PropTypes.bool.isRequired,
   stateRecipeCount: PropTypes.number.isRequired,
-  menuCurrentCollectionId: PropTypes.string.isRequired,
-  selectCurrentCollection: PropTypes.func.isRequired,
   shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
   basketOrderLoaded: PropTypes.func.isRequired,
   portionSizeSelectedTracking: PropTypes.func.isRequired,

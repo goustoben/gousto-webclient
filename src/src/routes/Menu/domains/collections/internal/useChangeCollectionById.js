@@ -1,8 +1,15 @@
+import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 import { filtersCollectionChange } from 'actions/filters'
+import { useDisplayedCollections } from './useDisplayedCollections'
+import { useLocation } from './useLocation'
 
-export const useChangeCollection = (dispatch, prevLoc, collections) =>
-  collectionId => {
+export const useChangeCollectionById = () => {
+  const dispatch = useDispatch()
+  const collections = useDisplayedCollections()
+  const prevLoc = useLocation()
+
+  return collectionId => {
     const query = { ...prevLoc.query }
 
     const matchingCollection = collections.find(collection => collection.get('id') === collectionId)
@@ -28,3 +35,4 @@ export const useChangeCollection = (dispatch, prevLoc, collections) =>
       }
     }
   }
+}

@@ -2,14 +2,14 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
-import { CollectionsNavContainer } from '../../CollectionsNav'
+import { CollectionsNavWrapper } from '../../CollectionsNav'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from '../BannerTastePreferences'
 import { ExperimentsContainer } from '../../../../containers/Experiments'
 
 jest.mock('routes/Menu/SubHeader')
-jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
+jest.mock('../../CollectionsNav', () => ({ CollectionsNavWrapper: 'CollectionsNav' }))
 jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 jest.mock('../BasketValidationErrorModal', () => ({ BasketValidationErrorModalContainer: 'BasketValidationErrorModalContainer'}))
 
@@ -22,7 +22,6 @@ describe('initial render', () => {
       requiredProps = {
         stateRecipeCount: 30,
         menuCurrentCollectionId: '234',
-        selectCurrentCollection: jest.fn(),
         detailVisibilityChange: jest.fn(),
         shouldJfyTutorialBeVisible: jest.fn(),
         basketOrderLoaded: jest.fn(),
@@ -55,7 +54,7 @@ describe('initial render', () => {
     })
 
     test('should show a collections nav', () => {
-      expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
+      expect(wrapper.find(CollectionsNavWrapper).exists()).toBe(true)
     })
 
     test('should render these through the RecipGrid component', () => {
@@ -158,7 +157,6 @@ describe('with the collections feature enabled', () => {
     requiredProps = {
       stateRecipeCount: 30,
       menuCurrentCollectionId: '234',
-      selectCurrentCollection: jest.fn(),
       detailVisibilityChange: jest.fn(),
       shouldJfyTutorialBeVisible: jest.fn(),
       basketOrderLoaded: jest.fn(),
@@ -178,7 +176,7 @@ describe('with the collections feature enabled', () => {
         checkQueryParams={() => {}}
       />,
     )
-    expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
+    expect(wrapper.find(CollectionsNavWrapper).exists()).toBe(true)
   })
 })
 
@@ -189,7 +187,6 @@ describe('with the force collections feature enabled', () => {
     requiredProps = {
       stateRecipeCount: 30,
       menuCurrentCollectionId: '234',
-      selectCurrentCollection: jest.fn(),
       detailVisibilityChange: jest.fn(),
       shouldJfyTutorialBeVisible: jest.fn(),
       basketOrderLoaded: jest.fn(),
@@ -213,7 +210,7 @@ describe('with the force collections feature enabled', () => {
       />,
     )
 
-    expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
+    expect(wrapper.find(CollectionsNavWrapper).exists()).toBe(true)
   })
   test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
     wrapper = shallow(
@@ -227,54 +224,6 @@ describe('with the force collections feature enabled', () => {
       />,
     )
 
-    expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
-  })
-})
-
-describe('selectCurrentCollection', () => {
-  let wrapper
-  let selectCurrentCollection
-  let requiredProps
-  beforeEach(() => {
-    selectCurrentCollection = jest.fn()
-    requiredProps = {
-      stateRecipeCount: 30,
-      menuCurrentCollectionId: '234',
-      selectCurrentCollection: jest.fn(),
-      detailVisibilityChange: jest.fn(),
-      shouldJfyTutorialBeVisible: jest.fn(),
-      basketOrderLoaded: jest.fn(),
-      portionSizeSelectedTracking: jest.fn(),
-      userId: '1234',
-      isAuthenticated: true,
-      loadOptimizelySDK: jest.fn(),
-    }
-    wrapper = shallow(
-      <MenuRecipes
-        {...requiredProps}
-        orderId=""
-        basketNumPortionChange={jest.fn()}
-        fadeCss="fadeOut"
-        showLoading={false}
-        stateRecipeCount={30}
-        menuCurrentCollectionId="123abc"
-        menuRecipeDetailShow=""
-        detailVisibilityChange={() => { }}
-        selectCurrentCollection={selectCurrentCollection}
-        checkQueryParams={() => {}}
-      />,
-    )
-  })
-  afterEach(() => {
-    selectCurrentCollection.mockClear()
-  })
-  test('should not call selectCurrentCollection if menuCollectionId doesnt change', () => {
-    wrapper.setProps({ menuCurrentCollectionId: '123abc' })
-    expect(selectCurrentCollection).not.toHaveBeenCalled()
-  })
-
-  test('should only call selectCurrentCollection if menuCollectionId changes', () => {
-    wrapper.setProps({ menuCurrentCollectionId: '567xyz' })
-    expect(selectCurrentCollection).toHaveBeenCalled()
+    expect(wrapper.find(CollectionsNavWrapper).exists()).toBe(true)
   })
 })

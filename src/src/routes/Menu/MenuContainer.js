@@ -55,7 +55,6 @@ const mapDispatchToProps = {
   basketNumPortionChange: actions.basketNumPortionChange,
   shouldJfyTutorialBeVisible,
   orderCheckoutAction: actions.orderCheckout,
-  selectCurrentCollection: actions.changeCollectionById,
   onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,
   menuCalculateTimeToUsable,
