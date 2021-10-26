@@ -1,1 +1,1 @@
-export { CTAToAllRecipes } from './CTAToAllRecipes'
+export { CTAToAllRecipesContainer } from './CTAToAllRecipesContainer'

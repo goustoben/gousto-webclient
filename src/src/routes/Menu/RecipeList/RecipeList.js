@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import { RecipeTileContainer } from '../components/RecipeTile'
 import css from './RecipeList.css'
 import { RecipeContextProvider } from '../context/recipeContext'
+import { CTAToAllRecipesContainer } from '../Recipe/CTAToAllRecipes'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -42,6 +43,7 @@ class RecipeList extends React.PureComponent {
             />
           </RecipeContextProvider>
         ))}
+        <CTAToAllRecipesContainer />
       </div>
     )
   }
