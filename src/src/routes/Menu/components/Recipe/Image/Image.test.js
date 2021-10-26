@@ -1,9 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { useSelector } from 'react-redux'
 import Immutable from 'immutable'
 import LazyLoad from 'react-lazyload'
 import * as recipeContext from '../../../context/recipeContext'
 import { Image } from './Image'
+
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn()
+}))
 
 describe('Recipe components > Image', () => {
   let recipe
@@ -29,6 +34,9 @@ describe('Recipe components > Image', () => {
       ],
     }
   ])
+  const state = {
+    features: Immutable.fromJS({ isMenuImagesSizeHintsEnabled: { value: false } })
+  }
 
   beforeEach(() => {
     recipe = Immutable.fromJS({
@@ -38,6 +46,7 @@ describe('Recipe components > Image', () => {
     })
     useContextMock.mockClear()
     useRecipeFieldMock.mockClear()
+    useSelector.mockImplementation(selector => selector(state))
   })
 
   test('should call useRecipeField with ["media", "images"] as selector and empty Immutable.List as default', () => {
@@ -76,6 +85,7 @@ describe('Recipe components > Image', () => {
           className={className}
           src={expectedSrc}
           srcSet={expectedSrcSet}
+          sizes=""
         />
       )
     })
@@ -92,6 +102,7 @@ describe('Recipe components > Image', () => {
               className={className}
               src={expectedSrc}
               srcSet={expectedSrcSet}
+              sizes=""
             />
           </LazyLoad>
         )
