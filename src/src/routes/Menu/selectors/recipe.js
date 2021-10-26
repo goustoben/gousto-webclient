@@ -266,3 +266,7 @@ export const getBrandAvailabilityByRecipeId = createSelector(
     return availability
   }
 )
+
+export const getIsMenuImagesSizeHintsEnabled = ({ features }) => (
+  features && features.getIn(['isMenuImagesSizeHintsEnabled', 'value'], false)
+)
