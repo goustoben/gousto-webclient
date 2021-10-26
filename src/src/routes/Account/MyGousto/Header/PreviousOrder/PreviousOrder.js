@@ -29,7 +29,7 @@ const PreviousOrder = ({
   })
 
   return (
-    <div>
+    <div data-testing="getHelpPreviousOrder">
       <Heading size="fontStyleM" type="h2">
         Last delivery
       </Heading>
