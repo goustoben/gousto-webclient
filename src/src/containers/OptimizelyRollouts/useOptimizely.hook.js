@@ -1,8 +1,11 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { useMountedState } from 'react-use'
+import { getAuthUserId } from 'selectors/auth'
 import { getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
+import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 
 const withVersionPrefixAsFalse = false
 
@@ -12,8 +15,11 @@ const withVersionPrefixAsFalse = false
  *
  * Example Value: {%22radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled%22:true}
  */
-export const useIsOptimizelyFeatureEnabled = ({ name, userId, trackExperimentInSnowplow }) => {
+export const useIsOptimizelyFeatureEnabled = (name) => {
+  const dispatch = useDispatch()
+
   const sessionId = get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
+  const userId = useSelector(getAuthUserId)
   const userIdForOptimizely = userId || sessionId
   const [instance, setInstance] = React.useState(null)
   const isMounted = useMountedState()
@@ -57,15 +63,15 @@ export const useIsOptimizelyFeatureEnabled = ({ name, userId, trackExperimentInS
   // Track when we get feature from optimizely
   React.useEffect(() => {
     if (instance && hasValidInstance()) {
-      trackExperimentInSnowplow(name, isEnabled, userId, sessionId)
+      dispatch(trackExperimentInSnowplow(name, isEnabled, userId, sessionId))
     }
   }, [
     instance,
-    trackExperimentInSnowplow,
     name,
     isEnabled,
     userId,
-    sessionId
+    sessionId,
+    dispatch,
   ])
 
   if (hasOverwrite) {
