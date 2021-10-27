@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import transit from 'transit-immutable-js'
 import { Provider } from 'react-redux'
 import Footer from 'Footer'
 import { Header } from 'Header'
@@ -17,6 +16,7 @@ import { clientAuthorise, refresh } from 'client/auth'
 import { browserHistory } from 'react-router'
 import { browserType } from 'client/browserType'
 import { configureStore } from './store'
+import { deserialise } from './deserialiseState'
 
 let loaded = false
 
@@ -26,7 +26,7 @@ async function init() {
   loaded = true
   let initialState = {}
   try {
-    initialState = transit.fromJSON(window.__initialState__)
+    initialState = deserialise(window.__initialState__)
   } catch (error) {
     //
   }

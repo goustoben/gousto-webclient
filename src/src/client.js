@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 
 import { routes } from 'routes'
 import { AppContainer } from 'containers/AppContainer'
-import transit from 'transit-immutable-js'
 import Cookies from 'utils/GoustoCookies'
 import { processCookies } from 'utils/processCookies'
 import processFeaturesQuery from 'utils/processFeaturesQuery'
@@ -22,12 +21,13 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { initializeDatadog } from './middlewares/datadog/initialize'
 import { configureStore } from './store'
 import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
+import { deserialise } from './deserialiseState'
 
 docReady('docReady', window)
 
 let initialState = {}
 try {
-  initialState = transit.fromJSON(window.__initialState__)
+  initialState = deserialise(window.__initialState__)
 } catch (error) {
   //
 }

@@ -2,9 +2,6 @@ import Immutable from 'immutable'
 import config from 'config/head/optimizely'
 const htmlTemplate = require('../template')
 
-// mock transit in encodeState
-jest.mock('transit-immutable-js')
-
 describe('htmlTemplate', () => {
   let initialState
   let helmetHead
