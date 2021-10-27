@@ -90,6 +90,8 @@ module.exports = {
 
           this.scrollIntoView(addRecipeButtonSelector)
 
+          this.api.pause(1000)
+
           // Select n recipes
           ctx.api.elements('css selector', addRecipeButtonSelector, addRecipeButtons => {
             for (let i = 0; i < recipeCount; i++) {
