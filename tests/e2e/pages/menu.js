@@ -88,20 +88,15 @@ module.exports = {
           // present due to re-render
           ctx.api.waitForElementPresent(addRecipeButtonSelector)
 
-          // Scroll recipes into view
-          // Prevents bottom bar intercepting click
-          ctx.api.getLocationInView(addRecipeButtonSelector, ({ value: { x, y } }) => {
-            ctx.executeAndThrowOnFailure(`window.scrollTo(${x}, ${y})`)
-          })
+          this.scrollIntoView(addRecipeButtonSelector)
 
           // Select n recipes
           ctx.api.elements('css selector', addRecipeButtonSelector, addRecipeButtons => {
             for (let i = 0; i < recipeCount; i++) {
               const addRecipeButton = addRecipeButtons.value[i]
-              ctx.api.elementIdClick(addRecipeButton.ELEMENT)
 
               clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(
-                addRecipeButtonElementId,
+                addRecipeButton.ELEMENT,
                 [
                   '[data-testing="promoModal"] [data-testing="modal-close-button"]',
                   '[data-testing="spotlight-overlay"]',
