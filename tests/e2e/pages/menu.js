@@ -79,23 +79,37 @@ module.exports = {
             firstAddRecipe.click()
           })
         },
-        addRecipes: function () {
-          const nightwatchContext = this
+        addRecipes: function (recipeCount = 3) {
+          const ctx = this
 
-          const addRecipeButtonSelector = nightwatchContext.elements.addRecipeButton.selector
+          const addRecipeButtonSelector = ctx.elements.addRecipeButton.selector
 
-          nightwatchContext.api.elements('css selector', addRecipeButtonSelector, result => {
+          // Double-check visibility, loading screen could be
+          // present due to re-render
+          ctx.api.waitForElementPresent(addRecipeButtonSelector)
 
-            const status = result.status
+          // Scroll recipes into view
+          // Prevents bottom bar intercepting click
+          ctx.api.getLocationInView(addRecipeButtonSelector, ({ value: { x, y } }) => {
+            ctx.executeAndThrowOnFailure(`window.scrollTo(${x}, ${y})`)
+          })
 
-            if (status !== 0){
-              throw new Error(`Unexpected status ${status} when retrieving elements matching css selector "${addRecipeButtonSelector}". Full result was: ${JSON.stringify(result)}`)
-            }
+          // Select n recipes
+          ctx.api.elements('css selector', addRecipeButtonSelector, addRecipeButtons => {
+            for (let i = 0; i < recipeCount; i++) {
+              const addRecipeButton = addRecipeButtons.value[i]
+              ctx.api.elementIdClick(addRecipeButton.ELEMENT)
 
-            const addRecipeButtonElements = result.value
-
-            for (let i = 0; i < 3; i++) {
-              addRecipe(i, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext)
+              clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(
+                addRecipeButtonElementId,
+                [
+                  '[data-testing="promoModal"] [data-testing="modal-close-button"]',
+                  '[data-testing="spotlight-overlay"]',
+                  '[data-testing="tutorialStepCta"]',
+                  '.ReactModalPortal [data-testing="menuRecipeAdd"]',
+                ],
+                nightwatchContext
+              );
             }
           })
         },
@@ -173,20 +187,4 @@ function clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThe
       }
     }
   })
-}
-
-function addRecipe(recipeIndex, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext) {
-  const addRecipeButtonElementId = addRecipeButtonElements[recipeIndex].ELEMENT
-
-  nightwatchContext.executeAndThrowOnFailure(`document.querySelectorAll('${addRecipeButtonSelector}')[${recipeIndex}].scrollIntoView({ block: "center" })`, [])
-  clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(
-    addRecipeButtonElementId,
-    [
-      '[data-testing="promoModal"] [data-testing="modal-close-button"]',
-      '[data-testing="spotlight-overlay"]',
-      '[data-testing="tutorialStepCta"]',
-      '.ReactModalPortal [data-testing="menuRecipeAdd"]',
-    ],
-    nightwatchContext
-  );
 }
