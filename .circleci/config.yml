@@ -208,6 +208,8 @@ jobs:
           path: tests/e2e/reports
       - store_artifacts:
           path: tests/e2e/reports
+      - store_artifacts:
+          path: tests/e2e/screenshots
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
