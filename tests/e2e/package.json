@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "nightwatch --env=local:chrome",
-    "test:staging": "nightwatch --env=staging:chrome --verbose --skiptags unstable"
+    "test:staging": "nightwatch --env=staging:chrome --verbose --skiptags unstable",
+    "chromedriver:start": "chromedriver start"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,6 @@
     "selenium-download": "2.0.7"
   },
   "devDependencies": {
-    "chromedriver": "^93.0.1"
+    "chromedriver": "^94.0.0"
   }
 }
