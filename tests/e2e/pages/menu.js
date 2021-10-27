@@ -103,7 +103,7 @@ module.exports = {
                   '[data-testing="tutorialStepCta"]',
                   '.ReactModalPortal [data-testing="menuRecipeAdd"]',
                 ],
-                nightwatchContext
+                ctx
               );
             }
           })
