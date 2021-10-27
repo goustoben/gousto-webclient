@@ -132,8 +132,8 @@ function editAnExistingOrder(browser) {
       done()
     })
     .perform(done => {
-      browser.pause(1000)
-      orderConfirmation.section.orderConfirmationContainer.asyncCheckIfOrderConfirmationPageVisible(browser, done)
+      browser.waitForElementVisible('*[data-testing="orderConfirmationContainer"]', 60 * 1000, 'Order confirmation page was not visible after 60 seconds');
+      done()
     })
 }
 
@@ -181,6 +181,7 @@ function orderANewBox(browser) {
       done()
     })
     .perform(done => {
-      orderConfirmation.section.orderConfirmationContainer.asyncCheckIfOrderConfirmationPageVisible(browser, done)
+      browser.waitForElementVisible('*[data-testing="orderConfirmationContainer"]', 60 * 1000, 'Order confirmation page was not visible after 60 seconds');
+      done()
     })
 }
