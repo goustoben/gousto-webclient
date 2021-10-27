@@ -22,7 +22,7 @@ orbs:
 jobs:
   setup-ci-variables-scripts:
     docker: *gousto_platform_image #stock image missing /gousto directory
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
       - checkout
@@ -34,8 +34,7 @@ jobs:
           command: |
             source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=$AWS_DEFAULT_REGION)
             echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           name: Setup ECR
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --setup
@@ -57,11 +56,10 @@ jobs:
 
   install-src-dependencies:
     docker: *circleci_node_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - attach_workspace:
           at: /
       - run:
@@ -80,7 +78,7 @@ jobs:
 
   jest-coverage-report:
     docker: *circleci_node_image
-    resource_class: large
+    resource_class: medium
     working_directory: ~/project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
       TZ: "Europe/London"
@@ -99,7 +97,7 @@ jobs:
 
   eslint-generate-report:
     docker: *circleci_node_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
@@ -117,7 +115,7 @@ jobs:
 
   publish-code-health:
     docker: *circleci_node_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
@@ -136,7 +134,7 @@ jobs:
 
   build-webclient:
     docker: *circleci_node_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
@@ -166,11 +164,10 @@ jobs:
 
   create-and-upload-webclient-docker-image-to-ecr:
     docker: *gousto_platform_image #stock image missing boto
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - attach_workspace:
           at: /
       - run:
@@ -180,7 +177,7 @@ jobs:
 
   test-e2e:
     docker: *circleci_node_browsers_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
@@ -218,7 +215,7 @@ jobs:
 
   test-regression:
     docker: *circleci_node_browsers_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
@@ -251,7 +248,7 @@ jobs:
 
   test-regression-mobile:
     docker: *circleci_node_browsers_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
@@ -284,7 +281,7 @@ jobs:
 
   deploy-infrastructure-and-webclient-image:
     docker: *gousto_platform_image #stock image missing boto
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
@@ -296,7 +293,7 @@ jobs:
 
   install-regression-test-dependencies:
     docker: *circleci_node_image
-    resource_class: large
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
