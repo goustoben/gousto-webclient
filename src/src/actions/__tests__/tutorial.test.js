@@ -5,6 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import { tutorialViewedExpireTime } from 'config/cookies'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 
 import {
   shouldJfyTutorialBeVisible,
@@ -24,9 +25,15 @@ jest.mock('config/cookies', () => ({
   tutorialViewedExpireTime: 60,
 }))
 
+jest.mock('containers/OptimizelyRollouts')
+
 describe('tutorial actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
+
+  beforeEach(() => {
+    isOptimizelyFeatureEnabledFactory.mockImplementation(() => async () => false)
+  })
 
   afterEach(() => {
     dispatch.mockClear()
@@ -59,8 +66,8 @@ describe('tutorial actions', () => {
         }))
       })
 
-      it('should call dispatch with correct action and properties', () => {
-        shouldJfyTutorialBeVisible()(dispatch, getState)
+      it('should call dispatch with correct action and properties', async () => {
+        await shouldJfyTutorialBeVisible()(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.SET_TUTORIAL_VISIBLE,
@@ -78,8 +85,8 @@ describe('tutorial actions', () => {
         }))
       })
 
-      it('should call dispatch with correct action and properties', () => {
-        shouldJfyTutorialBeVisible()(dispatch, getState)
+      it('should call dispatch with correct action and properties', async () => {
+        await shouldJfyTutorialBeVisible()(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.SET_TUTORIAL_VISIBLE,
@@ -102,8 +109,8 @@ describe('tutorial actions', () => {
         }))
       })
 
-      it('should call dispatch with correct action and properties', () => {
-        shouldJfyTutorialBeVisible()(dispatch, getState)
+      it('should call dispatch with correct action and properties', async () => {
+        await shouldJfyTutorialBeVisible()(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.SET_TUTORIAL_VISIBLE,
