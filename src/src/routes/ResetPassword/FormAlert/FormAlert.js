@@ -46,7 +46,11 @@ FormAlert.propTypes = {
   errorResetPassword: PropTypes.arrayOf(PropTypes.shape({
     error: PropTypes.string,
     message: PropTypes.string,
-  })).isRequired,
+  }))
+}
+
+FormAlert.defaultProps = {
+  errorResetPassword: null
 }
 
 export { FormAlert }

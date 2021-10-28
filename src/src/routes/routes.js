@@ -3,6 +3,7 @@ import { Route } from 'react-router'
 
 import MainLayout from 'layouts/MainLayout'
 import Page from 'containers/PageContainer'
+import FullPage from 'layouts/FullPage/FullPage'
 
 import ErrorPage from 'components/ErrorPage'
 import { Home } from './Home'
@@ -11,7 +12,8 @@ import Menu from './Menu'
 import Account from './Account'
 import { Signup } from './Signup'
 import Welcome from './Welcome'
-import ResetPassword from './ResetPassword'
+import { ResetPasswordContainer } from './ResetPassword'
+import configRoutes from '../config/routes'
 import { BoxPrices } from './BoxPrices'
 import Unsubscribe from './Unsubscribe'
 import { GetHelp } from './GetHelp'
@@ -26,7 +28,9 @@ const routes = (store) => (
     {Signup}
     {Menu}
     {BoxPrices}
-    {ResetPassword}
+    <Route component={FullPage} footerType="large">
+      <Route path={configRoutes.client.resetPassword} component={ResetPasswordContainer} />
+    </Route>
     {Unsubscribe}
     {PrivacyStatement}
     {GetHelp(store)}

@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Button } from 'goustouicomponents'
+import { CTA } from 'goustouicomponents'
 import ReCAPTCHA from 'components/Recaptcha'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import Input from 'Form/Input'
 import configAuth from 'config/auth'
 import Content from 'containers/Content'
 import InputError from 'Form/InputError'
-import { PageContent, PageHeader } from 'Page'
+import { PageContent } from 'Page'
 import css from './ResetPassword.css'
 import { FormAlert } from './FormAlert'
 
@@ -25,24 +25,23 @@ const propTypes = {
 }
 
 const defaultProps = {
-  location: { query: { token: '' } },
-  isValidPassword: true,
   errorResetPassword: null,
   authResetPassword: () => {},
-  isRecaptchaEnabled: false,
   changeRecaptcha: () => {}
 }
-
-class ResetPassword extends React.PureComponent {
-  state = {
-    passwordValue: '',
-    isPasswordLengthError: false,
-    recaptchaValue: null,
-  }
-
+export class ResetPassword extends React.PureComponent {
   static isPasswordLengthValid = (passwordValue) => (
     passwordValue.length >= configAuth.PASSWORD_MIN_LENGTH
   )
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      passwordValue: '',
+      isPasswordLengthError: false,
+      recaptchaValue: null,
+    }
+  }
 
   componentDidMount() {
     const { changeRecaptcha } = this.props
@@ -100,11 +99,12 @@ class ResetPassword extends React.PureComponent {
   render() {
     const { errorResetPassword, isRecaptchaEnabled } = this.props
     const { isPasswordLengthError, passwordValue } = this.state
+    const isInputValueEmpty = passwordValue.length === 0
 
     return (
       <div className={css.wrapper}>
-        <PageHeader title="Reset your Password" />
         <PageContent>
+          <h1 className={css.resetFormTitle}>Reset your Password</h1>
           <FormAlert errorResetPassword={errorResetPassword} />
           <Input
             type="password"
@@ -123,9 +123,17 @@ class ResetPassword extends React.PureComponent {
               </Content>
             </InputError>
           ) : null}
-          <Button className={css.submitButton} onClick={() => this.validateAndSubmit(passwordValue)}>
-            Reset password
-          </Button>
+          <div className={css.resetPasswordButton}>
+            <CTA
+              size="small"
+              isFullWidth
+              isDisabled={isInputValueEmpty}
+              className={css.submitButton}
+              onClick={() => this.validateAndSubmit(passwordValue)}
+            >
+              Reset Password
+            </CTA>
+          </div>
           {
             isRecaptchaEnabled
             && (
@@ -145,5 +153,3 @@ class ResetPassword extends React.PureComponent {
 
 ResetPassword.propTypes = propTypes
 ResetPassword.defaultProps = defaultProps
-
-export default ResetPassword
