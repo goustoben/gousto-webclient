@@ -28,7 +28,7 @@ jobs:
       - checkout
       - run:
           name: Download platform deploy scripts and set the ENVIRONMENT variable from the branch name
-          command: /gousto/platform-setup.sh
+          command: export CIRCLE_BRANCH=develop && /gousto/platform-setup.sh # DO NOT DEPLOY THIS - FOR TESTING
       - run:
           name: Set S3 Cloudfront URL
           command: |
@@ -313,6 +313,49 @@ jobs:
 
 workflows:
   version: 2
+
+  test-staging-integrity:
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - FEF-XXX-check-staging-integrity
+      - install-src-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+          filters:
+            branches:
+              only:
+                - FEF-XXX-check-staging-integrity
+      - build-webclient:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-src-dependencies
+          filters:
+            branches:
+              only:
+                - FEF-XXX-check-staging-integrity
+      - create-and-upload-webclient-docker-image-to-ecr:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient
+            - jest-coverage-report
+            - eslint-generate-report
+          filters:
+            branches:
+              only:
+                - FEF-XXX-check-staging-integrity
+      - deploy-infrastructure-and-webclient-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - create-and-upload-webclient-docker-image-to-ecr
+          filters:
+            branches:
+              only:
+                - FEF-XXX-check-staging-integrity
 
   e2e-manual:
     jobs:
