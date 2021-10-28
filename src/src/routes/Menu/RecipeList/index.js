@@ -1,3 +1,2 @@
-export { RecipeListContainer as RecipeList } from './RecipeListContainer'
-export { RecipeListContainer } from './RecipeListContainer'
+export { RecipeListWrapper } from './RecipeListWrapper'
 export { FilteredRecipeListContainer } from './FilteredRecipeListContainer'

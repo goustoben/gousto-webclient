@@ -1,1 +1,1 @@
-export { CollectionsNavContainer } from './CollectionsNavContainer'
+export { CollectionsNavWrapper } from './CollectionsNavWrapper'

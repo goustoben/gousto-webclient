@@ -6,6 +6,9 @@ import { getNumPortions, getBasketMenuId , getBasketRecipes } from 'selectors/ba
 import { getMenuLimits } from 'selectors/menu'
 import { getMenuCategoryIdForDetails } from './menuRecipeDetails'
 
+export const getMenuLoadingErrorMessage = state => state.menu.get('menuLoadingErrorMessage')
+export const getRecipeCount = state => getRecipes(state).size
+
 export const getCurrentMenuRecipes = createSelector(
   [getRecipes, getMenuRecipeIds],
   (allRecipes, currentMenuIds) => (

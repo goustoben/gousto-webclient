@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { match, createMemoryHistory } from 'react-router'
+import { MenuRecipesPageWrapper } from 'routes/Menu/MenuRecipesPage/MenuRecipesPageWrapper'
 import { routes } from '../routes'
 
 function reduxStoreMock(isAuthenticated) {
@@ -31,7 +32,7 @@ describe('router', () => {
           expect(renderProps.components[1].displayName).toEqual(
             'Connect(Menu)',
           )
-          expect(renderProps.components[2].displayName).toEqual('Connect(MenuRecipesPage)')
+          expect(renderProps.components[2]).toEqual(MenuRecipesPageWrapper)
         },
       )
     })
@@ -51,7 +52,7 @@ describe('router', () => {
           expect(renderProps.components[1].displayName).toEqual(
             'Connect(Menu)',
           )
-          expect(renderProps.components[2].displayName).toEqual('Connect(MenuRecipesPage)')
+          expect(renderProps.components[2]).toEqual(MenuRecipesPageWrapper)
         },
       )
     })

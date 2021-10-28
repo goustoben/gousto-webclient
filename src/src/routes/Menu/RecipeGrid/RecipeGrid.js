@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { RecipeListContainer, FilteredRecipeListContainer } from '../RecipeList'
+import { RecipeListWrapper, FilteredRecipeListContainer } from '../RecipeList'
 import { DetailOverlayContainer } from '../DetailOverlay'
 
 import css from '../Menu.css'
@@ -19,7 +19,7 @@ class RecipeGrid extends PureComponent {
   }
 
   render() {
-    const { recipes, originalOrderRecipeIds, query } = this.props
+    const { recipes, originalOrderRecipeIds } = this.props
     const { shouldShowOverlay } = this.state
 
     return (
@@ -29,7 +29,7 @@ class RecipeGrid extends PureComponent {
       >
         {
           recipes === null
-            ? <RecipeListContainer query={query} />
+            ? <RecipeListWrapper />
             : <FilteredRecipeListContainer recipes={recipes} originalOrderRecipeIds={originalOrderRecipeIds} />
         }
         <DetailOverlayContainer

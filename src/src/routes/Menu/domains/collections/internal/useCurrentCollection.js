@@ -1,3 +1,4 @@
+import { CollectionSlug } from '../constants'
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
 
@@ -13,7 +14,7 @@ const getCollectionBySlug = (collections, slug) => {
 
 const getCollectionSlug = collection => collection.get('slug')
 const isCollectionDefault = collection => Boolean(collection.get('default'))
-const isCollectionRecommendations = collection => getCollectionSlug(collection) === 'recommendations'
+const isCollectionRecommendations = collection => getCollectionSlug(collection) === CollectionSlug.Recommendations
 
 const getDefaultCollection = collections => {
   const defaultCollection = collections.find(isCollectionDefault)

@@ -1,19 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux'
 import { useDisplayedCollections } from './internal/useDisplayedCollections'
 import { useCurrentCollection } from './internal/useCurrentCollection'
-import { useChangeCollection } from './internal/useChangeCollection'
+import { useChangeCollectionById } from './internal/useChangeCollectionById'
 
 export const useCollections = () => {
-  const dispatch = useDispatch()
-
   const currentCollection = useCurrentCollection()
   const collections = useDisplayedCollections()
-  const location = useSelector(state => state.routing.locationBeforeTransitions)
-  const changeCollection = useChangeCollection(dispatch, location, collections)
+  const changeCollectionById = useChangeCollectionById()
 
   return {
     currentCollection,
+    currentCollectionId: currentCollection ? currentCollection.get('id') : null,
     collections,
-    changeCollection
+    changeCollectionById
   }
 }

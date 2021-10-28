@@ -3,10 +3,13 @@ import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import { tutorialViewedExpireTime } from 'config/cookies'
 import * as trackingKeys from 'actions/trackingKeys'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 import { actionTypes } from './actionTypes'
 
 export const shouldJfyTutorialBeVisible = () => (
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
+    const getIsCFYDisabled = isOptimizelyFeatureEnabledFactory('kales_remove_cfy_collection')
+
     const { menuCollections, tutorial } = getState()
 
     const cfyCollectionLoaded = menuCollections.find(
@@ -18,7 +21,9 @@ export const shouldJfyTutorialBeVisible = () => (
     const jfyTutorialSeen = Boolean(tutorial && tutorial.getIn(['viewed', 'justforyou']))
     let shouldTutorialBeVisible = false
 
-    if (tutorialNameIsCFY === 'jfy' && !jfyTutorialSeen) {
+    const isCFYEnabled = !(await getIsCFYDisabled(dispatch, getState))
+
+    if (isCFYEnabled && tutorialNameIsCFY === 'jfy' && !jfyTutorialSeen) {
       shouldTutorialBeVisible = true
     }
 

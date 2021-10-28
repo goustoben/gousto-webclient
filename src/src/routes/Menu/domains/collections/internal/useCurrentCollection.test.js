@@ -3,6 +3,7 @@ import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
 
 import { useCurrentCollection } from './useCurrentCollection'
+import { CollectionSlug } from '../constants'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -14,7 +15,7 @@ jest.mock('./useDisplayedCollections')
 
 describe('useCurrentCollection', () => {
   const defaultCollection = Immutable.Map({ id: '101', published: true, default: true, slug: 'foo' })
-  const recommendationsCollection = Immutable.Map({ id: '102', published: true, default: false, slug: 'recommendations' })
+  const recommendationsCollection = Immutable.Map({ id: '102', published: true, default: false, slug: CollectionSlug.Recommendations })
   const normalCollection = Immutable.Map({ id: '103', published: true, default: false, slug: 'pastas' })
   const normalCollectionTwo = Immutable.Map({ id: '104', published: true, default: false, slug: 'pizzas' })
 

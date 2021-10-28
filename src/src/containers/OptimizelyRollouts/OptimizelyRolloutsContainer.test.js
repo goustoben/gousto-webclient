@@ -14,11 +14,12 @@ describe('OptimizelyRolloutsContainer', () => {
       }),
     })
 
-    wrapper = shallow(<OptimizelyRolloutsContainer store={store} />)
+    wrapper = shallow(<OptimizelyRolloutsContainer store={store} featureName="foo" />)
 
     expect(wrapper.find('OptimizelyRollouts').props()).toEqual(expect.objectContaining({
       sessionId: null,
       authUserId: '88ca946c-1111-4201-8e1a-b68f9ec582h5',
+      featureName: 'foo',
       featureEnabled: false,
       children: null,
       trackExperimentInSnowplow: expect.any(Function)

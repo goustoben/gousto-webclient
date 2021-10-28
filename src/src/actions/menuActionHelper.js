@@ -3,7 +3,6 @@ import { collectionsTransformer } from 'apis/transformers/collections'
 import { recipesTransformer } from 'apis/transformers/recipes'
 import { locationQuery } from '../selectors/routing'
 import { actionTypes } from './actionTypes'
-import { menuSetLandingCollection } from '../routes/Menu/actions/menuSetLandingCollection'
 
 export function menuCollectionsReceive(collections) {
   return {
@@ -75,14 +74,7 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date) => {
 
   dispatch(menuCollectionsReceive(transformedCollections))
   dispatch(menuReceiveMenu(transformedRecipes))
-
-  // this is unfortunately required because menuSetLandingCollection
-  // requires collections, collectionRecipes and recipeStock to all be loaded
-  // it doesn't work without this as the thunk runs before all the store updates have completed
-  await Promise.resolve()
-
   dispatch(basketCurrentMenuIdChange(activeMenu))
-  dispatch(menuSetLandingCollection())
 }
 
 export {

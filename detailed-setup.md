@@ -279,9 +279,14 @@ cd ~/code/goustowebclient/tests/e2e
 npm test
 ```
 
-#### Staging environment (only for CircleCI)
+#### Staging environment
 ```shell
 cd ../tests/e2e
+
+# Start chromedriver
+npm run chromedriver:start
+
+# Separate terminal window
 npm run test:staging
 ```
 
