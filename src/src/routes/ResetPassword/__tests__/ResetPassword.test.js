@@ -1,24 +1,32 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ResetPassword from 'routes/ResetPassword/ResetPassword'
-import { PageContent, PageHeader } from 'Page'
+import { ResetPassword } from 'routes/ResetPassword/ResetPassword'
+import { PageContent } from 'Page'
 import Input from 'Form/Input'
 import InputError from 'Form/InputError'
-import { Button } from 'goustouicomponents'
+
+const IS_RECAPTCHA_ENABLED = false
+const TOKEN = 'ASDF1234'
+const LOCATION = { query: { token: TOKEN } }
 
 describe('<ResetPassword />', () => {
   let wrapper
   let pageContent
 
   beforeEach(() => {
-    wrapper = shallow(<ResetPassword />)
+    wrapper = shallow(
+      <ResetPassword
+        isRecaptchaEnabled={IS_RECAPTCHA_ENABLED}
+        location={LOCATION}
+      />
+    )
     pageContent = wrapper.find(PageContent)
   })
 
   describe('should render', () => {
     test('a header with the page title', () => {
-      expect(wrapper.find(PageHeader).prop('title')).toBeTruthy()
+      expect(wrapper.find('.resetFormTitle').exists()).toBe(true)
     })
 
     test('a content section', () => {
@@ -31,8 +39,9 @@ describe('<ResetPassword />', () => {
       expect(pageContent.find(Input).prop('error')).toBeFalsy()
     })
 
-    test('a button', () => {
-      expect(pageContent.find(Button)).toHaveLength(1)
+    test('a button which is disabled', () => {
+      expect(pageContent.find('.resetPasswordButton')).toHaveLength(1)
+      expect(pageContent.find('CTA').prop('isDisabled')).toBeTruthy()
     })
 
     test('an input error when the password is less than the min length', () => {
@@ -59,6 +68,16 @@ describe('<ResetPassword />', () => {
       expect(wrapper.state('isPasswordLengthError')).toBeTruthy()
     })
 
+    test('passwordValue has length button should not be disabled', () => {
+      wrapper.setState({ passwordValue: 'password' })
+
+      pageContent = wrapper.find(PageContent)
+
+      expect(wrapper.state('passwordValue')).toBeTruthy()
+
+      expect(pageContent.find('CTA').prop('isDisabled')).toBeFalsy()
+    })
+
     test('password long enough should update state on change', () => {
       wrapper.setState({ isPasswordLengthError: true })
 
@@ -71,38 +90,42 @@ describe('<ResetPassword />', () => {
 
     test('password too short should not be submitted', () => {
       const authResetPasswordSpy = jest.fn()
-      wrapper = shallow(<ResetPassword authResetPassword={authResetPasswordSpy} />)
+      wrapper = shallow(<ResetPassword
+        authResetPassword={authResetPasswordSpy}
+        isRecaptchaEnabled={IS_RECAPTCHA_ENABLED}
+        location={LOCATION}
+      />
+      )
       wrapper.find(PageContent).find(Input).prop('onChange')('7charac')
       wrapper.update()
-      wrapper.find(PageContent).find(Button).prop('onClick')()
+      wrapper.find(PageContent).find('CTA').simulate('click')
 
       expect(authResetPasswordSpy).not.toHaveBeenCalled()
     })
 
     test('password long enough should be submitted along with the token', () => {
       const authResetPasswordSpy = jest.fn()
-      const location = { query: { token: 'someTokenValue' } }
       wrapper = shallow(<ResetPassword
         authResetPassword={authResetPasswordSpy}
-        location={location}
+        location={LOCATION}
+        isRecaptchaEnabled={IS_RECAPTCHA_ENABLED}
       />)
       wrapper.find(PageContent).find(Input).prop('onChange')('8charact')
       wrapper.update()
-      wrapper.find(PageContent).find(Button).prop('onClick')()
+      wrapper.find(PageContent).find('CTA').simulate('click')
 
       expect(authResetPasswordSpy).toHaveBeenCalledTimes(1)
-      expect(authResetPasswordSpy).toHaveBeenCalledWith('8charact', 'someTokenValue', null)
+      expect(authResetPasswordSpy).toHaveBeenCalledWith('8charact', TOKEN, null)
     })
   })
 
   describe('given recaptcha is enabled', () => {
     const authResetPasswordSpy = jest.fn()
-    const location = { query: { token: 'someTokenValue' } }
 
     beforeEach(() => {
       wrapper = shallow(<ResetPassword
         authResetPassword={authResetPasswordSpy}
-        location={location}
+        location={LOCATION}
         isRecaptchaEnabled
       />)
       wrapper.setState({ recaptchaValue: 'recaptcha-value' })
@@ -110,11 +133,11 @@ describe('<ResetPassword />', () => {
       pageContent = wrapper.find(PageContent)
       wrapper.find(PageContent).find(Input).prop('onChange')('8charact')
       wrapper.update()
-      wrapper.find(PageContent).find(Button).prop('onClick')()
+      wrapper.find(PageContent).find('CTA').simulate('click')
     })
 
     test('authResetPassword is called with the recaptcha token', () => {
-      expect(authResetPasswordSpy).toHaveBeenCalledWith('8charact', 'someTokenValue', 'recaptcha-value')
+      expect(authResetPasswordSpy).toHaveBeenCalledWith('8charact', TOKEN, 'recaptcha-value')
     })
   })
 })
