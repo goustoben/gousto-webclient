@@ -339,8 +339,6 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-webclient
-            - jest-coverage-report
-            - eslint-generate-report
           filters:
             branches:
               only:
