@@ -4,7 +4,7 @@ import { getIsPolicyAccepted } from 'selectors/cookies'
 import { useCollections } from '../domains/collections'
 import { CollectionsNav } from './CollectionsNav'
 
-const CollectionsNavWrapper = () => {
+const CollectionsNavWrapper = (ownProps) => {
   const {
     currentCollectionId,
     collections,
@@ -14,6 +14,8 @@ const CollectionsNavWrapper = () => {
 
   return (
     <CollectionsNav
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...ownProps}
       collectionFilterChange={changeCollectionById}
       menuCollections={collections}
       menuCurrentCollectionId={currentCollectionId}

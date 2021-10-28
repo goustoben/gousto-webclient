@@ -7,7 +7,7 @@ import { RecipeList } from './RecipeList'
 import { getRecipeListRecipes } from '../selectors/recipeList'
 import { useCollections } from '../domains/collections/useCollections'
 
-const RecipeListWrapper = () => {
+const RecipeListWrapper = (ownProps) => {
   const dispatch = useDispatch()
   const { currentCollectionId } = useCollections()
   const { recipes, originalOrderRecipeIds } = useSelector(getRecipeListRecipes)
@@ -18,6 +18,8 @@ const RecipeListWrapper = () => {
 
   return (
     <RecipeList
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...ownProps}
       currentCollectionId={currentCollectionId}
       recipes={recipes}
       originalOrderRecipeIds={originalOrderRecipeIds}

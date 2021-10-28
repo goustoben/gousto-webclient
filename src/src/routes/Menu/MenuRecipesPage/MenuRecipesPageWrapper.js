@@ -46,6 +46,8 @@ const MenuRecipesPageWrapper = (ownProps) => {
 
   return (
     <MenuRecipesPage
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...ownProps}
       showTastePreferencesLoading={showTastePreferencesLoading}
       stateRecipeCount={stateRecipeCount}
       menuCurrentCollectionId={currentCollectionId}
