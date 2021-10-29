@@ -1,29 +1,92 @@
-import Immutable from 'immutable'
+import { defineTag, checkSliceTag } from 'utils/state'
+const {
+  isPlain,
+  isArray,
+  isObject,
+  isImmutableList,
+  isImmutableMap,
+  isImmutableOrderedMap,
+} = checkSliceTag
 
-const defineType = (value) => {
-  if (value instanceof Immutable.OrderedMap) {
-    return 'isOrderedMap'
-  }
+const transformObjects = (obj) => {
+  const transformedObjects = {}
+  Object.entries(obj).forEach(([key, value]) => {
+    transformedObjects[key] = {
+      tag: defineTag(value),
+      value: isObject(value) ? transformObjects(value) : value,
+    }
+  })
 
-  if (value instanceof Immutable.Map) {
-    return 'isMap'
-  }
+  return transformedObjects
+}
 
-  if (value instanceof Immutable.List) {
-    return 'isList'
-  }
+const transformMapObj = (mapObj) => {
+  const transformedMap = {}
+  mapObj.mapEntries(([mapKey, mapValue]) => {
+    transformedMap[mapKey] = {
+      tag: defineTag(mapValue),
+      value: isImmutableMap(mapValue) ? transformMapObj(mapValue) : mapValue,
+    }
+  })
 
-  return 'plain'
+  return transformedMap
 }
 
 const transformState = (state) => {
-  const transformedState = {}
+  let transformedState = []
+  const plainObjects = { tag: 'isPlain', items: {} }
+  const orderedMapObjects = { tag: 'isOrderedMap', items: {} }
+  const mapObjects = { tag: 'isMap', items: {} }
+  const listObjects = { tag: 'isList', items: {} }
+  const arrays = { tag: 'isArray', items: {} }
+  const objects = { tag: 'isObject', items: {} }
   Object.entries(state).forEach(([key, value]) => {
-    transformedState[key] = {
-      type: defineType(value),
-      value,
+    if (isImmutableOrderedMap(value)) {
+      orderedMapObjects.items[key] = value
+
+      return orderedMapObjects
     }
+
+    if (isImmutableMap(value)) {
+      mapObjects.items[key] = {
+        tag: defineTag(value),
+        value: transformMapObj(value),
+      }
+
+      return mapObjects
+    }
+
+    if (isImmutableList(value)) {
+      listObjects.items[key] = value.toJSON()
+
+      return listObjects
+    }
+
+    if (isArray(value)) {
+      arrays.items[key] = value
+
+      return arrays
+    }
+
+    if (isPlain(value)) {
+      plainObjects.items[key] = value
+
+      return plainObjects
+    }
+
+    objects.items[key] = transformObjects(value)
+
+    return objects
   })
+
+  transformedState = [
+    objects,
+    plainObjects,
+    mapObjects,
+    orderedMapObjects,
+    arrays,
+    listObjects,
+  ]
 
   return transformedState
 }
