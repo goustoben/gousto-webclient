@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import Cookies from 'utils/GoustoCookies'
-import parsePhoneNumber from 'libphonenumber-js'
+import { parsePhoneNumber } from 'utils/phoneNumber/phoneNumber'
 // eslint-disable-next-line import/no-cycle
 import { get } from 'utils/cookieHelper2'
 
