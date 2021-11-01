@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import userUtils from 'utils/user'
+import { getUserOrderById } from 'utils/user'
 import { getUserFirstName } from 'selectors/user'
 import { OrderSchedule } from './OrderSchedule'
 
 function mapStateToProps(state) {
   const orderId = state.basket.get('orderId')
   const nameFirst = getUserFirstName(state)
-  const order = userUtils.getUserOrderById(orderId, state.user.get('orders'))
+  const order = getUserOrderById(orderId, state.user.get('orders'))
   const subscription = state.user.get('subscription')
 
   return {

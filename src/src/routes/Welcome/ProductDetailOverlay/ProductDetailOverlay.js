@@ -10,7 +10,7 @@ const ProductDetailOverlay = ({ onVisibilityChange, open, productId }) => (
 )
 
 ProductDetailOverlay.propTypes = {
-  onVisibilityChange: PropTypes.func,
+  onVisibilityChange: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   productId: PropTypes.string.isRequired,
 }

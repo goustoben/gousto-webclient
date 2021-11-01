@@ -1,10 +1,10 @@
 import ProductList from 'Product/List'
-import productUtils from 'utils/products'
+import { getOneProductFromEachCategory } from 'utils/products'
 import actions from 'actions'
 import { connect } from 'react-redux'
 
 function mapStateToProps(state, { orderId }) {
-  const randomProducts = productUtils.getOneProductFromEachCategory(state.products, orderId)
+  const randomProducts = getOneProductFromEachCategory(state.products, orderId)
 
   return {
     orderId,

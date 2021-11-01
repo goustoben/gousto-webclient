@@ -1,8 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { VariantRecipeListModal } from '../VariantRecipeListModal'
-import { VariantRecipeListContainer } from '../../../Recipe/VariantRecipeList/VariantRecipeList'
-import { VariantRecipeListModalContent } from '../VariantRecipeListModalContent'
 
 describe('VariantRecipeListModal', () => {
   let wrapper

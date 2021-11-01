@@ -2,7 +2,7 @@
 import Immutable from 'immutable'
 
 import globals from 'config/globals'
-import windowUtils from 'utils/window'
+import { getWindow } from 'utils/window'
 import { actionTypes } from 'actions/actionTypes'
 import { getPathName } from 'middlewares/tracking/utils'
 
@@ -22,7 +22,7 @@ export const pinterestTracking = {
  * @param data
  */
 function sendTrackingData(eventName, data, trackType = 'track') {
-  windowUtils.getWindow().pintrk(trackType, eventName, data)
+  getWindow().pintrk(trackType, eventName, data)
 }
 
 /**
@@ -108,7 +108,7 @@ function getCallbacks() {
  * @param prevState
  */
 export default function Tracker(action, state = {}, prevState) {
-  if (globals.client && windowUtils.getWindow().pintrk) {
+  if (globals.client && getWindow().pintrk) {
     const callbacks = pinterestTracking.getCallbacks()
 
     if (action.type in callbacks) {

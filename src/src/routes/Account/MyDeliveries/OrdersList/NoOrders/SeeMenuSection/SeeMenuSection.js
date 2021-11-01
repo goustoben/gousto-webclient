@@ -12,7 +12,7 @@ const SeeMenuSection = ({ recipes, boxType }) => {
   }
   slicedRecipes = slicedRecipes.slice(0, 6)
   const recipeSection = slicedRecipes.map((recipe) =>
-    <OrderRecipe recipeTitle={recipe.get('title')} recipeImage={recipe.getIn(['media', 'images', 0, 'urls', 1, 'src'])} />
+    <OrderRecipe key={recipe.get('id')} recipeTitle={recipe.get('title')} recipeImage={recipe.getIn(['media', 'images', 0, 'urls', 1, 'src'])} />
   )
 
   return (

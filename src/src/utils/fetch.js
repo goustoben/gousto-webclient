@@ -18,19 +18,6 @@ export const includeCookiesDefault = false
 export const useMenuServiceDefault = false
 export const useOverwriteRequestMethodDefault = true
 
-export function fetchRaw(url, data = {}, options) {
-  return fetch(
-    options.accessToken,
-    url,
-    data,
-    options.method,
-    options.cache,
-    options.headers,
-    options.timeout,
-    options.includeCookies,
-    options.useMenuService)
-}
-
 export function fetch(
   accessToken,
   url,
@@ -187,6 +174,19 @@ export function fetch(
         url: responseUrl,
       }
     })
+}
+
+export function fetchRaw(url, data = {}, options) {
+  return fetch(
+    options.accessToken,
+    url,
+    data,
+    options.method,
+    options.cache,
+    options.headers,
+    options.timeout,
+    options.includeCookies,
+    options.useMenuService)
 }
 
 export default fetch
