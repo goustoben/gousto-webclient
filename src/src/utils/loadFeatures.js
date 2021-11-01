@@ -1,6 +1,6 @@
 import { featuresSet } from 'actions/features'
 import globals from 'config/globals'
-import windowUtils from 'utils/window'
+import { getWindow } from 'utils/window'
 
 // eslint-disable-next-line import/no-default-export
 export default function loadFeatures({ enable, disable, set = {}, features = {}} = {}, store) {
@@ -26,7 +26,7 @@ export default function loadFeatures({ enable, disable, set = {}, features = {}}
 
   store.dispatch(featuresSet(featuresArr))
 
-  const clientWindow = windowUtils.getWindow()
+  const clientWindow = getWindow()
   const trackedExperiments = (clientWindow && clientWindow.__snowPlowTrackedExperiments) || {} // eslint-disable-line no-underscore-dangle
 
   if (globals.client && typeof clientWindow.__snowPlowGetOptimizelyExperimentsData === 'function' && typeof clientWindow.snowplow === 'function') { // eslint-disable-line no-underscore-dangle

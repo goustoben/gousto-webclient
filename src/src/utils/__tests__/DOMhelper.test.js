@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import DOMHelper from 'utils/DOMhelper'
+import DOMHelper, { getBoundingClientRect, getElementHeight, getElementOffsetTop, getFirstMatchingNode, scrollToFirstMatchingNode } from 'utils/DOMhelper'
 
 jest.mock('react-dom',() => ({
   findDOMNode: jest.fn()
@@ -8,7 +8,7 @@ jest.mock('react-dom',() => ({
 describe('DOMhelper', () => {
   describe('getBoundingClientRect',() => {
     test('should return an empty object when ref is falsy', () => {
-      expect(DOMHelper.getBoundingClientRect()).toEqual({})
+      expect(getBoundingClientRect()).toEqual({})
     })
 
     test('should call getBoundingClientRect function when available', () => {
@@ -16,7 +16,7 @@ describe('DOMhelper', () => {
         getBoundingClientRect: () => ({ width: 100, height: 200 }),
       }
 
-      expect(DOMHelper.getBoundingClientRect(ref)).toEqual({ width: 100, height: 200 })
+      expect(getBoundingClientRect(ref)).toEqual({ width: 100, height: 200 })
     })
   })
 
@@ -32,11 +32,11 @@ describe('DOMhelper', () => {
     })
 
     test('should return undefined if no keys available', () => {
-      expect(DOMHelper.getFirstMatchingNode(undefined, { x: 'something' })).toEqual(undefined)
+      expect(getFirstMatchingNode(undefined, { x: 'something' })).toEqual(undefined)
     })
 
     test('should return undefined if no refs available', () => {
-      expect(DOMHelper.getFirstMatchingNode(['x'], undefined)).toEqual(undefined)
+      expect(getFirstMatchingNode(['x'], undefined)).toEqual(undefined)
     })
 
     test('should return matching node for first found key in list', () => {
@@ -48,7 +48,7 @@ describe('DOMhelper', () => {
         key2: 'ref for key2',
         key6: 'ref for key6',
       }
-      const result = DOMHelper.getFirstMatchingNode(keys, refs)
+      const result = getFirstMatchingNode(keys, refs)
       expect(findDOMNodeSpy.mock.calls).toHaveLength(1)
       expect(findDOMNodeSpy).toBeCalledWith('ref for key2')
       expect(result).toEqual('node for key2')
@@ -61,7 +61,7 @@ describe('DOMhelper', () => {
         key1: 'ref for key1',
         key2: 'ref for key2',
       }
-      expect(DOMHelper.getFirstMatchingNode(keys, refs)).toEqual(undefined)
+      expect(getFirstMatchingNode(keys, refs)).toEqual(undefined)
     })
 
     // there is another test in sinon that needs to be migrated but it was taking too long in the current ticket to move - in this file src/test/utils/DOMhelper.js - 15 Jul 2019
@@ -75,12 +75,12 @@ describe('DOMhelper', () => {
     })
 
     afterEach(() => {
-      jest.clearAllMocks
+      jest.clearAllMocks()
     })
 
     test('should call getFirstMatchingNode once with keys & refs', () => {
-      DOMHelper.scrollToFirstMatchingNode()
-      DOMHelper.scrollToFirstMatchingNode(['key1'], { key1: 'ref1' })
+      scrollToFirstMatchingNode()
+      scrollToFirstMatchingNode(['key1'], { key1: 'ref1' })
       expect(getFirstMatchingNodeSpy.mock.calls).toHaveLength(2)
       expect(getFirstMatchingNodeSpy.mock.calls[0]).toEqual([[], {}])
       expect(getFirstMatchingNodeSpy.mock.calls[1]).toEqual([['key1'], { key1: 'ref1' }])
@@ -95,7 +95,7 @@ describe('DOMhelper', () => {
         })
       }
 
-      expect(DOMHelper.getElementHeight(doc, '#testdiv')).toBe('50px')
+      expect(getElementHeight(doc, '#testdiv')).toBe('50px')
       expect(doc.querySelector).toBeCalledWith('#testdiv')
     })
   })
@@ -108,7 +108,7 @@ describe('DOMhelper', () => {
         })
       }
 
-      expect(DOMHelper.getElementOffsetTop(doc, '#testdiv')).toBe('50')
+      expect(getElementOffsetTop(doc, '#testdiv')).toBe('50')
       expect(doc.querySelector).toBeCalledWith('#testdiv')
     })
   })

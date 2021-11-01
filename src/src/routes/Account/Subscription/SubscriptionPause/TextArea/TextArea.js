@@ -21,16 +21,13 @@ const defaultProps = {
   placeholder: 'Enter other reason here',
 }
 
-class SubscriptionPauseTextArea extends React.PureComponent {
-  state = {
-    currentText: '',
-    validationMessage: '',
-  }
-
-  shouldComponentUpdate() {
-    const { disabled } = this.props
-
-    return !disabled
+class SubscriptionPauseTextArea extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentText: '',
+      validationMessage: '',
+    }
   }
 
   handleChange = (ev) => {
@@ -48,11 +45,18 @@ class SubscriptionPauseTextArea extends React.PureComponent {
     }
   }
 
-  handleSubmit = (ev) => {
-    ev.preventDefault()
+  // eslint-disable-next-line react/no-redundant-should-component-update
+  shouldComponentUpdate() {
+    const { disabled } = this.props
+
+    return !disabled
+  }
+
+  handleSubmit = (event) => {
     const { minLength, minLengthValidationMessage, onSubmit } = this.props
     const { currentText } = this.state
 
+    event.preventDefault()
     if (currentText.length < minLength) {
       this.setState({
         validationMessage: minLengthValidationMessage,
