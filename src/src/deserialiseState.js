@@ -5,8 +5,11 @@ const decodeObjects = (obj) => {
   const decodedObject = {}
   Object.entries(obj).forEach(([key, value]) => {
     const { tag, value: sliceValue } = value
-    if ('value' in value) {
-      decodedObject[key] = tag === 'isObject' ? decodeObjects(sliceValue) : getSliceValue(tag, sliceValue)
+    if (value.value !== undefined) {
+      decodedObject[key] = tag === 'isObject'
+        ? decodeObjects(sliceValue)
+        // eslint-disable-next-line no-use-before-define
+        : getSliceValue(tag, sliceValue)
     } else {
       decodedObject[key] = undefined
     }
@@ -19,7 +22,10 @@ const decodeMapObjects = (mapObj) => {
   const decodedMapObject = {}
   Object.entries(mapObj).forEach(([key, value]) => {
     const { tag, value: sliceValue } = value
-    decodedMapObject[key] = tag === 'isMap' ? new Immutable.Map(decodeMapObjects(sliceValue)) : getSliceValue(tag, sliceValue)
+    decodedMapObject[key] = tag === 'isMap'
+      ? new Immutable.Map(decodeMapObjects(sliceValue))
+      // eslint-disable-next-line no-use-before-define
+      : getSliceValue(tag, sliceValue)
   })
 
   return decodedMapObject
