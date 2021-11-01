@@ -56,6 +56,10 @@ describe('tracking actions', () => {
   let getState
   let dispatch
 
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
   describe('trackFirstPurchase', () => {
     const state = {
       user: Immutable.fromJS({
@@ -232,11 +236,37 @@ describe('tracking actions', () => {
         browseMode: false,
         deliveryDayId: 'test-day-id',
         orderId: '1234567',
-        recommenderVersion: '1'
+        recommenderVersion: '1',
+        isRecommendationsShown: false,
       })
     })
 
     describe('should dispatch recommended state', () => {
+      test('when Gousto Recommends collection is present', () => {
+        state = {
+          ...state,
+          menuService: {
+            ...state.menuService,
+            collection: {
+              '5f730d3c-aab1-4f84-b561-305540390885': {
+                attributes: {
+                  short_title: 'Gousto Recommends',
+                  slug: 'recommendations'
+                },
+                id: '5f730d3c-aab1-4f84-b561-305540390885',
+                type: 'collection'
+              }
+            }
+          }
+        }
+
+        getState.mockReturnValue(state)
+
+        trackRecipeOrderDisplayed(originalOrder, displayedOrder, collectionId)(dispatch, getState)
+
+        expect(dispatch.mock.calls[0][0].isRecommendationsShown).toBe(true)
+      })
+
       test('when no recipes are recommended', () => {
         state = {
           basket: Immutable.Map({

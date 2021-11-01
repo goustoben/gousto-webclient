@@ -15,7 +15,8 @@ describe('snowplow recipe tracking events', () => {
       orderId: '9191919',
       recommended: true,
       browseMode: false,
-      recommenderVersion: '1'
+      recommenderVersion: '1',
+      isRecommendationsShown: true,
     }
 
     test('should return an object with type view_recipe_list', () => {
@@ -35,7 +36,8 @@ describe('snowplow recipe tracking events', () => {
           order_id: '9191919',
           recommended: true,
           browse_mode: false,
-          recommender_version: '1'
+          recommender_version: '1',
+          is_recommendations_shown: true
         },
       })
     })
