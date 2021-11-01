@@ -1,4 +1,4 @@
-import parsePhoneNumber, { isValidPhoneNumber } from 'libphonenumber-js'
+import { parsePhoneNumber, isValidPhoneNumber } from 'utils/phoneNumber/phoneNumber'
 import { validateEmail } from 'utils/auth'
 
 export const emailValidator = value => (!value || !validateEmail(value) ? 'Please provide a valid email address' : undefined)

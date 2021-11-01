@@ -11,7 +11,7 @@ module.exports = {
 
     browser.end()
   },
-  tags: ['sign-up', 'paypal'],
+  tags: ['sign-up', 'paypal', 'unstable'],
 }
 
 function continueSignUpWithAPayPalAccount(browser) {
