@@ -11,6 +11,9 @@
 - name: set {{ node_version }} as default version
   copy: dest="{{ nvm_root }}/alias/default" content="{{ node_version }}"
 
+- name: Install gulp
+  command: npm i -g gulp
+
 - name: npm cache clean
   command: npm cache clean
   args:
