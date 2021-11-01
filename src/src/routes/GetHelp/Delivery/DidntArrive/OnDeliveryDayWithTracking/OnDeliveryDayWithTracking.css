@@ -4,7 +4,6 @@
 
 .mainText {
   padding-top: 0.5rem;
-  composes: fontStyleBody from 'design-language/typography.module.css';
 
   @media BreakpointFromMedium {
     padding-bottom: 1.5rem;
