@@ -3,7 +3,6 @@
 
 .mainText {
   padding-top: 0.5rem;
-  composes: fontStyleBody from 'design-language/typography.module.css';
 }
 
 .link {

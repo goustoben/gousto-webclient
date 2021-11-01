@@ -154,6 +154,7 @@ export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
   const { amount } = getCompensation(getState())
   const isMultiComplaint = getIsMultiComplaints(getState())
   const isMultiComplaintLimitReachedLastFourWeeks = getIsMultiComplaintLimitReachedLastFourWeeks(getState())
+  const isBoxDailyComplaintLimitReached = getIsBoxDailyComplaintLimitReached(getState())
 
   dispatch({
     type: webClientActionTypes.TRACKING,
@@ -162,6 +163,7 @@ export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
       amount,
       auto_accept: isAutoAccept,
       is_second_complaint: isMultiComplaint,
+      prev_comp_same_day: isBoxDailyComplaintLimitReached,
       seCategory: SE_CATEGORY_HELP,
       reason: isMultiComplaintLimitReachedLastFourWeeks ? 'multi_complaint_limit_last_four_week' : undefined
     }
@@ -444,3 +446,11 @@ export const validateDeliveryAction = (customerId, orderId) => async (dispatch, 
     errorMessage: `Delivery validation errored for customerId: ${customerId}, orderId: ${orderId}`,
   })
 }
+
+export const trackViewCreditClick = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.viewCreditClick,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})

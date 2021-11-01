@@ -81,6 +81,9 @@ const defaultFeatures = () => ({
   isAutoAcceptEnabled: {
     value: false
   },
+  ssrTwoComplaintsSameDay: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())
