@@ -25,7 +25,6 @@
 /src/.bowerrc        @Gousto/frontend-foundations
 /src/.eslintignore        @Gousto/frontend-foundations
 /src/.eslintrc        @Gousto/frontend-foundations
-/src/.gulprc.js        @Gousto/frontend-foundations
 /src/config/        @Gousto/frontend-foundations
 /src/scripts/        @Gousto/frontend-foundations
 /src/server/        @Gousto/frontend-foundations
