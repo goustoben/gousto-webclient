@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import config from '../config/apis'
 
 export default (postcode) => (

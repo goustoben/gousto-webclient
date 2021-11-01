@@ -1,4 +1,4 @@
-import windowUtils from 'utils/window'
+import { getWindow } from 'utils/window'
 
 const sendTrackingData = ({ type, eventName, tags = {}, attributes = {} }) => {
   let revenueInPence
@@ -17,12 +17,12 @@ const sendTrackingData = ({ type, eventName, tags = {}, attributes = {} }) => {
     tags: tagsObject,
     attributes: { ...attributes },
   }
-  windowUtils.getWindow().optimizely.push(trackingData)
+  getWindow().optimizely.push(trackingData)
 }
 
 export const optimizelyTracker = () => (
   next => action => {
-    if (action.optimizelyData && windowUtils.getWindow().optimizely) {
+    if (action.optimizelyData && getWindow().optimizely) {
       sendTrackingData(action.optimizelyData)
     }
 

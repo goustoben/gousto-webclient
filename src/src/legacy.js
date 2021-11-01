@@ -12,7 +12,7 @@ import loadFeatures from 'utils/loadFeatures'
 import { loadVariants } from 'utils/loadVariants'
 import queryString from 'query-string'
 import Cookies from 'utils/GoustoCookies'
-import promosActions from 'actions/promos'
+import { promoToggleModalVisibility } from 'actions/promos'
 import { clientAuthorise, refresh } from 'client/auth'
 import { browserHistory } from 'react-router'
 import browserType from 'client/browserType'
@@ -92,7 +92,7 @@ async function init() {
   window.__authRefresh__ = refresh // eslint-disable-line no-underscore-dangle
 
   if (store.getState().promoCurrent && !store.getState().promoModalVisible) {
-    store.dispatch(promosActions.promoToggleModalVisibility(true))
+    store.dispatch(promoToggleModalVisibility(true))
   }
 }
 

@@ -1,12 +1,12 @@
 import { actionTypes } from 'actions/actionTypes'
 import logger from 'utils/logger'
 import userActions from 'actions/user'
-import productsActions from 'actions/products'
+import { productsLoadCategories, productsLoadProducts, productsLoadProductsById, productsLoadStock } from 'actions/products'
 import { contentLoadContentByPageSlug } from 'actions/content'
-import recipesActions from 'actions/recipes'
-import basketActions from 'actions/basket'
+import recipeActions from 'actions/recipes'
+import { basketOrderLoad } from 'actions/basket'
 import { redirect } from 'actions/redirect'
-import userUtils from 'utils/user'
+import { getUserOrderById, getUserOrderGiftProductIds, getUserOrderProductIds, getUserOrderRecipeIds, } from 'utils/user'
 
 export const trackWelcomeAppPromoClick = () => (
   (dispatch) => {
@@ -26,7 +26,7 @@ export const fetchData = ({ params, query }) => (
 
     return dispatch(userActions.userLoadOrder(orderId))
       .then(() => {
-        userOrder = userUtils.getUserOrderById(
+        userOrder = getUserOrderById(
           orderId,
           getState().user.get('orders')
         )
@@ -40,30 +40,30 @@ export const fetchData = ({ params, query }) => (
           )
         }
 
-        const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
+        const orderRecipeIds = getUserOrderRecipeIds(userOrder)
 
         return Promise.all([
           dispatch(
             contentLoadContentByPageSlug('welcome_immediate', query.var)
           ),
           dispatch(
-            productsActions.productsLoadProducts(userOrder.get('whenCutoff'))
+            productsLoadProducts(userOrder.get('whenCutoff'))
           ),
-          dispatch(productsActions.productsLoadStock()),
-          dispatch(productsActions.productsLoadCategories()),
-          dispatch(recipesActions.recipesLoadRecipesById(orderRecipeIds))
+          dispatch(productsLoadStock()),
+          dispatch(productsLoadCategories()),
+          dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
         ])
       })
       .then(() => {
         const orderProductIds = [
-          ...userUtils.getUserOrderProductIds(userOrder),
-          ...userUtils.getUserOrderGiftProductIds(userOrder)
+          ...getUserOrderProductIds(userOrder),
+          ...getUserOrderGiftProductIds(userOrder)
         ]
 
-        return dispatch(productsActions.productsLoadProductsById(orderProductIds))
+        return dispatch(productsLoadProductsById(orderProductIds))
       })
       .then(() => {
-        dispatch(basketActions.basketOrderLoad(orderId))
+        dispatch(basketOrderLoad(orderId))
       })
       .catch(err => {
         if (err && err.level && typeof logger[err.level] === 'function') {

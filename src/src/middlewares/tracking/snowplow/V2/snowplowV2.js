@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import globals from 'config/globals'
-import windowUtils from 'utils/window'
+import { getWindow } from 'utils/window'
 import logger from 'utils/logger'
 import trackingGlobals from '../global'
 import basketTracking from '../basket'
@@ -13,7 +13,7 @@ import { trackEventWithData, getPathname } from '../utils'
 const { loginAttempt, loginRememberMe, loginFailed, loginVisibility, logout } = trackingGlobals
 
 function userIdentifiedTracking(action) {
-  const windowObj = windowUtils.getWindow()
+  const windowObj = getWindow()
 
   if (action.user && action.user.id) {
     if (windowObj && typeof windowObj.snowplow === 'function') {
@@ -27,7 +27,7 @@ function userIdentifiedTracking(action) {
 }
 
 function userLoggedOut(action) {
-  const windowObj = windowUtils.getWindow()
+  const windowObj = getWindow()
 
   if (windowObj && typeof windowObj.snowplow === 'function') {
     windowObj.snowplow('setUserId', null)
@@ -38,7 +38,7 @@ function userLoggedOut(action) {
 }
 
 function pageChange() {
-  const windowObj = windowUtils.getWindow()
+  const windowObj = getWindow()
 
   if (windowObj && typeof windowObj.snowplow === 'function') {
     windowObj.snowplow('trackPageView')

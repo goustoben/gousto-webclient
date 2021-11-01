@@ -1,7 +1,7 @@
-import windowUtils from 'utils/window'
+import { documentLocation, getWindow } from 'utils/window'
 
 export function sendTrackingData({ seCategory, type, action, data = {}, version = 1, pathname }) {
-  const windowObj = windowUtils.getWindow()
+  const windowObj = getWindow()
 
   if (windowObj && Array.isArray(windowObj.dataLayer)) {
     windowObj.dataLayer.push({
@@ -22,7 +22,7 @@ export function getPathname(state) {
   try {
     pathname = state.routing.locationBeforeTransitions.pathname
   } catch (e) {
-    pathname = windowUtils.documentLocation().pathname
+    pathname = documentLocation().pathname
   }
 
   return pathname

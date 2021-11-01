@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import orderActions from 'actions/order'
+import { cancelledAllBoxesModalToggleVisibility } from 'actions/order'
 
 import CancelledAllBoxesModal from './CancelledAllBoxesModal'
 
@@ -9,5 +9,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  toggleModalVisibility: orderActions.cancelledAllBoxesModalToggleVisibility,
+  toggleModalVisibility: cancelledAllBoxesModalToggleVisibility,
 })(CancelledAllBoxesModal)
