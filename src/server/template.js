@@ -1,6 +1,36 @@
-const newAssetPath = require('utils/media').newAssetPath
+const globals = require('config/globals')
+const { newAssetPath, getAssetRootUrl } = require('utils/media')
 const head = require('./head').default
 const encodeState = require('./encodeState')
+
+const { apiName, domain } = globals
+
+const preconnectDomains = [
+  'https://fonts.googleapis.com/',
+  'https://snplw.gousto.co.uk/',
+  'https://static.zdassets.com/',
+  getAssetRootUrl(),
+  `https://${apiName}-api.${domain}/`,
+]
+
+const getPreconnectSection = () => preconnectDomains.map(value => (
+  `<link rel="preconnect" href="${value}">`
+)).join('\n')
+
+const fontDescriptors = [
+  ['AvenirLTW04-45Book.woff2', 'font/woff2'],
+  ['AvenirLTW04-85Heavy.woff2', 'font/woff2'],
+  ['fontawesome-webfont.woff2?v=4.6.3', 'font/woff2'],
+  ['Axiforma-Bold.otf', 'font/opentype'],
+  ['Axiforma-Book.otf', 'font/opentype'],
+  ['Axiforma-Light.otf', 'font/opentype'],
+  ['Axiforma-Medium.otf', 'font/opentype'],
+  ['Axiforma-SemiBold.otf', 'font/opentype'],
+]
+
+const getPreloadFontsSection = () => fontDescriptors.map(([fontFileName, typeAttr]) => (
+  `<link ref="preload" href="${newAssetPath(fontFileName)}" as="font" type="${typeAttr}" crossorigin>`
+)).join('\n')
 
 const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts, helmetHead) => (
   `<!doctype html>
@@ -19,6 +49,8 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
       ${(helmetHead && helmetHead.title) ? helmetHead.title.toString() : ''}
       ${(helmetHead && helmetHead.meta) ? helmetHead.meta.toString() : ''}
       ${scripts.optimizely ? head.optimizely(initialState.features) : ''}
+      ${getPreconnectSection()}
+      ${getPreloadFontsSection()}
       <script src="${newAssetPath('performanceTracker.js')}"></script>
       <script src="${newAssetPath('vendors.js')}" defer></script>
       <script src="${newAssetPath('main.js')}" defer></script>
@@ -27,7 +59,6 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
         window.__initialState__ = ${encodeState(initialState)}
       </script>
 
-      <link href="https://fonts.googleapis.com/css?family=Lato:400,700,300italic,400italic" rel="stylesheet" type="text/css">
       ${(__HMR__ || __DEV__) ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
       ${(helmetHead && helmetHead.link) ? helmetHead.link.toString() : ''}
       ${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
@@ -35,7 +66,6 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
       ${scripts.other ? head.pingdom() : ''}
       ${head.trustpilot ? head.trustpilot() : ''}
       ${head.ribbon ? head.ribbon() : ''}
-
     </head>
     <body>
       ${scripts.facebookTracking ? head.fbTracking() : ''}
