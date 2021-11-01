@@ -14,6 +14,8 @@ import { getUTMAndPromoCode } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { sendAwinS2SData } from 'actions/awin'
 
+const collectionRecommendationSlug = 'recommendations'
+
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
     const { user } = getState()
@@ -145,14 +147,15 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
 
 export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
   (dispatch, getState) => {
-    const date = getState().basket.get('date')
-    const deliveryDayId = getState().boxSummaryDeliveryDays.getIn([date, 'id'])
-    const orderId = getState().basket.get('orderId')
-    const browseMode = getState().menuBrowseCtaShow
-    const recommended = getState().recipes.some(recipe => recipe.get('isRecommended', false))
-    const collectionId = getState().filters.get('currentCollectionId')
-    const menuServiceData = getState().menuService.meta
-    const recommenderVersion = menuServiceData.recommendations && menuServiceData.recommendations.version
+    const state = getState()
+    const date = state.basket.get('date')
+    const deliveryDayId = state.boxSummaryDeliveryDays.getIn([date, 'id'])
+    const orderId = state.basket.get('orderId')
+    const browseMode = state.menuBrowseCtaShow
+    const recommended = state.recipes.some(recipe => recipe.get('isRecommended', false))
+    const collectionId = state.filters.get('currentCollectionId')
+    const recommenderVersion = state.menuService.meta.recommendations && state.menuService.meta.recommendations.version
+    const isRecommendationsShown = Boolean(state.menuService.collection && Object.values(state.menuService.collection).find(collection => collection.attributes.slug === collectionRecommendationSlug))
 
     dispatch({
       type: actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING,
@@ -164,6 +167,7 @@ export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
       recommended,
       browseMode,
       recommenderVersion,
+      isRecommendationsShown,
     })
   }
 )
