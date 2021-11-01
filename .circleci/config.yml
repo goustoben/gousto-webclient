@@ -19,6 +19,34 @@ orbs:
   browser-tools: circleci/browser-tools@1.1.3
   aws-cli: circleci/aws-cli@1.4.1
 
+commands:
+  gzip:
+    description: "Apply gzip compression, excludes images"
+    parameters:
+      target:
+        type: string
+    steps:
+      - run: echo "Compressing << parameters.target >>. Initial size - $(du -sh << parameters.target >>)"
+      - run: find << parameters.target >> -type f -not \( -iname '*.ico' -or -iname '*.jpg' -or -iname '*.png' -or -iname '*.gif' \) -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+      - run: echo "Size after compression - $(du -sh << parameters.target >>)"
+
+  upload-to-s3:
+    description: "Upload public dir to S3 bucket"
+    parameters:
+      bucket:
+        type: string
+      path:
+        type: string
+        default: src/public/
+    steps:
+      - run: echo "Uploading to << parameters.bucket >>"
+      - run:
+         name: Upload all files excluding images, sets gzip content-encoding header
+         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.ico" --exclude "*.jpg" --exclude "*.png" --exclude "*.gif" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public
+      - run:
+         name: Upload image files to S3, does not set gzip content-encoding header
+         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.jpg" --include "*.png" --include "*.gif" --recursive --cache-control max-age=315360000,no-transform,public
+
 jobs:
   setup-ci-variables-scripts:
     docker: *gousto_platform_image #stock image missing /gousto directory
@@ -147,20 +175,28 @@ jobs:
           name: Build webclient
           working_directory: src
           command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build
-      - run:
-          name: Upload webclient resources to S3
-          working_directory: src
-          command: |
-            source ~/.circlerc
-            ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
-            echo "${ASSETS_BUCKET}"
-            npm config set goustowebclient_asset_bucket "${ASSETS_BUCKET}"
-            npm run deploy
-            npm run upload -- --upload_dir=${CI_BUILD_NUMBER}
       - persist_to_workspace:
           root: /
           paths:
             - mnt/ramdisk/src
+
+  upload-assets-to-s3:
+    docker: *gousto_platform_image
+    resource_class: medium
+    working_directory: /mnt/ramdisk
+    steps:
+      - attach_workspace:
+          at: /
+      - gzip:
+          target: src/public
+      - run:
+          name: Set assets bucket variable
+          command: |
+            echo 'source ~/.circlerc && export ASSETS_BUCKET=s3://s3-gousto-${ENVIRONMENT}-assets/build' >> $BASH_ENV
+      - upload-to-s3:
+          bucket: ${ASSETS_BUCKET}/latest/
+      - upload-to-s3:
+          bucket: ${ASSETS_BUCKET}/${CI_BUILD_NUMBER}/
 
   create-and-upload-webclient-docker-image-to-ecr:
     docker: *gousto_platform_image #stock image missing boto
@@ -290,7 +326,6 @@ jobs:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
           command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
 
-
   install-regression-test-dependencies:
     docker: *circleci_node_image
     resource_class: medium
@@ -352,6 +387,14 @@ workflows:
             branches:
               only:
                 - /^env-.*/
+      - upload-assets-to-s3:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient
+          filters:
+            branches:
+              only:
+                - /^env-.*/
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -379,6 +422,7 @@ workflows:
       - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
+            - upload-assets-to-s3
             - install-regression-test-dependencies
             - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
@@ -388,6 +432,7 @@ workflows:
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
+            - upload-assets-to-s3
             - install-regression-test-dependencies
             - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
@@ -415,6 +460,14 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-src-dependencies
+          filters:
+            branches:
+              only:
+                - develop
+      - upload-assets-to-s3:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient
           filters:
             branches:
               only:
@@ -473,6 +526,7 @@ workflows:
       - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
+            - upload-assets-to-s3
             - install-regression-test-dependencies
             - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
@@ -482,6 +536,7 @@ workflows:
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
+            - upload-assets-to-s3
             - install-regression-test-dependencies
             - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
@@ -491,6 +546,7 @@ workflows:
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
+            - upload-assets-to-s3
             - deploy-infrastructure-and-webclient-image
           filters:
             branches:
@@ -517,6 +573,14 @@ workflows:
           context: gousto-prod-aws-app-circleci
           requires:
             - install-src-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - upload-assets-to-s3:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - build-webclient
           filters:
             branches:
               only:
