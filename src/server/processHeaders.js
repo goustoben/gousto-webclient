@@ -1,5 +1,4 @@
-const requestActions = require('actions/request')
-const browserTypeChange = requestActions.browserTypeChange
+const {browserTypeChange, setUserAgent} = require('actions/request')
 
 const formatHeaderNames = headers => {
   const matchedHeaders = Object.keys(headers).filter(header => headers[header] === 'true' && header.includes('cloudfront-is'))
@@ -31,7 +30,7 @@ const processHeaders = (headers, store) => {
 
   const userAgentHeader = headers['user-agent']
   if (userAgentHeader) {
-    store.dispatch(requestActions.setUserAgent(userAgentHeader))
+    store.dispatch(setUserAgent(userAgentHeader))
   }
 }
 

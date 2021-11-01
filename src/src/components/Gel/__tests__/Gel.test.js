@@ -14,7 +14,7 @@ describe('<Gel />', () => {
     expect(wrapper.find('div').length).toBeGreaterThanOrEqual(1)
   })
 
-  test("should render its children", () => {
+  test('should render its children', () => {
     const TestComponent = () => (
       <div>
         <p>A Test Component</p>
