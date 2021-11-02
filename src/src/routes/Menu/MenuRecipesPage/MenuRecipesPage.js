@@ -16,9 +16,9 @@ import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { VariantRecipeListModalContainer, VariantRecipeListDesktopModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
-import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
+import { RecommendationsHighlight } from './RecommendationsHighlight/RecommendationsHighlight'
 
 export class MenuRecipesPage extends PureComponent {
   async componentDidMount() {
@@ -79,6 +79,7 @@ export class MenuRecipesPage extends PureComponent {
       showCommunicationPanel,
       menuLoadingErrorMessage,
       query,
+      showRecommendationHighlight,
     } = this.props
     const { communicationPanel } = menuConfig
 
@@ -104,9 +105,23 @@ export class MenuRecipesPage extends PureComponent {
         <BannerTastePreferencesContainer />
 
         {!showLoading && <CollectionsNavWrapper />}
-        <CollectionHeaderWrapperContainer />
 
-        {stateRecipeCount ? <RecipeGrid query={query} /> : null}
+        {
+          showRecommendationHighlight
+          && <RecommendationsHighlight />
+        }
+
+        {
+          !showRecommendationHighlight
+          && (
+            <React.Fragment>
+              <CollectionHeaderWrapperContainer />
+
+              {stateRecipeCount ? <RecipeGrid query={query} /> : null}
+            </React.Fragment>
+          )
+        }
+
         {showError ? (
           <h2 className={css.menuLoadingErrorMessage}>
             {menuLoadingErrorMessage}
@@ -121,11 +136,6 @@ export class MenuRecipesPage extends PureComponent {
         <VariantRecipeListModalContainer />
 
         <VariantRecipeListDesktopModalContainer />
-
-        <ExperimentsContainer experimentName="allocation-experiment-one" />
-        <ExperimentsContainer experimentName="allocation-experiment-two" />
-        <ExperimentsContainer experimentName="allocation-experiment-three" />
-        <ExperimentsContainer experimentName="allocation-experiment-four" />
       </div>
     )
   }
@@ -164,6 +174,7 @@ export class MenuRecipesPage extends PureComponent {
 }
 MenuRecipesPage.propTypes = {
   showTastePreferencesLoading: PropTypes.bool.isRequired,
+  showRecommendationHighlight: PropTypes.bool.isRequired,
   showLoading: PropTypes.bool.isRequired,
   stateRecipeCount: PropTypes.number.isRequired,
   shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
