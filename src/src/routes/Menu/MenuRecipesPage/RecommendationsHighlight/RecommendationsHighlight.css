@@ -1,10 +1,17 @@
+@value FontWeightBold, FontFamilyAxiformaBook, 3XLarge, FontBodySize from 'design-language/typography.css';
+
 .header {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 1rem;
+  font: FontWeightBold 3XLarge FontFamilyAxiformaBook;
+}
+
+.moreRecipes {
+  margin-bottom: 1.5rem;
 }
 
 .subtitle {
-  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  font: FontBodySize FontFamilyAxiformaBook;
 }
 
 .divider {

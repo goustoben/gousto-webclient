@@ -1,11 +1,13 @@
 import React from 'react'
+import classnames from 'classnames'
 import { useCollections } from 'routes/Menu/domains/collections'
 import { useMenu } from 'routes/Menu/domains/menu'
 import { DetailOverlayContainer } from '../../DetailOverlay'
 
 import { RecipeList } from './RecipeList'
 
-import css from '../../Menu.css'
+import menuCss from '../../Menu.css'
+import css from './RecommendationsHighlight.css'
 
 // remove all recipes from `input` that are in `recipesToRemove`
 const removeMatchingRecipes = (input, recipesToRemove) => (
@@ -28,7 +30,7 @@ const RecommendationsHighlight = () => {
   )
 
   return (
-    <div className={css.menuContainer}>
+    <div className={menuCss.menuContainer}>
       {
         recommendationRecipes.size
         && (
@@ -40,7 +42,7 @@ const RecommendationsHighlight = () => {
 
             <hr className={css.divider} />
 
-            <h2 className={css.header}>More delicious recipes...</h2>
+            <h2 className={classnames(css.header, css.moreRecipes)}>More delicious recipes...</h2>
           </React.Fragment>
         )
       }

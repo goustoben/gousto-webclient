@@ -106,6 +106,8 @@ export class MenuRecipesPage extends PureComponent {
 
         {!showLoading && <CollectionsNavWrapper />}
 
+        <CollectionHeaderWrapperContainer />
+
         {
           showRecommendationHighlight
           && <RecommendationsHighlight />
@@ -113,13 +115,8 @@ export class MenuRecipesPage extends PureComponent {
 
         {
           !showRecommendationHighlight
-          && (
-            <React.Fragment>
-              <CollectionHeaderWrapperContainer />
-
-              {stateRecipeCount ? <RecipeGrid query={query} /> : null}
-            </React.Fragment>
-          )
+          && stateRecipeCount
+          && <RecipeGrid query={query} />
         }
 
         {showError ? (
