@@ -1,3 +1,4 @@
 export const CollectionSlug = {
-  Recommendations: 'recommendations'
+  Recommendations: 'recommendations',
+  AllRecipes: 'all-recipes'
 }
