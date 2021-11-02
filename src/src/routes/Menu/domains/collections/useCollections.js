@@ -3,7 +3,6 @@ import { getMenuCollections } from 'routes/Menu/selectors/collections'
 import { useDisplayedCollections } from './internal/useDisplayedCollections'
 import { useCurrentCollection } from './internal/useCurrentCollection'
 import { useChangeCollectionById } from './internal/useChangeCollectionById'
-import { CollectionSlug } from './constants'
 
 export const useCollections = () => {
   const currentCollection = useCurrentCollection()
@@ -21,6 +20,7 @@ export const useCollections = () => {
     currentCollection,
     currentCollectionId: currentCollection ? currentCollection.get('id') : null,
     collections: displayedCollections,
+    allCollections,
     changeCollectionById,
     getCollectionBySlug,
   }
