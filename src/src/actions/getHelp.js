@@ -3,7 +3,6 @@ import {
   fetchOrderIssues as fetchOrderIssuesApi,
 } from 'apis/getHelp'
 import { getCompensation, getIsMultiComplaints } from 'routes/GetHelp/selectors/compensationSelectors'
-import { appendFeatureToRequest } from 'routes/GetHelp/utils/appendFeatureToRequest'
 import { getSelectedIngredients } from '../routes/GetHelp/selectors/selectors'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
@@ -75,13 +74,11 @@ const validateSelectedIngredients = ({
 
   const validateIngredientsParams = [
     accessToken,
-    appendFeatureToRequest({
-      body: {
-        customer_id: Number(costumerId),
-        order_id: Number(orderId),
-        ingredient_ids: ingredientUuids
-      },
-    })
+    {
+      customer_id: Number(costumerId),
+      order_id: Number(orderId),
+      ingredient_ids: ingredientUuids
+    },
   ]
 
   try {

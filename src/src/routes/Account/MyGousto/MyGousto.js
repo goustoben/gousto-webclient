@@ -6,7 +6,6 @@ import Helmet from 'react-helmet'
 import { ReactReduxContext } from 'react-redux'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
-import { LimitedCapacityNotice } from './LimitedCapacityNotice'
 import { CustomNotice } from './CustomNotice'
 import { AppAwarenessBanner } from './AppAwarenessBanner'
 import { Section } from './Section'
@@ -24,7 +23,6 @@ const propTypes = {
   nameFirst: PropTypes.string,
   referralDetails: PropTypes.instanceOf(Immutable.Map),
   redirect: PropTypes.func,
-  isCapacityLimited: PropTypes.bool,
   isCustomNoticeEnabled: PropTypes.bool,
   isMobileViewport: PropTypes.bool.isRequired,
   showAppAwareness: PropTypes.bool,
@@ -44,7 +42,6 @@ const defaultProps = {
   nameFirst: '',
   referralDetails: Immutable.Map(),
   redirect: () => {},
-  isCapacityLimited: false,
   isCustomNoticeEnabled: false,
   showAppAwareness: false,
   rateRecipeCount: 0,
@@ -117,7 +114,6 @@ class MyGousto extends React.PureComponent {
       nameFirst,
       referralDetails,
       redirect,
-      isCapacityLimited,
       isCustomNoticeEnabled,
       isMobileViewport,
       showAppAwareness,
@@ -138,7 +134,6 @@ class MyGousto extends React.PureComponent {
           )}
           <div className={css.notificationContent}>
             {showAppAwarenessBanner && <AppAwarenessBanner />}
-            {isCapacityLimited && !showAppAwarenessBanner && <LimitedCapacityNotice />}
             {isCustomNoticeEnabled && <CustomNotice />}
           </div>
           <div className={css.notificationContent}>
