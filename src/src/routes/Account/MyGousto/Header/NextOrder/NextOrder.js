@@ -52,12 +52,12 @@ const NextOrder = ({
 
   return (
     <div>
-      <div className={css.headingWrapper}>
+      <div className={css.headingWrapper} data-testing="viewUpcomingDelivery">
         <Heading size="fontStyleM" type="h2">
           {hasDeliveryToday ? 'Today\'s delivery' : 'Upcoming delivery'}
         </Heading>
         {hasDeliveryToday && (
-          <Link to={configRoutes.client.myDeliveries} className={css.headingLink}>
+          <Link to={configRoutes.client.myDeliveries} className={css.headingLink} data-testing="viewUpcomingDeliveriesCTA">
             View deliveries
           </Link>
         )}
