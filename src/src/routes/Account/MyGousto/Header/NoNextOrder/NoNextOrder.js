@@ -4,7 +4,7 @@ import GoustoLink from 'Link'
 import css from './NoNextOrder.css'
 
 const NoNextOrder = () => (
-  <div>
+  <div data-testing="noNextOrder">
     <Heading size="fontStyleM" type="h2">
       Upcoming delivery
     </Heading>
