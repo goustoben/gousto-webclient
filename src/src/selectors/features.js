@@ -76,22 +76,6 @@ export const getIsCommunicationPanelEnabled = ({ features }) => (
   features && features.getIn(['isCommunicationPanelEnabled', 'value'], false)
 )
 
-export const getBlockedResubscription = ({ features }) => (
-  features && features.getIn(['blockedResubscription', 'value'], false)
-)
-
-export const getBlockedTransactionalOrders = ({ features }) => (
-  features && features.getIn(['blockedTransactionalOrders', 'value'], false)
-)
-
-export const getLimitedCapacity = ({ features }) => (
-  features && features.getIn(['limitedCapacity', 'value'], false)
-)
-
-export const getIsLimitedCapacityChristmas = ({ features }) => (
-  features && features.getIn(['isLimitedCapacityChristmas', 'value'], false)
-)
-
 export const getIsTastePreferencesEnabled = ({ features }) => (
   features && features.getIn(['tastePreferences', 'value'], false)
 )

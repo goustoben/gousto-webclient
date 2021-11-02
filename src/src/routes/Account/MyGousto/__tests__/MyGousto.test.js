@@ -111,52 +111,8 @@ describe('MyGousto', () => {
       expect(wrapper.find(ReferAFriend).length).toEqual(1)
     })
 
-    test('the LimitedCapacityNotice is not rendered', () => {
-      expect(wrapper.find('Connect(LimitedCapacityNotice)').exists()).toBe(false)
-    })
-
     test('the AppAwarenessBanner is not rendered', () => {
       expect(wrapper.find('Connect(AppAwarenessBanner)').exists()).toBe(false)
-    })
-
-    describe('when limitedCapacity flag is true', () => {
-      beforeEach(() => {
-        wrapper = shallow(
-          <MyGousto
-            isMobileViewport={false}
-            userLoadOrders={userLoadOrdersSpy}
-            userGetReferralDetails={userGetReferralDetails}
-            isCapacityLimited
-          />,
-          {
-            context: {
-              store: {
-                dispatch: jest.fn(),
-              },
-            },
-          }
-        )
-      })
-
-      describe('when isCardTokenNotCompliantFor3ds is true', () => {
-        beforeEach(() => {
-          wrapper.setProps({
-            isCardTokenNotCompliantFor3ds: true
-          })
-        })
-
-        test('then should render PaymentDetailsNotification', () => {
-          expect(wrapper.find('PaymentDetailsNotification').exists()).toBe(true)
-        })
-      })
-
-      test('the LimitedCapacityNotice is rendered', () => {
-        expect(wrapper.find('Connect(LimitedCapacityNotice)').exists()).toBe(true)
-      })
-
-      test('the AppAwarenessBanner is not rendered', () => {
-        expect(wrapper.find('Connect(AppAwarenessBanner)').exists()).toBe(false)
-      })
     })
 
     describe('when user is on desktop viewport', () => {
@@ -221,7 +177,6 @@ describe('MyGousto', () => {
             isMobileViewport={false}
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
-            isCapacityLimited
             store={store}
           />,
           {
@@ -243,7 +198,6 @@ describe('MyGousto', () => {
             isMobileViewport={false}
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
-            isCapacityLimited
             store={store}
           />
         )
@@ -263,7 +217,6 @@ describe('MyGousto', () => {
             isMobileViewport={false}
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
-            isCapacityLimited
           />
         )
         const rateRecipeLink = wrapper
@@ -284,7 +237,6 @@ describe('MyGousto', () => {
             isMobileViewport={false}
             userLoadOrders={userLoadOrdersSpy}
             userGetReferralDetails={userGetReferralDetails}
-            isCapacityLimited
             store={store}
           />,
           {

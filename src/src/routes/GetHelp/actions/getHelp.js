@@ -13,7 +13,6 @@ import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getIsMultiComplaintLimitReachedLastFourWeeks, getIsBoxDailyComplaintLimitReached } from '../selectors/orderSelectors'
 import { getIsAutoAccept, getOrder, getRecipes } from '../selectors/selectors'
 import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
-import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
 import { transformRecipesWithIngredients } from './transformers/recipeTransform'
@@ -401,12 +400,10 @@ export const validateLatestOrder = ({
   try {
     const response = await validateOrder(
       accessToken,
-      appendFeatureToRequest({
-        body: {
-          customer_id: Number(costumerId),
-          order_id: Number(orderId),
-        },
-      })
+      {
+        customer_id: Number(costumerId),
+        order_id: Number(orderId),
+      },
     )
     const { massIssueIneligibleIngredientUuids, otherIssueIneligibleIngredientUuids } = response.data
 

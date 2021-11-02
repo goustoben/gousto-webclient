@@ -7,7 +7,6 @@ import { getBrowserType } from 'selectors/browser'
 import {
   getIsCustomNoticeEnabled,
   getIsMyGoustoBannerAppAwarenessEnabled,
-  getLimitedCapacity,
 } from 'selectors/features'
 import { track3dsCompliantClick } from './actions/tracking'
 import { MyGousto } from './MyGousto'
@@ -19,7 +18,6 @@ function mapStateToProps(state) {
     orders: state.user.get('orders'),
     nameFirst: state.user.get('nameFirst'),
     referralDetails: state.user.get('referralDetails'),
-    isCapacityLimited: getLimitedCapacity(state),
     isCustomNoticeEnabled: getIsCustomNoticeEnabled(state),
     isMobileViewport: getBrowserType(state) === 'mobile',
     showAppAwareness: getIsMyGoustoBannerAppAwarenessEnabled(state),

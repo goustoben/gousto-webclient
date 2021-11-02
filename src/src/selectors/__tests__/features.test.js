@@ -21,10 +21,6 @@ import {
   getPromoOfferVariant,
   getIsSignupReductionEnabled,
   getIsCommunicationPanelEnabled,
-  getBlockedResubscription,
-  getBlockedTransactionalOrders,
-  getLimitedCapacity,
-  getIsLimitedCapacityChristmas,
   getIsTastePreferencesEnabled,
   getIsLoginModalAppAwarenessEnabled,
   getIsMobileTopBannerAppAwarenessEnabled,
@@ -55,8 +51,6 @@ describe('when features are defined', () => {
   const cases = [
     [getAbandonBasket, 'abandonBasket'],
     [getAppBanner, 'appBanner'],
-    [getBlockedResubscription, 'blockedResubscription'],
-    [getBlockedTransactionalOrders, 'blockedTransactionalOrders'],
     [getFullScreenBoxSummary, 'fullScreenBoxSummary'],
     [getGoToMyDeliveries, 'goToMyDeliveries'],
     [getGoToMyGousto, 'goToMyGousto'],
@@ -72,8 +66,6 @@ describe('when features are defined', () => {
       [''], ['Click here to get 50% off your first box and 30% off all other boxes in your first month']]
     ],
     [getPromoOfferVariant, 'enableTVPromoAds'],
-    [getLimitedCapacity, 'limitedCapacity'],
-    [getIsLimitedCapacityChristmas, 'isLimitedCapacityChristmas'],
     [getShowUserCredit, 'showUserCredit'],
     [getUserMenuVariant, 'userMenuVariant', [[''], ['menuB']]],
     [isNextDayDeliveryPaintedDoorFeatureEnabled, 'nextDayDeliveryPaintedDoor'],

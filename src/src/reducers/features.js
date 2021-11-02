@@ -45,15 +45,6 @@ const defaultFeatures = () => ({
   enableTVPromoAds: {
     value: false,
   },
-  blockedResubscription: {
-    value: false,
-  },
-  blockedTransactionalOrders: {
-    value: false,
-  },
-  limitedCapacity: {
-    value: false,
-  },
   isAppAwarenessEnabled: {
     value: false
   },

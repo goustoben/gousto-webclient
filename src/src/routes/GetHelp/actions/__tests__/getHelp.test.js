@@ -63,7 +63,6 @@ const getIsBoxDailyComplaintLimitReached = safeJestMock(orderSelectors, 'getIsBo
 const ACCESS_TOKEN = 'access-token'
 const GET_STATE_PARAMS = {
   auth: Immutable.fromJS({ accessToken: ACCESS_TOKEN }),
-  features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
 }
 
 safeJestMock(logger, 'error')
@@ -222,7 +221,6 @@ describe('GetHelp action generators and thunks', () => {
       beforeEach(async () => {
         getState = jest.fn().mockReturnValue({
           auth: Immutable.fromJS({ accessToken: ACCESS_TOKEN }),
-          features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
           getHelp: Immutable.fromJS({
             order: {
               id: ORDER_ID,
@@ -275,7 +273,6 @@ describe('GetHelp action generators and thunks', () => {
       beforeEach(async () => {
         getState = jest.fn().mockReturnValue({
           auth: Immutable.fromJS({ accessToken: ACCESS_TOKEN }),
-          features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
           getHelp: Immutable.fromJS({
             order: {
               id: ORDER_ID,
@@ -1145,7 +1142,6 @@ describe('GetHelp action generators and thunks', () => {
         {
           customer_id: 777,
           order_id: 888,
-          features: [],
         }
       ]
 

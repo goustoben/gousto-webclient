@@ -16,7 +16,6 @@ jest.mock('apis/getHelp')
 
 const GET_STATE_PARAMS = {
   auth: Immutable.fromJS({ accessToken: 'access-token' }),
-  features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
 }
 
 describe('getHelp actions', () => {
@@ -102,7 +101,6 @@ describe('getHelp actions', () => {
         customer_id: 777,
         ingredient_ids: ['2222'],
         order_id: 888,
-        features: [],
       }
     ]
 
