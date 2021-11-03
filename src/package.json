@@ -5,7 +5,10 @@
   "main": "dist/server.js",
   "author": "Gousto",
   "license": "ISC",
-  "sideEffects": "false",
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "scripts": {
     "dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build:server && NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local node dist/server.js",
     "postinstall": "bower install --force --allow-root",
