@@ -17,3 +17,11 @@
 .divider {
   margin-bottom: 1.5rem;
 }
+
+.headerContainer {
+  padding: 0 0.75rem 0 0.75rem;
+
+  @media ScreenSMMin {
+    padding: 0;
+  }
+}
