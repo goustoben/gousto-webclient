@@ -294,4 +294,4 @@ async function processRequest(ctx, next) {
   await next()
 }
 
-module.exports = { processRequest, fetchAllData, configureHistoryAndStore, renderHTML }
+export { processRequest, fetchAllData, configureHistoryAndStore, renderHTML }

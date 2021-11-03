@@ -5,14 +5,13 @@ import subPauseActions, { fetchData } from 'actions/subscriptionPause'
 import statusActions from 'actions/status'
 import userActions from 'actions/user'
 import { cancelExistingOrders } from 'apis/orders'
-import customersApi from 'apis/customers'
-import redirectActions from 'actions/redirect'
+import * as customersApi from 'apis/customers'
+import * as redirectActions from 'actions/redirect'
 import config from 'config/subscription'
 import routesConfig from 'config/routes'
 import * as subUtils from 'utils/subscription'
 import logger from 'utils/logger'
 import windowUtil from 'utils/window'
-import { flushPromises } from '../../_testing/utils'
 import { deactivateSubscription } from '../../routes/Account/apis/subscription'
 
 jest.mock('actions/status', () => ({
@@ -368,6 +367,7 @@ describe('Subscription action', () => {
 
     describe('when deactivation fails', () => {
       beforeEach(async () => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         deactivateSubscription.mockReturnValue(Promise.reject('error from deactivateSubscription'))
         await subPauseActions.subscriptionDeactivate()(dispatch, getState)
       })
@@ -634,7 +634,7 @@ describe('Subscription action', () => {
       }
     )
 
-    describe('when feature flag subscriptionPause value is true', async () => {
+    describe('when feature flag subscriptionPause value is true', () => {
       beforeEach(() => {
         getState.mockReturnValueOnce({
           features: Immutable.fromJS({ subscriptionPauseOsr: { experiment: false, value: true } }),
@@ -650,7 +650,7 @@ describe('Subscription action', () => {
         })
       })
 
-      describe('when feature flag enableOsrOffer value is undefined', async () => {
+      describe('when feature flag enableOsrOffer value is undefined', () => {
         it('should call getPauseRecoveryContent with false enableOffer', async () => {
           await subPauseActions.subscriptionPauseStart()(dispatch, getState)
 
@@ -659,7 +659,7 @@ describe('Subscription action', () => {
         })
       })
 
-      describe('when feature flag enableOsrOffer value is true', async () => {
+      describe('when feature flag enableOsrOffer value is true', () => {
         beforeEach(() => {
           getState.mockReturnValueOnce({
             features: Immutable.fromJS({
@@ -1322,7 +1322,7 @@ describe('Subscription action', () => {
       }
     )
 
-    describe('when no reasons are retrieved', async () => {
+    describe('when no reasons are retrieved', () => {
       beforeEach(async () => {
         customersApi.fetchPauseReasons.mockReturnValue(Promise.resolve({ data: [], meta: {} }))
         await subPauseActions.subscriptionPauseFetchReasons()(dispatch, getState)
@@ -1346,8 +1346,9 @@ describe('Subscription action', () => {
       )
     })
 
-    describe('when fetch fails', async () => {
+    describe('when fetch fails', () => {
       beforeEach(async () => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         customersApi.fetchPauseReasons.mockReturnValue(Promise.reject('response from deactivateSubscription'))
         await subPauseActions.subscriptionPauseFetchReasons()(dispatch, getState)
       })
@@ -2170,6 +2171,7 @@ describe('Subscription action', () => {
           features: Immutable.fromJS({}),
           auth: Immutable.fromJS({ accessToken: 'token' }),
         })
+        // eslint-disable-next-line prefer-promise-reject-errors
         cancelExistingOrders.mockReturnValue(Promise.reject('response from cancelExistingOrders'))
 
         await subPauseActions.subscriptionPauseCancelPendingOrders()(dispatch, getState)
@@ -3053,20 +3055,19 @@ describe('Subscription action', () => {
 
     test('should dispatch the expected actions to load start screen if necessary', async () => {
       await fetchData()(dispatch, getState)
-      await flushPromises()
 
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'PS_START_MODAL_VIEWED' })
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS',
-        reasons: Immutable.fromJS([{ id: 123, steps: [{ id: 456 }] }])
+        reasons: Immutable.fromJS([{ id: 123, steps: [{ id: 456 }] }]),
       })
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_CHOICE',
-        chosenReasonIds: Immutable.List([123])
+        chosenReasonIds: Immutable.List([123]),
       })
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_STEP',
-        activeStepId: 456
+        activeStepId: 456,
       })
     })
 
@@ -3077,13 +3078,12 @@ describe('Subscription action', () => {
           startScreen: [],
           reasons: ['some', 'reasons'],
           metaData: {
-            some: 'metadata'
+            some: 'metadata',
           }
         })
       })
 
       await fetchData()(dispatch, getState)
-      await flushPromises()
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS',
@@ -3093,13 +3093,8 @@ describe('Subscription action', () => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'PS_REASON_CATEGORY_MODAL_VIEWED' })
     })
 
-    test('should dispatch action to load orders if there are none in the store', () => {
-      getState = () => ({
-        ...mockState,
-        user: Immutable.fromJS({
-          orders: []
-        })
-      })
+    afterEach(() => {
+      jest.clearAllMocks()
     })
   })
 })

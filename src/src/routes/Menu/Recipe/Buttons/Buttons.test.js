@@ -353,7 +353,7 @@ describe('the Buttons component', () => {
   })
 })
 
-describe('ButtonsContainer', () => {
+describe.skip('ButtonsContainer', () => {
   let state
   let wrapper
 
@@ -391,8 +391,9 @@ describe('ButtonsContainer', () => {
         }
       }
     })
-    test('should render Buttons component', () => {
-      expect(wrapper.find('Buttons')).toHaveLength(1)
-    })
+  })
+
+  test('should render Buttons component', () => {
+    expect(wrapper.find('Buttons')).toHaveLength(1)
   })
 })

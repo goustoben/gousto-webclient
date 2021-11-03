@@ -27,8 +27,8 @@ describe('OrderPricing', () => {
         <OrderPricing pricing={pricing} orderState={orderState} />,
       )
       expect(wrapper.type()).toEqual('div')
-      expect(wrapper.text()).toContain(pricing.get('grossOrderPrice'))
-      expect(wrapper.text()).toContain(pricing.get('netOrderPrice'))
+      expect(wrapper.find('.fullPrice').text()).toContain(`£${pricing.get('grossOrderPrice')}.00`)
+      expect(wrapper.find('.total').text()).toContain(`£${pricing.get('netOrderPrice')}.00`)
     })
 
     test('should render no gross order price when there is no discount and state is confirmed', () => {

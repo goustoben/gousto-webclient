@@ -13,7 +13,7 @@
 .useAppCta {
 	@media ScreenXXSMax {
 		margin-right: 0.85rem;
-		display: block;
+		display: block !important; /* adding this to get around a order presidence issue */
 		margin-left: auto;
 		border: 0;
 
@@ -27,7 +27,7 @@
 		}
 	}
 
-	display: none;
+	display: none !important; /* adding this to get around a order presidence issue */
 }
 
 .overlay {
