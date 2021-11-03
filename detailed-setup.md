@@ -112,8 +112,9 @@ load-nvmrc
 
 ### Troubleshooting
 
-#### Compilation issues when installing a new version of node via nvm
-When installing node with nvm, if you encounter `gyp: No Xcode or CLT version detected`, try reinstalling XCode Command Line Tools as follows:
+#### Compilation issues when installing a new version of node via `nvm`
+
+**When installing node with nvm**, if you encounter `gyp: No Xcode or CLT version detected`, try reinstalling XCode Command Line Tools as follows:
 
 ```
 # check XCode CLT directory location
@@ -124,6 +125,23 @@ sudo rm -rf $(xcode-select --print-path)
 
 # reinstall XCode CLT
 xcode-select --install
+```
+
+**`nvm install node` fails to install on macOS Big Sur M1 Chip**
+
+The problem manifests itself with lots of compilation warnings in terminal window.
+
+To fix the issue one needs to switch to Rosetta 2 shell:
+
+```
+arch -x86_64 zsh
+```
+
+and then install node as usual:
+
+
+```
+nvm install v14.18.1
 ```
 
 ### fnm (alternative to nvm)

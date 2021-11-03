@@ -35,14 +35,19 @@ const RecommendationsHighlight = () => {
         recommendationRecipes.size
         && (
           <React.Fragment>
-            <h2 className={css.header}>Chosen for you</h2>
-            <p className={css.subtitle}>Handpicked recipes to suit your taste.</p>
+            <div className={css.headerContainer}>
+              <h2 className={css.header}>Chosen for you</h2>
+
+              <p className={css.subtitle}>Handpicked recipes to suit your taste.</p>
+            </div>
 
             <RecipeList collectionId={currentCollectionId} recipes={recommendationRecipes} />
 
-            <hr className={css.divider} />
+            <div className={css.headerContainer}>
+              <hr className={css.divider} />
 
-            <h2 className={classnames(css.header, css.moreRecipes)}>More delicious recipes...</h2>
+              <h2 className={classnames(css.header, css.moreRecipes)}>More delicious recipes...</h2>
+            </div>
           </React.Fragment>
         )
       }
