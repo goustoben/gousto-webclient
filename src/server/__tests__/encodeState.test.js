@@ -17,56 +17,41 @@ describe('encodeState', () => {
     }
 
     const serialised = encodeState(state)
-    const expected = JSON.stringify([
-      {
+    const expected = JSON.stringify({
+      form: {
         tag: 'isObject',
-        items: {
-          form: {},
-        }
+        value: {},
       },
-      {
+      serverError: {
         tag: 'isPlain',
-        items: {
-          serverError: '404'
-        }
+        value: '404',
       },
-      {
+      payment: {
         tag: 'isMap',
-        items: {
-          payment: {
-            tag: 'isMap',
-            value: {
-              challengeUrl: {
-                tag: 'isPlain',
-                value: null
-              },
-              isModalVisible: {
-                tag: 'isPlain',
-                value: false
-              },
-              paymentMethod: {
-                tag: 'isPlain',
-                value: 'Card'
-              }
-            }
-          }
-        }
+        value: {
+          challengeUrl: {
+            tag: 'isPlain',
+            value: null,
+          },
+          isModalVisible: {
+            tag: 'isPlain',
+            value: false,
+          },
+          paymentMethod: {
+            tag: 'isPlain',
+            value: 'Card',
+          },
+        },
       },
-      {
+      menuCollections: {
         tag: 'isOrderedMap',
-        items: {
-          menuCollections: {},
-        }
+        value: {},
       },
-      {
-        tag: 'isArray',
-        items: {},
-      },
-      {
-        tag: 'isList',
-        items: {}
-      },
-    ])
+      // {
+      //   tag: 'isList',
+      //   items: {}
+      // },
+    })
 
     expect(serialised).toEqual(expected)
   })

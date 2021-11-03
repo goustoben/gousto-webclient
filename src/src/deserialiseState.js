@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import { defineTag } from 'utils/state'
 
 const decodeObjects = (obj) => {
   const decodedObject = {}
@@ -9,7 +8,7 @@ const decodeObjects = (obj) => {
       decodedObject[key] = tag === 'isObject'
         ? decodeObjects(sliceValue)
         // eslint-disable-next-line no-use-before-define
-        : getSliceValue(tag, sliceValue)
+        : getSliceValue(tag, sliceValue, key)
     } else {
       decodedObject[key] = undefined
     }
@@ -32,28 +31,24 @@ const decodeMapObjects = (mapObj) => {
 }
 
 const getSliceValue = (tag, value) => {
-  if (tag === 'isPlain') {
-    return value
-  }
-
-  if (tag === 'isObject') {
-    return defineTag(value) === 'isObject' && Object.keys(value).length
-      ? decodeObjects(value, getSliceValue)
-      : value || undefined
-  }
-
   if (tag === 'isOrderedMap') {
     return new Immutable.OrderedMap(value)
   }
 
   if (tag === 'isMap') {
-    return value.tag === 'isMap'
-      ? new Immutable.Map(decodeMapObjects(value.value))
-      : getSliceValue(defineTag(value), value)
+    return new Immutable.Map(decodeMapObjects(value))
   }
 
   if (tag === 'isList') {
     return new Immutable.List(value)
+  }
+
+  if (tag === 'isPlain') {
+    return value
+  }
+
+  if (tag === 'isObject') {
+    return decodeObjects(value)
   }
 
   return Immutable.fromJS(value)
@@ -62,11 +57,9 @@ const getSliceValue = (tag, value) => {
 export const deserialise = (state) => {
   const deserialisedState = {}
 
-  state.map(({ tag, items }) =>
-    Object.entries(items).forEach(([key, value]) => {
-      deserialisedState[key] = getSliceValue(tag, value)
-    })
-  )
+  Object.entries(state).forEach(([key, value]) => {
+    deserialisedState[key] = getSliceValue(value.tag, value.value)
+  })
 
   return deserialisedState
 }

@@ -9,7 +9,6 @@ const isImmutableOrderedMap = (value) => value instanceof Immutable.OrderedMap
 
 export const checkSliceTag = {
   isPlain,
-  isArray,
   isObject,
   isImmutableList,
   isImmutableMap,
@@ -27,10 +26,6 @@ export const defineTag = (value) => {
 
   if (isImmutableList(value)) {
     return 'isList'
-  }
-
-  if (isArray(value)) {
-    return 'isArray'
   }
 
   if (isPlain(value)) {
