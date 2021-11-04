@@ -439,7 +439,7 @@ class Header extends React.PureComponent {
                 <div className={css.mainContent}>
                   <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !promoCodeUrl} className={css.logoLink} aria-label="Gousto Home button">
                     <span>
-                      <Svg fileName="gousto_logo" className={css.logoDesktop} />
+                      <Svg fileName="nourished_logo" className={css.logoDesktop} />
                     </span>
                   </Link>
                   {(path === client.menu) ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
