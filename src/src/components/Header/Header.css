@@ -7,262 +7,267 @@
 @value FontBodySize from 'design-language/typography.css';
 
 .header {
-	position: relative;
+  position: relative;
 }
 
 .useAppCta {
-	@media ScreenXXSMax {
-		margin-right: 0.85rem;
-		display: block !important; /* adding this to get around a order presidence issue */
-		margin-left: auto;
-		border: 0;
+  @media ScreenXXSMax {
+    margin-right: 0.85rem;
+    display: block !important; /* adding this to get around a order presidence issue */
+    margin-left: auto;
+    border: 0;
 
-		div[role="button"]:last-child {
-			border-radius: 0.5rem;
-			padding-left: 1rem;
-			padding-right: 1rem;
-			font-family: bodyFontStackBold;
-			font-size: sizeXS;
-			line-height: 2.4rem;
-		}
-	}
+    div[role='button']:last-child {
+      border-radius: 0.5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      font-family: bodyFontStackBold;
+      font-size: sizeXS;
+      line-height: 2.4rem;
+    }
+  }
 
-	display: none !important; /* adding this to get around a order presidence issue */
+  display: none !important; /* adding this to get around a order presidence issue */
 }
 
 .overlay {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	background: Blackberry;
-	visibility: hidden;
-	transition: visibility 0.3s, opacity 0.3s ease-in-out;
-	z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: Blackberry;
+  visibility: hidden;
+  transition: visibility 0.3s, opacity 0.3s ease-in-out;
+  z-index: -1;
 }
 
 .overlayOpen {
-	composes: overlay;
+  composes: overlay;
 
-	z-index: 101;
-	opacity: 0.4;
-	visibility: visible;
+  z-index: 101;
+  opacity: 0.4;
+  visibility: visible;
 }
 
 span:target .overlay {
+  z-index: 101;
+  opacity: 0.4;
+  visibility: visible;
 
-	z-index: 101;
-	opacity: 0.4;
-	visibility: visible;
-
-	@media (min-width: 768px) {
-		display: none;
-	}
+  @media (min-width: 768px) {
+    display: none;
+  }
 }
 
 .container {
-	composes: pageContainer from 'styles/layout.css';
+  composes: pageContainer from 'styles/layout.css';
 
-	max-width: none;
-	padding: 0;
+  max-width: none;
+  padding: 0;
 }
 
 .mainBar {
-	background: Pomegranate;
-	width: 100%;
+  background: Pomegranate;
+  width: 100%;
 }
 
 .mainContent {
-	padding-top: 12px;
-	padding-bottom: 9px;
-	composes: pageContainer from 'styles/layout.css';
-	composes: paragraphXS from 'styles/typography.css';
-	composes: flex spaceBetween verticalCenter from 'styles/flex.css';
-	composes: relative from 'styles/position.css';
-	line-height: 1;
+  padding-top: 12px;
+  padding-bottom: 9px;
+  composes: pageContainer from 'styles/layout.css';
+  composes: paragraphXS from 'styles/typography.css';
+  composes: flex spaceBetween verticalCenter from 'styles/flex.css';
+  composes: relative from 'styles/position.css';
+  line-height: 1;
 
-	@media ScreenXSMax {
-		padding-top: 8px;
-		padding-bottom: 7px;
-	}
+  @media ScreenXSMax {
+    padding-top: 8px;
+    padding-bottom: 7px;
+  }
 }
 
 .logoDesktop {
-	height: 30px;
-	width: 131px;
+  height: 30px;
+  width: 131px;
 }
 
 .logoLink {
-	padding-top: 7px;
+  padding-top: 7px;
 
-	@media ScreenXSMax {
-		padding-top: 10px;
-	}
+  @media ScreenXSMax {
+    padding-top: 10px;
+  }
 }
 
 .linkDesktopContainer {
-	composes: hidden-sm-down d-flex flex-nowrap align-items-center from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-sm-down d-flex flex-nowrap align-items-center from 'sass-loader!styles/bootstrap.scss';
 }
 
 .linkDesktop {
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
-	composes: marginSMLeftRight paddingXXSTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
-	composes: headlineFont textBold textCenter textUpper noDecor from 'styles/typography.css';
-	color: MainFontColor;
-	border-bottom: 2px solid transparent;
+  composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+  composes: marginSMLeftRight paddingXXSTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+  composes: headlineFont textBold textCenter textUpper noDecor from 'styles/typography.css';
+  color: MainFontColor;
+  border-bottom: 2px solid transparent;
 
-	&:not(.btn) {
-		&.disabled, &:hover, &:focus, &:active {
-			border-bottom-color: MainFontColor;
-		}
-	}
+  &:not(.btn) {
+    &.disabled,
+    &:hover,
+    &:focus,
+    &:active {
+      border-bottom-color: MainFontColor;
+    }
+  }
 
-	&:not(.disabled) {
-		&:hover, &:focus, &:active {
-			cursor: pointer;
-			text-decoration: none;
-			color: MainFontColor;
-		}
-	}
+  &:not(.disabled) {
+    &:hover,
+    &:focus,
+    &:active {
+      cursor: pointer;
+      text-decoration: none;
+      color: MainFontColor;
+    }
+  }
 
-	&:last-child {
-		margin-right: 0;
-	}
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .btn {
-	composes: linkDesktop;
-	composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-	composes: inlineBlock from 'styles/display.css';
-	composes: textCenter noDecor from 'styles/typography.css';
-	color: MainFontColor !important;
-	border: 1px solid MainFontColor;
-	border-radius: 3px;
-	background-color: Pomegranate;
-	overflow: hidden;
-	transition: width 0.2s linear;
-	height: 35px;
-	cursor: pointer;
-	margin: 0;
+  composes: linkDesktop;
+  composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  composes: inlineBlock from 'styles/display.css';
+  composes: textCenter noDecor from 'styles/typography.css';
+  color: MainFontColor !important;
+  border: 1px solid MainFontColor;
+  border-radius: 3px;
+  background-color: Pomegranate;
+  overflow: hidden;
+  transition: width 0.2s linear;
+  height: 35px;
+  cursor: pointer;
+  margin: 0;
 }
 
 .btnLink {
-	composes: block from 'styles/display.css';
-	composes: textRight noDecor from 'styles/typography.css';
-	width: 100%;
-	height: 13px;
-	overflow: hidden;
-	color: MainFontColor !important;
+  composes: block from 'styles/display.css';
+  composes: textRight noDecor from 'styles/typography.css';
+  width: 100%;
+  height: 13px;
+  overflow: hidden;
+  color: MainFontColor !important;
 }
 
 .authButtonsContainer {
-	composes: d-flex flex-nowrap align-items-center justify-content-end from 'sass-loader!styles/bootstrap.scss';
-	margin-left: SpacingSM;
-	transition: all 0.3s ease-in-out;
-	min-width: 0;
+  composes: d-flex flex-nowrap align-items-center justify-content-end from 'sass-loader!styles/bootstrap.scss';
+  margin-left: SpacingSM;
+  transition: all 0.3s ease-in-out;
+  min-width: 0;
 }
 
 .loggingOut {
-	min-width: calc(SpacingSM + 190px);
+  min-width: calc(SpacingSM + 190px);
 }
 
 .loggedIn {
-	min-width: calc(SpacingSM + 200px);
+  min-width: calc(SpacingSM + 200px);
 }
 
 .loggedOut {
-	min-width: calc(SpacingSM + 73px);
+  min-width: calc(SpacingSM + 73px);
 }
 
 .linkMobileContainer {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 }
 
 .confirm {
-	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
 }
 
 .menuTitle {
-	composes: headerXXL bodyFont textBold from 'styles/typography.css';
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
-	color: White;
+  composes: headerXXL bodyFont textBold from 'styles/typography.css';
+  composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  color: White;
 }
 
 .burgerIcon {
-	composes: fa-basic-class fa-bars from 'styles/vendor/font-awesome-module.css';
-	font-size: sizeXXL;
-	background-color: transparent;
-	border: none;
-	padding: 0;
-	margin: 0;
+  composes: fa-basic-class fa-bars from 'styles/vendor/font-awesome-module.css';
+  font-size: sizeXXL;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 
-	&, &:hover {
-		color: White;
-		text-decoration: none;
-	}
+  &,
+  &:hover {
+    color: White;
+    text-decoration: none;
+  }
 }
 
 .modalOverlay {
-	display: flex;
-	align-items: center;
-	padding: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
 }
 
 .modalContainer {
-	width: 100%;
+  width: 100%;
 }
 
 .modal {
-	position: relative !important;
-	left: inherit !important;
-	top: 0 !important;
-	transform: inherit !important;
-	min-width: 288px;
-	width: 60% !important;
-	margin: 0 auto !important;
-	box-shadow: none !important;
-	max-width: 650px !important;
-	border-radius: 0px !important;
-	padding: 1rem !important;
-	@media ScreenXSMax {
-		width: 98% !important;
-	}
+  position: relative !important;
+  left: inherit !important;
+  top: 0 !important;
+  transform: inherit !important;
+  min-width: 288px;
+  width: 60% !important;
+  margin: 0 auto !important;
+  box-shadow: none !important;
+  max-width: 650px !important;
+  border-radius: 0px !important;
+  padding: 1rem !important;
+  @media ScreenXSMax {
+    width: 98% !important;
+  }
 }
 
 .appAwarenessModal {
-	min-width: 750px !important;
-	padding: 0 !important;
-	border: none;
-	background-clip: unset;
+  min-width: 750px !important;
+  padding: 0 !important;
+  border: none;
+  background-clip: unset;
 }
 
 .mobileTitle {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
-	composes: headerXXL textCenter from 'styles/typography.css';
-	composes: inlineBlock from 'styles/display.css';
-	width: 100%;
-	margin-left: calc(mobileLogoSize * -1);
-	color: White;
-	margin-bottom: 0;
+  composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  composes: headerXXL textCenter from 'styles/typography.css';
+  composes: inlineBlock from 'styles/display.css';
+  width: 100%;
+  margin-left: calc(mobileLogoSize * -1);
+  color: White;
+  margin-bottom: 0;
 }
 
 .fullWidthPrefix {
-	composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
 
-	&:after {
-		content: '\0020';
-	}
+  &:after {
+    content: '\0020';
+  }
 }
 
 .continueAsNewCustomerLink {
-	composes: avenirHeavy from 'styles/typography.css';
-	composes: marginXXL paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-	display: flex;
-	justify-content: center;
+  composes: avenirHeavy from 'styles/typography.css';
+  composes: marginXXL paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  display: flex;
+  justify-content: center;
 }
 
 .showcaseMenuLoginCta {

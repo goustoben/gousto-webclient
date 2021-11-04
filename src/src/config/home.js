@@ -2,8 +2,8 @@ import React from 'react'
 import Icon from 'components/Icon'
 
 export const hero = {
-  header: 'Endless choice in a recipe box',
-  subheader: 'Over 60 recipes every week',
+  header: 'High Impact Personalised Vitamins',
+  subheader: 'Bento Nourished',
 }
 
 export const CTA = {
@@ -52,48 +52,42 @@ export const defaultVariant = 'default'
 export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
   steps: [
     {
-      title: 'Variety',
+      title: 'Backed by science',
       img: isHomeJpgEnabled
         ? require('routes/Home/WhyChooseGousto/variety.jpg')
         : require('routes/Home/WhyChooseGousto/variety.png'),
       list: [
-        '60+ recipes a week, cooked from 10 mins',
-        'Family classics, global cuisines plus Joe Wicks’s health range',
-        'Tasty plant based and gluten free options too',
+        'Take our quiz to receive a bespoke recommendation, from our proprietary science backed algorithm',
       ],
     },
     {
-      title: 'Quality',
+      title: 'Freshly made-to-order',
       img: isHomeJpgEnabled
         ? require('routes/Home/WhyChooseGousto/quality.jpg')
         : require('routes/Home/WhyChooseGousto/quality.png'),
       list: [
-        'Fresh ingredients from trusted suppliers',
-        '100% British fresh meat',
-        'All recipes tried, tested and loved by our chefs and customers',
+        'Our freshly 3D printed gummy vitamins ensure you receive 99.5% of the nutritional value',
       ],
     },
     {
-      title: 'Simplicity',
+      title: 'High Absorption and Efficiency',
       img: isHomeJpgEnabled
         ? require('routes/Home/WhyChooseGousto/simplicity.jpg')
         : require('routes/Home/WhyChooseGousto/simplicity.png'),
       list: [
-        'Easy-to-follow recipe cards',
-        'Precise ingredients with zero food waste',
-        'Free, contactless delivery, any day you like',
+        'Nourishing you faster and more efficiently, our stacks get to work as soon as you chew',
       ],
     },
   ],
-  title: 'So why Gousto?',
+  title: 'So why Nourished?',
 })
 
 export const joeWicks =
-  "“I love coming home to a Gousto box with four different banging recipes each week. With so many dishes to choose from there's always something new to try!”"
+  "I really feel a difference in my awareness and energy level throughout the day!"
 export const carousel = {
-  title: 'Who says Tuesday can’t taste like Saturday?',
+  title: 'Meet Our Bestsellers',
   subtitle:
-    'Tuck into our 60 dish menu, filled with global cuisines, family favourites and Joe Wicks approved healthy options. Meals for every appetite – sorted.',
+    'Personalise your own vitamin stack or browse through our best sellers, gift boxes and latest additions to the Nourished collection. Each vitamin stack is freshly made-to-order and delivered in sustainable packaging.',
 }
 export const seo = {
   title: 'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',
