@@ -56,7 +56,8 @@
 
 .heroImage.isHomeJpgEnabled {
   @media BreakpointToMedium {
-    background: url('routes/Home/Hero/mobile-brand.jpg') center left / cover no-repeat;
+    background: url('https://cdn.shopify.com/s/files/1/0003/5415/6575/products/nourished-party-proofed-gummies-thedrugstore_1000x1000.jpg?v=1627389593')
+      center left / cover no-repeat;
   }
 
   @media BreakpointFromMedium {

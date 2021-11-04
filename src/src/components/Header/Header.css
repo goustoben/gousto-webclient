@@ -39,7 +39,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background: Blackberry;
+  background: #1e2c48;
   visibility: hidden;
   transition: visibility 0.3s, opacity 0.3s ease-in-out;
   z-index: -1;
@@ -71,7 +71,7 @@ span:target .overlay {
 }
 
 .mainBar {
-  background: Pomegranate;
+  background: #1e2c48;
   width: 100%;
 }
 
