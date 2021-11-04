@@ -1,21 +1,24 @@
 @value Blackberry from 'styles/colors.css';
 
 .noDecor {
-	composes: noDecor from 'styles/typography.css';
-	color: inherit;
-	&:hover, &:focus {
-		color: inherit;
-	}
+  composes: noDecor from 'styles/typography.css';
+  color: #1e2c48;
+  &:hover,
+  &:focus {
+    color: #1e2c48;
+  }
 }
 
 .base {
-	composes: textLinkBase from 'styles/typography.css';
+  composes: textLinkBase from 'styles/typography.css';
 }
 
 .secondary {
-	color: Blackberry;
+  color: #1e2c48;
 
-	&:hover, &:active, &:focus {
-		color: Blackberry;
-	}
+  &:hover,
+  &:active,
+  &:focus {
+    color: #1e2c48;
+  }
 }

@@ -146,7 +146,7 @@ span:target .overlay {
   color: MainFontColor !important;
   border: 1px solid MainFontColor;
   border-radius: 3px;
-  background-color: Pomegranate;
+  background-color: #1e2c48;
   overflow: hidden;
   transition: width 0.2s linear;
   height: 35px;
@@ -274,7 +274,7 @@ span:target .overlay {
   height: 3rem;
   border-radius: 3px;
   background: White;
-  color: Blackberry;
+  color: #1e2c48;
   border: none;
   composes: fontStyleButtonL from 'design-language/typography.css';
   padding: 0.5rem 1.5rem;

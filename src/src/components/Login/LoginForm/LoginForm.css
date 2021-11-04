@@ -6,131 +6,131 @@
 @value HeadingHeightLG: 80px;
 
 .hide {
-	composes: none from 'styles/display.css';
+  composes: none from 'styles/display.css';
 }
 
 .rememberMe {
-	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
-	margin-right: 1.75rem;
+  composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+  margin-right: 1.75rem;
 
-	@media BreakpointFromMedium {
-		width: 50%;
-		order: -1;
-	}
+  @media BreakpointFromMedium {
+    width: 50%;
+    order: -1;
+  }
 }
 
 .loginOptionsContainer {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-	@media BreakpointFromMedium {
-		flex-direction: row;
-	}
+  @media BreakpointFromMedium {
+    flex-direction: row;
+  }
 }
 
 .resetFormContainer {
-	@media BreakpointFromMedium {
-		text-align: right;
-		width: 50%;
-	}
+  @media BreakpointFromMedium {
+    text-align: right;
+    width: 50%;
+  }
 }
 
 .inputContainer {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .link {
-	composes: fontStyleSubHead from 'design-language/typography.module.css';
-	margin-bottom: 1rem;
-	display: inline-block;
-	color: Oyster;
-	border-bottom: 1px solid Oyster;
-	transition: all 200ms ease;
-	transition-property: color, border;
-	text-decoration: none;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  margin-bottom: 1rem;
+  display: inline-block;
+  color: #1e2c48;
+  border-bottom: 1px solid #1e2c48;
+  transition: all 200ms ease;
+  transition-property: color, border;
+  text-decoration: none;
 
-	&:link,
-	&:visited,
-	&:active {
-	  color: Bluecheese;
-	}
+  &:link,
+  &:visited,
+  &:active {
+    color: Bluecheese;
+  }
 
-	&:hover,
-	&:focus {
-	  color: Blueberry;
-	  border-color: Blueberry;
-	  text-decoration: none;
-	}
+  &:hover,
+  &:focus {
+    color: #1e2c48;
+    border-color: #1e2c48;
+    text-decoration: none;
+  }
 }
 
 .confirmMsg {
-	composes: textCenter from 'styles/typography.css';
-	padding: 80px 140px;
-	@media ScreenXSMax {
-		padding-left: 40px;
-		padding-right: 40px;
-	}
+  composes: textCenter from 'styles/typography.css';
+  padding: 80px 140px;
+  @media ScreenXSMax {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
 }
 
 .confirm {
-	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
-	composes: marginXSLeft from 'sass-loader!styles/spacing.scss';
+  composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
+  composes: marginXSLeft from 'sass-loader!styles/spacing.scss';
 }
 
 .input {
-	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	font-size: sizeMD;
+  composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+  font-size: sizeMD;
 }
 
 .error {
-	composes: fontStyleXS from 'design-language/typography.module.css';
-	margin-bottom: 1rem;
-	color: Radish;
+  composes: fontStyleXS from 'design-language/typography.module.css';
+  margin-bottom: 1rem;
+  color: #1e2c48;
 }
 
 .icon {
-	padding-right: 0.25rem;
-	composes: fa-basic-class from 'styles/vendor/font-awesome-module.module.css';
+  padding-right: 0.25rem;
+  composes: fa-basic-class from 'styles/vendor/font-awesome-module.module.css';
 }
 
 .errorIcon {
-	composes: icon;
-	composes: fa-exclamation-circle from 'styles/vendor/font-awesome-module.module.css';
-	color: Radish;
+  composes: icon;
+  composes: fa-exclamation-circle from 'styles/vendor/font-awesome-module.module.css';
+  color: #1e2c48;
 }
 
 .appAwarenessLoginForm {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .appAwarenessLoginForm .loginOptionsContainer {
-	display: block;
+  display: block;
 }
 
 .appAwarenessLoginForm .appAwarenessBottomContainer {
-	margin-top: auto;
+  margin-top: auto;
 }
 
 .appAwarenessLoginForm .resetFormContainer {
-	text-align: left;
-	width: 100%;
+  text-align: left;
+  width: 100%;
 }
 
 .appAwarenessLoginForm .rememberMe {
-	width: 100%;
+  width: 100%;
 }
 
 .appAwarenessLoginModal .confirmMsg {
-	padding: 1.5rem;
+  padding: 1.5rem;
 }
 
 .appAwarenessLoginModal {
-	height: calc(100% - HeadingHeightSM);
-	padding: 0 0.5rem;
+  height: calc(100% - HeadingHeightSM);
+  padding: 0 0.5rem;
 
-	@media BreakpointFromLarge {
-		height: calc(100% - HeadingHeightLG);
-	}
+  @media BreakpointFromLarge {
+    height: calc(100% - HeadingHeightLG);
+  }
 }

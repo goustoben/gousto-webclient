@@ -1,22 +1,22 @@
 @value Coconut from 'styles/colors.css';
 
 .loginDesktopContainer {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .appAwarenessContainer {
-    position: relative;
-    order: 1;
-    min-width: 460px;
-    background-color: Coconut;
-    overflow: hidden;
+  position: relative;
+  order: 1;
+  min-width: 460px;
+  background-color: #1e2c48;
+  overflow: hidden;
 }
 
 .loginFormContainer {
-    order: 2;
-    padding: 1rem 1rem 2rem;
-    min-width: 290px;
+  order: 2;
+  padding: 1rem 1rem 2rem;
+  min-width: 290px;
 }
 
 .loginFormContainer h4 {
@@ -24,46 +24,45 @@
 }
 
 .heading {
-    padding: 2rem 2rem 1rem;
-    min-height: 224px;
+  padding: 2rem 2rem 1rem;
+  min-height: 224px;
 }
 
 .subCopy {
-    composes: fontStyleBody from 'design-language/typography.css';
-    margin-bottom: 0;
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin-bottom: 0;
 }
 
 .imageContainer {
-    height: 272px;
+  height: 272px;
 }
 
 .phoneImage {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    width: 244px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 244px;
 }
 
 .ricePattern {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%);
-    width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
 }
 
 .inputFieldWrapper {
-    position: relative;
-  }
+  position: relative;
+}
 
-  .iconSuccess {
-    background: url('media/svgs/icon-thin-check.svg') center top no-repeat;
-    border-style: none;
-    width: 1.25rem;
-    height: 1.25rem;
-    position: absolute;
-    z-index: 1;
-    right: 1rem;
-    top: 1rem;
-  }
-
+.iconSuccess {
+  background: url('media/svgs/icon-thin-check.svg') center top no-repeat;
+  border-style: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  position: absolute;
+  z-index: 1;
+  right: 1rem;
+  top: 1rem;
+}
