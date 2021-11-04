@@ -70,10 +70,8 @@ const encodeValueBasedOnTag = (value, tag) => {
     return encodeArray(value)
   case 'isObject':
     return encodeObject(value)
-  case 'isPlain':
-    return value
   default: {
-    throw new Error(`Unrecognized tag in encoding: ${tag}`)
+    return value
   }
   }
 }
@@ -135,11 +133,7 @@ convertTaggedValueToValue = (taggedValue) => {
     return decodeObject(encodedValue)
   }
 
-  if (tag === 'isPlain') {
-    return encodedValue
-  }
-
-  throw new Error(`Unrecognized tag on decoding: ${tag}`)
+  return encodedValue
 }
 
 export const decodeState = (state) => decodeObject(state)
