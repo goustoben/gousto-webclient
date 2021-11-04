@@ -11,7 +11,7 @@ describe('get brand carousels', () => {
       name: 'light',
       color: '#333D47',
       backgroundColor: '#F4F7FA',
-      linkColor: '#615CFF',
+      linkColor: '#1E2C48',
       titleColor: '#333D47',
       fdiStyling: true
     }]
@@ -73,7 +73,7 @@ describe('getCarouselConfigForCategory', () => {
       name: 'light',
       color: '#333D47',
       backgroundColor: '#F4F7FA',
-      linkColor: '#615CFF',
+      linkColor: '#1E2C48',
       titleColor: '#333D47',
       fdiStyling: true
     }],
@@ -123,7 +123,7 @@ describe('getCarouselConfigForCategory', () => {
           backgroundColor: '#F4F7FA',
           color: '#333D47',
           fdiStyling: true,
-          linkColor: '#615CFF',
+          linkColor: '#1E2C48',
           name: 'light',
           titleColor: '#333D47'
         },
@@ -146,7 +146,7 @@ describe('getCarouselConfigForCategory', () => {
           backgroundColor: '#F4F7FA',
           color: '#333D47',
           fdiStyling: true,
-          linkColor: '#615CFF',
+          linkColor: '#1E2C48',
           name: 'light',
           titleColor: '#333D47'
         },
@@ -214,7 +214,7 @@ describe('getCarouselConfigForCategory', () => {
           backgroundColor: '#F4F7FA',
           color: '#333D47',
           fdiStyling: true,
-          linkColor: '#615CFF',
+          linkColor: '#1E2C48',
           name: 'light',
           titleColor: '#333D47'
         },
@@ -256,7 +256,7 @@ describe('getCarouselConfigForCategory', () => {
           backgroundColor: '#F4F7FA',
           color: '#333D47',
           fdiStyling: true,
-          linkColor: '#615CFF',
+          linkColor: '#1E2C48',
           name: 'light',
           titleColor: '#333D47'
         },
@@ -285,7 +285,7 @@ describe('getCarouselConfigForCategory', () => {
           backgroundColor: '#F4F7FA',
           color: '#333D47',
           fdiStyling: true,
-          linkColor: '#615CFF',
+          linkColor: '#1E2C48',
           name: 'light',
           titleColor: '#333D47'
         },
