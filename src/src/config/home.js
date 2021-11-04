@@ -54,8 +54,8 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
     {
       title: 'Backed by science',
       img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/variety.jpg')
-        : require('routes/Home/WhyChooseGousto/variety.png'),
+        ? require('routes/Home/WhyChooseGousto/science.jpg')
+        : require('routes/Home/WhyChooseGousto/science.png'),
       list: [
         'Take our quiz to receive a bespoke recommendation, from our proprietary science backed algorithm',
       ],
@@ -63,8 +63,8 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
     {
       title: 'Freshly made-to-order',
       img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/quality.jpg')
-        : require('routes/Home/WhyChooseGousto/quality.png'),
+        ? require('routes/Home/WhyChooseGousto/order.jpg')
+        : require('routes/Home/WhyChooseGousto/order.png'),
       list: [
         'Our freshly 3D printed gummy vitamins ensure you receive 99.5% of the nutritional value',
       ],
@@ -72,8 +72,8 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
     {
       title: 'High Absorption and Efficiency',
       img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/simplicity.jpg')
-        : require('routes/Home/WhyChooseGousto/simplicity.png'),
+        ? require('routes/Home/WhyChooseGousto/absorption.jpg')
+        : require('routes/Home/WhyChooseGousto/absorption.png'),
       list: [
         'Nourishing you faster and more efficiently, our stacks get to work as soon as you chew',
       ],
@@ -83,7 +83,7 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
 })
 
 export const joeWicks =
-  "I really feel a difference in my awareness and energy level throughout the day!"
+  "Vitamins. Designed by you, freshly made by us."
 export const carousel = {
   title: 'Meet Our Bestsellers',
   subtitle:

@@ -10,11 +10,11 @@ const JoeWicks = ({ isHomeJpgEnabled }) => {
   return (
     <div className={css.backgroundContainer}>
       <div className={css.container}>
-        <div role="img" aria-label="joe wicks" className={className} />
+        <div role="" aria-label="joe wicks" className={className} />
         <div className={css.textContainer}>
           <p className={css.quote}>{joeWicks}</p>
-          <span className={css.joeWicksSign}>Joe Wicks</span>
-          <span className={css.bodyCoach}> | The Body Coach</span>
+          <span className={css.joeWicksSign}></span>
+          <span className={css.bodyCoach}> </span>
         </div>
       </div>
     </div>
