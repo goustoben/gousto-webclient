@@ -10,7 +10,7 @@
 
 .copy {
   composes: fontStyleBodyL from 'design-language/typography.module.css';
-  color: Blackberry;
+  color: #1e2c48;
   margin-bottom: 1rem;
 }
 
@@ -31,13 +31,13 @@
 }
 
 .heading {
-  color: Pomegranate;
+  color: #1e2c48;
 }
 
 .linkButton {
   composes: fontSemiBold from 'design-language/typography.module.css';
   background: White;
-  color: Bluecheese;
+  color: #1e2c48;
   border: 0;
   padding: 0;
   cursor: pointer;

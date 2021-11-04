@@ -11,7 +11,7 @@ describe('WaveLinkHeader', () => {
       headerAttributes = {
         color: '#F2F2F2',
         description: 'Header description',
-        waveColor: '#FF0032',
+        waveColor: '#1E2C48',
         backgroundColor: '#0C3FC2',
         headerImage: [{
           url: 'waveLinkTitleImage-url'
@@ -40,7 +40,7 @@ describe('WaveLinkHeader', () => {
       headerAttributes = {
         color: '#F2F2F2',
         description: 'Header description',
-        waveColor: '#FF0032',
+        waveColor: '#1E2C48',
         backgroundColor: '#0C3FC2',
         headerImage: [],
         link: {

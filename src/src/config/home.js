@@ -7,11 +7,11 @@ export const hero = {
 }
 
 export const CTA = {
-  text: 'Get started',
-  stickyCTA: 'Get started with 50% off',
+  text: 'Order now',
+  stickyCTA: 'Get your personalised vitamins',
   join: (
     <span>
-      Get started{' '}
+      Order now{' '}
       <Icon
         name="fa-angle-right"
         size="1.5rem"
@@ -23,7 +23,7 @@ export const CTA = {
     text: 'See Menu',
     join: (
       <span>
-        See Menu{' '}
+        See Options{' '}
         <Icon
           name="fa-angle-right"
           size="1.5rem"

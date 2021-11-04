@@ -209,7 +209,7 @@ class Header extends React.PureComponent {
           clientRouted
           data-testing="myGoustoButtonLink"
         >
-          My Gousto
+          My Nourished
         </Link>
       )
     } else {

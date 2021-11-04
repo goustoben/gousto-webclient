@@ -19,7 +19,7 @@ const BrowseCTA = ({ menuBrowseCTAShow, boxDetailsVisibilityChange, menuBrowseCT
         <p className={css.text}>Please tell us where and when you&apos;d like your box so we can show you the latest recipes</p>
         <div className={css.button}>
           <Button width="full">
-            Get Started
+            Take the quiz
           </Button>
         </div>
       </div>

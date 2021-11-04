@@ -6,23 +6,23 @@
 @value mobileInfoBgSize: 220px;
 
 .container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 210px;
-	width: 100%;
-	position: relative;
-	background-position: center center / cover no-repeat;
-	background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 210px;
+  width: 100%;
+  position: relative;
+  background-position: center center / cover no-repeat;
+  background-size: cover;
 }
 
 .headerBase {
-	text-align: center;
-	width: 100%;
+  text-align: center;
+  width: 100%;
 }
 
 .header {
-	composes: headerBase;
-	composes: headerXXL2 headlineFont from 'styles/typography.css';
-	margin-bottom: auto;
+  composes: headerBase;
+  composes: headerXXL2 headlineFont from 'styles/typography.css';
+  margin-bottom: auto;
 }

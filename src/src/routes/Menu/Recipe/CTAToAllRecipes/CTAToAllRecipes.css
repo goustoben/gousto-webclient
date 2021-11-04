@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  background-color: #1e2c48;
 }
 
 .ctaInnerContainer {
@@ -13,6 +14,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #1e2c48;
   @media ScreenSMMin {
     position: absolute;
     width: 90%;
@@ -27,48 +29,47 @@
 }
 
 .ctaButton {
-  border: 1px solid BlueBase;
+  border: 1px solid #1e2c48;
   border-radius: 3px;
   color: White;
-  background-color: BlueBase;
+  background-color: #1e2c48;
   padding: 0.5rem 2rem;
   margin-bottom: 1rem;
   font-weight: bold;
   font-size: 16px;
-    @media ScreenSMMin {
-      color: BlueBase;
-      background-color: White;
-      padding: 0.5rem;
-      width: 70%;
+  @media ScreenSMMin {
+    color: #1e2c48;
+    background-color: White;
+    padding: 0.5rem;
+    width: 70%;
   }
 }
 
 .ctaButton:hover {
-  background-color: BlueBaseDarker;
+  background-color: rgb(30, 44, 72, 0.8);
   cursor: pointer;
   color: White;
 }
 
-
 .ctaAllRecipe {
-    width: 100%;
-    position: relative;
-    margin: 0 0.75rem 0.75rem 0.75rem;
-    flex-direction: column;
+  width: 100%;
+  position: relative;
+  margin: 0 0.75rem 0.75rem 0.75rem;
+  flex-direction: column;
 
-    @media ScreenSMMin {
-        margin: 0 1rem 1rem 0;
-        width: calc(50% - 1rem);
-        height: auto;
-    }
-    @media ScreenMDMin {
-        width: calc(33.33% - 1rem);
-        height: auto;
-    }
-    @media ScreenLGMin {
-        width: calc(25% - 1rem);
-        height: auto;
-    }
+  @media ScreenSMMin {
+    margin: 0 1rem 1rem 0;
+    width: calc(50% - 1rem);
+    height: auto;
+  }
+  @media ScreenMDMin {
+    width: calc(33.33% - 1rem);
+    height: auto;
+  }
+  @media ScreenLGMin {
+    width: calc(25% - 1rem);
+    height: auto;
+  }
 }
 
 .spottyBorder {
@@ -77,5 +78,5 @@
   display: none;
   @media ScreenSMMin {
     display: block;
-	}
+  }
 }
