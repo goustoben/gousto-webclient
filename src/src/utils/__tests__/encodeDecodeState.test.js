@@ -20,7 +20,7 @@ const defineTagCases = [
       header: 'header2',
     },
   ], 'isArray' ],
-  [ Immutable.Map(), 'isMap' ],
+  [ Immutable.Map({ header: 'header2' }), 'isImmutableMap' ],
   [ Immutable.List([
     {
       id: 'a325affa-e453',
@@ -32,8 +32,8 @@ const defineTagCases = [
       coreRecipeId: '3456',
       displayName: 'Lamb Meatballs With Herby Bulgur And Red Pepper Sauc',
     },
-  ]), 'isList' ],
-  [ Immutable.OrderedMap(), 'isOrderedMap' ],
+  ]), 'isImmutableList' ],
+  [ Immutable.OrderedMap({ header: 'header1' }), 'isImmutableOrderedMap' ],
 ]
 
 describe('given state utils', () => {
@@ -50,7 +50,7 @@ describe('given state utils', () => {
   })
 
   describe('when encodeState is invoked', () => {
-    test.only('should serialise and deserialise state tree properly', () => {
+    test('should serialise and deserialise state tree properly', () => {
       const state = {
         // an empty object
         form: {},
@@ -141,8 +141,6 @@ describe('given state utils', () => {
       }
 
       const serialised = encodeState(state)
-      console.debug('got serialised', serialised) // XXX remove me
-
       const deserialised = decodeState(JSON.parse(serialised))
 
       expect(deserialised).toEqual(state)

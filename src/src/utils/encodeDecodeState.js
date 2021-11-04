@@ -35,13 +35,7 @@ export const defineTag = (value) => {
 // forward declaration because of the mutual recursion
 let convertValueToTaggedValue
 
-const encodeImmutableList = (listObj) => {
-  const result = listObj.map((value) => {
-    return convertValueToTaggedValue(value)
-  })
-
-  return result
-}
+const encodeImmutableList = (listObj) => listObj.map((value) => convertValueToTaggedValue(value))
 
 const encodeImmutableMap = (mapObj) => {
   const result = {}
@@ -52,13 +46,7 @@ const encodeImmutableMap = (mapObj) => {
   return result
 }
 
-const encodeArray = (arrayObj) => {
-  const result = arrayObj.map((value) => {
-    return convertValueToTaggedValue(value)
-  })
-
-  return result
-}
+const encodeArray = (arrayObj) => arrayObj.map((value) => convertValueToTaggedValue(value))
 
 const encodeObject = (obj) => {
   const result = {}
@@ -71,28 +59,29 @@ const encodeObject = (obj) => {
 
 const encodeValueBasedOnTag = (value, tag) => {
   switch (tag) {
-    case 'isImmutableList':
-      return encodeImmutableList(value)
-    // Immutable.Map and Immutable.OrderedMap have the same encodedValue - only
-    // tag differs.
-    case 'isImmutableOrderedMap':
-    case 'isImmutableMap':
-      return encodeImmutableMap(value)
-    case 'isArray':
-      return encodeArray(value)
-    case 'isObject':
-      return encodeObject(value)
-    case 'isPlain':
-      return value
-    default: {
-      throw new Error('Unrecognized tag in encoding: ' + tag)
-    }
+  case 'isImmutableList':
+    return encodeImmutableList(value)
+  // Immutable.Map and Immutable.OrderedMap have the same encodedValue - only
+  // tag differs.
+  case 'isImmutableOrderedMap':
+  case 'isImmutableMap':
+    return encodeImmutableMap(value)
+  case 'isArray':
+    return encodeArray(value)
+  case 'isObject':
+    return encodeObject(value)
+  case 'isPlain':
+    return value
+  default: {
+    throw new Error(`Unrecognized tag in encoding: ${tag}`)
+  }
   }
 }
 
 convertValueToTaggedValue = (value) => {
   const tag = defineTag(value)
   const encodedValue = encodeValueBasedOnTag(value, tag)
+
   return {
     tag,
     value: encodedValue,
@@ -104,6 +93,7 @@ convertValueToTaggedValue = (value) => {
 // encodeState returns a string, while decodeState() takes an object.
 export const encodeState = (state) => {
   const encoded = encodeObject(state)
+
   return JSON.stringify(encoded)
 }
 
@@ -111,11 +101,7 @@ export const encodeState = (state) => {
 
 let convertTaggedValueToValue
 
-const decodeArray = (arrayObj) => {
-  return arrayObj.map((taggedValue) => {
-    return convertTaggedValueToValue(taggedValue)
-  })
-}
+const decodeArray = (arrayObj) => arrayObj.map((taggedValue) => convertTaggedValueToValue(taggedValue))
 
 const decodeObject = (obj) => {
   const result = {}
@@ -153,9 +139,7 @@ convertTaggedValueToValue = (taggedValue) => {
     return encodedValue
   }
 
-  throw new Error('Unrecognized tag on decoding: ' + tag)
+  throw new Error(`Unrecognized tag on decoding: ${tag}`)
 }
 
-export const decodeState = (state) => {
-  return decodeObject(state)
-}
+export const decodeState = (state) => decodeObject(state)
