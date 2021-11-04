@@ -10,11 +10,8 @@ import css from './WhyChooseGousto.css'
 const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing, isHomeJpgEnabled }) => {
   const subtitle = (
     <Fragment>
-      Impressively easy meals from just{' '}
-      <span className={css.pricePerServing}>
-        {pricePerServing ? formatPrice(pricePerServing) : ''} per serving
-      </span>
-      . All of the flavour, none of the fuss.
+      We'll recommend a unique combination of vitamins, minerals and supplements.
+
     </Fragment>
   )
   const { title } = getWhyGoustoConfig(isHomeJpgEnabled)

@@ -2,52 +2,54 @@
 @value Blackberry, Bluecheese, Blueberry from 'styles/colors.css';
 
 :global body {
-	color: Blackberry;
+  color: Blackberry;
 }
 
 :global a {
-	color: Bluecheese;
+  color: #1e2c48;
 
-	&:hover, &:active, &:focus {
-		color: Blueberry;
-	}
+  &:hover,
+  &:active,
+  &:focus {
+    color: #1e2c48;
+  }
 }
 
 .button {
-	cursor: pointer;
-	user-select: none;
+  cursor: pointer;
+  user-select: none;
 }
 
-:global .disabled[role="button"] {
-	cursor: default;
+:global .disabled[role='button'] {
+  cursor: default;
 }
 
 .zopim {
-	display: none;
+  display: none;
 }
 
 :global .ReactModal__Body--open .zEWidget-launcher {
-	filter: blur(3px);
-	-webkit-filter: blur(3px);
-	z-index: 10 !important;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  z-index: 10 !important;
 }
 
 :global .ReactModal__Body--open {
-	height: auto;
-	overflow-y: hidden;
+  height: auto;
+  overflow-y: hidden;
 }
 
 :global .ReactModal__Body--open #react-root {
-	transition: filter 0.3s linear;
-	filter: blur(0px);
-	-webkit-filter: blur(0px);
+  transition: filter 0.3s linear;
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
 }
 
 :global .ReactModal__Body--open #react-root {
-	filter: blur(5px);
-	-webkit-filter: blur(5px);
-	@media ScreenXSMax {
-		filter: none;
-		-webkit-filter: none;
-	}
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  @media ScreenXSMax {
+    filter: none;
+    -webkit-filter: none;
+  }
 }

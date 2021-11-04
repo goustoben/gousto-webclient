@@ -7,9 +7,7 @@ const TrustPilot = () => (
     <div className={css.leftSeedsArea} />
     <div className={css.textContainer}>
       <p className={css.deliveredMeals}>
-        Over
-        <span className={css.goustoRedColor}> 1 million meals </span>
-        cooked and loved
+        Rated 4.5 Stars
       </p>
       <div
         className={classNames('trustpilot-widget', css.widget)}
@@ -19,14 +17,14 @@ const TrustPilot = () => (
         data-style-width="100%"
         data-theme="light"
         data-font-family="Montserrat"
-        data-text-color="#333D47"
+        data-text-color="#1E2C48"
       >
         <a
           href="https://uk.trustpilot.com/review/gousto.co.uk"
           target="_blank"
           rel="noreferrer noopener"
         >
-          Trustpilot
+          On Trustpilot
         </a>
       </div>
     </div>

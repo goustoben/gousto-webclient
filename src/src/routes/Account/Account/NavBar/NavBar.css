@@ -3,83 +3,82 @@
 @value sizeSM, textBold noDecor textXS from 'styles/typography.css';
 
 .navContainer {
-	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-	margin: auto;
-	background-color: White;
-	border-bottom: 2px solid Basa;
-	@media ScreenXXSMax {
-		padding: 0px;
-	}
+  composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  margin: auto;
+  background-color: White;
+  border-bottom: 2px solid Basa;
+  @media ScreenXXSMax {
+    padding: 0px;
+  }
 }
 .navInner {
-	composes: accountContainer from 'styles/layout.css';
+  composes: accountContainer from 'styles/layout.css';
 }
 
 .nav {
-	width: 70%;
-	composes: flex row spaceBetween from 'styles/flex.css';
-	list-style: none;
-	margin: 0;
-	padding: 12px 0 0 0;
-	@media ScreenMDMax {
-		width:100%;
-	}
+  width: 70%;
+  composes: flex row spaceBetween from 'styles/flex.css';
+  list-style: none;
+  margin: 0;
+  padding: 12px 0 0 0;
+  @media ScreenMDMax {
+    width: 100%;
+  }
 }
 
 .mobileHide {
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
-	display: flex;
-	flex-direction: row;
+  composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+  display: flex;
+  flex-direction: row;
 }
 
 .tabletHide {
-	composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
 }
 
 .desktopHide {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 }
 
 .badge {
-	composes: textBold noDecor textXS from 'styles/typography.css';
-	composes: relative from 'styles/position.css';
-	background-color: Pomegranate;
-	margin-left: 0.25rem;
-	padding: 3px 6px;
-	border-radius: 100px;
-	line-height: 14px;
-	z-index: 10;
-	color: white;
-	align-self: center;
-	font-weight: 600;
+  composes: textBold noDecor textXS from 'styles/typography.css';
+  composes: relative from 'styles/position.css';
+  background-color: #1e2c48;
+  margin-left: 0.25rem;
+  padding: 3px 6px;
+  border-radius: 100px;
+  line-height: 14px;
+  z-index: 10;
+  color: white;
+  align-self: center;
+  font-weight: 600;
 
-	&:hover {
-		text-decoration: none !important;
-	}
-
+  &:hover {
+    text-decoration: none !important;
+  }
 }
 
 .link {
-	composes: noPadding from 'sass-loader!styles/spacing.scss';
-	composes: textUpper from 'styles/typography.css';
-	font-size: sizeSM;
-	composes: fullHeight from 'styles/positioning.css';
-	@media ScreenXXSMax {
-		font-size: 12px;
-	}
+  composes: noPadding from 'sass-loader!styles/spacing.scss';
+  composes: textUpper from 'styles/typography.css';
+  font-size: sizeSM;
+  composes: fullHeight from 'styles/positioning.css';
+  @media ScreenXXSMax {
+    font-size: 12px;
+  }
 
-	&:focus, &:active {
-		color: Pomegranate;
-	}
+  &:focus,
+  &:active {
+    color: #1e2c48;
+  }
 
-	&:hover {
-		color: Pomegranate;
-		text-decoration: none;
-	}
+  &:hover {
+    color: #1e2c48;
+    text-decoration: none;
+  }
 }
 
 .linkContainer {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
-

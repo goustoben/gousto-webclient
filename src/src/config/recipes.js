@@ -9,8 +9,8 @@ const config = {
       sharers: {
         text: 'Sharers',
         color: 'White',
-        backgroundColor: 'Pomegranate',
-        borderColor: 'Pomegranate',
+        backgroundColor: '#1E2C48',
+        borderColor: '#1E2C48',
       },
       ten_to_table: {
         text: '10-Minute Meal',
@@ -20,15 +20,15 @@ const config = {
       },
       everyday_favourites: {
         text: 'Everyday Favourites',
-        color: 'Pomegranate',
+        color: '#1E2C48',
         backgroundColor: 'Cauliflower',
         borderColor: 'DarkCauliflower',
       },
       fine_dine_in: {
         text: 'Fine Dine In',
         color: 'White',
-        backgroundColor: 'Blackberry',
-        borderColor: 'DarkBlackberry',
+        backgroundColor: '#1E2C48',
+        borderColor: '#1E2C48',
       },
     },
   },
@@ -49,7 +49,7 @@ const config = {
   },
   newRecipes: 'New recipes',
   recipeDetailViews: ['detail', 'fineDineInDetail'],
-  thematicBorderColor: '#FF0032',
+  thematicBorderColor: '#1E2C48',
 }
 
 export default config
