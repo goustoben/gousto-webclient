@@ -45,13 +45,15 @@ const serialiseObject = (obj) => {
 
 const deserialiseObject = (obj) => {
   const decodedObject = {}
-  Object.entries(obj).forEach(([key, value]) => {
-    const { tag, value: sliceValue } = value
-    if (value.value !== undefined) {
-      decodedObject[key] = tag === 'isObject'
-        ? deserialiseObject(sliceValue)
+  // console.log(obj)
+  Object.entries(obj).forEach(([key, objValue]) => {
+    const { tag, value } = objValue
+    // console.log('----tag', key, objValue)
+    if (value !== undefined) {
+      decodedObject[key] = tag === 'isObject' && Object.keys(value).length > 0
+        ? deserialiseObject(value)
         // eslint-disable-next-line no-use-before-define
-        : getDecodedValue(tag, sliceValue, key)
+        : getDecodedValue(tag, value)
     } else {
       decodedObject[key] = undefined
     }
@@ -65,7 +67,10 @@ const serialiseMapObj = (mapObj) => {
   mapObj.mapEntries(([mapKey, mapValue]) => {
     transformedMap[mapKey] = {
       tag: defineTag(mapValue),
-      value: isImmutableMap(mapValue) ? serialiseMapObj(mapValue) : mapValue,
+      value: isImmutableMap(mapValue)
+        ? serialiseMapObj(mapValue)
+        // eslint-disable-next-line no-use-before-define
+        : getEncodedValue(mapKey, mapValue),
     }
   })
 
@@ -76,18 +81,96 @@ const deserialiseMapObject = (mapObj) => {
   const decodedMapObject = {}
   Object.entries(mapObj).forEach(([key, value]) => {
     const { tag, value: sliceValue } = value
-    decodedMapObject[key] = tag === 'isMap'
-      ? new Immutable.Map(deserialiseMapObject(sliceValue))
-      // eslint-disable-next-line no-use-before-define
-      : getDecodedValue(tag, sliceValue)
+    // eslint-disable-next-line no-use-before-define
+    decodedMapObject[key] = getDecodedValue(tag, sliceValue)
+    // decodedMapObject[key] = tag === 'isMap'
+    //   ? new Immutable.Map(deserialiseMapObject(sliceValue))
+    //   // eslint-disable-next-line no-use-before-define
+    //   : getDecodedValue(tag, sliceValue)
   })
 
   return decodedMapObject
 }
 
+const serialiseOrderedMapObj = (orderedMapObj) => {
+  const transformedOrderedMap = {}
+  orderedMapObj.mapEntries(([mapKey, mapValue]) => {
+    transformedOrderedMap[mapKey] = {
+      tag: defineTag(mapValue),
+      value: isImmutableOrderedMap(mapValue)
+        ? serialiseOrderedMapObj(mapValue)
+        // eslint-disable-next-line no-use-before-define
+        : getEncodedValue(mapKey, mapValue),
+    }
+  })
+
+  return transformedOrderedMap
+}
+
+const deserialiseOrderedMapObject = (orderedMapObj) => {
+  const decodedMapObject = {}
+  Object.entries(orderedMapObj).forEach(([key, value]) => {
+    const { tag, value: sliceValue } = value
+    // eslint-disable-next-line no-use-before-define
+    decodedMapObject[key] = getDecodedValue(tag, sliceValue)
+    // decodedMapObject[key] = tag === 'isOrderedMap'
+    //   ? new Immutable.OrderedMap(deserialiseOrderedMapObject(sliceValue))
+    // eslint-disable-next-line no-use-before-define
+    // : getDecodedValue(tag, sliceValue)
+  })
+
+  return decodedMapObject
+}
+
+const getEncodedValue = (key, value) => {
+  if (isImmutableOrderedMap(value)) {
+    return {
+      tag: 'isOrderedMap',
+      value: serialiseOrderedMapObj(value),
+    }
+  }
+
+  if (isImmutableMap(value)) {
+    return {
+      tag: 'isMap',
+      value: serialiseMapObj(value),
+    }
+  }
+
+  if (isImmutableList(value)) {
+    return {
+      tag: 'isList',
+      value,
+    }
+  }
+
+  if (isArray(value)) {
+    return {
+      tag: 'isArray',
+      value,
+    }
+  }
+
+  if (isPlain(value)) {
+    return {
+      tag: 'isPlain',
+      value,
+    }
+  }
+
+  if (isObject(value)) {
+    return {
+      tag: 'isObject',
+      value: serialiseObject(value),
+    }
+  }
+
+  return value
+}
+
 const getDecodedValue = (tag, value) => {
   if (tag === 'isOrderedMap') {
-    return new Immutable.OrderedMap(value)
+    return new Immutable.OrderedMap(deserialiseOrderedMapObject(value))
   }
 
   if (tag === 'isMap') {
@@ -98,11 +181,7 @@ const getDecodedValue = (tag, value) => {
     return new Immutable.List(value)
   }
 
-  if (tag === 'isPlain') {
-    return value
-  }
-
-  if (tag === 'isArray') {
+  if (tag === 'isPlain' || tag === 'isArray') {
     return value
   }
 
@@ -114,66 +193,13 @@ const getDecodedValue = (tag, value) => {
 }
 
 export const encodeState = (state) => {
-  const transformedState = {}
+  const encodededState = {}
+
   Object.entries(state).forEach(([key, value]) => {
-    if (isImmutableOrderedMap(value)) {
-      transformedState[key] = {
-        tag: 'isOrderedMap',
-        value,
-      }
-
-      return transformedState
-    }
-
-    if (isImmutableMap(value)) {
-      transformedState[key] = {
-        tag: 'isMap',
-        value: serialiseMapObj(value),
-      }
-
-      return transformedState
-    }
-
-    if (isImmutableList(value)) {
-      transformedState[key] = {
-        tag: 'isList',
-        value: value.toJSON(),
-      }
-
-      return transformedState
-    }
-
-    if (isArray(value)) {
-      transformedState[key] = {
-        tag: 'isArray',
-        value,
-      }
-
-      return transformedState
-    }
-
-    if (isPlain(value)) {
-      transformedState[key] = {
-        tag: 'isPlain',
-        value,
-      }
-
-      return transformedState
-    }
-
-    if (isObject(value)) {
-      transformedState[key] = {
-        tag: 'isObject',
-        value: serialiseObject(value),
-      }
-
-      return transformedState
-    }
-
-    return transformedState
+    encodededState[key] = getEncodedValue(key, value)
   })
 
-  return JSON.stringify(transformedState)
+  return JSON.stringify(encodededState)
 }
 
 export const decodeState = (state) => {

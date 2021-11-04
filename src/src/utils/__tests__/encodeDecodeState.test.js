@@ -1,44 +1,45 @@
 import Immutable from 'immutable'
 import { defineTag, encodeState, decodeState } from 'utils/encodeDecodeState'
 
-describe('given state utils', () => {
-  let tag
-  const cases = [
-    [ {}, 'isObject' ],
-    [ null, 'isPlain' ],
-    [ undefined, 'isPlain' ],
-    [ 'boolean', 'isPlain' ],
-    [ 'number', 'isPlain' ],
-    [ 'string', 'isPlain' ],
-    [ [
-      {
-        type: 'collection',
-        id: '123',
-        header: 'header1',
-      },
-      {
-        type: 'collection',
-        id: '456',
-        header: 'header2',
-      },
-    ], 'isArray' ],
-    [ Immutable.Map(), 'isMap' ],
-    [ Immutable.List([
-      {
-        id: 'a325affa-e453',
-        coreRecipeId: '3499',
-        displayName: 'Meat-Free Meatballs With Herby Bulgur And Red Pepper Sauce',
-      },
-      {
-        id: 'a3252ffa-e453',
-        coreRecipeId: '3456',
-        displayName: 'Lamb Meatballs With Herby Bulgur And Red Pepper Sauc',
-      },
-    ]), 'isList' ],
-    [ Immutable.OrderedMap(), 'isOrderedMap' ],
-  ]
+const defineTagCases = [
+  [ {}, 'isObject' ],
+  [ null, 'isPlain' ],
+  [ undefined, 'isPlain' ],
+  [ 'boolean', 'isPlain' ],
+  [ 'number', 'isPlain' ],
+  [ 'string', 'isPlain' ],
+  [ [
+    {
+      type: 'collection',
+      id: '123',
+      header: 'header1',
+    },
+    {
+      type: 'collection',
+      id: '456',
+      header: 'header2',
+    },
+  ], 'isArray' ],
+  [ Immutable.Map(), 'isMap' ],
+  [ Immutable.List([
+    {
+      id: 'a325affa-e453',
+      coreRecipeId: '3499',
+      displayName: 'Meat-Free Meatballs With Herby Bulgur And Red Pepper Sauce',
+    },
+    {
+      id: 'a3252ffa-e453',
+      coreRecipeId: '3456',
+      displayName: 'Lamb Meatballs With Herby Bulgur And Red Pepper Sauc',
+    },
+  ]), 'isList' ],
+  [ Immutable.OrderedMap(), 'isOrderedMap' ],
+]
 
-  describe.each(cases)('when defineTag is called', (value, expected) => {
+describe('given state utils', () => {
+  describe.each(defineTagCases)('when defineTag is invoked', (value, expected) => {
+    let tag
+
     beforeEach(() => {
       tag = defineTag(value)
     })
@@ -49,7 +50,7 @@ describe('given state utils', () => {
   })
 
   describe('when encodeState is invoked', () => {
-    test('should serialise state tree', () => {
+    test('should serialise and deserialise state tree properly', () => {
       const state = {
         // an empty object
         form: {},
@@ -59,23 +60,24 @@ describe('given state utils', () => {
             action: 'POP',
             key: null,
             state: undefined,
+            query: {},
           },
         },
         // string
         serverError: '404',
         // Immutable.Map contains Immutable.Map
         menu: Immutable.Map({
-          menuVariants: Immutable.fromJS({
-            447: {
-              862: {
-                displayNmae: 'Indian-Style Spiced Carrot & Lentil Soup',
-              },
-            },
-            448: {
-              864: {
-                displayNmae: 'Spicy Hoisin Pork With Ginger & Sesame Greens',
-              },
-            },
+          menuVariants: Immutable.Map({
+            447: Immutable.Map({
+              862: Immutable.Map({
+                displayName: 'Indian-Style Spiced Carrot & Lentil Soup',
+              }),
+            }),
+            448: Immutable.Map({
+              864: Immutable.Map({
+                displayName: 'Spicy Hoisin Pork With Ginger & Sesame Greens',
+              }),
+            }),
           }),
         }),
         // Immutable.Map contains plain objects
@@ -139,323 +141,9 @@ describe('given state utils', () => {
       }
 
       const serialised = encodeState(state)
-      const expected = JSON.stringify({
-        form: { tag: 'isObject', value: {} },
-        routing: {
-          tag: 'isObject',
-          value: {
-            locationBeforeTransition: {
-              tag: 'isObject',
-              value: {
-                action: { tag: 'isPlain', value: 'POP' },
-                key: { tag: 'isPlain', value: null },
-                state: { tag: 'isPlain' },
-              },
-            },
-          },
-        },
-        serverError: { tag: 'isPlain', value: '404' },
-        menu: {
-          tag: 'isMap',
-          value: {
-            menuVariants: {
-              tag: 'isMap',
-              value: {
-                447: {
-                  tag: 'isMap',
-                  value: {
-                    862: {
-                      tag: 'isMap',
-                      value: {
-                        displayNmae: {
-                          tag: 'isPlain',
-                          value: 'Indian-Style Spiced Carrot & Lentil Soup',
-                        },
-                      },
-                    },
-                  },
-                },
-                448: {
-                  tag: 'isMap',
-                  value: {
-                    864: {
-                      tag: 'isMap',
-                      value: {
-                        displayNmae: {
-                          tag: 'isPlain',
-                          value: 'Spicy Hoisin Pork With Ginger & Sesame Greens',
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-        menu1: {
-          tag: 'isMap',
-          value: {
-            menuVariant: { tag: 'isPlain', value: '' },
-            collectionHeaders: {
-              tag: 'isArray',
-              value: [
-                { type: 'menu', id: '445' },
-                { type: 'menu', id: '446' },
-              ],
-            },
-            menuPrefetched: { tag: 'isPlain', value: true },
-          },
-        },
-        alternatives: {
-          tag: 'isList',
-          value: [
-            {
-              id: 'a325affa-e453',
-              coreRecipeId: '3499',
-              displayName: 'Meat-Free Meatballs With Herby Bulgur And Red Pepper Sauce',
-            },
-            {
-              id: 'a3252ffa-e453',
-              coreRecipeId: '3456',
-              displayName: 'Lamb Meatballs With Herby Bulgur And Red Pepper Sauc',
-            },
-          ],
-        },
-        menuCollections: {
-          tag: 'isOrderedMap',
-          value: {
-            a: {
-              carouselConfig: null,
-              featureCategoryOrder: 0,
-              shortTitle: 'Gousto Recommends',
-              requirements: {},
-            },
-            b: {
-              carouselConfig: null,
-              featureCategoryOrder: 0,
-              shortTitle: 'Dairy-Free',
-              requirements: { dietary_claims: ['dairy-free'] },
-            },
-          },
-        },
-        collectionsData: {
-          tag: 'isArray',
-          value: [
-            {
-              type: 'collection',
-              id: '123',
-              header: 'header1'
-            },
-            {
-              type: 'collection',
-              id: '456',
-              header: 'header2',
-            },
-          ],
-        },
-      })
+      const deserialised = decodeState(JSON.parse(serialised))
 
-      expect(serialised).toEqual(expected)
+      expect(deserialised).toEqual(state)
     })
   })
-
-  // describe('deserialise', () => {
-  //   test('should deserialise state tree properly', () => {
-  //     const initialState = {
-  //       form: { tag: 'isObject', value: {} },
-  //       routing: {
-  //         tag: 'isObject',
-  //         value: {
-  //           locationBeforeTransition: {
-  //             tag: 'isObject',
-  //             value: {
-  //               action: { tag: 'isPlain', value: 'POP' },
-  //               key: { tag: 'isPlain', value: null },
-  //               state: { tag: 'isPlain' },
-  //             },
-  //           },
-  //         },
-  //       },
-  //       serverError: { tag: 'isPlain', value: '404' },
-  //       menu: {
-  //         tag: 'isMap',
-  //         value: {
-  //           menuVariants: {
-  //             tag: 'isMap',
-  //             value: {
-  //               447: {
-  //                 tag: 'isMap',
-  //                 value: {
-  //                   862: {
-  //                     tag: 'isMap',
-  //                     value: {
-  //                       displayNmae: {
-  //                         tag: 'isPlain',
-  //                         value: 'Indian-Style Spiced Carrot & Lentil Soup',
-  //                       },
-  //                     },
-  //                   },
-  //                 },
-  //               },
-  //               448: {
-  //                 tag: 'isMap',
-  //                 value: {
-  //                   864: {
-  //                     tag: 'isMap',
-  //                     value: {
-  //                       displayNmae: {
-  //                         tag: 'isPlain',
-  //                         value: 'Spicy Hoisin Pork With Ginger & Sesame Greens',
-  //                       },
-  //                     },
-  //                   },
-  //                 },
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //       menu1: {
-  //         tag: 'isMap',
-  //         value: {
-  //           menuVariant: { tag: 'isPlain', value: '' },
-  //           collectionHeaders: {
-  //             tag: 'isArray',
-  //             value: [
-  //               { type: 'menu', id: '445' },
-  //               { type: 'menu', id: '446' },
-  //             ],
-  //           },
-  //           menuPrefetched: { tag: 'isPlain', value: true },
-  //         },
-  //       },
-  //       alternatives: {
-  //         tag: 'isList',
-  //         value: [
-  //           {
-  //             id: 'a325affa-e453',
-  //             coreRecipeId: '3499',
-  //             displayName: 'Meat-Free Meatballs With Herby Bulgur And Red Pepper Sauce',
-  //           },
-  //           {
-  //             id: 'a3252ffa-e453',
-  //             coreRecipeId: '3456',
-  //             displayName: 'Lamb Meatballs With Herby Bulgur And Red Pepper Sauc',
-  //           },
-  //         ],
-  //       },
-  //       menuCollections: {
-  //         tag: 'isOrderedMap',
-  //         value: {
-  //           a: {
-  //             carouselConfig: null,
-  //             featureCategoryOrder: 0,
-  //             shortTitle: 'Gousto Recommends',
-  //             // requirements: {},
-  //           },
-  //           b: {
-  //             carouselConfig: null,
-  //             featureCategoryOrder: 0,
-  //             shortTitle: 'Dairy-Free',
-  //             // requirements: { dietary_claims: ['dairy-free'] },
-  //           },
-  //         },
-  //       },
-  //       collectionsData: {
-  //         tag: 'isArray',
-  //         value: [
-  //           {
-  //             type: 'collection',
-  //             id: '123',
-  //             header: 'header1'
-  //           },
-  //           {
-  //             type: 'collection',
-  //             id: '456',
-  //             header: 'header2',
-  //           },
-  //         ],
-  //       },
-  //     }
-  //     const deserialisedState = deserialise(initialState)
-  //     const expected = {
-  //       form: {},
-  //       routing: {
-  //         locationBeforeTransition: {
-  //           action: 'POP',
-  //           key: null,
-  //           state: undefined,
-  //         },
-  //       },
-  //       serverError: '404',
-  //       menu: Immutable.Map({
-  //         menuVariants: Immutable.fromJS({
-  //           447: {
-  //             862: {
-  //               displayNmae: 'Indian-Style Spiced Carrot & Lentil Soup',
-  //             },
-  //           },
-  //           448: {
-  //             864: {
-  //               displayNmae: 'Spicy Hoisin Pork With Ginger & Sesame Greens',
-  //             },
-  //           },
-  //         }),
-  //       }),
-  //       menu1: Immutable.Map({
-  //         menuVariant: '',
-  //         collectionHeaders: [
-  //           {
-  //             type: 'menu',
-  //             id: '445',
-  //           },
-  //           {
-  //             type: 'menu',
-  //             id: '446',
-  //           },
-  //         ],
-  //         menuPrefetched: true,
-  //       }),
-  //       alternatives: Immutable.List([
-  //         {
-  //           id: 'a325affa-e453',
-  //           coreRecipeId: '3499',
-  //           displayName: 'Meat-Free Meatballs With Herby Bulgur And Red Pepper Sauce',
-  //         },
-  //         {
-  //           id: 'a3252ffa-e453',
-  //           coreRecipeId: '3456',
-  //           displayName: 'Lamb Meatballs With Herby Bulgur And Red Pepper Sauc',
-  //         },
-  //       ]),
-  //       menuCollections: Immutable.OrderedMap({
-  //         a: {
-  //           carouselConfig: null,
-  //           featureCategoryOrder: 0,
-  //           shortTitle: 'Gousto Recommends',
-  //         },
-  //         b: {
-  //           carouselConfig: null,
-  //           featureCategoryOrder: 0,
-  //           shortTitle: 'Dairy-Free',
-  //         },
-  //       }),
-  //       collectionsData: [
-  //         {
-  //           type: 'collection',
-  //           id: '123',
-  //           header: 'header1',
-  //         },
-  //         {
-  //           type: 'collection',
-  //           id: '456',
-  //           header: 'header2',
-  //         },
-  //       ],
-  //     }
-  //
-  //     expect(deserialisedState).toEqual(expected)
-  //   })
-  // })
 })
