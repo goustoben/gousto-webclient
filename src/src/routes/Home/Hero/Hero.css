@@ -42,30 +42,29 @@
 
 .heroImage:not(.isHomeJpgEnabled) {
   @media BreakpointToMedium {
-    background: url('routes/Home/Hero/mobile-brand.png') center left / cover no-repeat;
+    background: url('routes/Home/Hero/board.png') center left / cover no-repeat;
   }
 
   @media BreakpointFromMedium {
-    background: url('routes/Home/Hero/tablet-brand-dish.png') right top / cover no-repeat;
+    background: url('routes/Home/Hero/board.png') right top / cover no-repeat;
   }
 
   @media BreakpointFromLarge {
-    background: url('routes/Home/Hero/desktop-brand-dish.png') right top / cover no-repeat;
+    background: url('routes/Home/Hero/board.png') right top / cover no-repeat;
   }
 }
 
 .heroImage.isHomeJpgEnabled {
   @media BreakpointToMedium {
-    background: url('https://cdn.shopify.com/s/files/1/0003/5415/6575/products/nourished-party-proofed-gummies-thedrugstore_1000x1000.jpg?v=1627389593')
-      center left / cover no-repeat;
+    background: url('routes/Home/Hero/board.jpg') center left / cover no-repeat;
   }
 
   @media BreakpointFromMedium {
-    background: url('routes/Home/Hero/tablet-brand-dish.jpg') right top / cover no-repeat;
+    background: url('routes/Home/Hero/board.jpg') right top / cover no-repeat;
   }
 
   @media BreakpointFromLarge {
-    background: url('routes/Home/Hero/desktop-brand-dish.jpg') right top / cover no-repeat;
+    background: url('routes/Home/Hero/board.jpg') right top / cover no-repeat;
   }
 }
 
