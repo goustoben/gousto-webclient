@@ -14,6 +14,7 @@ import { loadVariants } from 'utils/loadVariants'
 import featuresLoadedFromStore from 'utils/featuresLoadedFromStore'
 import actions from 'actions'
 import docReady from 'utils/docReady'
+import { decodeState } from 'utils/encodeDecodeState'
 import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import { browserType } from 'client/browserType'
@@ -21,13 +22,12 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { initializeDatadog } from './middlewares/datadog/initialize'
 import { configureStore } from './store'
 import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
-import { deserialise } from './deserialiseState'
 
 docReady('docReady', window)
 
 let initialState = {}
 try {
-  initialState = deserialise(window.__initialState__)
+  initialState = decodeState(window.__initialState__)
 } catch (error) {
   //
 }

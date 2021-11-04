@@ -1,7 +1,7 @@
 const globals = require('config/globals')
 const { newAssetPath, getAssetRootUrl } = require('utils/media')
+const { encodeState } = require('utils/encodeDecodeState')
 const head = require('./head').default
-const encodeState = require('./encodeState')
 
 const { apiName, domain } = globals
 

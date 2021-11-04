@@ -19,10 +19,10 @@ const basketActions = require('actions/basket').default
 const processFeaturesQuery = require('utils/processFeaturesQuery').default
 const { newAssetPath } = require('utils/media')
 const { authorise } = require('utils/clientAuthorise')
+const { encodeState } = require('utils/encodeDecodeState')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 const fetchContentOnChange = require('routes/fetchContentOnChange').default
 const { loggerSetUuid } = require('actions/logger')
-const encodeState = require('./encodeState')
 const processHeaders = require('./processHeaders')
 const htmlTemplate = require('./template')
 

@@ -9,6 +9,7 @@ import processFeaturesQuery from 'utils/processFeaturesQuery'
 import processQuery from 'utils/processQuery'
 import loadFeatures from 'utils/loadFeatures'
 import { loadVariants } from 'utils/loadVariants'
+import { decodeState } from 'utils/encodeDecodeState'
 import queryString from 'query-string'
 import Cookies from 'utils/GoustoCookies'
 import { promoToggleModalVisibility } from 'actions/promos'
@@ -16,7 +17,6 @@ import { clientAuthorise, refresh } from 'client/auth'
 import { browserHistory } from 'react-router'
 import { browserType } from 'client/browserType'
 import { configureStore } from './store'
-import { deserialise } from './deserialiseState'
 
 let loaded = false
 
@@ -26,7 +26,7 @@ async function init() {
   loaded = true
   let initialState = {}
   try {
-    initialState = deserialise(window.__initialState__)
+    initialState = decodeState(window.__initialState__)
   } catch (error) {
     //
   }
