@@ -1,213 +1,161 @@
 import Immutable from 'immutable'
 
-const isArray = (value) => Array.isArray(value)
-const isObject = (value) => !isArray(value) && typeof value === 'object' && value !== null
-const isPlain = (value) => typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value === null || value === undefined
-const isImmutableMap = (value) => value instanceof Immutable.Map
 const isImmutableList = (value) => value instanceof Immutable.List
 const isImmutableOrderedMap = (value) => value instanceof Immutable.OrderedMap
+const isImmutableMap = (value) => value instanceof Immutable.Map
+const isArray = (value) => Array.isArray(value)
+const isObject = (value) => !isArray(value) && typeof value === 'object' && value !== null
 
 export const defineTag = (value) => {
+  if (isImmutableList(value)) {
+    return 'isImmutableList'
+  }
+
   if (isImmutableOrderedMap(value)) {
-    return 'isOrderedMap'
+    return 'isImmutableOrderedMap'
   }
 
   if (isImmutableMap(value)) {
-    return 'isMap'
-  }
-
-  if (isImmutableList(value)) {
-    return 'isList'
+    return 'isImmutableMap'
   }
 
   if (isArray(value)) {
     return 'isArray'
   }
 
-  if (isPlain(value)) {
-    return 'isPlain'
-  }
-
-  return 'isObject'
-}
-
-const serialiseObject = (obj) => {
-  const transformedObjects = {}
-  Object.entries(obj).forEach(([key, value]) => {
-    transformedObjects[key] = {
-      tag: defineTag(value),
-      value: isObject(value) ? serialiseObject(value) : value,
-    }
-  })
-
-  return transformedObjects
-}
-
-const deserialiseObject = (obj) => {
-  const decodedObject = {}
-  // console.log(obj)
-  Object.entries(obj).forEach(([key, objValue]) => {
-    const { tag, value } = objValue
-    // console.log('----tag', key, objValue)
-    if (value !== undefined) {
-      decodedObject[key] = tag === 'isObject' && Object.keys(value).length > 0
-        ? deserialiseObject(value)
-        // eslint-disable-next-line no-use-before-define
-        : getDecodedValue(tag, value)
-    } else {
-      decodedObject[key] = undefined
-    }
-  })
-
-  return decodedObject
-}
-
-const serialiseMapObj = (mapObj) => {
-  const transformedMap = {}
-  mapObj.mapEntries(([mapKey, mapValue]) => {
-    transformedMap[mapKey] = {
-      tag: defineTag(mapValue),
-      value: isImmutableMap(mapValue)
-        ? serialiseMapObj(mapValue)
-        // eslint-disable-next-line no-use-before-define
-        : getEncodedValue(mapKey, mapValue),
-    }
-  })
-
-  return transformedMap
-}
-
-const deserialiseMapObject = (mapObj) => {
-  const decodedMapObject = {}
-  Object.entries(mapObj).forEach(([key, value]) => {
-    const { tag, value: sliceValue } = value
-    // eslint-disable-next-line no-use-before-define
-    decodedMapObject[key] = getDecodedValue(tag, sliceValue)
-    // decodedMapObject[key] = tag === 'isMap'
-    //   ? new Immutable.Map(deserialiseMapObject(sliceValue))
-    //   // eslint-disable-next-line no-use-before-define
-    //   : getDecodedValue(tag, sliceValue)
-  })
-
-  return decodedMapObject
-}
-
-const serialiseOrderedMapObj = (orderedMapObj) => {
-  const transformedOrderedMap = {}
-  orderedMapObj.mapEntries(([mapKey, mapValue]) => {
-    transformedOrderedMap[mapKey] = {
-      tag: defineTag(mapValue),
-      value: isImmutableOrderedMap(mapValue)
-        ? serialiseOrderedMapObj(mapValue)
-        // eslint-disable-next-line no-use-before-define
-        : getEncodedValue(mapKey, mapValue),
-    }
-  })
-
-  return transformedOrderedMap
-}
-
-const deserialiseOrderedMapObject = (orderedMapObj) => {
-  const decodedMapObject = {}
-  Object.entries(orderedMapObj).forEach(([key, value]) => {
-    const { tag, value: sliceValue } = value
-    // eslint-disable-next-line no-use-before-define
-    decodedMapObject[key] = getDecodedValue(tag, sliceValue)
-    // decodedMapObject[key] = tag === 'isOrderedMap'
-    //   ? new Immutable.OrderedMap(deserialiseOrderedMapObject(sliceValue))
-    // eslint-disable-next-line no-use-before-define
-    // : getDecodedValue(tag, sliceValue)
-  })
-
-  return decodedMapObject
-}
-
-const getEncodedValue = (key, value) => {
-  if (isImmutableOrderedMap(value)) {
-    return {
-      tag: 'isOrderedMap',
-      value: serialiseOrderedMapObj(value),
-    }
-  }
-
-  if (isImmutableMap(value)) {
-    return {
-      tag: 'isMap',
-      value: serialiseMapObj(value),
-    }
-  }
-
-  if (isImmutableList(value)) {
-    return {
-      tag: 'isList',
-      value,
-    }
-  }
-
-  if (isArray(value)) {
-    return {
-      tag: 'isArray',
-      value,
-    }
-  }
-
-  if (isPlain(value)) {
-    return {
-      tag: 'isPlain',
-      value,
-    }
-  }
-
   if (isObject(value)) {
-    return {
-      tag: 'isObject',
-      value: serialiseObject(value),
-    }
+    return 'isObject'
   }
 
-  return value
+  return 'isPlain'
 }
 
-const getDecodedValue = (tag, value) => {
-  if (tag === 'isOrderedMap') {
-    return new Immutable.OrderedMap(deserialiseOrderedMapObject(value))
+// encoding
+
+// forward declaration because of the mutual recursion
+let convertValueToTaggedValue
+
+const encodeImmutableList = (listObj) => {
+  const result = listObj.map((value) => {
+    return convertValueToTaggedValue(value)
+  })
+
+  return result
+}
+
+const encodeImmutableMap = (mapObj) => {
+  const result = {}
+  mapObj.entrySeq().forEach(([key, value]) => {
+    result[key] = convertValueToTaggedValue(value)
+  })
+
+  return result
+}
+
+const encodeArray = (arrayObj) => {
+  const result = arrayObj.map((value) => {
+    return convertValueToTaggedValue(value)
+  })
+
+  return result
+}
+
+const encodeObject = (obj) => {
+  const result = {}
+  Object.entries(obj).forEach(([key, value]) => {
+    result[key] = convertValueToTaggedValue(value)
+  })
+
+  return result
+}
+
+const encodeValueBasedOnTag = (value, tag) => {
+  switch (tag) {
+    case 'isImmutableList':
+      return encodeImmutableList(value)
+    // Immutable.Map and Immutable.OrderedMap have the same encodedValue - only
+    // tag differs.
+    case 'isImmutableOrderedMap':
+    case 'isImmutableMap':
+      return encodeImmutableMap(value)
+    case 'isArray':
+      return encodeArray(value)
+    case 'isObject':
+      return encodeObject(value)
+    case 'isPlain':
+      return value
+    default: {
+      throw new Error('Unrecognized tag in encoding: ' + tag)
+    }
+  }
+}
+
+convertValueToTaggedValue = (value) => {
+  const tag = defineTag(value)
+  const encodedValue = encodeValueBasedOnTag(value, tag)
+  return {
+    tag,
+    value: encodedValue,
+  }
+}
+
+// Return the string representation of the object which, when passed to
+// decodeState(), will evaluate to the original state.  Note the asymmetry:
+// encodeState returns a string, while decodeState() takes an object.
+export const encodeState = (state) => {
+  const encoded = encodeObject(state)
+  return JSON.stringify(encoded)
+}
+
+// decoding
+
+let convertTaggedValueToValue
+
+const decodeArray = (arrayObj) => {
+  return arrayObj.map((taggedValue) => {
+    return convertTaggedValueToValue(taggedValue)
+  })
+}
+
+const decodeObject = (obj) => {
+  const result = {}
+  Object.entries(obj).forEach(([key, taggedValue]) => {
+    result[key] = convertTaggedValueToValue(taggedValue)
+  })
+
+  return result
+}
+
+convertTaggedValueToValue = (taggedValue) => {
+  const { tag, value: encodedValue } = taggedValue
+
+  if (tag === 'isImmutableList') {
+    return new Immutable.List(decodeArray(encodedValue))
   }
 
-  if (tag === 'isMap') {
-    return new Immutable.Map(deserialiseMapObject(value))
+  if (tag === 'isImmutableOrderedMap') {
+    return new Immutable.OrderedMap(decodeObject(encodedValue))
   }
 
-  if (tag === 'isList') {
-    return new Immutable.List(value)
+  if (tag === 'isImmutableMap') {
+    return new Immutable.Map(decodeObject(encodedValue))
   }
 
-  if (tag === 'isPlain' || tag === 'isArray') {
-    return value
+  if (tag === 'isArray') {
+    return decodeArray(encodedValue)
   }
 
   if (tag === 'isObject') {
-    return deserialiseObject(value)
+    return decodeObject(encodedValue)
   }
 
-  return Immutable.fromJS(value)
-}
+  if (tag === 'isPlain') {
+    return encodedValue
+  }
 
-export const encodeState = (state) => {
-  const encodededState = {}
-
-  Object.entries(state).forEach(([key, value]) => {
-    encodededState[key] = getEncodedValue(key, value)
-  })
-
-  return JSON.stringify(encodededState)
+  throw new Error('Unrecognized tag on decoding: ' + tag)
 }
 
 export const decodeState = (state) => {
-  const decodedState = {}
-
-  Object.entries(state).forEach(([key, value]) => {
-    decodedState[key] = getDecodedValue(value.tag, value.value)
-  })
-
-  return decodedState
+  return decodeObject(state)
 }

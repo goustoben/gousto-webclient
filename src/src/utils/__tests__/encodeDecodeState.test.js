@@ -50,7 +50,7 @@ describe('given state utils', () => {
   })
 
   describe('when encodeState is invoked', () => {
-    test('should serialise and deserialise state tree properly', () => {
+    test.only('should serialise and deserialise state tree properly', () => {
       const state = {
         // an empty object
         form: {},
@@ -95,7 +95,7 @@ describe('given state utils', () => {
           ],
           menuPrefetched: true,
         }),
-        // Immutable.List
+        // Immutable.List of plain objects
         alternatives: Immutable.List([
           {
             id: 'a325affa-e453',
@@ -108,7 +108,7 @@ describe('given state utils', () => {
             displayName: 'Lamb Meatballs With Herby Bulgur And Red Pepper Sauc',
           },
         ]),
-        // Immutable.OrderedMap
+        // Immutable.OrderedMap with nested Immutable.Map-s
         menuCollections: Immutable.OrderedMap({
           a: {
             carouselConfig: null,
@@ -125,7 +125,7 @@ describe('given state utils', () => {
             }),
           },
         }),
-        // array
+        // plain array of plain objects
         collectionsData: [
           {
             type: 'collection',
@@ -141,6 +141,8 @@ describe('given state utils', () => {
       }
 
       const serialised = encodeState(state)
+      console.debug('got serialised', serialised) // XXX remove me
+
       const deserialised = decodeState(JSON.parse(serialised))
 
       expect(deserialised).toEqual(state)
