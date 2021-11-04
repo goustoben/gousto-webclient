@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
 
@@ -23,6 +24,8 @@ const Checkout = (props) => {
     menuFetchData,
   } = props
 
+  const isMandatoryBasketEnabled = useIsOptimizelyFeatureEnabled('beetroots_mandatory_basket_step_in_menu')
+
   return (
     <BaseBannerButton
       view={view}
@@ -40,7 +43,7 @@ const Checkout = (props) => {
       spinnerContainerClassName={css.coSpinnerContainer}
       onClick={() => checkoutBasket(section, view)}
     >
-      Checkout
+      {isMandatoryBasketEnabled ? 'View basket' : 'Checkout'}
     </BaseBannerButton>
   )
 }
