@@ -2,7 +2,7 @@
 
 exports[`<Gel /> snapshots should render children 1`] = `
 <div
-  className="gel medium white"
+  className="medium white"
 >
   <div
     className="gelContent"
@@ -12,4 +12,4 @@ exports[`<Gel /> snapshots should render children 1`] = `
     </h1>
   </div>
 </div>
-`
+`;
