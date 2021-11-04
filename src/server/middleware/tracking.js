@@ -1,7 +1,8 @@
 const { v4: uuid } = require('uuid')
+const { secure } = require('globals')
 
 const cookieOptions = {
-  secure: true,
+  secure,
   httpOnly: false,
 }
 
@@ -10,7 +11,8 @@ export const sessionMiddleware = (sessionCookieName = 'gousto_session_id') => as
   ctx.cookies.secure = true
 
   if (!ctx.cookies.get(sessionCookieName)) {
-    ctx.cookies.set(sessionCookieName, uuid(), cookieOptions)
+    const res = uuid()
+    ctx.cookies.set(sessionCookieName, res, cookieOptions)
   }
 
   await next()
