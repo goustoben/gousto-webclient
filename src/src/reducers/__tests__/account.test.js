@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import accountReducer from 'reducers/account'
+import { accountReducers } from 'reducers/account'
 
 describe('account reducer', () => {
   test('should handle initial state', () => {
@@ -10,7 +10,7 @@ describe('account reducer', () => {
     })
     expect(
       Immutable.is(
-        accountReducer.orderCancelledModalVisibility(undefined, {}),
+        accountReducers.orderCancelledModalVisibility(undefined, {}),
         initialState,
       ),
     ).toEqual(true)
@@ -18,7 +18,7 @@ describe('account reducer', () => {
 
   describe('ORDER_CANCELLED_MODAL_VISIBILITY_CHANGE', () => {
     test('should load the data into state', () => {
-      const result = accountReducer.orderCancelledModalVisibility(
+      const result = accountReducers.orderCancelledModalVisibility(
         Immutable.Map({}),
         {
           type: actionTypes.ORDER_CANCELLED_MODAL_VISIBILITY_CHANGE,

@@ -1,4 +1,4 @@
-import pricingRequestApi from 'apis/pricing'
+import { requestPricing } from 'apis/pricing'
 import Immutable from 'immutable'
 import { getDeliveryTariffId, getSlot } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
@@ -133,7 +133,7 @@ const getPricing = async (dispatch, getState) => {
   } else {
     const pricingRequestParams = getPricingRequestParamsV1(state)
 
-    return pricingRequestApi(...pricingRequestParams)
+    return requestPricing(...pricingRequestParams)
   }
 }
 

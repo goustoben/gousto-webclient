@@ -19,7 +19,7 @@ export function isRedirectEnabled(state) {
   return false
 }
 
-export default connect((state) => ({
+export const PageContainer = connect((state) => ({
   isAuthenticated: state.auth.get('isAuthenticated'),
   disabled: state.auth.get('isAdmin'),
   email: state.user.get('email'),

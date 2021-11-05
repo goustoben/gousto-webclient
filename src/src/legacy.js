@@ -15,7 +15,7 @@ import Cookies from 'utils/GoustoCookies'
 import { promoToggleModalVisibility } from 'actions/promos'
 import { clientAuthorise, refresh } from 'client/auth'
 import { browserHistory } from 'react-router'
-import browserType from 'client/browserType'
+import { browserType } from 'client/browserType'
 import { configureStore } from './store'
 
 let loaded = false

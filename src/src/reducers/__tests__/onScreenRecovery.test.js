@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
 
-import onScreenRecovery from 'reducers/onScreenRecovery'
+import { onScreenRecoveryReducers } from 'reducers/onScreenRecovery'
 
 describe('onScreenRecovery reducer', () => {
   let state
@@ -24,7 +24,7 @@ describe('onScreenRecovery reducer', () => {
   describe('test initialState onScreenRecovery', () => {
     state = undefined
     test('onScreenRecovery initialState', () => {
-      expect(Immutable.is(initialState, onScreenRecovery.onScreenRecovery(state, null))).toBe(true)
+      expect(Immutable.is(initialState, onScreenRecoveryReducers.onScreenRecovery(state, null))).toBe(true)
     })
   })
 
@@ -44,7 +44,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'pending',
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -62,7 +62,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'projected',
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -82,7 +82,7 @@ describe('onScreenRecovery reducer', () => {
         orderDate: '2018-09-18 00:00:00',
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -97,7 +97,7 @@ describe('onScreenRecovery reducer', () => {
         modalType: 'order',
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -110,7 +110,7 @@ describe('onScreenRecovery reducer', () => {
         forceRefresh: true,
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
   })
@@ -127,7 +127,7 @@ describe('onScreenRecovery reducer', () => {
         modalVisibility: false,
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -147,7 +147,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'pending'
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -167,7 +167,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'projected'
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -189,7 +189,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'projected'
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -211,7 +211,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'projected'
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -249,7 +249,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'projected',
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
 
@@ -276,7 +276,7 @@ describe('onScreenRecovery reducer', () => {
         orderType: 'projected',
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
   })
@@ -293,7 +293,7 @@ describe('onScreenRecovery reducer', () => {
         boxNumber: '5',
       }
 
-      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      const result = onScreenRecoveryReducers.onScreenRecovery(initialState, actionToCall)
       expect(result.toJS()).toEqual(expect.objectContaining(expected))
     })
   })

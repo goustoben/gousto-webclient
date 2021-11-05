@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { Header } from 'Header'
 import css from './SignupLayout.css'
 
-class SignupLayout extends React.PureComponent {
+export class SignupLayout extends React.PureComponent {
   render() {
     const { hasWhiteBackground, children, showLoginCTA } = this.props
 
@@ -31,5 +31,3 @@ SignupLayout.defaultProps = {
   hasWhiteBackground: false,
   showLoginCTA: false,
 }
-
-export default SignupLayout

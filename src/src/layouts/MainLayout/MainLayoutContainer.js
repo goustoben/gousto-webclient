@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import MainLayout from './MainLayout'
+import { MainLayout } from './MainLayout'
 
-export default connect((state) => ({
+export const MainLayoutContainer = connect((state) => ({
   isAuthenticated: state.auth.get('isAuthenticated'),
   disabled: state.auth.get('isAdmin'),
   orders: state.user.get('orders'),

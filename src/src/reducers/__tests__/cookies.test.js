@@ -1,23 +1,23 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import cookiesReducer, { initialState } from 'reducers/cookies'
+import { cookiesReducers, initialState } from 'reducers/cookies'
 
 describe('cookies reducer', () => {
   test('initial state', () => {
     expect(
-      Immutable.is(cookiesReducer.cookies(undefined, {}), initialState),
+      Immutable.is(cookiesReducers.cookies(undefined, {}), initialState),
     ).toEqual(true)
   })
 
   test('unknown actions', () => {
-    const result = cookiesReducer.cookies(initialState, { type: 'unknown' })
+    const result = cookiesReducers.cookies(initialState, { type: 'unknown' })
 
     expect(Immutable.is(result, initialState)).toEqual(true)
   })
 
   describe('COOKIE_POLICY_ACCEPTANCE_CHANGE', () => {
     test('value passed set in the state', () => {
-      const result = cookiesReducer.cookies(initialState, {
+      const result = cookiesReducers.cookies(initialState, {
         type: actionTypes.COOKIE_POLICY_ACCEPTANCE_CHANGE,
         isAccepted: 'is-accepted-value',
       })

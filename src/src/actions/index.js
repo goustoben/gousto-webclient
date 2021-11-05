@@ -1,16 +1,12 @@
 import auth from './auth'
 import basket from './basket'
 import { checkoutActions } from './checkout'
-import content from './content'
 import filters from './filters'
 import * as log from './log'
 import login from './login'
 import menu from './menu'
-import newsletter from './newsletter'
 import order from './order'
 import * as onScreenRecovery from './onScreenRecovery'
-import page from './page'
-import persist from './persist'
 import products from './products'
 import { promoActions } from './promos'
 import pricing from './pricing'
@@ -24,7 +20,7 @@ import temp from './temp'
 import * as tracking from './tracking'
 import user from './user'
 import { collectionsLoadCollectionBySlug } from './collections'
-import deliveries from './deliveries'
+import { deliveriesActions } from './deliveries'
 import * as welcome from './welcome'
 import { homeActions } from './home'
 import { boxPricesActions } from './boxPrices'
@@ -34,16 +30,12 @@ const actions = {
   ...basket,
   ...checkoutActions,
   ...collectionsLoadCollectionBySlug,
-  ...content,
   ...filters,
   ...log,
   ...login,
   ...menu,
-  ...newsletter,
   ...order,
   ...onScreenRecovery,
-  ...page,
-  ...persist,
   ...products,
   ...promoActions,
   ...pricing,
@@ -56,7 +48,7 @@ const actions = {
   ...temp,
   ...tracking,
   ...user,
-  ...deliveries,
+  ...deliveriesActions,
   ...welcome,
   ...homeActions,
   ...boxPricesActions

@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import newsletterSignup from '../newsletter'
+import { requestNewsletterSignup } from '../newsletter'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -25,15 +25,15 @@ describe('newsletter api', () => {
     fetch.mockClear()
   })
 
-  describe('newsletterSignup', () => {
+  describe('requestNewsletterSignup', () => {
     test('should fetch the correct url', async () => {
-      await newsletterSignup('token', 'foo@example.com')
+      await requestNewsletterSignup('token', 'foo@example.com')
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/newsletter', { email: 'foo@example.com' }, 'POST')
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await newsletterSignup('token', 'foo@example.com')
+      const result = await requestNewsletterSignup('token', 'foo@example.com')
       expect(result).toEqual(mockFetchResult)
     })
   })

@@ -1,9 +1,9 @@
-import featureToggles, { defaultFeatures } from 'reducers/features'
+import { featuresReducers, defaultFeatures } from 'reducers/features'
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
 describe('features reducers', () => {
-  const { features } = featureToggles
+  const { features } = featuresReducers
 
   test('should handle initial state', () => {
     const state = undefined

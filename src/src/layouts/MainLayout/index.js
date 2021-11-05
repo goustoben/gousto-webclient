@@ -1,2 +1,2 @@
-import MainLayoutContainer from './MainLayoutContainer'
+import { MainLayoutContainer } from './MainLayoutContainer'
 export default MainLayoutContainer

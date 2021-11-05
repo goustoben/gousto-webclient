@@ -5,7 +5,7 @@ export const initialState = Immutable.fromJS({
   isPolicyAccepted: false,
 })
 
-const cookiesReducer = {
+export const cookiesReducers = {
   cookies: (state = initialState, { type, ...data }) => {
     switch (type) {
     case actionTypes.COOKIE_POLICY_ACCEPTANCE_CHANGE: {
@@ -17,5 +17,3 @@ const cookiesReducer = {
     }
   },
 }
-
-export default cookiesReducer

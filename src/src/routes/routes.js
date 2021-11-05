@@ -2,8 +2,8 @@ import React from 'react'
 import { Route } from 'react-router'
 
 import MainLayout from 'layouts/MainLayout'
-import Page from 'containers/PageContainer'
 import FullPage from 'layouts/FullPage/FullPage'
+import { PageContainer } from 'containers/PageContainer'
 
 import ErrorPage from 'components/ErrorPage'
 import { Home } from './Home'
@@ -23,7 +23,7 @@ import { PrivacyStatement } from './PrivacyStatement'
 import { ModernSlaveryStatement } from './ModernSlaveryStatement'
 
 const routes = (store) => (
-  <Route path="/" component={Page}>
+  <Route path="/" component={PageContainer}>
     {Home}
     {Signup}
     {Menu}

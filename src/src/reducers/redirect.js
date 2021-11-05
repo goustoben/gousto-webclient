@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 
-const redirect = {
+export const redirectReducers = {
   redirect: (state = '', action) => {
     switch (action.type) {
     case actionTypes.SERVER_REDIRECT:
@@ -28,5 +28,3 @@ const redirect = {
     }
   },
 }
-
-export default redirect

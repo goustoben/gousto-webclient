@@ -1,10 +1,10 @@
 import { actionTypes } from 'actions/actionTypes'
-import pageActions from 'actions/page'
+import { pageChange } from 'actions/page'
 
 describe('page actions', () => {
   describe('pageChange', () => {
-    test('should return a PAGE_CHANGE action with the first argument mapped through to the newLocation property', () => {
-      const result = pageActions.pageChange('the new location')
+    test('should return a PAGE_CHANGED action with the first argument mapped through to the newLocation property', () => {
+      const result = pageChange('the new location')
       expect(result).toEqual({
         type: actionTypes.PAGE_CHANGED,
         newLocation: 'the new location',

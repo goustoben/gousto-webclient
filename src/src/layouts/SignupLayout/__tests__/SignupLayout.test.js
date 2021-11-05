@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import SignupLayout from 'layouts/SignupLayout/SignupLayout'
+import { SignupLayout } from 'layouts/SignupLayout/SignupLayout'
 import { Header } from 'Header'
 import Footer from 'Footer'
 

@@ -1,38 +1,38 @@
 import { checkoutUrgencyReducers } from 'routes/Checkout/checkoutUrgencyReducers'
 import { abandonBasket } from './abandonBasket'
 import { appBanner } from './appBanner'
-import account from './account'
+import { accountReducers } from './account'
 import auth from './auth'
 import basket from './basket'
 import boxSummary from './boxSummary'
 import { checkoutReducers } from './checkout'
 import content from './content'
 import { cookbookRecipes } from './cookbookRecipes'
-import features from './features'
+import { featuresReducers } from './features'
 import filters from './filters'
-import login from './login'
+import { loginReducers } from './login'
 import menu from './menu'
-import newsletter from './newsletter'
+import { newsletterReducers } from './newsletter'
 import { payment } from './payment'
-import persist from './persist'
-import products from './products'
-import promos from './promos'
+import { persistReducers } from './persist'
+import { productsReducers } from './products'
+import { promosReducers } from './promos'
 import recipes from './recipes'
-import redirect from './redirect'
-import serverError from './serverError'
+import { redirectReducers } from './redirect'
+import { serverErrorReducers } from './serverError'
 import { signup } from './signup'
 import status from './status'
 import subscription from './subscription'
 import subscriptionPause from './subscriptionPause'
-import temp from './temp'
-import tracking from './tracking'
+import { tempReducers } from './temp'
+import { trackingReducers } from './tracking'
 import { tutorial } from './tutorial'
 import user from './user'
-import request from './request'
+import { requestReducers } from './request'
 import collections from './collections'
-import pricing from './pricing'
-import cookies from './cookies'
-import onScreenRecovery from './onScreenRecovery'
+import { pricingReducers } from './pricing'
+import { cookiesReducers } from './cookies'
+import { onScreenRecoveryReducers } from './onScreenRecovery'
 import { getHelp } from './getHelp'
 import { logger } from './logger'
 import { menuService } from './menuService'
@@ -46,7 +46,7 @@ import { myGousto } from './myGousto'
 const reducers = {
   ...abandonBasket,
   ...appBanner,
-  ...account,
+  ...accountReducers,
   ...auth,
   ...basket,
   ...boxSummary,
@@ -55,35 +55,35 @@ const reducers = {
   ...checkoutUrgencyReducers,
   ...collections,
   ...cookbookRecipes,
-  ...cookies,
+  ...cookiesReducers,
   ...content,
   ...feedback,
-  ...features,
+  ...featuresReducers,
   ...filters,
-  ...login,
+  ...loginReducers,
   logger,
   loggingManager,
   ...menu,
   menuService,
   myGousto,
-  ...newsletter,
-  ...onScreenRecovery,
-  ...persist,
-  ...products,
-  ...promos,
+  ...newsletterReducers,
+  ...onScreenRecoveryReducers,
+  ...persistReducers,
+  ...productsReducers,
+  ...promosReducers,
   ...recipes,
-  ...redirect,
-  ...serverError,
+  ...redirectReducers,
+  ...serverErrorReducers,
   ...signup,
   ...status,
   ...subscription,
   ...subscriptionPause,
-  ...temp,
-  ...tracking,
+  ...tempReducers,
+  ...trackingReducers,
   ...tutorial,
   ...user,
-  ...request,
-  ...pricing,
+  ...requestReducers,
+  ...pricingReducers,
   payment,
   getHelp,
   ...experimentsReducer,

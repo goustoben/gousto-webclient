@@ -17,7 +17,7 @@ export const initialState = () => Immutable.Map({
   forceRefresh: false,
 })
 
-const onScreenRecovery = {
+export const onScreenRecoveryReducers = {
   onScreenRecovery: (state, action) => {
     if (!state) {
       return initialState()
@@ -89,5 +89,3 @@ const onScreenRecovery = {
     }
   }
 }
-
-export default onScreenRecovery

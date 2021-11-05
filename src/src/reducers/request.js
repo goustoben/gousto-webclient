@@ -1,9 +1,9 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
-const initialState = () => Immutable.Map({ browser: 'desktop' })
+export const initialState = () => Immutable.Map({ browser: 'desktop' })
 
-const request = {
+export const requestReducers = {
   request: (state = initialState(), { type, userAgent, browserType }) => {
     switch (type) {
     case actionTypes.BROWSER_SET_USER_AGENT:
@@ -16,6 +16,3 @@ const request = {
     }
   },
 }
-
-export { initialState }
-export default request

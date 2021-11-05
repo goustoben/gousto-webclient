@@ -1,4 +1,4 @@
-import newsletterSignup from 'apis/newsletter'
+import { requestNewsletterSignup } from 'apis/newsletter'
 import { actionTypes } from './actionTypes'
 
 const newsletterSignupPending = () => ({
@@ -14,14 +14,14 @@ const newsletterSignupError = (message) => ({
   message,
 })
 
-const newsletterActions = {
+export const newsletterActions = {
   newsletterSignup: (email) => (
     async (dispatch, getState) => {
       const accessToken = getState().auth.get('accessToken')
       dispatch(newsletterSignupPending())
 
       try {
-        await newsletterSignup(accessToken, email)
+        await requestNewsletterSignup(accessToken, email)
         dispatch(newsletterSignedup())
       } catch (err) {
         let error = err
@@ -33,4 +33,3 @@ const newsletterActions = {
     }
   ),
 }
-export default newsletterActions

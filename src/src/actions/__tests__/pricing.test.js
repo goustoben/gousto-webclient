@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import pricing from 'apis/pricing'
+import { requestPricing } from 'apis/pricing'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
 import actions from 'actions/pricing'
 import { deliveryTariffTypes } from 'utils/deliveries'
@@ -8,7 +8,9 @@ import * as optimizelyUtils from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { createState as createOrderState } from 'routes/Menu/selectors/__mocks__/order.mock'
 import { orderV2PricesFixture } from 'routes/Menu/transformers/orderPricesV2ToV1.test'
 
-jest.mock('apis/pricing')
+jest.mock('apis/pricing', () => ({
+  requestPricing: jest.fn(),
+}))
 
 const createState = (partialOverwrite = {}) => createOrderState({
   ...partialOverwrite,
@@ -83,7 +85,7 @@ describe('pricing actions', () => {
         features: getFeatures('a1b2c3d4')
       })
 
-      pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+      requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
       await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
@@ -94,7 +96,7 @@ describe('pricing actions', () => {
         type: actionTypes.PRICING_SUCCESS,
         prices: pricingData,
       })
-      expect(pricing).not.toHaveBeenCalled()
+      expect(requestPricing).not.toHaveBeenCalled()
       expect(getOrderPriceSpy).not.toHaveBeenCalled()
     })
 
@@ -105,7 +107,7 @@ describe('pricing actions', () => {
         features: getFeatures('a1b2c3d4')
       })
 
-      pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+      requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
       await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
@@ -116,7 +118,7 @@ describe('pricing actions', () => {
         type: actionTypes.PRICING_SUCCESS,
         prices: pricingData,
       })
-      expect(pricing).not.toHaveBeenCalled()
+      expect(requestPricing).not.toHaveBeenCalled()
       expect(getOrderPriceSpy).not.toHaveBeenCalled()
     })
 
@@ -128,7 +130,7 @@ describe('pricing actions', () => {
           features: getFeatures('a1b2c3d4')
         })
 
-        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+        requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
         await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
@@ -140,7 +142,7 @@ describe('pricing actions', () => {
           type: actionTypes.PRICING_SUCCESS,
           prices: pricingData,
         })
-        expect(pricing).toHaveBeenCalled()
+        expect(requestPricing).toHaveBeenCalled()
       })
 
       it('should return with the PRICING_SUCCESS action and data with store data set', async () => {
@@ -170,7 +172,7 @@ describe('pricing actions', () => {
           }),
         })
 
-        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+        requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
         await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
@@ -182,10 +184,10 @@ describe('pricing actions', () => {
           type: actionTypes.PRICING_SUCCESS,
           prices: pricingData,
         })
-        expect(pricing).toHaveBeenCalled()
+        expect(requestPricing).toHaveBeenCalled()
 
         const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
-        expect(pricing).toHaveBeenCalledWith(
+        expect(requestPricing).toHaveBeenCalledWith(
           accessToken,
           recipeDataRequest,
           date,
@@ -223,12 +225,12 @@ describe('pricing actions', () => {
           features: getFeatures(deliveryTariffId)
         })
 
-        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+        requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
         await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
         const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
-        expect(pricing).toHaveBeenCalledWith(
+        expect(requestPricing).toHaveBeenCalledWith(
           accessToken,
           recipeDataRequest,
           date,
@@ -252,11 +254,11 @@ describe('pricing actions', () => {
           features: getFeatures('a1b2c3d4')
         })
 
-        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+        requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
         await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
-        expect(pricing.mock.calls[0][1]).toEqual({
+        expect(requestPricing.mock.calls[0][1]).toEqual({
           0: { id: '123', quantity: 2, type: 'Recipe' },
           1: { id: '123', quantity: 2, type: 'Recipe' },
           2: { id: 'p1', quantity: 1, type: 'Product' },
@@ -272,7 +274,7 @@ describe('pricing actions', () => {
           features: getFeatures('a1b2c3d4')
         })
 
-        pricing.mockReturnValue(Promise.reject('error from pricing endpoint'))
+        requestPricing.mockReturnValue(Promise.reject('error from pricing endpoint'))
 
         await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
@@ -284,7 +286,7 @@ describe('pricing actions', () => {
           type: actionTypes.PRICING_FAILURE,
           message: 'error from pricing endpoint',
         })
-        expect(pricing).toHaveBeenCalled()
+        expect(requestPricing).toHaveBeenCalled()
       })
     })
 

@@ -31,7 +31,7 @@ const defaultProps = {
   route: {},
 }
 
-class MainLayout extends React.Component {
+export class MainLayout extends React.Component {
   componentDidMount() {
     const { disabled, isAuthenticated, orders, shippingAddresses, userClearData, userFetchShippingAddresses, userLoadOrders } = this.props
 
@@ -92,5 +92,3 @@ class MainLayout extends React.Component {
 MainLayout.propTypes = propTypes
 
 MainLayout.defaultProps = defaultProps
-
-export default MainLayout

@@ -6,7 +6,7 @@ const data = Immutable.fromJS({
   visibility: false,
 })
 
-const account = {
+export const accountReducers = {
   orderCancelledModalVisibility: (state = data, action) => {
     switch (action.type) {
     case actionTypes.ORDER_CANCELLED_MODAL_VISIBILITY_CHANGE: {
@@ -33,5 +33,3 @@ const account = {
     }
   },
 }
-
-export default account

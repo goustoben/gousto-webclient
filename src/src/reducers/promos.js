@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
-const promos = {
+export const promosReducers = {
   promoCurrent: (state = '', action) => {
     switch (action.type) {
     case actionTypes.PROMO_SET:
@@ -38,5 +38,3 @@ const promos = {
     }
   },
 }
-
-export default promos
