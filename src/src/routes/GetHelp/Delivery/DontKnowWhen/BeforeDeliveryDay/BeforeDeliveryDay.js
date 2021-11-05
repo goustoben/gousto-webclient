@@ -32,7 +32,7 @@ const BeforeDeliveryDay = ({ trackClickMyGoustoInSSRDeliveries }) => (
             redirectToMyGousto()
           }}
         >
-          View My Gousto
+          View My Nourished
         </CTA>
       </BottomFixedContent>
     </Card>

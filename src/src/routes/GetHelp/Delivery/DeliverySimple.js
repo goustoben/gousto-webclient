@@ -44,12 +44,12 @@ class DeliverySimple extends PureComponent {
   getContent = ({ nextOrderTracking }) => (
     (!nextOrderTracking)
       ? {
-        ctaLabel: 'View My Gousto',
-        deliveryDescription: 'The tracking link is available on your day of delivery and this can be found on the "My Gousto" page under your next box delivery.',
+        ctaLabel: 'View My Nourished',
+        deliveryDescription: 'The tracking link is available on your day of delivery and this can be found on the "My Nourished" page under your next box delivery.',
       }
       : {
         ctaLabel: 'Track my box',
-        deliveryDescription: 'The tracking link is now available, this can usually be found on the "My Gousto" page under your next box delivery.'
+        deliveryDescription: 'The tracking link is now available, this can usually be found on the "My Nourished" page under your next box delivery.'
       }
   )
 

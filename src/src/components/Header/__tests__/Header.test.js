@@ -290,7 +290,7 @@ describe('Header', () => {
       const expected = [
         {
           clientRouted: true,
-          name: 'My Gousto',
+          name: 'My Nourished',
           url: routesConfig.client.myGousto,
           tracking: 'MyGoustoNavigation Clicked',
         },

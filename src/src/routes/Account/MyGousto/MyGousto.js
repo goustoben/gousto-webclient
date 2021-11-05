@@ -127,7 +127,7 @@ class MyGousto extends React.PureComponent {
 
     return (
       <div>
-        <Helmet title="My Gousto Account | View Your Most Recent Deliveries and Recipes" />
+        <Helmet title="My Nourished Account | View Your Most Recent Deliveries and Recipes" />
         <div className={css.wrapper}>
           {isCardTokenNotCompliantFor3ds && (
             <PaymentDetailsNotification track3dsCompliantClick={track3dsCompliantClick} />

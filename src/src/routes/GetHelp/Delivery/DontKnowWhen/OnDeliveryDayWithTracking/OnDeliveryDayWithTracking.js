@@ -76,7 +76,7 @@ const OnDeliveryDayWithTracking = ({
                   redirectToInternal(client.myGousto)
                 }}
               >
-                View My Gousto
+                View My Nourished
               </CTA>
             </div>
             <div className={css.cta}>

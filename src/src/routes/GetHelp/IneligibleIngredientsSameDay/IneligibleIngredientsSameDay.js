@@ -76,7 +76,7 @@ const IneligibleIngredientsSameDay = ({
           window.location.assign(routes.myGousto)
         }}
       >
-        Go to My Gousto
+        Go to My Nourished
       </CTA>
     </BottomFixedContent>
   </GetHelpLayout2>

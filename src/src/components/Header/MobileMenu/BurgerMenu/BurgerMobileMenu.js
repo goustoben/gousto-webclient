@@ -38,7 +38,7 @@ class BurgerMobileMenu extends React.PureComponent {
     }
 
     return menuItems.map(menuItem => {
-      const myGoustoMenuItem = menuItem.name === 'My Gousto'
+      const myGoustoMenuItem = menuItem.name === 'My Nourished'
       const homeMenuItem = menuItem.name === 'Home'
       const isHelpPreloginNeeded = menuItem.name.toLowerCase() === 'help'
       const rateRecipesItem = menuItem.name === 'Rate My Recipes'
