@@ -5,7 +5,7 @@ import { deepCloneObject } from 'utils/deepClone'
 export const defaultMenuItems = {
   home: { name: 'Home', url: clientRoutes.home, clientRouted: true },
   boxPrices: { name: 'Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
-  menu: { name: 'Choose Vitamins', url: clientRoutes.menu, tracking: trackingKeys.clickRecipeNavigation },
+  menu: { name: 'Take Quiz', url: clientRoutes.menu, tracking: trackingKeys.clickRecipeNavigation },
   help: {
     name: 'Help',
     url: clientRoutes.helpCentre,

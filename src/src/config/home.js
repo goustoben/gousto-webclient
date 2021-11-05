@@ -20,7 +20,7 @@ export const CTA = {
     </span>
   ),
   loggedIn: {
-    text: 'See Menu',
+    text: 'Buy Now',
     join: (
       <span>
         See Options{' '}
