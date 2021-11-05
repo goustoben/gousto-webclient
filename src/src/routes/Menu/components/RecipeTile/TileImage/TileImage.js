@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { CookingTimeIconContainer } from '../CookingTimeIcon'
+import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
 import { SoldOutOverlay } from '../../../Recipe/SoldOutOverlay'
 import { VariantHeaderContainer } from '../../../Recipe/VariantHeader/VariantHeaderContainer'
 
@@ -25,7 +25,7 @@ const TileImage = ({
     <div className={css.recipeImageAndCookingTimeWrapper}>
       <Image lazy title={title} className={css.imageStyle} />
 
-      <CookingTimeIconContainer recipeId={recipeId} />
+      <CookingTimeIcon />
     </div>
 
     {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />}

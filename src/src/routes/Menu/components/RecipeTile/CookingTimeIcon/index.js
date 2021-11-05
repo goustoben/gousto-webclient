@@ -1,1 +1,0 @@
-export { CookingTimeIconContainer } from './CookingTimeIconContainer'

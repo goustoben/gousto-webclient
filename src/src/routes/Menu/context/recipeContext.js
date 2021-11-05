@@ -1,4 +1,6 @@
 import { createContext, useContext } from 'react'
+import { useSelector } from 'react-redux'
+import { getNumPortions } from 'selectors/basket'
 
 /**
  *
@@ -23,3 +25,11 @@ export const useRecipeField = (fieldSelector, defaultValue) => {
 }
 
 export const useRecipeTitle = () => useRecipeField('title')
+
+export const useRecipeCookingTime = () => {
+  const recipe = useRecipe()
+  const numPortions = useSelector(getNumPortions)
+  const cookingTime = numPortions === 4 ? recipe.get('cookingTimeFamily') : recipe.get('cookingTime')
+
+  return cookingTime
+}

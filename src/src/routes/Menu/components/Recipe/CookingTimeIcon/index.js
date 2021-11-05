@@ -1,9 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useRecipeCookingTime } from 'routes/Menu/context/recipeContext'
 import css from './CookingTimeIcon.css'
-import { getPercentageFromCookingTime } from './utils/getPercentageFromCookingTime'
+import { getPercentageFromCookingTime } from './getPercentageFromCookingTime'
 
-const CookingTimeIcon = ({ cookingTime }) => {
+const CookingTimeIcon = () => {
+  const cookingTime = useRecipeCookingTime()
+
   if (!cookingTime) {
     return null
   }
@@ -34,7 +36,6 @@ const CookingTimeIcon = ({ cookingTime }) => {
 }
 
 CookingTimeIcon.propTypes = {
-  cookingTime: PropTypes.number.isRequired,
 }
 
 CookingTimeIcon.defaultProps = {
