@@ -27,7 +27,7 @@ export const ApplyVoucherPage = ({
     >
       {applyVoucherCustomText && <p className={css.customText}>{applyVoucherCustomText}</p>}
       <p className={css.customText}>
-        Additional costs will apply for surcharge recipes and items from the Gousto Market.
+        Additional costs will apply for surcharge recipes and items from the Nourished.
       </p>
       <ExpandableSection
         className={css.expandableSection}

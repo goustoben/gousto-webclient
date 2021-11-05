@@ -31,7 +31,7 @@ const RecipesInBasketProgressPresentation = (
             <ExtraInfoSecondary label="Next:" title="Market items">
               <LayoutContentWrapper>
                 <div className={css.extraInfo}>
-                  You can add desserts, drinks, snacks & more from the Gousto Market once you confirm your order.
+                  You can add desserts, drinks, snacks & more from the Nourished Market once you confirm your order.
                 </div>
               </LayoutContentWrapper>
             </ExtraInfoSecondary>

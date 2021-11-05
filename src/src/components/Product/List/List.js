@@ -14,7 +14,7 @@ const productsRoute = config.routes.client.orderConfirmation
 const ProductList = ({ orderId, products, number, onProductClick, isGoustoOnDemandEnabled }) => (
   <article className={classNames(css.content, { [css.goustoOnDemandContainer]: isGoustoOnDemandEnabled })}>
     {!isGoustoOnDemandEnabled && (
-      <SectionHeader title="Gousto Market" type="minorArticle">
+      <SectionHeader title="Nourished Market" type="minorArticle">
         Here you can add lovely wines, craft beers, delicious desserts, staples, kitchen tools, and treats from artisan suppliers.
       </SectionHeader>
     )}
@@ -31,7 +31,7 @@ const ProductList = ({ orderId, products, number, onProductClick, isGoustoOnDema
         to={productsRoute.replace(':orderId', orderId)}
         clientRouted={false}
       >
-        Browse Gousto Market
+        Browse Nourished Market
       </LinkButton>
     </div>
   </article>
