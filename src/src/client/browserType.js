@@ -1,7 +1,7 @@
 import { browserTypeChange } from 'actions/request'
 import actual from 'actual'
 
-export default store => {
+export const browserType = (store) => {
   if (actual('width', 'px') < 768) {
     store.dispatch(browserTypeChange('mobile'))
   } else if (actual('width', 'px') < 1025) {

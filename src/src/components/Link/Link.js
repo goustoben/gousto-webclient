@@ -6,7 +6,7 @@ import css from './Link.css'
 
 const GoustoLink = (props, context) => {
   let link
-  const { noDecoration, secondary, clientRouted, className, tracking, trackNavigationClick, ...rest } = props
+  const { noDecoration, secondary, clientRouted, className, tracking, ...rest } = props
   const dynamicClasses = {
     [css.base]: !className,
     [css.noDecor]: noDecoration,

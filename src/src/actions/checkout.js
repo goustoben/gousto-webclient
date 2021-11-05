@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { getFormSyncErrors } from 'redux-form'
 
-import gaID from 'config/head/gaTracking'
+import { gaTrackingConfig } from 'config/head/gaTracking'
 import { PaymentMethod } from 'config/signup'
 import { checkoutConfig } from 'config/checkout'
 
@@ -393,7 +393,7 @@ export const trackPurchase = ({ orderId }) => (
     const prices = pricing.get('prices')
     const totalPrice = prices.get('grossTotal')
     const shippingPrice = prices.get('deliveryTotal')
-    const gaIDTracking = gaID[__ENV__]// eslint-disable-line no-underscore-dangle
+    const gaIDTracking = gaTrackingConfig[__ENV__]// eslint-disable-line no-underscore-dangle
 
     if (typeof ga !== 'undefined') {
       ga('create', gaIDTracking, 'auto', 'gousto')

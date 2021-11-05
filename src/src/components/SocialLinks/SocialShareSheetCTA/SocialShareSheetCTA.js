@@ -15,7 +15,10 @@ const propTypes = {
 }
 
 class SocialShareSheetCTA extends PureComponent {
-  state = { isShareSheetOpen: false }
+  constructor(props) {
+    super(props)
+    this.state = { isShareSheetOpen: false }
+  }
 
   openShareSheet = () => {
     const { trackingReferFriend } = this.props

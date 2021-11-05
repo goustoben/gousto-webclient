@@ -23,7 +23,10 @@ const defaultProps = {
   elementType: 'page'
 }
 class SocialShareButtons extends PureComponent {
-  state = { isEmailModalOpen: false }
+  constructor(props) {
+    super(props)
+    this.state = { isEmailModalOpen: false }
+  }
 
   openEmailModal = () => {
     const { trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare } = this.props

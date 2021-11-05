@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import tracking from 'reducers/tracking'
+import { trackingReducers } from 'reducers/tracking'
 
 describe('tracking reducers', () => {
   const initialState = Immutable.Map({
@@ -13,14 +13,14 @@ describe('tracking reducers', () => {
     test('should handle initial state', () => {
       const state = undefined
       const action = {}
-      const result = tracking.tracking(state, action)
+      const result = trackingReducers.tracking(state, action)
       expect(Immutable.is(initialState, result)).toEqual(true)
     })
 
     test('should handle unknown actions', () => {
       const state = undefined
       const action = { type: 'unknown' }
-      const result = tracking.tracking(state, action)
+      const result = trackingReducers.tracking(state, action)
       expect(Immutable.is(initialState, result)).toEqual(true)
     })
 
@@ -35,7 +35,7 @@ describe('tracking reducers', () => {
         utmSource: undefined,
         awc: '',
       })
-      const result = tracking.tracking(state, action)
+      const result = trackingReducers.tracking(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
     })
 
@@ -50,7 +50,7 @@ describe('tracking reducers', () => {
         utmSource: 'google.com',
         awc: '',
       })
-      const result = tracking.tracking(state, action)
+      const result = trackingReducers.tracking(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
     })
 
@@ -65,7 +65,7 @@ describe('tracking reducers', () => {
         utmSource: undefined,
         awc: '5070-awin-click-checksum',
       })
-      const result = tracking.tracking(state, action)
+      const result = trackingReducers.tracking(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
     })
   })

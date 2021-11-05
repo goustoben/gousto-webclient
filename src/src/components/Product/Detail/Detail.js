@@ -7,6 +7,7 @@ import { ModalTitle, ModalContent } from 'ModalComponent'
 import Attributes from 'Product/Attributes'
 import Buttons from 'Product/Buttons'
 import { formatPrice } from 'utils/format'
+import { onEnter } from 'utils/accessibility'
 import { SubIngredients } from 'routes/Menu/Recipe/Detail/SubIngredients'
 import css from './Detail.css'
 
@@ -36,8 +37,8 @@ const Detail = ({
   const allergens = getAllergenListFromAttributes(attributes)
 
   return (
-    <div className={css.fullHeight} onClick={() => { onVisibilityChange() }}>
-      <div className={css.container} onClick={(e) => { e.stopPropagation() }}>
+    <div role="button" tabIndex={0} className={css.fullHeight} onClick={() => onVisibilityChange()} onKeyDown={onEnter(onVisibilityChange)}>
+      <div role="button" tabIndex={0} className={css.container} onClick={(e) => e.stopPropagation()}>
         <ModalTitle className={css.productDetailsTitle}>
           {title}
           <CloseButton onClose={() => onVisibilityChange()} />

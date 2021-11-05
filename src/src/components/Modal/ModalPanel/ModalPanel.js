@@ -32,7 +32,7 @@ class ModalPanel extends React.Component {
     if (disableClickOutside) {
       return
     }
-    if (this.isNodeInRoot(e.target, ReactDOM.findDOMNode(this.refs.content))) {
+    if (this.isNodeInRoot(e.target, ReactDOM.findDOMNode(this.contentRef))) {
       return
     }
     e.stopPropagation()
@@ -85,7 +85,7 @@ class ModalPanel extends React.Component {
     return (
       <div className={containerClassName}>
         {!disableOverlay && <div className={css.modalOverlay} />}
-        <div className={modalClasses} ref="content">
+        <div className={modalClasses} ref={(ref => { this.contentRef = ref })}>
           {this.renderBackButton()}
           {showCloseButton && (
             <div

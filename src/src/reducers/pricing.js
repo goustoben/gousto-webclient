@@ -7,7 +7,7 @@ const defaultState = Immutable.Map({
   error: Immutable.Map({}),
 })
 
-const pricing = {
+export const pricingReducers = {
   pricing: (state = defaultState, action) => {
     switch (action.type) {
     case actionTypes.PRICING_PENDING:
@@ -29,5 +29,3 @@ const pricing = {
     }
   },
 }
-
-export default pricing

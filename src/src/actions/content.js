@@ -24,7 +24,3 @@ export const loadContentVariants = (variants = {}) => (
     })
   }
 )
-
-export default {
-  contentLoadContentByPageSlug,
-}

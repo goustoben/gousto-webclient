@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import pricing from '../pricing'
+import { requestPricing } from '../pricing'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -25,7 +25,7 @@ describe('pricing api', () => {
     fetch.mockClear()
   })
 
-  describe('pricing', () => {
+  describe('requestPricing', () => {
     test('should fetch the correct url', async () => {
       const accessToken = 'token'
       const items = [ { id: '123' }, { id: '456' } ]
@@ -45,7 +45,7 @@ describe('pricing api', () => {
         delivery_tariff_id: deliveryTariffId,
         tariff_id: tariffId,
       }
-      await pricing(
+      await requestPricing(
         accessToken,
         items,
         deliveryDate,
@@ -60,7 +60,7 @@ describe('pricing api', () => {
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await pricing('token', [], '2019-09-10T00:00:00', '1', 'a', '1')
+      const result = await requestPricing('token', [], '2019-09-10T00:00:00', '1', 'a', '1')
       expect(result).toEqual(mockFetchResult)
     })
   })

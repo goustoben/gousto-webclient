@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import SignupLayout from 'layouts/SignupLayout'
+import { SignupLayout } from 'layouts/SignupLayout'
 import { HotjarTrigger } from 'HotjarTrigger'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { DiscountAppliedBarContainer } from 'routes/Signup/Components/DiscountAppliedBar/DiscountAppliedBarContainer'

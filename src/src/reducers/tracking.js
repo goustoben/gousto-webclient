@@ -7,7 +7,7 @@ const initialState = Immutable.fromJS({
   awc: '',
 })
 
-const tracking = {
+export const trackingReducers = {
   tracking: (state = initialState, action) => {
     switch (action.type) {
     case actionTypes.AFFILIATE_SOURCE_SET: {
@@ -28,5 +28,3 @@ const tracking = {
     }
   },
 }
-
-export default tracking

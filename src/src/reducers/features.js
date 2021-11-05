@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
-const defaultFeatures = () => ({
+export const defaultFeatures = () => ({
   /*
   * TODO: remove default features
   * once something becomes default behavior, we should update the code rather than continue to drive it by feature flags
@@ -77,9 +77,9 @@ const defaultFeatures = () => ({
   },
 })
 
-const initialState = () => Immutable.fromJS(defaultFeatures())
+export const initialState = () => Immutable.fromJS(defaultFeatures())
 
-const featureToggles = {
+export const featuresReducers = {
   features: (state = initialState(), action) => {
     switch (action.type) {
     case actionTypes.FEATURES_SET: {
@@ -97,6 +97,3 @@ const featureToggles = {
     }
   },
 }
-
-export { defaultFeatures, initialState }
-export default featureToggles

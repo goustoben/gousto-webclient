@@ -11,6 +11,7 @@ const Form = ({ children, ...props }) => (
 
 Form.propTypes = {
   children: PropTypes.node.isRequired,
+  method: PropTypes.string,
 }
 
 Form.defaultProps = {

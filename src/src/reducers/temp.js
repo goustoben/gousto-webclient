@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
-const temp = {
+export const tempReducers = {
   temp: (state = Immutable.Map({}), action) => {
     switch (action.type) {
     case actionTypes.TEMP:
@@ -15,5 +15,3 @@ const temp = {
     }
   },
 }
-
-export default temp

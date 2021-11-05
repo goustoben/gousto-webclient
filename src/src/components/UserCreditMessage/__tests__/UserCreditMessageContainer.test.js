@@ -6,7 +6,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import * as userApi from 'apis/user'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
-import featuresReducer, { initialState as featuresDefaultState } from 'reducers/features'
+import { featuresReducers, initialState as featuresDefaultState } from 'reducers/features'
 import status from 'reducers/status'
 import { UserCreditMessageContainer } from '../UserCreditMessageContainer'
 
@@ -19,7 +19,7 @@ const getStore = (enableFeature = true) => (
     combineReducers(
       {
         ...authReducer,
-        ...featuresReducer,
+        ...featuresReducers,
         ...userReducer,
         ...status,
       }

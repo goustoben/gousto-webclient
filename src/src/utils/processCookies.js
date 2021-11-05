@@ -12,7 +12,7 @@ import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
 import { initSelectedRecipeVariantAction } from 'routes/Menu/actions/menuRecipeDetails'
 import logger from 'utils/logger'
-import persist from 'actions/persist'
+import { persistActions } from 'actions/persist'
 import { get } from './cookieHelper2'
 
 const getCookieStoreValue = (cookies, key) => get(cookies, `${cookiePrefix}_${key}`)
@@ -125,9 +125,9 @@ const processCookies = (cookies, store) => {
       if (parsedJoinCookie === 'join2') {
         parsedJoinCookie = 'join'
       }
-      store.dispatch(persist.simpleHeader(parsedJoinCookie))
+      store.dispatch(persistActions.simpleHeader(parsedJoinCookie))
     } catch (error) {
-      store.dispatch(persist.simpleHeader(true))
+      store.dispatch(persistActions.simpleHeader(true))
     }
   }
 

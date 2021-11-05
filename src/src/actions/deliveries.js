@@ -151,7 +151,7 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
   dispatch(tempActions.temp('orderId', undefined))
 }
 
-export default {
+export const deliveriesActions = {
   trackDeliveryDayDropDownOpened,
   trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened,

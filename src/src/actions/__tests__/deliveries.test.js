@@ -1,5 +1,16 @@
 import Immutable from 'immutable'
-import deliveries from 'actions/deliveries'
+import {
+  trackDeliveryDayDropDownOpened,
+  trackDeliveryDayDropDownClosed,
+  trackDeliverySlotDropDownOpened,
+  trackDeliveryDayEdited,
+  trackDeliverySlotEdited,
+  trackDeliveryPreferenceModalViewed,
+  trackDeliveryPreferenceModalClosed,
+  trackDeliveryPreferenceSelected,
+  preselectFreeDeliverySlot,
+  setTempDeliveryOptions,
+} from 'actions/deliveries'
 import { actionTypes } from 'actions/actionTypes'
 import { basketSlotChange } from 'actions/basket'
 import { getSlot } from 'utils/deliveries'
@@ -34,7 +45,7 @@ describe('delivery actions', () => {
       const date = '2019-01-01'
       const dayOffset = 1
       const deliverySlotId = 'a1b2c3d4'
-      deliveries.trackDeliveryDayDropDownOpened(date, dayOffset, deliverySlotId)(dispatch)
+      trackDeliveryDayDropDownOpened(date, dayOffset, deliverySlotId)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_DAY_DROPDOWN_OPEN,
         trackingData: {
@@ -52,7 +63,7 @@ describe('delivery actions', () => {
       const date = '2019-01-02'
       const dayOffset = 2
       const deliverySlotId = 'a2b2c3d4'
-      deliveries.trackDeliveryDayDropDownClosed(date, dayOffset, deliverySlotId)(dispatch)
+      trackDeliveryDayDropDownClosed(date, dayOffset, deliverySlotId)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_DAY_DROPDOWN_CLOSED,
         trackingData: {
@@ -70,7 +81,7 @@ describe('delivery actions', () => {
       const date = '2019-01-03'
       const dayOffset = 3
       const deliverySlotId = 'a3b2c3d4'
-      deliveries.trackDeliverySlotDropDownOpened(date, dayOffset, deliverySlotId)(dispatch)
+      trackDeliverySlotDropDownOpened(date, dayOffset, deliverySlotId)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_SLOT_DROPDOWN_OPEN,
         trackingData: {
@@ -88,7 +99,7 @@ describe('delivery actions', () => {
       const date = '2019-01-04'
       const dayOffset = 4
       const deliverySlotId = 'a4b2c3d4'
-      deliveries.trackDeliveryDayEdited(date, dayOffset, deliverySlotId)(dispatch)
+      trackDeliveryDayEdited(date, dayOffset, deliverySlotId)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_DAY_SELECTION_EDITED,
         trackingData: {
@@ -106,7 +117,7 @@ describe('delivery actions', () => {
       const date = '2019-01-05'
       const dayOffset = 5
       const deliverySlotId = 'a5b2c3d4'
-      deliveries.trackDeliverySlotEdited(date, dayOffset, deliverySlotId)(dispatch)
+      trackDeliverySlotEdited(date, dayOffset, deliverySlotId)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_SLOT_SELECTION_EDITED,
         trackingData: {
@@ -124,7 +135,7 @@ describe('delivery actions', () => {
       const date = '2019-01-05'
       const dayOffset = 5
       const deliverySlotId = 'a5b2c3d4'
-      deliveries.trackDeliveryPreferenceModalViewed(date, dayOffset, deliverySlotId)(dispatch)
+      trackDeliveryPreferenceModalViewed(date, dayOffset, deliverySlotId)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_PREFERENCE_MODAL_VIEWED,
         trackingData: {
@@ -143,7 +154,7 @@ describe('delivery actions', () => {
       const dayOffset = 5
       const deliverySlotId = 'a5b2c3d4'
       const deliveryPreference = 'prefer ndd'
-      deliveries.trackDeliveryPreferenceModalClosed(date, dayOffset, deliverySlotId, deliveryPreference)(dispatch)
+      trackDeliveryPreferenceModalClosed(date, dayOffset, deliverySlotId, deliveryPreference)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_PREFERENCE_MODAL_CLOSED,
         trackingData: {
@@ -163,7 +174,7 @@ describe('delivery actions', () => {
       const dayOffset = 5
       const deliverySlotId = 'a5b2c3d4'
       const deliveryPreference = 'prefer ndd'
-      deliveries.trackDeliveryPreferenceSelected(date, dayOffset, deliverySlotId, deliveryPreference)(dispatch)
+      trackDeliveryPreferenceSelected(date, dayOffset, deliverySlotId, deliveryPreference)(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.DELIVERY_PREFERENCE_SELECTED,
         trackingData: {
@@ -188,7 +199,7 @@ describe('delivery actions', () => {
     describe('when slotId empty and slotTime has value', () => {
       test('should dispatch basketSlotChange', () => {
         getSlot.mockReturnValueOnce(Immutable.Map({ id: 'slotId' }))
-        deliveries.preselectFreeDeliverySlot(dispatch, getState)
+        preselectFreeDeliverySlot(dispatch, getState)
         expect(basketSlotChange).toHaveBeenCalledWith('slotId')
       })
     })
@@ -291,7 +302,7 @@ describe('delivery actions', () => {
         }
       })
 
-      deliveries.setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
+      setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({ key: 'slotId', type: 'TEMP', value: '123sddrdfst456' })
     })
 
@@ -329,7 +340,7 @@ describe('delivery actions', () => {
         }
       })
 
-      deliveries.setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
+      setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({ key: 'slotId', type: 'TEMP', value: '987sddrdfst456' })
     })
 
@@ -366,7 +377,7 @@ describe('delivery actions', () => {
           ]
         }
       })
-      deliveries.setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
+      setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({ key: 'slotId', type: 'TEMP', value: undefined })
     })
   })

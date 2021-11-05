@@ -1,9 +1,9 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import newsletterReducer from 'reducers/newsletter'
+import { newsletterReducers } from 'reducers/newsletter'
 
 describe('newsletter reducer', () => {
-  const { newsletterSignup } = newsletterReducer
+  const { newsletterSignup } = newsletterReducers
 
   test('should handle initial state', () => {
     const initialState = Immutable.Map({})

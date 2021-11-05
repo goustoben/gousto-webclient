@@ -100,9 +100,3 @@ export const getPreviewOrderErrorName = error => {
 
   return 'undefined-error'
 }
-
-export default {
-  formatTotalDiscounts,
-  totalPrice,
-  isValidPromoCode,
-}

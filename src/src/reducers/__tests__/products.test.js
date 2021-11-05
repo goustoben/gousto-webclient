@@ -2,13 +2,13 @@ import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
 
-import productsReducer from 'reducers/products'
+import { productsReducers } from 'reducers/products'
 
 describe('products reducer', () => {
   test('should handle initial state', () => {
     const initialState = Immutable.Map({})
     expect(
-      Immutable.is(productsReducer.products(undefined, {}), initialState),
+      Immutable.is(productsReducers.products(undefined, {}), initialState),
     ).toEqual(true)
   })
 
@@ -17,14 +17,14 @@ describe('products reducer', () => {
       1: { id: 1, title: 'product 1' },
       2: { id: 2, title: 'product 2' },
     })
-    const result = productsReducer.products(state, { type: 'unknown' })
+    const result = productsReducers.products(state, { type: 'unknown' })
 
     expect(Immutable.is(result, state)).toEqual(true)
   })
 
   describe('PRODUCTS_RECEIVE', () => {
     test('should load products into state', () => {
-      const result = productsReducer.products(Immutable.Map({}), {
+      const result = productsReducers.products(Immutable.Map({}), {
         type: actionTypes.PRODUCTS_RECEIVE,
         products: [
           { id: '1', title: 'product 1' },
@@ -74,7 +74,7 @@ describe('products reducer', () => {
         },
       ]
 
-      const result = productsReducer.products(Immutable.Map({}), {
+      const result = productsReducers.products(Immutable.Map({}), {
         type: actionTypes.PRODUCTS_RECEIVE,
         products,
         cutoffDate: undefined,
@@ -125,7 +125,7 @@ describe('products reducer', () => {
         },
       ]
 
-      const result = productsReducer.products(initialState, {
+      const result = productsReducers.products(initialState, {
         type: actionTypes.PRODUCTS_RECEIVE,
         products,
         cutoffDate: 'new cutoff date',
@@ -170,7 +170,7 @@ describe('products reducer', () => {
           },
         ]
 
-        const result = productsReducer.products(initialState, {
+        const result = productsReducers.products(initialState, {
           type: actionTypes.PRODUCTS_RECEIVE,
           products,
           cutoffDate: 'new cutoff date',
@@ -201,7 +201,7 @@ describe('products reducer', () => {
         type: actionTypes.PRODUCTS_RANDOM_RECEIVE,
         products: [{ id: '1' }, { id: '2' }],
       }
-      const result = productsReducer.randomProducts(Immutable.List([]), action)
+      const result = productsReducers.randomProducts(Immutable.List([]), action)
       const expectedState = Immutable.fromJS([{ id: '1' }, { id: '2' }])
 
       expect(Immutable.is(result, expectedState)).toEqual(true)
@@ -214,7 +214,7 @@ describe('products reducer', () => {
         type: actionTypes.PRODUCT_CATEGORIES_RECEIVE,
         categories: [{ id: '1' }, { id: '2' }],
       }
-      const result = productsReducer.productsCategories(
+      const result = productsReducers.productsCategories(
         Immutable.Map({}),
         action,
       )
@@ -233,7 +233,7 @@ describe('products reducer', () => {
         stock: { 1: 1 },
       }
       let initialState = Immutable.fromJS({ 1: 999 })
-      let result = productsReducer.productsStock(initialState, action)
+      let result = productsReducers.productsStock(initialState, action)
       let expectedState = Immutable.Map().set('1', 1000)
 
       expect(Immutable.is(result, expectedState)).toEqual(true)
@@ -243,7 +243,7 @@ describe('products reducer', () => {
         stock: { 1: -1 },
       }
       initialState = Immutable.fromJS({ 1: 999 })
-      result = productsReducer.productsStock(initialState, action)
+      result = productsReducers.productsStock(initialState, action)
       expectedState = Immutable.Map().set('1', 998)
 
       expect(Immutable.is(result, expectedState)).toEqual(true)

@@ -1,1 +1,1 @@
-export { default } from './SignupLayout'
+export { SignupLayout } from './SignupLayout'

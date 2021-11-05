@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { onEnter } from 'utils/accessibility'
 import { getDocumentHeight, getEllipse } from './helpers'
 import css from './Spotlight.css'
 
@@ -17,6 +17,8 @@ const Spotlight = ({ x, y, onClick }) => {
 
   return (
     <div
+      role="button"
+      tabIndex={0}
       data-testing="spotlight-overlay"
       className={css.spotlight}
       style={{
@@ -41,6 +43,7 @@ const Spotlight = ({ x, y, onClick }) => {
         )`,
       }}
       onClick={onClick}
+      onKeyDown={onEnter(onClick)}
     />
   )
 }

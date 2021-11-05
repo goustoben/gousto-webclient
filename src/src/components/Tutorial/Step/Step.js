@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { onEnter } from 'utils/accessibility'
 
 import Icon from 'Icon'
 import { Spotlight } from 'Spotlight'
@@ -9,20 +10,19 @@ import { isElementHidden, getSpotlightLocation, getTooltipProperties } from 'Tut
 import css from './Step.css'
 
 export class Step extends PureComponent {
-  state = {
-    x: 0,
-    y: 0,
-    style: {},
-    arrow: '',
+  constructor(props) {
+    super(props)
+    this.state = {
+      x: 0,
+      y: 0,
+      style: {},
+      arrow: '',
+    }
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.recalculateLocations)
     this.recalculateLocations()
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.recalculateLocations)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -31,9 +31,14 @@ export class Step extends PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.recalculateLocations)
+  }
+
   recalculateLocations = () => {
     const { selector, next } = this.props
-    const stepWidth = (window.innerWidth < 456) ? 200 : (window.innerWidth < 756 ? 250 : 300)
+    const fromTabletToMobile = window.innerWidth < 756 ? 250 : 300
+    const stepWidth = window.innerWidth < 456 ? 200 : fromTabletToMobile
     if (isElementHidden(selector)) {
       next()
 
@@ -65,7 +70,7 @@ export class Step extends PureComponent {
         <div className={css.tooltip} style={style}>
           <Tooltip arrow={arrow} onClose={onClose}>
             {children}
-            <div className={css.cta} onClick={next} data-testing="tutorialStepCta">
+            <div role="button" tabIndex={0} className={css.cta} onClick={next} onKeyDown={onEnter(next)} data-testing="tutorialStepCta">
               {(last) ? (
                 <p>OK</p>
               ) : (

@@ -33,9 +33,3 @@ export const trackEventWithData = getTrackingData => (action, state, prevState, 
 
   sendTrackingData({ ...data, pathname })
 }
-
-export default {
-  sendTrackingData,
-  getPathname,
-  trackEventWithData,
-}

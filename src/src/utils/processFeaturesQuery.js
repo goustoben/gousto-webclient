@@ -1,7 +1,7 @@
 import { featuresSet } from 'actions/features'
 
 const getFeatureValues = (query, keyword = 'features') => {
-  const regex = new RegExp(`${keyword}\\[([\\w-]+)\]`)
+  const regex = new RegExp(`${keyword}\\[([\\w-]+)]`)
 
   return Object.keys(query)
     .filter(key => regex.test(key))

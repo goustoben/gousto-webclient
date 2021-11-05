@@ -2,7 +2,7 @@ import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
-function pricing(
+export function requestPricing(
   accessToken,
   items,
   deliveryDate,
@@ -22,5 +22,3 @@ function pricing(
     delivery_tariff_id: deliveryTariffId
   }, 'GET')
 }
-
-export default pricing

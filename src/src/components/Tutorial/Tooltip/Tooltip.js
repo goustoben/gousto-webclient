@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { onEnter } from 'utils/accessibility'
 
 import Icon from 'Icon'
 import { Arrow } from './Arrow'
@@ -10,7 +11,7 @@ const Tooltip = ({ arrow, children, style, arrowStyle, contentStyle, onClose }) 
   <div className={css.container} style={style}>
     <Arrow positionY="top" position={arrow} />
     {(onClose) ? (
-      <div className={css.close} onClick={onClose}>
+      <div role="button" tabIndex={0} className={css.close} onClick={onClose} onKeyDown={onEnter(onClose)}>
         <Icon name="fa-times" />
       </div>
     ) : null}

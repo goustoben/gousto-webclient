@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 
-const newsletterSignup = {
+export const newsletterReducers = {
   newsletterSignup: (state = Immutable.Map({ }), action) => {
     switch (action.type) {
     case actionTypes.NEWSLETTER_SIGNUP_PENDING:
@@ -15,5 +15,3 @@ const newsletterSignup = {
     }
   },
 }
-
-export default newsletterSignup

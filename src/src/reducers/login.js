@@ -6,7 +6,7 @@ export const initialState = () => Immutable.fromJS({
   helpPreLogin: false,
 })
 
-const login = {
+export const loginReducers = {
   loginVisibility: (state, action) => {
     if (!state) {
       return initialState()
@@ -26,5 +26,3 @@ const login = {
     }
   },
 }
-
-export default login

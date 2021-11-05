@@ -1,13 +1,13 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import temp from 'reducers/temp'
+import { tempReducers } from 'reducers/temp'
 
 describe('temp reducer', () => {
   test('should handle initial state', () => {
     const state = undefined
     const action = {}
     const expected = Immutable.Map({})
-    const result = temp.temp(state, action)
+    const result = tempReducers.temp(state, action)
     expect(Immutable.is(expected, result)).toEqual(true)
   })
 
@@ -15,7 +15,7 @@ describe('temp reducer', () => {
     const state = undefined
     const action = { type: 'unknown' }
     const expected = Immutable.Map({})
-    const result = temp.temp(state, action)
+    const result = tempReducers.temp(state, action)
     expect(Immutable.is(expected, result)).toEqual(true)
   })
 
@@ -29,7 +29,7 @@ describe('temp reducer', () => {
     const expected = Immutable.Map({
       something: 'something else',
     })
-    const result = temp.temp(state, action)
+    const result = tempReducers.temp(state, action)
     expect(Immutable.is(expected, result)).toEqual(true)
   })
 
@@ -46,7 +46,7 @@ describe('temp reducer', () => {
       something: 'something else',
       somethingMore: 'something more else',
     })
-    const result = temp.temp(state, action)
+    const result = tempReducers.temp(state, action)
     expect(Immutable.is(expected, result)).toEqual(true)
   })
 })
