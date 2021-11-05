@@ -14,7 +14,7 @@ const FullPage = ({ children, route }) => (
 )
 
 FullPage.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   route: PropTypes.object,
 }
 

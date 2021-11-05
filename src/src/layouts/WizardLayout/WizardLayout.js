@@ -4,7 +4,7 @@ import { Header } from 'Header'
 import css from './WizardLayout.css'
 
 const propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 class WizardLayout extends React.PureComponent {

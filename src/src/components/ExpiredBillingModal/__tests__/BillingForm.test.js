@@ -64,11 +64,11 @@ describe('BillingForm submit button', () => {
 describe('BillingForm validateFormSubmit', () => {
   test('should return false if a field is missing', () => {
     const formInput = {
-      payment_type: 'CARD',
-      card_holder: null,
-      card_number: '23497563',
-      card_type: 'VISA',
-      card_cvv2: '123',
+      paymentType: 'CARD',
+      cardHolder: null,
+      cardNumber: '23497563',
+      cardType: 'VISA',
+      cardCvv2: '123',
       formCardExpiryYear: '',
       formCardExpiryMonth: '',
     }
@@ -78,11 +78,11 @@ describe('BillingForm validateFormSubmit', () => {
 
   test('should return false if CVV2 is not 3 characters', () => {
     const formInput = {
-      payment_type: 'CARD',
-      card_holder: 'Mr Nullington',
-      card_number: '23497563',
-      card_type: 'VISA',
-      card_cvv2: '1',
+      paymentType: 'CARD',
+      cardHolder: 'Mr Nullington',
+      cardNumber: '23497563',
+      cardType: 'VISA',
+      cardCvv2: '1',
       formCardExpiryYear: '12',
       formCardExpiryMonth: '33',
     }
@@ -92,11 +92,11 @@ describe('BillingForm validateFormSubmit', () => {
 
   test('should return true if all fields are present', () => {
     const formInput = {
-      payment_type: 'CARD',
-      card_holder: 'Mr Nullington',
-      card_number: '23497563',
-      card_type: 'VISA',
-      card_cvv2: '123',
+      paymentType: 'CARD',
+      cardHolder: 'Mr Nullington',
+      cardNumber: '23497563',
+      cardType: 'VISA',
+      cardCvv2: '123',
       formCardExpiryYear: '12',
       formCardExpiryMonth: '33',
     }
@@ -135,40 +135,40 @@ describe('BillingForm handleInputChange', () => {
     wrapper = shallow(<BillingForm submitCardDetails={submitCardDetails} />)
   })
   test('should store the value in state against the label given', () => {
-    wrapper.instance().handleInputChange('payment_type', 'CARD')
-    expect(wrapper.state('payment_type')).toEqual('CARD')
+    wrapper.instance().handleInputChange('paymentType', 'CARD')
+    expect(wrapper.state('paymentType')).toEqual('CARD')
   })
   test('should store the value in state against the label given', () => {
-    wrapper.instance().handleInputChange('card_type', 'VISA')
-    expect(wrapper.state('card_type')).toEqual('VISA')
+    wrapper.instance().handleInputChange('cardType', 'VISA')
+    expect(wrapper.state('cardType')).toEqual('VISA')
   })
   test('should store the value in state against the label given', () => {
-    wrapper.instance().handleInputChange('card_cvv2', '123')
-    expect(wrapper.state('card_cvv2')).toEqual('123')
+    wrapper.instance().handleInputChange('cardCvv2', '123')
+    expect(wrapper.state('cardCvv2')).toEqual('123')
   })
   test('should autodetect card_type when card_number is given', () => {
-    wrapper.instance().handleInputChange('card_number', '4929 0000 0002 2')
-    expect(wrapper.state('card_type')).toEqual('VISA')
+    wrapper.instance().handleInputChange('cardNumber', '4929 0000 0002 2')
+    expect(wrapper.state('cardType')).toEqual('VISA')
   })
   test('should remove non digits when card_number is given', () => {
-    wrapper.instance().handleInputChange('card_number', '4929 0000 0002 2')
-    expect(wrapper.state('card_number')).toEqual('4929000000022')
+    wrapper.instance().handleInputChange('cardNumber', '4929 0000 0002 2')
+    expect(wrapper.state('cardNumber')).toEqual('4929000000022')
   })
   test('should construct card_expires when month and/or year are entered', () => {
     wrapper.instance().handleInputChange('formCardExpiryYear', '11')
     expect(wrapper.state('formCardExpiryYear')).toEqual('11')
-    expect(wrapper.state('card_expires')).toEqual('11')
+    expect(wrapper.state('cardExpires')).toEqual('11')
     wrapper.instance().handleInputChange('formCardExpiryMonth', '04')
     expect(wrapper.state('formCardExpiryMonth')).toEqual('04')
-    expect(wrapper.state('card_expires')).toEqual('0411')
+    expect(wrapper.state('cardExpires')).toEqual('0411')
   })
   test('should construct card_expires when month and/or year are entered', () => {
     wrapper.instance().handleInputChange('formCardExpiryMonth', '11')
     expect(wrapper.state('formCardExpiryMonth')).toEqual('11')
-    expect(wrapper.state('card_expires')).toEqual('11')
+    expect(wrapper.state('cardExpires')).toEqual('11')
     wrapper.instance().handleInputChange('formCardExpiryYear', '04')
     expect(wrapper.state('formCardExpiryYear')).toEqual('04')
-    expect(wrapper.state('card_expires')).toEqual('1104')
+    expect(wrapper.state('cardExpires')).toEqual('1104')
   })
 })
 

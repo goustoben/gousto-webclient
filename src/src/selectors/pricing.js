@@ -19,7 +19,7 @@ export const areExtrasIncluded = createSelector(
   (surchargeTotal, deliveryTotal, grossTotal, recipeTotal) => {
     const isSurcharge = surchargeTotal && surchargeTotal !== '0.00'
     const isDeliveryCost = deliveryTotal && deliveryTotal !== '0.00'
-    const isOtherCost = grossTotal != recipeTotal
+    const isOtherCost = grossTotal !== recipeTotal
 
     return isSurcharge || isDeliveryCost || isOtherCost
   }

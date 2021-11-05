@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import { capitalizeFirstLetter } from 'utils/text'
+import { onEnter } from 'utils/accessibility'
 import css from './Item.css'
 
 const isFunction = (func) => (typeof func === 'function')
@@ -59,7 +60,15 @@ const Item = ({
         </p>
       )}
     </div>
-    {(available && onRemove) ? <span className={css.minusIcon} onClick={onRemove} /> : null}
+    {(available && onRemove) ? (
+      <span
+        className={css.minusIcon}
+        onClick={onRemove}
+        onKeyDown={onEnter(onRemove)}
+        role="button"
+        tabIndex="0"
+      />
+    ) : null}
   </div>
 )
 

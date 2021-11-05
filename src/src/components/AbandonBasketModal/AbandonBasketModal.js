@@ -12,7 +12,7 @@ import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
-import { loadMenuServiceDataIfDeepLinked } from '../../routes/Menu/fetchData/menuService'
+import { loadMenuServiceDataIfDeepLinked } from 'routes/Menu/fetchData/menuService'
 import css from './AbandonBasketModal.css'
 
 const propTypes = {
@@ -66,8 +66,11 @@ class AbandonBasketModal extends PureComponent {
     return Promise.all(promises)
   }
 
-  state = {
-    showModal: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      showModal: false
+    }
   }
 
   async componentDidMount() {

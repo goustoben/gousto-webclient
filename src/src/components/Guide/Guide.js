@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { P } from 'Page/Elements'
-import { ModuleTitle } from '../../routes/Home/ModuleTitle'
+import { ModuleTitle } from 'routes/Home/ModuleTitle'
 import css from './Guide.css'
 import { Panel } from './Panel'
 
@@ -10,9 +10,9 @@ const Guide = ({ steps, header, description, graphicType }) => (
     <ModuleTitle title={header} />
     <P className={css.description}>{description}</P>
     <div className={css.panels}>
-      {steps.map((step, index) => (
+      {steps.map((step) => (
         <Panel
-          key={index}
+          key={step.title}
           path={step.path}
           graphicType={graphicType}
           title={step.title}
@@ -26,7 +26,11 @@ const Guide = ({ steps, header, description, graphicType }) => (
 Guide.propTypes = {
   header: PropTypes.string,
   description: PropTypes.node,
-  steps: PropTypes.array,
+  steps: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    path: PropTypes.string,
+    description: PropTypes.string,
+  })),
   graphicType: PropTypes.oneOf(['img', 'svg']),
 }
 

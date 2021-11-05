@@ -19,7 +19,7 @@ class NewsletterSignUp extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const input = this.refs.email
+    const input = this.emailInputRef
     const { signup, onSignup } = this.props
     const { email } = this.state
     if (!signup.get('pending') && input && input.checkValidity()) {
@@ -39,7 +39,16 @@ class NewsletterSignUp extends React.Component {
             <span className={css.tasty}>Tasty Newsletter:</span>
           </div>
           <div className={css.inputContainer}>
-            <input type="email" name="email" className={css.email} placeholder="Enter email address" required autoComplete="off" onChange={this.handleChange} ref="email" />
+            <input
+              type="email"
+              name="email"
+              className={css.email}
+              placeholder="Enter email address"
+              required
+              autoComplete="off"
+              onChange={this.handleChange}
+              ref={(ref => { this.emailInputRef = ref })}
+            />
           </div>
           <div className={css.buttonContainer}>
             <Button pending={signup.get('pending')}>

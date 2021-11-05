@@ -6,12 +6,16 @@ import Svg from 'Svg'
 import { actionTypes } from 'actions/actionTypes'
 import { UserRAFLink } from 'components/UserRAFLink'
 import ReferAFriend from 'components/ReferAFriend'
+import { onEnter } from 'utils/accessibility'
 import { LinkRow } from './LinkRow'
 import css from './SocialShareSheet.css'
 import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferralLink, SOCIAL_TYPES } from '../socialReferralHelper'
 
 class SocialShareSheet extends React.PureComponent {
-  state = { isEmailFormOpen: false }
+  constructor(props) {
+    super(props)
+    this.state = { isEmailFormOpen: false }
+  }
 
   toggleEmailModal = () => {
     const { trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare } = this.props
@@ -47,7 +51,7 @@ class SocialShareSheet extends React.PureComponent {
         </div>
 
         <div className={`${css.row} ${isEmailFormOpen && css.emailFormOpen}`}>
-          <div className={css.emailHeader} onClick={this.toggleEmailModal}>
+          <div role="button" tabIndex={0} className={css.emailHeader} onClick={this.toggleEmailModal} onKeyDown={onEnter(this.toggleEmailModal)}>
             <div className={css.iconWrapper}>
               <Svg fileName="icon-email-colour" className={css.icon} />
             </div>

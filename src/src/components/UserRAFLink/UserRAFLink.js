@@ -7,11 +7,14 @@ import { getReferralLink, SOCIAL_TYPES } from 'components/SocialLinks/socialRefe
 import css from './UserRAFLink.css'
 
 class UserRAFLink extends React.PureComponent {
-  state = { copiedMessageVisible: false }
-
   static fetchData = async ({ store }) => Promise.all([
     store.dispatch(actions.userLoadReferralDetails()),
   ])
+
+  constructor(props) {
+    super(props)
+    this.state = { copiedMessageVisible: false }
+  }
 
   componentWillUnmount() {
     clearTimeout(this.timeout)

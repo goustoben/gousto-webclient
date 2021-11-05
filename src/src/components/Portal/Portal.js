@@ -14,6 +14,18 @@ export class Portal extends Component {
     this.close()
   }
 
+  close() {
+    const { node } = this
+
+    if (node) {
+      unmountComponentAtNode(node)
+      document.body.removeChild(node)
+      if (this.node) {
+        this.node = null
+      }
+    }
+  }
+
   renderWrapper() {
     const { children } = this.props
     const { node } = this
@@ -24,18 +36,6 @@ export class Portal extends Component {
       document.body.appendChild(this.node)
 
       unstable_renderSubtreeIntoContainer(this, children, this.node)
-    }
-  }
-
-  close() {
-    const { node } = this
-
-    if (node) {
-      unmountComponentAtNode(node)
-      document.body.removeChild(node)
-      if (this.node) {
-        this.node = null
-      }
     }
   }
 

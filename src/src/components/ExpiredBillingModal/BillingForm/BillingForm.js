@@ -22,12 +22,12 @@ const divisor = String.fromCharCode(47)
 class BillingForm extends React.PureComponent {
   static validateFormSubmit(formInput) {
     return !!(
-      formInput.payment_type
-      && formInput.card_holder
-      && formInput.card_number
-      && formInput.card_type
-      && formInput.card_cvv2
-      && formInput.card_cvv2.length === 3
+      formInput.paymentType
+      && formInput.cardHolder
+      && formInput.cardNumber
+      && formInput.cardType
+      && formInput.cardCvv2
+      && formInput.cardCvv2.length === 3
       && formInput.formCardExpiryYear
       && formInput.formCardExpiryMonth
     )
@@ -36,14 +36,14 @@ class BillingForm extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      payment_type: 'card',
-      card_holder: '',
-      card_number: '',
-      card_type: '',
-      card_cvv2: '',
+      paymentType: 'card',
+      cardHolder: '',
+      cardNumber: '',
+      cardType: '',
+      cardCvv2: '',
       formCardExpiryYear: '',
       formCardExpiryMonth: '',
-      card_expires: '',
+      cardExpires: '',
       cardNameError: false,
       cardNumberError: false,
       cardTypeError: false,
@@ -57,35 +57,33 @@ class BillingForm extends React.PureComponent {
     const { formCardExpiryMonth, formCardExpiryYear } = this.state
 
     let onlyDigits
-    if (label === 'card_number' || label === 'card_cvv2') {
+    if (label === 'cardNumber' || label === 'cardCvv2') {
       onlyDigits = value.replace(/[^\d]/g, '')
     }
-    if (label === 'card_cvv2') {
+    if (label === 'cardCvv2') {
       return this.setState({ [label]: onlyDigits.substring(0, 3) })
     }
-    if (label === 'card_number') {
+    if (label === 'cardNumber') {
       this.setState({ [label]: onlyDigits })
       const cardType = inferCardType(onlyDigits)
       if (checkoutConfig.supportedCardTypes.indexOf(cardType) !== -1 || cardType === '') {
-        return this.setState({ card_type: cardType })
+        return this.setState({ cardType })
       }
     }
     if (label === 'formCardExpiryYear') {
       const expiry = formCardExpiryMonth.concat(value)
-      this.setState({ card_expires: expiry })
+      this.setState({ cardExpires: expiry })
     } else if (label === 'formCardExpiryMonth') {
       const expiry = value.concat(formCardExpiryYear)
-      this.setState({ card_expires: expiry })
+      this.setState({ cardExpires: expiry })
     }
 
     return this.setState({ [label]: value })
   }
 
-  paymentOptions() {
-    return checkoutConfig.cardTypeOptions.map((option) =>
-      ({ ...option, subLabel: (<span className={css[option.icon]} aria-hidden="true" />)})
-    )
-  }
+  paymentOptions = () => checkoutConfig.cardTypeOptions.map((option) =>
+    ({ ...option, subLabel: (<span className={css[option.icon]} aria-hidden="true" />)})
+  )
 
   validateOnBlur(label, val) {
     if (label === 'cardNumberError' && val) {
@@ -104,16 +102,16 @@ class BillingForm extends React.PureComponent {
   render() {
     const { isPosting, submitCardDetails } = this.props
     const {
-      card_holder,
+      cardHolder,
       cardNameError,
 
-      card_number,
+      cardNumber,
       cardNumberError,
 
-      card_type,
+      cardType,
       cardTypeError,
 
-      card_cvv2,
+      cardCvv2,
       securityCodeError,
 
       formCardExpiryMonth,
@@ -140,9 +138,9 @@ class BillingForm extends React.PureComponent {
                 <Input
                   name="formCardName"
                   type="text"
-                  value={card_holder}
-                  onChange={(e) => this.handleInputChange('card_holder', e)}
-                  onBlur={() => this.validateOnBlur('cardNameError', card_holder)}
+                  value={cardHolder}
+                  onChange={(e) => this.handleInputChange('cardHolder', e)}
+                  onBlur={() => this.validateOnBlur('cardNameError', cardHolder)}
                 />
                 {cardNameError ? <p className={css.errorMessage}>Name is required</p> : null}
               </div>
@@ -152,9 +150,9 @@ class BillingForm extends React.PureComponent {
                 <p className={css.inputTitle}>Card number</p>
                 <Input
                   name="formCardNumber"
-                  value={card_number}
-                  onChange={(e) => this.handleInputChange('card_number', e)}
-                  onBlur={() => this.validateOnBlur('cardNumberError', card_number)}
+                  value={cardNumber}
+                  onChange={(e) => this.handleInputChange('cardNumber', e)}
+                  onBlur={() => this.validateOnBlur('cardNumberError', cardNumber)}
                 />
                 {cardNumberError ? <p className={css.errorMessage}>Card number should be at least 10 digits</p> : null}
               </div>
@@ -163,9 +161,9 @@ class BillingForm extends React.PureComponent {
                 <Dropdown
                   name="formCardType"
                   options={this.paymentOptions()}
-                  value={card_type}
-                  onChange={(e) => this.handleInputChange('card_type', e)}
-                  onBlur={() => this.validateOnBlur('cardTypeError', card_type)}
+                  value={cardType}
+                  onChange={(e) => this.handleInputChange('cardType', e)}
+                  onBlur={() => this.validateOnBlur('cardTypeError', cardType)}
                 />
                 {cardTypeError ? <p className={css.errorMessage}>Card type is required</p> : null}
               </div>
@@ -176,9 +174,9 @@ class BillingForm extends React.PureComponent {
                 <div className={css.row}>
                   <Input
                     name="formSecurityCode"
-                    value={card_cvv2}
-                    onChange={(e) => this.handleInputChange('card_cvv2', e)}
-                    onBlur={() => this.validateOnBlur('securityCodeError', card_cvv2)}
+                    value={cardCvv2}
+                    onChange={(e) => this.handleInputChange('cardCvv2', e)}
+                    onBlur={() => this.validateOnBlur('securityCodeError', cardCvv2)}
                   />
                   <div className={css.securityCodeTooltip}>
                     <CheckoutTooltip version="Desktop">

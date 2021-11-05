@@ -5,8 +5,8 @@ import css from './Attributes.css'
 
 const Attributes = ({ attributes }) => (
   <ul className={css.list}>
-    {attributes.map((attribute, i) => (
-      <li key={i} className={css.listItem}>
+    {attributes.map((attribute) => (
+      <li key={attribute.get('title')} className={css.listItem}>
         <span className={css.textBold}>
           {attribute.get('title')}
           :
