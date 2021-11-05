@@ -74,7 +74,7 @@ describe('signup actions', () => {
     })
   })
 
-  describe('signupChangePostcode', async () => {
+  describe('signupChangePostcode', () => {
     let postcode
     let nextStepName
 

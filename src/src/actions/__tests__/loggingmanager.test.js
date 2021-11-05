@@ -45,7 +45,7 @@ describe('trackUserFreeFoodPageView', () => {
     triggerLoggingManagerEvent.mockReset()
   })
 
-  describe('when the free food page is viewed', async () => {
+  describe('when the free food page is viewed', () => {
     beforeEach(async () => {
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -79,7 +79,7 @@ describe('trackUserLogin', () => {
   const browser = 'mobile'
   const eventName = 'user-loggedin'
 
-  describe('when the user is authed', async () => {
+  describe('when the user is authed', () => {
     beforeEach(async () => {
       const state = {
         request: Immutable.fromJS({
@@ -114,7 +114,7 @@ describe('trackUserLogin', () => {
     })
   })
 
-  describe('when the user is NOT authed', async () => {
+  describe('when the user is NOT authed', () => {
     beforeEach(async () => {
       const state = {
         request: Immutable.fromJS({
@@ -482,7 +482,7 @@ describe('trackUserFreeFoodLinkShare', () => {
     triggerLoggingManagerEvent.mockReset()
   })
 
-  describe('when the free food link is clicked', async () => {
+  describe('when the free food link is clicked', () => {
     beforeEach(async () => {
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)

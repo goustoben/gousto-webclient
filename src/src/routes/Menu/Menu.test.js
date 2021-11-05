@@ -279,7 +279,6 @@ describe('Menu', () => {
     let wrapper
 
     beforeEach(async () => {
-      window.location.assign = jest.fn()
       wrapper = await mount(
         <Menu
           {...requiredProps}

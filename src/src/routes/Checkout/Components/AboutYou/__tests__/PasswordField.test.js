@@ -4,7 +4,7 @@ import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import { PasswordField } from '../PasswordField/PasswordField'
 
-jest.useFakeTimers()
+jest.useFakeTimers('legacy')
 
 describe('Given PasswordField component', () => {
   let wrapper

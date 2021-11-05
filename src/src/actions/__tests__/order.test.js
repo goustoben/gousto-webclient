@@ -35,6 +35,7 @@ import { safeJestMock } from '../../_testing/mocks'
 import * as SidesActions from '../../routes/Menu/actions/sides'
 
 import { flushPromises } from '../../_testing/utils'
+import { mockWindowLocationAssign } from '../../../jest/mockWindowLocationAssign'
 
 jest.mock('../../routes/Account/apis/subscription')
 jest.mock('apis/user')
@@ -364,8 +365,15 @@ describe('order actions', () => {
       disallowRedirectToSummary: true,
       recipes: ['recipe-id-1', 'recipe-id-2'],
     }
+    let mockAssign
+    const { location } = window
 
-    window.location.assign = jest.fn()
+    beforeEach(() => {
+      mockAssign = mockWindowLocationAssign()
+    })
+    afterEach(() => {
+      window.location = location
+    })
 
     test('api is being called correctly', async () => {
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
@@ -480,7 +488,7 @@ describe('order actions', () => {
 
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
-      expect(window.location.assign).toHaveBeenCalledTimes(0)
+      expect(mockAssign).toHaveBeenCalledTimes(0)
     })
   })
 

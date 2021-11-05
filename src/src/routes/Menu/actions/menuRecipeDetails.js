@@ -46,7 +46,7 @@ export const checkQueryParams = () => (dispatch, getState) => {
     delete queryParams.recipeDetailId
     const newLoc = { ...prevLoc, query: queryParams }
     dispatch(push(newLoc))
-    dispatch(exports.showDetailRecipe(recipeId))
+    dispatch(showDetailRecipe(recipeId))
   }
 }
 export const initSelectedRecipeVariantAction = (selectedRecipeVariants) => ({

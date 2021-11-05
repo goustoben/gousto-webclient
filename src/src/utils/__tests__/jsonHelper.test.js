@@ -28,7 +28,6 @@ describe('processJSON', () => {
     }
   })
 
-  // TODO: fix processJSON to have expected behavior
   test('handle errors response as an array', async () => {
     const serverResponse = {
       error: 'Validation error',
@@ -41,13 +40,13 @@ describe('processJSON', () => {
       ],
     }
 
-    const rejectionObj = {code: '401', errors: [{error: '401', message: 'Auth Exception!'}], message: ', 401 - Auth Exception!'}
-
-    try {
-      await processJSON([serverResponse, 500])
-    } catch (e) {
-      expect(e).toEqual(rejectionObj)
+    const expectation = {
+      code: '401',
+      errors: [{ error: '401', message: 'Auth Exception!' }],
+      message: ', 401 - Auth Exception!',
     }
+    const actual = processJSON([serverResponse, 500])
+    await expect(actual).rejects.toEqual(expectation)
   })
 
   // TODO: fix processJSON to have expected behavior
@@ -80,16 +79,19 @@ describe('parseObjectKeysToCamelCase', () => {
 
   describe('When parameter is array of objects', () => {
     beforeEach(() => {
-      objectToBeParsed = [{
-        property_one: 'test1',
-        property_two: 'test2'
-      }]
+      objectToBeParsed = [
+        {
+          property_one: 'test1',
+          property_two: 'test2',
+        },
+      ]
     })
     test('then should return the right format', () => {
       const expectedResult = {
         0: {
           propertyOne: 'test1',
-          propertyTwo: 'test2'}
+          propertyTwo: 'test2',
+        },
       }
       expect(parseObjectKeysToCamelCase(objectToBeParsed)).toEqual(expectedResult)
     })
@@ -100,22 +102,24 @@ describe('parseObjectKeysToCamelCase', () => {
       objectToBeParsed = {
         first_prop: {
           property_one: 'test1',
-          property_two: 'test2'
+          property_two: 'test2',
         },
         second_prop: {
           property_one: 'test3',
-          property_two: 'test4'
-        }
+          property_two: 'test4',
+        },
       }
     })
     test('then should return the right format', () => {
       const expectedResult = {
         firstProp: {
           propertyOne: 'test1',
-          propertyTwo: 'test2'},
+          propertyTwo: 'test2',
+        },
         secondProp: {
           propertyOne: 'test3',
-          propertyTwo: 'test4'}
+          propertyTwo: 'test4',
+        },
       }
       expect(parseObjectKeysToCamelCase(objectToBeParsed)).toEqual(expectedResult)
     })
@@ -123,16 +127,19 @@ describe('parseObjectKeysToCamelCase', () => {
 
   describe('When parameter has digits in the keys', () => {
     beforeEach(() => {
-      objectToBeParsed = [{
-        property_1: 'test1',
-        property_2: 'test2'
-      }]
+      objectToBeParsed = [
+        {
+          property_1: 'test1',
+          property_2: 'test2',
+        },
+      ]
     })
     test('then should return the right format', () => {
       const expectedResult = {
         0: {
           property1: 'test1',
-          property2: 'test2'}
+          property2: 'test2',
+        },
       }
       expect(parseObjectKeysToCamelCase(objectToBeParsed)).toEqual(expectedResult)
     })

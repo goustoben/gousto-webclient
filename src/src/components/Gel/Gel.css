@@ -1,13 +1,6 @@
 @value White, Bronze, Black, Blackberry, Pomegranate, Duckegg from 'styles/colors.css';
 @value ScreenMDMin from 'styles/screenSizes.css';
 
-.gel {
-	position: absolute;
-	border-radius: 100%;
-	transform: translate(-50%, -50%);
-	text-align: center;
-}
-
 .white {
 	background: White;
 }
@@ -60,7 +53,7 @@
 	@media ScreenMDMin {
 		height: 120px;
 		width: 120px;
-		padding: 14px;		
+		padding: 14px;
 	}
 }
 
