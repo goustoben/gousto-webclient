@@ -19,22 +19,19 @@ class Buttons extends React.Component {
     const { view, surchargePerPortion } = this.props
     const viewsToExclude = config.recipeDetailViews
 
-    const shouldApplyClass = Boolean(
-      surchargePerPortion
-      && !viewsToExclude.includes(view)
-    )
-    const otherClassNames = otherClasses.map(name => css[name])
+    const shouldApplyClass = Boolean(surchargePerPortion && !viewsToExclude.includes(view))
+    const otherClassNames = otherClasses.map((name) => css[name])
 
-    return classnames(
-      { [css[className]]: shouldApplyClass },
-      ...otherClassNames
-    )
+    return classnames({ [css[className]]: shouldApplyClass }, ...otherClassNames)
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
     const { numPortions, qty, surchargePerPortion, buttonText } = this.props
     const { tooltipVisible } = this.state
-    const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected', 'sentenceCaseSegment')
+    const segmentSelectedClass = this.getSurchargeGridClass(
+      'segmentSelected',
+      'sentenceCaseSegment'
+    )
 
     if (qty > 0) {
       const totalQty = qty * numPortions
@@ -42,27 +39,13 @@ class Buttons extends React.Component {
       const textContent = surchargePerPortion ? ' Added' : defaultContent
 
       return [
-        <Segment
-          key={0}
-          onClick={this.handleRemove}
-          size="small"
-          className={segmentSelectedClass}
-        >
+        <Segment key={0} onClick={this.handleRemove} size="small" className={segmentSelectedClass}>
           <Control placement="left">-</Control>
         </Segment>,
-        <Segment
-          fill={false}
-          key={1}
-          size="large"
-          className={segmentSelectedClass}
-        >
+        <Segment fill={false} key={1} size="large" className={segmentSelectedClass}>
           {`${totalQty}${textContent}`}
           {surchargePerPortion && (
-            <div
-              className={
-                this.getSurchargeGridClass('surchargeHidden', 'surcharge')
-              }
-            >
+            <div className={this.getSurchargeGridClass('surchargeHidden', 'surcharge')}>
               <Surcharge surcharge={surchargePerPortion} />
             </div>
           )}
@@ -109,11 +92,7 @@ class Buttons extends React.Component {
         >
           {buttonText}
           {surchargePerPortion && (
-            <div
-              className={
-                this.getSurchargeGridClass('surchargeWrapped', 'surcharge')
-              }
-            >
+            <div className={this.getSurchargeGridClass('surchargeWrapped', 'surcharge')}>
               <Surcharge surcharge={surchargePerPortion} />
             </div>
           )}
@@ -149,7 +128,9 @@ class Buttons extends React.Component {
       }
     } else if (config.recipeDetailViews.includes(view)) {
       menuRecipeDetailVisibilityChange()
-      setTimeout(() => { menuBrowseCTAVisibilityChange(true) }, 500)
+      setTimeout(() => {
+        menuBrowseCTAVisibilityChange(true)
+      }, 500)
     } else {
       menuBrowseCTAVisibilityChange(true)
     }
@@ -198,23 +179,17 @@ class Buttons extends React.Component {
     if (isOutOfStock) {
       tooltipMessage = 'You got the last one'
     } else if (limitReached) {
-      tooltipMessage = 'You\'ve run out of space in your box!'
+      tooltipMessage = "You've run out of space in your box!"
     }
 
     return (
       <Button
         fill={false}
         className={css.btnWrapper}
-        data-testing={
-          disabled ? 'menuRecipeAddDisabled' : dataTesting
-        }
+        data-testing={disabled ? 'menuRecipeAddDisabled' : dataTesting}
         width="full"
       >
-        {this.getSegments(
-          tooltipMessage,
-          css.tooltipMobileGrid,
-          disabled
-        )}
+        {this.getSegments(tooltipMessage, css.tooltipMobileGrid, disabled)}
       </Button>
     )
   }
@@ -243,7 +218,7 @@ Buttons.propTypes = {
 }
 
 Buttons.defaultProps = {
-  buttonText: 'Add recipe',
+  buttonText: 'Add nourishment',
   basketPostcode: '',
   isOutOfStock: false,
   surchargePerPortion: null,

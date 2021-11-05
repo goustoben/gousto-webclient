@@ -20,11 +20,8 @@ import { getPreviewMenuDateForCutoff } from '../selectors/menuService'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 import { sendClientMetric } from '../apis/clientMetrics'
 
-const requiresMenuRecipesClear = (state, orderId) => (
-  orderId
-    && getIsAuthenticated(state)
-    && state.basket.get('recipes').size
-)
+const requiresMenuRecipesClear = (state, orderId) =>
+  orderId && getIsAuthenticated(state) && state.basket.get('recipes').size
 
 const chooseFirstDate = () => async (dispatch, getState) => {
   const isAuthenticated = getIsAuthenticated(getState())
@@ -96,7 +93,14 @@ const loadOrder = (orderId) => async (dispatch, getState) => {
       logger.notice({ message: `Unauthenticated user trying to edit: ${orderId}` })
     }
 
-    await dispatch(actions.redirect(`/menu?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}/menu/${orderId}`)}#login`, true))
+    await dispatch(
+      actions.redirect(
+        `/menu?target=${encodeURIComponent(
+          `${__CLIENT_PROTOCOL__}://${__DOMAIN__}/menu/${orderId}`
+        )}#login`,
+        true
+      )
+    )
   }
 }
 
@@ -106,19 +110,18 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
   if (getState().basket.get('orderId')) {
     const shippingAddresses = getState().user.get('shippingAddresses')
 
-    const addressToSelect = (
-      shippingAddresses.find(address => address.shippingDefault === true)
-      || shippingAddresses.first()
-    )
+    const addressToSelect =
+      shippingAddresses.find((address) => address.shippingDefault === true) ||
+      shippingAddresses.first()
 
     await dispatch(actions.basketReset(addressToSelect))
   }
 
   if (
-    query.day_id
-    || query.slot_id
-    || getBasketDate(getState())
-    || getState().basket.get('slotId')
+    query.day_id ||
+    query.slot_id ||
+    getBasketDate(getState()) ||
+    getState().basket.get('slotId')
   ) {
     try {
       await dispatch(actions.menuLoadDays())
@@ -162,25 +165,28 @@ const selectCollectionFromQuery = (query) => (dispatch, getState) => {
 }
 
 const shouldFetchData = (state, params, force, userMenuVariant) => {
-  const {menuRecipes} = state
-  const {menuCollections} = state
-  const threshold = (__DEV__) ? 4 : 8
+  const { menuRecipes } = state
+  const { menuCollections } = state
+  const threshold = __DEV__ ? 4 : 8
   const stale = moment(state.menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
   const requiresClear = requiresMenuRecipesClear(state, params.orderId)
   const isAccessTokenDifferent = getMenuAccessToken(state) !== getAccessToken(state)
-  const isMenuVariantDifferent = userMenuVariant && getMenuFetchVariant(state) !== getUserMenuVariant(state)
+  const isMenuVariantDifferent =
+    userMenuVariant && getMenuFetchVariant(state) !== getUserMenuVariant(state)
 
   return (
-    force
-      || isAccessTokenDifferent
-      || isMenuVariantDifferent
-      || !menuRecipes
-      || (menuRecipes && menuRecipes.size <= threshold)
-      || stale
-      || requiresClear
-      || !menuCollections.size
+    force ||
+    isAccessTokenDifferent ||
+    isMenuVariantDifferent ||
+    !menuRecipes ||
+    (menuRecipes && menuRecipes.size <= threshold) ||
+    stale ||
+    requiresClear ||
+    !menuCollections.size
   )
 }
+
+const nourishedMenuResponse = require('./nourishedData.json')
 
 // eslint-disable-next-line import/no-default-export
 export default function fetchData({ query, params }, force, background, userMenuVariant) {
@@ -206,7 +212,8 @@ export default function fetchData({ query, params }, force, background, userMenu
 
     if (isAuthenticated && userId) {
       fetchMenuPromise = fetchMenusWithUserId(accessToken, query, userId)
-    } else if (userMenuVariant) { // A/B test on signup page
+    } else if (userMenuVariant) {
+      // A/B test on signup page
       fetchMenuPromise = fetchMenusWithUserId(accessToken, query, userMenuVariant)
     } else {
       fetchMenuPromise = fetchMenus(accessToken, query)
@@ -214,7 +221,7 @@ export default function fetchData({ query, params }, force, background, userMenu
 
     const menuResponse = await fetchMenuPromise
 
-    dispatch(menuServiceDataReceived(menuResponse, accessToken, userMenuVariant))
+    dispatch(menuServiceDataReceived(nourishedMenuResponse, accessToken, userMenuVariant))
 
     dispatch(getBrandInfo())
     dispatch(getBrandMenuHeaders())

@@ -12,15 +12,15 @@ export function menuCollectionsReceive(collections) {
 }
 
 export function menuReceiveMenu(recipes) {
-  return ({
+  return {
     type: actionTypes.RECIPES_RECEIVE,
     recipes,
-  })
+  }
 }
 
-const basketCurrentMenuIdChange = ({id}) => ({
+const basketCurrentMenuIdChange = ({ id }) => ({
   type: actionTypes.BASKET_CURRENT_MENU_ID_CHANGE,
-  menuId: id
+  menuId: id,
 })
 
 function getStockAvailability(getState, recipeStock) {
@@ -45,7 +45,9 @@ function getStockAvailability(getState, recipeStock) {
 
   return recipeStockList.reduce((acc, stockEntry) => {
     const committed = stockEntry.committed === '1'
-    const foundMatchingRecipeFromStock = storedRecipes.find((obj) => obj.id === stockEntry.recipeId.toString())
+    const foundMatchingRecipeFromStock = storedRecipes.find(
+      (obj) => obj.id === stockEntry.recipeId.toString()
+    )
 
     if (foundMatchingRecipeFromStock) {
       acc[foundMatchingRecipeFromStock.id] = {
@@ -77,7 +79,4 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date) => {
   dispatch(basketCurrentMenuIdChange(activeMenu))
 }
 
-export {
-  getStockAvailability,
-  loadMenuCollectionsWithMenuService
-}
+export { getStockAvailability, loadMenuCollectionsWithMenuService }

@@ -1,11 +1,17 @@
 const transformMenuCollections = (menu, normalisedData, meta) => {
-  if (!menu || !menu.relationships || !menu.relationships.collections || !menu.relationships.collections.data) {
+  if (
+    !menu ||
+    !menu.relationships ||
+    !menu.relationships.collections ||
+    !menu.relationships.collections.data
+  ) {
     return undefined
   }
 
-  const featuredCategories = menu.relationships.featured_categories && menu.relationships.featured_categories.data
-    ? menu.relationships.featured_categories.data
-    : []
+  const featuredCategories =
+    menu.relationships.featured_categories && menu.relationships.featured_categories.data
+      ? menu.relationships.featured_categories.data
+      : []
   const featuredCategoriesObject = featuredCategories.reduce((acc, featuredCategory, index) => {
     acc[featuredCategory.id] = { ...featuredCategory, index }
 
@@ -25,11 +31,13 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
       shortTitle: normalisedAttributes.short_title || '',
       slug: normalisedAttributes.slug || '',
       requirements: normalisedAttributes.requirements || {},
-      recipesInCollection: collectionItem.relationships.recipes.data.map(recipe => recipe.core_recipe_id),
+      recipesInCollection: collectionItem.relationships.recipes.data.map(
+        (recipe) => recipe.core_recipe_id
+      ),
       isFeaturedCategory: !!featuredCategory,
       featuredCategoryOrder: featuredCategory ? featuredCategory.index : 0,
       carouselConfig: featuredCategory ? featuredCategory.meta : null,
-      thumbnail: collectionItem.meta && collectionItem.meta.thumbnail
+      thumbnail: collectionItem.meta && collectionItem.meta.thumbnail,
     }
 
     if (normalisedAttributes.slug === 'recommendations') {
@@ -42,6 +50,7 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
   return formattedData
 }
 
-const collectionsTransformer = (activeMenu, menuServiceData) => transformMenuCollections(activeMenu, menuServiceData, menuServiceData.meta)
+const collectionsTransformer = (activeMenu, menuServiceData) =>
+  transformMenuCollections(activeMenu, menuServiceData, menuServiceData.meta)
 
 export { collectionsTransformer }

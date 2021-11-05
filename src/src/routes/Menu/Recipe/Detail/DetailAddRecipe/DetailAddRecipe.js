@@ -20,7 +20,6 @@ const DetailAddRecipe = ({ id, view, position, isOutOfStock, buttonText, closeOn
         closeOnAdd={closeOnAdd}
       />
     </div>
-
   )
 }
 
@@ -29,14 +28,24 @@ DetailAddRecipe.propTypes = {
   isOutOfStock: PropTypes.bool,
   position: PropTypes.number.isRequired,
   buttonText: PropTypes.string,
-  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'chefPrepared', 'fineDineIn', 'fineDineInDetail', 'detail', 'smallGrid']).isRequired,
-  closeOnAdd: PropTypes.bool
+  view: PropTypes.oneOf([
+    'grid',
+    'list',
+    'featured',
+    'simple',
+    'chefPrepared',
+    'fineDineIn',
+    'fineDineInDetail',
+    'detail',
+    'smallGrid',
+  ]).isRequired,
+  closeOnAdd: PropTypes.bool,
 }
 
 DetailAddRecipe.defaultProps = {
-  buttonText: 'Add recipe',
+  buttonText: 'Add nourishment',
   isOutOfStock: false,
-  closeOnAdd: false
+  closeOnAdd: false,
 }
 
 export { DetailAddRecipe }
