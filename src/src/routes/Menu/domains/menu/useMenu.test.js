@@ -18,7 +18,8 @@ const createMockStore = (valueOverrides) => {
     basket: basketInitialState(),
     recipes: Immutable.Map(valueOverrides.recipes) || Immutable.Map(),
     menuRecipes: Immutable.List(valueOverrides.menuRecipes) || Immutable.List(),
-    menuCollections: Immutable.OrderedMap(valueOverrides.menuCollections) || Immutable.OrderedMap()
+    menuCollections: Immutable.OrderedMap(valueOverrides.menuCollections) || Immutable.OrderedMap(),
+    menuRecipeStock: Immutable.Map(valueOverrides.menuRecipeStock) || Immutable.Map({}),
   }
 
   const mockStore = configureMockStore()
@@ -57,12 +58,20 @@ describe('menu domain / useMenu', () => {
       [RECIPE_4.get('id')]: RECIPE_4,
     },
     menuRecipes: [
+      RECIPE_1.get('id'),
+      RECIPE_2.get('id'),
       RECIPE_3.get('id'),
       RECIPE_4.get('id'),
     ],
     menuCollections: {
       [COLLECTION_A.get('id')]: COLLECTION_A,
       [COLLECTION_B.get('id')]: COLLECTION_B
+    },
+    menuRecipeStock: {
+      [RECIPE_1.get('id')]: Immutable.fromJS({'2': 0, '4': 0}),
+      [RECIPE_2.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
+      [RECIPE_3.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
+      [RECIPE_4.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
     },
   })
 
@@ -74,5 +83,15 @@ describe('menu domain / useMenu', () => {
     const recipes = result.current.getRecipesForCollectionId(COLLECTION_B.get('id'))
 
     expect(recipes).toEqual(Immutable.List([RECIPE_3, RECIPE_4]))
+  })
+
+  describe('when some Recipes are out of stock', () => {
+    test('getRecipesForCollectionId returns them at the end of the list', () => {
+      const { result } = renderHook(() => useMenu(), { wrapper })
+
+      const recipes = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
+
+      expect(recipes).toEqual(Immutable.List([RECIPE_2, RECIPE_1]))
+    })
   })
 })
