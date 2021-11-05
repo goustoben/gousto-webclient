@@ -16,8 +16,3 @@ PageContent.defaultProps = {
 }
 
 export const PageHeader = (props) => <SectionHeader {...props} type="page" />
-
-export default {
-  PageContent,
-  PageHeader,
-}

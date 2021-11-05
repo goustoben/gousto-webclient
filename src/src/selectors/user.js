@@ -148,14 +148,3 @@ export const getIsMultiSkipPending = createMultiSkipSelector('isPending')
 export const getIsMultiSkipError = createMultiSkipSelector('isError')
 
 export const getIsMultiSkipSuccess = createMultiSkipSelector('isSuccess')
-
-export default {
-  getUserFirstName,
-  getUserId,
-  getReferralOffer,
-  getReferralCode,
-  getLoadingStateForOffer,
-  getAgeVerified,
-  getUserOrders,
-  getUsersOrdersDaySlotLeadTimeIds
-}

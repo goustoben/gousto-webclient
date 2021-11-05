@@ -53,8 +53,3 @@ export const formatRecipeDiscount = (recipeDiscountPercent) => {
 
   return 'Discount'
 }
-
-export default {
-  formatPrice,
-  getFirstPartPostcode,
-}
