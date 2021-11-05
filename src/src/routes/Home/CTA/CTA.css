@@ -2,8 +2,13 @@
 
 .ctaContainer {
   margin-bottom: 1rem;
+  background-color: #1e2c48;
 
   @media BreakpointFromMedium {
     max-width: 17.5rem;
+  }
+
+  button {
+    background-color: #1e2c48;
   }
 }
