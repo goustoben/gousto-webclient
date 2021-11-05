@@ -5,8 +5,8 @@ import Immutable from 'immutable'
 import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
 import { VariantHeaderContainer } from 'routes/Menu/Recipe/VariantHeader/VariantHeaderContainer'
 import { TileImage } from './TileImage'
-import { CookingTimeIconContainer } from '../CookingTimeIcon'
 import { Image } from '../../Recipe'
+import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
 
 import css from './TileImage.css'
 
@@ -14,7 +14,7 @@ describe('<TileImage />', () => {
   let wrapper
 
   test('should render one Recipe Image component', () => {
-    wrapper = shallow(<TileImage title="my recipe" recipeId="1234" categoryId="abcde" />)
+    wrapper = shallow(<TileImage title="my recipe" recipeId="1234" categoryId="abcde" showVariantHeader={false} />)
 
     expect(wrapper.find(Image)).toHaveLength(1)
     expect(wrapper.find(Image).prop('lazy')).toBeTruthy()
@@ -52,11 +52,9 @@ describe('<TileImage />', () => {
           width: 250,
         },
       ]),
-      cookingTime: 30,
-      cookingTimeFamily: 30
     })
     wrapper = shallow(<TileImage recipe={recipe} recipeId={recipe.get('id')} categoryId="abcde" index={index} numPortions={2} showDetailRecipe={showDetailRecipe} showVariantHeader />)
-    expect(wrapper.find(CookingTimeIconContainer).length).toEqual(1)
+    expect(wrapper.find(CookingTimeIcon).length).toEqual(1)
   })
 
   test('should contain one VariantHeaderContainer component', () => {
