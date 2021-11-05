@@ -12,6 +12,12 @@ const experimentsConfig = {
     name: 'Radishes menu api recipe agnostic sides MVP web enabled',
     variationName: 'Variation',
     defaultName: 'Control',
+  },
+  kales_remove_cfy_collection: {
+    id: 'kales_remove_cfy_collection',
+    name: 'Kales remove CFY collection',
+    variationName: 'Variation',
+    defaultName: 'Control',
   }
 }
 
