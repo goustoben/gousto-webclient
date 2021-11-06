@@ -1,3 +1,5 @@
+import { nourishedCollections, mockNourishedData } from './mockNourishedData'
+
 const nourishedData = {
   '60006307-d5f4-4364-9d44-2be34c6bc536': {
     name: 'Ginseng',
@@ -5,8 +7,6 @@ const nourishedData = {
     url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Ginseng_Square_900x.jpg?v=1603189291.jpg',
   },
 }
-
-const mockNourishedData = require('./mockNourishedData.json')
 
 const strToInt = (string) => {
   const bytes = []
@@ -34,16 +34,6 @@ const mockRecipeItems = (order) =>
 const mockOrders = (orders) =>
   orders.map((order) => ({ ...order, recipeItems: mockRecipeItems(order) }))
 
-const nourishedCollections = [
-  'Anti-aging',
-  'Anti-inflammatory',
-  'Bone health',
-  'Brain & Mind',
-  'Digestive',
-  'Endurance',
-  'Energy',
-]
-
 const mockMenuResponse = (response) => {
   const [primary_menu, secondary_menu] = response.data
   response.included.forEach((collection) => {
@@ -67,6 +57,7 @@ const mockMenuResponse = (response) => {
         if (recipe.type === 'recipe') {
           const theAttrs = response.included.find((item) => item.id === recipe.id)
           const nourishment = uuidToListItem(recipe.id, nourishments)
+          theAttrs.attributes.name = nourishment.name
           theAttrs.attributes.images.forEach((image) => {
             image.crops.forEach((crop) => (crop.url = nourishment.url))
           })
