@@ -19,6 +19,7 @@ import { getPreviewMenuDateForCutoff } from '../selectors/menuService'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 import { sendClientMetric } from '../apis/clientMetrics'
+import { mockMenuResponse } from '../../../nourishised'
 
 const requiresMenuRecipesClear = (state, orderId) =>
   orderId && getIsAuthenticated(state) && state.basket.get('recipes').size
@@ -186,8 +187,6 @@ const shouldFetchData = (state, params, force, userMenuVariant) => {
   )
 }
 
-const nourishedMenuResponse = require('./nourishedData.json')
-
 // eslint-disable-next-line import/no-default-export
 export default function fetchData({ query, params }, force, background, userMenuVariant) {
   return async (dispatch, getState) => {
@@ -220,7 +219,7 @@ export default function fetchData({ query, params }, force, background, userMenu
     }
 
     const menuResponse = await fetchMenuPromise
-
+    const nourishedMenuResponse = mockMenuResponse(menuResponse)
     dispatch(menuServiceDataReceived(nourishedMenuResponse, accessToken, userMenuVariant))
 
     dispatch(getBrandInfo())
