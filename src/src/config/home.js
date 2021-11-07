@@ -7,11 +7,11 @@ export const hero = {
 }
 
 export const CTA = {
-  text: 'Order now',
+  text: 'Take quiz',
   stickyCTA: 'Get your personalised vitamins',
   join: (
     <span>
-      Order now{' '}
+      Take quiz{' '}
       <Icon
         name="fa-angle-right"
         size="1.5rem"
@@ -82,8 +82,7 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
   title: 'So why Nourished?',
 })
 
-export const joeWicks =
-  "Vitamins. Designed by you, freshly made by us."
+export const joeWicks = 'Vitamins. Designed by you, freshly made by us.'
 export const carousel = {
   title: 'Meet Our Bestsellers',
   subtitle:
