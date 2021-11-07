@@ -36,35 +36,39 @@ const mockOrders = (orders) =>
 
 const mockMenuResponse = (response) => {
   const [primary_menu, secondary_menu] = response.data
+  const selectedCollections = {}
+
   response.included.forEach((collection) => {
     if (collection.type === 'collection') {
-      let theName = null
-      if (collection.attributes.order === 100) {
-        theName = 'All Nourishments'
-      } else {
-        theName = uuidToListItem(collection.id, nourishedCollections)
-      }
-
+      const theName = nourishedCollections[collection.attributes.short_title]
       collection.attributes.short_title = theName
+      selectedCollections[collection.id] = theName
     }
   })
 
+  const collectionData = []
   primary_menu.relationships.collections.data.forEach((collection) => {
     if (collection.type === 'collection') {
-      const nourishedCollection = uuidToListItem(collection.id, nourishedCollections).toLowerCase()
-      const nourishments = mockNourishedData[nourishedCollection]
-      collection.relationships.recipes.data.forEach((recipe) => {
-        if (recipe.type === 'recipe') {
-          const theAttrs = response.included.find((item) => item.id === recipe.id)
-          const nourishment = uuidToListItem(recipe.id, nourishments)
-          theAttrs.attributes.name = nourishment.name
-          theAttrs.attributes.images.forEach((image) => {
-            image.crops.forEach((crop) => (crop.url = nourishment.url))
-          })
-        }
-      })
+      const collectionName = selectedCollections[collection.id]
+      if (collectionName) {
+        const nourishments = mockNourishedData[collectionName.toLowerCase()]
+        collection.relationships.recipes.data.forEach((recipe) => {
+          if (recipe.type === 'recipe') {
+            const theAttrs = response.included.find((item) => item.id === recipe.id)
+            const nourishment = uuidToListItem(recipe.id, nourishments)
+            theAttrs.attributes.name = nourishment.name
+            theAttrs.attributes.images.forEach((image) => {
+              image.crops.forEach((crop) => (crop.url = nourishment.url))
+            })
+          }
+        })
+        collectionData.push(collection)
+      }
+    } else {
+      collectionData.push(collection)
     }
   })
+  primary_menu.relationships.collections.data = collectionData
 
   return response
 }
