@@ -34,10 +34,8 @@ const mockRecipeItems = (order) =>
 const mockOrders = (orders) =>
   orders.map((order) => ({ ...order, recipeItems: mockRecipeItems(order) }))
 
-const mockMenuResponse = (response) => {
-  const [primary_menu, secondary_menu] = response.data
+const transformCollectionAndReturn = (response) => {
   const selectedCollections = {}
-
   response.included.forEach((collection) => {
     if (collection.type === 'collection') {
       const theName = nourishedCollections[collection.attributes.short_title]
@@ -46,25 +44,33 @@ const mockMenuResponse = (response) => {
     }
   })
 
+  return selectedCollections
+}
+
+const replaceRecipeAttribute = (response, collection, nourishments) => {
+  collection.relationships.recipes.data.forEach((recipe) => {
+    if (recipe.type === 'recipe') {
+      const theAttrs = response.included.find((item) => item.id === recipe.id)
+      const nourishment = uuidToListItem(recipe.id, nourishments)
+      theAttrs.attributes.name = nourishment.name
+      theAttrs.attributes.images.forEach((image) => {
+        image.crops.forEach((crop) => (crop.url = nourishment.url))
+      })
+    }
+  })
+}
+
+const mockMenuResponse = (response) => {
+  const [primary_menu, secondary_menu] = response.data
+  const selectedCollections = transformCollectionAndReturn(response)
+
   const collectionData = []
   primary_menu.relationships.collections.data.forEach((collection) => {
-    if (collection.type === 'collection') {
+    if (collection.type !== 'collection') collectionData.push(collection)
+    if (collection.type === 'collection' && selectedCollections[collection.id]) {
       const collectionName = selectedCollections[collection.id]
-      if (collectionName) {
-        const nourishments = mockNourishedData[collectionName.toLowerCase()]
-        collection.relationships.recipes.data.forEach((recipe) => {
-          if (recipe.type === 'recipe') {
-            const theAttrs = response.included.find((item) => item.id === recipe.id)
-            const nourishment = uuidToListItem(recipe.id, nourishments)
-            theAttrs.attributes.name = nourishment.name
-            theAttrs.attributes.images.forEach((image) => {
-              image.crops.forEach((crop) => (crop.url = nourishment.url))
-            })
-          }
-        })
-        collectionData.push(collection)
-      }
-    } else {
+      const nourishments = mockNourishedData[collectionName.toLowerCase()]
+      replaceRecipeAttribute(response, collection, nourishments)
       collectionData.push(collection)
     }
   })
