@@ -5,7 +5,8 @@ import configureMockStore from 'redux-mock-store'
 import { JustForYouTutorial } from '../JustForYouTutorial'
 import { JustForYouTutorialContainer } from '../JustForYouTutorialContainer'
 
-describe('JustForYouTutorial Component', () => {
+// TODO: Revisit when the `kales_remove_cfy_collection` experiment is over
+describe.skip('JustForYouTutorial Component', () => {
   const incrementTutorialViewed = jest.fn()
   let wrapper
 
@@ -58,7 +59,8 @@ describe('JustForYouTutorial Component', () => {
   })
 })
 
-describe('Check browser to show JFY', () => {
+// TODO: Revisit when the `kales_remove_cfy_collection` experiment is over
+describe.skip('Check browser to show JFY', () => {
   let wrapper
   it('should not render JFY if browser Edge', () => {
     const mockStore = configureMockStore()

@@ -57,7 +57,8 @@ describe('tutorial actions', () => {
     })
   })
 
-  describe('shouldJfyTutorialBeVisible', () => {
+  // TODO: Revisit when the `kales_remove_cfy_collection` experiment is over
+  describe.skip('shouldJfyTutorialBeVisible', () => {
     describe('when tutorial has been seen and collection is present', () => {
       beforeEach(() => {
         getState.mockReturnValueOnce(getTutorialState({
