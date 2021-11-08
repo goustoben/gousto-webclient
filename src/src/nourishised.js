@@ -61,11 +61,9 @@ const replaceRecipeAttribute = (response, collection, nourishments) => {
   })
 }
 
-const mockMenuResponse = (response) => {
-  const [primary_menu, secondary_menu] = response.data
-  const selectedCollections = transformCollectionAndReturn(response)
+const mockCollections = (menu, selectedCollections, response) => {
   const collectionData = []
-  primary_menu.relationships.collections.data.forEach((collection) => {
+  menu.relationships.collections.data.forEach((collection) => {
     if (collection.type !== 'collection') collectionData.push(collection)
     if (collection.type === 'collection' && selectedCollections[collection.id]) {
       const collectionName = selectedCollections[collection.id]
@@ -74,7 +72,14 @@ const mockMenuResponse = (response) => {
       collectionData.push(collection)
     }
   })
-  primary_menu.relationships.collections.data = collectionData
+  menu.relationships.collections.data = collectionData
+}
+
+const mockMenuResponse = (response) => {
+  const [primary_menu, secondary_menu] = response.data
+  const selectedCollections = transformCollectionAndReturn(response)
+  mockCollections(primary_menu, selectedCollections, response)
+  mockCollections(secondary_menu, selectedCollections, response)
 
   return response
 }
