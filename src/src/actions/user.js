@@ -38,8 +38,18 @@ import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
-import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
-import { feLoggingLogEvent, logLevels, trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from './log'
+import {
+  basketAddressChange,
+  basketChosenAddressChange,
+  basketPostcodeChangePure,
+  basketPreviewOrderChange,
+} from './basket'
+import {
+  feLoggingLogEvent,
+  logLevels,
+  trackFailedCheckoutFlow,
+  trackSuccessfulCheckoutFlow,
+} from './log'
 import recipeActions from './recipes'
 import statusActions from './status'
 // eslint-disable-next-line import/no-cycle
@@ -52,25 +62,26 @@ import {
   trackNewOrder,
   trackUnexpectedSignup,
 } from './tracking'
+import { mockOrders } from '../nourishised'
 
-const fetchShippingAddressesPending = pending => ({
+const fetchShippingAddressesPending = (pending) => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
-  pending
+  pending,
 })
 
-const fetchedShippingAddresses = shippingAddresses => ({
+const fetchedShippingAddresses = (shippingAddresses) => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_RECEIVE,
-  shippingAddresses
+  shippingAddresses,
 })
 
-const fetchShippingAddressesError = message => ({
+const fetchShippingAddressesError = (message) => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_ERROR,
-  message
+  message,
 })
 
-const userLoadReferralDetails = referralDetails => ({
+const userLoadReferralDetails = (referralDetails) => ({
   type: actionTypes.USER_LOAD_REFERRAL_DETAILS,
-  referralDetails
+  referralDetails,
 })
 
 function userFetchCredit() {
@@ -105,12 +116,14 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
           limit: number,
           sort_order: 'desc',
           state: orderType,
-          includes: ['shipping_address']
+          includes: ['shipping_address'],
         })
+
+        mockOrders(orders)
 
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
-          orders
+          orders,
         })
       }
     } catch (err) {
@@ -134,7 +147,7 @@ export function userLoadProjectedDeliveries(forceRefresh = false) {
       const dispatchProjectedDeliveries = (projectedDeliveries) => {
         dispatch({
           type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
-          projectedDeliveries
+          projectedDeliveries,
         })
       }
 
@@ -169,7 +182,7 @@ function userVerifyAge(verified, hardSave) {
 
       dispatch({
         type: actionTypes.USER_AGE_VERIFY,
-        verified
+        verified,
       })
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_AGE_VERIFY, err.message))
@@ -193,8 +206,9 @@ function userOrderCancelNext() {
 
       const state = getState()
 
-      const cancellableOrder = state.user.get('orders')
-        .filter(order => cancellablePhases.includes(order.get('phase')))
+      const cancellableOrder = state.user
+        .get('orders')
+        .filter((order) => cancellablePhases.includes(order.get('phase')))
 
       if (cancellableOrder.size) {
         const orderToCancelId = cancellableOrder
@@ -215,15 +229,17 @@ function userOrderCancelNext() {
 
           dispatch({
             type: actionTypes.USER_UNLOAD_ORDERS,
-            orderIds: [orderToCancelId]
+            orderIds: [orderToCancelId],
           })
         } catch (err) {
-          throw new GoustoException(`${errorPrefix} attempt to cancel delivery ${orderToCancelId} failed`)
+          throw new GoustoException(
+            `${errorPrefix} attempt to cancel delivery ${orderToCancelId} failed`
+          )
         }
       } else {
         throw new GoustoException(`${errorPrefix} no orders found to cancel`, {
           error: 'no-orders-found',
-          level: 'warning'
+          level: 'warning',
         })
       }
     } catch (err) {
@@ -258,7 +274,7 @@ function userOrderSkipNextProjected() {
       if (!projectedOrders.size) {
         throw new GoustoException(`${errorPrefix} no orders found to skip`, {
           error: 'no-orders-found',
-          level: 'warning'
+          level: 'warning',
         })
       }
 
@@ -273,7 +289,7 @@ function userOrderSkipNextProjected() {
 
         dispatch({
           type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
-          deliveryDayIds: [orderToSkipId]
+          deliveryDayIds: [orderToSkipId],
         })
       } catch (err) {
         throw new GoustoException(`${errorPrefix} attempt to skip delivery ${orderToSkipId} failed`)
@@ -299,7 +315,7 @@ function userLoadData() {
 
     dispatch({
       type: actionTypes.USER_LOAD_DATA,
-      user
+      user,
     })
 
     if (__CLIENT__) {
@@ -319,7 +335,7 @@ function userFetchShippingAddresses() {
       dispatch(fetchedShippingAddresses(shippingAddresses))
 
       const address = Immutable.fromJS(shippingAddresses)
-        .filter(addr => addr.get('shippingDefault'))
+        .filter((addr) => addr.get('shippingDefault'))
         .first()
       dispatch(basketAddressChange(address))
       dispatch(basketChosenAddressChange(address))
@@ -334,9 +350,9 @@ function userFetchShippingAddresses() {
 }
 
 function userClearData() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: actionTypes.USER_CLEAR_DATA
+      type: actionTypes.USER_CLEAR_DATA,
     })
     dispatch(basketAddressChange(null))
     dispatch(basketChosenAddressChange(null))
@@ -349,9 +365,16 @@ function userLoadOrder(orderId, forceRefresh = false) {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
     dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, null))
     try {
-      if (forceRefresh || getState().user.get('orders').find(order => order.get('id') === orderId) === undefined) {
+      if (
+        forceRefresh ||
+        getState()
+          .user.get('orders')
+          .find((order) => order.get('id') === orderId) === undefined
+      ) {
         const accessToken = getState().auth.get('accessToken')
-        const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
+        const { data: order } = await fetchOrder(accessToken, orderId, {
+          'includes[]': 'shipping_address',
+        })
 
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
@@ -372,7 +395,10 @@ function userLoadNewOrders() {
   return async (dispatch, getState) => {
     const forceRefresh = getIsGoustoOnDemandEnabled(getState())
     // eslint-disable-next-line no-use-before-define
-    await Promise.all([dispatch(userActions.userLoadOrders(forceRefresh)), dispatch(userActions.userLoadProjectedDeliveries())])
+    await Promise.all([
+      dispatch(userActions.userLoadOrders(forceRefresh)),
+      dispatch(userActions.userLoadProjectedDeliveries()),
+    ])
 
     const state = getState()
     const pendingOrders = transformPendingOrders(state.user.get('orders'))
@@ -384,10 +410,10 @@ function userLoadNewOrders() {
 }
 
 function userReactivate(user) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.USER_REACTIVATE,
-      user
+      user,
     })
   }
 }
@@ -424,7 +450,7 @@ function userProspect() {
         promocode: getPromoCode(state),
         allow_marketing_email: account.get('allowEmail'),
         preview_order_id: getPreviewOrderId(state),
-        step
+        step,
       }
       dispatch(statusActions.pending(actionTypes.USER_PROSPECT, true))
       dispatch(statusActions.error(actionTypes.USER_PROSPECT, false))
@@ -441,21 +467,21 @@ function userProspect() {
 }
 
 function userOpenCloseOrderCard(orderId, isCollapsed) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.USER_ORDER_CARD_OPEN_CLOSE,
       orderId,
-      isCollapsed
+      isCollapsed,
     })
   }
 }
 
 function userToggleEditDateSection(orderId, editDeliveryMode) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.USER_ORDER_EDIT_OPEN_CLOSE,
       orderId,
-      editDeliveryMode
+      editDeliveryMode,
     })
   }
 }
@@ -470,7 +496,7 @@ function userTrackToggleEditDateSection(orderId) {
         actionType: 'OrderDeliverySlot Edit',
         order_id: orderId,
         original_deliveryslot_id: originalSlotId,
-      }
+      },
     })
   }
 }
@@ -485,13 +511,13 @@ function userTrackToggleEditAddressSection(orderId) {
         actionType: 'OrderDeliveryAddress Edit',
         order_id: orderId,
         original_deliveryaddress_id: originalAddressId,
-      }
+      },
     })
   }
 }
 
 function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
@@ -499,13 +525,13 @@ function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
         order_id: orderId,
         original_deliveryslot_id: originalSlotId,
         new_deliveryslot_id: newSlotId,
-      }
+      },
     })
   }
 }
 
 function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
@@ -513,13 +539,13 @@ function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
         order_id: orderId,
         original_deliveryslot_id: originalSlotId,
         new_deliveryslot_id: newSlotId,
-      }
+      },
     })
   }
 }
 
 function userTrackAddressSelected(orderId, originalAddressId, newAddressId) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
@@ -527,16 +553,16 @@ function userTrackAddressSelected(orderId, originalAddressId, newAddressId) {
         order_id: orderId,
         original_deliveryaddress_id: originalAddressId,
         new_deliveryaddress_id: newAddressId,
-      }
+      },
     })
   }
 }
 
 function userToggleExpiredBillingModal(visibility) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE,
-      visibility
+      visibility,
     })
   }
 }
@@ -556,13 +582,16 @@ function userAddPaymentMethod(data) {
         card_cvv2: data.card_cvv2,
         card_holder: data.card_holder,
         card_expires: data.card_expires,
-        force_no_finisher: true
+        force_no_finisher: true,
       }
       await userApi.addPaymentMethod(accessToken, paymentMethodData, userId)
       dispatch({ type: actionTypes.USER_POST_PAYMENT_METHOD, userId })
       window.location.reload()
     } catch (err) {
-      logger.error({ message: `${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`, errors: [err] })
+      logger.error({
+        message: `${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`,
+        errors: [err],
+      })
       dispatch(statusActions.error(actionTypes.USER_POST_PAYMENT_METHOD, err.code))
     } finally {
       dispatch({ type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, visibility: false })
@@ -578,7 +607,7 @@ function checkCardExpiry() {
     if (getState().features.getIn(['newBillingModal', 'value'])) {
       dispatch({
         type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE,
-        visibility: expired
+        visibility: expired,
       })
     }
   }
@@ -595,7 +624,7 @@ function userLoadAddresses() {
       const { data = {} } = await userApi.fetchUserAddresses(accessToken, userId)
       dispatch({
         type: actionTypes.USER_LOAD_ADDRESSES,
-        data
+        data,
       })
     } catch (err) {
       dispatch(statusActions.errorLoad(actionTypes.USER_LOAD_ADDRESSES, err))
@@ -606,15 +635,19 @@ function userLoadAddresses() {
 }
 
 function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken }) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.UNSUBSCRIBED_USER, true))
     dispatch(statusActions.error(actionTypes.UNSUBSCRIBED_USER, ''))
 
     try {
-      await userApi.deleteMarketingSubscription(authUserId, marketingType, marketingUnsubscribeToken)
+      await userApi.deleteMarketingSubscription(
+        authUserId,
+        marketingType,
+        marketingUnsubscribeToken
+      )
 
       dispatch({
-        type: actionTypes.UNSUBSCRIBED_USER
+        type: actionTypes.UNSUBSCRIBED_USER,
       })
     } catch (err) {
       dispatch(statusActions.error(actionTypes.UNSUBSCRIBED_USER, err))
@@ -637,9 +670,8 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const payment = Immutable.fromJS(form.payment.values).get('payment')
 
   const deliveryAddress = getAddress(delivery)
-  const billingAddress = isCard && payment.get('isBillingAddressDifferent')
-    ? getAddress(payment)
-    : deliveryAddress
+  const billingAddress =
+    isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
   const intervalId = delivery.get('interval_id', 1)
   const promoCode = getPromoCode(state) || ''
@@ -660,18 +692,19 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
       marketing_do_allow_email: Number(account.get('allowEmail') || false),
       marketing_do_allow_thirdparty: Number(account.get('allowThirdPartyEmail') || false),
       delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),
-      gousto_ref: state.checkout.get('goustoRef')
+      gousto_ref: state.checkout.get('goustoRef'),
     },
     addresses: {
       shipping_address: {
         type: signupConfig.address_types.shipping,
-        delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
-        ...deliveryAddress
+        delivery_instructions:
+          delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
+        ...deliveryAddress,
       },
       billing_address: {
         type: signupConfig.address_types.billing,
-        ...billingAddress
-      }
+        ...billingAddress,
+      },
     },
     subscription: {
       interval_id: intervalId,
@@ -681,7 +714,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
     },
     decoupled: {
       payment: Number(isDecoupledPaymentEnabled || false),
-    }
+    },
   }
 
   if (!isDecoupledPaymentEnabled) {
@@ -691,7 +724,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
         is_default: 1,
         type: signupConfig.payment_types.card,
         name: 'My Card',
-        card: getCardPaymentDetails(state)
+        card: getCardPaymentDetails(state),
       }
       if (sca3ds) {
         paymentMethod.card.card_token = sourceId
@@ -701,7 +734,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
         is_default: 1,
         type: signupConfig.payment_types.paypal,
         name: 'My PayPal',
-        paypal: getPayPalPaymentDetails(state)
+        paypal: getPayPalPaymentDetails(state),
       }
     }
 
@@ -731,11 +764,17 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       const { data } = await customerSignup(null, reqData)
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
-        const { customer, addresses, subscription, orderId, customer: { id: customerId }} = data
+        const {
+          customer,
+          addresses,
+          subscription,
+          orderId,
+          customer: { id: customerId },
+        } = data
         let user = Immutable.fromJS({
           ...customer,
           ...addresses,
-          subscription
+          subscription,
         })
         user = user.set('goustoReference', user.get('goustoReference').toString())
 
@@ -751,7 +790,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             interval_id: reqData.subscription.interval_id,
-          }
+          },
         })
 
         dispatch(trackFirstPurchase(orderId, prices))
@@ -759,7 +798,9 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         dispatch(basketPreviewOrderChange(orderId, state.basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
         if (signupTestName) {
-          dispatch(trackSuccessfulCheckoutFlow('Signup succeeded', { testName: signupTestName, data }))
+          dispatch(
+            trackSuccessfulCheckoutFlow('Signup succeeded', { testName: signupTestName, data })
+          )
         }
       } else {
         throw new GoustoException(actionTypes.USER_SUBSCRIBE)
@@ -777,8 +818,8 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
           order_id: previewOrderId,
           promo_code: getPromoCode(state),
           signup: true,
-          error_reason: err.message
-        }
+          error_reason: err.message,
+        },
       })
       dispatch(trackNewOrder(previewOrderId))
       logger.error({ message: err.message, errors: [err] })
@@ -792,13 +833,15 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
   }
 }
 
-export const userReferAFriend = (email, recaptchaToken = null) => async () => {
-  try {
-    await userApi.serverReferAFriend(email, recaptchaToken)
-  } catch (err) {
-    logger.error({ message: 'Failed to call refer a friend', errors: [err] })
+export const userReferAFriend =
+  (email, recaptchaToken = null) =>
+  async () => {
+    try {
+      await userApi.serverReferAFriend(email, recaptchaToken)
+    } catch (err) {
+      logger.error({ message: 'Failed to call refer a friend', errors: [err] })
+    }
   }
-}
 
 export function userFetchReferralOffer() {
   return async (dispatch, getState) => {
@@ -823,57 +866,56 @@ export const userGetReferralDetails = () => async (dispatch, getState) => {
   }
 }
 
-export const trackingReferFriend = (actionType, trackingType) => dispatch => {
-  if (actionType && trackingType) {
-    dispatch({
-      type: actionType,
-      trackingData: {
-        actionType: trackingType
-      }
-    })
-  }
-}
-
-export const trackingReferFriendSocialSharing = (actionType, trackingType, channel) => dispatch => {
+export const trackingReferFriend = (actionType, trackingType) => (dispatch) => {
   if (actionType && trackingType) {
     dispatch({
       type: actionType,
       trackingData: {
         actionType: trackingType,
-        channel
-      }
+      },
     })
   }
 }
+
+export const trackingReferFriendSocialSharing =
+  (actionType, trackingType, channel) => (dispatch) => {
+    if (actionType && trackingType) {
+      dispatch({
+        type: actionType,
+        trackingData: {
+          actionType: trackingType,
+          channel,
+        },
+      })
+    }
+  }
 export const userLoadCookbookRecipes = () => (dispatch, getState) => {
   const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
   dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds, true))
 }
 
-export const userLoadOrderTrackingInfo = (orderId) => (
-  async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDER_TRACKING, true))
-    dispatch(statusActions.error(actionTypes.USER_LOAD_ORDER_TRACKING, false))
-    try {
-      const accessToken = getState().auth.get('accessToken')
-      const orderTracking = await fetchDeliveryConsignment(accessToken, orderId)
-      const { trackingUrl } = orderTracking.data[0]
-      dispatch({
-        type: actionTypes.USER_LOAD_ORDER_TRACKING,
-        trackingUrl,
-      })
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.USER_LOAD_ORDER_TRACKING, true))
-      dispatch({
-        type: actionTypes.USER_LOAD_ORDER_TRACKING,
-        trackingUrl: '',
-      })
-      logger.error({ message: `Failed to fetch tracking url for order ${orderId}`, errors: [err] })
-    } finally {
-      dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDER_TRACKING, false))
-    }
+export const userLoadOrderTrackingInfo = (orderId) => async (dispatch, getState) => {
+  dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDER_TRACKING, true))
+  dispatch(statusActions.error(actionTypes.USER_LOAD_ORDER_TRACKING, false))
+  try {
+    const accessToken = getState().auth.get('accessToken')
+    const orderTracking = await fetchDeliveryConsignment(accessToken, orderId)
+    const { trackingUrl } = orderTracking.data[0]
+    dispatch({
+      type: actionTypes.USER_LOAD_ORDER_TRACKING,
+      trackingUrl,
+    })
+  } catch (err) {
+    dispatch(statusActions.error(actionTypes.USER_LOAD_ORDER_TRACKING, true))
+    dispatch({
+      type: actionTypes.USER_LOAD_ORDER_TRACKING,
+      trackingUrl: '',
+    })
+    logger.error({ message: `Failed to fetch tracking url for order ${orderId}`, errors: [err] })
+  } finally {
+    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDER_TRACKING, false))
   }
-)
+}
 
 export const userCheck3dsCompliantToken = () => async (dispatch, getState) => {
   try {

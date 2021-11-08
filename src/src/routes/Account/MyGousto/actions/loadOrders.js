@@ -2,6 +2,7 @@ import { getAccessToken } from 'selectors/auth'
 import { fetchUserOrders } from 'apis/user'
 import { asyncAndDispatch } from '../../../GetHelp/actions/utils'
 import { actionTypes } from './actionTypes'
+import { mockOrders } from '../../../../nourishised'
 
 export const loadOrders = () => async (dispatch, getState) => {
   const state = getState()
@@ -13,6 +14,7 @@ export const loadOrders = () => async (dispatch, getState) => {
       sort_order: 'desc',
       state: 'pending',
     })
+    mockOrders(orders)
 
     return { orders }
   }

@@ -3,7 +3,12 @@ import routes from 'config/routes'
 import { fetch } from 'utils/fetch'
 
 export function applyPromo(accessToken, promoCode) {
-  return fetch(accessToken, `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
+  return fetch(
+    accessToken,
+    `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`,
+    {},
+    'POST'
+  )
 }
 
 export function fetchUserCredit(accessToken) {
@@ -23,7 +28,12 @@ export function fetchUser(accessToken) {
 }
 
 export function fetchShippingAddresses(accessToken) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.userAddress}`, { type: 'shipping' }, 'GET')
+  return fetch(
+    accessToken,
+    `${endpoint('core')}${routes.core.userAddress}`,
+    { type: 'shipping' },
+    'GET'
+  )
 }
 
 export function fetchUserOrders(accessToken, reqData) {
@@ -47,7 +57,12 @@ export function referralDetails(accessToken, reqData) {
 }
 
 export function referAFriend(accessToken, email) {
-  return fetch(accessToken, `${endpoint('core')}/user/current/referral`, { emails: [email] }, 'POST')
+  return fetch(
+    accessToken,
+    `${endpoint('core')}/user/current/referral`,
+    { emails: [email] },
+    'POST'
+  )
 }
 
 export function serverReferAFriend(email, recaptchaToken) {

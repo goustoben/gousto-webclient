@@ -19,20 +19,21 @@ const strToInt = (string) => {
 
 const uuidToListItem = (uuid, list) => list[strToInt(uuid) % list.length]
 
-const mockRecipeItems = (order) =>
-  order.recipeItems.map((item) => {
-    const mockData = nourishedData[item.recipeUuid]
-    if (mockData) {
-      item.media.forEach((m) => {
-        m.urls.forEach((url) => (url.src = mockData.url))
-      })
-    }
+const mockOrders = (orders) => {
+  const nourishments = mockNourishedData['all nourishments']
 
-    return item
+  orders.forEach((order) => {
+    order.recipeItems.forEach((item) => {
+      const nourishment = uuidToListItem(item.recipeUuid, nourishments)
+      item.title = nourishment.name
+      item.media.forEach((m) => {
+        m.urls.forEach((url) => (url.src = nourishment.src))
+      })
+    })
   })
 
-const mockOrders = (orders) =>
-  orders.map((order) => ({ ...order, recipeItems: mockRecipeItems(order) }))
+  return orders
+}
 
 const transformCollectionAndReturn = (response) => {
   const selectedCollections = {}
@@ -47,13 +48,12 @@ const transformCollectionAndReturn = (response) => {
   return selectedCollections
 }
 
-const replaceRecipeAttribute = (response, collection, nourishments, recipeToNourishment) => {
+const replaceRecipeAttribute = (response, collection, nourishments) => {
   collection.relationships.recipes.data.forEach((recipe) => {
     if (recipe.type === 'recipe') {
       const theAttrs = response.included.find((item) => item.id === recipe.id)
       const nourishment = uuidToListItem(recipe.id, nourishments)
       theAttrs.attributes.name = nourishment.name
-      recipeToNourishment[recipe.id] = nourishment
       theAttrs.attributes.images.forEach((image) => {
         image.crops.forEach((crop) => (crop.url = nourishment.url))
       })
@@ -61,31 +61,22 @@ const replaceRecipeAttribute = (response, collection, nourishments, recipeToNour
   })
 }
 
-const writeToFile = (recipeToNourishment) => {
-  const fs = require('fs')
-  fs.writeFile('./recipeToNourishment.json', JSON.stringify(recipeToNourishment), (err) => {
-    if (err) console.log('Error writing file:', err)
-  })
-}
-
 const mockMenuResponse = (response) => {
   const [primary_menu, secondary_menu] = response.data
   const selectedCollections = transformCollectionAndReturn(response)
-  const recipeToNourishment = {}
   const collectionData = []
   primary_menu.relationships.collections.data.forEach((collection) => {
     if (collection.type !== 'collection') collectionData.push(collection)
     if (collection.type === 'collection' && selectedCollections[collection.id]) {
       const collectionName = selectedCollections[collection.id]
       const nourishments = mockNourishedData[collectionName.toLowerCase()]
-      replaceRecipeAttribute(response, collection, nourishments, recipeToNourishment)
+      replaceRecipeAttribute(response, collection, nourishments)
       collectionData.push(collection)
     }
   })
   primary_menu.relationships.collections.data = collectionData
-  // writeToFile(recipeToNourishment)
 
   return response
 }
 
-export { mockMenuResponse }
+export { mockMenuResponse, mockOrders }
