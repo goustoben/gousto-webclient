@@ -15,7 +15,7 @@ import {
   chefSelectsSettingsSection,
   totalPriceSection,
   skipABoxSection,
-  pauseSubscriptionSection
+  pauseSubscriptionSection,
 } from '../subscriptionsSectionsContent'
 import { DietaryPreference } from './sections/ChefSelectsSettings/DietaryPreference'
 import { MealsPerBox } from './sections/ChefSelectsSettings/MealsPerBox'
@@ -25,31 +25,17 @@ const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscr
   <Fragment>
     <ResubscriptionModal />
     <Grid>
-      <Column
-        smallScreen={12}
-        mediumScreen={6}
-        largeScreen={6}
-        hasPaddingSmallScreen={false}
-      >
+      <Column smallScreen={12} mediumScreen={6} largeScreen={6} hasPaddingSmallScreen={false}>
         <Section
           title={yourSubscriptionDetailsSection.title}
           subTitle={yourSubscriptionDetailsSection.subTitle}
           testingSelector={yourSubscriptionDetailsSection.testingSelector}
         >
-          <DeliveryDayAndTime
-            accessToken={accessToken}
-            isMobile={isMobile}
-          />
-          <BoxSize
-            accessToken={accessToken}
-            isMobile={isMobile}
-          />
-          <Frequency
-            accessToken={accessToken}
-            isMobile={isMobile}
-          />
+          <DeliveryDayAndTime accessToken={accessToken} isMobile={isMobile} />
+          <BoxSize accessToken={accessToken} isMobile={isMobile} />
+          <Frequency accessToken={accessToken} isMobile={isMobile} />
         </Section>
-        <Section
+        {/* <Section
           title={chefSelectsSettingsSection.title}
           subTitle={chefSelectsSettingsSection.subTitle}
           testingSelector={chefSelectsSettingsSection.testingSelector}
@@ -62,14 +48,9 @@ const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscr
             accessToken={accessToken}
             isMobile={isMobile}
           />
-        </Section>
+        </Section> */}
       </Column>
-      <Column
-        smallScreen={12}
-        mediumScreen={6}
-        largeScreen={6}
-        hasPaddingSmallScreen={false}
-      >
+      <Column smallScreen={12} mediumScreen={6} largeScreen={6} hasPaddingSmallScreen={false}>
         <Section
           title={totalPriceSection.title}
           subTitle={totalPriceSection.subTitle}
@@ -81,20 +62,13 @@ const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscr
     </Grid>
 
     <Grid>
-      <Column
-        smallScreen={12}
-      >
+      <Column smallScreen={12}>
         <Divider hidden={['sm']} />
       </Column>
     </Grid>
 
     <Grid>
-      <Column
-        smallScreen={12}
-        mediumScreen={6}
-        largeScreen={6}
-        hasPaddingSmallScreen={false}
-      >
+      <Column smallScreen={12} mediumScreen={6} largeScreen={6} hasPaddingSmallScreen={false}>
         <Section
           title={skipABoxSection.title}
           subTitle={skipABoxSection.subTitle}
@@ -103,29 +77,25 @@ const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscr
           <SkipABox />
         </Section>
       </Column>
-      <Column
-        smallScreen={12}
-        mediumScreen={6}
-        largeScreen={6}
-        hasPaddingSmallScreen={false}
-      >
+      <Column smallScreen={12} mediumScreen={6} largeScreen={6} hasPaddingSmallScreen={false}>
         <Section
           title={pauseSubscriptionSection.title}
           subTitle={pauseSubscriptionSection.subTitle}
           testingSelector={pauseSubscriptionSection.testingSelector}
         >
-          <PauseSubscription startOnScreenRecoverySubscriptionFlow={startOnScreenRecoverySubscriptionFlow} />
+          <PauseSubscription
+            startOnScreenRecoverySubscriptionFlow={startOnScreenRecoverySubscriptionFlow}
+          />
         </Section>
       </Column>
     </Grid>
   </Fragment>
-
 )
 
 ActiveSubscription.propTypes = {
   accessToken: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  startOnScreenRecoverySubscriptionFlow: PropTypes.func.isRequired
+  startOnScreenRecoverySubscriptionFlow: PropTypes.func.isRequired,
 }
 
 export { ActiveSubscription }
