@@ -79,4 +79,15 @@ const mockMenuResponse = (response) => {
   return response
 }
 
-export { mockMenuResponse, mockOrders }
+const mockRecipes = (recipes) => {
+  const nourishments = mockNourishedData['all nourishments']
+  recipes.forEach((recipe) => {
+    const nourishment = uuidToListItem(recipe.id, nourishments)
+    recipe.attributes.name = nourishment.name
+    recipe.attributes.images.forEach((image) => {
+      image.crops.forEach((crop) => (crop.url = nourishment.url))
+    })
+  })
+}
+
+export { mockMenuResponse, mockOrders, mockRecipes }
