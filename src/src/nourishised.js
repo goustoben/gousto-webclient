@@ -1,13 +1,5 @@
 import { nourishedCollections, mockNourishedData, mockMarketPlaceItems } from './mockNourishedData'
 
-const nourishedData = {
-  '60006307-d5f4-4364-9d44-2be34c6bc536': {
-    name: 'Ginseng',
-    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Ginseng_Square_900x.jpg?v=1603189291.jpg',
-    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Ginseng_Square_900x.jpg?v=1603189291.jpg',
-  },
-}
-
 const strToInt = (string) => {
   const bytes = []
   for (let i = 0; i < string.length; ++i) {
@@ -41,6 +33,7 @@ const transformCollectionAndReturn = (response) => {
     if (collection.type === 'collection') {
       const theName = nourishedCollections[collection.attributes.short_title]
       collection.attributes.short_title = theName
+      collection.attributes.meta_title = theName
       selectedCollections[collection.id] = theName
     }
   })
@@ -76,10 +69,10 @@ const mockCollections = (menu, selectedCollections, response) => {
 }
 
 const mockMenuResponse = (response) => {
-  const [primary_menu, secondary_menu] = response.data
+  const [primaryMenu, secondaryMenu] = response.data
   const selectedCollections = transformCollectionAndReturn(response)
-  mockCollections(primary_menu, selectedCollections, response)
-  mockCollections(secondary_menu, selectedCollections, response)
+  mockCollections(primaryMenu, selectedCollections, response)
+  mockCollections(secondaryMenu, selectedCollections, response)
 
   return response
 }

@@ -31,9 +31,9 @@ const propTypes = {
 const defaultProps = {
   rafOffer: defaultOffer,
   userFirstName: '',
-  userFetchReferralOffer: () => { },
-  trackingReferFriend: () => { },
-  trackingReferFriendSocialSharing: () => { },
+  userFetchReferralOffer: () => {},
+  trackingReferFriend: () => {},
+  trackingReferFriendSocialSharing: () => {},
   isLoading: false,
   device: 'desktop',
   trackUserFreeFoodPageView: () => {},
@@ -70,55 +70,63 @@ class Referral extends Component {
     const expiry = rafOffer.get('expiry')
     const displayLink = getReferralLink(referralCode)
 
-    return isLoading
-      ? (
-        <div className={css.loadingContainer}>
-          <Loading loading={isLoading} />
+    return isLoading ? (
+      <div className={css.loadingContainer}>
+        <Loading loading={isLoading} />
+      </div>
+    ) : (
+      <div className={expiry ? css.containerBackgroundDouble : css.containerBackground}>
+        <Helmet title="Nourished Referrals | Invite Your Friends To Try Nourished" />
+        <div className={css.rafPageTitle}>
+          <RAFTitle title={offerTitle} />
         </div>
-      )
-      : (
-        <div className={expiry ? css.containerBackgroundDouble : css.containerBackground}>
-          <Helmet title="Gousto Referrals | Invite Your Friends To Try Gousto" />
-          <div className={css.rafPageTitle}>
-            <RAFTitle title={offerTitle} />
+        <div className={css.rafOfferSection}>
+          <div className={css.rafOfferBanner}>
+            <div className={expiry ? css.iconReferDouble : css.iconRefer} />
+            <RAFOffer offer={rafOffer} />
           </div>
-          <div className={css.rafOfferSection}>
-            <div className={css.rafOfferBanner}>
-              <div className={expiry ? css.iconReferDouble : css.iconRefer} />
-              <RAFOffer offer={rafOffer} />
-            </div>
-            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer} />}
-            <div className={expiry ? css.rafCounterPresent : css.rafRow}>
-              <UserRAFLink
-                classContainer={css.rafLink}
-                classLinkContainer={css.linkContainer}
+          {expiry && (
+            <DoubleCreditCountdown
+              description={offerDescription}
+              expiry={expiry}
+              fetchOffer={this.fetchReferralOffer}
+            />
+          )}
+          <div className={expiry ? css.rafCounterPresent : css.rafRow}>
+            <UserRAFLink
+              classContainer={css.rafLink}
+              classLinkContainer={css.linkContainer}
+              referralCode={referralCode}
+              trackingReferFriend={trackingReferFriend}
+              trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+            >
+              <div id="referral-code-box" aria-label="referral code">
+                <textarea className={`${css.displayedLink}`} readOnly>
+                  {displayLink}
+                </textarea>
+              </div>
+            </UserRAFLink>
+            <SocialShareButtons
+              referralCode={referralCode}
+              userFirstName={userFirstName}
+              device={device}
+              offerCredit={offerCredit}
+              elementType="page"
+              trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
+              trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+            />
+            <div className={css.mobileShow}>
+              <SocialShareSheetCTA
                 referralCode={referralCode}
                 trackingReferFriend={trackingReferFriend}
-                trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
-              >
-                <div id="referral-code-box" aria-label="referral code">
-                  <textarea className={`${css.displayedLink}`} readOnly>
-                    {displayLink}
-                  </textarea>
-                </div>
-              </UserRAFLink>
-              <SocialShareButtons
-                referralCode={referralCode}
-                userFirstName={userFirstName}
-                device={device}
-                offerCredit={offerCredit}
-                elementType="page"
-                trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
-                trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+                isFixed
               />
-              <div className={css.mobileShow}>
-                <SocialShareSheetCTA referralCode={referralCode} trackingReferFriend={trackingReferFriend} isFixed />
-              </div>
             </div>
           </div>
-          <HowItWorks details={offerDetails} />
         </div>
-      )
+        <HowItWorks details={offerDetails} />
+      </div>
+    )
   }
 }
 
@@ -127,4 +135,3 @@ Referral.propTypes = propTypes
 Referral.defaultProps = defaultProps
 
 export { Referral }
-
