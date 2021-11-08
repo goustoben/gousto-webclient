@@ -83,7 +83,7 @@ const mockMenuResponse = (response) => {
     }
   })
   primary_menu.relationships.collections.data = collectionData
-  writeToFile(recipeToNourishment)
+  // writeToFile(recipeToNourishment)
 
   return response
 }
