@@ -1,14 +1,22 @@
 import { push } from 'react-router-redux'
 
-import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
+import {
+  fetchProduct,
+  fetchRandomProducts,
+  fetchProductCategories,
+  fetchProductStock,
+  fetchProducts,
+} from 'apis/products'
 import { getProductsByCutoff, sortProductsByPrice } from 'utils/products'
 import logger from 'utils/logger'
 import { getActiveMenuIdForOrderDate } from 'routes/Menu/selectors/menu'
 import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
+import { mockProducts } from '../nourishised'
 
-export const productDetailVisibilityChange = (productId = false) => (
+export const productDetailVisibilityChange =
+  (productId = false) =>
   (dispatch, getState) => {
     const prevLoc = getState().routing.locationBeforeTransitions
     const query = { ...prevLoc.query }
@@ -31,14 +39,16 @@ export const productDetailVisibilityChange = (productId = false) => (
     const newLoc = { ...prevLoc, query }
     dispatch(push(newLoc))
   }
-)
 
-export const productsLoadCategories = (forceRefresh = false) => (
+export const productsLoadCategories =
+  (forceRefresh = false) =>
   async (dispatch, getState) => {
     if (forceRefresh || !getState().productsCategories.size) {
       dispatch(statusActions.pending(actionTypes.PRODUCT_CATEGORIES_RECEIVE, true))
       try {
-        const { data: categories } = await fetchProductCategories(getState().auth.get('accessToken'))
+        const { data: categories } = await fetchProductCategories(
+          getState().auth.get('accessToken')
+        )
         dispatch({ type: actionTypes.PRODUCT_CATEGORIES_RECEIVE, categories })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCT_CATEGORIES_RECEIVE, err.message))
@@ -48,7 +58,6 @@ export const productsLoadCategories = (forceRefresh = false) => (
       }
     }
   }
-)
 
 function getProductParameters(state, props = {}) {
   const accessToken = getAccessToken(state)
@@ -58,19 +67,14 @@ function getProductParameters(state, props = {}) {
   return {
     accessToken,
     authUserId,
-    menuId
+    menuId,
   }
 }
 
-export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}, menus) => (
+export const productsLoadProducts =
+  (cutoffDate, periodId, { reload = false } = {}, menus) =>
   async (dispatch, getState) => {
-    const {
-      basket,
-      products,
-      productsStock,
-      error,
-      features,
-    } = getState()
+    const { basket, products, productsStock, error, features } = getState()
     const currentProductsInBasket = basket.get('products')
     const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
     const sort = 'position'
@@ -78,17 +82,29 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       sort,
     }
 
-    const { accessToken, authUserId, menuId } = getProductParameters(getState(), { cutoffDate, menus })
+    const { accessToken, authUserId, menuId } = getProductParameters(getState(), {
+      cutoffDate,
+      menus,
+    })
 
     if (periodId) {
       reqData.period_id = periodId
     }
 
-    if ((isProductsLargerThanBasket || reload)
-      || (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
+    if (
+      isProductsLargerThanBasket ||
+      reload ||
+      (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)
+    ) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
-        const { data: productsFromApi } = await fetchProducts(accessToken, cutoffDate, reqData, authUserId, menuId)
+        const { data: productsFromApi } = await fetchProducts(
+          accessToken,
+          cutoffDate,
+          reqData,
+          authUserId,
+          menuId
+        )
         const productsToDisplay = productsFromApi.reduce((productsForSaleAccumulator, product) => {
           product.stock = productsStock.get(product.id)
           if (product.isForSale) {
@@ -98,14 +114,18 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
           return productsForSaleAccumulator
         }, [])
 
+        console.log(mockProducts(productsToDisplay))
+
         const shouldSortByPrice = features.getIn(['sortMarketProducts', 'value'], false)
-        const productsToStore = shouldSortByPrice ? sortProductsByPrice(productsToDisplay) : productsToDisplay
+        const productsToStore = shouldSortByPrice
+          ? sortProductsByPrice(productsToDisplay)
+          : productsToDisplay
 
         dispatch({
           type: actionTypes.PRODUCTS_RECEIVE,
           products: productsToStore,
           cutoffDate,
-          reload
+          reload,
         })
         if (error[actionTypes.PRODUCTS_RECEIVE]) {
           dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, null))
@@ -118,37 +138,43 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       }
     }
   }
-)
 
-export const productsLoadRandomProducts = (limit, imageSizes) => (
-  async (dispatch, getState) => {
-    const { accessToken, authUserId, menuId } = getProductParameters(getState())
+export const productsLoadRandomProducts = (limit, imageSizes) => async (dispatch, getState) => {
+  const { accessToken, authUserId, menuId } = getProductParameters(getState())
 
-    if (!getState().randomProducts.size) {
-      dispatch(statusActions.pending(actionTypes.PRODUCTS_RANDOM_RECEIVE, true))
-      dispatch(statusActions.error(actionTypes.PRODUCTS_RANDOM_RECEIVE, null))
-      try {
-        const { data: products } = await fetchRandomProducts(accessToken, limit, imageSizes, authUserId, menuId)
-        dispatch({ type: actionTypes.PRODUCTS_RANDOM_RECEIVE, products })
-      } catch (err) {
-        dispatch(statusActions.error(actionTypes.PRODUCTS_RANDOM_RECEIVE, err.message))
-        logger.error(err)
-      } finally {
-        dispatch(statusActions.pending(actionTypes.PRODUCTS_RANDOM_RECEIVE, false))
-      }
+  if (!getState().randomProducts.size) {
+    dispatch(statusActions.pending(actionTypes.PRODUCTS_RANDOM_RECEIVE, true))
+    dispatch(statusActions.error(actionTypes.PRODUCTS_RANDOM_RECEIVE, null))
+    try {
+      const { data: products } = await fetchRandomProducts(
+        accessToken,
+        limit,
+        imageSizes,
+        authUserId,
+        menuId
+      )
+      dispatch({ type: actionTypes.PRODUCTS_RANDOM_RECEIVE, products })
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.PRODUCTS_RANDOM_RECEIVE, err.message))
+      logger.error(err)
+    } finally {
+      dispatch(statusActions.pending(actionTypes.PRODUCTS_RANDOM_RECEIVE, false))
     }
   }
-)
+}
 
-export const productsLoadProductsById = (productIds = []) => (
+export const productsLoadProductsById =
+  (productIds = []) =>
   async (dispatch, getState) => {
-    const newProductIds = productIds.filter(productId => !getState().products.has(productId)).sort()
+    const newProductIds = productIds
+      .filter((productId) => !getState().products.has(productId))
+      .sort()
     const { accessToken, authUserId, menuId } = getProductParameters(getState())
 
     if (newProductIds.length) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
-        const productPromises = newProductIds.map(async productId => {
+        const productPromises = newProductIds.map(async (productId) => {
           const { data } = await fetchProduct(accessToken, productId, authUserId, menuId)
 
           return data
@@ -164,9 +190,9 @@ export const productsLoadProductsById = (productIds = []) => (
       }
     }
   }
-)
 
-export const productsLoadStock = (forceRefresh = false) => (
+export const productsLoadStock =
+  (forceRefresh = false) =>
   async (dispatch, getState) => {
     if (forceRefresh || !getState().productsStock.size) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_STOCK_CHANGE, true))
@@ -174,7 +200,7 @@ export const productsLoadStock = (forceRefresh = false) => (
         const { data: stockData } = await fetchProductStock(getState().auth.get('accessToken'))
         const stock = {}
 
-        Object.keys(stockData).forEach(productId => {
+        Object.keys(stockData).forEach((productId) => {
           stock[productId] = stockData[productId].number
         })
 
@@ -187,14 +213,13 @@ export const productsLoadStock = (forceRefresh = false) => (
       }
     }
   }
-)
 
 export const trackProductFiltering = (categoryId) => ({
   type: actionTypes.PRODUCTS_FILTER_TRACKING,
   trackingData: {
     actionType: 'Products filtered',
     categoryId,
-  }
+  },
 })
 
 export const productsActions = {

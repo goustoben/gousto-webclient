@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 
-import config from 'config/routes'
+import config, { menu } from 'config/routes'
 import { fetchOrder } from 'apis/orders'
 import logger from 'utils/logger'
 import userUtils from 'utils/user'

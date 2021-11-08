@@ -695,3 +695,121 @@ export const mockNourishedData = {
     },
   ],
 }
+
+export const mockMarketPlaceItems = [
+  {
+    name: 'Nourished Advent Calendar',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/AdventCalendar_ProductPage_Banner_Tablet_900x.jpg?v=1634137555',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/AdventCalendar_ProductPage_Banner_Tablet_900x.jpg?v=1634137555',
+  },
+  {
+    name: 'The Wellness Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/WellnessBox2021_1df193f7-1d87-4976-9c18-6de1e8980576_900x.png?v=1631196907',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/WellnessBox2021_1df193f7-1d87-4976-9c18-6de1e8980576_900x.png?v=1631196907',
+  },
+  {
+    name: 'The Inner Defence Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxinnerdefence_6488b22d-89a1-4a0a-b198-79f376553329_900x.jpg?v=1631715230',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxinnerdefence_6488b22d-89a1-4a0a-b198-79f376553329_900x.jpg?v=1631715230',
+  },
+  {
+    name: 'The Inner Peace Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxinnerpeacesquare_ed0677ba-bbd4-481a-b643-21ba49cf9c90_900x.jpg?v=1631864062',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxinnerpeacesquare_ed0677ba-bbd4-481a-b643-21ba49cf9c90_900x.jpg?v=1631864062',
+  },
+  {
+    name: 'The Inner Strength Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerStrength_f55427cd-b3c8-482b-9460-2dc5944a8fbf_900x.jpg?v=1631194536',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerStrength_f55427cd-b3c8-482b-9460-2dc5944a8fbf_900x.jpg?v=1631194536',
+  },
+  {
+    name: 'The Inner Beauty Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxinnerbeauty_15fea417-6b3b-494d-8035-0d5b450a122b_900x.jpg?v=1626445411',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxinnerbeauty_15fea417-6b3b-494d-8035-0d5b450a122b_900x.jpg?v=1626445411',
+  },
+  {
+    name: 'The Menopure Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxmenopure_900x.jpg?v=1626446718',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxmenopure_900x.jpg?v=1626446718',
+  },
+  {
+    name: 'The Plant Based Power Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Plant-basedPower_1e709756-87d4-46d0-8ed4-34f1b05da070_900x.jpg?v=1626447619',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Plant-basedPower_1e709756-87d4-46d0-8ed4-34f1b05da070_900x.jpg?v=1626447619',
+  },
+  {
+    name: 'The Inner Vitality Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerVitality_0c1b71db-55d2-4e55-a513-d61688d1cbc8_900x.png?v=1626446499',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerVitality_0c1b71db-55d2-4e55-a513-d61688d1cbc8_900x.png?v=1626446499',
+  },
+  {
+    name: 'The Party Proofed Gift Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxpartyproofed_08a34eb8-0123-46e2-9fde-3f8bf8d3443a_900x.jpg?v=1626447434',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/giftboxpartyproofed_08a34eb8-0123-46e2-9fde-3f8bf8d3443a_900x.jpg?v=1626447434',
+  },
+  {
+    name: 'Inner Defence One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerDefence_3for2_Square_bdf10323-e756-4cbd-8c08-241df5a151d7_900x.jpg?v=1634826469',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerDefence_3for2_Square_bdf10323-e756-4cbd-8c08-241df5a151d7_900x.jpg?v=1634826469',
+  },
+  {
+    name: 'Inner Beauty One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerBeauty_3for2_Square_19e7f897-d2ed-42c2-a020-c2eca49c83a0_900x.jpg?v=1634826414',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerBeauty_3for2_Square_19e7f897-d2ed-42c2-a020-c2eca49c83a0_900x.jpg?v=1634826414',
+  },
+  {
+    name: 'Gamer One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Gamer_3for2_Square_302bc51d-d204-44cd-bade-b737bbcab300_900x.jpg?v=1634825686',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Gamer_3for2_Square_302bc51d-d204-44cd-bade-b737bbcab300_900x.jpg?v=1634825686',
+  },
+  {
+    name: 'Inner Peace One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerPeace_3for2_Square_d7f4ef9c-60fd-4bfb-b6a5-fcbf21f9f9f4_900x.jpg?v=1634826503',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerPeace_3for2_Square_d7f4ef9c-60fd-4bfb-b6a5-fcbf21f9f9f4_900x.jpg?v=1634826503',
+  },
+  {
+    name: 'Inner Strength One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerStrength_3for2_Square_74ffbd62-53c2-495e-8c22-f02b70a7b63b_900x.jpg?v=1634826555',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerStrength_3for2_Square_74ffbd62-53c2-495e-8c22-f02b70a7b63b_900x.jpg?v=1634826555',
+  },
+  {
+    name: 'Nourished Essentials One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Essentials_3for2_Square_900x.jpg?v=1634826583',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Essentials_3for2_Square_900x.jpg?v=1634826583',
+  },
+  {
+    name: 'Plant-based Power One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/PlantBasedPower_3for2_Square_366c6ee9-ba49-429d-a1d3-21c6209166ea_900x.jpg?v=1634826678',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/PlantBasedPower_3for2_Square_366c6ee9-ba49-429d-a1d3-21c6209166ea_900x.jpg?v=1634826678',
+  },
+  {
+    name: 'High Flyer One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/HighFlyer_3for2_Square_a702f1e9-935f-4bed-a8c4-2c192962a6c0_900x.jpg?v=1634825761',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/HighFlyer_3for2_Square_a702f1e9-935f-4bed-a8c4-2c192962a6c0_900x.jpg?v=1634825761',
+  },
+  {
+    name: 'Prenatal One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Prenatal_3for2_Square_fe3a7834-da9e-4616-b6e8-7030b88da8cf_900x.jpg?v=1634826730',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Prenatal_3for2_Square_fe3a7834-da9e-4616-b6e8-7030b88da8cf_900x.jpg?v=1634826730',
+  },
+  {
+    name: 'Party Proofed One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/PartyProofed_3for2_Square_e1426fd6-a06b-4788-adec-fdc90326c95f_900x.jpg?v=1634826647',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/PartyProofed_3for2_Square_e1426fd6-a06b-4788-adec-fdc90326c95f_900x.jpg?v=1634826647',
+  },
+  {
+    name: 'Menopure One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Menopure_3for2_Square_744353d7-ac2e-403e-8b5a-e7d5ba606001_900x.jpg?v=1634830992',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/Menopure_3for2_Square_744353d7-ac2e-403e-8b5a-e7d5ba606001_900x.jpg?v=1634830992',
+  },
+  {
+    name: 'Inner Vitality One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerVitality_3for2_Square_900x.jpg?v=1634835996',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/InnerVitality_3for2_Square_900x.jpg?v=1634835996',
+  },
+  {
+    name: 'Shape Up One Week Box',
+    src: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/MicrosoftTeams-image_1_557f07f2-f895-43ea-a421-dca89d75c48e_900x.jpg?v=1634836764',
+    url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/MicrosoftTeams-image_1_557f07f2-f895-43ea-a421-dca89d75c48e_900x.jpg?v=1634836764',
+  },
+]

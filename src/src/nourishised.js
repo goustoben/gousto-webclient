@@ -1,4 +1,4 @@
-import { nourishedCollections, mockNourishedData } from './mockNourishedData'
+import { nourishedCollections, mockNourishedData, mockMarketPlaceItems } from './mockNourishedData'
 
 const nourishedData = {
   '60006307-d5f4-4364-9d44-2be34c6bc536': {
@@ -90,4 +90,18 @@ const mockRecipes = (recipes) => {
   })
 }
 
-export { mockMenuResponse, mockOrders, mockRecipes }
+const mockProducts = (products) => {
+  products.forEach((product) => {
+    const marketPlaceItem = uuidToListItem(product.id, mockMarketPlaceItems)
+    product.title = marketPlaceItem.name
+    for (const [_size, obj] of Object.entries(product.images)) {
+      obj.src = marketPlaceItem.src
+      obj.url = marketPlaceItem.url
+    }
+    console.log(product)
+  })
+
+  return products
+}
+
+export { mockMenuResponse, mockOrders, mockRecipes, mockProducts }
