@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { helpPreLoginVisibilityChange } from 'actions/login'
 import * as trackingKeys from 'actions/trackingKeys'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import Footer from 'Footer/Footer'
@@ -9,121 +8,121 @@ jest.mock('actions/login')
 
 describe('<Footer />', () => {
   const trackNavigationClick = jest.fn()
+  const helpPreLoginVisibilityChange = jest.fn()
+  let wrapper
 
   afterEach(() => {
     jest.clearAllMocks()
   })
 
+  beforeEach(() => {
+    wrapper = shallow(<Footer
+      trackNavigationClick={trackNavigationClick}
+      helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
+    />)
+  })
+
   test('should return a <footer>', () => {
-    const wrapper = shallow(<Footer />)
     expect(wrapper.type()).toEqual('footer')
   })
 
-  test('should display the medium footer by default which conatains AppStoreLinks and full list', () => {
-    const wrapper = shallow(<Footer isAuthenticated />)
-    expect(wrapper.find(AppStoreLinks).length).toEqual(1)
+  describe('when type prop is not passed', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isAuthenticated: true
+      })
+    })
 
-    // Render app links store
-    expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(1)
-    // Render full list
-    expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(1)
-    // render Terms
-    expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
-    // render Privacy links
-    expect(
-      wrapper.find('[data-selid="footer-privacy-statement"]').length,
-    ).toEqual(1)
-    // render Modern Slavery link
-    expect(
-      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
-    ).toEqual(1)
-    // Don't render pattern
-    expect(wrapper.find('#pattern').length).toEqual(0)
+    test('then should render medium footer by default', () => {
+      expect(wrapper.find(AppStoreLinks).length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-privacy-statement"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-modern-slavery-statement"]').length).toEqual(1)
+      expect(wrapper.find('#pattern').length).toEqual(0)
+    })
   })
 
-  test("should display the Simple footer when type is 'simple' ", () => {
-    const wrapper = shallow(<Footer type="simple" />)
-    // Render Terms
-    expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
-    // Render Privacy links
-    expect(
-      wrapper.find('[data-selid="footer-privacy-statement"]').length,
-    ).toEqual(1)
-    // render Modern Slavery link
-    expect(
-      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
-    ).toEqual(1)
-    // DONT Render app links store
-    expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(0)
-    // DONT Render full list
-    expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(0)
-    // DONT render pattern
-    expect(wrapper.find('#pattern').length).toEqual(0)
-    // DONT render app store links
-    expect(wrapper.find(AppStoreLinks).length).toEqual(0)
+  describe('when type is "simple"', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        type: 'simple',
+      })
+    })
+
+    test('then should display the Simple footer with proper links', () => {
+      expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-privacy-statement"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-modern-slavery-statement"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(0)
+      expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(0)
+      expect(wrapper.find('#pattern').length).toEqual(0)
+      expect(wrapper.find(AppStoreLinks).length).toEqual(0)
+    })
   })
 
-  test('should keep back compatibility with the `simple` prop ', () => {
-    const wrapper = shallow(<Footer simple />)
-    // Render Terms
-    expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
-    // Render Privacy links
-    expect(
-      wrapper.find('[data-selid="footer-privacy-statement"]').length,
-    ).toEqual(1)
-    // render Modern Slavery link
-    expect(
-      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
-    ).toEqual(1)
-    // DONT Render app links store
-    expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(0)
-    // DONT Render full list
-    expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(0)
-    // DONT render pattern
-    expect(wrapper.find('#pattern').length).toEqual(0)
-    // DONT render app store links
-    expect(wrapper.find(AppStoreLinks).length).toEqual(0)
+  describe('when simple prop is passed', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        simple: true,
+      })
+    })
+
+    test('should keep back compatibility and render proper links', () => {
+      expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-privacy-statement"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-modern-slavery-statement"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(0)
+      expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(0)
+      expect(wrapper.find('#pattern').length).toEqual(0)
+      expect(wrapper.find(AppStoreLinks).length).toEqual(0)
+    })
   })
 
-  test("should display the Large footer when type is 'large' ", () => {
-    const wrapper = shallow(<Footer type="large" isAuthenticated />)
-    // render Terms
-    expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
-    // Render Privacy links
-    expect(
-      wrapper.find('[data-selid="footer-privacy-statement"]').length,
-    ).toEqual(1)
-    // render Modern Slavery link
-    expect(
-      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
-    ).toEqual(1)
-    // Render app links store
-    expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(1)
-    // Render full list
-    expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(1)
-    // Render app store links
-    expect(wrapper.find(AppStoreLinks).length).toEqual(1)
+  describe('when type is "large"', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        type: 'large',
+        isAuthenticated: true,
+      })
+    })
+
+    test('then should render proper links', () => {
+      expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-privacy-statement"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-modern-slavery-statement"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(1)
+      expect(wrapper.find('[data-selid="footer-learn-more"]').length).toEqual(1)
+      expect(wrapper.find(AppStoreLinks).length).toEqual(1)
+    })
   })
 
-  test('should not display copyright if set to false', () => {
-    const wrapper = shallow(<Footer copyright={false} />)
-    // render Terms
-    expect(wrapper.find('#copyright').length).toEqual(0)
+  describe('when copyright is false', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        copyright: false,
+      })
+    })
+
+    test('then should not display copyright', () => {
+      expect(wrapper.find('#copyright').length).toEqual(0)
+    })
   })
 
-  test('should display copyright if set to true', () => {
-    const wrapper = shallow(<Footer copyright />)
-    // render Terms
-    expect(wrapper.find('#copyright').length).toEqual(1)
+  describe('when copyright is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        copyright: true,
+      })
+    })
+
+    test('then should display copyright', () => {
+      expect(wrapper.find('#copyright').length).toEqual(1)
+    })
   })
 
   describe('clicking the links', () => {
-    let wrapper
-
-    beforeEach(() => {
-      wrapper = shallow(<Footer />)
-    })
-
     test('does not open other links in a new tab', () => {
       const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
       expect(linksWithNewTab).toHaveLength(0)
@@ -131,19 +130,14 @@ describe('<Footer />', () => {
   })
 
   describe('given the user is logged in', () => {
-    let wrapper
     let helpLink
 
     describe('when Help is clicked', () => {
       beforeEach(() => {
-        wrapper = shallow(
-          <Footer
-            copyright={false}
-            isAuthenticated
-            trackNavigationClick={trackNavigationClick}
-          />
-        )
-
+        wrapper.setProps({
+          copyright: false,
+          isAuthenticated: true,
+        })
         helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
       })
 
@@ -166,17 +160,12 @@ describe('<Footer />', () => {
   })
 
   describe('given the user is logged out', () => {
-    let wrapper
     let helpLink
 
     beforeEach(() => {
-      wrapper = shallow(
-        <Footer
-          helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
-          isAuthenticated={false}
-          trackNavigationClick={trackNavigationClick}
-        />
-      )
+      wrapper.setProps({
+        isAuthenticated: false
+      })
       helpLink = wrapper.find('[data-test="help-link"]')
     })
 
@@ -216,8 +205,6 @@ describe('<Footer />', () => {
   })
 
   describe('when weeks recipes link is rendered', () => {
-    const wrapper = shallow(<Footer trackNavigationClick={trackNavigationClick} />)
-
     test('then it should be client routed', () => {
       const recipesSelector = '[data-selid="footer-this-weeks-recipes"]'
       const weekRecipes = wrapper.find(recipesSelector)
@@ -236,6 +223,44 @@ describe('<Footer />', () => {
       test('then trackNavigationClick should be called with proper prop', () => {
         expect(trackNavigationClick).toHaveBeenCalledWith({ actionType: trackingKeys.clickRecipeNavigationFooter })
       })
+    })
+  })
+
+  describe('when isCorporateEnquiriesLinkVisible is true', () => {
+    let corporateEnquiries
+
+    beforeEach(() => {
+      wrapper.setProps({
+        isCorporateEnquiriesLinkVisible: true
+      })
+      corporateEnquiries = wrapper.find('[data-selid="footer-corporate-enquiries"]')
+    })
+
+    test('then corporate enquiries link should be visible', () => {
+      expect(corporateEnquiries.exists()).toBeTruthy()
+    })
+
+    describe('when link is clicked', () => {
+      beforeEach(() => {
+        corporateEnquiries.prop('tracking')()
+      })
+
+      test('then trackNavigationClick should be called with a proper parameter', () => {
+        expect(trackNavigationClick).toHaveBeenCalledWith({ actionType: 'click_corporate_enquiry_footer' })
+      })
+    })
+  })
+
+  describe('when isCorporateEnquiriesLinkVisible is false', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCorporateEnquiriesLinkVisible: false
+      })
+    })
+
+    test('then corporate enquiries link should be hidden', () => {
+      const corporateEnquiries = wrapper.find('[data-selid="footer-corporate-enquiries"]')
+      expect(corporateEnquiries.exists()).toBeFalsy()
     })
   })
 })
