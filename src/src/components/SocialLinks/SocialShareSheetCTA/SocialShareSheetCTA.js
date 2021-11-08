@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { CTA } from 'goustouicomponents'
 import { actionTypes } from 'actions/actionTypes'
 import Overlay from 'components/Overlay'
-import SocialShareSheet from 'components/SocialLinks/SocialShareSheet'
+import { SocialShareSheetContainer } from 'components/SocialLinks/SocialShareSheet'
 
 import css from './SocialShareSheetCTA.css'
 
@@ -45,7 +45,7 @@ class SocialShareSheetCTA extends PureComponent {
           Share your link
         </CTA>
         <Overlay open={isShareSheetOpen} from="bottom">
-          <SocialShareSheet onClose={this.closeShareSheet} referralCode={referralCode} />
+          <SocialShareSheetContainer onClose={this.closeShareSheet} referralCode={referralCode} />
         </Overlay>
       </div>
     )

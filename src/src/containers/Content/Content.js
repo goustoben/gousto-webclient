@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Content from 'Content'
+import { Content } from 'Content'
 
 function mapStateToProps(state) {
   return { state }

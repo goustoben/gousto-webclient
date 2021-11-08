@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 // eslint-disable-next-line import/no-unresolved
 import formsCss from 'styles/forms.css'
-import InputWrapper from 'Form/InputWrapper'
+import { InputWrapper } from 'Form/InputWrapper'
 import css from './input.css'
 import checkoutCss from '../../../routes/Checkout/Checkout.css'
 

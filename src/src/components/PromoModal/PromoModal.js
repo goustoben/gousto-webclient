@@ -10,7 +10,7 @@ import {
 } from 'actions/trackingKeys'
 import { CTA, Modal } from 'goustouicomponents'
 import headerImage from 'media/images/discount-modal-header.jpg'
-import AgeVerify from './AgeVerify'
+import { AgeVerifyContainer } from './AgeVerify'
 import css from './PromoModal.css'
 
 class PromoModal extends React.Component {
@@ -80,7 +80,7 @@ class PromoModal extends React.Component {
               {!error && !isGoustoOnDemandError && <h4 className={css.subHeader}>{title}</h4>}
               {/* eslint-disable-next-line react/no-danger */}
               <p className={css.content} dangerouslySetInnerHTML={{ __html: text }} />
-              {needsAgeVerification && !error ? <AgeVerify /> : null}
+              {needsAgeVerification && !error ? <AgeVerifyContainer /> : null}
               <CTA
                 size="medium"
                 testingSelector="promoModalButton"

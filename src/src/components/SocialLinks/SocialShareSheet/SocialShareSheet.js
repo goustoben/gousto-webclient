@@ -5,8 +5,8 @@ import ModalPanel from 'Modal/ModalPanel'
 import Svg from 'Svg'
 import { actionTypes } from 'actions/actionTypes'
 import { UserRAFLink } from 'components/UserRAFLink'
-import ReferAFriend from 'components/ReferAFriend'
 import { onEnter } from 'utils/accessibility'
+import { ReferAFriendContainer } from 'components/ReferAFriend'
 import { LinkRow } from './LinkRow'
 import css from './SocialShareSheet.css'
 import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferralLink, SOCIAL_TYPES } from '../socialReferralHelper'
@@ -59,7 +59,7 @@ class SocialShareSheet extends React.PureComponent {
           </div>
 
           <div className={`${css.emailForm} ${!isEmailFormOpen && css.hideContent}`}>
-            {isEmailFormOpen && <ReferAFriend />}
+            {isEmailFormOpen && <ReferAFriendContainer />}
           </div>
         </div>
 

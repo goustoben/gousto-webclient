@@ -6,8 +6,8 @@ import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal,
 import { formatOrderPrice } from 'utils/pricing'
 
 import css from './Receipt.css'
-import ReceiptLine from './ReceiptLine'
-import DeliveryDetails from './DeliveryDetails'
+import { ReceiptLine } from './ReceiptLine'
+import { DeliveryDetails } from './DeliveryDetails'
 
 const propTypes = {
   prices: PropTypes.instanceOf(Immutable.Map),

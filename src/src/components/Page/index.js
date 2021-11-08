@@ -1,6 +1,6 @@
 import React from 'react'
-import StyledElement from 'StyledElement'
-import SectionHeader from 'SectionHeader'
+import { StyledElement } from 'StyledElement'
+import { SectionHeader } from 'SectionHeader'
 
 export const PageContent = (props) => StyledElement({
   ...props,

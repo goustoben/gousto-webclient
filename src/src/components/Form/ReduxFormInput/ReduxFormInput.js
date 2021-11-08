@@ -34,7 +34,7 @@ const defaultProps = {
   dataTesting: null,
 }
 
-class ReduxFormInput extends React.PureComponent {
+export class ReduxFormInput extends React.PureComponent {
   onChange = (value) => {
     const { input, meta } = this.props
     if (value) {
@@ -110,5 +110,3 @@ class ReduxFormInput extends React.PureComponent {
 
 ReduxFormInput.propTypes = propTypes
 ReduxFormInput.defaultProps = defaultProps
-
-export default ReduxFormInput

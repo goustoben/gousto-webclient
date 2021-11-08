@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Field } from 'redux-form'
-import ReduxFormInput from 'Form/ReduxFormInput'
+import { ReduxFormInput } from 'Form/ReduxFormInput'
 import { CheckoutButton } from '../CheckoutButton/CheckoutButton'
 import { transformAddresses } from '../../utils/delivery'
 

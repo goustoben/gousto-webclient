@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import Item from 'Item/Item'
-import Image from 'Image/Image'
+import { Image } from 'Image/Image'
 
 describe('Item', () => {
   test('should render title', () => {

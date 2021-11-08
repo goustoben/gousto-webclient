@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 const defaultImage = require('media/photos/gousto-share-box.jpg')
 const localisation = require('config/localisation')
 
-const OpenGraph = ({ href, imageUrl }) => (
+export const OpenGraph = ({ href, imageUrl }) => (
   <Helmet
     meta={[
       {
@@ -56,5 +56,3 @@ OpenGraph.propTypes = {
   href: PropTypes.string.isRequired,
   imageUrl: PropTypes.string,
 }
-
-export default OpenGraph

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'redux-form'
-import ReduxFormInput from 'Form/ReduxFormInput'
+import { ReduxFormInput } from 'Form/ReduxFormInput'
 import classNames from 'classnames'
 import { checkoutConfig } from 'config/checkout'
 import css from './Delivery.css'

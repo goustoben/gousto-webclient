@@ -5,7 +5,7 @@ import Immutable, { List, Map } from 'immutable'
 import Image from 'Image'
 import CloseButton from 'Overlay/CloseButton'
 import Details, { getAllergenListFromAttributes } from 'Product/Detail/Detail'
-import Attributes from 'Product/Attributes/Attributes'
+import { Attributes } from 'Product/Attributes/Attributes'
 import Buttons from 'Product/Buttons/Buttons'
 
 describe('getAllergenListFromAttributes', () => {

@@ -1,1 +1,1 @@
-export { default } from './StyledElement'
+export { StyledElement } from './StyledElement'

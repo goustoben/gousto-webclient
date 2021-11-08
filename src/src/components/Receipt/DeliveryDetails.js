@@ -5,7 +5,7 @@ import moment from 'moment'
 import deliverySlotUtils from 'utils/deliverySlot'
 import css from './DeliveryDetails.css'
 
-const DeliveryDetails = (props) => {
+export const DeliveryDetails = (props) => {
   const { address, date, slot } = props
   const deliveryDate = moment(date).format('ddd, D MMM')
   const deliveryTime = deliverySlotUtils.toTimeRange(slot)
@@ -41,5 +41,3 @@ DeliveryDetails.defaultProps = {
   date: '',
   slot: {}
 }
-
-export default DeliveryDetails

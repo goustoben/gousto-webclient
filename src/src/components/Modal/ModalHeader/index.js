@@ -1,1 +1,1 @@
-export { default } from './ModalHeader'
+export { ModalHeader } from './ModalHeader'

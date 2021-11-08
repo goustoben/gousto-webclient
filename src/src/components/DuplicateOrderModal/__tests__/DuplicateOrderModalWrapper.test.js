@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import DuplicateOrderModalWrapper from 'DuplicateOrderModal/DuplicateOrderModalWrapper'
-import DuplicateOrderModal from 'DuplicateOrderModal/DuplicateOrderModalContainer'
+import { DuplicateOrderModalWrapper } from 'DuplicateOrderModal/DuplicateOrderModalWrapper'
+import { DuplicateOrderModalContainer } from 'DuplicateOrderModal/DuplicateOrderModalContainer'
 import Overlay from 'Overlay'
 
 describe('DuplicateOrderModal/DuplicateOrderModalWrapper', () => {
@@ -17,7 +17,7 @@ describe('DuplicateOrderModal/DuplicateOrderModalWrapper', () => {
   })
 
   test('should contain a DuplicateOrderModal', () => {
-    expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
+    expect(wrapper.find(DuplicateOrderModalContainer).length).toEqual(1)
   })
 
   test('should map the visible prop through to Overlay open', () => {

@@ -21,7 +21,7 @@ const mergeErrorMessages = (errors, fieldPath, value) => {
 
 const getReference = (obj, field = '') => field.split('.').reduce((object, index) => (object ? object[index] : ''), obj)
 
-export default (rules, data, props, errorMessages = {}) => Object.keys(rules).reduce((allError, fieldName) => {
+export const validate = (rules, data, props, errorMessages = {}) => Object.keys(rules).reduce((allError, fieldName) => {
   const validationRule = rules[fieldName]
   const fieldValue = getReference(data, fieldName)
   const value = fieldValue ? String(fieldValue) : ''

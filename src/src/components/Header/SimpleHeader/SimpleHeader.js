@@ -6,7 +6,7 @@ import { PromoModalWrapper as PromoModal } from 'PromoModal'
 import { H1 } from 'Page/Header'
 import css from '../Header.css'
 
-const SimpleHeader = ({ serverError, className, homeUrl, title, showLoginCTA, onLoginClick }) => (
+export const SimpleHeader = ({ serverError, className, homeUrl, title, showLoginCTA, onLoginClick }) => (
   <span id={serverError ? 'mobileMenu' : null}>
     <a className={className} href={serverError ? '#' : null} />
     <header className={css.header}>
@@ -53,5 +53,3 @@ SimpleHeader.defaultProps = {
   showLoginCTA: false,
   onLoginClick: () => {},
 }
-
-export default SimpleHeader

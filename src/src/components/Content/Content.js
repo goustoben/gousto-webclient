@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import logger from 'utils/logger'
 
-const Content = (props) => {
+export const Content = (props) => {
   function getValueFromStores(valuePath, stores) {
     let value = null
     const arrayOfPath = valuePath.split('.')
@@ -96,5 +96,3 @@ Content.propTypes = {
   propNames: PropTypes.string,
   state: PropTypes.object.isRequired,
 }
-
-export default Content

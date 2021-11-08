@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Content from 'Content'
+import { Content } from 'Content'
 import Immutable from 'immutable'
-import SectionHeader from 'SectionHeader'
+import { SectionHeader } from 'SectionHeader'
 
 describe('Content', () => {
   let state

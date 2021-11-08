@@ -57,7 +57,7 @@ const renderHelpLink = (
     )
 )
 
-const Footer = ({
+export const Footer = ({
   copyright,
   helpPreLoginVisibilityChange,
   isAuthenticated,
@@ -278,6 +278,3 @@ Footer.defaultProps = {
   type: 'medium',
   isCorporateEnquiriesLinkVisible: true,
 }
-
-// eslint-disable-next-line
-export default Footer

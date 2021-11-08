@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import ImageSelection from 'ImageSelection'
+import { ImageSelection } from 'ImageSelection'
 import Image from 'Image'
 
 describe('ImageSelection', () => {

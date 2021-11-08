@@ -3,7 +3,7 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { getIsCorporateEnquiriesLinkVisible } from 'selectors/features'
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import { trackNavigationClick } from 'actions/tracking'
-import Footer from './Footer'
+import { Footer } from './Footer'
 
 const mapStateToProps = (state, ownProps) => ({
   isAuthenticated: getIsAuthenticated(state),
@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   isCorporateEnquiriesLinkVisible: getIsCorporateEnquiriesLinkVisible(state),
 })
 
-export default connect(mapStateToProps, {
+export const FooterContainer = connect(mapStateToProps, {
   helpPreLoginVisibilityChange,
   trackNavigationClick,
 })(Footer)

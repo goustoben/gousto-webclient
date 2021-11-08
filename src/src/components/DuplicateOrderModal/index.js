@@ -1,1 +1,1 @@
-export { default } from './DuplicateOrderModalWrapperContainer'
+export { DuplicateOrderModalWrapperContainer } from './DuplicateOrderModalWrapperContainer'

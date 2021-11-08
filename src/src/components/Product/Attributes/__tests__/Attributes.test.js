@@ -2,7 +2,7 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import Attributes from 'Product/Attributes'
+import { Attributes } from 'Product/Attributes'
 
 describe('Product Attributes', () => {
   let wrapper

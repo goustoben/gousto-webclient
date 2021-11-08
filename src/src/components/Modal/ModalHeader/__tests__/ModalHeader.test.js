@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ModalHeader from 'components/Modal/ModalHeader'
+import { ModalHeader } from 'components/Modal/ModalHeader'
 
 describe('ModalHeader', () => {
   let wrapper

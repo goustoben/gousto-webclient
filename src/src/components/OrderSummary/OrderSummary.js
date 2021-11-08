@@ -6,7 +6,7 @@ import Receipt from 'Receipt'
 import Icon from 'Icon'
 
 import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
-import ProductItem from 'Product/ProductItem'
+import { ProductItem } from 'Product/ProductItem'
 import SaveButton from 'OrderSummary/SaveButton'
 import classnames from 'classnames'
 import productUtils from 'utils/products'

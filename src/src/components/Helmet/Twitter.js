@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 
 const defaultImage = require('media/photos/gousto-share-box.jpg')
 
-const Twitter = ({ href, imageUrl }) => (
+export const Twitter = ({ href, imageUrl }) => (
   <Helmet
     meta={[
       {
@@ -47,5 +47,3 @@ Twitter.propTypes = {
   href: PropTypes.string.isRequired,
   imageUrl: PropTypes.string,
 }
-
-export default Twitter

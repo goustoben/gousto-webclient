@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Overlay from 'Overlay'
-import DuplicateOrderModal from './DuplicateOrderModalContainer'
+import { DuplicateOrderModalContainer } from './DuplicateOrderModalContainer'
 
-const DuplicateOrderModalWrapper = ({ visible }) => (
+export const DuplicateOrderModalWrapper = ({ visible }) => (
   <Overlay open={visible} from="top">
-    <DuplicateOrderModal />
+    <DuplicateOrderModalContainer />
   </Overlay>
 )
 
@@ -16,5 +16,3 @@ DuplicateOrderModalWrapper.propTypes = {
 DuplicateOrderModalWrapper.defaultProps = {
   visible: false,
 }
-
-export default DuplicateOrderModalWrapper

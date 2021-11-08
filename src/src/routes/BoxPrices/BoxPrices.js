@@ -5,7 +5,7 @@ import { ReactReduxContext } from 'react-redux'
 import { menuLoadBoxPrices } from 'actions/menu'
 import { getHeroDetails, seo } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
-import Hero from 'Hero'
+import { Hero } from 'Hero'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 import css from './BoxPrices.css'
 

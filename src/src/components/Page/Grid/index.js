@@ -1,4 +1,4 @@
-import StyledElement from 'StyledElement'
+import { StyledElement } from 'StyledElement'
 
 export const Col = (props) => StyledElement({ ...props, type: 'div' })
 

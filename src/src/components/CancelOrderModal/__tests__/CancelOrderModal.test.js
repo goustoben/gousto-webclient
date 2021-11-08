@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import CancelOrderModal from 'CancelOrderModal/CancelOrderModal'
+import { CancelOrderModal } from 'CancelOrderModal/CancelOrderModal'
 
 describe('CancelOrderModal', () => {
   let wrapper

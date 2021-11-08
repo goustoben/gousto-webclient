@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const InputWrapper = (Component, { childLabel, inputType, mask, ...rest } = {}) => {
+const InputWrapperUnconnected = (Component, { childLabel, inputType, mask, ...rest } = {}) => {
   const additionalProps = {
     'data-hj-masked': mask,
   }
@@ -24,7 +24,7 @@ const InputWrapper = (Component, { childLabel, inputType, mask, ...rest } = {}) 
   )
 }
 
-InputWrapper.propTypes = {
+InputWrapperUnconnected.propTypes = {
   childLabel: PropTypes.string,
   mask: PropTypes.object,
   inputType: PropTypes.oneOf([
@@ -38,10 +38,10 @@ InputWrapper.propTypes = {
   ]),
 }
 
-InputWrapper.defaultProps = {
+InputWrapperUnconnected.defaultProps = {
   childLabel: null,
   mask: null,
   value: null,
 }
 
-export default Component => props => InputWrapper(Component, props)
+export const InputWrapper = Component => props => InputWrapperUnconnected(Component, props)

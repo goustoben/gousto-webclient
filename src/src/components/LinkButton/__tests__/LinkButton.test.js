@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import LinkButton from 'LinkButton'
+import { LinkButton } from 'LinkButton'
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
 

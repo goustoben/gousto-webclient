@@ -1,4 +1,4 @@
-import StyledElement from 'StyledElement'
+import { StyledElement } from 'StyledElement'
 
 export const Aside = (props) => StyledElement({ ...props, type: 'aside' })
 

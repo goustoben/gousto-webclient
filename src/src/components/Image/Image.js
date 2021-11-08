@@ -37,7 +37,7 @@ const defaultProps = {
   placeholder: null,
 }
 
-class Image extends React.PureComponent {
+export class Image extends React.PureComponent {
   getSrcSet = srcs =>
     srcs.reduce(
       (str, src) => `${str} ${src.get('src')} ${src.get('width')}w,`,
@@ -140,5 +140,3 @@ class Image extends React.PureComponent {
 
 Image.propTypes = propTypes
 Image.defaultProps = defaultProps
-
-export default Image

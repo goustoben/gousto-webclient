@@ -1,4 +1,4 @@
-import validate from 'Form/validate'
+import { validate } from 'Form/validate'
 import { regularExpressions } from 'validations/regularExpressions'
 
 describe('validate', () => {

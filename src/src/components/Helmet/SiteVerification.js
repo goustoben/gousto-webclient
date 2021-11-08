@@ -1,7 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 
-const SiteVerification = () => (
+export const SiteVerification = () => (
   <Helmet
     meta={[
       {
@@ -23,5 +23,3 @@ const SiteVerification = () => (
     ]}
   />
 )
-
-export default SiteVerification

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import InputWrapper from 'Form/InputWrapper'
+import { InputWrapper } from 'Form/InputWrapper'
 import css from './CheckBox.css'
 
 export class CheckBox extends React.PureComponent {

@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import ReceiptLine from 'Receipt/ReceiptLine'
+import { ReceiptLine } from 'Receipt/ReceiptLine'
 
 describe('ReceiptLine', () => {
   test('should render label and children', () => {

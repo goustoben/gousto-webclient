@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Order.css'
 
-const Order = ({ date, numPeople, numRecipes }) => (
+export const Order = ({ date, numPeople, numRecipes }) => (
   <div className={css.order}>
     <div className={css.left}>
       <span className={css.calendar} />
@@ -30,5 +30,3 @@ Order.propTypes = {
   numPeople: PropTypes.string.isRequired,
   numRecipes: PropTypes.string.isRequired,
 }
-
-export default Order

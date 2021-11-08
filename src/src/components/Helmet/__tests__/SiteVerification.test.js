@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Helmet from 'react-helmet'
 
-import SiteVerification from 'Helmet/SiteVerification'
+import { SiteVerification } from 'Helmet/SiteVerification'
 
 describe('Helmet SiteVerification', () => {
   const wrapper = shallow(<SiteVerification />)

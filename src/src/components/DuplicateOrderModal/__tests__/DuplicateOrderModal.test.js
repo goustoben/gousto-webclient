@@ -2,8 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import DuplicateOrderModal from 'DuplicateOrderModal/DuplicateOrderModal'
-import Order from 'DuplicateOrderModal/Order'
+import { DuplicateOrderModal } from 'DuplicateOrderModal/DuplicateOrderModal'
+import { Order } from 'DuplicateOrderModal/Order'
 import ModalPanel from 'Modal/ModalPanel'
 
 describe('DuplicateOrderModal', () => {

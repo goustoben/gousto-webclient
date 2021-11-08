@@ -5,7 +5,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
 import css from './DuplicateOrderModal.css'
-import Order from './Order'
+import { Order } from './Order'
 
 const renderOrders = (closeOrders) => {
   const ordersRendered = []
@@ -25,7 +25,7 @@ const renderOrders = (closeOrders) => {
   return ordersRendered
 }
 
-const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
+export const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
   <ModalPanel closePortal={close} disableOverlay>
     <div className={css.body}>
       <h2>Your Upcoming Deliveries</h2>
@@ -51,5 +51,3 @@ DuplicateOrderModal.propTypes = {
 DuplicateOrderModal.defaultProps = {
   closeOrders: Immutable.Map(),
 }
-
-export default DuplicateOrderModal

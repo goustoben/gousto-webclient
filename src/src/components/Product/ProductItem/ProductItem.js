@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import Item from 'Item'
 
-const ProductItem = ({ disclaimerKey, images, title, quantity, onImageClick, onRemove, available, gift, url }) => (
+export const ProductItem = ({ disclaimerKey, images, title, quantity, onImageClick, onRemove, available, gift, url }) => (
   <Item
     disclaimerKey={disclaimerKey}
     type="product"
@@ -38,5 +38,3 @@ ProductItem.defaultProps = {
   gift: false,
   url: null,
 }
-
-export default ProductItem
