@@ -9,7 +9,6 @@ import {
   isOsrOfferFeatureEnabled,
   getAbandonBasket,
   getIsCustomNoticeEnabled,
-  getShowUserCredit,
   getGoToMyGousto,
   getGoToMyDeliveries,
   getPromoBannerEnabled,
@@ -67,7 +66,6 @@ describe('when features are defined', () => {
       [''], ['Click here to get 50% off your first box and 30% off all other boxes in your first month']]
     ],
     [getPromoOfferVariant, 'enableTVPromoAds'],
-    [getShowUserCredit, 'showUserCredit'],
     [getUserMenuVariant, 'userMenuVariant', [[''], ['menuB']]],
     [isNextDayDeliveryPaintedDoorFeatureEnabled, 'nextDayDeliveryPaintedDoor'],
     [isOsrOfferFeatureEnabled, 'enableOsrOffer'],
