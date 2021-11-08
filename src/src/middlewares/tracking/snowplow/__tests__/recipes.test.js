@@ -1,11 +1,8 @@
-import {
-  recipeListViewed,
-} from '../recipes/recipes'
+import { recipeListViewed } from '../recipes/recipes'
 
 describe('snowplow recipe tracking events', () => {
   describe('view_recipe_list', () => {
     const action = {
-      originalOrder: ['3', '5', '2', '7'],
       displayedOrder: ['7', '3', '2'],
       collectionId: '1234',
       dietTypes: ['meat'],
@@ -26,7 +23,6 @@ describe('snowplow recipe tracking events', () => {
     test('should return an object with data extracted from the action', () => {
       expect(recipeListViewed(action)).toMatchObject({
         data: {
-          original_order: ['3', '5', '2', '7'],
           displayed_order: ['7', '3', '2'],
           collection_id: '1234',
           diet_types: ['meat'],
@@ -37,7 +33,7 @@ describe('snowplow recipe tracking events', () => {
           recommended: true,
           browse_mode: false,
           recommender_version: '1',
-          is_recommendations_shown: true
+          is_recommendations_shown: true,
         },
       })
     })
