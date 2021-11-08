@@ -53,7 +53,6 @@
     "classnames": "2.2.6",
     "cookies-js": "1.2.3",
     "dompurify": "^2.0.8",
-    "es-abstract": "^1.19.1",
     "gousto-lumberjack-js": "git@github.com:Gousto/lumberjack-js-package.git#v1.0.4",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
