@@ -37,68 +37,45 @@ const getStore = (enableFeature = true) => (
 )
 
 describe('UserCreditMessageContainer', () => {
-  describe('the feature flag is enabled', () => {
-    describe('and credit is set to higher than 0', () => {
-      const store = getStore()
-      let wrapper = null
-
-      beforeEach(() => {
-        userApi.fetchUserCredit.mockReset()
-        userApi.fetchUserCredit.mockResolvedValueOnce({
-          data: { balance: '5.00' }
-        })
-
-        wrapper = mount(
-          <UserCreditMessageContainer store={store} />
-        )
-      })
-
-      test('the userFetchCredit action is being called correctly', () => {
-        expect(userApi.fetchUserCredit).toHaveBeenCalledTimes(1)
-      })
-
-      test('the Alert component is rendered and displays the user credit', () => {
-        expect(
-          wrapper.find('Alert').find('Heading').contains('Credit £5.00')
-        ).toBe(true)
-      })
-    })
-
-    describe('and credit is set to lower than 1', () => {
-      const store = getStore()
-      let wrapper = null
-
-      beforeEach(() => {
-        userApi.fetchUserCredit.mockReset()
-        userApi.fetchUserCredit.mockResolvedValueOnce({
-          data: { balance: '0' }
-        })
-
-        wrapper = mount(
-          <UserCreditMessageContainer store={store} />
-        )
-      })
-
-      test('the Alert component is not rendered', () => {
-        expect(wrapper.find('Alert').length).toBe(0)
-      })
-    })
-  })
-
-  describe('the feature flag is disabled', () => {
-    const store = getStore(false)
+  describe('and credit is set to higher than 0', () => {
+    const store = getStore()
     let wrapper = null
 
     beforeEach(() => {
       userApi.fetchUserCredit.mockReset()
+      userApi.fetchUserCredit.mockResolvedValueOnce({
+        data: { balance: '5.00' }
+      })
 
       wrapper = mount(
         <UserCreditMessageContainer store={store} />
       )
     })
 
-    test('the userFetchCredit action is not being called', () => {
-      expect(userApi.fetchUserCredit).toHaveBeenCalledTimes(0)
+    test('the userFetchCredit action is being called correctly', () => {
+      expect(userApi.fetchUserCredit).toHaveBeenCalledTimes(1)
+    })
+
+    test('the Alert component is rendered and displays the user credit', () => {
+      expect(
+        wrapper.find('Alert').find('Heading').contains('Credit £5.00')
+      ).toBe(true)
+    })
+  })
+
+  describe('and credit is set to lower than 1', () => {
+    const store = getStore()
+    let wrapper = null
+
+    beforeEach(() => {
+      userApi.fetchUserCredit.mockReset()
+      userApi.fetchUserCredit.mockResolvedValueOnce({
+        data: { balance: '0' }
+      })
+
+      wrapper = mount(
+        <UserCreditMessageContainer store={store} />
+      )
     })
 
     test('the Alert component is not rendered', () => {

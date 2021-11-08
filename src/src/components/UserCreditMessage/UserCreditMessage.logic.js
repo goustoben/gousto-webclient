@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { UserCreditMessagePresentation } from './UserCreditMessage.presentation'
 
 const propTypes = {
-  shouldFetchUserCredit: PropTypes.bool.isRequired,
   showUserCredit: PropTypes.bool,
   userCredit: PropTypes.string,
   userFetchCredit: PropTypes.func.isRequired,
@@ -17,13 +16,9 @@ const defaultProps = {
 class UserCreditMessage extends Component {
   componentDidMount() {
     const {
-      shouldFetchUserCredit,
       userFetchCredit,
     } = this.props
-
-    if (shouldFetchUserCredit) {
-      userFetchCredit()
-    }
+    userFetchCredit()
   }
 
   render() {

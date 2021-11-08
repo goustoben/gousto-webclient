@@ -36,9 +36,6 @@ export const defaultFeatures = () => ({
   sortMarketProducts: {
     value: false,
   },
-  showUserCredit: {
-    value: false,
-  },
   userMenuVariant: {
     value: '',
   },
