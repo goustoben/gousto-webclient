@@ -64,6 +64,7 @@ const Footer = ({
   simple,
   type,
   trackNavigationClick,
+  isCorporateEnquiriesLinkVisible,
 }) => {
   const renderTermsLink = () => (
     <li className={css.menuItem}>
@@ -91,6 +92,24 @@ const Footer = ({
       </Link>
     </li>
   )
+
+  const renderCorporateEnquiriesLink = () =>
+    isCorporateEnquiriesLinkVisible && (
+      <li className={css.menuItem}>
+        <Link
+          to={clientRoutes.corporateEnquiries}
+          data-selid="footer-corporate-enquiries"
+          title="Corporate enquiries"
+          clientRouted={false}
+          secondary
+          tracking={() => trackNavigationClick({
+            actionType: trackingKeys.clickCorporateEnquiriesLinkFooter,
+          })}
+        >
+          Corporate Enquiries
+        </Link>
+      </li>
+    )
 
   const renderSimpleList = () => (
     <ul className={css.menuList}>
@@ -141,6 +160,7 @@ const Footer = ({
       </li>
       {renderPrivacyLink()}
       {renderModernSlaveryLink()}
+      {renderCorporateEnquiriesLink()}
     </ul>
   )
 
@@ -248,6 +268,7 @@ Footer.propTypes = {
   simple: PropTypes.bool,
   type: PropTypes.string,
   trackNavigationClick: PropTypes.func.isRequired,
+  isCorporateEnquiriesLinkVisible: PropTypes.bool,
 }
 
 Footer.defaultProps = {
@@ -255,6 +276,7 @@ Footer.defaultProps = {
   isAuthenticated: false,
   simple: false,
   type: 'medium',
+  isCorporateEnquiriesLinkVisible: true,
 }
 
 // eslint-disable-next-line

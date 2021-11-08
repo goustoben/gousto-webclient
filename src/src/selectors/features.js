@@ -153,3 +153,7 @@ export const getIsJpgImagesEnabled = ({ features }) => (
 export const getSsrTwoComplaintsSameDay = ({ features }) => (
   features && features.getIn(['ssrTwoComplaintsSameDay', 'value'], false)
 )
+
+export const getIsCorporateEnquiriesLinkVisible = ({ features }) => (
+  features && features.getIn(['isCorporateEnquiriesLinkVisible', 'value'], true)
+)

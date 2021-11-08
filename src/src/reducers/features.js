@@ -75,6 +75,9 @@ export const defaultFeatures = () => ({
   ssrTwoComplaintsSameDay: {
     value: false
   },
+  isCorporateEnquiriesLinkVisible: {
+    value: true
+  },
 })
 
 export const initialState = () => Immutable.fromJS(defaultFeatures())

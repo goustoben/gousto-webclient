@@ -83,6 +83,8 @@ module.exports = {
 
     modernSlavery: '/modern-slavery-statement',
 
+    corporateEnquiries: 'https://cook.gousto.co.uk/corporate-enquiry/',
+
     resetForm: '/resetform',
 
     welcome: '/welcome-to-gousto',
