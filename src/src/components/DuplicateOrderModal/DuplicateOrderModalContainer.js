@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import actions from 'actions'
-import DuplicateOrderModal from './DuplicateOrderModal'
+import { DuplicateOrderModal } from './DuplicateOrderModal'
 
 function mapStateToProps(state) {
   return {
@@ -17,8 +17,6 @@ function mapStateToProps(state) {
   }
 }
 
-const DuplicateOrderModalContainer = connect(mapStateToProps, {
+export const DuplicateOrderModalContainer = connect(mapStateToProps, {
   close: () => actions.temp('closeOrderIds', Immutable.Map([])),
 })(DuplicateOrderModal)
-
-export default DuplicateOrderModalContainer

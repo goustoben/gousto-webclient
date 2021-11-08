@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Order from 'DuplicateOrderModal/Order'
+import { Order } from 'DuplicateOrderModal/Order'
 
 describe('DuplicateOrderModal/Order', () => {
   let wrapper

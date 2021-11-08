@@ -7,13 +7,13 @@ import Link from 'Link'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import { Login } from 'Login'
-import SimpleHeader from 'Header/SimpleHeader'
+import { SimpleHeader } from 'Header/SimpleHeader'
 import { PromoModalWrapper as PromoModal } from 'PromoModal'
-import DuplicateOrderModal from 'DuplicateOrderModal'
+import { DuplicateOrderModalWrapperContainer } from 'DuplicateOrderModal'
 import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
-import ExpiredBillingModal from 'ExpiredBillingModal'
+import { ExpiredBillingModalContainer } from 'ExpiredBillingModal'
 import { CookieBannerContainer } from 'CookieBanner'
 import { Button } from 'goustouicomponents'
 import { AppBanner } from 'AppBanner'
@@ -475,8 +475,8 @@ class Header extends React.PureComponent {
           {this.renderLoginModal()}
           <CancelOrderModal close={this.onCloseCancelBoxModal} />
           <PromoModal />
-          <DuplicateOrderModal />
-          <ExpiredBillingModal />
+          <DuplicateOrderModalWrapperContainer />
+          <ExpiredBillingModalContainer />
           <SubscriptionPause />
           <OnScreenRecovery />
           {path.indexOf('my-') !== -1 ? (<div><Account location={{ pathname: path }} /></div>) : null}

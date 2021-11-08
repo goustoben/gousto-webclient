@@ -1,1 +1,1 @@
-export { default } from './InputWrapper'
+export { InputWrapper } from './InputWrapper'

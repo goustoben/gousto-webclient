@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Svg.css'
 
-const Svg = ({ fileName, className, label, hidden }) => {
+export const Svg = ({ fileName, className, label, hidden }) => {
   const svgUrl = require(`media/svgs/${fileName}.svg`) // eslint-disable-line global-require
 
   return (
@@ -29,4 +29,3 @@ Svg.defaultProps = {
   className: '',
   label: ''
 }
-export default Svg

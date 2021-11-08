@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import css from './SectionHeader.css'
 
-const SectionHeader = ({ title, children, type, contentAlign, contentSizeMax }) => (
+export const SectionHeader = ({ title, children, type, contentAlign, contentSizeMax }) => (
   <header className={css[`${type}Container`]}>
     <div className={classnames(css[`${type}Content`], css[`${type}ContentMax${contentSizeMax}`], css[`${contentAlign}Align`])}>
       <h1 className={css[`${type}Title`]}>{title}</h1>
@@ -26,5 +26,3 @@ SectionHeader.defaultProps = {
   contentSizeMax: '',
   type: 'page',
 }
-
-export default SectionHeader

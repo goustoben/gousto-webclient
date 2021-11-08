@@ -3,9 +3,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import ProductList from 'Product/List'
-import SectionHeader from 'SectionHeader'
-import ImageSelection from 'ImageSelection'
-import LinkButton from 'LinkButton'
+import { SectionHeader } from 'SectionHeader'
+import { ImageSelection } from 'ImageSelection'
+import { LinkButton } from 'LinkButton'
 
 describe('Product List', () => {
   const wrapper = shallow(<ProductList orderId="1" />)

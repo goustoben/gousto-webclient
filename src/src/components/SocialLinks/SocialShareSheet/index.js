@@ -1,1 +1,1 @@
-export { default } from './SocialShareSheetContainer'
+export { SocialShareSheetContainer } from './SocialShareSheetContainer'

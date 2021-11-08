@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, FormSection } from 'redux-form'
 
-import ReduxFormInput from 'Form/ReduxFormInput'
+import { ReduxFormInput } from 'Form/ReduxFormInput'
 
 import css from './CheckoutName.css'
 

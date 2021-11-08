@@ -3,7 +3,7 @@ import React from 'react'
 import CheckBox from 'Form/CheckBox'
 import css from './AgeVerify.css'
 
-const AgeVerify = ({ verified, onChange }) => (
+export const AgeVerify = ({ verified, onChange }) => (
   <div className={css.checkbox}>
     <CheckBox
       label="Please confirm you are over 18 years old to receive these gifts"
@@ -23,5 +23,3 @@ AgeVerify.propTypes = {
 AgeVerify.defaultProps = {
   verified: false,
 }
-
-export default AgeVerify

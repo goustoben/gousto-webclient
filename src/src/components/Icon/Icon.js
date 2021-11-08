@@ -4,7 +4,7 @@ import classNames from 'classnames'
 // eslint-disable-next-line import/no-unresolved
 import css from 'styles/vendor/font-awesome-module.css'
 
-const Icon = ({ name, fixedWidth, size, style, className }) => (
+export const Icon = ({ name, fixedWidth, size, style, className }) => (
   <span
     className={classNames(css['fa-basic-class'], css[name], {
       [css['fa-fw']]: fixedWidth,
@@ -28,5 +28,3 @@ Icon.defaultProps = {
   size: null,
   style: {},
 }
-
-export default Icon

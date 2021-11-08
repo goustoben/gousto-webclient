@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import ReferAFriend from 'components/ReferAFriend'
+import { ReferAFriendContainer } from 'components/ReferAFriend'
 import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { trackingReferFriendSocialSharing } from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
@@ -55,9 +55,9 @@ describe('SocialShareSheet', () => {
       expect(copyLinkRow.find('span').text()).toEqual('Copy link')
     })
 
-    test('should render ReferAFriend when isEmailFormOpen is true', () => {
+    test('should render ReferAFriendContainer when isEmailFormOpen is true', () => {
       wrapper.setState({ isEmailFormOpen: true })
-      expect(wrapper.find(ReferAFriend).length).toEqual(1)
+      expect(wrapper.find(ReferAFriendContainer).length).toEqual(1)
     })
 
     test('should render three LinkRow components', () => {

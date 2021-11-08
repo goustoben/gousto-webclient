@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import classnames from 'classnames'
 import css from './Link.css'
 
-const GoustoLink = (props, context) => {
+export const GoustoLink = (props, context) => {
   let link
   const { noDecoration, secondary, clientRouted, className, tracking, ...rest } = props
   const dynamicClasses = {
@@ -38,5 +38,3 @@ GoustoLink.propTypes = {
 GoustoLink.defaultProps = {
   clientRouted: true,
 }
-
-export default GoustoLink

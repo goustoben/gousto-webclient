@@ -1,2 +1,2 @@
-import FooterContainer from './FooterContainer'
+import { FooterContainer } from './FooterContainer'
 export default FooterContainer

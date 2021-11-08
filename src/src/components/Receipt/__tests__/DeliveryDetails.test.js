@@ -2,7 +2,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 import Immutable from 'immutable'
-import DeliveryDetails from 'Receipt/DeliveryDetails'
+import { DeliveryDetails } from 'Receipt/DeliveryDetails'
 
 describe('DeliveryDetails', () => {
   let wrapper

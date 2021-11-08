@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AgeVerify from 'components/PromoModal/AgeVerify/AgeVerify'
+import { AgeVerify } from 'components/PromoModal/AgeVerify/AgeVerify'
 
 describe('AgeVerify', () => {
   let wrapper

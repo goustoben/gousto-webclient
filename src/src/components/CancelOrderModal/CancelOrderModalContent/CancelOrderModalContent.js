@@ -19,7 +19,7 @@ const defaultProps = {
   cancelOrderModalToggleVisibility: () => {},
 }
 
-class CancelOrderModalContent extends React.PureComponent {
+export class CancelOrderModalContent extends React.PureComponent {
   handleCancelBox = () => {
     const { orderCancel, cancelOrderModalToggleVisibility, orderId } = this.props
     orderCancel(orderId)
@@ -55,5 +55,3 @@ class CancelOrderModalContent extends React.PureComponent {
 
 CancelOrderModalContent.propTypes = propTypes
 CancelOrderModalContent.defaultProps = defaultProps
-
-export default CancelOrderModalContent

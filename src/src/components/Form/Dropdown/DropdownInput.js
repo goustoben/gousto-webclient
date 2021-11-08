@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Select from 'react-select'
 import classNames from 'classnames'
 import restrictProps from 'utils/restrictProps'
-import InputWrapper from 'Form/InputWrapper'
+import { InputWrapper } from 'Form/InputWrapper'
 // eslint-disable-next-line import/no-unresolved
 import formsCss from 'styles/forms.css'
 import css from './DropdownInput.css'

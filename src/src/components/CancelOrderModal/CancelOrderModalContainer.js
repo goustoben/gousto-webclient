@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import CancelOrderModal from './CancelOrderModal'
+import { CancelOrderModal } from './CancelOrderModal'
 
 const mapStateToProps = (state) => ({
   cancelOrderModalOpen: state.orderCancelledModalVisibility.get('visibility'),

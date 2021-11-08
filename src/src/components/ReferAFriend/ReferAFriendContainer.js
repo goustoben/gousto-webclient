@@ -9,11 +9,8 @@ const mapStateToProps = (state) => ({
   isRecaptchaEnabled: getIsRecaptchaEnabled(state),
 })
 
-const ReferAFriendContainer = connect(mapStateToProps, {
+export const ReferAFriendContainer = connect(mapStateToProps, {
   changeRecaptcha,
   userReferAFriend,
   trackingReferFriendSocialSharing,
 })(ReferAFriend)
-
-export default ReferAFriendContainer
-

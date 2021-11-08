@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 
-const Facebook = ({ admins, appID, domainVerification }) => {
+export const Facebook = ({ admins, appID, domainVerification }) => {
   const metaData = [
     {
       property: 'fb:app_id',
@@ -29,5 +29,3 @@ Facebook.propTypes = {
   appID: PropTypes.string.isRequired,
   domainVerification: PropTypes.string.isRequired,
 }
-
-export default Facebook

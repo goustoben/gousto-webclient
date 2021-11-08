@@ -14,7 +14,7 @@ const defaultProps = {
   Component: null,
 }
 
-export default class ScrollToRefs extends PureComponent {
+class ScrollToRefs extends PureComponent {
   componentDidUpdate(prevProps) {
     const { refKeys, scrollToRef } = this.props
 

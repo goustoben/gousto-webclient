@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import Image from 'Image'
 import css from './ImageSelection.css'
 
-const ImageSelection = ({ content, onImageClick }) => (
+export const ImageSelection = ({ content, onImageClick }) => (
   <div className={css.scroll}>
     <div className={css.row}>
       {content.length > 0 && content.map(item => {
@@ -53,5 +53,3 @@ ImageSelection.defaultProps = {
   content: [Immutable.Map()],
   onImageClick: () => {},
 }
-
-export default ImageSelection

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Helmet from 'react-helmet'
-import CanonicalLink from 'Helmet/CanonicalLink'
+import { CanonicalLink } from 'Helmet/CanonicalLink'
 
 describe('Helmet CanonicalLink', () => {
   test('should return 1 Helmet', () => {

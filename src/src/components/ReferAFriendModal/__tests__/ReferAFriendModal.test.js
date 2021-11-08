@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { ReferAFriendModal } from '../ReferAFriendModal'
-import ReferAFriend from '../../ReferAFriend'
+import { ReferAFriendContainer } from '../../ReferAFriend'
 
 describe('ReferAFriendModal', () => {
   let wrapper
@@ -13,8 +13,8 @@ describe('ReferAFriendModal', () => {
     )
   })
 
-  it('should render ReferAFriend component', () => {
-    expect(wrapper.find(ReferAFriend).length).toEqual(1)
+  it('should render ReferAFriendContainer component', () => {
+    expect(wrapper.find(ReferAFriendContainer).length).toEqual(1)
   })
 
   it('should render a heading', () => {

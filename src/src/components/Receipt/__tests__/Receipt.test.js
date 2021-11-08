@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import Receipt from '../Receipt'
-import ReceiptLine from '../ReceiptLine'
-import DeliveryDetails from '../DeliveryDetails'
+import { ReceiptLine } from '../ReceiptLine'
+import { DeliveryDetails } from '../DeliveryDetails'
 
 describe('Receipt', () => {
   let wrapper

@@ -87,7 +87,7 @@ export const mapPropsToClassName = ({ className, ...props } = {}) => {
   return classNames.join(' ')
 }
 
-const StyledElement = ({ backgroundColor, color, children, margin, padding, style, type, ...restProps }) => {
+export const StyledElement = ({ backgroundColor, color, children, margin, padding, style, type, ...restProps }) => {
   const className = mapPropsToClassName(restProps)
   const supportedProps = getSupportedProps(restProps, type)
 
@@ -138,5 +138,3 @@ StyledElement.defaultProps = {
   padding: undefined,
   style: {},
 }
-
-export default StyledElement

@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import css from './ReceiptLine.css'
 
-const ReceiptLine = ({
+export const ReceiptLine = ({
   label,
   children,
   lineStyle,
@@ -62,5 +62,3 @@ ReceiptLine.defaultProps = {
   dataTesting: null,
   isReceiptInCheckout: false,
 }
-
-export default ReceiptLine

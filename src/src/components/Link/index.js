@@ -1,3 +1,2 @@
-import Link from './Link'
-export default Link
-
+import { GoustoLink } from './Link'
+export default GoustoLink

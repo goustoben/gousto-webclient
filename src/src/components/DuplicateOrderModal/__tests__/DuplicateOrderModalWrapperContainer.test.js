@@ -2,8 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
-import DuplicateOrderModalWrapperContainer from 'DuplicateOrderModal/DuplicateOrderModalWrapperContainer'
-import DuplicateOrderModalWrapper from 'DuplicateOrderModal/DuplicateOrderModalWrapper'
+import { DuplicateOrderModalWrapperContainer } from 'DuplicateOrderModal/DuplicateOrderModalWrapperContainer'
+import { DuplicateOrderModalWrapper } from 'DuplicateOrderModal/DuplicateOrderModalWrapper'
 
 describe('DuplicateOrderModalWrapperContainer', () => {
   let wrapper

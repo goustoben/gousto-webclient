@@ -11,11 +11,8 @@ const mapStateToProps = (state) => ({
   device: state.request.get('browser')
 })
 
-const SocialShareSheetContainer = connect(mapStateToProps, {
+export const SocialShareSheetContainer = connect(mapStateToProps, {
   trackingReferFriend,
   trackingReferFriendSocialSharing,
   trackUserFreeFoodLinkShare,
 })(SocialShareSheet)
-
-export default SocialShareSheetContainer
-

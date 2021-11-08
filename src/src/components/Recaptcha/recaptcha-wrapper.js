@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import ReCAPTCHA from "./recaptcha";
+import { ReCAPTCHA } from "./recaptcha";
 import makeAsyncScriptLoader from "react-async-script";
 
 const callbackName = "onloadcallback";

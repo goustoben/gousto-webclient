@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
-import DuplicateOrderModalWrapper from './DuplicateOrderModalWrapper'
+import { DuplicateOrderModalWrapper } from './DuplicateOrderModalWrapper'
 
 function mapStateToProps(state) {
   const closeOrderIds = state
@@ -12,6 +12,4 @@ function mapStateToProps(state) {
   }
 }
 
-const DuplicateOrderModalWrapperContainer = connect(mapStateToProps, {})(DuplicateOrderModalWrapper)
-
-export default DuplicateOrderModalWrapperContainer
+export const DuplicateOrderModalWrapperContainer = connect(mapStateToProps, {})(DuplicateOrderModalWrapper)

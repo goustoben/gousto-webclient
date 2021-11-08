@@ -6,7 +6,7 @@ import Overlay from 'Overlay'
 import { BillingFormContainer } from './BillingForm'
 import css from './ExpiredBillingModal.css'
 
-class ExpiredBillingModal extends React.PureComponent {
+export class ExpiredBillingModal extends React.PureComponent {
   onCloseExpiredBillingModal = () => {
     const { closeExpiredBillingModal } = this.props
     closeExpiredBillingModal(false)
@@ -43,5 +43,3 @@ ExpiredBillingModal.defaultProps = {
 }
 
 ExpiredBillingModal.contextType = ReactReduxContext
-
-export default ExpiredBillingModal

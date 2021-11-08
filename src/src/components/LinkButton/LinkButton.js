@@ -4,7 +4,7 @@ import { Button, Segment } from 'goustouicomponents'
 import Link from 'Link'
 import css from './LinkButton.css'
 
-const LinkButton = ({ children, clientRouted, color, disabled, fill, to, width }) => (
+export const LinkButton = ({ children, clientRouted, color, disabled, fill, to, width }) => (
   <Button fill={fill}>
     <Segment
       className={css.segment}
@@ -40,5 +40,3 @@ LinkButton.defaultProps = {
   width: 'auto',
   clientRouted: true,
 }
-
-export default LinkButton

@@ -23,7 +23,7 @@ const defaultProps = {
   badge: "bottomright",
 }
 
-class ReCAPTCHA extends React.Component {
+export class ReCAPTCHA extends React.Component {
   state={}
 
   getValue () {
@@ -93,5 +93,3 @@ class ReCAPTCHA extends React.Component {
     );
   }
 }
-
-export default ReCAPTCHA;

@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import templateConfig from 'config/template'
 import globals from 'config/globals'
-import CanonicalLink from './CanonicalLink'
-import Facebook from './Facebook'
-import OpenGraph from './OpenGraph'
-import SiteVerification from './SiteVerification'
-import Twitter from './Twitter'
+import { CanonicalLink } from './CanonicalLink'
+import { Facebook } from './Facebook'
+import { OpenGraph } from './OpenGraph'
+import { SiteVerification } from './SiteVerification'
+import { Twitter } from './Twitter'
 
 export const generateHref = url => {
   const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-frontend.`}${globals.domain}`

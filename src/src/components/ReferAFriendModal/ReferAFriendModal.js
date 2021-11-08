@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
-import ReferAFriend from 'components/ReferAFriend'
+import { ReferAFriendContainer } from 'components/ReferAFriend'
 import css from './ReferAFriendModal.css'
 
 const propTypes = {
@@ -26,7 +26,7 @@ class ReferAFriendModal extends PureComponent {
             {' '}
             {credit}
           </h4>
-          <ReferAFriend />
+          <ReferAFriendContainer />
         </div>
       </ModalPanel>
     )

@@ -4,7 +4,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import Item from 'Item/Item'
-import ProductItem from 'Product/ProductItem'
+import { ProductItem } from 'Product/ProductItem'
 
 describe('ProductItem', () => {
   const testData = {

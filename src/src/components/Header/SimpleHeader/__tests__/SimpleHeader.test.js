@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import SimpleHeader from 'Header/SimpleHeader'
+import { SimpleHeader } from 'Header/SimpleHeader'
 import Link from 'Link'
 import Svg from 'Svg'
 

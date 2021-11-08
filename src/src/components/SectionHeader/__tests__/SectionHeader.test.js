@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import SectionHeader from 'SectionHeader'
+import { SectionHeader } from 'SectionHeader'
 
 describe('SectionHeader', () => {
   let wrapper
