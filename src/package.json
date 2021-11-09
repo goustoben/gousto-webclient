@@ -10,9 +10,10 @@
     "*.scss"
   ],
   "scripts": {
-    "dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build:server && NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local node dist/server.js",
+    "dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build:server && NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local ./scripts/fork.sh 'npm run start' 'npm run emulation-server'",
     "postinstall": "bower install --force --allow-root",
     "start": "node dist/server.js",
+    "emulation-server": "npm --prefix ../emulation-server run dev",
     "start:with-static": "withStatic=true npm run start",
     "start:dev:inspect": "nodemon --inspect=0.0.0.0 dist/server.js",
     "start:dev": "mkdir -p dist && touch ./dist/server.js && nodemon dist/server.js",
@@ -35,6 +36,7 @@
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci --runInBand --forceExit --coverage",
+    "test:gousto-adapters": "rm -rf ../pact && jest --config=src/adapters/gousto/__tests__/jest.config.js",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "eslint": "eslint .",
     "codeowners:report": "node ./scripts/codeowners-report/codeowners-report.js",
@@ -105,6 +107,7 @@
     "validator": "10.4.0"
   },
   "devDependencies": {
+    "@pact-foundation/pact": "^9.16.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@sheerun/mutationobserver-shim": "^0.3.3",
     "@testing-library/jest-dom": "^5.14.1",
@@ -115,6 +118,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
+    "axios": "^0.24.0",
     "codeowners": "^4.2.0",
     "concat-stream": "^2.0.0",
     "css-loader": "1.0.1",
@@ -136,6 +140,7 @@
     "ignore": "^5.1.8",
     "image-webpack-loader": "4.6.0",
     "jest": "^27.1.0",
+    "jest-environment-node": "^27.2.5",
     "jest-fetch-mock": "^3.0.3",
     "jsdom": "11.3.0",
     "json5": "^2.2.0",
@@ -191,78 +196,15 @@
       "node_modules"
     ]
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "preset": "ts-jest",
-    "coverageReporters": [
-      "lcov",
-      "json-summary"
-    ],
-    "testMatch": [
-      "**/__tests__/**/[^.]*.(j|t)s?(x)",
-      "**/?(*.)(test).(j|t)s?(x)"
-    ],
-    "moduleNameMapper": {
-      "fixtures/(.*)$": "<rootDir>/../tests/regression/fixtures/$1",
-      "goustouicomponents": "<rootDir>/libs/goustouicomponents/src/main",
-      "zest/(.*)$": "<rootDir>/libs/goustouicomponents/dist/$1",
-      "gousto-config": "<rootDir>/libs/goustouicomponents/src/gousto-config",
-      "design-language/icons/(.*)$": "<rootDir>/libs/goustouicomponents/src/design-language/icons/$1",
-      "design-language/media/(.*)$": "<rootDir>/libs/goustouicomponents/src/design-language/media/$1",
-      "^.+\\.(css|scss)$": "identity-obj-proxy"
-    },
-    "testPathIgnorePatterns": [
-      "libs/goustouicomponents"
-    ],
-    "transform": {
-      "^.+\\.js?$": "ts-jest",
-      "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/.fileTransformer.js"
-    },
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{js}",
-      "<rootDir>/server/**/*.{js}",
-      "!<rootDir>/src/scripts/**/*",
-      "!<rootDir>/src/**/config/*.{js}",
-      "!<rootDir>/src/_testing/**/*"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>",
-      "<rootDir>/src",
-      "<rootDir>/src/components"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest/.setup.js"
-    ],
-    "globals": {
-      "__DEV__": false,
-      "__PROD__": true,
-      "__HMR__": false,
-      "__SERVER__": false,
-      "__CLIENT__": true,
-      "__CLOUDFRONT_URL__": "test.com",
-      "__CLIENT_PROTOCOL__": "https",
-      "__CHECKOUT_PK__": "",
-      "__RECAPTCHA_RAF_PUBK__": "",
-      "__RECAPTCHA_RAF_PVTK__": "",
-      "__ENV__": "production",
-      "__API_ENV__": "production",
-      "__RUNNING_ENV__": "live",
-      "__DOMAIN__": "gousto.local",
-      "__TEST__": true,
-      "process.env.NODE_ENV": "production",
-      "__ENDPOINTS__": {},
-      "ts-jest": {
-        "tsconfig": "./tsconfig.tests.json"
-      }
-    }
-  },
   "husky": {
     "hooks": {
       "pre-push": "npm audit --audit-level=critical"
     }
   },
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
+  },
+  "config": {
+    "pact_do_not_track": true
   }
 }
