@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { fetchRecipeStock, fetchRecipes, fetchRecipesStockByDate, fetchRecipesFromMenu } from '../recipes'
 
 const mockFetchResult = { data: [1, 2, 3] }

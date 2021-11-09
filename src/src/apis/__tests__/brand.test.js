@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { fetchBrandInfo, fetchBrandMenuHeaders } from '../brand'
 
 jest.mock('utils/fetch', () =>

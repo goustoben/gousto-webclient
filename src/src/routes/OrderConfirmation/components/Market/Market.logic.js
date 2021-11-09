@@ -43,9 +43,12 @@ const defaultProps = {
 }
 
 class Market extends PureComponent {
-  state = {
-    filteredProducts: null,
-    isOrderSummaryOpen: false,
+  constructor(props) {
+    super(props)
+    this.state = {
+      filteredProducts: null,
+      isOrderSummaryOpen: false,
+    }
   }
 
   getFilteredProducts = (chosenCategory) => {
@@ -57,7 +60,7 @@ class Market extends PureComponent {
 
     let chosenCategoryProducts = null
 
-    if (chosenCategory == 'all-products') {
+    if (chosenCategory === 'all-products') {
       chosenCategoryProducts = products
     } else {
       Object.keys(products).map(productKey => {
@@ -65,7 +68,7 @@ class Market extends PureComponent {
         productCategories && productCategories.map(category => {
           const productProps = products[productKey]
 
-          if (chosenCategory == category.id) {
+          if (chosenCategory === category.id) {
             const product = { [productProps.id]: { ...productProps } }
             chosenCategoryProducts = { ...chosenCategoryProducts, ...product }
           }

@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import config from 'config/products'
 import { fetchProduct, fetchProductCategories, fetchProducts, fetchRandomProducts, fetchProductStock } from '../products'
 

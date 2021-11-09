@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { updateTastePreferences } from '../tastePreferences'
 
 jest.mock('utils/fetch', () =>

@@ -33,13 +33,13 @@ describe('ProductList component', () => {
     })
 
     test('should render product list wrapper', () => {
-      propsProductList.products = mockProducts,
+      propsProductList.products = mockProducts
       wrapper = mount(<ProductList {...propsProductList} />)
       expect(wrapper.find('div.productList').length).toBe(1)
     })
 
     test('should render 2 products', () => {
-      propsProductList.products = mockProducts,
+      propsProductList.products = mockProducts
       wrapper = mount(<ProductList {...propsProductList} />)
       expect(wrapper.find('Product').length).toBe(2)
     })

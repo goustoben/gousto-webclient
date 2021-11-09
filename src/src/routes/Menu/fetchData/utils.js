@@ -29,16 +29,16 @@ export const selectCollection = (collectionName) => (dispatch, getState) => {
   dispatch(collectionFilterIdReceive(collectionId))
 }
 
-export const setSlotFromIds = (slot_id, day_id) => (dispatch, getState) => {
+export const setSlotFromIds = (slotId, dayId) => (dispatch, getState) => {
   const { boxSummaryDeliveryDays } = getState()
-  if (day_id) {
-    const day = boxSummaryDeliveryDays.find(deliveryDay => deliveryDay.get('coreDayId') === day_id)
+  if (dayId) {
+    const day = boxSummaryDeliveryDays.find(deliveryDay => deliveryDay.get('coreDayId') === dayId)
     if (day) {
       const date = day.get('date')
       dispatch(basketDateChange(date))
       let slotIdToSet = ''
-      if (slot_id) {
-        const matchingSlot = day.get('slots').find(slot => slot.get('coreSlotId') === slot_id)
+      if (slotId) {
+        const matchingSlot = day.get('slots').find(slot => slot.get('coreSlotId') === slotId)
         slotIdToSet = matchingSlot ? matchingSlot.get('id') : ''
       }
       dispatch(basketSlotChange(slotIdToSet))

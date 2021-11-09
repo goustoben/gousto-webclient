@@ -9,6 +9,12 @@ const propTypes = {
   theirMonthOffer: PropTypes.string,
 }
 
+const defaultProps = {
+  isYourOffer: false,
+  offer: '',
+  theirMonthOffer: '',
+}
+
 const Offer = ({ isYourOffer, offer, theirMonthOffer }) => {
   const offerConfig = config(theirMonthOffer)
   const title = isYourOffer ? offerConfig.youGetTitle : offerConfig.yourFriendGetsTitle
@@ -24,5 +30,6 @@ const Offer = ({ isYourOffer, offer, theirMonthOffer }) => {
 }
 
 Offer.propTypes = propTypes
+Offer.defaultProps = defaultProps
 
 export { Offer }

@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { triggerLoggingManagerEvent } from '../loggingManager'
 
 jest.mock('utils/fetch', () =>

@@ -41,8 +41,6 @@ const defaultProps = {
 }
 
 class Unsubscribe extends React.PureComponent {
-  state = {}
-
   unsubscribeHander = () => {
     const { location, userUnsubscribeAction } = this.props
     const { authUserId, marketingType, marketingUnsubscribeToken } = location.query

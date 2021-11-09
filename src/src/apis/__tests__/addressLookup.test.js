@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { fetchAddressByPostcode } from '../addressLookup'
 
 const mockFetchResult = { data: [1, 2, 3] }

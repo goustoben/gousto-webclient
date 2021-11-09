@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../onScreenRecovery'
 
 const mockFetchResult = { data: [1, 2, 3] }

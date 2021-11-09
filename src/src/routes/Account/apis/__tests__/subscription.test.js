@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-named-as-default
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import {
   deactivateSubscription,
   fetchProjectedDeliveries,

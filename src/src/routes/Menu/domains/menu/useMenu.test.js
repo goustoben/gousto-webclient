@@ -68,10 +68,10 @@ describe('menu domain / useMenu', () => {
       [COLLECTION_B.get('id')]: COLLECTION_B
     },
     menuRecipeStock: {
-      [RECIPE_1.get('id')]: Immutable.fromJS({'2': 0, '4': 0}),
-      [RECIPE_2.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
-      [RECIPE_3.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
-      [RECIPE_4.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
+      [RECIPE_1.get('id')]: Immutable.fromJS({2: 0, 4: 0}),
+      [RECIPE_2.get('id')]: Immutable.fromJS({2: 100, 4: 100}),
+      [RECIPE_3.get('id')]: Immutable.fromJS({2: 100, 4: 100}),
+      [RECIPE_4.get('id')]: Immutable.fromJS({2: 100, 4: 100}),
     },
   })
 

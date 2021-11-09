@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { requestNewsletterSignup } from '../newsletter'
 
 const mockFetchResult = { data: [1, 2, 3] }
