@@ -4,7 +4,8 @@
     "outDir": "../lib/tests",
     "types": ["jest", "node"],
     "lib": ["ES2015", "ES2015.Promise", "dom"],
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "target": "ES2015"
   },
   "exclude": [
     "./**/node_modules",

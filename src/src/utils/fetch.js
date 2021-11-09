@@ -186,7 +186,9 @@ export function fetchRaw(url, data = {}, options) {
     options.headers,
     options.timeout,
     options.includeCookies,
-    options.useMenuService)
+    options.useMenuService,
+    options.useOverwriteRequestMethod
+  )
 }
 
 export default fetch
