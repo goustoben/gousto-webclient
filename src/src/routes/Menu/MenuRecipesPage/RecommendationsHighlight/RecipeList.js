@@ -8,11 +8,11 @@ import css from './RecipeList.css'
 
 const RecipeList = ({ collectionId, recipes }) => (
   <div className={css.recipeList}>
-    {recipes.map((recipe) => (
+    {recipes.map(({recipe, originalId}) => (
       <RecipeContextProvider key={recipe.get('id')} value={recipe}>
         <RecipeTileContainer
           recipeId={recipe.get('id')}
-          originalId={recipe.get('id')}
+          originalId={originalId}
           categoryId={collectionId}
         />
       </RecipeContextProvider>

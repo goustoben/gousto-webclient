@@ -1,16 +1,17 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
 
 import { RecipeList } from './RecipeList'
-import { getRecipeListRecipes } from '../selectors/recipeList'
 import { useCollections } from '../domains/collections/useCollections'
+import { useMenu } from '../domains/menu'
 
 const RecipeListWrapper = (ownProps) => {
   const dispatch = useDispatch()
   const { currentCollectionId } = useCollections()
-  const { recipes, originalOrderRecipeIds } = useSelector(getRecipeListRecipes)
+  const { getRecipesForCollectionId } = useMenu()
+  const { recipes, originalOrderRecipeIds } = getRecipesForCollectionId(currentCollectionId)
 
   const actionDispatchers = bindActionCreators({
     trackRecipeOrderDisplayed

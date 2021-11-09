@@ -5,7 +5,7 @@ import { getStock } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { isRecipeInBasket } from 'utils/menu'
 import { getRecipeId } from 'utils/recipe'
-import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId, getCurrentCollectionDietaryClaims, getMenuCollections , getRecipesInCollection } from './collections'
+import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId, getMenuCollections, getRecipesInCollection, getCollectionDietaryClaims } from './collections'
 import { getCurrentMenuRecipes } from './menu'
 import { getVariantsForRecipeForCurrentCollection, isOutOfStock } from './recipe'
 import { getSelectedRecipeVariants, getCurrentMenuVariants } from './variants'
@@ -236,41 +236,45 @@ const getReplacements = (recipeList, recipeIds, getVariantFn) => (
   }, {})
 )
 
-export const getRecipeListRecipes = createSelector(
-  [getCurrentCollectionDietaryClaims, getCurrentMenuRecipes, getMenuCollections, getInStockRecipes, getCurrentMenuVariants, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getRecipeComparatorFactory],
-  (collectionDietaryClaims, currentMenuRecipes, menuCollections, inStockRecipes, currentMenuVariants, selectedVariants, collectionId, filterFn, recipeComparatorFactory) => {
-    if (!collectionId) {
-      // return all recipes on menu
-      return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
-    }
-
-    const recipeIdsInCollection = getRecipesInCollection(menuCollections, collectionId)
-
-    if (!recipeIdsInCollection) {
-      // return all recipes on menu
-      return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
-    }
-
-    const recipesInCollection = getRecipesForIds(currentMenuRecipes, recipeIdsInCollection)
-
-    const recipesWithOutOfStockReplaced = replaceOutOfStockWithVariants(
-      recipesInCollection,
-      currentMenuRecipes,
-      inStockRecipes,
-      selectedVariants,
-      currentMenuVariants,
-      collectionId,
-      collectionDietaryClaims
-    )
-
-    const replacements = getReplacements(
-      currentMenuRecipes,
-      recipeIdsInCollection,
-      recipeId => getSelectedVariantId(selectedVariants, collectionId, recipeId)
-    )
-
-    return createRecipesResponse(recipesWithOutOfStockReplaced, filterFn, recipeComparatorFactory, replacements)
+export const getRecipeListRecipesLogic = (currentMenuRecipes, menuCollections, inStockRecipes, currentMenuVariants, selectedVariants, collectionId, filterFn, recipeComparatorFactory) => {
+  if (!collectionId) {
+    // return all recipes on menu
+    return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
   }
+
+  const recipeIdsInCollection = getRecipesInCollection(menuCollections, collectionId)
+
+  if (!recipeIdsInCollection) {
+    // return all recipes on menu
+    return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
+  }
+
+  const recipesInCollection = getRecipesForIds(currentMenuRecipes, recipeIdsInCollection)
+
+  const collectionDietaryClaims = getCollectionDietaryClaims(menuCollections, collectionId)
+
+  const recipesWithOutOfStockReplaced = replaceOutOfStockWithVariants(
+    recipesInCollection,
+    currentMenuRecipes,
+    inStockRecipes,
+    selectedVariants,
+    currentMenuVariants,
+    collectionId,
+    collectionDietaryClaims
+  )
+
+  const replacements = getReplacements(
+    currentMenuRecipes,
+    recipeIdsInCollection,
+    recipeId => getSelectedVariantId(selectedVariants, collectionId, recipeId)
+  )
+
+  return createRecipesResponse(recipesWithOutOfStockReplaced, filterFn, recipeComparatorFactory, replacements)
+}
+
+export const getRecipeListRecipes = createSelector(
+  [getCurrentMenuRecipes, getMenuCollections, getInStockRecipes, getCurrentMenuVariants, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getRecipeComparatorFactory],
+  getRecipeListRecipesLogic
 )
 
 export const getBaseRecipeSides = createSelector(

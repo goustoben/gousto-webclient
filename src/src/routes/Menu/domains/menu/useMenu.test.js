@@ -20,6 +20,9 @@ const createMockStore = (valueOverrides) => {
     menuRecipes: Immutable.List(valueOverrides.menuRecipes) || Immutable.List(),
     menuCollections: Immutable.OrderedMap(valueOverrides.menuCollections) || Immutable.OrderedMap(),
     menuRecipeStock: Immutable.Map(valueOverrides.menuRecipeStock) || Immutable.Map({}),
+    menu: Immutable.fromJS({
+      menuVariants: { }
+    })
   }
 
   const mockStore = configureMockStore()
@@ -47,8 +50,8 @@ describe('menu domain / useMenu', () => {
   const RECIPE_3 = Immutable.Map({ id: 'cccc' })
   const RECIPE_4 = Immutable.Map({ id: 'dddd' })
 
-  const COLLECTION_A = createMockCollection('1234-5678', 'One Category', [ RECIPE_1, RECIPE_2 ])
-  const COLLECTION_B = createMockCollection('0000-0000', 'Another Category', [ RECIPE_3, RECIPE_4 ])
+  const COLLECTION_A = createMockCollection('1234-5678', 'One Category', [RECIPE_1, RECIPE_2])
+  const COLLECTION_B = createMockCollection('0000-0000', 'Another Category', [RECIPE_3, RECIPE_4])
 
   const store = createMockStore({
     recipes: {
@@ -68,10 +71,10 @@ describe('menu domain / useMenu', () => {
       [COLLECTION_B.get('id')]: COLLECTION_B
     },
     menuRecipeStock: {
-      [RECIPE_1.get('id')]: Immutable.fromJS({'2': 0, '4': 0}),
-      [RECIPE_2.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
-      [RECIPE_3.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
-      [RECIPE_4.get('id')]: Immutable.fromJS({'2': 100, '4': 100}),
+      [RECIPE_1.get('id')]: Immutable.fromJS({ 2: 0, 4: 0 }),
+      [RECIPE_2.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
+      [RECIPE_3.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
+      [RECIPE_4.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
     },
   })
 
@@ -80,18 +83,24 @@ describe('menu domain / useMenu', () => {
   test('getRecipesForCollectionId returns correct recipes', () => {
     const { result } = renderHook(() => useMenu(), { wrapper })
 
-    const recipes = result.current.getRecipesForCollectionId(COLLECTION_B.get('id'))
+    const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_B.get('id'))
 
-    expect(recipes).toEqual(Immutable.List([RECIPE_3, RECIPE_4]))
+    expect(recipes).toEqual(Immutable.List([
+      {recipe: RECIPE_3, originalId: RECIPE_3.get('id')},
+      {recipe: RECIPE_4, originalId: RECIPE_4.get('id')},
+    ]))
   })
 
   describe('when some Recipes are out of stock', () => {
     test('getRecipesForCollectionId returns them at the end of the list', () => {
       const { result } = renderHook(() => useMenu(), { wrapper })
 
-      const recipes = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
+      const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
 
-      expect(recipes).toEqual(Immutable.List([RECIPE_2, RECIPE_1]))
+      expect(recipes).toEqual(Immutable.List([
+        {recipe: RECIPE_2, originalId: RECIPE_2.get('id')},
+        {recipe: RECIPE_1, originalId: RECIPE_1.get('id')},
+      ]))
     })
   })
 })
