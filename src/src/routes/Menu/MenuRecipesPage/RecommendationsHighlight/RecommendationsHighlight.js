@@ -35,6 +35,16 @@ const RecommendationsHighlight = () => {
     recommendationRecipes
   )
 
+  if (remainingRecipes.size === 0) {
+    return (
+      <div className={menuCss.menuContainer}>
+        <RecipeList collectionId={RECOMMENDATIONS_ID} recipes={recommendationRecipes} />
+
+        <DetailOverlayContainer showOverlay />
+      </div>
+    )
+  }
+
   return (
     <div className={menuCss.menuContainer}>
       {
