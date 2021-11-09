@@ -25,8 +25,8 @@ import {
 import { getCardPaymentDetails, getPayPalPaymentDetails, isCardPayment } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
 
-import logger from 'utils/logger'
-import GoustoException from 'utils/GoustoException'
+import { logger } from 'utils/logger'
+import { GoustoException } from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'

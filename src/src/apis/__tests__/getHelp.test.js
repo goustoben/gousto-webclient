@@ -1,4 +1,4 @@
-import fetch, { fetchRaw } from 'utils/fetch'
+import { fetch, fetchRaw } from 'utils/fetch'
 import {
   applyDeliveryCompensation,
   shouldShowEntryPointTooltip,

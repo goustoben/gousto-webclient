@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { fetchRecipes, fetchRecipesFromMenu, fetchRecipesStockByDate } from 'apis/recipes'
 import { getCutoffDateTime, cutoffDateTimeNow } from 'utils/deliveries'
 import statusActions from './status'

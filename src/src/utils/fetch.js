@@ -1,7 +1,7 @@
 import qs from 'qs'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import isomorphicFetch from 'isomorphic-fetch'
-import env from 'utils/env'
+import { env } from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
 import { timeout as fetchWithTimeout } from 'promise-timeout'
@@ -188,5 +188,3 @@ export function fetchRaw(url, data = {}, options) {
     options.includeCookies,
     options.useMenuService)
 }
-
-export default fetch

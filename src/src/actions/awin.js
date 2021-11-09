@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { awinServerToServer } from 'apis/awin'
 
 export const sendAwinS2SData = (awinParams) => async (dispatch) => {

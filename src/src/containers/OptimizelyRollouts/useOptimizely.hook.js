@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { useMountedState } from 'react-use'
 import { getAuthUserId } from 'selectors/auth'

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Card, CTA, Heading, OrderDetails } from 'goustouicomponents'
 import { client } from 'config/routes'
 import Link from 'components/Link'
-import humanTimeFormat from 'utils/timeFormat'
+import { timeFormat } from 'utils/timeFormat'
 
 const NextProjectedDelivery = ({ deliveryDate }) => (
   <div>
@@ -12,7 +12,7 @@ const NextProjectedDelivery = ({ deliveryDate }) => (
     </Heading>
     <Card>
       <OrderDetails
-        deliveryDate={humanTimeFormat(deliveryDate, 'day')}
+        deliveryDate={timeFormat(deliveryDate, 'day')}
         orderState="scheduled"
       />
       <Link to={client.myDeliveries}>

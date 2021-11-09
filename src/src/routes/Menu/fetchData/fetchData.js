@@ -1,7 +1,7 @@
 import moment from 'moment'
 import now from 'performance-now'
 import actions from 'actions'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'

@@ -1,7 +1,7 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 import ReactDOM from 'react-dom'
 import scrollIntoView from 'scroll-into-view'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 const DOMHelper = {
   getBoundingClientRect,

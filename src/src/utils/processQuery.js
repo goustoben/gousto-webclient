@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { setAffiliateSource, setAwinClickChecksum } from 'actions/tracking'
@@ -60,4 +60,6 @@ async function processQuery(query, store, { hashTag = '', }) {
   }
 }
 
-export default processQuery
+export {
+  processQuery
+}

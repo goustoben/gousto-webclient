@@ -12,4 +12,6 @@ function restrictProps(currentProps, restrictedProps, defaultProps = {}) {
   return newProps
 }
 
-export default restrictProps
+export {
+  restrictProps
+}

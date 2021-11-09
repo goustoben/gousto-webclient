@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import classNames from 'classnames'
 import { checkoutConfig } from 'config/checkout'
 import css from './PromoCode.css'

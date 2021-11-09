@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { redirect } from 'utils/window'

@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import Immutable from 'immutable'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { client } from 'config/routes'
 import { isOneOfPage } from 'utils/routes'
 import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from 'utils/auth'

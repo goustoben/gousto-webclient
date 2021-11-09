@@ -5,9 +5,9 @@ import { gaTrackingConfig } from 'config/head/gaTracking'
 import { PaymentMethod } from 'config/signup'
 import { checkoutConfig } from 'config/checkout'
 
-import logger from 'utils/logger'
-import Cookies from 'utils/GoustoCookies'
-import GoustoException from 'utils/GoustoException'
+import { logger } from 'utils/logger'
+import { Cookies } from 'utils/GoustoCookies'
+import { GoustoException } from 'utils/GoustoException'
 import { basketResetPersistent } from 'utils/basket'
 import { isValidPromoCode } from 'utils/order'
 

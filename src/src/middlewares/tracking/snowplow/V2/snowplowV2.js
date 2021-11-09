@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import globals from 'config/globals'
 import { getWindow } from 'utils/window'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import trackingGlobals from '../global'
 import basketTracking from '../basket'
 import pauseSubscriptionTracking from '../pauseSubscription'

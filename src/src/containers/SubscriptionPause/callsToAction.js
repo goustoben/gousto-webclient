@@ -1,4 +1,4 @@
-import createCtaContainer from 'utils/createCtaContainer'
+import { createCtaContainer } from 'utils/createCtaContainer'
 import routesConfig from 'config/routes'
 import actions from 'actions/subscriptionPause'
 

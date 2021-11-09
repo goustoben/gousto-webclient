@@ -1,4 +1,4 @@
-export default function dottify(object) {
+export function dottify(object) {
   let dottified = ''
 
   if (object !== null && typeof object === 'object') {

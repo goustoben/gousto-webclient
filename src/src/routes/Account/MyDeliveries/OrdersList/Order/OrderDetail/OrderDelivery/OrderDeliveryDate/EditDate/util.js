@@ -1,4 +1,4 @@
-import humanTimeFormat from 'utils/timeFormat'
+import { timeFormat } from 'utils/timeFormat'
 import moment from 'moment'
 import { getNDDFeatureValue } from 'selectors/features'
 import { createSelector } from 'reselect'
@@ -118,7 +118,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
         {
           value: slot.coreSlotId,
           uuid: slot.id,
-          label: `${humanTimeFormat(slot.deliveryStartTime, 'hour')} - ${humanTimeFormat(slot.deliveryEndTime, 'hour')}`,
+          label: `${timeFormat(slot.deliveryStartTime, 'hour')} - ${timeFormat(slot.deliveryEndTime, 'hour')}`,
           subLabel: slot.deliveryPrice === '0.00' ? 'Free' : `£${slot.deliveryPrice}`,
           isDefaultSlot: slot.isDefault,
         }

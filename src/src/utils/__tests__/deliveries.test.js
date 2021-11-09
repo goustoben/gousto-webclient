@@ -20,7 +20,7 @@ import {
   doesDayHaveSlotsWithoutDeliveryFees,
   getCutoffForFirstAvailableDate,
 } from 'utils/deliveries'
-import GoustoException from 'utils/GoustoException'
+import { GoustoException } from 'utils/GoustoException'
 import Immutable from 'immutable'
 import * as features from 'selectors/features'
 import * as DeliverySlotHelper from 'utils/deliverySlotHelper'

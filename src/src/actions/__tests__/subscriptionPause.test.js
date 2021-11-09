@@ -10,7 +10,7 @@ import * as redirectActions from 'actions/redirect'
 import config from 'config/subscription'
 import routesConfig from 'config/routes'
 import * as subUtils from 'utils/subscription'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import windowUtil from 'utils/window'
 import { deactivateSubscription } from '../../routes/Account/apis/subscription'
 

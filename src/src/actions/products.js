@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 
 import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
 import { getProductsByCutoff, sortProductsByPrice } from 'utils/products'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { getActiveMenuIdForOrderDate } from 'routes/Menu/selectors/menu'
 import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { actionTypes } from './actionTypes'

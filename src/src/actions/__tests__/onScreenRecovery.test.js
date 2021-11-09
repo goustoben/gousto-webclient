@@ -7,7 +7,7 @@ import * as windowUtils from 'utils/window'
 import subPauseActions from 'actions/subscriptionPause'
 import { actionTypes } from 'actions/actionTypes'
 import userActions from 'actions/user'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 import {
   modalVisibilityChange,

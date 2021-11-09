@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import { updateTastePreferences } from 'apis/tastePreferences'
 import { updateUserTasteProfile } from 'actions/tastePreferences'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 jest.mock('apis/tastePreferences', () => ({
   updateTastePreferences: jest.fn(),

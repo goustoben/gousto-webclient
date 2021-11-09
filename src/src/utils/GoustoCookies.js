@@ -7,4 +7,6 @@ Cookies.defaults = {
   secure: globals.secure,
 }
 
-export default Cookies
+export {
+  Cookies
+}

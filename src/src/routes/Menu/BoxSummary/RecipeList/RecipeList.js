@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { RecipeHolder } from '../RecipeHolder'
 import css from './RecipeList.css'
 

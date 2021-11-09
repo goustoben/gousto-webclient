@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'

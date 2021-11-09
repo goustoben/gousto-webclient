@@ -9,7 +9,7 @@ import { safeJestMock } from '_testing/mocks'
 import optimizelySdk from '@optimizely/optimizely-sdk'
 import { loadOptimizelySDK } from '../optimizely'
 import {instance as OptimizelySDKModule } from '../../containers/OptimizelyRollouts/optimizelySDK'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 /* eslint-enable */
 
 describe('optimizely actions', () => {

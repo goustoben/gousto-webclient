@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import { TimeIndicator, Rating } from 'goustouicomponents'
-import sanitizeText from 'utils/sanitizeText'
+import { removeDiacritics } from 'utils/sanitizeText'
 import css from './SimpleRecipe.css'
 
 const SimpleRecipe = ({ media, title, maxMediaSize, averageRating, ratingCount, cookingTime }) => {
-  const recipeTitle = sanitizeText.removeDiacritics(title)
+  const recipeTitle = removeDiacritics(title)
 
   return (
     <div className={css.recipeDetails}>

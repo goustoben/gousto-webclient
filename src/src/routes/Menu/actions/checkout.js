@@ -1,5 +1,5 @@
 import { getPreviewOrderErrorName } from 'utils/order'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import routes from 'config/routes'
 import { createPreviewOrder } from 'apis/orders'
 

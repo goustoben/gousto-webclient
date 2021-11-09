@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 export function formatArrayErrors(errors) {
   return errors.reduce((str, error) => `${str} ${error.message}`, '')

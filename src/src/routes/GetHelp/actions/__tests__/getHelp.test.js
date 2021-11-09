@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { browserHistory } from 'react-router'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'
 import { fetchUserOrders } from 'apis/user'

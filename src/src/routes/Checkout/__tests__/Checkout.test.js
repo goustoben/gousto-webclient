@@ -26,7 +26,7 @@ import {
 /* eslint-enable import/named */
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import Overlay from 'Overlay'
 import { Login } from 'Login'
 

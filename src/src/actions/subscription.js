@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { getUserId } from 'selectors/user'
 import { fetchSubscription } from '../routes/Account/apis/subscription'
 import { basketNumPortionChange } from './basket'

@@ -1,5 +1,5 @@
 import { actionTypes } from 'actions/actionTypes'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import userActions from 'actions/user'
 import { productsLoadCategories, productsLoadProducts, productsLoadProductsById, productsLoadStock } from 'actions/products'
 import { contentLoadContentByPageSlug } from 'actions/content'

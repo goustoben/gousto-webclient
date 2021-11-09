@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 
-import humanTimeFormat from 'utils/timeFormat'
+import { timeFormat } from 'utils/timeFormat'
 
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import OrderCollage from './OrderCollage'
@@ -54,8 +54,8 @@ class Order extends React.PureComponent {
     if (isOrderInteractive) {
       onClickFunction = collapsed ? this.open : this.close
     }
-    const humanDeliveryTimeStart = humanTimeFormat(orderDeliveryTimeStart, 'hour')
-    const humanDeliveryTimeEnd = humanTimeFormat(orderDeliveryTimeEnd, 'hour')
+    const humanDeliveryTimeStart = timeFormat(orderDeliveryTimeStart, 'hour')
+    const humanDeliveryTimeEnd = timeFormat(orderDeliveryTimeEnd, 'hour')
 
     return (
       <div className={css.orderWrap} id={`order-${orderId}`} data-testing={isProjected ? 'projectedDelivery' : 'pendingOrder'}>
@@ -104,8 +104,8 @@ class Order extends React.PureComponent {
                   ) : (
                     <OrderStatus
                       orderState={orderState}
-                      whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'timeLeft')}
-                      whenMenuOpen={humanTimeFormat(orderWhenMenuOpen, 'hourAndDay')}
+                      whenCutoff={timeFormat(orderShouldCutoffAt, 'timeLeft')}
+                      whenMenuOpen={timeFormat(orderWhenMenuOpen, 'hourAndDay')}
                     />
                   )}
                   <div>
@@ -143,7 +143,7 @@ class Order extends React.PureComponent {
                 deliveryDayId={deliveryDayId}
                 orderState={orderState}
                 close={this.close}
-                paymentDate={humanTimeFormat(orderShouldCutoffAt, 'dayAndMonth')}
+                paymentDate={timeFormat(orderShouldCutoffAt, 'dayAndMonth')}
                 recipes={recipes}
                 products={products.get('elements')}
                 priceBreakdown={priceBreakdown}
@@ -151,7 +151,7 @@ class Order extends React.PureComponent {
                 deliveryTimeStart={humanDeliveryTimeStart}
                 deliveryTimeEnd={humanDeliveryTimeEnd}
                 editDeliveryMode={editDeliveryMode}
-                whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'dayAndMonth')}
+                whenCutoff={timeFormat(orderShouldCutoffAt, 'dayAndMonth')}
                 cancellable={cancellable}
                 restorable={restorable}
                 shippingAddressId={shippingAddressId}

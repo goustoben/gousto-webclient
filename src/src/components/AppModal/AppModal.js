@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { client } from 'config/routes'
 import { redirect } from 'utils/window'
 import { set, get } from 'utils/cookieHelper2'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 
 import { AppBannerDetails } from 'components/AppBanner'
 import { AnimatedImage } from './AnimatedImage/AnimatedImage'

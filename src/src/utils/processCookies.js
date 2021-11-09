@@ -11,7 +11,7 @@ import { setAffiliateSource, setAwinClickChecksum } from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
 import { initSelectedRecipeVariantAction } from 'routes/Menu/actions/menuRecipeDetails'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { persistActions } from 'actions/persist'
 import { get } from './cookieHelper2'
 

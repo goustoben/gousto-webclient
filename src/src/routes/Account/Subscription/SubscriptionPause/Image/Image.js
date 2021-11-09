@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import Image from 'Image'
 import css from './Image.css'
 

@@ -19,7 +19,7 @@ import {
   signupGetCountByPostcode,
 } from 'actions/signup'
 import { fetchCountByPostcode } from 'apis/signup'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),

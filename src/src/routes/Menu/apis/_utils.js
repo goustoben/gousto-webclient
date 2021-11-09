@@ -1,4 +1,4 @@
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 
 const getSessionId = () => get(Cookies, 'gousto_session_id', false, false)

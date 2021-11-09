@@ -1,6 +1,6 @@
 import { log } from 'apis/log'
 import { getFeLoggingCorrelationData } from 'selectors/checkout'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 export const logLevels = {
   info: 'info',

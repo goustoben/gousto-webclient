@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
 import statusActions from 'actions/status'
 import { trackOrder } from 'actions/order'

@@ -21,9 +21,8 @@ export const getDateOffset = date => {
   const now = moment()
   const then = moment(date)
   const offset = Math.ceil(then.diff(now, 'hours', true) / 24)
-  const adjustedOffset = isAfterCutoff() ? offset - 1 : offset
 
-  return adjustedOffset
+  return isAfterCutoff() ? offset - 1 : offset
 }
 
 export const formatDeliveryTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
@@ -67,14 +66,3 @@ export const createNextDayDeliveryDays = () => {
 }
 
 /** END: Temp methods for NDD painted door */
-
-export default {
-  toTimeRange,
-  formatNextDayDeliveryDayDate,
-  formatNextDayDeliveryDayLabel,
-  getDateOffset,
-  isAfterCutoff,
-  createNextDayDeliveryDays,
-  generateNextDayDeliverySlots
-}
-

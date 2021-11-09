@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
-import logger from 'utils/logger'
-import Cookies from 'utils/GoustoCookies'
+import { logger } from 'utils/logger'
+import { Cookies } from 'utils/GoustoCookies'
 import { getBrandMenuHeaders, getBrandInfo, brandDataReceived } from '../brandData'
 import * as brandApi from '../../../../apis/brand'
 import { safeJestMock } from '../../../../_testing/mocks'

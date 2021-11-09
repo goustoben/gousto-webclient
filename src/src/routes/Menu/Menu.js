@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import { forceCheck as forceCheckLazyload } from 'react-lazyload'
 
 import menu from 'config/menu'
-import browserHelper from 'utils/browserHelper'
+import { browserHelper } from 'utils/browserHelper'
 
 import MainLayout from 'layouts/MainLayout'
 import { ShowcaseMenuContainer } from 'routes/ShowcaseMenu'

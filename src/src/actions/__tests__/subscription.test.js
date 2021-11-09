@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
 import { basketNumPortionChange } from 'actions/basket'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 import { subscriptionLoadData } from 'actions/subscription'
 import { fetchSubscription } from '../../routes/Account/apis/subscription'

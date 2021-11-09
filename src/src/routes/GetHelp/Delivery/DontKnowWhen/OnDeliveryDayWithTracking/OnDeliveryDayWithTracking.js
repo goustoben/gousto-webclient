@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import Link from 'components/Link'
 import { client } from 'config/routes'
-import humanTimeFormat from 'utils/timeFormat'
+import { timeFormat } from 'utils/timeFormat'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
@@ -25,8 +25,8 @@ const OnDeliveryDayWithTracking = ({
   trackClickTrackMyBoxInSSRDeliveries,
 }) => {
   const { deliveryStart, deliveryEnd } = deliverySlot
-  const humanFriendlyStart = humanTimeFormat(deliveryStart, 'hour')
-  const humanFriendlyEnd = humanTimeFormat(deliveryEnd, 'hour')
+  const humanFriendlyStart = timeFormat(deliveryStart, 'hour')
+  const humanFriendlyEnd = timeFormat(deliveryEnd, 'hour')
   const { index, contact } = client.getHelp
 
   return (

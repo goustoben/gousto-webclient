@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import { set } from 'utils/cookieHelper2'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import config from 'config/cookies'
 
 function cookiePolicyAcceptanceChange(isAccepted) {

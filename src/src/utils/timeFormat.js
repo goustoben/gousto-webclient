@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-export default function timeFormat(time, format) {
+export function timeFormat(time, format) {
   switch (format) {
   case 'day':
     return moment(time, 'YYYY-MM-DD').format('dddd Do MMMM')

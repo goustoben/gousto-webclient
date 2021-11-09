@@ -3,7 +3,7 @@ import { resetUserPassword, identifyUserUsingOAuth } from 'apis/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { trackUserLogin } from 'actions/loggingmanager'
 
 jest.mock('apis/auth')

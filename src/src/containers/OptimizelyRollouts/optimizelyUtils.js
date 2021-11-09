@@ -1,4 +1,4 @@
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { getAuthUserId } from 'selectors/auth'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'

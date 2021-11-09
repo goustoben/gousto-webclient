@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import { isOrderBeingDeliveredToday } from 'utils/order'
 import { myGoustoOrderPropType } from '../../../GetHelp/getHelpPropTypes'

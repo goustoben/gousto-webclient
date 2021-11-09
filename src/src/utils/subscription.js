@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import GoustoException from 'utils/GoustoException'
+import { GoustoException } from 'utils/GoustoException'
 
 export function pauseReasonsAreCategories(pauseReasons = Immutable.List([])) {
   let childrenFound = false

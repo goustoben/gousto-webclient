@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 let env // eslint-disable-line import/no-mutable-exports
 
 if (__SERVER__) {
@@ -18,4 +18,6 @@ if (__SERVER__) {
   }
 }
 
-export default env
+export {
+  env
+}

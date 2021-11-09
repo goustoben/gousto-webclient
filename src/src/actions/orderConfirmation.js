@@ -3,8 +3,8 @@ import { push } from 'react-router-redux'
 
 import config from 'config/routes'
 import { fetchOrder } from 'apis/orders'
-import logger from 'utils/logger'
-import userUtils from 'utils/user'
+import { logger } from 'utils/logger'
+import { getUserOrderRecipeUuIds } from 'utils/user'
 import { basketOrderLoad } from 'actions/basket'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import { orderCheckPossibleDuplicate } from './order'
@@ -32,7 +32,7 @@ export const orderDetails = (orderId) => (
       const { data: order } = await fetchOrder(accessToken, orderId)
       const { data: menus } = await fetchSimpleMenu(accessToken, userId)
       const immutableOrderDetails = Immutable.fromJS(order)
-      const orderRecipeIds = userUtils.getUserOrderRecipeUuIds(immutableOrderDetails)
+      const orderRecipeIds = getUserOrderRecipeUuIds(immutableOrderDetails)
       dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeIds))
       await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, {reload: true}, menus))
 

@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import webClientStatusActions from 'actions/status'
 import { asyncAndDispatch } from '../utils'
 

@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
-import timeFormat from 'utils/timeFormat'
+import { timeFormat } from 'utils/timeFormat'
 
 export const filterOrders = (orders) => (
   orders.filter(order => {

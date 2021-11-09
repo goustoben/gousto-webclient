@@ -1,5 +1,5 @@
-import Cookies from 'utils/GoustoCookies'
-import logger from 'utils/logger'
+import { Cookies } from 'utils/GoustoCookies'
+import { logger } from 'utils/logger'
 import { updateTastePreferences } from 'apis/tastePreferences'
 import { getIsTastePreferencesEnabled } from '../selectors/features'
 import { getAccessToken } from '../selectors/auth'

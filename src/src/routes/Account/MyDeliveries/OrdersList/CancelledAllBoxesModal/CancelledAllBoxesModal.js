@@ -6,7 +6,7 @@ import { client as clientRoutes } from 'config/routes'
 import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
 import Overlay from 'Overlay'
-import timeFormat from 'utils/timeFormat'
+import { timeFormat } from 'utils/timeFormat'
 import Link from 'Link'
 import css from './CancelledAllBoxesModal.css'
 

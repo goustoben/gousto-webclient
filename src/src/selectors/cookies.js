@@ -1,4 +1,4 @@
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 
 export const getIsPolicyAccepted = state => state.cookies.get('isPolicyAccepted')

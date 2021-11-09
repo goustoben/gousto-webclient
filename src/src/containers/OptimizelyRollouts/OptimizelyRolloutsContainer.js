@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { OptimizelyRollouts } from './OptimizelyRollouts'
 import { getAuthUserId } from '../../selectors/auth'

@@ -28,7 +28,7 @@ import {
 
 import { PaymentMethod, signupConfig } from 'config/signup'
 
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { deliveryTariffTypes } from 'utils/deliveries'
 import {
   transformPendingOrders,

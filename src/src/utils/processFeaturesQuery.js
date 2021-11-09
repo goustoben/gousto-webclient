@@ -48,4 +48,6 @@ const processFeaturesQuery = (query, store) => {
   }
 }
 
-export default processFeaturesQuery
+export {
+  processFeaturesQuery
+}

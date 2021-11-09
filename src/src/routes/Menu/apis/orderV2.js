@@ -1,4 +1,5 @@
-import fetch, {
+import {
+  fetch,
   cacheDefault,
   timeoutDefault,
   includeCookiesDefault,

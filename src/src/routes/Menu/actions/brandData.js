@@ -1,6 +1,6 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { getAccessToken , getAuthUserId } from 'selectors/auth'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { fetchBrandMenuHeaders, fetchBrandInfo } from 'apis/brand'
 import { actionTypes } from '../../../actions/actionTypes'

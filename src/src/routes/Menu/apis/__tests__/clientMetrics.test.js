@@ -1,6 +1,6 @@
 import { safeJestMock } from '_testing/mocks'
 import { fetch } from 'utils/fetch'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import MockDate from 'mockdate'
 import { sendClientMetric } from '../clientMetrics'
 

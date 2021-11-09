@@ -1,4 +1,4 @@
-import * as fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import * as cookieHelper2 from 'utils/cookieHelper2'
 import { updateOrder, createOrder, getOrderPrice, getOrder, getUserOrders } from '../orderV2'
 import * as menuFetch from '../fetch'

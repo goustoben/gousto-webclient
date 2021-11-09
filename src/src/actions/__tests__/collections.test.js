@@ -1,4 +1,4 @@
-import GoustoException from 'utils/GoustoException'
+import { GoustoException } from 'utils/GoustoException'
 import { collectionsLoadCollectionBySlug } from 'actions/collections'
 import { fetchCollectionBySlug } from 'apis/collections'
 import status from 'actions/status'

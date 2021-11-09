@@ -2,7 +2,7 @@ import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
 import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { getPromoBannerState } from 'utils/home'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 export const applyPromoCodeAndShowModal = () => async (dispatch, getState) => {
   const state = getState()

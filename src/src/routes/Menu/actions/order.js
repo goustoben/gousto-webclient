@@ -1,4 +1,4 @@
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { trackOrder } from 'actions/order'
 import statusActions from 'actions/status'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'

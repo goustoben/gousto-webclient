@@ -1,5 +1,5 @@
 import webClientStatusActions from 'actions/status'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 export const asyncAndDispatch = async ({
   dispatch,

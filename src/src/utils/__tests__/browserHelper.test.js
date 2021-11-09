@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import browserHelper, { canUseDom } from '../browserHelper'
+import { browserHelper, canUseDom } from '../browserHelper'
 
 let windowSpy
 

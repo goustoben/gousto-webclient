@@ -1,4 +1,4 @@
-import * as fetchModule from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
@@ -19,7 +19,7 @@ describe('menus', () => {
   let cookieGetSpy
 
   beforeEach(() => {
-    fetchRawSpy = jest.spyOn(fetchModule, 'fetchRaw').mockImplementation(() => {
+    fetchRawSpy = jest.spyOn(fetch, 'fetchRaw').mockImplementation(() => {
       const getData = async () => (mockFetchResult)
 
       return getData()

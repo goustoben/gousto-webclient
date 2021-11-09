@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import endpoint from 'config/endpoint'
 
 export const sendClientMetric = async (name, value, unit = 'None') => {

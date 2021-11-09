@@ -1,6 +1,6 @@
 import { sendAwinS2SData } from 'actions/awin'
 import { awinServerToServer } from 'apis/awin'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions/subscriptionPause'
-import getPauseScreen from 'utils/getPauseScreen'
+import { getPauseScreen } from 'utils/getPauseScreen'
 import SubscriptionPauseScreen from './SubscriptionPauseScreen'
 
 const mapStateToProps = state => {

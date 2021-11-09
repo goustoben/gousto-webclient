@@ -1,9 +1,9 @@
 import Immutable from 'immutable'
-import getPauseScreenFromConfig from 'utils/getPauseScreenFromConfig'
-import getPauseScreenContentMapped from 'utils/getPauseScreenContentMapped'
+import { getPauseScreenFromConfig } from 'utils/getPauseScreenFromConfig'
+import { getPauseScreenContentMapped } from 'utils/getPauseScreenContentMapped'
 import * as subUtils from 'utils/subscription'
 
-export default function getPauseScreen(subscriptionPauseState) {
+export function getPauseScreen(subscriptionPauseState) {
   let staticScreenId
   const errorPrefix = 'getPauseScreen error:'
 

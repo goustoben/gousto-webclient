@@ -1,4 +1,4 @@
-import GoustoException from 'utils/GoustoException'
+import { GoustoException } from 'utils/GoustoException'
 import * as collectionsApi from 'apis/collections'
 import { actionTypes } from 'actions/actionTypes'
 import statusActions from 'actions/status'

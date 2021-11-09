@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import * as orderConfirmationActions from 'actions/orderConfirmation'
 import * as OrderAPIV1 from 'apis/orders'
-import utilsLogger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import { basketUpdateProducts } from '../basket'
@@ -125,7 +125,7 @@ describe('basketUpdateProducts', () => {
     beforeEach(() => {
       dispatch = jest.fn()
       updateOrderItemsSpy.mockReturnValue(Promise.reject(new Error({ e: 'Error' })))
-      loggerErrorSpy = jest.spyOn(utilsLogger, 'error')
+      loggerErrorSpy = jest.spyOn(logger, 'error')
     })
 
     test('should put the error into the error store for BASKET_CHECKOUT', async () => {

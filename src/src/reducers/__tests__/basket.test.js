@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import config from 'config'
 import basketReducer from 'reducers/basket'
 import * as basketActions from 'actions/basket'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
   error: jest.fn()

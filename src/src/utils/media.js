@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import jsonfile from 'jsonfile'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import path from 'path'
 
 let localManifest

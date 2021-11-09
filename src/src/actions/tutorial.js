@@ -1,6 +1,6 @@
 
 import { set } from 'utils/cookieHelper2'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { tutorialViewedExpireTime } from 'config/cookies'
 import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from './actionTypes'

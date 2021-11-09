@@ -1,5 +1,5 @@
 import moment from 'moment'
-import GoustoException from 'utils/GoustoException'
+import { GoustoException } from 'utils/GoustoException'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getDisabledSlotDates } from 'routes/Menu/selectors/boxSummary'
 import { getBasketDate } from 'selectors/basket'

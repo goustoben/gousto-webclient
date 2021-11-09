@@ -1,5 +1,5 @@
 import { actionTypes } from 'actions/actionTypes'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { getBasketRecipes } from 'selectors/basket'
 import { getRecipeTotalDiscounted, getTotalDiscount, getPricingPromoCode } from 'selectors/pricing'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'

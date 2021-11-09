@@ -10,7 +10,7 @@ import { signupConfig } from 'config/signup'
 import { getAccessToken } from 'selectors/auth'
 import { getUTMAndPromoCode } from 'selectors/tracking'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
 

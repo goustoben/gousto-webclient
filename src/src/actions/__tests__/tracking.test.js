@@ -38,7 +38,7 @@ import {
 } from 'actions/trackingKeys'
 import globals from 'config/globals'
 import { PaymentMethod } from 'config/signup'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import {
   getIsDecoupledPaymentEnabled
 } from 'selectors/features'

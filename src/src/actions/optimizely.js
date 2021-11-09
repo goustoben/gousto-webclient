@@ -1,5 +1,5 @@
-import logger from 'utils/logger'
-import Cookies from 'utils/GoustoCookies'
+import { logger } from 'utils/logger'
+import { Cookies } from 'utils/GoustoCookies'
 import { actionTypes } from './actionTypes'
 import { getAuthUserId } from '../selectors/auth'
 import statusActions from './status'

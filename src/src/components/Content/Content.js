@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 
 export const Content = (props) => {
   function getValueFromStores(valuePath, stores) {

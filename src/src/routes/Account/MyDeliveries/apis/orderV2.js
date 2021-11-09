@@ -1,6 +1,6 @@
 import { fetch } from 'utils/fetch'
 import endpoint from 'config/endpoint'
-import Cookies from 'utils/GoustoCookies'
+import { Cookies } from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 
 export function deleteOrder(accessToken, orderId, userId) {

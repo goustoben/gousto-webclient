@@ -7,7 +7,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import status from 'actions/status'
 
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 
 import { checkoutCreatePreviewOrder, checkoutTransactionalOrder } from '../checkout'

@@ -1,5 +1,5 @@
 import { client as clientRoutes } from 'config/routes'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import seActions from 'middlewares/tracking/snowplow/pauseSubscription/seActions'
 import * as windowUtils from 'utils/window'
 import { actionTypes } from './actionTypes'
