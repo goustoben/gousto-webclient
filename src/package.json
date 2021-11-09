@@ -34,7 +34,7 @@
     "test:jest:one:watch": "jest --watch",
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
-    "test:jest:ci:coverage": "jest --ci -w=2 --coverage",
+    "test:jest:ci:coverage": "jest --ci --runInBand --forceExit --coverage",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "eslint": "eslint .",
     "codeowners:report": "node ./scripts/codeowners-report/codeowners-report.js",
