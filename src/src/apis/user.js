@@ -1,7 +1,6 @@
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 import { fetch } from 'utils/fetch'
-import { createAdapter as unsubscribeUserFromMarketingFactory } from '../adapters/gousto/Gousto2-Core/unsubscribeUserFromMarketing'
 
 export function applyPromo(accessToken, promoCode) {
   return fetch(accessToken, `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
@@ -64,8 +63,10 @@ export function fetchUserAddresses(accessToken, userId) {
 }
 
 export function deleteMarketingSubscription(authUserId, marketingType, marketingUnsubscribeToken) {
-  const unsubscribeUserFromMarketing = unsubscribeUserFromMarketingFactory(endpoint('core'))
-
-  return unsubscribeUserFromMarketing(authUserId, marketingType, marketingUnsubscribeToken)
+  return fetch(
+    null,
+    `${endpoint('core')}/user/${authUserId}/marketing/${marketingType}`,
+    { marketing_unsubscribe_token: marketingUnsubscribeToken },
+    'DELETE'
+  )
 }
-

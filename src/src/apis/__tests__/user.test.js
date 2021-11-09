@@ -1,4 +1,4 @@
-import { fetch, fetchRaw } from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import {
   applyPromo,
   fetchReferralOffer,
@@ -21,11 +21,6 @@ import {
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () => ({
   fetch: jest.fn().mockImplementation(() => {
-    const getData = async () => ({ data: [1, 2, 3] })
-
-    return getData()
-  }),
-  fetchRaw: jest.fn().mockImplementation(() => {
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
@@ -279,11 +274,12 @@ describe('user api', () => {
       const marketingType = 'test_marketing_type'
       const marketingUnsubscribeToken = 'token'
       await deleteMarketingSubscription(userId, marketingType, marketingUnsubscribeToken)
-      expect(fetchRaw).toHaveBeenCalledTimes(1)
-      expect(fetchRaw).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
         `https://production-api.gousto.co.uk/user/${userId}/marketing/${marketingType}`,
         { marketing_unsubscribe_token: marketingUnsubscribeToken },
-        {method: 'PUT', useOverwriteRequestMethod: false}
+        'DELETE'
       )
     })
 

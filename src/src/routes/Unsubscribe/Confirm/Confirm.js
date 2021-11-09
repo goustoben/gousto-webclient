@@ -5,7 +5,7 @@ import { Button } from 'goustouicomponents'
 
 import css from './Confirm.css'
 
-const Confirm = ({ pending, unsubscribeClick, isError, copy, dataTesting }) => (
+const Confirm = ({ pending, unsubscribeClick, isError, copy }) => (
   <div>
     <p>
       {copy.body1}
@@ -16,7 +16,6 @@ const Confirm = ({ pending, unsubscribeClick, isError, copy, dataTesting }) => (
       disabled={pending}
       className={css.submitButton}
       onClick={unsubscribeClick}
-      data-testing={dataTesting}
     >
       {copy.button}
     </Button>
@@ -32,17 +31,12 @@ Confirm.propTypes = {
   isError: PropTypes.bool.isRequired,
   pending: PropTypes.bool.isRequired,
   unsubscribeClick: PropTypes.func.isRequired,
-  dataTesting: PropTypes.string,
   copy: PropTypes.shape({
     defaultError: PropTypes.string,
     body1: PropTypes.string,
     body2: PropTypes.string,
     button: PropTypes.string,
   }).isRequired,
-}
-
-Confirm.defaultProps = {
-  dataTesting: ''
 }
 
 export default Confirm

@@ -7,7 +7,7 @@ import css from './Unsubscribed.css'
 
 const Unsubscribed = ({ copy }) => (
   <div>
-    <Link to="/" data-testing="post-unsubscribe-cta">
+    <Link to="/">
       {copy.link}
       <span className={css.buttonRightIcon} />
     </Link>

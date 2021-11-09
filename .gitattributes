@@ -2,4 +2,3 @@
 src/package-lock.json -diff linguist-generated
 tests/e2e/package-lock.json -diff linguist-generated
 tests/regression/package-lock.json -diff linguist-generated
-emulation-server/package-lock.json -diff linguist-generated

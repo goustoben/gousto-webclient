@@ -29,4 +29,3 @@ src/config/*-local.json5
 .idea
 src/config/env.json
 lib
-/pact/
