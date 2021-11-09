@@ -15,5 +15,7 @@ export const initialize = () => {
 
   cy.intercept('GET', '/subscriptionquery/v1/subscriptions*', { fixture: 'subscription/subscriptionQueryResponse.json' })
 
+  cy.intercept('GET', '/user/current/referralDetails*', { fixture: 'user/userCurrentReferralDetails.json' })
+
   cy.visit('/my-gousto')
 }
