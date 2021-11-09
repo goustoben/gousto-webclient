@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "result": {
+    "data": {
+      "referral_credit": 45,
+      "referral_count": 3
+    },
+    "meta":[]
+  }
+}

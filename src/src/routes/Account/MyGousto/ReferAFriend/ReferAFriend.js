@@ -29,14 +29,14 @@ const ReferAFriend = ({ referralDetails, redirect }) => {
       <div className={css.rafStampsWrapper}>
         <div className={css.rafStampDetails}>
           <div className={css.rafStamp}>
-            <p className={css.rafDetailsValue}>{referralCount}</p>
+            <p className={css.rafDetailsValue} data-testing="referralCount">{referralCount}</p>
             <Svg fileName="icon-stamp-full" className={css.iconStamp} />
           </div>
           <p className={css.rafDetailsLabel}>Friends who have signed up using your Gousto referral</p>
         </div>
         <div className={css.rafStampDetails}>
           <div className={css.rafStamp}>
-            <p className={css.rafDetailsValue}>
+            <p className={css.rafDetailsValue} data-testing="referralCredit">
               £
               {referralCredit}
             </p>
@@ -48,7 +48,7 @@ const ReferAFriend = ({ referralDetails, redirect }) => {
       <div className={css.shareExperience}>
         <h3 className={css.shareHeading}>Share the Gousto experience</h3>
         <p>Refer a friend – and you both save</p>
-        <Button onClick={onClick}>Invite More Friends</Button>
+        <Button onClick={onClick} data-testing="inviteMoreFriends">Invite More Friends</Button>
       </div>
     </div>
   )
