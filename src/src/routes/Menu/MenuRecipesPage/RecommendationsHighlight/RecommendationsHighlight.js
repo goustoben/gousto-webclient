@@ -11,7 +11,13 @@ import css from './RecommendationsHighlight.css'
 // remove all recipes from `input` that are in `recipesToRemove`
 const removeMatchingRecipes = (input, recipesToRemove) => (
   input.filter(recipe =>
-    recipe && recipesToRemove.some(other => other && other.get('id') === recipe.get('id')) === false
+    recipe
+    && recipe.recipe
+    && recipesToRemove.some(other => (
+      other
+      && other.recipe
+      && other.recipe.get('id') === recipe.recipe.get('id')
+    )) === false
   )
 )
 
