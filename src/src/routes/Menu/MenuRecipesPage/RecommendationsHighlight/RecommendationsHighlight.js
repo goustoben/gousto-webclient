@@ -1,6 +1,5 @@
 import React from 'react'
 import classnames from 'classnames'
-import { useCollections } from 'routes/Menu/domains/collections'
 import { useMenu } from 'routes/Menu/domains/menu'
 import { DetailOverlayContainer } from '../../DetailOverlay'
 
@@ -12,7 +11,13 @@ import css from './RecommendationsHighlight.css'
 // remove all recipes from `input` that are in `recipesToRemove`
 const removeMatchingRecipes = (input, recipesToRemove) => (
   input.filter(recipe =>
-    recipesToRemove.some(other => other.get('id') === recipe.get('id')) === false
+    recipe
+    && recipe.recipe
+    && recipesToRemove.some(other => (
+      other
+      && other.recipe
+      && other.recipe.get('id') === recipe.recipe.get('id')
+    )) === false
   )
 )
 
@@ -20,14 +25,25 @@ const ALL_RECIPES_ID = 'ca8f71be-63ac-11e6-a693-068306404bab'
 const RECOMMENDATIONS_ID = '97270056-cd65-11e8-a2d2-067a72dd5dba'
 
 const RecommendationsHighlight = () => {
-  const { currentCollectionId } = useCollections()
   const { getRecipesForCollectionId } = useMenu()
 
-  const recommendationRecipes = getRecipesForCollectionId(RECOMMENDATIONS_ID)
+  const { recipes: recommendationRecipes } = getRecipesForCollectionId(RECOMMENDATIONS_ID)
+  const { recipes: allRecipes } = getRecipesForCollectionId(ALL_RECIPES_ID)
+
   const remainingRecipes = removeMatchingRecipes(
-    getRecipesForCollectionId(ALL_RECIPES_ID),
+    allRecipes,
     recommendationRecipes
   )
+
+  if (remainingRecipes.size === 0) {
+    return (
+      <div className={menuCss.menuContainer}>
+        <RecipeList collectionId={RECOMMENDATIONS_ID} recipes={recommendationRecipes} />
+
+        <DetailOverlayContainer showOverlay />
+      </div>
+    )
+  }
 
   return (
     <div className={menuCss.menuContainer}>
@@ -41,7 +57,7 @@ const RecommendationsHighlight = () => {
               <p className={css.subtitle}>Handpicked recipes to suit your taste.</p>
             </div>
 
-            <RecipeList collectionId={currentCollectionId} recipes={recommendationRecipes} />
+            <RecipeList collectionId={RECOMMENDATIONS_ID} recipes={recommendationRecipes} />
 
             <div className={css.headerContainer}>
               <hr className={css.divider} />
@@ -52,7 +68,7 @@ const RecommendationsHighlight = () => {
         )
       }
 
-      <RecipeList collectionId={currentCollectionId} recipes={remainingRecipes} />
+      <RecipeList collectionId={ALL_RECIPES_ID} recipes={remainingRecipes} />
 
       <DetailOverlayContainer showOverlay />
     </div>
