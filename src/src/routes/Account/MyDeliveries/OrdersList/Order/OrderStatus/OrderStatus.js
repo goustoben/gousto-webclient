@@ -17,7 +17,7 @@ const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
     {orderState === 'menu open'
       ? (
         <p className={css.orderStatus}>
-          {whenCutoff}
+          {whenCutoff || 'No time'}
           {' '}
           left to choose recipes
         </p>
@@ -26,7 +26,7 @@ const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
     {orderState === 'recipes chosen'
       ? (
         <p className={css.orderStatus}>
-          {whenCutoff}
+          {whenCutoff || 'No time'}
           {' '}
           left to edit this box
         </p>

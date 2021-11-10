@@ -49,6 +49,34 @@ describe('OrderStatus', () => {
       expect(wrapper.text()).toContain('6 days left to choose recipes')
     })
 
+    test('should display no time left when `whenCutOff` is null for orderState=menu open', () => {
+      orderStateSample = 'menu open'
+
+      wrapper = shallow(
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={null}
+          whenMenuOpen={whenMenuOpen}
+        />,
+      )
+
+      expect(wrapper.text()).toContain('No time left to choose recipes')
+    })
+
+    test('should display no time left when `whenCutOff` is null for orderState=recipes chosen', () => {
+      orderStateSample = 'recipes chosen'
+
+      wrapper = shallow(
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={null}
+          whenMenuOpen={whenMenuOpen}
+        />,
+      )
+
+      expect(wrapper.text()).toContain('No time left to edit this box')
+    })
+
     test('should render a <p> with the correct copy for orderState=recipes chosen', () => {
       orderStateSample = 'recipes chosen'
 

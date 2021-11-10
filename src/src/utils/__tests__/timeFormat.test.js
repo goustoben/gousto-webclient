@@ -2,7 +2,7 @@ import moment from 'moment'
 import humanTimeFormat from 'utils/timeFormat'
 
 describe('time format util methods', () => {
-  test('the method humanTimeFormat should work with the format "day"', () => {
+  test('should work with the format "day"', () => {
     expect(humanTimeFormat('2017-09-04 00:00:00', 'day')).toEqual(
       'Monday 4th September',
     )
@@ -11,7 +11,7 @@ describe('time format util methods', () => {
     )
   })
 
-  test('the method humanTimeFormat should work with the format "dayAndMonth"', () => {
+  test('should work with the format "dayAndMonth"', () => {
     expect(humanTimeFormat('2017-09-05 00:00:00', 'dayAndMonth')).toEqual(
       '5 September',
     )
@@ -20,14 +20,14 @@ describe('time format util methods', () => {
     )
   })
 
-  test('the method humanTimeFormat should work with the format "hour"', () => {
+  test('should work with the format "hour"', () => {
     expect(humanTimeFormat('00:00:00', 'hour')).toEqual('12am')
     expect(humanTimeFormat('19:00:01', 'hour')).toEqual('8pm')
     expect(humanTimeFormat('13:01:00', 'hour')).toEqual('2pm')
     expect(humanTimeFormat('18:59:59', 'hour')).toEqual('7pm')
   })
 
-  test('the method humanTimeFormat should work with the format "hourAndDay"', () => {
+  test('should work with the format "hourAndDay"', () => {
     expect(humanTimeFormat('2017-09-04 00:00:00', 'hourAndDay')).toEqual(
       '12am, 4 September',
     )
@@ -36,7 +36,7 @@ describe('time format util methods', () => {
     )
   })
 
-  test('the method humanTimeFormat should work with the format "timeLeft"', () => {
+  test('should work with the format "timeLeft"', () => {
     const time = moment()
     time.add({ minutes: 60 })
     expect(humanTimeFormat(time, 'timeLeft')).toEqual('an hour')
@@ -46,5 +46,11 @@ describe('time format util methods', () => {
     expect(humanTimeFormat(time, 'timeLeft')).toEqual('a day')
     time.add({ days: 15 })
     expect(humanTimeFormat(time, 'timeLeft')).toEqual('16 days')
+  })
+
+  test('should return null when time has passed cut off date', () => {
+    const pastCutOffDate = '2021-11-04 11:59:59'
+    const time = moment(pastCutOffDate)
+    expect(humanTimeFormat(time, 'timeLeft')).toEqual(null)
   })
 })

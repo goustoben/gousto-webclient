@@ -1,6 +1,16 @@
 import moment from 'moment'
 
-export default function timeFormat(time, format) {
+const getTimeLeft = (date) => {
+  const dateToMoment = moment(date, 'YYYY-MM-DD HH:mm:ss')
+
+  if (dateToMoment.diff(moment()) <= 0) {
+    return null
+  }
+
+  return dateToMoment.toNow(true)
+}
+
+function timeFormat(time, format) {
   switch (format) {
   case 'day':
     return moment(time, 'YYYY-MM-DD').format('dddd Do MMMM')
@@ -14,10 +24,12 @@ export default function timeFormat(time, format) {
   case 'hourAndDay':
     return moment(time, 'YYYY-MM-DD HH:mm:ss').format('ha, D MMMM')
   case 'timeLeft':
-    return moment(time, 'YYYY-MM-DD HH:mm:ss').toNow(true)
+    return getTimeLeft(time)
   case 'dayAndMonth':
     return moment(time, 'YYYY-MM-DD HH:mm:ss').format('D MMMM')
   default:
     return ''
   }
 }
+
+export default timeFormat
