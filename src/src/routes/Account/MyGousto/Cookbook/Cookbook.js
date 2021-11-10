@@ -71,7 +71,7 @@ class Cookbook extends React.PureComponent {
         {loading && (
           <p className={css.mobileShow}>Loading your most recent recipes...</p>
         )}
-        <Row>{this.renderRecipes()}</Row>
+        <Row data-testing="recentPreviousRecipes">{this.renderRecipes()}</Row>
       </div>
     )
   }
