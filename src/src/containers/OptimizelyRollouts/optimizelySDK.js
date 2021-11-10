@@ -1,4 +1,4 @@
-import optimizelySdk, { enums } from '@optimizely/optimizely-sdk'
+import optimizelySdk from '@optimizely/optimizely-sdk'
 import optimizelyRollouts from '../../config/head/optimizelyRollouts'
 
 class OptimizelySDK {
@@ -13,7 +13,6 @@ class OptimizelySDK {
       this.loading = true
       this.optimizelyRolloutsInstance = optimizelySdk.createInstance({
         sdkKey: optimizelyRollouts[__ENV__] || optimizelyRollouts.staging, //eslint-disable-line
-        logLevel: __ENV__ === 'local' ? enums.LOG_LEVEL.INFO : enums.LOG_LEVEL.ERROR,
       })
       try {
         const {success} = await this.optimizelyRolloutsInstance.onReady({timeout: 5000})

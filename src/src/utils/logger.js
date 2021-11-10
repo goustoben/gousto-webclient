@@ -1,7 +1,5 @@
 import lumberjack from 'gousto-lumberjack-js'
 
-const consoleEnabled = __ENV__ !== 'production' || __ENV__ !== 'staging'
-
-const logger = lumberjack({ service: 'webclient', consoleEnabled })
+const logger = lumberjack({service: 'webclient', consoleEnabled: !(__ENV__ === 'production')})
 
 export default logger
