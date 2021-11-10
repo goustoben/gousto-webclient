@@ -15,6 +15,14 @@ export const getOtherIssueIneligibleIngredientUuids = (state) => (
   state.getHelp.get('otherIssueIneligibleIngredientUuids').toJS()
 )
 
+export const getNumOrdersChecked = (state) => (
+  state.getHelp.get('numOrdersChecked')
+)
+
+export const getNumOrdersCompensated = (state) => (
+  state.getHelp.get('numOrdersCompensated')
+)
+
 export const getIsAutoAccept = (state) => (
   state.getHelp.get('isAutoAccept')
 )

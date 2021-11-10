@@ -26,6 +26,8 @@ const getHelpInitialState = fromJS({
   selectedIngredients: {},
   massIssueIneligibleIngredientUuids: [],
   otherIssueIneligibleIngredientUuids: [],
+  numOrdersChecked: null,
+  numOrdersCompensated: null,
 })
 
 const getHelp = (state, action) => {
@@ -183,10 +185,13 @@ const getHelp = (state, action) => {
       .setIn(['order', 'deliveryCompensationAmount'], action.payload.compensation)
       .setIn(['order', 'hasPassedDeliveryValidation'], action.payload.isValid)
   }
-
   case webClientActionTypes.GET_HELP_VALIDATE_ORDER: {
-    return state.set('massIssueIneligibleIngredientUuids', fromJS(action.massIssueIneligibleIngredientUuids))
-      .set('otherIssueIneligibleIngredientUuids', fromJS(action.otherIssueIneligibleIngredientUuids))
+    return state.merge({
+      massIssueIneligibleIngredientUuids: action.massIssueIneligibleIngredientUuids,
+      otherIssueIneligibleIngredientUuids: action.otherIssueIneligibleIngredientUuids,
+      numOrdersChecked: action.numOrdersChecked,
+      numOrdersCompensated: action.numOrdersCompensated,
+    })
   }
   case actionTypes.GET_HELP_LOAD_REFUND_AMOUNT: {
     return state.set('isAutoAccept', action.payload.isAutoAccept)

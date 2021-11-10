@@ -423,12 +423,16 @@ describe('getHelp reducer', () => {
     describe('when there is a payload', () => {
       const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
       const OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['25949ce8-d92c-43fa-8c0d-110d903d6e60', '7893dfhgjk-204c-4ded-9dac-12df03f265d6']
+      const NUM_ORDERS_CHECKED = 4
+      const NUM_ORDERS_COMPENSATED = 1
 
       beforeEach(() => {
         newState = getHelp(getHelpInitialState, {
           type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
           massIssueIneligibleIngredientUuids: MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
-          otherIssueIneligibleIngredientUuids: OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS
+          otherIssueIneligibleIngredientUuids: OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
+          numOrdersChecked: NUM_ORDERS_CHECKED,
+          numOrdersCompensated: NUM_ORDERS_COMPENSATED,
         })
       })
 
@@ -438,6 +442,14 @@ describe('getHelp reducer', () => {
 
       test('otherIssueIneligibleIngredientUuids state is set as that payload', () => {
         expect(newState.get('otherIssueIneligibleIngredientUuids').toJS()).toEqual(OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS)
+      })
+
+      test('numOrdersChecked state is set as that payload', () => {
+        expect(newState.get('numOrdersChecked')).toEqual(NUM_ORDERS_CHECKED)
+      })
+
+      test('numOrdersCompensated state is set as that payload', () => {
+        expect(newState.get('numOrdersCompensated')).toEqual(NUM_ORDERS_COMPENSATED)
       })
     })
   })
