@@ -405,12 +405,19 @@ export const validateLatestOrder = ({
         order_id: Number(orderId),
       },
     )
-    const { massIssueIneligibleIngredientUuids, otherIssueIneligibleIngredientUuids } = response.data
+    const {
+      massIssueIneligibleIngredientUuids,
+      otherIssueIneligibleIngredientUuids,
+      numOrdersChecked,
+      numOrdersCompensated,
+    } = response.data
 
     dispatch({
       type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
       massIssueIneligibleIngredientUuids,
       otherIssueIneligibleIngredientUuids,
+      numOrdersChecked,
+      numOrdersCompensated,
     })
   } catch (error) {
     dispatch(webClientStatusActions.error(webClientActionTypes.GET_HELP_VALIDATE_ORDER, error.message))

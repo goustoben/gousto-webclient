@@ -4,6 +4,8 @@ import {
   getError,
   getMassIssueIneligibleIngredientUuids,
   getOtherIssueIneligibleIngredientUuids,
+  getNumOrdersChecked,
+  getNumOrdersCompensated,
   getIsAutoAccept,
   getIsError,
   getIsLoadOrderError,
@@ -34,6 +36,8 @@ const DELIVERY_SLOT = {
   deliveryEnd: '18:59:59',
   deliveryStart: '08:00:00',
 }
+const NUM_ORDERS_CHECKED = 4
+const NUM_ORDERS_COMPENSATED = 1
 const TRACKING_URL = 'https://amazing-courier.com/order/1111'
 const ORDER = {
   id: ORDER_ID,
@@ -117,6 +121,8 @@ const STATE = {
   getHelp: fromJS({
     massIssueIneligibleIngredientUuids: fromJS(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
     otherIssueIneligibleIngredientUuids: fromJS(OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
+    numOrdersChecked: NUM_ORDERS_CHECKED,
+    numOrdersCompensated: NUM_ORDERS_COMPENSATED,
     isAutoAccept: IS_AUTO_ACCEPT,
     order: ORDER,
     recipes: RECIPES,
@@ -135,6 +141,8 @@ describe('Get Help selectors', () => {
     ['getAccessToken', getAccessToken, ACCESS_TOKEN],
     ['getMassIssueIneligibleIngredientUuids', getMassIssueIneligibleIngredientUuids, MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
     ['getOtherIssueIneligibleIngredientUuids', getOtherIssueIneligibleIngredientUuids, OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
+    ['getNumOrdersChecked', getNumOrdersChecked, NUM_ORDERS_CHECKED],
+    ['getNumOrdersCompensated', getNumOrdersCompensated, NUM_ORDERS_COMPENSATED],
     ['getIsAutoAccept', getIsAutoAccept, IS_AUTO_ACCEPT],
     ['getIsOrderLoading', getIsOrderLoading, ORDER_PENDING_VALUE],
     ['getIsTrackingUrlLoading', getIsTrackingUrlLoading, TRACKING_URL_PENDING_VALUE],

@@ -1135,7 +1135,9 @@ describe('GetHelp action generators and thunks', () => {
       const validationResponse = {
         valid: true,
         massIssueIneligibleIngredientUuids: ['a', 'b'],
-        otherIssueIneligibleIngredientUuids: ['c', 'd']
+        otherIssueIneligibleIngredientUuids: ['c', 'd'],
+        numOrdersChecked: 4,
+        numOrdersCompensated: 2,
       }
       const expectedParams = [
         ACCESS_TOKEN,
@@ -1160,11 +1162,13 @@ describe('GetHelp action generators and thunks', () => {
           expect(validateOrder).toHaveBeenCalledWith(...expectedParams)
         })
 
-        test('the ineligible ingredient uuids are dispatched correctly', () => {
+        test('order validation details are dispatched correctly', () => {
           expect(dispatch).toHaveBeenCalledWith({
             type: 'GET_HELP_VALIDATE_ORDER',
             massIssueIneligibleIngredientUuids: validationResponse.massIssueIneligibleIngredientUuids,
             otherIssueIneligibleIngredientUuids: validationResponse.otherIssueIneligibleIngredientUuids,
+            numOrdersChecked: validationResponse.numOrdersChecked,
+            numOrdersCompensated: validationResponse.numOrdersCompensated,
           })
         })
       })
