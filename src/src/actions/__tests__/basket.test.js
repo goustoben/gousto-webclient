@@ -15,7 +15,7 @@ import basket, {
   basketRestorePreviousDate,
   basketDateChange,
 } from 'actions/basket'
-import pricingActions from 'actions/pricing'
+import { pricingRequest } from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
@@ -145,7 +145,7 @@ describe('basket actions', () => {
 
     test('should dispatch a pricing pricingRequest action', async () => {
       const pricingRequestResponse = Symbol('Pricing request')
-      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
+      pricingRequest.mockReturnValue(pricingRequestResponse)
 
       await basketNumPortionChange(2)(dispatch, getStateSpy)
 
@@ -349,7 +349,7 @@ describe('basket actions', () => {
         })
 
         jest.spyOn(basketUtils, 'naiveLimitReached').mockReturnValue(true)
-        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
+        pricingRequest.mockReturnValue(pricingRequestAction)
 
         recipes = { 123: 1, 234: 2 }
       })
@@ -424,7 +424,7 @@ describe('basket actions', () => {
             }
           })
         })
-        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
+        pricingRequest.mockReturnValue(pricingRequestAction)
       })
       test('should dispatch BASKET_SLOT_CHANGE', () => {
         const slotId = 'slot-1-day-1'
@@ -501,7 +501,7 @@ describe('basket actions', () => {
             }
           })
         })
-        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
+        pricingRequest.mockReturnValue(pricingRequestAction)
       })
 
       test('should not dispatch BASKET_SELECT_DELIVERY_SLOT', () => {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxPricesBoxSizeSelected } from 'actions/boxPrices'
 import { getIsJpgImagesEnabled } from 'selectors/features'

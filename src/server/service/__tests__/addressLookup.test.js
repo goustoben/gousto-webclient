@@ -1,4 +1,4 @@
-import lookupService from '../addressLookup'
+import { addressLookup } from '../addressLookup'
 import config from '../../config/apis'
 
 jest.mock('utils/fetch')
@@ -22,7 +22,7 @@ describe('server/service/addressLookup', () => {
   test('It should forward the call to fetch and add required parameters', async () => {
     expect.assertions(4)
 
-    await lookupService('AB12CD')
+    await addressLookup('AB12CD')
 
     expect(fetchMock).toHaveBeenCalled()
     expect(fetchMock.mock.calls[0][0]).toEqual(null)

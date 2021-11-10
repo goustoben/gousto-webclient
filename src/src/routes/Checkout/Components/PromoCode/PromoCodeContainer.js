@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { sendRequestToUpdateOrderSummaryPrices } from 'actions/checkout'
 import { PromoCode } from './PromoCode'
 

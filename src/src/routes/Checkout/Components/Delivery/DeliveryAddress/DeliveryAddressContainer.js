@@ -11,7 +11,7 @@ import {
 } from 'redux-form'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import actions from 'actions'
+import { actions } from 'actions'
 import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
 import { Address } from '../../Address'

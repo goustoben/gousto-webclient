@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { trackUserAttributes } from 'actions/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import { getIsSignupReductionEnabled } from 'selectors/features'

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackSignupWizardAction } from 'actions/signup'
 import { getCurrentPromoCodeCustomText1 } from 'routes/Signup/signupSelectors'

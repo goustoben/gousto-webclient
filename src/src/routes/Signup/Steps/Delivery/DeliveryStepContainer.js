@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getLandingDay } from 'utils/deliveries'

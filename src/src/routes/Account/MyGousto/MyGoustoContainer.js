@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { userGetReferralDetails, userCheck3dsCompliantToken, userReset3dsCompliantToken } from 'actions/user'
 import { redirect } from 'actions/redirect'

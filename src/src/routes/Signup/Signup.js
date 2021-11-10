@@ -7,7 +7,7 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import routes from 'config/routes'
-import actions from 'actions'
+import { actions } from 'actions'
 import {
   stepByName,
   getPromocodeQueryParam,

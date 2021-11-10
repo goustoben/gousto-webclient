@@ -1,5 +1,5 @@
 import { fetchFeatures } from 'apis/fetchS3'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import {
   getUserToken,
   identifyUserUsingOAuth,
@@ -8,7 +8,7 @@ import {
   validateRecaptchaUserToken,
   validateUserPassword,
 } from 'apis/auth'
-import env from 'utils/env'
+import { env } from 'utils/env'
 import routes from 'config/routes'
 import {
   routeMatches,

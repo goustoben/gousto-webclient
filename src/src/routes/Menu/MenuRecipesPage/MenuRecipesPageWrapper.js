@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { useDispatch, useSelector } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getIsTastePreferencesEnabled } from 'selectors/features'
 import { getUserId } from 'selectors/user'

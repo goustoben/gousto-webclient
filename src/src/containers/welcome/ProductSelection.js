@@ -1,7 +1,7 @@
 import ProductList from 'Product/List'
 import { getOneProductFromEachCategory, getProductsByCutoff } from 'utils/products'
 import { getUserOrderById } from 'utils/user'
-import actions from 'actions'
+import { actions } from 'actions'
 import { connect } from 'react-redux'
 
 function mapStateToProps(state, { orderId }) {

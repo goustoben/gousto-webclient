@@ -1,16 +1,22 @@
 import { gtm } from './gtm'
 import { trustpilot } from './trustpilot'
+import { defaultMeta } from './defaultMeta'
+import { fbTracking } from './fbTracking'
+import { pingdom } from './pingdom'
+import { favicon } from './favicon'
+import { mobileMeta } from './mobileMeta'
+import { optimizely } from './optimizely'
 import { ribbon } from './ribbon'
 
 const head = {
   gtm,
   trustpilot,
-  defaultMeta: require('./defaultMeta').default,
-  fbTracking: require('./fbTracking').default,
-  pingdom: require('./pingdom').default,
-  favicon: require('./favicon').default,
-  mobileMeta: require('./mobileMeta').default,
-  optimizely: require('./optimizely').default,
+  defaultMeta,
+  fbTracking,
+  pingdom,
+  favicon,
+  mobileMeta,
+  optimizely,
   ribbon
 }
 

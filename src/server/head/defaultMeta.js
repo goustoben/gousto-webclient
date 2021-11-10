@@ -1,4 +1,4 @@
-function defaultMeta(title, keywords, description) {
+export function defaultMeta(title, keywords, description) {
   return (
     `<title>${title}</title>
     <meta charset="utf-8" />
@@ -8,5 +8,3 @@ function defaultMeta(title, keywords, description) {
     <meta name="keywords" content="${keywords}">`
   )
 }
-
-export default defaultMeta

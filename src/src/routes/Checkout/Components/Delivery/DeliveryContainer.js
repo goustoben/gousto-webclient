@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta } from 'redux-form'
 import { deliveryFormName } from 'selectors/checkout'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 

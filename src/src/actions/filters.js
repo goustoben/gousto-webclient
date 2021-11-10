@@ -71,9 +71,3 @@ export const filterProductCategory = (category) => (
     dispatch(trackProductFiltering(category))
   }
 )
-
-export default {
-  collectionFilterChange,
-  collectionFilterIdReceive,
-  changeCollectionById
-}

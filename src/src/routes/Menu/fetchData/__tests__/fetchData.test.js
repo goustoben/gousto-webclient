@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import moment from 'moment'
 import now from 'performance-now'
 
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { initialState as initialAuthState } from 'reducers/auth'
 import { initialState as initialBasketState } from 'reducers/basket'

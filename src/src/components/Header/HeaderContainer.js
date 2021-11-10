@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import { getIsAuthenticated } from 'selectors/auth'

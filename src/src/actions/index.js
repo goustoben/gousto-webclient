@@ -1,9 +1,9 @@
-import auth from './auth'
-import basket from './basket'
+import * as auth from './auth'
+import * as basket from './basket'
 import { checkoutActions } from './checkout'
-import filters from './filters'
+import * as filters from './filters'
 import * as log from './log'
-import login from './login'
+import * as login from './login'
 import menu from './menu'
 import order from './order'
 import * as onScreenRecovery from './onScreenRecovery'
@@ -25,7 +25,7 @@ import * as welcome from './welcome'
 import { homeActions } from './home'
 import { boxPricesActions } from './boxPrices'
 
-const actions = {
+export const actions = {
   ...auth,
   ...basket,
   ...checkoutActions,
@@ -53,5 +53,3 @@ const actions = {
   ...homeActions,
   ...boxPricesActions
 }
-
-export default actions

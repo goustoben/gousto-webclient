@@ -5,6 +5,10 @@ import GoustoImage from 'Image'
 import { removeDiacritics } from 'utils/sanitizeText'
 import { SimpleRecipe } from './SimpleRecipe'
 
+jest.mock('utils/sanitizeText', () => ({
+  removeDiacritics: jest.fn(),
+}))
+
 describe('<SimpleRecipe />', () => {
   let wrapper
   const recipe = {
@@ -24,7 +28,7 @@ describe('<SimpleRecipe />', () => {
   }
 
   beforeEach(() => {
-    jest.spyOn(removeDiacritics, 'removeDiacritics').mockImplementation((param) => param)
+    removeDiacritics.mockImplementation((param) => param)
     wrapper = shallow(<SimpleRecipe {...recipe} />)
   })
 

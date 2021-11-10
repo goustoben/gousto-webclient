@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getIsRecaptchaEnabled } from 'selectors/auth'
-import actionsAuth, { changeRecaptcha } from 'actions/auth'
+import { changeRecaptcha, authResetPassword } from 'actions/auth'
 import { actionTypes } from 'actions/actionTypes'
 import { ResetPassword } from './ResetPassword'
 
@@ -10,6 +10,6 @@ const mapStateToProps = (state) => ({
 })
 
 export const ResetPasswordContainer = connect(mapStateToProps, {
-  authResetPassword: actionsAuth.authResetPassword,
+  authResetPassword,
   changeRecaptcha,
 })(ResetPassword)

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
-import actions from 'actions'
+import { actions } from 'actions'
 import { DuplicateOrderModal } from './DuplicateOrderModal'
 
 function mapStateToProps(state) {

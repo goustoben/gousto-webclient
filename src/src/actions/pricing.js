@@ -137,7 +137,7 @@ const getPricing = async (dispatch, getState) => {
   }
 }
 
-const pricingClear = () => async (dispatch, getState) => {
+export const pricingClear = () => async (dispatch, getState) => {
   const prices = getState().pricing.get('prices').toJS()
 
   if (Object.keys(prices).length) {

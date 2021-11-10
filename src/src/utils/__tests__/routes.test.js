@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import authActions from 'actions/auth'
+import * as authActions from 'actions/auth'
 import { checkValidSession, addTargetToRedirect, checkGuest } from '../routes'
 
 jest.mock('actions/auth', () => ({

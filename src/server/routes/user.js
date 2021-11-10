@@ -1,9 +1,9 @@
 import { fetchFeatures } from 'apis/fetchS3'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { validateRecaptchaUserToken } from 'apis/auth'
 import { referAFriend as sendReferalToCore } from 'apis/user'
 import routes from 'config/routes'
-import env from 'utils/env'
+import { env } from 'utils/env'
 import { routeMatches, getCookieValue } from './utils'
 
 /**

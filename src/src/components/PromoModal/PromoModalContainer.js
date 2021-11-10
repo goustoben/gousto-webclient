@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import Immutable from 'immutable'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'

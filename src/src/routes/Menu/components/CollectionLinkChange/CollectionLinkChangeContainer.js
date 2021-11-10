@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { CollectionLinkChange } from './CollectionLinkChange'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

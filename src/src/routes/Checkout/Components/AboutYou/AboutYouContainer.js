@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { isValid } from 'redux-form'
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed, validatePassword } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'

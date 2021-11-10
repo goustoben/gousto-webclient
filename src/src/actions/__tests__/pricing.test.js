@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import { requestPricing } from 'apis/pricing'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
-import actions from 'actions/pricing'
+import { pricingRequest, pricingClear } from 'actions/pricing'
 import { deliveryTariffTypes } from 'utils/deliveries'
 import * as optimizelyUtils from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { createState as createOrderState } from 'routes/Menu/selectors/__mocks__/order.mock'
@@ -87,7 +87,7 @@ describe('pricing actions', () => {
 
       requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-      await actions.pricingRequest()(dispatchSpy, getStateSpy)
+      await pricingRequest()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).not.toContain({
         type: actionTypes.PRICING_PENDING,
@@ -109,7 +109,7 @@ describe('pricing actions', () => {
 
       requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-      await actions.pricingRequest()(dispatchSpy, getStateSpy)
+      await pricingRequest()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).not.toHaveBeenCalledWith({
         type: actionTypes.PRICING_PENDING,
@@ -132,7 +132,7 @@ describe('pricing actions', () => {
 
         requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        await pricingRequest()(dispatchSpy, getStateSpy)
 
         expect(dispatchSpy).toHaveBeenCalledTimes(2)
         expect(dispatchSpy).toHaveBeenCalledWith({
@@ -174,7 +174,7 @@ describe('pricing actions', () => {
 
         requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        await pricingRequest()(dispatchSpy, getStateSpy)
 
         expect(dispatchSpy).toHaveBeenCalledTimes(2)
         expect(dispatchSpy).toHaveBeenCalledWith({
@@ -227,7 +227,7 @@ describe('pricing actions', () => {
 
         requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        await pricingRequest()(dispatchSpy, getStateSpy)
 
         const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
         expect(requestPricing).toHaveBeenCalledWith(
@@ -256,7 +256,7 @@ describe('pricing actions', () => {
 
         requestPricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        await pricingRequest()(dispatchSpy, getStateSpy)
 
         expect(requestPricing.mock.calls[0][1]).toEqual({
           0: { id: '123', quantity: 2, type: 'Recipe' },
@@ -276,7 +276,7 @@ describe('pricing actions', () => {
 
         requestPricing.mockReturnValue(Promise.reject('error from pricing endpoint'))
 
-        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        await pricingRequest()(dispatchSpy, getStateSpy)
 
         expect(dispatchSpy).toHaveBeenCalledTimes(2)
         expect(dispatchSpy).toHaveBeenCalledWith({
@@ -301,7 +301,7 @@ describe('pricing actions', () => {
           const getState = () => createState()
           getOrderPriceSpy.mockResolvedValue([orderV2PricesFixture, null, 200])
 
-          await actions.pricingRequest()(dispatchSpy, getState)
+          await pricingRequest()(dispatchSpy, getState)
 
           expect(dispatchSpy).toHaveBeenCalledTimes(2)
           expect(dispatchSpy).toHaveBeenCalledWith({
@@ -365,7 +365,7 @@ describe('pricing actions', () => {
 
           getOrderPriceSpy.mockResolvedValue([null, 'error from pricing endpoint', 400])
 
-          await actions.pricingRequest()(dispatchSpy, getState)
+          await pricingRequest()(dispatchSpy, getState)
 
           expect(dispatchSpy).toHaveBeenCalledTimes(2)
           expect(dispatchSpy).toHaveBeenCalledWith({
@@ -390,7 +390,7 @@ describe('pricing actions', () => {
         features: getFeatures('a1b2c3d4')
       })
 
-      await actions.pricingClear()(dispatchSpy, getStateSpy)
+      await pricingClear()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalled()
       expect(dispatchSpy).toHaveBeenCalledWith({
@@ -406,7 +406,7 @@ describe('pricing actions', () => {
         features: getFeatures('a1b2c3d4')
       })
 
-      await actions.pricingClear()(dispatchSpy, getStateSpy)
+      await pricingClear()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).not.toHaveBeenCalled()
     })

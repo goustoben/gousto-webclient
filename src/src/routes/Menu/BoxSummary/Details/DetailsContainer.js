@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, trackingUnavailableRecipeList } from 'actions/boxSummary'
 import { getBasketSlotId } from 'selectors/basket'

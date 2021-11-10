@@ -5,7 +5,7 @@ import { basketAddressChange, basketChosenAddressChange, basketDateChange, baske
 import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
 import { promoAgeVerify } from 'actions/promos'
-import authActions from 'actions/auth'
+import { userAuthenticated, userRememberMe } from 'actions/auth'
 import { cookiePolicyAcceptanceChange } from 'actions/cookies'
 import { setAffiliateSource, setAwinClickChecksum } from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
@@ -51,12 +51,12 @@ const processCookies = (cookies, store) => {
     if (rememberCookie) {
       const rememberMe = rememberCookie.remember_me
       if (typeof rememberMe !== 'undefined') {
-        store.dispatch(authActions.userRememberMe(rememberMe))
+        store.dispatch(userRememberMe(rememberMe))
       }
     }
 
     if (accessToken || refreshToken) {
-      store.dispatch(authActions.userAuthenticated(accessToken, refreshToken, expiresAt))
+      store.dispatch(userAuthenticated(accessToken, refreshToken, expiresAt))
     }
   } catch (err) {
     logger.warning(err)

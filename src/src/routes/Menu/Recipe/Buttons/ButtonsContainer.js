@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { actions } from 'actions'
 import { recipeVariantDropdownExpanded } from 'actions/menu'
 import { getSurcharge, getSurchargePerPortion } from 'utils/recipe'
 import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'

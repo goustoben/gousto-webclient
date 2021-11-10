@@ -1,6 +1,6 @@
 import ProductList from 'Product/List'
 import { getOneProductFromEachCategory } from 'utils/products'
-import actions from 'actions'
+import { actions } from 'actions'
 import { connect } from 'react-redux'
 
 function mapStateToProps(state, { orderId }) {

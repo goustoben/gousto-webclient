@@ -1,9 +1,8 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
 import ReactDOM from 'react-dom'
 import scrollIntoView from 'scroll-into-view'
 import { logger } from 'utils/logger'
 
-const DOMHelper = {
+export const DOMHelper = {
   getBoundingClientRect,
   getFirstMatchingNode,
   scrollToFirstMatchingNode,
@@ -49,15 +48,11 @@ export function scrollToFirstMatchingNode(keys = [], refs = {}) {
 }
 
 export function getElementHeight(document, selector) {
-  const elementHeight = document && document.querySelector(selector) && document.querySelector(selector).offsetHeight
-
-  return elementHeight
+  return document && document.querySelector(selector) && document.querySelector(selector).offsetHeight
 }
 
 export function getElementOffsetTop(document, selector) {
-  const elementOffsetTop = document && document.querySelector(selector) && document.querySelector(selector).offsetTop
-
-  return elementOffsetTop
+  return document && document.querySelector(selector) && document.querySelector(selector).offsetTop
 }
 
 export const isNodeInRoot = (node, root) => {
@@ -71,5 +66,3 @@ export const isNodeInRoot = (node, root) => {
 
   return false
 }
-
-export default DOMHelper

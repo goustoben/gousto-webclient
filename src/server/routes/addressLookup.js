@@ -1,4 +1,4 @@
-import addressLookup from '../service/addressLookup'
+import { addressLookup } from '../service/addressLookup'
 
 function isValidPayload(ctx) {
   return ctx.query && ctx.query.postcode

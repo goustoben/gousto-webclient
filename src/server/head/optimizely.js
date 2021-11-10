@@ -1,6 +1,6 @@
 import config from 'config/head/optimizely'
 
-export default function optimizely(features) {
+export function optimizely(features) {
   let script = ''
   if (config[__ENV__]) { // eslint-disable-line no-underscore-dangle
     const featuresSerialised = JSON.stringify(features.toJS())

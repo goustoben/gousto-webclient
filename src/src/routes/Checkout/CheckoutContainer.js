@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import actions from 'actions'
+import { actions } from 'actions'
 import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import {

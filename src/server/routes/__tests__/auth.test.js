@@ -2,7 +2,7 @@ import { fetchFeatures } from 'apis/fetchS3'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
 import { getUserToken, refreshUserToken, validateUserPassword, identifyUserUsingOAuth, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
-import logger from 'utils/logger'
+import { logger } from 'utils/logger'
 import { RECAPTCHA_PRIVATE_KEY } from '../../config/recaptcha'
 
 jest.mock('utils/logger', () => ({

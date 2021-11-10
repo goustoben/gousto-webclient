@@ -22,7 +22,7 @@ import { fetchFeatures } from '../apis/fetchS3'
 import { actionTypes } from './actionTypes'
 
 /* action creators */
-const userAuthenticated = (accessToken, refreshToken, expiresAt) => ({
+export const userAuthenticated = (accessToken, refreshToken, expiresAt) => ({
   type: actionTypes.USER_AUTHENTICATED,
   accessToken,
   refreshToken,
@@ -38,12 +38,12 @@ const userLoggedIn = () => ({
   type: actionTypes.USER_LOGGED_IN,
 })
 
-const userRememberMe = rememberMe => ({
+export const userRememberMe = rememberMe => ({
   type: actionTypes.USER_REMEMBER_ME,
   rememberMe,
 })
 
-const redirectLoggedInUser = () => (
+export const redirectLoggedInUser = () => (
   async (dispatch, getState) => {
     const { auth } = getState()
     const isAuthenticated = auth.get('isAuthenticated')
@@ -58,7 +58,7 @@ const redirectLoggedInUser = () => (
 )
 
 /* auth */
-const authenticate = (email, password, rememberMe, recaptchaToken) => (
+export const authAuthenticate = (email, password, rememberMe, recaptchaToken) => (
   async (dispatch) => {
     try {
       const { data: authResponse } = await serverAuthenticate(email, password, rememberMe, recaptchaToken)
@@ -83,7 +83,7 @@ const authenticate = (email, password, rememberMe, recaptchaToken) => (
   }
 )
 
-const refresh = () => (
+export const authRefresh = () => (
   async (dispatch, getState) => {
     const rememberMe = getState().auth.get('rememberMe', false)
     try {
@@ -105,7 +105,7 @@ const refresh = () => (
   }
 )
 
-const identify = (accessToken) => (
+export const authIdentify = (accessToken) => (
   async (dispatch) => {
     let data = {}
 
@@ -125,7 +125,7 @@ const identify = (accessToken) => (
   }
 )
 
-const clear = () => (
+export const authClear = () => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
 
@@ -134,18 +134,18 @@ const clear = () => (
   }
 )
 
-const validate = (accessToken, refreshToken, expiresAt) => (
+export const authValidate = (accessToken, refreshToken, expiresAt) => (
   async (dispatch, getState) => {
     try {
       if (expiresAt && moment(expiresAt).isBefore(moment())) {
         throw new Error('Token already expired')
       }
-      await dispatch(identify(accessToken))
+      await dispatch(authIdentify(accessToken))
     } catch (err) {
       if (refreshToken) {
-        await dispatch(refresh(refreshToken))
+        await dispatch(authRefresh(refreshToken))
         const newAccessToken = getState().auth.get('accessToken')
-        await dispatch(identify(newAccessToken))
+        await dispatch(authIdentify(newAccessToken))
       } else {
         throw err
       }
@@ -153,7 +153,7 @@ const validate = (accessToken, refreshToken, expiresAt) => (
   }
 )
 
-const authResetPassword = (password, passwordToken, recaptchaToken = '') => (
+export const authResetPassword = (password, passwordToken, recaptchaToken = '') => (
   async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.AUTH_PASSWORD_RESET, true))
     dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, null))
@@ -190,18 +190,3 @@ export const storeSignupRecaptchaToken = (token) => ({
   type: actionTypes.STORE_SIGNUP_RECAPTCHA_TOKEN,
   token,
 })
-
-const authActions = {
-  authAuthenticate: authenticate,
-  authRefresh: refresh,
-  authIdentify: identify,
-  authClear: clear,
-  authValidate: validate,
-  authResetPassword,
-  storeSignupRecaptchaToken,
-  userRememberMe,
-  userAuthenticated,
-  redirectLoggedInUser,
-}
-
-export default authActions

@@ -1,8 +1,6 @@
 import { push } from 'react-router-redux'
-
 import config from 'config'
-import basketActions from 'actions/basket'
-import pricingActions from 'actions/pricing'
+import { pricingRequest } from 'actions/pricing'
 import * as trackingKeys from 'actions/trackingKeys'
 import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
@@ -10,14 +8,14 @@ import { getUserOrderById } from 'utils/user'
 import { logger } from 'utils/logger'
 import { getUserOrders } from 'selectors/user'
 import { getBasketRecipes } from 'selectors/basket'
+import { getUTMAndPromoCode } from 'selectors/tracking'
+import { getIsAuthenticated } from 'selectors/auth'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import { boxSummaryDeliveryDaysLoad } from './boxSummary'
 import { actionTypes } from './actionTypes'
-import { getUTMAndPromoCode } from '../selectors/tracking'
 import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import { trackingOrderCheckout } from './tracking'
-import { getIsAuthenticated } from '../selectors/auth'
 
 export const basketOrderLoaded = (orderId) => (
   (dispatch, getState) => {
@@ -84,7 +82,7 @@ export const basketNumPortionChange = (numPortions) => (
       },
     })
 
-    dispatch(pricingActions.pricingRequest())
+    dispatch(pricingRequest())
 
     const {promoCode, UTM} = getUTMAndPromoCode(getState())
     dispatch({
@@ -135,14 +133,14 @@ export const basketSetNumRecipes = (numRecipes) => ({
 export const basketOrderLoad = (orderId, order = null) => (
   (dispatch, getState) => {
     if (getState().basket.get('orderId') !== orderId) {
-      dispatch(basketActions.basketReset())
-      dispatch(basketActions.basketIdChange(orderId))
-      dispatch(basketActions.basketOrderItemsLoad(orderId, order))
+      dispatch(basketReset())
+      dispatch(basketIdChange(orderId))
+      dispatch(basketOrderItemsLoad(orderId, order))
       logger.info(`Basket loaded order: ${orderId}`)
     } else {
       logger.info(`Order already loaded into current basket: ${orderId}`)
     }
-    dispatch(basketActions.basketOrderLoaded(orderId))
+    dispatch(basketOrderLoaded(orderId))
   }
 )
 
@@ -157,7 +155,7 @@ export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 
         switch (type) {
         case 'product': {
           for (let i = 0; i < qty; i++) {
-            dispatch(basketActions.basketProductAdd(itemableId, view, orderId))
+            dispatch(basketProductAdd(itemableId, view, orderId))
           }
           break
         }
@@ -177,7 +175,7 @@ export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 
           const itemableType = item.get('itemableType')
 
           for (let i = 0; i < qty; i++) {
-            dispatch(basketActions.basketGiftAdd(itemableId, itemableType))
+            dispatch(basketGiftAdd(itemableId, itemableType))
           }
           break
         }
@@ -341,7 +339,7 @@ export const basketRecipesInitialise = (recipes) => (dispatch, getState) => {
     limitReached: reachedLimit,
   })
 
-  dispatch(pricingActions.pricingRequest())
+  dispatch(pricingRequest())
 }
 
 export const basketIdChange = orderId => ({
@@ -374,7 +372,7 @@ export const basketSlotChange = slotId => (
       const orderId = orderForDate.get('id')
       dispatch(basketIdChange(orderId))
     }
-    dispatch(pricingActions.pricingRequest())
+    dispatch(pricingRequest())
 
     const slots = state.boxSummaryDeliveryDays.getIn([date, 'slots'], null)
     if (slots && slots.size > 0) {
@@ -447,7 +445,7 @@ export const basketRestorePreviousValues = () => (
       })
     }
 
-    dispatch(pricingActions.pricingRequest())
+    dispatch(pricingRequest())
   }
 )
 
@@ -596,5 +594,3 @@ export const actions = {
   basketSignupCollectionReceive,
   basketSetSubscriptionOption,
 }
-
-export default actions
