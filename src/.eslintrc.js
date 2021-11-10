@@ -260,8 +260,7 @@ module.exports = {
     "ga": false,
     "hj": true,
     "after": true,
-    "Cypress": true,
-    "pact": true,
+    "Cypress": true
   },
   plugins: ['prettier'],
   overrides: [

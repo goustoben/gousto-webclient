@@ -13,7 +13,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
   }})
 })
 
-Cypress.Commands.overwrite('server', (originalFn, options={}) => {
+Cypress.Commands.overwrite('server', (originalFn, options) => {
   const goustoDefaultOptions = {
     force404: true,
     ignore: (xhr) => {
@@ -23,11 +23,11 @@ Cypress.Commands.overwrite('server', (originalFn, options={}) => {
       const tracking = xhr.url.match(/(snowplow)|(pinterest)|(optimizely)|(hotjar)|(pingdom)|(s.yimg)/)
       const recaptcha = xhr.url.match(/(recaptcha\/api2\/userverify)/)
 
-      return defaultCypressWhitelist || content || tracking || checkoutCom || recaptcha || (options.ignore && options.ignore(xhr))
+      return defaultCypressWhitelist || content || tracking || checkoutCom || recaptcha
     }
   }
 
-  return originalFn({...options, ...goustoDefaultOptions})
+  return originalFn({options, ...goustoDefaultOptions})
 })
 
 Cypress.on('uncaught:exception', (err, runnable, promise) => {
