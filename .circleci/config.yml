@@ -281,10 +281,6 @@ jobs:
           working_directory: src
           command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build
       - run:
-          name: Install emulation server dependencies
-          working_directory: emulation-server
-          command: npm ci
-      - run:
           name: Update local DNS configuration
           command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
       - run:
@@ -346,15 +342,52 @@ jobs:
           destination: ./
 
   deploy-infrastructure-and-webclient-image:
+    parameters:
+      pact_canideploy_retry_attempts:
+        type: integer
+        default: 0
     docker: *gousto_platform_image #stock image missing boto
     resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
           at: /
+      - when:
+          condition:
+            or:
+              - equal: [ develop, << pipeline.git.branch >> ]
+              - equal: [ main, << pipeline.git.branch >> ]
+              - equal: [ master, << pipeline.git.branch >> ]
+          steps:
+            - run:
+                name: Run pact can-i-deploy
+                command: |
+                  source ~/.circlerc && PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker can-i-deploy \
+                    --pacticipant "${CIRCLE_PROJECT_REPONAME}" \
+                    --version "${CIRCLE_SHA1}" \
+                    --to-environment "${ENVIRONMENT}" \
+                    --broker-base-url "${TEST_PACT_BROKER_BASE_URL}" \
+                    --retry-while-unknown << parameters.pact_canideploy_retry_attempts >> \
+                    --retry-interval 10
+
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
           command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
+      - when:
+          condition:
+            or:
+              - equal: [ develop, << pipeline.git.branch >> ]
+              - equal: [ main, << pipeline.git.branch >> ]
+              - equal: [ master, << pipeline.git.branch >> ]
+          steps:
+            - run:
+                name: Run pact record-deployment
+                command: |
+                  source ~/.circlerc && PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker record-deployment \
+                    --pacticipant "${CIRCLE_PROJECT_REPONAME}" \
+                    --version "${CIRCLE_SHA1}" \
+                    --environment "${ENVIRONMENT}" \
+                    --broker-base-url "${TEST_PACT_BROKER_BASE_URL}"
 
   install-regression-test-dependencies:
     docker: *circleci_node_image
@@ -373,8 +406,102 @@ jobs:
             - mnt/ramdisk/tests/regression/node_modules
             - root/.cache/Cypress
 
+  publish-wip-pacts:
+    docker: *gousto_platform_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          working_directory: src
+          command: |
+            npm ci
+            npm run postinstall
+      - run:
+          name: Run Gousto service adapter tests
+          working_directory: src
+          command: npm run test:gousto-adapters
+      - run:
+          name: Publish pact files
+          command: |
+            PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker publish pact/pacts \
+              --consumer-app-version "${CIRCLE_SHA1}" \
+              --broker-base-url "${TEST_PACT_BROKER_BASE_URL}" \
+              --build-url "${CIRCLE_BUILD_URL}"
+
+
+  publish-pacts:
+    docker: *gousto_platform_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+          name: Publish pact files
+          command: |
+            PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker publish pact/pacts \
+              --consumer-app-version "${CIRCLE_SHA1}" \
+              --broker-base-url "${TEST_PACT_BROKER_BASE_URL}" \
+              --branch "${CIRCLE_BRANCH}" \
+              --build-url "${CIRCLE_BUILD_URL}"
+
+
+  test-integration-adapters:
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk/src
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+          name: Run Gousto service adapter tests
+          command: npm run test:gousto-adapters
+      - persist_to_workspace:
+          root: /
+          paths:
+            - mnt/ramdisk/pact/pacts
+
+  verify-emulation-server:
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk/emulation-server
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+          name: Install emulation server dependencies
+          command: npm ci
+      - run:
+          name: Start emulation server
+          background: true
+          command: npm start
+      - run:
+          name: Wait for emulation server to be ready
+          working_directory: /mnt/ramdisk/scripts
+          command: ./waitForHttpPath.sh 3000 /_config/state 10
+      - run:
+          name: Verify emulation server satisfies Pact file expectations
+          command: npm test
+      - persist_to_workspace:
+          root: /
+          paths:
+            - mnt/ramdisk/emulation-server
+
 workflows:
   version: 2
+
+  pull-request-branch:
+    jobs:
+      - publish-wip-pacts:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
 
   e2e-manual:
     jobs:
@@ -425,36 +552,6 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-      - install-regression-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - test-regression:
-          name: test-regression-web
-          platform: web
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-            - install-regression-test-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - test-regression:
-          name: test-regression-mobile
-          platform: mobile
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-            - install-regression-test-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -464,10 +561,9 @@ workflows:
               only:
                 - /^env-.*/
       - deploy-infrastructure-and-webclient-image:
+          name: deploy-infrastructure-and-webclient-image-to-lower-environment
           context: gousto-beta-aws-app-circleci
           requires:
-            - test-regression-web
-            - test-regression-mobile
             - create-and-upload-webclient-docker-image-to-ecr
             - upload-assets-to-s3
           filters:
@@ -515,6 +611,30 @@ workflows:
             branches:
               only:
                 - develop
+      - test-integration-adapters:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-src-dependencies
+          filters:
+            branches:
+              only:
+                - develop
+      - verify-emulation-server:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-integration-adapters
+          filters:
+            branches:
+              only:
+                - develop
+      - publish-pacts:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - verify-emulation-server
+          filters:
+            branches:
+              only:
+                - develop
       - eslint-generate-report:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -538,6 +658,7 @@ workflows:
           requires:
             - install-src-dependencies
             - install-regression-test-dependencies
+            - verify-emulation-server
           filters:
             branches:
               only:
@@ -549,6 +670,7 @@ workflows:
           requires:
             - install-src-dependencies
             - install-regression-test-dependencies
+            - verify-emulation-server
           filters:
             branches:
               only:
@@ -571,10 +693,13 @@ workflows:
               only:
                 - develop
       - deploy-infrastructure-and-webclient-image:
+          name: deploy-infrastructure-and-webclient-image-to-staging
+          pact_canideploy_retry_attempts: 18
           context: gousto-beta-aws-app-circleci
           requires:
             - jest-coverage-report
             - eslint-generate-report
+            - publish-pacts
             - test-regression-web
             - test-regression-mobile
             - create-and-upload-webclient-docker-image-to-ecr
@@ -586,7 +711,8 @@ workflows:
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy-infrastructure-and-webclient-image
+            - deploy-infrastructure-and-webclient-image-to-staging
+            - verify-emulation-server
           filters:
             branches:
               only:
@@ -604,6 +730,23 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
+          filters:
+            branches:
+              only:
+                - master
+      - test-integration-adapters:
+          name: generate-pacts
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-src-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - publish-pacts:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - generate-pacts
           filters:
             branches:
               only:
@@ -633,8 +776,10 @@ workflows:
               only:
                 - master
       - deploy-infrastructure-and-webclient-image:
+          name: deploy-infrastructure-and-webclient-image-to-production
           context: gousto-prod-aws-app-circleci
           requires:
+            - publish-pacts
             - create-and-upload-webclient-docker-image-to-ecr
             - upload-assets-to-s3
           filters:
