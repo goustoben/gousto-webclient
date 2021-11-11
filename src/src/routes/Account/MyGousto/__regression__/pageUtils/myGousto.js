@@ -15,7 +15,11 @@ export const initialize = () => {
 
   cy.intercept('GET', '/subscriptionquery/v1/subscriptions*', { fixture: 'subscription/subscriptionQueryResponse.json' })
 
+  cy.intercept('GET', '/userfeedback/v1/feedback', { fixture: 'user/userFeedback.json'})
+
   cy.intercept('GET', '/user/current/referralDetails*', { fixture: 'user/userCurrentReferralDetails.json' })
 
-  cy.visit('/my-gousto')
+  cy.intercept('GET', '/recipes/v2/recipes*', { fixture: 'recipes/recipes.json'}).as('recipes')
+
+  cy.visitAndWaitForClientSideReRender('/my-gousto')
 }

@@ -14,7 +14,8 @@ describe('User log in flow', () => {
       })
 
       it('should allow a user to enter credentials and then successfully log in', () => {
-        cy.visit('/menu')
+        cy.visitAndWaitForClientSideReRender('/menu')
+
         cy.get('[data-testing="loginButton"]').click()
 
         cy.get('form').within(() => {
@@ -34,7 +35,8 @@ describe('User log in flow', () => {
       })
 
       it('show display an error message', () => {
-        cy.visit('/menu')
+        cy.visitAndWaitForClientSideReRender('/menu')
+
         cy.get('[data-testing="loginButton"]').click()
 
         cy.get('form').within(() => {
@@ -55,7 +57,8 @@ describe('User log in flow', () => {
       })
 
       it('should allow a user to enter credentials and then successfully log in', () => {
-        cy.visit('/menu')
+        cy.visitAndWaitForClientSideReRender('/menu')
+
         cy.get('button[data-testing="burgerMenu"]').click()
         cy.get('li[data-testing="burgerMenuLogin"]').click()
 
@@ -78,7 +81,8 @@ describe('User log in flow', () => {
       })
 
       it('show display an error message', () => {
-        cy.visit('/menu')
+        cy.visitAndWaitForClientSideReRender('/menu')
+
         cy.get('button[data-testing="burgerMenu"]').click()
         cy.get('li[data-testing="burgerMenuLogin"]').click()
 

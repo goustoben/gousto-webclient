@@ -164,7 +164,7 @@ class MyGousto extends React.PureComponent {
           ) : null}
           <Cookbook />
           {rateRecipeCount && rateRecipeCount > 0 ? (
-            <div className={css.mobileHide}>
+            <div className={css.mobileHide} data-testing="recentPreviousRecipe">
               <Link
                 className={css.rateRecipesButton}
                 to="/rate-my-recipes"
