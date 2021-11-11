@@ -4,9 +4,9 @@ import { logger } from 'utils/logger'
 import MockDate from 'mockdate'
 import { sendClientMetric } from '../clientMetrics'
 
-jest.mock('utils/fetch', () =>
-  jest.fn().mockResolvedValue({ data: [1, 2, 3] })
-)
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockResolvedValue({ data: [1, 2, 3] })
+}))
 
 jest.mock('config/routes', () => ({
   version: {

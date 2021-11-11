@@ -1,4 +1,4 @@
-import actions, { changeRecaptcha } from 'actions/auth'
+import * as actions from 'actions/auth'
 import { resetUserPassword, identifyUserUsingOAuth } from 'apis/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
@@ -8,14 +8,19 @@ import { trackUserLogin } from 'actions/loggingmanager'
 
 jest.mock('apis/auth')
 
-jest.mock('utils/window')
+jest.mock('utils/window',() => ({
+  redirect: jest.fn(),
+  documentLocation: jest.fn(),
+}))
 
 jest.mock('apis/fetchS3', () => ({
   fetchFeatures: jest.fn()
 }))
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn()
+  logger: {
+    error: jest.fn()
+  }
 }))
 
 jest.mock('moment', () => {
@@ -36,7 +41,6 @@ describe('redirectLoggedInUser', () => {
   let getState
 
   beforeEach(() => {
-    redirect.mockReturnValue(jest.fn())
     documentLocation.mockReturnValue({ pathname: '/' })
   })
 
@@ -135,7 +139,7 @@ describe('changeRecaptcha', () => {
       fetchFeatures.mockReturnValue({ data: { isRecaptchaEnabled: false }})
     })
     test('should dispatch CHANGE_RECAPTCHA false ', async () => {
-      await changeRecaptcha()(dispatch)
+      await actions.changeRecaptcha()(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'CHANGE_RECAPTCHA',
         isRecaptchaEnabled: false
@@ -149,7 +153,7 @@ describe('changeRecaptcha', () => {
       fetchFeatures.mockReturnValue({ data: { isRecaptchaEnabled: true }})
     })
     test('should dispatch CHANGE_RECAPTCHA true ', async () => {
-      await changeRecaptcha()(dispatch)
+      await actions.changeRecaptcha()(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'CHANGE_RECAPTCHA',
         isRecaptchaEnabled: true
@@ -163,7 +167,7 @@ describe('changeRecaptcha', () => {
       fetchFeatures.mockReturnValue({ data: null})
     })
     test('should not dispatch', async () => {
-      await changeRecaptcha()(dispatch)
+      await actions.changeRecaptcha()(dispatch)
       expect(dispatch).not.toHaveBeenCalled()
     })
   })
@@ -179,7 +183,7 @@ describe('changeRecaptcha', () => {
     })
 
     test('should call logger.error', async () => {
-      await changeRecaptcha()(dispatch)
+      await actions.changeRecaptcha()(dispatch)
       expect(loggerErrorSpy).toHaveBeenCalledWith({ message: 'S3File fetch failed' })
     })
   })

@@ -46,7 +46,9 @@ import * as orderSelectors from '../../selectors/orderSelectors'
 import { transformRecipesWithIngredients } from '../transformers/recipeTransform'
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn(),
+  logger: {
+    error: jest.fn()
+  },
 }))
 jest.mock('apis/deliveries')
 jest.mock('apis/orders')

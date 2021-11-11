@@ -2,6 +2,12 @@
 import { Helmet } from 'react-helmet'
 const { processRequest } = require('../../../server/processRequest')
 
+jest.mock('utils/logger', () => ({
+  logger: {
+    notice: jest.fn()
+  },
+}))
+
 describe('router', () => {
   beforeEach(() => {
     global.__SERVER__ = true

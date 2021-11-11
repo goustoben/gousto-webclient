@@ -3,7 +3,9 @@ import webClientStatusActions from 'actions/status'
 import { asyncAndDispatch } from '../utils'
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn(),
+  logger: {
+    error: jest.fn()
+  },
 }))
 
 // Tests inside this describe don't clear the mocks after each test intentionally

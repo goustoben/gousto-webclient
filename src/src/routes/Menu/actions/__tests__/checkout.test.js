@@ -21,8 +21,10 @@ jest.mock('apis/orders', () => ({
 }))
 
 jest.mock('utils/logger', () => ({
-  warning: jest.fn(),
-  error: jest.fn()
+  logger: {
+    warning: jest.fn(),
+    error: jest.fn()
+  },
 }))
 jest.mock('utils/deliveries')
 

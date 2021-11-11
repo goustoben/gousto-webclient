@@ -2,20 +2,18 @@ import sinon from 'sinon'
 
 import globals from 'config/globals'
 import Cookies from 'cookies-js'
+import { Cookies as GoustoCookies } from 'utils/GoustoCookies'
+
 Cookies.defaults = {
   ...Cookies.defaults,
   somethingElse: 'set',
 }
 
 describe('GoustoCookies', () => {
-  let GoustoCookies
   let globalsStub
 
   beforeEach(() => {
     globalsStub = sinon.stub(globals, 'secure').get(() => true)
-
-    // eslint-disable-next-line global-require
-    GoustoCookies = require('utils/GoustoCookies').default
   })
 
   afterEach(() => {

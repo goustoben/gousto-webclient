@@ -2,16 +2,13 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Immutable from 'immutable'
-import { actions } from 'actions'
-import { helpPreLoginVisibilityChange } from 'actions/login'
+import { helpPreLoginVisibilityChange, loginVisibilityChange } from 'actions/login'
 import { Header } from 'Header/Header'
 import routesConfig from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
 
 jest.mock('actions')
 jest.mock('actions/login')
-
-const { loginVisibilityChange } = actions
 
 describe('Header', () => {
   afterEach(() => {
@@ -40,15 +37,19 @@ describe('Header', () => {
 
   let wrapper
   const trackNavigationClick = jest.fn()
+  const requiredProps = {
+    helpPreLoginVisibilityChange,
+    closeBoxModalVisibilityChange: jest.fn(),
+    loginVisibilityChange,
+    logoutUser: jest.fn(),
+    routing: {},
+  }
 
   beforeEach(() => {
     wrapper = shallow(
       <Header
-        loginVisibilityChange={loginVisibilityChange}
-        helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
-        closeBoxModalVisibilityChange={() => {}}
-        logoutUser={() => {}}
         trackNavigationClick={trackNavigationClick}
+        {...requiredProps}
       />,
       { context: { store } }
     )
@@ -173,7 +174,7 @@ describe('Header', () => {
       const trackNavigationClickSpy = jest.fn()
 
       beforeEach(() => {
-        wrapper = shallow(<Header isAuthenticated trackNavigationClick={trackNavigationClickSpy} />, { context: { store } })
+        wrapper = shallow(<Header {...requiredProps} isAuthenticated trackNavigationClick={trackNavigationClickSpy} />, { context: { store } })
 
         delete window.location
         window.location = { assign: jest.fn() }

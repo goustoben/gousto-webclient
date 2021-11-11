@@ -1,4 +1,4 @@
-import { fetch } from 'utils/fetch'
+import * as fetch from 'utils/fetch'
 import * as cookieHelper2 from 'utils/cookieHelper2'
 import { updateOrder, createOrder, getOrderPrice, getOrder, getUserOrders } from '../orderV2'
 import * as menuFetch from '../fetch'
@@ -16,7 +16,7 @@ describe('orderApi', () => {
   let fetchSpy
 
   beforeEach(() => {
-    fetchSpy = jest.spyOn(fetch, 'default').mockImplementation(jest.fn)
+    fetchSpy = jest.spyOn(fetch, 'fetch').mockImplementation(jest.fn)
     jest.spyOn(menuFetch, 'post').mockResolvedValue(mockFetchResponse({}))
   })
 

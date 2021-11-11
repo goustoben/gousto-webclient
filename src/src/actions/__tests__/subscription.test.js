@@ -21,7 +21,9 @@ jest.mock('actions/basket', () => ({
 }))
 
 jest.mock('utils/logger', () => ({
-  notice: jest.fn(),
+  logger: {
+    notice: jest.fn()
+  },
 }))
 
 describe('subscription actions', () => {

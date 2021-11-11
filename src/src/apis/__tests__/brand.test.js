@@ -1,13 +1,13 @@
 import { fetch } from 'utils/fetch'
 import { fetchBrandInfo, fetchBrandMenuHeaders } from '../brand'
 
-jest.mock('utils/fetch', () =>
-  jest.fn().mockImplementation(() => {
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockImplementation(() => {
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
   })
-)
+}))
 
 describe('brand api', () => {
   beforeEach(() => {

@@ -14,7 +14,12 @@ import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import pricingActions from './pricing'
 import statusActions from './status'
-import authActions from './auth'
+import {
+  authAuthenticate,
+  authIdentify,
+  userRememberMe,
+  authClear,
+} from './auth'
 import { actionTypes } from './actionTypes'
 import { isMobile } from '../utils/view'
 import { getBrowserType } from '../selectors/browser'
@@ -43,7 +48,7 @@ const authorise = roles => {
   return true
 }
 
-const loginVisibilityChange = visibility => ({
+export const loginVisibilityChange = visibility => ({
   type: actionTypes.LOGIN_VISIBILITY_CHANGE,
   visibility,
 })
@@ -79,7 +84,7 @@ const postLogoutSteps = () => (
   }
 )
 
-const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId = '') => (
+export const loginUser = ({ email, password, rememberMe, recaptchaToken = null }, orderId = '') => (
   async (dispatch, getState) => {
     dispatch(pending(actionTypes.USER_LOGIN, true))
     dispatch(error(actionTypes.USER_LOGIN, false))
@@ -88,12 +93,12 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
       if (rememberMe) {
         dispatch({ type: actionTypes.LOGIN_REMEMBER_ME })
       }
-      await dispatch(authActions.authAuthenticate(email, password, rememberMe, recaptchaToken))
-      await dispatch(authActions.authIdentify())
+      await dispatch(authAuthenticate(email, password, rememberMe, recaptchaToken))
+      await dispatch(authIdentify())
 
       const userRoles = getState().auth.get('roles', Immutable.List([]))
       if (userRoles.size > 0 && authorise(userRoles)) {
-        dispatch(authActions.userRememberMe(rememberMe))
+        dispatch(userRememberMe(rememberMe))
         await postLoginSteps(isAdmin(userRoles), orderId, getState().features)(dispatch, getState)
       }
     } catch (err) {
@@ -106,14 +111,14 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
   }
 )
 
-const logout = () => (
+export const logoutUser = () => (
   async dispatch => {
-    await dispatch(authActions.authClear())
+    await dispatch(authClear())
     dispatch(postLogoutSteps())
   }
 )
 
-const cannotLogin = ({ email, password }) => (
+export const cannotLogin = ({ email, password }) => (
   async (dispatch) => {
     let err
     if (!email) {
@@ -238,11 +243,3 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     }
   }
 )
-
-export default {
-  loginUser: login,
-  logoutUser: logout,
-  loginVisibilityChange,
-  cannotLogin,
-  loginRedirect,
-}

@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import * as reactRouterPush from 'react-router-redux'
-import basketActions from 'actions/basket'
+import * as basketActions from 'actions/basket'
 import { boxSummaryDeliveryDaysLoad, boxSummaryNext, basketDeliveryDaysReceive, trackingUnavailableRecipeList, boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { menuLoadMenu } from 'actions/menu'
 import { fetchDeliveryDays } from 'apis/deliveries'

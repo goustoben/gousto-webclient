@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { actions } from 'actions'
+import { loginUser, cannotLogin } from 'actions/login'
 import { actionTypes } from 'actions/actionTypes'
 import { getIsRecaptchaEnabled } from 'selectors/auth'
 import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
@@ -23,8 +23,8 @@ const mapStateToProps = (state) => {
 }
 
 const LoginFormContainer = connect(mapStateToProps, {
-  onSubmit: actions.loginUser,
-  onInvalid: actions.cannotLogin,
+  onSubmit: loginUser,
+  onInvalid: cannotLogin,
   changeRecaptcha
 })(LoginForm)
 

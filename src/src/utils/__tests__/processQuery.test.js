@@ -26,7 +26,9 @@ jest.mock('actions/promos',() => ({
 }))
 
 jest.mock('utils/logger', () => ({
-  warning: jest.fn(),
+  logger: {
+    warning: jest.fn()
+  },
 }))
 
 jest.mock('@axe-core/react')

@@ -1,13 +1,13 @@
 import { fetch } from 'utils/fetch'
 import { updateTastePreferences } from '../tastePreferences'
 
-jest.mock('utils/fetch', () =>
-  jest.fn().mockImplementation(() => {
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockImplementation(() => {
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
   })
-)
+}))
 
 describe('updateTastePreferences', () => {
   test('should fetch the correct url', async () => {

@@ -2,13 +2,17 @@ import Immutable from 'immutable'
 import globals from 'config/globals'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
-import loginActions, { helpPreLoginVisibilityChange, loginRedirect } from 'actions/login'
+import * as loginActions from 'actions/login'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
 import { pricingRequest } from '../pricing'
 import statusActions from '../status'
-import authActions from '../auth'
+import {
+  authAuthenticate,
+  authIdentify,
+  userRememberMe,
+} from '../auth'
 
 jest.mock('config/globals')
 jest.mock('containers/OptimizelyRollouts/optimizelyUtils')
@@ -70,8 +74,8 @@ describe('login actions', () => {
       jest.clearAllMocks()
 
       globals.domain = HOST_PRODUCTION
-      authActions.authAuthenticate.mockReturnValue(null)
-      authActions.authIdentify.mockReturnValue(null)
+      authAuthenticate.mockReturnValue(null)
+      authIdentify.mockReturnValue(null)
       getState.mockReturnValue({
         auth: authState,
         user: userState,
@@ -95,12 +99,12 @@ describe('login actions', () => {
       expect(dispatch.mock.calls[3][0]).toEqual({
         type: actionTypes.LOGIN_REMEMBER_ME,
       })
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
-      expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authIdentify).toHaveBeenCalled()
       expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
-      expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
+      expect(userRememberMe).toHaveBeenCalledWith(true)
       expect(redirect).not.toHaveBeenCalled()
     })
 
@@ -109,7 +113,7 @@ describe('login actions', () => {
 
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true, recaptchaToken })(dispatch, getState)
 
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, recaptchaToken)
+      expect(authAuthenticate).toHaveBeenCalledWith('email', 'password', true, recaptchaToken)
     })
 
     it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /home, no redirect', async () => {
@@ -117,12 +121,12 @@ describe('login actions', () => {
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
-      expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authIdentify).toHaveBeenCalled()
       expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
-      expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
+      expect(userRememberMe).toHaveBeenCalledWith(true)
       expect(redirect).toHaveBeenCalledWith('/my-gousto')
     })
 
@@ -132,12 +136,12 @@ describe('login actions', () => {
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
-      expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authIdentify).toHaveBeenCalled()
       expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
-      expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
+      expect(userRememberMe).toHaveBeenCalledWith(true)
       expect(redirect).toHaveBeenCalledWith('/menu')
     })
 
@@ -153,12 +157,12 @@ describe('login actions', () => {
 
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
-      expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authIdentify).toHaveBeenCalled()
       expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
-      expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
+      expect(userRememberMe).toHaveBeenCalledWith(true)
       expect(redirect).toHaveBeenCalledWith('/my-details')
     })
 
@@ -260,8 +264,8 @@ describe('login actions', () => {
 
         expect(statusActions.pending).toHaveBeenCalledTimes(2)
         expect(statusActions.error).toHaveBeenCalledTimes(1)
-        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
-        expect(authActions.authIdentify).toHaveBeenCalled()
+        expect(authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authIdentify).toHaveBeenCalled()
         expect(pricingRequest).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -288,8 +292,8 @@ describe('login actions', () => {
 
         expect(statusActions.pending).toHaveBeenCalledTimes(2)
         expect(statusActions.error).toHaveBeenCalledTimes(1)
-        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
-        expect(authActions.authIdentify).toHaveBeenCalled()
+        expect(authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authIdentify).toHaveBeenCalled()
         expect(pricingRequest).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -301,7 +305,7 @@ describe('login actions', () => {
   describe('loginRedirect', () => {
     describe('when the current url contain no search query parameters', () => {
       test('should redirect the user to my-gousto by default', () => {
-        const url = loginRedirect({
+        const url = loginActions.loginRedirect({
           pathname: '/',
           search: '',
         }, false, Immutable.Map({}))
@@ -311,7 +315,7 @@ describe('login actions', () => {
 
     describe('when the current url contains a promo_code search query', () => {
       test('should preserve promo_code', () => {
-        const url = loginRedirect({
+        const url = loginActions.loginRedirect({
           pathname: '/',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -320,7 +324,7 @@ describe('login actions', () => {
       })
 
       test('should preserve path when it is menu', () => {
-        const url = loginRedirect({
+        const url = loginActions.loginRedirect({
           pathname: '/menu',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -329,7 +333,7 @@ describe('login actions', () => {
       })
 
       test('should preserve path when it is check-out', () => {
-        const url = loginRedirect({
+        const url = loginActions.loginRedirect({
           pathname: '/check-out',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -338,7 +342,7 @@ describe('login actions', () => {
       })
 
       test('should my-gousto when path is not menu or check-out', () => {
-        const url = loginRedirect({
+        const url = loginActions.loginRedirect({
           pathname: '/box-prices',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -349,7 +353,7 @@ describe('login actions', () => {
 
     describe('when the current url only contains a target search query', () => {
       test('should strip this from the destination', () => {
-        const url = loginRedirect({
+        const url = loginActions.loginRedirect({
           pathname: '/home',
           hash: '#login',
           search: '?target=fake.gousto.co.uk',
@@ -368,7 +372,7 @@ describe('login actions', () => {
 
       describe('Given the action is called with visibility true', () => {
         beforeEach(() => {
-          helpPreLoginVisibilityChange(true)(dispatch)
+          loginActions.helpPreLoginVisibilityChange(true)(dispatch)
         })
 
         test('the query parameter target is set to the Help Centre URL', () => {

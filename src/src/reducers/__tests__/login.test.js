@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import loginActions, { helpPreLoginVisibilityChange } from 'actions/login'
+import * as loginActions from 'actions/login'
 import { loginReducers, initialState } from 'reducers/login'
 
 describe('login reducer', () => {
@@ -21,7 +21,7 @@ describe('login reducer', () => {
       const dispatch = jest.fn()
       const getState = jest.fn()
 
-      helpPreLoginVisibilityChange(visibility)(dispatch, getState)
+      loginActions.helpPreLoginVisibilityChange(visibility)(dispatch, getState)
       const dispatchCalls = dispatch.mock.calls
       const paramOfLastCallToDispatch = dispatchCalls[dispatchCalls.length - 1][0]
       const result = loginReducers.loginVisibility(STATE, paramOfLastCallToDispatch)

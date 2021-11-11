@@ -5,8 +5,10 @@ import { validateRecaptchaUserToken } from 'apis/auth'
 import { getCookieValue, routeMatches } from 'server/routes/utils'
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn(),
-  notice: jest.fn(),
+  logger: {
+    error: jest.fn(),
+    notice: jest.fn(),
+  }
 }))
 
 jest.mock('apis/user', () => ({

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { isValid } from 'redux-form'
-import { actions } from 'actions'
+import { userProspect } from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
-import { trackCheckoutButtonPressed, validatePassword } from 'actions/checkout'
+import { trackCheckoutButtonPressed, validatePassword, checkoutClearErrors } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { accountFormName, getPasswordValue } from 'selectors/checkout'
@@ -23,11 +23,11 @@ export function mapStateToProps(sectionName) {
 
 function connectComponent(sectionName) {
   return connect(mapStateToProps(sectionName), {
-    clearErrors: actions.checkoutClearErrors,
+    clearErrors: checkoutClearErrors,
     trackCheckoutButtonPressed,
     trackUTMAndPromoCode,
     validatePassword,
-    userProspect: actions.userProspect,
+    userProspect,
   })(AboutYou)
 }
 

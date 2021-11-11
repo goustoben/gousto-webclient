@@ -8,13 +8,13 @@ import {
   unSkipDates,
 } from '../subscription'
 
-jest.mock('utils/fetch', () =>
-  jest.fn().mockImplementation(() => {
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockImplementation(() => {
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
   })
-)
+}))
 
 jest.mock('config/routes', () => ({
   subscriptionCommand: {

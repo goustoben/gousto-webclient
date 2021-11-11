@@ -3,18 +3,21 @@ import Immutable from 'immutable'
 import { updateTastePreferences } from 'apis/tastePreferences'
 import { updateUserTasteProfile } from 'actions/tastePreferences'
 import { logger } from 'utils/logger'
-import { Cookies } from 'utils/GoustoCookies'
 
 jest.mock('apis/tastePreferences', () => ({
   updateTastePreferences: jest.fn(),
 }))
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn(),
+  logger: {
+    error: jest.fn()
+  },
 }))
 
 jest.mock('utils/GoustoCookies', () => ({
-  get: () => 'session_id',
+  Cookies: {
+    get: () => 'session_id'
+  },
 }))
 
 describe('updateUserTasteProfile actions', () => {

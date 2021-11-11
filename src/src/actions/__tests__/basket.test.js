@@ -1,21 +1,6 @@
 import Immutable from 'immutable'
-import basket, {
-  basketReset,
-  portionSizeSelectedTracking,
-  basketCheckedOut,
-  basketCheckoutClicked,
-  basketOrderItemsLoad,
-  basketProceedToCheckout,
-  basketRecipesInitialise,
-  basketPostcodeChange,
-  basketNumPortionChange,
-  basketSlotChange,
-  basketOrderLoaded,
-  basketRestorePreviousValues,
-  basketRestorePreviousDate,
-  basketDateChange,
-} from 'actions/basket'
-import { pricingRequest } from 'actions/pricing'
+import * as basket from 'actions/basket'
+import * as pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
@@ -28,14 +13,13 @@ import * as trackingActions from '../tracking'
 jest.mock('utils/basket')
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn()
+  logger: {
+    error: jest.fn()
+  }
 }))
 
 jest.mock('actions/pricing', () => ({
-  __esModule: true,
-  default: {
-    pricingRequest: jest.fn()
-  }
+  pricingRequest: jest.fn()
 }))
 
 jest.mock('actions/orderConfirmation', () => ({
@@ -70,7 +54,7 @@ describe('basket actions', () => {
     })
     test('should dispatch BASKET_ORDER_LOADED', () => {
       const orderId = '123'
-      basketOrderLoaded(orderId)(dispatch, getState)
+      basket.basketOrderLoaded(orderId)(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_ORDER_LOADED,
@@ -106,7 +90,7 @@ describe('basket actions', () => {
           })
         },
       }
-      await basketCheckoutClicked(section)(dispatch, getState)
+      await basket.basketCheckoutClicked(section)(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith(trackingData)
@@ -125,7 +109,7 @@ describe('basket actions', () => {
           order_id: orderId || null,
         },
       }
-      await portionSizeSelectedTracking(numPortion, orderId)(dispatch)
+      await basket.portionSizeSelectedTracking(numPortion, orderId)(dispatch)
 
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith(numPortionChangeTracking)
@@ -145,15 +129,15 @@ describe('basket actions', () => {
 
     test('should dispatch a pricing pricingRequest action', async () => {
       const pricingRequestResponse = Symbol('Pricing request')
-      pricingRequest.mockReturnValue(pricingRequestResponse)
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
 
-      await basketNumPortionChange(2)(dispatch, getStateSpy)
+      await basket.basketNumPortionChange(2)(dispatch, getStateSpy)
 
       expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
     })
 
     test('should dispatch box size changed action', async () => {
-      await basketNumPortionChange(4)(dispatch, getStateSpy)
+      await basket.basketNumPortionChange(4)(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BOX_SIZE_CHANGED_TRACKING,
         trackingData: {
@@ -179,7 +163,7 @@ describe('basket actions', () => {
 
     test('should dispatch BASKET_SELECT_POSTCODE', async () => {
       const postcode = 'W37UP'
-      await basketPostcodeChange(postcode)(dispatch, getStateSpy)
+      await basket.basketPostcodeChange(postcode)(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_SELECT_POSTCODE,
         trackingData: {
@@ -209,7 +193,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch  BASKET_CHECKOUT tracking', async () => {
-      await basketCheckedOut('grid')(dispatch, getState)
+      await basket.basketCheckedOut('grid')(dispatch, getState)
 
       expect(dispatch.mock.calls[2][0]).toEqual({
         type: 'BASKET_CHECKOUT',
@@ -222,7 +206,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch trackingOrderCheckout', async () => {
-      await basketCheckedOut('grid')(dispatch, getState)
+      await basket.basketCheckedOut('grid')(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith(trackingOrderCheckout())
     })
@@ -275,7 +259,7 @@ describe('basket actions', () => {
     })
 
     test('should call basketProductAdd for each product in the given order if order is not already loaded', () => {
-      basketOrderItemsLoad('123')(dispatch, getStateSpy)
+      basket.basketOrderItemsLoad('123')(dispatch, getStateSpy)
       expect(basketProductAddSpy).toHaveBeenCalledTimes(5)
       expect(basketProductAddSpy.mock.calls[0]).toEqual(['p2', null, '123'])
       expect(basketProductAddSpy.mock.calls[1]).toEqual(['p2', null, '123'])
@@ -285,7 +269,7 @@ describe('basket actions', () => {
     })
 
     test('should call basketRecipeAdd for each recipe set (total recipes / number portions ) in the given order if order is not already loaded', () => {
-      basketOrderItemsLoad('123')(dispatch, getStateSpy)
+      basket.basketOrderItemsLoad('123')(dispatch, getStateSpy)
       expect(basketRecipeAddSpy).toHaveBeenCalledTimes(3)
       expect(basketRecipeAddSpy.mock.calls[0]).toEqual(['r1', null, undefined, undefined, '123'])
       expect(basketRecipeAddSpy.mock.calls[1]).toEqual(['r2', null, undefined, undefined, '123'])
@@ -293,14 +277,14 @@ describe('basket actions', () => {
     })
 
     test('should call basketGiftAdd for each gift product in the given order if order is not already loaded', () => {
-      basketOrderItemsLoad('123')(dispatch, getStateSpy)
+      basket.basketOrderItemsLoad('123')(dispatch, getStateSpy)
       expect(basketGiftAddSpy).toHaveBeenCalledTimes(2)
       expect(basketGiftAddSpy.mock.calls[0]).toEqual(['p1', 'Product'])
       expect(basketGiftAddSpy.mock.calls[1]).toEqual(['p1', 'Gift'])
     })
 
     test('should NOT call basketProductAdd, basketRecipeAdd, or basketGiftAdd if order is already loaded', () => {
-      basketOrderItemsLoad('456')(dispatch, getStateSpy)
+      basket.basketOrderItemsLoad('456')(dispatch, getStateSpy)
       expect(basketProductAddSpy).not.toHaveBeenCalled()
       expect(basketRecipeAddSpy).not.toHaveBeenCalled()
       expect(basketGiftAddSpy).not.toHaveBeenCalled()
@@ -321,7 +305,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch a BASKET_CHECKOUT_PROCEED tracking action', () => {
-      basketProceedToCheckout()(dispatch, getState)
+      basket.basketProceedToCheckout()(dispatch, getState)
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: 'BASKET_CHECKOUT_PROCEED',
         trackingData: {
@@ -349,14 +333,14 @@ describe('basket actions', () => {
         })
 
         jest.spyOn(basketUtils, 'naiveLimitReached').mockReturnValue(true)
-        pricingRequest.mockReturnValue(pricingRequestAction)
+        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
 
         recipes = { 123: 1, 234: 2 }
       })
 
       describe('when `basketRecipesInitialise` action called', () => {
         beforeEach(() => {
-          basketRecipesInitialise(recipes)(dispatch, getStateSpy)
+          basket.basketRecipesInitialise(recipes)(dispatch, getStateSpy)
         })
 
         test('then the state should have been retrieved', () => {
@@ -424,11 +408,11 @@ describe('basket actions', () => {
             }
           })
         })
-        pricingRequest.mockReturnValue(pricingRequestAction)
+        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
       })
       test('should dispatch BASKET_SLOT_CHANGE', () => {
         const slotId = 'slot-1-day-1'
-        basketSlotChange(slotId)(dispatch, getStateSpy)
+        basket.basketSlotChange(slotId)(dispatch, getStateSpy)
         const expectedResult = {
           type: 'BASKET_SLOT_CHANGE',
           slotId: 'slot-1-day-1',
@@ -444,13 +428,13 @@ describe('basket actions', () => {
 
       test('should dispatch pricingRequestAction', () => {
         const slotId = 'slot-1-day-1'
-        basketSlotChange(slotId)(dispatch, getStateSpy)
+        basket.basketSlotChange(slotId)(dispatch, getStateSpy)
         expect(dispatch).toHaveBeenNthCalledWith(3, pricingRequestAction)
       })
 
       test('should dispatch pricingRequestAction', () => {
         const slotId = 'slot-1-day-1'
-        basketSlotChange(slotId)(dispatch, getStateSpy)
+        basket.basketSlotChange(slotId)(dispatch, getStateSpy)
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: actionTypes.BASKET_ID_CHANGE,
           orderId: '12345'
@@ -459,7 +443,7 @@ describe('basket actions', () => {
 
       test('should dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
         const slotId = 'slot-1-day-1'
-        basketSlotChange(slotId)(dispatch, getStateSpy)
+        basket.basketSlotChange(slotId)(dispatch, getStateSpy)
         expect(dispatch).toHaveBeenNthCalledWith(4, {
           type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
           trackingData: {
@@ -501,12 +485,12 @@ describe('basket actions', () => {
             }
           })
         })
-        pricingRequest.mockReturnValue(pricingRequestAction)
+        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
       })
 
       test('should not dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
         const slotId = 'slot-1-day-1'
-        basketSlotChange(slotId)(dispatch, getStateSpy)
+        basket.basketSlotChange(slotId)(dispatch, getStateSpy)
         expect(dispatch).not.toHaveBeenNthCalledWith(4, {
           type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
           trackingData: {
@@ -522,7 +506,7 @@ describe('basket actions', () => {
   describe('basketReset', () => {
     describe('when chosenAddress is not set', () => {
       test('should return the correct action', () => {
-        const result = basketReset()
+        const result = basket.basketReset()
 
         expect(result).toEqual({
           type: actionTypes.BASKET_RESET,
@@ -536,7 +520,7 @@ describe('basket actions', () => {
     describe('when chosenAddress is set', () => {
       test('should return the correct action', () => {
         const address = { id: '12345' }
-        const result = basketReset(address)
+        const result = basket.basketReset(address)
 
         expect(result).toEqual({
           type: actionTypes.BASKET_RESET,
@@ -566,7 +550,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_SLOT_CHANGE', () => {
-      basketRestorePreviousValues()(dispatch, getStateSpy)
+      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: 'BASKET_SLOT_CHANGE',
         slotId: '1ab-3esd',
@@ -574,7 +558,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_POSTCODE_CHANGE', () => {
-      basketRestorePreviousValues()(dispatch, getStateSpy)
+      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
       expect(dispatch.mock.calls[1][0]).toEqual({
         type: 'BASKET_POSTCODE_CHANGE',
         postcode: 'W140EE',
@@ -582,7 +566,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_ADDRESS_CHANGE', () => {
-      basketRestorePreviousValues()(dispatch, getStateSpy)
+      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
       expect(dispatch.mock.calls[2][0]).toEqual({
         type: 'BASKET_ADDRESS_CHANGE',
         address: Immutable.Map({ id: '12345' }),
@@ -622,7 +606,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_DATE_CHANGE', () => {
-      basketRestorePreviousDate()(dispatch, getStateSpy)
+      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
       expect( dispatch.mock.calls[0][0]).toEqual({
         type: actionTypes.BASKET_DATE_CHANGE,
         date: '2020-03-30',
@@ -630,7 +614,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_SLOT_CHANGE', () => {
-      basketRestorePreviousDate()(dispatch, getStateSpy)
+      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_SLOT_CHANGE,
         slotId: 'slot-124',
@@ -638,7 +622,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE', () => {
-      basketRestorePreviousDate()(dispatch, getStateSpy)
+      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE,
         trackingData: {
@@ -659,7 +643,7 @@ describe('basket actions', () => {
 
     test('should dispatch BASKET_DATE_CHANGE with right date', () => {
       const date = '2020-05-02 00:00:00'
-      const result = basketDateChange(date)
+      const result = basket.basketDateChange(date)
       expect(result).toEqual({
         date: '2020-05-02 00:00:00',
         type: 'BASKET_DATE_CHANGE'

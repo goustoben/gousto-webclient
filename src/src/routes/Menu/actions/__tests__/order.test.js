@@ -26,7 +26,9 @@ jest.mock('actions/tracking')
 jest.mock('actions/order')
 jest.mock('actions/orderConfirmation')
 jest.mock('utils/logger', () => ({
-  error: jest.fn()
+  logger: {
+    error: jest.fn()
+  }
 }))
 
 jest.mock('config/order', () => ({

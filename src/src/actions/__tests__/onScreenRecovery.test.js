@@ -54,7 +54,9 @@ jest.mock('apis/onScreenRecovery', () => ({
 }))
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn()
+  logger: {
+    error: jest.fn()
+  }
 }))
 
 describe('onScreenRecovery', () => {

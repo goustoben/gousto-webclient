@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { actions } from 'actions'
-import { sendRequestToUpdateOrderSummaryPrices } from 'actions/checkout'
+import { basketPromoCodeChange, basketPromoCodeAppliedChange } from 'actions/basket'
+import { sendRequestToUpdateOrderSummaryPrices, trackPromocodeChange } from 'actions/checkout'
 import { PromoCode } from './PromoCode'
 
 function mapStateToProps(state) {
@@ -18,9 +18,9 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  basketPromoCodeChange: actions.basketPromoCodeChange,
-  basketPromoCodeAppliedChange: actions.basketPromoCodeAppliedChange,
-  trackPromocodeChange: actions.trackPromocodeChange,
+  basketPromoCodeChange,
+  basketPromoCodeAppliedChange,
+  trackPromocodeChange,
   sendRequestToUpdateOrderSummaryPrices,
 }
 

@@ -3,7 +3,9 @@ import { awinServerToServer } from 'apis/awin'
 import { logger } from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
-  warning: jest.fn(),
+  logger: {
+    warning: jest.fn()
+  },
 }))
 
 jest.mock('apis/awin')

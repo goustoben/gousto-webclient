@@ -1,4 +1,4 @@
-import { fetch } from 'utils/fetch'
+import * as fetch from 'utils/fetch'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'

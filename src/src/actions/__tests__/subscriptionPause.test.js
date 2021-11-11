@@ -42,9 +42,11 @@ jest.mock('apis/customers', () => ({
   fetchPauseReasons: jest.fn()
 }))
 jest.mock('utils/logger', () => ({
-  critical: jest.fn(),
-  error: jest.fn(),
-  warning: jest.fn()
+  logger: {
+    critical: jest.fn(),
+    error: jest.fn(),
+    warning: jest.fn()
+  },
 }))
 
 describe('Subscription action', () => {

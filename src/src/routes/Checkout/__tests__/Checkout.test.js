@@ -10,20 +10,10 @@ import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
 import { BoxDetailsContainer } from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPaymentContainer } from 'routes/Checkout/Components/CheckoutPayment'
-/* eslint-disable import/named */
-import {
-  menuLoadDays,
-  checkoutCreatePreviewOrder,
-  basketStepsOrderReceive,
-  basketProceedToCheckout,
-  menuLoadBoxPrices,
-  pricingRequest,
-  redirect,
-  replace,
-  checkoutStepIndexReached,
-  trackSignupStep,
-} from 'actions'
-/* eslint-enable import/named */
+import { menuLoadDays, menuLoadBoxPrices } from 'actions/menu'
+import { pricingRequest } from 'actions/pricing'
+import { checkoutCreatePreviewOrder, checkoutStepIndexReached } from 'actions/checkout'
+import { basketStepsOrderReceive, basketProceedToCheckout } from 'actions/basket'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
 import { logger } from 'utils/logger'
@@ -62,8 +52,10 @@ jest.mock('routes/Menu/fetchData/menuService', () => ({
 }))
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn(),
-  warning: jest.fn(),
+  logger: {
+    error: jest.fn(),
+    warning: jest.fn(),
+  },
 }))
 
 describe('Given Checkout component', () => {
@@ -77,6 +69,9 @@ describe('Given Checkout component', () => {
   let trackFailedCheckoutFlow
   let changeRecaptcha
   let fetchGoustoRef
+  let trackSignupStep
+  let redirect
+  let replace
 
   beforeEach(() => {
     const mockStore = configureMockStore()
@@ -133,6 +128,9 @@ describe('Given Checkout component', () => {
     trackFailedCheckoutFlow = jest.fn()
     changeRecaptcha = jest.fn()
     fetchGoustoRef = jest.fn()
+    trackSignupStep = jest.fn()
+    redirect = jest.fn()
+    replace = jest.fn()
 
     onCheckoutSpy = jest.fn()
 
