@@ -54,9 +54,6 @@ module.exports = {
       selector: '*[data-testing="menuRecipes"]',
 
       elements: {
-        recipeList: {
-          selector: '*[data-testing="menuRecipesList"]',
-        },
         featured: {
           selector: '*[data-reactid="171"]',
         },
@@ -68,8 +65,8 @@ module.exports = {
       commands: [{
         checkIfRecipesVisible: function () {
           this
-            .waitForElementPresent('@recipeList')
-            .expect.element('@recipeList').to.be.visible
+            .waitForElementPresent('@addRecipeButton')
+            .expect.element('@addRecipeButton').to.be.visible
 
           return this
         },
