@@ -80,6 +80,7 @@ jobs:
             - mnt/ramdisk/scripts
             - mnt/ramdisk/ci_scripts
             - mnt/ramdisk/images
+            - mnt/ramdisk/emulation-server
             - root/.circlerc
 
   install-src-dependencies:
@@ -250,64 +251,93 @@ jobs:
           command: aws wafv2 update-ip-set --name $ipsetName --scope $ipsetScope --id $ipsetId --lock-token $nextLockToken --addresses $ipsetAddresses
 
   test-regression:
+    parameters:
+      platform:
+        type: string
+      test_command:
+        type: string
+        default: ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
+      test_directory:
+        type: string
+        default: tests/regression
+      application_base_url:
+        type: string
+        default: http://frontend.gousto.local:8080
+      test_node_options:
+        type: string
+        default: --max-http-header-size=1000000
     docker: *circleci_node_browsers_image
     resource_class: medium
-    working_directory: /mnt/ramdisk/tests/regression
+    working_directory: /mnt/ramdisk
     parallelism: 5
     steps:
       - attach_workspace:
           at: /
       - run:
-          name: Export base url environment variable
-          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
-          # This is a workaround for broken variable interpolation in version 2
-          # https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/2
+          name: Create minimal config file
+          command: 'echo "{\"running_env\": \"local\", \"checkout_pk\": \"${CHECKOUTCOM_PK_STAGING}\"}" > src/config/development-local.json5'
       - run:
-          name: Run regression tests
-          command: |
-            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
-          environment:
-            CYPRESS_platform: web
-            NODE_OPTIONS: --max-http-header-size=1000000
+          name: Build local application
+          working_directory: src
+          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build
+      - run:
+          name: Install emulation server dependencies
+          working_directory: emulation-server
+          command: npm ci
+      - run:
+          name: Update local DNS configuration
+          command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
+      - run:
+          name: Start local application
+          working_directory: src
+          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run server
+          background: true
+      - run:
+          name: Start emulation server
+          working_directory: emulation-server
+          command: npm start
+          background: true
+      - run:
+          name: Wait for emulation server to be ready
+          working_directory: scripts
+          command: ./waitForHttpPath.sh 3000 /_config/state 10
+      - run:
+          name: Wait for application to be ready
+          working_directory: scripts
+          command: ./waitForHttpPath.sh 8080 / 10
+      - when:
+          condition:
+            equal: [ web, << parameters.platform >> ]
+          steps:
+            - run:
+                name: Run regression tests
+                working_directory: << parameters.test_directory >>
+                command: << parameters.test_command >>
+                environment:
+                  CYPRESS_baseUrl: << parameters.application_base_url >>
+                  CYPRESS_platform: << parameters.platform >>
+                  NODE_OPTIONS: << parameters.test_node_options >>
+      - when:
+          condition:
+            equal: [ mobile, << parameters.platform >> ]
+          steps:
+            - run:
+                name: Run regression tests
+                working_directory: << parameters.test_directory >>
+                command: << parameters.test_command >>
+                environment:
+                  CYPRESS_baseUrl: << parameters.application_base_url >>
+                  CYPRESS_viewportWidth: 375
+                  CYPRESS_viewportHeight: 667
+                  CYPRESS_platform: << parameters.platform >>
+                  NODE_OPTIONS: << parameters.test_node_options >>
       - run:
           name: Create reports
           when: on_fail
+          working_directory: << parameters.test_directory >>
           command: npm run report
       - store_test_results:
           path: /mnt/ramdisk/tests/regression/test_results/cypress
-      - store_artifacts:
-          path: /mnt/ramdisk/tests/regression/reports/html
-          destination: ./
-      - store_artifacts:
-          path: /mnt/ramdisk/tests/regression/videos
-          destination: ./
-
-  test-regression-mobile:
-    docker: *circleci_node_browsers_image
-    resource_class: medium
-    working_directory: /mnt/ramdisk/tests/regression
-    parallelism: 5
-    steps:
-      - attach_workspace:
-          at: /
-      - run:
-          name: Export base url environment variable
-          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
-      - run:
-          name: Run regression tests
-          command: |
-            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
-          environment:
-            CYPRESS_viewportWidth: 375
-            CYPRESS_viewportHeight: 667
-            CYPRESS_platform: mobile
-            NODE_OPTIONS: --max-http-header-size=1000000
-      - store_test_results:
-          path: /mnt/ramdisk/tests/regression/test_results/cypress
-      - run:
-          name: Create reports
-          when: on_fail
-          command: npm run report
       - store_artifacts:
           path: /mnt/ramdisk/tests/regression/reports/html
           destination: ./
@@ -395,6 +425,36 @@ workflows:
             branches:
               only:
                 - /^env-.*/
+      - install-regression-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - test-regression:
+          name: test-regression-web
+          platform: web
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-src-dependencies
+            - install-regression-test-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - test-regression:
+          name: test-regression-mobile
+          platform: mobile
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-src-dependencies
+            - install-regression-test-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -406,35 +466,10 @@ workflows:
       - deploy-infrastructure-and-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
+            - test-regression-web
+            - test-regression-mobile
             - create-and-upload-webclient-docker-image-to-ecr
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - install-regression-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - test-regression:
-          context: gousto-beta-aws-app-circleci
-          requires:
             - upload-assets-to-s3
-            - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - test-regression-mobile:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - upload-assets-to-s3
-            - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -488,6 +523,36 @@ workflows:
             branches:
               only:
                 - develop
+      - install-regression-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+          filters:
+            branches:
+              only:
+                - develop
+      - test-regression:
+          name: test-regression-web
+          platform: web
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-src-dependencies
+            - install-regression-test-dependencies
+          filters:
+            branches:
+              only:
+                - develop
+      - test-regression:
+          name: test-regression-mobile
+          platform: mobile
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-src-dependencies
+            - install-regression-test-dependencies
+          filters:
+            branches:
+              only:
+                - develop
       - publish-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -501,8 +566,6 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-webclient
-            - jest-coverage-report
-            - eslint-generate-report
           filters:
             branches:
               only:
@@ -510,35 +573,12 @@ workflows:
       - deploy-infrastructure-and-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
+            - jest-coverage-report
+            - eslint-generate-report
+            - test-regression-web
+            - test-regression-mobile
             - create-and-upload-webclient-docker-image-to-ecr
-          filters:
-            branches:
-              only:
-                - develop
-      - install-regression-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - develop
-      - test-regression:
-          context: gousto-beta-aws-app-circleci
-          requires:
             - upload-assets-to-s3
-            - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
-          filters:
-            branches:
-              only:
-                - develop
-      - test-regression-mobile:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - upload-assets-to-s3
-            - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -546,7 +586,6 @@ workflows:
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - upload-assets-to-s3
             - deploy-infrastructure-and-webclient-image
           filters:
             branches:
@@ -597,6 +636,7 @@ workflows:
           context: gousto-prod-aws-app-circleci
           requires:
             - create-and-upload-webclient-docker-image-to-ecr
+            - upload-assets-to-s3
           filters:
             branches:
               only:

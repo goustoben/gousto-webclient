@@ -21,5 +21,5 @@ export const initialize = () => {
 
   cy.intercept('GET', '/recipes/v2/recipes*', { fixture: 'recipes/recipes.json'}).as('recipes')
 
-  cy.visit('/my-gousto')
+  cy.visitAndWaitForClientSideReRender('/my-gousto')
 }

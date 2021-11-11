@@ -239,3 +239,16 @@ Cypress.Commands.add('stubAll3rdParties', () => {
 Cypress.Commands.add('stubAllApis', () => {
   cy.intercept('https://**-api.gousto.info/**', { statusCode: 404, body: 'Cypress forced 404', })
 })
+
+/**
+ * This command ensures that the client side re-render has started before returning.
+ * This protects against the case where the re-render deattaches an element being used in the test
+ * from the DOM causing flakiness.
+ *
+ * A property is added to the window object to indicate that the re-render has started. This is then
+ * checked to see that the test can proceed - https://docs.cypress.io/api/commands/window#Start-tests-when-app-is-ready
+ */
+Cypress.Commands.add('visitAndWaitForClientSideReRender', (url, options) => {
+  cy.visit(url, options)
+  cy.window().should('have.property', 'clientRenderStarted', true)
+})

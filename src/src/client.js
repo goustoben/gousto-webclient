@@ -61,6 +61,8 @@ window.docReady(() => {
       />,
       reactRootDOM
     )
+
+    window.clientRenderStarted = true
   } else {
     console.log(new Error('reactRootDOM not found')) // eslint-disable-line no-console
   }

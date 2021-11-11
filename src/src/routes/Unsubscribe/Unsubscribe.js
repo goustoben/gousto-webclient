@@ -76,6 +76,7 @@ class Unsubscribe extends React.PureComponent {
                   body2: copy.body2,
                   button: copy.button,
                 }}
+                dataTesting="confirm-unsubscribe"
               />
             ) : <Unsubscribed copy={{ link: copy.link }} />
           }
