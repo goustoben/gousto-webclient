@@ -125,7 +125,7 @@
             },
             "serverSide": {
               "live": "http://staging-core.gousto.info",
-              "local": "https://staging-api.gousto.info"
+              "local": "http://localhost:3000"
             }
           }
         },
