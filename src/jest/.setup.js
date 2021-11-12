@@ -5,13 +5,13 @@ import MutationObserver from '@sheerun/mutationobserver-shim'
 import './.setupEndpoints.js'
 import { cache } from "swr"
 import { server } from "./.msw"
-
-const Enzyme = require('enzyme');
-const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
-
 import Modal from 'react-modal'
 import { Pact } from "@pact-foundation/pact"
 import path from "path"
+import { rmdirSync } from "fs"
+
+const Enzyme = require('enzyme');
+const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
 
 if (global.adapterTest) {
   configureAdapterTestEnvironment()
@@ -23,6 +23,11 @@ function configureAdapterTestEnvironment() {
   jest.setTimeout(30 * 1000)
 
   const pathOutputDirectoryPath = path.join(__dirname, '..', '..', 'pact')
+
+  if (!global.pactDirectoryReset) {
+    rmdirSync(pathOutputDirectoryPath, {recursive: true})
+    global.pactDirectoryReset = true
+  }
 
   const pact = new Pact({
     consumer: 'gousto-webclient',

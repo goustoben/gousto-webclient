@@ -42,6 +42,21 @@ jobs:
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: npm ci
       working-directory: src
+    - name: Run Gousto service adapter tests
+      run: npm run test:gousto-adapters
+      working-directory: src
+    - name: Install emulation server dependencies
+      if: steps.cache-node-modules.outputs.cache-hit != 'true'
+      run: npm ci
+      working-directory: emulation-server
+    - name: Start emulation server
+      run: |
+        npm start &
+        ../scripts/waitForHttpPath.sh 3000 /_config/state 10
+      working-directory: emulation-server
+    - name: Verify emulation server satisfies Pact file expectations
+      run: npm test
+      working-directory: emulation-server
     - name: Run tests
       run: npm run test:jest:ci:coverage
       working-directory: src
