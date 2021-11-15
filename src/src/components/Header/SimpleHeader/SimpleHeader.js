@@ -16,7 +16,7 @@ const SimpleHeader = ({ serverError, className, homeUrl, title, showLoginCTA, on
             <div className={css.mainContent}>
               <Link to={homeUrl} className={css.logoLink} clientRouted>
                 <span>
-                  <Svg fileName="nourished_logo" className={css.logoDesktop} />
+                  <Svg fileName="cgc_logo" className={css.logoDesktop} />
                 </span>
               </Link>
               {title ? <H1 className={css.mobileTitle}>{title}</H1> : null}

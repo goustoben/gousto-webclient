@@ -88,10 +88,10 @@ class Welcome extends React.PureComponent {
                       )}
                     </VerticalStagesItem>
                     <VerticalStagesItem
-                      title="Add desserts, drinks, snacks & more from the Nourished Market"
+                      title="Add desserts, drinks, snacks & more from the Online Store"
                       isCompleted={false}
                     >
-                      <p>Additional charges will apply for Nourished Market items.</p>
+                      <p>Additional charges will apply for Online Store tems.</p>
                       <ProductSelection orderId={orderId} isGoustoOnDemandEnabled />
                     </VerticalStagesItem>
                   </VerticalStages>

@@ -69,7 +69,7 @@ const IneligibleIngredients = ({
             window.location.assign(routes.myGousto)
           }}
         >
-          Go to My Nourished
+          Go to My Account
         </CTA>
       </BottomFixedContent>
     </GetHelpLayout2>

@@ -27,7 +27,7 @@ export const ApplyVoucherPage = ({
     >
       {applyVoucherCustomText && <p className={css.customText}>{applyVoucherCustomText}</p>}
       <p className={css.customText}>
-        Additional costs will apply for surcharge recipes and items from the Nourished.
+        Additional costs will apply for surcharge recipes and items from the Online Shop.
       </p>
       <ExpandableSection
         className={css.expandableSection}
@@ -36,7 +36,7 @@ export const ApplyVoucherPage = ({
         renderToggle={({ isExpanded, handleClick }) => renderToggleContent(isExpanded, handleClick)}
       >
         <p>On the app, it is under upcoming deliveries on the home tab.</p>
-        <p>On the website, it is under upcoming deliveries in My Gousto.</p>
+        <p>On the website, it is under upcoming deliveries in My Account.</p>
       </ExpandableSection>
       <div className={css.ctaContainer}>
         <CheckoutButton

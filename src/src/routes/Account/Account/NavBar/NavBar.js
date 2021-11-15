@@ -9,7 +9,7 @@ const NavBar = (props) => {
   const { rateRecipeCount, trackClickRateRecipes } = props
 
   const menuTitles = {
-    myGousto: 'My Nourished Gousto',
+    myGousto: 'My Nourished',
     myDeliveries: 'Upcoming Deliveries',
     mySubscription: 'Subscription Settings',
     myDetails: 'Account Details',

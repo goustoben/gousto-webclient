@@ -24,7 +24,7 @@ class OrderProducts extends React.PureComponent {
         <div>
           <div className={css.headerRow}>
             <Content contentKeys="mydeliveries_OrderOrderproductsTitle">
-              <span className={css.header}>Nourished Market</span>
+              <span className={css.header}>Online Shop</span>
             </Content>
             {products.size > 0 ? (
               <Link className={css.editLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
@@ -38,7 +38,7 @@ class OrderProducts extends React.PureComponent {
               <img className={css.marketImageFull} src={marketPhotoSrc} alt="Gousto Market products" />
               <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
                 <Button color="secondary" width="full" noDecoration>
-                  Go to Nourished Market
+                  Go to Online Shop
                 </Button>
               </Link>
             </div>
@@ -90,5 +90,6 @@ OrderProducts.defaultProps = {
   products: Immutable.List([]),
   orderId: '',
 }
+
 
 export default OrderProducts

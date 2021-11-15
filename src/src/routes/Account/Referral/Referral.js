@@ -76,7 +76,7 @@ class Referral extends Component {
       </div>
     ) : (
       <div className={expiry ? css.containerBackgroundDouble : css.containerBackground}>
-        <Helmet title="Nourished Referrals | Invite Your Friends To Try Nourished" />
+        <Helmet title="Craft Referrals | Invite Your Friends To Try Craft Gin Club" />
         <div className={css.rafPageTitle}>
           <RAFTitle title={offerTitle} />
         </div>

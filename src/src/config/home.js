@@ -2,13 +2,13 @@ import React from 'react'
 import Icon from 'components/Icon'
 
 export const hero = {
-  header: 'High Impact Personalised Vitamins',
-  subheader: 'Bento Nourished',
+  header: 'Perfect Nights Start With Gin',
+  subheader: 'Craft Gin Club',
 }
 
 export const CTA = {
-  text: 'Take quiz',
-  stickyCTA: 'Get your personalised vitamins',
+  text: 'Join Now',
+  stickyCTA: 'Get your monthly gin box',
   join: (
     <span>
       Take quiz{' '}
@@ -52,41 +52,41 @@ export const defaultVariant = 'default'
 export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
   steps: [
     {
-      title: 'Backed by science',
+      title: 'Discover the Best Gins',
       img: isHomeJpgEnabled
         ? require('routes/Home/WhyChooseGousto/science.jpg')
         : require('routes/Home/WhyChooseGousto/science.png'),
       list: [
-        'Take our quiz to receive a bespoke recommendation, from our proprietary science backed algorithm',
+        'Every year our experts taste over 500 gins (seriously). We handpick the best 12 and send one of them every month to you!',
       ],
     },
     {
-      title: 'Freshly made-to-order',
+      title: 'Unbox Amazing Surprises',
       img: isHomeJpgEnabled
         ? require('routes/Home/WhyChooseGousto/order.jpg')
         : require('routes/Home/WhyChooseGousto/order.png'),
       list: [
-        'Our freshly 3D printed gummy vitamins ensure you receive 99.5% of the nutritional value',
+        'Every box is a surprise until it lands on your doorstep! Our members say ‘It’s like Christmas every month’. You can choose how often you want your ginny delivery - every 1, 2 or 3 months.',
       ],
     },
     {
-      title: 'High Absorption and Efficiency',
+      title: 'Enjoy Perfect Nights In',
       img: isHomeJpgEnabled
         ? require('routes/Home/WhyChooseGousto/absorption.jpg')
         : require('routes/Home/WhyChooseGousto/absorption.png'),
       list: [
-        'Nourishing you faster and more efficiently, our stacks get to work as soon as you chew',
+        'Spend the night in ginny delight with perfectly paired G&Ts, delicious cocktails and scrumptious treats.',
       ],
     },
   ],
-  title: 'So why Nourished?',
+  title: 'So why Craft?',
 })
 
-export const joeWicks = 'Vitamins. Designed by you, freshly made by us.'
+export const joeWicks = "Gin. It's our thing!"
 export const carousel = {
-  title: 'Meet Our Bestsellers',
+  title: 'Browse our Past Boxes',
   subtitle:
-    'Personalise your own vitamin stack or browse through our best sellers, gift boxes and latest additions to the Nourished collection. Each vitamin stack is freshly made-to-order and delivered in sustainable packaging.',
+    'Personalise your own vitamin stack or browse through our best sellers, gift boxes and latest additions to the Craft collection. Each vitamin stack is freshly made-to-order and delivered in sustainable packaging.',
 }
 export const seo = {
   title: 'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',

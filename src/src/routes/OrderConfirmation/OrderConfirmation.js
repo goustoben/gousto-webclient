@@ -108,7 +108,7 @@ class OrderConfirmation extends PureComponent {
             </VerticalStages>
           ) : (
             <div>
-              <h3 className={css.marketPlaceTitle}>Nourished Market</h3>
+              <h3 className={css.marketPlaceTitle}>Online Shop</h3>
               <Market
                 ageVerified={ageVerified}
                 toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}

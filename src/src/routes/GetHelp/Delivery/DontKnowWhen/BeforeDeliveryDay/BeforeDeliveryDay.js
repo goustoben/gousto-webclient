@@ -21,7 +21,7 @@ const BeforeDeliveryDay = ({ trackClickMyGoustoInSSRDeliveries }) => (
         I don&apos;t know when my box will arrive
       </Heading>
       <p className={css.mainText}>
-        The tracking link is available on your day of delivery and this can be found on the &quot;My Gousto&quot; page under your next box delivery.
+        The tracking link is available on your day of delivery and this can be found on the &quot;My Account&quot; page under your next box delivery.
       </p>
       <BottomFixedContent>
         <CTA
@@ -32,7 +32,7 @@ const BeforeDeliveryDay = ({ trackClickMyGoustoInSSRDeliveries }) => (
             redirectToMyGousto()
           }}
         >
-          View My Nourished
+          View My Account
         </CTA>
       </BottomFixedContent>
     </Card>
