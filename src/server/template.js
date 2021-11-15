@@ -21,11 +21,11 @@ const fontDescriptors = [
   ['AvenirLTW04-45Book.woff2', 'font/woff2'],
   ['AvenirLTW04-85Heavy.woff2', 'font/woff2'],
   ['fontawesome-webfont.woff2?v=4.6.3', 'font/woff2'],
-  ['Axiforma-Bold.otf', 'font/opentype'],
-  ['Axiforma-Book.otf', 'font/opentype'],
-  ['Axiforma-Light.otf', 'font/opentype'],
-  ['Axiforma-Medium.otf', 'font/opentype'],
-  ['Axiforma-SemiBold.otf', 'font/opentype'],
+  ['Axiforma-Bold.woff2', 'font/woff2'],
+  ['Axiforma-Book.woff2', 'font/woff2'],
+  ['Axiforma-Light.woff2', 'font/woff2'],
+  ['Axiforma-Medium.woff2', 'font/woff2'],
+  ['Axiforma-SemiBold.woff2', 'font/woff2'],
 ]
 
 const getPreloadFontsSection = () => fontDescriptors.map(([fontFileName, typeAttr]) => (
