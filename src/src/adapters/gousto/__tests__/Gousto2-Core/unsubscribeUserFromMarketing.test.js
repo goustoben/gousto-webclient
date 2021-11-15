@@ -34,7 +34,7 @@ describe('Unsubscribe user from marketing', () => {
           status: 200,
           headers: {
             'Content-Type': term({
-              matcher: 'application',
+              matcher: 'applicatio.',
               generate: 'application/json',
             })
           },
@@ -59,12 +59,6 @@ describe('Unsubscribe user from marketing', () => {
         })
         .willRespondWith({
           status: 404,
-          headers: {
-            'Content-Type': term({
-              matcher: 'json',
-              generate: 'application/json',
-            })
-          },
           body: {}
         }
         ))
@@ -91,12 +85,6 @@ describe('Unsubscribe user from marketing', () => {
         })
         .willRespondWith({
           status: 404,
-          headers: {
-            'Content-Type': term({
-              matcher: 'application',
-              generate: 'application/json',
-            })
-          },
           body: {}
         })
     )
