@@ -6,7 +6,7 @@
   margin-top: bannerOffset;
   background: url('media/images/app-promo-banner-background.png') center top no-repeat;
   display: flex;
-  background-color: ##343579;
+  background-color: #blackberry;
   color: White;
 
   animation: appBannerAnimation 0.5s ease-in-out;
