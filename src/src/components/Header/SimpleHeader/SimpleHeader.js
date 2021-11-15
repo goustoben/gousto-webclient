@@ -16,7 +16,7 @@ const SimpleHeader = ({ serverError, className, homeUrl, title, showLoginCTA, on
             <div className={css.mainContent}>
               <Link to={homeUrl} className={css.logoLink} clientRouted>
                 <span>
-                  <Svg fileName="cgc_logo" className={css.logoDesktop} />
+                  <img src="https://images.squarespace-cdn.com/content/v1/5402e23ce4b0a7034afad3a2/1529056356037-KZB7R0T6T39M2METCGDL/cgc-logo.png?format=1500w" height="80px"/>
                 </span>
               </Link>
               {title ? <H1 className={css.mobileTitle}>{title}</H1> : null}
