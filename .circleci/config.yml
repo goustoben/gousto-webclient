@@ -428,6 +428,7 @@ jobs:
             PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker publish pact/pacts \
               --consumer-app-version "${CIRCLE_SHA1}" \
               --broker-base-url "${TEST_PACT_BROKER_BASE_URL}" \
+              --branch "${CIRCLE_BRANCH}" \
               --build-url "${CIRCLE_BUILD_URL}"
 
 
