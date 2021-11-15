@@ -12,19 +12,21 @@ import { menuInitialState } from 'reducers/menu'
 import { defaultState as defaultUserState } from 'reducers/user'
 import logger from 'utils/logger'
 import { getLandingDay } from 'utils/deliveries'
-import { menuLoadComplete } from 'actions/menu'
-import { fetchBrandInfo } from 'apis/brand'
 import * as boxSummaryActions from 'actions/boxSummary'
 import { getUserMenuVariant } from 'selectors/features'
-import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
-import * as basketRecipesActions from '../../actions/basketRecipes'
+import * as basketRecipesActions from '../../actions/basketRecipes/basketRecipes'
 import { safeJestMock } from '../../../../_testing/mocks'
-import * as brandHeadersActions from '../../actions/brandData'
-import * as clientMetrics from '../../apis/clientMetrics'
+import * as brandHeadersActions from '../../actions/brandData/brandData'
+import * as clientMetrics ∂from '../../apis/clientMetrics/clientMetrics'
 
 import fetchData from '../fetchData'
 
-import { setSlotFromIds, getPreselectedCollectionName, selectCollection } from '../utils'
+import { getPreselectedCollectionName, selectCollection, setSlotFromIds } from '../utils'
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { menuLoadComplete } from "actions/menu/menuLoadComplete"
+import { fetchBrandInfo } from "apis/brand/fetchBrandInfo"
+import { fetchMenus } from "routes/Menu/fetchData/apis/fetchMenus"
+import { fetchMenusWithUserId } from "routes/Menu/fetchData/apis/fetchMenusWithUserId"
 
 jest.mock('../utils')
 jest.mock('utils/deliveries')
@@ -102,7 +104,7 @@ describe('menu fetchData', () => {
     actions.menuLoadOrderDetails.mockReset()
     actions.menuLoadMenu.mockReset()
     actions.menuLoadDays.mockReset()
-    boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReset()
+    boxSummaryDeliveryDaysLoad.mockReset()
     actions.basketNumPortionChange.mockReset()
     basketRecipeAddSpy.mockReset()
 
@@ -343,7 +345,7 @@ describe('menu fetchData', () => {
 
             actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
 
-            boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
+            boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
 
             await fetchData({ query: queryWithSlots, params }, false, false)(dispatch, getState)
           })
@@ -418,7 +420,7 @@ describe('menu fetchData', () => {
             test('should dispatch boxSummaryDeliveryDaysLoad', async () => {
               const boxSummaryDeliveryDaysLoadResult = Symbol('fake action creator result')
 
-              boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
+              boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
 
               await fetchData({ query, params }, false, false)(dispatch, getState)
 

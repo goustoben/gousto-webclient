@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Card, ItemExpandable } from 'goustouicomponents'
-import { client } from '../../../../config/routes'
+import { client } from 'config/routes'
 import Link from '../../../../components/Link'
 import layoutCss from '../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 

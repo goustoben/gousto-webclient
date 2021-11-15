@@ -1,44 +1,40 @@
 import Immutable from 'immutable'
 
-import { serverReferAFriend, fetchUserCredit, applyPromo } from 'apis/user'
-import customersApi, { customerSignup } from 'apis/customers'
-import { fetchDeliveryConsignment } from 'apis/deliveries'
+import customersApi from 'apis/customers/customers'
 import * as prospectAPI from 'apis/prospect'
 
 import { actionTypes } from 'actions/actionTypes'
 import { placeOrder } from 'actions/trackingKeys'
-import userActions, {
-  userReferAFriend,
-  userSubscribe,
-  userFetchReferralOffer,
-  trackingReferFriend,
-  trackingReferFriendSocialSharing,
-  userLoadCookbookRecipes,
-  userGetReferralDetails,
-  userLoadOrderTrackingInfo,
-  userLoadProjectedDeliveries,
-} from 'actions/user'
+import userActions from 'actions/user'
 import recipeActions from 'actions/recipes'
-import {
-  trackFirstPurchase,
-  trackNewUser,
-  trackNewOrder,
-  trackUnexpectedSignup,
-} from 'actions/tracking'
 
 import { PaymentMethod, signupConfig } from 'config/signup'
 
 import logger from 'utils/logger'
 import { deliveryTariffTypes } from 'utils/deliveries'
-import {
-  transformPendingOrders,
-  transformProjectedDeliveries,
-} from 'utils/myDeliveries'
-import {
-  getIsDecoupledPaymentEnabled,
-} from 'selectors/features'
-import { skipDates } from 'routes/Account/apis/subscription'
-import * as orderV2Apis from 'routes/Account/MyDeliveries/apis/orderV2'
+import { transformPendingOrders, transformProjectedDeliveries, } from 'utils/myDeliveries'
+import { getIsDecoupledPaymentEnabled, } from 'selectors/features'
+import * as orderV2Apis from 'routes/Account/MyDeliveries/apis/orderV2/orderV2'
+import { trackFirstPurchase } from "actions/tracking/trackFirstPurchase"
+import { trackNewUser } from "actions/tracking/trackNewUser"
+import { trackNewOrder } from "actions/tracking/trackNewOrder"
+import { trackUnexpectedSignup } from "actions/tracking/trackUnexpectedSignup"
+import { userLoadProjectedDeliveries } from "actions/user/userLoadProjectedDeliveries"
+import { userSubscribe } from "actions/user/userSubscribe"
+import { userReferAFriend } from "actions/user/userReferAFriend"
+import { userFetchReferralOffer } from "actions/user/userFetchReferralOffer"
+import { userGetReferralDetails } from "actions/user/userGetReferralDetails"
+import { trackingReferFriend } from "actions/user/trackingReferFriend"
+import { trackingReferFriendSocialSharing } from "actions/user/trackingReferFriendSocialSharing"
+import { userLoadCookbookRecipes } from "actions/user/userLoadCookbookRecipes"
+import { userLoadOrderTrackingInfo } from "actions/user/userLoadOrderTrackingInfo"
+import { applyPromo } from "apis/users/applyPromo"
+import { fetchUserCredit } from "apis/users/fetchUserCredit"
+import { serverReferAFriend } from "apis/users/serverReferAFriend"
+import { fetchDeliveryConsignment } from "apis/deliveries/fetchDeliveryConsignment"
+import { customerSignup } from "apis/customers/customerSignup"
+import { skipDates } from "routes/Account/apis/subscription/skipDates"
+import { deleteOrder } from "routes/Account/MyDeliveries/apis/orderV2/deleteOrder"
 
 jest.mock('selectors/features')
 
@@ -1493,7 +1489,7 @@ describe('user actions', () => {
       test('should call deleteOrder', async () => {
         await userActions.userOrderCancelNext()(dispatchSpy, getStateSpy)
 
-        expect(orderV2Apis.deleteOrder).toHaveBeenCalledWith('access-token', expectedOrderId, 'auth-user-id')
+        expect(deleteOrder).toHaveBeenCalledWith('access-token', expectedOrderId, 'auth-user-id')
       })
 
       test('should dispatch USER_UNLOAD_ORDERS', async () => {

@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import actions from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
 import { getReferralLink, SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import css from './UserRAFLink.css'
+import { userLoadReferralDetails } from "actions/user/userLoadReferralDetails"
 
 class UserRAFLink extends React.PureComponent {
   state = { copiedMessageVisible: false }
@@ -20,7 +20,7 @@ class UserRAFLink extends React.PureComponent {
   }
 
   static fetchData = async ({ store }) => Promise.all([
-    store.dispatch(actions.userLoadReferralDetails()),
+    store.dispatch(userLoadReferralDetails()),
   ])
 
   componentWillUnmount() {

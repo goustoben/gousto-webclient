@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import { basketRecipeAdd, basketRecipeRemove } from '../../../../Menu/actions/basketRecipes'
 import { Buttons } from './Buttons'
+import { basketRecipeAdd } from "routes/Menu/actions/basketRecipes/basketRecipeAdd"
+import { basketRecipeRemove } from "routes/Menu/actions/basketRecipes/basketRecipeRemove"
 
 function mapStateToProps(state, props) {
   return {

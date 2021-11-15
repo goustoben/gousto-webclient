@@ -2,13 +2,13 @@ import React from 'react'
 import thunk from 'redux-thunk'
 import Immutable from 'immutable'
 import { mount } from 'enzyme'
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-import * as userApi from 'apis/user'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import featuresReducer, { initialState as featuresDefaultState } from 'reducers/features'
 import status from 'reducers/status'
 import { UserCreditMessageContainer } from '../UserCreditMessageContainer'
+import { fetchUserCredit } from "apis/users/fetchUserCredit"
 
 jest.mock('apis/user', () => ({
   fetchUserCredit: jest.fn(),
@@ -43,8 +43,8 @@ describe('UserCreditMessageContainer', () => {
       let wrapper = null
 
       beforeEach(() => {
-        userApi.fetchUserCredit.mockReset()
-        userApi.fetchUserCredit.mockResolvedValueOnce({
+        fetchUserCredit.mockReset()
+        fetchUserCredit.mockResolvedValueOnce({
           data: { balance: '5.00' }
         })
 
@@ -54,7 +54,7 @@ describe('UserCreditMessageContainer', () => {
       })
 
       test('the userFetchCredit action is being called correctly', () => {
-        expect(userApi.fetchUserCredit).toHaveBeenCalledTimes(1)
+        expect(fetchUserCredit).toHaveBeenCalledTimes(1)
       })
 
       test('the Alert component is rendered and displays the user credit', () => {
@@ -69,8 +69,8 @@ describe('UserCreditMessageContainer', () => {
       let wrapper = null
 
       beforeEach(() => {
-        userApi.fetchUserCredit.mockReset()
-        userApi.fetchUserCredit.mockResolvedValueOnce({
+        fetchUserCredit.mockReset()
+        fetchUserCredit.mockResolvedValueOnce({
           data: { balance: '0' }
         })
 
@@ -90,7 +90,7 @@ describe('UserCreditMessageContainer', () => {
     let wrapper = null
 
     beforeEach(() => {
-      userApi.fetchUserCredit.mockReset()
+      fetchUserCredit.mockReset()
 
       wrapper = mount(
         <UserCreditMessageContainer store={store} />
@@ -98,7 +98,7 @@ describe('UserCreditMessageContainer', () => {
     })
 
     test('the userFetchCredit action is not being called', () => {
-      expect(userApi.fetchUserCredit).toHaveBeenCalledTimes(0)
+      expect(fetchUserCredit).toHaveBeenCalledTimes(0)
     })
 
     test('the Alert component is not rendered', () => {

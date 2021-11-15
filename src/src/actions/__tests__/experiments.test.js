@@ -2,10 +2,18 @@ import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
-import * as apis from 'apis/userBucketing'
+import * as apis from 'apis/userBucketing/userBucketing'
 import { actionTypes } from '../actionTypes'
 import { experimentBucketedUser } from '../trackingKeys'
 import * as actions from '../experiments'
+import { storeUserExperiments } from "actions/experiments/storeUserExperiments"
+import { appendUserExperiment } from "actions/experiments/appendUserExperiment"
+import { appendDefaultUserExperiment } from "actions/experiments/appendDefaultUserExperiment"
+import { removeUserExperiments } from "actions/experiments/removeUserExperiments"
+import { trackBucketedUser } from "actions/experiments/trackBucketedUser"
+import { fetchUserExperiments } from "actions/experiments/fetchUserExperiments"
+import { assignUserToExperiment } from "actions/experiments/assignUserToExperiment"
+import { fetchOrAssignUserToExperiment } from "actions/experiments/fetchOrAssignUserToExperiment"
 
 const mockedCookieGet = safeJestMock(Cookies, 'get')
 const mockedLoggerError = safeJestMock(logger, 'error')
@@ -42,7 +50,7 @@ describe('experiments Actions', () => {
 
   describe('storeUserExperiments', () => {
     test('returns correct structure', () => {
-      const result = actions.storeUserExperiments([])
+      const result = storeUserExperiments([])
 
       expect(result).toEqual({
         type: actionTypes.EXPERIMENTS_RECEIVED,
@@ -55,7 +63,7 @@ describe('experiments Actions', () => {
 
   describe('removeUserExperiments', () => {
     test('returns correct structure', () => {
-      const result = actions.removeUserExperiments()
+      const result = removeUserExperiments()
 
       expect(result).toEqual({
         type: actionTypes.EXPERIMENTS_REMOVE,
@@ -66,7 +74,7 @@ describe('experiments Actions', () => {
 
   describe('appendUserExperiment', () => {
     test('returns correct structure', () => {
-      const result = actions.appendUserExperiment({
+      const result = appendUserExperiment({
         mock: 'experiment'
       })
 
@@ -81,7 +89,7 @@ describe('experiments Actions', () => {
 
   describe('appendDefaultUserExperiment', () => {
     test('returns correct structure', () => {
-      const result = actions.appendDefaultUserExperiment('mock-experiment')
+      const result = appendDefaultUserExperiment('mock-experiment')
 
       expect(result).toEqual({
         type: actionTypes.EXPERIMENTS_APPEND,
@@ -98,7 +106,7 @@ describe('experiments Actions', () => {
 
   describe('trackBucketedUser', () => {
     test('returns correct structure', () => {
-      const result = actions.trackBucketedUser({
+      const result = trackBucketedUser({
         experimentName: 'mock-experiment-name',
         withinExperiment: true,
         bucket: 'control'
@@ -119,7 +127,7 @@ describe('experiments Actions', () => {
   describe('fetchUserExperiments', () => {
     describe('When no sessionId is given', () => {
       test('should not fetch user experiments', async () => {
-        const thunk = actions.fetchUserExperiments()
+        const thunk = fetchUserExperiments()
         await thunk(dispatch, getState)
 
         expect(mockedGetUserExperiments).not.toHaveBeenCalled()
@@ -156,7 +164,7 @@ describe('experiments Actions', () => {
         })
 
         test('should set statusActions PENDING to true', async () => {
-          const thunk = actions.fetchUserExperiments()
+          const thunk = fetchUserExperiments()
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(1, {
@@ -167,14 +175,14 @@ describe('experiments Actions', () => {
         })
 
         test('should call getUserExperiments', async () => {
-          const thunk = actions.fetchUserExperiments()
+          const thunk = fetchUserExperiments()
           await thunk(dispatch, getState)
 
           expect(mockedGetUserExperiments).toHaveBeenCalledWith('mock-session-id', 'mock-user-id')
         })
 
         test('should store user experiments', async () => {
-          const thunk = actions.fetchUserExperiments()
+          const thunk = fetchUserExperiments()
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -190,7 +198,7 @@ describe('experiments Actions', () => {
         })
 
         test('should set statusActions PENDING to false when finished', async () => {
-          const thunk = actions.fetchUserExperiments()
+          const thunk = fetchUserExperiments()
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(3, {
@@ -207,7 +215,7 @@ describe('experiments Actions', () => {
         })
 
         test('should log an error', async () => {
-          const thunk = actions.fetchUserExperiments()
+          const thunk = fetchUserExperiments()
           await thunk(dispatch, getState)
 
           expect(mockedLoggerError).toHaveBeenCalledWith({
@@ -217,7 +225,7 @@ describe('experiments Actions', () => {
         })
 
         test('should reset statusActions pending to false', async () => {
-          const thunk = actions.fetchUserExperiments()
+          const thunk = fetchUserExperiments()
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -233,7 +241,7 @@ describe('experiments Actions', () => {
   describe('assignUserToExperiment', () => {
     describe('When no experimentName is given', () => {
       test('should not assign a user to an experiment', async () => {
-        const thunk = actions.assignUserToExperiment()
+        const thunk = assignUserToExperiment()
         await thunk(dispatch, getState)
 
         expect(mockedUpdateUserExperiment).not.toHaveBeenCalled()
@@ -243,7 +251,7 @@ describe('experiments Actions', () => {
 
     describe('When no sessionId is given', () => {
       test('should not assign a user to an experiment', async () => {
-        const thunk = actions.assignUserToExperiment('mock-experiment')
+        const thunk = assignUserToExperiment('mock-experiment')
         await thunk(dispatch, getState)
 
         expect(mockedUpdateUserExperiment).not.toHaveBeenCalled()
@@ -277,7 +285,7 @@ describe('experiments Actions', () => {
         })
 
         test('should set statusActions PENDING to true', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(1, {
@@ -288,14 +296,14 @@ describe('experiments Actions', () => {
         })
 
         test('should call updateUserExperiment', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(mockedUpdateUserExperiment).toHaveBeenCalledWith('mock-experiment', 'mock-session-id', 'mock-user-id')
         })
 
         test('should call trackBucketedUser', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -310,7 +318,7 @@ describe('experiments Actions', () => {
         })
 
         test('should append the returned user experiment to state', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(3, {
@@ -326,7 +334,7 @@ describe('experiments Actions', () => {
         })
 
         test('should set statusActions PENDING to false when finished', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(4, {
@@ -343,7 +351,7 @@ describe('experiments Actions', () => {
         })
 
         test('should log the issue', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(mockedLoggerError).toHaveBeenCalledWith({
@@ -357,7 +365,7 @@ describe('experiments Actions', () => {
         })
 
         test('should append a default user experiment to state', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -373,7 +381,7 @@ describe('experiments Actions', () => {
         })
 
         test('should reset statusActions pending to false', async () => {
-          const thunk = actions.assignUserToExperiment('mock-experiment')
+          const thunk = assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(3, {
@@ -403,7 +411,7 @@ describe('experiments Actions', () => {
       test('should dispatch "fetchUserExperiments" action', async () => {
         const mockedFetchUserExperiments = safeJestMock(actions, 'fetchUserExperiments')
 
-        const thunk = actions.fetchOrAssignUserToExperiment()
+        const thunk = fetchOrAssignUserToExperiment()
         await thunk(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalled()
@@ -429,7 +437,7 @@ describe('experiments Actions', () => {
       test('should dispatch "assignUserToExperiment" action', async () => {
         const mockedAssignUserToExperiment = safeJestMock(actions, 'assignUserToExperiment')
 
-        const thunk = actions.fetchOrAssignUserToExperiment()
+        const thunk = fetchOrAssignUserToExperiment()
         await thunk(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalled()
@@ -462,7 +470,7 @@ describe('experiments Actions', () => {
         test('does not fetch user experiments', async () => {
           const mockedFetchUserExperiments = safeJestMock(actions, 'fetchUserExperiments')
 
-          const thunk = actions.fetchOrAssignUserToExperiment('mock-experiment')
+          const thunk = fetchOrAssignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).not.toHaveBeenCalled()
@@ -474,7 +482,7 @@ describe('experiments Actions', () => {
         test('does not assign user to experiment', async () => {
           const mockedAssignUserToExperiment = safeJestMock(actions, 'assignUserToExperiment')
 
-          const thunk = actions.fetchOrAssignUserToExperiment('mock-experiment')
+          const thunk = fetchOrAssignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).not.toHaveBeenCalled()

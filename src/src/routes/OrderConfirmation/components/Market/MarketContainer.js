@@ -8,9 +8,9 @@ import {
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
 import { actionTypes } from 'actions/actionTypes'
-import { filterProductCategory } from 'actions/filters'
-import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { Market } from './Market.logic'
+import { filterProductCategory } from "actions/filters/filterProductCategory"
+import { basketUpdateProducts } from "routes/Menu/actions/basket/basketUpdateProducts"
 
 const mapStateToProps = (state) => {
   const order = getBasketOrderDetails(state)

@@ -1,10 +1,12 @@
 import Immutable from 'immutable'
 import processQuery from 'utils/processQuery'
 import logger from 'utils/logger'
-import { basketPromoCodeChange } from 'actions/basket'
-import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
-import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
-import { setAffiliateSource } from 'actions/tracking'
+import { basketPromoCodeChange } from "actions/basket/basketPromoCodeChange"
+import { promoChange } from "../../actions/promos/promoChange"
+import { promoToggleModalVisibility } from "../../actions/promos/promoToggleModalVisibility"
+import { promoApply } from "../../actions/promos/promoApply"
+import { signupSetGoustoOnDemandEnabled } from "actions/signup/signupSetGoustoOnDemandEnabled"
+import { setAffiliateSource } from "actions/tracking/setAffiliateSource"
 
 jest.mock('actions/signup',() => ({
   signupSetGoustoOnDemandEnabled: jest.fn(),

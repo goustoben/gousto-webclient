@@ -11,9 +11,9 @@ import {
 import {
   getOpenOrders
 } from '../../../../../context/selectors/orders'
-import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
+import { useUpdateSubscription } from '../../../../../apis/hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
-import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
+import * as subscriptionToast from '../../../../../apis/hooks/useSubscriptionToast'
 
 jest.mock('../../../../../tracking')
 jest.mock('../../../../../context/selectors/subscription')

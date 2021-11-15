@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { updateTastePreferences } from '../tastePreferences'
+import { updateTastePreferences } from "apis/tastePreferences/updateTastePreferences"
 
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {

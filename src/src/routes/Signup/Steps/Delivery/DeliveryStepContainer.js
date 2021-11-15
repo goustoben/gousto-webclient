@@ -1,18 +1,23 @@
 import { connect } from 'react-redux'
-
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getLandingDay } from 'utils/deliveries'
 import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import {
-  isNextDayDeliveryPaintedDoorFeatureEnabled,
-  getIsTastePreferencesEnabled,
   getIsPaymentBeforeChoosingEnabled,
+  getIsTastePreferencesEnabled,
+  isNextDayDeliveryPaintedDoorFeatureEnabled,
 } from 'selectors/features'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
-import { trackSignupWizardAction, trackSocialBelongingBannerAppearance } from 'actions/signup'
 import { DeliveryStep } from './DeliveryStep'
+import { boxSummaryDeliverySlotChosen } from "actions/boxSummary/boxSummaryDeliverySlotChosen"
+import { trackSignupWizardAction } from "actions/signup/trackSignupWizardAction"
+import { trackSocialBelongingBannerAppearance } from "actions/signup/trackSocialBelongingBannerAppearance"
+import { temp } from "actions/temp/temp"
+import { trackDeliveryDayDropDownOpened } from "actions/deliveries/trackDeliveryDayDropDownOpened"
+import { trackDeliveryDayDropDownClosed } from "actions/deliveries/trackDeliveryDayDropDownClosed"
+import { trackDeliverySlotDropDownOpened } from "actions/deliveries/trackDeliverySlotDropDownOpened"
+import { trackDeliveryDayEdited } from "actions/deliveries/trackDeliveryDayEdited"
+import { trackDeliverySlotEdited } from "actions/deliveries/trackDeliverySlotEdited"
 
 function mapStateToProps(state) {
   const deliveryDaysWithDisabled = addDisabledSlotIds(state.boxSummaryDeliveryDays)
@@ -44,14 +49,14 @@ function mapStateToProps(state) {
 }
 
 const DeliveryStepContainer = connect(mapStateToProps, {
-  setTempDate: (date) => actions.temp('date', date),
-  setTempSlotId: (slotId) => actions.temp('slotId', slotId),
+  setTempDate: (date) => temp('date', date),
+  setTempSlotId: (slotId) => temp('slotId', slotId),
   boxSummaryDeliverySlotChosen,
-  trackDeliveryDayDropDownOpened: actions.trackDeliveryDayDropDownOpened,
-  trackDeliveryDayDropDownClosed: actions.trackDeliveryDayDropDownClosed,
-  trackDeliverySlotDropDownOpened: actions.trackDeliverySlotDropDownOpened,
-  trackDeliveryDayEdited: actions.trackDeliveryDayEdited,
-  trackDeliverySlotEdited: actions.trackDeliverySlotEdited,
+  trackDeliveryDayDropDownOpened,
+  trackDeliveryDayDropDownClosed,
+  trackDeliverySlotDropDownOpened,
+  trackDeliveryDayEdited,
+  trackDeliverySlotEdited,
   trackSignupWizardAction,
   trackSocialBelongingBannerAppearance,
 })(DeliveryStep)

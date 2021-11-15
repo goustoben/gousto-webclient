@@ -1,1 +1,1 @@
-export default from './Item'
+export { default as Component } from './Item'

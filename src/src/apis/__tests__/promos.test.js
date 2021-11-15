@@ -1,5 +1,6 @@
 import { fetch } from 'utils/fetch'
-import { fetchPromo, fetchPromocodeFromCampaignUrl } from '../promos'
+import { fetchPromo } from "apis/promos/fetchPromo"
+import { fetchPromocodeFromCampaignUrl } from "apis/promos/fetchPromocodeFromCampaignUrl"
 
 const mockFetchResult = { data: [1, 2, 3] }
 

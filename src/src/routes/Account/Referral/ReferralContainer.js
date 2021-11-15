@@ -1,10 +1,13 @@
 import { connect } from 'react-redux'
 
-import { userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
-import { trackUserFreeFoodPageView, trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { getReferralOffer, getReferralCode, getUserFirstName, getLoadingStateForOffer } from 'selectors/user'
 
 import { Referral } from './Referral'
+import { trackUserFreeFoodPageView } from "actions/loggingmanager/trackUserFreeFoodPageView"
+import { trackUserFreeFoodLinkShare } from "actions/loggingmanager/trackUserFreeFoodLinkShare"
+import { userFetchReferralOffer } from "actions/user/userFetchReferralOffer"
+import { trackingReferFriend } from "actions/user/trackingReferFriend"
+import { trackingReferFriendSocialSharing } from "actions/user/trackingReferFriendSocialSharing"
 
 const mapStateToProps = (state) => ({
   referralCode: getReferralCode(state),

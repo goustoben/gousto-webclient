@@ -1,1 +1,1 @@
-export default from './SignupLayout'
+export { default as Component } from './SignupLayout'

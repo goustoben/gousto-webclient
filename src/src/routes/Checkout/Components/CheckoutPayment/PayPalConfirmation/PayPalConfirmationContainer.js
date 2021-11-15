@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { PaymentMethod } from 'config/signup'
-import { setCurrentPaymentMethod } from 'actions/checkout'
 import { isSubmitting } from 'routes/Checkout/utils/state'
 import { PayPalConfirmation } from './PayPalConfirmation'
+import { setCurrentPaymentMethod } from "actions/checkout/setCurrentPaymentMethod"
 
 const mapStateToProps = (state) => ({
   isSubmitting: isSubmitting(state),

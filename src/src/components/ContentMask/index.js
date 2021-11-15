@@ -1,1 +1,1 @@
-export default from './ContentMask'
+export { default as Component } from './ContentMask'

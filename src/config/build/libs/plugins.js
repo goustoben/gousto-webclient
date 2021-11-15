@@ -11,12 +11,14 @@ const TerserPlugin = require('terser-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 const { webpackEnvVarsClient, webpackEnvVarsDev } = require('./webpack-env-vars')
+const {WebpackConfigDumpPlugin} = require("webpack-config-dump-plugin")
 
 const defaultPlugins = (webpackEnvVars) => [
   new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
   new LodashModuleReplacementPlugin(),
   new webpack.DefinePlugin(webpackEnvVars),
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only inlcude moment in English,
+  new WebpackConfigDumpPlugin({})
 ]
 
 const productionClientPlugins = [
@@ -82,7 +84,7 @@ const developmentHmrClientPlugins = [
   new SimpleProgressWebpackPlugin({
     format: 'compact'
   }),
-  
+
   new ReactRefreshWebpackPlugin({
     overlay: false,
   }),

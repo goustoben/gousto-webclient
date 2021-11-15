@@ -1,1 +1,1 @@
-export default from './SocialShareSheetContainer'
+export { default as Component } from './SocialShareSheetContainer'

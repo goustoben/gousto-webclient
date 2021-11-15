@@ -1,6 +1,5 @@
-import { loadContentVariants } from 'actions/content'
-
 import { loadVariants } from 'utils/loadVariants'
+import { loadContentVariants } from "actions/content/loadContentVariants"
 
 jest.mock('actions/content', () => ({
   loadContentVariants: jest.fn(),

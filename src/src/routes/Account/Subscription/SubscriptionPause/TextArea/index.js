@@ -1,1 +1,1 @@
-export default from './TextAreaContainer'
+export { default as Component } from './TextAreaContainer'

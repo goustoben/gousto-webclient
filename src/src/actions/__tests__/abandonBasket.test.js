@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
-import { getAbandonBasketSessionState, trackAbandonBasketEligibility, trackAbandonBasketContinueToMenu } from '../abandonBasket'
+import { getAbandonBasketSessionState } from "actions/abandonBasket/getAbandonBasketSessionState"
+import { trackAbandonBasketEligibility } from "actions/abandonBasket/trackAbandonBasketEligibility"
+import { trackAbandonBasketContinueToMenu } from "actions/abandonBasket/trackAbandonBasketContinueToMenu"
 
 const dispatchSpy = jest.fn()
 const getStateSpy = jest.fn()

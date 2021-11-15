@@ -4,8 +4,8 @@ import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
 import { getNumPortions } from 'selectors/basket'
 
-import { showDetailRecipe } from '../../../actions/menuRecipeDetails'
 import { CookingTimeIcon } from './CookingTimeIcon'
+import { showDetailRecipe } from "routes/Menu/actions/menuRecipeDetails/showDetailRecipe"
 
 const getIdForCookingTimeIcon = (state, props) => props.recipeId
 

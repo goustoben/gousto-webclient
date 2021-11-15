@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { checkPaymentAuth } from 'actions/checkout'
 import { getChallengeUrl, isModalOpen } from 'selectors/payment'
 import { Checkout3DSModal } from './Checkout3DSModal'
+import { checkPaymentAuth } from "actions/checkout/checkPaymentAuth"
 
 const mapStateToProps = (state) => ({
   isOpen: isModalOpen(state),

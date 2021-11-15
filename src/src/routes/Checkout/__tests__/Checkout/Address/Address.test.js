@@ -4,9 +4,9 @@ import { shallow } from 'enzyme'
 import moment from 'moment'
 import { Address } from 'routes/Checkout/Components/Address/Address'
 import { AddressInputs } from 'routes/Checkout/Components/Address/AddressInputs'
-import { fetchDeliveryDays } from 'apis/deliveries'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton'
+import { fetchDeliveryDays } from "apis/deliveries/fetchDeliveryDays"
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({

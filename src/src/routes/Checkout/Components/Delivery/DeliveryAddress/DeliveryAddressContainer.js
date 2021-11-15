@@ -1,20 +1,14 @@
 import { connect } from 'react-redux'
 import { Map } from 'immutable'
-import {
-  change,
-  getFormAsyncErrors,
-  getFormMeta,
-  getFormSyncErrors,
-  registerField,
-  touch,
-  untouch,
-} from 'redux-form'
-import { trackCheckoutButtonPressed } from 'actions/checkout'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import actions from 'actions'
+import { change, getFormAsyncErrors, getFormMeta, getFormSyncErrors, registerField, touch, untouch, } from 'redux-form'
 import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
 import { Address } from '../../Address'
+import { trackCheckoutButtonPressed } from "actions/checkout/trackCheckoutButtonPressed"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
+import { checkoutAddressLookup } from "actions/checkout/checkoutAddressLookup"
+import { basketPostcodeChange } from "actions/basket/basketPostcodeChange"
+import { userProspect } from "actions/user/userProspect"
 
 function getCutoffDate(state) {
   const date = state.basket.get('date')
@@ -46,13 +40,13 @@ function mapStateToProps(state, ownProps) {
 }
 
 export const DeliveryAddressContainer = connect(mapStateToProps, {
-  checkoutAddressLookup: actions.checkoutAddressLookup,
-  onAddressConfirm: actions.basketPostcodeChange,
+  checkoutAddressLookup,
+  onAddressConfirm: basketPostcodeChange,
   change,
   untouch,
   touch,
   registerField,
   trackCheckoutButtonPressed,
   trackUTMAndPromoCode,
-  userProspect: actions.userProspect,
+  userProspect,
 })(Address)

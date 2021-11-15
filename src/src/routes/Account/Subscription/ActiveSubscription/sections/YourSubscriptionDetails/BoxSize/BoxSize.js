@@ -7,9 +7,9 @@ import {
 } from '../../../../context'
 import { getNumPortions, getIsBoxLoaded } from '../../../../context/selectors/box'
 import { SettingSection } from '../../../../components/SettingSection'
-import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
+import { useUpdateSubscription } from '../../../../apis/hooks/useUpdateSubscription'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
-import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
+import { useSubscriptionToast } from '../../../../apis/hooks/useSubscriptionToast'
 import { BOX_SIZES } from '../../../../enum/box'
 
 export const BoxSize = ({ accessToken, isMobile }) => {

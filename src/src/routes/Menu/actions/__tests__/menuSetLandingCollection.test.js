@@ -3,7 +3,7 @@ import * as filterActions from 'actions/filters'
 import * as collectionUtils from 'utils/collections'
 
 import { safeJestMock } from '_testing/mocks'
-import { menuSetLandingCollection } from '../menuSetLandingCollection'
+import { menuSetLandingCollection } from '../menuSetLandingCollection/menuSetLandingCollection'
 
 import * as collectionSelectors from '../../selectors/collections'
 

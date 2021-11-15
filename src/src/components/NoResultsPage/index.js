@@ -1,1 +1,1 @@
-export default from './NoResultsPage'
+export { default as Component } from './NoResultsPage'

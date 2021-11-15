@@ -5,7 +5,7 @@ import { shallow } from 'enzyme'
 import { createState } from 'routes/Menu/selectors/__mocks__/order.mock'
 import * as Menu from 'actions/menu'
 import { MenuSidesModalContainer } from '../MenuSidesModalContainer'
-import * as SidesActions from '../../actions/sides'
+import * as SidesActions from '../../actions/sides/sides'
 import * as MenuSidesCheckoutClick from '../../actions/menuSidesCheckoutClick'
 
 describe('<MenuSidesModalContainer/>', () => {

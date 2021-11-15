@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 import Perfume from 'perfume.js'
-import { feLoggingLogEvent } from 'actions/log'
 import { initializePerformanceTrackerSender } from '../initializePerformanceTrackerSender'
 import { trackerVarName } from '../performanceTracker'
+import { feLoggingLogEvent } from "actions/log/feLoggingLogEvent"
 
 jest.mock('perfume.js', () => ({
   __esModule: true,

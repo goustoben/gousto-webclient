@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import { fetchRecipesWithIngredients } from './menu'
+import { fetchRecipesWithIngredients } from "routes/GetHelp/apis/menu/fetchRecipesWithIngredients"
 
 const MOCK_FETCH_RESULT = { data: [1, 2, 3] }
 const RECIPE_IDS = ['ab1', 'ab2', 'ab3']

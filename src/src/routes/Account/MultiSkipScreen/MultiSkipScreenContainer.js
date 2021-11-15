@@ -1,11 +1,5 @@
 import { connect } from 'react-redux'
 import {
-  multiSkipCloseModal,
-  multiSkipTrackContinueToPause,
-  skipMultipleBoxes,
-  trackViewMultiSkip
-} from 'routes/Account/actions/multiSkip'
-import {
   getUserId,
   getUserNewOrdersForMultiSkip,
   getNextDeliveryDate,
@@ -14,6 +8,10 @@ import {
   getSkippedBoxesCount
 } from 'selectors/user'
 import { MultiSkipScreenLogic } from './MultiSkipScreen.logic'
+import { multiSkipTrackContinueToPause } from "routes/Account/actions/multiSkip/multiSkipTrackContinueToPause"
+import { trackViewMultiSkip } from "routes/Account/actions/multiSkip/trackViewMultiSkip"
+import { multiSkipCloseModal } from "routes/Account/actions/multiSkip/multiSkipCloseModal"
+import { skipMultipleBoxes } from "routes/Account/actions/multiSkip/skipMultipleBoxes"
 
 const mapStateToProps = (state) => {
   const newOrders = getUserNewOrdersForMultiSkip(state)

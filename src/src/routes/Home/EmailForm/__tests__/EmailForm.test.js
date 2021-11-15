@@ -5,7 +5,7 @@ import Form from 'Form'
 import TextInput from 'Form/Input'
 import { CTA } from 'goustouicomponents'
 import { P } from 'Page/Elements'
-import { newsletterSubscribe } from 'apis/customers'
+import { newsletterSubscribe } from "apis/customers/newsletterSubscribe"
 
 let wrapper
 

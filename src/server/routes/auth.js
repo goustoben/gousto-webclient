@@ -1,22 +1,20 @@
-import { fetchFeatures } from 'apis/fetchS3'
 import logger from 'utils/logger'
-import {
-  getUserToken,
-  identifyUserUsingOAuth,
-  refreshUserToken,
-  forgetUserToken,
-  validateRecaptchaUserToken,
-  validateUserPassword,
-} from 'apis/auth'
 import env from 'utils/env'
-import routes from 'config/routes'
-import {
-  routeMatches,
-  addSessionCookies,
-  removeSessionCookies,
-  getCookieValue,
-} from './utils'
+import { addSessionCookies, getCookieValue, removeSessionCookies, routeMatches, } from './utils'
 import { RECAPTCHA_PRIVATE_KEY } from '../config/recaptcha'
+import { loginRoute } from "config/routes/auth/loginRoute"
+import { logoutRoute } from "config/routes/auth/logoutRoute"
+import { refreshRoute } from "config/routes/auth/refreshRoute"
+import { identifyRoute } from "config/routes/auth/identifyRoute"
+import { forgetRoute } from "config/routes/auth/forgetRoute"
+import { validateRoute } from "config/routes/auth/validateRoute"
+import { getUserToken } from "apis/auth/getUserToken"
+import { identifyUserUsingOAuth } from "apis/auth/identifyUserUsingOAuth"
+import { refreshUserToken } from "apis/auth/refreshUserToken"
+import { forgetUserToken } from "apis/auth/forgetUserToken"
+import { validateUserPassword } from "apis/auth/validateUserPassword"
+import { validateRecaptchaUserToken } from "apis/auth/validateRecaptchaUserToken"
+import { fetchFeatures } from "apis/fetchS3/fetchFeatures"
 
 const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 
@@ -159,17 +157,17 @@ export async function validate(ctx) {
 /* eslint-disable consistent-return */
 const auth = (app) => {
   app.use(async (ctx, next) => {
-    if (routeMatches(ctx, routes.auth.login, 'POST')) {
+    if (routeMatches(ctx, loginRoute, 'POST')) {
       await login(ctx)
-    } else if (routeMatches(ctx, routes.auth.logout, 'POST')) {
+    } else if (routeMatches(ctx, logoutRoute, 'POST')) {
       logout(ctx)
-    } else if (routeMatches(ctx, routes.auth.refresh, 'POST')) {
+    } else if (routeMatches(ctx, refreshRoute, 'POST')) {
       await refresh(ctx)
-    } else if (routeMatches(ctx, routes.auth.identify, 'POST')) {
+    } else if (routeMatches(ctx, identifyRoute, 'POST')) {
       await identify(ctx)
-    } else if (routeMatches(ctx, routes.auth.forget, 'POST')) {
+    } else if (routeMatches(ctx, forgetRoute, 'POST')) {
       await forget(ctx)
-    } else if (routeMatches(ctx, routes.auth.validate, 'POST')) {
+    } else if (routeMatches(ctx, validateRoute, 'POST')) {
       await validate(ctx)
     } else {
       return next()

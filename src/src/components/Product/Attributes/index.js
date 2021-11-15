@@ -1,1 +1,1 @@
-export default from './Attributes'
+export { default as Component } from './Attributes'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen, within, fireEvent, waitFor, cleanup } from '@testing-library/react'
-import * as OrderAPI from 'apis/orders'
-import { user } from 'routes/Menu/apis/sides.hook.mock'
+import * as OrderAPI from 'apis/orders/orders'
+import { user } from 'routes/Menu/apis/sides.hook/sides.hook.mock'
 import Modal from 'react-modal'
 import { SidesModal } from './SidesModal'
 

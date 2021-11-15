@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import basket, { basketReset } from 'actions/basket'
+import basket from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
@@ -7,8 +7,9 @@ import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
-import * as basketRecipesActions from '../../routes/Menu/actions/basketRecipes'
+import * as basketRecipesActions from 'routes/Menu/actions/basketRecipes/basketRecipes'
 import * as trackingActions from '../tracking'
+import { basketReset } from "actions/basket/basketReset"
 
 jest.mock('utils/basket')
 

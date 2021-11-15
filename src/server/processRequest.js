@@ -1,7 +1,10 @@
 import { Helmet } from 'react-helmet'
-import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
-import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
+import { DISABLED_SCRIPTS, extractScriptOptions } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
+import { basketPromoCodeUrlChange } from "actions/basket/basketPromoCodeUrlChange"
+import { loggerSetUuid } from "actions/logger/loggerSetUuid"
+import { setMenuPrefetched } from "routes/Menu/actions/menuPrefetch/setMenuPrefetched"
+
 const React = require('react')
 
 const { renderToString } = require('react-dom/server')
@@ -10,18 +13,15 @@ const { syncHistoryWithStore } = require('react-router-redux')
 const { routes } = require('routes')
 const { configureStore } = require('store')
 const { Provider } = require('react-redux')
-const promoActions = require('actions/promos').default
 const logger = require('utils/logger').default
 const { Header } = require('Header/Header')
 const { clearPersistentStore } = require('middlewares/persist/persistStore')
 const { processCookies } = require('utils/processCookies')
-const basketActions = require('actions/basket').default
 const processFeaturesQuery = require('utils/processFeaturesQuery').default
 const { newAssetPath } = require('utils/media')
 const { authorise } = require('utils/clientAuthorise')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 const fetchContentOnChange = require('routes/fetchContentOnChange').default
-const { loggerSetUuid } = require('actions/logger')
 const encodeState = require('./encodeState')
 const processHeaders = require('./processHeaders')
 const htmlTemplate = require('./template')
@@ -108,7 +108,7 @@ const createCookies = (ctx, store) => {
   // todo: make sure cookie is correctly set up
   if (ctx.cookies && ctx.request && ctx.request.query && ctx.request.query.promo) {
     ctx.cookies.set('promo_url', ctx.request.query.promo)
-    store.dispatch(basketActions.basketPromoCodeUrlChange(ctx.request.query.promo))
+    store.dispatch(basketPromoCodeUrlChange(ctx.request.query.promo))
   }
 }
 
@@ -176,7 +176,7 @@ async function processRequest(ctx, next) {
       }
       if (ctx.request.query.landingPagePath) {
         try {
-          await store.dispatch(promoActions.promoGetFromLandingPage(ctx.request.query.landingPagePath))
+          await store.dispatch(promoGetFromLandingPage(ctx.request.query.landingPagePath))
         } catch (e) {
           //
         }

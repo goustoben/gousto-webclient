@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { getRecipes } from '../selectors/selectors'
-import { trackRecipeCardClick, trackRecipeCardGetInTouchClick } from '../actions/getHelp'
 import { RecipeCards } from './RecipeCards.logic'
+import { trackRecipeCardClick } from "routes/GetHelp/actions/getHelp/trackRecipeCardClick"
+import { trackRecipeCardGetInTouchClick } from "routes/GetHelp/actions/getHelp/trackRecipeCardGetInTouchClick"
 
 const mapStateToProps = (state) => ({
   recipes: getRecipes(state),

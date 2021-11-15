@@ -1,16 +1,20 @@
 import { connect } from 'react-redux'
-
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
-import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import { applyPromoCodeAndShowModal } from 'actions/home'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 
 import Menu from './Menu'
-import { menuOverlayClick } from './actions/menuOverlayClick'
 import fetchData from './fetchData'
-import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable'
+import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable/menuCalculateTimeToUsable'
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { applyPromoCodeAndShowModal } from "actions/home/applyPromoCodeAndShowModal"
+import { shouldJfyTutorialBeVisible } from "actions/tutorial/shouldJfyTutorialBeVisible"
+import { menuLoadBoxPrices } from "actions/menu/menuLoadBoxPrices"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { loginVisibilityChange } from "actions/login/loginVisibilityChange"
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { orderCheckout } from "actions/order/orderCheckout"
+import { changeCollectionById } from "actions/filters/changeCollectionById"
+import { menuOverlayClick } from "routes/Menu/actions/menuOverlayClick/menuOverlayClick"
 
 const flattenRecipes = (recipes) => {
   const recipesToJs = recipes.toJS()
@@ -49,13 +53,13 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  menuLoadBoxPrices: actions.menuLoadBoxPrices,
-  menuLoadDays: actions.menuLoadDays,
-  loginVisibilityChange: actions.loginVisibilityChange,
-  basketNumPortionChange: actions.basketNumPortionChange,
+  menuLoadBoxPrices,
+  menuLoadDays,
+  loginVisibilityChange,
+  basketNumPortionChange,
   shouldJfyTutorialBeVisible,
-  orderCheckoutAction: actions.orderCheckout,
-  selectCurrentCollection: actions.changeCollectionById,
+  orderCheckoutAction: orderCheckout,
+  selectCurrentCollection: changeCollectionById,
   onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,
   menuCalculateTimeToUsable,

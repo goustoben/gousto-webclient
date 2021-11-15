@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
-import userActions from 'actions/user'
-import { userRecipeRatings } from '../../Ratings/actions/feedback'
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 import Account from './Account'
+import { userLoadData } from "actions/user/userLoadData"
+import { checkCardExpiry } from "actions/user/checkCardExpiry"
+import { userRecipeRatings } from "routes/Ratings/actions/feedback/userRecipeRatings"
 
 function mapStateToProps(state) {
   return {
@@ -15,8 +16,8 @@ const AccountContainer = connect(
   mapStateToProps,
   {
     loadMenuServiceDataIfDeepLinked,
-    userLoadData: userActions.userLoadData,
-    checkCardExpiry: userActions.checkCardExpiry,
+    userLoadData,
+    checkCardExpiry,
     userRecipeRatings,
   }
 )(Account)

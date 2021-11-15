@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { PaymentFailure } from '../PaymentFailure'
+import { PaymentFailure } from '../PaymentFailure/PaymentFailure'
 import { PaymentResult } from '../PaymentResult'
 
 describe('PaymentFailure', () => {

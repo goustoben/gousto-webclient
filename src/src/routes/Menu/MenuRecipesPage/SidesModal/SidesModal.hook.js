@@ -1,8 +1,8 @@
 import React from 'react'
-import { useSides } from 'routes/Menu/apis/sides.hook'
 import { ResourceType } from 'routes/Menu/constants/resources'
-import { updateOrderItems } from 'apis/orders'
 import { SIDES, MAX_PRODUCTS_PER_BOX, LimitType } from '../../constants/products'
+import { updateOrderItems } from "apis/orders/updateOrderItems"
+import { useSides } from "routes/Menu/apis/sides.hook/useSides"
 
 // Note: this method should be replaced with `Object.fromEntries` when supported
 const fromEntriesReduce = (obj, [key, value]) => ({

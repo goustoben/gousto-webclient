@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import { saveBasket } from '../checkout'
+import { saveBasket } from "apis/checkout/saveBasket"
 
 const mockFetchResult = { data: [1, 2, 3] }
 

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import { recipeVariantDropdownExpanded } from 'actions/menu'
 import { getCurrentExpandedRecipeVariantsDropdown } from 'selectors/menu'
 import { getBrowserType } from 'selectors/browser'
 import { VariantRecipeListModal } from './VariantRecipeListModal'
+import { recipeVariantDropdownExpanded } from "actions/menu/recipeVariantDropdownExpanded"
 
 const mapStateToProps = (state) => ({
   currentExpandedRecipeVariantsDropdown: getCurrentExpandedRecipeVariantsDropdown(state),

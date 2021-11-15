@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
-import { getDisplayedCollections, getCurrentCollectionId } from '../selectors/collections'
+import { getCurrentCollectionId, getDisplayedCollections } from '../selectors/collections'
 import { CollectionsNav } from './CollectionsNav'
+import { collectionFilterChange } from "actions/filters/collectionFilterChange"
 
 function mapStateToProps(state) {
   const collectionId = getCurrentCollectionId(state)
@@ -15,7 +15,7 @@ function mapStateToProps(state) {
 }
 
 const CollectionsNavContainer = connect(mapStateToProps, {
-  collectionFilterChange: actions.collectionFilterChange,
+  collectionFilterChange,
 })(CollectionsNav)
 
 export { CollectionsNavContainer }

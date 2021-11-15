@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
-import loginActions, { helpPreLoginVisibilityChange } from 'actions/login'
+import loginActions from 'actions/login'
 import login, { initialState } from 'reducers/login'
+import { helpPreLoginVisibilityChange } from "actions/login/helpPreLoginVisibilityChange"
 
 describe('login reducer', () => {
   const STATE = initialState()

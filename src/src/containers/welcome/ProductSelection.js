@@ -1,8 +1,8 @@
 import ProductList from 'Product/List'
 import { getOneProductFromEachCategory, getProductsByCutoff } from 'utils/products'
 import { getUserOrderById } from 'utils/user'
-import actions from 'actions'
 import { connect } from 'react-redux'
+import { productDetailVisibilityChange } from "actions/products/productDetailVisibilityChange"
 
 function mapStateToProps(state, { orderId }) {
   const cutoff = getUserOrderById(orderId, state.user.get('orders')).get('whenCutoff')
@@ -17,7 +17,7 @@ function mapStateToProps(state, { orderId }) {
 }
 
 const ProductListContainer = connect(mapStateToProps, {
-  onProductClick: actions.productDetailVisibilityChange,
+  onProductClick: productDetailVisibilityChange,
 })(ProductList)
 
 export default ProductListContainer

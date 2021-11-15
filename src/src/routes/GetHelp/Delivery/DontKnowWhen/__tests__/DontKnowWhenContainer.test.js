@@ -2,7 +2,6 @@ import React from 'react'
 import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
 import { createStore, compose, applyMiddleware } from 'redux'
-import { loadOrderById, loadTrackingUrl } from '../../../actions/getHelp'
 import { DontKnowWhenContainer } from '../DontKnowWhenContainer'
 import {
   getAccessToken,
@@ -13,6 +12,8 @@ import {
   getOrderDeliverySlot,
   getTrackingUrl,
 } from '../../../selectors/selectors'
+import { loadOrderById } from "routes/GetHelp/actions/getHelp/loadOrderById"
+import { loadTrackingUrl } from "routes/GetHelp/actions/getHelp/loadTrackingUrl"
 
 jest.mock('../../../selectors/selectors')
 jest.mock('../../../actions/getHelp', () => ({

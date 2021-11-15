@@ -31,7 +31,7 @@ describe('utils', () => {
 
   describe('routeMatches', () => {
     test('should return false if ctx does not match given method and path', () => {
-      ctx = getRoutingCtx({ path: '/refresh', method: 'GET' })
+      ctx = getRoutingCtx({ path: '/authRefresh', method: 'GET' })
 
       expect(routeMatches(ctx, '/login', 'POST')).toBeFalsy()
     })
@@ -43,7 +43,7 @@ describe('utils', () => {
     })
 
     test('should return false if ctx matches given method, not path', () => {
-      ctx = getRoutingCtx({ path: '/refresh', method: 'POST' })
+      ctx = getRoutingCtx({ path: '/authRefresh', method: 'POST' })
 
       expect(routeMatches(ctx, '/login', 'POST')).toBeFalsy()
     })

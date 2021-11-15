@@ -1,10 +1,10 @@
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 import { client } from 'config/routes'
-import { setComplaint } from 'apis/getHelp'
-import { trackAcceptIngredientsRefund } from 'actions/getHelp'
-import { createComplaint } from '../createComplaint'
 import * as getHelpActionsUtils from '../utils'
+import { trackAcceptIngredientsRefund } from "actions/getHelp/trackAcceptIngredientsRefund"
+import { setComplaint } from "apis/getHelp/setComplaint"
+import { createComplaint } from "routes/GetHelp/actions/createComplaint/createComplaint"
 
 jest.mock('react-router-redux')
 jest.mock('apis/getHelp')

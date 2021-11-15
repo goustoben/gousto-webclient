@@ -146,7 +146,7 @@ export function fetch(
 
       return [JSONParse(response, useMenuService), responseStatus]
     }) // eslint-disable-line new-cap
-    .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
+    .then(processJSON) /* TODO - try authRefresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
       logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
 
@@ -160,7 +160,7 @@ export function fetch(
       const message = (e instanceof Error || e.message) ? e.message : e
       let log = logger.error
 
-      if (url.indexOf('oauth/identify') > -1 || url.indexOf('oauth/refresh-token') > -1 || responseStatus === 422) {
+      if (url.indexOf('oauth/authIdentify') > -1 || url.indexOf('oauth/authRefresh-token') > -1 || responseStatus === 422) {
         log = logger.warning
       }
 

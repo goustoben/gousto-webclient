@@ -4,7 +4,7 @@ import { getRecipePosition } from 'selectors/collections'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { getRecipeOutOfStock } from '../selectors/recipe'
 import { DetailOverlay } from './DetailOverlay'
-import { menuRecipeDetailVisibilityChange } from '../actions/menuRecipeDetails'
+import { menuRecipeDetailVisibilityChange } from "routes/Menu/actions/menuRecipeDetails/menuRecipeDetailVisibilityChange"
 
 const mapStateToProps = (state, ownProps) => {
   const recipeId = getMenuRecipeIdForDetails(state)

@@ -369,7 +369,7 @@ describe('CheckoutFrame', () => {
         wrapper = shallow(<CheckoutFrame checkoutClearErrors={checkoutClearErrors} />)
       })
 
-      test('should clear checkout.com errors', () => {
+      test('should authClear checkout.com errors', () => {
         wrapper.instance().cardSubmitted()
 
         expect(checkoutClearErrors).toHaveBeenCalled()

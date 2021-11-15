@@ -31,8 +31,8 @@ describe("Examples", () => {
 
     cy.fixture('auth/login').as('login')
     cy.route('POST', /login/, '@login')
-    cy.fixture('auth/identify').as('identify')
-    cy.route('POST', /identify/, '@identify')
+    cy.fixture('auth/authIdentify').as('identify')
+    cy.route('POST', /authIdentify/, '@authIdentify')
 
     cy.visit('/menu')
 

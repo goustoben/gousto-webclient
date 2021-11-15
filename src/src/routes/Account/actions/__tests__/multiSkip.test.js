@@ -1,12 +1,10 @@
 import Immutable from 'immutable'
 import * as orderActions from 'actions/order'
 import { actionTypes } from 'actions/actionTypes'
-import {
-  multiSkipTrackContinueToPause,
-  multiSkipCloseModal,
-  skipMultipleBoxes,
-  trackViewMultiSkip
-} from '../multiSkip'
+import { multiSkipTrackContinueToPause } from "routes/Account/actions/multiSkip/multiSkipTrackContinueToPause"
+import { trackViewMultiSkip } from "routes/Account/actions/multiSkip/trackViewMultiSkip"
+import { multiSkipCloseModal } from "routes/Account/actions/multiSkip/multiSkipCloseModal"
+import { skipMultipleBoxes } from "routes/Account/actions/multiSkip/skipMultipleBoxes"
 
 const mockDispatch = jest.fn()
 

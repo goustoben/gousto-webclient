@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
-import actions from 'actions/user'
-import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { getUserId } from 'selectors/user'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { signupSetGoustoOnDemandEnabled } from 'actions/signup/signupSetGoustoOnDemandEnabled'
+import { userLoadAddresses } from 'actions/user/userLoadAddresses'
+import { userLoadNewOrders } from 'actions/user/userLoadNewOrders'
+import { userLoadData } from 'actions/user/userLoadData'
 import MyDeliveries from './MyDeliveries'
 
 const mapStateToProps = (state) => ({
@@ -16,9 +18,9 @@ const mapStateToProps = (state) => ({
 })
 
 const MyDeliveriesContainer = connect(mapStateToProps, {
-  userLoadAddresses: actions.userLoadAddresses,
-  userLoadNewOrders: actions.userLoadNewOrders,
-  userLoadData: actions.userLoadData,
+  userLoadAddresses,
+  userLoadNewOrders,
+  userLoadData,
   signupSetGoustoOnDemandEnabled,
 })(MyDeliveries)
 

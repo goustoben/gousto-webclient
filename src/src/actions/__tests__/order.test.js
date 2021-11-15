@@ -2,38 +2,34 @@ import Immutable from 'immutable'
 
 import * as deliveriesUtils from 'utils/deliveries'
 import * as menuOrderSelectors from 'routes/Menu/selectors/order'
-import { fetchDeliveryDays } from 'apis/deliveries'
-import {
-  saveOrder,
-  fetchOrder,
-  checkoutOrder,
-  updateOrderAddress,
-} from 'apis/orders'
-import actionStatus from 'actions/status'
+import actionStatus from 'actions/status/status'
 import { actionTypes } from 'actions/actionTypes'
-import { trackAffiliatePurchase } from 'actions/tracking'
-import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
 
-import {
-  trackOrder,
-  orderUpdate,
-  orderCheckout,
-  orderGetDeliveryDays,
-  orderUpdateDayAndSlot,
-  clearUpdateDateErrorAndPending,
-  orderAddressChange,
-  cancelMultipleBoxes,
-  projectedOrderRestore,
-  trackCancelMultipleBoxes
-} from 'actions/order'
-
-import { skipDates, unSkipDates } from '../../routes/Account/apis/subscription'
-import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
-import * as rocketsOrderV2 from '../../routes/Account/MyDeliveries/apis/orderV2'
+import * as clientMetrics from 'routes/Menu/apis/clientMetrics/clientMetrics'
+import * as rocketsOrderV2 from 'routes/Account/MyDeliveries/apis/orderV2/orderV2'
 import { safeJestMock } from '../../_testing/mocks'
 
 import { flushPromises } from '../../_testing/utils'
+import { orderConfirmationRedirect } from "actions/order/orderConfirmationRedirect"
+import { trackOrder } from "actions/order/trackOrder"
+import { orderUpdate } from "actions/order/orderUpdate"
+import { orderUpdateDayAndSlot } from "actions/order/orderUpdateDayAndSlot"
+import { orderCheckout } from "actions/order/orderCheckout"
+import { projectedOrderRestore } from "actions/order/projectedOrderRestore"
+import { orderAddressChange } from "actions/order/orderAddressChange"
+import { orderGetDeliveryDays } from "actions/order/orderGetDeliveryDays"
+import { clearUpdateDateErrorAndPending } from "actions/order/clearUpdateDateErrorAndPending"
+import { trackCancelMultipleBoxes } from "actions/order/trackCancelMultipleBoxes"
+import { cancelMultipleBoxes } from "actions/order/cancelMultipleBoxes"
+import { trackAffiliatePurchase } from "actions/tracking/trackAffiliatePurchase"
+import { checkoutOrder } from "apis/orders/checkoutOrder"
+import { fetchOrder } from "apis/orders/fetchOrder"
+import { saveOrder } from "apis/orders/saveOrder"
+import { updateOrderAddress } from "apis/orders/updateOrderAddress"
+import { fetchDeliveryDays } from "apis/deliveries/fetchDeliveryDays"
+import { skipDates } from "routes/Account/apis/subscription/skipDates"
+import { unSkipDates } from "routes/Account/apis/subscription/unSkipDates"
 
 jest.mock('../../routes/Account/apis/subscription')
 jest.mock('apis/user')

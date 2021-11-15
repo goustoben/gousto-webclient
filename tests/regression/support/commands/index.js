@@ -12,15 +12,15 @@ Cypress.Commands.add('login', () => {
   cy.server()
   cy.fixture('auth/login').as('login')
   cy.route('POST', /login/, '@login')
-  cy.fixture('auth/identify').as('identify')
-  cy.route('POST', /identify/, '@identify').as('identifyRequest')
-  cy.fixture('auth/refresh').as('refresh')
-  cy.route('POST', /refresh/, '@refresh')
+  cy.fixture('auth/authIdentify').as('identify')
+  cy.route('POST', /authIdentify/, '@authIdentify').as('identifyRequest')
+  cy.fixture('auth/authRefresh').as('refresh')
+  cy.route('POST', /authRefresh/, '@authRefresh')
   cy.route('POST', /log-event/, {})
 
   const token = { access_token: '8tebopinE7WiWTgDDGl92NhMYXLMCD9AUHfEsWcH' }
   const expiry = { expires_at: '2030-01-31T22:15:01.593Z' }
-  const refresh = { refresh_token: "5lJLjJ67tJ5n8RIW2ZYohXTes4F47qEMtzZSI4HM" }
+  const authRefresh = { refresh_token: "5lJLjJ67tJ5n8RIW2ZYohXTes4F47qEMtzZSI4HM" }
   const remember = { remember_me: true }
 
   const encode = cookieValue => encodeURIComponent(JSON.stringify(cookieValue))
@@ -151,7 +151,7 @@ Cypress.Commands.add('setFeatures', (features) => {
 
 Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, features = [] }) => {
   cy.server()
-  cy.route('POST', /identify/, 'fixture:auth/identify')
+  cy.route('POST', /authIdentify/, 'fixture:auth/authIdentify')
   cy.route('POST', /loggingmanager/, 'fixture:loggingmanager/log')
 
   cy.fixture('user/userCurrent').as('userCurrent')

@@ -4,4 +4,4 @@ export {
   ModalFooter,
 } from './ModalSections'
 
-export default from './ModalComponent'
+export { default as Component } from './ModalComponent'

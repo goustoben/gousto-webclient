@@ -5,7 +5,7 @@ const GoustoApi = {
     success: {
       testUser: {
         statusCode: HTTP_STATUS_CODES.OK,
-        fixture: fixturePath('identify/success-test-user.json'),
+        fixture: fixturePath('authIdentify/success-test-user.json'),
       },
     },
   },
@@ -32,7 +32,7 @@ const GoustoApi = {
       }
     }
   },
-  
+
   clientmetrics: {
     v1:{
       metric:{
@@ -40,7 +40,7 @@ const GoustoApi = {
       }
     }
   },
-  
+
   deliveries: {
     'v1.0':{
       days: {
@@ -48,7 +48,7 @@ const GoustoApi = {
       }
     }
   },
-  
+
   delivery_day:{
     $day:{
       stock: {
@@ -58,7 +58,7 @@ const GoustoApi = {
       }
     }
   },
-  
+
   menu: {
     v1: {
       menus: {
@@ -66,13 +66,13 @@ const GoustoApi = {
       },
     },
   },
-  
+
   order: {
     preview: {
       OK: () => interceptApiEndpoint('order/preview', 'default-ok'),
     }
-  }, 
-  
+  },
+
   payments: {
     v1: {
       payments: {
@@ -82,7 +82,7 @@ const GoustoApi = {
       }
     }
   },
-  
+
   prices: {
     OK: () => interceptApiEndpointWithQuery('prices', '*', 'default-ok')
   },
@@ -94,15 +94,15 @@ const GoustoApi = {
         notFound: () => interceptApiEndpointWithQuery('user/current/orders', '*', 'not-found', HTTP_METHODS.GET, 401, true)
       },
       projectedDeliveries: {
-        notFound: () => interceptApiEndpointWithQuery('user/current/projected-deliveries', '*', 'not-found', HTTP_METHODS.GET, 401, true)        
+        notFound: () => interceptApiEndpointWithQuery('user/current/projected-deliveries', '*', 'not-found', HTTP_METHODS.GET, 401, true)
       },
     }
-  },  
+  },
 }
 
-    
-   
-   
+
+
+
 
 export { GoustoApi }
 

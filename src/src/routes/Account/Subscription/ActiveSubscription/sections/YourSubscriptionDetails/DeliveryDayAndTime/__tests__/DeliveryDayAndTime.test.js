@@ -11,9 +11,9 @@ import {
   getCurrentDeliverySlot,
   getDeliverySlots
 } from '../../../../../context/selectors/deliveries'
-import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
+import { useUpdateSubscription } from '../../../../../apis/hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
-import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
+import * as subscriptionToast from '../../../../../apis/hooks/useSubscriptionToast'
 import { ToastProvider } from '../../../../../components/Toast'
 
 jest.mock('../../../../../tracking')

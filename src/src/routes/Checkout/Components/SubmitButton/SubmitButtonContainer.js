@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import { trackSubmitOrderEvent } from 'actions/tracking'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { isSubmitting } from 'routes/Checkout/utils/state'
 import { SubmitButton } from './SubmitButton'
+import { trackSubmitOrderEvent } from "actions/tracking/trackSubmitOrderEvent"
 
 function mapStateToProps(state, ownProps) {
   const browser = state.request.get('browser')

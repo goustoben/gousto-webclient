@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { trackClickRateRecipes } from '../../../Ratings/actions/feedback'
 import NavBar from './NavBar'
+import { trackClickRateRecipes } from "routes/Ratings/actions/feedback/trackClickRateRecipes"
 
 const mapDispatchToProps = {
   trackClickRateRecipes,

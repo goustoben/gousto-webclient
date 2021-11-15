@@ -1,14 +1,22 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryVisibilityChange, boxSummaryNext } from 'actions/boxSummary'
 import { getBrowserType } from 'selectors/browser'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { isMobile } from 'utils/view'
 import BoxSummaryDesktop from './BoxSummary'
 import { getMenuBrowseCTAShow } from '../../../selectors/root'
-import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes, shouldShowBoxSummary } from '../../../selectors/basket'
+import {
+  getBasketDate,
+  getBasketOrderId,
+  getBasketRecipes,
+  getBasketSlotId,
+  getNumPortions,
+  shouldShowBoxSummary
+} from '../../../selectors/basket'
+import { boxSummaryVisibilityChange } from "actions/boxSummary/boxSummaryVisibilityChange"
+import { boxSummaryNext } from "actions/boxSummary/boxSummaryNext"
+import { basketRestorePreviousValues } from "actions/basket/basketRestorePreviousValues"
 
 const mapStateToProps = (state) => ({
   isMobile: isMobile(getBrowserType(state)),
@@ -35,7 +43,7 @@ const mapStateToProps = (state) => ({
 
 const BoxSummaryDesktopContainer = connect(mapStateToProps, {
   boxDetailsVisibilityChange: boxSummaryVisibilityChange,
-  basketRestorePreviousValues: actions.basketRestorePreviousValues,
+  basketRestorePreviousValues,
   boxSummaryNext,
 })(BoxSummaryDesktop)
 

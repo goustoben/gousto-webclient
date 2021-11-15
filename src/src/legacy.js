@@ -4,7 +4,6 @@ import transit from 'transit-immutable-js'
 import { Provider } from 'react-redux'
 import Footer from 'Footer'
 import { Header } from 'Header'
-import actions from 'actions'
 import { getIsAuthenticated } from 'selectors/auth'
 import processFeaturesQuery from 'utils/processFeaturesQuery'
 import processQuery from 'utils/processQuery'
@@ -12,11 +11,13 @@ import loadFeatures from 'utils/loadFeatures'
 import { loadVariants } from 'utils/loadVariants'
 import queryString from 'query-string'
 import Cookies from 'utils/GoustoCookies'
-import promosActions from 'actions/promos'
 import { clientAuthorise, refresh } from 'client/auth'
 import { browserHistory } from 'react-router'
 import browserType from 'client/browserType'
 import { configureStore } from './store'
+import { promoToggleModalVisibility } from "./actions/promos/promoToggleModalVisibility"
+import { loginVisibilityChange } from "actions/login/loginVisibilityChange"
+import { subscriptionPauseStart } from "actions/subscriptionPause/subscriptionPauseStart"
 
 let loaded = false
 
@@ -70,17 +71,17 @@ async function init() {
   const isNotAuthenticated = !getIsAuthenticated(store.getState())
 
   if (isOfLoginHashTag && isNotAuthenticated) {
-    store.dispatch(actions.loginVisibilityChange(true))
+    store.dispatch(loginVisibilityChange(true))
   }
 
   window.onhashchange = () => {
     if (isOfLoginHashTag && isNotAuthenticated) {
-      store.dispatch(actions.loginVisibilityChange(true))
+      store.dispatch(loginVisibilityChange(true))
     }
   }
 
   window.showNewRecoveryFlow = () => {
-    store.dispatch(actions.subscriptionPauseStart())
+    store.dispatch(subscriptionPauseStart())
   }
 
   window.__loadFeatures__ = features => loadFeatures(features, store) // eslint-disable-line no-underscore-dangle
@@ -92,7 +93,7 @@ async function init() {
   window.__authRefresh__ = refresh // eslint-disable-line no-underscore-dangle
 
   if (store.getState().promoCurrent && !store.getState().promoModalVisible) {
-    store.dispatch(promosActions.promoToggleModalVisibility(true))
+    store.dispatch(promoToggleModalVisibility(true))
   }
 }
 

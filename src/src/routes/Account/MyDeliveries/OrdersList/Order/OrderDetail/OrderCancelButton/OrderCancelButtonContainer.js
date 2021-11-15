@@ -1,8 +1,10 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
-import actions from 'actions/order'
-import { orderCancelStart } from 'actions/onScreenRecovery'
 import OrderCancelButton from './OrderCancelButton'
+import { orderCancelStart } from "actions/onScreenRecovery/orderCancelStart"
+import { projectedOrderCancel } from "actions/order/projectedOrderCancel"
+import { cancelOrderModalToggleVisibility } from "actions/order/cancelOrderModalToggleVisibility"
+import { orderCancel } from "actions/order/orderCancel"
 
 function mapStateToProps(state, ownProps) {
   const error = state.error.get(actionTypes.PROJECTED_ORDER_CANCEL, null)
@@ -16,9 +18,9 @@ function mapStateToProps(state, ownProps) {
 }
 
 const OrderCancelButtonContainer = connect(mapStateToProps, {
-  projectedOrderCancel: actions.projectedOrderCancel,
-  cancelOrderModalToggleVisibility: actions.cancelOrderModalToggleVisibility,
-  orderCancel: actions.orderCancel,
+  projectedOrderCancel,
+  cancelOrderModalToggleVisibility,
+  orderCancel,
   orderCancelStart,
 })(OrderCancelButton)
 

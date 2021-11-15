@@ -1,24 +1,29 @@
 import { connect } from 'react-redux'
 
-import actions from 'actions'
-import { changeRecaptcha } from 'actions/auth'
-import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import {
-  fetchPayPalClientToken,
-  trackCheckoutButtonPressed,
-  clearPayPalClientToken,
-  checkoutStepIndexReached,
-  fetchGoustoRef,
-} from 'actions/checkout'
-import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
-import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import {
+  getIsGoustoOnDemandEnabled,
   getIsPaymentBeforeChoosingEnabled,
   getIsPaymentBeforeChoosingV3Enabled,
-  getIsGoustoOnDemandEnabled,
 } from 'selectors/features'
 import { Checkout } from './Checkout'
+import { authChangeRecaptcha } from "actions/auth/authChangeRecaptcha"
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { checkoutStepIndexReached } from "actions/checkout/checkoutStepIndexReached"
+import { clearPayPalClientToken } from "actions/checkout/clearPayPalClientToken"
+import { fetchPayPalClientToken } from "actions/checkout/fetchPayPalClientToken"
+import { trackCheckoutButtonPressed } from "actions/checkout/trackCheckoutButtonPressed"
+import { fetchGoustoRef } from "actions/checkout/fetchGoustoRef"
+import { trackSuccessfulCheckoutFlow } from "actions/log/trackSuccessfulCheckoutFlow"
+import { trackFailedCheckoutFlow } from "actions/log/trackFailedCheckoutFlow"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
+import { trackCheckoutNavigationLinks } from "actions/tracking/trackCheckoutNavigationLinks"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { checkoutSignup } from "actions/checkout/checkoutSignup"
+import { menuLoadBoxPrices } from "actions/menu/menuLoadBoxPrices"
+import { trackSignupPageChange } from "actions/checkout/trackSignupPageChange"
+import { loginVisibilityChange } from "actions/login/loginVisibilityChange"
+import { redirect } from "actions/redirect/redirect"
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -38,17 +43,17 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  menuLoadDays: actions.menuLoadDays,
-  redirect: actions.redirect,
-  submitOrder: actions.checkoutSignup,
-  menuLoadBoxPrices: actions.menuLoadBoxPrices,
-  trackSignupStep: actions.trackSignupPageChange,
-  loginVisibilityChange: actions.loginVisibilityChange,
+  menuLoadDays,
+  redirect,
+  submitOrder: checkoutSignup,
+  menuLoadBoxPrices,
+  trackSignupStep: trackSignupPageChange,
+  loginVisibilityChange,
   boxSummaryDeliveryDaysLoad,
   trackCheckoutButtonPressed,
   trackSuccessfulCheckoutFlow,
   trackFailedCheckoutFlow,
-  changeRecaptcha,
+  changeRecaptcha: authChangeRecaptcha,
   trackUTMAndPromoCode,
   fetchPayPalClientToken,
   clearPayPalClientToken,

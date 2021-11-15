@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import orderActions from 'actions/order'
 
 import CancelledAllBoxesModal from './CancelledAllBoxesModal'
+import { cancelledAllBoxesModalToggleVisibility } from "actions/order/cancelledAllBoxesModalToggleVisibility"
 
 const mapStateToProps = (state) => ({
   isModalOpen: state.user.getIn(['cancelledAllBoxesModal', 'visibility']),
@@ -9,5 +9,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  toggleModalVisibility: orderActions.cancelledAllBoxesModalToggleVisibility,
+  toggleModalVisibility: cancelledAllBoxesModalToggleVisibility,
 })(CancelledAllBoxesModal)

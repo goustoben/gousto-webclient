@@ -6,13 +6,11 @@ import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import { tutorialViewedExpireTime } from 'config/cookies'
 
-import {
-  shouldJfyTutorialBeVisible,
-  setTutorialViewed,
-  setTutorialVisible,
-  tutorialTracking,
-  persistTutorialViewed,
-} from 'actions/tutorial'
+import { shouldJfyTutorialBeVisible } from "actions/tutorial/shouldJfyTutorialBeVisible"
+import { setTutorialVisible } from "actions/tutorial/setTutorialVisible"
+import { persistTutorialViewed } from "actions/tutorial/persistTutorialViewed"
+import { setTutorialViewed } from "actions/tutorial/setTutorialViewed"
+import { tutorialTracking } from "actions/tutorial/tutorialTracking"
 
 jest.mock('utils/cookieHelper2', () => ({
   set: jest.fn(),

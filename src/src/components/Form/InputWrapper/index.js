@@ -1,1 +1,1 @@
-export default from './InputWrapper'
+export { default as Component } from './InputWrapper'

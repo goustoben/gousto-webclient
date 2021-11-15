@@ -1,5 +1,5 @@
 import { actionTypes } from 'actions/actionTypes'
-import { featuresSet } from '../features'
+import { featuresSet } from "actions/features/featuresSet"
 
 describe('features actions', () => {
   describe('featuresSet', () => {

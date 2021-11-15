@@ -1,15 +1,14 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
-import {
-  clearSelectedRecipeVariants,
-  recipeVariantDropdownExpanded,
-  menuLoadingError
-} from '../../actions/menu'
-import { selectRecipeVariantAction, initSelectedRecipeVariantAction } from '../../routes/Menu/actions/menuRecipeDetails'
-import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandData'
-import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
-import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
+import { menuLoadingError } from "actions/menu/menuLoadingError"
+import { clearSelectedRecipeVariants } from "actions/menu/clearSelectedRecipeVariants"
+import { recipeVariantDropdownExpanded } from "actions/menu/recipeVariantDropdownExpanded"
+import { menuCollectionsHeadersReceived } from "routes/Menu/actions/brandData/menuCollectionsHeadersReceived"
+import { trackTimeToUsable } from "routes/Menu/actions/menuCalculateTimeToUsable/trackTimeToUsable"
+import { setMenuPrefetched } from "routes/Menu/actions/menuPrefetch/setMenuPrefetched"
+import { initSelectedRecipeVariantAction } from "routes/Menu/actions/menuRecipeDetails/initSelectedRecipeVariantAction"
+import { selectRecipeVariantAction } from "routes/Menu/actions/menuRecipeDetails/selectRecipeVariantAction"
 
 describe('menu reducer', () => {
   describe('menu', () => {

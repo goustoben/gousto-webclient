@@ -1,9 +1,14 @@
-import { fetchFeatures } from 'apis/fetchS3'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
-import { getUserToken, refreshUserToken, validateUserPassword, identifyUserUsingOAuth, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
 import logger from 'utils/logger'
 import { RECAPTCHA_PRIVATE_KEY } from '../../../server/config/recaptcha'
+import { getUserToken } from "apis/auth/getUserToken"
+import { identifyUserUsingOAuth } from "apis/auth/identifyUserUsingOAuth"
+import { refreshUserToken } from "apis/auth/refreshUserToken"
+import { forgetUserToken } from "apis/auth/forgetUserToken"
+import { validateUserPassword } from "apis/auth/validateUserPassword"
+import { validateRecaptchaUserToken } from "apis/auth/validateRecaptchaUserToken"
+import { fetchFeatures } from "apis/fetchS3/fetchFeatures"
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
@@ -326,7 +331,7 @@ describe('auth', () => {
         getCookieValue.mockReturnValueOnce(refreshToken)
       })
 
-      test('should get the request\'s refresh token cookie value and fire a refreshUserToken call', async () => {
+      test('should get the request\'s authRefresh token cookie value and fire a refreshUserToken call', async () => {
         await refresh(ctx)
 
         expect(getCookieValue).toHaveBeenCalled()
@@ -369,7 +374,7 @@ describe('auth', () => {
       identifyUserUsingOAuth.mockReset()
     })
 
-    test('should identify the user based on the token', async () => {
+    test('should authIdentify the user based on the token', async () => {
       ctx = getCtx()
       const accessToken = 'eed4b4f4a3ed0091cb4b7af9c581350bdf9ea806'
       identifyUserUsingOAuth.mockReturnValueOnce({ data: 'test' })

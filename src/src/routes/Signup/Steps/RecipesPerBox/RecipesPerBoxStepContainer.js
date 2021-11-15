@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { basketSetNumRecipes } from 'actions/basket'
-import { trackSignupWizardAction } from 'actions/signup'
 import { RecipesPerBoxStep } from './RecipesPerBoxStep'
+import { basketSetNumRecipes } from "actions/basket/basketSetNumRecipes"
+import { trackSignupWizardAction } from "actions/signup/trackSignupWizardAction"
 
 const mapDispatchToProps = {
   basketSetNumRecipes,

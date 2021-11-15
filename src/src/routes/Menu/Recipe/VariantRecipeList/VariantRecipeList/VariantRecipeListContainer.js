@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
-import { selectRecipeVariant , menuRecipeDetailVisibilityChange } from 'routes/Menu/actions/menuRecipeDetails'
-import {
-  trackVariantListDisplay,
-} from 'actions/menu'
 import { getSidesData } from '../../../selectors/variants'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
 import { getCurrentCollectionId } from '../../../selectors/collections'
 import { getCategoryIdForVariants } from '../../../selectors/menu'
 import { VariantRecipeList } from './VariantRecipeList'
+import { trackVariantListDisplay } from "actions/menu/trackVariantListDisplay"
+import { menuRecipeDetailVisibilityChange } from "routes/Menu/actions/menuRecipeDetails/menuRecipeDetailVisibilityChange"
+import { selectRecipeVariant } from "routes/Menu/actions/menuRecipeDetails/selectRecipeVariant"
 
 const mapStateToProps = (state, ownProps) => {
   const recipe = getRecipeById(state, ownProps.recipeId)

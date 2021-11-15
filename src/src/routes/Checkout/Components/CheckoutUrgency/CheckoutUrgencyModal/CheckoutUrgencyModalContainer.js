@@ -5,10 +5,10 @@ import {
   trackCheckoutUrgencyAction,
 } from 'routes/Checkout/checkoutActions'
 import { checkoutUrgencyDefaultModalSeconds } from 'routes/Checkout/checkoutUrgencyConfig'
-import { redirect } from 'actions/redirect'
-import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 import routes from 'config/routes'
 import { CheckoutUrgencyModal } from './CheckoutUrgencyModal'
+import { checkoutCreatePreviewOrder } from "routes/Menu/actions/checkout/checkoutCreatePreviewOrder"
+import { redirect } from "actions/redirect/redirect"
 
 const mapStateToProps = (state) => {
   const currentStatus = getCheckoutUrgencyCurrentStatus(state)

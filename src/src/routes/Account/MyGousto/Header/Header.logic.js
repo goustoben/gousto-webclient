@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import logger from 'utils/logger'
-import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import { isOrderBeingDeliveredToday } from 'utils/order'
 import { myGoustoOrderPropType } from '../../../GetHelp/getHelpPropTypes'
 import { HeaderPresentation } from './Header.presentation'
+import { shouldShowEntryPointTooltip } from "apis/getHelp/shouldShowEntryPointTooltip"
 class Header extends PureComponent {
   constructor(props) {
     super(props)

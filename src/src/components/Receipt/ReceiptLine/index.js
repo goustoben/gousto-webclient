@@ -1,1 +1,1 @@
-export default from './ReceiptLine'
+export { default as Component } from './ReceiptLine'

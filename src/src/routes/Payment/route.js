@@ -1,13 +1,11 @@
 import React from 'react'
 import { Route } from 'react-router'
-
-import config from 'config/routes'
-import { PaymentSuccess } from './PaymentSuccess'
-import { PaymentFailure } from './PaymentFailure'
+import { PaymentSuccess } from "routes/Payment/PaymentSuccess/route"
+import { PaymentFailure } from "routes/Payment/PaymentFailure/route"
 
 export const route = (
   <Route>
-    <Route path={config.client.payment.success} component={PaymentSuccess} />
-    <Route path={config.client.payment.failure} component={PaymentFailure} />
+    <PaymentSuccess/>
+    <PaymentFailure/>
   </Route>
 )

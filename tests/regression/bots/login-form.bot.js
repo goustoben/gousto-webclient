@@ -28,7 +28,7 @@ class LoginFormBot extends GoustoTestBot {
   getLogoutButton(){ return this.getByDataTestingName('BUTTON_LOGOUT') }
 
   prepareForAuthSuccess() {
-    cy.intercept(/identify/, GoustoApi.identify.success.testUser)
+    cy.intercept(/authIdentify/, GoustoApi.identify.success.testUser)
     cy.intercept(/login/, GoustoApi.login.success.testUser)
   }
 

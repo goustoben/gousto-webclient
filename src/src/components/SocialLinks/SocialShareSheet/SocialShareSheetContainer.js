@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 import { getReferralOffer, getUserFirstName } from 'selectors/user'
-import { trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
-import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 
 import { SocialShareSheet } from './SocialShareSheet'
+import { trackUserFreeFoodLinkShare } from "actions/loggingmanager/trackUserFreeFoodLinkShare"
+import { trackingReferFriend } from "actions/user/trackingReferFriend"
+import { trackingReferFriendSocialSharing } from "actions/user/trackingReferFriendSocialSharing"
 
 const mapStateToProps = (state) => ({
   userFirstName: getUserFirstName(state),

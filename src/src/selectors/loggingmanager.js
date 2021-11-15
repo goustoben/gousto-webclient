@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import { getPlatformDetails } from 'selectors/appBanner'
-import { EVENT_NAMES } from 'actions/loggingmanager'
+import { EVENT_NAMES } from "actions/loggingmanager/EVENT_NAMES"
 
 export const getGoustoAppEventName = () => {
   const { name } = getPlatformDetails()

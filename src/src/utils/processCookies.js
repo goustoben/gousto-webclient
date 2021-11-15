@@ -1,19 +1,33 @@
 import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
-import { appBannerDismiss } from 'actions/appBanner'
-import basketActions, { basketSetNumRecipes } from 'actions/basket'
-import { signupStepsReceive } from 'actions/signup'
-import { featuresSet } from 'actions/features'
-import { promoAgeVerify } from 'actions/promos'
-import authActions from 'actions/auth'
-import { cookiePolicyAcceptanceChange } from 'actions/cookies'
-import { setAffiliateSource } from 'actions/tracking'
-import { setTutorialViewed } from 'actions/tutorial'
-import { loadContentVariants } from 'actions/content'
-import { initSelectedRecipeVariantAction } from 'routes/Menu/actions/menuRecipeDetails'
 import logger from 'utils/logger'
-import persist from 'actions/persist'
 import { get } from './cookieHelper2'
+import { appBannerDismiss } from "actions/appBanner/appBannerDismiss"
+import { basketSetNumRecipes } from "actions/basket/basketSetNumRecipes"
+import { basketPromoCodeChange } from "actions/basket/basketPromoCodeChange"
+import { basketPromoCodeUrlChange } from "actions/basket/basketPromoCodeUrlChange"
+import { basketSetSubscriptionOption } from "actions/basket/basketSetSubscriptionOption"
+import { basketPreviewOrderChange } from "actions/basket/basketPreviewOrderChange"
+import { basketStepsOrderReceive } from "actions/basket/basketStepsOrderReceive"
+import { basketSignupCollectionReceive } from "actions/basket/basketSignupCollectionReceive"
+import { basketPostcodeChangePure } from "actions/basket/basketPostcodeChangePure"
+import { basketAddressChange } from "actions/basket/basketAddressChange"
+import { basketChosenAddressChange } from "actions/basket/basketChosenAddressChange"
+import { basketDateChange } from "actions/basket/basketDateChange"
+import { basketSlotChange } from "actions/basket/basketSlotChange"
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { basketRecipesInitialise } from "actions/basket/basketRecipesInitialise"
+import { authUserRememberMe } from "actions/auth/authUserRememberMe"
+import { authUserAuthenticated } from "actions/auth/authUserAuthenticated"
+import { loadContentVariants } from "actions/content/loadContentVariants"
+import { cookiePolicyAcceptanceChange } from "actions/cookies/cookiePolicyAcceptanceChange"
+import { featuresSet } from "actions/features/featuresSet"
+import { simpleHeader } from "actions/persist/simpleHeader"
+import { promoAgeVerify } from "../actions/promos/promoAgeVerify"
+import { signupStepsReceive } from "actions/signup/signupStepsReceive"
+import { setAffiliateSource } from "actions/tracking/setAffiliateSource"
+import { setTutorialViewed } from "actions/tutorial/setTutorialViewed"
+import { initSelectedRecipeVariantAction } from "routes/Menu/actions/menuRecipeDetails/initSelectedRecipeVariantAction"
 
 const getCookieStoreValue = (cookies, key) => get(cookies, `${cookiePrefix}_${key}`)
 
@@ -50,12 +64,12 @@ const processCookies = (cookies, store) => {
     if (rememberCookie) {
       const rememberMe = rememberCookie.remember_me
       if (typeof rememberMe !== 'undefined') {
-        store.dispatch(authActions.userRememberMe(rememberMe))
+        store.dispatch(authUserRememberMe(rememberMe))
       }
     }
 
     if (accessToken || refreshToken) {
-      store.dispatch(authActions.userAuthenticated(accessToken, refreshToken, expiresAt))
+      store.dispatch(authUserAuthenticated(accessToken, refreshToken, expiresAt))
     }
   } catch (err) {
     logger.warning(err)
@@ -108,7 +122,7 @@ const processCookies = (cookies, store) => {
   }
 
   if (promoCode) {
-    store.dispatch(basketActions.basketPromoCodeChange(promoCode))
+    store.dispatch(basketPromoCodeChange(promoCode))
   }
   if (promoAgeVerified) {
     try {
@@ -124,9 +138,9 @@ const processCookies = (cookies, store) => {
       if (parsedJoinCookie === 'join2') {
         parsedJoinCookie = 'join'
       }
-      store.dispatch(persist.simpleHeader(parsedJoinCookie))
+      store.dispatch(simpleHeader(parsedJoinCookie))
     } catch (error) {
-      store.dispatch(persist.simpleHeader(true))
+      store.dispatch(simpleHeader(true))
     }
   }
 
@@ -143,52 +157,52 @@ const processCookies = (cookies, store) => {
   }
 
   if (promoCodeUrl) {
-    store.dispatch(basketActions.basketPromoCodeUrlChange(promoCodeUrl))
+    store.dispatch(basketPromoCodeUrlChange(promoCodeUrl))
   }
 
   if (subscriptionOption) {
-    store.dispatch(basketActions.basketSetSubscriptionOption(subscriptionOption))
+    store.dispatch(basketSetSubscriptionOption(subscriptionOption))
   }
 
   if (previewOrderId && boxId) {
-    store.dispatch(basketActions.basketPreviewOrderChange(previewOrderId, boxId))
+    store.dispatch(basketPreviewOrderChange(previewOrderId, boxId))
   }
 
   if (stepsOrder) {
-    store.dispatch(basketActions.basketStepsOrderReceive(JSON.parse(stepsOrder)))
+    store.dispatch(basketStepsOrderReceive(JSON.parse(stepsOrder)))
   }
 
   if (collection) {
-    store.dispatch(basketActions.basketSignupCollectionReceive(collection))
+    store.dispatch(basketSignupCollectionReceive(collection))
   }
 
   if (!orderId) {
     if (postcode) {
-      store.dispatch(basketActions.basketPostcodeChangePure(postcode))
+      store.dispatch(basketPostcodeChangePure(postcode))
     }
 
     if (address) {
       const immutableAddress = Immutable.fromJS(JSON.parse(address))
-      store.dispatch(basketActions.basketAddressChange(immutableAddress))
-      store.dispatch(basketActions.basketChosenAddressChange(immutableAddress))
+      store.dispatch(basketAddressChange(immutableAddress))
+      store.dispatch(basketChosenAddressChange(immutableAddress))
     }
 
     if (date) {
-      store.dispatch(basketActions.basketDateChange(date))
+      store.dispatch(basketDateChange(date))
       if (slotId) {
-        store.dispatch(basketActions.basketSlotChange(slotId))
+        store.dispatch(basketSlotChange(slotId))
       }
     }
 
     if (numPortions) {
-      store.dispatch(basketActions.basketNumPortionChange(numPortions))
+      store.dispatch(basketNumPortionChange(numPortions))
     }
     if (numRecipes) {
       store.dispatch(basketSetNumRecipes(numRecipes))
     }
 
     recipes = recipes ? JSON.parse(recipes) : {}
-    store.dispatch(basketActions.basketRecipesInitialise(recipes))
+    store.dispatch(basketRecipesInitialise(recipes))
   }
 
   if (features) {

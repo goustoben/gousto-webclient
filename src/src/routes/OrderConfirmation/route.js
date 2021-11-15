@@ -2,9 +2,10 @@ import React from 'react'
 import { Route } from 'react-router'
 import config from 'config/routes'
 import { checkValidSession } from 'utils/routes'
-import { orderDetails } from 'actions/orderConfirmation'
 
 import OrderConfirmation from './OrderConfirmationContainer'
+import { orderDetails } from "actions/order/orderDetails"
+import MainLayout from "layouts/MainLayout"
 
 export default (store) => {
   const onEnterHandler = (routes, replace, next) => {
@@ -19,6 +20,8 @@ export default (store) => {
   }
 
   return (
-    <Route path={config.client.orderConfirmation} component={OrderConfirmation} onEnter={onEnterHandler} />
+    <Route component={MainLayout}>
+      <Route path={config.client.orderConfirmation} component={OrderConfirmation} onEnter={onEnterHandler}/>
+    </Route>
   )
 }

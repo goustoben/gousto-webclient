@@ -1,1 +1,1 @@
-export default from './SubscriptionPauseContainer'
+export { default as Component } from './SubscriptionPauseContainer'

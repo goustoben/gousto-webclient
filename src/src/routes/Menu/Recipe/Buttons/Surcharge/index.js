@@ -1,1 +1,1 @@
-export default from './Surcharge'
+export { default as Component } from './Surcharge'

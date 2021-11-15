@@ -6,9 +6,9 @@ import { SubscriptionContext } from '../../../../../context/index'
 import { MealsPerBox } from '../MealsPerBox'
 
 import { getMealsPerBox, getIsBoxAndPricesLoaded, getDietaryPreference, getBoxPricesNumPortion } from '../../../../../context/selectors/box'
-import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
+import { useUpdateSubscription } from '../../../../../apis/hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
-import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
+import * as subscriptionToast from '../../../../../apis/hooks/useSubscriptionToast'
 
 jest.mock('../../../../../tracking')
 jest.mock('../../../../../context/selectors/box')

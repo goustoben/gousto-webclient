@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import { getIsRecaptchaEnabled } from 'selectors/auth'
-import actionsAuth, { changeRecaptcha } from 'actions/auth'
 import { actionTypes } from 'actions/actionTypes'
 import ResetPassword from './ResetPassword'
+import { authChangeRecaptcha } from "actions/auth/authChangeRecaptcha"
+import { authResetPassword } from "actions/auth/authResetPassword"
 
 const mapStateToProps = (state) => ({
   errorResetPassword: state.error.get(actionTypes.AUTH_PASSWORD_RESET, []),
@@ -10,8 +11,8 @@ const mapStateToProps = (state) => ({
 })
 
 const ResetPasswordContainer = connect(mapStateToProps, {
-  authResetPassword: actionsAuth.authResetPassword,
-  changeRecaptcha,
+  authResetPassword: authResetPassword,
+  changeRecaptcha: authChangeRecaptcha,
 })(ResetPassword)
 
 export default ResetPasswordContainer

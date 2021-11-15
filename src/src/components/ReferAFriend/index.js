@@ -1,1 +1,1 @@
-export default from './ReferAFriendContainer'
+export { default as Component } from './ReferAFriendContainer'

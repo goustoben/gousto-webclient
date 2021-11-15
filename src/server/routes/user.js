@@ -1,10 +1,10 @@
-import { fetchFeatures } from 'apis/fetchS3'
 import logger from 'utils/logger'
-import { validateRecaptchaUserToken } from 'apis/auth'
-import { referAFriend as sendReferalToCore } from 'apis/user'
-import routes from 'config/routes'
 import env from 'utils/env'
-import { routeMatches, getCookieValue } from './utils'
+import { getCookieValue, routeMatches } from './utils'
+import { referAFriend as sendReferalToCore } from "apis/users/referAFriend"
+import { referAFriendRoute } from "config/routes/user/referAFriendRoute"
+import { validateRecaptchaUserToken } from "apis/auth/validateRecaptchaUserToken"
+import { fetchFeatures } from "apis/fetchS3/fetchFeatures"
 
 /**
  * Refer a friend Route
@@ -47,7 +47,7 @@ export async function referAFriend(ctx) {
 
 /* eslint-disable consistent-return */
 export const userController = async (ctx, next) => {
-  if (routeMatches(ctx, routes.user.referAFriend, 'POST')) {
+  if (routeMatches(ctx, referAFriendRoute, 'POST')) {
     await referAFriend(ctx)
   } else {
     return next()

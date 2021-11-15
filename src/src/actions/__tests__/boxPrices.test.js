@@ -1,13 +1,14 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { boxPricesBoxSizeSelected, updatePricePerServing } from 'actions/boxPrices'
-import { basketNumPortionChange } from 'actions/basket'
-import { redirect } from 'actions/redirect'
-import { signupNextStep } from 'actions/signup'
-import { trackClickBuildMyBox } from 'actions/tracking'
-import { applyPromoCodeAndShowModal } from 'actions/home'
-import { fetchBoxPrices } from 'apis/boxPrices'
 import { getPromoBannerState } from 'utils/home'
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { boxPricesBoxSizeSelected } from "actions/boxPrices/boxPricesBoxSizeSelected"
+import { updatePricePerServing } from "actions/boxPrices/updatePricePerServing"
+import { applyPromoCodeAndShowModal } from "actions/home/applyPromoCodeAndShowModal"
+import { redirect } from "actions/redirect/redirect"
+import { signupNextStep } from "actions/signup/signupNextStep"
+import { trackClickBuildMyBox } from "actions/tracking/trackClickBuildMyBox"
+import { fetchBoxPrices } from "apis/boxPrices/fetchBoxPrices"
 
 jest.mock('actions/basket', () => ({
   basketNumPortionChange: jest.fn()

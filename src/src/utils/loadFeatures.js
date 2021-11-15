@@ -1,6 +1,6 @@
-import { featuresSet } from 'actions/features'
 import globals from 'config/globals'
 import windowUtils from 'utils/window'
+import { featuresSet } from "actions/features/featuresSet"
 
 // eslint-disable-next-line import/no-default-export
 export default function loadFeatures({ enable, disable, set = {}, features = {}} = {}, store) {

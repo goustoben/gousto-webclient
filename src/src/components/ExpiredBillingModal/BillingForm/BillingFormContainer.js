@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import actions from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
 import BillingForm from './BillingForm'
+import { userAddPaymentMethod } from "actions/user/userAddPaymentMethod"
 
 const mapStateToProps = (state) => ({
   isPosting: state.pending.get(actionTypes.USER_POST_PAYMENT_METHOD),
@@ -9,5 +9,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  submitCardDetails: actions.userAddPaymentMethod,
+  submitCardDetails: userAddPaymentMethod,
 })(BillingForm)

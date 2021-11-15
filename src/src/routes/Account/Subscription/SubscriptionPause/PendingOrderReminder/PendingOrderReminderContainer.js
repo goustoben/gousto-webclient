@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import PendingOrderReminder from './PendingOrderReminder'
+import { temp } from "actions/temp/temp"
 
 function mapStateToProps(state) {
   return {
@@ -13,8 +13,7 @@ function mapStateToProps(state) {
 }
 
 const PendingOrderReminderContainer = connect(mapStateToProps, {
-  close: () => actions.temp('pendingOrderIds', Immutable.List([])),
-  cancelPendingOrders: () => actions.cancelPendingOrders(),
+  close: () => temp('pendingOrderIds', Immutable.List([])),
 })(PendingOrderReminder)
 
 export default PendingOrderReminderContainer

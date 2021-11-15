@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { trackSignupWizardAction } from 'actions/signup'
 import { getCurrentPromoCodeCustomText1 } from 'routes/Signup/signupSelectors'
 import { getNumPersonsToBoxDescriptors } from 'routes/BoxPrices/boxPricesSelectors'
 import { BoxSizeStep } from './BoxSizeStep'
+import { trackSignupWizardAction } from "actions/signup/trackSignupWizardAction"
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { portionSizeSelectedTracking } from "actions/basket/portionSizeSelectedTracking"
 
 const mapStateToProps = (state) => ({
   menuBoxPrices: state.menuBoxPrices,
@@ -16,8 +17,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  numPortionChange: actions.basketNumPortionChange,
-  numPortionChangeTracking: actions.portionSizeSelectedTracking,
+  numPortionChange: basketNumPortionChange,
+  numPortionChangeTracking: portionSizeSelectedTracking,
   trackSignupWizardAction,
 }
 

@@ -14,10 +14,10 @@ import { PausedSubscription } from './PausedSubscription'
 import { SubscriptionTitle } from './components/SubscriptionTitle'
 import { ToastProvider } from './components/Toast'
 
-import { useSubscriptionData } from './hooks/useSubscriptionData'
-import { useCurrentUserData } from './hooks/useCurrentUserData'
-import { useBoxPricesData } from './hooks/useBoxPricesData'
-import { useOrdersData } from './hooks/useOrdersData'
+import { useSubscriptionData } from './apis/hooks/useSubscriptionData'
+import { useCurrentUserData } from './apis/hooks/useCurrentUserData'
+import { useBoxPricesData } from './apis/hooks/useBoxPricesData'
+import { useOrdersData } from './apis/hooks/useOrdersData'
 import css from './Subscription.css'
 
 const propTypes = {

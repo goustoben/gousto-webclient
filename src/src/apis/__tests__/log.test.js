@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import { log } from '../log'
+import { log } from "apis/log/log"
 
 jest.mock('utils/fetch', () => ({
   fetch: jest.fn(() => Promise.resolve())

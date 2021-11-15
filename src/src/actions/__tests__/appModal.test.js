@@ -1,4 +1,5 @@
-import { trackAppModalView, trackClickAppModalInstall } from '../appModal'
+import { trackAppModalView } from "actions/appModal/trackAppModalView"
+import { trackClickAppModalInstall } from "actions/appModal/trackClickAppModalInstall"
 
 describe('AppModal actions', () => {
   test('trackAppModalView', () => {

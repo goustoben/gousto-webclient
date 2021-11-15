@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { fetchOrAssignUserToExperiment } from 'actions/experiments'
 import { makeGetExperimentByName, isFetchingExperiments} from 'selectors/experiments'
 import { Experiments } from './Experiments'
+import { fetchOrAssignUserToExperiment } from "actions/experiments/fetchOrAssignUserToExperiment"
 
 const mapStateToProps = (state, props) => {
   const getExperimentByName = makeGetExperimentByName()

@@ -1,11 +1,11 @@
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { redirect } from 'actions/redirect'
 import loginActions from 'actions/login'
 import {
   signupCheckAccountGoToBoxPrices,
   signupCheckAccountLogin,
   signupApplyVoucherGoToDeliveries,
 } from '../signupActions'
+import { redirect } from "actions/redirect/redirect"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
 
 jest.mock('actions/tracking', () => ({
   trackUTMAndPromoCode: jest.fn(),

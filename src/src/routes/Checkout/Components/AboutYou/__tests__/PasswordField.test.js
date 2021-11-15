@@ -81,7 +81,7 @@ describe('Given PasswordField component', () => {
       expect(validatePassword).toBeCalled()
     })
 
-    test('then after changing value right after first change should clear timeout', () => {
+    test('then after changing value right after first change should authClear timeout', () => {
       act(() => {
         wrapper.find('input').prop('onChange')({
           target: {

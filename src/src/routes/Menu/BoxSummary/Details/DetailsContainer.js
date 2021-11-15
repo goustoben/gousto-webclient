@@ -1,16 +1,18 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryVisibilityChange, trackingUnavailableRecipeList } from 'actions/boxSummary'
 import { getBasketSlotId } from 'selectors/basket'
 import { getFullScreenBoxSummary } from 'selectors/features'
-import {
-  getOkRecipeIds,
-  getUnavailableRecipeIds,
-} from 'routes/Menu/selectors/basket'
-import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
-import { basketRecipeRemove } from '../../actions/basketRecipes'
+import { getOkRecipeIds, getUnavailableRecipeIds, } from 'routes/Menu/selectors/basket'
 import { Details } from './Details'
+import { boxSummaryVisibilityChange } from "actions/boxSummary/boxSummaryVisibilityChange"
+import { trackingUnavailableRecipeList } from "actions/boxSummary/trackingUnavailableRecipeList"
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { portionSizeSelectedTracking } from "actions/basket/portionSizeSelectedTracking"
+import { basketPostcodeChange } from "actions/basket/basketPostcodeChange"
+import { basketSlotClear } from "actions/basket/basketSlotClear"
+import { basketRestorePreviousDate } from "actions/basket/basketRestorePreviousDate"
+import { basketRecipeRemove } from "routes/Menu/actions/basketRecipes/basketRecipeRemove"
+import { menuRecipeDetailVisibilityChange } from "routes/Menu/actions/menuRecipeDetails/menuRecipeDetailVisibilityChange"
 
 const mapStateToProps = (state) => ({
   accessToken: state.auth.get('accessToken'),
@@ -29,12 +31,12 @@ const mapStateToProps = (state) => ({
 })
 
 const DetailsContainer = connect(mapStateToProps, {
-  basketNumPortionChange: actions.basketNumPortionChange,
-  portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
-  basketPostcodeChange: actions.basketPostcodeChange,
+  basketNumPortionChange,
+  portionSizeSelectedTracking,
+  basketPostcodeChange,
   onRemove: basketRecipeRemove,
-  clearSlot: actions.basketSlotClear,
-  basketRestorePreviousDate: actions.basketRestorePreviousDate,
+  clearSlot: basketSlotClear,
+  basketRestorePreviousDate,
   showRecipeDetailsOnClick: menuRecipeDetailVisibilityChange,
   boxSummaryVisibilityChange,
   trackingUnavailableRecipeList,

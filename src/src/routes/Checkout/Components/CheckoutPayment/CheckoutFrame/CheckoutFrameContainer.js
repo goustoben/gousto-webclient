@@ -2,17 +2,15 @@ import { connect } from 'react-redux'
 import { getFormValues, change } from 'redux-form'
 
 import { hasCheckoutError } from 'selectors/checkout'
-import {
-  fireCheckoutError,
-  checkoutClearErrors,
-  fireCheckoutPendingEvent,
-  trackingCardTokenizationSuccessfully,
-  trackingCardTokenizationFailed,
-} from 'actions/checkout'
-import { trackFailedCheckoutFlow } from 'actions/log'
 import { sectionName, deliveryAddressSectionName } from '../config'
 import { getBillingAddress } from './utils'
 import { CheckoutFrame } from './CheckoutFrame'
+import { checkoutClearErrors } from "actions/checkout/checkoutClearErrors"
+import { fireCheckoutPendingEvent } from "actions/checkout/fireCheckoutPendingEvent"
+import { fireCheckoutError } from "actions/checkout/fireCheckoutError"
+import { trackingCardTokenizationSuccessfully } from "actions/checkout/trackingCardTokenizationSuccessfully"
+import { trackingCardTokenizationFailed } from "actions/checkout/trackingCardTokenizationFailed"
+import { trackFailedCheckoutFlow } from "actions/log/trackFailedCheckoutFlow"
 
 const mapStateToProps = (state) => {
   const formValues = {

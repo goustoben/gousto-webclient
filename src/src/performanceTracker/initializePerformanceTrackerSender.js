@@ -1,6 +1,7 @@
-import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { getIsTrackPerformanceEnabled } from 'selectors/features'
 import { trackerVarName, createTrackerInitializePerfume } from './performanceTracker'
+import { logLevels } from "actions/log/logLevels"
+import { feLoggingLogEvent } from "actions/log/feLoggingLogEvent"
 
 const sendPerformanceMetric = (store, metricName, value) => {
   store.dispatch(

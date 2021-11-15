@@ -1,4 +1,4 @@
-import { getLowestPrice } from '../boxPricesPricePerPortion'
+import { getLowestPrice } from "actions/boxPricesPricePerPortion/getLowestPrice"
 
 const data = {
   2: {

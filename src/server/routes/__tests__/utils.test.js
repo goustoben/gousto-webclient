@@ -27,7 +27,7 @@ describe('utils', () => {
       const response = {
         data: {
           accessToken: 'mock-access-token',
-          refreshToken: 'mock-refresh-token',
+          refreshToken: 'mock-authRefresh-token',
           expiresAt: '123456789',
         }
       }
@@ -44,7 +44,7 @@ describe('utils', () => {
             [{}, 'oauth_help_centre_token', { access_token: 'mock-access-token' }, 0.4166666666666667, true, false, true, '/help-centre'],
             [{}, 'oauth_taste_profile_token', { access_token: 'mock-access-token' }, 0.4166666666666667, true, false, true, '/taste-profile'],
             [{}, 'oauth_expiry', { expires_at: 'mock-expires-response' }, 0.4166666666666667],
-            [{}, 'oauth_refresh', { refresh_token: 'mock-refresh-token' }, 90, true, true, true],
+            [{}, 'oauth_refresh', { refresh_token: 'mock-authRefresh-token' }, 90, true, true, true],
             [{}, 'oauth_remember', { remember_me: true }, 90],
           ])
         })
@@ -62,7 +62,7 @@ describe('utils', () => {
             [{}, 'oauth_help_centre_token', { access_token: 'mock-access-token' }, null, true, false, true, '/help-centre'],
             [{}, 'oauth_taste_profile_token', { access_token: 'mock-access-token' }, null, true, false, true, '/taste-profile'],
             [{}, 'oauth_expiry', { expires_at: 'mock-expires-response' }, null],
-            [{}, 'oauth_refresh', { refresh_token: 'mock-refresh-token' }, null, true, true, true],
+            [{}, 'oauth_refresh', { refresh_token: 'mock-authRefresh-token' }, null, true, true, true],
             [{}, 'oauth_remember', { remember_me: false }, null],
           ])
         })

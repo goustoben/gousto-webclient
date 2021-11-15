@@ -1,14 +1,5 @@
 import { connect } from 'react-redux'
 import {
-  validateSelectedIngredients,
-  storeSelectedIngredients,
-} from 'actions/getHelp'
-import {
-  trackDeselectIngredient,
-  trackSelectIngredient,
-  validateLatestOrder,
-} from '../actions/getHelp'
-import {
   getIsOrderValidationPending,
   getIsOrderValidationError,
   getIsMultiComplaintLimitReachedLastFourWeeks,
@@ -16,6 +7,11 @@ import {
 } from '../selectors/orderSelectors'
 import { getMassIssueIneligibleIngredientUuids, getOrder, getRecipes } from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
+import { storeSelectedIngredients } from "actions/getHelp/storeSelectedIngredients"
+import { validateSelectedIngredients } from "actions/getHelp/validateSelectedIngredients"
+import { trackSelectIngredient } from "routes/GetHelp/actions/getHelp/trackSelectIngredient"
+import { trackDeselectIngredient } from "routes/GetHelp/actions/getHelp/trackDeselectIngredient"
+import { validateLatestOrder } from "routes/GetHelp/actions/getHelp/validateLatestOrder"
 
 const mapStateToProps = (state) => ({
   massIssueIneligibleIngredientUuids: getMassIssueIneligibleIngredientUuids(state),

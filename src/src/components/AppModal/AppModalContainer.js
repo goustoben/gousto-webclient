@@ -7,9 +7,9 @@ import { getPlatformDetails } from 'selectors/appBanner'
 import { shouldShowBoxSummary } from 'selectors/basket'
 import { getIsMobileMenuModalAppAwarenessEnabled } from 'selectors/features'
 
-import { trackAppModalView, trackClickAppModalInstall } from 'actions/appModal'
-
 import { AppModal } from './AppModal'
+import { trackAppModalView } from "actions/appModal/trackAppModalView"
+import { trackClickAppModalInstall } from "actions/appModal/trackClickAppModalInstall"
 
 const mapStateToProps = (state) => {
   const { name, ratings } = getPlatformDetails()

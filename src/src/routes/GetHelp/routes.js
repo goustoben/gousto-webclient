@@ -1,26 +1,26 @@
 import React from 'react'
-import { Route, Redirect, IndexRoute } from 'react-router'
+import { Redirect, Route } from 'react-router'
 
 import configRoutes from 'config/routes'
 import WizardLayout from 'layouts/WizardLayout'
 import { checkValidSession } from 'utils/routes'
-import { AutoAcceptCheckContainer } from './AutoAcceptCheck'
-import { AutoAcceptConfirmationContainer } from './AutoAcceptConfirmation'
 import { GetHelpContainer } from './GetHelpContainer'
-import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
-import { IneligibleIngredientsContainer } from './IneligibleIngredients'
-import { IneligibleIngredientsSameDayContainer } from './IneligibleIngredientsSameDay'
-import { DeliveryContainer } from './Delivery'
-import { DeliveryValidationContainer } from './Delivery/DeliveryValidation'
-import { DontKnowWhen } from './Delivery/DontKnowWhen'
-import { IngredientsContainer } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
-import { RecipeCardsContainer } from './RecipeCards'
 import { Refund } from './Refund'
-import { DidntArriveContainer } from './Delivery/DidntArrive'
+import { OrderIssue } from "routes/GetHelp/OrderIssue/route"
+import { AutoAcceptCheck } from "routes/GetHelp/AutoAcceptCheck/route"
+import { AutoAcceptConfirmation } from "routes/GetHelp/AutoAcceptConfirmation/route"
+import { Delivery } from "routes/GetHelp/Delivery/route"
+import { DeliveryValidation } from "routes/GetHelp/Delivery/DeliveryValidation/route"
+import { DidntArrive } from "routes/GetHelp/Delivery/DidntArrive/route"
+import { DontKnowWhen } from "routes/GetHelp/Delivery/DontKnowWhen/route"
+import { Ingredients } from "routes/GetHelp/Ingredients/route"
+import { IneligibleIngredients } from "routes/GetHelp/IneligibleIngredients/route"
+import { RecipeCards } from "routes/GetHelp/RecipeCards/route"
+import { IneligibleIngredientsSameDay } from "routes/GetHelp/IneligibleIngredientsSameDay/route"
 
 const getHelpRoutes = (store) => {
   const {
@@ -61,53 +61,23 @@ const getHelpRoutes = (store) => {
         component={GetHelpContainer}
         onEnter={onEnterHandler}
       >
-        <IndexRoute component={OrderIssueContainer} />
-        <Route
-          path={autoAcceptCheck}
-          component={AutoAcceptCheckContainer}
-        />
-        <Route
-          path={autoAcceptConfirmation}
-          component={AutoAcceptConfirmationContainer}
-        />
-        <Route
-          path={delivery({ userId: ':userId', orderId: ':orderId' })}
-          component={DeliveryContainer}
-        />
-        <Route
-          path={deliveryDidntArriveValidation({ userId: ':userId', orderId: ':orderId' })}
-          component={DeliveryValidationContainer}
-        />
-        <Route
-          path={deliveryDontKnowWhen({ userId: ':userId', orderId: ':orderId' })}
-          component={DontKnowWhen}
-        />
-        <Route
-          path={deliveryDidntArrive({ userId: ':userId', orderId: ':orderId' })}
-          component={DidntArriveContainer}
-        />
-        <Route
-          path={ingredients({ userId: ':userId', orderId: ':orderId' })}
-          component={IngredientsContainer}
-        />
-        <Route
-          path={multipleIngredientsIssues}
-          component={IneligibleIngredientsContainer}
-        />
-        <Route
-          path={recipeCards({ userId: ':userId', orderId: ':orderId' })}
-          component={RecipeCardsContainer}
-        />
-        <Route
-          path={sameDayIngredientIssues}
-          component={IneligibleIngredientsSameDayContainer}
-        />
+        <OrderIssue/>
+        <AutoAcceptCheck autoAcceptCheck={autoAcceptCheck}/>
+        <AutoAcceptConfirmation autoAcceptConfirmation={autoAcceptConfirmation}/>
+        <Delivery delivery={delivery}/>
+        <DeliveryValidation deliveryDidntArriveValidation={deliveryDidntArriveValidation}/>
+        <DontKnowWhen deliveryDontKnowWhen={deliveryDontKnowWhen}/>
+        <DidntArrive deliveryDidntArrive={deliveryDidntArrive}/>
+        <Ingredients ingredients={ingredients}/>
+        <IneligibleIngredients multipleIngredientsIssues={multipleIngredientsIssues}/>
+        <RecipeCards recipeCards={recipeCards}/>
+        <IneligibleIngredientsSameDay sameDayIngredientIssues={sameDayIngredientIssues}/>
         {Confirmation}
         {Contact}
         {IngredientIssues}
         {IngredientReasons}
         {Refund}
-        <Redirect to={login} />
+        <Redirect to={login}/>
       </Route>
     </Route>
   )

@@ -3,9 +3,9 @@ import { actionTypes } from 'actions/actionTypes'
 import { isBasketTransactionalOrder } from 'selectors/basket'
 import { getAuthUserId } from 'selectors/auth'
 import { trackExperimentInSnowplow } from 'containers/OptimizelyRollouts/trackExperimentInSnowplow'
-import { checkoutBasket } from '../../../actions/menuCheckoutClick'
-import { openSidesModal } from '../../../actions/sides'
 import { Checkout } from './Checkout'
+import { checkoutBasket } from "routes/Menu/actions/menuCheckoutClick/checkoutBasket"
+import { openSidesModal } from "routes/Menu/actions/sides/openSidesModal"
 
 const mapStateToProps = (state) => ({
   recipes: state.basket.get('recipes'),

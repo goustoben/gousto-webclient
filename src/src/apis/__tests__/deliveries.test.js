@@ -1,5 +1,6 @@
 import fetch from 'utils/fetch'
-import { fetchDeliveryDays, fetchDeliveryConsignment } from '../deliveries'
+import { fetchDeliveryDays } from "apis/deliveries/fetchDeliveryDays"
+import { fetchDeliveryConsignment } from "apis/deliveries/fetchDeliveryConsignment"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

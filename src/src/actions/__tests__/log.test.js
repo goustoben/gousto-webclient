@@ -1,10 +1,8 @@
-import {
-  feLoggingLogEvent,
-  trackSuccessfulCheckoutFlow,
-  trackFailedCheckoutFlow,
-  logLevels,
-} from 'actions/log'
-import { log } from 'apis/log'
+import { logLevels } from "actions/log/logLevels"
+import { feLoggingLogEvent } from "actions/log/feLoggingLogEvent"
+import { trackSuccessfulCheckoutFlow } from "actions/log/trackSuccessfulCheckoutFlow"
+import { trackFailedCheckoutFlow } from "actions/log/trackFailedCheckoutFlow"
+import { log } from "apis/log/log"
 
 jest.mock('apis/log', () => ({
   log: jest.fn(() => Promise.resolve()),

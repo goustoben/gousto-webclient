@@ -1,1 +1,1 @@
-export default from './OrderCollage'
+export { default as Component } from './OrderCollage'

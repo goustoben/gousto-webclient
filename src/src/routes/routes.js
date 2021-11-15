@@ -32,13 +32,9 @@ const routes = (store) => (
     {GetHelp(store)}
     {ModernSlaveryStatement}
     {Payment}
-
-    <Route component={MainLayout}>
-      {Welcome(store)}
-      {Account(store)}
-      {OrderConfirmation(store)}
-    </Route>
-
+    {Welcome(store)}
+    {Account(store)}
+    {OrderConfirmation(store)}
     {Checkout(store)}
     <Route component={MainLayout}>
       <Route path="*" component={ErrorPage} />

@@ -1,1 +1,1 @@
-export default from './FullPage'
+export { default as Component } from './FullPage'

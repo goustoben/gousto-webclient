@@ -1,5 +1,6 @@
 import fetch from 'utils/fetch'
-import { getUserExperiments, updateUserExperiment } from '../userBucketing'
+import { getUserExperiments } from "apis/userBucketing/getUserExperiments"
+import { updateUserExperiment } from "apis/userBucketing/updateUserExperiment"
 
 jest.mock('utils/fetch')
 

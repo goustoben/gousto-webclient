@@ -1,10 +1,10 @@
 import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
-import { menuCalculateTimeToUsable } from '../menuCalculateTimeToUsable'
+import { menuCalculateTimeToUsable } from '../menuCalculateTimeToUsable/menuCalculateTimeToUsable'
 import * as browserTimings from '../utils/browserTimings'
 import { actionTypes } from '../../../../actions/actionTypes'
 import { menuTimeToUsable } from '../../../../actions/trackingKeys'
-import * as clientMetrics from '../../apis/clientMetrics'
+import * as clientMetrics from '../../apis/clientMetrics/clientMetrics'
 
 describe('given menuCalculateTimeToUsable action is called', () => {
   let state

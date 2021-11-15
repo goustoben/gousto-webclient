@@ -3,9 +3,9 @@ import { getAccessToken } from 'selectors/auth'
 import { getBrowserType } from 'selectors/browser'
 import { getIsSubscriberPricingEnabled } from 'selectors/features'
 import { isMobile } from 'utils/view'
-import { startOnScreenRecoverySubscriptionFlow } from 'actions/onScreenRecovery'
 
 import { Subscription } from './Subscription'
+import { startOnScreenRecoverySubscriptionFlow } from "actions/onScreenRecovery/startOnScreenRecoverySubscriptionFlow"
 
 const mapStateToProps = (state) => ({
   accessToken: getAccessToken(state),

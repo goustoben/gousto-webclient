@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
-import { trackingReferFriendSocialSharing } from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
 import { SocialShareButtons } from '..'
 import { SOCIAL_TYPES } from '../../socialReferralHelper'
+import { trackUserFreeFoodLinkShare } from "actions/loggingmanager/trackUserFreeFoodLinkShare"
+import { trackingReferFriendSocialSharing } from "actions/user/trackingReferFriendSocialSharing"
 
 jest.mock('actions/loggingmanager', () => ({
   trackUserFreeFoodLinkShare: jest.fn(),

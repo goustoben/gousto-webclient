@@ -1,9 +1,7 @@
-import {
-  openSidesModalAction,
-  closeSidesModalAction,
-  openSidesModal,
-  closeSidesModal,
-} from '../sides'
+import { openSidesModalAction } from "routes/Menu/actions/sides/openSidesModalAction"
+import { closeSidesModalAction } from "routes/Menu/actions/sides/closeSidesModalAction"
+import { openSidesModal } from "routes/Menu/actions/sides/openSidesModal"
+import { closeSidesModal } from "routes/Menu/actions/sides/closeSidesModal"
 
 describe('openSidesModalAction', () => {
   test('should return the correct action', () => {

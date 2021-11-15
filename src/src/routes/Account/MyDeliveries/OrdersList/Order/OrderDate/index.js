@@ -1,1 +1,1 @@
-export default from './OrderDate'
+export { default as Component } from './OrderDate'

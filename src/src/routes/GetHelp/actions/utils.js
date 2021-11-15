@@ -1,4 +1,5 @@
-import webClientStatusActions from 'actions/status'
+import { error } from "actions/status/error"
+import { pending } from "actions/status/pending"
 import logger from 'utils/logger'
 
 export const asyncAndDispatch = async ({
@@ -8,7 +9,6 @@ export const asyncAndDispatch = async ({
   handleError = null,
   errorMessage,
 }) => {
-  const { pending, error } = webClientStatusActions
   dispatch(pending(actionType, true))
   dispatch(error(actionType, null))
   try {

@@ -1,4 +1,4 @@
-import { featuresSet } from 'actions/features'
+import { featuresSet } from "actions/features/featuresSet"
 
 const getFeatureValues = (query, keyword = 'features') => {
   const regex = new RegExp(`${keyword}\\[([\\w-]+)\]`)

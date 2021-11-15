@@ -1,7 +1,7 @@
 import config from 'config/routes'
-import authActions from 'actions/auth'
 import { getIsAuthenticated, getAccessToken, getRefreshToken, getExpiresAt } from 'selectors/auth'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import { authValidate } from "actions/auth/authValidate"
 
 /**
  * Get origin url on the client
@@ -52,7 +52,7 @@ export function checkValidSession(store, redirectUrl, target) {
       }
 
       try {
-        store.dispatch(authActions.authValidate(accessToken, refreshToken, expiresAt))
+        store.dispatch(authValidate(accessToken, refreshToken, expiresAt))
       } catch (e) {
         replace(addTargetToRedirect({target, location, redirectUrl}))
       }

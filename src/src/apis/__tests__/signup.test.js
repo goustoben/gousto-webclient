@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import { fetchCountByPostcode } from '../signup'
+import { fetchCountByPostcode } from "apis/signup/fetchCountByPostcode"
 
 const mockFetchResult = {
   data: {

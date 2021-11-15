@@ -4,8 +4,8 @@ import {
   signupCheckAccountLogin,
 } from 'routes/Signup/signupActions'
 import { getIsAuthenticated } from 'selectors/auth'
-import { redirect } from 'actions/redirect'
 import { CheckAccountPage } from './CheckAccountPage'
+import { redirect } from "actions/redirect/redirect"
 
 const mapStateToProps = (state) => ({
   isAuthenticated: getIsAuthenticated(state),

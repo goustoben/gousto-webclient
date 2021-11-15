@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxPricesBoxSizeSelected } from 'actions/boxPrices'
-import { getNumPersonsToBoxDescriptors, getIsBoxPricesRedesignEnabled } from './boxPricesSelectors'
+import { getIsBoxPricesRedesignEnabled, getNumPersonsToBoxDescriptors } from './boxPricesSelectors'
 import { BoxPrices } from './BoxPrices'
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { boxPricesBoxSizeSelected } from "actions/boxPrices/boxPricesBoxSizeSelected"
 
 const mapStateToProps = (state) => ({
   numPersonsToBoxDescriptors: getNumPersonsToBoxDescriptors(state),
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  basketNumPortionChange: actions.basketNumPortionChange,
+  basketNumPortionChange,
   boxPricesBoxSizeSelected,
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { clickClaimDiscountBar } from 'actions/trackingKeys'
-import { applyPromoCodeAndShowModal } from 'actions/home'
-import { redirect } from 'actions/redirect'
 import { PromoBanner } from '../PromoBanner'
+import { applyPromoCodeAndShowModal } from "actions/home/applyPromoCodeAndShowModal"
+import { redirect } from "actions/redirect/redirect"
 
 jest.mock('actions/home', () => ({
   applyPromoCodeAndShowModal: jest.fn(),

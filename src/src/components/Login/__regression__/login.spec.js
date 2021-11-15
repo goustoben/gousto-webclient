@@ -4,7 +4,7 @@ describe('User log in flow', () => {
   beforeEach(() => {
     cy.stubAll3rdParties()
     cy.stubAllApis()
-    cy.intercept('POST', /identify/, { fixture: 'auth/identify' }).as('identifyRequest')
+    cy.intercept('POST', /authIdentify/, { fixture: 'auth/authIdentify' }).as('identifyRequest')
   })
 
   withPlatformTags(WEB).describe('on web', () => {

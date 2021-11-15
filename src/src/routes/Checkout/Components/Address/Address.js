@@ -5,13 +5,13 @@ import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
 import { showAddress } from 'routes/Checkout/utils/delivery'
-import { fetchDeliveryDays } from 'apis/deliveries'
 import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
 import { DeliveryPhoneNumber } from '../Delivery/DeliveryPhoneNumber'
 import { DeliveryInstruction } from '../Delivery/DeliveryInstruction'
 import { DeliveryEducationBanner } from '../Delivery/DeliveryEducationBanner'
 import { AddressOverhaul } from './AddressOverhaul/AddressOverhaul'
 import { CheckoutButton } from '../CheckoutButton'
+import { fetchDeliveryDays } from "apis/deliveries/fetchDeliveryDays"
 
 const propTypes = {
   formName: PropTypes.string,

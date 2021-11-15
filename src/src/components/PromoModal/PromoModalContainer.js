@@ -1,14 +1,15 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import Immutable from 'immutable'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { basketPromoCodeChange } from 'actions/basket'
-import { promoToggleModalVisibility, promoResetGoustoOnDemandFlow } from 'actions/promos'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { PromoModal } from './PromoModal'
 import css from './PromoModal.css'
+import { basketPromoCodeChange } from "actions/basket/basketPromoCodeChange"
+import { promoToggleModalVisibility } from "../../actions/promos/promoToggleModalVisibility"
+import { promoResetGoustoOnDemandFlow } from "../../actions/promos/promoResetGoustoOnDemandFlow"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
+import { promoApply } from "actions/promos/promoApply"
 
 const mapStateToProps = (state) => {
   const promoCode = state.promoCurrent
@@ -96,7 +97,7 @@ const mapStateToProps = (state) => {
 }
 
 export const PromoModalContainer = connect(mapStateToProps, {
-  promoApply: actions.promoApply,
+  promoApply,
   trackUTMAndPromoCode,
   closeModal: () => promoToggleModalVisibility(false),
   basketPromoCodeChange,

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { helpPreLoginVisibilityChange } from 'actions/login'
 import { BurgerMobileMenu } from './BurgerMobileMenu'
-import { trackClickRateRecipes } from '../../../../routes/Ratings/actions/feedback'
+import { helpPreLoginVisibilityChange } from "actions/login/helpPreLoginVisibilityChange"
+import { trackClickRateRecipes } from "routes/Ratings/actions/feedback/trackClickRateRecipes"
 
 export const BurgerMobileMenuContainer = connect(null, {
   helpPreLoginVisibilityChange,

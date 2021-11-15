@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Link from 'Link'
-import { helpPreLoginVisibilityChange } from 'actions/login'
 import { BurgerMobileMenu } from '../BurgerMobileMenu'
+import { helpPreLoginVisibilityChange } from "actions/login/helpPreLoginVisibilityChange"
 
 jest.mock('actions/login')
 

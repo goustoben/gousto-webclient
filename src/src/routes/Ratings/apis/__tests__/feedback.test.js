@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import { getUserFeedbackCount } from '../feedback'
+import { getUserFeedbackCount } from "routes/Ratings/apis/feedback/getUserFeedbackCount"
 
 jest.mock('utils/fetch')
 

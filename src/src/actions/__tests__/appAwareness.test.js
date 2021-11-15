@@ -1,6 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
-import { trackAppStoreLoginButton, trackPlayStoreLoginButton } from '../appAwareness'
+import { trackAppStoreLoginButton } from "actions/appAwareness/trackAppStoreLoginButton"
+import { trackPlayStoreLoginButton } from "actions/appAwareness/trackPlayStoreLoginButton"
 
 describe('app awareness actions', () => {
   describe('when trackAppStoreLoginButton is called', () => {

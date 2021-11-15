@@ -1,7 +1,8 @@
 import Immutable from 'immutable'
-import { getStockAvailability, loadMenuCollectionsWithMenuService } from 'actions/menuActionHelper'
 import { safeJestMock } from '_testing/mocks'
-import * as landingCollectionImport from '../../routes/Menu/actions/menuSetLandingCollection'
+import * as landingCollectionImport from 'routes/Menu/actions/menuSetLandingCollection/menuSetLandingCollection'
+import { getStockAvailability } from "actions/menuActionHelper/getStockAvailability"
+import { loadMenuCollectionsWithMenuService } from "actions/menuActionHelper/loadMenuCollectionsWithMenuService"
 
 const mockActiveMenuForDate = {}
 const menuSetLandingCollection = safeJestMock(landingCollectionImport, 'menuSetLandingCollection')

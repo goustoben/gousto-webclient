@@ -4,7 +4,7 @@ import * as basketActions from 'actions/basket'
 import * as menuActions from 'actions/menu'
 
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
-import { menuOverlayClick } from '../menuOverlayClick'
+import { menuOverlayClick } from "routes/Menu/actions/menuOverlayClick/menuOverlayClick"
 
 describe('given menuOverlayClick action is called', () => {
   let state

@@ -1,9 +1,10 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
-import { orderAddressChange } from 'actions/order'
-import userActions from 'actions/user'
 import { OrderDeliveryAddress } from './OrderDeliveryAddress'
+import { orderAddressChange } from "actions/order/orderAddressChange"
+import { userTrackToggleEditAddressSection } from "actions/user/userTrackToggleEditAddressSection"
+import { userTrackAddressSelected } from "actions/user/userTrackAddressSelected"
 
 function mapStateToProps(state, ownProps) {
   const { orderId } = ownProps
@@ -20,6 +21,6 @@ function mapStateToProps(state, ownProps) {
 
 export const OrderDeliveryAddressContainer = connect(mapStateToProps, {
   orderAddressChange,
-  userTrackToggleEditAddressSection: userActions.userTrackToggleEditAddressSection,
-  userTrackAddressSelected: userActions.userTrackAddressSelected,
+  userTrackToggleEditAddressSection,
+  userTrackAddressSelected,
 })(OrderDeliveryAddress)

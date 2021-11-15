@@ -1,17 +1,13 @@
 import { connect } from 'react-redux'
-import {
-  storeGetHelpOrderId,
-} from 'actions/getHelp'
 import { client as routes } from 'config/routes'
 import { getUserId } from 'selectors/user'
 import { getOrder } from './selectors/selectors'
 import { actionTypes } from './actions/actionTypes'
-import {
-  loadOrderById,
-  loadOrderAndRecipesByIds,
-  validateLatestOrder
-} from './actions/getHelp'
 import { GetHelp } from './GetHelp'
+import { storeGetHelpOrderId } from "actions/getHelp/storeGetHelpOrderId"
+import { loadOrderById } from "routes/GetHelp/actions/getHelp/loadOrderById"
+import { loadOrderAndRecipesByIds } from "routes/GetHelp/actions/getHelp/loadOrderAndRecipesByIds"
+import { validateLatestOrder } from "routes/GetHelp/actions/getHelp/validateLatestOrder"
 
 const getContent = ({ content }) => ({
   title: content.get('get-help_default_pageheader_header')

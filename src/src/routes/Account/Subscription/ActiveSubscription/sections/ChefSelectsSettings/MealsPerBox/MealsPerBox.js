@@ -16,8 +16,8 @@ import { SettingSection } from '../../../../components/SettingSection'
 
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
-import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
-import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
+import { useUpdateSubscription } from '../../../../apis/hooks/useUpdateSubscription'
+import { useSubscriptionToast } from '../../../../apis/hooks/useSubscriptionToast'
 
 import { MEALS_PER_BOX_MAP } from '../../../../enum/box'
 

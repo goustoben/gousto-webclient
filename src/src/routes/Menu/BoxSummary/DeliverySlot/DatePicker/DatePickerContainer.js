@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
-import tempActions from 'actions/temp'
-import { setTempDeliveryOptions } from 'actions/deliveries'
 import { DatePicker } from './DatePicker'
+import { setTempDeliveryOptions } from "actions/deliveries/setTempDeliveryOptions"
+import { temp } from "actions/temp/temp"
 
 const mapStateToProps = (state) => ({
   disableNewDatePicker: !state.auth.get('isAuthenticated'),
 })
 
 const mapDispatchToProps = {
-  setTempSlotId: slotId => tempActions.temp('slotId', slotId),
+  setTempSlotId: slotId => temp('slotId', slotId),
   handleDateChange: setTempDeliveryOptions
 }
 

@@ -1,16 +1,12 @@
 import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
-import {
-  fetchOrderIssues as fetchOrderIssuesApi,
-  validateIngredients,
-} from 'apis/getHelp'
 import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
-import {
-  fetchIngredientIssues as fetchOrderIssuesAction,
-  validateSelectedIngredients,
-  trackAcceptIngredientsRefund
-} from 'actions/getHelp'
+import { trackAcceptIngredientsRefund } from "actions/getHelp/trackAcceptIngredientsRefund"
+import { validateSelectedIngredients } from "actions/getHelp/validateSelectedIngredients"
+import { fetchIngredientIssues as fetchOrderIssuesAction } from "actions/getHelp/fetchIngredientIssues"
+import { validateIngredients } from "apis/getHelp/validateIngredients"
+import { fetchOrderIssues as fetchOrderIssuesApi } from "apis/getHelp/fetchOrderIssues"
 
 jest.mock('apis/getHelp')
 

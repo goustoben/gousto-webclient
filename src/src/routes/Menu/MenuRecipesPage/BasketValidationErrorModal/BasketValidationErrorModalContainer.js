@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 import { getBasketNotValidError } from 'selectors/status'
 import { getFormatedRulesMessage } from '../../selectors/basket'
 import { BasketValidationErrorModal } from './BasketValidationErrorModal'
-import { clearBasketNotValidError } from '../../actions/menuCheckoutClick'
-import { basketRecipeSwap } from '../../actions/basketRecipes'
+import { basketRecipeSwap } from "routes/Menu/actions/basketRecipes/basketRecipeSwap"
+import { clearBasketNotValidError } from "routes/Menu/actions/menuCheckoutClick/clearBasketNotValidError"
 
 const mapStateToProps = (state) => {
   const basketRuleBroken = getBasketNotValidError(state)

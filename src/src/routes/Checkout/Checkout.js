@@ -1,11 +1,9 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import logger from 'utils/logger'
 import routesConfig from 'config/routes'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import Overlay from 'Overlay'
 import ModalPanel from 'Modal/ModalPanel'
 import { Login } from 'Login'
@@ -30,6 +28,12 @@ import { CheckoutUrgencyControllerContainer } from './Components/CheckoutUrgency
 import { CheckoutUrgencyModalContainer } from './Components/CheckoutUrgency/CheckoutUrgencyModal'
 import { CheckoutUrgencyBanner } from './Components/CheckoutUrgency/CheckoutUrgencyBanner'
 import css from './Checkout.css'
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { replace } from "actions/redirect/replace"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { checkoutCreatePreviewOrder } from "routes/Menu/actions/checkout/checkoutCreatePreviewOrder"
+import { pricingRequest } from "actions/pricing/pricingRequest"
+import { redirect } from "actions/redirect/redirect"
 
 const stepMapping = {
   'order-summary': { component: OrderSummary, humanName: 'Summary' },
@@ -114,7 +118,7 @@ class Checkout extends PureComponent {
     const currentStep = params && params.stepName
 
     if (!query.steps && firstStep && (!currentStep || currentStep !== firstStep)) {
-      store.dispatch(actions.replace(`${routesConfig.client['check-out']}/${firstStep}`))
+      store.dispatch(replace(`${routesConfig.client['check-out']}/${firstStep}`))
     }
 
     // defensive code to ensure menu load days works below for deeplinks
@@ -125,12 +129,12 @@ class Checkout extends PureComponent {
       (typeof store.getState().boxSummaryDeliveryDays === 'object' &&
         store.getState().boxSummaryDeliveryDays.size === 0)
     ) {
-      await store.dispatch(actions.menuLoadDays())
+      await store.dispatch(menuLoadDays())
       await store.dispatch(boxSummaryDeliveryDaysLoad())
     }
 
     try {
-      await store.dispatch(actions.checkoutCreatePreviewOrder())
+      await store.dispatch(checkoutCreatePreviewOrder())
     } catch (e) {
       // error is handled below
     }
@@ -148,18 +152,18 @@ class Checkout extends PureComponent {
       )
 
       return store.dispatch(
-        actions.redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true)
+        redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true)
       )
     }
 
     if (!store.getState().menuCutoffUntil) {
-      await store.dispatch(actions.menuLoadDays())
+      await store.dispatch(menuLoadDays())
     }
 
-    return store.dispatch(actions.pricingRequest()).catch((err) => {
+    return store.dispatch(pricingRequest()).catch((err) => {
       if (__SERVER__) {
         logger.error({ message: 'Failed to fetch prices.', errors: [err] })
-        store.dispatch(actions.redirect(routesConfig.client.menu, true))
+        store.dispatch(redirect(routesConfig.client.menu, true))
       }
     })
   }

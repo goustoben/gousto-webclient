@@ -7,8 +7,8 @@ import {
   showEventSent
 } from 'selectors/loggingmanager'
 import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
-import { sendGoustoAppLinkSMS } from 'actions/loggingmanager'
 import { LoginDesktop } from './LoginDesktop'
+import { sendGoustoAppLinkSMS } from "actions/loggingmanager/sendGoustoAppLinkSMS"
 
 const mapStateToProps = (state) => ({
   goustoAppEventName: getGoustoAppEventName(),

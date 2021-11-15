@@ -16,12 +16,12 @@ import {
 } from '../../../../context/selectors/deliveries'
 
 import { SettingSection } from '../../../../components/SettingSection'
-import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
+import { useUpdateSubscription } from '../../../../apis/hooks/useUpdateSubscription'
 
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
 import css from './DeliveryDayAndTime.css'
-import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
+import { useSubscriptionToast } from '../../../../apis/hooks/useSubscriptionToast'
 
 const renderCurrentValue = ({ day, timeRange }) => (
   <Fragment>

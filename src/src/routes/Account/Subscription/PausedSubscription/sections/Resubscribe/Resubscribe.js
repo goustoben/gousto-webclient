@@ -1,19 +1,16 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CTA } from 'goustouicomponents'
 import PropTypes from 'prop-types'
-
-import endpoint from 'config/endpoint'
-import routes from 'config/routes'
 
 import { getCurrentUserId } from 'routes/Account/Subscription/context/selectors/currentUser'
 import { Section } from '../../../components/Section'
 import { resubscribeSection } from '../../../subscriptionsSectionsContent'
-import { useFetch } from '../../../../../../hooks/useFetch'
 import { SubscriptionContext } from '../../../context'
 import { actionTypes } from '../../../context/reducers'
 import { SubscriberPricingInfoPanel } from '../../../../AccountComponents/SubscriberPricingInfoPanel'
 import { trackSubscriptionSettingsChange } from '../../../tracking'
 import css from './Resubscribe.css'
+import { useReactivateSubscription } from "routes/Account/Subscription/PausedSubscription/apis/hooks/useReactivateSubscription"
 
 const getResult = (loading, response, error) => {
   if (!error && !loading && response && response.status && response.status.toLowerCase() === 'ok') {
@@ -37,22 +34,7 @@ export const Resubscribe = ({ accessToken }) => {
   }
 
   const userId = getCurrentUserId(state)
-
-  const reactivateSubscriptionUrl = `${endpoint('subscriptioncommand')}/subscriptions/${userId}${routes.subscriptionCommand.activate}`
-  const method = 'POST'
-
-  const [loading, response, error] = useFetch({
-    url: reactivateSubscriptionUrl,
-    needsAuthorization: true,
-    accessToken,
-    trigger: {
-      shouldRequest: shouldResubscribe,
-      setShouldRequest: setShouldResubscribe,
-    },
-    options: {
-      method,
-    },
-  })
+  const {loading, response, error} = useReactivateSubscription(userId, accessToken, shouldResubscribe, setShouldResubscribe)
 
   const data = getResult(loading, response, error)
 

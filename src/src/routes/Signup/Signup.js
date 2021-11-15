@@ -6,18 +6,10 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import routes from 'config/routes'
-import actions from 'actions'
-import {
-  stepByName,
-  getPromocodeQueryParam,
-  findStepBySlug,
-  getStepFromPathname,
-} from 'utils/signup'
+import { findStepBySlug, getPromocodeQueryParam, getStepFromPathname, stepByName, } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
-import { menuLoadBoxPrices } from 'actions/menu'
 
 import { getPromoCode } from 'selectors/basket'
-import { promoGet } from 'actions/promos'
 import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
 
 import css from './Signup.css'
@@ -30,6 +22,12 @@ import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppl
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
 import { CheckAccountPageContainer } from './Components/CheckAccountPage'
 import { ApplyVoucherPageContainer } from './Components/ApplyVoucherPage'
+import { menuLoadBoxPrices } from "actions/menu/menuLoadBoxPrices"
+import { promoGet } from "../../actions/promos/promoGet"
+import { signupStepsReceive } from "actions/signup/signupStepsReceive"
+import { signupSetStep } from "actions/signup/signupSetStep"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { redirect } from "actions/redirect/redirect"
 
 const components = {
   boxSize: BoxSizeStep,
@@ -147,10 +145,10 @@ class Signup extends PureComponent {
     const firstStep = stepByName(steps.first())
 
     if (!store.getState().menuCutoffUntil) {
-      await store.dispatch(actions.menuLoadDays())
+      await store.dispatch(menuLoadDays())
     }
 
-    store.dispatch(actions.signupStepsReceive(steps))
+    store.dispatch(signupStepsReceive(steps))
 
     let stepToSet = firstStep
 
@@ -162,7 +160,7 @@ class Signup extends PureComponent {
       }
     }
 
-    store.dispatch(actions.signupSetStep(stepToSet))
+    store.dispatch(signupSetStep(stepToSet))
 
     if (isGoustoOnDemandEnabled && params.stepName !== signupConfig.checkAccountPageSlug) {
       const state = store.getState()
@@ -178,14 +176,14 @@ class Signup extends PureComponent {
 
     if (isPaymentBeforeChoosingV2Enabled) {
       return store.dispatch(
-        actions.redirect(`${routes.client.menu}${getPromocodeQueryParam(promoCode, '?')}`)
+        redirect(`${routes.client.menu}${getPromocodeQueryParam(promoCode, '?')}`)
       )
     }
 
     // No Step specified and no query string specified
     if (!params.stepName && querySteps.length === 0) {
       return store.dispatch(
-        actions.redirect(
+        redirect(
           `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
             promoCode,
             '?'
@@ -200,7 +198,7 @@ class Signup extends PureComponent {
       const futureSteps = querySteps.join(',')
 
       return store.dispatch(
-        actions.redirect(
+        redirect(
           `${routes.client.signup}/${step.get('slug')}?steps=${futureSteps}${getPromocodeQueryParam(
             promoCode
           )}`
@@ -221,7 +219,7 @@ class Signup extends PureComponent {
       !shouldSetStepFromParams
     ) {
       return store.dispatch(
-        actions.redirect(
+        redirect(
           `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
             promoCode,
             '?'

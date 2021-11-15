@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
-import { sendRequestToUpdateOrderSummaryPrices } from 'actions/checkout'
 import { PromoCode } from './PromoCode'
+import { sendRequestToUpdateOrderSummaryPrices } from "actions/checkout/sendRequestToUpdateOrderSummaryPrices"
+import { basketPromoCodeChange } from "actions/basket/basketPromoCodeChange"
+import { basketPromoCodeAppliedChange } from "actions/basket/basketPromoCodeAppliedChange"
+import { trackPromocodeChange } from "actions/checkout/trackPromocodeChange"
 
 function mapStateToProps(state) {
   const prices = state.pricing.get('prices')
@@ -18,9 +20,9 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  basketPromoCodeChange: actions.basketPromoCodeChange,
-  basketPromoCodeAppliedChange: actions.basketPromoCodeAppliedChange,
-  trackPromocodeChange: actions.trackPromocodeChange,
+  basketPromoCodeChange,
+  basketPromoCodeAppliedChange,
+  trackPromocodeChange,
   sendRequestToUpdateOrderSummaryPrices,
 }
 

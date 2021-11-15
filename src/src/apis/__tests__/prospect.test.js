@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { storeProspect } from '../prospect'
+import { storeProspect } from "apis/prospect/storeProspect"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

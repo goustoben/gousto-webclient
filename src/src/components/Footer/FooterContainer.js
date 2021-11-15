@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { getIsAuthenticated } from 'selectors/auth'
-import { helpPreLoginVisibilityChange } from 'actions/login'
-import { trackNavigationClick } from 'actions/tracking'
 import Footer from './Footer'
+import { helpPreLoginVisibilityChange } from "actions/login/helpPreLoginVisibilityChange"
+import { trackNavigationClick } from "actions/tracking/trackNavigationClick"
 
 const mapStateToProps = (state, ownProps) => ({
   isAuthenticated: getIsAuthenticated(state),

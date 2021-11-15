@@ -6,8 +6,8 @@ import {
   showEventPending,
   showEventSent
 } from 'selectors/loggingmanager'
-import { sendGoustoAppLinkSMS } from 'actions/loggingmanager'
 import { AppAwarenessBanner } from './AppAwarenessBanner'
+import { sendGoustoAppLinkSMS } from "actions/loggingmanager/sendGoustoAppLinkSMS"
 
 const mapStateToProps = (state) => ({
   goustoAppEventName: getGoustoAppEventName(),

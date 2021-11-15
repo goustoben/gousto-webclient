@@ -1,10 +1,14 @@
 import Immutable from 'immutable'
 import * as reactRouterPush from 'react-router-redux'
 import basketActions from 'actions/basket'
-import { boxSummaryDeliveryDaysLoad, boxSummaryNext, basketDeliveryDaysReceive, trackingUnavailableRecipeList, boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
-import { menuLoadMenu } from 'actions/menu'
-import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
+import { basketDeliveryDaysReceive } from "actions/boxSummary/basketDeliveryDaysReceive"
+import { boxSummaryDeliverySlotChosen } from "actions/boxSummary/boxSummaryDeliverySlotChosen"
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { boxSummaryNext } from "actions/boxSummary/boxSummaryNext"
+import { trackingUnavailableRecipeList } from "actions/boxSummary/trackingUnavailableRecipeList"
+import { menuLoadMenu } from "actions/menu/menuLoadMenu"
+import { fetchDeliveryDays } from "apis/deliveries/fetchDeliveryDays"
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({

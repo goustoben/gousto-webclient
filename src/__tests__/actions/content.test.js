@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
-import { fetchContentBySlug } from 'apis/content'
-import { contentLoadContentByPageSlug, loadContentVariants } from 'actions/content'
+import { contentLoadContentByPageSlug } from "actions/content/contentLoadContentByPageSlug"
+import { loadContentVariants } from "actions/content/loadContentVariants"
+import { fetchContentBySlug } from "apis/content/fetchContentBySlug"
 
 jest.mock('apis/content', () => ({
   fetchContentBySlug: jest.fn(),

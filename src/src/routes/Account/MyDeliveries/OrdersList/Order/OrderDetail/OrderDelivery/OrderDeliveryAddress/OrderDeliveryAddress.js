@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { Alert, Button } from 'goustouicomponents'
-import config from 'config'
 import Link from 'Link'
 import { LinkButton } from '../LinkButton'
 import { Address } from './Address'
 
 import css from './OrderDeliveryAddress.css'
+import { client } from "config/routes"
 
 class OrderDeliveryAddress extends React.PureComponent {
   constructor(props) {
@@ -82,7 +82,6 @@ class OrderDeliveryAddress extends React.PureComponent {
     const submitDisabled = selectedAddressId === shippingAddressId
     const shippingAddress = addresses.find(address => address.get('id') === shippingAddressId)
     const formattedShippingAddress = this.formatAddress(shippingAddress)
-    const { client } = config.routes
 
     return (
       <div>

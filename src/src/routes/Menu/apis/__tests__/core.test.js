@@ -1,5 +1,6 @@
 import { fetch } from 'utils/fetch'
-import { saveUserOrder, updateUserOrder } from '../core'
+import { saveUserOrder } from "routes/Menu/apis/core/saveUserOrder"
+import { updateUserOrder } from "routes/Menu/apis/core/updateUserOrder"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () => ({

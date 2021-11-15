@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { clearUpdateDateErrorAndPending, orderGetDeliveryDays } from 'actions/order'
-import recipesActions from 'actions/recipes'
-import userActions from 'actions/user'
 import OrderDelivery from './OrderDelivery'
+import { orderGetDeliveryDays } from "actions/order/orderGetDeliveryDays"
+import { clearUpdateDateErrorAndPending } from "actions/order/clearUpdateDateErrorAndPending"
+import { recipesLoadStockByDate } from "actions/recipes/recipesLoadStockByDate"
+import { userTrackToggleEditDateSection } from "actions/user/userTrackToggleEditDateSection"
+import { userToggleEditDateSection } from "actions/user/userToggleEditDateSection"
 
 function mapStateToProps(state, ownProps) {
   const order = state.user.getIn(['newOrders', ownProps.orderId])
@@ -23,9 +25,9 @@ function mapStateToProps(state, ownProps) {
 const OrderDeliveryContainer = connect(mapStateToProps, {
   clearUpdateDateErrorAndPending,
   orderGetDeliveryDays,
-  recipesLoadStockByDate: recipesActions.recipesLoadStockByDate,
-  userTrackToggleEditDateSection: userActions.userTrackToggleEditDateSection,
-  userToggleEditDateSection: userActions.userToggleEditDateSection
+  recipesLoadStockByDate: recipesLoadStockByDate,
+  userTrackToggleEditDateSection,
+  userToggleEditDateSection
 })(OrderDelivery)
 
 export default OrderDeliveryContainer

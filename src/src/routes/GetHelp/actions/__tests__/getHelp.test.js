@@ -1,49 +1,47 @@
 import Immutable from 'immutable'
 import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
-import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { fetchOrder } from 'apis/orders'
-import { fetchUserOrders } from 'apis/user'
 import * as getHelpApi from 'apis/getHelp'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
 import * as menuApi from '../../apis/menu'
 import * as getHelpActionsUtils from '../utils'
-import {
-  applyDeliveryRefund,
-  getUserOrders,
-  loadOrderById,
-  loadOrderAndRecipesByIds,
-  loadTrackingUrl,
-  trackAcceptRefundInSSRDeliveries,
-  trackClickGetHelpWithThisBox,
-  trackClickGetInTouchInSSRDeliveries,
-  trackClickMyGoustoInSSRDeliveries,
-  trackClickTrackMyBoxInSSRDeliveries,
-  trackConfirmationCTA,
-  trackContinueAsNewCustomer,
-  trackDeclineRefundInSSRDeliveries,
-  trackDeliveryOther,
-  trackDeliveryStatus,
-  trackDeselectIngredient,
-  trackHelpPreLoginModalDisplayed,
-  trackIngredientReasonsConfirmed,
-  trackMassIssueAlertDisplayed,
-  trackNextBoxTrackingClick,
-  trackRecipeCardClick,
-  trackRecipeCardGetInTouchClick,
-  trackRefundFAQClick,
-  trackIngredientsAutoAcceptCheck,
-  trackIngredientsGetInTouchClick,
-  trackIngredientsGoToMyGousto,
-  trackSelectDeliveryCategory,
-  trackSelectIngredient,
-  validateDeliveryAction,
-  validateLatestOrder,
-} from '../getHelp'
 import * as orderSelectors from '../../selectors/orderSelectors'
 import { transformRecipesWithIngredients } from '../transformers/recipeTransform'
+import { fetchUserOrders } from "apis/users/fetchUserOrders"
+import { fetchOrder } from "apis/orders/fetchOrder"
+import { fetchDeliveryConsignment } from "apis/deliveries/fetchDeliveryConsignment"
+import { trackDeliveryOther } from "routes/GetHelp/actions/getHelp/trackDeliveryOther"
+import { trackDeliveryStatus } from "routes/GetHelp/actions/getHelp/trackDeliveryStatus"
+import { trackNextBoxTrackingClick } from "routes/GetHelp/actions/getHelp/trackNextBoxTrackingClick"
+import { getUserOrders } from "routes/GetHelp/actions/getHelp/getUserOrders"
+import { loadOrderById } from "routes/GetHelp/actions/getHelp/loadOrderById"
+import { loadOrderAndRecipesByIds } from "routes/GetHelp/actions/getHelp/loadOrderAndRecipesByIds"
+import { trackIngredientsAutoAcceptCheck } from "routes/GetHelp/actions/getHelp/trackIngredientsAutoAcceptCheck"
+import { trackIngredientsGetInTouchClick } from "routes/GetHelp/actions/getHelp/trackIngredientsGetInTouchClick"
+import { trackIngredientsGoToMyGousto } from "routes/GetHelp/actions/getHelp/trackIngredientsGoToMyGousto"
+import { trackConfirmationCTA } from "routes/GetHelp/actions/getHelp/trackConfirmationCTA"
+import { trackClickGetHelpWithThisBox } from "routes/GetHelp/actions/getHelp/trackClickGetHelpWithThisBox"
+import { trackHelpPreLoginModalDisplayed } from "routes/GetHelp/actions/getHelp/trackHelpPreLoginModalDisplayed"
+import { trackContinueAsNewCustomer } from "routes/GetHelp/actions/getHelp/trackContinueAsNewCustomer"
+import { trackIngredientReasonsConfirmed } from "routes/GetHelp/actions/getHelp/trackIngredientReasonsConfirmed"
+import { trackMassIssueAlertDisplayed } from "routes/GetHelp/actions/getHelp/trackMassIssueAlertDisplayed"
+import { trackSelectIngredient } from "routes/GetHelp/actions/getHelp/trackSelectIngredient"
+import { trackDeselectIngredient } from "routes/GetHelp/actions/getHelp/trackDeselectIngredient"
+import { trackRecipeCardClick } from "routes/GetHelp/actions/getHelp/trackRecipeCardClick"
+import { trackRecipeCardGetInTouchClick } from "routes/GetHelp/actions/getHelp/trackRecipeCardGetInTouchClick"
+import { trackRefundFAQClick } from "routes/GetHelp/actions/getHelp/trackRefundFAQClick"
+import { trackSelectDeliveryCategory } from "routes/GetHelp/actions/getHelp/trackSelectDeliveryCategory"
+import { trackClickMyGoustoInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackClickMyGoustoInSSRDeliveries"
+import { trackClickTrackMyBoxInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackClickTrackMyBoxInSSRDeliveries"
+import { trackClickGetInTouchInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackClickGetInTouchInSSRDeliveries"
+import { trackAcceptRefundInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackAcceptRefundInSSRDeliveries"
+import { trackDeclineRefundInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackDeclineRefundInSSRDeliveries"
+import { applyDeliveryRefund } from "routes/GetHelp/actions/getHelp/applyDeliveryRefund"
+import { loadTrackingUrl } from "routes/GetHelp/actions/getHelp/loadTrackingUrl"
+import { validateLatestOrder } from "routes/GetHelp/actions/getHelp/validateLatestOrder"
+import { validateDeliveryAction } from "routes/GetHelp/actions/getHelp/validateDeliveryAction"
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),

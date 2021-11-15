@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import basketActions from 'actions/basket'
-import productActions from 'actions/products'
 import userUtils from 'utils/user'
 import OrderSummary from 'OrderSummary'
 import { actionTypes } from 'actions/actionTypes'
-import { basketUpdateProducts } from 'routes/Menu/actions/basket'
+import { basketProductRemove } from "actions/basket/basketProductRemove"
+import { productDetailVisibilityChange } from "actions/products/productDetailVisibilityChange"
+import { basketUpdateProducts } from "routes/Menu/actions/basket/basketUpdateProducts"
 
 function mapStateToProps(state) {
   const orderId = state.basket.get('orderId')
@@ -32,8 +32,8 @@ function mapStateToProps(state) {
 
 const OrderSummaryContainer = connect(mapStateToProps, {
   onSave: basketUpdateProducts,
-  removeProduct: basketActions.basketProductRemove,
-  showProductDetail: productActions.productDetailVisibilityChange,
+  removeProduct: basketProductRemove,
+  showProductDetail: productDetailVisibilityChange,
 })(OrderSummary)
 
 export default OrderSummaryContainer

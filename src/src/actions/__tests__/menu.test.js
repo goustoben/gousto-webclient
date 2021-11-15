@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
-import * as orders from 'apis/orders'
-import * as recipes from 'apis/recipes'
+import * as orders from 'apis/orders/orders'
+import * as recipes from 'apis/recipes/recipes'
 import * as utilsBasket from 'utils/basket'
 import * as utilsDeliveries from 'utils/deliveries'
 import * as MenuServiceLoadDaysActions from 'actions/menuServiceLoadDays'
@@ -8,33 +8,32 @@ import * as MenuActionHelperActions from 'actions/menuActionHelper'
 import * as boxPrices from 'apis/boxPrices'
 import { actionTypes } from '../actionTypes'
 import * as trackingKeys from '../trackingKeys'
-import statusActions from '../status'
+import statusActions from '../status/status'
 import * as BasketActions from '../basket'
-import * as MenuBasketActions from '../../routes/Menu/actions/basketRecipes'
+import * as MenuBasketActions from 'routes/Menu/actions/basketRecipes/basketRecipes'
 import tempActions from '../temp'
 import * as ProductActions from '../products'
-import menuActions, {
-  findSlot,
-  sideEventScreens,
-  sideEventTypes,
-  menuCutoffUntilReceive,
-  forceMenuLoad,
-  menuLoadMenu,
-  menuLoadDays,
-  menuLoadStock,
-  menuBrowseCTAVisibilityChange,
-  menuLoadComplete,
-  menuReceiveBoxPrices,
-  recipeVariantDropdownExpanded,
-  menuLoadBoxPrices,
-  trackSidesContinueClicked,
-  trackViewSidesModal,
-  trackCancelSide,
-  trackAddSide,
-  trackViewSidesAllergens,
-  trackCloseSidesAllergens,
-  menuLoadOrderDetails,
-} from '../menu'
+import menuActions from '../menu'
+import { menuLoadBoxPrices } from "actions/menu/menuLoadBoxPrices"
+import { menuReceiveBoxPrices } from "actions/menu/menuReceiveBoxPrices"
+import { findSlot } from "actions/menu/findSlot"
+import { menuCutoffUntilReceive } from "actions/menu/menuCutoffUntilReceive"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { menuLoadMenu } from "actions/menu/menuLoadMenu"
+import { menuLoadOrderDetails } from "actions/menu/menuLoadOrderDetails"
+import { menuLoadStock } from "actions/menu/menuLoadStock"
+import { menuBrowseCTAVisibilityChange } from "actions/menu/menuBrowseCTAVisibilityChange"
+import { forceMenuLoad } from "actions/menu/forceMenuLoad"
+import { menuLoadComplete } from "actions/menu/menuLoadComplete"
+import { recipeVariantDropdownExpanded } from "actions/menu/recipeVariantDropdownExpanded"
+import { sideEventScreens } from "actions/menu/sideEventScreens"
+import { sideEventTypes } from "actions/menu/sideEventTypes"
+import { trackSidesContinueClicked } from "actions/menu/trackSidesContinueClicked"
+import { trackViewSidesModal } from "actions/menu/trackViewSidesModal"
+import { trackCancelSide } from "actions/menu/trackCancelSide"
+import { trackAddSide } from "actions/menu/trackAddSide"
+import { trackViewSidesAllergens } from "actions/menu/trackViewSidesAllergens"
+import { trackCloseSidesAllergens } from "actions/menu/trackCloseSidesAllergens"
 
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'

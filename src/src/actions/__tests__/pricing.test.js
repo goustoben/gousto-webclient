@@ -1,12 +1,12 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import pricing from 'apis/pricing'
-import * as orderV2 from 'routes/Menu/apis/orderV2'
+import * as orderV2 from 'routes/Menu/apis/orderV2/orderV2'
 import actions from 'actions/pricing'
 import { deliveryTariffTypes } from 'utils/deliveries'
 import * as optimizelyUtils from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { createState as createOrderState } from 'routes/Menu/selectors/__mocks__/order.mock'
 import { orderV2PricesFixture } from 'routes/Menu/transformers/orderPricesV2ToV1.test'
+import pricing from "apis/pricing/pricing"
 
 jest.mock('apis/pricing')
 

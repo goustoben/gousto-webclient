@@ -1,1 +1,1 @@
-export default from './OrderState'
+export { default as Component } from './OrderState'

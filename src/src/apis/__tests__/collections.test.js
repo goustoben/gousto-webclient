@@ -1,5 +1,7 @@
 import fetch from 'utils/fetch'
-import { fetchCollections, fetchCollectionBySlug, fetchCollectionRecipes } from '../collections'
+import { fetchCollections } from "apis/collections/fetchCollections"
+import { fetchCollectionRecipes } from "apis/collections/fetchCollectionRecipes"
+import { fetchCollectionBySlug } from "apis/collections/fetchCollectionBySlug"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

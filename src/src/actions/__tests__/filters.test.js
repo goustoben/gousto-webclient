@@ -1,12 +1,10 @@
 import Immutable from 'immutable'
 import { actionTypes } from '../actionTypes'
 
-import {
-  collectionFilterChange,
-  changeCollectionById,
-  changeCollectionToAllRecipesViaCTA,
-  filterProductCategory
-} from '../filters'
+import { collectionFilterChange } from "actions/filters/collectionFilterChange"
+import { changeCollectionById } from "actions/filters/changeCollectionById"
+import { changeCollectionToAllRecipesViaCTA } from "actions/filters/changeCollectionToAllRecipesViaCTA"
+import { filterProductCategory } from "actions/filters/filterProductCategory"
 
 jest.mock('react-router-redux', () => ({
   push: jest.fn(),

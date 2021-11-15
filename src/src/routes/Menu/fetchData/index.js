@@ -1,1 +1,1 @@
-export default from './fetchData'
+export { default as Component } from './fetchData'

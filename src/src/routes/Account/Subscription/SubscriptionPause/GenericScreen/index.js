@@ -1,1 +1,1 @@
-export default from './GenericScreen'
+export { default as Component } from './GenericScreen'

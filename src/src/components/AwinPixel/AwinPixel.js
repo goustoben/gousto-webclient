@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { feLoggingLogEvent, logLevels } from 'actions/log'
+import { logLevels } from "actions/log/logLevels"
+import { feLoggingLogEvent } from "actions/log/feLoggingLogEvent"
 
 const MERCHANT_ID = 5070
 

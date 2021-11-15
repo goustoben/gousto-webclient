@@ -23,13 +23,13 @@ import {
   trackSignupStep,
 } from 'actions'
 /* eslint-enable import/named */
-import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
 import logger from 'utils/logger'
 import Overlay from 'Overlay'
 import { Login } from 'Login'
 
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
 
 jest.mock('actions', () => ({
   replace: jest.fn().mockReturnValue(Promise.resolve()),
@@ -458,7 +458,7 @@ describe('Given Checkout component', () => {
       })
     })
 
-    test('should clear PayPal token', async () => {
+    test('should authClear PayPal token', async () => {
       await wrapper.unmount()
 
       expect(clearPayPalClientToken).toHaveBeenCalled()

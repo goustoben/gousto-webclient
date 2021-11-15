@@ -1,11 +1,9 @@
 import { fetch } from 'utils/fetch'
-import {
-  authPayment,
-  checkPayment,
-  fetchPayPalToken,
-  signupPayment,
-  get3DSCompliantToken,
-} from '../payments'
+import { authPayment } from "apis/payments/authPayment"
+import { checkPayment } from "apis/payments/checkPayment"
+import { fetchPayPalToken } from "apis/payments/fetchPayPalToken"
+import { signupPayment } from "apis/payments/signupPayment"
+import { get3DSCompliantToken } from "apis/payments/get3DSCompliantToken"
 
 const mockPaymentAuthResponse = {
   status: 'ok',

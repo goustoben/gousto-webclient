@@ -3,10 +3,10 @@ import { shallow } from 'enzyme'
 
 import Immutable from 'immutable'
 import actions from 'actions'
-import { helpPreLoginVisibilityChange } from 'actions/login'
 import { Header } from 'Header/Header'
 import routesConfig from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
+import { helpPreLoginVisibilityChange } from "actions/login/helpPreLoginVisibilityChange"
 
 jest.mock('actions')
 jest.mock('actions/login')

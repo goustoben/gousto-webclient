@@ -1,8 +1,8 @@
-import { fetchFeatures } from 'apis/fetchS3'
 import { referAFriend as handleReferalRequest, user, userController } from 'server/routes/user'
-import { referAFriend as sendReferalToCore } from 'apis/user'
-import { validateRecaptchaUserToken } from 'apis/auth'
 import { getCookieValue, routeMatches } from 'server/routes/utils'
+import { referAFriend as sendReferalToCore } from "apis/users/referAFriend"
+import { validateRecaptchaUserToken } from "apis/auth/validateRecaptchaUserToken"
+import { fetchFeatures } from "apis/fetchS3/fetchFeatures"
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),

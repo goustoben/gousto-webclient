@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { userLoadOrderTrackingInfo } from 'actions/user'
 import { getIsMyGoustoBannerSubscriberPricingEnabled } from 'selectors/features'
 import { getUserId, getUserSubscriptionState } from 'selectors/user'
 import {
@@ -9,9 +8,10 @@ import {
   getNextProjectedOrder,
   getPreviousOrder,
 } from '../selectors'
-import { loadNextProjectedOrder } from '../actions/loadNextProjectedOrder'
-import { loadOrders } from '../actions/loadOrders'
 import { Header } from './Header.logic'
+import { userLoadOrderTrackingInfo } from "actions/user/userLoadOrderTrackingInfo"
+import { loadNextProjectedOrder } from "routes/Account/MyGousto/actions/loadNextProjectedOrder/loadNextProjectedOrder"
+import { loadOrders } from "routes/Account/MyGousto/actions/loadOrders/loadOrders"
 
 const mapStateToProps = state => ({
   accessToken: state.auth.get('accessToken'),

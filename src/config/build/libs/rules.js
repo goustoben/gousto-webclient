@@ -16,12 +16,12 @@ const cssProductionRules = [
 const cssDevelopmentRules = [
     {
         test: /\.css$/,
-        use: ['style-loader', ...cssLoaders] 
+        use: ['style-loader', ...cssLoaders]
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', ...scssLoaders] 
-      },    
+        use: ['style-loader', ...scssLoaders]
+      },
 ]
 
 const javascriptProductionRule = {
@@ -32,7 +32,7 @@ const javascriptProductionRule = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: true,
-          }  
+          }
       }
   ],
   include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
@@ -62,7 +62,7 @@ const javascriptDevelopmentRuleWithReactRefresh = {
             cacheDirectory: true,
             plugins: [
               require.resolve('react-refresh/babel'),
-            ].filter(Boolean),                  
+            ].filter(Boolean),
           }
       }
   ],

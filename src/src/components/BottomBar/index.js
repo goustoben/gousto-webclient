@@ -1,1 +1,1 @@
-export default from './BottomBar'
+export { default as Component } from './BottomBar'

@@ -1,5 +1,6 @@
 import fetch from 'utils/fetch'
-import { fetchBrandInfo, fetchBrandMenuHeaders } from '../brand'
+import { fetchBrandInfo } from "apis/brand/fetchBrandInfo"
+import { fetchBrandMenuHeaders } from "apis/brand/fetchBrandMenuHeaders"
 
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {

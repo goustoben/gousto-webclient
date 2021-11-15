@@ -4,14 +4,11 @@ import * as boxSummaryActions from 'actions/boxSummary'
 import * as menuCheckoutActions from 'routes/Menu/actions/checkout'
 import * as orderActions from 'actions/order'
 import optimizelySdk from '@optimizely/optimizely-sdk'
-import * as menuActions from 'routes/Menu/actions/order'
+import * as menuActions from 'routes/Menu/actions/order/order'
 import * as menuSelectors from '../../selectors/menu'
-import {
-  isOrderApiCreateEnabled,
-  isOrderApiUpdateEnabled,
-  checkoutBasket,
-  clearBasketNotValidError,
-} from '../menuCheckoutClick'
+import { checkoutBasket } from "routes/Menu/actions/menuCheckoutClick/checkoutBasket"
+import { clearBasketNotValidError } from "routes/Menu/actions/menuCheckoutClick/clearBasketNotValidError"
+import { isOrderApiCreateEnabled, isOrderApiUpdateEnabled } from "routes/Menu/actions/menuCheckoutClick/common"
 
 // The first spec to create optimizely instance will point to this function.
 // as we memories the optimizely instances onces created.

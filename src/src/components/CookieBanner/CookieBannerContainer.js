@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
-import {
-  cookiePolicyAcceptanceChange,
-  trackCookiePolicyAccepted,
-  trackCookiePolicyVisible,
-} from 'actions/cookies'
 import { getIsPolicyAccepted } from 'selectors/cookies'
 import { getIsPromoAppBannerEnabled } from 'selectors/appBanner'
 import { CookieBanner } from './CookieBanner'
+import { cookiePolicyAcceptanceChange } from "actions/cookies/cookiePolicyAcceptanceChange"
+import { trackCookiePolicyAccepted } from "actions/cookies/trackCookiePolicyAccepted"
+import { trackCookiePolicyVisible } from "actions/cookies/trackCookiePolicyVisible"
 
 const copy = {
   button: 'Agree',

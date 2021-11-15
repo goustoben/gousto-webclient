@@ -1,6 +1,4 @@
 import Immutable from 'immutable'
-import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
-import { trackingReferFriendSocialSharing } from 'actions/user'
 import {
   getMessage,
   getReferralLink,
@@ -10,6 +8,8 @@ import {
   getFacebookReferralLink,
   SOCIAL_TYPES,
 } from '../socialReferralHelper'
+import { trackUserFreeFoodLinkShare } from "actions/loggingmanager/trackUserFreeFoodLinkShare"
+import { trackingReferFriendSocialSharing } from "actions/user/trackingReferFriendSocialSharing"
 
 jest.mock('actions/loggingmanager', () => ({
   trackUserFreeFoodLinkShare: jest.fn(),

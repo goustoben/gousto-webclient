@@ -1,9 +1,7 @@
 import fetch, { fetchRaw } from 'utils/fetch'
-import {
-  applyDeliveryCompensation,
-  shouldShowEntryPointTooltip,
-  validateDelivery,
-} from '../getHelp'
+import { shouldShowEntryPointTooltip } from "apis/getHelp/shouldShowEntryPointTooltip"
+import { applyDeliveryCompensation } from "apis/getHelp/applyDeliveryCompensation"
+import { validateDelivery } from "apis/getHelp/validateDelivery"
 
 const ACCESS_TOKEN = 'shhh-is-a-secret'
 const MOCK_RESPONSE = { data: [1, 2, 3] }

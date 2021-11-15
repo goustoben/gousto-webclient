@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
 import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from 'actions/actionTypes'
-import { userRecipeRatings, trackClickRateRecipes } from 'routes/Ratings/actions/feedback'
-import { getUserFeedbackCount } from '../../apis/feedback'
+import { userRecipeRatings } from "routes/Ratings/actions/feedback/userRecipeRatings"
+import { trackClickRateRecipes } from "routes/Ratings/actions/feedback/trackClickRateRecipes"
+import { getUserFeedbackCount } from "routes/Ratings/apis/feedback/getUserFeedbackCount"
 
 jest.mock('../../apis/feedback', () => ({
   getUserFeedbackCount: jest.fn()

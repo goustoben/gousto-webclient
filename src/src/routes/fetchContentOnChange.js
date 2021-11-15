@@ -1,5 +1,5 @@
-import { contentLoadContentByPageSlug } from 'actions/content'
 import config from 'config/cms'
+import { contentLoadContentByPageSlug } from "actions/content/contentLoadContentByPageSlug"
 
 export const pathToSlug = (path) => {
   const mappings = [

@@ -612,7 +612,7 @@ describe('user reducer', () => {
   })
 
   describe('USER_CLEAR_DATA', () => {
-    test('should clear the state', () => {
+    test('should authClear the state', () => {
       const state = Immutable.Map({
         id: '123',
         email: 'test@email.com',

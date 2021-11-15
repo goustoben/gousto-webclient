@@ -6,6 +6,7 @@ import { AppStoreLinks } from 'components/AppStoreLinks'
 import { TickList } from 'TickList'
 import config from 'config'
 import css from './AppPromo.css'
+import { client } from "config/routes"
 
 const benefits = [
   'Be the first to know when the menu is out',
@@ -37,7 +38,7 @@ const mobileAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
     className={classnames(css.mobileAppLink, {
       [css.hideElement]: (device === 'desktop' || device === 'tablet')
     })}
-    href={config.routes.client.appsRedirect}
+    href={client.appsRedirect}
   >
     <CTA isFullWidth>Download the app</CTA>
   </a>

@@ -1,27 +1,6 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
-import {
-  trackFirstPurchase,
-  setAffiliateSource,
-  trackAffiliatePurchase,
-  trackRecipeOrderDisplayed,
-  trackUserAttributes,
-  setUTMSource,
-  trackGetStarted,
-  trackSubmitOrderEvent,
-  trackUTMAndPromoCode,
-  trackNewUser,
-  trackNewOrder,
-  trackSubscriptionCreated,
-  trackingOrderCheckout,
-  trackClickBuildMyBox,
-  trackDiscountVisibilityBannerAppearance,
-  trackCheckoutNavigationLinks,
-  trackCheckoutError,
-  trackShowcaseMenuAction,
-  trackUnexpectedSignup,
-} from 'actions/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import {
   clickGetStarted,
@@ -42,6 +21,25 @@ import logger from 'utils/logger'
 import {
   getIsDecoupledPaymentEnabled
 } from 'selectors/features'
+import { trackFirstPurchase } from "actions/tracking/trackFirstPurchase"
+import { setAffiliateSource } from "actions/tracking/setAffiliateSource"
+import { trackAffiliatePurchase } from "actions/tracking/trackAffiliatePurchase"
+import { trackRecipeOrderDisplayed } from "actions/tracking/trackRecipeOrderDisplayed"
+import { trackUserAttributes } from "actions/tracking/trackUserAttributes"
+import { setUTMSource } from "actions/tracking/setUTMSource"
+import { trackGetStarted } from "actions/tracking/trackGetStarted"
+import { trackSubmitOrderEvent } from "actions/tracking/trackSubmitOrderEvent"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
+import { trackNewUser } from "actions/tracking/trackNewUser"
+import { trackNewOrder } from "actions/tracking/trackNewOrder"
+import { trackSubscriptionCreated } from "actions/tracking/trackSubscriptionCreated"
+import { trackingOrderCheckout } from "actions/tracking/trackingOrderCheckout"
+import { trackClickBuildMyBox } from "actions/tracking/trackClickBuildMyBox"
+import { trackDiscountVisibilityBannerAppearance } from "actions/tracking/trackDiscountVisibilityBannerAppearance"
+import { trackCheckoutNavigationLinks } from "actions/tracking/trackCheckoutNavigationLinks"
+import { trackCheckoutError } from "actions/tracking/trackCheckoutError"
+import { trackShowcaseMenuAction } from "actions/tracking/trackShowcaseMenuAction"
+import { trackUnexpectedSignup } from "actions/tracking/trackUnexpectedSignup"
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),

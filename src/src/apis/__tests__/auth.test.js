@@ -1,20 +1,18 @@
 import fetch from 'utils/fetch'
 import isomorphicFetch from 'isomorphic-fetch'
-import {
-  getUserToken,
-  identifyUserUsingOAuth,
-  refreshUserToken,
-  forgetUserToken,
-  validateUserPassword,
-  resetUserPassword,
-  serverAuthenticate,
-  serverLogout,
-  serverRefresh,
-  identifyUserViaServer,
-  serverForget,
-  serverValidatePassword,
-  validateRecaptchaUserToken,
-} from '../auth'
+import { getUserToken } from "apis/auth/getUserToken"
+import { identifyUserUsingOAuth } from "apis/auth/identifyUserUsingOAuth"
+import { refreshUserToken } from "apis/auth/refreshUserToken"
+import { forgetUserToken } from "apis/auth/forgetUserToken"
+import { validateUserPassword } from "apis/auth/validateUserPassword"
+import { resetUserPassword } from "apis/auth/resetUserPassword"
+import { serverAuthenticate } from "apis/auth/serverAuthenticate"
+import { serverLogout } from "apis/auth/serverLogout"
+import { serverRefresh } from "apis/auth/serverRefresh"
+import { identifyUserViaServer } from "apis/auth/identifyUserViaServer"
+import { serverForget } from "apis/auth/serverForget"
+import { serverValidatePassword } from "apis/auth/serverValidatePassword"
+import { validateRecaptchaUserToken } from "apis/auth/validateRecaptchaUserToken"
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {
@@ -35,8 +33,8 @@ jest.mock('config/routes', () => ({
     resetUserPassword: '/resetUserPassword',
     login: '/login',
     logout: '/logout',
-    refresh: '/refresh',
-    identify: '/identify',
+    refresh: '/authRefresh',
+    identify: '/authIdentify',
     forget: '/forget',
     validate: '/validate',
   },
@@ -248,7 +246,7 @@ describe('auth api', () => {
       await serverRefresh(rememberMe)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/refresh', { rememberMe }, 'POST', 'no-cache', {}, null, true)
+      expect(fetch).toHaveBeenCalledWith(null, '/authRefresh', { rememberMe }, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -262,7 +260,7 @@ describe('auth api', () => {
       await identifyUserViaServer()
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/identify', { }, 'POST', 'no-cache', {}, null, true)
+      expect(fetch).toHaveBeenCalledWith(null, '/authIdentify', { }, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {

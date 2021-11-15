@@ -1,24 +1,38 @@
 import moment from 'moment'
 import now from 'performance-now'
-import actions from 'actions'
 import logger from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'
-import { getIsAdmin, getIsAuthenticated, getAccessToken } from 'selectors/auth'
+import { getAccessToken, getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getMenuAccessToken, getMenuFetchVariant } from 'selectors/menu'
 import { getUserMenuVariant } from 'selectors/features'
-import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
-import { menuLoadComplete } from 'actions/menu'
-import { menuServiceDataReceived } from 'actions/menuService'
-import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import { basketRecipeAdd } from '../actions/basketRecipes'
-import { getBrandMenuHeaders, getBrandInfo } from '../actions/brandData'
-import { fetchMenus, fetchMenusWithUserId } from './menuApi'
+import { cutoffDateTimeNow, getLandingDay } from 'utils/deliveries'
 import { getPreviewMenuDateForCutoff } from '../selectors/menuService'
 
-import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
-import { sendClientMetric } from '../apis/clientMetrics'
+import { getPreselectedCollectionName, selectCollection, setSlotFromIds } from './utils'
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { menuLoadComplete } from "actions/menu/menuLoadComplete"
+import { menuServiceDataReceived } from "actions/menuService/menuServiceDataReceived"
+import { pending } from "actions/status/pending"
+import { error as errorAction } from "actions/status/error"
+import { menuLoadStock } from "actions/menu/menuLoadStock"
+import { menuLoadMenu } from "actions/menu/menuLoadMenu"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { redirect } from "actions/redirect/redirect"
+import { menuLoadOrderDetails } from "actions/menu/menuLoadOrderDetails"
+import { basketDateChange } from "actions/basket/basketDateChange"
+import { userLoadOrders } from "actions/user/userLoadOrders"
+import { userLoadData } from "actions/user/userLoadData"
+import { basketReset } from "actions/basket/basketReset"
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { basketPostcodeChangePure } from "actions/basket/basketPostcodeChangePure"
+import { basketRecipeAdd } from "routes/Menu/actions/basketRecipes/basketRecipeAdd"
+import { getBrandMenuHeaders } from "routes/Menu/actions/brandData/getBrandMenuHeaders"
+import { getBrandInfo } from "routes/Menu/actions/brandData/getBrandInfo"
+import { sendClientMetric } from "routes/Menu/apis/clientMetrics/sendClientMetric"
+import { fetchMenus } from "routes/Menu/fetchData/apis/fetchMenus"
+import { fetchMenusWithUserId } from "routes/Menu/fetchData/apis/fetchMenusWithUserId"
 
 const requiresMenuRecipesClear = (state, orderId) => (
   orderId
@@ -31,22 +45,22 @@ const chooseFirstDate = () => async (dispatch, getState) => {
   const isAdmin = getIsAdmin(getState())
 
   if (isAuthenticated && !isAdmin) {
-    await dispatch(actions.userLoadOrders())
+    await dispatch(userLoadOrders())
   }
 
-  await dispatch(actions.menuLoadDays())
+  await dispatch(menuLoadDays())
   await dispatch(boxSummaryDeliveryDaysLoad())
 
   const { date } = getLandingDay(getState())
 
-  return dispatch(actions.basketDateChange(date))
+  return dispatch(basketDateChange(date))
 }
 
 const handleQueryError = (error) => async (dispatch) => {
-  await dispatch(actions.error(actionTypes.ORDER_SAVE, error))
+  await dispatch(errorAction(actionTypes.ORDER_SAVE, error))
 
   if (error === 'no-stock') {
-    await dispatch(actions.menuLoadStock(true))
+    await dispatch(menuLoadStock(true))
   }
 }
 
@@ -54,11 +68,11 @@ const loadOrderAuthenticated = (orderId) => async (dispatch, getState) => {
   const { auth, user } = getState()
 
   if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
-    await dispatch(actions.userLoadData())
+    await dispatch(userLoadData())
   }
   const prevBasketRecipes = getState().basket.get('recipes')
 
-  await dispatch(actions.menuLoadOrderDetails(orderId))
+  await dispatch(menuLoadOrderDetails(orderId))
 
   const noOfOrderRecipes = getState().basket.get('recipes').size
 
@@ -76,9 +90,9 @@ const loadOrderAuthenticated = (orderId) => async (dispatch, getState) => {
     }
   }
 
-  await dispatch(actions.menuLoadMenu())
-  dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
-  dispatch(actions.menuLoadStock(true))
+  await dispatch(menuLoadMenu())
+  dispatch(pending(actionTypes.MENU_FETCH_DATA, false))
+  dispatch(menuLoadStock(true))
   sendClientMetric('menu-edit-initiated', 1, 'Count')
 }
 
@@ -96,7 +110,7 @@ const loadOrder = (orderId) => async (dispatch, getState) => {
       logger.notice({ message: `Unauthenticated user trying to edit: ${orderId}` })
     }
 
-    await dispatch(actions.redirect(`/menu?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}/menu/${orderId}`)}#login`, true))
+    await dispatch(redirect(`/menu?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}/menu/${orderId}`)}#login`, true))
   }
 }
 
@@ -111,7 +125,7 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
       || shippingAddresses.first()
     )
 
-    await dispatch(actions.basketReset(addressToSelect))
+    await dispatch(basketReset(addressToSelect))
   }
 
   if (
@@ -121,7 +135,7 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
     || getState().basket.get('slotId')
   ) {
     try {
-      await dispatch(actions.menuLoadDays())
+      await dispatch(menuLoadDays())
       await dispatch(boxSummaryDeliveryDaysLoad())
       dispatch(setSlotFromIds(query.slot_id, query.day_id))
     } catch (err) {
@@ -132,7 +146,7 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
   }
 
   if (query.num_portions) {
-    dispatch(actions.basketNumPortionChange(query.num_portions))
+    dispatch(basketNumPortionChange(query.num_portions))
   }
 
   let cutoffDateTime
@@ -146,12 +160,12 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
     cutoffDateTime = getPreviewMenuDateForCutoff(getState())
   }
 
-  await dispatch(actions.menuLoadMenu(cutoffDateTime, background))
-  dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
-  dispatch(actions.menuLoadStock(true))
+  await dispatch(menuLoadMenu(cutoffDateTime, background))
+  dispatch(pending(actionTypes.MENU_FETCH_DATA, false))
+  dispatch(menuLoadStock(true))
 
   if (query.postcode && !getState().basket.get('postcode')) {
-    dispatch(actions.basketPostcodeChangePure(query.postcode))
+    dispatch(basketPostcodeChangePure(query.postcode))
   }
 }
 
@@ -197,7 +211,7 @@ export default function fetchData({ query, params }, force, background, userMenu
       return
     }
 
-    await dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
+    await dispatch(pending(actionTypes.MENU_FETCH_DATA, true))
 
     const isAuthenticated = getIsAuthenticated(getState())
     const userId = getState().auth.get('id')
@@ -235,7 +249,7 @@ export default function fetchData({ query, params }, force, background, userMenu
       const timeTaken = Math.round(now() - startTime)
       dispatch(menuLoadComplete(timeTaken, true))
     } catch (e) {
-      dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
+      dispatch(pending(actionTypes.MENU_FETCH_DATA, false))
       throw e
     }
   }

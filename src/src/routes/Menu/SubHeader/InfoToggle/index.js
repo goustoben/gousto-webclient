@@ -1,1 +1,1 @@
-export default from './InfoToggle'
+export { default as Component } from './InfoToggle'

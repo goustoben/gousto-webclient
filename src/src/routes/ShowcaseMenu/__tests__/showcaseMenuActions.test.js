@@ -1,14 +1,14 @@
 import { push } from 'react-router-redux'
 import Immutable from 'immutable'
-import { trackShowcaseMenuAction } from 'actions/tracking'
-import { collectionFilterChange } from 'actions/filters'
-import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
 import {
   proceed,
   changeCollection,
   openRecipeDetails,
   trackScrollOneStep,
 } from '../showcaseMenuActions'
+import { collectionFilterChange } from "actions/filters/collectionFilterChange"
+import { trackShowcaseMenuAction } from "actions/tracking/trackShowcaseMenuAction"
+import { showDetailRecipe } from "routes/Menu/actions/menuRecipeDetails/showDetailRecipe"
 
 jest.mock('react-router-redux', () => ({
   push: jest.fn(),

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getIsRibbonTriggered } from 'selectors/ribbonSelectors'
-import { setRibbonTriggered } from 'actions/ribbonActions'
 import { RibbonTrigger } from './RibbonTrigger'
+import { setRibbonTriggered } from "actions/ribbonActions/setRibbonTriggered"
 
 const mapStateToProps = (state) => ({
   isRibbonTriggered: getIsRibbonTriggered(state),

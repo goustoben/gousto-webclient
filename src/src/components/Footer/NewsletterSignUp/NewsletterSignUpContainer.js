@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import NewsletterSignUp from './NewsletterSignUp'
+import newsletterSignup from "apis/newsletter/newsletterSignup"
 
 const mapStateToProps = (state) => (
   {
@@ -9,5 +9,5 @@ const mapStateToProps = (state) => (
 )
 
 export default connect(mapStateToProps, {
-  onSignup: actions.newsletterSignup,
+  onSignup: newsletterSignup,
 })(NewsletterSignUp)

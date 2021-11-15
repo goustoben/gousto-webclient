@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import newsletterSignup from '../newsletter'
+import newsletterSignup from "apis/newsletter/newsletterSignup"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

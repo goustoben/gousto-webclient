@@ -2,12 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
-import recipesActions from 'actions/recipes'
 import { OrderedRecipes } from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {
   static fetchData({ store, orderRecipeIds }) {
-    store.dispatch(recipesActions.recipesLoadRecipesById(orderRecipeIds))
+    store.dispatch(recipesLoadRecipesById(orderRecipeIds))
   }
 
   componentDidMount() {

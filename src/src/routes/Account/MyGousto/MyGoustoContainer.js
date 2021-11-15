@@ -1,8 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { userGetReferralDetails, userCheck3dsCompliantToken, userReset3dsCompliantToken } from 'actions/user'
-import { redirect } from 'actions/redirect'
 import { getBrowserType } from 'selectors/browser'
 import {
   getIsCustomNoticeEnabled,
@@ -11,7 +8,12 @@ import {
 } from 'selectors/features'
 import { track3dsCompliantClick } from './actions/tracking'
 import { MyGousto } from './MyGousto'
-import { trackClickRateRecipes } from '../../Ratings/actions/feedback'
+import { redirect } from "actions/redirect/redirect"
+import { userGetReferralDetails } from "actions/user/userGetReferralDetails"
+import { userCheck3dsCompliantToken } from "actions/user/userCheck3dsCompliantToken"
+import { userReset3dsCompliantToken } from "actions/user/userReset3dsCompliantToken"
+import { userLoadOrders } from "actions/user/userLoadOrders"
+import { trackClickRateRecipes } from "routes/Ratings/actions/feedback/trackClickRateRecipes"
 
 function mapStateToProps(state) {
   return {
@@ -31,7 +33,7 @@ function mapStateToProps(state) {
 }
 
 const MyGoustoContainer = connect(mapStateToProps, {
-  userLoadOrders: actions.userLoadOrders,
+  userLoadOrders,
   userGetReferralDetails,
   redirect,
   trackClickRateRecipes,

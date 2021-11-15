@@ -1,1 +1,1 @@
-export default from './BillingFormContainer'
+export { default as Component } from './BillingFormContainer'

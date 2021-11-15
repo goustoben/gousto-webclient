@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import { getFormValues, submit, getFormMeta } from 'redux-form'
+import { getFormMeta, getFormValues, submit } from 'redux-form'
 import { deliveryFormName } from 'selectors/checkout'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { trackUTMAndPromoCode } from 'actions/tracking'
 
 import { Delivery } from './Delivery'
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
+import { checkoutClearErrors } from "actions/checkout/checkoutClearErrors"
 
 export function mapStateToProps(sectionName) {
   return (state) => ({
@@ -36,7 +36,7 @@ export function mapStateToProps(sectionName) {
 const connectComponent = (sectionName) =>
   connect(mapStateToProps(sectionName), {
     manualSubmit: submit,
-    clearErrors: actions.checkoutClearErrors,
+    clearErrors: checkoutClearErrors,
     trackUTMAndPromoCode,
   })(Delivery)
 

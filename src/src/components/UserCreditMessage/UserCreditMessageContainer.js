@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import userActions from 'actions/user'
 import { getShowUserCredit } from 'selectors/features'
 import { getLoadingStateForUserCredit, getUserCredit } from 'selectors/user'
 
 import { UserCreditMessage } from './UserCreditMessage.logic'
+import { userFetchCredit } from "actions/user/userFetchCredit"
 
 const mapStateToProps = (state) => {
   const userCredit = getUserCredit(state)
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
 }
 
 const UserCreditMessageContainer = connect(mapStateToProps, {
-  userFetchCredit: userActions.userFetchCredit,
+  userFetchCredit,
 })(UserCreditMessage)
 
 export {

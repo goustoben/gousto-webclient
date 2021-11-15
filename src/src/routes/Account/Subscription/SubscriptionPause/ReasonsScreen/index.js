@@ -1,1 +1,1 @@
-export default from './ReasonsScreenContainer'
+export { default as Component } from './ReasonsScreenContainer'

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { CTAToAllRecipes } from './CTAToAllRecipes'
+import { changeCollectionToAllRecipesViaCTA } from "actions/filters/changeCollectionToAllRecipesViaCTA"
 
 const CTAToAllRecipesContainer = connect(null, {
   collectionFilterChange: changeCollectionToAllRecipesViaCTA

@@ -3,7 +3,7 @@ import * as filterActions from 'actions/filters'
 import { actionTypes } from 'actions/actionTypes'
 import { clickMerchandisingBanner } from 'actions/trackingKeys'
 
-import { merchandisingBannerClick } from '../merchandisingBannerClick'
+import { merchandisingBannerClick } from '../merchandisingBannerClick/merchandisingBannerClick'
 import * as collectionSelectors from '../../selectors/collections'
 
 describe('given merchandisingBannerClick action is called', () => {

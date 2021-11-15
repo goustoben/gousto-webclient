@@ -1,12 +1,5 @@
 import { getFormAsyncErrors, getFormSyncErrors, touch } from 'redux-form'
 import { connect } from 'react-redux'
-import { storeSignupRecaptchaToken } from 'actions/auth'
-import {
-  trackingOrderPlaceAttemptSucceeded,
-  trackingOrderPlaceAttempt,
-  trackingOrderPlaceAttemptFailed,
-  setCurrentPaymentMethod,
-} from 'actions/checkout'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
@@ -16,6 +9,11 @@ import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
 import { CheckoutPayment } from './CheckoutPayment'
+import { authStoreSignupRecaptchaToken } from "actions/auth/authStoreSignupRecaptchaToken"
+import { setCurrentPaymentMethod } from "actions/checkout/setCurrentPaymentMethod"
+import { trackingOrderPlaceAttemptSucceeded } from "actions/checkout/trackingOrderPlaceAttemptSucceeded"
+import { trackingOrderPlaceAttemptFailed } from "actions/checkout/trackingOrderPlaceAttemptFailed"
+import { trackingOrderPlaceAttempt } from "actions/checkout/trackingOrderPlaceAttempt"
 
 export const mapStateToProps = (state) => {
   const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
@@ -41,7 +39,7 @@ export const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  storeSignupRecaptchaToken,
+  storeSignupRecaptchaToken: authStoreSignupRecaptchaToken,
   touch,
   trackingOrderPlaceAttempt,
   trackingOrderPlaceAttemptFailed,

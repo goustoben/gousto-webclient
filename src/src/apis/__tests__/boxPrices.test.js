@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchBoxPrices } from '../boxPrices'
+import { fetchBoxPrices } from "apis/boxPrices/fetchBoxPrices"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

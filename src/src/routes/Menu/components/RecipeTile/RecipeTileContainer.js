@@ -4,9 +4,9 @@ import { getRecipes } from 'selectors/root'
 import { getBrowserType } from 'selectors/browser'
 import { getRecipeOutOfStock, getRecipeTitle, getRecipeIsFineDineIn } from '../../selectors/recipe'
 import { getVariantsForRecipe } from '../../selectors/variants'
-import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { RecipeTile } from './RecipeTile'
 import { getBrandAvailability, getBrandTagline } from '../../selectors/recipeTags'
+import { showDetailRecipe } from "routes/Menu/actions/menuRecipeDetails/showDetailRecipe"
 
 const getIdForRecipeTile = (state, props) => props.recipeId
 

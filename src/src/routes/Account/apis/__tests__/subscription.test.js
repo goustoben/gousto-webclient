@@ -1,12 +1,10 @@
 // eslint-disable-next-line import/no-named-as-default
 import fetch from 'utils/fetch'
-import {
-  deactivateSubscription,
-  fetchProjectedDeliveries,
-  fetchSubscription,
-  skipDates,
-  unSkipDates,
-} from '../subscription'
+import { skipDates } from "routes/Account/apis/subscription/skipDates"
+import { unSkipDates } from "routes/Account/apis/subscription/unSkipDates"
+import { fetchSubscription } from "routes/Account/apis/subscription/fetchSubscription"
+import { fetchProjectedDeliveries } from "routes/Account/apis/subscription/fetchProjectedDeliveries"
+import { deactivateSubscription } from "routes/Account/apis/subscription/deactivateSubscription"
 
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {

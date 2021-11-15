@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
 
-import {
-  fetchIngredientIssues,
-  storeSelectedIngredientIssue,
-  trackIngredientIssues
-} from 'actions/getHelp'
 import { IngredientIssues } from './IngredientIssues.logic'
 import { getSelectedIngredients } from '../selectors/selectors'
+import { trackIngredientIssues } from "actions/getHelp/trackIngredientIssues"
+import { storeSelectedIngredientIssue } from "actions/getHelp/storeSelectedIngredientIssue"
+import { fetchIngredientIssues } from "actions/getHelp/fetchIngredientIssues"
 
 const mapStateToProps = (state) => {
   const { getHelp } = state

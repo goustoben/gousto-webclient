@@ -1,1 +1,1 @@
-export default from './OrderRescheduledNotification'
+export { default as Component } from './OrderRescheduledNotification'

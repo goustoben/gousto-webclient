@@ -1,1 +1,1 @@
-export default from './NewsletterSignUpContainer'
+export { default as Component } from './NewsletterSignUpContainer'

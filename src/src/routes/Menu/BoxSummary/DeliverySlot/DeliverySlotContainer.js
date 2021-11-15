@@ -1,17 +1,18 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Immutable from 'immutable'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryNext } from 'actions/boxSummary'
 import { getFullScreenBoxSummary } from 'selectors/features'
 import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
-import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
+import { getBasketDate, getBasketPostcode, getNumPortions } from 'selectors/basket'
 import { getBoxSummaryTextProps } from 'selectors/boxSummary'
 import { getLoadingStateForOrder } from 'selectors/user'
 import { DeliverySlot } from './DeliverySlot'
+import { boxSummaryNext } from "actions/boxSummary/boxSummaryNext"
+import { basketPostcodeClear } from "actions/basket/basketPostcodeClear"
+import { basketRestorePreviousValues } from "actions/basket/basketRestorePreviousValues"
 
 function mapStateToProps(state) {
   const isAuthenticated = getIsAuthenticated(state)
@@ -50,8 +51,8 @@ function mapStateToProps(state) {
 
 const DeliverySlotContainer = connect(mapStateToProps, {
   pushOrderEdit: orderId => push(`/menu/${orderId}`),
-  clearPostcode: actions.basketPostcodeClear,
-  basketRestorePreviousValues: actions.basketRestorePreviousValues,
+  clearPostcode: basketPostcodeClear,
+  basketRestorePreviousValues,
   boxSummaryNext,
 })(DeliverySlot)
 

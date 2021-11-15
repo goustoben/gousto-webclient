@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { homeGetStarted } from 'actions/home'
 import { CTA } from './CTA'
+import { homeGetStarted } from "actions/home/homeGetStarted"
 
 const mapDispatchToProps = {
   homeGetStarted,

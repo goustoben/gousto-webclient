@@ -2,12 +2,12 @@ import React from 'react'
 import thunk from 'redux-thunk'
 import Immutable from 'immutable'
 import { mount } from 'enzyme'
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import status from 'reducers/status'
-import webClientStatusActions from 'actions/status'
+import { error } from "actions/status/error"
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
-import { applyDeliveryRefund } from '../../../../actions/getHelp'
 import { DeliveryCompensationContainer } from '../DeliveryCompensationContainer'
+import { applyDeliveryRefund } from "routes/GetHelp/actions/getHelp/applyDeliveryRefund"
 
 jest.mock('actions/status')
 jest.mock('../../../../actions/getHelp')
@@ -130,7 +130,7 @@ describe('When DeliveryCompensationContainer mounts', () => {
       ERROR_MESSAGE,
     )
 
-    expect(webClientStatusActions.error).toHaveBeenCalledWith(
+    expect(error).toHaveBeenCalledWith(
       'GET_HELP_APPLY_DELIVERY_COMPENSATION',
       ERROR_MESSAGE,
     )

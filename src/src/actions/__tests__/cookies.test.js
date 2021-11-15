@@ -1,10 +1,8 @@
 import { actionTypes } from 'actions/actionTypes'
 import * as cookieHelper from 'utils/cookieHelper2'
-import {
-  cookiePolicyAcceptanceChange,
-  trackCookiePolicyAccepted,
-  trackCookiePolicyVisible,
-} from '../cookies'
+import { cookiePolicyAcceptanceChange } from "actions/cookies/cookiePolicyAcceptanceChange"
+import { trackCookiePolicyAccepted } from "actions/cookies/trackCookiePolicyAccepted"
+import { trackCookiePolicyVisible } from "actions/cookies/trackCookiePolicyVisible"
 
 describe('cookie actions', () => {
   describe('cookiePolicyAcceptanceChange', () => {

@@ -13,8 +13,8 @@ import {
 import { getDeliveryFrequency } from '../../../../context/selectors/deliveries'
 import { SettingSection } from '../../../../components/SettingSection'
 
-import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
-import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
+import { useUpdateSubscription } from '../../../../apis/hooks/useUpdateSubscription'
+import { useSubscriptionToast } from '../../../../apis/hooks/useSubscriptionToast'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
 export const Frequency = ({ accessToken, isMobile }) => {

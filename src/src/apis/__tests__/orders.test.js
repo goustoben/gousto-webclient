@@ -1,14 +1,12 @@
 import fetch from 'utils/fetch'
 
-import {
-  saveOrder,
-  fetchOrder,
-  checkoutOrder,
-  updateOrderItems,
-  createPreviewOrder,
-  updateOrderAddress,
-  cancelExistingOrders,
-} from '../orders'
+import { checkoutOrder } from "apis/orders/checkoutOrder"
+import { fetchOrder } from "apis/orders/fetchOrder"
+import { updateOrderItems } from "apis/orders/updateOrderItems"
+import { saveOrder } from "apis/orders/saveOrder"
+import { cancelExistingOrders } from "apis/orders/cancelExistingOrders"
+import { updateOrderAddress } from "apis/orders/updateOrderAddress"
+import { createPreviewOrder } from "apis/orders/createPreviewOrder"
 
 const expectedHeaders = { 'Content-Type': 'application/json'}
 const mockFetchResult = { data: [1, 2, 3] }

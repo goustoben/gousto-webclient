@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
-import { trackUserAttributes } from 'actions/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import { getIsSignupReductionEnabled } from 'selectors/features'
 import routes from 'config/routes'
 import Page from './Page'
+import { trackUserAttributes } from "actions/tracking/trackUserAttributes"
+import { loginVisibilityChange } from "actions/login/loginVisibilityChange"
+import { userLoadData } from "actions/user/userLoadData"
 
 export function isRedirectEnabled(state) {
   const { locationBeforeTransitions } = state.routing || {}
@@ -27,7 +28,7 @@ export default connect((state) => ({
   contentFetchPending: state.pending.get(actionTypes.CONTENT_RECEIVE, false),
   isSignupReductionEnabled: isRedirectEnabled(state)
 }), {
-  loginVisibilityChange: actions.loginVisibilityChange,
+  loginVisibilityChange,
   trackUserAttributes,
-  userLoadData: actions.userLoadData,
+  userLoadData,
 })(Page)

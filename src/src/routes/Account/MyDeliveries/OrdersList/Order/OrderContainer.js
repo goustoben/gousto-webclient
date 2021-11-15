@@ -2,9 +2,10 @@ import Immutable from 'immutable'
 import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
-import actions from 'actions/user'
 
 import Order from './Order'
+import { userOpenCloseOrderCard } from "actions/user/userOpenCloseOrderCard"
+import { userToggleEditDateSection } from "actions/user/userToggleEditDateSection"
 
 function mapStateToProps(state, ownProps) {
   const { order } = ownProps
@@ -41,8 +42,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 const OrderContainer = connect(mapStateToProps, {
-  userOpenCloseOrderCard: actions.userOpenCloseOrderCard,
-  userToggleEditDateSection: actions.userToggleEditDateSection,
+  userOpenCloseOrderCard,
+  userToggleEditDateSection,
 })(Order)
 
 export default OrderContainer

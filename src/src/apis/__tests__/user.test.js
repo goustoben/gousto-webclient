@@ -1,22 +1,20 @@
 import { fetch } from 'utils/fetch'
-import {
-  applyPromo,
-  fetchReferralOffer,
-  fetchPromo,
-  fetchUser,
-  fetchShippingAddresses,
-  fetchUserCredit,
-  fetchUserOrders,
-  reactivate,
-  checkDuplicateUser,
-  verifyAge,
-  referralDetails,
-  serverReferAFriend,
-  addPaymentMethod,
-  fetchUserAddresses,
-  deleteMarketingSubscription,
-  referAFriend
-} from '../user'
+import { applyPromo } from "apis/users/applyPromo"
+import { fetchUserCredit } from "apis/users/fetchUserCredit"
+import { fetchReferralOffer } from "apis/users/fetchReferralOffer"
+import { fetchPromo } from "apis/users/fetchPromo"
+import { fetchUser } from "apis/users/fetchUser"
+import { fetchShippingAddresses } from "apis/users/fetchShippingAddresses"
+import { fetchUserOrders } from "apis/users/fetchUserOrders"
+import { reactivate } from "apis/users/reactivate"
+import { verifyAge } from "apis/users/verifyAge"
+import { checkDuplicateUser } from "apis/users/checkDuplicateUser"
+import { referralDetails } from "apis/users/referralDetails"
+import { serverReferAFriend } from "apis/users/serverReferAFriend"
+import { addPaymentMethod } from "apis/users/addPaymentMethod"
+import { fetchUserAddresses } from "apis/users/fetchUserAddresses"
+import { deleteMarketingSubscription } from "apis/users/deleteMarketingSubscription"
+import { referAFriend } from "apis/users/referAFriend"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () => ({

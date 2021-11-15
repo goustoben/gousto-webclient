@@ -2,12 +2,12 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import moment from 'moment'
-import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import logger from 'utils/logger'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { Header } from '../Header.logic'
+import { shouldShowEntryPointTooltip } from "apis/getHelp/shouldShowEntryPointTooltip"
 
 jest.mock('apis/getHelp', () => ({
   shouldShowEntryPointTooltip: jest.fn().mockResolvedValue({

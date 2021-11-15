@@ -1,52 +1,62 @@
 /* eslint-disable import/no-named-as-default-member */
 import Immutable from 'immutable'
 
-import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchReference, fetchPromoCodeValidity } from 'apis/customers'
-import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
-
 import { actionTypes } from 'actions/actionTypes'
 import pricingActions from 'actions/pricing'
-import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
-import { trackAffiliatePurchase, trackUTMAndPromoCode, trackCheckoutError, trackSubscriptionCreated } from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
-import statusActions from 'actions/status'
-import { userSubscribe } from 'actions/user'
+import statusActions from 'actions/status/status'
 
 import routes from 'config/routes'
 import { PaymentMethod } from 'config/signup'
 
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 import { basketResetPersistent } from 'utils/basket'
-import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 
 import {
   checkoutActions,
-  trackPurchase,
-  checkoutNon3DSSignup,
-  checkout3DSSignup,
-  checkPaymentAuth,
-  fireCheckoutError,
-  fireCheckoutPendingEvent,
-  checkoutPostSignup,
-  checkoutClearErrors,
-  checkoutSignupPayment,
-  checkoutDecoupledPaymentSignup,
-  trackPromocodeChange,
-  checkoutAddressLookup,
-  trackCheckoutButtonPressed,
-  fetchPayPalClientToken,
-  clearPayPalErrors,
-  clearPayPalClientToken,
-  setCurrentPaymentMethod,
-  setPayPalDeviceData,
-  setPayPalNonce,
-  firePayPalError,
-  checkoutStepIndexReached,
-  handlePromoCodeRemoved,
-  handleCheckoutError,
-  fetchGoustoRef,
+
+
+
 } from 'actions/checkout'
+import { basketPromoCodeChange } from "actions/basket/basketPromoCodeChange"
+import { basketPromoCodeAppliedChange } from "actions/basket/basketPromoCodeAppliedChange"
+import { checkoutClearErrors } from "actions/checkout/checkoutClearErrors"
+import { checkoutAddressLookup } from "actions/checkout/checkoutAddressLookup"
+import { fireCheckoutPendingEvent } from "actions/checkout/fireCheckoutPendingEvent"
+import { fireCheckoutError } from "actions/checkout/fireCheckoutError"
+import { checkoutStepIndexReached } from "actions/checkout/checkoutStepIndexReached"
+import { firePayPalError } from "actions/checkout/firePayPalError"
+import { setPayPalNonce } from "actions/checkout/setPayPalNonce"
+import { setPayPalDeviceData } from "actions/checkout/setPayPalDeviceData"
+import { setCurrentPaymentMethod } from "actions/checkout/setCurrentPaymentMethod"
+import { clearPayPalClientToken } from "actions/checkout/clearPayPalClientToken"
+import { clearPayPalErrors } from "actions/checkout/clearPayPalErrors"
+import { fetchPayPalClientToken } from "actions/checkout/fetchPayPalClientToken"
+import { trackPromocodeChange } from "actions/checkout/trackPromocodeChange"
+import { trackCheckoutButtonPressed } from "actions/checkout/trackCheckoutButtonPressed"
+import { fetchGoustoRef } from "actions/checkout/fetchGoustoRef"
+import { checkoutPostSignup } from "actions/checkout/checkoutPostSignup"
+import { trackPurchase } from "actions/checkout/trackPurchase"
+import { checkPaymentAuth } from "actions/checkout/checkPaymentAuth"
+import { checkoutSignupPayment } from "actions/checkout/checkoutSignupPayment"
+import { checkoutDecoupledPaymentSignup } from "actions/checkout/checkoutDecoupledPaymentSignup"
+import { checkout3DSSignup } from "actions/checkout/checkout3DSSignup"
+import { checkoutNon3DSSignup } from "actions/checkout/checkoutNon3DSSignup"
+import { handleCheckoutError } from "actions/checkout/handleCheckoutError"
+import { handlePromoCodeRemoved } from "actions/checkout/handlePromoCodeRemoved"
+import { checkoutCreatePreviewOrder } from "routes/Menu/actions/checkout/checkoutCreatePreviewOrder"
+import { trackAffiliatePurchase } from "actions/tracking/trackAffiliatePurchase"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
+import { trackSubscriptionCreated } from "actions/tracking/trackSubscriptionCreated"
+import { trackCheckoutError } from "actions/tracking/trackCheckoutError"
+import { userSubscribe } from "actions/user/userSubscribe"
+import { fetchAddressByPostcode } from "apis/addressLookup/fetchAddressByPostcode"
+import { fetchReference } from "apis/customers/fetchReference"
+import { fetchPromoCodeValidity } from "apis/customers/fetchPromoCodeValidity"
+import { authPayment } from "apis/payments/authPayment"
+import { checkPayment } from "apis/payments/checkPayment"
+import { fetchPayPalToken } from "apis/payments/fetchPayPalToken"
+import { signupPayment } from "apis/payments/signupPayment"
 
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
@@ -583,7 +593,7 @@ describe('checkout actions', () => {
       expect(userSubscribe).toHaveBeenCalled()
     })
 
-    test('should clear gousto ref', async () => {
+    test('should authClear gousto ref', async () => {
       await checkoutNon3DSSignup()(dispatch, getState)
 
       expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
@@ -608,7 +618,7 @@ describe('checkout actions', () => {
         expect(checkoutCreatePreviewOrder).not.toHaveBeenCalled()
       })
 
-      test('should clear gousto reference', async () => {
+      test('should authClear gousto reference', async () => {
         await checkoutNon3DSSignup()(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
@@ -766,7 +776,7 @@ describe('checkout actions', () => {
         expect(authPayment).not.toHaveBeenCalled()
       })
 
-      test('should not clear gousto reference', async () => {
+      test('should not authClear gousto reference', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).not.toHaveBeenCalled()
@@ -805,7 +815,7 @@ describe('checkout actions', () => {
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
     })
 
-    test('should not clear gousto reference', async () => {
+    test('should not authClear gousto reference', async () => {
       await checkout3DSSignup()(dispatch, getState)
 
       expect(checkoutActions.clearGoustoRef).not.toHaveBeenCalled()
@@ -816,7 +826,7 @@ describe('checkout actions', () => {
         authPayment.mockRejectedValueOnce(new Error('Failed request'))
       })
 
-      test('should clear gousto reference', async () => {
+      test('should authClear gousto reference', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
@@ -862,7 +872,7 @@ describe('checkout actions', () => {
         expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
       })
 
-      test('should clear gousto reference', async () => {
+      test('should authClear gousto reference', async () => {
         await checkPaymentAuth(successSessionId)(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
@@ -946,7 +956,7 @@ describe('checkout actions', () => {
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
       })
 
-      test('should clear gousto reference', async () => {
+      test('should authClear gousto reference', async () => {
         await checkPaymentAuth(failedSessionId)(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
@@ -1018,7 +1028,7 @@ describe('checkout actions', () => {
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
     })
 
-    test('should not clear gousto reference', async () => {
+    test('should not authClear gousto reference', async () => {
       await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
       expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
@@ -1029,7 +1039,7 @@ describe('checkout actions', () => {
         authPayment.mockRejectedValueOnce(new Error('Failed request'))
       })
 
-      test('should clear gousto reference', async () => {
+      test('should authClear gousto reference', async () => {
         await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
@@ -1043,7 +1053,7 @@ describe('checkout actions', () => {
         expect(userSubscribe).toHaveBeenCalledWith(false, null)
       })
 
-      test('should not clear gousto reference', async () => {
+      test('should not authClear gousto reference', async () => {
         await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
         expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
@@ -1085,7 +1095,7 @@ describe('checkout actions', () => {
       expect(checkoutActions.checkoutPostSignup).toHaveBeenCalled()
     })
 
-    test('should clear gousto reference', async () => {
+    test('should authClear gousto reference', async () => {
       await checkoutSignupPayment()(dispatch, getState)
 
       expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
@@ -1478,7 +1488,7 @@ describe('checkout actions', () => {
       getState.mockReturnValue(createState())
     })
 
-    test('then it should clear the basket promo code, set error and fetch new prices', async () => {
+    test('then it should authClear the basket promo code, set error and fetch new prices', async () => {
       await handlePromoCodeRemoved(dispatch, getState)
 
       expect(basketPromoCodeChange).toHaveBeenCalledWith('')

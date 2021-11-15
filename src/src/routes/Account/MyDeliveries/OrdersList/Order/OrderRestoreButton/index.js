@@ -1,1 +1,1 @@
-export default from './OrderRestoreButtonContainer'
+export { default as Component } from './OrderRestoreButtonContainer'

@@ -12,7 +12,8 @@ import contentReducer from 'reducers/content'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import { IngredientsContainer } from 'routes/GetHelp/Ingredients/IngredientsContainer'
 
-import { validateIngredients, validateOrder } from 'apis/getHelp'
+import { validateIngredients } from "apis/getHelp/validateIngredients"
+import { validateOrder } from "apis/getHelp/validateOrder"
 
 jest.mock('apis/getHelp')
 

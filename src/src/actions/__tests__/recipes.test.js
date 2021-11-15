@@ -1,10 +1,12 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import statusActions from 'actions/status'
-import { fetchRecipes, fetchRecipesFromMenu } from 'apis/recipes'
+import statusActions from 'actions/status/status'
 import { getCutoffDateTime } from 'utils/deliveries'
-import recipeActions, { loadRecipes } from '../recipes'
+import recipeActions from '../recipes'
 import { menuRecipeMapper } from '../../apis/transformers/recipes'
+import { loadRecipes } from "actions/recipes/loadRecipes"
+import { fetchRecipes } from "apis/recipes/fetchRecipes"
+import { fetchRecipesFromMenu } from "apis/recipes/fetchRecipesFromMenu"
 
 jest.mock('../../apis/transformers/recipes', () => ({
   menuRecipeMapper: jest.fn(),

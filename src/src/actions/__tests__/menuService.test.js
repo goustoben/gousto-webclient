@@ -1,5 +1,5 @@
-import { menuServiceDataReceived } from 'actions/menuService'
 import * as trackingKeys from 'actions/trackingKeys'
+import { menuServiceDataReceived } from "actions/menuService/menuServiceDataReceived"
 
 describe('menuServiceDataReceived', () => {
   test('should dispatch MENU_SERVICE_DATA_RECEIVED with the normalised response and tracking data', () => {

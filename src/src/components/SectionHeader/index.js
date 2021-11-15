@@ -1,1 +1,1 @@
-export default from './SectionHeader'
+export { default as Component } from './SectionHeader'

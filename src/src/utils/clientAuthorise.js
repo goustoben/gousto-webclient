@@ -1,4 +1,5 @@
-import authActions from 'actions/auth'
+import { authValidate } from "actions/auth/authValidate"
+import { authUserAuthenticated } from "actions/auth/authUserAuthenticated"
 
 export async function authorise(store) {
   try {
@@ -7,9 +8,9 @@ export async function authorise(store) {
     const expiresAt = store.getState().auth.get('expiresAt')
 
     if (accessToken || refreshToken) {
-      await store.dispatch(authActions.authValidate(accessToken, refreshToken, expiresAt))
+      await store.dispatch(authValidate(accessToken, refreshToken, expiresAt))
     }
   } catch (err) {
-    store.dispatch(authActions.userAuthenticated('', '', ''))
+    store.dispatch(authUserAuthenticated('', '', ''))
   }
 }

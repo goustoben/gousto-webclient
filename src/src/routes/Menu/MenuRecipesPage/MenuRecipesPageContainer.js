@@ -1,23 +1,24 @@
 import { connect } from 'react-redux'
-import { changeCollectionById } from 'actions/filters'
-import actions from 'actions'
-import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import {
-  getIsSignupReductionEnabled,
   getIsCommunicationPanelEnabled,
+  getIsSignupReductionEnabled,
   getIsTastePreferencesEnabled
 } from 'selectors/features'
-import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
+import { getBoxSummaryDeliveryDays, getRecipes } from 'selectors/root'
 import { getIsAuthenticated } from 'selectors/auth'
 import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getLoadingStateForOrder, getUserId } from 'selectors/user'
-import { checkQueryParams } from '../actions/menuRecipeDetails'
-import { loadOptimizelySDK } from '../../../actions/optimizely'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { getCurrentCollectionId } from '../selectors/collections'
 import { isMenuLoading } from '../selectors/menu'
 import fetchData from '../fetchData'
+import { changeCollectionById } from "actions/filters/changeCollectionById"
+import { loadOptimizelySDK } from "actions/optimizely/loadOptimizelySDK"
+import { shouldJfyTutorialBeVisible } from "actions/tutorial/shouldJfyTutorialBeVisible"
+import { basketOrderLoaded } from "actions/basket/basketOrderLoaded"
+import { portionSizeSelectedTracking } from "actions/basket/portionSizeSelectedTracking"
+import { checkQueryParams } from "routes/Menu/actions/menuRecipeDetails/checkQueryParams"
 
 const mapStateToProps = (state, ownProps) => {
   const {
@@ -48,8 +49,8 @@ const mapDispatchToProps = {
   checkQueryParams,
   shouldJfyTutorialBeVisible,
   selectCurrentCollection: changeCollectionById,
-  basketOrderLoaded: actions.basketOrderLoaded,
-  portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
+  basketOrderLoaded,
+  portionSizeSelectedTracking,
   loadOptimizelySDK,
   fetchMenuData: fetchData,
 }

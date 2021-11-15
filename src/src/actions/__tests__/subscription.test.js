@@ -1,12 +1,12 @@
 import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
-import { basketNumPortionChange } from 'actions/basket'
 import logger from 'utils/logger'
 
-import { subscriptionLoadData } from 'actions/subscription'
-import { fetchSubscription } from '../../routes/Account/apis/subscription'
 import { mapSubscriptionPayload } from '../../routes/Account/Subscription/utils/mapping'
+import { basketNumPortionChange } from "actions/basket/basketNumPortionChange"
+import { subscriptionLoadData } from "actions/subscription/subscriptionLoadData"
+import { fetchSubscription } from "routes/Account/apis/subscription/fetchSubscription"
 
 jest.mock('../../routes/Account/apis/subscription', () => ({
   fetchSubscription: jest.fn(),

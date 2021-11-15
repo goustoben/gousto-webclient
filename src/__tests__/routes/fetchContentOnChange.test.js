@@ -1,8 +1,7 @@
 import Immutable from 'immutable'
 
-import { contentLoadContentByPageSlug } from 'actions/content'
-
 import { fetchContentOnChange, pathToSlug } from 'routes/fetchContentOnChange'
+import { contentLoadContentByPageSlug } from "actions/content/contentLoadContentByPageSlug"
 
 jest.mock('actions/content', () => ({
   contentLoadContentByPageSlug: jest.fn(),

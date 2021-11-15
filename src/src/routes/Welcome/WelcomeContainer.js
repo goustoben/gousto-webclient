@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 
-import { productDetailVisibilityChange } from 'actions/products'
-import { userFetchReferralOffer } from 'actions/user'
-import { trackWelcomeAppPromoClick, fetchData } from 'actions/welcome'
-import { updateUserTasteProfile } from 'actions/tastePreferences'
-
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getHeaderDetails } from 'routes/OrderConfirmation/helper'
 
 import { Welcome } from './Welcome'
+import { productDetailVisibilityChange } from "actions/products/productDetailVisibilityChange"
+import { updateUserTasteProfile } from "actions/tastePreferences/updateUserTasteProfile"
+import { userFetchReferralOffer } from "actions/user/userFetchReferralOffer"
+import { trackWelcomeAppPromoClick } from "actions/welcome/trackWelcomeAppPromoClick"
+import { fetchData } from "actions/welcome/fetchData"
 
 function mapStateToProps(state, ownProps) {
   const { products, user, request } = state

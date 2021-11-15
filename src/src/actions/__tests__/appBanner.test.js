@@ -1,7 +1,9 @@
 import { actionTypes } from 'actions/actionTypes'
-import { appBannerDismiss, trackingAppPromoCTAClick, trackingAppPromoBannerView } from 'actions/appBanner'
 import * as cookieHelper from 'utils/cookieHelper2'
 import * as trackingKeys from 'actions/trackingKeys'
+import { appBannerDismiss } from "actions/appBanner/appBannerDismiss"
+import { trackingAppPromoCTAClick } from "actions/appBanner/appBanner/trackingAppPromoCTAClick"
+import { trackingAppPromoBannerView } from "actions/appBanner/trackingAppPromoBannerView"
 
 describe('app banner actions', () => {
   describe('appBannerDismiss', () => {

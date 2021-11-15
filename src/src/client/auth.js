@@ -16,7 +16,7 @@ async function refreshClient(store) {
       await clientAuthorise(store)
     }
   } catch (err) {
-    // refresh failed
+    // authRefresh failed
   }
 
   if (refreshToken) {
@@ -36,7 +36,7 @@ export function refresh(store) {
       timeOutRef = setTimeout(() => { refreshClient(store) }, ttl * 1000)
     }
   } catch (err) {
-    // refresh failed
+    // authRefresh failed
     clearTimeout(timeOutRef)
   }
 }

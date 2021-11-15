@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { client } from '../../../../../config/routes'
+import { client } from 'config/routes'
 import { GetHelpFAQ } from '../GetHelpFAQ'
 
 describe('GetHelpFAQ', () => {

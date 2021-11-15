@@ -1,1 +1,1 @@
-export default from './ProductDetailContainer'
+export { default as Component } from './ProductDetailContainer'

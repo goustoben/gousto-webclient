@@ -4,23 +4,18 @@ import { safeJestMock } from '_testing/mocks'
 
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'utils/window'
-import { fetchOrder } from 'apis/orders'
 
-import { basketOrderLoad } from 'actions/basket'
 import recipes from 'actions/recipes'
-import { orderCheckPossibleDuplicate } from 'actions/order'
-import {
-  productsLoadProducts,
-} from 'actions/products'
-
-import {
-  orderDetails,
-  orderConfirmationRedirect,
-  orderConfirmationProductTracking,
-  orderConfirmationUpdateOrderTracking,
-} from 'actions/orderConfirmation'
 
 import * as menuApis from '../../routes/Menu/fetchData/menuApi'
+import { orderConfirmationRedirect } from "actions/order/orderConfirmationRedirect"
+import { orderDetails } from "actions/order/orderDetails"
+import { orderConfirmationProductTracking } from "actions/order/orderConfirmationProductTracking"
+import { orderConfirmationUpdateOrderTracking } from "actions/order/orderConfirmationUpdateOrderTracking"
+import { basketOrderLoad } from "actions/basket/basketOrderLoaded"
+import { orderCheckPossibleDuplicate } from "actions/order/orderCheckPossibleDuplicate"
+import { productsLoadProducts } from "actions/products/productsLoadProducts"
+import { fetchOrder } from "apis/orders/fetchOrder"
 
 jest.mock('apis/orders')
 jest.mock('actions/basket')

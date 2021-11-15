@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { boxSummaryVisibilityChange } from 'actions/boxSummary'
 import { getBrowserType } from 'selectors/browser'
-import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { RecipeList } from './RecipeList'
 import { getBasketRecipeWithSidesBaseId } from '../../selectors/recipeList'
+import { boxSummaryVisibilityChange } from "actions/boxSummary/boxSummaryVisibilityChange"
+import { menuRecipeDetailVisibilityChange } from "routes/Menu/actions/menuRecipeDetails/menuRecipeDetailVisibilityChange"
 
 const mapStateToProps = (state) => ({
   browser: getBrowserType(state),

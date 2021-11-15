@@ -4,12 +4,12 @@ import Immutable from 'immutable'
 import { Button } from 'goustouicomponents'
 import ModalPanel from 'Modal/ModalPanel'
 import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
-import { menuLoadDays } from 'actions/menu'
-import * as boxSummaryActions from 'actions/boxSummary'
-import { loadRecipes } from 'actions/recipes'
 import userActions from 'actions/user'
 import { loadMenuServiceDataIfDeepLinked } from '../../../routes/Menu/fetchData/menuService'
 import { AbandonBasketModal } from '../AbandonBasketModal'
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { loadRecipes } from "actions/recipes/loadRecipes"
 
 jest.mock('actions/menu', () => ({
   menuLoadDays: jest.fn()
@@ -184,7 +184,7 @@ describe('Abandon Basket Modal', () => {
     test('should call boxSummaryDeliveryDaysLoad if authenticated and no deliveryDays', () => {
       AbandonBasketModal.fetchData({ store })
 
-      expect(boxSummaryActions.boxSummaryDeliveryDaysLoad).toHaveBeenCalled()
+      expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalled()
     })
 
     test('should call loadRecipes if authenticated and no recipes', () => {
@@ -200,7 +200,7 @@ describe('Abandon Basket Modal', () => {
       AbandonBasketModal.fetchData({ store })
       expect(userActions.userLoadOrders).not.toHaveBeenCalled()
       expect(menuLoadDays).not.toHaveBeenCalled()
-      expect(boxSummaryActions.boxSummaryDeliveryDaysLoad).not.toHaveBeenCalled()
+      expect(boxSummaryDeliveryDaysLoad).not.toHaveBeenCalled()
       expect(loadRecipes).not.toHaveBeenCalled()
     })
   })

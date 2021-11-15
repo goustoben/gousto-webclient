@@ -198,7 +198,7 @@ describe('auth reducer', () => {
       expect(Immutable.is(result, expected)).toEqual(true)
     })
 
-    test('should set the refresh token too if present', () => {
+    test('should set the authRefresh token too if present', () => {
       const state = Immutable.fromJS({
         accessToken: '',
         refreshToken: '',
@@ -214,13 +214,13 @@ describe('auth reducer', () => {
       const action = {
         type: 'USER_AUTHENTICATED',
         accessToken: 'access token',
-        refreshToken: 'refresh token',
+        refreshToken: 'authRefresh token',
         expiresAt: '2017-01-01',
       }
       const result = auth.auth(state, action)
       const expected = Immutable.fromJS({
         accessToken: 'access token',
-        refreshToken: 'refresh token',
+        refreshToken: 'authRefresh token',
         isAuthenticated: false,
         isAdmin: false,
         rememberMe: false,

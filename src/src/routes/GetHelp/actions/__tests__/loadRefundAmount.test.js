@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
-import { fetchRefundAmount } from 'apis/getHelp'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
-import { loadRefundAmount } from '../loadRefundAmount'
 import * as getHelpActionsUtils from '../utils'
+import { fetchRefundAmount } from "apis/getHelp/fetchRefundAmount"
+import { loadRefundAmount } from "routes/GetHelp/actions/loadRefundAmount/loadRefundAmount"
 
 jest.mock('apis/getHelp')
 

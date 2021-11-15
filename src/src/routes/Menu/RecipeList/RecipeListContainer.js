@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { trackRecipeOrderDisplayed } from 'actions/tracking'
 import { getCurrentCollectionId } from '../selectors/collections'
 
 import { RecipeList } from './RecipeList'
 import { getRecipeListRecipes } from '../selectors/recipeList'
+import { trackRecipeOrderDisplayed } from "actions/tracking/trackRecipeOrderDisplayed"
 
 const mapStateToProps = (state) => {
   const currentCollectionId = getCurrentCollectionId(state)

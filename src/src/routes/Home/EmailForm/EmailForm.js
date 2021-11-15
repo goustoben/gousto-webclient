@@ -4,9 +4,9 @@ import TextInput from 'Form/Input'
 import { CTA } from 'goustouicomponents'
 import Form from 'Form'
 import { validateEmail } from 'utils/auth'
-import { newsletterSubscribe } from 'apis/customers'
 import { homeConfig } from 'config/home'
 import css from './EmailForm.css'
+import { newsletterSubscribe } from "apis/customers/newsletterSubscribe"
 
 class EmailForm extends React.PureComponent {
   constructor() {

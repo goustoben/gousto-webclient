@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
-import { recipeVariantDropdownExpanded } from 'actions/menu'
 import { getSurcharge, getSurchargePerPortion } from 'utils/recipe'
-import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
-import { basketRecipeAdd, basketRecipeRemove } from '../../actions/basketRecipes'
 import { getBasketPostcode } from '../../../../selectors/basket'
 import Buttons from './Buttons'
+import { recipeVariantDropdownExpanded } from "actions/menu/recipeVariantDropdownExpanded"
+import { menuBrowseCTAVisibilityChange } from "actions/menu/menuBrowseCTAVisibilityChange"
+import { basketRecipeAdd } from "routes/Menu/actions/basketRecipes/basketRecipeAdd"
+import { basketRecipeRemove } from "routes/Menu/actions/basketRecipes/basketRecipeRemove"
+import { menuRecipeDetailVisibilityChange } from "routes/Menu/actions/menuRecipeDetails/menuRecipeDetailVisibilityChange"
 
 const mapStateToProps = (state, props) => {
   const numPortions = state.basket.get('numPortions')
@@ -29,7 +30,7 @@ const ButtonsContainer = connect(mapStateToProps, {
   onAdd: basketRecipeAdd,
   onRemove: basketRecipeRemove,
   menuRecipeDetailVisibilityChange,
-  menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
+  menuBrowseCTAVisibilityChange,
   recipeVariantDropdownExpanded,
 })(Buttons)
 

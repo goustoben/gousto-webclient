@@ -1,10 +1,12 @@
-import actions, { changeRecaptcha } from 'actions/auth'
-import { resetUserPassword, identifyUserUsingOAuth } from 'apis/auth'
-import { fetchFeatures } from 'apis/fetchS3'
+import actions from 'actions/auth'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
 import logger from 'utils/logger'
-import { trackUserLogin } from 'actions/loggingmanager'
+import { authChangeRecaptcha } from "actions/auth/authChangeRecaptcha"
+import { trackUserLogin } from "actions/loggingmanager/trackUserLogin"
+import { identifyUserUsingOAuth } from "apis/auth/identifyUserUsingOAuth"
+import { resetUserPassword } from "apis/auth/resetUserPassword"
+import { fetchFeatures } from "apis/fetchS3/fetchFeatures"
 
 jest.mock('apis/auth')
 
@@ -135,7 +137,7 @@ describe('changeRecaptcha', () => {
       fetchFeatures.mockReturnValue({ data: { isRecaptchaEnabled: false }})
     })
     test('should dispatch CHANGE_RECAPTCHA false ', async () => {
-      await changeRecaptcha()(dispatch)
+      await authChangeRecaptcha()(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'CHANGE_RECAPTCHA',
         isRecaptchaEnabled: false
@@ -149,7 +151,7 @@ describe('changeRecaptcha', () => {
       fetchFeatures.mockReturnValue({ data: { isRecaptchaEnabled: true }})
     })
     test('should dispatch CHANGE_RECAPTCHA true ', async () => {
-      await changeRecaptcha()(dispatch)
+      await authChangeRecaptcha()(dispatch)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'CHANGE_RECAPTCHA',
         isRecaptchaEnabled: true
@@ -163,7 +165,7 @@ describe('changeRecaptcha', () => {
       fetchFeatures.mockReturnValue({ data: null})
     })
     test('should not dispatch', async () => {
-      await changeRecaptcha()(dispatch)
+      await authChangeRecaptcha()(dispatch)
       expect(dispatch).not.toHaveBeenCalled()
     })
   })
@@ -179,7 +181,7 @@ describe('changeRecaptcha', () => {
     })
 
     test('should call logger.error', async () => {
-      await changeRecaptcha()(dispatch)
+      await authChangeRecaptcha()(dispatch)
       expect(loggerErrorSpy).toHaveBeenCalledWith({ message: 'S3File fetch failed' })
     })
   })
@@ -255,10 +257,10 @@ describe('validate', () => {
           accessToken: 'test-access-token',
         }),
       })
-      actions.authValidate(null, 'test-refresh-token', '2018-04-10T12:00:00Z')(dispatch, getState)
+      actions.authValidate(null, 'test-authRefresh-token', '2018-04-10T12:00:00Z')(dispatch, getState)
     })
 
-    test('refresh and identify actions are dispatched', () => {
+    test('authRefresh and authIdentify actions are dispatched', () => {
       expect(dispatch).toHaveBeenCalledTimes(2)
     })
   })
@@ -276,7 +278,7 @@ describe('authIdentify', () => {
       actions.authIdentify('test-access-token')(dispatch)
     })
 
-    test('userIdentified, trackUserLogin and userLoggedIn actions are dispatched', () => {
+    test('userIdentified, trackUserLogin and authUserLoggedIn actions are dispatched', () => {
       expect(dispatch).toHaveBeenCalledWith({type: 'USER_LOGGED_IN'})
       expect(dispatch).toHaveBeenCalledWith({
         type: 'USER_IDENTIFIED',

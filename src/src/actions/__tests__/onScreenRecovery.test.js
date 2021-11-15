@@ -1,31 +1,31 @@
 import Immutable from 'immutable'
 
-import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from 'apis/onScreenRecovery'
-import { orderCancel, projectedOrderCancel } from 'actions/order'
-import { redirect } from 'actions/redirect'
 import * as windowUtils from 'utils/window'
 import subPauseActions from 'actions/subscriptionPause'
 import { actionTypes } from 'actions/actionTypes'
 import userActions from 'actions/user'
 import logger from 'utils/logger'
 
-import {
-  modalVisibilityChange,
-  keepOrder,
-  cancelPendingOrder,
-  cancelProjectedOrder,
-  getSkipRecoveryContent,
-  getPauseRecoveryContent,
-  cancelOrder,
-  pauseSubscription,
-  onKeep,
-  onConfirm,
-  getRecoveryContent,
-  orderCancelStart,
-  generateModalTrackingData,
-  trackViewDiscountReminder,
-  startOnScreenRecoverySubscriptionFlow,
-} from 'actions/onScreenRecovery'
+import { generateModalTrackingData } from "actions/onScreenRecovery/generateModalTrackingData"
+import { trackViewDiscountReminder } from "actions/onScreenRecovery/trackViewDiscountReminder"
+import { modalVisibilityChange } from "actions/onScreenRecovery/modalVisibilityChange"
+import { keepOrder } from "actions/onScreenRecovery/keepOrder"
+import { cancelProjectedOrder } from "actions/onScreenRecovery/cancelProjectedOrder"
+import { getSkipRecoveryContent } from "actions/onScreenRecovery/getSkipRecoveryContent"
+import { getPauseRecoveryContent } from "actions/onScreenRecovery/getPauseRecoveryContent"
+import { cancelOrder } from "actions/onScreenRecovery/cancelOrder"
+import { pauseSubscription } from "actions/onScreenRecovery/pauseSubscription"
+import { onKeep } from "actions/onScreenRecovery/onKeep"
+import { onConfirm } from "actions/onScreenRecovery/onConfirm"
+import { getRecoveryContent } from "actions/onScreenRecovery/getRecoveryContent"
+import { orderCancelStart } from "actions/onScreenRecovery/orderCancelStart"
+import { startOnScreenRecoverySubscriptionFlow } from "actions/onScreenRecovery/startOnScreenRecoverySubscriptionFlow"
+import { cancelPendingOrder } from "actions/onScreenRecovery/cancelPendingOrder"
+import { orderCancel } from "actions/order/orderCancel"
+import { projectedOrderCancel } from "actions/order/projectedOrderCancel"
+import { redirect } from "actions/redirect/redirect"
+import { fetchOrderSkipContent } from "apis/onScreenRecovery/fetchOrderSkipContent"
+import { fetchSubscriptionPauseContent } from "apis/onScreenRecovery/fetchSubscriptionPauseContent"
 
 jest.mock('actions/order', () => ({
   orderCancel: jest.fn(),

@@ -2,10 +2,11 @@ import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import { actionTypes } from '../../../../actions/actionTypes'
-import * as menuRecipeDetailsActions from '../menuRecipeDetails'
+import * as menuRecipeDetailsActions from '../menuRecipeDetails/menuRecipeDetails'
 import * as recipeListSelectors from '../../selectors/recipeList'
 import { wellformedMenuService, wellformedRecipe } from '../../selectors/__tests__/menuService.test'
 import { safeJestMock } from '../../../../_testing/mocks'
+import { checkQueryParams as checkQueryParams1 } from "routes/Menu/actions/menuRecipeDetails/checkQueryParams"
 
 jest.mock('react-router-redux', () => ({
   push: jest.fn()
@@ -277,14 +278,14 @@ describe('checkQueryParams', () => {
     })
 
     test('should dispatch push with new route without recipeDetailId', () => {
-      menuRecipeDetailsActions.checkQueryParams()(dispatch, getState)
+      checkQueryParams1()(dispatch, getState)
       expect(push).toHaveBeenCalledWith({
         query: {}
       })
     })
 
     test('should dispatch showDetailRecipe', () => {
-      menuRecipeDetailsActions.checkQueryParams()(dispatch, getState)
+      checkQueryParams1()(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith('showDetailRecipe')
     })
   })

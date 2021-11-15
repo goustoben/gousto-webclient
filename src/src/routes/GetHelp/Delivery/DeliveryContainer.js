@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
-import userActions, { userLoadOrderTrackingInfo } from 'actions/user'
 import { getUserOrders } from 'selectors/user'
 import { getisNewSSRDeliveriesEnabled } from 'selectors/features'
-import {
-  trackDeliveryOther,
-  trackDeliveryStatus,
-  trackNextBoxTrackingClick,
-  trackSelectDeliveryCategory,
-} from '../actions/getHelp'
 import { Delivery } from './Delivery'
+import { userLoadOrderTrackingInfo } from "actions/user/userLoadOrderTrackingInfo"
+import { userLoadOrders } from "actions/user/userLoadOrders"
+import { trackDeliveryOther } from "routes/GetHelp/actions/getHelp/trackDeliveryOther"
+import { trackDeliveryStatus } from "routes/GetHelp/actions/getHelp/trackDeliveryStatus"
+import { trackNextBoxTrackingClick } from "routes/GetHelp/actions/getHelp/trackNextBoxTrackingClick"
+import { trackSelectDeliveryCategory } from "routes/GetHelp/actions/getHelp/trackSelectDeliveryCategory"
 
 function mapStateToProps(state) {
   return {
@@ -24,7 +23,7 @@ const DeliveryContainer = connect(mapStateToProps, {
   trackDeliveryStatus,
   trackNextBoxTrackingClick,
   trackSelectDeliveryCategory,
-  userLoadOrders: userActions.userLoadOrders,
+  userLoadOrders,
 })(Delivery)
 
 export {

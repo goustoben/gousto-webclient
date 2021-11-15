@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchAddressByPostcode } from '../addressLookup'
+import { fetchAddressByPostcode } from "apis/addressLookup/fetchAddressByPostcode"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -15,7 +15,7 @@ jest.mock('config/routes', () => ({
     recipes: 'v2',
   },
   address: {
-    postcodeLookup: '/postcodeLookup'
+    postcodeLookup: '/postcodeLookupRoute'
   }
 }))
 
@@ -28,7 +28,7 @@ describe('addressLookup api', () => {
     test('should fetch the correct url', async () => {
       await fetchAddressByPostcode('W2 3LX')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/postcodeLookup', { postcode: 'W2 3LX' }, 'GET')
+      expect(fetch).toHaveBeenCalledWith(null, '/postcodeLookupRoute', { postcode: 'W2 3LX' }, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {

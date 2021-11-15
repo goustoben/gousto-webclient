@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 
-import { getRecoveryContent } from 'actions/onScreenRecovery'
 import { getIsMultiSkipEnabled } from 'selectors/features'
 import { getHasBoxesToSkip } from 'selectors/user'
 import { OnScreenRecovery } from './OnScreenRecovery'
+import { getRecoveryContent } from "actions/onScreenRecovery/getRecoveryContent"
 
 const mapStateToProps = (state) => ({
   triggered: state.onScreenRecovery.get('triggered'),

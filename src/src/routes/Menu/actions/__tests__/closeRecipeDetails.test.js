@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
-import { closeRecipeDetails } from '../closeRecipeDetails'
 
-import * as menuRecipeDetailsActions from '../menuRecipeDetails'
+import * as menuRecipeDetailsActions from '../menuRecipeDetails/menuRecipeDetails'
+import { closeRecipeDetails } from "routes/Menu/actions/closeRecipeDetails/closeRecipeDetails"
 
 describe('menu closeRecipeDetails action', () => {
   let state

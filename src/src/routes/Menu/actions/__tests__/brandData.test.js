@@ -1,9 +1,13 @@
 import Immutable from 'immutable'
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
-import { getBrandMenuHeaders, getBrandInfo, brandDataReceived } from '../brandData'
-import * as brandApi from '../../../../apis/brand'
+import * as brandApi from 'apis/brand/brand'
 import { safeJestMock } from '../../../../_testing/mocks'
+import { fetchBrandInfo } from "apis/brand/fetchBrandInfo"
+import { fetchBrandMenuHeaders } from "apis/brand/fetchBrandMenuHeaders"
+import { brandDataReceived } from "routes/Menu/actions/brandData/brandDataReceived"
+import { getBrandMenuHeaders } from "routes/Menu/actions/brandData/getBrandMenuHeaders"
+import { getBrandInfo } from "routes/Menu/actions/brandData/getBrandInfo"
 
 const mockedCookieGet = safeJestMock(Cookies, 'get')
 
@@ -67,7 +71,7 @@ describe('getBrandMenuHeaders', () => {
 
     test('should call fetchBrandMenuHeaders with access token', async () => {
       await getBrandMenuHeaders()(dispatch, getState)
-      expect(brandApi.fetchBrandMenuHeaders).toHaveBeenCalledWith('access-token', 'mock-session-id', 'user-id')
+      expect(fetchBrandMenuHeaders).toHaveBeenCalledWith('access-token', 'mock-session-id', 'user-id')
     })
 
     test('should dispatch MENU_COLLECTIONS_HEADERS_RECEIVED', async () => {
@@ -129,7 +133,7 @@ describe('getBrandInfo', () => {
 
     test('should call fetchBrandInfo with access token, sessionId and userId', async () => {
       await getBrandInfo()(dispatch, getState)
-      expect(brandApi.fetchBrandInfo).toHaveBeenCalledWith('access-token', 'mock-session-id', 'user-id')
+      expect(fetchBrandInfo).toHaveBeenCalledWith('access-token', 'mock-session-id', 'user-id')
     })
   })
 })

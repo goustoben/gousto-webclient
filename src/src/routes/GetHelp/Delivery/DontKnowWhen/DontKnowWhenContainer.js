@@ -1,13 +1,6 @@
 import { connect } from 'react-redux'
 import { DontKnowWhen } from './DontKnowWhen'
 import {
-  loadOrderById,
-  loadTrackingUrl,
-  trackClickGetInTouchInSSRDeliveries,
-  trackClickMyGoustoInSSRDeliveries,
-  trackClickTrackMyBoxInSSRDeliveries,
-} from '../../actions/getHelp'
-import {
   getAccessToken,
   getIsLoadOrderError,
   getIsOrderLoading,
@@ -16,6 +9,11 @@ import {
   getOrderDeliverySlot,
   getTrackingUrl,
 } from '../../selectors/selectors'
+import { loadOrderById } from "routes/GetHelp/actions/getHelp/loadOrderById"
+import { trackClickMyGoustoInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackClickMyGoustoInSSRDeliveries"
+import { trackClickTrackMyBoxInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackClickTrackMyBoxInSSRDeliveries"
+import { trackClickGetInTouchInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackClickGetInTouchInSSRDeliveries"
+import { loadTrackingUrl } from "routes/GetHelp/actions/getHelp/loadTrackingUrl"
 
 const mapStateToProps = (state) => ({
   accessToken: getAccessToken(state),

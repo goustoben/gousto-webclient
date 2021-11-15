@@ -4,8 +4,8 @@ import { getCutoffs } from 'utils/deliveries'
 import moment from 'moment'
 
 import { Detail } from './Detail'
-import { closeRecipeDetails } from '../../actions/closeRecipeDetails'
 import { getBrandAvailability } from '../../selectors/recipeTags'
+import { closeRecipeDetails } from "routes/Menu/actions/closeRecipeDetails/closeRecipeDetails"
 
 function mapStateToProps(state, ownProps) {
   let [cutoffDate] = getCutoffs(state.basket, state.boxSummaryDeliveryDays) // eslint-disable-line prefer-const

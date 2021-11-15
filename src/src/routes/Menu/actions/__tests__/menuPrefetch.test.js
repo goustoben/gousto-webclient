@@ -1,5 +1,5 @@
 import { actionTypes } from '../../../../actions/actionTypes'
-import { setMenuPrefetched } from '../menuPrefetch'
+import { setMenuPrefetched } from "routes/Menu/actions/menuPrefetch/setMenuPrefetched"
 
 describe('menuPrefetch', () => {
   test('should return menuPrefetched action with payload', () => {

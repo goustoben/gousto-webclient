@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { CollectionLinkChange } from './CollectionLinkChange'
+import { collectionFilterChange } from "actions/filters/collectionFilterChange"
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onChangeCollection: () => {
@@ -8,7 +8,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       ownProps.onClick()
     }
 
-    dispatch(actions.collectionFilterChange(ownProps.collectionId))
+    dispatch(collectionFilterChange(ownProps.collectionId))
   }
 })
 

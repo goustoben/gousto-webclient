@@ -1,7 +1,7 @@
 import ProductList from 'Product/List'
 import productUtils from 'utils/products'
-import actions from 'actions'
 import { connect } from 'react-redux'
+import { productDetailVisibilityChange } from "actions/products/productDetailVisibilityChange"
 
 function mapStateToProps(state, { orderId }) {
   const randomProducts = productUtils.getOneProductFromEachCategory(state.products, orderId)
@@ -14,7 +14,7 @@ function mapStateToProps(state, { orderId }) {
 }
 
 const ProductListContainer = connect(mapStateToProps, {
-  onProductClick: actions.productDetailVisibilityChange,
+  onProductClick: productDetailVisibilityChange,
 })(ProductList)
 
 export default ProductListContainer

@@ -1,5 +1,5 @@
-import { browserTypeChange } from 'actions/request'
 import actual from 'actual'
+import { browserTypeChange } from "actions/request/browserTypeChange"
 
 export default store => {
   if (actual('width', 'px') < 768) {

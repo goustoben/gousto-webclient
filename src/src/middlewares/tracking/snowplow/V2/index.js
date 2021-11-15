@@ -1,1 +1,1 @@
-export default from './snowplowV2'
+export { default as Component } from './snowplowV2'

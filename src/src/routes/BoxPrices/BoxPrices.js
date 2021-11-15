@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
-import { menuLoadBoxPrices } from 'actions/menu'
 import { hero, seo } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
 import Hero from 'Hero'
@@ -11,6 +10,7 @@ import css from './BoxPrices.css'
 import { BoxPricesRedesign } from './BoxPricesRedesign'
 import { BoxPricesList } from './BoxPricesList'
 import { BoxPricesContent } from './BoxPricesContent'
+import { menuLoadBoxPrices } from "actions/menu/menuLoadBoxPrices"
 
 class BoxPrices extends React.PureComponent {
   static fetchData = async ({ store }) => {

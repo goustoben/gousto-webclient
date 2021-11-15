@@ -1,16 +1,18 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import {
-  getIsTastePreferencesEnabled,
+  getIsGoustoOnDemandEnabled,
   getIsPaymentBeforeChoosingEnabled,
   getIsPaymentBeforeChoosingV2Enabled,
-  getIsGoustoOnDemandEnabled,
+  getIsTastePreferencesEnabled,
 } from 'selectors/features'
-import { signupDismissDiscountAppliedBar, signupSetStep } from 'actions/signup'
-import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
 import { getIsWizardWithoutImagesEnabled } from 'routes/Signup/signupSelectors'
 import { Signup } from './Signup'
+import { signupStepsReceive } from "actions/signup/signupStepsReceive"
+import { signupSetStep } from "actions/signup/signupSetStep"
+import { signupNextStep } from "actions/signup/signupNextStep"
+import { signupDismissDiscountAppliedBar } from "actions/signup/signupDismissDiscountAppliedBar"
+import { trackDiscountVisibilityBannerAppearance } from "actions/tracking/trackDiscountVisibilityBannerAppearance"
 
 const mapStateToProps = (state, ownProps) => ({
   stepName: ownProps.params.stepName,
@@ -32,8 +34,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const SignupContainer = connect(mapStateToProps, {
-  goToStep: actions.signupNextStep,
-  signupStepsReceive: actions.signupStepsReceive,
+  goToStep: signupNextStep,
+  signupStepsReceive: signupStepsReceive,
   trackDiscountVisibility: trackDiscountVisibilityBannerAppearance,
   signupDismissDiscountAppliedBar,
   signupSetStep,

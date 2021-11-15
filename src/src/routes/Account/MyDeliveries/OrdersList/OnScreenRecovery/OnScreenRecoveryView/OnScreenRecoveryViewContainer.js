@@ -1,15 +1,13 @@
 import { connect } from 'react-redux'
 
-import {
-  onKeep,
-  onConfirm,
-  getRecoveryContent,
-  modalVisibilityChange,
-  trackViewDiscountReminder
-} from 'actions/onScreenRecovery'
 import { getIsSubscriberPricingEnabled } from 'selectors/features'
 import { getBrowserType } from 'selectors/browser'
 import { OnScreenRecoveryView } from './OnScreenRecoveryView'
+import { trackViewDiscountReminder } from "actions/onScreenRecovery/trackViewDiscountReminder"
+import { modalVisibilityChange } from "actions/onScreenRecovery/modalVisibilityChange"
+import { onKeep } from "actions/onScreenRecovery/onKeep"
+import { onConfirm } from "actions/onScreenRecovery/onConfirm"
+import { getRecoveryContent } from "actions/onScreenRecovery/getRecoveryContent"
 
 const mapStateToProps = (state) => ({
   title: state.onScreenRecovery.get('title'),

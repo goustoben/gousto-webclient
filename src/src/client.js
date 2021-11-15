@@ -13,7 +13,6 @@ import processQuery from 'utils/processQuery'
 import loadFeatures from 'utils/loadFeatures'
 import { loadVariants } from 'utils/loadVariants'
 import featuresLoadedFromStore from 'utils/featuresLoadedFromStore'
-import actions from 'actions'
 import docReady from 'utils/docReady'
 import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
@@ -21,6 +20,8 @@ import browserType from 'client/browserType'
 import { getIsAuthenticated } from 'selectors/auth'
 import { configureStore } from './store'
 import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
+import { setUTMSource } from "actions/tracking/setUTMSource"
+import { loginVisibilityChange } from "actions/login/loginVisibilityChange"
 
 if (__ENV__ !== 'production') {
   // eslint-disable-next-line global-require
@@ -40,7 +41,7 @@ try {
 const store = configureStore(browserHistory, initialState, Cookies)
 
 processCookies(Cookies, store)
-store.dispatch(actions.setUTMSource())
+store.dispatch(setUTMSource())
 
 const history = syncHistoryWithStore(browserHistory, store)
 
@@ -76,7 +77,7 @@ window.onhashchange = () => {
   const isOfLoginHashTag = window.location.hash.indexOf('login') !== -1
   const isNotAuthenticated = !getIsAuthenticated(store.getState())
   if (isOfLoginHashTag && isNotAuthenticated) {
-    store.dispatch(actions.loginVisibilityChange(true))
+    store.dispatch(loginVisibilityChange(true))
   }
 }
 

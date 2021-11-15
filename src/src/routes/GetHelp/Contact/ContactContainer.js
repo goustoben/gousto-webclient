@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 
-import { selectContactChannel } from 'actions/getHelp'
 import { getUserId } from 'selectors/user'
 import { getOrderId } from '../selectors/selectors'
 
 import { Contact } from './Contact'
+import { selectContactChannel } from "actions/getHelp/selectContactChannel"
 
 const mapStateToProps = (state) => ({
   content: {

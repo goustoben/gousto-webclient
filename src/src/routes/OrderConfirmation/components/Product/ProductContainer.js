@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 import { getBasket } from 'selectors/root'
-import { getTempProductId, getTempAddProduct } from 'selectors/temp'
-import { basketProductAdd, basketProductRemove } from 'actions/basket'
-import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
-import tempActions from 'actions/temp'
+import { getTempAddProduct, getTempProductId } from 'selectors/temp'
 import { Product } from './Product.logic'
+import { orderConfirmationProductTracking } from "actions/order/orderConfirmationProductTracking"
+import { basketProductAdd } from "actions/basket/basketProductAdd"
+import { basketProductRemove } from "actions/basket/basketProductRemove"
+import { temp } from "actions/temp/temp"
 
 const mapStateToProps = (state, props) => {
   const isSelectedProduct = props.product && (props.product.id === state.temp.get('productId'))
@@ -21,7 +22,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
   basketProductAdd,
   basketProductRemove,
-  temp: tempActions.temp,
+  temp,
   orderConfirmationProductTracking
 }
 

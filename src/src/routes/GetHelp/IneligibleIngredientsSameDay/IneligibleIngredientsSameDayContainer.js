@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { trackIngredientsGoToMyGousto } from '../actions/getHelp'
 import { IneligibleIngredientsSameDay } from './IneligibleIngredientsSameDay'
+import { trackIngredientsGoToMyGousto } from "routes/GetHelp/actions/getHelp/trackIngredientsGoToMyGousto"
 
 const IneligibleIngredientsSameDayContainer = connect(() => ({}), {
   trackIngredientsGoToMyGousto

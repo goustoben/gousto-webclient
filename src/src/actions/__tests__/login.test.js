@@ -2,13 +2,15 @@ import Immutable from 'immutable'
 import globals from 'config/globals'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
-import loginActions, { helpPreLoginVisibilityChange, loginRedirect } from 'actions/login'
+import loginActions from 'actions/login'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
-import { pricingRequest } from '../pricing'
-import statusActions from '../status'
+import statusActions from '../status/status'
 import authActions from '../auth'
+import { helpPreLoginVisibilityChange } from "actions/login/helpPreLoginVisibilityChange"
+import { loginRedirect } from "actions/login/loginRedirect"
+import { pricingRequest } from "actions/pricing/pricingRequest"
 
 jest.mock('config/globals')
 jest.mock('containers/OptimizelyRollouts/optimizelyUtils')

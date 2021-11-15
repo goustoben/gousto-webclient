@@ -1,8 +1,10 @@
-import { homeGetStarted, applyPromoCodeAndShowModal } from 'actions/home'
-import { redirect } from 'actions/redirect'
-import { trackGetStarted } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
-import { promoChange, promoToggleModalVisibility } from 'actions/promos'
+import { applyPromoCodeAndShowModal } from "actions/home/applyPromoCodeAndShowModal"
+import { homeGetStarted } from "actions/home/homeGetStarted"
+import { promoChange } from "../promos/promoChange"
+import { promoToggleModalVisibility } from "../promos/promoToggleModalVisibility"
+import { redirect } from "actions/redirect/redirect"
+import { trackGetStarted } from "actions/tracking/trackGetStarted"
 
 jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),

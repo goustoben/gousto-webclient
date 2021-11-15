@@ -1,12 +1,12 @@
 import logger from 'utils/logger'
-import webClientStatusActions from 'actions/status'
+import webClientStatusActions from 'actions/status/status'
 import { asyncAndDispatch } from '../utils'
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
 }))
 
-// Tests inside this describe don't clear the mocks after each test intentionally
+// Tests inside this describe don't authClear the mocks after each test intentionally
 describe('asyncAndDispatch', () => {
   const dispatch = jest.fn()
   const handleError = jest.fn()

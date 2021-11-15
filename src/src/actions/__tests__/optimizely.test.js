@@ -1,4 +1,6 @@
 /* eslint-disable */
+import { loadOptimizelySDK } from "actions/optimizely/loadOptimizelySDK"
+
 jest.mock('utils/logger', () => ({
   info: jest.fn(),
   error: jest.fn(),
@@ -7,7 +9,6 @@ jest.mock('utils/logger', () => ({
 import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
 import optimizelySdk from '@optimizely/optimizely-sdk'
-import { loadOptimizelySDK } from '../optimizely'
 import {instance as OptimizelySDKModule } from '../../containers/OptimizelyRollouts/optimizelySDK'
 import logger from 'utils/logger'
 /* eslint-enable */

@@ -1,8 +1,12 @@
 import * as fetch from 'utils/fetch'
 import * as cookieHelper2 from 'utils/cookieHelper2'
-import { updateOrder, createOrder, getOrderPrice, getOrder, getUserOrders } from '../orderV2'
 import * as menuFetch from '../fetch'
 import { mockFetchResponse } from '../fetch.mock'
+import { createOrder } from "routes/Menu/apis/orderV2/createOrder"
+import { getOrderPrice } from "routes/Menu/apis/orderV2/getOrderPrice"
+import { updateOrder } from "routes/Menu/apis/orderV2/updateOrder"
+import { getOrder } from "routes/Menu/apis/orderV2/getOrder"
+import { getUserOrders } from "routes/Menu/apis/orderV2/getUserOrders"
 
 jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPrefix, shouldDecode) => {
   if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {

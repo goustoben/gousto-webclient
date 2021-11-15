@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
-import {
-  trackClickGetInTouchInSSRDeliveries,
-  validateDeliveryAction,
-} from '../../actions/getHelp'
 import { DeliveryValidation } from './DeliveryValidation'
+import { trackClickGetInTouchInSSRDeliveries } from "routes/GetHelp/actions/getHelp/trackClickGetInTouchInSSRDeliveries"
+import { validateDeliveryAction } from "routes/GetHelp/actions/getHelp/validateDeliveryAction"
 
 const mapStateToProps = (state) => ({
   compensationAmount: state.getHelp.getIn(['order', 'deliveryCompensationAmount']),

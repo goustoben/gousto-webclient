@@ -6,6 +6,7 @@ import { StepIndicator } from 'goustouicomponents'
 import { Signup } from 'routes/Signup/Signup'
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
 import css from '../Signup.css'
+import { signupStepsReceive } from "actions/signup/signupStepsReceive"
 
 jest.spyOn(actions, 'signupStepsReceive').mockResolvedValue()
 
@@ -89,7 +90,7 @@ describe('Signup', () => {
           store: context.store,
         })
 
-        expect(actions.signupStepsReceive).toHaveBeenCalledWith(
+        expect(signupStepsReceive).toHaveBeenCalledWith(
           Immutable.List(['boxSize', 'recipesPerBox', 'postcode', 'delivery'])
         )
       })

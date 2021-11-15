@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { helpPreLoginVisibilityChange } from 'actions/login'
 import * as trackingKeys from 'actions/trackingKeys'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import Footer from 'Footer/Footer'
+import { helpPreLoginVisibilityChange } from "actions/login/helpPreLoginVisibilityChange"
 
 jest.mock('actions/login')
 

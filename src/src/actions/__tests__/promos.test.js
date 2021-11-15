@@ -1,6 +1,6 @@
 import pricing from 'actions/pricing'
-import { promoActions } from 'actions/promos'
-import { trackPromocodeChange } from 'actions/checkout'
+import { promoActions } from '../promos'
+import { trackPromocodeChange } from "actions/checkout/trackPromocodeChange"
 
 const { promoApplyCheckoutCode } = promoActions
 const dispatchSpy = jest.fn()

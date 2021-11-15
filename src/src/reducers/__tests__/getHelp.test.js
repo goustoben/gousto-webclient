@@ -1,9 +1,9 @@
 import { List, Map, OrderedMap, fromJS } from 'immutable'
-import { storeGetHelpOrder } from 'routes/GetHelp/actions/getHelp'
 import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
+import { storeGetHelpOrder } from "routes/GetHelp/actions/getHelp/storeGetHelpOrder"
 
 const MOCK_ORDERS = [
   {

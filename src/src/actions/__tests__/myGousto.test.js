@@ -1,7 +1,5 @@
 import { actionTypes } from 'actions/actionTypes'
-import {
-  trackNextBoxTrackingClick,
-} from 'actions/myGousto'
+import { trackNextBoxTrackingClick } from "actions/myGousto/trackNextBoxTrackingClick"
 
 describe('myGousto actions', () => {
   describe('trackNextBoxTrackingClick', () => {

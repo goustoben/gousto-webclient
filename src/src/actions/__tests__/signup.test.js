@@ -1,25 +1,23 @@
 import Immutable from 'immutable'
 
-import { basketPostcodeChange } from 'actions/basket'
 import { actionTypes } from 'actions/actionTypes'
 import { push } from 'react-router-redux'
 import { stepByName } from 'utils/signup'
-import { redirect } from 'actions/redirect'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import {
-  signupStepsReceive,
-  signupCookForKidsChange,
-  signupChangePostcode,
-  signupTracking,
-  signupNextStep,
-  signupSetStep,
-  signupGoToMenu,
-  trackSignupWizardAction,
-  trackSocialBelongingBannerAppearance,
-  signupGetCountByPostcode,
-} from 'actions/signup'
-import { fetchCountByPostcode } from 'apis/signup'
 import logger from 'utils/logger'
+import { basketPostcodeChange } from "actions/basket/basketPostcodeChange"
+import { redirect } from "actions/redirect/redirect"
+import { signupStepsReceive } from "actions/signup/signupStepsReceive"
+import { signupSetStep } from "actions/signup/signupSetStep"
+import { signupCookForKidsChange } from "actions/signup/signupCookForKidsChange"
+import { signupTracking } from "actions/signup/signupTracking"
+import { signupNextStep } from "actions/signup/signupNextStep"
+import { signupGoToMenu } from "actions/signup/signupGoToMenu"
+import { trackSignupWizardAction } from "actions/signup/trackSignupWizardAction"
+import { signupGetCountByPostcode } from "actions/signup/signupGetCountByPostcode"
+import { signupChangePostcode } from "actions/signup/signupChangePostcode"
+import { trackSocialBelongingBannerAppearance } from "actions/signup/trackSocialBelongingBannerAppearance"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
+import { fetchCountByPostcode } from "apis/signup/fetchCountByPostcode"
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),

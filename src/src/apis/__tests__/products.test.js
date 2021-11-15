@@ -1,6 +1,10 @@
 import fetch from 'utils/fetch'
 import config from 'config/products'
-import { fetchProduct, fetchProductCategories, fetchProducts, fetchRandomProducts, fetchProductStock } from '../products'
+import { fetchProduct } from "apis/products/fetchProduct"
+import { fetchProductCategories } from "apis/products/fetchProductCategories"
+import { fetchProducts } from "apis/products/fetchProducts"
+import { fetchRandomProducts } from "apis/products/fetchRandomProducts"
+import { fetchProductStock } from "apis/products/fetchProductStock"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

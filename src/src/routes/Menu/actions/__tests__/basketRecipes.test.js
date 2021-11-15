@@ -4,14 +4,20 @@ import * as basketSelectors from 'selectors/basket'
 import * as loggingmanagerActions from 'actions/loggingmanager'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
-import * as basketActions from '../basketRecipes'
-import * as menuCheckoutClickActions from '../menuCheckoutClick'
-import { safeJestMock, multiReturnMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
-import pricingActions from '../../../../actions/pricing'
-import * as menuActions from '../../../../actions/menu'
+import * as basketActions from '../basketRecipes/basketRecipes'
+import * as menuCheckoutClickActions from '../menuCheckoutClick/menuCheckoutClick'
+import { multiReturnMock, returnArgumentsFromMock, safeJestMock } from '../../../../_testing/mocks'
+import pricingActions from 'actions/pricing'
+import * as menuActions from 'actions/menu'
 import * as menuSelectors from '../../selectors/menu'
-import * as menuRecipeDetailsActions from '../menuRecipeDetails'
-import * as clientMetrics from '../../apis/clientMetrics'
+import * as menuRecipeDetailsActions from '../menuRecipeDetails/menuRecipeDetails'
+import * as clientMetrics from '../../apis/clientMetrics/clientMetrics'
+import { trackUserAddRemoveRecipe } from "actions/loggingmanager/trackUserAddRemoveRecipe"
+import { validBasketRecipeAdd } from "routes/Menu/actions/basketRecipes/validBasketRecipeAdd"
+import { basketRecipeAdd } from "routes/Menu/actions/basketRecipes/basketRecipeAdd"
+import { basketRecipeRemove } from "routes/Menu/actions/basketRecipes/basketRecipeRemove"
+import { basketRecipeSwap } from "routes/Menu/actions/basketRecipes/basketRecipeSwap"
+import { basketRecipeAddAttempt } from "routes/Menu/actions/basketRecipes/basketRecipeAddAttempt"
 
 jest.mock('actions/loggingmanager')
 
@@ -98,7 +104,7 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
   })
 
   test('`BASKET_ELIGIBLE_TRACK` should be dispatched', () => {
-    basketActions.validBasketRecipeAdd('234', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+    validBasketRecipeAdd('234', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
 
     expect(dispatch).toHaveBeenNthCalledWith(4, {
       type: actionTypes.BASKET_ELIGIBLE_TRACK,
@@ -157,7 +163,7 @@ describe('validBasketRecipeAdd', () => {
       const orderId = '12345'
 
       test('then it should not call', () => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
+        validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
 
         expect(mockSendClientMetrics).not.toHaveBeenCalled()
       })
@@ -167,7 +173,7 @@ describe('validBasketRecipeAdd', () => {
       const orderId = undefined
 
       test('then it should call sendClientMetric with the correct info', () => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
+        validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
 
         expect(mockSendClientMetrics).toHaveBeenCalledWith('menu-first-recipe-add', 1, 'Count')
       })
@@ -205,7 +211,7 @@ describe('validBasketRecipeAdd', () => {
         })
       })
 
-      basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+      validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
     })
 
     afterEach(() => {
@@ -268,7 +274,7 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call `validBasketRecipeAdd` with recipe already within the basket which is in stock', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+        validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
       })
 
       test('then state should have been retrieved two times', () => {
@@ -310,7 +316,7 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call `validBasketRecipeAdd` with recipe that is out of stock', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('234', 'healthkitchen', { position: '23' })(dispatch, getStateSpy)
+        validBasketRecipeAdd('234', 'healthkitchen', { position: '23' })(dispatch, getStateSpy)
       })
 
       test('then no actions should have been dispatched', () => {
@@ -372,7 +378,7 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call `validBasketRecipeAdd`', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+        validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
       })
 
       test('then state should have been retrieved two times', () => {
@@ -474,7 +480,7 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call  `validBasketRecipeAdd`', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+        validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
       })
 
       test('then no actions should have been dispatched', () => {
@@ -518,21 +524,21 @@ describe('basketRecipeAdd', () => {
     })
 
     test('then it should call validateMenuLimitsForBasket', () => {
-      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+      basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
 
       expect(validateMenuLimitsForBasketSpy).toBeCalledWith(state, '123')
     })
 
     test('then it should dispatch validBasketRecipeAdd', () => {
-      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+      basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
 
       expect(dispatch).toHaveBeenCalledWith('mockedValidBasketRecipeAddReturn')
     })
 
     test('then trackUserAddRemoveRecipe is called correctly', () => {
-      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+      basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
 
-      expect(loggingmanagerActions.trackUserAddRemoveRecipe).toHaveBeenCalledTimes(1)
+      expect(trackUserAddRemoveRecipe).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -558,7 +564,7 @@ describe('basketRecipeAdd', () => {
     })
 
     test('then it should dispatch validBasketRecipeAdd', () => {
-      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+      basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
 
       expect(validateMenuLimitsForBasketSpy).toBeCalledWith(state, '123')
       expect(dispatch).toHaveBeenCalledTimes(1)
@@ -601,7 +607,7 @@ describe('basketRecipeAdd', () => {
       })
 
       test('should dispatch menuRecipeDetailVisibilityChange', () => {
-        basketActions.basketRecipeAdd('1234', 'view', {}, 4)(dispatch, getStateSpy)
+        basketRecipeAdd('1234', 'view', {}, 4)(dispatch, getStateSpy)
         expect(dispatch).toHaveBeenCalledWith(['menuRecipeDetailVisibilityChange', []])
       })
     })
@@ -647,7 +653,7 @@ describe('basketRecipeRemove', () => {
 
   describe('when basketRecipeRemove is called passing recipeId only', () => {
     beforeEach(() => {
-      basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
+      basketRecipeRemove('123')(dispatch, getStateSpy)
     })
 
     test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', () => {
@@ -685,7 +691,7 @@ describe('basketRecipeRemove', () => {
     })
 
     test('then trackUserAddRemoveRecipe is called correctly', () => {
-      expect(loggingmanagerActions.trackUserAddRemoveRecipe).toHaveBeenCalledTimes(1)
+      expect(trackUserAddRemoveRecipe).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -694,13 +700,13 @@ describe('basketRecipeRemove', () => {
     const pricingRequestSpy = safeJestMock(pricingActions, 'pricingRequest')
     pricingRequestSpy.mockReturnValue(pricingRequestResponse)
 
-    basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
+    basketRecipeRemove('123')(dispatch, getStateSpy)
 
     expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
   })
 
   test('should map through the given view argument through to trackingData', () => {
-    basketActions.basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
+    basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
 
     expect(getStateSpy.mock.calls).toHaveLength(3)
     expect(dispatch.mock.calls).toHaveLength(5)
@@ -761,7 +767,7 @@ describe('basketRecipeRemove', () => {
         }
       }
     })
-    basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
+    basketRecipeRemove('123')(dispatch, getStateSpy)
 
     expect(getStateSpy.mock.calls).toHaveLength(3)
     expect(dispatch.mock.calls).toHaveLength(5)
@@ -811,7 +817,7 @@ describe('basketRecipeSwap', () => {
       dispatch = jest.fn()
     })
     test('then it should not dispatch anything', () => {
-      basketActions.basketRecipeSwap()(dispatch, getStateSpy)
+      basketRecipeSwap()(dispatch, getStateSpy)
       expect(dispatch).not.toHaveBeenCalled()
     })
   })
@@ -847,17 +853,17 @@ describe('basketRecipeSwap', () => {
     })
 
     test('then it should dipatch basketRecipeRemove', () => {
-      basketActions.basketRecipeSwap()(dispatch, getStateSpy)
+      basketRecipeSwap()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith('mockedBasketRecipeRemoveReturn')
     })
 
     test('then it should dipatch validBasketRecipeAdd', () => {
-      basketActions.basketRecipeSwap()(dispatch, getStateSpy)
+      basketRecipeSwap()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith('mockedValidBasketRecipeAddReturn')
     })
 
     test('then it should dipatch clearBasketNotValidError', () => {
-      basketActions.basketRecipeSwap()(dispatch, getStateSpy)
+      basketRecipeSwap()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith('mockedClearBasketNotValidErrorReturn')
     })
   })
@@ -894,7 +900,7 @@ describe('basketRecipeAddAttempt', () => {
       safeJestMock(basketSelectors, 'getBasketPostcode').mockReturnValue('SE13 4RT')
       const basketRecipeAddSpy = safeJestMock(basketActions, 'basketRecipeAdd').mockReturnValue('basketRecipeAddResponse')
 
-      basketActions.basketRecipeAddAttempt('123')(dispatch, getStateSpy)
+      basketRecipeAddAttempt('123')(dispatch, getStateSpy)
       expect(basketRecipeAddSpy).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith('basketRecipeAddResponse')
     })
@@ -918,7 +924,7 @@ describe('basketRecipeAddAttempt', () => {
       const menuBrowseCTAVisibilityChangeSpy = safeJestMock(menuActions, 'menuBrowseCTAVisibilityChange')
       menuBrowseCTAVisibilityChangeSpy.mockReturnValue('menuBrowseCTAVisibilityChangeResponse')
 
-      basketActions.basketRecipeAddAttempt('123')(dispatch, getStateSpy)
+      basketRecipeAddAttempt('123')(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith('menuBrowseCTAVisibilityChangeResponse')
     })

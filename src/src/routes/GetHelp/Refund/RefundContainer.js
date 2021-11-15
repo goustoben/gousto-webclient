@@ -8,11 +8,11 @@ import {
   getSelectedIngredients,
 } from '../selectors/selectors'
 import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
-import { trackIngredientsGetInTouchClick } from '../actions/getHelp'
-import { createComplaint } from '../actions/createComplaint'
 import { actionTypes } from '../actions/actionTypes'
 
 import { Refund } from './Refund'
+import { createComplaint } from "routes/GetHelp/actions/createComplaint/createComplaint"
+import { trackIngredientsGetInTouchClick } from "routes/GetHelp/actions/getHelp/trackIngredientsGetInTouchClick"
 
 const mapStateToProps = (state) => ({
   compensation: getCompensation(state),

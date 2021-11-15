@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { redirect } from 'actions/redirect'
-import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getPromoBannerText } from 'selectors/features'
 import { getPromoBannerState } from 'utils/home'
-import { applyPromoCodeAndShowModal } from 'actions/home'
 import { promo } from 'config/home'
 import { PromoBanner } from './PromoBanner'
+import { applyPromoCodeAndShowModal } from "actions/home/applyPromoCodeAndShowModal"
+import { redirect } from "actions/redirect/redirect"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
 
 const mapStateToProps = (state) => {
   const text = getPromoBannerText(state) || promo.defaultBannerText

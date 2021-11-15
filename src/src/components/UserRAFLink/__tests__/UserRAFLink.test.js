@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import { UserRAFLink } from '../UserRAFLink'
+import { trackUserFreeFoodLinkShare } from "actions/loggingmanager/trackUserFreeFoodLinkShare"
 
 jest.mock('actions/loggingmanager', () => ({
   trackUserFreeFoodLinkShare: jest.fn(),

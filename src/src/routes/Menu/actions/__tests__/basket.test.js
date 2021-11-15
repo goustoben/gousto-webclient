@@ -1,10 +1,10 @@
 import Immutable from 'immutable'
 import * as orderConfirmationActions from 'actions/orderConfirmation'
-import * as OrderAPIV1 from 'apis/orders'
+import * as OrderAPIV1 from 'apis/orders/orders'
 import utilsLogger from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
-import { basketUpdateProducts } from '../basket'
+import { basketUpdateProducts } from "routes/Menu/actions/basket/basketUpdateProducts"
 
 describe('basketUpdateProducts', () => {
   let dispatch

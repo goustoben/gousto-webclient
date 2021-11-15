@@ -1,12 +1,12 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 import {
   checkoutUrgencySetCurrentStatus,
   trackCheckoutUrgencyAction,
 } from 'routes/Checkout/checkoutActions'
 import { CheckoutUrgencyModalContainer } from '../CheckoutUrgencyModalContainer'
+import { checkoutCreatePreviewOrder } from "routes/Menu/actions/checkout/checkoutCreatePreviewOrder"
 
 jest.mock('routes/Menu/actions/checkout', () => ({
   checkoutCreatePreviewOrder: jest.fn(),

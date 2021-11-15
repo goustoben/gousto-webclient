@@ -1,5 +1,6 @@
 import fetch from 'utils/fetch'
-import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../onScreenRecovery'
+import { fetchOrderSkipContent } from "apis/onScreenRecovery/fetchOrderSkipContent"
+import { fetchSubscriptionPauseContent } from "apis/onScreenRecovery/fetchSubscriptionPauseContent"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

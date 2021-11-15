@@ -1,1 +1,1 @@
-export default from './CancelledAllBoxesModalContainer'
+export { default as Component } from './CancelledAllBoxesModalContainer'

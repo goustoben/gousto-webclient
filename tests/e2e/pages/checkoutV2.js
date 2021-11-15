@@ -487,7 +487,7 @@ module.exports = {
               tag: 'signupSuccessful',
               checkFn: function(callback) {
                 // Corresponds to ./welcome.js::sections.elements.appPromo, but
-                // it's not clear how to reference a peer page object from
+                // it's not authClear how to reference a peer page object from
                 // here.
                 const selector = '*[data-testing=appPromo]'
                 asyncIsElementBySelectorPresent(browser, selector, callback)

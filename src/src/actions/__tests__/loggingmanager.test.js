@@ -1,13 +1,11 @@
 import Immutable from 'immutable'
-import { triggerLoggingManagerEvent } from 'apis/loggingManager'
-import {
-  EVENT_NAMES,
-  sendGoustoAppLinkSMS,
-  trackUserAddRemoveRecipe,
-  trackUserFreeFoodPageView,
-  trackUserLogin,
-  trackUserFreeFoodLinkShare,
-} from 'actions/loggingmanager'
+import { EVENT_NAMES } from "actions/loggingmanager/EVENT_NAMES"
+import { trackUserFreeFoodPageView } from "actions/loggingmanager/trackUserFreeFoodPageView"
+import { trackUserLogin } from "actions/loggingmanager/trackUserLogin"
+import { trackUserAddRemoveRecipe } from "actions/loggingmanager/trackUserAddRemoveRecipe"
+import { sendGoustoAppLinkSMS } from "actions/loggingmanager/sendGoustoAppLinkSMS"
+import { trackUserFreeFoodLinkShare } from "actions/loggingmanager/trackUserFreeFoodLinkShare"
+import { triggerLoggingManagerEvent } from "apis/loggingmanager/triggerLoggingManagerEvent"
 
 jest.mock('apis/loggingManager', () => ({
   triggerLoggingManagerEvent: jest.fn(),

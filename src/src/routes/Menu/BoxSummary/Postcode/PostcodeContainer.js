@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryNext } from 'actions/boxSummary'
 import { getFullScreenBoxSummary } from 'selectors/features'
 import { Postcode } from './Postcode'
+import { boxSummaryNext } from "actions/boxSummary/boxSummaryNext"
+import { basketRestorePreviousValues } from "actions/basket/basketRestorePreviousValues"
+import { basketChosenAddressChange } from "actions/basket/basketChosenAddressChange"
+import { temp } from "actions/temp/temp"
 
 function mapStateToProps(state) {
   let shippingDefault
@@ -33,9 +35,9 @@ function mapStateToProps(state) {
 }
 
 const PostcodeContainer = connect(mapStateToProps, {
-  basketRestorePreviousValues: actions.basketRestorePreviousValues,
-  basketChosenAddressChange: actions.basketChosenAddressChange,
-  setTempPostcode: postcode => actions.temp('postcode', postcode),
+  basketRestorePreviousValues,
+  basketChosenAddressChange,
+  setTempPostcode: postcode => temp('postcode', postcode),
   boxSummaryNext,
 })(Postcode)
 

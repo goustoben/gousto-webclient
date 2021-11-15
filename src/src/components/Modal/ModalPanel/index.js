@@ -1,1 +1,1 @@
-export default from './ModalPanel'
+export { default as Component } from './ModalPanel'

@@ -1,8 +1,11 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
-import actions from 'actions'
 import { getProductLimitReached } from 'utils/basket'
 import ProductDetail from 'Product/Detail'
+import { basketProductAdd } from "actions/basket/basketProductAdd"
+import { basketProductRemove } from "actions/basket/basketProductRemove"
+import { userVerifyAge } from "actions/user/userVerifyAge"
+import { productDetailVisibilityChange } from "actions/products/productDetailVisibilityChange"
 
 function mapStateToProps(state, props) {
   const product = state.products.get(props.productId, Immutable.Map())
@@ -25,10 +28,10 @@ function mapStateToProps(state, props) {
 }
 
 const DetailContainer = connect(mapStateToProps, {
-  onAdd: actions.basketProductAdd,
-  onRemove: actions.basketProductRemove,
-  onVerifyAge: actions.userVerifyAge,
-  onVisibilityChange: actions.productDetailVisibilityChange,
+  onAdd: basketProductAdd,
+  onRemove: basketProductRemove,
+  onVerifyAge: userVerifyAge,
+  onVisibilityChange: productDetailVisibilityChange,
 })(ProductDetail)
 
 export default DetailContainer

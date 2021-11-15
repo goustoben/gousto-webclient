@@ -1,7 +1,9 @@
 import * as fetchModule from 'utils/fetch'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
-import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
+import { fetchMenus } from "routes/Menu/fetchData/apis/fetchMenus"
+import { fetchMenusWithUserId } from "routes/Menu/fetchData/apis/fetchMenusWithUserId"
+import { fetchSimpleMenu } from "routes/Menu/fetchData/apis/fetchSimpleMenu"
 
 const mockFetchResult = { data: [1, 2, 3] }
 

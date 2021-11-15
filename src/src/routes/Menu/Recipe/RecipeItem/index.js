@@ -1,1 +1,1 @@
-export default from './RecipeItem'
+export { default as Component } from './RecipeItem'

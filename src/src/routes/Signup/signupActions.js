@@ -3,10 +3,10 @@ import {
   signupCheckAccountExistingCustomer,
   signupApplyVoucher,
 } from 'actions/trackingKeys'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { redirect } from 'actions/redirect'
-import loginActions from 'actions/login'
 import routes from 'config/routes'
+import { loginVisibilityChange } from "actions/login/loginVisibilityChange"
+import { redirect } from "actions/redirect/redirect"
+import { trackUTMAndPromoCode } from "actions/tracking/trackUTMAndPromoCode"
 
 export const signupCheckAccountGoToBoxPrices = () => (dispatch) => {
   dispatch(trackUTMAndPromoCode(signupCheckAccountNewCustomer))
@@ -16,7 +16,6 @@ export const signupCheckAccountGoToBoxPrices = () => (dispatch) => {
 export const signupCheckAccountLogin = () => (dispatch) => {
   dispatch(trackUTMAndPromoCode(signupCheckAccountExistingCustomer))
 
-  const { loginVisibilityChange } = loginActions
   dispatch(loginVisibilityChange(true))
 }
 

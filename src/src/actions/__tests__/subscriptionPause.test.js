@@ -1,11 +1,8 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
-import subPauseActions, { fetchData } from 'actions/subscriptionPause'
-import statusActions from 'actions/status'
+import subPauseActions from 'actions/subscriptionPause'
+import statusActions from 'actions/status/status'
 import userActions from 'actions/user'
-import { cancelExistingOrders } from 'apis/orders'
-import customersApi from 'apis/customers'
 import redirectActions from 'actions/redirect'
 import config from 'config/subscription'
 import routesConfig from 'config/routes'
@@ -13,7 +10,11 @@ import * as subUtils from 'utils/subscription'
 import logger from 'utils/logger'
 import windowUtil from 'utils/window'
 import { flushPromises } from '../../_testing/utils'
-import { deactivateSubscription } from '../../routes/Account/apis/subscription'
+import { getPauseRecoveryContent } from "actions/onScreenRecovery/getPauseRecoveryContent"
+import { fetchData } from "actions/subscriptionPause/fetchData"
+import { cancelExistingOrders } from "apis/orders/cancelExistingOrders"
+import { fetchPauseReasons } from "apis/customers/fetchPauseReasons"
+import { deactivateSubscription } from "routes/Account/apis/subscription/deactivateSubscription"
 
 jest.mock('actions/status', () => ({
   error: jest.fn(),
@@ -1293,7 +1294,7 @@ describe('Subscription action', () => {
         user: Immutable.fromJS({ id: '123' }),
       })
       dispatch = jest.fn()
-      customersApi.fetchPauseReasons.mockReturnValue(new Promise(resolve => {
+      fetchPauseReasons.mockReturnValue(new Promise(resolve => {
         resolve(
           {
             data: ['1', '2'],
@@ -1310,7 +1311,7 @@ describe('Subscription action', () => {
     test('should call fetchPauseReasons once', async () => {
       await subPauseActions.subscriptionPauseFetchReasons()(dispatch, getState)
 
-      expect(customersApi.fetchPauseReasons).toHaveBeenCalledTimes(1)
+      expect(fetchPauseReasons).toHaveBeenCalledTimes(1)
     })
 
     test(
@@ -1324,7 +1325,7 @@ describe('Subscription action', () => {
 
     describe('when no reasons are retrieved', async () => {
       beforeEach(async () => {
-        customersApi.fetchPauseReasons.mockReturnValue(Promise.resolve({ data: [], meta: {} }))
+        fetchPauseReasons.mockReturnValue(Promise.resolve({ data: [], meta: {} }))
         await subPauseActions.subscriptionPauseFetchReasons()(dispatch, getState)
       })
 
@@ -1348,7 +1349,7 @@ describe('Subscription action', () => {
 
     describe('when fetch fails', async () => {
       beforeEach(async () => {
-        customersApi.fetchPauseReasons.mockReturnValue(Promise.reject('response from deactivateSubscription'))
+        fetchPauseReasons.mockReturnValue(Promise.reject('response from deactivateSubscription'))
         await subPauseActions.subscriptionPauseFetchReasons()(dispatch, getState)
       })
 

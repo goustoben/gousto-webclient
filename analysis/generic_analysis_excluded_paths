@@ -1,0 +1,7 @@
+\.css
+\.png
+PropTypes.js
+^\.\./src/node_modules/
+^\.\./src/libs/
+^\.\./src/src/media/
+^\.\./src/src/middlewares/

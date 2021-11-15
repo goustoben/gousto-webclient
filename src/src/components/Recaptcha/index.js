@@ -1,2 +1,2 @@
 /* eslint-disable */
-export default from './recaptcha-wrapper'
+export { default as Component } from './recaptcha-wrapper'

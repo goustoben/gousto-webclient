@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { getIsAutoAccept } from '../selectors/selectors'
-import { loadRefundAmount } from '../actions/loadRefundAmount'
-import { createComplaint } from '../actions/createComplaint'
 import { AutoAcceptCheck } from './AutoAcceptCheck'
+import { createComplaint } from "routes/GetHelp/actions/createComplaint/createComplaint"
+import { loadRefundAmount } from "routes/GetHelp/actions/loadRefundAmount/loadRefundAmount"
 
 const mapStateToProps = (state) => ({
   isAutoAccept: getIsAutoAccept(state),

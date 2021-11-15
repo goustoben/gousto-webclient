@@ -145,7 +145,7 @@ describe('AppModal', () => {
   })
 
   describe('cleanup', () => {
-    test('should clear timeouts on unmount', () => {
+    test('should authClear timeouts on unmount', () => {
       expect.assertions(1)
 
       const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout')

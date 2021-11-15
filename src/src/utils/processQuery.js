@@ -1,9 +1,11 @@
 import logger from 'utils/logger'
-import { basketPromoCodeChange } from 'actions/basket'
-import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
-import { setAffiliateSource } from 'actions/tracking'
-import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { getIsAuthenticated } from 'selectors/auth'
+import { basketPromoCodeChange } from "actions/basket/basketPromoCodeChange"
+import { promoChange } from "../actions/promos/promoChange"
+import { promoToggleModalVisibility } from "../actions/promos/promoToggleModalVisibility"
+import { promoApply } from "../actions/promos/promoApply"
+import { signupSetGoustoOnDemandEnabled } from "actions/signup/signupSetGoustoOnDemandEnabled"
+import { setAffiliateSource } from "actions/tracking/setAffiliateSource"
 
 async function processQuery(query, store, { hashTag = '', }) {
   if (!query || !store) {

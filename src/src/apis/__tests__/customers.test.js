@@ -1,5 +1,9 @@
 import fetch from 'utils/fetch'
-import { fetchPauseReasons, customerSignup, newsletterSubscribe, fetchReference, fetchPromoCodeValidity } from '../customers'
+import { fetchPauseReasons } from "apis/customers/fetchPauseReasons"
+import { customerSignup } from "apis/customers/customerSignup"
+import { newsletterSubscribe } from "apis/customers/newsletterSubscribe"
+import { fetchReference } from "apis/customers/fetchReference"
+import { fetchPromoCodeValidity } from "apis/customers/fetchPromoCodeValidity"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

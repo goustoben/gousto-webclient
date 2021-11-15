@@ -2,10 +2,11 @@ import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
 import { actionTypes } from 'actions/actionTypes'
-import { basketDateChange, basketSlotChange } from 'actions/basket'
-import { redirect } from 'actions/redirect'
 import { recommendationsSlug } from 'config/collections'
 import { getPreselectedCollectionName, selectCollection, setSlotFromIds } from '../utils'
+import { basketDateChange } from "actions/basket/basketDateChange"
+import { basketSlotChange } from "actions/basket/basketSlotChange"
+import { redirect } from "actions/redirect/redirect"
 
 jest.mock('actions/basket', () => ({
   basketDateChange: jest.fn(),

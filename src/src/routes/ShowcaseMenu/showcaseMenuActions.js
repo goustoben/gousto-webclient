@@ -1,6 +1,5 @@
 import { push } from 'react-router-redux'
 import { actionTypes } from 'actions/actionTypes'
-import { trackShowcaseMenuAction } from 'actions/tracking'
 import {
   showcaseMenuProceed,
   showcaseMenuChangeCollection,
@@ -8,10 +7,11 @@ import {
   showcaseMenuScrollCarousel,
   showcaseMenuView,
 } from 'actions/trackingKeys'
-import { collectionFilterChange } from 'actions/filters'
 import routesConfig from 'config/routes'
 import { getNumPortions, getNumRecipes, getBasketPostcode, getBasketSlotId } from 'selectors/basket'
-import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
+import { collectionFilterChange } from "actions/filters/collectionFilterChange"
+import { trackShowcaseMenuAction } from "actions/tracking/trackShowcaseMenuAction"
+import { showDetailRecipe } from "routes/Menu/actions/menuRecipeDetails/showDetailRecipe"
 
 export const setShowcaseMenuSeen = () => ({
   type: actionTypes.SHOWCASE_MENU_SEEN,

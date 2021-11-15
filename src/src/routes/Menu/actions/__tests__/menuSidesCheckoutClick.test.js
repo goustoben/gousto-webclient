@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
-import * as menuCheckoutClick from '../menuCheckoutClick'
-import { checkoutWithSides } from '../menuSidesCheckoutClick'
-import * as sidesAction from '../sides'
+import * as menuCheckoutClick from '../menuCheckoutClick/menuCheckoutClick'
+import * as sidesAction from '../sides/sides'
+import { checkoutWithSides } from "routes/Menu/actions/menuSidesCheckoutClick/checkoutWithSides"
 
 describe('checkoutWithSides', () => {
   let state

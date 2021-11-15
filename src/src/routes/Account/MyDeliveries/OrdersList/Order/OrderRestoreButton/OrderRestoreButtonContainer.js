@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
-import { projectedOrderRestore } from 'actions/order'
 import OrderRestoreButton from './OrderRestoreButton'
+import { projectedOrderRestore } from "actions/order/projectedOrderRestore"
 
 function mapStateToProps(state, ownProps) {
   const error = state.error.get(actionTypes.PROJECTED_ORDER_RESTORE, null)

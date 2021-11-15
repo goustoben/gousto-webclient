@@ -1,7 +1,7 @@
 import GoustoException from 'utils/GoustoException'
-import { collectionsLoadCollectionBySlug } from 'actions/collections'
-import { fetchCollectionBySlug } from 'apis/collections'
-import status from 'actions/status'
+import status from 'actions/status/status'
+import { collectionsLoadCollectionBySlug } from "actions/collections/collectionsLoadCollectionBySlug"
+import { fetchCollectionBySlug } from "apis/collections/fetchCollectionBySlug"
 
 jest.mock('actions/status', () => ({
   errorLoad: jest.fn(),

@@ -5,14 +5,14 @@ import moment from 'moment'
 import { Button } from 'goustouicomponents'
 import ModalPanel from 'Modal/ModalPanel'
 import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
-import userActions from 'actions/user'
-import { menuLoadDays } from 'actions/menu'
-import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import { loadRecipes } from 'actions/recipes'
 import { getIsAuthenticated } from 'selectors/auth'
-import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
+import { getBoxSummaryDeliveryDays, getRecipes } from 'selectors/root'
 import { loadMenuServiceDataIfDeepLinked } from '../../routes/Menu/fetchData/menuService'
 import css from './AbandonBasketModal.css'
+import { boxSummaryDeliveryDaysLoad } from "actions/boxSummary/boxSummaryDeliveryDaysLoad"
+import { menuLoadDays } from "actions/menu/menuLoadDays"
+import { loadRecipes } from "actions/recipes/loadRecipes"
+import { userLoadOrders } from "actions/user/userLoadOrders"
 
 class AbandonBasketModal extends PureComponent {
   static propTypes = {
@@ -49,7 +49,7 @@ class AbandonBasketModal extends PureComponent {
     const promises = []
 
     if (getIsAuthenticated(state)) {
-      promises.push(store.dispatch(userActions.userLoadOrders()))
+      promises.push(store.dispatch(userLoadOrders()))
 
       if (!getBoxSummaryDeliveryDays(state).size) {
         // defensive code to ensure menu load days works below for deeplinks

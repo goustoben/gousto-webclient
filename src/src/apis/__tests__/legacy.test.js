@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { legacyVerifyAge } from '../legacy'
+import { legacyVerifyAge } from "apis/legacy/legacyVerifyAge"
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>

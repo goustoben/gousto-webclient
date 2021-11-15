@@ -1,1 +1,1 @@
-export default from './CloseButton'
+export { default as Component } from './CloseButton'

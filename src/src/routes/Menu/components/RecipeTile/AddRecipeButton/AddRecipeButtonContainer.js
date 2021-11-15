@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
-import { recipeVariantDropdownExpanded } from 'actions/menu'
 import { getBasketTotalRecipes , getBasketPostcode } from 'selectors/basket'
 import { AddRecipeButton } from './AddRecipeButton'
-import { basketRecipeAddAttempt, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { getRecipeIdInBasket } from '../../../selectors/recipe'
 import { getRecipeButtonProps } from './recipeButtonPropsSelector'
 import { getVariantsForRecipe } from '../../../selectors/variants'
+import { recipeVariantDropdownExpanded } from "actions/menu/recipeVariantDropdownExpanded"
+import { basketRecipeRemove } from "routes/Menu/actions/basketRecipes/basketRecipeRemove"
+import { basketRecipeAddAttempt } from "routes/Menu/actions/basketRecipes/basketRecipeAddAttempt"
 
 const mapStateToProps = (state, ownProps) => {
   const isInBasket = getRecipeIdInBasket(state, ownProps)

@@ -1,9 +1,9 @@
-import actions from 'actions'
 import { documentLocation } from 'utils/window'
+import { pageChange } from "actions/page/pageChange"
 
 function trackPageChange(store) {
   if (documentLocation() && documentLocation().href) {
-    store.dispatch(actions.pageChange(documentLocation().href))
+    store.dispatch(pageChange(documentLocation().href))
   }
 }
 

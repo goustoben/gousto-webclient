@@ -1,8 +1,13 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { fetchProducts, fetchProductCategories, fetchRandomProducts } from 'apis/products'
-import { productsLoadProducts, trackProductFiltering, productsLoadCategories, productsLoadRandomProducts } from '../products'
-import statusActions from '../status'
+import statusActions from '../status/status'
+import { productsLoadCategories } from "actions/products/productsLoadCategories"
+import { productsLoadProducts } from "actions/products/productsLoadProducts"
+import { productsLoadRandomProducts } from "actions/products/productsLoadRandomProducts"
+import { trackProductFiltering } from "actions/products/trackProductFiltering"
+import { fetchProductCategories } from "apis/products/fetchProductCategories"
+import { fetchProducts } from "apis/products/fetchProducts"
+import { fetchRandomProducts } from "apis/products/fetchRandomProducts"
 
 jest.mock('apis/products', () => ({
   fetchProducts: jest.fn(),
