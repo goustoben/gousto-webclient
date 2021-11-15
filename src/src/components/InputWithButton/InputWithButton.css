@@ -45,5 +45,5 @@
 .eventStatus {
   composes: fontStyleBody from 'design-language/typography.module.css';
   font-size: 0.75rem;
-  color: #1e2c48;
+  color: #343579;
 }

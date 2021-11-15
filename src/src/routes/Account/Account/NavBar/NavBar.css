@@ -43,7 +43,7 @@
 .badge {
   composes: textBold noDecor textXS from 'styles/typography.css';
   composes: relative from 'styles/position.css';
-  background-color: #1e2c48;
+  background-color: #343579;
   margin-left: 0.25rem;
   padding: 3px 6px;
   border-radius: 100px;
@@ -69,11 +69,11 @@
 
   &:focus,
   &:active {
-    color: #1e2c48;
+    color: #343579;
   }
 
   &:hover {
-    color: #1e2c48;
+    color: #343579;
     text-decoration: none;
   }
 }

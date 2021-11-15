@@ -39,7 +39,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background: #1e2c48;
+  background: #343579;
   visibility: hidden;
   transition: visibility 0.3s, opacity 0.3s ease-in-out;
   z-index: -1;
@@ -71,7 +71,7 @@ span:target .overlay {
 }
 
 .mainBar {
-  background: #1e2c48;
+  background: #343579;
   width: 100%;
 }
 
@@ -146,7 +146,7 @@ span:target .overlay {
   color: MainFontColor !important;
   border: 1px solid MainFontColor;
   border-radius: 3px;
-  background-color: #1e2c48;
+  background-color: #343579;
   overflow: hidden;
   transition: width 0.2s linear;
   height: 35px;
@@ -274,7 +274,7 @@ span:target .overlay {
   height: 3rem;
   border-radius: 3px;
   background: White;
-  color: #1e2c48;
+  color: #343579;
   border: none;
   composes: fontStyleButtonL from 'design-language/typography.css';
   padding: 0.5rem 1.5rem;
