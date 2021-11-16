@@ -1,22 +1,29 @@
+import { OrderedMap as ImmutableOrderedMap, Map as ImmutableMap } from 'immutable'
+
 import { CollectionSlug } from '../constants'
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
+import { Collection } from '../../../types/collection'
 
-const getCollectionBySlug = (collections, slug) => {
+const getCollectionBySlug = (
+  collections: ImmutableOrderedMap<string, Collection>,
+  slug: string
+) => {
   if (!slug) {
     return null
   }
 
-  const collection = collections.find(c => c.get('slug') === slug)
+  const collection = collections.find((c: Collection) => c.get('slug') === slug)
 
   return collection || null
 }
 
-const getCollectionSlug = collection => collection.get('slug')
-const isCollectionDefault = collection => Boolean(collection.get('default'))
-const isCollectionRecommendations = collection => getCollectionSlug(collection) === CollectionSlug.Recommendations
+const getCollectionSlug = (collection: Collection) => collection.get('slug')
+const isCollectionDefault = (collection: Collection) => Boolean(collection.get('default'))
+const isCollectionRecommendations = (collection: Collection) =>
+  getCollectionSlug(collection) === CollectionSlug.Recommendations
 
-const getDefaultCollection = collections => {
+const getDefaultCollection = (collections: ImmutableOrderedMap<string, Collection>) => {
   const defaultCollection = collections.find(isCollectionDefault)
 
   if (defaultCollection) {
