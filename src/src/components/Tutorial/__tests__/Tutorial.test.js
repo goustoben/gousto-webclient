@@ -1,185 +1,131 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { render, screen, fireEvent } from '@testing-library/react'
 
 import { isElementHidden } from 'Tutorial/helpers'
-import { Step } from 'Tutorial/Step'
-
 import { Tutorial } from 'Tutorial'
+import { Step } from '../Step'
 
 jest.mock('Tutorial/Step', () => ({
-  Step: props => <div {...props} />,
+  /* eslint-disable-next-line react/prop-types */
+  Step: ({ next, onClose, children }) => (
+    <div>
+      {children}
+      <button type="button" onClick={next}>
+        Next button
+      </button>
+      <button type="button" onClick={onClose}>
+        Close button
+      </button>
+    </div>
+  ),
 }))
 
 jest.mock('Tutorial/helpers', () => ({
   isElementHidden: jest.fn(),
 }))
 
-const generateSteps = (length) => (
+const generateSteps = (length) =>
   [...Array(length)].map((val, index) => (
-    // eslint-disable-next-line react/no-array-index-key
-    <Step key={`test-step-${index}`} selector=".test">{`Step #${index}`}</Step>
+    <Step key={`test-step-${index}`} selector=".test">{`Step number ${index}`}</Step>
   ))
-)
+
+let mockOnClose = jest.fn()
+let mockTrackStepViewed = jest.fn()
+
+function renderTutorial(props = {}, mockSteps = generateSteps(3)) {
+  render(
+    <Tutorial onClose={mockOnClose} trackStepViewed={mockTrackStepViewed} {...props}>
+      {mockSteps}
+    </Tutorial>
+  )
+}
 
 describe('Tutorial', () => {
-  let wrapper
+  beforeEach(() => {
+    jest.clearAllMocks()
 
-  describe('state', () => {
-    test('should not show children when hidden', () => {
-      isElementHidden.mockReturnValueOnce(true)
-      wrapper = shallow(<Tutorial trackStepViewed={jest.fn()}>{generateSteps(1)}</Tutorial>)
-      expect(wrapper.state().children.length).toBe(0)
+    isElementHidden.mockReturnValue(false)
+  })
+
+  describe('element hidden state', () => {
+    test('should not render children when isElementHidden is true', () => {
+      isElementHidden.mockReturnValue(true)
+      renderTutorial()
+
+      const step = screen.queryByText(/Step number/i)
+
+      expect(step).not.toBeInTheDocument()
     })
 
-    test('should only hold visible children', () => {
-      const dummySteps = generateSteps(1)
-      // eslint-disable-next-line no-console
-      // expect(dummySteps.length).toBe(1)
-      isElementHidden.mockReturnValueOnce(false)
-      wrapper = shallow(<Tutorial trackStepViewed={jest.fn()}>{dummySteps}</Tutorial>)
-      expect(wrapper.state().children.length).toBe(1)
+    test('should render children when isElementHidden is false', () => {
+      renderTutorial()
+
+      const step = screen.queryByText(/Step number/i)
+
+      expect(step).toBeInTheDocument()
     })
   })
 
   describe('rendering', () => {
-    beforeEach(() => {
-      isElementHidden.mockReturnValue(false)
-    })
-
     test('should display first child step by default', () => {
-      const threeSteps = generateSteps(3)
+      renderTutorial()
 
-      wrapper = shallow(
-        <Tutorial trackStepViewed={jest.fn()}>{threeSteps}</Tutorial>
-      )
+      screen.getByText(/Step number 0/i)
+    })
 
-      expect(threeSteps.length).toEqual(3)
-      expect(wrapper.children()).toHaveLength(1)
-      expect(wrapper.state().children).toHaveLength(3)
-      expect(wrapper.children().first().text()).toEqual('Step #0')
+    test('should invoke trackStepViewed for initially rendered step', () => {
+      renderTutorial()
+
+      expect(mockTrackStepViewed).toHaveBeenCalledTimes(1)
+      expect(mockTrackStepViewed).toHaveBeenCalledWith(0)
     })
   })
 
-  describe('children', () => {
-    beforeEach(() => {
-      isElementHidden.mockReturnValue(false)
-    })
-
-    test('should clone children with next, last, onClose props ', () => {
-      const children = generateSteps(3)
-
-      wrapper = shallow(
-        <Tutorial trackStepViewed={jest.fn()}>{children}</Tutorial>
-      )
-
-      expect(wrapper.prop('last')).toBe(false)
-      expect(wrapper.prop('next')).toBeInstanceOf(Function)
-      expect(wrapper.prop('onClose')).toBeInstanceOf(Function)
-    })
-  })
-
-  describe('next', () => {
-    beforeEach(() => {
-      isElementHidden.mockReturnValue(false)
-    })
-
+  describe('next step handler', () => {
     test('should return the next valid step', () => {
-      const onClose = jest.fn()
-      const trackStepViewed = jest.fn()
-      const children = generateSteps(2)
+      renderTutorial()
+      const nextButton = screen.getByText(/Next button/i)
+      fireEvent.click(nextButton)
 
-      wrapper = mount(
-        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {children}
-        </Tutorial>
-      )
-
-      expect(wrapper.find('Step').html()).toContain('Step #0')
-      expect(wrapper.find('Step').first().prop('last')).toBe(false)
-
-      const { next } = wrapper.instance()
-      next().then(() => {
-        expect(wrapper.find('Step').html()).toContain('Step #1')
-        expect(wrapper.find('Step').first().prop('last')).toBe(true)
-      })
+      screen.getByText(/Step number 1/i)
     })
 
     test('should close if the current step is the last', () => {
-      const onClose = jest.fn()
-      const trackStepViewed = jest.fn()
-      const children = generateSteps(2)
+      renderTutorial({}, generateSteps(1))
 
-      wrapper = mount(
-        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {children}
-        </Tutorial>
-      )
+      const nextButton = screen.getByText(/Next button/i)
+      fireEvent.click(nextButton)
 
-      const { next } = wrapper.instance()
-      next().then(() => {
-        expect(wrapper.find('Step').html()).toContain('Step #1')
-        expect(wrapper.find('Step').first().prop('last')).toBe(true)
-      })
-      next().then(() => {
-        expect(wrapper.state().hide).toBe(true)
-      })
+      expect(screen.queryByText(/Step number/i)).not.toBeInTheDocument()
+    })
+
+    test('invokes trackStepViewed with correct step', () => {
+      renderTutorial()
+
+      const nextButton = screen.getByText(/Next button/i)
+      fireEvent.click(nextButton)
+
+      expect(mockTrackStepViewed).toHaveBeenCalledWith(1)
     })
   })
 
-  describe('close', () => {
-    beforeEach(() => {
-      isElementHidden.mockReturnValue(false)
-    })
+  describe('close handler', () => {
+    test('should hide steps', () => {
+      renderTutorial()
 
-    test('should return the next valid step', () => {
-      const onClose = jest.fn()
-      const trackStepViewed = jest.fn()
+      const closeButton = screen.getByText(/Close button/i)
+      fireEvent.click(closeButton)
 
-      wrapper = mount(
-        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {generateSteps(2)}
-        </Tutorial>
-      )
-
-      expect(wrapper.find('Step').html()).toContain('Step #0')
-      expect(wrapper.find('Step').first().prop('last')).toBe(false)
-
-      const { close } = wrapper.instance()
-      close()
-
-      expect(wrapper.html()).toBeNull()
+      expect(screen.queryByText(/Step number/i)).not.toBeInTheDocument()
     })
 
     test('should invoke onClose prop', () => {
-      const onClose = jest.fn()
-      const trackStepViewed = jest.fn()
+      renderTutorial()
 
-      wrapper = mount(
-        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {generateSteps(2)}
-        </Tutorial>
-      )
+      const closeButton = screen.getByText(/Close button/i)
+      fireEvent.click(closeButton)
 
-      const { close } = wrapper.instance()
-      close()
-
-      expect(onClose).toHaveBeenCalled()
+      expect(mockOnClose).toHaveBeenCalledTimes(1)
     })
-  })
-
-  test('should invoke trackStepViewed prop', () => {
-    const onClose = jest.fn()
-    const trackStepViewed = jest.fn()
-
-    wrapper = mount(
-      <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-        {generateSteps(2)}
-      </Tutorial>
-    )
-
-    const { next } = wrapper.instance()
-    next()
-
-    expect(trackStepViewed).toHaveBeenCalled()
   })
 })

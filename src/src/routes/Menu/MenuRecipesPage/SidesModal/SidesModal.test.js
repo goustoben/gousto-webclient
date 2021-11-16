@@ -103,6 +103,7 @@ describe('<SideModal />', () => {
   }
 
   beforeEach(() => {
+    jest.clearAllMocks() // trying to avoid potential collisions with tests that aren't cleaning up their mocks properly.
     updateOrderItems = jest.spyOn(OrderAPI, 'updateOrderItems').mockImplementation().mockResolvedValue()
     onSubmit = jest.fn()
     onClose = jest.fn()
