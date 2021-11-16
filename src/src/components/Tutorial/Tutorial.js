@@ -38,17 +38,18 @@ export class Tutorial extends PureComponent {
     })
   }
 
-  next = async () => {
+  next = () => {
     const { trackStepViewed } = this.props
     const { step, children } = this.state
 
     if (step === children.length - 1) {
       this.close()
     } else {
-      await this.setState({
+      this.setState({
         step: step + 1,
+      }, () => {
+        trackStepViewed(step + 1)
       })
-      trackStepViewed(step + 1)
     }
   }
 
