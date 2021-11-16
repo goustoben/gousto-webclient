@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build:server && npm run start",
-    "postinstall": "bower install --force --allow-root",
+    "postinstall": "npm --prefix ../emulation-server install && bower install --force --allow-root",
     "start": "./scripts/fork.sh 'NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run server' 'npm --prefix ../emulation-server run dev:proxy-staging'",
     "server": "node dist/server.js",
     "start:with-static": "withStatic=true npm run start",
