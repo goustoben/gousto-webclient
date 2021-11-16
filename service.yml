@@ -62,5 +62,6 @@ environments:
     ecs:
       memory: 2048
       cpu: 1024
-      desiredCount: 8
-      maxCount: 16
+      service:
+        desiredCount: 4
+        maxCount: 16
