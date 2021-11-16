@@ -13,14 +13,16 @@ const getCollectionBySlug = (
     return null
   }
 
-  const collection = collections.find((c: Collection) => c.get('slug') === slug)
+  const collection = collections.find((c) => c !== undefined && c.get('slug') === slug)
 
   return collection || null
 }
 
-const getCollectionSlug = (collection: Collection) => collection.get('slug')
-const isCollectionDefault = (collection: Collection) => Boolean(collection.get('default'))
-const isCollectionRecommendations = (collection: Collection) =>
+const getCollectionSlug = (collection: Collection | undefined) =>
+  collection !== undefined && collection.get('slug')
+const isCollectionDefault = (collection: Collection | undefined) =>
+  collection !== undefined && Boolean(collection.get('default'))
+const isCollectionRecommendations = (collection: Collection | undefined) =>
   getCollectionSlug(collection) === CollectionSlug.Recommendations
 
 const getDefaultCollection = (collections: ImmutableOrderedMap<string, Collection>) => {
@@ -43,7 +45,8 @@ const getDefaultCollection = (collections: ImmutableOrderedMap<string, Collectio
   return null
 }
 
-export const useCurrentCollection = () => {
+// eslint-disable-next-line no-unused-vars
+export function useCurrentCollection<Type extends Collection>(): Collection | null {
   const slug = useCollectionQuerySlug()
   const collections = useDisplayedCollections()
 
