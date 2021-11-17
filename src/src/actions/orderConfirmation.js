@@ -29,7 +29,7 @@ export const orderDetails = (orderId) => (
     try {
       dispatch(productsLoadCategories())
       dispatch(productsLoadStock())
-      const { data: order } = await fetchOrder(accessToken, orderId)
+      const order = await fetchOrder(accessToken, orderId)
       const { data: menus } = await fetchSimpleMenu(accessToken, userId)
       const immutableOrderDetails = Immutable.fromJS(order)
       const orderRecipeIds = getUserOrderRecipeUuIds(immutableOrderDetails)

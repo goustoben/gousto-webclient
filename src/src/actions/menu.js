@@ -229,7 +229,7 @@ export function menuLoadOrderDetails(orderId) {
       await dispatch(statusActions.pending(actionTypes.LOADING_ORDER, true))
 
       const accessToken = getState().auth.get('accessToken')
-      const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
+      const order = await fetchOrder(accessToken, orderId, {includeShippingAddress: true})
       dispatch(basketReset())
       dispatch(menuActions.menuCutoffUntilReceive(order.shouldCutoffAt))
 

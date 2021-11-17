@@ -92,7 +92,7 @@ describe('orderConfirmation actions', () => {
 
     test('should attempt to fetch the order details for the orderId given', async () => {
       fetchOrder.mockReturnValue(
-        Promise.resolve({ data: { id: '1234', whenCutoff: '2019-04-12 19:00:00' } })
+        Promise.resolve({id: '1234', whenCutoff: '2019-04-12 19:00:00'})
       )
 
       await orderDetails('1234')(dispatch, getState)
@@ -104,14 +104,12 @@ describe('orderConfirmation actions', () => {
       beforeEach(() => {
         fetchOrder.mockReturnValue(
           Promise.resolve({
-            data: {
-              id: '1234',
-              whenCutoff: '2019-04-12 19:00:00',
-              recipeItems: [
-                { recipeUuid: 'uuid-1' },
-                { recipeUuid: 'uuid-2' },
-              ],
-            },
+            id: '1234',
+            whenCutoff: '2019-04-12 19:00:00',
+            recipeItems: [
+              {recipeUuid: 'uuid-1'},
+              {recipeUuid: 'uuid-2'},
+            ],
           })
         )
       })
@@ -127,11 +125,9 @@ describe('orderConfirmation actions', () => {
       beforeEach(() => {
         fetchOrder.mockReturnValue(
           Promise.resolve({
-            data: {
-              id: '1234',
-              whenCutoff: '2019-04-12 19:00:00',
-              periodId: '5678'
-            },
+            id: '1234',
+            whenCutoff: '2019-04-12 19:00:00',
+            periodId: '5678'
           })
         )
       })

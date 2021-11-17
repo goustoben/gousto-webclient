@@ -193,17 +193,15 @@ describe('GetHelp action generators and thunks', () => {
     ]
 
     const FETCH_ORDER_RESPONSE = {
-      data: {
-        recipeItems: [
-          { recipeId: '2871', recipeUuid: 'uuid1', recipeGoustoReference: '2145' },
-          { recipeId: '1783', recipeUuid: 'uuid2', recipeGoustoReference: '5678' },
-        ],
-        deliveryDate: '2021-05-01 00:00:00',
-        deliverySlot: {
-          deliveryEnd: '18:59:59',
-          deliveryStart: '08:00:00',
-        },
-      }
+      recipeItems: [
+        {recipeId: '2871', recipeUuid: 'uuid1', recipeGoustoReference: '2145'},
+        {recipeId: '1783', recipeUuid: 'uuid2', recipeGoustoReference: '5678'},
+      ],
+      deliveryDate: '2021-05-01 00:00:00',
+      deliverySlot: {
+        deliveryEnd: '18:59:59',
+        deliveryStart: '08:00:00',
+      },
     }
 
     const FETCH_RECIPES_RESPONSE = {
@@ -325,14 +323,12 @@ describe('GetHelp action generators and thunks', () => {
 
   describe('When the loadOrderById action is called and the API call succeeds', () => {
     const FETCH_ORDER_RESPONSE = {
-      data: {
-        recipeItems: [{ recipeId: '2871', recipeGoustoReference: '2733' }],
-        deliveryDate: '2021-05-01 00:00:00',
-        deliverySlot: {
-          deliveryEnd: '18:59:59',
-          deliveryStart: '08:00:00',
-        },
-      }
+      recipeItems: [{recipeId: '2871', recipeGoustoReference: '2733'}],
+      deliveryDate: '2021-05-01 00:00:00',
+      deliverySlot: {
+        deliveryEnd: '18:59:59',
+        deliveryStart: '08:00:00',
+      },
     }
 
     const ORDER_ID = '12345'
@@ -349,7 +345,7 @@ describe('GetHelp action generators and thunks', () => {
     test('the order fetched by fetchOrder is dispatched with the right action type', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'GET_HELP_LOAD_ORDERS_BY_ID',
-        payload: { order: FETCH_ORDER_RESPONSE.data },
+        payload: { order: FETCH_ORDER_RESPONSE },
       })
     })
 

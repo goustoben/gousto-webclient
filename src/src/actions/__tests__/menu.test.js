@@ -528,33 +528,32 @@ describe('menu actions', () => {
       it('should setup the basket and store state correctly', async () => {
         const numPortions = 2
         fetchOrderSpy.mockResolvedValue({
-          data: {
-            id: 'order_id',
-            box: {
-              numPortions,
-            },
-            shouldCutoffAt: 'should_cut_off_at',
-            deliveryDate: 'delivery_date',
-            recipeItems: [
-              { recipeId: 'recipes_1', quantity: 2 },
-              { recipeId: 'recipes_2', quantity: 2 },
-            ],
-            productItems: [
-              { itemableId: 'product_1', quantity: 2 },
-              { itemableId: 'product_2', quantity: 2 },
-            ],
-            prices: {
-              grossTotal: 20,
-              total: 24,
-            },
-            shippingAddress: {
-              postcode: 'N1 4DY'
-            },
-            deliverySlot: {
-              id: 'delivery_slot_id',
-            }
+          id: 'order_id',
+          box: {
+            numPortions,
+          },
+          shouldCutoffAt: 'should_cut_off_at',
+          deliveryDate: 'delivery_date',
+          recipeItems: [
+            {recipeId: 'recipes_1', quantity: 2},
+            {recipeId: 'recipes_2', quantity: 2},
+          ],
+          productItems: [
+            {itemableId: 'product_1', quantity: 2},
+            {itemableId: 'product_2', quantity: 2},
+          ],
+          prices: {
+            grossTotal: 20,
+            total: 24,
+          },
+          shippingAddress: {
+            postcode: 'N1 4DY'
+          },
+          deliverySlot: {
+            id: 'delivery_slot_id',
           }
-        })
+        }
+        )
         const boxSummaryDeliveryDaysId = 'dg015db8'
         state.boxSummaryDeliveryDays = Immutable.fromJS({
           '2019-10-22': {
@@ -569,7 +568,7 @@ describe('menu actions', () => {
 
         await menuLoadOrderDetails('order_id')(dispatch, getState)
 
-        expect(fetchOrderSpy).toHaveBeenNthCalledWith(1, 'test', 'order_id', { 'includes[]': 'shipping_address' })
+        expect(fetchOrderSpy).toHaveBeenNthCalledWith(1, 'test', 'order_id', { includeShippingAddress: true })
         expect(statusActionsPendingSpy).toHaveBeenNthCalledWith(1, 'LOADING_ORDER', true)
         expect(basketResetSpy).toBeCalledTimes(1)
         expect(basketDateChangeSpy).toHaveBeenNthCalledWith(1, 'delivery_date')

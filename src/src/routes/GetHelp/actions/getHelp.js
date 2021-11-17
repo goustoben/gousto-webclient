@@ -69,10 +69,7 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
 
 export const loadOrderById = ({ accessToken, orderId }) => async (dispatch) => {
   const getPayload = async () => {
-    const { data: order } = await fetchOrder(
-      accessToken,
-      orderId
-    )
+    const order = await fetchOrder(accessToken, orderId)
 
     return { order }
   }
@@ -102,9 +99,9 @@ export const loadOrderAndRecipesByIds = (orderId) => (
       let { recipeItems: recipeIds, recipeUuids } = order
 
       if (recipeIds.length === 0) {
-        const response = await fetchOrder(accessToken, orderId, { include: 'shipping_address' })
+        const originalOrder = await fetchOrder(accessToken, orderId, {includeShippingAddress: true})
         // copying the object so we do not mutate test's mocked response
-        order = {...response.data}
+        order = {...originalOrder}
         recipeIds = order.recipeItems.map(item => item.recipeId)
         recipeUuids = order.recipeItems.map(item => item.recipeUuid)
         order.recipeItems = recipeIds

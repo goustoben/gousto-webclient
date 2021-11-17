@@ -56,24 +56,21 @@ describe('orders api', () => {
   describe('fetchOrder', () => {
     test('should fetch the correct url', async () => {
       const orderId = '123'
-      const reqData = { a: 1, b: 2 }
-      await fetchOrder('token', orderId, reqData)
+      await fetchOrder('token', orderId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'GET', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'GET', undefined, expectedHeaders)
     })
 
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchOrder('token', '123', {})
-      expect(result).toEqual(mockFetchResult)
+    test('should include shipping address if specified', async () => {
+      const orderId = '123'
+      await fetchOrder('token', orderId, {includeShippingAddress: true})
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {'includes[]': 'shipping_address'}, 'GET', undefined, expectedHeaders)
     })
 
-    describe('when reqData not provided', () => {
-      test('should fetch the correct url', async () => {
-        const orderId = '123'
-        await fetchOrder('token', orderId)
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'GET', undefined, expectedHeaders)
-      })
+    test('should return the order', async () => {
+      const result = await fetchOrder('token', '123')
+      expect(result).toEqual(mockFetchResult.data)
     })
   })
 
