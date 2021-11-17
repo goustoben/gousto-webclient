@@ -1,9 +1,9 @@
 import { CollectionSlug } from '../constants'
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
-import { Collection, Collections } from '../../../types'
+import { MenuCollectionIMap, MenuCollectionsIOrderedMap} from '../../../types'
 
-const getCollectionBySlug = (collections: Collections, slug: string) => {
+const getCollectionBySlug = (collections: MenuCollectionsIOrderedMap, slug: string) => {
   if (!slug) {
     return null
   }
@@ -13,14 +13,14 @@ const getCollectionBySlug = (collections: Collections, slug: string) => {
   return collection || null
 }
 
-const getCollectionSlug = (collection?: Collection) =>
+const getCollectionSlug = (collection?: MenuCollectionIMap) =>
   collection !== undefined && collection.get('slug')
-const isCollectionDefault = (collection?: Collection) =>
+const isCollectionDefault = (collection?: MenuCollectionIMap) =>
   collection !== undefined && Boolean(collection.get('default'))
-const isCollectionRecommendations = (collection?: Collection) =>
+const isCollectionRecommendations = (collection?: MenuCollectionIMap) =>
   getCollectionSlug(collection) === CollectionSlug.Recommendations
 
-const getDefaultCollection = (collections: Collections) => {
+const getDefaultCollection = (collections: MenuCollectionsIOrderedMap) => {
   const defaultCollection = collections.find(isCollectionDefault)
 
   if (defaultCollection) {
@@ -40,7 +40,7 @@ const getDefaultCollection = (collections: Collections) => {
   return null
 }
 
-export function useCurrentCollection(): Collection | null {
+export const useCurrentCollection = (): MenuCollectionIMap | null => {
   const slug = useCollectionQuerySlug()
   const collections = useDisplayedCollections()
 

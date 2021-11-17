@@ -1,4 +1,4 @@
-import { Collection } from './collection'
-import { Collections } from './collections'
+import { MenuCollection, MenuCollectionIMap } from './menuCollection'
+import { MenuCollections, MenuCollectionsIOrderedMap } from './menuCollections'
 
-export { Collection, Collections }
+export { MenuCollection, MenuCollectionIMap, MenuCollections, MenuCollectionsIOrderedMap }

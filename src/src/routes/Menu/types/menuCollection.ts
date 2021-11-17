@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Map as ImmutableMap } from 'immutable'
 
-export interface Collection extends ImmutableMap<string, any> {
+export type MenuCollection = {
   carouselConfig?:
     | {
         [k: string]: unknown
@@ -23,3 +23,5 @@ export interface Collection extends ImmutableMap<string, any> {
   shortTitle: string
   description: string
 }
+
+export type MenuCollectionIMap = MenuCollection & ImmutableMap<string, unknown>
