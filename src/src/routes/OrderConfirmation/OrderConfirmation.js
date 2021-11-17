@@ -97,7 +97,7 @@ class OrderConfirmation extends PureComponent {
               </VerticalStagesItem>
 
               <VerticalStagesItem
-                title="Add desserts, drinks, snacks & more from the Nourished Market"
+                title="Add desserts, drinks, snacks & more from the Craft Market"
                 isCompleted={false}
               >
                 <Market

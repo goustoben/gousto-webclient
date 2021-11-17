@@ -10,7 +10,7 @@ import css from './WhyChooseGousto.css'
 const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing, isHomeJpgEnabled }) => {
   const subtitle = (
     <Fragment>
-      We'll recommend a unique combination of vitamins, minerals and supplements.
+      We're the UK's biggest club for gin lovers
 
     </Fragment>
   )

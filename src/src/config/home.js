@@ -54,26 +54,26 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
     {
       title: 'Discover the Best Gins',
       img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/science.jpg')
-        : require('routes/Home/WhyChooseGousto/science.png'),
+        ? require('routes/Home/WhyChooseGousto/rewards.jpg')
+        : require('routes/Home/WhyChooseGousto/rewards.png'),
       list: [
         'Every year our experts taste over 500 gins (seriously). We handpick the best 12 and send one of them every month to you!',
       ],
     },
     {
-      title: 'Unbox Amazing Surprises',
+      title: 'Unbox Surprises',
       img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/order.jpg')
-        : require('routes/Home/WhyChooseGousto/order.png'),
+        ? require('routes/Home/WhyChooseGousto/xmas-box.jpg')
+        : require('routes/Home/WhyChooseGousto/xmas-box.png'),
       list: [
-        'Every box is a surprise until it lands on your doorstep! Our members say ‘It’s like Christmas every month’. You can choose how often you want your ginny delivery - every 1, 2 or 3 months.',
+        'Every box is a surprise until it lands on your doorstep! You can choose how often you want your ginny delivery - every 1, 2 or 3 months.',
       ],
     },
     {
-      title: 'Enjoy Perfect Nights In',
+      title: 'Perfect Nights In',
       img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/absorption.jpg')
-        : require('routes/Home/WhyChooseGousto/absorption.png'),
+        ? require('routes/Home/WhyChooseGousto/aug-box.jpg')
+        : require('routes/Home/WhyChooseGousto/aug-box.png'),
       list: [
         'Spend the night in ginny delight with perfectly paired G&Ts, delicious cocktails and scrumptious treats.',
       ],

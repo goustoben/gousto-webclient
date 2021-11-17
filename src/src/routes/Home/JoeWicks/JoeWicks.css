@@ -42,11 +42,11 @@
 }
 
 .joeWicksImage:not(.isHomeJpgEnabled) {
-  background: url('routes/Home/JoeWicks/printedchewable.png') center center / contain no-repeat;
+  background: url('routes/Home/JoeWicks/desktop-ipad.png') center center / contain no-repeat;
 }
 
 .isHomeJpgEnabled {
-  background: url('routes/Home/JoeWicks/printedchewable.jpg') center center / contain no-repeat;
+  background: url('routes/Home/JoeWicks/desktop-ipad.jpg') center center / contain no-repeat;
 }
 
 .textContainer {
@@ -59,7 +59,7 @@
 
 .quote {
   margin: 0 0 1rem;
-  composes: fontStyleL from 'design-language/typography.module.css';
+  composes: fontStyleXL from 'design-language/typography.module.css';
   color: White;
 }
 

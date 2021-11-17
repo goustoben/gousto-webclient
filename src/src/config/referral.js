@@ -7,9 +7,9 @@ export default Immutable.fromJS({
   firstMonthDiscountFormatted: '30%',
   details: [
     'Invite your friends to try Craft. We’ll pop £15 in your account and your friends will get 50% off their first box',
-    'You can refer up to 20 friends every month. That’s £300 worth of Craft credit to use on recipes and goodies from the Nourished Market',
+    'You can refer up to 20 friends every month. That’s £300 worth of Craft credit to use on recipes and goodies from the Online Shop',
     'Your credit shows up once your friend’s first box is delivered. See full T&Cs [tc]here.[/tc]',
   ],
 })
 
-export const rafTermsLink = 'https://cook.Nourished.co.uk/raf-tcs/'
+export const rafTermsLink = 'https://cook.craft.co.uk/raf-tcs/'

@@ -19,7 +19,7 @@ import { getPreviewMenuDateForCutoff } from '../selectors/menuService'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 import { sendClientMetric } from '../apis/clientMetrics'
-import { mockMenuResponse } from '../../../nourishised'
+import { mockMenuResponse } from '../../../craft'
 
 const requiresMenuRecipesClear = (state, orderId) =>
   orderId && getIsAuthenticated(state) && state.basket.get('recipes').size
@@ -219,8 +219,8 @@ export default function fetchData({ query, params }, force, background, userMenu
     }
 
     const menuResponse = await fetchMenuPromise
-    const nourishedMenuResponse = mockMenuResponse(menuResponse)
-    dispatch(menuServiceDataReceived(nourishedMenuResponse, accessToken, userMenuVariant))
+    const craftMenuResponse = mockMenuResponse(menuResponse)
+    dispatch(menuServiceDataReceived(craftMenuResponse, accessToken, userMenuVariant))
 
     dispatch(getBrandInfo())
     dispatch(getBrandMenuHeaders())

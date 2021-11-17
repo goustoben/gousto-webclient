@@ -241,7 +241,7 @@ class CheckoutPayment extends React.Component {
     const sectionSubtitle =
       isGoustoOnDemandEnabled && isFreeBox ? (
         <span>
-          Payment details will only be used for surcharge recipes or items from the Nourished Market.{' '}
+          Payment details will only be used for surcharge recipes or items from the Online Shop.{' '}
           <span className={css.bold}>If you don’t add these, no payment will be taken.</span>
         </span>
       ) : null

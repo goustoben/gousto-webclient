@@ -42,29 +42,29 @@
 
 .heroImage:not(.isHomeJpgEnabled) {
   @media BreakpointToMedium {
-    background: url('routes/Home/Hero/board.png') center left / cover no-repeat;
+    background: url('routes/Home/Hero/flatlay-blue.png') center left / cover no-repeat;
   }
 
   @media BreakpointFromMedium {
-    background: url('routes/Home/Hero/board.png') right top / cover no-repeat;
+    background: url('routes/Home/Hero/flatlay-blue.png') right top / cover no-repeat;
   }
 
   @media BreakpointFromLarge {
-    background: url('routes/Home/Hero/board.png') right top / cover no-repeat;
+    background: url('routes/Home/Hero/flatlay-blue.png') right top / cover no-repeat;
   }
 }
 
 .heroImage.isHomeJpgEnabled {
   @media BreakpointToMedium {
-    background: url('routes/Home/Hero/board.jpg') center left / cover no-repeat;
+    background: url('routes/Home/Hero/flatlay-blue.jpg') center left / cover no-repeat;
   }
 
   @media BreakpointFromMedium {
-    background: url('routes/Home/Hero/board.jpg') right top / cover no-repeat;
+    background: url('routes/Home/Hero/flatlay-blue.jpg') right top / cover no-repeat;
   }
 
   @media BreakpointFromLarge {
-    background: url('routes/Home/Hero/board.jpg') right top / cover no-repeat;
+    background: url('routes/Home/Hero/flatlay-blue.jpg') right top / cover no-repeat;
   }
 }
 
@@ -106,7 +106,7 @@
   @media BreakpointFromMedium {
     width: 200%;
     height: 11.25rem;
-    background: url('routes/Home/Hero/gummies.png') left top / contain no-repeat;
+    background: url('routes/Home/Hero/craftbox.png') left top / contain no-repeat;
     margin-bottom: 1rem;
   }
 
