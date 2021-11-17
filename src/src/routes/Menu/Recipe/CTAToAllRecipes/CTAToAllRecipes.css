@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: #blackberry;
+  background-color: #F4D34E;
 }
 
 .ctaInnerContainer {
@@ -14,7 +14,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #blackberry;
+  background-color: #F4D34E;
   @media ScreenSMMin {
     position: absolute;
     width: 90%;
@@ -29,16 +29,16 @@
 }
 
 .ctaButton {
-  border: 1px solid #blackberry !important;
+  border: 1px solid #F4D34E !important;
   border-radius: 3px;
   color: White;
-  background-color: #blackberry !important;
+  background-color: #F4D34E !important;
   padding: 0.5rem 2rem;
   margin-bottom: 1rem;
   font-weight: bold;
   font-size: 16px;
   @media ScreenSMMin {
-    color: #blackberry;
+    color: #F4D34E;
     background-color: White;
     padding: 0.5rem;
     width: 70%;

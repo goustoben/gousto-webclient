@@ -11,7 +11,7 @@ export const CTA = {
   stickyCTA: 'Get your monthly gin box',
   join: (
     <span>
-      Take quiz{' '}
+      Join Now{' '}
       <Icon
         name="fa-angle-right"
         size="1.5rem"

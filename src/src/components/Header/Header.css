@@ -146,7 +146,7 @@ span:target .overlay {
   color: MainFontColor !important;
   border: 1px solid MainFontColor;
   border-radius: 3px;
-  background-color: #blackberry;
+  background-color: #F4D34E;
   overflow: hidden;
   transition: width 0.2s linear;
   height: 35px;
