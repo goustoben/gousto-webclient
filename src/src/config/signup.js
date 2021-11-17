@@ -21,15 +21,15 @@ export const signupConfig = {
     shipping: 'shipping',
   },
   boxSizeStep: {
-    title: 'Choose your box size',
-    subtitle: 'You can choose 2, 3 or 4 recipes per box.',
+    title: 'Choose your subscription frequency',
+    subtitle: 'You can choose a one off box or a monthly subscription',
     cta: 'Select',
     boxSize: {
-      2: {
+      1: {
         description: 'This smaller box is packed with enough pre-measured ingredients for each recipe to feed 2 people.',
         image: require('media/images/box-prices/two-person-box.jpg'),
       },
-      4: {
+      2: {
         description: 'This larger box is packed with enough pre-measured ingredients for each recipe to feed 4 people.',
         image: require('media/images/box-prices/four-person-box.jpg'),
       },
@@ -37,22 +37,22 @@ export const signupConfig = {
     discountApplied: 'Discount applied',
     boxSizeTypes: [
       {
-        heading: 'Regular box',
-        suitableFor: ['2 adults (or 1 + leftovers)', '1 adult and 1-2 children'],
-        ctaText: 'Choose regular box',
-        value: 2,
+        heading: 'One-off box',
+        suitableFor: ['Perfect for a gift or a one-off treat!'],
+        ctaText: 'Choose one-off box',
+        value: 1,
       },
       {
-        heading: 'Large box',
-        suitableFor: ['4 adults (or 2-3 + leftovers)', '2 adults and 2-3 children'],
-        ctaText: 'Choose large box',
-        value: 4,
+        heading: 'Monthly subscription',
+        suitableFor: ['One bottle of gin, mixers, snacks and a magazine per month'],
+        ctaText: 'Choose subscription',
+        value: 2,
       },
     ],
   },
   recipesPerBoxStep: {
     title: 'How many recipes do you want per box?',
-    recipesPerBoxPossibleValues: [2, 3, 4],
+    recipesPerBoxPossibleValues: [1, 2],
   },
   postCodeStep: {
     title: 'Where would you like your boxes delivered?',

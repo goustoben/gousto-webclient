@@ -33,7 +33,7 @@ export const BoxSizeStep = ({
     boxSizeTypes.map(({ heading, suitableFor, ctaText, value }) => (
       <div className={css.carouselItem} key={`box-size-for-${value}`}>
         <h2 className={css.itemHeading}>{heading}</h2>
-        <p className={css.suitableTitle}>Suitable for:</p>
+        <p className={css.suitableTitle}>What's on offer:</p>
         <ul className={css.list}>
           {suitableFor.map((label) => (
             <li key={`for-${label.charAt(0)}`} className={css.listItem}>

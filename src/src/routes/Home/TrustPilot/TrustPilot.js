@@ -7,7 +7,7 @@ const TrustPilot = () => (
     <div className={css.leftSeedsArea} />
     <div className={css.textContainer}>
       <p className={css.deliveredMeals}>
-        Rated 4.5 Stars
+        Rated 4.6 Stars
       </p>
       <div
         className={classNames('trustpilot-widget', css.widget)}
