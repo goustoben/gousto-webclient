@@ -1,3 +1,5 @@
+const axios = require("axios")
+
 function setLoginCookies() {
   const token = { access_token: '8tebopinE7WiWTgDDGl92NhMYXLMCD9AUHfEsWcH' }
   const expiry = { expires_at: '2030-01-31T22:15:01.593Z' }
@@ -251,4 +253,8 @@ Cypress.Commands.add('stubAllApis', () => {
 Cypress.Commands.add('visitAndWaitForClientSideReRender', (url, options) => {
   cy.visit(url, options)
   cy.window().should('have.property', 'clientRenderStarted', true)
+})
+
+Cypress.Commands.add('configureEmulationState', (state) => {
+  axios.put(`${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/_config/state`, state).catch(console.error)
 })

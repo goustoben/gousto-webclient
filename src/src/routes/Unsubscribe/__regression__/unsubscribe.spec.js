@@ -1,10 +1,9 @@
 const CONFIRM_UNSUBSCRIBE_ELEMENT_SELECTOR = '[data-testing="confirm-unsubscribe"]'
-const axios = require('axios')
 
 describe('Unsubscribing from marketing emails', () => {
   describe('Given I click an unsubscribe link that Gousto provided to me', () => {
     before(() => {
-      configureEmulationState({
+      cy.configureEmulationState({
         users: [{
           authUserId: 'the-auth-user-id',
           marketingUnsubscribeToken: 'the-marketing-unsubscribe-token'
@@ -35,7 +34,7 @@ describe('Unsubscribing from marketing emails', () => {
 
   describe('Given I click an unsubscribe link for a non-existent user', () => {
     before(() => {
-      configureEmulationState({
+      cy.configureEmulationState({
         users: [{
           authUserId: 'the-auth-user-id',
           marketingUnsubscribeToken: 'the-marketing-unsubscribe-token'
@@ -65,10 +64,6 @@ describe('Unsubscribing from marketing emails', () => {
     })
   })
 })
-
-function configureEmulationState(state) {
-  axios.put(`${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/_config/state`, state)
-}
 
 function unsubscribeApiPathFor({authUserId, marketingType}) {
   return `${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/user/${authUserId}/marketing/${marketingType}`
