@@ -1,14 +1,9 @@
-import { OrderedMap as ImmutableOrderedMap, Map as ImmutableMap } from 'immutable'
-
 import { CollectionSlug } from '../constants'
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
-import { Collection } from '../../../types/collection'
+import { Collection, Collections } from '../../../types'
 
-const getCollectionBySlug = (
-  collections: ImmutableOrderedMap<string, Collection>,
-  slug: string
-) => {
+const getCollectionBySlug = (collections: Collections, slug: string) => {
   if (!slug) {
     return null
   }
@@ -18,14 +13,14 @@ const getCollectionBySlug = (
   return collection || null
 }
 
-const getCollectionSlug = (collection: Collection | undefined) =>
+const getCollectionSlug = (collection?: Collection) =>
   collection !== undefined && collection.get('slug')
-const isCollectionDefault = (collection: Collection | undefined) =>
+const isCollectionDefault = (collection?: Collection) =>
   collection !== undefined && Boolean(collection.get('default'))
-const isCollectionRecommendations = (collection: Collection | undefined) =>
+const isCollectionRecommendations = (collection?: Collection) =>
   getCollectionSlug(collection) === CollectionSlug.Recommendations
 
-const getDefaultCollection = (collections: ImmutableOrderedMap<string, Collection>) => {
+const getDefaultCollection = (collections: Collections) => {
   const defaultCollection = collections.find(isCollectionDefault)
 
   if (defaultCollection) {
@@ -45,8 +40,7 @@ const getDefaultCollection = (collections: ImmutableOrderedMap<string, Collectio
   return null
 }
 
-// eslint-disable-next-line no-unused-vars
-export function useCurrentCollection<Type extends Collection>(): Collection | null {
+export function useCurrentCollection(): Collection | null {
   const slug = useCollectionQuerySlug()
   const collections = useDisplayedCollections()
 
