@@ -19,6 +19,7 @@ import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import { browserType } from 'client/browserType'
 import { getIsAuthenticated } from 'selectors/auth'
+import { initializeDatadog } from './middlewares/datadog/initialize'
 import { configureStore } from './store'
 import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
 
@@ -49,6 +50,8 @@ window.docReady(() => {
   browserType(store)
 
   initializePerformanceTrackerSender(store)
+
+  initializeDatadog()
 
   const reactRootDOM = document.getElementById('react-root')
 

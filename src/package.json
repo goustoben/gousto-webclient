@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@axe-core/react": "^4.1.1",
+    "@datadog/browser-logs": "^3.7.0",
     "@optimizely/optimizely-sdk": "^4.1.0",
     "actual": "0.4.0",
     "airbnb-prop-types": "^2.16.0",
