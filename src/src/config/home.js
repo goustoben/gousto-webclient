@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
+import { boxTypes } from './basket'
 
 export const hero = {
   header: 'Perfect Nights Start With Gin',
@@ -86,7 +87,7 @@ export const joeWicks = "Gin. It's our thing!"
 export const carousel = {
   title: 'Browse our Past Boxes',
   subtitle:
-    'Personalise your own vitamin stack or browse through our best sellers, gift boxes and latest additions to the Craft collection. Each vitamin stack is freshly made-to-order and delivered in sustainable packaging.',
+  "Every month, we send our club members a full-sized bottle of amazing craft gin from one of the world's finest distillers, in a treat-filled Gin of the Month box."
 }
 export const seo = {
   title: 'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',

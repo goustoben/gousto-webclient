@@ -13,7 +13,7 @@ import { getActiveMenuIdForOrderDate } from 'routes/Menu/selectors/menu'
 import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
-import { mockProducts } from '../nourishised'
+import { mockProducts } from '../craft'
 
 export const productDetailVisibilityChange =
   (productId = false) =>

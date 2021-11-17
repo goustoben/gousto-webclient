@@ -27,6 +27,11 @@ const allBoxes = [
 
 export const mockCraftData = {
   //
+
+    name: 'December',
+    src: 'https://craftginclub.s3.eu-west-2.amazonaws.com/ss_carousel/7aff62a2-a32e-4ff5-96dd-d6513b372178.jpg'
+
+
 }
 
 export const mockOnlineShopItems = [
