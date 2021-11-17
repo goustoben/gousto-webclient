@@ -24,4 +24,4 @@ export type MenuCollection = {
   description: string
 }
 
-export type MenuCollectionIMap = MenuCollection & ImmutableMap<string, unknown>
+export type MenuCollectionIMap = MenuCollection & ImmutableMap<keyof MenuCollection, unknown>
