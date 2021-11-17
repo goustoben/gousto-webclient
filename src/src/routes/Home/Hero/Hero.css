@@ -87,6 +87,7 @@
 
 .title {
   margin-bottom: 0.5rem;
+  color: #343579 !important;
 
   @media BreakpointFromMedium {
     margin-bottom: 1rem;
