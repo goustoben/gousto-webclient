@@ -3,20 +3,17 @@ describe('Given the customer is logged in', () => {
     cy.server()
     cy.fixture('user/userCurrent').as('userCurrent')
     cy.route('GET', /user\/current/, '@userCurrent').as('userCurrentRequest')
-    cy.fixture('user/userCurrentActiveSubscription').as('userCurrentSubscription')
-    cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('userCurrentSubscriptionRequest')
 
-    cy.login()
+    document.cookie = `v1_oauth_token=${encode({access_token: '8tebopinE7WiWTgDDGl92NhMYXLMCD9AUHfEsWcH'})};path=/;`
+    document.cookie = `v1_oauth_expiry=${encode({expires_at: '2030-01-31T22:15:01.593Z'})};path=/`
+    document.cookie = `v1_oauth_refresh=${encode({refresh_token: '5lJLjJ67tJ5n8RIW2ZYohXTes4F47qEMtzZSI4HM'})};path=/`
   })
 
   describe('When their order is eligible for ingredients refund and they visit the Recipe Cards URL directly', () => {
     beforeEach(() => {
-      cy.fixture('getHelp/ssr/validate').as('validate')
-      cy.route('POST', /ssr\/v1\/ssr\/validate/, '@validate')
       cy.fixture('getHelp/order/order26May20').as('urlOrder')
       cy.route('GET', /order\/16269494/, '@urlOrder')
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
-      cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
       cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
 
       cy.visit('get-help/user/17247344/order/16269494/recipe-cards')
@@ -30,3 +27,7 @@ describe('Given the customer is logged in', () => {
     })
   })
 })
+
+function encode(cookieValue) {
+  return encodeURIComponent(JSON.stringify(cookieValue))
+}
