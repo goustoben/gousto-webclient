@@ -1,7 +1,18 @@
 import _ from "lodash";
 
 export type User = { authUserId: string, marketingUnsubscribeToken: string }
-export type State = { users?: [User] };
+
+export type Order = { id: string }
+
+export type Session = {
+    accessToken: string;
+}
+
+export type State = {
+    sessions?: [Session];
+    orders?: [Order];
+    users?: [User]
+};
 
 export function createState() {
     let state: State = {};

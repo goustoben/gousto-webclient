@@ -1,20 +1,35 @@
 describe('Given the customer is logged in', () => {
   beforeEach(() => {
     cy.server()
-
-    document.cookie = `v1_oauth_token=${encode({access_token: 'ANY_ACCESS_TOKEN'})};path=/;`
-    document.cookie = `v1_oauth_expiry=${encode({expires_at: '1970-01-01T00:00:00.000Z'})};path=/`
-    document.cookie = `v1_oauth_refresh=${encode({refresh_token: 'ANY_REFRESH_TOKEN'})};path=/`
+    cy.setLoginCookiesWithAccessToken('the-access-token')
   })
 
   describe('When their order is eligible for ingredients refund and they visit the Recipe Cards URL directly', () => {
     beforeEach(() => {
-      cy.fixture('getHelp/order/order26May20').as('urlOrder')
-      cy.route('GET', /order\/16269494/, '@urlOrder')
+      cy.server({ignore: xhr => xhr.url === getOrderApiPathFor({id: 'the-order-id'})})
+
+      cy.configureEmulationState({
+        orders: [{
+          id: 'the-order-id',
+          recipeItems: [
+            {recipeId: '2151', recipeUuid: '12054592-71aa-45e3-86d5-80e73b1ff38e'},
+            {recipeId: '2026', recipeUuid: 'f2b6772d-3615-4608-affe-527c50e808c6'},
+            {recipeId: '3064', recipeUuid: 'e9ddc6f1-a3e7-448b-8612-bc81d7f086c2'},
+            {recipeId: '3041', recipeUuid: '59c4b9ce-cb52-44a1-8f3c-f702ad13bd9b'},
+          ],
+          delivery_date: '1970-01-01 00:00:00',
+          delivery_slot: {
+            delivery_start: '00:00:00',
+            delivery_end: '00:00:00',
+          }
+        }],
+        sessions: [{accessToken: 'the-access-token'}]
+      })
+
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
       cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
 
-      cy.visit('get-help/user/17247344/order/16269494/recipe-cards')
+      cy.visit('get-help/user/ANY_USER_ID/order/the-order-id/recipe-cards')
     })
 
     it('shows the Recipe Cards page with the recipes loaded', () => {
@@ -26,6 +41,6 @@ describe('Given the customer is logged in', () => {
   })
 })
 
-function encode(cookieValue) {
-  return encodeURIComponent(JSON.stringify(cookieValue))
+function getOrderApiPathFor({id}) {
+  return `${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/order/${id}`
 }

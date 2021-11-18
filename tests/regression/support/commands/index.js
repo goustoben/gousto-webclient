@@ -1,18 +1,19 @@
 const axios = require("axios")
 
-function setLoginCookies() {
-  const token = { access_token: '8tebopinE7WiWTgDDGl92NhMYXLMCD9AUHfEsWcH' }
-  const expiry = { expires_at: '2030-01-31T22:15:01.593Z' }
-  const refresh = { refresh_token: "5lJLjJ67tJ5n8RIW2ZYohXTes4F47qEMtzZSI4HM" }
-  const remember = { remember_me: true }
-
+function setLoginCookies({accessToken, expiresAt, refreshToken, rememberMe} = {
+  accessToken: '8tebopinE7WiWTgDDGl92NhMYXLMCD9AUHfEsWcH',
+  expiresAt: '2030-01-31T22:15:01.593Z',
+  refreshToken: "5lJLjJ67tJ5n8RIW2ZYohXTes4F47qEMtzZSI4HM",
+  rememberMe: true
+}) {
   const encode = cookieValue => encodeURIComponent(JSON.stringify(cookieValue))
 
-  document.cookie = `v1_oauth_token=${encode(token)};path=/;`
-  document.cookie = `v1_oauth_expiry=${encode(expiry)};path=/`
-  document.cookie = `v1_oauth_refresh=${encode(refresh)};path=/`
-  document.cookie = `v1_oauth_remember=${encode(remember)};path=/`
+  document.cookie = `v1_oauth_token=${encode({access_token: accessToken})};path=/;`
+  document.cookie = `v1_oauth_expiry=${encode({expires_at: expiresAt})};path=/`
+  document.cookie = `v1_oauth_refresh=${encode({refresh_token: refreshToken})};path=/`
+  document.cookie = `v1_oauth_remember=${encode({remember_me: rememberMe})};path=/`
 }
+
 // // ***********************************************
 // // For examples of custom
 // // commands please read more here:
@@ -21,6 +22,15 @@ function setLoginCookies() {
 Cypress.Commands.add('mockDate', () => {
   const DATE = new Date(2020, 4, 1).getTime()
   cy.clock(DATE, ['Date'])
+})
+
+Cypress.Commands.add('setLoginCookiesWithAccessToken', (accessToken) => {
+  setLoginCookies({
+    accessToken: accessToken,
+    expiresAt: '1970-01-01T00:00:00.000Z',
+    refreshToken: 'ANY_REFRESH_TOKEN',
+    rememberMe: true
+  })
 })
 
 Cypress.Commands.add('login', () => {

@@ -6,6 +6,8 @@ import {createState} from "./state";
 import cors from "@koa/cors"
 import proxy from 'koa-better-http-proxy'
 import {Command} from "commander";
+import {withSnakeCaseProperties} from "./utils/responseRendering";
+import {isAuthorizedRequest} from "./utils/authorization";
 
 function getServerConfiguration() {
     const command = new Command();
@@ -45,6 +47,28 @@ router.put('/_config/state/Gousto2-Core', ctx => {
 
     setState(ctx.request.body)
     ctx.status = 200
+})
+
+router.get('/order/:orderId', ctx => {
+    const state = getState();
+
+    if (!isAuthorizedRequest(ctx, state)) {
+        ctx.status = 401
+        return
+    }
+
+    if (state.orders) {
+        const order = state.orders.find(order => order.id === ctx.params.orderId);
+
+        if (order) {
+            ctx.status = 200
+            ctx.body = withSnakeCaseProperties(order)
+            return
+        }
+    }
+
+    ctx.status = 404
+    return
 })
 
 router.put('/user/:authUserId/marketing/unsubscribe_emails', ctx => {
