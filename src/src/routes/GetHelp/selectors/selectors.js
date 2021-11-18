@@ -1,6 +1,7 @@
+import { actionTypes as webclientActionTypes } from 'actions/actionTypes'
 import { createSelector } from 'reselect'
 import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
-import { actionTypes as webclientActionTypes } from 'actions/actionTypes'
+import { getIsSsrRepetitiveIssues } from '../../../selectors/features'
 import { transformIngredientImgSrcSet } from '../utils/transformIngredientImgSrcSet'
 
 export const getAccessToken = (state) => state.auth.get('accessToken')
@@ -21,6 +22,27 @@ export const getNumOrdersChecked = (state) => (
 
 export const getNumOrdersCompensated = (state) => (
   state.getHelp.get('numOrdersCompensated')
+)
+
+export const getHasSeenRepetitiveIssuesScreen = (state) => (
+  state.getHelp.get('hasSeenRepetitiveIssuesScreen')
+)
+
+export const getHasRepetitiveIssues = createSelector(
+  getNumOrdersChecked,
+  getNumOrdersCompensated,
+  getIsSsrRepetitiveIssues,
+  getHasSeenRepetitiveIssuesScreen,
+  (
+    numOrdersChecked,
+    numOrdersCompensated,
+    isSsrRepetitiveIssues,
+    hasSeenRepetitiveIssuesScreen
+  ) => (
+    isSsrRepetitiveIssues
+    && !hasSeenRepetitiveIssuesScreen
+    && Boolean(numOrdersChecked && numOrdersCompensated)
+  )
 )
 
 export const getIsAutoAccept = (state) => (
@@ -68,7 +90,7 @@ export const getSelectedIngredients = (state) => (
 
 export const getSelectedIngredientsWithImage = createSelector(
   getSelectedIngredients, getRecipes,
-  (selectedIngredients, recipes) => Object.values(selectedIngredients).map(({recipeId, ingredientUuid}) => {
+  (selectedIngredients, recipes) => Object.values(selectedIngredients).map(({ recipeId, ingredientUuid }) => {
     const recipeForIngredient = recipes.find(recipe => recipe.id === recipeId)
     const ingredientData = recipeForIngredient.ingredients.find(ingredient => ingredient.uuid === ingredientUuid)
 

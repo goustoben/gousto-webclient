@@ -43,6 +43,7 @@ import {
   validateLatestOrder,
 } from '../getHelp'
 import * as orderSelectors from '../../selectors/orderSelectors'
+import * as selectors from '../../selectors/selectors'
 import { transformRecipesWithIngredients } from '../transformers/recipeTransform'
 
 jest.mock('utils/logger', () => ({
@@ -59,6 +60,8 @@ const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
 const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
 const getIsMultiComplaintLimitReachedLastFourWeeks = safeJestMock(orderSelectors, 'getIsMultiComplaintLimitReachedLastFourWeeks')
 const getIsBoxDailyComplaintLimitReached = safeJestMock(orderSelectors, 'getIsBoxDailyComplaintLimitReached')
+const getNumOrdersChecked = safeJestMock(selectors, 'getNumOrdersChecked')
+const getNumOrdersCompensated = safeJestMock(selectors, 'getNumOrdersCompensated')
 
 const ACCESS_TOKEN = 'access-token'
 const GET_STATE_PARAMS = {
@@ -535,6 +538,29 @@ describe('GetHelp action generators and thunks', () => {
             is_second_complaint: false,
             prev_comp_same_day: false,
             seCategory: 'help',
+          }
+        })
+      })
+    })
+
+    describe('when numOrdersChecked and numOrdersCompensated are truthy', () => {
+      beforeEach(() => {
+        getNumOrdersChecked.mockReturnValue(2)
+        getNumOrdersCompensated.mockReturnValue(1)
+      })
+
+      test('dispatch the tracking action with correct values', () => {
+        trackIngredientsGetInTouchClick()(dispatch, getState)
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: webClientActionTypes.TRACKING,
+          trackingData: {
+            actionType: 'ssr_ingredients_click_get_in_touch',
+            auto_accept: false,
+            is_second_complaint: false,
+            prev_comp_same_day: false,
+            seCategory: 'help',
+            numOrdersChecked: 2,
+            numOrdersCompensated: 1,
           }
         })
       })
@@ -1128,7 +1154,6 @@ describe('GetHelp action generators and thunks', () => {
   describe('ValidateLatestOrder action', () => {
     describe('when it succeeds', () => {
       const params = {
-        accessToken: ACCESS_TOKEN,
         costumerId: '777',
         orderId: '888',
       }
