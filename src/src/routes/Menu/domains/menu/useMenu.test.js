@@ -20,9 +20,7 @@ const createMockStore = (valueOverrides) => {
     menuRecipes: Immutable.List(valueOverrides.menuRecipes) || Immutable.List(),
     menuCollections: Immutable.OrderedMap(valueOverrides.menuCollections) || Immutable.OrderedMap(),
     menuRecipeStock: Immutable.Map(valueOverrides.menuRecipeStock) || Immutable.Map({}),
-    menu: Immutable.fromJS({
-      menuVariants: { }
-    })
+    menu: Immutable.Map(valueOverrides.menu) || Immutable.Map({}),
   }
 
   const mockStore = configureMockStore()
@@ -76,6 +74,9 @@ describe('menu domain / useMenu', () => {
       [RECIPE_3.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
       [RECIPE_4.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
     },
+    menu: Immutable.fromJS({
+      menuVariants: Immutable.fromJS({ }),
+    }),
   })
 
   const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>

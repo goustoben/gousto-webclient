@@ -7,6 +7,11 @@ import { isOutOfStock } from './recipe'
 export const getRecipesInCollection = (menuCollections, collectionId) => menuCollections.getIn([collectionId, 'recipesInCollection'], null)
 export const getCollectionDietaryClaims = (menuCollections, collectionId) => menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
 
+export const getDietaryClaimsInCollection = (menuCollections, collectionId) => menuCollections.getIn(
+  [collectionId, 'requirements', 'dietary_claims'],
+  null
+)
+
 export const getCollectionId = collection => collection.get('id')
 const getCollectionSlug = collection => collection.get('slug')
 const isCollectionPublished = collection => Boolean(collection.get('published'))

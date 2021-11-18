@@ -5,12 +5,14 @@ describe('getRecipeComparatorForOutOfStock', () => {
   const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
   const RECIPE_2 = Immutable.Map({ id: 'bbbb' })
 
+  const wrapRecipes = (recipes) => recipes.map((recipe) => ({recipe}))
+
   describe('when there are no recipes in stock', () => {
     const comparator = getRecipeComparatorForOutOfStock()
 
     test('should return comparator that does not swap recipes', () => {
-      expect([RECIPE_1, RECIPE_2].sort(comparator)).toEqual([RECIPE_1, RECIPE_2])
-      expect([RECIPE_2, RECIPE_1].sort(comparator)).toEqual([RECIPE_2, RECIPE_1])
+      expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(wrapRecipes([RECIPE_1, RECIPE_2]))
+      expect(wrapRecipes([RECIPE_2, RECIPE_1]).sort(comparator)).toEqual(wrapRecipes([RECIPE_2, RECIPE_1]))
     })
   })
 
@@ -18,8 +20,8 @@ describe('getRecipeComparatorForOutOfStock', () => {
     const comparator = getRecipeComparatorForOutOfStock([RECIPE_1, RECIPE_2])
 
     test('should return comparator that does not swap recipes', () => {
-      expect([RECIPE_1, RECIPE_2].sort(comparator)).toEqual([RECIPE_1, RECIPE_2])
-      expect([RECIPE_2, RECIPE_1].sort(comparator)).toEqual([RECIPE_2, RECIPE_1])
+      expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(wrapRecipes([RECIPE_1, RECIPE_2]))
+      expect(wrapRecipes([RECIPE_2, RECIPE_1]).sort(comparator)).toEqual(wrapRecipes([RECIPE_2, RECIPE_1]))
     })
   })
 
@@ -27,8 +29,8 @@ describe('getRecipeComparatorForOutOfStock', () => {
     const comparator = getRecipeComparatorForOutOfStock([RECIPE_2])
 
     test('should return comparator that orders recipes such: the ones out of stock are the last', () => {
-      expect([RECIPE_1, RECIPE_2].sort(comparator)).toEqual([RECIPE_2, RECIPE_1])
-      expect([RECIPE_2, RECIPE_1].sort(comparator)).toEqual([RECIPE_2, RECIPE_1])
+      expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(wrapRecipes([RECIPE_2, RECIPE_1]))
+      expect(wrapRecipes([RECIPE_2, RECIPE_1]).sort(comparator)).toEqual(wrapRecipes([RECIPE_2, RECIPE_1]))
     })
   })
 
@@ -39,7 +41,8 @@ describe('getRecipeComparatorForOutOfStock', () => {
     const comparator = getRecipeComparatorForOutOfStock([RECIPE_1, RECIPE_3, RECIPE_4])
 
     test('should return comparator that orders recipes so original order of recipes in stock is maintained', () => {
-      expect([RECIPE_1, RECIPE_2, RECIPE_3, RECIPE_4].sort(comparator)).toEqual([RECIPE_1, RECIPE_3, RECIPE_4, RECIPE_2])
+      expect(wrapRecipes([RECIPE_1, RECIPE_2, RECIPE_3, RECIPE_4]).sort(comparator))
+        .toEqual(wrapRecipes([RECIPE_1, RECIPE_3, RECIPE_4, RECIPE_2]))
     })
   })
 })
