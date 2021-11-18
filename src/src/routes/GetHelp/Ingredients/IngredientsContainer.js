@@ -14,7 +14,12 @@ import {
   getIsMultiComplaintLimitReachedLastFourWeeks,
   getIsBoxDailyComplaintLimitReached
 } from '../selectors/orderSelectors'
-import { getMassIssueIneligibleIngredientUuids, getOrder, getRecipes } from '../selectors/selectors'
+import {
+  getMassIssueIneligibleIngredientUuids,
+  getOrder,
+  getRecipes,
+  getHasRepetitiveIssues,
+} from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({
@@ -23,6 +28,7 @@ const mapStateToProps = (state) => ({
   isMultiComplaintLimitReachedLastFourWeeks: getIsMultiComplaintLimitReachedLastFourWeeks(state),
   isBoxDailyComplaintLimitReached: getIsBoxDailyComplaintLimitReached(state),
   isValidateOrderLoading: getIsOrderValidationPending(state),
+  hasRepetitiveIssues: getHasRepetitiveIssues(state),
   order: getOrder(state),
   recipes: getRecipes(state),
   user: {

@@ -479,6 +479,23 @@ describe('getHelp reducer', () => {
     })
   })
 
+  describe('given an action with type GET_HELP_HAS_SEEN_REPETITIVE_ISSUES is received', () => {
+    let HAS_SEEN_REPETITIVE_ISSUES_SCREEN
+
+    beforeEach(() => {
+      HAS_SEEN_REPETITIVE_ISSUES_SCREEN = 'true or false'
+
+      newState = getHelp(getHelpInitialState, {
+        type: actionTypes.GET_HELP_HAS_SEEN_REPETITIVE_ISSUES,
+        hasSeenRepetitiveIssuesScreen: HAS_SEEN_REPETITIVE_ISSUES_SCREEN
+      })
+    })
+
+    test('the new state has correct properties stored', () => {
+      expect(newState.get('hasSeenRepetitiveIssuesScreen')).toBe(HAS_SEEN_REPETITIVE_ISSUES_SCREEN)
+    })
+  })
+
   describe('given an unknown action type is received', () => {
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {

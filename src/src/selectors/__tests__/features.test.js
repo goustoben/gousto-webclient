@@ -37,6 +37,7 @@ import {
   getIsAutoAcceptEnabled,
   getSsrTwoComplaintsSameDay,
   getIsCorporateEnquiriesLinkVisible,
+  getIsSsrRepetitiveIssues,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -89,6 +90,7 @@ describe('when features are defined', () => {
     [getIsAutoAcceptEnabled, 'isAutoAcceptEnabled'],
     [getSsrTwoComplaintsSameDay, 'ssrTwoComplaintsSameDay'],
     [getIsCorporateEnquiriesLinkVisible, 'isCorporateEnquiriesLinkVisible'],
+    [getIsSsrRepetitiveIssues, 'isSsrRepetitiveIssues'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

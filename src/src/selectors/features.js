@@ -153,3 +153,7 @@ export const getSsrTwoComplaintsSameDay = ({ features }) => (
 export const getIsCorporateEnquiriesLinkVisible = ({ features }) => (
   features && features.getIn(['isCorporateEnquiriesLinkVisible', 'value'], true)
 )
+
+export const getIsSsrRepetitiveIssues = ({ features }) => (
+  features && features.getIn(['isSsrRepetitiveIssues', 'value'], false)
+)

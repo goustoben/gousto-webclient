@@ -54,6 +54,7 @@ describe('<Ingredients />', () => {
     isMultiComplaintLimitReachedLastFourWeeks: false,
     isOrderValidationError: false,
     isValidateOrderLoading: false,
+    hasRepetitiveIssues: false,
     order,
     recipes,
     user,
@@ -292,7 +293,7 @@ describe('<Ingredients />', () => {
 
         test('calls validate order endpoint', () => {
           expect(validateLatestOrder).toHaveBeenCalledWith(
-            { accessToken: 'user-access-token', costumerId: '777', orderId: '888' }
+            { costumerId: '777', orderId: '888' }
           )
         })
       })
@@ -342,6 +343,22 @@ describe('<Ingredients />', () => {
 
         test('redirects to /same-day-ingredient-issues', () => {
           expect(browserHistory.push).toHaveBeenCalledWith('/get-help/same-day-ingredient-issues')
+        })
+      })
+
+      describe('and hasRepetitiveIssues is true, hasSeenRepetitiveIssuesScreen is false and isSsrRepetitiveIssues feature flag is set to true', () => {
+        beforeEach(() => {
+          wrapper = mount(
+            <Ingredients
+              {...PROPS}
+            />
+          )
+          // setting props here so componentDidUpdate() will run
+          wrapper.setProps({ hasRepetitiveIssues: true })
+        })
+
+        test('redirects to /get-help/user/USER_ID/order/ORDER_ID/repetitive-ingredient-issues', () => {
+          expect(browserHistory.push).toHaveBeenCalledWith(`/get-help/user/${user.id}/order/${order.id}/repetitive-ingredient-issues`)
         })
       })
 

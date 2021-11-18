@@ -9,6 +9,7 @@ import { recipePropType } from '../getHelpPropTypes'
 const propTypes = {
   massIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
   isMultiComplaintLimitReachedLastFourWeeks: PropTypes.bool.isRequired,
+  hasRepetitiveIssues: PropTypes.bool,
   isBoxDailyComplaintLimitReached: PropTypes.bool.isRequired,
   isOrderValidationError: PropTypes.bool.isRequired,
   isValidateOrderLoading: PropTypes.bool.isRequired,
@@ -31,6 +32,7 @@ const defaultProps = {
   order: {},
   recipes: [],
   user: {},
+  hasRepetitiveIssues: false,
 }
 
 class Ingredients extends PureComponent {
@@ -46,17 +48,22 @@ class Ingredients extends PureComponent {
     const { validateLatestOrder, user, order } = this.props
 
     validateLatestOrder({
-      accessToken: user.accessToken,
       costumerId: user.id,
       orderId: order.id,
     })
   }
 
   componentDidUpdate() {
-    const { isOrderValidationError, isMultiComplaintLimitReachedLastFourWeeks, isBoxDailyComplaintLimitReached } = this.props
-
+    const {
+      isOrderValidationError,
+      isMultiComplaintLimitReachedLastFourWeeks,
+      isBoxDailyComplaintLimitReached,
+      hasRepetitiveIssues,
+    } = this.props
     if (isMultiComplaintLimitReachedLastFourWeeks) {
       this.redirectToIneligibleIngredientsPage()
+    } else if (hasRepetitiveIssues) {
+      this.repetitiveIngredientsIssues()
     } else if (isBoxDailyComplaintLimitReached) {
       this.redirectToSameDayIngredientIssues()
     } else if (isOrderValidationError) {
@@ -135,6 +142,11 @@ class Ingredients extends PureComponent {
 
   redirectToSameDayIngredientIssues = () => {
     browserHistory.push(`${client.getHelp.index}/${client.getHelp.sameDayIngredientIssues}`)
+  }
+
+  repetitiveIngredientsIssues = () => {
+    const { user, order } = this.props
+    browserHistory.push(`${client.getHelp.repetitiveIngredientsIssues({ userId: user.id, orderId: order.id })}`)
   }
 
   render() {

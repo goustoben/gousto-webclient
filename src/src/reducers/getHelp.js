@@ -28,6 +28,7 @@ const getHelpInitialState = fromJS({
   otherIssueIneligibleIngredientUuids: [],
   numOrdersChecked: null,
   numOrdersCompensated: null,
+  hasSeenRepetitiveIssuesScreen: false,
 })
 
 const getHelp = (state, action) => {
@@ -198,6 +199,10 @@ const getHelp = (state, action) => {
       .setIn(['compensation', 'amount'], action.payload.amount)
       .setIn(['compensation', 'totalAmount'], action.payload.totalAmount)
       .setIn(['compensation', 'type'], action.payload.type)
+  }
+
+  case actionTypes.GET_HELP_HAS_SEEN_REPETITIVE_ISSUES: {
+    return state.set('hasSeenRepetitiveIssuesScreen', action.hasSeenRepetitiveIssuesScreen)
   }
   default:
     return state

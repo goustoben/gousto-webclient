@@ -6,7 +6,9 @@ import {
   getOtherIssueIneligibleIngredientUuids,
   getNumOrdersChecked,
   getNumOrdersCompensated,
+  getHasSeenRepetitiveIssuesScreen,
   getIsAutoAccept,
+  getHasRepetitiveIssues,
   getIsError,
   getIsLoadOrderError,
   getIsOrderLoading,
@@ -28,6 +30,7 @@ const ERROR_MESSAGE = 'An error message'
 const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a', 'b', 'c']
 const OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a324', 'b345', 'c3454']
 const IS_AUTO_ACCEPT = 'is auto accept can be true or false'
+const HAS_SEEN_REPETITIVE_ISSUES = 'hasSeenRepetitiveIssuesScreen can be true or false'
 const ORDER_PENDING_VALUE = 'order pending can be true or false'
 const ORDER_ID = '12345'
 const TRACKING_URL_PENDING_VALUE = 'trackingUrl pending can be true or false'
@@ -127,6 +130,7 @@ const STATE = {
     order: ORDER,
     recipes: RECIPES,
     selectedIngredients: SELECTED_INGREDIENTS,
+    hasSeenRepetitiveIssuesScreen: HAS_SEEN_REPETITIVE_ISSUES,
   }),
   pending: fromJS({
     GET_HELP_LOAD_ORDERS_BY_ID: ORDER_PENDING_VALUE,
@@ -146,6 +150,7 @@ describe('Get Help selectors', () => {
     ['getIsAutoAccept', getIsAutoAccept, IS_AUTO_ACCEPT],
     ['getIsOrderLoading', getIsOrderLoading, ORDER_PENDING_VALUE],
     ['getIsTrackingUrlLoading', getIsTrackingUrlLoading, TRACKING_URL_PENDING_VALUE],
+    ['getHasSeenRepetitiveIssuesScreen', getHasSeenRepetitiveIssuesScreen, HAS_SEEN_REPETITIVE_ISSUES],
     ['getOrder', getOrder, ORDER],
     ['getOrderDeliveryDate', getOrderDeliveryDate, DELIVERY_DATE],
     ['getOrderDeliverySlot', getOrderDeliverySlot, DELIVERY_SLOT],
@@ -172,6 +177,90 @@ describe('Get Help selectors', () => {
 
     test('gets the error value for the corresponding action type', () => {
       expect(result).toBe(ERROR_MESSAGE)
+    })
+  })
+
+  describe('Given getHasRepetitiveIssues is called', () => {
+    let REPETITIVE_ISSUES_STATE
+    describe('when isSsrRepetitiveIssues is false', () => {
+      beforeEach(() => {
+        REPETITIVE_ISSUES_STATE = {
+          getHelp: fromJS({}),
+          features: fromJS({
+            isSsrRepetitiveIssues: {
+              value: false
+            }
+          }),
+        }
+        result = getHasRepetitiveIssues(REPETITIVE_ISSUES_STATE)
+      })
+      test('getHasRepetitiveIssues should return false', () => {
+        expect(result).toBe(false)
+      })
+    })
+    describe('when isSsrRepetitiveIssues is true', () => {
+      beforeEach(() => {
+        REPETITIVE_ISSUES_STATE = {
+          features: fromJS({
+            isSsrRepetitiveIssues: {
+              value: true
+            }
+          }),
+        }
+      })
+
+      describe('and hasSeenRepetitiveIssuesScreen is false', () => {
+        describe('when numOrdersChecked are > 0', () => {
+          beforeEach(() => {
+            const NEW_REPETITIVE_ISSUES_STATE = {
+              ...REPETITIVE_ISSUES_STATE,
+              getHelp: fromJS({
+                numOrdersChecked: 3,
+                numOrdersCompensated: 2,
+                hasSeenRepetitiveIssuesScreen: false,
+              }),
+            }
+            result = getHasRepetitiveIssues(NEW_REPETITIVE_ISSUES_STATE)
+          })
+          test('getHasRepetitiveIssues should return true', () => {
+            expect(result).toBe(true)
+          })
+        })
+
+        describe('when numOrdersChecked are > 0', () => {
+          beforeEach(() => {
+            const NEW_REPETITIVE_ISSUES_STATE = {
+              ...REPETITIVE_ISSUES_STATE,
+              getHelp: fromJS({
+                numOrdersChecked: 3,
+                numOrdersCompensated: 0,
+                hasSeenRepetitiveIssuesScreen: false,
+              }),
+            }
+            result = getHasRepetitiveIssues(NEW_REPETITIVE_ISSUES_STATE)
+          })
+          test('getHasRepetitiveIssues should return false', () => {
+            expect(result).toBe(false)
+          })
+        })
+      })
+
+      describe('and hasSeenRepetitiveIssuesScreen is true', () => {
+        beforeEach(() => {
+          const NEW_REPETITIVE_ISSUES_STATE = {
+            ...REPETITIVE_ISSUES_STATE,
+            getHelp: fromJS({
+              numOrdersChecked: 3,
+              numOrdersCompensated: 3,
+              hasSeenRepetitiveIssuesScreen: true,
+            }),
+          }
+          result = getHasRepetitiveIssues(NEW_REPETITIVE_ISSUES_STATE)
+        })
+        test('getHasRepetitiveIssues should return false', () => {
+          expect(result).toBe(false)
+        })
+      })
     })
   })
 

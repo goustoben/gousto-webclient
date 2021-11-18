@@ -29,6 +29,7 @@ const withStatic = process.env.withStatic === 'true'
 const uuidv1 = require('uuid/v1')
 const { loggerSetUuid } = require('actions/logger')
 const addressLookupRoute = require('./routes/addressLookup').default
+const { performanceTestPage } = require('./routes/performanceTest')
 const routes = require('./routes').default
 const htmlTemplate = require('./template')
 const { appsRedirect } = require('./middleware/apps')
@@ -139,6 +140,8 @@ app.use(async (ctx, next) => {
 app.use(appsRedirect)
 
 app.use(addressLookupRoute)
+
+app.use(performanceTestPage)
 
 /**
  * Authentication Routes

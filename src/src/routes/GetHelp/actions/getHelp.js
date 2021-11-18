@@ -11,7 +11,7 @@ import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
 import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getIsMultiComplaintLimitReachedLastFourWeeks, getIsBoxDailyComplaintLimitReached } from '../selectors/orderSelectors'
-import { getIsAutoAccept, getOrder, getRecipes } from '../selectors/selectors'
+import { getIsAutoAccept, getOrder, getRecipes, getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
 import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
@@ -154,6 +154,8 @@ export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
   const isMultiComplaint = getIsMultiComplaints(getState())
   const isMultiComplaintLimitReachedLastFourWeeks = getIsMultiComplaintLimitReachedLastFourWeeks(getState())
   const isBoxDailyComplaintLimitReached = getIsBoxDailyComplaintLimitReached(getState())
+  const numOrdersChecked = getNumOrdersChecked(getState())
+  const numOrdersCompensated = getNumOrdersCompensated(getState())
 
   dispatch({
     type: webClientActionTypes.TRACKING,
@@ -164,7 +166,9 @@ export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
       is_second_complaint: isMultiComplaint,
       prev_comp_same_day: isBoxDailyComplaintLimitReached,
       seCategory: SE_CATEGORY_HELP,
-      reason: isMultiComplaintLimitReachedLastFourWeeks ? 'multi_complaint_limit_last_four_week' : undefined
+      reason: isMultiComplaintLimitReachedLastFourWeeks ? 'multi_complaint_limit_last_four_week' : undefined,
+      numOrdersChecked,
+      numOrdersCompensated,
     }
   })
 }
@@ -390,16 +394,15 @@ export const loadTrackingUrl = (orderId) => async (dispatch, getState) => {
 }
 
 export const validateLatestOrder = ({
-  accessToken,
   orderId,
   costumerId
-}) => async (dispatch) => {
+}) => async (dispatch, getState) => {
   dispatch(webClientStatusActions.pending(webClientActionTypes.GET_HELP_VALIDATE_ORDER, true))
   dispatch(webClientStatusActions.error(webClientActionTypes.GET_HELP_VALIDATE_ORDER, ''))
 
   try {
     const response = await validateOrder(
-      accessToken,
+      getAccessToken(getState()),
       {
         customer_id: Number(costumerId),
         order_id: Number(orderId),
