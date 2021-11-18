@@ -20,7 +20,10 @@ const createMockStore = (valueOverrides) => {
     menuRecipes: Immutable.List(valueOverrides.menuRecipes) || Immutable.List(),
     menuCollections: Immutable.OrderedMap(valueOverrides.menuCollections) || Immutable.OrderedMap(),
     menuRecipeStock: Immutable.Map(valueOverrides.menuRecipeStock) || Immutable.Map({}),
-    menu: Immutable.Map(valueOverrides.menu) || Immutable.Map({}),
+    menuRecipeDetails: Immutable.Map({}),
+    menu: Immutable.Map(valueOverrides.menu) || Immutable.fromJS({
+      menuVariants: { }
+    })
   }
 
   const mockStore = configureMockStore()

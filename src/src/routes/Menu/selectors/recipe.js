@@ -57,15 +57,17 @@ export const getRecipeOutOfStock = createSelector(
   (recipeId, menuRecipeStock, numPortions, inBasket) => (isOutOfStock(recipeId, numPortions, menuRecipeStock) && !inBasket)
 )
 
+export const getSurchargeForRecipe = (recipeId, numPortions, recipes) => {
+  const meals = recipes.getIn([recipeId, 'meals'])
+  const overallSurcharge = getSurcharge(meals, numPortions)
+  const surchargePerPortion = overallSurcharge ? getSurchargePerPortion(overallSurcharge, numPortions) : null
+
+  return surchargePerPortion
+}
+
 export const getRecipeSurcharge = createSelector(
   [getRecipeIdFromProps, getNumPortions, getRecipes],
-  (recipeId, numPortions, recipes) => {
-    const meals = recipes.getIn([recipeId, 'meals'])
-    const overallSurcharge = getSurcharge(meals, numPortions)
-    const surchargePerPortion = overallSurcharge ? getSurchargePerPortion(overallSurcharge, numPortions) : null
-
-    return surchargePerPortion
-  }
+  getSurchargeForRecipe
 )
 
 export const getRecipeSidesSurcharge = createSelector(
