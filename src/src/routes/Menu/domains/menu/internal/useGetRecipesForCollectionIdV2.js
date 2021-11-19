@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
+import Immutable from 'immutable'
 import { getDietaryClaimsInCollection, getRecipesInCollection } from 'routes/Menu/selectors/collections'
 import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import { getInStockRecipes } from 'routes/Menu/selectors/recipeList'
@@ -24,7 +25,7 @@ export const useGetRecipesForCollectionId = (collections) => {
     const dietaryClaims = getDietaryClaimsInCollection(collections, collectionId)
 
     if (!recipeIdsInCollection) {
-      return { recipes: [] }
+      return { recipes: Immutable.List(), originalOrderRecipeIds: Immutable.List() }
     }
 
     const selectedVariantReplacer = getSelectedVariantsReplacer({
@@ -43,13 +44,17 @@ export const useGetRecipesForCollectionId = (collections) => {
     //  * ensure we prefer to show variants customer explicitly picked
     //  * ensure any out of stock recipes are replaced by in stock alternatives
     //  * ensure any remaining out of stock recipes are moved to the end of the list
-    const resultingRecipes = recipes
+    const originalRecipes = recipes
       .filter(r => recipeIdsInCollection.includes(r.get('id')))
       .map(selectedVariantReplacer)
       .map(outOfStockRecipeReplacer)
+
+    const resultingRecipes = originalRecipes
       .sort(recipeComparatorForOutOfStock)
 
-    return { recipes: resultingRecipes }
+    const originalOrderRecipeIds = originalRecipes.map(({originalId}) => originalId)
+
+    return { recipes: resultingRecipes, originalOrderRecipeIds }
   }
 
   return {

@@ -95,6 +95,17 @@ describe('menu domain / useMenu', () => {
     ]))
   })
 
+  test('getRecipesForCollectionId returns correct originalOrderRecipeIds', () => {
+    const { result } = renderHook(() => useMenu(), { wrapper })
+
+    const { originalOrderRecipeIds } = result.current.getRecipesForCollectionId(COLLECTION_B.get('id'))
+
+    expect(originalOrderRecipeIds).toEqual(Immutable.List([
+      RECIPE_3.get('id'),
+      RECIPE_4.get('id'),
+    ]))
+  })
+
   describe('when some Recipes are out of stock', () => {
     test('getRecipesForCollectionId returns them at the end of the list', () => {
       const { result } = renderHook(() => useMenu(), { wrapper })
@@ -104,6 +115,17 @@ describe('menu domain / useMenu', () => {
       expect(recipes).toEqual(Immutable.List([
         {recipe: RECIPE_2, originalId: RECIPE_2.get('id')},
         {recipe: RECIPE_1, originalId: RECIPE_1.get('id')},
+      ]))
+    })
+
+    test('getRecipesForCollectionId returns correct originalOrderRecipeIds', () => {
+      const { result } = renderHook(() => useMenu(), { wrapper })
+
+      const { originalOrderRecipeIds } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
+
+      expect(originalOrderRecipeIds).toEqual(Immutable.List([
+        RECIPE_1.get('id'),
+        RECIPE_2.get('id'),
       ]))
     })
   })
