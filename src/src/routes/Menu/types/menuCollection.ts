@@ -22,6 +22,7 @@ export type MenuCollection = {
   id: string
   shortTitle: string
   description: string
+  default: boolean
 }
 
 export type MenuCollectionIMap = MenuCollection & ImmutableMap<keyof MenuCollection, unknown>
