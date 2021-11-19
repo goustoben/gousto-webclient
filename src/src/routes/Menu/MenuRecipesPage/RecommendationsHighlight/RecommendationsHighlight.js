@@ -48,7 +48,7 @@ const RecommendationsHighlight = () => {
   return (
     <div className={menuCss.menuContainer}>
       {
-        recommendationRecipes.size
+        Boolean(recommendationRecipes.size)
         && (
           <React.Fragment>
             <div className={css.headerContainer}>

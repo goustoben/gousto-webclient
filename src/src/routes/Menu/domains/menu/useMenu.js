@@ -8,6 +8,7 @@ export const useMenu = () => {
 
   // When it comes to enable new implementation of getRecipesForCollectionId
   // swap line below for version 2
+  // eslint-disable-next-line no-unused-vars
   const { getRecipesForCollectionId } = useGetRecipesForCollectionId(allCollections)
   const { getAlternativeOptionsForRecipe } = useAlternativeOptions({allCollections})
 
@@ -15,7 +16,7 @@ export const useMenu = () => {
   const { getRecipesForCollectionId: getRecipesForCollectionIdV2 } = useGetRecipesForCollectionIdV2(allCollections)
 
   return {
-    getRecipesForCollectionId,
+    getRecipesForCollectionId: getRecipesForCollectionIdV2,
     getAlternativeOptionsForRecipe,
   }
 }
