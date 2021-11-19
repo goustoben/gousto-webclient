@@ -23,10 +23,9 @@ jest.mock('routes/Menu/Recipe/VariantRecipeList/VariantRecipeList', () => ({
   VariantRecipeListContainer: () => <div />
 }))
 
-jest.mock('routes/Menu/domains/collections', () => ({
-  useCollections: () => ({
-    currentCollectionId: '123',
-  }),
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: () => '123',
 }))
 
 describe('<Detail />', () => {

@@ -2,11 +2,12 @@ import React from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { useSelector } from 'react-redux'
 
+import { getMenuCategoryIdForDetails } from 'routes/Menu/selectors/menuRecipeDetails'
 import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
-import { useCollections } from 'routes/Menu/domains/collections'
 import Carousel from './Carousel'
 
 import { VariantRecipeListContainer } from '../VariantRecipeList/VariantRecipeList'
@@ -38,7 +39,7 @@ export const Detail = (props) => {
     isFromShowcaseMenu
   } = props
 
-  const { currentCollectionId } = useCollections()
+  const currentCollectionId = useSelector(getMenuCategoryIdForDetails)
 
   if (! currentCollectionId) {
     return null
