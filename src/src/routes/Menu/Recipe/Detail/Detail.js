@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
+import { useCollections } from 'routes/Menu/domains/collections'
 import Carousel from './Carousel'
 
 import { VariantRecipeListContainer } from '../VariantRecipeList/VariantRecipeList'
@@ -36,6 +37,12 @@ export const Detail = (props) => {
     brandAvailability,
     isFromShowcaseMenu
   } = props
+
+  const { currentCollectionId } = useCollections()
+
+  if (! currentCollectionId) {
+    return null
+  }
 
   const recipeLegalDetailId = chosenSideRecipeId || id
   const titleClass = classnames(
@@ -93,6 +100,7 @@ export const Detail = (props) => {
               recipeId={menuWithSides ? chosenSideRecipeId : id}
               isOnDetailScreen
               isFromShowcaseMenu={isFromShowcaseMenu}
+              collectionId={currentCollectionId}
             />
           </div>
           <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
@@ -109,6 +117,7 @@ export const Detail = (props) => {
           <p className={css.additionalInfo}>
             What you&#8217;ll need:
             {youWillNeed.map((item, idx) => (
+              // eslint-disable-next-line react/no-array-index-key
               <span key={idx}>
                 {item}
                 {(youWillNeed.size - 1) !== idx && ', '}
@@ -166,7 +175,7 @@ Detail.propTypes = {
   brandAvailability: PropTypes.shape({
     slug: PropTypes.string,
     text: PropTypes.string,
-    theme: PropTypes.object,
+    theme: PropTypes.shape({}),
   }),
   isFromShowcaseMenu: PropTypes.bool,
 }

@@ -8,7 +8,7 @@ export const VariantRecipeListModalContent = ({ recipeId, originalId, categoryId
     <VariantRecipeListContainer
       recipeId={recipeId}
       originalId={originalId}
-      categoryId={categoryId}
+      collectionId={categoryId}
       closeOnSelection={closeOnSelection}
     />
 

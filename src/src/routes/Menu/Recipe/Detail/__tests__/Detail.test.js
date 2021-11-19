@@ -23,6 +23,12 @@ jest.mock('routes/Menu/Recipe/VariantRecipeList/VariantRecipeList', () => ({
   VariantRecipeListContainer: () => <div />
 }))
 
+jest.mock('routes/Menu/domains/collections', () => ({
+  useCollections: () => ({
+    currentCollectionId: '123',
+  }),
+}))
+
 describe('<Detail />', () => {
   const DETAIL = (
     <Detail
@@ -39,6 +45,7 @@ describe('<Detail />', () => {
       inBasket={false}
       description="Recipe description"
       closeRecipeDetails={() => {}}
+      isOutOfStock={false}
     />
   )
 
