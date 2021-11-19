@@ -3,10 +3,8 @@ import { selectRecipeVariant , menuRecipeDetailVisibilityChange } from 'routes/M
 import {
   trackVariantListDisplay,
 } from 'actions/menu'
-import { getMenuCategoryIdForDetails } from 'routes/Menu/selectors/menuRecipeDetails'
 import { getSidesData } from '../../../selectors/variants'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
-import { getCurrentCollectionId } from '../../../selectors/collections'
 import { getCategoryIdForVariants } from '../../../selectors/menu'
 import { VariantRecipeList } from './VariantRecipeList'
 
@@ -16,7 +14,6 @@ const mapStateToProps = (state, ownProps) => {
   const categoryIdForVariants = getCategoryIdForVariants(state, ownProps)
   const { recipeVariants } = getSidesData(state, { recipeId: recipeIdProp, categoryId: categoryIdForVariants })
   const recipeVariantsArray = recipeVariants ? recipeVariants.variantsList.toJS() : []
-  const categoryId = getMenuCategoryIdForDetails(state)
 
   let selectedRecipe = {}
 
@@ -28,7 +25,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
-    collectionId: ownProps.categoryId || categoryId || getCurrentCollectionId(state, ownProps),
     recipeVariants,
     recipeVariantsArray,
     selectedRecipe
