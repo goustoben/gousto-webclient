@@ -1,12 +1,11 @@
 describe('Given the customer is logged in', () => {
   beforeEach(() => {
-    cy.server()
     cy.setLoginCookiesWithAccessToken('the-access-token')
   })
 
   describe('When their order is eligible for ingredients refund and they visit the Recipe Cards URL directly', () => {
     beforeEach(() => {
-      cy.server({ignore: xhr => xhr.url === getOrderApiPathFor({id: 'the-order-id'})})
+      cy.serverWithEmulatedPaths('/order/the-order-id')
 
       cy.configureEmulationState({
         orders: [{
@@ -41,6 +40,3 @@ describe('Given the customer is logged in', () => {
   })
 })
 
-function getOrderApiPathFor({id}) {
-  return `${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/order/${id}`
-}

@@ -12,7 +12,7 @@ describe('Unsubscribing from marketing emails', () => {
 
       cy.stubAll3rdParties()
 
-      cy.server({ignore: xhr => xhr.url === unsubscribeApiPathFor({authUserId: 'the-auth-user-id', marketingType: 'unsubscribe_emails'})})
+      cy.serverWithEmulatedPaths(unsubscribeApiPathFor({authUserId: 'the-auth-user-id', marketingType: 'unsubscribe_emails'}))
 
       cy.visit(unsubscribeUrlPathFor({
         authUserId: 'the-auth-user-id',
@@ -43,7 +43,7 @@ describe('Unsubscribing from marketing emails', () => {
 
       cy.stubAll3rdParties()
 
-      cy.server({ignore: xhr => xhr.url === unsubscribeApiPathFor({authUserId: 'non-existent-auth-user-id', marketingType: 'unsubscribe_emails'})})
+      cy.serverWithEmulatedPaths(unsubscribeApiPathFor({authUserId: 'non-existent-auth-user-id', marketingType: 'unsubscribe_emails'}))
 
       cy.visit(unsubscribeUrlPathFor({
         authUserId: 'non-existent-auth-user-id',
@@ -66,7 +66,7 @@ describe('Unsubscribing from marketing emails', () => {
 })
 
 function unsubscribeApiPathFor({authUserId, marketingType}) {
-  return `${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/user/${authUserId}/marketing/${marketingType}`
+  return `/user/${authUserId}/marketing/${marketingType}`
 }
 
 function unsubscribeUrlPathFor({authUserId, marketingType, marketingUnsubscribeToken}) {

@@ -268,3 +268,10 @@ Cypress.Commands.add('visitAndWaitForClientSideReRender', (url, options) => {
 Cypress.Commands.add('configureEmulationState', (state) => {
   axios.put(`${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/_config/state`, state).catch(console.error)
 })
+
+Cypress.Commands.add('serverWithEmulatedPaths', (...paths) => {
+  const ignoredUrls = paths.map(path => `${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}${path}`)
+  cy.server({ignore: xhr => ignoredUrls.includes(xhr.url)})
+
+  axios.put(`${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/_config/emulated-paths`, paths).catch(console.error)
+})

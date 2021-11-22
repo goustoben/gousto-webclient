@@ -8,6 +8,8 @@ const emulationServerBaseUrl = 'http://localhost:3000';
 
 jest.setTimeout(10 * 1000)
 
+beforeAll(() => axios.put(`${emulationServerBaseUrl}/_config/emulated-paths`, ['.*']))
+
 test('Verify pacts against emulator', async () => {
     const resultStrings = await forEachPactFileIn(
         path.join(__dirname, '..', '..', '..', 'pact'),

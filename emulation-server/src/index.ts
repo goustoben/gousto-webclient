@@ -17,12 +17,36 @@ function getServerConfiguration() {
     return command.opts();
 }
 
+const serverConfiguration = getServerConfiguration();
+
 const {getState, setState} = createState()
 
 const app = new Koa();
 
 const router = new Router()
     .use(koaBody())
+
+let emulatedPathPatterns: string[] = [];
+
+router.get('/_config/emulated-paths', ctx => {
+    ctx.body = emulatedPathPatterns
+    ctx.status = 200
+})
+
+router.put('/_config/emulated-paths', ctx => {
+    if (!ctx.is('application/json')) {
+        ctx.status = 415
+        return
+    }
+
+    emulatedPathPatterns = ctx.request.body
+    ctx.status = 200
+})
+
+router.delete('/_config/emulated-paths', ctx => {
+    emulatedPathPatterns = []
+    ctx.status = 200
+})
 
 router.get('/_config/state', ctx => {
     ctx.body = getState()
@@ -93,13 +117,19 @@ router.put('/user/:authUserId/marketing/unsubscribe_emails', ctx => {
 
 app.use(logger())
     .use(cors())
-    .use(router.routes())
-    .use(router.allowedMethods())
-
-const serverConfiguration = getServerConfiguration();
 
 if (serverConfiguration.proxyHost) {
-    app.use(proxy(serverConfiguration.proxyHost, {https: true}))
+    app.use(proxy(serverConfiguration.proxyHost, {
+        https: true,
+        filter(ctx) {
+            const isEmulatedPath = ctx.request.path.startsWith('/_config/') || emulatedPathPatterns.some(pathPattern => ctx.request.path.match(pathPattern));
+            return !isEmulatedPath
+        }
+    }))
 }
+
+app.use(router.routes())
+    .use(router.allowedMethods())
+
 
 app.listen(3000);
