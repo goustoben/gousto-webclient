@@ -12,6 +12,7 @@ const propTypes = {
   creditAmount: PropTypes.number.isRequired,
   isMultiComplaints: PropTypes.bool.isRequired,
   issuesIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isSsrRepetitiveIssues: PropTypes.bool.isRequired,
   nameFirst: PropTypes.string.isRequired,
   trackConfirmationCTA: PropTypes.func.isRequired,
   trackRefundFAQClick: PropTypes.func.isRequired,
@@ -21,6 +22,7 @@ const Confirmation = ({
   creditAmount,
   isMultiComplaints,
   issuesIDs,
+  isSsrRepetitiveIssues,
   nameFirst,
   trackConfirmationCTA,
   trackRefundFAQClick
@@ -40,10 +42,19 @@ const Confirmation = ({
         hasLateralBordersOnSmallScreens={false}
         className={layoutCss.sideBordersWhenGetHelpLayoutHasMargins}
       >
-        <p>
-          We really appreciate you letting us know about the issue.
-          Credit will be automatically taken off your next order as an apology.
-        </p>
+        {isSsrRepetitiveIssues
+          ? (
+            <p>
+              Please accept our apologies, we really appreciate you taking the time to report this issue.
+              Your credit is now in your account, and will automatically be taken off your next order.
+            </p>
+          )
+          : (
+            <p>
+              We really appreciate you letting us know about the issue.
+              Credit will be automatically taken off your next order as an apology.
+            </p>
+          )}
         <Alert type="success" hasIcon={false}>
           <div className={css.alertContent}>
             <div className={css.alertIconWrapper}>

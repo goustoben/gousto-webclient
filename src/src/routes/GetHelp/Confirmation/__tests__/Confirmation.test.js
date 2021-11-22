@@ -16,6 +16,7 @@ describe('<Confirmation />', () => {
       creditAmount={CREDIT}
       isMultiComplaints={false}
       issuesIDs={ISSUES_IDS}
+      isSsrRepetitiveIssues={false}
       nameFirst={USER_NAME}
       trackConfirmationCTA={TRACK_CONFIRMATION_CTA_FUNCTION}
       trackRefundFAQClick={TRACK_REFUND_FAQ_CLICK}
@@ -36,10 +37,24 @@ describe('<Confirmation />', () => {
     expect(getHelpLayout.prop('hasBackButton')).toBe(false)
   })
 
-  test('renders the copy inside the Card', () => {
-    expect(getHelpLayout.find('Card').at(0).text()).toContain(
-      'We really appreciate you letting us know about the issue. Credit will be automatically taken off your next order as an apology.'
-    )
+  describe('when isSsrRepetitiveIssues is false', () => {
+    test('renders the correct copy inside the Card', () => {
+      expect(getHelpLayout.find('Card').at(0).text()).toContain(
+        'We really appreciate you letting us know about the issue. Credit will be automatically taken off your next order as an apology.'
+      )
+    })
+  })
+
+  describe('when isSsrRepetitiveIssues is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isSsrRepetitiveIssues: true })
+    })
+
+    test('renders the correct copy inside the Card', () => {
+      expect(getHelpLayout.find('Card').at(0).text()).toContain(
+        'Please accept our apologies, we really appreciate you taking the time to report this issue.'
+      )
+    })
   })
 
   describe('renders an alert inside the Card', () => {

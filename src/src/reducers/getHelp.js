@@ -1,6 +1,6 @@
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
-import { fromJS, Map, OrderedMap } from 'immutable'
+import { fromJS, OrderedMap } from 'immutable'
 
 const getHelpInitialState = fromJS({
   compensation: {
@@ -21,9 +21,10 @@ const getHelpInitialState = fromJS({
     hasPassedDeliveryValidation: false,
     deliveryCompensationAmount: null,
   },
-  orders: Map(),
+  orders: {},
   recipes: [],
   selectedIngredients: {},
+  shippingAddresses: [],
   massIssueIneligibleIngredientUuids: [],
   otherIssueIneligibleIngredientUuids: [],
   numOrdersChecked: null,
@@ -200,9 +201,17 @@ const getHelp = (state, action) => {
       .setIn(['compensation', 'totalAmount'], action.payload.totalAmount)
       .setIn(['compensation', 'type'], action.payload.type)
   }
-
   case actionTypes.GET_HELP_HAS_SEEN_REPETITIVE_ISSUES: {
     return state.set('hasSeenRepetitiveIssuesScreen', action.hasSeenRepetitiveIssuesScreen)
+  }
+  case actionTypes.GET_HELP_LOAD_SHIPPING_ADDRESSES: {
+    const filteredAddresses = action.payload.map(address => {
+      const { id, line1, line2, line3, name, postcode, town } = address
+
+      return { id, line1, line2, line3, name, postcode, town }
+    })
+
+    return state.set('shippingAddresses', fromJS(filteredAddresses))
   }
   default:
     return state
