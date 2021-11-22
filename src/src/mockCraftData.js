@@ -7,8 +7,6 @@ export const craftCollections = {
   'Everyday Favourites': 'Snacks',
   'Plant-Based': 'Cocktails',
   'Gluten-Free': 'Syrups',
-  Fish: 'Gift Guide',
-  'Healthy Choices': 'Crackers',
   Chicken: 'Advent',
   'Dairy-Free': 'Events',
   'All Recipes': 'All items',
@@ -17,9 +15,9 @@ export const craftCollections = {
 
 const allItems = [
   {
-      "name": "The Very Merry Gin Advent Calendar",
-      "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766",
-      "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766"
+    "name": "The Very Merry Gin Advent Calendar",
+    "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766",
+    "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766"
   },
   {
       "name": "Christmas Gins",
@@ -32,19 +30,19 @@ const allItems = [
       "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GT-pop-shop3_500x500.jpg?v=1606485839"
   },
   {
-      "name": "Explorers' Collection Bundle",
-      "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Explorer_Bundle_Xmas_500x500.jpg?v=1632741124",
-      "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Explorer_Bundle_Xmas_500x500.jpg?v=1632741124"
+    "name": "Explorers' Collection Bundle",
+    "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Explorer_Bundle_Xmas_500x500.jpg?v=1632741124",
+    "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Explorer_Bundle_Xmas_500x500.jpg?v=1632741124"
   },
   {
-      "name": "The Cracking Combo Bundle",
-      "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NEW-CRACKER_BOX-PINK_AND_BLUE_50x50.jpg?v=1629809822",
-      "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NEW-CRACKER_BOX-PINK_AND_BLUE_50x50.jpg?v=1629809822"
+    "name": "The Cracking Combo Bundle",
+    "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NEW-CRACKER_BOX-PINK_AND_BLUE_50x50.jpg?v=1629809822",
+    "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NEW-CRACKER_BOX-PINK_AND_BLUE_50x50.jpg?v=1629809822"
   },
   {
-      "name": "Pink Gins",
-      "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-pink_50x50.jpg?v=1603707669",
-      "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-pink_50x50.jpg?v=1603707669"
+    "name": "Pink Gins",
+    "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-pink_50x50.jpg?v=1603707669",
+    "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-pink_50x50.jpg?v=1603707669"
   },
   {
       "name": "Four Very Merry Gin &amp; Tonic Crackers",
@@ -73,7 +71,7 @@ const allItems = [
   },
   {
       "name": "Schofe's Winter G&amp;T Bundle",
-      "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356",
+      "src": "https://cdn.shopify.com/s/files/∏1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356",
       "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356"
   },
   {
@@ -239,88 +237,88 @@ const allItems = [
   // discovery gins
   {
       "name": "Schofe’s Winter Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243"
   },
   {
       "name": "York Gin Chocolate &amp; Orange",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638"
   },
   {
       "name": "BeauFort VS Smoked Overproof Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043"
   },
   {
       "name": "Porter's Tropical Old Tom Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953"
   },
   {
       "name": "Pink Marmalade Gin - Sophie Ellis Bextor Edition",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201"
   },
   {
       "name": "Isle of Bute Oyster Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119"
   },
   {
       "name": "Corner 53 Lemon Meringue Pie Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857"
   },
   {
       "name": "Comte De Grasse 44°N Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811"
   },
   {
       "name": "Cherry Moon Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741"
   },
   {
       "name": "The Apiarist Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003"
   },
   {
       "name": "Campfire Cask Aged Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305"
   },
   {
       "name": "Victory Pink Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974"
   },
   {
       "name": "Schofe's Christmas Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928"
   },
   {
       "name": "Marie Jeanne's Pink Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882"
   },
   {
       "name": "Fox's Kiln Distillery Blood Orange Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355"
   },
   {
       "name": "Purity Old Tom Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179"
   },
   {
       "name": "Three Wrens Apple Crumble Gin",
-      "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167",
-      "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167"
+      "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167",
+      "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167"
   },
   {
       "name": "The Perfect Advent Pairings Bundle",
@@ -1413,147 +1411,53 @@ const allItems = [
       "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LaGioiosa-Prosecco_50x50.png?v=1621862405"
   },
   // syrups,
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Mixology Bundle</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Gin &amp; Stormy</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Race Car Cocktail Syrup</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Peach Gin Iced Tea Cocktail Syrup</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Savanna Spritz Cocktail Syrup</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Pink Gin Spritz Cocktail Syrup</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Cosmopoli-gin cocktail syrup</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Gin Star Martini cocktail syrup</div>",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Craft Gin Club<div class=\"uppercase\">Gin-a-colada cocktail syrup</div>",
-      "src": null,
-      "url": null
-  },
+    {
+        "name": "Mixology Bundle",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980"
+    },
+    {
+        "name": "Gin &amp; Stormy",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742"
+    },
+    {
+        "name": "Race Car Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973"
+    },
+    {
+        "name": "Peach Gin Iced Tea Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877"
+    },
+    {
+        "name": "Savanna Spritz Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289"
+    },
+    {
+        "name": "Pink Gin Spritz Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455"
+    },
+    {
+        "name": "Cosmopoli-gin cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537"
+    },
+    {
+        "name": "Gin Star Martini cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790"
+    },
+    {
+        "name": "Gin-a-colada cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852"
+    },
   // Gift Guide,
-  {
-      "name": "The Very Merry Gin Advent Calendar",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "My Craft Gin",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "The Very Merry Gin &amp; Tonic Cracker Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Gift Cards",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Gin &amp; Stormy Cocktail Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Gift<br>Memberships",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "The Perfect Advent Pairings Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "SCHOFE'S WINTER GIN",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Ultimate Christmas Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Explorers' Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Ultimate Gin of the Month Gin Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Mixology Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Bestsellers Gin Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "WOODEN GIN GIFT BOX",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Race Car Cocktail Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Christmas Day Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Gin &amp; Tonic with a pop",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Ultimate Discovery Gin Bundle",
-      "src": null,
-      "url": null
-  },
-  {
-      "name": "Classic Gin Bundle",
-      "src": null,
-      "url": null
-  },
+
   //  Crackers,
   {
       "name": "Classic",
@@ -1816,88 +1720,88 @@ export const mockCraftData = {
   'Discovery Gin': [
     {
         "name": "Schofe’s Winter Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243"
     },
     {
         "name": "York Gin Chocolate &amp; Orange",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638"
     },
     {
         "name": "BeauFort VS Smoked Overproof Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043"
     },
     {
         "name": "Porter's Tropical Old Tom Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953"
     },
     {
         "name": "Pink Marmalade Gin - Sophie Ellis Bextor Edition",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201"
     },
     {
         "name": "Isle of Bute Oyster Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119"
     },
     {
         "name": "Corner 53 Lemon Meringue Pie Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857"
     },
     {
         "name": "Comte De Grasse 44°N Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811"
     },
     {
         "name": "Cherry Moon Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741"
     },
     {
         "name": "The Apiarist Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003"
     },
     {
         "name": "Campfire Cask Aged Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305"
     },
     {
         "name": "Victory Pink Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974"
     },
     {
         "name": "Schofe's Christmas Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928"
     },
     {
         "name": "Marie Jeanne's Pink Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882"
     },
     {
         "name": "Fox's Kiln Distillery Blood Orange Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355"
     },
     {
         "name": "Purity Old Tom Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179"
     },
     {
         "name": "Three Wrens Apple Crumble Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167"
     }
   ],
 
@@ -2882,167 +2786,55 @@ export const mockCraftData = {
         "url": "https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LaGioiosa-Prosecco_50x50.png?v=1621862405"
     }
   ],
-  'Syrups': [
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Mixology Bundle</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Gin &amp; Stormy</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Race Car Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Peach Gin Iced Tea Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Savanna Spritz Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Pink Gin Spritz Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Cosmopoli-gin cocktail syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Gin Star Martini cocktail syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Gin-a-colada cocktail syrup</div>",
-        "src": null,
-        "url": null
-    }
-  ],
-  'Gift Guide': [
-    {
-        "name": "The Very Merry Gin Advent Calendar",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "My Craft Gin",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "The Very Merry Gin &amp; Tonic Cracker Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Gift Cards",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Gin &amp; Stormy Cocktail Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Gift<br>Memberships",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "The Perfect Advent Pairings Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "SCHOFE'S WINTER GIN",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Ultimate Christmas Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Explorers' Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Ultimate Gin of the Month Gin Bundle",
-        "src": null,
-        "url": null
-    },
+  'Syrups':
+    [
     {
         "name": "Mixology Bundle",
-        "src": null,
-        "url": null
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980"
     },
     {
-        "name": "Bestsellers Gin Bundle",
-        "src": null,
-        "url": null
+        "name": "Gin &amp; Stormy",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742"
     },
     {
-        "name": "WOODEN GIN GIFT BOX",
-        "src": null,
-        "url": null
+        "name": "Race Car Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973"
     },
     {
-        "name": "Race Car Cocktail Bundle",
-        "src": null,
-        "url": null
+        "name": "Peach Gin Iced Tea Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877"
     },
     {
-        "name": "Christmas Day Bundle",
-        "src": null,
-        "url": null
+        "name": "Savanna Spritz Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289"
     },
     {
-        "name": "Gin &amp; Tonic with a pop",
-        "src": null,
-        "url": null
+        "name": "Pink Gin Spritz Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455"
     },
     {
-        "name": "Ultimate Discovery Gin Bundle",
-        "src": null,
-        "url": null
+        "name": "Cosmopoli-gin cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537"
     },
     {
-        "name": "Classic Gin Bundle",
-        "src": null,
-        "url": null
+        "name": "Gin Star Martini cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790"
+    },
+    {
+        "name": "Gin-a-colada cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852"
     }
   ],
-  'Crackers': [
-    {
-        "name": "Classic",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Pink",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Bundle",
-        "src": null,
-        "url": null
-    }
-  ],
+
   'Advent': [
     {
         "name": "The Very Merry Gin Advent Calendar",
@@ -3288,88 +3080,88 @@ export const mockMarketPlaceItems = [
     },
     {
         "name": "Schofe’s Winter Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243"
     },
     {
         "name": "York Gin Chocolate &amp; Orange",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638"
     },
     {
         "name": "BeauFort VS Smoked Overproof Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/BeauFort_VS_Smoked_Overproof_Gin.png?v=1631264043"
     },
     {
         "name": "Porter's Tropical Old Tom Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Porters-Tropical.png?v=1629469953"
     },
     {
         "name": "Pink Marmalade Gin - Sophie Ellis Bextor Edition",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Discovery-GinSophieEB.png?v=1625572201"
     },
     {
         "name": "Isle of Bute Oyster Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/IsleofBute-OysterGin.png?v=1624372119"
     },
     {
         "name": "Corner 53 Lemon Meringue Pie Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/LMP-DiscoveryGin.png?v=1621514857"
     },
     {
         "name": "Comte De Grasse 44°N Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/44_ComteDeGrasse.png?v=1619093811"
     },
     {
         "name": "Cherry Moon Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Moon-50CL.png?v=1591955741"
     },
     {
         "name": "The Apiarist Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Apiarist.png?v=1619086003"
     },
     {
         "name": "Campfire Cask Aged Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/campfire.png?v=1619177305"
     },
     {
         "name": "Victory Pink Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/VictoryGin.png?v=1619085974"
     },
     {
         "name": "Schofe's Christmas Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/schofe.png?v=1619085928"
     },
     {
         "name": "Marie Jeanne's Pink Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Marie-Jeanne.png?v=1597938882"
     },
     {
         "name": "Fox's Kiln Distillery Blood Orange Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/Fox-kiln.png?v=1595415355"
     },
     {
         "name": "Purity Old Tom Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/purity-discovery_1.png?v=1593014179"
     },
     {
         "name": "Three Wrens Apple Crumble Gin",
-        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167",
-        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167"
+        "src": https://cdnshopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167",
+        "url": https://cdnshopify.com/s/files/1/0094/7319/6090/products/THREE-WRENS-APPLE-CRUMBLE-GIN-ABV-40-70CL.png?v=1591881167"
     },
     {
         "name": "The Perfect Advent Pairings Bundle",
@@ -4463,162 +4255,51 @@ export const mockMarketPlaceItems = [
     },
     // syrups,
     {
-        "name": "Craft Gin Club<div class=\"uppercase\">Mixology Bundle</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Gin &amp; Stormy</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Race Car Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Peach Gin Iced Tea Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Savanna Spritz Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Pink Gin Spritz Cocktail Syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Cosmopoli-gin cocktail syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Gin Star Martini cocktail syrup</div>",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Craft Gin Club<div class=\"uppercase\">Gin-a-colada cocktail syrup</div>",
-        "src": null,
-        "url": null
-    },
-    // Gift Guide,
-    {
-        "name": "The Very Merry Gin Advent Calendar",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "My Craft Gin",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "The Very Merry Gin &amp; Tonic Cracker Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Gift Cards",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Gin &amp; Stormy Cocktail Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Gift<br>Memberships",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "The Perfect Advent Pairings Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "SCHOFE'S WINTER GIN",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Ultimate Christmas Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Explorers' Bundle",
-        "src": null,
-        "url": null
-    },
-    {
-        "name": "Ultimate Gin of the Month Gin Bundle",
-        "src": null,
-        "url": null
-    },
-    {
         "name": "Mixology Bundle",
-        "src": null,
-        "url": null
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980"
     },
     {
-        "name": "Bestsellers Gin Bundle",
-        "src": null,
-        "url": null
+        "name": "Gin &amp; Stormy",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742"
     },
     {
-        "name": "WOODEN GIN GIFT BOX",
-        "src": null,
-        "url": null
+        "name": "Race Car Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973"
     },
     {
-        "name": "Race Car Cocktail Bundle",
-        "src": null,
-        "url": null
+        "name": "Peach Gin Iced Tea Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877"
     },
     {
-        "name": "Christmas Day Bundle",
-        "src": null,
-        "url": null
+        "name": "Savanna Spritz Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289"
     },
     {
-        "name": "Gin &amp; Tonic with a pop",
-        "src": null,
-        "url": null
+        "name": "Pink Gin Spritz Cocktail Syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455"
     },
     {
-        "name": "Ultimate Discovery Gin Bundle",
-        "src": null,
-        "url": null
+        "name": "Cosmopoli-gin cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537"
     },
     {
-        "name": "Classic Gin Bundle",
-        "src": null,
-        "url": null
-    },
-    //  Crackers,
-    {
-        "name": "Classic",
-        "src": null,
-        "url": null
+        "name": "Gin Star Martini cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790"
     },
     {
-        "name": "Pink",
-        "src": null,
-        "url": null
+        "name": "Gin-a-colada cocktail syrup",
+        "src": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852",
+        "url": "//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852"
     },
-    {
-        "name": "Bundle",
-        "src": null,
-        "url": null
-    },
+
     {
     "name": "Advent Calendar",
     "src": "https://cdn.shopify.com/s/files/1/0094/7319/6090/t/29/assets/advent-baul-baul.svg?v=7497043818228618811",

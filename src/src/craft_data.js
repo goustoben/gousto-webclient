@@ -19,23 +19,23 @@
 // })
 
 
-const nodeList = document.querySelectorAll('.discovery-gins')
+// const nodeList = document.querySelectorAll('.discovery-gins')
 
-const allItems = []
+// const allItems = []
 
-nodeList.forEach((node) => {
-  console.log(node.querySelector('h2 div').innerHTML)
-  if (node.querySelector('.discovery-gin__image')) {
-    allItems.push(
-      {
-        name: node.querySelector('h2 div').innerHTML,
-        src: node.querySelector('.discovery-gin__image').getAttribute('src'),
-        url: node.querySelector('.discovery-gin__image').getAttribute('src'),
-      }
-    )
+// nodeList.forEach((node) => {
+//   console.log(node.querySelector('h2 div').innerHTML)
+//   if (node.querySelector('.discovery-gin__image')) {
+//     allItems.push(
+//       {
+//         name: node.querySelector('h2 div').innerHTML,
+//         src: node.querySelector('.discovery-gin__image').getAttribute('src'),
+//         url: node.querySelector('.discovery-gin__image').getAttribute('src'),
+//       }
+//     )
 
-  }
-})
+//   }
+// })
 
 
 
@@ -59,3 +59,22 @@ nodeList.forEach((node) => {
 
 
 // })
+
+
+const nodeList = document.querySelectorAll('.discovery-gin__wrapper')
+
+const allItems = []
+
+nodeList.forEach((node) => {
+  console.log(node.querySelector('h2 div').innerHTML)
+  if (node.querySelector('img')) {
+    allItems.push(
+      {
+        name: node.querySelector('h2 div').innerHTML,
+        src: node.querySelector('img').getAttribute('src'),
+        url: node.querySelector('img').getAttribute('src'),
+      }
+    )
+
+  }
+})

@@ -220,7 +220,7 @@ export default function fetchData({ query, params }, force, background, userMenu
 
     const menuResponse = await fetchMenuPromise
     const craftMenuResponse = mockMenuResponse(menuResponse)
-    dispatch(menuServiceDataReceived(MenuResponse, accessToken, userMenuVariant))
+    dispatch(menuServiceDataReceived(menuResponse, accessToken, userMenuVariant))
 
     dispatch(getBrandInfo())
     dispatch(getBrandMenuHeaders())
