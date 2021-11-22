@@ -34,7 +34,7 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
           )}
         />
       ) : (
-        'Add nourishment'
+        'Add Item'
       )}
     </span>
   )

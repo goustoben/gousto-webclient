@@ -5,7 +5,7 @@ export const getRecipeButtonProps = createSelector(getRecipeIdInBasket, (isInBas
   const buttonProps = {
     buttonClassName: isInBasket ? 'removeButton' : 'addButton',
     lineClassName: isInBasket ? 'removeButtonLine' : 'addButtonLine',
-    buttonText: isInBasket ? 'Remove' : 'Nourishment',
+    buttonText: isInBasket ? 'Remove' : 'Add Item',
   }
 
   return buttonProps

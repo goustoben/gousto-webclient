@@ -218,7 +218,7 @@ Buttons.propTypes = {
 }
 
 Buttons.defaultProps = {
-  buttonText: 'Add nourishment',
+  buttonText: 'Add Item',
   basketPostcode: '',
   isOutOfStock: false,
   surchargePerPortion: null,

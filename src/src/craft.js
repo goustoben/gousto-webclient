@@ -78,7 +78,7 @@ const mockMenuResponse = (response) => {
 }
 
 const mockRecipes = (recipes) => {
-  const nourishments = mockCraftData['all nourishments']
+  const nourishments = mockCraftData['All Items']
   recipes.forEach((recipe) => {
     const nourishment = uuidToListItem(recipe.id, nourishments)
     recipe.attributes.name = nourishment.name

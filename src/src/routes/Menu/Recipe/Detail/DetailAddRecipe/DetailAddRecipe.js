@@ -43,7 +43,7 @@ DetailAddRecipe.propTypes = {
 }
 
 DetailAddRecipe.defaultProps = {
-  buttonText: 'Add nourishment',
+  buttonText: 'Add Item',
   isOutOfStock: false,
   closeOnAdd: false,
 }
