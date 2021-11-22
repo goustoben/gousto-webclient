@@ -1,4 +1,4 @@
-@value White, BlueBase, BlueBaseDarker from 'styles/colors.css';
+@value White, BlueBase, BlueBaseDarker, CraftYellow from 'styles/colors.css';
 @value ScreenSMMin,ScreenMDMin,ScreenLGMin from 'styles/screenSizes.css';
 
 .ctaWrapper {
@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: #F4D34E;
+  background-color: CraftYellow;
 }
 
 .ctaInnerContainer {
@@ -14,7 +14,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #F4D34E;
+  background-color: CraftYellow;
   @media ScreenSMMin {
     position: absolute;
     width: 90%;
@@ -29,16 +29,16 @@
 }
 
 .ctaButton {
-  border: 1px solid #F4D34E !important;
+  border: 1px solid CraftYellow !important;
   border-radius: 3px;
   color: White;
-  background-color: #F4D34E !important;
+  background-color: CraftYellow !important;
   padding: 0.5rem 2rem;
   margin-bottom: 1rem;
   font-weight: bold;
   font-size: 16px;
   @media ScreenSMMin {
-    color: #F4D34E;
+    color: CraftYellow;
     background-color: White;
     padding: 0.5rem;
     width: 70%;

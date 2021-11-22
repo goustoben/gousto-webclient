@@ -1,4 +1,4 @@
-@value White, Pomegranate, Blackberry from 'styles/colors.css';
+@value White, Pomegranate, Blackberry, CraftYellow from 'styles/colors.css';
 @value MainFontColor White;
 @value ScreenXSMax, ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
@@ -146,7 +146,7 @@ span:target .overlay {
   color: MainFontColor !important;
   border: 1px solid MainFontColor;
   border-radius: 3px;
-  background-color: #F4D34E;
+  background-color: CraftYellow;
   overflow: hidden;
   transition: width 0.2s linear;
   height: 35px;

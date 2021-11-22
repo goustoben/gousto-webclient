@@ -87,7 +87,7 @@
 
 .title {
   margin-bottom: 0.5rem;
-  color: #343579 !important;
+  color: Blackberry !important;
 
   @media BreakpointFromMedium {
     margin-bottom: 1rem;

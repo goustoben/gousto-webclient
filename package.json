@@ -1,0 +1,26 @@
+{
+  "name": "gousto-webclient",
+  "version": "1.0.0",
+  "description": "Gousto Web Client ====",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gousto/gousto-webclient.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gousto/gousto-webclient/issues"
+  },
+  "homepage": "https://github.com/Gousto/gousto-webclient#readme"
+}
