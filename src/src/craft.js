@@ -1,4 +1,4 @@
-import { craftCollections, mockCraftData, mockOnlineShopItems } from './mockCraftData'
+import { craftCollections, mockCraftData, mockMarketPlaceItems } from './mockCraftData'
 
 const strToInt = (string) => {
   const bytes = []
@@ -90,11 +90,11 @@ const mockRecipes = (recipes) => {
 
 const mockProducts = (products) => {
   products.forEach((product) => {
-    const onlineShopItem = uuidToListItem(product.id, mockOnlineShopItems)
-    product.title = onlineShopItem.name
+    const marketPlaceItem = uuidToListItem(product.id, mockMarketPlaceItems)
+    product.title = marketPlaceItem.name
     for (const [_size, obj] of Object.entries(product.images)) {
-      obj.src = onlineShopItem.src
-      obj.url = onlineShopItem.url
+      obj.src = marketPlaceItem.src
+      obj.url = marketPlaceItem.url
     }
     console.log(product)
   })

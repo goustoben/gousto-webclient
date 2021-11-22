@@ -817,5 +817,3 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0232/9618/0301/products/MicrosoftTeams-image_1_557f07f2-f895-43ea-a421-dca89d75c48e_900x.jpg?v=1634836764',
   },
 ]
-
-
