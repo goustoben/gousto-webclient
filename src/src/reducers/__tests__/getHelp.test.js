@@ -496,6 +496,62 @@ describe('getHelp reducer', () => {
     })
   })
 
+  describe('given an action with type GET_HELP_LOAD_SHIPPING_ADDRESSES is received', () => {
+    const ADDRESSES = [
+      {
+        id: '1',
+        line1: 'Flat 6',
+        line2: '8 Some Road',
+        line3: '',
+        name: 'New Home',
+        postcode: 'W5 3PB',
+        town: 'London',
+        irrelevanField: 'some-value',
+      },
+      {
+        id: '2',
+        line1: 'Flat 7',
+        line2: '9 Some Road',
+        line3: '',
+        name: 'New Home',
+        postcode: 'W5 3PB',
+        town: 'London',
+        irrelevanField: 'some-value',
+      },
+    ]
+
+    beforeEach(() => {
+      newState = getHelp(getHelpInitialState, {
+        type: actionTypes.GET_HELP_LOAD_SHIPPING_ADDRESSES,
+        payload: ADDRESSES,
+      })
+    })
+
+    test('the new state has the relevant addresses fields', () => {
+      const FILTERED_ADDRESSES = [
+        {
+          id: '1',
+          line1: 'Flat 6',
+          line2: '8 Some Road',
+          line3: '',
+          name: 'New Home',
+          postcode: 'W5 3PB',
+          town: 'London',
+        },
+        {
+          id: '2',
+          line1: 'Flat 7',
+          line2: '9 Some Road',
+          line3: '',
+          name: 'New Home',
+          postcode: 'W5 3PB',
+          town: 'London',
+        },
+      ]
+      expect(newState.get('shippingAddresses').toJS()).toEqual(FILTERED_ADDRESSES)
+    })
+  })
+
   describe('given an unknown action type is received', () => {
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {
