@@ -25,6 +25,9 @@ const propTypes = {
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
   numberOfIngredients: PropTypes.number.isRequired,
+  numOrdersChecked: PropTypes.number.isRequired,
+  numOrdersCompensated: PropTypes.number.isRequired,
+  isSsrRepetitiveIssues: PropTypes.bool.isRequired,
   trackIngredientsGetInTouchClick: PropTypes.func.isRequired,
 }
 
@@ -37,12 +40,24 @@ const Refund = ({
   isAnyPending,
   isMultiComplaints,
   numberOfIngredients,
+  numOrdersChecked,
+  numOrdersCompensated,
+  isSsrRepetitiveIssues,
   trackIngredientsGetInTouchClick
 }) => {
-  const headingText = `We're so sorry to hear about the issue with your ingredient${numberOfIngredients > 1 ? 's' : ''}`
+  const isExperimentAndHasIssuesInCheckedBoxes = isSsrRepetitiveIssues && numOrdersCompensated > 0
+  const headingText = [
+    "We're so sorry to hear about your ",
+    (numberOfIngredients > 1 ? `${numberOfIngredients} ` : ''),
+    'ingredient issue',
+    (numberOfIngredients > 1 ? 's' : '')
+  ].join('')
+
   const refundCreditText = isMultiComplaints ? (
     <p className={css.confirmationBody}>
-      We would like to offer you an additional
+      {isExperimentAndHasIssuesInCheckedBoxes ? 'we’d' : 'We would'}
+      {' '}
+      like to offer you an additional
       {' '}
       <strong className={css.confirmationBodyAmount}>
         £
@@ -56,7 +71,9 @@ const Refund = ({
     </p>
   ) : (
     <p className={css.confirmationBody}>
-      We would like to give you
+      {isExperimentAndHasIssuesInCheckedBoxes ? 'we’d' : 'We would'}
+      {' '}
+      like to give you
       {' '}
       <span className={css.confirmationBodyAmount}>
         £
@@ -65,9 +82,54 @@ const Refund = ({
         credit
       </span>
       {' '}
-      off your next order as an apology for the issues with:
+      off your next order as an apology for
+      {isExperimentAndHasIssuesInCheckedBoxes ? '' : ' the issues with'}
+      :
     </p>
   )
+
+  const showPersonalisedText = () => {
+    if (numOrdersChecked === 1 && numOrdersCompensated === 1) {
+      return (
+        <p>
+          Once again, we’re sorry that you’ve had issues with your previous box too.
+          We appreciate how inconvenient this is, so
+          {' '}
+          {refundCreditText}
+        </p>
+      )
+    }
+
+    if (numOrdersChecked > 1 && numOrdersChecked === numOrdersCompensated) {
+      return (
+        <p>
+          Once again, we’re sorry that all of your last
+          {' '}
+          {numOrdersChecked}
+          {' '}
+          boxes have had issues. We appreciate how inconvenient this is, so
+          {' '}
+          {refundCreditText}
+        </p>
+      )
+    }
+
+    return (
+      <p>
+        Once again, we’re sorry that
+        {' '}
+        {numOrdersCompensated}
+        {' '}
+        of your last
+        {' '}
+        {numOrdersChecked}
+        {' '}
+        boxes have had issues. We appreciate how inconvenient this is, so
+        {' '}
+        {refundCreditText}
+      </p>
+    )
+  }
 
   const getHelpLayoutbody = (isAnyPending || isAnyError)
     ? (
@@ -77,7 +139,9 @@ const Refund = ({
     )
     : (
       <Fragment>
-        {refundCreditText}
+        {isExperimentAndHasIssuesInCheckedBoxes
+          ? showPersonalisedText()
+          : refundCreditText}
         <IngredientsListContainer />
       </Fragment>
     )

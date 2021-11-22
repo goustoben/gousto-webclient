@@ -6,7 +6,10 @@ import {
   getIsError,
   getPending,
   getSelectedIngredients,
+  getNumOrdersChecked,
+  getNumOrdersCompensated,
 } from '../selectors/selectors'
+import { getIsSsrRepetitiveIssues } from '../../../selectors/features'
 import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
 import { trackIngredientsGetInTouchClick } from '../actions/getHelp'
 import { createComplaint } from '../actions/createComplaint'
@@ -24,6 +27,9 @@ const mapStateToProps = (state) => ({
   isAnyError: getIsError(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
   isMultiComplaints: getIsMultiComplaints(state),
   numberOfIngredients: Object.keys(getSelectedIngredients(state)).length,
+  isSsrRepetitiveIssues: getIsSsrRepetitiveIssues(state),
+  numOrdersChecked: getNumOrdersChecked(state),
+  numOrdersCompensated: getNumOrdersCompensated(state),
 })
 
 const RefundContainer = connect(mapStateToProps, {
