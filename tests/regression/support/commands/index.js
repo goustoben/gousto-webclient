@@ -275,3 +275,6 @@ Cypress.Commands.add('serverWithEmulatedPaths', (...paths) => {
 
   axios.put(`${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/_config/emulated-paths`, paths).catch(console.error)
 })
+Cypress.Commands.add('resetEmulatedPaths', (...paths) => {
+  axios.delete(`${Cypress.env('GOUSTO_SERVICE_EMULATION_BASE_URL')}/_config/emulated-paths`).catch(console.error)
+})

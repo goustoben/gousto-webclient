@@ -38,5 +38,7 @@ describe('Given the customer is logged in', () => {
       cy.get('[data-testing="getHelpRecipe"]').eq(3).contains('Charlie Bigham\'s Moussaka')
     })
   })
+
+  after(() => cy.resetEmulatedPaths())
 })
 

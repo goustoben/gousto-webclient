@@ -63,6 +63,8 @@ describe('Unsubscribing from marketing emails', () => {
       })
     })
   })
+
+  after(() => cy.resetEmulatedPaths())
 })
 
 function unsubscribeApiPathFor({authUserId, marketingType}) {

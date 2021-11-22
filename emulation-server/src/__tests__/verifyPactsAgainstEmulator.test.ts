@@ -26,3 +26,4 @@ test('Verify pacts against emulator', async () => {
     console.log(resultStrings.join())
 });
 
+afterAll(() => axios.delete(`${emulationServerBaseUrl}/_config/emulated-paths`))
