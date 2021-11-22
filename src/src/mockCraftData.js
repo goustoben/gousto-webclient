@@ -2831,8 +2831,8 @@ export const mockCraftData = {
   advent: [
     {
       name: 'The Very Merry Gin Advent Calendar',
-      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/t/29/assets/best-buy-award-badge-white.png?v=880311522067688652',
-      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/t/29/assets/best-buy-award-badge-white.png?v=880311522067688652',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766',
     },
   ],
   events: [
@@ -4296,8 +4296,8 @@ export const mockMarketPlaceItems = [
 
   {
     name: 'Advent Calendar',
-    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/t/29/assets/advent-baul-baul.svg?v=7497043818228618811',
-    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/t/29/assets/advent-baul-baul.svg?v=7497043818228618811',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766',
   },
   {
     name: 'Flavoured Gins G&T Tasting',
