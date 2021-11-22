@@ -1,18 +1,31 @@
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
+import type { Dispatch } from 'react'
 import { filtersCollectionChange } from 'actions/filters'
 import { useDisplayedCollections } from './useDisplayedCollections'
 import { useLocation } from './useLocation'
 
-export const useChangeCollectionById = () => {
+type ChangeCollectionById = {
+  type: string
+  collectionName: string
+  collectionId: string
+  trackingData: {
+    actionType: string
+    collectionId: string
+  }
+}
+
+export const useChangeCollectionById = (): Function => {
   const dispatch = useDispatch()
   const collections = useDisplayedCollections()
   const prevLoc = useLocation()
 
-  return collectionId => {
+  return (collectionId: string): Dispatch<ChangeCollectionById> | undefined => {
     const query = { ...prevLoc.query }
 
-    const matchingCollection = collections.find(collection => collection.get('id') === collectionId)
+    const matchingCollection = collections.find(
+      (collection) => collection !== undefined && collection.get('id') === collectionId
+    )
 
     if (!matchingCollection) {
       return

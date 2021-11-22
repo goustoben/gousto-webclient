@@ -235,6 +235,7 @@ module.exports = {
   rules: ruleDefinitions,
   env: {
     jasmine: true,
+    'jest/globals': true
   },
   "globals": {
     "document": true,
