@@ -25,7 +25,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Explorer_Xmas_1_500x500.jpg?v=1632496863',
   },
   {
-    name: 'Gin &amp; Tonic With a Pop!',
+    name: 'Gin & Tonic With a Pop!',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GT-pop-shop3_500x500.jpg?v=1606485839',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GT-pop-shop3_500x500.jpg?v=1606485839',
   },
@@ -45,7 +45,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-pink_50x50.jpg?v=1603707669',
   },
   {
-    name: 'Four Very Merry Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
   },
@@ -70,7 +70,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Cocktail_Bundle_50x50.jpg?v=1635502261',
   },
   {
-    name: "Schofe's Winter G&amp;T Bundle",
+    name: "Schofe's Winter G&T Bundle",
     src: 'https://cdn.shopify.com/s/files/∏1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356',
   },
@@ -80,7 +80,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Mad_Owl_GOTM_50x50.jpg?v=1634906680',
   },
   {
-    name: 'Gin &amp; Stormy Cocktail Bundle',
+    name: 'Gin & Stormy Cocktail Bundle',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
   },
@@ -170,12 +170,12 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Wooden_Box_Bundle_Citrus_50x50.jpg?v=1634040038',
   },
   {
-    name: 'Ludlow Seville Orange &amp; Cassia Gin',
+    name: 'Ludlow Seville Orange & Cassia Gin',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Ludlow_Seville-Orange-Cassia_Gin_50x50.png?v=1634896118',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Ludlow_Seville-Orange-Cassia_Gin_50x50.png?v=1634896118',
   },
   {
-    name: 'Otterbeck Distillery Cotton Gin Strawberry &amp; Pinkpeppercorn',
+    name: 'Otterbeck Distillery Cotton Gin Strawberry & Pinkpeppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Otterbeck-Strawberry_50x50.png?v=1629968814',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Otterbeck-Strawberry_50x50.png?v=1629968814',
   },
@@ -185,7 +185,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AnnoSloeGin_50x50.png?v=1606486127',
   },
   {
-    name: "Tarquin's Pink Grapefruit &amp; Elderflower Gin",
+    name: "Tarquin's Pink Grapefruit & Elderflower Gin",
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tarquins-PinkGrapefruit_50x50.png?v=1615202096',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tarquins-PinkGrapefruit_50x50.png?v=1615202096',
   },
@@ -195,7 +195,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STAR_MARTINI_BUNDLE-shop-New_50x50.jpg?v=1633365450',
   },
   {
-    name: 'Sloe Gin &amp; Elderflower Collins Cocktail Bundle',
+    name: 'Sloe Gin & Elderflower Collins Cocktail Bundle',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/bundle-sloe-shop_50x50.jpg?v=1605535432',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/bundle-sloe-shop_50x50.jpg?v=1605535432',
   },
@@ -225,7 +225,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Sloe_Gin_Negroni_Bundle_1_50x50.jpg?v=1633511044',
   },
   {
-    name: 'Four Very Merry Pink Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Pink Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
   },
@@ -241,7 +241,7 @@ const allItems = [
     url: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243',
   },
   {
-    name: 'York Gin Chocolate &amp; Orange',
+    name: 'York Gin Chocolate & Orange',
     src: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638',
     url: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638',
   },
@@ -396,17 +396,17 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2_50x50.jpg?v=1635343877',
   },
   {
-    name: 'Gin &amp; Stormy',
+    name: 'Gin & Stormy',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
   },
   {
-    name: 'Calyx Drinks Apple &amp; Hibiscus',
+    name: 'Calyx Drinks Apple & Hibiscus',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Calyx_Hibiscus_Apple_50x50.png?v=1635497932',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Calyx_Hibiscus_Apple_50x50.png?v=1635497932',
   },
   {
-    name: 'Dash Soda Rhubarb &amp; Ginger',
+    name: 'Dash Soda Rhubarb & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dash_Rhubarb_Ginger_50x50.png?v=1635498004',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dash_Rhubarb_Ginger_50x50.png?v=1635498004',
   },
@@ -441,12 +441,12 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1_50x50.jpg?v=1637146980',
   },
   {
-    name: 'Lixir Blood Orange &amp; Cinnamon',
+    name: 'Lixir Blood Orange & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-BloodOrange_50x50.png?v=1622814949',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-BloodOrange_50x50.png?v=1622814949',
   },
   {
-    name: 'Lixir Elderflower &amp; Lemon',
+    name: 'Lixir Elderflower & Lemon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-Lemon_50x50.png?v=1622814967',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-Lemon_50x50.png?v=1622814967',
   },
@@ -456,7 +456,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-light_a6560e05-c117-4974-a87d-34fd1cd7c3de_50x50.jpg?v=1561720455',
   },
   {
-    name: 'Lixir Rhubarb &amp; Ginger',
+    name: 'Lixir Rhubarb & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-rhubarb_50x50.jpg?v=1561720532',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-rhubarb_50x50.jpg?v=1561720532',
   },
@@ -481,7 +481,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Mandarino_Polara_50x50.png?v=1632747206',
   },
   {
-    name: 'Bibite Polara Lemon &amp; Ginger',
+    name: 'Bibite Polara Lemon & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Lemon_50x50.png?v=1622813605',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Lemon_50x50.png?v=1622813605',
   },
@@ -516,12 +516,12 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Spuma_50x50.png?v=1622813655',
   },
   {
-    name: 'Soho Juice Blood Orange, Raspberry &amp; Ginger',
+    name: 'Soho Juice Blood Orange, Raspberry & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-BloodOrange_50x50.png?v=1621851918',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-BloodOrange_50x50.png?v=1621851918',
   },
   {
-    name: 'Soho Juice Apple, Honey &amp; Lemon',
+    name: 'Soho Juice Apple, Honey & Lemon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-AppleHoneyLemon_50x50.png?v=1621851997',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-AppleHoneyLemon_50x50.png?v=1621851997',
   },
@@ -581,32 +581,32 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-GARNISH_PACK_GROUP-2_500x500.jpg?v=1623839337',
   },
   {
-    name: 'Lemon &amp; Coriander',
+    name: 'Lemon & Coriander',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
   },
   {
-    name: 'Pineapple &amp; Pink Peppercorn',
+    name: 'Pineapple & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
   },
   {
-    name: 'Lime &amp; Blueberry',
+    name: 'Lime & Blueberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
   },
   {
-    name: 'Lemon &amp; Juniper',
+    name: 'Lemon & Juniper',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
   },
   {
-    name: 'Blood Orange &amp; Cardamom',
+    name: 'Blood Orange & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
   },
   {
-    name: 'Grapefruit &amp; Cranberry',
+    name: 'Grapefruit & Cranberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
   },
@@ -616,17 +616,17 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Giftpack_Bundle_50x50.jpg?v=1636643323',
   },
   {
-    name: 'Lime &amp; Cardamom',
+    name: 'Lime & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
   },
   {
-    name: 'Orange &amp; Cinnamon',
+    name: 'Orange & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
   },
   {
-    name: 'Lemon &amp; Raspberry',
+    name: 'Lemon & Raspberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
   },
@@ -666,27 +666,27 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-grapefruit_garnish_pack_1_50x50.jpg?v=1623774508',
   },
   {
-    name: 'Grapefruit &amp; Cardamom',
+    name: 'Grapefruit & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
   },
   {
-    name: 'Orange &amp; Black Peppercorn',
+    name: 'Orange & Black Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
   },
   {
-    name: 'Grapefruit &amp; Cinnamon',
+    name: 'Grapefruit & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
   },
   {
-    name: 'Grapefruit &amp; Pink Peppercorn',
+    name: 'Grapefruit & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
   },
   {
-    name: 'Lime &amp; Rosebuds',
+    name: 'Lime & Rosebuds',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
   },
@@ -701,32 +701,32 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-GARNISH_PACK_GROUP-2_500x500.jpg?v=1623839337',
   },
   {
-    name: 'Lemon &amp; Coriander',
+    name: 'Lemon & Coriander',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
   },
   {
-    name: 'Pineapple &amp; Pink Peppercorn',
+    name: 'Pineapple & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
   },
   {
-    name: 'Lime &amp; Blueberry',
+    name: 'Lime & Blueberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
   },
   {
-    name: 'Lemon &amp; Juniper',
+    name: 'Lemon & Juniper',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
   },
   {
-    name: 'Blood Orange &amp; Cardamom',
+    name: 'Blood Orange & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
   },
   {
-    name: 'Grapefruit &amp; Cranberry',
+    name: 'Grapefruit & Cranberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
   },
@@ -736,17 +736,17 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Giftpack_Bundle_50x50.jpg?v=1636643323',
   },
   {
-    name: 'Lime &amp; Cardamom',
+    name: 'Lime & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
   },
   {
-    name: 'Orange &amp; Cinnamon',
+    name: 'Orange & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
   },
   {
-    name: 'Lemon &amp; Raspberry',
+    name: 'Lemon & Raspberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
   },
@@ -786,27 +786,27 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-grapefruit_garnish_pack_1_50x50.jpg?v=1623774508',
   },
   {
-    name: 'Grapefruit &amp; Cardamom',
+    name: 'Grapefruit & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
   },
   {
-    name: 'Orange &amp; Black Peppercorn',
+    name: 'Orange & Black Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
   },
   {
-    name: 'Grapefruit &amp; Cinnamon',
+    name: 'Grapefruit & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
   },
   {
-    name: 'Grapefruit &amp; Pink Peppercorn',
+    name: 'Grapefruit & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
   },
   {
-    name: 'Lime &amp; Rosebuds',
+    name: 'Lime & Rosebuds',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
   },
@@ -821,12 +821,12 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tonic_and_Garnish_Bundle_500x500.jpg?v=1633097199',
   },
   {
-    name: 'Countdown to Christmas G&amp;T Tasting',
+    name: 'Countdown to Christmas G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_50x50.jpg?v=1635346027',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_50x50.jpg?v=1635346027',
   },
   {
-    name: 'Four Very Merry Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
   },
@@ -851,7 +851,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-classic_50x50.jpg?v=1603707906',
   },
   {
-    name: 'Four Very Merry Pink Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Pink Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
   },
@@ -896,7 +896,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Wheel_Poster_1_50x50.jpg?v=1632739091',
   },
   {
-    name: 'Flavoured Gins G&amp;T Tasting',
+    name: 'Flavoured Gins G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_50x50.jpg?v=1636712572',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_50x50.jpg?v=1636712572',
   },
@@ -981,7 +981,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NutsFor-Paprika_50x50.jpg?v=1612190508',
   },
   {
-    name: 'Eat Real Chilli &amp; Lemon',
+    name: 'Eat Real Chilli & Lemon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Eat_Real_Chill_Lemon_50x50.jpg?v=1634898020',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Eat_Real_Chill_Lemon_50x50.jpg?v=1634898020',
   },
@@ -1001,7 +1001,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gnaw_Irish_Cream_50x50.jpg?v=1632747384',
   },
   {
-    name: 'Love Corn Cheese &amp; Onion',
+    name: 'Love Corn Cheese & Onion',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Love-Corn_50x50.jpg?v=1629968977',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Love-Corn_50x50.jpg?v=1629968977',
   },
@@ -1011,7 +1011,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Munchkings2_50x50.jpg?v=1629992671',
   },
   {
-    name: 'Wild Cassava Sweet Chilli &amp; Onion',
+    name: 'Wild Cassava Sweet Chilli & Onion',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/WildCassava-SweetChilli_50x50.jpg?v=1626793567',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/WildCassava-SweetChilli_50x50.jpg?v=1626793567',
   },
@@ -1021,7 +1021,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/UncleSaba-SweetLentilPoppadoms_50x50.jpg?v=1626793498',
   },
   {
-    name: 'The Dormen Sweet Chilli Nuts &amp; Fruit',
+    name: 'The Dormen Sweet Chilli Nuts & Fruit',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dormen-ChilliNuts_Fruit_50x50.jpg?v=1626793526',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dormen-ChilliNuts_Fruit_50x50.jpg?v=1626793526',
   },
@@ -1051,12 +1051,12 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PurelyPlantain-WildGarlic_50x50.jpg?v=1619519098',
   },
   {
-    name: "Olly's Olives Chilli &amp; Rosemary",
+    name: "Olly's Olives Chilli & Rosemary",
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/oliveschilliandrosemary_50x50.jpg?v=1589792370',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/oliveschilliandrosemary_50x50.jpg?v=1589792370',
   },
   {
-    name: 'The British Popcorn Co. Caramel &amp; Espresso Popcorn',
+    name: 'The British Popcorn Co. Caramel & Espresso Popcorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Caramel_50x50.jpg?v=1622038661',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Caramel_50x50.jpg?v=1622038661',
   },
@@ -1081,7 +1081,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Chikas-S_V_50x50.jpg?v=1614791980',
   },
   {
-    name: 'Copperpot Pecan &amp; Maple',
+    name: 'Copperpot Pecan & Maple',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Copperpot-MapleSyrup_Pecan_50x50.jpg?v=1625142523',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Copperpot-MapleSyrup_Pecan_50x50.jpg?v=1625142523',
   },
@@ -1091,7 +1091,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tony-Hazlenut_1_50x50.jpg?v=1621513545',
   },
   {
-    name: 'BEPPS Salt &amp; Black Pepper Popped Crisps',
+    name: 'BEPPS Salt & Black Pepper Popped Crisps',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Bepps-Salt_Pepper_50x50.jpg?v=1622039788',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Bepps-Salt_Pepper_50x50.jpg?v=1622039788',
   },
@@ -1126,7 +1126,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Firetree_Vanuatu_50x50.jpg?v=1604487613',
   },
   {
-    name: 'The British Popcorn Co. Sour Cream &amp; Black Pepper Popcorn',
+    name: 'The British Popcorn Co. Sour Cream & Black Pepper Popcorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-SourCream_50x50.jpg?v=1622038684',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-SourCream_50x50.jpg?v=1622038684',
   },
@@ -1136,7 +1136,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Firetree_Solomon69_50x50.jpg?v=1604488229',
   },
   {
-    name: 'The British Popcorn Co. Sweet &amp; Salty Popcorn',
+    name: 'The British Popcorn Co. Sweet & Salty Popcorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Sweet_Salt_50x50.jpg?v=1622038695',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Sweet_Salt_50x50.jpg?v=1622038695',
   },
@@ -1236,12 +1236,12 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Cocktail_Bundle_50x50.jpg?v=1635502261',
   },
   {
-    name: 'Gin &amp; Stormy Cocktail Bundle',
+    name: 'Gin & Stormy Cocktail Bundle',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
   },
   {
-    name: 'Gin &amp; Stormy',
+    name: 'Gin & Stormy',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
   },
@@ -1256,7 +1256,7 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Pink_Sloe_Gin_Spritz_Bundle_50x50.jpg?v=1636648670',
   },
   {
-    name: 'Gin &amp; Stormy',
+    name: 'Gin & Stormy',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin-Stormy-Mini_50x50.jpg?v=1634897770',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin-Stormy-Mini_50x50.jpg?v=1634897770',
   },
@@ -1413,48 +1413,48 @@ const allItems = [
   // syrups,
   {
     name: 'Mixology Bundle',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
   },
   {
-    name: 'Gin &amp; Stormy',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
+    name: 'Gin & Stormy',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
   },
   {
     name: 'Race Car Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
   },
   {
     name: 'Peach Gin Iced Tea Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
   },
   {
     name: 'Savanna Spritz Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
   },
   {
     name: 'Pink Gin Spritz Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
   },
   {
     name: 'Cosmopoli-gin cocktail syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
   },
   {
     name: 'Gin Star Martini cocktail syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
   },
   {
     name: 'Gin-a-colada cocktail syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
   },
   // Gift Guide,
 
@@ -1480,12 +1480,12 @@ const allItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/t/29/assets/advent-baul-baul.svg?v=7497043818228618811',
   },
   {
-    name: 'Flavoured Gins G&amp;T Tasting',
+    name: 'Flavoured Gins G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_500x500.jpg?v=1636712572',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_500x500.jpg?v=1636712572',
   },
   {
-    name: 'Countdown to Christmas G&amp;T Tasting',
+    name: 'Countdown to Christmas G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_500x500.jpg?v=1635346027',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_500x500.jpg?v=1635346027',
   },
@@ -1504,7 +1504,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Explorer_Xmas_1_500x500.jpg?v=1632496863',
     },
     {
-      name: 'Gin &amp; Tonic With a Pop!',
+      name: 'Gin & Tonic With a Pop!',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GT-pop-shop3_500x500.jpg?v=1606485839',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GT-pop-shop3_500x500.jpg?v=1606485839',
     },
@@ -1524,7 +1524,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-pink_50x50.jpg?v=1603707669',
     },
     {
-      name: 'Four Very Merry Gin &amp; Tonic Crackers',
+      name: 'Four Very Merry Gin & Tonic Crackers',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
     },
@@ -1549,7 +1549,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Cocktail_Bundle_50x50.jpg?v=1635502261',
     },
     {
-      name: "Schofe's Winter G&amp;T Bundle",
+      name: "Schofe's Winter G&T Bundle",
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356',
     },
@@ -1559,7 +1559,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Mad_Owl_GOTM_50x50.jpg?v=1634906680',
     },
     {
-      name: 'Gin &amp; Stormy Cocktail Bundle',
+      name: 'Gin & Stormy Cocktail Bundle',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
     },
@@ -1649,12 +1649,12 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Wooden_Box_Bundle_Citrus_50x50.jpg?v=1634040038',
     },
     {
-      name: 'Ludlow Seville Orange &amp; Cassia Gin',
+      name: 'Ludlow Seville Orange & Cassia Gin',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Ludlow_Seville-Orange-Cassia_Gin_50x50.png?v=1634896118',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Ludlow_Seville-Orange-Cassia_Gin_50x50.png?v=1634896118',
     },
     {
-      name: 'Otterbeck Distillery Cotton Gin Strawberry &amp; Pinkpeppercorn',
+      name: 'Otterbeck Distillery Cotton Gin Strawberry & Pinkpeppercorn',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Otterbeck-Strawberry_50x50.png?v=1629968814',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Otterbeck-Strawberry_50x50.png?v=1629968814',
     },
@@ -1664,7 +1664,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AnnoSloeGin_50x50.png?v=1606486127',
     },
     {
-      name: "Tarquin's Pink Grapefruit &amp; Elderflower Gin",
+      name: "Tarquin's Pink Grapefruit & Elderflower Gin",
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tarquins-PinkGrapefruit_50x50.png?v=1615202096',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tarquins-PinkGrapefruit_50x50.png?v=1615202096',
     },
@@ -1674,7 +1674,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STAR_MARTINI_BUNDLE-shop-New_50x50.jpg?v=1633365450',
     },
     {
-      name: 'Sloe Gin &amp; Elderflower Collins Cocktail Bundle',
+      name: 'Sloe Gin & Elderflower Collins Cocktail Bundle',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/bundle-sloe-shop_50x50.jpg?v=1605535432',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/bundle-sloe-shop_50x50.jpg?v=1605535432',
     },
@@ -1704,7 +1704,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Sloe_Gin_Negroni_Bundle_1_50x50.jpg?v=1633511044',
     },
     {
-      name: 'Four Very Merry Pink Gin &amp; Tonic Crackers',
+      name: 'Four Very Merry Pink Gin & Tonic Crackers',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
     },
@@ -1721,7 +1721,7 @@ export const mockCraftData = {
       url: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243',
     },
     {
-      name: 'York Gin Chocolate &amp; Orange',
+      name: 'York Gin Chocolate & Orange',
       src: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638',
       url: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638',
     },
@@ -1878,17 +1878,17 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2_50x50.jpg?v=1635343877',
     },
     {
-      name: 'Gin &amp; Stormy',
+      name: 'Gin & Stormy',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
     },
     {
-      name: 'Calyx Drinks Apple &amp; Hibiscus',
+      name: 'Calyx Drinks Apple & Hibiscus',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Calyx_Hibiscus_Apple_50x50.png?v=1635497932',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Calyx_Hibiscus_Apple_50x50.png?v=1635497932',
     },
     {
-      name: 'Dash Soda Rhubarb &amp; Ginger',
+      name: 'Dash Soda Rhubarb & Ginger',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dash_Rhubarb_Ginger_50x50.png?v=1635498004',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dash_Rhubarb_Ginger_50x50.png?v=1635498004',
     },
@@ -1923,12 +1923,12 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1_50x50.jpg?v=1637146980',
     },
     {
-      name: 'Lixir Blood Orange &amp; Cinnamon',
+      name: 'Lixir Blood Orange & Cinnamon',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-BloodOrange_50x50.png?v=1622814949',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-BloodOrange_50x50.png?v=1622814949',
     },
     {
-      name: 'Lixir Elderflower &amp; Lemon',
+      name: 'Lixir Elderflower & Lemon',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-Lemon_50x50.png?v=1622814967',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-Lemon_50x50.png?v=1622814967',
     },
@@ -1938,7 +1938,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-light_a6560e05-c117-4974-a87d-34fd1cd7c3de_50x50.jpg?v=1561720455',
     },
     {
-      name: 'Lixir Rhubarb &amp; Ginger',
+      name: 'Lixir Rhubarb & Ginger',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-rhubarb_50x50.jpg?v=1561720532',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-rhubarb_50x50.jpg?v=1561720532',
     },
@@ -1963,7 +1963,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Mandarino_Polara_50x50.png?v=1632747206',
     },
     {
-      name: 'Bibite Polara Lemon &amp; Ginger',
+      name: 'Bibite Polara Lemon & Ginger',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Lemon_50x50.png?v=1622813605',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Lemon_50x50.png?v=1622813605',
     },
@@ -1998,12 +1998,12 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Spuma_50x50.png?v=1622813655',
     },
     {
-      name: 'Soho Juice Blood Orange, Raspberry &amp; Ginger',
+      name: 'Soho Juice Blood Orange, Raspberry & Ginger',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-BloodOrange_50x50.png?v=1621851918',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-BloodOrange_50x50.png?v=1621851918',
     },
     {
-      name: 'Soho Juice Apple, Honey &amp; Lemon',
+      name: 'Soho Juice Apple, Honey & Lemon',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-AppleHoneyLemon_50x50.png?v=1621851997',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-AppleHoneyLemon_50x50.png?v=1621851997',
     },
@@ -2065,32 +2065,32 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-GARNISH_PACK_GROUP-2_500x500.jpg?v=1623839337',
     },
     {
-      name: 'Lemon &amp; Coriander',
+      name: 'Lemon & Coriander',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
     },
     {
-      name: 'Pineapple &amp; Pink Peppercorn',
+      name: 'Pineapple & Pink Peppercorn',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
     },
     {
-      name: 'Lime &amp; Blueberry',
+      name: 'Lime & Blueberry',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
     },
     {
-      name: 'Lemon &amp; Juniper',
+      name: 'Lemon & Juniper',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
     },
     {
-      name: 'Blood Orange &amp; Cardamom',
+      name: 'Blood Orange & Cardamom',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
     },
     {
-      name: 'Grapefruit &amp; Cranberry',
+      name: 'Grapefruit & Cranberry',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
     },
@@ -2100,17 +2100,17 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Giftpack_Bundle_50x50.jpg?v=1636643323',
     },
     {
-      name: 'Lime &amp; Cardamom',
+      name: 'Lime & Cardamom',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
     },
     {
-      name: 'Orange &amp; Cinnamon',
+      name: 'Orange & Cinnamon',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
     },
     {
-      name: 'Lemon &amp; Raspberry',
+      name: 'Lemon & Raspberry',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
     },
@@ -2150,27 +2150,27 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-grapefruit_garnish_pack_1_50x50.jpg?v=1623774508',
     },
     {
-      name: 'Grapefruit &amp; Cardamom',
+      name: 'Grapefruit & Cardamom',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
     },
     {
-      name: 'Orange &amp; Black Peppercorn',
+      name: 'Orange & Black Peppercorn',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
     },
     {
-      name: 'Grapefruit &amp; Cinnamon',
+      name: 'Grapefruit & Cinnamon',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
     },
     {
-      name: 'Grapefruit &amp; Pink Peppercorn',
+      name: 'Grapefruit & Pink Peppercorn',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
     },
     {
-      name: 'Lime &amp; Rosebuds',
+      name: 'Lime & Rosebuds',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
     },
@@ -2187,12 +2187,12 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tonic_and_Garnish_Bundle_500x500.jpg?v=1633097199',
     },
     {
-      name: 'Countdown to Christmas G&amp;T Tasting',
+      name: 'Countdown to Christmas G&T Tasting',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_50x50.jpg?v=1635346027',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_50x50.jpg?v=1635346027',
     },
     {
-      name: 'Four Very Merry Gin &amp; Tonic Crackers',
+      name: 'Four Very Merry Gin & Tonic Crackers',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
     },
@@ -2217,7 +2217,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-classic_50x50.jpg?v=1603707906',
     },
     {
-      name: 'Four Very Merry Pink Gin &amp; Tonic Crackers',
+      name: 'Four Very Merry Pink Gin & Tonic Crackers',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
     },
@@ -2262,7 +2262,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Wheel_Poster_1_50x50.jpg?v=1632739091',
     },
     {
-      name: 'Flavoured Gins G&amp;T Tasting',
+      name: 'Flavoured Gins G&T Tasting',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_50x50.jpg?v=1636712572',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_50x50.jpg?v=1636712572',
     },
@@ -2349,7 +2349,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NutsFor-Paprika_50x50.jpg?v=1612190508',
     },
     {
-      name: 'Eat Real Chilli &amp; Lemon',
+      name: 'Eat Real Chilli & Lemon',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Eat_Real_Chill_Lemon_50x50.jpg?v=1634898020',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Eat_Real_Chill_Lemon_50x50.jpg?v=1634898020',
     },
@@ -2369,7 +2369,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gnaw_Irish_Cream_50x50.jpg?v=1632747384',
     },
     {
-      name: 'Love Corn Cheese &amp; Onion',
+      name: 'Love Corn Cheese & Onion',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Love-Corn_50x50.jpg?v=1629968977',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Love-Corn_50x50.jpg?v=1629968977',
     },
@@ -2379,7 +2379,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Munchkings2_50x50.jpg?v=1629992671',
     },
     {
-      name: 'Wild Cassava Sweet Chilli &amp; Onion',
+      name: 'Wild Cassava Sweet Chilli & Onion',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/WildCassava-SweetChilli_50x50.jpg?v=1626793567',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/WildCassava-SweetChilli_50x50.jpg?v=1626793567',
     },
@@ -2389,7 +2389,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/UncleSaba-SweetLentilPoppadoms_50x50.jpg?v=1626793498',
     },
     {
-      name: 'The Dormen Sweet Chilli Nuts &amp; Fruit',
+      name: 'The Dormen Sweet Chilli Nuts & Fruit',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dormen-ChilliNuts_Fruit_50x50.jpg?v=1626793526',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dormen-ChilliNuts_Fruit_50x50.jpg?v=1626793526',
     },
@@ -2419,12 +2419,12 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PurelyPlantain-WildGarlic_50x50.jpg?v=1619519098',
     },
     {
-      name: "Olly's Olives Chilli &amp; Rosemary",
+      name: "Olly's Olives Chilli & Rosemary",
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/oliveschilliandrosemary_50x50.jpg?v=1589792370',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/oliveschilliandrosemary_50x50.jpg?v=1589792370',
     },
     {
-      name: 'The British Popcorn Co. Caramel &amp; Espresso Popcorn',
+      name: 'The British Popcorn Co. Caramel & Espresso Popcorn',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Caramel_50x50.jpg?v=1622038661',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Caramel_50x50.jpg?v=1622038661',
     },
@@ -2449,7 +2449,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Chikas-S_V_50x50.jpg?v=1614791980',
     },
     {
-      name: 'Copperpot Pecan &amp; Maple',
+      name: 'Copperpot Pecan & Maple',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Copperpot-MapleSyrup_Pecan_50x50.jpg?v=1625142523',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Copperpot-MapleSyrup_Pecan_50x50.jpg?v=1625142523',
     },
@@ -2459,7 +2459,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tony-Hazlenut_1_50x50.jpg?v=1621513545',
     },
     {
-      name: 'BEPPS Salt &amp; Black Pepper Popped Crisps',
+      name: 'BEPPS Salt & Black Pepper Popped Crisps',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Bepps-Salt_Pepper_50x50.jpg?v=1622039788',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Bepps-Salt_Pepper_50x50.jpg?v=1622039788',
     },
@@ -2494,7 +2494,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Firetree_Vanuatu_50x50.jpg?v=1604487613',
     },
     {
-      name: 'The British Popcorn Co. Sour Cream &amp; Black Pepper Popcorn',
+      name: 'The British Popcorn Co. Sour Cream & Black Pepper Popcorn',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-SourCream_50x50.jpg?v=1622038684',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-SourCream_50x50.jpg?v=1622038684',
     },
@@ -2504,7 +2504,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Firetree_Solomon69_50x50.jpg?v=1604488229',
     },
     {
-      name: 'The British Popcorn Co. Sweet &amp; Salty Popcorn',
+      name: 'The British Popcorn Co. Sweet & Salty Popcorn',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Sweet_Salt_50x50.jpg?v=1622038695',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Sweet_Salt_50x50.jpg?v=1622038695',
     },
@@ -2606,12 +2606,12 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Cocktail_Bundle_50x50.jpg?v=1635502261',
     },
     {
-      name: 'Gin &amp; Stormy Cocktail Bundle',
+      name: 'Gin & Stormy Cocktail Bundle',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
     },
     {
-      name: 'Gin &amp; Stormy',
+      name: 'Gin & Stormy',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
     },
@@ -2626,7 +2626,7 @@ export const mockCraftData = {
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Pink_Sloe_Gin_Spritz_Bundle_50x50.jpg?v=1636648670',
     },
     {
-      name: 'Gin &amp; Stormy',
+      name: 'Gin & Stormy',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin-Stormy-Mini_50x50.jpg?v=1634897770',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin-Stormy-Mini_50x50.jpg?v=1634897770',
     },
@@ -2784,48 +2784,48 @@ export const mockCraftData = {
   syrups: [
     {
       name: 'Mixology Bundle',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
     },
     {
-      name: 'Gin &amp; Stormy',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
+      name: 'Gin & Stormy',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
     },
     {
       name: 'Race Car Cocktail Syrup',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
     },
     {
       name: 'Peach Gin Iced Tea Cocktail Syrup',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
     },
     {
       name: 'Savanna Spritz Cocktail Syrup',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
     },
     {
       name: 'Pink Gin Spritz Cocktail Syrup',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
     },
     {
       name: 'Cosmopoli-gin cocktail syrup',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
     },
     {
       name: 'Gin Star Martini cocktail syrup',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
     },
     {
       name: 'Gin-a-colada cocktail syrup',
-      src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
-      url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
+      src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
+      url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
     },
   ],
   advent: [
@@ -2837,17 +2837,18 @@ export const mockCraftData = {
   ],
   events: [
     {
-      name: 'Flavoured Gins G&amp;T Tasting',
+      name: 'Flavoured Gins G&T Tasting',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_500x500.jpg?v=1636712572',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_500x500.jpg?v=1636712572',
     },
     {
-      name: 'Countdown to Christmas G&amp;T Tasting',
+      name: 'Countdown to Christmas G&T Tasting',
       src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_500x500.jpg?v=1635346027',
       url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_500x500.jpg?v=1635346027',
     },
   ],
   'all items': allItems,
+  recommendations: allItems,
 }
 
 export const mockMarketPlaceItems = [
@@ -2862,7 +2863,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Explorer_Xmas_1_500x500.jpg?v=1632496863',
   },
   {
-    name: 'Gin &amp; Tonic With a Pop!',
+    name: 'Gin & Tonic With a Pop!',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GT-pop-shop3_500x500.jpg?v=1606485839',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GT-pop-shop3_500x500.jpg?v=1606485839',
   },
@@ -2882,7 +2883,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-pink_50x50.jpg?v=1603707669',
   },
   {
-    name: 'Four Very Merry Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
   },
@@ -2907,7 +2908,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Cocktail_Bundle_50x50.jpg?v=1635502261',
   },
   {
-    name: "Schofe's Winter G&amp;T Bundle",
+    name: "Schofe's Winter G&T Bundle",
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Gnt_Bundle_50x50.jpg?v=1635502356',
   },
@@ -2917,7 +2918,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Mad_Owl_GOTM_50x50.jpg?v=1634906680',
   },
   {
-    name: 'Gin &amp; Stormy Cocktail Bundle',
+    name: 'Gin & Stormy Cocktail Bundle',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
   },
@@ -3007,12 +3008,12 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Wooden_Box_Bundle_Citrus_50x50.jpg?v=1634040038',
   },
   {
-    name: 'Ludlow Seville Orange &amp; Cassia Gin',
+    name: 'Ludlow Seville Orange & Cassia Gin',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Ludlow_Seville-Orange-Cassia_Gin_50x50.png?v=1634896118',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Ludlow_Seville-Orange-Cassia_Gin_50x50.png?v=1634896118',
   },
   {
-    name: 'Otterbeck Distillery Cotton Gin Strawberry &amp; Pinkpeppercorn',
+    name: 'Otterbeck Distillery Cotton Gin Strawberry & Pinkpeppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Otterbeck-Strawberry_50x50.png?v=1629968814',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Otterbeck-Strawberry_50x50.png?v=1629968814',
   },
@@ -3022,7 +3023,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AnnoSloeGin_50x50.png?v=1606486127',
   },
   {
-    name: "Tarquin's Pink Grapefruit &amp; Elderflower Gin",
+    name: "Tarquin's Pink Grapefruit & Elderflower Gin",
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tarquins-PinkGrapefruit_50x50.png?v=1615202096',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tarquins-PinkGrapefruit_50x50.png?v=1615202096',
   },
@@ -3032,7 +3033,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STAR_MARTINI_BUNDLE-shop-New_50x50.jpg?v=1633365450',
   },
   {
-    name: 'Sloe Gin &amp; Elderflower Collins Cocktail Bundle',
+    name: 'Sloe Gin & Elderflower Collins Cocktail Bundle',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/bundle-sloe-shop_50x50.jpg?v=1605535432',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/bundle-sloe-shop_50x50.jpg?v=1605535432',
   },
@@ -3062,7 +3063,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Sloe_Gin_Negroni_Bundle_1_50x50.jpg?v=1633511044',
   },
   {
-    name: 'Four Very Merry Pink Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Pink Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
   },
@@ -3077,7 +3078,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/SCHOFE_S_WINTER_GIN.png?v=1635502243',
   },
   {
-    name: 'York Gin Chocolate &amp; Orange',
+    name: 'York Gin Chocolate & Orange',
     src: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638',
     url: 'https://cdnshopify.com/s/files/1/0094/7319/6090/products/Choc_Orange_York_Gin.png?v=1634220638',
   },
@@ -3232,17 +3233,17 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2_50x50.jpg?v=1635343877',
   },
   {
-    name: 'Gin &amp; Stormy',
+    name: 'Gin & Stormy',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
   },
   {
-    name: 'Calyx Drinks Apple &amp; Hibiscus',
+    name: 'Calyx Drinks Apple & Hibiscus',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Calyx_Hibiscus_Apple_50x50.png?v=1635497932',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Calyx_Hibiscus_Apple_50x50.png?v=1635497932',
   },
   {
-    name: 'Dash Soda Rhubarb &amp; Ginger',
+    name: 'Dash Soda Rhubarb & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dash_Rhubarb_Ginger_50x50.png?v=1635498004',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dash_Rhubarb_Ginger_50x50.png?v=1635498004',
   },
@@ -3277,12 +3278,12 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1_50x50.jpg?v=1637146980',
   },
   {
-    name: 'Lixir Blood Orange &amp; Cinnamon',
+    name: 'Lixir Blood Orange & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-BloodOrange_50x50.png?v=1622814949',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-BloodOrange_50x50.png?v=1622814949',
   },
   {
-    name: 'Lixir Elderflower &amp; Lemon',
+    name: 'Lixir Elderflower & Lemon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-Lemon_50x50.png?v=1622814967',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lixir-Lemon_50x50.png?v=1622814967',
   },
@@ -3292,7 +3293,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-light_a6560e05-c117-4974-a87d-34fd1cd7c3de_50x50.jpg?v=1561720455',
   },
   {
-    name: 'Lixir Rhubarb &amp; Ginger',
+    name: 'Lixir Rhubarb & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-rhubarb_50x50.jpg?v=1561720532',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/lixir-rhubarb_50x50.jpg?v=1561720532',
   },
@@ -3317,7 +3318,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Mandarino_Polara_50x50.png?v=1632747206',
   },
   {
-    name: 'Bibite Polara Lemon &amp; Ginger',
+    name: 'Bibite Polara Lemon & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Lemon_50x50.png?v=1622813605',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Lemon_50x50.png?v=1622813605',
   },
@@ -3352,12 +3353,12 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Polara-Spuma_50x50.png?v=1622813655',
   },
   {
-    name: 'Soho Juice Blood Orange, Raspberry &amp; Ginger',
+    name: 'Soho Juice Blood Orange, Raspberry & Ginger',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-BloodOrange_50x50.png?v=1621851918',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-BloodOrange_50x50.png?v=1621851918',
   },
   {
-    name: 'Soho Juice Apple, Honey &amp; Lemon',
+    name: 'Soho Juice Apple, Honey & Lemon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-AppleHoneyLemon_50x50.png?v=1621851997',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SohoJuice-AppleHoneyLemon_50x50.png?v=1621851997',
   },
@@ -3417,32 +3418,32 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-GARNISH_PACK_GROUP-2_500x500.jpg?v=1623839337',
   },
   {
-    name: 'Lemon &amp; Coriander',
+    name: 'Lemon & Coriander',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
   },
   {
-    name: 'Pineapple &amp; Pink Peppercorn',
+    name: 'Pineapple & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
   },
   {
-    name: 'Lime &amp; Blueberry',
+    name: 'Lime & Blueberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
   },
   {
-    name: 'Lemon &amp; Juniper',
+    name: 'Lemon & Juniper',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
   },
   {
-    name: 'Blood Orange &amp; Cardamom',
+    name: 'Blood Orange & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
   },
   {
-    name: 'Grapefruit &amp; Cranberry',
+    name: 'Grapefruit & Cranberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
   },
@@ -3452,17 +3453,17 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Giftpack_Bundle_50x50.jpg?v=1636643323',
   },
   {
-    name: 'Lime &amp; Cardamom',
+    name: 'Lime & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
   },
   {
-    name: 'Orange &amp; Cinnamon',
+    name: 'Orange & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
   },
   {
-    name: 'Lemon &amp; Raspberry',
+    name: 'Lemon & Raspberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
   },
@@ -3502,27 +3503,27 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-grapefruit_garnish_pack_1_50x50.jpg?v=1623774508',
   },
   {
-    name: 'Grapefruit &amp; Cardamom',
+    name: 'Grapefruit & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
   },
   {
-    name: 'Orange &amp; Black Peppercorn',
+    name: 'Orange & Black Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
   },
   {
-    name: 'Grapefruit &amp; Cinnamon',
+    name: 'Grapefruit & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
   },
   {
-    name: 'Grapefruit &amp; Pink Peppercorn',
+    name: 'Grapefruit & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
   },
   {
-    name: 'Lime &amp; Rosebuds',
+    name: 'Lime & Rosebuds',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
   },
@@ -3537,32 +3538,32 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-GARNISH_PACK_GROUP-2_500x500.jpg?v=1623839337',
   },
   {
-    name: 'Lemon &amp; Coriander',
+    name: 'Lemon & Coriander',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SeptGarnish_500x500.jpg?v=1629969089',
   },
   {
-    name: 'Pineapple &amp; Pink Peppercorn',
+    name: 'Pineapple & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/AugustGranish-Pineapple_PinkPepper_50x50.jpg?v=1626793406',
   },
   {
-    name: 'Lime &amp; Blueberry',
+    name: 'Lime & Blueberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JulyGarnish_50x50.jpg?v=1624956447',
   },
   {
-    name: 'Lemon &amp; Juniper',
+    name: 'Lemon & Juniper',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon_Juniper-Garnish_50x50.jpg?v=1619519135',
   },
   {
-    name: 'Blood Orange &amp; Cardamom',
+    name: 'Blood Orange & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/OctoberGarnish_50x50.jpg?v=1632751950',
   },
   {
-    name: 'Grapefruit &amp; Cranberry',
+    name: 'Grapefruit & Cranberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Grapefruit___Cranberry_50x50.jpg?v=1636135522',
   },
@@ -3572,17 +3573,17 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Giftpack_Bundle_50x50.jpg?v=1636643323',
   },
   {
-    name: 'Lime &amp; Cardamom',
+    name: 'Lime & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lime___Cardamon_50x50.jpg?v=1636135460',
   },
   {
-    name: 'Orange &amp; Cinnamon',
+    name: 'Orange & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Orange___Cinnamon_50x50.jpg?v=1636135399',
   },
   {
-    name: 'Lemon &amp; Raspberry',
+    name: 'Lemon & Raspberry',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Lemon___Raspberry_50x50.jpg?v=1636135488',
   },
@@ -3622,27 +3623,27 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4265-grapefruit_garnish_pack_1_50x50.jpg?v=1623774508',
   },
   {
-    name: 'Grapefruit &amp; Cardamom',
+    name: 'Grapefruit & Cardamom',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/JuneGarnish_50x50.jpg?v=1622039074',
   },
   {
-    name: 'Orange &amp; Black Peppercorn',
+    name: 'Orange & Black Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ORANGE_BLACKPEPPERCORN_GARNISH_50x50.jpg?v=1619093396',
   },
   {
-    name: 'Grapefruit &amp; Cinnamon',
+    name: 'Grapefruit & Cinnamon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NovGarnish_791a3a16-c8af-4ec1-8f42-f3559e78d190_50x50.jpg?v=1635497486',
   },
   {
-    name: 'Grapefruit &amp; Pink Peppercorn',
+    name: 'Grapefruit & Pink Peppercorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GRAPEFRUIT_PINKPEPPERCORN_GARNISH_50x50.jpg?v=1619093710',
   },
   {
-    name: 'Lime &amp; Rosebuds',
+    name: 'Lime & Rosebuds',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/LIME_ROSE-GARNISH_50x50.jpg?v=1619093642',
   },
@@ -3657,12 +3658,12 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tonic_and_Garnish_Bundle_500x500.jpg?v=1633097199',
   },
   {
-    name: 'Countdown to Christmas G&amp;T Tasting',
+    name: 'Countdown to Christmas G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_50x50.jpg?v=1635346027',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_50x50.jpg?v=1635346027',
   },
   {
-    name: 'Four Very Merry Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-BLUE-PRODUCT_50x50.jpg?v=1629804215',
   },
@@ -3687,7 +3688,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/giftpack-classic_50x50.jpg?v=1603707906',
   },
   {
-    name: 'Four Very Merry Pink Gin &amp; Tonic Crackers',
+    name: 'Four Very Merry Pink Gin & Tonic Crackers',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/CRACKER_BOX-PINK-PRODUCT_50x50.jpg?v=1629804230',
   },
@@ -3732,7 +3733,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Garnish_Wheel_Poster_1_50x50.jpg?v=1632739091',
   },
   {
-    name: 'Flavoured Gins G&amp;T Tasting',
+    name: 'Flavoured Gins G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_50x50.jpg?v=1636712572',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_50x50.jpg?v=1636712572',
   },
@@ -3817,7 +3818,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/NutsFor-Paprika_50x50.jpg?v=1612190508',
   },
   {
-    name: 'Eat Real Chilli &amp; Lemon',
+    name: 'Eat Real Chilli & Lemon',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Eat_Real_Chill_Lemon_50x50.jpg?v=1634898020',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Eat_Real_Chill_Lemon_50x50.jpg?v=1634898020',
   },
@@ -3837,7 +3838,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gnaw_Irish_Cream_50x50.jpg?v=1632747384',
   },
   {
-    name: 'Love Corn Cheese &amp; Onion',
+    name: 'Love Corn Cheese & Onion',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Love-Corn_50x50.jpg?v=1629968977',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Love-Corn_50x50.jpg?v=1629968977',
   },
@@ -3847,7 +3848,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Munchkings2_50x50.jpg?v=1629992671',
   },
   {
-    name: 'Wild Cassava Sweet Chilli &amp; Onion',
+    name: 'Wild Cassava Sweet Chilli & Onion',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/WildCassava-SweetChilli_50x50.jpg?v=1626793567',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/WildCassava-SweetChilli_50x50.jpg?v=1626793567',
   },
@@ -3857,7 +3858,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/UncleSaba-SweetLentilPoppadoms_50x50.jpg?v=1626793498',
   },
   {
-    name: 'The Dormen Sweet Chilli Nuts &amp; Fruit',
+    name: 'The Dormen Sweet Chilli Nuts & Fruit',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dormen-ChilliNuts_Fruit_50x50.jpg?v=1626793526',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Dormen-ChilliNuts_Fruit_50x50.jpg?v=1626793526',
   },
@@ -3887,12 +3888,12 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PurelyPlantain-WildGarlic_50x50.jpg?v=1619519098',
   },
   {
-    name: "Olly's Olives Chilli &amp; Rosemary",
+    name: "Olly's Olives Chilli & Rosemary",
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/oliveschilliandrosemary_50x50.jpg?v=1589792370',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/oliveschilliandrosemary_50x50.jpg?v=1589792370',
   },
   {
-    name: 'The British Popcorn Co. Caramel &amp; Espresso Popcorn',
+    name: 'The British Popcorn Co. Caramel & Espresso Popcorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Caramel_50x50.jpg?v=1622038661',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Caramel_50x50.jpg?v=1622038661',
   },
@@ -3917,7 +3918,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Chikas-S_V_50x50.jpg?v=1614791980',
   },
   {
-    name: 'Copperpot Pecan &amp; Maple',
+    name: 'Copperpot Pecan & Maple',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Copperpot-MapleSyrup_Pecan_50x50.jpg?v=1625142523',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Copperpot-MapleSyrup_Pecan_50x50.jpg?v=1625142523',
   },
@@ -3927,7 +3928,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Tony-Hazlenut_1_50x50.jpg?v=1621513545',
   },
   {
-    name: 'BEPPS Salt &amp; Black Pepper Popped Crisps',
+    name: 'BEPPS Salt & Black Pepper Popped Crisps',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Bepps-Salt_Pepper_50x50.jpg?v=1622039788',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Bepps-Salt_Pepper_50x50.jpg?v=1622039788',
   },
@@ -3962,7 +3963,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Firetree_Vanuatu_50x50.jpg?v=1604487613',
   },
   {
-    name: 'The British Popcorn Co. Sour Cream &amp; Black Pepper Popcorn',
+    name: 'The British Popcorn Co. Sour Cream & Black Pepper Popcorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-SourCream_50x50.jpg?v=1622038684',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-SourCream_50x50.jpg?v=1622038684',
   },
@@ -3972,7 +3973,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Firetree_Solomon69_50x50.jpg?v=1604488229',
   },
   {
-    name: 'The British Popcorn Co. Sweet &amp; Salty Popcorn',
+    name: 'The British Popcorn Co. Sweet & Salty Popcorn',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Sweet_Salt_50x50.jpg?v=1622038695',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/BPC-Sweet_Salt_50x50.jpg?v=1622038695',
   },
@@ -4072,12 +4073,12 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Schofes_Cocktail_Bundle_50x50.jpg?v=1635502261',
   },
   {
-    name: 'Gin &amp; Stormy Cocktail Bundle',
+    name: 'Gin & Stormy Cocktail Bundle',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin___Stormy_Cocktail_Bundle_50x50.jpg?v=1635498301',
   },
   {
-    name: 'Gin &amp; Stormy',
+    name: 'Gin & Stormy',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP_50x50.jpg?v=1635348742',
   },
@@ -4092,7 +4093,7 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Pink_Sloe_Gin_Spritz_Bundle_50x50.jpg?v=1636648670',
   },
   {
-    name: 'Gin &amp; Stormy',
+    name: 'Gin & Stormy',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin-Stormy-Mini_50x50.jpg?v=1634897770',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Gin-Stormy-Mini_50x50.jpg?v=1634897770',
   },
@@ -4249,48 +4250,48 @@ export const mockMarketPlaceItems = [
   // syrups,
   {
     name: 'Mixology Bundle',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/4syrups-shop-PDP_1_1.jpg?v=1637146980',
   },
   {
-    name: 'Gin &amp; Stormy',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
+    name: 'Gin & Stormy',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/GIN_STORMY-LG_SYRUP-SHOPCROP.jpg?v=1635348742',
   },
   {
     name: 'Race Car Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/RACE_CAR_SYRUP-SHOPCROP.jpg?v=1635343973',
   },
   {
     name: 'Peach Gin Iced Tea Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PEACH_GIN_ICED_TEA-SHOPCROP_2.jpg?v=1635343877',
   },
   {
     name: 'Savanna Spritz Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/SAVANA_SPRITZ_SYRUP-SHOP.jpg?v=1620207289',
   },
   {
     name: 'Pink Gin Spritz Cocktail Syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/PinkGinSpritz-Large.jpg?v=1624874455',
   },
   {
     name: 'Cosmopoli-gin cocktail syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/cosmo-large-img1-pdp.jpg?v=1624874537',
   },
   {
     name: 'Gin Star Martini cocktail syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginstar-large-1500px.jpg?v=1635343790',
   },
   {
     name: 'Gin-a-colada cocktail syrup',
-    src: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
-    url: '//cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
+    src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
+    url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/ginacolada-1500px.jpg?v=1635343852',
   },
 
   {
@@ -4299,12 +4300,12 @@ export const mockMarketPlaceItems = [
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/t/29/assets/advent-baul-baul.svg?v=7497043818228618811',
   },
   {
-    name: 'Flavoured Gins G&amp;T Tasting',
+    name: 'Flavoured Gins G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_500x500.jpg?v=1636712572',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Artisan-October-G_TEvent_PDP_500x500.jpg?v=1636712572',
   },
   {
-    name: 'Countdown to Christmas G&amp;T Tasting',
+    name: 'Countdown to Christmas G&T Tasting',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_500x500.jpg?v=1635346027',
     url: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Countdown_To_Chrsitmas_G_T_Tasting_500x500.jpg?v=1635346027',
   },
