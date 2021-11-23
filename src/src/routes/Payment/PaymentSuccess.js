@@ -6,7 +6,7 @@ class PaymentSuccess extends PureComponent {
     return (
       <PaymentResult header="Verification successful" success>
         <p>
-          You will now be automatically redirected back to Gousto with no further action required.
+          You will now be automatically redirected back to Craft with no further action required.
         </p>
       </PaymentResult>
     )

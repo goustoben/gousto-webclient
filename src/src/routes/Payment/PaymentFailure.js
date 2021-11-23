@@ -5,7 +5,7 @@ class PaymentFailure extends PureComponent {
   render() {
     return (
       <PaymentResult header="Verification failed" success={false}>
-        <p>You will now be automatically redirected back to Gousto with further details.</p>
+        <p>You will now be automatically redirected back to Craft with further details.</p>
       </PaymentResult>
     )
   }
