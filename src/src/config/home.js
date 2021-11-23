@@ -85,7 +85,7 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
 
 export const joeWicks = "Gin. It's our thing!"
 export const carousel = {
-  title: 'Browse our Items',
+  title: 'Browse our Shop',
   subtitle:
   "Every month, we send our club members a full-sized bottle of amazing craft gin from one of the world's finest distillers, in a treat-filled Gin of the Month box."
 }

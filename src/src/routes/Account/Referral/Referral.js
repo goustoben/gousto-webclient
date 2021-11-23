@@ -63,7 +63,7 @@ class Referral extends Component {
       device,
       trackUserFreeFoodLinkShare,
     } = this.props
-    const offerTitle = rafOffer.get('title')
+    // const offerTitle = rafOffer.get('title')
     const offerCredit = rafOffer.get('creditFormatted')
     const offerDetails = rafOffer.get('details')
     const offerDescription = rafOffer.get('description')
@@ -78,7 +78,7 @@ class Referral extends Component {
       <div className={expiry ? css.containerBackgroundDouble : css.containerBackground}>
         <Helmet title="Craft Referrals | Invite Your Friends To Try Craft Gin Club" />
         <div className={css.rafPageTitle}>
-          <RAFTitle title={offerTitle} />
+          <RAFTitle title="Invite Your Friends To Try Craft Gin Club" />
         </div>
         <div className={css.rafOfferSection}>
           <div className={css.rafOfferBanner}>

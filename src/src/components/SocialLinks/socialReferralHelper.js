@@ -16,7 +16,7 @@ export const getMessage = (offer) => {
   const firstBoxOffer = offer ? offer.get('firstBoxDiscountFormatted') : defaultOffer.get('firstBoxDiscountFormatted')
   const firstMonthOffer = offer ? offer.get('firstMonthDiscountFormatted') : defaultOffer.get('firstMonthDiscountFormatted')
 
-  return `I love Gousto and I think you will too! Use my link to get an exclusive ${firstBoxOffer} off your first box, PLUS ${firstMonthOffer} off for a whole month. \r\n`
+  return `I love Craft and I think you will too! Use my link to get an exclusive ${firstBoxOffer} off your first box, PLUS ${firstMonthOffer} off for a whole month. \r\n`
 }
 
 export const getReferralLink = (referralCode, userFirstName = '', UTM = '') => {
@@ -112,4 +112,3 @@ export const getTextMessageReferralLink = (
 
   return window.location.assign(`sms:?&body=${encodedMessage}`)
 }
-

@@ -112,11 +112,11 @@ const Footer = ({
           <Link
             to={clientRoutes.menu}
             data-selid="footer-this-weeks-recipes"
-            title="This Week's Recipes"
+            title="This Month's Box"
             clientRouted
             secondary
           >
-            This Week&apos;s Recipes
+            This Month's Box
           </Link>
         </span>
       </li>
@@ -125,7 +125,7 @@ const Footer = ({
       </li>
       {renderTermsLink()}
       <li className={css.menuItem}>
-        <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Cookbook" clientRouted={false} secondary>Cookbook</Link>
+        <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Recipes" clientRouted={false} secondary>Recipes</Link>
       </li>
       <li className={css.menuItem}>
         <Link to={clientRoutes.jobs} data-selid="footer-jobs" title="Jobs" clientRouted={false} secondary>Jobs</Link>
@@ -174,7 +174,7 @@ const Footer = ({
 
   const copyrightText = (
     <p>
-      &copy; Gousto
+      &copy; Craft
       {moment().format('YYYY')}
       . All rights reserved.
     </p>
