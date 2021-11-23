@@ -32,9 +32,6 @@ export const defineTag = (value) => {
 
 // encoding
 
-// forward declaration because of the mutual recursion
-let convertValueToTaggedValue
-
 const encodeImmutableList = (listObj) => listObj.map((value) => convertValueToTaggedValue(value))
 
 const encodeImmutableMap = (mapObj) => {
@@ -76,7 +73,7 @@ const encodeValueBasedOnTag = (value, tag) => {
   }
 }
 
-convertValueToTaggedValue = (value) => {
+function convertValueToTaggedValue(value) {
   const tag = defineTag(value)
   const encodedValue = encodeValueBasedOnTag(value, tag)
 
@@ -97,8 +94,6 @@ export const encodeState = (state) => {
 
 // decoding
 
-let convertTaggedValueToValue
-
 const decodeArray = (arrayObj) => arrayObj.map((taggedValue) => convertTaggedValueToValue(taggedValue))
 
 const decodeObject = (obj) => {
@@ -110,7 +105,7 @@ const decodeObject = (obj) => {
   return result
 }
 
-convertTaggedValueToValue = (taggedValue) => {
+function convertTaggedValueToValue(taggedValue) {
   const { tag, value: encodedValue } = taggedValue
 
   if (tag === 'isImmutableList') {
