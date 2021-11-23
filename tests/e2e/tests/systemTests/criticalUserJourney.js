@@ -12,7 +12,8 @@ module.exports = {
     orderANewBox(browser)
 
     browser.end()
-  }
+  },
+  tags: ['critical-user-journey'],
 }
 
 function continueSignUpWithACreditCard(browser) {

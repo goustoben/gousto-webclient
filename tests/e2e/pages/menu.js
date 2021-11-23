@@ -81,20 +81,11 @@ module.exports = {
 
           const addRecipeButtonSelector = nightwatchContext.elements.addRecipeButton.selector
 
-          nightwatchContext.api.elements('css selector', addRecipeButtonSelector, result => {
 
-            const status = result.status
+          for (let i = 0; i < 3; i++) {
+            addRecipe(i, addRecipeButtonSelector, nightwatchContext)
+          }
 
-            if (status !== 0){
-              throw new Error(`Unexpected status ${status} when retrieving elements matching css selector "${addRecipeButtonSelector}". Full result was: ${JSON.stringify(result)}`)
-            }
-
-            const addRecipeButtonElements = result.value
-
-            for (let i = 0; i < 3; i++) {
-              addRecipe(i, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext)
-            }
-          })
         },
       }],
     },
@@ -172,18 +163,28 @@ function clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThe
   })
 }
 
-function addRecipe(recipeIndex, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext) {
-  const addRecipeButtonElementId = addRecipeButtonElements[recipeIndex].ELEMENT
+function addRecipe(recipeIndex, addRecipeButtonSelector, nightwatchContext) {
+  nightwatchContext.api.elements('css selector', addRecipeButtonSelector, result => {
+    const status = result.status
 
-  nightwatchContext.executeAndThrowOnFailure(`document.querySelectorAll('${addRecipeButtonSelector}')[${recipeIndex}].scrollIntoView({ block: "center" })`, [])
-  clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(
-    addRecipeButtonElementId,
-    [
-      '[data-testing="promoModal"] [data-testing="modal-close-button"]',
-      '[data-testing="spotlight-overlay"]',
-      '[data-testing="tutorialStepCta"]',
-      '.ReactModalPortal [data-testing="menuRecipeAdd"]',
-    ],
-    nightwatchContext
-  );
+    if (status !== 0) {
+      throw new Error(`Unexpected status ${status} when retrieving elements matching css selector "${addRecipeButtonSelector}". Full result was: ${JSON.stringify(result)}`)
+    }
+
+    const addRecipeButtonElements = result.value
+
+    const addRecipeButtonElementId = addRecipeButtonElements[recipeIndex].ELEMENT
+
+    nightwatchContext.executeAndThrowOnFailure(`document.querySelectorAll('${addRecipeButtonSelector}')[${recipeIndex}].scrollIntoView({ block: "center" })`, [])
+    clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(
+      addRecipeButtonElementId,
+      [
+        '[data-testing="promoModal"] [data-testing="modal-close-button"]',
+        '[data-testing="spotlight-overlay"]',
+        '[data-testing="tutorialStepCta"]',
+        '.ReactModalPortal [data-testing="menuRecipeAdd"]',
+      ],
+      nightwatchContext
+    );
+  })
 }
