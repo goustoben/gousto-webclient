@@ -62,7 +62,7 @@ import {
   trackNewOrder,
   trackUnexpectedSignup,
 } from './tracking'
-import { mockOrders } from '../nourishised'
+import { mockOrders } from '../craft'
 
 const fetchShippingAddressesPending = (pending) => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,

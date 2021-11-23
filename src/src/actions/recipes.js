@@ -4,7 +4,7 @@ import { getCutoffDateTime, cutoffDateTimeNow } from 'utils/deliveries'
 import statusActions from './status'
 import { actionTypes } from './actionTypes'
 import { menuRecipeMapper } from '../apis/transformers/recipes'
-import { mockRecipes } from '../nourishised'
+import { mockRecipes } from '../craft'
 
 const recipesLoadRecipesById =
   (recipeIds = [], isCookbook) =>

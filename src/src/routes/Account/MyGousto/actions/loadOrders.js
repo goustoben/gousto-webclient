@@ -2,7 +2,7 @@ import { getAccessToken } from 'selectors/auth'
 import { fetchUserOrders } from 'apis/user'
 import { asyncAndDispatch } from '../../../GetHelp/actions/utils'
 import { actionTypes } from './actionTypes'
-import { mockOrders } from '../../../../nourishised'
+import { mockOrders } from '../../../../craft'
 
 export const loadOrders = () => async (dispatch, getState) => {
   const state = getState()

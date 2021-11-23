@@ -12,7 +12,7 @@ const strToInt = (string) => {
 const uuidToListItem = (uuid, list) => list[strToInt(uuid) % list.length]
 
 const mockOrders = (orders) => {
-  const boxes = mockCraftData['all boxes']
+  const boxes = mockCraftData['all items']
 
   orders.forEach((order) => {
     order.recipeItems.forEach((item) => {
@@ -78,7 +78,7 @@ const mockMenuResponse = (response) => {
 }
 
 const mockRecipes = (recipes) => {
-  const nourishments = mockCraftData['All Items']
+  const nourishments = mockCraftData['all items']
   recipes.forEach((recipe) => {
     const nourishment = uuidToListItem(recipe.id, nourishments)
     recipe.attributes.name = nourishment.name
