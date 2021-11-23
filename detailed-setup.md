@@ -341,3 +341,17 @@ If you'd like to introduce prettier inside an unmigrated-yet route, please follo
 8. Check that the app behaves the same
 
 *After* the merge into `develop`, add the commit's hash into `.git-blame-ignore-revs` so that the bulk change doesn't show up in people's `git blame` invocations. Unfortunately it requires two merges, because we haven't invented self-referencing commits yet.
+
+## Coding practices
+
+### Structure of the Redux state
+
+Due to the custom implementation of serializing the state for passing from the
+server-rendering process to the browser's execution context (see
+`src/src/utils/encodeDecodeState.js`), values of only the following types are
+allowed in the Redux store's state:
+
+- plain JavaScript values (`undefined`, `number`, `boolean`, `Array`, `Object` including `null`);
+- `Immutable.List`, `Immutable.Map`, `Immutable.OrderedMap`
+
+The values inside collections should follow these restrictions, recursively.
