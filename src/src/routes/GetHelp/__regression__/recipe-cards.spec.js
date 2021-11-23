@@ -7,6 +7,9 @@ describe('Given the customer is logged in', () => {
     beforeEach(() => {
       cy.serverWithEmulatedPaths('/order/the-order-id')
 
+      const ANY_DELIVERY_DATE = '1970-01-01 00:00:00'
+      const ANY_TIME = '00:00:00'
+
       cy.configureEmulationState({
         orders: [{
           id: 'the-order-id',
@@ -16,10 +19,10 @@ describe('Given the customer is logged in', () => {
             {recipeId: '3064', recipeUuid: 'e9ddc6f1-a3e7-448b-8612-bc81d7f086c2'},
             {recipeId: '3041', recipeUuid: '59c4b9ce-cb52-44a1-8f3c-f702ad13bd9b'},
           ],
-          delivery_date: '1970-01-01 00:00:00',
+          delivery_date: ANY_DELIVERY_DATE,
           delivery_slot: {
-            delivery_start: '00:00:00',
-            delivery_end: '00:00:00',
+            delivery_start: ANY_TIME,
+            delivery_end: ANY_TIME,
           }
         }],
         sessions: [{accessToken: 'the-access-token'}]

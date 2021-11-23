@@ -26,7 +26,7 @@ Cypress.Commands.add('mockDate', () => {
 
 Cypress.Commands.add('setLoginCookiesWithAccessToken', (accessToken) => {
   setLoginCookies({
-    accessToken: accessToken,
+    accessToken,
     expiresAt: '1970-01-01T00:00:00.000Z',
     refreshToken: 'ANY_REFRESH_TOKEN',
     rememberMe: true
