@@ -18,7 +18,7 @@ const BoxProgressMessage = ({ numRecipes, className }) => {
   } else if (numRecipes < minRecipesNum) {
     return <p className={className}>Add more recipes to complete your box</p>
   } else if (numRecipes >= maxRecipesNum) {
-    return <p className={className}>Nice! You&apos;ve got the best price per serving</p>
+    return <p className={className}></p>
   } else {
     const remainingRecipes = maxRecipesNum - numRecipes
 
@@ -28,10 +28,10 @@ const BoxProgressMessage = ({ numRecipes, className }) => {
         {' '}
         <strong>{remainingRecipes}</strong>
         {' '}
-        more recipe
+        more items
         {remainingRecipes > 1 ? 's' : ''}
         {' '}
-        for the best price per serving
+        for the best box
       </p>
     )
   }

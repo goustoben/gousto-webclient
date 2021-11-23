@@ -23,7 +23,7 @@ export const getClientOrderState = (state, deliveryDate, recipeItems, phase) => 
   }
 
   if (state === 'pending' && !!recipeItems.size) {
-    return 'recipes chosen'
+    return 'items chosen'
   }
 
   return state

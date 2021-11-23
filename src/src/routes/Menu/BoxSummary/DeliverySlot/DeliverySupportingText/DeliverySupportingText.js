@@ -16,7 +16,7 @@ const DeliverySupportingText = ({ hasEmptyOrders, hasFullOrders, doesDateHaveDis
     deliveryCopy = (
       <div>
         <Svg fileName="icon_Booked-delivery" className={css.upcomingOrder} />
-        <span> Upcoming delivery – recipes chosen</span>
+        <span> Upcoming delivery – items chosen</span>
       </div>
     )
   }
@@ -26,7 +26,7 @@ const DeliverySupportingText = ({ hasEmptyOrders, hasFullOrders, doesDateHaveDis
     deliveryCopyEmpty = (
       <div>
         <Svg fileName="icon_Scheduled-delivery" className={css.upcomingOrder} />
-        <span> Upcoming delivery – recipes not chosen</span>
+        <span> Upcoming delivery – items not chosen</span>
       </div>
     )
   }

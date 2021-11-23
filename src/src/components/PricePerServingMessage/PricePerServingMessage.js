@@ -19,7 +19,7 @@ const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null, isPr
 
     return (
       <p className={classNames(css.pricePerServingMessage, { [css.priceMessageInCheckout]: isPriceInCheckout })}>
-        Price per serving:
+
         {' '}
         {oldPrice}
         {isPriceInCheckout

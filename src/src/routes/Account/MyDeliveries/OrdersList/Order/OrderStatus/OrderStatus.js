@@ -19,7 +19,7 @@ const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
         <p className={css.orderStatus}>
           {whenCutoff}
           {' '}
-          left to choose recipes
+          left to choose items
         </p>
       )
       : null}

@@ -21,14 +21,14 @@ export const TotalPrice = () => {
     ? (
       <section>
         <div className={css.priceRow} data-testing="price-per-servings">
-          <p>Price per Serving</p>
+          <p></p>
           <span>
             £
             {pricePerPortion}
           </span>
         </div>
         <div className={css.totalPrice} data-testing="total-price">
-          <p>Total Box Price</p>
+          <p>Box Price</p>
           <span>
             £
             {totalBoxPrice}

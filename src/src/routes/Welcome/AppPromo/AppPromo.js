@@ -53,7 +53,7 @@ const AppPromo = ({ device, trackWelcomeAppPromoClick }) => (
   <div data-testing="appPromo">
     <div className={css.contentContainer}>
       <div className={css.content}>
-        <h2 className={css.header}>Download the Gousto app</h2>
+        <h2 className={css.header}>Download the Craft app</h2>
         <TickList listItems={benefits} listItemClassName={css.list} />
         <div>
           {mobileAppStoreCTAs(device, trackWelcomeAppPromoClick)}

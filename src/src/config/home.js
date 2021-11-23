@@ -85,21 +85,21 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
 
 export const joeWicks = "Gin. It's our thing!"
 export const carousel = {
-  title: 'Browse our Past Boxes',
+  title: 'Browse our Items',
   subtitle:
   "Every month, we send our club members a full-sized bottle of amazing craft gin from one of the world's finest distillers, in a treat-filled Gin of the Month box."
 }
 export const seo = {
-  title: 'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',
+  title: 'Gin Boxes | Get a Selection Every Month | Craft',
   meta: [
     {
       name: 'description',
       content:
-        'Change the way you eat with our easy to follow recipes. We deliver fresh boxes of ingredients and delicious recipes 7 days a week. Get started now!',
+        "Every month, we send our club members a full-sized bottle of amazing craft gin from one of the world's finest distillers, in a treat-filled Gin of the Month box.",
     },
     {
       name: 'keywords',
-      content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking, recipe box',
+      content: 'Craft, delivery, gin, fresh, cocktails, drinks, subscription',
     },
   ],
 }
