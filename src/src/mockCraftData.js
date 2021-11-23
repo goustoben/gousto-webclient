@@ -14,6 +14,7 @@ export const craftCollections = {
 }
 
 const allItems = [
+  // gin
   {
     name: 'The Very Merry Gin Advent Calendar',
     src: 'https://cdn.shopify.com/s/files/1/0094/7319/6090/products/Advent_HP_500x500.jpg?v=1634304766',
