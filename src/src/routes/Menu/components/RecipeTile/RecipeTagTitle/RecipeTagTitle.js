@@ -11,7 +11,7 @@ const RecipeTagTitle = ({ brandTag }) => {
 
   const { theme, text } = brandTag
 
-  return React.createElement('div', { className: css.recipeTagTitle, style: getTagStyle(theme) }, text)
+  return (<div></div>)
 }
 
 RecipeTagTitle.propTypes = {

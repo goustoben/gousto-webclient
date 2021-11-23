@@ -11,8 +11,8 @@ const CookingTimeIcon = ({ cookingTime }) => {
   const percentage = getPercentageFromCookingTime(cookingTime)
 
   return (
-    <div className={css.cookingTimeIcon}>
-      <svg viewBox="0 0 36 36" className={css.circularChart}>
+    <div>
+      {/* <svg viewBox="0 0 36 36" className={css.circularChart}>
         <path
           className={css.circularChartCircleBg}
           d="M18 2.0845
@@ -28,7 +28,7 @@ const CookingTimeIcon = ({ cookingTime }) => {
         />
       </svg>
 
-      <div className={css.time}>{cookingTime}</div>
+      <div className={css.time}>{cookingTime}</div> */}
     </div>
   )
 }
