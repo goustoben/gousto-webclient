@@ -5,8 +5,8 @@ const defineTagCases = [
   [ {}, 'isObject' ],
   [ null, 'isPlain' ],
   [ undefined, 'isPlain' ],
-  [ 'boolean', 'isPlain' ],
-  [ 'number', 'isPlain' ],
+  [ true, 'isPlain' ],
+  [ 12, 'isPlain' ],
   [ 'string', 'isPlain' ],
   [ [
     {
@@ -44,7 +44,7 @@ describe('given state utils', () => {
       tag = defineTag(value)
     })
 
-    test(`then should return proper tag ${expected} for passed value`, () => {
+    test(`then should return proper tag ${expected} for passed value ${value}`, () => {
       expect(tag).toEqual(expected)
     })
   })
