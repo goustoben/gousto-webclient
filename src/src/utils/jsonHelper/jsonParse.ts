@@ -1,5 +1,10 @@
 import logger from 'utils/logger';
 
+// todo Replace this type shim once we have Datadog in place
+type Logger = {
+  error: (r: Record<string, unknown>) => void
+}
+
 /**
  * Module
  * ============================================================================
@@ -15,7 +20,7 @@ export function JSONParse(text: string, returnRawData: boolean): unknown { // es
 
     return JSON.parse(camelCaseText)
   } catch (e) {
-    logger.error({ message: `JSONParse failed with text: "${text}"`, errors: [e] })
+    (logger as Logger).error({ message: `JSONParse failed with text: "${text}"`, errors: [e] })
     throw new Error('An error occurred, please try again.')
   }
 }
