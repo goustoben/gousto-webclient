@@ -111,3 +111,8 @@ http://127.0.0.1:8888 with the size stats for each bundle and its dependencies.
 In local development, open the browser window at
 http://frontend.gousto.local:8080/?axe=1 in order to enable Axe. This will show
 the accessibility-related warnings on the pages.
+
+# Project history
+
+Gousto-Webclient was originally ported from Gousto2-Frontend. You can view the Git history of the JS code at:
+https://github.com/Gousto/Gousto2-FrontEnd/blob/750691d7/src/nodeserver/src

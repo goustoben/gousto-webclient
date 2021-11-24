@@ -1,4 +1,4 @@
-import { processJSON, parseObjectKeysToCamelCase } from '../jsonHelper'
+import { processJSON, parseObjectKeysToCamelCase } from '../../jsonHelper'
 
 describe('processJSON', () => {
   test('handle validation error response', async () => {
