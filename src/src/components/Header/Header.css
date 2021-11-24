@@ -274,7 +274,7 @@ span:target .overlay {
   height: 3rem;
   border-radius: 3px;
   background: White;
-  color: #343579;
+  color: #F4D34E;
   border: none;
   composes: fontStyleButtonL from 'design-language/typography.css';
   padding: 0.5rem 1.5rem;

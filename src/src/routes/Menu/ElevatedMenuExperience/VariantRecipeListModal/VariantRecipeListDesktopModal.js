@@ -17,30 +17,9 @@ export const VariantRecipeListDesktopModal = ({
   }
 
   return (
-    <ModalComponent
-      visible={!!currentExpandedRecipeVariantsDropdown}
-      from="top"
-      onClose={hideModal}
-      overlayContentClassName={css.variantRecipeListOverlayContent}
-    >
-      <ModalTitle className={css.variantRecipeListModalTitleWrapper}>
-        <h1 className={css.variantRecipeListModalTitle}>Options available</h1>
-        <button type="button" className={css.variantRecipeListModalCloseX} onClick={hideModal} />
-      </ModalTitle>
-      <ModalContent className={css.variantRecipeListModalContent}>
-        {
-          currentExpandedRecipeVariantsDropdown
-          && (
-            <VariantRecipeListModalContent
-              originalId={currentExpandedRecipeVariantsDropdown.originalId}
-              recipeId={currentExpandedRecipeVariantsDropdown.recipeId}
-              categoryId={currentExpandedRecipeVariantsDropdown.categoryId}
-              closeOnSelection={false}
-            />
-          )
-        }
-      </ModalContent>
-    </ModalComponent>
+    <div>
+
+    </div>
   )
 }
 VariantRecipeListDesktopModal.propTypes = {

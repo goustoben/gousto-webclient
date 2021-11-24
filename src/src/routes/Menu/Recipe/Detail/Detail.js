@@ -135,7 +135,7 @@ export const Detail = (props) => {
                 view={view}
                 surcharge={surcharge}
                 position={position}
-                buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
+                buttonText={isChefPrepared ? 'Add item' : 'Add item'}
               />
             </div>
           )

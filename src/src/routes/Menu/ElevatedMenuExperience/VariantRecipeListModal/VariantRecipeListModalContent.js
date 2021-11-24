@@ -12,7 +12,7 @@ export const VariantRecipeListModalContent = ({ recipeId, originalId, categoryId
       closeOnSelection={closeOnSelection}
     />
 
-    <DetailAddRecipe id={recipeId} buttonText="Add recipe" closeOnAdd />
+    <DetailAddRecipe id={recipeId} buttonText="Add item" closeOnAdd />
   </React.Fragment>
 )
 

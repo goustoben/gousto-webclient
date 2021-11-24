@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: CraftYellow;
+  background-color: CraftYellow !important;
 }
 
 .ctaInnerContainer {
@@ -29,7 +29,7 @@
 }
 
 .ctaButton {
-  border: 1px solid CraftYellow !important;
+  border: 1px solid Blackberry !important;
   border-radius: 3px;
   color: White;
   background-color: CraftYellow !important;
@@ -46,7 +46,7 @@
 }
 
 .ctaButton:hover {
-  background-color: rgb(30, 44, 72, 0.9);
+  background-color: CraftYellow;
   cursor: pointer;
   color: White;
 }

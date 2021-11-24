@@ -14,19 +14,11 @@ const VariantHeader = ({ recipeVariants, isOutOfStock, textOverride }) => {
     return null
   }
 
-  const alternativeCount = recipeVariants.alternatives.size + 1
-  const text = textOverride || `${alternativeCount} options available`
+  // const alternativeCount = recipeVariants.alternatives.size + 1
+  // const text = textOverride
 
   return (
-    <div
-      className={classnames(
-        css.variantHeader,
-        css.themeBlue,
-        css.positionTop,
-        css.textLeft
-      )}
-    >
-      {text}
+    <div>
     </div>
   )
 }
