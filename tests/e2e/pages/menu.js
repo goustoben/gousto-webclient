@@ -50,6 +50,7 @@ module.exports = {
         }
       ]
     },
+
     recipes: {
       selector: '*[data-testing="menuRecipes"]',
 
@@ -76,25 +77,18 @@ module.exports = {
             firstAddRecipe.click()
           })
         },
-        addRecipes: function () {
+        addRecipes: async function () {
           const nightwatchContext = this
 
           const addRecipeButtonSelector = nightwatchContext.elements.addRecipeButton.selector
 
-          nightwatchContext.api.elements('css selector', addRecipeButtonSelector, result => {
-
-            const status = result.status
-
-            if (status !== 0){
-              throw new Error(`Unexpected status ${status} when retrieving elements matching css selector "${addRecipeButtonSelector}". Full result was: ${JSON.stringify(result)}`)
+          for (let i = 0; i < 3; i++) {
+            try {
+              await addRecipe(i, addRecipeButtonSelector, nightwatchContext)
+            } catch (err) {
+              throw new Error(`Unable to click add recipe button: selector=${addRecipeButtonSelector}; index=${i}; error=${JSON.stringify(err)}`)
             }
-
-            const addRecipeButtonElements = result.value
-
-            for (let i = 0; i < 3; i++) {
-              addRecipe(i, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext)
-            }
-          })
+          }
         },
       }],
     },
@@ -157,27 +151,28 @@ module.exports = {
   }],
 }
 
-function clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonElementId, dismissableInterceptingElementSelectors, nightwatchContext, firstClickAttempt = true) {
-  nightwatchContext.api.elementIdClick(addRecipeButtonElementId, result => {
+function clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonUUID, dismissableInterceptingElementSelectors, nightwatchContext, firstClickAttempt = true) {
+  nightwatchContext.api.elementIdClick(addRecipeButtonUUID, result => {
     const status = result.status
 
     if (status !== 0) {
       if (firstClickAttempt && status === -1 && result.errorStatus === 64 && result.value.message.startsWith('element click intercepted')) {
         dismissableInterceptingElementSelectors.map(selectors => nightwatchContext.optionallyClickToDismiss(selectors))
-        clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonElementId, dismissableInterceptingElementSelectors, nightwatchContext, false)
+        clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(addRecipeButtonUUID, dismissableInterceptingElementSelectors, nightwatchContext, false)
       } else {
-        throw new Error(`Unexpected status ${status} when clicking element with ID "${addRecipeButtonElementId}". Full result was: ${JSON.stringify(result)}`)
+        throw new Error(`Unexpected status ${status} when clicking element with ID "${addRecipeButtonUUID}". Full result was: ${JSON.stringify(result)}`)
       }
     }
   })
 }
 
-function addRecipe(recipeIndex, addRecipeButtonElements, addRecipeButtonSelector, nightwatchContext) {
-  const addRecipeButtonElementId = addRecipeButtonElements[recipeIndex].ELEMENT
-
+async function addRecipe(recipeIndex, addRecipeButtonSelector, nightwatchContext) {
   nightwatchContext.executeAndThrowOnFailure(`document.querySelectorAll('${addRecipeButtonSelector}')[${recipeIndex}].scrollIntoView({ block: "center" })`, [])
+
+  const addRecipeButtonUUID = await getNightwatchUUID(nightwatchContext, addRecipeButtonSelector, recipeIndex)
+
   clickElementWithIdAndOptionallyDismissInterceptingElementsByClickingThem(
-    addRecipeButtonElementId,
+    addRecipeButtonUUID,
     [
       '[data-testing="promoModal"] [data-testing="modal-close-button"]',
       '[data-testing="spotlight-overlay"]',
@@ -186,4 +181,16 @@ function addRecipe(recipeIndex, addRecipeButtonElements, addRecipeButtonSelector
     ],
     nightwatchContext
   );
+}
+
+async function getNightwatchUUID(nightwatchContext, cssSelector, index = 0) {
+  return new Promise((resolve, reject) => {
+    nightwatchContext.api.elements('css selector', cssSelector, result => {
+      if (result.status !== 0) {
+        reject(result)
+      } else {
+        resolve(result.value[index].ELEMENT)
+      }
+    })
+  })
 }

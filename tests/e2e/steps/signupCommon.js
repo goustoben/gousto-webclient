@@ -56,8 +56,9 @@ module.exports = {
         menu.section.recipes.checkIfRecipesVisible()
         done()
       })
-      .perform(function (done) {
-        menu.section.recipes.addRecipes()
+      .perform(async function (done) {
+        // Flaky fix count: 2
+        await menu.section.recipes.addRecipes()
         done()
       })
       .perform(function (done) {

@@ -8,7 +8,6 @@ const koaMount = require('koa-mount')
 const bodyParser = require('koa-body')
 const { renderToString } = require('react-dom/server')
 const Footer = require('Footer').default
-const logger = require('utils/logger').default
 const { Provider } = require('react-redux')
 const path = require('path')
 /* eslint-disable-next-line import/no-extraneous-dependencies */
@@ -28,6 +27,7 @@ const withStatic = process.env.withStatic === 'true'
 
 const uuidv1 = require('uuid/v1')
 const { loggerSetUuid } = require('actions/logger')
+const logger = require('./utils/logger').default
 const addressLookupRoute = require('./routes/addressLookup').default
 const { performanceTestPage } = require('./routes/performanceTest')
 const routes = require('./routes').default
