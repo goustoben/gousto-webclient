@@ -11,6 +11,7 @@ const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 const clientProtocol = nodeConfig.get('client_protocol')
 const cloudfrontUrl = nodeConfig.get('cloudfront_url')
 const datadogBrowserLogsToken = nodeConfig.get('datadog_browser_logs_token')
+const datadogRumSDKToken = nodeConfig.get('datadog_rum_sdk_token')
 const datadogEnabled = nodeConfig.get('datadog_enabled')
 const domain = nodeConfig.get('domain')
 const endpoints = nodeConfig.get('endpoints')
@@ -30,6 +31,7 @@ const webpackEnvVarsBase = {
   __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
   __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
   __DATADOG_BROWSER_LOGS_TOKEN__: JSON.stringify(datadogBrowserLogsToken),
+  __DATADOG_RUM_SDK_TOKEN__: JSON.stringify(datadogRumSDKToken),
   __DATADOG_ENABLED__: JSON.stringify(datadogEnabled),
   __DOMAIN__: JSON.stringify(domain),
   __ENDPOINTS__: JSON.stringify(endpoints),
@@ -77,24 +79,24 @@ const webpackEnvVarsServer = {
 }
 
 module.exports = {
-    webpackEnvVarsDev,
-    webpackEnvVarsClient,
-    webpackEnvVarsServer,
-    apiName,
-    apiToken,
-    authClientId,
-    authClientSecret,
-    build,
-    checkout_pk,
-    clientDevServerEnabled,
-    clientProtocol,
-    cloudfrontUrl,
-    domain,
-    endpoints,
-    envName,
-    hmrEnabled,
-    publicPath,
-    recaptchaReferralPrivateKey,
-    recaptchaReferralPublicKey,
-    runningEnv,
+  webpackEnvVarsDev,
+  webpackEnvVarsClient,
+  webpackEnvVarsServer,
+  apiName,
+  apiToken,
+  authClientId,
+  authClientSecret,
+  build,
+  checkout_pk,
+  clientDevServerEnabled,
+  clientProtocol,
+  cloudfrontUrl,
+  domain,
+  endpoints,
+  envName,
+  hmrEnabled,
+  publicPath,
+  recaptchaReferralPrivateKey,
+  recaptchaReferralPublicKey,
+  runningEnv,
 }

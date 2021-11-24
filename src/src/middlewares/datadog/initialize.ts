@@ -1,25 +1,19 @@
-import '@datadog/browser-logs/bundle/datadog-logs'
-import { LogsInitConfiguration } from '@datadog/browser-logs'
+import { datadogLogs, LogsInitConfiguration } from '@datadog/browser-logs'
+import { datadogRum, RumInitConfiguration } from '@datadog/browser-rum'
 
-import { sharedConfig } from './config'
+import { browserLogsConfig, RUMSDKConfig } from './config'
 
-declare global {
-  interface Window {
-    DD_LOGS: any
-  }
-  const __ENV__: string
-  const __DATADOG_ENABLED__: boolean
+const initializeDatadogLoggingSDK = (config: LogsInitConfiguration): void => {
+  datadogLogs.init(config)
 }
 
-const initializeDatadogLoggingSDK = (sharedConfig: LogsInitConfiguration) => {
-  window.DD_LOGS.init({
-    ...sharedConfig,
-    forwardErrorsToLogs: true,
-  })
+const initializeDatadogRUMSDK = (config: RumInitConfiguration): void => {
+  datadogRum.init(config)
 }
 
-export const initializeDatadog = () => {
+export const initializeDatadog = (): void => {
   if (__DATADOG_ENABLED__) {
-    initializeDatadogLoggingSDK(sharedConfig)
+    initializeDatadogLoggingSDK(browserLogsConfig)
+    initializeDatadogRUMSDK(RUMSDKConfig)
   }
 }

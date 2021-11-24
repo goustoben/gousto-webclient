@@ -2,5 +2,22 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "lib": ["ES2015", "ES2015.Promise", "dom"]
-  }
+  },
+  "exclude": [
+    "./**/node_modules",
+    "./config",
+    "./dist",
+    "./jest",
+    "./node_modules",
+    "./libs",
+    "./libs/goustouicomponents/.github",
+    "./libs/goustouicomponents/.storybook",
+    "./libs/goustouicomponents/dist",
+    "./libs/goustouicomponents/setup",
+    "./public",
+    "./scripts",
+    "./server",
+    "**/__tests__/**/*"
+  ],
+  "include": ["./**/*"]
 }

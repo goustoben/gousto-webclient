@@ -13,6 +13,7 @@
     "module": "ES2015",
     "moduleResolution": "node",
     "outDir": "../lib/client",
+    "types": ["jest", "node"],
     "paths": {
       "_testing/*": ["./src/_testing/*"],
       "*": ["./src/components/*", "../libs/goustouicomponents/./*"],
@@ -48,21 +49,5 @@
     "strict": true,
     "target": "es5",
   },
-  "exclude": [
-    "./**/node_modules",
-    "./config",
-    "./dist",
-    "./jest",
-    "./node_modules",
-    "./libs",
-    "./libs/goustouicomponents/.github",
-    "./libs/goustouicomponents/.storybook",
-    "./libs/goustouicomponents/dist",
-    "./libs/goustouicomponents/setup",
-    "./public",
-    "./scripts",
-    "./server",
-    "**/__tests__/**/*"
-  ],
-  "include": ["./**/*"]
+  "include": ["./src/types/**/*"]
 }
