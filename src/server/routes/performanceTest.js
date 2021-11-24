@@ -8,6 +8,7 @@ function renderPerformanceTestPage() {
         <meta name="robots" content="noindex">
       </head>
       <body>
+        <p>Performance test content</p>
       </body>
     </html>
   `
