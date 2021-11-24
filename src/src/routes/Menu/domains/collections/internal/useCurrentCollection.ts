@@ -1,22 +1,27 @@
+import { OrderedMap as IOrderedMap } from 'immutable'
 import { CollectionSlug } from '../constants'
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
+import { MenuCollection } from '../../../types'
 
-const getCollectionBySlug = (collections, slug) => {
+const getCollectionBySlug = (collections: IOrderedMap<string, MenuCollection>, slug: string) => {
   if (!slug) {
     return null
   }
 
-  const collection = collections.find(c => c.get('slug') === slug)
+  const collection = collections.find((c) => c !== undefined && c.get('slug') === slug)
 
   return collection || null
 }
 
-const getCollectionSlug = collection => collection.get('slug')
-const isCollectionDefault = collection => Boolean(collection.get('default'))
-const isCollectionRecommendations = collection => getCollectionSlug(collection) === CollectionSlug.Recommendations
+const getCollectionSlug = (collection?: MenuCollection) =>
+  collection !== undefined && collection.get('slug')
+const isCollectionDefault = (collection?: MenuCollection) =>
+  collection !== undefined && Boolean(collection.get('default'))
+const isCollectionRecommendations = (collection?: MenuCollection) =>
+  getCollectionSlug(collection) === CollectionSlug.Recommendations
 
-const getDefaultCollection = collections => {
+const getDefaultCollection = (collections: IOrderedMap<string, MenuCollection>) => {
   const defaultCollection = collections.find(isCollectionDefault)
 
   if (defaultCollection) {
@@ -36,7 +41,7 @@ const getDefaultCollection = collections => {
   return null
 }
 
-export const useCurrentCollection = () => {
+export const useCurrentCollection = (): MenuCollection | null => {
   const slug = useCollectionQuerySlug()
   const collections = useDisplayedCollections()
 

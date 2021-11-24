@@ -1,34 +1,65 @@
 import Immutable from 'immutable'
+import { mocked } from 'ts-jest/utils'
+
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
-
 import { useCurrentCollection } from './useCurrentCollection'
 import { CollectionSlug } from '../constants'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: jest.fn()
+  useSelector: jest.fn(),
 }))
 
 jest.mock('./useCollectionQuerySlug')
 jest.mock('./useDisplayedCollections')
 
+const mockedUseCollectionQuerySlug = mocked(useCollectionQuerySlug, true)
+const mockedUseDisplayedCollections = mocked(useDisplayedCollections, true)
+
 describe('useCurrentCollection', () => {
-  const defaultCollection = Immutable.Map({ id: '101', published: true, default: true, slug: 'foo' })
-  const recommendationsCollection = Immutable.Map({ id: '102', published: true, default: false, slug: CollectionSlug.Recommendations })
-  const normalCollection = Immutable.Map({ id: '103', published: true, default: false, slug: 'pastas' })
-  const normalCollectionTwo = Immutable.Map({ id: '104', published: true, default: false, slug: 'pizzas' })
+  const defaultCollection = Immutable.Map({
+    id: '101',
+    published: true,
+    default: true,
+    slug: 'foo',
+  })
+  const recommendationsCollection = Immutable.Map({
+    id: '102',
+    published: true,
+    default: false,
+    slug: CollectionSlug.Recommendations,
+  })
+  const normalCollection = Immutable.Map({
+    id: '103',
+    published: true,
+    default: false,
+    slug: 'pastas',
+  })
+  const normalCollectionTwo = Immutable.Map({
+    id: '104',
+    published: true,
+    default: false,
+    slug: 'pizzas',
+  })
 
   beforeEach(() => {
     jest.clearAllMocks()
 
-    useCollectionQuerySlug.mockReturnValue(null)
-    useDisplayedCollections.mockReturnValue(Immutable.List([normalCollection, normalCollectionTwo, recommendationsCollection, defaultCollection]))
+    mockedUseCollectionQuerySlug.mockReturnValue(null)
+    mockedUseDisplayedCollections.mockReturnValue(
+      Immutable.List([
+        normalCollection,
+        normalCollectionTwo,
+        recommendationsCollection,
+        defaultCollection,
+      ])
+    )
   })
 
   describe('when there is a slug matching a collection', () => {
     beforeEach(() => {
-      useCollectionQuerySlug.mockReturnValue(normalCollection.get('slug'))
+      mockedUseCollectionQuerySlug.mockReturnValue(normalCollection.get('slug'))
     })
 
     test('should return that collection', () => {
@@ -47,7 +78,9 @@ describe('useCurrentCollection', () => {
 
     describe('when there is no default collection', () => {
       beforeEach(() => {
-        useDisplayedCollections.mockReturnValue(Immutable.List([normalCollection, normalCollectionTwo, recommendationsCollection]))
+        mockedUseDisplayedCollections.mockReturnValue(
+          Immutable.List([normalCollection, normalCollectionTwo, recommendationsCollection])
+        )
       })
 
       test('should return recommendations collection', () => {
@@ -58,7 +91,9 @@ describe('useCurrentCollection', () => {
 
       describe('when there is no recommendations collection', () => {
         beforeEach(() => {
-          useDisplayedCollections.mockReturnValue(Immutable.List([normalCollection, normalCollectionTwo]))
+          mockedUseDisplayedCollections.mockReturnValue(
+            Immutable.List([normalCollection, normalCollectionTwo])
+          )
         })
 
         test('should return first collection in list', () => {
