@@ -3,7 +3,7 @@ import React from 'react'
 import moment from 'moment'
 import config from 'config'
 import * as trackingKeys from 'actions/trackingKeys'
-import { client as clientRoutes } from 'config/routes'
+import { client as clientRoutes, giftCardsURL } from 'config/routes'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
@@ -64,6 +64,7 @@ export const Footer = ({
   simple,
   type,
   trackNavigationClick,
+  isGiftCardsLinkVisible,
   isCorporateEnquiriesLinkVisible,
 }) => {
   const renderTermsLink = () => (
@@ -92,6 +93,24 @@ export const Footer = ({
       </Link>
     </li>
   )
+
+  const renderGiftCardsLink = () =>
+    isGiftCardsLinkVisible && (
+      <li className={css.menuItem}>
+        <Link
+          to={giftCardsURL}
+          data-selid="footer-gift-cards"
+          title="Gift Cards"
+          clientRouted={false}
+          secondary
+          tracking={() => trackNavigationClick({
+            actionType: trackingKeys.clickGiftCardsFooterLink,
+          })}
+        >
+          Gift Cards
+        </Link>
+      </li>
+    )
 
   const renderCorporateEnquiriesLink = () =>
     isCorporateEnquiriesLinkVisible && (
@@ -160,6 +179,7 @@ export const Footer = ({
       </li>
       {renderPrivacyLink()}
       {renderModernSlaveryLink()}
+      {renderGiftCardsLink()}
       {renderCorporateEnquiriesLink()}
     </ul>
   )
@@ -268,6 +288,7 @@ Footer.propTypes = {
   simple: PropTypes.bool,
   type: PropTypes.string,
   trackNavigationClick: PropTypes.func.isRequired,
+  isGiftCardsLinkVisible: PropTypes.bool,
   isCorporateEnquiriesLinkVisible: PropTypes.bool,
 }
 
@@ -276,5 +297,6 @@ Footer.defaultProps = {
   isAuthenticated: false,
   simple: false,
   type: 'medium',
+  isGiftCardsLinkVisible: true,
   isCorporateEnquiriesLinkVisible: true,
 }

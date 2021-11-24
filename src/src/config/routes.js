@@ -200,4 +200,6 @@ module.exports = {
   userFeedback: {
     feedback: '/feedback'
   },
+
+  giftCardsURL: 'https://www.digiistore.com/gousto-giftcard/'
 }

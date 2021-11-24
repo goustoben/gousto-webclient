@@ -263,4 +263,42 @@ describe('<Footer />', () => {
       expect(corporateEnquiries.exists()).toBeFalsy()
     })
   })
+
+  describe('when isGiftCardsLinkVisible is true', () => {
+    let element
+
+    beforeEach(() => {
+      wrapper.setProps({
+        isGiftCardsLinkVisible: true
+      })
+      element = wrapper.find('[data-selid="footer-gift-cards"]')
+    })
+
+    test('then the Gift Cards link should be visible', () => {
+      expect(element.exists()).toBe(true)
+    })
+
+    describe('when link is clicked', () => {
+      beforeEach(() => {
+        element.prop('tracking')()
+      })
+
+      test('then trackNavigationClick should be called with a proper parameter', () => {
+        expect(trackNavigationClick).toHaveBeenCalledWith({ actionType: 'click_gift_cards_footer' })
+      })
+    })
+  })
+
+  describe('when isGiftCardsLinkVisible is false', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isGiftCardsLinkVisible: false
+      })
+    })
+
+    test('then corporate enquiries link should be hidden', () => {
+      const element = wrapper.find('[data-selid="footer-gift-cards"]')
+      expect(element.exists()).toBe(false)
+    })
+  })
 })
