@@ -61,7 +61,8 @@ module.exports = {
     'process.env.NODE_ENV': 'production',
     __ENDPOINTS__: {},
     __DATADOG_ENABLED__: false,
-    __DATADOG_BROWSER_LOGS_TOKEN__: 'CLIENT_TOKEN',
+    __DATADOG_BROWSER_LOGS_TOKEN__: 'BROWSER_LOGS_TOKEN',
+    __DATADOG_RUM_SDK_TOKEN__: 'RUM_SDK_TOKEN',
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.tests.json',
     }

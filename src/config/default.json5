@@ -9,6 +9,7 @@
   "cloudfront_url": "",
   "checkout_pk": "",
   "datadog_browser_logs_token": "",
+  "datadog_rum_sdk_token": "",
   "datadog_enabled": false,
   "hmr_enabled": false,
   "client_dev_server_enabled": false,

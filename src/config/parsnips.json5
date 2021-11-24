@@ -3,6 +3,7 @@
   "domain": "gousto.info",
   "running_env": "live",
   "datadog_browser_logs_token": "",
+  "datadog_rum_sdk_token": "",
   "datadog_enabled": false,
   "endpoints": {
     "parsnips": {

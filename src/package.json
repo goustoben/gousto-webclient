@@ -45,7 +45,8 @@
   },
   "dependencies": {
     "@axe-core/react": "^4.1.1",
-    "@datadog/browser-logs": "^3.7.0",
+    "@datadog/browser-logs": "^3.8.0",
+    "@datadog/browser-rum": "^3.8.0",
     "@optimizely/optimizely-sdk": "^4.1.0",
     "actual": "0.4.0",
     "airbnb-prop-types": "^2.16.0",
@@ -102,7 +103,6 @@
     "swr": "^0.5.6",
     "transit-immutable-js": "0.7.0",
     "transit-js": "0.8.861",
-    "ts-jest": "^27.0.5",
     "url": "0.11.0",
     "uuid": "3.3.2",
     "validator": "10.4.0"
@@ -177,6 +177,7 @@
     "style-loader": "0.23.1",
     "svg-url-loader": "^2.3.2",
     "terser-webpack-plugin": "1.1.0",
+    "ts-jest": "^27.0.7",
     "ts-loader": "^8.3.0",
     "tslib": "^2.3.1",
     "typescript": "^4.4.2",
