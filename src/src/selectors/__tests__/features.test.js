@@ -38,6 +38,7 @@ import {
   getSsrTwoComplaintsSameDay,
   getIsCorporateEnquiriesLinkVisible,
   getIsSsrRepetitiveIssues,
+  getIsGiftCardsLinkVisible,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -91,6 +92,7 @@ describe('when features are defined', () => {
     [getSsrTwoComplaintsSameDay, 'ssrTwoComplaintsSameDay'],
     [getIsCorporateEnquiriesLinkVisible, 'isCorporateEnquiriesLinkVisible'],
     [getIsSsrRepetitiveIssues, 'isSsrRepetitiveIssues'],
+    [getIsGiftCardsLinkVisible, 'isGiftCardsLinkVisible'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
