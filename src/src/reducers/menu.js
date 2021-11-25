@@ -11,7 +11,6 @@ export const menuInitialState = Immutable.Map({
   menuLimits: [],
   menuVariants: Immutable.fromJS({}),
   selectedRecipeVariants: {},
-  currentExpandedRecipeVariantsDropdown: null,
   collectionHeaders: {},
   hasCalculatedTimeToUsable: false,
   hasVisitedNonMenuPage: false,
@@ -51,27 +50,12 @@ const menu = {
     case actionTypes.MENU_RECIPE_VARIANT_SELECTED: {
       const originalVariants = state.get('selectedRecipeVariants')
       const newVariants = switchSelectedVariants(originalVariants, action.payload)
-      const { close = true, variantId, collectionId, originalRecipeId } = action.payload
 
-      if (!close) {
-        return state.set('selectedRecipeVariants', newVariants).set('currentExpandedRecipeVariantsDropdown', {
-          recipeId: variantId,
-          collectionId,
-          originalRecipeId,
-        })
-      }
-
-      return state
-        .set('currentExpandedRecipeVariantsDropdown', null)
-        .set('selectedRecipeVariants', newVariants)
+      return state.set('selectedRecipeVariants', newVariants)
     }
 
     case actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS: {
       return state.set('selectedRecipeVariants', {})
-    }
-
-    case actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED: {
-      return state.set('currentExpandedRecipeVariantsDropdown', action.payload.recipeData)
     }
 
     case actionTypes.MENU_COLLECTIONS_HEADERS_RECEIVED: {
@@ -279,4 +263,5 @@ const menu = {
 
 }
 
+// eslint-disable-next-line import/no-default-export
 export default menu

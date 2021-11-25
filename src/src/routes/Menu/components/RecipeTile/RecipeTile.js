@@ -86,6 +86,7 @@ const RecipeTile = ({
             originalId={originalId}
             categoryId={categoryId}
             fdiStyling={fdiStyling}
+            hasAlternativeOptions={showVariantHeader}
           />
         </div>
       </div>

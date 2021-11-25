@@ -24,6 +24,9 @@ describe('<RecipeTilePurchaseInfoContainer />', () => {
 
   const mockStore = configureMockStore()
   const store = mockStore({
+    request: Immutable.fromJS({
+      browser: 'mobile',
+    }),
     recipes: Immutable.fromJS({
       [recipeId]: recipe
     }),

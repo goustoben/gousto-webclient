@@ -6,7 +6,6 @@ import { getSurchargeForRecipe, getVariantsForRecipeForCurrentCollection } from 
 import { getInStockRecipes } from 'routes/Menu/selectors/recipeList'
 import { getCurrentMenuVariants } from 'routes/Menu/selectors/variants'
 import { getNumPortions } from 'selectors/basket'
-import { getCurrentExpandedRecipeVariantsDropdown } from 'selectors/menu'
 import { getRecipeTitle } from 'selectors/recipe'
 import { getRecipes } from 'selectors/root'
 import { Recipe, RecipeImmutable, CollectionImmutable } from './types'
@@ -54,7 +53,6 @@ type AllCollections = Immutable.Map<string, CollectionImmutable>
 
 export const useAlternativeOptions: UseAlternativeOptions = ({allCollections} = {}) => {
   const collectionIdFromDetails = useSelector<RootStateOrAny, string | undefined>(getMenuCategoryIdForDetails)
-  const currentlyExpandedVariantsDropdown = useSelector<RootStateOrAny, {collectionId: string}>(getCurrentExpandedRecipeVariantsDropdown)
   const recipesVariants = useSelector<RootStateOrAny, {[k: Recipe['id']]: Recipe}>(getCurrentMenuVariants)
   const recipes = useSelector<RootStateOrAny, RecipeImmutable[]>(getCurrentMenuRecipes)
   const allRecipesAsMap = useSelector(getRecipes)
@@ -64,7 +62,7 @@ export const useAlternativeOptions: UseAlternativeOptions = ({allCollections} = 
   const dispatch = useDispatch()
 
   const getAlternativeOptionsForRecipe: GetAlternativeOptionsForRecipe = ({recipeId, originalId, categoryId, isOnDetailScreen, isFromShowcaseMenu, closeOnSelection}) => {
-    const collectionId = categoryId || collectionIdFromDetails || currentlyExpandedVariantsDropdown.collectionId
+    const collectionId = categoryId || collectionIdFromDetails
 
     if (! collectionId) {
       throw new Error(`Failed to obtain collectionId while determining Alternative Options for ${recipeId} recipe`)

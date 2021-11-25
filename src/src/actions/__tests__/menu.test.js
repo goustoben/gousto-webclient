@@ -25,7 +25,6 @@ import menuActions, {
   menuBrowseCTAVisibilityChange,
   menuLoadComplete,
   menuReceiveBoxPrices,
-  recipeVariantDropdownExpanded,
   menuLoadBoxPrices,
   trackSidesContinueClicked,
   trackViewSidesModal,
@@ -344,40 +343,6 @@ describe('menu actions', () => {
         type: actionTypes.MENU_BOX_PRICES_RECEIVE,
         prices,
         tariffId,
-      })
-    })
-  })
-
-  describe('recipeVariantDropdownExpanded', () => {
-    const recipeData = {
-      recipeId: '123'
-    }
-
-    test('should return action MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED with no recipe data', () => {
-      const result = recipeVariantDropdownExpanded(null)
-      expect(result).toEqual({
-        type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
-        payload: {
-          recipeData: null,
-        },
-        trackingData: {
-          actionType: 'disclose_recipe_variants',
-          show: false,
-        },
-      })
-    })
-
-    test('should return action MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED with recipe data', () => {
-      const result = recipeVariantDropdownExpanded(recipeData)
-      expect(result).toEqual({
-        type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
-        payload: {
-          recipeData,
-        },
-        trackingData: {
-          actionType: 'disclose_recipe_variants',
-          show: true,
-        },
       })
     })
   })

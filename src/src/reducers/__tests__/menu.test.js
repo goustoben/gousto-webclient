@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
 import {
   clearSelectedRecipeVariants,
-  recipeVariantDropdownExpanded,
   menuLoadingError
 } from '../../actions/menu'
 import { selectRecipeVariantAction, initSelectedRecipeVariantAction } from '../../routes/Menu/actions/menuRecipeDetails'
@@ -204,16 +203,6 @@ describe('menu reducer', () => {
         const action = clearSelectedRecipeVariants()
 
         const result = menu.menu(stateWithSelectedVariants, action)
-        expect(result).toEqual(expectedState)
-      })
-    })
-
-    describe('MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED', () => {
-      const recipeId = '1234'
-      const action = recipeVariantDropdownExpanded({ recipeId })
-      test('should set recipeVariantDropdownExpanded entry to the recipe id', () => {
-        const result = menu.menu(menuInitialState, action)
-        const expectedState = menuInitialState.set('currentExpandedRecipeVariantsDropdown', { recipeId })
         expect(result).toEqual(expectedState)
       })
     })

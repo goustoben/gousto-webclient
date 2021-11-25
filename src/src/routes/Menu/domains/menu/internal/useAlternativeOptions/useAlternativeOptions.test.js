@@ -391,7 +391,6 @@ function createMockState(args = {}) {
           },
         }
       }),
-      currentExpandedRecipeVariantsDropdown: { recipeId: RECIPE_ID_1 },
     }),
   }
 

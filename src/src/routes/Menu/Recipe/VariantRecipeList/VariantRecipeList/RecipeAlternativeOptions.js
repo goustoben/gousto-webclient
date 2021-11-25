@@ -60,7 +60,7 @@ RecipeAlternativeOptions.propTypes = {
   recipeId: PropTypes.string.isRequired,
   originalId: PropTypes.string.isRequired,
   categoryId: PropTypes.string,
-  closeOnSelection: PropTypes.func,
+  closeOnSelection: PropTypes.bool,
   isOnDetailScreen: PropTypes.bool,
 }
 

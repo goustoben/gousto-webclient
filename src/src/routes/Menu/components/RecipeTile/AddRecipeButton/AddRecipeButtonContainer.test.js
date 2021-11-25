@@ -51,6 +51,5 @@ describe('<AddRecipeButtonContainer />', () => {
     expect(button.prop('isInBasket')).toEqual(false)
     expect(button.prop('isBasketLimitReached')).toEqual(false)
     expect(button.prop('buttonProps')).toEqual({buttonClassName: 'addButton', buttonText: 'Add recipe', lineClassName: 'addButtonLine'})
-    expect(button.prop('recipeVariants')).toEqual(null)
   })
 })

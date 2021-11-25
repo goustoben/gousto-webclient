@@ -2,6 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
+import { SwapAlternativeOptions } from '../SwapAlternativeOptions/SwapAlternativeOptions'
+import { SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions/SwapAlternativeOptionsMobile'
 
 describe('RecipeTilePurchaseInfo', () => {
   let wrapper
@@ -9,7 +11,11 @@ describe('RecipeTilePurchaseInfo', () => {
     surcharge: 0,
     isOutOfStock: false,
     recipeId: '123',
-    isFineDineIn: false
+    isFineDineIn: false,
+    browserType: 'mobile',
+    hasAlternativeOptions: false,
+    categoryId: 'some category ID',
+    originalId: 'some Original ID',
   }
 
   describe('when the recipe is out of stock', () => {
@@ -133,6 +139,70 @@ describe('RecipeTilePurchaseInfo', () => {
 
     test('should have class of surchargeInfoIsFineDineIn', () => {
       expect(wrapper.find('.surchargeInfo').length).toEqual(1)
+    })
+  })
+
+  describe('when there is no Alternative options for a recipe', () => {
+    beforeEach(() => {
+      wrapper = shallow(<RecipeTilePurchaseInfo
+        {...defaultProps}
+        hasAlternativeOptions={false}
+      />)
+    })
+
+    test('should not render buttons for swapping alternative options', () => {
+      expect(wrapper.find(SwapAlternativeOptions)).toHaveLength(0)
+      expect(wrapper.find(SwapAlternativeOptionsMobile)).toHaveLength(0)
+    })
+  })
+
+  describe('when there are Alternative options for recipe', () => {
+    describe('when it is mobile browser', () => {
+      beforeEach(() => {
+        const props = {
+          ...defaultProps,
+          hasAlternativeOptions: true,
+          browserType: 'mobile',
+        }
+        wrapper = shallow(<RecipeTilePurchaseInfo
+          {...props}
+        />)
+      })
+
+      test('should render mobile component for swapping alternative options', () => {
+        expect(wrapper.find(SwapAlternativeOptions)).toHaveLength(0)
+        expect(wrapper.find(SwapAlternativeOptionsMobile)).toHaveLength(1)
+      })
+
+      test('should pass the necessary props down to the swapping alternative options component', () => {
+        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('recipeId')).toEqual(defaultProps.recipeId)
+        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('originalId')).toEqual(defaultProps.originalId)
+        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('categoryId')).toEqual(defaultProps.categoryId)
+      })
+    })
+
+    describe('when it is not mobile browser', () => {
+      beforeEach(() => {
+        const props = {
+          ...defaultProps,
+          hasAlternativeOptions: true,
+          browserType: 'desktop',
+        }
+        wrapper = shallow(<RecipeTilePurchaseInfo
+          {...props}
+        />)
+      })
+
+      test('should render Desktop specific component for swapping alternative options', () => {
+        expect(wrapper.find(SwapAlternativeOptions)).toHaveLength(1)
+        expect(wrapper.find(SwapAlternativeOptionsMobile)).toHaveLength(0)
+      })
+
+      test('should pass the necessary props down to the swapping alternative options component', () => {
+        expect(wrapper.find(SwapAlternativeOptions).prop('recipeId')).toEqual(defaultProps.recipeId)
+        expect(wrapper.find(SwapAlternativeOptions).prop('originalId')).toEqual(defaultProps.originalId)
+        expect(wrapper.find(SwapAlternativeOptions).prop('categoryId')).toEqual(defaultProps.categoryId)
+      })
     })
   })
 })

@@ -5,30 +5,22 @@ import css from './AddRecipeButton.css'
 export const AddRecipeButton = ({
   basketRecipeAddAttempt,
   basketRecipeRemove,
-  recipeVariantDropdownExpanded,
   recipeId,
-  categoryId,
-  originalId,
   isInBasket,
   isBasketLimitReached,
   buttonProps,
-  recipeVariants,
-  hasBasketPostcode
 }) => {
   const disabled = isBasketLimitReached && !isInBasket
-
-  const hasAlternatives = recipeVariants && recipeVariants.type === 'alternatives'
 
   const buttonAction = (e) => {
     if (isInBasket) {
       basketRecipeRemove(recipeId)
-    } else if (hasAlternatives && hasBasketPostcode) {
-      recipeVariantDropdownExpanded({ recipeId, originalId, categoryId })
     } else {
       basketRecipeAddAttempt(recipeId)
     }
     e.stopPropagation()
   }
+
   const buttonKeyPressAction = (e) => {
     e.stopPropagation()
     if (e.keyCode === 13) {
@@ -62,26 +54,15 @@ export const AddRecipeButton = ({
 }
 AddRecipeButton.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  categoryId: PropTypes.string.isRequired,
-  originalId: PropTypes.string.isRequired,
   basketRecipeAddAttempt: PropTypes.func.isRequired,
   basketRecipeRemove: PropTypes.func.isRequired,
-  recipeVariantDropdownExpanded: PropTypes.func.isRequired,
   isInBasket: PropTypes.bool.isRequired,
-  hasBasketPostcode: PropTypes.bool.isRequired,
   isBasketLimitReached: PropTypes.bool.isRequired,
   buttonProps: PropTypes.shape({
     buttonClassName: PropTypes.string,
     lineClassName: PropTypes.string,
     buttonText: PropTypes.string,
   }).isRequired,
-  recipeVariants: PropTypes.shape({
-    type: PropTypes.string,
-    alternatives: PropTypes.arrayOf(PropTypes.shape),
-    sides: PropTypes.arrayOf(PropTypes.shape),
-  }),
+
 }
 
-AddRecipeButton.defaultProps = {
-  recipeVariants: null,
-}

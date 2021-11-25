@@ -144,58 +144,26 @@ describe('AddRecipeButton', () => {
         })
 
         describe('when hasBasketPostcode is true', () => {
-          let recipeVariantDropdownExpanded
-
           beforeEach(() => {
-            recipeVariantDropdownExpanded = jest.fn()
-
             wrapper.setProps({
               hasBasketPostcode: true,
-              recipeVariantDropdownExpanded
             })
           })
 
-          test('should call recipeVariantDropdownExpanded', () => {
+          test('should call basketRecipeAddAttempt', () => {
             wrapper.find('.addButton').simulate('click', {
               stopPropagation: () => { }
             })
 
-            const { recipeId, originalId, categoryId } = buttonsProps
-
-            expect(recipeVariantDropdownExpanded).toHaveBeenCalledWith({
-              recipeId,
-              originalId,
-              categoryId
-            })
-          })
-
-          test('should not call basketRecipeAddAttempt', () => {
-            wrapper.find('.addButton').simulate('click', {
-              stopPropagation: () => { }
-            })
-
-            expect(buttonsProps.basketRecipeAddAttempt).not.toHaveBeenCalled()
+            expect(buttonsProps.basketRecipeAddAttempt).toHaveBeenCalled()
           })
         })
 
         describe('when hasBasketPostcode is false', () => {
-          let recipeVariantDropdownExpanded
-
           beforeEach(() => {
-            recipeVariantDropdownExpanded = jest.fn()
-
             wrapper.setProps({
               hasBasketPostcode: false,
-              recipeVariantDropdownExpanded
             })
-          })
-
-          test('should not call recipeVariantDropdownExpanded', () => {
-            wrapper.find('.addButton').simulate('click', {
-              stopPropagation: () => { }
-            })
-
-            expect(recipeVariantDropdownExpanded).not.toHaveBeenCalled()
           })
 
           test('should call basketRecipeAddAttempt', () => {
@@ -221,16 +189,11 @@ describe('AddRecipeButton', () => {
     })
 
     describe('when recipe has alternatives', () => {
-      let recipeVariantDropdownExpanded
-
       beforeEach(() => {
-        recipeVariantDropdownExpanded = jest.fn()
-
         wrapper.setProps({
           recipeVariants: {
             type: 'alternatives',
           },
-          recipeVariantDropdownExpanded
         })
       })
 

@@ -134,8 +134,6 @@ class Buttons extends React.Component {
       menuRecipeDetailVisibilityChange,
       menuBrowseCTAVisibilityChange,
       basketPostcode,
-      closeOnAdd,
-      recipeVariantDropdownExpanded,
     } = this.props
 
     if (disable) {
@@ -144,9 +142,6 @@ class Buttons extends React.Component {
 
     if (stock !== null && Boolean(basketPostcode)) {
       onAdd(recipeId, view, { position, score })
-      if (closeOnAdd) {
-        recipeVariantDropdownExpanded(null)
-      }
     } else if (config.recipeDetailViews.includes(view)) {
       menuRecipeDetailVisibilityChange()
       setTimeout(() => { menuBrowseCTAVisibilityChange(true) }, 500)
@@ -238,8 +233,6 @@ Buttons.propTypes = {
   score: PropTypes.number,
   buttonText: PropTypes.string,
   basketPostcode: PropTypes.string,
-  closeOnAdd: PropTypes.bool,
-  recipeVariantDropdownExpanded: PropTypes.bool.isRequired,
 }
 
 Buttons.defaultProps = {
@@ -247,7 +240,6 @@ Buttons.defaultProps = {
   basketPostcode: '',
   isOutOfStock: false,
   surchargePerPortion: null,
-  closeOnAdd: false,
 }
 
 export default Buttons
