@@ -38,11 +38,8 @@ describe('RecipeList', () => {
     ])
     describe('when the recipe list is initially rendered', () => {
       test('should call trackRecipeOrderDisplayed once', () => {
-        const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
-
         shallow(
           <RecipeList
-            originalOrderRecipeIds={originalOrderRecipeIds}
             recipes={recipes}
             trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
             currentCollectionId="123"
@@ -51,20 +48,14 @@ describe('RecipeList', () => {
         )
 
         expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(1)
-        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(
-          ['1', '2', '3'],
-          ['3', '1'],
-        )
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(['3', '1'])
       })
     })
 
     describe('when the recipe collection selection is changed', () => {
       test('should call trackRecipeOrderDisplayed an additional time', () => {
-        const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
-
         wrapper = shallow(
           <RecipeList
-            originalOrderRecipeIds={originalOrderRecipeIds}
             recipes={recipes}
             currentCollectionId="123"
             trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
@@ -76,20 +67,14 @@ describe('RecipeList', () => {
         })
 
         expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(2)
-        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(
-          ['1', '2', '3'],
-          ['3', '1'],
-        )
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(['3', '1'])
       })
     })
 
     describe('when the recipe collection remains the same', () => {
       test('should not call trackRecipeOrderDisplayed after initial render', () => {
-        const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
-
         wrapper = shallow(
           <RecipeList
-            originalOrderRecipeIds={originalOrderRecipeIds}
             recipes={recipes}
             currentCollectionId="123"
             trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
@@ -101,10 +86,7 @@ describe('RecipeList', () => {
         })
 
         expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(1)
-        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(
-          ['1', '2', '3'],
-          ['3', '1'],
-        )
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(['3', '1'])
       })
     })
   })

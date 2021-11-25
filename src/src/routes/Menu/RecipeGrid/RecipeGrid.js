@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
-import { RecipeListWrapper, FilteredRecipeListContainer } from '../RecipeList'
+import { RecipeListWrapper } from '../RecipeList'
 import { DetailOverlayContainer } from '../DetailOverlay'
 
 import css from '../Menu.css'
@@ -19,7 +18,6 @@ class RecipeGrid extends PureComponent {
   }
 
   render() {
-    const { recipes, originalOrderRecipeIds } = this.props
     const { shouldShowOverlay } = this.state
 
     return (
@@ -27,11 +25,7 @@ class RecipeGrid extends PureComponent {
         className={css.menuContainer}
         data-testing="menuRecipesList"
       >
-        {
-          recipes === null
-            ? <RecipeListWrapper />
-            : <FilteredRecipeListContainer recipes={recipes} originalOrderRecipeIds={originalOrderRecipeIds} />
-        }
+        <RecipeListWrapper />
         <DetailOverlayContainer
           showOverlay={shouldShowOverlay}
         />
@@ -41,16 +35,12 @@ class RecipeGrid extends PureComponent {
 }
 
 RecipeGrid.propTypes = {
-  recipes: PropTypes.instanceOf(Immutable.List),
-  originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List),
   query: PropTypes.shape({
     collection: PropTypes.string,
   }),
 }
 
 RecipeGrid.defaultProps = {
-  recipes: null,
-  originalOrderRecipeIds: null,
   query: {}
 }
 

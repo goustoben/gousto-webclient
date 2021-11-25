@@ -19,14 +19,11 @@ class RecipeList extends React.PureComponent {
   }
 
   trackRecipeOrderDisplayed() {
-    const { originalOrderRecipeIds, recipes, trackRecipeOrderDisplayed } = this.props
+    const { recipes, trackRecipeOrderDisplayed } = this.props
 
     const recipeIds = recipes.map(({ recipe }) => recipe.get('id'))
 
-    trackRecipeOrderDisplayed(
-      originalOrderRecipeIds.toJS(),
-      recipeIds.toJS()
-    )
+    trackRecipeOrderDisplayed(recipeIds.toJS())
   }
 
   render() {
@@ -50,14 +47,9 @@ class RecipeList extends React.PureComponent {
 }
 
 RecipeList.propTypes = {
-  originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List),
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   currentCollectionId: PropTypes.string.isRequired,
   trackRecipeOrderDisplayed: PropTypes.func.isRequired
-}
-
-RecipeList.defaultProps = {
-  originalOrderRecipeIds: Immutable.List([])
 }
 
 export { RecipeList }

@@ -1,1 +1,1 @@
-export { CollectionItemContainer } from './CollectionItemContainer'
+export { CollectionItem } from './CollectionItem'

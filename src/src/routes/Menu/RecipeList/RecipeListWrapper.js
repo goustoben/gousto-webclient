@@ -11,7 +11,7 @@ const RecipeListWrapper = (ownProps) => {
   const dispatch = useDispatch()
   const { currentCollectionId } = useCollections()
   const { getRecipesForCollectionId } = useMenu()
-  const { recipes, originalOrderRecipeIds } = getRecipesForCollectionId(currentCollectionId)
+  const { recipes } = getRecipesForCollectionId(currentCollectionId)
 
   const actionDispatchers = bindActionCreators({
     trackRecipeOrderDisplayed
@@ -23,7 +23,6 @@ const RecipeListWrapper = (ownProps) => {
       {...ownProps}
       currentCollectionId={currentCollectionId}
       recipes={recipes}
-      originalOrderRecipeIds={originalOrderRecipeIds}
       trackRecipeOrderDisplayed={actionDispatchers.trackRecipeOrderDisplayed}
     />
   )

@@ -1,22 +1,59 @@
+import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { getFilterFn, getInStockRecipes, getRecipeComparatorFactory, getRecipeListRecipesLogic } from 'routes/Menu/selectors/recipeList'
+import Immutable from 'immutable'
+import { getDietaryClaimsInCollection, getRecipesInCollection } from 'routes/Menu/selectors/collections'
+import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
+import { getInStockRecipes } from 'routes/Menu/selectors/recipeList'
 import { getCurrentMenuVariants, getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
-import { getCurrentMenuRecipes } from '../../../selectors/menu'
+import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
+import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
+import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
 
 export const useGetRecipesForCollectionId = (collections) => {
-  // these selectors are to pass down to the base logic - reselect would usually do this
-  // this pattern was for lowest-impact implementation of the old logic. to be refactored
+  const recipes = useSelector(getCurrentMenuRecipes)
+  const recipesInStock = useSelector(getInStockRecipes)
+  const recipesVariants = useSelector(getCurrentMenuVariants)
+  const selectedRecipeVariants = useSelector(getSelectedRecipeVariants)
 
-  const currentMenuRecipes = useSelector(getCurrentMenuRecipes)
-  const inStockRecipes = useSelector(getInStockRecipes)
-  const currentMenuVariants = useSelector(getCurrentMenuVariants)
-  const selectedVariants = useSelector(getSelectedRecipeVariants)
-  const filterFn = useSelector(getFilterFn)
-  const recipeComparatorFactory = useSelector(getRecipeComparatorFactory)
-
-  const getRecipesForCollectionId = (collectionId) => (
-    getRecipeListRecipesLogic(currentMenuRecipes, collections, inStockRecipes, currentMenuVariants, selectedVariants, collectionId, filterFn, recipeComparatorFactory)
+  const recipeComparatorForOutOfStock = useMemo(
+    () => getRecipeComparatorForOutOfStock(recipesInStock),
+    [recipesInStock]
   )
+
+  const getRecipesForCollectionId = (collectionId) => {
+    const recipeIdsInCollection = getRecipesInCollection(collections, collectionId)
+    const dietaryClaims = getDietaryClaimsInCollection(collections, collectionId)
+
+    if (!recipeIdsInCollection) {
+      return { recipes: Immutable.List() }
+    }
+
+    const selectedVariantReplacer = getSelectedVariantsReplacer({
+      recipes,
+      replacementMap: (selectedRecipeVariants || {})[collectionId] || {},
+    })
+
+    const outOfStockRecipeReplacer = getOutOfStockRecipeReplacer({
+      recipesInStock,
+      recipes,
+      recipesVariants,
+      dietaryClaims,
+    })
+
+    // The order of mappers below matters:
+    //  * ensure we prefer to show variants customer explicitly picked
+    //  * ensure any out of stock recipes are replaced by in stock alternatives
+    //  * ensure any remaining out of stock recipes are moved to the end of the list
+    const originalRecipes = recipes
+      .filter(r => recipeIdsInCollection.includes(r.get('id')))
+      .map(selectedVariantReplacer)
+      .map(outOfStockRecipeReplacer)
+
+    const resultingRecipes = originalRecipes
+      .sort(recipeComparatorForOutOfStock)
+
+    return { recipes: resultingRecipes }
+  }
 
   return {
     getRecipesForCollectionId

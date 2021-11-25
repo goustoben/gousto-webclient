@@ -17,9 +17,6 @@ jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
 jest.mock('./RecipeMeta', () => ({
   RecipeMeta: () => <div />
 }))
-jest.mock('./ThematicsPage', () => ({
-  ThematicsPage: () => 'FilteredRecipePage'
-}))
 
 jest.mock('react-lazyload', () => ({
   forceCheck: jest.fn(),
