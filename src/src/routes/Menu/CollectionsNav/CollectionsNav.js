@@ -8,7 +8,7 @@ import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getScrollOffset } from 'utils/menu'
 import { getWindow } from 'utils/window'
 import { getElementOffsetTop } from 'utils/DOMhelper'
-import { CollectionItemContainer } from '../components/CollectionItem'
+import { CollectionItem } from '../components/CollectionItem'
 import css from './CollectionsNav.css'
 
 const MOBILE_BREAKPOINT = 543
@@ -316,7 +316,7 @@ class CollectionsNav extends React.PureComponent {
                   const isCurrent = (menuCurrentCollectionId === collectionId)
 
                   return (
-                    <CollectionItemContainer
+                    <CollectionItem
                       key={collectionId}
                       dataId={collectionId}
                       className={isCurrent ? css.currentItem : css.item}
@@ -329,7 +329,7 @@ class CollectionsNav extends React.PureComponent {
                       <span className={css.itemTitle}>
                         {collection.get('shortTitle')}
                       </span>
-                    </CollectionItemContainer>
+                    </CollectionItem>
                   )
                 })
                 .toArray()}

@@ -12,10 +12,6 @@ jest.mock('react-router-redux', () => ({
   push: jest.fn(),
 }))
 
-jest.mock('config/recipes', () => ({
-  thematicBorderColor: 'red'
-}))
-
 describe('filters actions', () => {
   let state
 

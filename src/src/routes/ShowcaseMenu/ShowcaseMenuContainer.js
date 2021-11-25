@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getCurrentCollectionId } from 'routes/Menu/selectors/collections'
-import { getRecipeListRecipes } from 'routes/Menu/selectors/recipeList'
+import { getRecipeListRecipes } from './selectors/recipeList'
 import { ShowcaseMenu } from './ShowcaseMenu'
 import {
   proceed,

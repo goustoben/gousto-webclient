@@ -145,7 +145,7 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
     }
   }
 
-export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
+export const trackRecipeOrderDisplayed = (displayedOrder) => (
   (dispatch, getState) => {
     const state = getState()
     const date = state.basket.get('date')
@@ -159,7 +159,6 @@ export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
 
     dispatch({
       type: actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING,
-      originalOrder,
       displayedOrder,
       collectionId,
       deliveryDayId,

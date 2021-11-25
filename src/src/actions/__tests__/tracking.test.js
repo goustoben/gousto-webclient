@@ -172,7 +172,6 @@ describe('tracking actions', () => {
   })
 
   describe('trackRecipeOrderDisplayed', () => {
-    const originalOrder = ['3', '5', '2', '6']
     const displayedOrder = ['6', '3', '2']
     const collectionId = '678'
     let state = {
@@ -220,16 +219,12 @@ describe('tracking actions', () => {
     test('should dispatch correct arguments', () => {
       getState.mockReturnValue(state)
 
-      trackRecipeOrderDisplayed(
-        originalOrder,
-        displayedOrder,
-      )(dispatch, getState)
+      trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
 
       const dispatchCall = dispatch.mock.calls[0][0]
 
       expect(dispatchCall).toEqual({
         type: 'RECIPES_DISPLAYED_ORDER_TRACKING',
-        originalOrder: ['3', '5', '2', '6'],
         displayedOrder: ['6', '3', '2'],
         collectionId: '678',
         recommended: true,
@@ -262,7 +257,7 @@ describe('tracking actions', () => {
 
         getState.mockReturnValue(state)
 
-        trackRecipeOrderDisplayed(originalOrder, displayedOrder, collectionId)(dispatch, getState)
+        trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
 
         expect(dispatch.mock.calls[0][0].isRecommendationsShown).toBe(true)
       })
@@ -295,7 +290,7 @@ describe('tracking actions', () => {
         }
         getState.mockReturnValue(state)
 
-        trackRecipeOrderDisplayed(originalOrder, displayedOrder, collectionId)(dispatch, getState)
+        trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
 
         expect(dispatch.mock.calls[0][0].recommended).toBeFalsy()
       })
@@ -328,7 +323,7 @@ describe('tracking actions', () => {
         }
         getState.mockReturnValue(state)
 
-        trackRecipeOrderDisplayed(originalOrder, displayedOrder, collectionId)(dispatch, getState)
+        trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
 
         expect(dispatch.mock.calls[0][0].recommended).toBeTruthy()
       })
