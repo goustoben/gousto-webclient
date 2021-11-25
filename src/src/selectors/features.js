@@ -157,3 +157,7 @@ export const getIsCorporateEnquiriesLinkVisible = ({ features }) => (
 export const getIsSsrRepetitiveIssues = ({ features }) => (
   features && features.getIn(['isSsrRepetitiveIssues', 'value'], false)
 )
+
+export const getIsGiftCardsLinkVisible = ({ features }) => (
+  features && features.getIn(['isGiftCardsLinkVisible', 'value'], true)
+)
