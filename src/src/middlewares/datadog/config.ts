@@ -16,7 +16,7 @@ export const browserLogsConfig: LogsInitConfiguration = {
 
 export const RUMSDKConfig: RumInitConfiguration = {
   ...commonConfig,
-  applicationId: '3ee48ed0-491a-462a-a38e-ca65cffe159e',
+  applicationId: __DATADOG_RUM_SDK_APP_ID__,
   clientToken: __DATADOG_RUM_SDK_TOKEN__,
   trackInteractions: false,
   defaultPrivacyLevel: 'mask-user-input',

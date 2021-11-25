@@ -48,7 +48,7 @@ describe('Given datadog is enabled', () => {
   test('Then it should initialize datadogRum SDK with the expected config', () => {
     expect(RUMSDK.datadogRum.init).toHaveBeenCalledWith({
       ...mockedSharedConfig,
-      applicationId: '3ee48ed0-491a-462a-a38e-ca65cffe159e',
+      applicationId: 'RUM_SDK_APP_ID',
       clientToken: 'RUM_SDK_TOKEN',
       trackInteractions: false,
       defaultPrivacyLevel: 'mask-user-input',
