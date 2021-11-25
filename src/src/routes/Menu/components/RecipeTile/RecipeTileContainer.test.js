@@ -17,17 +17,6 @@ describe('<RecipeTileContainer />', () => {
       borderColor: '#01A92B'
     }]
   }
-  const expectedTagline = {
-    slug: 'fine-dine-in-eme',
-    text: 'Fine Dine In',
-    type: 'general',
-    theme: {
-      name: 'light',
-      color: '#01A92B',
-      borderColor: '#01A92B'
-    },
-    themes: undefined,
-  }
 
   const availabilityTag = {
     slug: 'new-eme',
@@ -112,7 +101,6 @@ describe('<RecipeTileContainer />', () => {
     expect(wrapper.find('RecipeTile').prop('title')).toEqual('Chicken curry')
     expect(wrapper.find('RecipeTile').prop('showDetailRecipe')).toEqual(expect.any(Function))
     expect(wrapper.find('RecipeTile').prop('isFineDineIn')).toEqual(true)
-    expect(wrapper.find('RecipeTile').prop('brandTagline')).toEqual(expectedTagline)
     expect(wrapper.find('RecipeTile').prop('brandAvailability')).toEqual(expectedAvailability)
     expect(wrapper.find('RecipeTile').prop('browserType')).toEqual('desktop')
   })

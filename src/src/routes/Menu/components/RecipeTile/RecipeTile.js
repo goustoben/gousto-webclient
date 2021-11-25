@@ -4,11 +4,10 @@ import classnames from 'classnames'
 import Immutable from 'immutable'
 import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
-import { RecipeTagTitle } from './RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
 import css from './RecipeTile.css'
 import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
-import { Title } from '../Recipe'
+import { Title, BrandTag } from '../Recipe'
 
 const RecipeTile = ({
   browserType,
@@ -19,7 +18,6 @@ const RecipeTile = ({
   isOutOfStock,
   isFineDineIn,
   recipeVariants,
-  brandTagline,
   brandAvailability,
   categoryId,
   fdiStyling,
@@ -35,7 +33,6 @@ const RecipeTile = ({
 
   const showVariantHeader = !((!recipeVariants || !recipeVariants.alternatives || !recipeVariants.alternatives.size) || isOutOfStock)
   const hasTopLeftTag = Boolean(brandAvailability)
-  const hasTopRightTag = Boolean(brandTagline)
 
   const mobileBannerShown = (showVariantHeader && browserType === 'mobile')
   const desktopBannerShown = (showVariantHeader && (browserType === 'desktop' || browserType === 'tablet'))
@@ -76,9 +73,8 @@ const RecipeTile = ({
             }
           )}
         >
-          {hasTopRightTag && (
-            <RecipeTagTitle brandTag={brandTagline} showVariantHeader={showVariantHeader} />
-          )}
+          <BrandTag />
+
           <Title className={css.recipeTileTitle} />
 
           <RecipeTilePurchaseInfoContainer
@@ -101,11 +97,6 @@ RecipeTile.propTypes = {
   originalId: PropTypes.string,
   showDetailRecipe: PropTypes.func.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
-  brandTagline: PropTypes.shape({
-    slug: PropTypes.string,
-    text: PropTypes.string,
-    theme: PropTypes.object,
-  }),
   brandAvailability: PropTypes.shape({
     slug: PropTypes.string,
     text: PropTypes.string,
@@ -119,7 +110,6 @@ RecipeTile.propTypes = {
 
 RecipeTile.defaultProps = {
   originalId: null,
-  brandTagline: null,
   brandAvailability: null,
   categoryId: null,
   fdiStyling: true,

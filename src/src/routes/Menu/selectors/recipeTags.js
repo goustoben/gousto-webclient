@@ -1,11 +1,5 @@
 import { createSelector } from 'reselect'
-
-import {
-  getAllTags,
-  findTag,
-  getTaglineByRecipeId,
-  getBrandAvailabilityByRecipeId,
-} from './recipe'
+import { getAllTags, findTag, getBrandAvailabilityByRecipeId } from './recipe'
 
 export const getBrandAvailability = createSelector(
   getBrandAvailabilityByRecipeId,
@@ -21,17 +15,3 @@ export const getBrandAvailability = createSelector(
     return findTag(allTags, availability)
   }
 )
-
-export const getBrandTagline = createSelector(
-  getTaglineByRecipeId,
-  getAllTags,
-  (
-    tagline,
-    allTags,
-  ) => {
-    if (!tagline || !allTags) {
-      return null
-    }
-
-    return findTag(allTags, tagline)
-  })
