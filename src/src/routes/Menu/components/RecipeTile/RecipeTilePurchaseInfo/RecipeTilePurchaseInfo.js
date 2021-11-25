@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
+import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
 import css from './RecipeTilePurchaseInfo.css'
 
 export const RecipeTilePurchaseInfo = ({
@@ -13,6 +14,8 @@ export const RecipeTilePurchaseInfo = ({
   isOutOfStock,
   isFineDineIn,
   fdiStyling,
+  browserType,
+  hasAlternativeOptions,
 }) => {
   if (isOutOfStock) {
     return null
@@ -44,7 +47,13 @@ export const RecipeTilePurchaseInfo = ({
         </div>
       ) : null}
       <div className={css.buttonsWrapper}>
-        <AddRecipeButtonContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
+        <AddRecipeButtonContainer recipeId={recipeId} />
+        {hasAlternativeOptions
+            && (
+              browserType === 'mobile'
+                ? <SwapAlternativeOptionsMobile recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
+                : <SwapAlternativeOptions recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
+            )}
       </div>
     </div>
   )
@@ -59,6 +68,8 @@ RecipeTilePurchaseInfo.propTypes = {
   isOutOfStock: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool.isRequired,
   fdiStyling: PropTypes.bool,
+  browserType: PropTypes.string.isRequired,
+  hasAlternativeOptions: PropTypes.bool.isRequired,
 }
 
 RecipeTilePurchaseInfo.defaultProps = {

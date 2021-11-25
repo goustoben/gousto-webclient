@@ -57,6 +57,8 @@ const Overlay = ({
       contentLabel={contentLabel}
       closeTimeoutMS={200}
       preventScroll
+      onRequestClose={onBackgroundClick}
+      shouldCloseOnOverlayClick
     >
       <div className={classNames(className)}>
         <div

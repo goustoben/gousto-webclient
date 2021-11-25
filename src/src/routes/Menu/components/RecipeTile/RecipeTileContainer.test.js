@@ -81,7 +81,6 @@ describe('<RecipeTileContainer />', () => {
 
         }
       }),
-      currentExpandedRecipeVariantsDropdown: { recipeId },
     }),
     brand: {
       data: {

@@ -351,17 +351,6 @@ export const clearSelectedRecipeVariants = () => ({
   type: actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS
 })
 
-export const recipeVariantDropdownExpanded = (recipeData) => ({
-  type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
-  payload: {
-    recipeData,
-  },
-  trackingData: {
-    actionType: trackingKeys.discloseRecipeVariants,
-    show: Boolean(recipeData ? recipeData.recipeId : null)
-  }
-})
-
 export const trackVariantListDisplay = (view) => ({
   type: actionTypes.TRACK_VARIANT_RECIPE_LIST_DISPLAY,
   trackingData: {

@@ -1,6 +1,11 @@
+
 @value headingFontStackBold, sizeLG, sizeMD, sizeXS from 'styles/typography.css';
 @value Bluecheese, White, Mackerel from 'styles/colors.css';
 @value ScreenXXSMax, ScreenXXSMin, ScreenXSMax from 'styles/screenSizes.css';
+@value Top from 'styles/z-index.module.css';
+
+/* Mobile Modal stylings */
+
 .variantRecipeListModal {
   position: fixed;
   top: auto;
@@ -58,4 +63,52 @@
 
 .variantRecipeListOverlayContent {
   min-height: auto;
+}
+
+/* Desktop dropdown section */
+
+.outerWrapper {
+  display: flex;
+  margin-left: 1rem;
+  justify-content: flex-end;
+}
+
+.button {
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid Bluecheese;
+  color: Bluecheese;
+  background-color: White;
+  border-radius: 3px;
+  justify-content: center;
+  @media ScreenSMMin {
+    min-width: 11.25rem;
+  }
+}
+
+.arrowDown {
+  composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+  composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+}
+
+.dropWrapper {
+  position: absolute;
+  width: 100%;
+  background: White;
+  z-index: Top;
+  display: none;
+  top: 3rem;
+
+  box-shadow: 0 4px 14px 0 rgba(51, 61, 71, 0.2);
+  padding: 1rem;
+  @media ScreenSMMin {
+    padding-top: 0;
+  }
+}
+
+.isExpanded {
+  display: block;
 }
