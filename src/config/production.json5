@@ -2,7 +2,8 @@
   "api_name": "production",
   "domain": "gousto.co.uk",
   "running_env": "live",
-  "datadog_browser_logs_token": "",
-  "datadog_rum_sdk_token": "",
-  "datadog_enabled": false
+  "datadog_browser_logs_token": "pub317260bf93610224cda1575e5bb24f2a",
+  "datadog_rum_sdk_token": "pub5434f4d0f23379cbe71d4b5693ae81a5",
+  "datadog_rum_sdk_app_id": "3fc47a59-383f-4906-a976-581959ba13b1",
+  "datadog_enabled": true
 }

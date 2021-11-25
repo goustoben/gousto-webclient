@@ -12,6 +12,7 @@ const clientProtocol = nodeConfig.get('client_protocol')
 const cloudfrontUrl = nodeConfig.get('cloudfront_url')
 const datadogBrowserLogsToken = nodeConfig.get('datadog_browser_logs_token')
 const datadogRumSDKToken = nodeConfig.get('datadog_rum_sdk_token')
+const datadogRumSDKAppID = nodeConfig.get('datadog_rum_sdk_app_id')
 const datadogEnabled = nodeConfig.get('datadog_enabled')
 const domain = nodeConfig.get('domain')
 const endpoints = nodeConfig.get('endpoints')
@@ -32,6 +33,7 @@ const webpackEnvVarsBase = {
   __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
   __DATADOG_BROWSER_LOGS_TOKEN__: JSON.stringify(datadogBrowserLogsToken),
   __DATADOG_RUM_SDK_TOKEN__: JSON.stringify(datadogRumSDKToken),
+  __DATADOG_RUM_SDK_APP_ID__: JSON.stringify(datadogRumSDKAppID),
   __DATADOG_ENABLED__: JSON.stringify(datadogEnabled),
   __DOMAIN__: JSON.stringify(domain),
   __ENDPOINTS__: JSON.stringify(endpoints),
