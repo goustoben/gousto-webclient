@@ -5,10 +5,8 @@ import Immutable from 'immutable'
 import { RecipeTile } from './RecipeTile'
 import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
-import { RecipeTagTitle } from './RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
-import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList/VariantRecipeListContainer'
-import { Title } from '../Recipe'
+import { Title, BrandTag } from '../Recipe'
 
 describe('RecipeTile', () => {
   let wrapper
@@ -94,8 +92,8 @@ describe('RecipeTile', () => {
         expect(wrapper.find(RecipeTag)).toHaveLength(1)
       })
 
-      test('should contain one RecipeTagTitle component', () => {
-        expect(wrapper.find(RecipeTagTitle)).toHaveLength(1)
+      test('should contain one BrandTag component', () => {
+        expect(wrapper.find(BrandTag)).toHaveLength(1)
       })
       test('should contain an RecipeTilePurchaseInfoContainer ', () => {
         expect(wrapper.find(RecipeTilePurchaseInfoContainer)).toHaveLength(1)
