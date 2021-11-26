@@ -1,0 +1,19 @@
+{
+  "name": "e2e2",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/selenium-webdriver": "^4.0.16",
+    "chromedriver": "^96.0.0",
+    "jest": "^27.3.1",
+    "selenium-webdriver": "^4.1.0",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.5.2"
+  }
+}

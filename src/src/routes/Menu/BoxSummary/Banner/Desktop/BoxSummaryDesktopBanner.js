@@ -23,7 +23,7 @@ const BoxSummaryDesktopBanner = ({
   onExpandClick,
   openDetails
 }) => (
-  <div className={css.bardesktop}>
+  <div className={css.bardesktop} data-testing="box-summary-desktop-banner">
     <RecipeListContainer view="desktop" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
     <span className={css.buttonsContainer}>
       {
