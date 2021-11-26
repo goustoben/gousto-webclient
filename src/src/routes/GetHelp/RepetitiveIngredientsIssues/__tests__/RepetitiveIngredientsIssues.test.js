@@ -17,7 +17,7 @@ describe('<RepetitiveIngredientsIssues />', () => {
   const PARAMS = {
     userId: USER_ID,
     orderId: ORDER_ID
-  },
+  }
   const FIRST_NAME = 'Gousto'
   const originalBrowserHistory = browserHistory
 

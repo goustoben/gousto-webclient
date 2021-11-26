@@ -23,7 +23,7 @@ module.exports = {
     '<rootDir>/src/adapters/gousto/__tests__/'
   ],
   transform: {
-    '^.+\\.js?$': 'ts-jest',
+    '^.+\\.(t|j)sx?$': '@swc/jest',
     '\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/jest/.fileTransformer.js'
   },
   collectCoverageFrom: [
@@ -63,9 +63,6 @@ module.exports = {
     __DATADOG_ENABLED__: false,
     __DATADOG_BROWSER_LOGS_TOKEN__: 'BROWSER_LOGS_TOKEN',
     __DATADOG_RUM_SDK_TOKEN__: 'RUM_SDK_TOKEN',
-    __DATADOG_RUM_SDK_APP_ID__: 'RUM_SDK_APP_ID',
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.tests.json',
-    }
+    __DATADOG_RUM_SDK_APP_ID__: 'RUM_SDK_APP_ID'
   }
 }
