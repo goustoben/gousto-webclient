@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { useSelector } from 'react-redux'
 import Immutable from 'immutable'
 import LazyLoad from 'react-lazyload'
 import * as recipeContext from '../../../context/recipeContext'
@@ -34,9 +33,6 @@ describe('Recipe components > Image', () => {
       ],
     }
   ])
-  const state = {
-    features: Immutable.fromJS({ isMenuImagesSizeHintsEnabled: { value: false } })
-  }
 
   beforeEach(() => {
     recipe = Immutable.fromJS({
@@ -46,7 +42,6 @@ describe('Recipe components > Image', () => {
     })
     useContextMock.mockClear()
     useRecipeFieldMock.mockClear()
-    useSelector.mockImplementation(selector => selector(state))
   })
 
   test('should call useRecipeField with ["media", "images"] as selector and empty Immutable.List as default', () => {
@@ -85,7 +80,7 @@ describe('Recipe components > Image', () => {
           className={className}
           src={expectedSrc}
           srcSet={expectedSrcSet}
-          sizes=""
+          sizes="(max-width: 500px) 400px, (max-width: 991px) 700px, 400px"
         />
       )
     })
@@ -102,7 +97,7 @@ describe('Recipe components > Image', () => {
               className={className}
               src={expectedSrc}
               srcSet={expectedSrcSet}
-              sizes=""
+              sizes="(max-width: 500px) 400px, (max-width: 991px) 700px, 400px"
             />
           </LazyLoad>
         )
