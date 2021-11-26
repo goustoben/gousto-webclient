@@ -35,7 +35,7 @@
     "test:jest:one:watch": "jest --watch",
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
-    "test:jest:ci:coverage": "jest --ci --runInBand --detectOpenHandles --forceExit --logHeapUsage --silent --coverage",
+    "test:jest:ci:coverage": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent --coverage",
     "test:gousto-adapters": "jest --config=src/adapters/gousto/__tests__/jest.config.js",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "eslint": "eslint .",
