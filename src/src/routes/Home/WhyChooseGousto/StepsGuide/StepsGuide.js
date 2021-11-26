@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { getWhyGoustoConfig } from 'config/home'
 import css from './StepsGuide.css'
 
@@ -26,8 +25,7 @@ class StepsGuide extends PureComponent {
   }
 
   render() {
-    const { isHomeJpgEnabled } = this.props
-    const { steps } = getWhyGoustoConfig(isHomeJpgEnabled)
+    const { steps } = getWhyGoustoConfig()
 
     return (
       <div className={css.container}>
@@ -35,14 +33,6 @@ class StepsGuide extends PureComponent {
       </div>
     )
   }
-}
-
-StepsGuide.propTypes = {
-  isHomeJpgEnabled: PropTypes.bool,
-}
-
-StepsGuide.defaultProps = {
-  isHomeJpgEnabled: false,
 }
 
 export { StepsGuide }

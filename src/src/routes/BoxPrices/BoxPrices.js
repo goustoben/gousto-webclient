@@ -30,9 +30,8 @@ class BoxPrices extends React.PureComponent {
       numPersonsToBoxDescriptors,
       loading,
       error,
-      isJpgImagesEnabled,
     } = this.props
-    const { image, header } = getHeroDetails(isJpgImagesEnabled)
+    const { image, header } = getHeroDetails()
 
     return isBoxPricesRedesignEnabled ? (
       <div>
@@ -78,7 +77,6 @@ BoxPrices.propTypes = {
   isBoxPricesRedesignEnabled: PropTypes.bool,
   boxPricesBoxSizeSelected: PropTypes.func,
   numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
-  isJpgImagesEnabled: PropTypes.bool,
 }
 
 BoxPrices.defaultProps = {
@@ -87,7 +85,6 @@ BoxPrices.defaultProps = {
   isBoxPricesRedesignEnabled: false,
   boxPricesBoxSizeSelected: () => {},
   numPersonsToBoxDescriptors: null,
-  isJpgImagesEnabled: false,
 }
 
 BoxPrices.contextType = ReactReduxContext

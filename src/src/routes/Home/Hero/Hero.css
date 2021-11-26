@@ -40,21 +40,7 @@
   }
 }
 
-.heroImage:not(.isHomeJpgEnabled) {
-  @media BreakpointToMedium {
-    background: url('routes/Home/Hero/mobile-brand.png') center left / cover no-repeat;
-  }
-
-  @media BreakpointFromMedium {
-    background: url('routes/Home/Hero/tablet-brand-dish.png') right top / cover no-repeat;
-  }
-
-  @media BreakpointFromLarge {
-    background: url('routes/Home/Hero/desktop-brand-dish.png') right top / cover no-repeat;
-  }
-}
-
-.heroImage.isHomeJpgEnabled {
+.heroImage {
   @media BreakpointToMedium {
     background: url('routes/Home/Hero/mobile-brand.jpg') center left / cover no-repeat;
   }

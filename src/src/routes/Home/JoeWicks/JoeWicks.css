@@ -41,11 +41,7 @@
   }
 }
 
-.joeWicksImage:not(.isHomeJpgEnabled) {
-  background: url('routes/Home/JoeWicks/joe-wicks.png') center center / contain no-repeat;
-}
-
-.isHomeJpgEnabled {
+.joeWicksImage {
   background: url('routes/Home/JoeWicks/joe-wicks.jpg') center center / contain no-repeat;
 }
 
