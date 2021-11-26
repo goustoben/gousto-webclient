@@ -1,6 +1,5 @@
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
-import * as trackingKeys from 'actions/trackingKeys'
-import { actionTypes } from './actionTypes'
+import { actionTypes, trackingKeys } from './actionTypes'
 import { getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
 
 export const trackContinueToSsrClick = () => (dispatch, getState) => {

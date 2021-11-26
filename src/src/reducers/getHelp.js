@@ -24,6 +24,7 @@ const getHelpInitialState = fromJS({
   orders: {},
   recipes: [],
   selectedIngredients: {},
+  selectedRecipeCards: [],
   shippingAddresses: [],
   massIssueIneligibleIngredientUuids: [],
   otherIssueIneligibleIngredientUuids: [],
@@ -213,6 +214,10 @@ const getHelp = (state, action) => {
 
     return state.set('shippingAddresses', fromJS(filteredAddresses))
   }
+  case actionTypes.GET_HELP_SET_SELECTED_RECIPE_CARDS: {
+    return state.set('selectedRecipeCards', fromJS(action.payload.recipeIds))
+  }
+
   default:
     return state
   }

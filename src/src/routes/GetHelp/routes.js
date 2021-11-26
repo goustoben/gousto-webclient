@@ -19,6 +19,7 @@ import { IngredientsContainer } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
 import { RecipeCardsContainer } from './RecipeCards'
+import { RecipeCardsSelectContainer } from './RecipeCards/RecipeCardsSelect'
 import { RepetitiveIngredientsIssuesContainer } from './RepetitiveIngredientsIssues'
 import { Refund } from './Refund'
 import { DidntArriveContainer } from './Delivery/DidntArrive'
@@ -99,6 +100,10 @@ const getHelpRoutes = (store) => {
         <Route
           path={recipeCards({ userId: ':userId', orderId: ':orderId' })}
           component={RecipeCardsContainer}
+        />
+        <Route
+          path={`${recipeCards({ userId: ':userId', orderId: ':orderId' })}/select`}
+          component={RecipeCardsSelectContainer}
         />
         <Route
           path={repetitiveIngredientsIssues({ userId: ':userId', orderId: ':orderId' })}

@@ -108,3 +108,5 @@ export const getSelectedIngredientIssuesIDs = createSelector(getSelectedIngredie
 export const getTrackingUrl = (state) => (
   state.getHelp.getIn(['order', 'trackingUrl'])
 )
+
+export const getSelectedRecipeCards = (state) => state.getHelp.get('selectedRecipeCards').toJS()

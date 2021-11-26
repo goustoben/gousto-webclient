@@ -552,6 +552,22 @@ describe('getHelp reducer', () => {
     })
   })
 
+  describe('given an action with type GET_HELP_SET_SELECTED_RECIPE_CARDS is received', () => {
+    const recipeIds = ['123', '456']
+
+    beforeEach(() => {
+      newState = getHelp(getHelpInitialState, {
+        type: actionTypes.GET_HELP_SET_SELECTED_RECIPE_CARDS,
+        payload: {
+          recipeIds
+        }
+      })
+    })
+
+    test('the new state has correct properties stored', () => {
+      expect(newState.get('selectedRecipeCards')).toEqual(fromJS(recipeIds))
+    })
+  })
   describe('given an unknown action type is received', () => {
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {
