@@ -142,10 +142,6 @@ export const getIsAutoAcceptEnabled = ({ features }) => (
   features && features.getIn(['isAutoAcceptEnabled', 'value'], false)
 )
 
-export const getIsJpgImagesEnabled = ({ features }) => (
-  features && features.getIn(['isJpgImagesEnabled', 'value'], false)
-)
-
 export const getSsrTwoComplaintsSameDay = ({ features }) => (
   features && features.getIn(['ssrTwoComplaintsSameDay', 'value'], false)
 )

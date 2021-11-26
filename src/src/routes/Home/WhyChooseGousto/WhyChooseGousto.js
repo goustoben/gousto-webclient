@@ -7,7 +7,7 @@ import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
 import css from './WhyChooseGousto.css'
 
-const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing, isHomeJpgEnabled }) => {
+const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
   const subtitle = (
     <Fragment>
       Impressively easy meals from just{' '}
@@ -17,12 +17,12 @@ const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing, isHomeJpgEnabled })
       . All of the flavour, none of the fuss.
     </Fragment>
   )
-  const { title } = getWhyGoustoConfig(isHomeJpgEnabled)
+  const { title } = getWhyGoustoConfig()
 
   return (
     <div className={css.whyGoustoContainer}>
       <ModuleTitle title={title} subTitle={subtitle} />
-      <StepsGuide isHomeJpgEnabled={isHomeJpgEnabled} />
+      <StepsGuide />
       <div className={css.CTAContainer}>
         <CTAHomepageContainer ctaUri={ctaUri} sectionForTracking="whyChooseGousto">
           {ctaText}
@@ -36,12 +36,10 @@ WhyChooseGousto.propTypes = {
   ctaUri: PropTypes.string.isRequired,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   pricePerServing: PropTypes.string,
-  isHomeJpgEnabled: PropTypes.bool,
 }
 
 WhyChooseGousto.defaultProps = {
   pricePerServing: '',
-  isHomeJpgEnabled: false,
 }
 
 export { WhyChooseGousto }

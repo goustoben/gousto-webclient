@@ -1,7 +1,7 @@
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { safeJestMock } from '_testing/mocks'
 import { trackContinueToSsrClick, updateHasSeenRepetitiveIssuesScreen } from '../repetitiveIngredientsIssues'
-import { actionTypes } from '../actionTypes'
+import { actionTypes, trackingKeys } from '../actionTypes'
 import * as selectorsSelectors from '../../selectors/selectors'
 const getNumOrdersChecked = safeJestMock(selectorsSelectors, 'getNumOrdersChecked')
 const getNumOrdersCompensated = safeJestMock(selectorsSelectors, 'getNumOrdersCompensated')
@@ -23,7 +23,7 @@ describe('trackContinueToSsrClick', () => {
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
-          actionType: 'continue_to_ssr_click',
+          actionType: trackingKeys.continueToSsrClick,
           numOrdersChecked: 2,
           numOrdersCompensated: 1,
         }
@@ -44,4 +44,3 @@ describe('trackContinueToSsrClick', () => {
     })
   })
 })
-

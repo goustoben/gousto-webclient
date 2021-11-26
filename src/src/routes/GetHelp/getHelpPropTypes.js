@@ -4,6 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 export const recipePropType = PropTypes.shape({
   id: PropTypes.string,
   title: PropTypes.string,
+  imageUrl: PropTypes.string,
   ingredients: PropTypes.arrayOf(
     PropTypes.shape({
       uuid: PropTypes.string,

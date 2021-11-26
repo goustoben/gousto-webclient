@@ -69,6 +69,7 @@ describe('transformRecipesWithIngredients', () => {
       uuid: '123abc',
       title: 'Pasta',
       goustoReference: '889',
+      imageUrl: '',
       ingredients: [{
         label: 'onion',
         urls: [{
@@ -83,6 +84,7 @@ describe('transformRecipesWithIngredients', () => {
       uuid: '456def',
       title: 'Rice',
       goustoReference: '667',
+      imageUrl: '',
       ingredients: [{
         label: 'garlic',
         urls: [{
@@ -116,6 +118,7 @@ describe('transformRecipesWithIngredients', () => {
         uuid: '123abc',
         title: 'Pasta',
         goustoReference: '889',
+        imageUrl: '',
         ingredients: [{
           label: 'onion',
           urls: [],
@@ -127,10 +130,54 @@ describe('transformRecipesWithIngredients', () => {
         uuid: '456def',
         title: 'Rice',
         goustoReference: '667',
+        imageUrl: '',
         ingredients: [{
           label: 'garlic',
           urls: [],
           uuid: 'ef456gh'
+        }]
+      }]
+      expect(result).toEqual(EXPECTED_RECIPES)
+    })
+  })
+
+  describe('When recipes have images', () => {
+    beforeEach(() => {
+      const RECIPES_WITH_IMAGE = [{
+        id: '123abc',
+        attributes: {
+          name: 'Pasta',
+          core_recipe_id: '998',
+          gousto_reference: 889,
+          images: [{ crops: [{ url: 'Pasta-image.urlx50'}, { url: 'Pasta-image.urlx200'}]}]
+        },
+        relationships: {
+          ingredients: {
+            data: [{
+              id: 'ab123cd',
+              labels: {
+                for2: 'onion'
+              }
+            }]
+          }
+        }
+      }]
+      result = transformRecipesWithIngredients(RECIPES_WITH_IMAGE, INGREDIENTS_DATA)
+    })
+    test('returns the recipes with ingredients recipe image url', () => {
+      const EXPECTED_RECIPES = [{
+        id: '998',
+        uuid: '123abc',
+        title: 'Pasta',
+        goustoReference: '889',
+        imageUrl: 'Pasta-image.urlx200',
+        ingredients: [{
+          label: 'onion',
+          urls: [{
+            url: 'onion-url-50w',
+            width: 50
+          }],
+          uuid: 'ab123cd'
         }]
       }]
       expect(result).toEqual(EXPECTED_RECIPES)

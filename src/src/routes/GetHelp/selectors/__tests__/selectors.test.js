@@ -23,6 +23,7 @@ import {
   getSelectedIngredientIssuesIDs,
   getSelectedIngredientsWithImage,
   getTrackingUrl,
+  getSelectedRecipeCards
 } from '../selectors'
 
 const ACCESS_TOKEN = 'shhh-its-a-secret'
@@ -114,6 +115,7 @@ const SELECTED_INGREDIENTS_WITH_IMG = [{
   srcSet: 'ingredient-cornish-image-url 50w'
 }]
 
+const SELECTED_RECIPE_CARDS = ['2871', '385']
 const STATE = {
   auth: fromJS({
     accessToken: ACCESS_TOKEN,
@@ -130,6 +132,7 @@ const STATE = {
     order: ORDER,
     recipes: RECIPES,
     selectedIngredients: SELECTED_INGREDIENTS,
+    selectedRecipeCards: SELECTED_RECIPE_CARDS,
     hasSeenRepetitiveIssuesScreen: HAS_SEEN_REPETITIVE_ISSUES,
   }),
   pending: fromJS({
@@ -160,6 +163,7 @@ describe('Get Help selectors', () => {
     ['getTrackingUrl', getTrackingUrl, TRACKING_URL],
     ['getSelectedIngredientIssuesIDs', getSelectedIngredientIssuesIDs, SELECTED_INGREDIENTS_ISSUES_IDS],
     ['getSelectedIngredientsWithImage', getSelectedIngredientsWithImage, SELECTED_INGREDIENTS_WITH_IMG],
+    ['getSelectedRecipeCards', getSelectedRecipeCards, SELECTED_RECIPE_CARDS]
   ])('Given %s is called', (_selectorName, selector, expectedResult) => {
     beforeEach(() => {
       result = selector(STATE)

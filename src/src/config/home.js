@@ -49,13 +49,11 @@ export const knownVariants = ['default', 'tv']
 
 export const defaultVariant = 'default'
 
-export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
+export const getWhyGoustoConfig = () => ({
   steps: [
     {
       title: 'Variety',
-      img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/variety.jpg')
-        : require('routes/Home/WhyChooseGousto/variety.png'),
+      img: require('routes/Home/WhyChooseGousto/variety.jpg'),
       list: [
         '60+ recipes a week, cooked from 10 mins',
         'Family classics, global cuisines plus Joe Wicks’s health range',
@@ -64,9 +62,7 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
     },
     {
       title: 'Quality',
-      img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/quality.jpg')
-        : require('routes/Home/WhyChooseGousto/quality.png'),
+      img: require('routes/Home/WhyChooseGousto/quality.jpg'),
       list: [
         'Fresh ingredients from trusted suppliers',
         '100% British fresh meat',
@@ -75,9 +71,7 @@ export const getWhyGoustoConfig = (isHomeJpgEnabled) => ({
     },
     {
       title: 'Simplicity',
-      img: isHomeJpgEnabled
-        ? require('routes/Home/WhyChooseGousto/simplicity.jpg')
-        : require('routes/Home/WhyChooseGousto/simplicity.png'),
+      img: require('routes/Home/WhyChooseGousto/simplicity.jpg'),
       list: [
         'Easy-to-follow recipe cards',
         'Precise ingredients with zero food waste',

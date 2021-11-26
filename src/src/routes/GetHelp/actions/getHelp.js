@@ -7,17 +7,16 @@ import * as userApi from 'apis/user'
 import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
-import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
 import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getIsMultiComplaintLimitReachedLastFourWeeks, getIsBoxDailyComplaintLimitReached } from '../selectors/orderSelectors'
 import { getIsAutoAccept, getOrder, getRecipes, getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
 import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
-import { actionTypes } from './actionTypes'
+import { actionTypes, trackingKeys } from './actionTypes'
 import { asyncAndDispatch } from './utils'
 import { transformRecipesWithIngredients } from './transformers/recipeTransform'
 
-const SE_CATEGORY_HELP = 'help'
+export const SE_CATEGORY_HELP = 'help'
 
 export const trackDeliveryOther = () => ({
   type: webClientActionTypes.TRACKING,
