@@ -7,7 +7,7 @@ import { SidesModal } from './SidesModal'
 
 Modal.setAppElement(document.body)
 
-describe.skip('<SideModal />', () => {
+describe('<SideModal />', () => {
   const accessToken = 'access-token'
   const orderId = 'order-id'
 
