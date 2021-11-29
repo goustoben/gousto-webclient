@@ -7,7 +7,7 @@ import { Allergens } from '../Allergens/Allergens'
 import { IngredientsList } from '../IngredientsList/IngredientsList'
 
 const DetailAllergenIngredients = ({ allergens, ingredients }) => {
-  if (!ingredients.size || !allergens.size) {
+  if (!ingredients.size) {
     return null
   }
 
