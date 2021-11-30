@@ -18,12 +18,10 @@ import {
   getOrderDeliverySlot,
   getOrderId,
   getPending,
-  getRecipes,
   getSelectedIngredients,
   getSelectedIngredientIssuesIDs,
   getSelectedIngredientsWithImage,
   getTrackingUrl,
-  getSelectedRecipeCards
 } from '../selectors'
 
 const ACCESS_TOKEN = 'shhh-its-a-secret'
@@ -54,14 +52,16 @@ const RECIPES = [
     id: '2871',
     title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
     ingredients: [
-      { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
+      {
+        uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
         label: '40g Cornish clotted cream',
         urls: [
           {
             url: 'ingredient-cornish-image-url',
             width: 50,
           },
-        ] },
+        ]
+      },
     ],
     goustoReference: '2145',
   },
@@ -110,7 +110,8 @@ const SELECTED_INGREDIENTS_WITH_IMG = [{
   label: '8ml soy sauce',
   srcSet: 'ingredient-soy-image-url 50w',
 },
-{ ingredientUuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
+{
+  ingredientUuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
   label: '40g Cornish clotted cream',
   srcSet: 'ingredient-cornish-image-url 50w'
 }]
@@ -158,12 +159,10 @@ describe('Get Help selectors', () => {
     ['getOrderDeliveryDate', getOrderDeliveryDate, DELIVERY_DATE],
     ['getOrderDeliverySlot', getOrderDeliverySlot, DELIVERY_SLOT],
     ['getOrderId', getOrderId, ORDER_ID],
-    ['getRecipes', getRecipes, RECIPES],
     ['getSelectedIngredients', getSelectedIngredients, SELECTED_INGREDIENTS],
     ['getTrackingUrl', getTrackingUrl, TRACKING_URL],
     ['getSelectedIngredientIssuesIDs', getSelectedIngredientIssuesIDs, SELECTED_INGREDIENTS_ISSUES_IDS],
     ['getSelectedIngredientsWithImage', getSelectedIngredientsWithImage, SELECTED_INGREDIENTS_WITH_IMG],
-    ['getSelectedRecipeCards', getSelectedRecipeCards, SELECTED_RECIPE_CARDS]
   ])('Given %s is called', (_selectorName, selector, expectedResult) => {
     beforeEach(() => {
       result = selector(STATE)

@@ -24,8 +24,8 @@ describe('trackContinueToSsrClick', () => {
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: trackingKeys.continueToSsrClick,
-          numOrdersChecked: 2,
-          numOrdersCompensated: 1,
+          num_orders_checked: 2,
+          num_orders_compensated: 1,
         }
       })
     })

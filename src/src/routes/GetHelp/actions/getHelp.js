@@ -10,7 +10,8 @@ import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { getAccessToken } from 'selectors/auth'
 import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getIsMultiComplaintLimitReachedLastFourWeeks, getIsBoxDailyComplaintLimitReached } from '../selectors/orderSelectors'
-import { getIsAutoAccept, getOrder, getRecipes, getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
+import { getIsAutoAccept, getOrder, getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
+import { getRecipes } from '../selectors/recipesSelectors'
 import { getCompensation, getIsMultiComplaints } from '../selectors/compensationSelectors'
 import { actionTypes, trackingKeys } from './actionTypes'
 import { asyncAndDispatch } from './utils'
@@ -166,8 +167,8 @@ export const trackIngredientsGetInTouchClick = () => (dispatch, getState) => {
       prev_comp_same_day: isBoxDailyComplaintLimitReached,
       seCategory: SE_CATEGORY_HELP,
       reason: isMultiComplaintLimitReachedLastFourWeeks ? 'multi_complaint_limit_last_four_week' : undefined,
-      numOrdersChecked,
-      numOrdersCompensated,
+      num_orders_checked: numOrdersChecked,
+      num_orders_compensated: numOrdersCompensated,
     }
   })
 }

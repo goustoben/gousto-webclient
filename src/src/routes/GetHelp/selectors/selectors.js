@@ -2,6 +2,7 @@ import { actionTypes as webclientActionTypes } from 'actions/actionTypes'
 import { createSelector } from 'reselect'
 import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
 import { getIsSsrRepetitiveIssues } from '../../../selectors/features'
+import { getRecipes } from './recipesSelectors'
 import { transformIngredientImgSrcSet } from '../utils/transformIngredientImgSrcSet'
 
 export const getAccessToken = (state) => state.auth.get('accessToken')
@@ -80,16 +81,13 @@ export const getOrderId = state => state.getHelp.getIn(['order', 'id'])
 
 export const getPending = (state, actionType) => state.pending.get(actionType, false)
 
-export const getRecipes = (state) => (
-  state.getHelp.get('recipes').toJS()
-)
-
 export const getSelectedIngredients = (state) => (
   state.getHelp.get('selectedIngredients').toJS()
 )
 
 export const getSelectedIngredientsWithImage = createSelector(
-  getSelectedIngredients, getRecipes,
+  getSelectedIngredients,
+  getRecipes,
   (selectedIngredients, recipes) => Object.values(selectedIngredients).map(({ recipeId, ingredientUuid }) => {
     const recipeForIngredient = recipes.find(recipe => recipe.id === recipeId)
     const ingredientData = recipeForIngredient.ingredients.find(ingredient => ingredient.uuid === ingredientUuid)
@@ -108,5 +106,3 @@ export const getSelectedIngredientIssuesIDs = createSelector(getSelectedIngredie
 export const getTrackingUrl = (state) => (
   state.getHelp.getIn(['order', 'trackingUrl'])
 )
-
-export const getSelectedRecipeCards = (state) => state.getHelp.get('selectedRecipeCards').toJS()

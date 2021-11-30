@@ -281,7 +281,7 @@ describe('GetHelp action generators and thunks', () => {
               id: ORDER_ID,
               recipeItems: ['2871', '1783'],
             },
-            recipes: [ MOCK_RECIPES[0], MOCK_RECIPES[1] ],
+            recipes: [MOCK_RECIPES[0], MOCK_RECIPES[1]],
           })
         })
         await loadOrderAndRecipesByIds(ORDER_ID)(dispatch, getState)
@@ -559,8 +559,8 @@ describe('GetHelp action generators and thunks', () => {
             is_second_complaint: false,
             prev_comp_same_day: false,
             seCategory: 'help',
-            numOrdersChecked: 2,
-            numOrdersCompensated: 1,
+            num_orders_checked: 2,
+            num_orders_compensated: 1,
           }
         })
       })
