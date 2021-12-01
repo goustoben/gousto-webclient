@@ -2,18 +2,21 @@ import { fromJS } from 'immutable'
 
 import {
   getShippingAddresses,
+  getSelectedAddress,
 } from '../addressSelectors'
 
+const ADDRESS = {
+  id: '1',
+  line1: 'Flat 6',
+  line2: '8 Some Road',
+  line3: '',
+  name: 'New Home',
+  postcode: 'W5 3PB',
+  town: 'London',
+}
+
 const ADDRESSES = [
-  {
-    id: '1',
-    line1: 'Flat 6',
-    line2: '8 Some Road',
-    line3: '',
-    name: 'New Home',
-    postcode: 'W5 3PB',
-    town: 'London',
-  },
+  ADDRESS,
   {
     id: '2',
     line1: 'Flat 7',
@@ -28,6 +31,7 @@ const ADDRESSES = [
 const STATE = {
   getHelp: fromJS({
     shippingAddresses: ADDRESSES,
+    selectedAddress: ADDRESS,
   }),
 }
 
@@ -36,6 +40,7 @@ describe('addressSelectors', () => {
 
   describe.each([
     ['getShippingAddresses', getShippingAddresses, ADDRESSES],
+    ['getSelectedAddress', getSelectedAddress, ADDRESS],
   ])('Given %s is called', (_selectorName, selector, expectedResult, newState = {}) => {
     beforeEach(() => {
       result = selector({

@@ -1,5 +1,6 @@
 import { actionTypes, trackingKeys } from './actionTypes'
-import { getOrderId, getSelectedRecipeCards } from '../selectors/selectors'
+import { getOrderId } from '../selectors/selectors'
+import { getSelectedRecipeCards } from '../selectors/recipesSelectors'
 import { SE_CATEGORY_HELP } from './getHelp'
 
 export const trackContinueToRecipeCardsIssues = () => (dispatch, getState) => {
@@ -25,3 +26,49 @@ export const setSelectedRecipeCards = (recipeIds) => ({
     recipeIds
   }
 })
+
+export const trackPrintedRecipeCardClickRecipe = () => (dispatch, getState) => {
+  const state = getState()
+  const recipeIds = getSelectedRecipeCards(state)
+
+  dispatch({
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: trackingKeys.ssrPrintedRecipeCardsClickRecipe,
+      no_of_recipe_cards: recipeIds.length,
+      seCategory: SE_CATEGORY_HELP,
+    }
+  })
+}
+
+export const trackPrintedRecipeCardClickDone = () => (dispatch, getState) => {
+  const state = getState()
+  const orderId = getOrderId(state)
+  const recipeIds = getSelectedRecipeCards(state)
+
+  dispatch({
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: trackingKeys.ssrPrintedRecipeCardsClickDone,
+      order_id: orderId,
+      no_of_recipe_cards: recipeIds.length,
+      seCategory: SE_CATEGORY_HELP,
+    }
+  })
+}
+
+export const trackPrintedRecipeCardClickCookbook = () => (dispatch, getState) => {
+  const state = getState()
+  const orderId = getOrderId(state)
+  const recipeIds = getSelectedRecipeCards(state)
+
+  dispatch({
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: trackingKeys.ssrPrintedRecipeCardsClickCookbook,
+      order_id: orderId,
+      no_of_recipe_cards: recipeIds.length,
+      seCategory: SE_CATEGORY_HELP,
+    }
+  })
+}

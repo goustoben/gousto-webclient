@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { getUserId } from 'selectors/user'
 import { RecipeCardsSelect } from './RecipeCardsSelect'
-import { getRecipes, getOrderId, getSelectedRecipeCards } from '../../selectors/selectors'
+import { getOrderId } from '../../selectors/selectors'
+import { getRecipes, getSelectedRecipeCards } from '../../selectors/recipesSelectors'
 import { trackContinueToRecipeCardsIssues, setSelectedRecipeCards } from '../../actions/recipeCards'
 
 const mapStateToProps = (state) => ({

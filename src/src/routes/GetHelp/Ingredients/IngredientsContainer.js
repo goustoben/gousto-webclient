@@ -17,9 +17,9 @@ import {
 import {
   getMassIssueIneligibleIngredientUuids,
   getOrder,
-  getRecipes,
   getHasRepetitiveIssues,
 } from '../selectors/selectors'
+import { getRecipes } from '../selectors/recipesSelectors'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({

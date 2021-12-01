@@ -10,8 +10,8 @@ export const trackContinueToSsrClick = () => (dispatch, getState) => {
     type: webClientActionTypes.TRACKING,
     trackingData: {
       actionType: trackingKeys.continueToSsrClick,
-      numOrdersChecked,
-      numOrdersCompensated
+      num_orders_checked: numOrdersChecked,
+      num_orders_compensated: numOrdersCompensated
     }
   })
 }

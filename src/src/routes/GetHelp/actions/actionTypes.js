@@ -34,7 +34,10 @@ const trackingKeys = {
   ssrIngredientsOpenRefundArticle: 'ssr_ingredients_open_refund_article',
   ssrIngredientsReasonsConfirmed: 'ssr_ingredients_reasons_confirmed',
   ssrPrintedRecipeCardsContinue: 'ssr_printed_recipe_cards_continue',
+  ssrPrintedRecipeCardsClickRecipe: 'ssr_printed_recipe_cards_click_recipe',
+  ssrPrintedRecipeCardsClickDone: 'ssr_printed_recipe_cards_click_done',
   ssrRecipesClickGetInTouch: 'ssr_recipes_click_get_in_touch',
+  ssrPrintedRecipeCardsClickCookbook: 'ssr_printed_recipe_cards_click_cookbook',
   ssrSelectIngredient: 'ssr_select_ingredient',
   viewCreditClick: 'view_credit_click',
 }

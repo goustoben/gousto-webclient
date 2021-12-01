@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getRecipes } from '../selectors/selectors'
+import { getRecipes } from '../selectors/recipesSelectors'
 import { trackRecipeCardClick, trackRecipeCardGetInTouchClick } from '../actions/getHelp'
 import { RecipeCards } from './RecipeCards.logic'
 
