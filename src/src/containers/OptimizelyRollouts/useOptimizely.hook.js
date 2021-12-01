@@ -1,10 +1,10 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { useMountedState } from 'react-use'
 import { getAuthUserId } from 'selectors/auth'
-import { getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
+import { timeout, getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 
 const withVersionPrefixAsFalse = false
@@ -18,64 +18,34 @@ const withVersionPrefixAsFalse = false
 export const useIsOptimizelyFeatureEnabled = (name) => {
   const dispatch = useDispatch()
 
+  const [isEnabled, setEnabled] = useState(null)
+
   const sessionId = get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
   const userId = useSelector(getAuthUserId)
+  const getIsMounted = useMountedState()
   const userIdForOptimizely = userId || sessionId
-  const [instance, setInstance] = React.useState(null)
-  const isMounted = useMountedState()
-  const getIsFeatureEnabled = React.useCallback(() => {
-    // if we have no instance
-    if (!instance) return false
 
-    // If we don't have a valid instance, we can't use Optimizely
-    if (!hasValidInstance()) return false
-
-    return instance.isFeatureEnabled(name, userIdForOptimizely)
-  }, [name, userIdForOptimizely, instance])
-  const isEnabled = getIsFeatureEnabled()
-  const cookieOverwrite = get(Cookies, 'gousto_optimizely_overwrites')
-  const overwrite = cookieOverwrite && typeof cookieOverwrite === 'object' ? (cookieOverwrite[name] || null) : null
-  const hasOverwrite = overwrite !== null
-
-  React.useEffect(() => {
-    // If we don't have a userId or sessionId,
-    // we can't use Optimizely to track the experiment
-    if (!userIdForOptimizely) return
-
-    // if we have a valid instance we don't need to fetch an instance
-    if (instance && hasValidInstance()) return
-
-    const loadOptimizelyInstance = async () => {
-      // We return if we have an instance already
-      if (instance) return
-
-      const optimizelyInstance = await getOptimizelyInstance()
-
-      // We don't want to call setState if we have unmounted
-      if (isMounted()) {
-        setInstance(optimizelyInstance)
-      }
+  useEffect(() => {
+    if (!userIdForOptimizely) {
+      return
     }
+    getOptimizelyInstance().then((optimizelyInstance) => {
+      optimizelyInstance.onReady({ timeout }).then(() => {
+        if (hasValidInstance() && getIsMounted()) {
+          const featureValue = optimizelyInstance.isFeatureEnabled(name, userIdForOptimizely)
 
-    loadOptimizelyInstance()
-  }, [instance, userIdForOptimizely, isMounted])
+          dispatch(trackExperimentInSnowplow(name, featureValue, userId, sessionId))
+          setEnabled(featureValue)
+        }
+      })
+    })
+  }, [name, dispatch, userIdForOptimizely, userId, sessionId, getIsMounted])
 
-  // Track when we get feature from optimizely
-  React.useEffect(() => {
-    if (instance && hasValidInstance()) {
-      dispatch(trackExperimentInSnowplow(name, isEnabled, userId, sessionId))
-    }
-  }, [
-    instance,
-    name,
-    isEnabled,
-    userId,
-    sessionId,
-    dispatch,
-  ])
+  const cookieOverride = get(Cookies, 'gousto_optimizely_overwrites')
+  const override = cookieOverride && typeof cookieOverride === 'object' ? cookieOverride[name] || null : null
 
-  if (hasOverwrite) {
-    return overwrite
+  if (override !== null) {
+    return override
   }
 
   return isEnabled

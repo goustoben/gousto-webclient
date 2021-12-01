@@ -21,9 +21,22 @@ const experimentsConfig = {
   }
 }
 
+// When several different places in the app work off the same feature flag,
+// it's superfluous to send the tracking requests beyond the first.
+const sentCache = new Map()
+
+const createKey = (featureName, authUserId, sessionId) => [featureName, authUserId, sessionId].join(':')
+
 export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId) => (dispatch) => {
   const experimentData = experimentsConfig[featureName]
   if (experimentData) {
+    const key = createKey(featureName, authUserId, sessionId)
+    if (sentCache.has(key) && sentCache.get(key) === isOptimizelyFeatureEnabled) {
+      return
+    }
+
+    sentCache.set(key, isOptimizelyFeatureEnabled)
+
     dispatch({
       type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
       trackingData: {
