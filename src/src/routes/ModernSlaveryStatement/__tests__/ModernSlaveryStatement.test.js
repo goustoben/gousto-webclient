@@ -4,10 +4,11 @@ import { mount } from 'enzyme'
 import Helmet from 'react-helmet'
 import { client } from 'config/routes'
 import MainLayout from 'layouts/MainLayout'
-import { match, createMemoryHistory } from 'react-router'
 import { routes } from 'routes'
 
 import { ModernSlaveryStatement } from '../ModernSlaveryStatement'
+
+const { match, createMemoryHistory } = require('react-router')
 
 describe('ModernSlaveryStatement', () => {
   test('should display the modern slavery statement page when /modern-slavery-statement is called', () => {

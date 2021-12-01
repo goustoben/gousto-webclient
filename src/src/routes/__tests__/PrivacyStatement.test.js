@@ -1,8 +1,8 @@
 import config from 'config'
 import MainLayout from 'layouts/MainLayout'
-import { match, createMemoryHistory } from 'react-router'
 import { PrivacyStatement } from '../PrivacyStatement/PrivacyStatement'
 import { routes } from '../routes'
+const { match, createMemoryHistory } = require('react-router')
 
 function reduxStoreMock() {
   return {

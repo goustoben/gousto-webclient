@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
-import { match, createMemoryHistory } from 'react-router'
 import { getHelpRoutes } from '../routes'
+const { match, createMemoryHistory } = require('react-router')
 
 jest.mock('utils/window', () => ({
   redirect: jest.fn(),

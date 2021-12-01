@@ -9,7 +9,7 @@ const getCollectionBySlug = (collections: IOrderedMap<string, MenuCollection>, s
     return null
   }
 
-  const collection = collections.find((c) => c !== undefined && c.get('slug') === slug)
+  const collection = collections.find((c) => c?.get('slug') === slug)
 
   return collection || null
 }

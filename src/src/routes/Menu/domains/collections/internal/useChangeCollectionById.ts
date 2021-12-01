@@ -1,3 +1,4 @@
+/* eslint-disbale-next-line explicit-module-boundary-types */
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 import { filtersCollectionChange } from 'actions/filters'
@@ -9,10 +10,12 @@ export const useChangeCollectionById = () => {
   const collections = useDisplayedCollections()
   const prevLoc = useLocation()
 
-  return collectionId => {
+  return (collectionId: string) => {
     const query = { ...prevLoc.query }
 
-    const matchingCollection = collections.find(collection => collection.get('id') === collectionId)
+    const matchingCollection = collections.find(
+      (collection) => collection?.get('id') === collectionId
+    )
 
     if (!matchingCollection) {
       return

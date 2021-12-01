@@ -5,6 +5,7 @@ import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
 import { useCurrentCollection } from './useCurrentCollection'
 import { CollectionSlug } from '../constants'
+import { createCollectionFromDefaultValues } from './utils'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -18,25 +19,25 @@ const mockedUseCollectionQuerySlug = mocked(useCollectionQuerySlug, true)
 const mockedUseDisplayedCollections = mocked(useDisplayedCollections, true)
 
 describe('useCurrentCollection', () => {
-  const defaultCollection = Immutable.Map({
+  const defaultCollection = createCollectionFromDefaultValues({
     id: '101',
     published: true,
     default: true,
     slug: 'foo',
   })
-  const recommendationsCollection = Immutable.Map({
+  const recommendationsCollection = createCollectionFromDefaultValues({
     id: '102',
     published: true,
     default: false,
     slug: CollectionSlug.Recommendations,
   })
-  const normalCollection = Immutable.Map({
+  const normalCollection = createCollectionFromDefaultValues({
     id: '103',
     published: true,
     default: false,
     slug: 'pastas',
   })
-  const normalCollectionTwo = Immutable.Map({
+  const normalCollectionTwo = createCollectionFromDefaultValues({
     id: '104',
     published: true,
     default: false,
@@ -48,12 +49,12 @@ describe('useCurrentCollection', () => {
 
     mockedUseCollectionQuerySlug.mockReturnValue(null)
     mockedUseDisplayedCollections.mockReturnValue(
-      Immutable.List([
-        normalCollection,
-        normalCollectionTwo,
-        recommendationsCollection,
-        defaultCollection,
-      ])
+      Immutable.OrderedMap({
+        a: normalCollection,
+        b: normalCollectionTwo,
+        c: recommendationsCollection,
+        d: defaultCollection,
+      })
     )
   })
 
@@ -79,7 +80,11 @@ describe('useCurrentCollection', () => {
     describe('when there is no default collection', () => {
       beforeEach(() => {
         mockedUseDisplayedCollections.mockReturnValue(
-          Immutable.List([normalCollection, normalCollectionTwo, recommendationsCollection])
+          Immutable.OrderedMap({
+            a: normalCollection,
+            b: normalCollectionTwo,
+            c: recommendationsCollection,
+          })
         )
       })
 
@@ -92,7 +97,7 @@ describe('useCurrentCollection', () => {
       describe('when there is no recommendations collection', () => {
         beforeEach(() => {
           mockedUseDisplayedCollections.mockReturnValue(
-            Immutable.List([normalCollection, normalCollectionTwo])
+            Immutable.OrderedMap({ a: normalCollection, b: normalCollectionTwo })
           )
         })
 

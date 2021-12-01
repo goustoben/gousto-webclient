@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
-import { match, createMemoryHistory } from 'react-router'
 import { MenuRecipesPageWrapper } from 'routes/Menu/MenuRecipesPage/MenuRecipesPageWrapper'
 import { routes } from '../routes'
+const { match, createMemoryHistory } = require('react-router')
 
 function reduxStoreMock(isAuthenticated) {
   return {
