@@ -22,6 +22,7 @@ describe('useIsOptimizelyFeatureEnabled', () => {
   let goustoOptimizelyOverwrites
 
   const isFeatureEnabled = jest.fn()
+  const onReady = jest.fn().mockImplementation(() => Promise.resolve())
 
   const dispatch = jest.fn()
   useDispatch.mockReturnValue(dispatch)
@@ -33,7 +34,7 @@ describe('useIsOptimizelyFeatureEnabled', () => {
   beforeEach(() => {
     hasValidInstanceSpy = jest.spyOn(optimizelySdk, 'hasValidInstance')
     getOptimizelyInstanceSpy = jest.spyOn(optimizelySdk, 'getOptimizelyInstance')
-      .mockResolvedValue({ isFeatureEnabled })
+      .mockResolvedValue({ isFeatureEnabled, onReady })
 
     goustoSessionId = undefined
     goustoOptimizelyOverwrites = undefined
@@ -61,12 +62,12 @@ describe('useIsOptimizelyFeatureEnabled', () => {
   })
 
   describe('when user and session are not present', () => {
-    it('should return false', async () => {
+    it('should return null', async () => {
       const { result } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
 
       const isEnabled = result.current
 
-      expect(isEnabled).toBe(false)
+      expect(isEnabled).toBe(null)
       expect(get).toHaveBeenNthCalledWith(1, Cookies, 'gousto_session_id', false, false)
       expect(get).toHaveBeenNthCalledWith(2, Cookies, 'gousto_optimizely_overwrites')
       expect(hasValidInstanceSpy).not.toBeCalled()
@@ -84,18 +85,13 @@ describe('useIsOptimizelyFeatureEnabled', () => {
     })
 
     describe('when optimizely does not load successfully', () => {
-      it('should return false', async () => {
-        hasValidInstanceSpy.mockReturnValue(false)
-
-        const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
-
-        await waitForNextUpdate()
+      it('should return null', async () => {
+        const { result } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
 
         const isEnabled = result.current
 
-        expect(isEnabled).toBe(false)
+        expect(isEnabled).toBe(null)
         expect(getOptimizelyInstanceSpy).toBeCalled()
-        expect(hasValidInstanceSpy).toBeCalled()
         expect(isFeatureEnabled).not.toBeCalled()
         expect(dispatch).not.toBeCalled()
       })

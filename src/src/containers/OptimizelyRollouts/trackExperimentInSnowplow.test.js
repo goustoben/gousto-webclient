@@ -1,12 +1,15 @@
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 
 describe('trackExperimentInSnowplow', () => {
-  let dispatch
-  let featureName = 'testFeature'
+  const dispatch = jest.fn()
+
   beforeEach(() => {
-    dispatch = jest.fn()
+    jest.clearAllMocks()
   })
+
   describe('when as experiments for featureName', () => {
+    const featureName = 'testFeature'
+
     describe('when optimizelyExperiment is enabled', () => {
       beforeEach(() => {
         const isOptimizelyFeatureEnabled = true
@@ -14,6 +17,7 @@ describe('trackExperimentInSnowplow', () => {
         const sessionId = ''
         trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, authUserId, sessionId)(dispatch)
       })
+
       test('should call snowplow with experiment data', () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
@@ -26,6 +30,21 @@ describe('trackExperimentInSnowplow', () => {
             session_id: ''
           }
         })
+      })
+    })
+
+    describe('when repeat calls are made', () => {
+      beforeEach(() => {
+        const isOptimizelyFeatureEnabled = true
+        const authUserId = 'another-auth-id'
+        const sessionId = ''
+        for (let i = 0; i < 3; ++i) {
+          trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, authUserId, sessionId)(dispatch)
+        }
+      })
+
+      test('should call snowplow only once', () => {
+        expect(dispatch).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -53,11 +72,13 @@ describe('trackExperimentInSnowplow', () => {
   })
 
   describe('when no experimentsConfig for featureName', () => {
+    const featureName = 'testFeatureWithNoData'
+
     beforeEach(() => {
-      featureName = 'testFeatureWithNoData'
       const isOptimizelyFeatureEnabled = false
       trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, '', '')(dispatch)
     })
+
     test('should not call dispatch', () => {
       expect(dispatch).not.toHaveBeenCalled()
     })
