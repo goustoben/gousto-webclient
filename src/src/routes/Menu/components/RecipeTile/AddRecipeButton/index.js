@@ -1,1 +1,1 @@
-export { AddRecipeButton } from './AddRecipeButton'
+export { AddRecipeButtonContainer } from './AddRecipeButtonContainer'

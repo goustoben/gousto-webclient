@@ -1,10 +1,6 @@
-import { Map } from 'immutable'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { basketRecipeAdd, basketRecipeRemove } from 'routes/Menu/actions/basketRecipes'
-import { getBasketRecipes } from '../../../../../selectors/basket'
 import { useBasketDelivery } from './delivery'
-
-const USER_RECIPE_LIMIT = 4
 
 const useModifyRecipes = () => {
   const dispatch = useDispatch()
@@ -32,27 +28,17 @@ const useCanAddRecipes = () => {
   return Boolean(postcode)
 }
 
-const useRecipeQuantities = (): Map<string, number> => {
-  const recipesFromState = useSelector(getBasketRecipes)
-
-  return recipesFromState
-}
-
-const sumQuantities = (recipes: Map<string, number>) => recipes
-  .reduce((total = 0, current = 0) => total + current, 0)
+// todo implement this
+const useRecipes = () => []
 
 export const useBasketRecipes = () => {
-  const recipeQuantities = useRecipeQuantities()
+  const recipes = useRecipes()
   const canAddRecipes = useCanAddRecipes()
-
-  const isRecipeInBasket = (recipeId: string) => recipeQuantities.get(recipeId, 0) > 0
-  const limitReached = sumQuantities(recipeQuantities) >= USER_RECIPE_LIMIT
 
   return {
     ...useModifyRecipes(),
 
+    recipes,
     canAddRecipes,
-    limitReached,
-    isRecipeInBasket,
   }
 }

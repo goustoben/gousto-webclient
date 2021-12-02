@@ -1,7 +1,10 @@
+
+import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { limitReached } from 'utils/basket'
 import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
 import status from '../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
+import { getBasketPostcode} from '../../../selectors/basket'
 import { actionTypes } from '../../../actions/actionTypes'
 import pricingActions from '../../../actions/pricing'
 import * as trackingKeys from '../../../actions/trackingKeys'
@@ -183,3 +186,15 @@ export const basketRecipeSwap = () =>
       dispatch(clearBasketNotValidError())
     }
   }
+
+export const basketRecipeAddAttempt = (recipeId) => (
+  (dispatch, getState) => {
+    const basketPostcode = getBasketPostcode(getState())
+
+    if (basketPostcode) {
+      dispatch(basketRecipeAdd(recipeId))
+    } else {
+      dispatch(menuBrowseCTAVisibilityChange(true))
+    }
+  }
+)

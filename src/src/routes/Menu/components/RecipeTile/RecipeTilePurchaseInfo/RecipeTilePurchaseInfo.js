@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { AddRecipeButton } from '../AddRecipeButton'
+import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
 import css from './RecipeTilePurchaseInfo.css'
 
@@ -47,7 +47,7 @@ export const RecipeTilePurchaseInfo = ({
         </div>
       ) : null}
       <div className={css.buttonsWrapper}>
-        <AddRecipeButton recipeId={recipeId} />
+        <AddRecipeButtonContainer recipeId={recipeId} />
         {hasAlternativeOptions
             && (
               browserType === 'mobile'
