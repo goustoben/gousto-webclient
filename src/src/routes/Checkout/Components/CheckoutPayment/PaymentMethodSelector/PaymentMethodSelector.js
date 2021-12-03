@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { PaymentMethod } from 'config/signup'
 import { PaymentMethodListItem } from './PaymentMethodListItem'
-import css from './PaymentMethodSelector.css'
+import css from './PaymentMethodSelector.module.css'
 
 export const PaymentMethodSelector = ({
   currentPaymentMethod,

@@ -8,7 +8,7 @@ import { TileImage } from './TileImage'
 import { Image } from '../../Recipe'
 import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
 
-import css from './TileImage.css'
+import css from './TileImage.module.css'
 
 describe('<TileImage />', () => {
   let wrapper

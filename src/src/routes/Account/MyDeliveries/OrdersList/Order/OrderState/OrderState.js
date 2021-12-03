@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './OrderState.css'
+import css from './OrderState.module.css'
 
 const initcap = (word) => word.charAt(0).toUpperCase() + word.slice(1)
 const toCamelCase = (str) => str.replace(/\b\w/g, chr => chr.toUpperCase()).replace(' ', '')

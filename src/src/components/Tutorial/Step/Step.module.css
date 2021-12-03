@@ -1,0 +1,18 @@
+@value Bluecheese from 'styles/colors.module.css';
+
+.cta {
+  margin-top: 20px;
+  color: Bluecheese;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 500;
+}
+
+.cta__icon {
+  vertical-align: sub;
+  margin-left: 4px;
+}

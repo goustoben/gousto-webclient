@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Order.css'
+import css from './Order.module.css'
 
 export const Order = ({ date, numPeople, numRecipes }) => (
   <div className={css.order}>

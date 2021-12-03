@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'goustouicomponents'
-import css from './Notification.css'
+import css from './Notification.module.css'
 
 const propTypes = {
   type: PropTypes.string.isRequired,

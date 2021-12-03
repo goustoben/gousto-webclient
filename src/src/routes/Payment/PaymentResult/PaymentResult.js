@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import css from './PaymentResult.css'
+import css from './PaymentResult.module.css'
 
 class PaymentResult extends PureComponent {
   render() {

@@ -1,0 +1,94 @@
+@value Bluecheese, Bluecheese50, Duckegg, White from 'styles/colors.module.css';
+@value sizeXXS from 'styles/typography.module.css';
+
+.day {
+	composes: relative from 'styles/position.module.css';
+	composes: textBold from 'styles/typography.module.css';
+	composes: bottomRightBorder from '../Calendar.module.css';
+	color: Bluecheese;
+
+	background: White;
+	cursor: pointer;
+
+	&:last-child {
+		border-bottom-width: 0;
+	}
+}
+
+.currentDay {
+	composes: day;
+	background: Bluecheese;
+	color: White;
+}
+
+.emptyDay {
+	composes: day;
+	cursor: default;
+	color: Bluecheese50;
+	position: relative;
+}
+
+.emptyDay::before {
+	content: '';
+	height: 1px;
+	width: 50%;
+	background-color: Duckegg;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	left: 0;
+	margin: 0 auto;
+}
+
+.icon {
+	composes: absolute from 'styles/position.module.css';
+	font-size: sizeXXS;
+	top: 2px;
+	left: 2px;
+	height: 10px;
+	width: 10px;
+}
+
+.icon-full-box {
+	composes: icon;
+	background: url('media/svgs/icon_Booked-delivery-small.svg') center top no-repeat;
+}
+
+.icon-empty-box {
+	composes: icon;
+	background: url('media/svgs/icon_Scheduled-delivery-small.svg') center top no-repeat;
+}
+
+.currentDay .icon-full-box {
+	position: absolute;
+	font-size: sizeXXS;
+	top: 2px;
+	left: 2px;
+	height: 10px;
+	width: 10px;
+	background: url('media/svgs/icon_Booked-delivery-small-inverted.svg') center top no-repeat;
+}
+
+.currentDay .icon-empty-box {
+	position: absolute;
+	font-size: sizeXXS;
+	top: 2px;
+	left: 2px;
+	height: 10px;
+	width: 10px;
+	background: url('media/svgs/icon_Scheduled-delivery-small-inverted.svg') center top no-repeat;
+}
+
+.square {
+	width: 100%;
+	padding-bottom : 100%; /* = width for a 1:1 aspect ratio */
+}
+
+.content {
+	position:absolute;
+	height:100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

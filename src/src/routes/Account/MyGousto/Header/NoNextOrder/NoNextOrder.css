@@ -1,4 +1,0 @@
-.subtitle {
-  composes: fontStyleSubHead from 'design-language/typography.css';
-  margin-bottom: 0.75rem;
-}

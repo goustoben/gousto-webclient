@@ -1,0 +1,7 @@
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+
+.cancelButton {
+	@media ScreenXSMax {
+		width: 100%
+	}
+}

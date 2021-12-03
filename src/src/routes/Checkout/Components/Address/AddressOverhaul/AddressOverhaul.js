@@ -4,7 +4,7 @@ import { onEnter } from 'utils/accessibility'
 import { Postcode } from '../Postcode'
 import { AddressInputs } from '../AddressInputs'
 import { DeliveryCard } from '../../Delivery/DeliveryCard'
-import css from '../Address.css'
+import css from '../Address.module.css'
 
 export class AddressOverhaul extends PureComponent {
   handleEditAddressManually = () => {

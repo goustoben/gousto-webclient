@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Svg from 'Svg'
 import { WarningExistingOrder } from '../WarningExistingOrder'
-import css from '../DeliverySlot.css'
+import css from '../DeliverySlot.module.css'
 
 const DeliverySupportingText = ({ hasEmptyOrders, hasFullOrders, doesDateHaveDisabledSlots, showWarning, tempDate }) => {
   let warningMessage

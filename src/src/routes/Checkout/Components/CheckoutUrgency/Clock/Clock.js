@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { formatSeconds } from '../checkoutUrgencyUtils'
-import css from './Clock.css'
+import css from './Clock.module.css'
 
 export const Clock = ({ seconds, total, isCritical }) => {
   const svgViewBox = 128

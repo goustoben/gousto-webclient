@@ -1,0 +1,81 @@
+@value White, BlueBase, BlueBaseDarker from 'styles/colors.module.css';
+@value ScreenSMMin,ScreenMDMin,ScreenLGMin from 'styles/screenSizes.module.css';
+
+.ctaWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.ctaInnerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @media ScreenSMMin {
+    position: absolute;
+    width: 90%;
+  }
+}
+
+.ctaText {
+  composes: axiforma from 'styles/typography.module.css';
+  font-size: 16px;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.ctaButton {
+  border: 1px solid BlueBase;
+  border-radius: 3px;
+  color: White;
+  background-color: BlueBase;
+  padding: 0.5rem 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 16px;
+    @media ScreenSMMin {
+      color: BlueBase;
+      background-color: White;
+      padding: 0.5rem;
+      width: 70%;
+  }
+}
+
+.ctaButton:hover {
+  background-color: BlueBaseDarker;
+  cursor: pointer;
+  color: White;
+}
+
+
+.ctaAllRecipe {
+    width: 100%;
+    position: relative;
+    margin: 0 0.75rem 0.75rem 0.75rem;
+    flex-direction: column;
+
+    @media ScreenSMMin {
+        margin: 0 1rem 1rem 0;
+        width: calc(50% - 1rem);
+        height: auto;
+    }
+    @media ScreenMDMin {
+        width: calc(33.33% - 1rem);
+        height: auto;
+    }
+    @media ScreenLGMin {
+        width: calc(25% - 1rem);
+        height: auto;
+    }
+}
+
+.spottyBorder {
+  width: 100%;
+  height: 100%;
+  display: none;
+  @media ScreenSMMin {
+    display: block;
+	}
+}

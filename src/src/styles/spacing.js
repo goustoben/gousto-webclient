@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 // eslint-disable-next-line import/no-unresolved
-import spacingStyles from 'styles/spacing.css'
+import spacingStyles from 'styles/spacing.module.css'
 
 const otherValues = [
   'auto',

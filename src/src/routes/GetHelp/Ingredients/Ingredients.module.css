@@ -1,0 +1,15 @@
+@value ScreenXXSMax from 'styles/screenSizes.module.css';
+
+.button {
+	align-self: center;
+	flex-grow: 0.4;
+	width: 100%;
+
+	@media ScreenXXSMax {
+		align-self: center;
+	}
+}
+
+.copy {
+	composes: fontStyleSubHead from 'design-language/typography.module.css';
+}

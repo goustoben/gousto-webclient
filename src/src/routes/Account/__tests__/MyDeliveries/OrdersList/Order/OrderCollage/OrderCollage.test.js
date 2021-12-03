@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { shallow, mount } from 'enzyme'
 
 import OrderCollage from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollage'
-import css from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollage/OrderCollage.css'
+import css from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollage/OrderCollage.module.css'
 
 describe('OrderCollage', () => {
   let wrapper

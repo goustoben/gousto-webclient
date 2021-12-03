@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { PaymentResult } from '../PaymentResult'
-import css from '../PaymentResult/PaymentResult.css'
+import css from '../PaymentResult/PaymentResult.module.css'
 
 describe('PaymentResult', () => {
   let wrapper

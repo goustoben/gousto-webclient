@@ -2,7 +2,7 @@ import React from 'react'
 
 import { telephone } from 'config/company'
 
-import css from './PhoneContent.css'
+import css from './PhoneContent.module.css'
 
 const PhoneContent = () => (
   <div>

@@ -5,7 +5,7 @@ import Carousel from 'Carousel'
 import { formatRecipeTitle } from 'utils/recipe'
 import { SimpleRecipe } from '../SimpleRecipe'
 import { Arrow } from '../CarouselArrow/CarouselArrow'
-import css from './RecipeCarousel.css'
+import css from './RecipeCarousel.module.css'
 import { orderRecipes } from './orderRecipes'
 
 const RecipeCarousel = ({ homeCarouselRecipes }) => (

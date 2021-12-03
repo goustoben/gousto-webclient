@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer'
 
 import Gel from 'Gel'
-import css from 'Gel/Gel.css'
+import css from 'Gel/Gel.module.css'
 
 describe('<Gel />', () => {
   let wrapper

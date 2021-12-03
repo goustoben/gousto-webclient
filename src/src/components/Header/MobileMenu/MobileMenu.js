@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { BurgerMobileMenu } from './BurgerMenu'
 import { LinkMobileMenu } from './LinksMobileMenu'
-import css from '../Header.css'
+import css from '../Header.module.css'
 
 const propTypes = {
   hideMobileMenu: PropTypes.func.isRequired,

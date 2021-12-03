@@ -1,0 +1,19 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.carouselContainer {
+  padding: 2.5rem 0.75rem 0;
+
+  @media BreakpointFromMedium {
+    padding: 2.5rem 2rem 0;
+  }
+}
+
+.CTAContainer {
+  display: none;
+
+  @media BreakpointFromMedium {
+    display: block;
+    max-width: 17.5rem;
+    margin: 0 auto 2.5rem;
+  }
+}

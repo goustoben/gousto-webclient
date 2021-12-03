@@ -6,7 +6,7 @@ import { trackRecipeOrderDisplayed } from 'actions/tracking'
 import { RecipeContextProvider } from 'routes/Menu/context/recipeContext'
 import { RecipeTileContainer } from 'routes/Menu/components/RecipeTile'
 
-import css from './RecipeList.css'
+import css from './RecipeList.module.css'
 
 const RecipeList = ({ collectionId, recipes }) => {
   const dispatch = useDispatch()

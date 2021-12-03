@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import placeholderImg from 'media/images/recipe-placeholder.png'
-import css from './IngredientsList.css'
+import css from './IngredientsList.module.css'
 
 const Ingredient = ({ label, srcSet }) => {
   const [srcSetImg, setSrcSetImg] = useState(null)

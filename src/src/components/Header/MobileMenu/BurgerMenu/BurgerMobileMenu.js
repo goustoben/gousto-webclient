@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import Link from 'Link'
 import * as trackingKeys from 'actions/trackingKeys'
-import css from '../MobileMenu.css'
+import css from '../MobileMenu.module.css'
 
 const getCssClassForMenuItem = (homeMenuItem, myGoustoMenuItem, isAuthenticated) => {
   if (homeMenuItem && isAuthenticated) {

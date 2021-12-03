@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import { useMenu } from 'routes/Menu/domains/menu'
 
-import css from './CollectionItem.css'
+import css from './CollectionItem.module.css'
 
 const CollectionItem = ({ collectionId, className, dataId, onClick, identifier, element, children, slug }) => {
   const { getRecipesForCollectionId } = useMenu()

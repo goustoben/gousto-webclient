@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './VariantRecipeList.css'
+import css from './VariantRecipeList.module.css'
 import { VariantRecipeListItemContainer } from '../VariantRecipeListItem'
 
 const compareCoreRecipeIds = (a, b) => a.coreRecipeId - b.coreRecipeId

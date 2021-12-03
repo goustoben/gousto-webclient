@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
-import css from './RecipeTile.css'
+import css from './RecipeTile.module.css'
 import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
 import { Title, BrandTag } from '../Recipe'
 

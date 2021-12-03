@@ -13,7 +13,7 @@ import { Cookbook } from './Cookbook'
 import { HeaderContainer } from './Header'
 import { ReferAFriend } from './ReferAFriend'
 import { PaymentDetailsNotification } from './PaymentDetailsNotification'
-import css from './MyGousto.css'
+import css from './MyGousto.module.css'
 
 const propTypes = {
   userLoadOrders: PropTypes.func.isRequired,

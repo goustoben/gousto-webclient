@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal, ModalHeader } from 'goustouicomponents'
 
-import css from './ExpandedContent.css'
+import css from './ExpandedContent.module.css'
 
 export const ExpandedContent = ({
   isMobile,

@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import { Button, Segment } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
-import css from './BrowseCTAButton.css'
+import css from './BrowseCTAButton.module.css'
 
 const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view) => {
   if (!boxSummaryShow) {

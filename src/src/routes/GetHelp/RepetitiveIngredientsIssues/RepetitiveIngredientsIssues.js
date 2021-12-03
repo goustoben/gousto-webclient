@@ -4,8 +4,8 @@ import { browserHistory } from 'react-router'
 import { client as routes } from 'config/routes'
 import { BottomFixedContent, Card, CTA } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './RepetitiveIngredientsIssues.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './RepetitiveIngredientsIssues.module.css'
 
 const showPersonalisedCopy = (firstName, numOrdersChecked, numOrdersCompensated) => {
   if (numOrdersChecked === 1 && numOrdersCompensated === 1) {

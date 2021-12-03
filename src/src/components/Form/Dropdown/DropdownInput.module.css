@@ -1,0 +1,265 @@
+@value Oyster, Radish, Radish05 from 'styles/colors.module.css';
+@value ScreenSMMax, ScreenMDMin from 'styles/screenSizes.module.css';
+@value sizeMD, bodyFontStackNormal from 'styles/typography.module.css';
+@value SpacingLG, SpacingMD, SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value dropdownSelectedColor, dropdownSelectedBgColor, inputColor, inputBgColor, inputBorderColor, inputBorderColorFocus, inputDisabledColor, inputSecondaryColor, inputSecondaryBgColor, inputSecondaryBorderColor, inputSecondaryBorderColorFocus, dropdownSecondarySelectedColor, dropdownSecondarySelectedBgColor from 'styles/forms.module.css';
+@value FontBodySize, FontFamilyAxiformaBook, FontWeightBold from 'design-language/typography.module.css';
+
+@value selectWidth 100%;
+@value errorColor Radish;
+@value errorBgColor Radish05;
+@value errorBorderColor Radish;
+
+.mobileHide {
+	@media ScreenSMMax {
+		display: none;
+	}
+
+  @media ScreenMDMin {
+    margin-left: 0;
+  }
+}
+.mobileOnly {
+	@media ScreenMDMin {
+		display: none;
+	}
+}
+
+.dropdown {
+	position: relative;
+}
+
+.subLabel {
+	composes: textSM textItalic from 'styles/typography.module.css';
+}
+
+.selectuppercase {
+	text-transform: uppercase;
+}
+
+/* Base */
+.native {
+	composes: textMD textBold from 'styles/typography.module.css';
+	composes: paddingXSTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: borderSM from 'styles/borders.module.css';
+	width: selectWidth;
+	appearance: none;
+	outline: none;
+	box-shadow: none;
+}
+
+.nativeSelectArrow {
+	border-style: solid;
+	border-width: 5px 5px 2.5px;
+	composes: inlineBlock from 'styles/display.module.css';
+	height: 0;
+	width: 0;
+	margin-left: calc(SpacingLG * -1);
+}
+
+.select {
+	position: relative;
+	max-width: selectWidth;
+
+	& :global .Select-arrow {
+		font-size: sizeMD;
+	}
+
+	& :global .Select-menu {
+		max-height: 160px;
+	}
+
+	& :global .Select-menu-outer {
+		margin-top: SpacingXXS;
+		box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.45);
+	}
+
+	& :global .is-focused:not(.is-open) > .Select-control {
+		box-shadow: none;
+	}
+
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		font-family: bodyFontStackNormal;
+		font-smoothing: antialiased;
+		font-size: sizeMD;
+	}
+
+	& :global .Select-placeholder
+	& :global .Select-control {
+		box-shadow: none;
+		width: selectWidth;
+		padding-left: SpacingMD;
+		padding-right: SpacingMD;
+	}
+
+	& :global .Select-control:hover {
+		box-shadow: none;
+	}
+
+	& :global .Select-option.is-disabled {
+		color: inputDisabledColor !important;
+	}
+}
+
+/* Colors */
+.primary.native {
+	color: inputColor;
+	border-color: inputBorderColor;
+	background: inputBgColor;
+}
+
+.primary.nativeSelectArrow {
+	border-color: inputColor transparent transparent;
+}
+
+.primary.select {
+	& :global .Select-arrow {
+		border-color: inputColor transparent transparent;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		color: inputColor !important;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-control {
+		border-color: inputBorderColor;
+	}
+
+	& :global .is-open > .Select-control,
+	& :global .Select-control:hover {
+		border-color: inputBorderColorFocus;
+	}
+
+	& :global .Select-option.is-selected,
+	& :global .Select-option.is-focused {
+		background-color: dropdownSelectedBgColor;
+		color: dropdownSelectedColor;
+	}
+}
+
+.secondary.native {
+	color: inputSecondaryColor;
+	border-color: inputSecondaryBorderColor;
+	background: inputSecondaryBgColor;
+}
+
+.secondary.nativeSelectArrow {
+	border-color: inputSecondaryColor transparent transparent;
+}
+
+.secondary.select {
+	& :global .Select-arrow {
+		border-color: inputSecondaryColor transparent transparent;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		color: inputSecondaryColor !important;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-control {
+		border-color: inputSecondaryBorderColor;
+	}
+
+	& :global .is-open > .Select-control,
+	& :global .Select-control:hover {
+		border-color: inputSecondaryBorderColorFocus;
+	}
+
+	& :global .Select-option.is-selected,
+	& :global .Select-option.is-focused {
+		background-color: dropdownSecondarySelectedBgColor;
+		color: dropdownSecondarySelectedColor;
+	}
+}
+
+.disabled {
+	color: Oyster;
+}
+
+.error {
+	& :global .Select-arrow {
+		border-color: inputColor transparent transparent;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		color: errorColor !important;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-control {
+		border-color: errorBorderColor;
+	}
+
+	& :global .is-open > .Select-control,
+	& :global .Select-control:hover {
+		border-color: errorBorderColor;
+	}
+
+	& :global .Select-option.is-selected,
+	& :global .Select-option.is-focused {
+		background-color: errorBgColor;
+		color: errorColor;
+	}
+}
+
+
+.icon {
+	composes: fa-basic-class fa-fw from 'styles/vendor/font-awesome-module.css';
+	font-size: sizeMD;
+}
+
+.icon-full-box {
+	font-size: sizeMD;
+	height: 10px;
+	width: 10px;
+	background: url('../../../media/svgs/icon_Booked-delivery-small.svg') center top no-repeat;
+}
+
+.boxIcon {
+	composes: absolute from 'styles/position.module.css';
+	top: 2px;
+	left: 2px;
+	height: 10px;
+	width: 10px;
+	background: url('../../../media/svgs/icon_Booked-delivery-small.svg') center top no-repeat;
+}
+
+.selectBorder {
+  border-color: Oyster !important;
+}
+
+.inCheckoutMobile {
+  padding: 0.625rem 0.75rem;
+  composes: selectBorder;
+}
+
+.inCheckoutDesktop {
+  & :global .Select-control {
+    border-color: Oyster !important;
+  }
+
+  & :global .Select-multi-value-wrapper,
+  & :global .Select-value {
+    padding: 0.3rem 0.75rem !important;
+  }
+
+  & :global .Select-value-label {
+    font-family: FontFamilyAxiformaBook, sans-serif;
+    font-size: FontBodySize;
+    font-weight: FontWeightBold;
+  }
+}

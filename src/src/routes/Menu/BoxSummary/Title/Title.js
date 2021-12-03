@@ -6,7 +6,7 @@ import moment from 'moment'
 import { Spinner } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
 import { Price } from '../Price'
-import css from './Title.css'
+import css from './Title.module.css'
 
 const propTypes = {
   date: PropTypes.string,

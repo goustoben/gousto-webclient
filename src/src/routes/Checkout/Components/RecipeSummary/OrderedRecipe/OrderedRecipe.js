@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import config from 'config/menu'
 import GoustoImage from 'Image'
 import { ButtonsContainer } from '../Buttons'
-import css from './OrderedRecipe.css'
+import css from './OrderedRecipe.module.css'
 
 export const OrderedRecipes = ({ title, recipeId, stock, media, featureBtn, isFineDineIn }) => (
   <div className={css.container}>

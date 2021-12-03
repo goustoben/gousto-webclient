@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 
-import css from './EventDate.css'
+import css from './EventDate.module.css'
 
 const propTypes = {
   date: PropTypes.string.isRequired,

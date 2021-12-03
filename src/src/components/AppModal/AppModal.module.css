@@ -1,0 +1,35 @@
+@value BluecheeseLighter from 'styles/colors.module.css';
+@value HeadingHeight 68px;
+
+.container {
+    text-align: center;
+    height: calc(100% - HeadingHeight);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "body"
+        "phoneImg"
+        "fixedToBottom";
+}
+
+.bodyContainer {
+    padding: 0 1.5rem;
+    grid-area: body;
+}
+
+.bodyText {
+    composes: fontStyleBody from 'design-language/typography.module.css';
+    margin-bottom: 1.5rem;
+}
+
+.appBannerDetails {
+    padding: 0.5rem 1rem;
+    background-color: BluecheeseLighter;
+}
+
+.ctaContainer {
+    text-align: center;
+    padding: 1rem;
+    grid-area: fixedToBottom;
+}

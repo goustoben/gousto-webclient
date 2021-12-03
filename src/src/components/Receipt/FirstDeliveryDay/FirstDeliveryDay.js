@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import moment from 'moment'
 import { getSlotTimes } from 'utils/deliveries'
-import styles from './FirstDeliveryDay.css'
+import styles from './FirstDeliveryDay.module.css'
 
 const FirstDeliveryDay = ({ date, deliveryDays, slotId }) => {
   const deliverydate = moment(date).format('ddd D MMM')

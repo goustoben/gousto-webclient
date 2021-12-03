@@ -1,0 +1,115 @@
+
+@value headingFontStackBold, sizeLG, sizeMD, sizeXS from 'styles/typography.module.css';
+@value Bluecheese, White, Mackerel from 'styles/colors.module.css';
+@value ScreenXXSMax, ScreenXXSMin, ScreenXSMax from 'styles/screenSizes.module.css';
+@value Top from 'styles/z-index.module.css';
+
+/* Mobile Modal stylings */
+
+.variantRecipeListModal {
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  width: 100%;
+  border-radius: 0;
+  margin: 0;
+	@media (max-width: 420px) {
+		transform: translate(-50%, 0);
+	}
+}
+
+.variantRecipeListModalTitleWrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  position: relative;
+  padding: 1.25rem 1rem 0.5rem;
+}
+
+.variantRecipeListModalTitle {
+  font-family: headingFontStackBold;
+  font-size: sizeLG;
+  text-align: left;
+  padding-right: 2rem;
+}
+
+.variantRecipeListModalCloseX {
+  composes: closeIcon from 'styles/icons.module.css';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.variantRecipeListModalContent {
+  text-align: left;
+  margin: 0;
+  padding: 0.25rem 1rem 2rem;
+}
+
+.variantRecipeListModalFooter {
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid Mackerel;
+  margin-top: 1rem;
+}
+
+.addASideLabel {
+  font-weight: 600;
+  font-size: sizeXS;
+}
+
+.variantRecipeListOverlayContent {
+  min-height: auto;
+}
+
+/* Desktop dropdown section */
+
+.outerWrapper {
+  display: flex;
+  margin-left: 1rem;
+  justify-content: flex-end;
+}
+
+.button {
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid Bluecheese;
+  color: Bluecheese;
+  background-color: White;
+  border-radius: 3px;
+  justify-content: center;
+  padding: 0;
+  @media ScreenSMMin {
+    min-width: 11.25rem;
+  }
+}
+
+.arrowDown {
+  composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+  composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+}
+
+.dropWrapper {
+  position: absolute;
+  width: 100%;
+  background: White;
+  z-index: Top;
+  display: none;
+  top: 3rem;
+
+  box-shadow: 0 4px 14px 0 rgba(51, 61, 71, 0.2);
+  padding: 1rem;
+  @media ScreenSMMin {
+    padding-top: 0;
+  }
+}
+
+.isExpanded {
+  display: block;
+}

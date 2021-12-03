@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { DeliveryCard } from 'routes/Checkout/Components/Delivery/DeliveryCard'
-import css from './SocialBelongingBanner.css'
+import css from './SocialBelongingBanner.module.css'
 
 export const SocialBelongingBanner = ({
   amountOfCustomers,

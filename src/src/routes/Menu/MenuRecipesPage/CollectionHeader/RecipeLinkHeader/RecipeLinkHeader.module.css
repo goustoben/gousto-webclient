@@ -1,0 +1,68 @@
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+@value FontFamilyAxiformaBook, FontWeightBold from 'design-language/typography.module.css';
+@value sizeMD, sizeXXL from 'styles/typography.module.css';
+
+.recipeLinkHeader {
+  width: 100%;
+  composes: pageContainer from 'styles/layout.module.css';
+  padding-top: 0.75rem;
+  margin-top: 3rem;
+  margin-bottom: -2.25rem;
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.recipeLinkHeaderView {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipeLinkHeaderTitle {
+  font-size: sizeXXL;
+  font-family: FontFamilyAxiformaBook;
+  font-weight: FontWeightBold;
+}
+
+.recipeLinkHeaderViewAllLink {
+  cursor: pointer;
+  margin-left: auto;
+  font-family: FontFamilyAxiformaBook;
+  font-weight: FontWeightBold;
+  font-size: sizeMD;
+}
+
+.recipeLinkHeaderDescription {
+  padding-bottom: 0.75rem;
+  font-family: FontFamilyAxiformaBook;
+  font-size: sizeMD;
+  margin: 0;
+}
+
+.recipeLinkRecipesContainer {
+  display: flex;
+  justify-content: center;
+  margin-right: -1rem;
+}
+
+.recipeLink33percentContainer {
+  width: calc(33% - 1rem);
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.recipeLink50percentContainer {
+  width: calc(50% - 1rem);
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+.recipeLinkImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

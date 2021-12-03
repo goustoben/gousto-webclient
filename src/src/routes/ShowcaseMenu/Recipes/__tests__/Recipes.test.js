@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { Recipes } from '../Recipes'
 
-jest.mock('../Recipes.css', () => ({
+jest.mock('../Recipes.module.css', () => ({
   __esModule: true,
   default: {
     cardWidth: '15rem',

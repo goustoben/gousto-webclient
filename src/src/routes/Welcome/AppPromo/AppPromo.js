@@ -5,7 +5,7 @@ import { CTA } from 'goustouicomponents'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import { TickList } from 'TickList'
 import config from 'config'
-import css from './AppPromo.css'
+import css from './AppPromo.module.css'
 
 const benefits = [
   'Be the first to know when the menu is out',

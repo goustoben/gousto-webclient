@@ -5,7 +5,7 @@ import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
 import { useClickOutside } from './useClickOutside'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const css = require('./SwapAlternativeOptions.css')
+const css = require('./SwapAlternativeOptions.module.css')
 
 export const SwapAlternativeOptionsMobile: React.FC<{
   recipeId: string;

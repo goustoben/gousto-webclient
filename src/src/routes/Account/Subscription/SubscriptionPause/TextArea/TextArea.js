@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Button } from 'goustouicomponents'
-import css from './TextArea.css'
+import css from './TextArea.module.css'
 
 const propTypes = {
   disabled: PropTypes.bool,

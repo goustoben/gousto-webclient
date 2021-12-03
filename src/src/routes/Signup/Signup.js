@@ -21,7 +21,7 @@ import { getPromoCode } from 'selectors/basket'
 import { promoGet } from 'actions/promos'
 import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
 
-import css from './Signup.css'
+import css from './Signup.module.css'
 
 import { BoxSizeStep } from './Steps/BoxSize'
 import { RecipesPerBoxStepContainer } from './Steps/RecipesPerBox'

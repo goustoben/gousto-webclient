@@ -7,8 +7,8 @@ import { ReduxFormInput } from 'Form/ReduxFormInput'
 import { CheckoutButton } from '../CheckoutButton/CheckoutButton'
 import { transformAddresses } from '../../utils/delivery'
 
-import postcodeCss from './Postcode.css'
-import checkoutCss from '../../Checkout.css'
+import postcodeCss from './Postcode.module.css'
+import checkoutCss from '../../Checkout.module.css'
 
 const Postcode = ({
   onPostcodeLookup,

@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
 import { RecipeHolder } from '../RecipeHolder'
-import css from './RecipeList.css'
+import css from './RecipeList.module.css'
 
 const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore, detailVisibilityChange, boxDetailsVisibilityChange, browser, boxSummaryVisible }) => {
   let emptyRecipes

@@ -1,0 +1,87 @@
+@value inputBorderColor, inputBorderColorFocus, errorBorderColor from 'styles/forms.module.css';
+@value Bluecheese, Oyster, Radish from 'styles/colors.module.css';
+
+:global #controllerFrame {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.iframeContainer {
+  width: 100%;
+  height: 3rem;
+  border-radius: 3px;
+  visibility: hidden;
+  border: 1px solid Oyster;
+
+  iframe {
+    border-radius: 3px;
+  }
+
+  &[class~='frame--activated'] {
+    visibility: visible;
+  }
+
+  &:hover {
+    border-color: Bluecheese;
+  }
+
+  &[class~='frame--focus'] {
+    border-color: Bluecheese;
+    border-width: 2px;
+  }
+
+  &[class~='frame--invalid'] {
+    border-color: Radish;
+    border-width: 2px;
+  }
+}
+
+.row {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.fieldContainer {
+  flex: 1;
+
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.fieldWithIcon {
+  position: relative;
+}
+
+.lockIconContainer {
+  position: absolute;
+  top: 0;
+  right: 0.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.lockIcon {
+  /* media/svgs/icon-checkout-lock.svg */
+  width: 24px;
+  height: 24px;
+}
+
+.forceLineBreakOnSmallScreens {
+  /* When Security Code (CVV) label displays on two rows, force the Expiry
+   (MM/YY) display on two rows as well. This is a hack that depends on the
+   labels and font sizes staying the same. */
+  @media (min-width: 374px) {
+    display: none;
+  }
+}
+
+.cardNameHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardsIcon {
+  composes: cardsIcon from '../PaymentMethodSelector/PaymentMethodSelector.module.css';
+}

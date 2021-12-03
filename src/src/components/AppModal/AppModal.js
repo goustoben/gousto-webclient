@@ -9,7 +9,7 @@ import Cookies from 'utils/GoustoCookies'
 import { AppBannerDetails } from 'components/AppBanner'
 import { AnimatedImage } from './AnimatedImage/AnimatedImage'
 
-import css from './AppModal.css'
+import css from './AppModal.module.css'
 
 const COOKIE_KEY = 'cookie_app_promotion'
 const COOKIE_VALUE = 'dismissed'

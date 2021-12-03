@@ -1,0 +1,133 @@
+@value ScreenXSMax, ScreenSMMin, ScreenXXSMin, Screen3XSMax from 'styles/screenSizes.module.css';
+@value White, Mushroom50 from 'styles/colors.module.css';
+
+.fullHeight {
+	composes: absolute from 'styles/position.module.css';
+	min-height: 100vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	@media ScreenSMMin {
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
+}
+
+.container {
+	composes: relative from 'styles/position.module.css';
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+	z-index: 1000;
+	background-color: White;
+	padding: 0 30px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	@media ScreenSMMin {
+		width: 100%;
+		height: auto;
+		max-width: 800px;
+		margin: 0 auto;
+		border-radius: 5px;
+		box-shadow: 0 5px 15px rgba(0,0,0, 0.5);
+	}
+}
+
+.image {
+	object-fit: cover;
+	width: 100%;
+}
+
+.detailContainer {
+	composes: flex from 'styles/display.module.css';
+	flex-direction: column;
+	text-align: left;
+	justify-content: space-between;
+	padding-top: 20px;
+	font-size: 16px;
+	flex-grow: 1;
+
+	@media Screen3XSMax {
+		flex-grow: 0;
+	}
+
+	@media ScreenSMMin {
+		width: 50%;
+		padding-left: 30px;
+		padding-top: 0;
+		font-size: 18px;
+	}
+}
+
+.detailButtons {
+	border:none;
+	@media ScreenSMMin {
+		order: 2;
+	};
+}
+
+.productDetailsTitle {
+	padding-top: 20px;
+	text-align: left;
+	font-weight: 700;
+	font-size: 18px;
+	display: flex;
+	justify-content: space-between;
+	margin: 0;
+
+	@media ScreenXXSMin {
+		font-size: 24px;
+	}
+}
+
+.productDetailsTitle > span {
+	padding: 0;
+}
+
+.productDetailsContent {
+	display: flex;
+	flex-direction: column;
+	padding: 10px 0 30px;
+	margin: 0;
+	flex-grow: 1;
+}
+.productDetailsContentRow {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+
+	@media ScreenSMMin {
+		flex-direction: row;
+	}
+}
+
+.productDetailsImage {
+	width: 100%;
+
+	@media ScreenSMMin {
+		width: 50%;
+		height: 100%;
+	}
+}
+
+.productDetailsAttributes {
+	padding: 15px 0 0;
+	text-align: left;
+	@media Screen3XSMax {
+		line-height: 22px;
+	}
+}
+
+.productDetailsPrice {
+	font-size: 16px;
+}
+
+.productDetailsDescription {
+	line-height: 22px;
+	white-space: pre-line;
+
+	@media ScreenSMMin {
+		max-height: 65vh;
+		overflow: auto;
+	}
+}

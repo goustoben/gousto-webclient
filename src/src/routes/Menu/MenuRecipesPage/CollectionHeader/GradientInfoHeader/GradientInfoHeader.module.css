@@ -1,0 +1,71 @@
+@value headingFontStackBold, sizeMD, sizeXS from 'styles/typography.module.css';
+@value ScreenXXSMin, ScreenXXSMax, ScreenXSMax from 'styles/screenSizes.module.css';
+
+.gradientInfoHeader {
+  height: 10rem;
+  position: relative;
+  width: 100%;
+  composes: pageContainer from 'styles/layout.module.css';
+  padding-top: 3rem;
+  margin-bottom: -2rem;
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.gradientImageBackground {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.gradientBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left:0;
+}
+
+.gradientImage {
+  width: 60%;
+  object-fit: cover;
+  @media ScreenXXSMin {
+    width: 40%;
+  }
+}
+
+.gradientText {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  width: 60%;
+  padding-left: 1rem;
+  font-family: headingFontStackBold;
+  font-size: sizeXS;
+  @media ScreenXXSMin {
+    font-size: sizeMD;
+  }
+}
+
+.gradientDescription {
+  padding-top: 0.5rem;
+}
+
+.hideMobile {
+  @media ScreenXXSMax {
+    display: none;
+  }
+}
+
+.hideDesktop {
+  @media ScreenXXSMin {
+    display: none;
+  }
+}

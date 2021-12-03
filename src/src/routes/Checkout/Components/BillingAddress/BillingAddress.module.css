@@ -1,0 +1,15 @@
+@value Blackberry, Blueberry, Bluecheese from 'styles/colors.module.css';
+
+.addressContainer {
+  padding-top: 0.5rem;
+}
+
+.checkboxLabel {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  color: Blackberry;
+  font-weight: normal;
+}
+
+.container {
+  margin-bottom: 1rem;
+}

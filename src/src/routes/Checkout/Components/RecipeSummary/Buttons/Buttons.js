@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Segment, Control, Tooltip } from 'goustouicomponents'
 import { checkoutConfig } from 'config/checkout'
-import css from './Buttons.css'
+import css from './Buttons.module.css'
 
 class Buttons extends React.Component {
   constructor() {

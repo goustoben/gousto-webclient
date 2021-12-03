@@ -1,7 +1,7 @@
 import React from 'react'
 import { Heading, Card, CTA } from 'goustouicomponents'
 import GoustoLink from 'Link'
-import css from './NoNextOrder.css'
+import css from './NoNextOrder.module.css'
 
 const NoNextOrder = () => (
   <div data-testing="noNextOrder">

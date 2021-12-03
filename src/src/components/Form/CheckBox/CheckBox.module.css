@@ -1,0 +1,61 @@
+@value sizeXXS from 'styles/typography.module.css';
+@value Black, Bluecheese, LightestAccessible, White from 'styles/colors.module.css';
+@value checkRadioSize, checkRadioColor, checkRadioBgColorUnchecked, checkRadioBorderColorUnchecked, checkRadioBgColorChecked, checkRadioBorderColorChecked, checkRadioBorderColorFocus from 'styles/forms.module.css';
+@value borderSize: 2px;
+
+.container {
+	composes: block from 'styles/display.module.css';
+	position: relative;
+}
+
+.label {
+	display: flex;
+	padding-left: 1rem;
+}
+
+.input {
+	opacity: 0;
+}
+
+.indicator {
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background: White;
+	border: borderSize solid LightestAccessible;
+	border-radius: borderSize;
+}
+
+.checked {
+	background: url('../../../media/svgs/icon-checkmark.svg') center top no-repeat;
+	border-style: none;
+	width: 20px;
+	height: 20px;
+}
+
+.text {
+	composes: fontStyleBody from 'design-language/typography.module.css';
+	color: Black;
+}
+
+.textChecked {
+	font-weight: bold;
+	color: Bluecheese;
+}
+
+.textSizeExtraSmall {
+	composes: paragraphXS from 'styles/typography.module.css';
+}
+
+.textSizeMedium {
+	composes: paragraphMD from 'styles/typography.module.css';
+}
+
+.disclaimer {
+	& .text {
+		font-size:0.75rem;
+		color: Black;
+	}
+}

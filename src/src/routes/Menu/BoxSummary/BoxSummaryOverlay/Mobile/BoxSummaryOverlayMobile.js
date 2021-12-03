@@ -3,7 +3,7 @@ import React from 'react'
 import Overlay from 'Overlay'
 import { MOBILE_VIEW } from 'utils/view'
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
-import css from './BoxSummaryOverlayMobile.css'
+import css from './BoxSummaryOverlayMobile.module.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
 
 const BoxSummaryOverlayMobile = ({ onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions, shouldDisplayFullScreenBoxSummary }) => {

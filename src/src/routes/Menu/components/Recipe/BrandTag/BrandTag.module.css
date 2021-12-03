@@ -1,0 +1,13 @@
+@value ScreenSMMin from 'styles/screenSizes.module.css';
+@value sizeXXS, sizeXS from 'styles/typography.module.css';
+
+.brandTag {
+  text-transform: uppercase;
+  font-size: sizeXXS;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  
+  @media ScreenSMMin {
+    font-size: sizeXS;
+  }
+}

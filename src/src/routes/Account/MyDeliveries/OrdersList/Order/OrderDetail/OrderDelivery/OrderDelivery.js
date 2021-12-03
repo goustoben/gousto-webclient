@@ -4,7 +4,7 @@ import Loading from 'Loading'
 import { OrderDeliveryAddress } from './OrderDeliveryAddress'
 import { OrderDeliveryDate } from './OrderDeliveryDate'
 
-import css from './OrderDelivery.css'
+import css from './OrderDelivery.module.css'
 
 class OrderDelivery extends React.PureComponent {
   componentDidMount() {

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import { InputWrapper } from 'Form/InputWrapper'
-import css from './CheckBox.css'
+import css from './CheckBox.module.css'
 
 export class CheckBox extends React.PureComponent {
   handleChange = (e) => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import css from './VariantHeader.css'
+import css from './VariantHeader.module.css'
 
 const VariantHeader = ({ recipeVariants, isOutOfStock, textOverride }) => {
   if (!recipeVariants || isOutOfStock) {

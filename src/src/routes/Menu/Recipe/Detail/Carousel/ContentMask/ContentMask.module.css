@@ -1,0 +1,12 @@
+@value Blackberry, White from 'styles/colors.module.css';
+@value ScreenXXSMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.module.css';
+
+.container {
+	position: relative;
+	background-color: Blackberry;
+	color: White;
+}
+
+.content {
+	padding: 1rem 0 2.5rem;
+}

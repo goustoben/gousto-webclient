@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import css from './MenuDateRange.css'
+import css from './MenuDateRange.module.css'
 
 export const MenuDateRange = ({ variant, text }) => (
   <h1

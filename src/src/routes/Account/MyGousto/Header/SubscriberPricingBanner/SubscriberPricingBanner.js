@@ -3,7 +3,7 @@ import { Heading } from 'goustouicomponents'
 import Svg from 'Svg'
 import PropTypes from 'prop-types'
 
-import css from './SubscriberPricingBanner.css'
+import css from './SubscriberPricingBanner.module.css'
 import { SubscriberPricingBannerModal } from './SubscriberPricingBannerModal'
 
 const SubscriberPricingBanner = ({

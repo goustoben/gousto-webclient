@@ -20,8 +20,8 @@ import { DetailPerPortionContainer } from './DetailPerPortion'
 import { DetailAttributeGridContainer } from './DetailAttributeGrid'
 import { DetailAddRecipe } from './DetailAddRecipe'
 
-import css from './Detail.css'
-import titleCss from './DetailTitle.css'
+import css from './Detail.module.css'
+import titleCss from './DetailTitle.module.css'
 
 export const Detail = (props) => {
   const {

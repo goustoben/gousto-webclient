@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Svg from 'Svg'
-import css from './Alert.css'
+import css from './Alert.module.css'
 
 export const Alert = ({ children }) => (
   <div className={css.alert}>

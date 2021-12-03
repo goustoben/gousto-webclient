@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import classnames from 'classnames'
-import css from './AttributeGrid.css'
+import css from './AttributeGrid.module.css'
 import { recipePriorityOrder, detailedRecipePriorityOrder} from './config'
 import { RecipeAttribute } from '../RecipeAttribute'
 

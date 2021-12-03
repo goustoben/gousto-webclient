@@ -7,7 +7,7 @@ import Link from 'Link'
 import routes from 'config/routes'
 import Content from 'containers/Content'
 import SeeMenuSection from './SeeMenuSection'
-import css from './NoOrders.css'
+import css from './NoOrders.module.css'
 
 const NoOrders = ({ recipes, boxType }) => (
   <div>

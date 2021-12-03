@@ -23,7 +23,7 @@ import { onEnter } from 'utils/accessibility'
 import * as trackingKeys from 'actions/trackingKeys'
 import { MobileMenu } from './MobileMenu'
 import { getDeepClonedMenuItems, showcaseMenuItem } from './menuItemsHelper'
-import css from './Header.css'
+import css from './Header.module.css'
 
 class Header extends React.PureComponent {
   constructor(props) {

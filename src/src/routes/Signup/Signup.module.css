@@ -1,0 +1,122 @@
+@value White from 'styles/colors.module.css';
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+
+@value CG100 #CED4D9;
+
+@value WizardWidthTablet 36rem;
+@value WizardWidthTabletGoustoOnDemand 40rem;
+@value WizardWidthDesktop 46.75rem;
+
+.signupContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid CG100;
+  border-bottom: 1px solid CG100;
+  margin: 0 auto;
+  background: White;
+  padding: 1rem 0.75rem;
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    border: 1px solid CG100;
+    max-width: WizardWidthTablet;
+    padding: 1.5rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: WizardWidthDesktop;
+    padding: 2rem;
+  }
+}
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.stepsContainer {
+  @media BreakpointFromMedium {
+    margin: 0 auto;
+  }
+}
+
+.header,
+.body,
+.footer {
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.wizardWithoutImagesHeader {
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.body {
+  text-align: center;
+}
+
+.basicInputContainer {
+  max-width: 100%;
+  width: 100%;
+  display: block;
+
+  @media BreakpointFromMedium {
+    max-width: 22rem;
+  }
+}
+
+.inputContainer {
+  composes: basicInputContainer;
+  margin: 0 auto;
+}
+
+.animationContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+
+  @media BreakpointFromMedium {
+    max-width: WizardWidthTablet;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: WizardWidthDesktop;
+  }
+}
+
+.discountApplied {
+  padding-top: 0;
+}
+
+.goustoOnDemandContainer {
+  .stepsContainer, .animationContainer {
+    @media BreakpointFromMedium {
+      max-width: WizardWidthTabletGoustoOnDemand;
+    }
+
+    @media BreakpointFromLarge {
+      max-width: WizardWidthDesktop;
+    }
+  }
+}

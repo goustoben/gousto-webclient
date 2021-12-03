@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
 import config from 'config/recipes'
 import Surcharge from './Surcharge'
-import css from './Buttons.css'
+import css from './Buttons.module.css'
 
 class Buttons extends React.Component {
   constructor() {

@@ -5,8 +5,8 @@ import Svg from 'Svg'
 import { client as routes } from 'config/routes'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { GetHelpFAQ } from '../components/GetHelpFAQ/GetHelpFAQ'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './Confirmation.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './Confirmation.module.css'
 
 const propTypes = {
   creditAmount: PropTypes.number.isRequired,

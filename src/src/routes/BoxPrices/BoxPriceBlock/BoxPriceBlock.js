@@ -6,7 +6,7 @@ import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
 import { BoxInfo } from '../BoxInfo'
 import { BoxPriceButton } from '../BoxPriceButton/BoxPriceButton'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
-import css from './BoxPriceBlock.css'
+import css from './BoxPriceBlock.module.css'
 
 class BoxPriceBlock extends PureComponent {
   render() {

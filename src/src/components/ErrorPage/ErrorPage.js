@@ -7,7 +7,7 @@ import Svg from 'Svg'
 import classNames from 'classnames'
 
 import { connect } from 'react-redux'
-import css from './ErrorPage.css'
+import css from './ErrorPage.module.css'
 
 const errors = {
   403: {

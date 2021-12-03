@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './OrderWhenMenuOpen.css'
+import css from './OrderWhenMenuOpen.module.css'
 
 const OrderWhenMenuOpen = ({ whenMenuOpen }) => (
   <p className={css.whenMenuOpen}>

@@ -1,0 +1,21 @@
+@value size 40px;
+
+.ingredientContainer {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0 0;
+}
+
+.ingredientImage {
+  background-image: url('media/images/recipe-placeholder.png');
+  background-size: cover;
+  width: size;
+  height: size;
+  border-radius: 100%;
+}
+
+.ingredientLabel {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  padding-left: 0.5rem;
+  margin: 0;
+}

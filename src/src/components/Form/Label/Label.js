@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Label.css'
+import css from './Label.module.css'
 
 export const Label = ({ children, label, subLabel }) => (
   <label className={css.labelContainer}>

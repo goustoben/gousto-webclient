@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import css from './ScrollCarousel.css'
+import css from './ScrollCarousel.module.css'
 
 export const ArrowButton = ({ buttonClassName, iconClassName, canScroll, onClick }) => (
   // Note: it's safe to set tabIndex=-1 for this control to be mouse-only: as

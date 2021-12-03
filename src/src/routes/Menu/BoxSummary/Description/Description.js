@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Description.css'
+import css from './Description.module.css'
 
 const Description = ({ numPortions, numRecipes, view, deliveryOptions, warning }) => {
   let statusText = `Choose 2, 3 or 4 meals for ${numPortions} people`

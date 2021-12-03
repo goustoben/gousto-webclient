@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { NavBar } from './NavBar'
-import css from './Account.css'
+import css from './Account.module.css'
 import Banner from './Banner'
 
 const propTypes = {

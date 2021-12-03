@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './Waves.css'
+import css from './Waves.module.css'
 
 export const Waves = ({fillColor}) => (
   <div className={css.waves}>

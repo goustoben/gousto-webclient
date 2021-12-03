@@ -1,0 +1,214 @@
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+@value Mackerel, White, Oyster, Bluecheese, Radish, DarkHaricot, Blackberry, DarkHaricot05 from 'styles/colors.module.css';
+
+.sectionContainer {
+  border-bottom: 1px solid Mackerel;
+  border-top: 1px solid Mackerel;
+  padding: 1rem 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+  background: White;
+
+  @media BreakpointFromMedium {
+    border: 1px solid Mackerel;
+    padding: 1.5rem 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.inputContainer {
+  max-width: 100%;
+  flex: 0 0 100%;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  border-radius: 3px;
+
+  @media BreakpointFromMedium {
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.checkoutInput {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  padding: 0 0.75rem;
+  border-color: Oyster;
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  height: 3rem;
+
+  &:hover {
+   border: 1px solid Bluecheese !important;
+  }
+
+  &:focus {
+    border: 2px solid Bluecheese !important;
+  }
+}
+
+.checkoutInputError {
+  background: White;
+  border: 2px solid Radish !important;
+  box-shadow: none;
+}
+
+.prefixPadding {
+  padding-left: 4rem;
+}
+
+.relative {
+  position: relative;
+}
+
+.fieldHeader {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  margin-bottom: 0.5rem;
+}
+
+.validPassword {
+  border: 1px solid DarkHaricot !important;
+  color: Blackberry;
+  background: DarkHaricot05 !important;
+}
+/* 
+label {
+  width: 100%;
+  margin-bottom: 0;
+} */
+
+.label {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  margin-bottom: 0.5rem;
+}
+
+.password {
+  padding-right: 2.5rem;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid Mackerel;
+  outline: 0;
+}
+
+.disableInvalid {
+  background: none;
+  border-color: Mackerel;
+  color: Blackberry;
+
+  &:hover,
+  &:focus {
+    border-color: Mackerel;
+  }
+}
+
+.rowCheckout {
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    max-width: 36rem;
+    padding: 0 2rem;
+    display: block;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 0 2rem;
+    display: flex;
+  }
+}
+
+.section {
+  padding: 0;
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    max-width: 36rem;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 0 1.5rem 0 0;
+    width: 60%;
+  }
+}
+
+.aside {
+  padding: 0;
+  display: none;
+
+  @media BreakpointFromMedium {
+    display: block;
+    border: 1px solid Mackerel;
+    height: 100%;
+  }
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    max-width: 36rem;
+  }
+
+  @media BreakpointFromLarge {
+    width: 35%;
+  }
+}
+
+.checkoutContent {
+  width: 100%;
+  composes: pageContainerLG from 'styles/layout.module.css';
+  padding: 0 0 1rem 0;
+  margin: 0 auto;
+
+  @media BreakpointFromMedium {
+    padding: 2rem;
+    display: block;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 3rem 2rem;
+  }
+}
+
+.modal {
+  position: relative !important;
+  left: inherit !important;
+  top: 0 !important;
+  transform: inherit !important;
+  min-width: 288px;
+  width: 60% !important;
+  margin: 0 auto !important;
+  box-shadow: none !important;
+  max-width: 650px !important;
+  border-radius: 0 !important;
+  padding: 1rem !important;
+  @media ScreenXSMax {
+    width: 98% !important;
+  }
+}
+
+.modalContainer {
+  width: 100%;
+}
+
+.modalOverlay {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.mobileOnly {
+  @media BreakpointFromMedium {
+    display: none;
+  }
+}
+
+.desktopOnly {
+  border: 1px solid Mackerel;
+  height: 100%;
+  background: White;
+
+  @media BreakpointToMedium {
+    display: none;
+  }
+
+  @media BreakpointFromLarge {
+    width: 40%;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import OrderCollapseExpand from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollapseExpand'
-import css from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollapseExpand/OrderCollapseExpand.css'
+import css from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollapseExpand/OrderCollapseExpand.module.css'
 
 describe('OrderCollapseExpand', () => {
   describe('rendering', () => {

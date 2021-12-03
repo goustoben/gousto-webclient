@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Portal } from 'Portal'
 import { Tutorial, Step } from 'Tutorial'
-import css from './JustForYouTutorial.css'
+import css from './JustForYouTutorial.module.css'
 
 class JustForYouTutorial extends React.PureComponent {
   onCloseTutorial(step) {

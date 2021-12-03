@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import iphoneImg from 'media/images/app-modal-iphone@2x.png'
 import androidImg from 'media/images/app-modal-android@2x.png'
 
-import css from './AnimatedImage.css'
+import css from './AnimatedImage.module.css'
 
 const defaultStyle = {
   transition: 'transform 400ms ease-in-out',

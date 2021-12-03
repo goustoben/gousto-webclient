@@ -8,8 +8,8 @@ import Loading from 'Loading'
 import logger from 'utils/logger'
 import { DeliveryCard } from 'routes/Checkout/Components/Delivery/DeliveryCard'
 import OrdersList from './OrdersList'
-import css from './MyDeliveries.css'
-import accountCss from '../Account/Account.css'
+import css from './MyDeliveries.module.css'
+import accountCss from '../Account/Account.module.css'
 
 class MyDeliveries extends React.PureComponent {
   componentDidMount() {

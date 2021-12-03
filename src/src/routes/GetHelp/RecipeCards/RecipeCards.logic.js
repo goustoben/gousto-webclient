@@ -5,8 +5,8 @@ import { recipePropType } from '../getHelpPropTypes'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { RecipeCardContent } from './RecipeCardContent'
 import { RecipeList } from '../components/RecipeList'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './RecipeCards.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './RecipeCards.module.css'
 
 const propTypes = {
   recipes: PropTypes.arrayOf(recipePropType).isRequired,

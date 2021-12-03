@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Alert, Button } from 'goustouicomponents'
-import css from './CancelOrderModalContent.css'
+import css from './CancelOrderModalContent.module.css'
 
 const propTypes = {
   orderId: PropTypes.string,

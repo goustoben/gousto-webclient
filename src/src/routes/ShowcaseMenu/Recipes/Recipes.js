@@ -5,7 +5,7 @@ import { ScrollCarousel } from '../ScrollCarousel'
 import { LoadingRecipeCards } from './LoadingRecipeCards'
 import { RecipeCards } from './RecipeCards'
 import { getScrollStepInPixels } from './recipesUtils'
-import css from './Recipes.css'
+import css from './Recipes.module.css'
 
 export const Recipes = ({
   currentCollectionId,

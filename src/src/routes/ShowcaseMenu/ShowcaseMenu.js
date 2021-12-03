@@ -15,7 +15,7 @@ import { Recipes } from './Recipes'
 import { InformationBox } from './InformationBox'
 import { CTASection } from './CTASection'
 import { PriceExplanationSection } from './PriceExplanationSection'
-import css from './ShowcaseMenu.css'
+import css from './ShowcaseMenu.module.css'
 
 export const ShowcaseMenu = ({
   proceed,

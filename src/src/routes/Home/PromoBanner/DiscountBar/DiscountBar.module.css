@@ -1,0 +1,41 @@
+@value Bluecheese, White from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.discountContainer {
+  min-height: 3.75rem;
+  background: Bluecheese;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  composes: fontStyleM from 'design-language/typography.module.css';
+  color: White;
+  padding: 1rem;
+
+  @media BreakpointFromMedium {
+    min-height: 3rem;
+    padding: 0;
+  }
+}
+
+.hideBar {
+  display: none;
+}
+
+.discountText {
+  margin: 0 0.5rem 0 0;
+}
+
+.arrowRightIcon {
+  min-width: 1.5rem;
+  height: 1.5rem;
+  background-image: url('../../../../media/svgs/icon-navigation-arrow-right.svg');
+}
+
+.stickyBar {
+  @media BreakpointFromMedium {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+  }
+}

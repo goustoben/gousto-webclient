@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Media from 'react-media'
 import { LinkRecipeHolder } from './LinkRecipeHolder'
-import css from './RecipeLinkHeader.css'
+import css from './RecipeLinkHeader.module.css'
 import { CollectionLinkChangeContainer } from '../../../components/CollectionLinkChange'
 
 export const RecipeLinkHeader = ({ headerAttributes }) => {

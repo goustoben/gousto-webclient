@@ -6,8 +6,8 @@ import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapp
 import { RecipeList } from '../components/RecipeList'
 import { RecipeIngredientsContainer } from '../components/RecipeIngredients'
 import { recipePropType } from '../getHelpPropTypes'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './Ingredients.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './Ingredients.module.css'
 
 const propTypes = {
   cannotContinue: PropTypes.bool.isRequired,

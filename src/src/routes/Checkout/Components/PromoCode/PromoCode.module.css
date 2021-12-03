@@ -1,0 +1,84 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value DarkHaricot, White, Blackberry, Radish from 'styles/colors.module.css';
+
+.inputContainer {
+  composes: flex column flexGrow center from 'styles/flex.module.css';
+}
+
+.inputGroup {
+  width: 100%;
+  padding: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+
+  @media BreakpointFromMedium {
+    padding-bottom: 1.5rem;
+  }
+}
+
+.input {
+  composes: input from 'styles/forms.module.css';
+}
+
+.discountLabel {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  margin-bottom: 0.5rem;
+}
+
+.inputError {
+  composes: input;
+  composes: inputError from 'styles/forms.module.css';
+  border-color: Radish;
+  border-width: 2px;
+  background: White;
+  color: Blackberry;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+}
+
+.inputSuccess {
+  composes: input;
+  composes: inputSuccess from 'styles/forms.module.css';
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  border-width: 2px;
+  border-color: DarkHaricot;
+  background: White;
+  color: Blackberry;
+  position: relative;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  right: 0.5rem;
+  border: none;
+  padding: 0;
+}
+
+.inputIconSuccess {
+  background: url('routes/Checkout/Components/PromoCode/icon-success-tick.svg') center center /
+    contain no-repeat;
+}
+
+.inputIconError {
+  background: url('routes/Checkout/Components/PromoCode/icon-error-red.svg') center center / contain
+    no-repeat;
+}
+
+.isHidden {
+  display: none;
+}
+
+.successMsg {
+  composes: msg from 'styles/forms.module.css';
+}
+
+.errorMsg {
+  composes: errorMsg from 'styles/forms.module.css';
+  composes: fontStyleS from 'design-language/typography.module.css';
+}

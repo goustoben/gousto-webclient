@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
-import css from './ModalPanel.css'
+import css from './ModalPanel.module.css'
 
 class ModalPanel extends React.Component {
   componentDidMount() {

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import Immutable from 'immutable'
-import css from './OrderPricing.css'
+import css from './OrderPricing.module.css'
 import DiscountBadge from './DiscountBadge'
 
 const OrderPricing = ({ pricing, orderState }) => {

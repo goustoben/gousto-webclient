@@ -8,7 +8,7 @@ import CheckBox from 'Form/CheckBox'
 
 import InputError from 'Form/InputError'
 import { Label } from 'Form/Label'
-import css from './ReduxFormInput.css'
+import css from './ReduxFormInput.module.css'
 
 const propTypes = {
   input: PropTypes.object,

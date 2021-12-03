@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './OpenBoxButton.css'
+import css from './OpenBoxButton.module.css'
 
 const OpenBoxButton = ({ arrowUp }) => (
   <div className={css.iconMobile}>

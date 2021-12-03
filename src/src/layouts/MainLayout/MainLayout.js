@@ -5,7 +5,7 @@ import Footer from 'Footer'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
-import css from './MainLayout.css'
+import css from './MainLayout.module.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

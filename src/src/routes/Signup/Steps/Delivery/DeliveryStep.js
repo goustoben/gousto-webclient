@@ -21,8 +21,8 @@ import { SubscriptionTransparencyText } from '../../Components/SubscriptionTrans
 import { Button } from '../../Button'
 import { Image } from '../../Image'
 
-import signupCss from '../../Signup.css'
-import css from './DeliveryStep.css'
+import signupCss from '../../Signup.module.css'
+import css from './DeliveryStep.module.css'
 
 const formatPointInTime = (tempDate, time) => moment(`${tempDate} ${time}`).format('ha')
 

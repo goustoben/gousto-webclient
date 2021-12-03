@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { config } from './config'
-import css from './ReferAFriend.css'
+import css from './ReferAFriend.module.css'
 
 const propTypes = {
   isYourOffer: PropTypes.bool,

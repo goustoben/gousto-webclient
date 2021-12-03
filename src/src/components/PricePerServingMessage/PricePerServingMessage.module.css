@@ -1,0 +1,29 @@
+@value FS900 #006700;
+
+.pricePerServingMessage {
+  font-weight: bold;
+}
+
+.oldPrice {
+  font-weight: normal;
+}
+
+.oldPriceInCheckout {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  margin: 0.25rem 0 0 0.75rem;
+}
+
+.newPriceInCheckout {
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  composes: fontBold from 'design-language/typography.module.css';
+  color: FS900;
+  margin-left: 0.75rem;
+}
+
+.priceMessageInCheckout {
+  display: flex;
+  align-items: center;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  margin: 0;
+  max-height: 1.5rem;
+}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
-import css from './RecipeMicronutrients.css'
+import css from './RecipeMicronutrients.module.css'
 
 const RecipeMicronutrients = ({ micronutrients, inset }) => !!micronutrients && (
 <div className={css.micronutrientsWrapper}>

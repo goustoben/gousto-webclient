@@ -1,0 +1,94 @@
+@value ScreenXSMax, ScreenSMMin, MinBreakPointXL, ScreenMDMin from 'styles/screenSizes.module.css';
+@value SpacingXXL, SpacingLG, SpacingMD as GutterSize, SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
+@value sizeMD, sizeSM, sizeXL from 'styles/typography.module.css';
+@value Coconut, Mushroom50, White, NewGrey from 'styles/colors.module.css';
+@value headerHeight from 'components/Header/Header.module.css';
+
+@value ColumnWidth 33.333%;
+@value MobColumnWidth 100%;
+@value MobGridWidth 50%;
+@value HeaderLimit 1214px;
+@value oneHundrendPercent 100%;
+
+.container {
+	background: Coconut;
+	padding-bottom: 75px;
+	min-height: 500px;
+}
+
+.blur {
+	composes: blur from 'styles/effects.module.css';
+	@media ScreenXSMax {
+		-webkit-filter: none;
+	}
+}
+
+.greyOverlay {
+	composes: fixed from 'styles/position.module.css';
+	left: 0;
+	top: 0;
+
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: 0;
+	z-index: 100;
+	pointer-events: none;
+
+	@media ScreenSMMin {
+		transition: opacity 0.3s ease-in-out;
+	}
+
+	@media ScreenXSMax {
+		transition: none;
+	}
+
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		margin-top: -15px;
+	}
+}
+
+.greyOverlayShow {
+	composes: greyOverlay;
+	composes: fadeIn from 'styles/effects.module.css';
+
+	pointer-events: all;
+	opacity: 0.4;
+
+	@media ScreenXSMax {
+		animation: none;
+	}
+}
+
+.menuContainer {
+	composes: pageContainer from 'styles/layout.module.css';
+	padding-top: 3rem;
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.legal {
+	composes: textXS textCenter from 'styles/typography.module.css';
+	composes: marginLG from 'sass-loader!styles/spacing.scss';
+	color: NewGrey;
+}
+
+.willFade {
+	opacity: 1;
+	transition: 0.5s opacity;
+}
+
+.fadeOut {
+	composes: willFade;
+	opacity: 0.4;
+	pointer-events: none;
+}
+
+.fade--recommendations {
+	composes: willFade;
+	opacity: 0;
+	pointer-events: none;
+}

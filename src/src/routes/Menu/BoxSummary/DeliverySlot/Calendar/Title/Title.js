@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
-import css from './Title.css'
+import css from './Title.module.css'
 
 const unique = arr => Array.from(new Set(arr))
 

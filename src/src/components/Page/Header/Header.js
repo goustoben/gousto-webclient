@@ -4,9 +4,9 @@ import classNames from 'classnames'
 import { spacingPropValidation, getSpacingStyles } from 'styles/spacing'
 
 // eslint-disable-next-line import/no-unresolved
-import typography from 'styles/typography.css'
+import typography from 'styles/typography.module.css'
 // eslint-disable-next-line import/no-unresolved
-import colors from 'styles/colors.css'
+import colors from 'styles/colors.module.css'
 
 function Header({ margin, padding, type, size, headlineFont, colorName, children, ...props }) {
   const className = classNames(

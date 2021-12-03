@@ -3,7 +3,7 @@ import React from 'react'
 import { Modal, CTA, ModalHeader } from 'goustouicomponents'
 import Svg from 'Svg'
 import classnames from 'classnames'
-import css from './OnScreenRecoveryView.css'
+import css from './OnScreenRecoveryView.module.css'
 import { SubscriberPricingInfoPanel } from '../../../../AccountComponents/SubscriberPricingInfoPanel'
 
 const propTypes = {

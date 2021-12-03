@@ -4,8 +4,8 @@ import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
-import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './BeforeDeliveryDay.css'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './BeforeDeliveryDay.module.css'
 
 const redirectToMyGousto = () => {
   browserHistory.push(client.myGousto)

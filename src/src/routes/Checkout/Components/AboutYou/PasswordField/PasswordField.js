@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { useDebounce } from 'react-use'
-import checkoutCss from '../../../Checkout.css'
+import checkoutCss from '../../../Checkout.module.css'
 
 const propTypes = {
   name: PropTypes.string,

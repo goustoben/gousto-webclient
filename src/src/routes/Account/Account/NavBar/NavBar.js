@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import config from 'config/routes'
-import css from './NavBar.css'
+import css from './NavBar.module.css'
 import NavBarItem from './NavBarItem/NavBarItem'
 
 const NavBar = (props) => {

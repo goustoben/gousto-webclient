@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import css from './SubIngredients.css'
+import css from './SubIngredients.module.css'
 
 const newLineString = 'NEWLINE'
 const REGEX_TO_SPLIT_SENTENCES = /([A-Za-zÀ-ÖØ-öø-ÿ]+)|\s+|[^\sA-Za-zÀ-ÖØ-öø-ÿ]+/g

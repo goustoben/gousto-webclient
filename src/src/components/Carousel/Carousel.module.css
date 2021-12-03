@@ -1,0 +1,172 @@
+@value Blackberry, White from 'styles/colors.module.css';
+@value SpacingLG, SpacingXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
+@value dotSize 30px;
+@value dotBorderSize 3px;
+@value dotSizeInner 20px;
+@value dotBorderSizeInner 5px;
+
+/* Server side render styles before DOM loads, to ensure no jump */
+#root :global .carousel-no-js .slick-track {
+	margin-left: -100%;
+	padding-bottom: dotSize;
+}
+
+/* Slide Content */
+#root :global .slick-slide img {
+	width: 100%;
+}
+
+#root :global .slick-slide p {
+	padding: 0 SpacingXXXL;
+	margin: SpacingLG 0;
+	text-align: center;
+}
+
+/* Arrows */
+#root :global .slick-prev,
+#root :global .slick-next
+{
+	font-size: 0;
+	line-height: 0;
+	position: absolute;
+	top: 50%;
+	display: block;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	-webkit-transform: translate(0, -50%);
+	-ms-transform: translate(0, -50%);
+	transform: translate(0, -50%);
+	cursor: pointer;
+	color: transparent;
+	border: none;
+	outline: none;
+	background: transparent;
+}
+#root :global .slick-prev:hover,
+#root :global .slick-prev:focus,
+#root :global .slick-next:hover,
+#root :global .slick-next:focus
+{
+	color: transparent;
+	outline: none;
+	background: transparent;
+}
+#root :global .slick-prev:hover:before,
+#root :global .slick-prev:focus:before,
+#root :global .slick-next:hover:before,
+#root :global .slick-next:focus:before
+{
+	opacity: 1;
+}
+#root :global .slick-prev.slick-disabled:before,
+#root :global .slick-next.slick-disabled:before
+{
+	opacity: 0.25;
+}
+
+#root :global .slick-prev:before,
+#root :global .slick-next:before
+{
+	line-height: 1;
+	opacity: 0.75;
+	color: white;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+#root :global .slick-prev
+{
+	left: -25px;
+}
+#root :global [dir='rtl'] .slick-prev
+{
+	right: -25px;
+	left: auto;
+}
+#root :global .slick-prev:before
+{
+	content: 'â†';
+}
+#root :global [dir='rtl'] .slick-prev:before
+{
+	content: 'â†’';
+}
+
+#root :global .slick-next
+{
+	right: -25px;
+}
+#root :global [dir='rtl'] .slick-next
+{
+	right: auto;
+	left: -25px;
+}
+#root :global .slick-next:before
+{
+	content: 'â†’';
+}
+#root :global [dir='rtl'] .slick-next:before
+{
+	content: 'â†';
+}
+
+/* Dots */
+#root :global .slick-dots
+{
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font-size: 0;
+	list-style: none;
+	text-align: center;
+}
+#root :global .slick-dots li
+{
+	position: relative;
+	display: inline-block;
+	width: dotSize;
+	height: dotSize;
+	margin: 0 5px;
+	padding: 0;
+	cursor: pointer;
+}
+#root :global .slick-dots li button
+{
+	font-size: 0;
+	line-height: 0;
+	display: block;
+	width: dotSize;
+	height: dotSize;
+	padding: 0;
+	border-radius: dotSize;
+	cursor: pointer;
+	color: transparent;
+	border: dotBorderSize solid Blackberry;
+	outline: none;
+	background: White;
+}
+#root :global .slick-dots li button:before
+{
+	content: ' ';
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: dotBorderSizeInner;
+	width: dotSizeInner;
+	height: dotSizeInner;
+	border-radius: dotSizeInner;
+	background: White;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+#root :global .slick-dots li.slick-active button:before
+{
+	background: Blackberry;
+}
+#root :global .slick-dots li button:hover,
+#root :global .slick-dots li button:focus
+{
+	outline: none;
+}

@@ -1,0 +1,33 @@
+@value Haricot from 'styles/colors.module.css';
+
+.alertContent {
+  display: flex;
+  align-items: center;
+}
+
+.alertIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: Haricot;
+  margin-right: 0.75rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.alertIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.alertText {
+  composes: fontStyleM from 'design-language/typography.module.css';
+  width: 100%;
+}
+
+.creditCopy {
+  composes: fontStyleXS from 'design-language/typography.module.css';
+  margin-bottom: 0;
+}

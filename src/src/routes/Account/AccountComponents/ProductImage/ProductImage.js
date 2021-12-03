@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './ProductImage.css'
+import css from './ProductImage.module.css'
 
 const propTypes = {
   src: PropTypes.string,

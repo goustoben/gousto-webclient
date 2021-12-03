@@ -1,0 +1,33 @@
+.recipeRow {
+  display: flex;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+}
+
+.recipeImage {
+  object-fit: cover;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 1rem;
+}
+
+.recipeTitle {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.recipeCardsList > div:first-child {
+  padding-top: 1.5rem;
+}
+
+.recipeCardsList > div:not(:last-child) {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #CED4D9;
+}
+
+@media (max-width: 560px) {
+  .subTitle {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}

@@ -6,7 +6,7 @@ import routes from 'config/routes'
 import Link from 'Link'
 import { getSlotTimes } from 'utils/deliveries'
 import { RecipeSummary } from '../RecipeSummary'
-import css from './BoxDetails.css'
+import css from './BoxDetails.module.css'
 
 export const BoxDetails = ({ numPortions, date, deliveryDays, slotId }) => {
   const deliveryDate = moment(date).format('dddd Do MMMM')

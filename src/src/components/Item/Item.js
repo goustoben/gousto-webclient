@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import { capitalizeFirstLetter } from 'utils/text'
 import { onEnter } from 'utils/accessibility'
-import css from './Item.css'
+import css from './Item.module.css'
 
 const isFunction = (func) => (typeof func === 'function')
 

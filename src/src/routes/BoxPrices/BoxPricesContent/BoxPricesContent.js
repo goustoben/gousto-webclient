@@ -3,7 +3,7 @@ import classnames from 'classnames'
 
 import Svg from 'Svg'
 import { content, quotes } from 'routes/BoxPrices/boxPricesConfig'
-import css from './BoxPricesContent.css'
+import css from './BoxPricesContent.module.css'
 
 export const BoxPricesContent = () => (
   <Fragment>

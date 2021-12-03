@@ -1,0 +1,20 @@
+@value ScreenXXSMax from 'styles/screenSizes.module.css';
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 -0.25rem;
+
+	@media ScreenXXSMax {
+		display: block;
+	}
+}
+
+.dropDownContainer {
+	flex: 1 0 160px;
+	margin: 0 0.25rem 0.5rem;
+}
+
+.editDeliveryOuterContainer {
+	margin-top: 0.625rem;
+}

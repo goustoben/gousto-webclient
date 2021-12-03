@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import css from './NutritionDisclaimerText.css'
+import css from './NutritionDisclaimerText.module.css'
 
 const NutritionDisclaimerText = () => (
   <div className={classnames(css.extraNutritionalInformation, css.extraInfoMargins)}>

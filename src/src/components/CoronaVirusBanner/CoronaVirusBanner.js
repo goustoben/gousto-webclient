@@ -1,7 +1,7 @@
 import React from 'react'
 import GoustoLink from 'Link'
 
-import css from './CoronaVirusBanner.css'
+import css from './CoronaVirusBanner.module.css'
 
 const COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus/'
 

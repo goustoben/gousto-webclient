@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { ReactReduxContext } from 'react-redux'
 import OrderCancelButton from './OrderCancelButton'
 
-import css from './OrderDetail.css'
+import css from './OrderDetail.module.css'
 import OrderRecipes from './OrderRecipes'
 import OrderProducts from './OrderProducts'
 import OrderPricingDetail from './OrderPricingDetail'

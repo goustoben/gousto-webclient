@@ -38,7 +38,7 @@ class GoustoStore {
       optimizelyTracker,
     ]
 
-    if (globals.dev && globals.client && !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { // eslint-disable-line no-underscore-dangle
+    if (globals.dev && globals.client && global.window && !global.window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { // eslint-disable-line no-underscore-dangle
       const stateTransformer = (state) => {
         const newState = {}
         for (const i of Object.keys(state)) {
@@ -58,8 +58,8 @@ class GoustoStore {
       middleware.push(persistenceMiddleware(persistenceConfig, cookies))
     }
 
-    const composeEnhancers = globals.client && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function'
-      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    const composeEnhancers = globals.client && global.window && typeof global.window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function'
+      ? global.window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
         trace: true,
         // This is has to be greater than the default limit of 10
         // because we have so many middlewares in between the call

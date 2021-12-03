@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Partial.css'
+import css from './Partial.module.css'
 
 class PartialContainer extends React.PureComponent {
   render() {

@@ -1,0 +1,93 @@
+@value CarrotLight, Carrot, Bluecheese, Oyster, Blueberry from 'styles/colors.module.css';
+@value BreakpointFromMedium, BreakpointToLarge, BreakpointToMedium, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+
+.container {
+  margin: 0 auto;
+  max-width: 75rem;
+}
+
+.wrapper {
+  background: CarrotLight;
+  border: 1px solid Carrot;
+  padding: 1.5rem;
+  margin: 2rem 2rem 0;
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    margin: 2rem;
+  }
+
+  @media BreakpointToMedium {
+    margin: 0.75rem;
+    padding: 1rem;
+  }
+}
+
+.title {
+  composes: fontStyleM from 'design-language/typography.module.css';
+  composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.text {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+}
+
+.row {
+  display: block;
+  margin: 0.5rem 0 1rem;
+  @media BreakpointFromMedium {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.mt05 {
+  margin-top: 0.5rem;
+}
+
+.input {
+  height: 54px;
+
+  @media BreakpointToMedium {
+    width: 100%;
+  }
+
+  @media BreakpointFromLarge {
+    width: 343px;
+    margin-right: 0.8rem;
+  }
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    width: 305px;
+    margin-right: 0.4rem;
+  }
+}
+
+.loginAncor {
+  border-bottom: 1px solid Oyster;
+  padding-bottom: 0.25rem;
+  composes: fontSemiBold from 'design-language/typography.module.css';
+
+  &:hover {
+    color: Blueberry;
+    text-decoration: none;
+  }
+}
+
+.infoIcon {
+  background: url('../../../media/svgs/icon-error-info.svg') center top no-repeat;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: Carrot;
+  position: relative;
+  top: 0.1rem;
+}
+
+.ctaText {
+  @media BreakpointFromMedium {
+    padding: 0 1.73rem;
+    display: block;
+  }
+}

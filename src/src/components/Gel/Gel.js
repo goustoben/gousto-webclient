@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import css from './Gel.css'
+import css from './Gel.module.css'
 
 const Gel = ({ className, size, children, color }) => (
   <div className={classnames(css[size], css[color], className)}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { boxTypesRedesign } from 'routes/BoxPrices/boxPricesConfig'
-import css from './BoxPriceBlock.css'
+import css from './BoxPriceBlock.module.css'
 
 export const BoxPriceSuitableForSection = ({ numPersons }) => {
   const boxTypeConfig = boxTypesRedesign[numPersons]

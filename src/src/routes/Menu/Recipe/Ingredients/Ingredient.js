@@ -4,7 +4,7 @@ import Image from 'Image'
 import Immutable from 'immutable'
 import Svg from 'Svg'
 import { getMenuRecipeImage } from 'utils/image'
-import css from './Ingredient.css'
+import css from './Ingredient.module.css'
 
 const Ingredient = ({ ingredient }) => {
   let src

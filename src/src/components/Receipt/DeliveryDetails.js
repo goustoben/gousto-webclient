@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import moment from 'moment'
 import { toTimeRange } from 'utils/deliverySlot'
-import css from './DeliveryDetails.css'
+import css from './DeliveryDetails.module.css'
 
 export const DeliveryDetails = (props) => {
   const { address, date, slot } = props

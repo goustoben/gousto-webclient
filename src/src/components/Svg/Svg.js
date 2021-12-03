@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Svg.css'
+import css from './Svg.module.css'
 
 export const Svg = ({ fileName, className, label, hidden }) => {
   const svgUrl = require(`media/svgs/${fileName}.svg`) // eslint-disable-line global-require

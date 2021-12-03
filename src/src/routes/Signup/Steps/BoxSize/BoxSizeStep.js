@@ -6,8 +6,8 @@ import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 import { PrimaryButton } from './PrimaryButton'
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
-import css from './BoxSizeStep.css'
-import signupCss from '../../Signup.css'
+import css from './BoxSizeStep.module.css'
+import signupCss from '../../Signup.module.css'
 
 export const BoxSizeStep = ({
   numPortionChange,

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Product } from '../Product'
-import css from './ProductList.css'
+import css from './ProductList.module.css'
 
 const propTypes = {
   products: PropTypes.shape({

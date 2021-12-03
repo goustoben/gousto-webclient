@@ -16,8 +16,8 @@ import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
 import { SectionHeader } from '../SectionHeader'
 
-import checkoutCss from '../../Checkout.css'
-import css from './Delivery.css'
+import checkoutCss from '../../Checkout.module.css'
+import css from './Delivery.module.css'
 
 const propTypes = {
   formValues: PropTypes.objectOf(PropTypes.object),

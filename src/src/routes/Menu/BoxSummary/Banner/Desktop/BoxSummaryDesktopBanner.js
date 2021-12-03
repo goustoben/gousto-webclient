@@ -9,7 +9,7 @@ import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 
 import { ExpandBoxSummaryButtonContainer } from './ExpandBoxSummaryButtonContainer'
 
-import css from './BoxSummaryDesktopBanner.css'
+import css from './BoxSummaryDesktopBanner.module.css'
 import { boxSummaryBannerPropTypes } from '../propTypes'
 
 const BoxSummaryDesktopBanner = ({

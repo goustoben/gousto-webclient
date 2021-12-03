@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Gel from 'Gel'
-import css from './YouGet.css'
+import css from './YouGet.module.css'
 
 const YouGet = ({ youGetOffer, offerColour }) => (
   <div className={css.youGetOffer}>

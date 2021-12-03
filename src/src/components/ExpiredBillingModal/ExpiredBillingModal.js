@@ -4,7 +4,7 @@ import { ReactReduxContext } from 'react-redux'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import { BillingFormContainer } from './BillingForm'
-import css from './ExpiredBillingModal.css'
+import css from './ExpiredBillingModal.module.css'
 
 export class ExpiredBillingModal extends React.PureComponent {
   onCloseExpiredBillingModal = () => {

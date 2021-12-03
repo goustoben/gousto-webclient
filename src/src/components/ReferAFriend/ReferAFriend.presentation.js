@@ -6,7 +6,7 @@ import { Button } from 'goustouicomponents'
 import InputError from 'Form/InputError'
 import ReCAPTCHA from 'components/Recaptcha'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha-my-referral'
-import css from './ReferAFriend.css'
+import css from './ReferAFriend.module.css'
 
 const propTypes = {
   captchaChanges: PropTypes.func.isRequired,

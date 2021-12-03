@@ -1,0 +1,49 @@
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value White from 'styles/colors.module.css';
+
+.headerWrapper {
+  h2 {
+    padding: 1rem;
+
+    @media BreakpointFromMedium {
+      padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+  }
+}
+
+.backgroundHeader {
+  grid-area: backgroundHeader;
+  background-image: url('media/images/pause-osr-modal-bg.jpg');
+  background-size: contain;
+  padding-bottom: 56.25%;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  background: White;
+
+  padding: 0 1rem 1rem 1rem;
+
+  @media BreakpointFromMedium {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    width: 560px;
+  }
+}
+
+.copy {
+  padding-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    padding-bottom: 1.5rem;
+  }
+
+  p {
+    margin: 0;
+    padding-bottom: 1rem;
+
+    @media BreakpointFromMedium {
+      padding-bottom: 1.5rem;
+    }
+  }
+}

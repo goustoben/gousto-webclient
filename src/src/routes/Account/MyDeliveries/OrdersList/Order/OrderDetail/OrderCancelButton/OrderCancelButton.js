@@ -4,7 +4,7 @@ import React from 'react'
 import { Alert, Button } from 'goustouicomponents'
 import Content from 'containers/Content'
 
-import css from './OrderCancelButton.css'
+import css from './OrderCancelButton.module.css'
 
 class OrderCancelButton extends React.PureComponent {
   handleCancelBox = () => {

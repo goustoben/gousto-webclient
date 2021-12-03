@@ -7,11 +7,11 @@ Using require on the next few lines as there is an issue importing global styles
 with our current configuration and ts-loader.
 */
 // eslint-disable-next-line no-unused-vars
-const reactSlickGlobalStyles = require('./ReactSlick.css')
+const reactSlickGlobalStyles = require('./ReactSlick.module.css')
 // eslint-disable-next-line no-unused-vars
-const carouselScssGlobalStyles = require('./Carousel.scss')
+// const carouselScssGlobalStyles = require('./Carousel.scss')
 // eslint-disable-next-line no-unused-vars
-const carouselCssGlobalStyles = require('./Carousel.css')
+const carouselCssGlobalStyles = require('./Carousel.module.css')
 
 const propTypes = {
   arrows: PropTypes.bool,

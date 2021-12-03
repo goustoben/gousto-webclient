@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import Link from 'Link'
-import css from './NavBarItem.css'
+import css from './NavBarItem.module.css'
 
 const NavBarItem = ({ isActive, children, className, pathName, clientRouted, tracking }) => (
   <li className={classnames(css.tab, className, { [css.active]: isActive })}>

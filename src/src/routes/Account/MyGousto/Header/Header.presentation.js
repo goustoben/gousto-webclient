@@ -7,7 +7,7 @@ import { NextProjectedDelivery } from './NextProjectedDelivery'
 import { NoNextOrder } from './NoNextOrder'
 import { PreviousOrderContainer } from './PreviousOrder'
 import { SubscriberPricingBanner } from './SubscriberPricingBanner'
-import css from './Header.css'
+import css from './Header.module.css'
 
 const HeaderPresentation = ({
   nextProjectedOrder,

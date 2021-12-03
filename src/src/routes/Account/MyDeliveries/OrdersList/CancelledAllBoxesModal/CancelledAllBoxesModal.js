@@ -8,7 +8,7 @@ import { Button } from 'goustouicomponents'
 import Overlay from 'Overlay'
 import timeFormat from 'utils/timeFormat'
 import Link from 'Link'
-import css from './CancelledAllBoxesModal.css'
+import css from './CancelledAllBoxesModal.module.css'
 
 const CancelledAllBoxesModal = ({
   isModalOpen,

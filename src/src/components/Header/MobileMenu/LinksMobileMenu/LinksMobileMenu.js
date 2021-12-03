@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'Link'
 import Svg from 'Svg'
 import { defaultMenuItems } from '../../menuItemsHelper'
-import cssMobile from '../MobileMenu.css'
+import cssMobile from '../MobileMenu.module.css'
 
 const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick }) => (
   <span className={cssMobile.mobileMenuTestWrapper}>

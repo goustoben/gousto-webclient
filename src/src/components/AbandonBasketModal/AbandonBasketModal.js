@@ -13,7 +13,7 @@ import { loadRecipes } from 'actions/recipes'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
 import { loadMenuServiceDataIfDeepLinked } from 'routes/Menu/fetchData/menuService'
-import css from './AbandonBasketModal.css'
+import css from './AbandonBasketModal.module.css'
 
 const propTypes = {
   basketRecipes: PropTypes.instanceOf(Immutable.Map),

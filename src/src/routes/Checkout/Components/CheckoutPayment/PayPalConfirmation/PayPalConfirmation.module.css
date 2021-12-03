@@ -1,0 +1,56 @@
+@value Bluecheese, Blueberry, Oyster, LightestAccessible from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.successTickIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.paypalIcon {
+  height: 24px;
+  width: 99px;
+  vertical-align: top;
+  margin-top: -2px;
+}
+
+.paypalAlternativeText {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  color: LightestAccessible;
+}
+
+.resetPaymentMethod {
+  color: Bluecheese;
+  border-bottom: 1px solid transparent;
+  transition: all 200ms ease;
+  transition-property: color, border;
+  border-bottom: 1px solid Oyster;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: Blueberry;
+    border-color: Blueberry;
+  }
+}
+
+.container,
+.paypalAlternativeText {
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}
+
+.container {
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.message {
+  margin-right: 0.5rem;
+  white-space: nowrap;
+}

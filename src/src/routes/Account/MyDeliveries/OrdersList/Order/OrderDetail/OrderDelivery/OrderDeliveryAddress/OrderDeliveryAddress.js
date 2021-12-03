@@ -7,7 +7,7 @@ import Link from 'Link'
 import { LinkButton } from '../LinkButton'
 import { Address } from './Address'
 
-import css from './OrderDeliveryAddress.css'
+import css from './OrderDeliveryAddress.module.css'
 
 class OrderDeliveryAddress extends React.PureComponent {
   constructor(props) {

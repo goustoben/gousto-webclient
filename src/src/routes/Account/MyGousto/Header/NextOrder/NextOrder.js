@@ -7,7 +7,7 @@ import { windowOpen } from 'utils/window'
 import { myGoustoOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
 import { getClientOrderState } from '../../../../GetHelp/utils/orders'
 
-import css from './NextOrder.css'
+import css from './NextOrder.module.css'
 
 const NextOrder = ({
   boxTrackingUrl,

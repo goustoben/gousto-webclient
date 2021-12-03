@@ -10,7 +10,7 @@ import { SocialShareSheetCTA } from 'components/SocialLinks/SocialShareSheetCTA/
 import defaultOffer from 'config/referral'
 
 import { RAFTitle } from './RAFTitle'
-import css from './Referral.css'
+import css from './Referral.module.css'
 import { RAFOffer } from './RAFOffer'
 import { HowItWorks } from './HowItWorks'
 import { DoubleCreditCountdown } from './DoubleCreditCountdown'

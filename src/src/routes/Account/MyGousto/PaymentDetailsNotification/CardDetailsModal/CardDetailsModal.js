@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
 import { Modal, ModalHeader } from 'goustouicomponents'
 import { click3dsModalClose } from 'actions/trackingKeys'
-import css from './CardDetailsModal.css'
+import css from './CardDetailsModal.module.css'
 
 export const CardDetailsModal = ({ isOpen, toggleModal }) => (
   <Overlay open={isOpen} from="top">

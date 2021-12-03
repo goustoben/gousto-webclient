@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Alert, Button } from 'goustouicomponents'
 import Content from 'containers/Content'
-import css from './OrderRestoreButton.css'
+import css from './OrderRestoreButton.module.css'
 
 class OrderRestoreButton extends React.PureComponent {
   handleRestoreBox = () => {

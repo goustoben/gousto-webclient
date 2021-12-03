@@ -14,7 +14,7 @@ import { BasketValidationErrorModalContainer } from './BasketValidationErrorModa
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
-import css from './MenuRecipesPage.css'
+import css from './MenuRecipesPage.module.css'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
 import { RecommendationsHighlight } from './RecommendationsHighlight/RecommendationsHighlight'

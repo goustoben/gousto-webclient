@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { CheckoutUrgencyContext } from 'routes/Checkout/Components/CheckoutUrgency/CheckoutUrgencyContext'
 import Svg from 'Svg'
 import { formatSeconds } from '../checkoutUrgencyUtils'
-import css from './CheckoutUrgencyBanner.css'
+import css from './CheckoutUrgencyBanner.module.css'
 
 export const CheckoutUrgencyBanner = () => {
   const remainingSeconds = useContext(CheckoutUrgencyContext)

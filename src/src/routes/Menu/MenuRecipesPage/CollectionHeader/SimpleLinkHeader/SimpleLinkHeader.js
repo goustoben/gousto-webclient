@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './SimpleLinkHeader.css'
+import css from './SimpleLinkHeader.module.css'
 
 const SimpleLinkHeader = ({ headerAttributes, onClick }) => {
   const { backgroundColor, color, headerImage, description } = headerAttributes

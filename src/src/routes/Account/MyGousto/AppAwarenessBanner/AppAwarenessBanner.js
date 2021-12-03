@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { InputWithButton } from 'components/InputWithButton'
 import { CTA, Heading, InputField } from 'goustouicomponents'
 import imageGoustoApp from 'media/images/app-awareness-phone.png'
-import css from './AppAwarenessBanner.css'
+import css from './AppAwarenessBanner.module.css'
 
 const defaultProps = {
   initialUserPhoneNumber: null,

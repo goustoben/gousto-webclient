@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import css from './ReceiptLine.css'
+import css from './ReceiptLine.module.css'
 
 export const ReceiptLine = ({
   label,

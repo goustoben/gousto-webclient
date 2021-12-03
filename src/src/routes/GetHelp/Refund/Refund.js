@@ -7,8 +7,8 @@ import { client as routes } from 'config/routes'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { IngredientsListContainer } from './IngredientsList'
 
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './Refund.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './Refund.module.css'
 
 const propTypes = {
   compensation: PropTypes.shape({

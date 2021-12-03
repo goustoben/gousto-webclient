@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import css from './Info.css'
+import css from './Info.module.css'
 
 const Info = ({ type = 'div', children, regular, ...props }) => {
   const className = classNames(

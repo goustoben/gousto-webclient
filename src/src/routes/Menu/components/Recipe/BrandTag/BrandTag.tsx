@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRecipeBrandTag } from 'routes/Menu/context/recipeContext'
 
-import css from './BrandTag.css'
+import css from './BrandTag.module.css'
 
 const BrandTag: React.FC = () => {
   const brandTag = useRecipeBrandTag()

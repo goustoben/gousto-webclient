@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import css from './ContentMask.css'
+import css from './ContentMask.module.css'
 
 const ContentMask = ({ className, children }) => (
   <div className={className}>

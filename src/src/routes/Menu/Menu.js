@@ -13,7 +13,7 @@ import { RecipeMeta } from './RecipeMeta'
 import { RecipesInBasketProgress } from './RecipesInBasketProgress'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
-import css from './Menu.css'
+import css from './Menu.module.css'
 
 class Menu extends React.PureComponent {
   constructor(props) {

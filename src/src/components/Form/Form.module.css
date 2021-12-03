@@ -1,0 +1,8 @@
+.hideSubmit {
+	composes: noPadding noMargin from 'sass-loader!styles/spacing.scss';
+	composes: borderNone from 'styles/borders.module.css';
+	composes: block from 'styles/display.module.css';
+	opacity: 0;
+	width: 0px;
+	height: 0px;
+}

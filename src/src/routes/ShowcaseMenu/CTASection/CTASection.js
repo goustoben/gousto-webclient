@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CTA } from 'goustouicomponents'
 import { onEnter } from 'utils/accessibility'
-import css from './CTASection.css'
+import css from './CTASection.module.css'
 
 export const CTASection = ({ onClick }) => (
   <div className={css.ctaSection}>

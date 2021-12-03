@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import css from './SoldOutOverlay.css'
+import css from './SoldOutOverlay.module.css'
 
 const SoldOutOverlay = ({ isOutOfStock }) => {
   const message = (

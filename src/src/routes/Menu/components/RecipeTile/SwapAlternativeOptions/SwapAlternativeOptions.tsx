@@ -8,7 +8,7 @@ import { useClickOutside } from './useClickOutside'
 const classnames = require('classnames')
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const css = require('./SwapAlternativeOptions.css')
+const css = require('./SwapAlternativeOptions.module.css')
 
 export const SwapAlternativeOptions:React.FC<{
   recipeId: string;

@@ -1,0 +1,10 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.getInTouchCTA {
+  margin-bottom: 0.5rem;
+}
+
+.heading {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  margin-bottom: 1rem;
+}

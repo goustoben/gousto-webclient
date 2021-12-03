@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Header } from 'Header'
-import css from './WizardLayout.css'
+import css from './WizardLayout.module.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { onEnter } from 'utils/accessibility'
-import css from './CloseButton.css'
+import css from './CloseButton.module.css'
 
 const CloseButton = ({ onClose }) => (
   <span

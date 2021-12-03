@@ -1,7 +1,7 @@
 import React from 'react'
 import spottyBorder from 'media/images/menu/spottyTileBorder.png'
 import PropTypes from 'prop-types'
-import css from './CTAToAllRecipes.css'
+import css from './CTAToAllRecipes.module.css'
 
 const CTAToAllRecipes = ({ collectionFilterChange, menuCurrentCollectionId }) => {
   const recommendationsCollection = '97270056-cd65-11e8-a2d2-067a72dd5dba'

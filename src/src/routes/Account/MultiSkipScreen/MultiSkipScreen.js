@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { Modal, ModalHeader, CTA, InputCheck } from 'goustouicomponents'
 
-import css from './MultiSkipScreen.css'
-import cssCommon from './MultiSkip.common.css'
+import css from './MultiSkipScreen.module.css'
+import cssCommon from './MultiSkip.common.module.css'
 
 export const MultiSkipScreen = ({
   alreadySkippedBoxesCount,

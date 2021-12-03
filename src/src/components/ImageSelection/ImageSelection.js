@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Image from 'Image'
-import css from './ImageSelection.css'
+import css from './ImageSelection.module.css'
 
 export const ImageSelection = ({ content, onImageClick }) => (
   <div className={css.scroll}>

@@ -1,5 +1,6 @@
 function getUTMQueryParams() {
-  const { search } = window.location
+  const win = global.window ? global.window.location : {}
+  const { search = '' } = win
   const output = {}
   if (search !== '') {
     const params = search.split('&')
@@ -19,7 +20,7 @@ function getUTMQueryParams() {
  * */
 export function getUTM() {
   return {
-    referral: document.referrer,
+    referral: global.window ? global.window.document.referrer : false,
     ...getUTMQueryParams()
   }
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
 import { AgeVerificationCheckBox } from 'Product/AgeVerification'
-import css from './Buttons.css'
+import css from './Buttons.module.css'
 
 class Buttons extends React.PureComponent {
   // eslint-disable-next-line react/state-in-constructor

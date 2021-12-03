@@ -1,0 +1,15 @@
+@value ScreenXXSMax from 'styles/screenSizes.module.css';
+@value Bluecheese from 'styles/colors.module.css';
+
+.list {
+	padding: 0;
+	list-style: none;
+}
+
+.item {
+	border-bottom: 1px solid #ccc;
+}
+
+.item:last-child {
+	border-bottom: 0;
+}

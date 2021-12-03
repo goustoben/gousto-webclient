@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import CheckBox from 'Form/CheckBox'
-import css from './AgeVerify.css'
+import css from './AgeVerify.module.css'
 
 export const AgeVerify = ({ verified, onChange }) => (
   <div className={css.checkbox}>

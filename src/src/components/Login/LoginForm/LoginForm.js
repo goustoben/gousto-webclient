@@ -8,7 +8,7 @@ import CheckBox from 'Form/CheckBox'
 import Form from 'Form'
 import config from 'config'
 import classNames from 'classnames'
-import css from './LoginForm.css'
+import css from './LoginForm.module.css'
 
 class LoginForm extends React.PureComponent {
   constructor() {

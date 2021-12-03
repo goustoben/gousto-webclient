@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CheckBox from 'Form/CheckBox'
 import { BillingAddressContainer } from './AddressContainer'
-import css from './BillingAddress.css'
-import checkoutCss from '../../Checkout.css'
+import css from './BillingAddress.module.css'
+import checkoutCss from '../../Checkout.module.css'
 
 export class BillingAddress extends React.PureComponent {
   toggleDeliveryAddress = () => {

@@ -1,0 +1,140 @@
+@value avenirHeavyFontStack from 'styles/typography.module.css';
+@value DarkGrey, Mackerel, White, Radish from 'styles/colors.module.css';
+@value ScreenXSMax, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.module.css';
+
+@value FullWidthBreakpoint ScreenXSMax;
+
+.resetButtonStyle {
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.productWrapper {
+  background:White;
+  border: 1px solid Mackerel;
+  margin-bottom: 20px;
+  transition: box-shadow 200ms ease-in;
+  width: 100%;
+
+  @media ScreenMDMin {
+    width: calc(50% - 10px);
+  }
+
+  @media FullWidthBreakpoint {
+    width: calc(50% - 10px);
+  }
+}
+
+.fourColumn {
+  @media ScreenSMMin {
+    width: calc(25% - 10px);
+  }
+}
+
+.productWrapper:hover {
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.10);
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  position: relative;
+
+  @media FullWidthBreakpoint {
+    justify-content: stretch;
+  }
+}
+
+.productImage {
+  width: 100%;
+  padding-bottom: 66%; /* ratio of the image */
+  height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.productImage img {
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.fadedImage {
+  opacity: 0.4;
+}
+
+.productContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  height: 100%;
+  padding: 1rem;
+}
+
+.productContentFirstColumn {
+  padding-right: 1rem;
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  text-align: left;
+}
+
+.productInfo:hover .productTitle {
+  text-decoration: underline;
+}
+
+.productTitle {
+  font-size: 18px;
+  font-family: avenirHeavyFontStack;
+  font-weight: 400;
+  margin-bottom: 5px;
+
+  @media FullWidthBreakpoint {
+    font-size: 0.75rem;
+  }
+}
+
+.productPrice {
+  font-family: avenirHeavyFontStack;
+  color: DarkGrey;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+
+  @media FullWidthBreakpoint {
+    font-size: 0.75rem;
+  }
+}
+
+.productButtonWrapper {
+  align-self: flex-end;
+
+  @media FullWidthBreakpoint {
+    width: 100%;
+  }
+}
+
+.productLowStock {
+  position: absolute;
+  background-color: White;
+  color: Radish;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-family: avenirHeavyFontStack;
+  padding: 4px 10px;
+  top: 20px;
+  right: 0;
+}

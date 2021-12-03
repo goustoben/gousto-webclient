@@ -3,7 +3,7 @@ import React from 'react'
 import { Header } from 'Header'
 import Footer from 'Footer'
 
-import css from './FullPage.css'
+import css from './FullPage.module.css'
 
 export const FullPage = ({ children, route }) => (
   <div className={css.container}>

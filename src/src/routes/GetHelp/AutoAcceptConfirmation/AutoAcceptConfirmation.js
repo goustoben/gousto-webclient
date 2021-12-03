@@ -6,8 +6,8 @@ import { client } from 'config/routes'
 import Link from 'components/Link'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { GetHelpFAQ } from '../components/GetHelpFAQ/GetHelpFAQ'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './AutoAcceptConfirmation.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './AutoAcceptConfirmation.module.css'
 
 const IS_AUTO_ACCEPT = true
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Form.css'
+import css from './Form.module.css'
 
 const Form = ({ children, ...props }) => (
   <form { ...props }>

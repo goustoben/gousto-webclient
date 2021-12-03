@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
 
-import css from './BoxSummary.css'
+import css from './BoxSummary.module.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
 import { EscapeKeyPressed } from '../../../utils/DOMEvents'

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import { Field } from 'redux-form'
 import { ReduxFormInput } from 'Form/ReduxFormInput'
-import checkoutCss from '../../Checkout.css'
+import checkoutCss from '../../Checkout.module.css'
 
 const AddressInputs = ({ receiveRef, sectionName }) => (
   <Fragment>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Alert } from 'goustouicomponents'
 import { EditDate } from './EditDate'
 import { LinkButton } from '../LinkButton'
-import css from './OrderDeliveryDate.css'
+import css from './OrderDeliveryDate.module.css'
 
 const propTypes = {
   date: PropTypes.string,

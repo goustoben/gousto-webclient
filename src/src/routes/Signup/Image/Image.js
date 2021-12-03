@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import css from './Image.css'
+import css from './Image.module.css'
 
 const SignupImage = ({ name }) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require

@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { signupClickVoucherInfo } from 'actions/trackingKeys'
 import Svg from 'Svg'
-import css from './ApplyVoucherPage.css'
+import css from './ApplyVoucherPage.module.css'
 
 export const HeaderContent = ({ isExpanded, handleClick, trackUTMAndPromoCode }) => (
   <div

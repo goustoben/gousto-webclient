@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Content from 'containers/Content'
-import css from './OrderStatus.css'
+import css from './OrderStatus.module.css'
 
 const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
   <div>

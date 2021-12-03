@@ -6,7 +6,7 @@ import { actionTypes } from 'actions/actionTypes'
 import Overlay from 'components/Overlay'
 import { SocialShareSheetContainer } from 'components/SocialLinks/SocialShareSheet'
 
-import css from './SocialShareSheetCTA.css'
+import css from './SocialShareSheetCTA.module.css'
 
 const propTypes = {
   referralCode: PropTypes.string.isRequired,

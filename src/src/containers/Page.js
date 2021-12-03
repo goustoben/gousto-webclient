@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 import config from 'config'
 import { getWindow, redirect } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
-import css from './Page.css'
+import css from './Page.module.css'
 
 const imageUrl = require('media/photos/gousto-share-box.jpg')
 

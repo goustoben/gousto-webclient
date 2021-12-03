@@ -1,0 +1,28 @@
+@value sizeXL, avenirHeavyFontStack from 'styles/typography.module.css';
+@value SpacingLG from 'styles/spacing.module.css';
+
+.titleSection {
+	font-family: avenirHeavyFontStack;
+	font-size: sizeXL;
+	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
+	margin-top: SpacingLG;
+}
+
+.row {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.rowInCheckout {
+  margin-bottom: 0;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+}
+
+.dash {
+	composes: inlineBlock from 'styles/display.module.css';
+	composes: marginSMRight from 'sass-loader!styles/spacing.scss';
+}
+
+.undiscountedBoxPrice {
+	composes: textStrike from 'styles/typography.module.css';
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+}

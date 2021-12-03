@@ -9,7 +9,7 @@ import Immutable from 'immutable'
 import { getAllergenListFromAttributes } from 'Product/Detail/Detail'
 import ModalPanel from 'Modal/ModalPanel'
 import { SubIngredients } from '../../Recipe/Detail/SubIngredients/SubIngredients'
-import css from './SidesModal.css'
+import css from './SidesModal.module.css'
 import { SidePropType } from './SidesPropTypes'
 import { useSidesBasket } from './SidesModal.hook'
 

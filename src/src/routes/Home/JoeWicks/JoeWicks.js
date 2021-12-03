@@ -1,6 +1,6 @@
 import React from 'react'
 import { joeWicks } from 'config/home'
-import css from './JoeWicks.css'
+import css from './JoeWicks.module.css'
 
 const JoeWicks = () => (
   <div className={css.backgroundContainer}>

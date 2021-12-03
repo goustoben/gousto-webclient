@@ -6,7 +6,7 @@ import { BottomFixedContent, CTA } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../layouts/GetHelpLayout2'
 import { recipePropType } from '../../getHelpPropTypes'
 import { RecipeCardsList } from './RecipeCardsList'
-import css from './RecipeCardsSelect.css'
+import css from './RecipeCardsSelect.module.css'
 
 const RecipeCardsSelect = ({
   recipes,

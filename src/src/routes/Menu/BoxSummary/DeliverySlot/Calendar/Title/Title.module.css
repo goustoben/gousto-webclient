@@ -1,0 +1,8 @@
+@value Blackberry from 'styles/colors.module.css';
+
+.title {
+	composes: headerMD from 'styles/typography.module.css';
+	composes: inlineBlock from 'styles/display.module.css';
+	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+	color: Blackberry;
+}

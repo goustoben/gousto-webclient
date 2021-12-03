@@ -1,5 +1,5 @@
 import React from 'react'
-import css from './Delivery.css'
+import css from './Delivery.module.css'
 
 const DeliveryEducationBanner = () => (
   <div className={css.deliveryEducationBanner}>

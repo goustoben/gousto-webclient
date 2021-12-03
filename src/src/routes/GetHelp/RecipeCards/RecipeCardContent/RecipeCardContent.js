@@ -4,7 +4,7 @@ import { CTA } from 'goustouicomponents'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { windowOpen } from 'utils/window'
-import css from './RecipeCardContent.css'
+import css from './RecipeCardContent.module.css'
 import { recipePropType } from '../../getHelpPropTypes'
 
 const propTypes = {

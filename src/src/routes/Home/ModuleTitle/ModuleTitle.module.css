@@ -1,0 +1,27 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value NewGrey from 'styles/colors.module.css';
+
+.title {
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.subtitleContainer {
+  margin: 0 auto 2rem;
+  width: 100%;
+  max-width: 31.5rem;
+  text-align: center;
+
+  @media BreakpointFromMedium {
+    max-width: 48rem;
+  }
+}
+
+.subtitleP {
+  margin: 0;
+  color: NewGrey;
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+}

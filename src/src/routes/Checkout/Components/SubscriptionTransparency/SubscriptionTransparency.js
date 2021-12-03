@@ -1,6 +1,6 @@
 import React from 'react'
 import Svg from 'Svg'
-import css from './SubscriptionTransparency.css'
+import css from './SubscriptionTransparency.module.css'
 
 export const SubscriptionTransparency = () => (
   <div className={css.container}>

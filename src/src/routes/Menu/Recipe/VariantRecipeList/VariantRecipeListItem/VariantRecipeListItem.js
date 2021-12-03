@@ -2,7 +2,7 @@ import React from 'react'
 import { InputRadio } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import css from './VariantRecipeListItem.css'
+import css from './VariantRecipeListItem.module.css'
 
 const VariantRecipeListItem = ({
   recipeId,

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { onEnter } from 'utils/accessibility'
 import { getDocumentHeight, getEllipse } from './helpers'
-import css from './Spotlight.css'
+import css from './Spotlight.module.css'
 
 const RADIUS = 100
 const accuracy = 0.3

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Gel from 'Gel'
 import classnames from 'classnames'
-import css from './YourFriendGets.css'
+import css from './YourFriendGets.module.css'
 
 const YourFriendGets = ({ yourFriendFirstBoxOffer, yourFriendFirstMonthOffer }) => (
   <div className={css.yourFriendOffer}>

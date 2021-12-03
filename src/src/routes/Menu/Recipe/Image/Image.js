@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import GoustoImage from 'Image'
 import { SoldOutOverlay } from '../SoldOutOverlay'
 
-import css from './Image.css'
+import css from './Image.module.css'
 
 const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, isOutOfStock, lazy }) => (
   <div

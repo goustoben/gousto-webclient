@@ -1,0 +1,46 @@
+@value BreakpointToMedium, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+@value Mackerel from 'styles/colors.module.css';
+
+.heading {
+  @media BreakpointToMedium {
+    max-width: 230px;
+  }
+}
+
+.line {
+  position: relative;
+  height: 1.5rem;
+  width: 100%;
+
+  @media BreakpointFromLarge {
+    margin-bottom: 1rem;
+  }
+}
+
+.line::after {
+  content: '';
+  border-bottom: 1px solid Mackerel;
+  margin: auto;
+  position: absolute;
+  top: 0.5rem;
+  left: -1rem;
+  right: 0;
+
+  @media BreakpointFromLarge {
+    top: 1rem;
+  }
+}
+
+.line::before {
+  content: '';
+  border-bottom: 1px solid Mackerel;
+  margin: auto;
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+  right: -1rem;
+
+  @media BreakpointFromLarge {
+    top: 1rem;
+  }
+}

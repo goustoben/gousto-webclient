@@ -4,8 +4,8 @@ import { client as routes } from 'config/routes'
 import { BottomFixedContent, Card, CTA } from 'goustouicomponents'
 import Link from 'components/Link'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './IneligibleIngredientsSameDay.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './IneligibleIngredientsSameDay.module.css'
 
 const IneligibleIngredientsSameDay = ({
   ssrTwoComplaintsSameDay,

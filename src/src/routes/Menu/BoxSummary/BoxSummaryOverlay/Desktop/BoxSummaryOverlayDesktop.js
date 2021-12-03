@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
-import css from './BoxSummaryOverlayDesktop.css'
+import css from './BoxSummaryOverlayDesktop.module.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
 
 const BoxSummaryOverlayDesktop = ({ onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions, orderSaveError }) => (

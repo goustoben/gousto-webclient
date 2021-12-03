@@ -8,7 +8,7 @@ import { basketPromoCodeChange } from 'actions/basket'
 import { promoToggleModalVisibility, promoResetGoustoOnDemandFlow } from 'actions/promos'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { PromoModal } from './PromoModal'
-import css from './PromoModal.css'
+import css from './PromoModal.module.css'
 
 const mapStateToProps = (state) => {
   const promoCode = state.promoCurrent

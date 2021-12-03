@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import { shallow } from 'enzyme'
 import SeeMenuSection from 'routes/Account/MyDeliveries/OrdersList/NoOrders/SeeMenuSection/SeeMenuSection'
-import css from 'routes/Account/MyDeliveries/OrdersList/NoOrders/SeeMenuSection/SeeMenuSection.css'
+import css from 'routes/Account/MyDeliveries/OrdersList/NoOrders/SeeMenuSection/SeeMenuSection.module.css'
 
 describe('SeeMenuSection', () => {
   describe('rendering', () => {

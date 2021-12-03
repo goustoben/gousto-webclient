@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { RecipeTileContainer } from '../../../components/RecipeTile'
-import css from './RecipeLinkHeader.css'
+import css from './RecipeLinkHeader.module.css'
 
 export const LinkRecipeHolder = ({ matches, images, fdiStyling, recipes, title }) => {
   const getRecipeHeaderContentForNumberOfColumns = (columnNumber) => {

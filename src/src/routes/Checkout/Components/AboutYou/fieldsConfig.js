@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { client } from 'config/routes'
 import { emailValidator } from 'utils/forms'
-import css from './AboutYou.css'
+import css from './AboutYou.module.css'
 
 const passwordLabel = 'Password'
 const checkboxLabel = (trackPrivacyPolicyClick) => (

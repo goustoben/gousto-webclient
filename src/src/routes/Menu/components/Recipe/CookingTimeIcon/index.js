@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecipeCookingTime } from 'routes/Menu/context/recipeContext'
-import css from './CookingTimeIcon.css'
+import css from './CookingTimeIcon.module.css'
 import { getPercentageFromCookingTime } from './getPercentageFromCookingTime'
 
 const CookingTimeIcon = () => {

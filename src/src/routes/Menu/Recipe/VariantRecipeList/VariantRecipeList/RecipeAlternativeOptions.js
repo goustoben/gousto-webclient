@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useMenu } from 'routes/Menu/domains/menu'
 import { VariantRecipeListItem } from '../VariantRecipeListItem/VariantRecipeListItem'
-import css from './VariantRecipeList.css'
+import css from './VariantRecipeList.module.css'
 
 /**
  *  Component that duplicates the VarianRecipeListContainer.

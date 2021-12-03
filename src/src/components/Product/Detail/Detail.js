@@ -9,7 +9,7 @@ import Buttons from 'Product/Buttons'
 import { formatPrice } from 'utils/format'
 import { onEnter } from 'utils/accessibility'
 import { SubIngredients } from 'routes/Menu/Recipe/Detail/SubIngredients'
-import css from './Detail.css'
+import css from './Detail.module.css'
 
 export const getAllergenListFromAttributes = (attributes = []) => {
   const allergensAttributes = attributes.find((item) => item.get('title', '').toLowerCase() === 'allergen')

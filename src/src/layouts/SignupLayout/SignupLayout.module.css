@@ -1,0 +1,19 @@
+@value Coconut, White from 'styles/colors.module.css';
+
+.pageContainer {
+  position: relative;
+  background: Coconut;
+  min-height: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.hasWhiteBackground {
+  background: White;
+}
+
+.headerContainer {
+  width: 100%;
+  display: block;
+}

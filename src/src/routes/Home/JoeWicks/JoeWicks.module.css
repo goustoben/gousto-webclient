@@ -1,0 +1,71 @@
+@value BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.module.css';
+@value White, Blackberry, Duckegg from 'styles/colors.module.css';
+
+.backgroundContainer {
+  background: Blackberry;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 0.75rem 0.75rem 1.5rem;
+
+  @media BreakpointFromMedium {
+    padding: 2rem;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  @media BreakpointFromXLarge {
+    padding: 3rem 2rem;
+  }
+}
+
+.joeWicksImage {
+  width: 100%;
+  max-width: 22rem;
+  height: 22rem;
+  margin: 0 auto 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin: 0 1.75rem 0 0;
+    min-width: 11rem;
+    max-width: 17.75rem;
+    height: 17.75rem;
+  }
+
+  @media BreakpointFromXLarge {
+    margin-right: 6.25rem;
+  }
+}
+
+.joeWicksImage {
+  background: url('./joe-wicks.jpg') center center / contain no-repeat;
+}
+
+.textContainer {
+  text-align: center;
+
+  @media BreakpointFromMedium {
+    text-align: left;
+  }
+}
+
+.quote {
+  margin: 0 0 1rem;
+  composes: fontStyleL from 'design-language/typography.module.css';
+  color: White;
+}
+
+.joeWicksSign {
+  composes: fontBold from 'design-language/typography.module.css';
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  color: Duckegg;
+}
+
+.bodyCoach {
+  composes: FontStyleBody from 'design-language/typography.module.css';
+  color: White;
+}

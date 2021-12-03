@@ -1,0 +1,45 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value White, Blackberry from 'styles/colors.module.css';
+
+.arrow {
+  display: none;
+  height: 0;
+  opacity: 0;
+
+  @media BreakpointFromMedium {
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    z-index: 5;
+    background: Blackberry;
+    border-radius: 50%;
+    top: calc(50% - 1.25rem);
+    cursor: pointer;
+    text-align: center;
+    padding: 0.45rem;
+    opacity: 0.6;
+    border: 1px solid White;
+    outline: 0;
+  }
+}
+
+.arrow:focus {
+  outline: 0;
+}
+
+.arrow:hover {
+  opacity: 0.9;
+}
+
+.arrowRight {
+  right: 2rem;
+}
+
+.arrowLeft {
+  left: 2rem;
+  transform: rotate(180deg);
+}
+
+.arrow::before {
+  content: url('../../../../media/svgs/icon-navigation-arrow-right.svg');
+}

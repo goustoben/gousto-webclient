@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Buttons from 'Product/Buttons'
 import classnames from 'classnames'
-import css from './Product.css'
+import css from './Product.module.css'
 
 const propTypes = {
   id: PropTypes.string,

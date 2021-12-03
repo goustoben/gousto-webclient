@@ -5,7 +5,7 @@ import { homeConfig } from 'config/home'
 import { Heading } from 'goustouicomponents'
 import { CTAHomepageContainer } from '../CTA'
 import { Benefits } from '../Benefits'
-import css from './Hero.css'
+import css from './Hero.module.css'
 
 class Hero extends Component {
   constructor(props) {

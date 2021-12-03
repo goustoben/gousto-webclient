@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { Confirm } from 'routes/Unsubscribe/Confirm'
 
-import css from 'routes/Unsubscribe/Confirm/Confirm.css'
+import css from 'routes/Unsubscribe/Confirm/Confirm.module.css'
 
 describe('<Confirm />', () => {
   test('copy body1, body2 and the copy of the button are rendered', () => {

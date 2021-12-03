@@ -4,7 +4,7 @@ import { Button, LegacyDropdown } from 'goustouicomponents'
 import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 
-import css from './IngredientIssues.css'
+import css from './IngredientIssues.module.css'
 
 const propTypes = {
   content: PropTypes.shape({

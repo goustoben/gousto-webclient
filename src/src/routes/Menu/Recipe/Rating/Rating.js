@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Rating.css'
+import css from './Rating.module.css'
 
 class RecipeRating extends React.Component {
   showStar(avg) {

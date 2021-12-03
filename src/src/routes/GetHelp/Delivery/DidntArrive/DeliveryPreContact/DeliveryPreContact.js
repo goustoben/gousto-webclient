@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { client } from 'config/routes'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
-import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './DeliveryPreContact.css'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './DeliveryPreContact.module.css'
 
 const redirectToContactPage = () => {
   browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)

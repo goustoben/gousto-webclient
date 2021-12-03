@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Immutable from 'immutable'
-import css from './HowItWorks.css'
+import css from './HowItWorks.module.css'
 
 const propTypes = {
   detailsSteps: PropTypes.instanceOf(Immutable.List)

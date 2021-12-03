@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import Svg from 'Svg'
-import css from './RecipeAttribute.css'
+import css from './RecipeAttribute.module.css'
 import { getDescription } from './config'
 
 const RecipeAttribute = ({ icon, name, value, show, view }) => (

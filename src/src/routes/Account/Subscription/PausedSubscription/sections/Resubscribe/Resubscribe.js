@@ -13,7 +13,7 @@ import { SubscriptionContext } from '../../../context'
 import { actionTypes } from '../../../context/reducers'
 import { SubscriberPricingInfoPanel } from '../../../../AccountComponents/SubscriberPricingInfoPanel'
 import { trackSubscriptionSettingsChange } from '../../../tracking'
-import css from './Resubscribe.css'
+import css from './Resubscribe.module.css'
 
 const getResult = (loading, response, error) => {
   if (!error && !loading && response && response.status && response.status.toLowerCase() === 'ok') {

@@ -1,0 +1,73 @@
+@value Mackerel, Basa, Bluecheese, Blackberry from 'styles/colors.module.css';
+@value sizeSM from 'styles/typography.module.css';
+.item {
+    text-align: left;
+    box-sizing: content-box;
+}
+
+.item > label {
+  margin-bottom: 0;
+}
+
+.listItem {
+    composes: item;
+    position: relative;
+    padding: 0.325rem 0;
+    border: 1px solid Mackerel;
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
+}
+
+.listItemChecked {
+    border-width: 2px;
+    border-color: Bluecheese;
+}
+
+.soldOutText {
+    color: Mackerel;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.extraInformation {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.surchargeAmountText {
+    color: Blackberry;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.titleContainer {
+    margin-left: 0.5rem;
+}
+
+.titleText {
+    color: Blackberry;
+}
+
+.surchargeText {
+    color: Blackberry;
+    font-weight: 500;
+    white-space: nowrap;
+    font-size: sizeSM;
+}
+
+.perServingText {
+    white-space: nowrap;
+    font-size: 0.8rem;
+}
+
+.labelContainer {
+    cursor: pointer;
+    margin: 0;
+    display: flex;
+    width: calc(100% - 1.5rem);
+    justify-content: space-between;
+    line-height: 1.3;
+    margin-left: 0.25rem
+}

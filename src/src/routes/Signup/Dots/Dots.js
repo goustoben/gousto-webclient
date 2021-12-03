@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Dots.css'
+import css from './Dots.module.css'
 
 const Dots = ({ steps, stepNo }) => (
   <div className={css.dots}>

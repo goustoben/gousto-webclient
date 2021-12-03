@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Loader } from 'goustouicomponents'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 import { formatPrice } from 'routes/Signup/signupUtils'
-import css from './PricePerNRecipesTable.css'
+import css from './PricePerNRecipesTable.module.css'
 
 export const PricePerNRecipesTable = ({ isLoadingPrices, boxDescriptors }) => (
   <div className={css.pricesPerRecipesTableContainer}>

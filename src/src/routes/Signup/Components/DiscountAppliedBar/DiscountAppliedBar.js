@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { signupConfig } from 'config/signup'
-import css from './DiscountAppliedBar.css'
+import css from './DiscountAppliedBar.module.css'
 
 class DiscountAppliedBar extends Component {
   constructor(props) {

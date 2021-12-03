@@ -1,0 +1,26 @@
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+
+.bold {
+	composes: textBold from 'styles/typography.module.css';
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.subHeader {
+	font-size: 1rem;
+	margin-bottom: 0.5rem;
+}
+
+.dateTime {
+	font-size: 0.875rem;
+	margin-bottom: 0;
+}
+
+.button {
+	@media ScreenXSMax {
+		display: block;
+	}
+}

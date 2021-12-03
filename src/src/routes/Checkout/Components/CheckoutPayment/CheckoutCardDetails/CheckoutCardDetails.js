@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { CheckoutFrame } from '../CheckoutFrame'
 import { CheckoutAddress } from '../CheckoutAddress'
-import css from './CheckoutCardDetails.css'
+import css from './CheckoutCardDetails.module.css'
 
 export const CheckoutCardDetails = (props) => {
   const {

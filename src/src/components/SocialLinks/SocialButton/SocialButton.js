@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Svg from 'Svg'
-import css from './SocialButton.css'
+import css from './SocialButton.module.css'
 
 const SocialButton = ({ text, type, onClick, elementType }) => {
   const buttonType = `button-${type}`

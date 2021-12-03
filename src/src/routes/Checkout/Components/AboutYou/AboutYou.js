@@ -12,8 +12,8 @@ import { CheckoutButton } from '../CheckoutButton'
 import { PasswordCriteria } from '../PasswordCriteria'
 import { PasswordField } from './PasswordField'
 import { fieldsConfig } from './fieldsConfig'
-import css from './AboutYou.css'
-import checkoutCss from '../../Checkout.css'
+import css from './AboutYou.module.css'
+import checkoutCss from '../../Checkout.module.css'
 
 class AboutYou extends PureComponent {
   constructor(props) {

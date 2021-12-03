@@ -3,7 +3,7 @@ import React from 'react'
 
 import Link from 'Link'
 
-import css from './Unsubscribed.css'
+import css from './Unsubscribed.module.css'
 
 export const Unsubscribed = ({ copy }) => (
   <div>

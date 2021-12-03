@@ -2,7 +2,7 @@ import React from 'react'
 import configRoutes from 'config/routes'
 import { checkoutConfig } from 'config/checkout'
 import Link from 'Link'
-import css from './TermsAndConditions.css'
+import css from './TermsAndConditions.module.css'
 
 export const TermsAndConditions = () => (
   <div className={css.termsAndConditions}>

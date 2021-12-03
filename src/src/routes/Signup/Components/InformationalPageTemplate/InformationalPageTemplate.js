@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import css from './InformationalPageTemplate.css'
+import css from './InformationalPageTemplate.module.css'
 
 export const InformationalPageTemplate = ({
   isGoustoOnDemandEnabled,

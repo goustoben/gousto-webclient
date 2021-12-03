@@ -3,8 +3,8 @@ import React from 'react'
 import { client as routes } from 'config/routes'
 import { BottomFixedContent, Card, CTA } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './IneligibleIngredients.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './IneligibleIngredients.module.css'
 
 const propTypes = {
   ineligibilityCriteria: PropTypes.shape({

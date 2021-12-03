@@ -4,7 +4,7 @@ import { getHeroDetails } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 import { BoxPricesTabs } from './BoxPricesTabs'
-import css from './BoxPrices.css'
+import css from './BoxPrices.module.css'
 
 import { BoxPricesListRedesignContainer as BoxPricesListRedesign } from './BoxPricesList/BoxPricesListRedesign'
 import { BoxPricesContent } from './BoxPricesContent'

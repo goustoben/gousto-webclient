@@ -2,7 +2,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import sinon from 'sinon'
 
-import css from './Calendar.css'
+import css from './Calendar.module.css'
 import { Calendar } from './Calendar'
 import { Title } from './Title'
 import { Day } from './Day'

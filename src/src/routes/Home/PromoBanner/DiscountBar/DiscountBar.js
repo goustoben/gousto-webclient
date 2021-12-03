@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { onEnter } from 'utils/accessibility'
 import classnames from 'classnames'
-import css from './DiscountBar.css'
+import css from './DiscountBar.module.css'
 
 const DiscountBar = ({ isHidden, isSticky, applyDiscount, text }) => (
   <div

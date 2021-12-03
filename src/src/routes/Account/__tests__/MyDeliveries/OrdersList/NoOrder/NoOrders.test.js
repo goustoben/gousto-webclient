@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import { shallow } from 'enzyme'
 import NoOrders from 'routes/Account/MyDeliveries/OrdersList/NoOrders/NoOrders'
-import css from 'routes/Account/MyDeliveries/OrdersList/NoOrders/NoOrders.css'
+import css from 'routes/Account/MyDeliveries/OrdersList/NoOrders/NoOrders.module.css'
 import Content from 'containers/Content'
 
 describe('OrdersList', () => {

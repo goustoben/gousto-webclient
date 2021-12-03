@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 
-import css from './Address.css'
+import css from './Address.module.css'
 
 const propTypes = {
   addressName: PropTypes.string,

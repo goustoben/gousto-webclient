@@ -18,7 +18,7 @@ import { useSubscriptionData } from './hooks/useSubscriptionData'
 import { useCurrentUserData } from './hooks/useCurrentUserData'
 import { useBoxPricesData } from './hooks/useBoxPricesData'
 import { useOrdersData } from './hooks/useOrdersData'
-import css from './Subscription.css'
+import css from './Subscription.module.css'
 
 const propTypes = {
   accessToken: PropTypes.string.isRequired,

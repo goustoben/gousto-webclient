@@ -1,0 +1,89 @@
+@value Bluecheese, Radish, Radish40, Oyster from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.flex {
+  composes: flex rowWrap from 'styles/flex.module.css';
+  composes: rowWrap flex from 'styles/flex.module.css';
+}
+
+.linkBase {
+  composes: textSM from 'styles/typography.module.css';
+  color: Bluecheese;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.address {
+  composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.addressToggle {
+  float: right;
+}
+
+.errorMsg {
+  color: Radish;
+  composes: textXS from 'styles/typography.module.css';
+  composes: paddingXXSTop from 'sass-loader!styles/spacing.scss';
+}
+
+.linkRight {
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  font-size: 10px;
+}
+
+.textSM {
+  composes: textSM from 'styles/typography.module.css';
+  composes: inlineBlock from 'styles/display.module.css';
+}
+
+.inputContainer {
+  composes: marginSMTopBottom marginXSLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.inputContainerInline {
+  composes: inputContainer;
+  composes: inlineBlock from 'styles/display.module.css';
+  vertical-align: top;
+}
+
+.inputError {
+  background-color: Radish40;
+  border: solid 1px Radish;
+}
+
+.upperCase {
+  composes: textUpper from 'styles/typography.module.css';
+}
+
+:global .deliveryDropdown select {
+  width: 100%;
+}
+
+.addressContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.deliveryAddress {
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+
+.editAddressLink {
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  composes: fontStyleS from 'design-language/typography.module.css';
+  composes: fontBold from 'design-language/typography.module.css';
+}
+
+.enterAddressManually {
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}

@@ -6,7 +6,7 @@ import { getFirstName } from '../../context/selectors/currentUser'
 import { getShowResubscriptionModal } from '../../context/selectors/subscription'
 import { SubscriptionContext } from '../../context'
 import { actionTypes } from '../../context/reducers'
-import css from './ResubscriptionModal.css'
+import css from './ResubscriptionModal.module.css'
 
 export const ResubscriptionModal = () => {
   const { dispatch, state } = useContext(SubscriptionContext)

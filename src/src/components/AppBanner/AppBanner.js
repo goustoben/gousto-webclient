@@ -5,9 +5,9 @@ import classnames from 'classnames'
 import { client } from 'config/routes'
 import { redirect } from 'utils/window'
 // eslint-disable-next-line import/no-unresolved
-import typography from 'design-language/typography.css'
+import typography from 'design-language/typography.module.css'
 import { AppBannerDetails } from './AppBannerDetails'
-import css from './AppBanner.css'
+import css from './AppBanner.module.css'
 
 const propTypes = {
   name: PropTypes.string.isRequired,

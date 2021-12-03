@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { Price } from '../Price'
-import css from '../Price/Price.css'
+import css from '../Price/Price.module.css'
 
 describe('<Price />', () => {
   let [recipeTotal, recipeDiscount, recipeTotalDiscounted] = [39.99, 0.0, 39.99]

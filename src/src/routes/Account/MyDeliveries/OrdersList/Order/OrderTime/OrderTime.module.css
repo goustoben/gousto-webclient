@@ -1,0 +1,7 @@
+@value Blackberry from 'styles/colors.module.css';
+
+.time {
+	composes: textMD from 'styles/typography.module.css';
+	color: Blackberry;
+	composes: marginZeroTopBottom, marginZeroLeftRight from 'sass-loader!styles/spacing.scss';
+}

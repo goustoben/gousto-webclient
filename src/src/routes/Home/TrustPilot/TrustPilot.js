@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import css from './TrustPilot.css'
+import css from './TrustPilot.module.css'
 
 const TrustPilot = () => (
   <div className={css.trustPilotContainer}>

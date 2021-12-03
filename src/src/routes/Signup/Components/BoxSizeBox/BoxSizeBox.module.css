@@ -1,0 +1,98 @@
+@value NewGrey, Basa, White, Radish from 'styles/colors.module.css';
+@value BreakpointFromMedium, BreakpointToLarge from 'design-language/breakpoints.module.css';
+
+.container {
+  max-width: 100%;
+  background-color: White;
+  border: 1px solid Basa;
+
+  &:first-child {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  @media BreakpointFromMedium {
+    max-width: 330px;
+
+    &:first-child {
+      margin-right: 1.5rem;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  height: 175px;
+
+  @media BreakpointFromMedium {
+    height: 185px;
+  }
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    min-width: 100%;
+    min-height: 100%;
+    /* Override Image.contain: on smaller widths, the image is cut off instead of
+       squished to fit. */
+    max-width: unset;
+  }
+}
+
+.boxWrapper {
+  padding: 1rem 1.5rem;
+  text-align: left;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem;
+  }
+}
+
+.title {
+  composes: fontStyleM from 'design-language/typography.module.css';
+  margin: 0;
+}
+
+.subtitle {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  color: NewGrey;
+  margin-bottom: 1rem;
+}
+
+.redPrice,
+.priceText {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  color: NewGrey;
+  margin: 0;
+}
+
+.redPrice {
+  text-decoration: line-through;
+  color: Radish;
+  margin-left: 0.25rem;
+}
+
+.priceContainer {
+  margin-bottom: 1.5rem;
+}
+
+.priceContainer.discountApplied {
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  composes: fontStyleXL from 'design-language/typography.module.css';
+}
+
+.loading {
+  padding: 1rem 0;
+}
+
+.loading > * {
+  margin: 0 auto;
+}

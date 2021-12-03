@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Svg from 'Svg'
 
-import css from './DeliveryCard.css'
+import css from './DeliveryCard.module.css'
 
 const DeliveryCard = ({ iconName, children, dataTesting, cardStyle, customClass }) => (
   <div

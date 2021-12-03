@@ -7,7 +7,7 @@ import { getAreDeliveriesLoaded, getCurrentDeliverySlot } from '../../context/se
 import { dayNumberMap } from '../../enum/day'
 import { formatCutoffTime } from '../../utils/time'
 
-import css from './SubscriptionTitle.css'
+import css from './SubscriptionTitle.module.css'
 
 export const SubscriptionTitle = () => {
   const { state } = useContext(SubscriptionContext)

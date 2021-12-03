@@ -1,0 +1,146 @@
+@value BreakpointToLarge, BreakpointFromLarge, BreakpointFromXLarge from 'design-language/breakpoints.module.css';
+@value Large, FontFamilyAxiformaBook, FontFamilyAxiformaSemiBold from 'design-language/typography.module.css';
+@value NG50 #F4F7FA;
+
+.informationBoxToLarge {
+  background: NG50;
+
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+
+  @media BreakpointFromLarge {
+    display: none;
+  }
+}
+
+.informationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0.75rem 0;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem 0 0;
+  }
+}
+
+.informationToLarge {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.seedsBottom {
+  background: url('routes/ShowcaseMenu/images/seeds-bottom.svg') center no-repeat;
+  background-size: cover;
+  height: 3.5rem;
+}
+
+.informationBoxFromLarge {
+  background: NG50;
+  height: 10.5rem;
+  display: flex;
+  margin-bottom: 2rem;
+
+  @media BreakpointToLarge {
+    display: none;
+  }
+}
+
+.informationFromLarge {
+  flex: 1;
+  display: flex;
+}
+
+.item {
+  @media BreakpointToLarge {
+    display: flex;
+    margin-bottom: 1.5rem;
+    align-items: baseline;
+  }
+
+  @media BreakpointFromLarge {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+.primaryLine {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+
+  @media BreakpointFromXLarge {
+    font: Large FontFamilyAxiformaSemiBold !important;
+  }
+}
+
+.icon {
+  background-repeat: no-repeat;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  @media BreakpointToLarge {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-basis: 1.5rem;
+    margin-right: 0.5rem;
+    align-self: flex-start;
+  }
+
+  @media BreakpointFromLarge {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-basis: 2.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.icon-menu {
+  background-image: url('routes/ShowcaseMenu/images/icon-menu.svg');
+}
+
+.icon-recipes {
+  background-image: url('routes/ShowcaseMenu/images/icon-recipes.svg');
+}
+
+.icon-meals {
+  background-image: url('routes/ShowcaseMenu/images/icon-meals.svg');
+}
+
+.icon-fresh {
+  background-image: url('routes/ShowcaseMenu/images/icon-fresh.svg');
+}
+
+.secondaryLine {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+
+  @media BreakpointFromXLarge {
+    font: Large FontFamilyAxiformaBook !important;
+  }
+}
+
+.seedsLeft {
+  background-image: url('routes/ShowcaseMenu/images/seeds-left.svg');
+  background-position-x: 100%;
+  background-size: cover;
+  height: 100%;
+  width: 9vw;
+}
+
+.seedsRight {
+  background-image: url('routes/ShowcaseMenu/images/seeds-left.svg');
+  background-size: cover;
+  height: 100%;
+  width: 9vw;
+}

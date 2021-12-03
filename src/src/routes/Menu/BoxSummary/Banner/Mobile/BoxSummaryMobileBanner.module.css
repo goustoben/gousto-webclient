@@ -1,0 +1,126 @@
+@value Blackberry, DarkRadish, Radish, White, Bluecheese from 'styles/colors.module.css';
+@value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value sizeLG, sizeXS from 'styles/typography.module.css';
+@value ScreenSMMin from 'styles/screenSizes.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+@value barMobileHeight 90px;
+/* for .mobileOverlay */
+
+.container {
+	z-index: 500;
+}
+
+.barmobile {
+	composes: container;
+	composes: fixed from 'styles/position.module.css';
+
+	left: 0;
+	bottom: 0;
+	background-color: Blackberry;
+	width: 100%;
+	height: barMobileHeight;
+	@media BreakpointFromMedium {
+		display: none;
+	}
+}
+
+.mobileText {
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	color: White;
+}
+
+.summaryMobile {
+	composes: flex spaceAround from 'styles/flex.module.css';
+	composes: marginXXSTop from 'sass-loader!styles/spacing.scss';
+}
+
+.circle {
+	composes: absolute from 'styles/position.module.css';
+	right: 0.25rem;
+	min-width: 3.5rem;
+	height: 2.5rem;
+	background-color: Blackberry;
+	border-radius: 1.25rem 1.25rem 0 0;
+}
+
+.arrowDown {
+	composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+	composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+}
+
+.hide {
+	composes: none from 'styles/display.module.css';
+}
+
+.detailContainer {
+	composes: borderXS from 'styles/borders.module.css';
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	background-color: White;
+}
+
+.detailContainermobile {
+	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: detailContainer;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	overflow-x: auto;
+	padding: 0;
+}
+
+.supercontainermobile {
+	height: 100%;
+}
+
+.mobileOverlay {
+	height: calc( 100% - barMobileHeight );
+	min-height: calc( 100% - barMobileHeight );
+}
+
+.mobileModalContent {
+	height: 100%;
+	min-height: 100%;
+}
+
+.closeBtn {
+	composes: fa-basic-class  fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
+	composes: absolute from 'styles/position.module.css';
+
+	right: SpacingXXS;
+	top: SpacingSM;
+
+	padding: 0.5rem;
+	width: auto;
+
+	font-size: sizeLG;
+	cursor: pointer;
+}
+
+.errorTooltipMobile {
+	position: fixed;
+	@media ScreenSMMin {
+		display: none;
+	}
+}
+.errorTooltipDesktop {
+	display: none;
+	position: fixed;
+	@media ScreenSMMin {
+		display: inherit;
+	}
+}
+
+.errorMessage {
+	composes: textRegular from 'styles/typography.module.css';
+	color: DarkRadish;
+	box-shadow: 0px 2px 5px Radish;
+}
+
+.hide {
+	composes: none from 'styles/display.module.css';
+}

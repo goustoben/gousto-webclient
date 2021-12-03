@@ -3,7 +3,7 @@ import React from 'react'
 import config from 'config/cookies'
 import Link from 'Link'
 import classnames from 'classnames'
-import css from './CookieBanner.css'
+import css from './CookieBanner.module.css'
 
 const CookieBanner = ({
   cookiePolicyAcceptanceChange,

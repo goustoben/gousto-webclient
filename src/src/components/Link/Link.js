@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
-import css from './Link.css'
+import css from './Link.module.css'
 
 export const GoustoLink = (props, context) => {
   let link

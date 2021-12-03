@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { browserHistory } from 'react-router'
 
-import css from './SubscriberPricingBannerModal.css'
+import css from './SubscriberPricingBannerModal.module.css'
 import { SubscriberPricingInfoPanel } from '../../../AccountComponents/SubscriberPricingInfoPanel'
 
 const MODAL_CONTENT = {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './RAFOffer.css'
+import css from './RAFOffer.module.css'
 import { YouGet } from './YouGet'
 import { YourFriendGets } from './YourFriendGets'
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { Button, Segment } from 'goustouicomponents'
 import classnames from 'classnames'
 
-import css from './SlotPicker.css'
+import css from './SlotPicker.module.css'
 
 const SlotPicker = ({ slots, date, slotId, onClick }) => {
   const hasMoreThanTwoSlots = slots[date] && slots[date].length > 2

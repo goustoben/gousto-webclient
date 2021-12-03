@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 
-import css from './Ingredients.css'
+import css from './Ingredients.module.css'
 import { Ingredient } from './Ingredient'
 
 const Ingredients = ({ ingredients, inset }) => (

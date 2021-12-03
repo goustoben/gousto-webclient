@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import Svg from 'Svg'
 import { Benefits } from 'routes/Home/Benefits'
-import postcodeCss from './PostcodeStep.css'
+import postcodeCss from './PostcodeStep.module.css'
 
 export const PostcodeStepMessage = ({
   isGoustoOnDemandEnabled,

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import css from './Attributes.css'
+import css from './Attributes.module.css'
 
 export const Attributes = ({ attributes }) => (
   <ul className={css.list}>

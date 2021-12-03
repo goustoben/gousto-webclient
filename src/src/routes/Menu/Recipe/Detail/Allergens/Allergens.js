@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import menu from 'config/menu'
-import css from './Allergens.css'
+import css from './Allergens.module.css'
 
 const replaceGluten = (allergens) => allergens.map(a =>
   (a === 'gluten' ? 'cereals containing gluten' : a)

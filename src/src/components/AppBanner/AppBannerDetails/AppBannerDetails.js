@@ -4,8 +4,8 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 
 // eslint-disable-next-line import/no-unresolved
-import typography from 'design-language/typography.css'
-import css from './AppBannerDetails.css'
+import typography from 'design-language/typography.module.css'
+import css from './AppBannerDetails.module.css'
 
 export const AppBannerDetails = ({ name, ratings, variant }) => {
   const starFileName = `app-promo-star${variant === 'dark' ? '-dark' : ''}`

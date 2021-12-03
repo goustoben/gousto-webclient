@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import LoadingComponent, { LoadingTastePreferences } from 'Loading'
 
-import css from './Loading.css'
+import css from './Loading.module.css'
 
 const propTypes = {
   loading: PropTypes.bool,

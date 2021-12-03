@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import typography from 'design-language/typography.module.css'
-import css from './BoxDetails.css'
+import css from './BoxDetails.module.css'
 
 export const YourBoxDetails = ({ numPortions, numRecipes }) => (
   <div className={`${css.container} ${css.wrapper}`} data-testing="checkoutBoxDetailsSection">

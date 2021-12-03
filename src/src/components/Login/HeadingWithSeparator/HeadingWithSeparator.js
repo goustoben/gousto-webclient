@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Heading } from 'goustouicomponents'
-import css from './HeadingWithSeparator.css'
+import css from './HeadingWithSeparator.module.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

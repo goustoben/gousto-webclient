@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Header } from 'Header'
-import css from './SignupLayout.css'
+import css from './SignupLayout.module.css'
 
 export class SignupLayout extends React.PureComponent {
   render() {

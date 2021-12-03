@@ -4,7 +4,7 @@ import { ExpandableSection } from 'goustouicomponents'
 import { checkoutClickHideOrderSummary, checkoutClickShowOrderSummary } from 'actions/trackingKeys'
 import { HeaderContent } from './HeaderContent/HeaderContent'
 
-import css from './ExpandableBoxSummary.css'
+import css from './ExpandableBoxSummary.module.css'
 
 export const ExpandableBoxSummary = ({
   children,

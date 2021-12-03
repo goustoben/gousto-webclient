@@ -6,7 +6,7 @@ import { reminder } from 'config/freeDelivery'
 import { getDeliveryDaysAndSlots } from 'utils/deliverySlotHelper'
 import { DatePickerContainer } from './DatePicker'
 import { DeliverySupportingText } from './DeliverySupportingText'
-import css from './DeliverySlot.css'
+import css from './DeliverySlot.module.css'
 
 class DeliverySlot extends React.PureComponent {
   render = () => {

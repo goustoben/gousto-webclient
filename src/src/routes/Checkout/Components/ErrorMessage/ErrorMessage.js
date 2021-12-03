@@ -3,7 +3,7 @@ import React from 'react'
 import { checkoutConfig } from 'config/checkout'
 import { CTA } from 'goustouicomponents'
 import { Alert } from '../Alert'
-import css from './ErrorMessage.css'
+import css from './ErrorMessage.module.css'
 
 export const ErrorMessage = ({ errorType, onLoginClick }) => {
   if (!errorType) {

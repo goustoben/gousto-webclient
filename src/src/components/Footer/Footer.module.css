@@ -1,0 +1,212 @@
+@value sizeLG, sizeXXL from 'styles/typography.module.css';
+@value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value Blackberry, White from 'styles/colors.module.css';
+@value MaxBreakPointXS, ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMLMin, ScreenLGMin from 'styles/screenSizes.module.css';
+
+.superContainer {
+	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+}
+
+.nav {
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+	text-align: center;
+	/* if IE 11 */
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none), (max-width: MaxBreakPointXS) {
+		flex: 0 0 100%;
+	}
+}
+
+.links {
+	composes: noPadding noMargin from 'sass-loader!styles/spacing.scss';
+	padding-bottom: 20px;
+	list-style: none;
+}
+
+.link {
+	composes: textSM from 'styles/typography.module.css';
+	composes: inlineBlock from 'styles/display.module.css';
+}
+
+.icon {
+	composes: marginXSLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.module.css';
+	margin-top: calc(SpacingXXS * -1);
+	vertical-align: top;
+	color: inherit;
+}
+
+.patternSvg {
+	background-size: contain;
+	background-repeat: repeat-x;
+	width: 100%;
+	min-height: 500px;
+}
+
+.phone {
+	composes: textSM from 'styles/typography.module.css';
+	@media ScreenXSMax {
+		line-height: 3;
+	}
+}
+.phone, .phone:hover, .phone:active {
+	color: White !important;
+	text-decoration: none;
+	position: relative;
+	padding-left: 23px;
+}
+
+.earPhone {
+	composes: fa-basic-class fa-phone from 'styles/vendor/font-awesome-module.css';
+	composes: paddingXSRight from 'sass-loader!styles/spacing.scss';
+	font-size: sizeLG;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.pipe {
+	composes: paddingXSTopBottom paddingXSLeftRight marginLGRight marginXXSLeft from 'sass-loader!styles/spacing.scss';
+	border-right: 1px solid White;
+}
+
+.mobilePipe {
+	composes: pipe;
+	height: 27px;
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.desktopHide {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.desktopShow {
+	composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileFooter {
+	composes: row col-xs-3 center-block from 'sass-loader!styles/bootstrap.scss';
+	composes: desktopHide;
+}
+
+.newsletterContainer {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.menu {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.menuList {
+	list-style: none;
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+	padding-bottom: 25px;
+	padding-top: 20px;
+
+	@media ScreenMLMin {
+		padding-top: 40px;
+	}
+}
+
+.menuList li {
+	@media ScreenLGMin {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+.menuItem {
+	composes: inlineBlock from 'styles/display.module.css';
+	composes: sizeMD axiforma from 'styles/typography.module.css';
+	cursor: pointer;
+	@media ScreenSMMax {
+		font-weight: normal;
+	}
+
+	&:not(:last-child):after{
+		 content: '';
+		 padding: SpacingSM;
+		 padding-top: 0;
+		 padding-bottom: 0;
+		 @media ScreenSMMax {content: '|';}
+	 }
+}
+
+.separator {
+	composes: desktopHide;
+	width: 100%;
+	height: 1px;
+	border: none;
+	background: White;
+	opacity: 0.4;
+}
+
+.copyright {
+	composes: paragraphXS from 'styles/typography.module.css';
+	composes: textXXS from 'styles/typography.module.css';
+	padding-bottom: 5px;
+}
+
+.contact {
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.appStoreLinksContainer {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.contact, .appStoreLinksContainer {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.footer {
+	composes: textCenter from 'styles/typography.module.css';
+	background: White;
+	padding-bottom: 0;
+}
+
+.appLinks {
+	composes: paddingXXXXLTopBottom from 'sass-loader!styles/spacing.scss';
+	padding-bottom: 15px;
+}
+
+.icon {
+	composes: marginXSLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.module.css';
+	margin-top: calc(SpacingXXS * -1);
+	vertical-align: top;
+	font-size: sizeXXL;
+}
+
+.facebook{
+	composes: icon;
+	composes: fa-basic-class fa-facebook from 'styles/vendor/font-awesome-module.css';
+}
+
+.twitter{
+	composes: icon;
+	composes: fa-basic-class fa-twitter from 'styles/vendor/font-awesome-module.css';
+}
+
+.youtube{
+	composes: icon;
+	composes: fa-basic-class fa-youtube from 'styles/vendor/font-awesome-module.css';
+}
+
+.instagram{
+	composes: icon;
+	composes: fa-basic-class fa-instagram from 'styles/vendor/font-awesome-module.css';
+}
+
+.modernSlaveryLink {
+	@media ScreenXSMax {
+		display: none;
+	}
+}

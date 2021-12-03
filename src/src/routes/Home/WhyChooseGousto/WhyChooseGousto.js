@@ -5,7 +5,7 @@ import { getWhyGoustoConfig } from 'config/home'
 import { StepsGuide } from './StepsGuide'
 import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
-import css from './WhyChooseGousto.css'
+import css from './WhyChooseGousto.module.css'
 
 const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
   const subtitle = (

@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import { Heading, LayoutPageWrapper } from 'goustouicomponents'
 import Helmet from 'react-helmet'
 import policy from 'config/policy'
-import css from './PrivacyStatement.css'
+import css from './PrivacyStatement.module.css'
 
 const PrivacyStatement = () => (
   <LayoutPageWrapper>

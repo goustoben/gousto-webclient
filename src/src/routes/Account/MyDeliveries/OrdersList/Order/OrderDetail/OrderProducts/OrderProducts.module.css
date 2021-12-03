@@ -1,0 +1,78 @@
+@value ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenXSMax from 'styles/screenSizes.module.css';
+@value SpacingXXS, SpacingSM, SpacingXXL from 'sass-loader!styles/spacing.scss';
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header {
+	composes: textBold from 'styles/typography.module.css';
+	margin-bottom: 1rem;
+}
+
+.editLink {
+  text-transform: uppercase;
+}
+
+.productContainer {
+	display: flex;
+	margin-bottom: SpacingXXL;
+}
+
+.productImage {
+	width: 100px;
+	height: 85px;
+
+	@media ScreenXXSMax {
+		width: 90px;
+		height: 77px;
+	}
+}
+
+.productInfo {
+	width: 260px;
+	margin-left: SpacingSM;
+	display: flex;
+	flex-direction: column;
+
+	@media ScreenXXSMax {
+		width: 0;
+		flex-grow: 1;
+		font-size: 14px;
+	}
+}
+
+.price {
+	composes: textBold from 'styles/typography.module.css';
+	margin-top: auto;
+}
+
+.mainContainer::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.marketPromoText {
+  margin-bottom: 1rem;
+}
+
+.marketImageRight {
+  float: right;
+  margin-left: 2rem;
+  width: 50%;
+
+  @media ScreenXSMax {
+    display: none;
+	}
+}
+
+.marketImageFull {
+  margin-bottom: 1rem;
+  width: 100%;
+
+  @media ScreenSMMin {
+    display: none;
+	}
+}

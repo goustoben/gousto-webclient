@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Content from 'containers/Content'
-import css from './RAFTitle.css'
+import css from './RAFTitle.module.css'
 
 const RAFTitle = ({title}) => (
   <div className={css.rafTitle}>

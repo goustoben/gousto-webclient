@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import actual from 'actual'
-import css from './Button.css'
+import css from './Button.module.css'
 
 const ctaText = (
   isLastStep,

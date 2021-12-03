@@ -1,0 +1,25 @@
+@value White, Blackberry from 'styles/colors.module.css';
+@value sizeXXL from 'styles/typography.module.css';
+
+.banner {
+	background: White;
+	color: Blackberry;
+	composes: paddingMDTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.bannerInner {
+	composes: accountContainer from 'styles/layout.module.css';
+}
+
+.onDesktop {
+    composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.onMobile {
+    composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.bannerTitle {
+	composes: headerXXL from 'styles/typography.module.css';
+	color: Blackberry;
+}

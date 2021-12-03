@@ -1,0 +1,132 @@
+@value BreakpointFromLarge, BreakpointToLarge from 'design-language/breakpoints.module.css';
+@value BlueBase, White  from 'styles/colors.module.css';
+@value CG-200 #AEB7C0;
+
+.container {
+  position: relative;
+
+  @media BreakpointFromLarge {
+   display: flex;
+   text-align: center;
+  }
+}
+
+.event {
+  position: relative;
+  display: flex;
+
+  &::before {
+    border: 0 dashed CG-200;
+    position: absolute;
+    content: '';
+  }
+
+  @media BreakpointFromLarge {
+    display: block;
+    width: 25%;
+
+    &::before {
+      border-width: 1px 0 0;
+      width: 100%;
+      height: 1px;
+      top: 2rem;
+      left: 0;
+    }
+
+    &:first-child::before {
+      left: 50%;
+    }
+
+    &:last-child::before {
+      right: 50%;
+      left: auto;
+    }
+  }
+
+  @media BreakpointToLarge {
+    padding-bottom: 1.5rem;
+
+    &::before {
+      border-width: 0 0 0 1px;
+      height: 100%;
+      left: 2rem;
+      top: 0;
+    }
+
+    &:last-child::before {
+      height: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.eventMeta {
+  background-color: White;
+  text-align: center;
+  position: relative;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+
+  @media BreakpointFromLarge {
+    margin: 0 auto 1rem;
+  }
+}
+
+.eventBody {
+  @media BreakpointToLarge {
+    margin-left: 1rem;
+    flex-grow: 1;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 0 1rem;
+  }
+}
+
+.eventMetaHead {
+  composes: fontStyleXS from 'design-language/typography.module.css';
+  background-color: BlueBase;
+  height: 1.13rem;
+  color: White;
+}
+
+.eventMetaBody {
+  border: 1px solid CG-200;
+  height: 2.63rem;
+}
+
+.eventBodyDate {
+  composes: fontStyleButtonL from 'design-language/typography.module.css';
+  margin: -0.13rem  0 -0.5rem;
+  display: block;
+}
+
+.eventMetaLabel {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  background-color: BlueBase;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: White;
+  height: 60px;
+}
+
+.eventTitle {
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  composes: fontBold from 'design-language/typography.module.css';
+  margin-bottom: 0.25rem;
+
+  @media BreakpointFromLarge {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.eventDetails {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  margin: 0;
+}

@@ -5,7 +5,7 @@ import {
   collectionDescriptorsLinePropType,
 } from '../propTypes'
 import { LineOfPills } from './LineOfPills'
-import css from './CollectionPicker.css'
+import css from './CollectionPicker.module.css'
 
 export const CollectionPicker = ({
   collectionDescriptorsInLines,

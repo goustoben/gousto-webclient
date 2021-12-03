@@ -7,7 +7,7 @@ import { Section } from 'routes/Account/MyGousto/Section'
 import { Alert } from 'routes/Checkout/Components/Alert'
 import { click3dsReenterCardDetails, click3dsUpdateInfo } from 'actions/trackingKeys'
 import { CardDetailsModal } from './CardDetailsModal'
-import css from './PaymentDetailsNotification.css'
+import css from './PaymentDetailsNotification.module.css'
 
 export const PaymentDetailsNotification = ({
   track3dsCompliantClick,

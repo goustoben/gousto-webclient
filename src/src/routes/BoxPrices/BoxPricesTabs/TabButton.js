@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
-import css from './BoxPricesTabs.css'
+import css from './BoxPricesTabs.module.css'
 
 export const TabButton = ({ text, isActive, onClick }) => (
   <div

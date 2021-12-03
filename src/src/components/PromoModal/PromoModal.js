@@ -11,7 +11,7 @@ import {
 import { CTA, Modal } from 'goustouicomponents'
 import headerImage from 'media/images/discount-modal-header.jpg'
 import { AgeVerifyContainer } from './AgeVerify'
-import css from './PromoModal.css'
+import css from './PromoModal.module.css'
 
 class PromoModal extends React.Component {
   handleClick = (type) => () => {

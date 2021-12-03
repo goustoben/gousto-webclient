@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Segment } from 'goustouicomponents'
 import classnames from 'classnames'
 import { isMobile } from 'utils/view'
-import css from './BannerButton.css'
+import css from './BannerButton.module.css'
 
 const BaseBannerButton = ({ view, pending, disabled, spinnerClassName, spinnerContainerClassName, onClick, children, dataTesting }) => {
   const isMobileView = isMobile(view)

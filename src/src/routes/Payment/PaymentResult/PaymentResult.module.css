@@ -1,0 +1,20 @@
+@value Haricot, DarkChilli from 'styles/colors.module.css';
+@value XLarge, FontWeightBold, FontFamilyAxiformaBook from 'design-language/typography.module.css';
+
+.header {
+  font: FontWeightBold XLarge FontFamilyAxiformaBook;
+}
+
+.successHeader {
+  composes: header;
+  color: Haricot;
+}
+
+.failureHeader {
+  composes: header;
+  color: DarkChilli;
+}
+
+.content {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+}

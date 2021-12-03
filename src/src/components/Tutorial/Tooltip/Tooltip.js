@@ -5,7 +5,7 @@ import { onEnter } from 'utils/accessibility'
 import Icon from 'Icon'
 import { Arrow } from './Arrow'
 
-import css from './Tooltip.css'
+import css from './Tooltip.module.css'
 
 const Tooltip = ({ arrow, children, style, arrowStyle, contentStyle, onClose }) => (
   <div className={css.container} style={style}>

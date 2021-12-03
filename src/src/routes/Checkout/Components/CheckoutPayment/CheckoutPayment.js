@@ -19,7 +19,7 @@ import { SectionHeader } from '../SectionHeader'
 import { PaymentFooter } from './PaymentFooter'
 import { PayPalConfirmation } from './PayPalConfirmation'
 
-import css from './CheckoutPayment.css'
+import css from './CheckoutPayment.module.css'
 
 class CheckoutPayment extends React.Component {
   constructor(props) {

@@ -18,7 +18,7 @@ import OrderItemSummary from './OrderItemSummary'
 import OrderRestoreButton from './OrderRestoreButton'
 import OrderRescheduledNotification from './OrderRescheduledNotification'
 
-import css from './Order.css'
+import css from './Order.module.css'
 
 class Order extends React.PureComponent {
   componentDidMount() {

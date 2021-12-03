@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import css from './RecipeTag.css'
+import css from './RecipeTag.module.css'
 
 const getTagStyle = (theme) => ({ ...theme, border: theme.borderColor ? '1px solid' : 'none' })
 

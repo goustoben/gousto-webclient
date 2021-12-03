@@ -7,7 +7,7 @@ import { ImageSelection } from 'ImageSelection'
 import { LinkButton } from 'LinkButton'
 import { SectionHeader } from 'SectionHeader'
 import config from 'config'
-import css from './List.css'
+import css from './List.module.css'
 
 const productsRoute = config.routes.client.orderConfirmation
 

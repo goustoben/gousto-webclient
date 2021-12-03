@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Button from '../../Buttons'
 
-import css from './DetailAddRecipe.css'
+import css from './DetailAddRecipe.module.css'
 
 const DetailAddRecipe = ({ id, view, position, isOutOfStock, buttonText }) => {
   if (isOutOfStock) {

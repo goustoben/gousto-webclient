@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Icon, iconNames } from '../../Icon'
 
-import css from './SettingSectionToggle.css'
+import css from './SettingSectionToggle.module.css'
 
 export const SettingSectionToggle = ({
   isExpanded,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
-import css from './SellThePropositionPage.css'
+import css from './SellThePropositionPage.module.css'
 
 export const items = [
   {

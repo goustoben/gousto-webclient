@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import { Button } from 'goustouicomponents'
 import DropdownInput from 'Form/Dropdown'
 import util from './util'
-import css from './EditDate.css'
+import css from './EditDate.module.css'
 
 class EditDate extends React.PureComponent {
   constructor(props) {

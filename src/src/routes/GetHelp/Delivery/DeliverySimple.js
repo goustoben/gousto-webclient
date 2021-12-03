@@ -9,8 +9,8 @@ import { findNewestOrder, isOrderBeingDeliveredToday } from 'utils/order'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './DeliverySimple.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './DeliverySimple.module.css'
 
 const propTypes = {
   loadOrderTrackingInfo: PropTypes.func.isRequired,

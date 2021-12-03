@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import moment from 'moment'
-import PendingOrderReminderCss from './PendingOrderReminder.css'
+import PendingOrderReminderCss from './PendingOrderReminder.module.css'
 import CallToAction from '../CallToAction'
 
 const css = {}

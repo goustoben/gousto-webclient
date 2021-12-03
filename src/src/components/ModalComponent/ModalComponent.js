@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 
 import Overlay from 'Overlay'
-import css from './ModalComponent.css'
+import css from './ModalComponent.module.css'
 
 const ModalComponent = ({ children, visible, styleName, overlayContentClassName, from, onClose }) => (
   <Overlay open={Boolean(visible)} contentClassName={overlayContentClassName} from={from} onBackgroundClick={onClose}>

@@ -4,7 +4,7 @@ import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
 import { SoldOutOverlay } from '../../../Recipe/SoldOutOverlay'
 import { VariantHeaderContainer } from '../../../Recipe/VariantHeader/VariantHeaderContainer'
 
-import css from './TileImage.css'
+import css from './TileImage.module.css'
 import { Image } from '../../Recipe'
 
 const TileImage = ({

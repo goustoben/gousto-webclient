@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import css from './DoubleCreditCountdown.css'
+import css from './DoubleCreditCountdown.module.css'
 
 const propTypes = {
   title: PropTypes.string.isRequired,

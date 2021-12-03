@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import Immutable from 'immutable'
 import { getFeaturedImage } from 'utils/image'
 import { isMobile, DESKTOP_VIEW } from 'utils/view'
-import css from './RecipeHolder.css'
+import css from './RecipeHolder.module.css'
 
 const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
   const isMobileView = isMobile(view)

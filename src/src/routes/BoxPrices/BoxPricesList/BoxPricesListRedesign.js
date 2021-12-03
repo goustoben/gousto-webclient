@@ -3,7 +3,7 @@ import React from 'react'
 import { withError } from 'utils/withError'
 import { BoxPriceBlock } from '../BoxPriceBlock/BoxPriceBlockRedesign'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
-import css from './BoxPriceList.css'
+import css from './BoxPriceList.module.css'
 
 const BoxPricesListRedesign = ({
   numPersonsToBoxDescriptors,

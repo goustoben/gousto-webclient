@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './OrderDate.css'
+import css from './OrderDate.module.css'
 
 const OrderDate = ({ date }) => (
   <p className={css.date}>{date}</p>

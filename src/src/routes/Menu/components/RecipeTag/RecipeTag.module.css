@@ -1,0 +1,28 @@
+@value White from 'styles/colors.module.css';
+@value ScreenSMMin from 'styles/screenSizes.module.css';
+
+.recipeTag {
+  padding: 0.25rem 0.5rem 0.2rem 0.5rem;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: White;
+  white-space: nowrap;
+
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+
+  @media ScreenSMMin {
+    top: 1rem;
+  }
+}
+
+.recipeTagShowVariantHeader {
+  top: 2.625rem;
+}
+
+.recipeTagDetailScreen {
+  position: relative;
+  top: 0;
+}

@@ -1,0 +1,29 @@
+@value BreakpointFromMedium from 'design-language/typography.module.css';
+@value spacingS, spacingM from 'routes/ShowcaseMenu/showcaseMenuStyles.module.css';
+
+.ctaSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 spacingS;
+
+  @media BreakpointFromMedium {
+    padding: 0 spacingM;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.buttonContainer {
+  width: 100%;
+  max-width: 22rem;
+
+  /* Override ui-components CTA that has a non-compliant height. */
+  button {
+    height: 3rem;
+
+    span {
+      padding: 0;
+    }
+  }
+}

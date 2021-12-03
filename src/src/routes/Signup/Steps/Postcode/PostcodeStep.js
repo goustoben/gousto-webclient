@@ -7,8 +7,8 @@ import { Heading } from 'goustouicomponents'
 import { PostcodeStepMessage } from './PostcodeStepMessage'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
-import postcodeCss from './PostcodeStep.css'
-import css from '../../Signup.css'
+import postcodeCss from './PostcodeStep.module.css'
+import css from '../../Signup.module.css'
 
 class PostcodeStep extends PureComponent {
   handleClick = () => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { Heading, LayoutPageWrapper } from 'goustouicomponents'
 import { CTABack } from 'zest/CTABack'
-import css from './GetHelpLayout2.css'
+import css from './GetHelpLayout2.module.css'
 
 const GetHelpLayout2 = ({
   children,

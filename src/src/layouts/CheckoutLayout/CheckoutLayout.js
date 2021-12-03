@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Header } from 'Header'
 import Helmet from 'react-helmet'
-import css from './CheckoutLayout.css'
+import css from './CheckoutLayout.module.css'
 
 export class CheckoutLayout extends React.PureComponent {
   render() {

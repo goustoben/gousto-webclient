@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 
-import css from './OrderRecipe.css'
+import css from './OrderRecipe.module.css'
 
 const OrderRecipe = ({
   recipeImage,

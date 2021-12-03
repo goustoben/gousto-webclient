@@ -1,0 +1,71 @@
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media BreakpointFromMedium {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+}
+
+.stepContainer {
+  max-width: 25rem;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    width: 32%;
+    min-width: 11rem;
+    max-width: 17.75rem;
+    margin-bottom: 0;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 22.5rem;
+  }
+}
+
+.stepImage {
+  margin-bottom: 1rem;
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    min-height: 6.5rem;
+    max-height: 10.5rem;
+  }
+}
+
+.stepTitle {
+  margin-bottom: 0.5rem;
+  composes: fontStyleXL from 'design-language/typography.module.css';
+  text-align: left;
+}
+
+.listContainer {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.listItem {
+  margin-bottom: 0.5rem;
+  list-style: none;
+  display: flex;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+}
+
+.listItem:last-child {
+  margin-bottom: 0;
+}
+
+.tick {
+  margin-right: 0.75rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  background: url('../../../../media/svgs/icon-success-tick.svg') center center / contain no-repeat;
+}

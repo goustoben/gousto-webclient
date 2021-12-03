@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import ModalPanel from 'Modal/ModalPanel'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
-import css from './DuplicateOrderModal.css'
+import css from './DuplicateOrderModal.module.css'
 import { Order } from './Order'
 
 const renderOrders = (closeOrders) => {

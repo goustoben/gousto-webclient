@@ -7,7 +7,7 @@ import { Spotlight } from 'Spotlight'
 import { Tooltip } from 'Tutorial/Tooltip'
 
 import { isElementHidden, getSpotlightLocation, getTooltipProperties } from 'Tutorial/helpers'
-import css from './Step.css'
+import css from './Step.module.css'
 
 export class Step extends PureComponent {
   constructor(props) {

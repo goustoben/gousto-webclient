@@ -1,0 +1,23 @@
+@value Blueberry, Bluecheese from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.link {
+  color: Bluecheese;
+  text-decoration: underline;
+  cursor: pointer;
+  composes: fontBold from 'design-language/typography.module.css';
+
+  &:hover {
+    color: Blueberry;
+  }
+}
+
+.termsAndConditions {
+  text-align: center;
+  composes: fontStyleXS from 'design-language/typography.module.css';
+  margin-top: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-top: 1.25rem;
+  }
+}

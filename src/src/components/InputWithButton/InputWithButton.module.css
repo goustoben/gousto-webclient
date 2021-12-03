@@ -1,0 +1,49 @@
+@value inputAndButtonHeight 3rem;
+@value Blackberry, Bluecheese, Radish from 'styles/colors.module.css';
+
+.inputWithButtonWrapper {
+  display: flex;
+  padding-top: 1rem;
+}
+
+.inputWithButtonWrapper label {
+  display: none;
+}
+
+.inputWithButtonWrapper p {
+  line-height: 1.5rem;
+}
+
+.inputWithButtonWrapper input {
+  border-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  margin-bottom: 0;
+  height: inputAndButtonHeight;
+}
+
+.inputWithButtonWrapper input:focus,
+.inputWithButtonWrapper input:hover {
+  border-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.inputWithButtonWrapper button,
+.inputWithButtonWrapper button:focus {
+  border-left: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  height: inputAndButtonHeight;
+}
+
+.inputWithButtonWrapper button span {
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+}
+
+.eventStatus {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  font-size: 0.75rem;
+  color: Blackberry;
+}

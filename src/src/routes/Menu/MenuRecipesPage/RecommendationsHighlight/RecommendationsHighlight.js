@@ -5,8 +5,8 @@ import { DetailOverlayContainer } from '../../DetailOverlay'
 
 import { RecipeList } from './RecipeList'
 
-import menuCss from '../../Menu.css'
-import css from './RecommendationsHighlight.css'
+import menuCss from '../../Menu.module.css'
+import css from './RecommendationsHighlight.module.css'
 
 // remove all recipes from `input` that are in `recipesToRemove`
 const removeMatchingRecipes = (input, recipesToRemove) => (

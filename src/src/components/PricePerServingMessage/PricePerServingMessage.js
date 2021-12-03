@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { formatOrderPrice } from 'utils/pricing'
 
-import css from './PricePerServingMessage.css'
+import css from './PricePerServingMessage.module.css'
 
 const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null, isPriceInCheckout = false }) => {
   if (discountedPrice) {

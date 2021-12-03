@@ -4,7 +4,7 @@ import { carousel } from 'config/home'
 import { RecipeCarousel } from './RecipeCarousel'
 import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
-import css from './Carousel.css'
+import css from './Carousel.module.css'
 
 const Carousel = ({ numRecipes, ctaUri, ctaText }) => (
   <Fragment>

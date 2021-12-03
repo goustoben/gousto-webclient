@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Card, InputCheck } from 'goustouicomponents'
 import { recipePropType } from '../../getHelpPropTypes'
-import layoutCss from '../../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './RecipeCardsSelect.css'
+import layoutCss from '../../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './RecipeCardsSelect.module.css'
 
 const RecipeCardsList = ({ recipes, recipeIds, onInputChange }) => (
   <Card

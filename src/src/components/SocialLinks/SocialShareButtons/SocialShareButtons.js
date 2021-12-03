@@ -7,7 +7,7 @@ import { ReferAFriendModal } from 'components/ReferAFriendModal'
 import { getFacebookReferralLink, getMessengerReferralLink, SOCIAL_TYPES } from '../socialReferralHelper'
 import { SocialButton } from '../SocialButton'
 
-import css from './SocialShareButtons.css'
+import css from './SocialShareButtons.module.css'
 
 const propTypes = {
   referralCode: PropTypes.string.isRequired,

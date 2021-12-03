@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './InputWithButton.css'
+import css from './InputWithButton.module.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

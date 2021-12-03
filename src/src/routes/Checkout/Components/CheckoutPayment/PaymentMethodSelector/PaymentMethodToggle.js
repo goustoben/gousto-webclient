@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { InputRadio } from 'goustouicomponents'
 import Svg from 'Svg'
 import { methodDescriptorPropType } from './propTypes'
-import css from './PaymentMethodSelector.css'
+import css from './PaymentMethodSelector.module.css'
 
 export const PaymentMethodToggle = ({ methodDescriptor, isActive, setCurrentPaymentMethod }) => {
   const { paymentMethod, leftItem, rightItem } = methodDescriptor

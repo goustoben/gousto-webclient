@@ -4,7 +4,7 @@ import { Field, FormSection } from 'redux-form'
 
 import { ReduxFormInput } from 'Form/ReduxFormInput'
 
-import css from './CheckoutName.css'
+import css from './CheckoutName.module.css'
 
 export const CheckoutName = ({ sectionName, receiveRef }) => (
   <FormSection name={sectionName}>

@@ -9,7 +9,7 @@ import { getScrollOffset } from 'utils/menu'
 import { getWindow } from 'utils/window'
 import { getElementOffsetTop } from 'utils/DOMhelper'
 import { CollectionItem } from '../components/CollectionItem'
-import css from './CollectionsNav.css'
+import css from './CollectionsNav.module.css'
 
 const MOBILE_BREAKPOINT = 543
 

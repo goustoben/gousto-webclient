@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import css from './Arrow.css'
+import css from './Arrow.module.css'
 
 const getArrowClasses = (position) => {
   const [positionY, positionX] = position.split('-')

@@ -5,7 +5,7 @@ import actions from 'actions'
 import { StepIndicator } from 'goustouicomponents'
 import { Signup } from 'routes/Signup/Signup'
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
-import css from '../Signup.css'
+import css from '../Signup.module.css'
 
 jest.spyOn(actions, 'signupStepsReceive').mockResolvedValue()
 

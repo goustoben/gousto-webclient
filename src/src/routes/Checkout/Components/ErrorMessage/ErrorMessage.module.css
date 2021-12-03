@@ -1,0 +1,16 @@
+.container {
+  margin-bottom: 1.5rem;
+}
+
+.header {
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+}
+
+.messageContainer {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  margin-bottom: 1rem;
+}
+
+.ctaContainer {
+  margin: 0 0 0 -2rem;
+}

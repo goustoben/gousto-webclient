@@ -6,7 +6,7 @@ import { Loader } from 'goustouicomponents'
 
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 
-import css from './CheckoutPayPalDetails.css'
+import css from './CheckoutPayPalDetails.module.css'
 
 /* global braintree, paypal */
 class CheckoutPayPalDetails extends React.PureComponent {

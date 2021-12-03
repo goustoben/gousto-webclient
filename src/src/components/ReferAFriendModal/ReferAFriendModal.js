@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
 import { ReferAFriendContainer } from 'components/ReferAFriend'
-import css from './ReferAFriendModal.css'
+import css from './ReferAFriendModal.module.css'
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,

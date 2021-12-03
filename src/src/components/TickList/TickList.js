@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './TickList.css'
+import css from './TickList.module.css'
 
 const TickList = ({ listItems, listItemClassName }) => (
   <ul className={css.list}>

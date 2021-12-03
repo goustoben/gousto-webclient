@@ -4,8 +4,8 @@ import classnames from 'classnames'
 
 import { Modal, ModalHeader, CTA } from 'goustouicomponents'
 
-import css from './MultiSkipResultScreen.css'
-import cssCommon from '../MultiSkip.common.css'
+import css from './MultiSkipResultScreen.module.css'
+import cssCommon from '../MultiSkip.common.module.css'
 
 const SuccessMsg = ({ skippedBoxesCount }) => (
   <p data-testing="multi-skip-success-message">

@@ -6,7 +6,7 @@ import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
 import { SocialButton } from 'components/SocialLinks/SocialButton'
 import { UserRAFLink } from 'components/UserRAFLink'
 import { SocialShareSheetCTA } from 'components/SocialLinks/SocialShareSheetCTA'
-import css from './ReferAFriend.css'
+import css from './ReferAFriend.module.css'
 import { Offer } from './Offer'
 
 const propTypes = {

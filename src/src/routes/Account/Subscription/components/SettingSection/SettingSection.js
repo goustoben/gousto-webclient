@@ -9,7 +9,7 @@ import { iconNames } from '../Icon'
 import { ExpandedContent } from './ExpandedContent'
 import { SettingSectionToggle } from './SettingSectionToggle'
 
-import css from './SettingSection.css'
+import css from './SettingSection.module.css'
 
 export const SettingSection = ({
   children,

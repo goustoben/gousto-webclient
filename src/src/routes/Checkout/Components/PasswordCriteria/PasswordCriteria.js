@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { passwordCriteria } from './errors'
-import css from './PasswordCriteria.css'
+import css from './PasswordCriteria.module.css'
 
 const max = 'validation.max.string.password'
 const min = 'validation.min.string.password'

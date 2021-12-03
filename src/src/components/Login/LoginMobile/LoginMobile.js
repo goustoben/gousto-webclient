@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import config from 'config'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import { HeadingWithSeparator } from '../HeadingWithSeparator'
-import css from './LoginMobile.css'
+import css from './LoginMobile.module.css'
 
 const defaultProps = {
   showAppAwareness: false,

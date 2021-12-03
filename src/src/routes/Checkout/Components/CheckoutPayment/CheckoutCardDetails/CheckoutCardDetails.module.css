@@ -1,0 +1,20 @@
+@value Blackberry from 'styles/colors.module.css';
+
+.frame {
+  composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.addressContainer {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.hide {
+  display: none;
+}

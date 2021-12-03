@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import InputError from 'Form/InputError'
 import Svg from 'Svg'
-import css from './CheckoutFrame.css'
-import checkoutCss from '../../../Checkout.css'
+import css from './CheckoutFrame.module.css'
+import checkoutCss from '../../../Checkout.module.css'
 
 export const FrameField = ({
   header,

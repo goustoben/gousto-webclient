@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { RecipeListWrapper } from '../RecipeList'
 import { DetailOverlayContainer } from '../DetailOverlay'
 
-import css from '../Menu.css'
+import css from '../Menu.module.css'
 
 class RecipeGrid extends PureComponent {
   constructor() {

@@ -1,9 +1,0 @@
-@value BreakpointFromMedium from 'design-language/breakpoints.css';
-
-.ctaContainer {
-  margin-bottom: 1rem;
-
-  @media BreakpointFromMedium {
-    max-width: 17.5rem;
-  }
-}

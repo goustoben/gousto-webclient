@@ -1,0 +1,20 @@
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+
+.row {
+  display: flex;
+  padding: 0.65rem 0;
+  font-size: 0.8rem;
+}
+
+.icon {
+  background: url('media/svgs/icon-truck.svg') center top no-repeat;
+  width: 1rem;
+  height: 1rem;
+  margin: 0.1rem 0.65rem 0 0;
+}
+
+@media ScreenXSMax {
+  .time {
+    display: block;
+  }
+}

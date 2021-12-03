@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import css from './SectionHeader.css'
+import css from './SectionHeader.module.css'
 
 export const SectionHeader = ({ title, subtitle }) => (
   <div className={css.sectionContainer}>

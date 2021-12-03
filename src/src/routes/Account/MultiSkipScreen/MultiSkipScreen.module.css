@@ -1,0 +1,55 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.noSkippedBoxesText {
+  margin: 0;
+}
+
+.skippedBoxesText {
+  margin-bottom: 0;
+}
+
+.tileContainer {
+  padding: 2rem 0 3rem;
+}
+
+.tileContainerPaddingReset {
+  padding: 1rem 0 2rem;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem 0 3rem;
+  }
+}
+
+.ctaContainer {
+  display: flex;
+  flex-direction: column;
+
+  @media BreakpointFromMedium {
+    flex-direction: row;
+  }
+}
+
+.skipBoxesCTA {
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin: 0 0 0 0.5rem;
+    order: 1;
+  }
+}
+
+.continueToPauseCTA {
+  @media BreakpointFromMedium {
+    margin: 0 0.5rem 0 0;
+    order: 0;
+  }
+}
+
+.skipBoxesCTA,
+.continueToPauseCTA {
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    width: 50%;
+  }
+}

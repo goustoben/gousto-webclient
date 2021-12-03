@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CheckoutButton } from '../CheckoutButton'
-import css from './SubmitButton.css'
+import css from './SubmitButton.module.css'
 
 class SubmitButton extends React.PureComponent {
   handleClick = () => {

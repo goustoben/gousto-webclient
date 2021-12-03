@@ -4,7 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 import placeholderSrc from 'media/images/recipe-placeholder.png'
 
-import css from './OrderRecipeBox.css'
+import css from './OrderRecipeBox.module.css'
 import OrderRecipe from '../../../../../../AccountComponents/OrderRecipe'
 
 const OrderRecipeBox = ({

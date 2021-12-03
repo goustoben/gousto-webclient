@@ -4,7 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 import Content from 'containers/Content'
 
-import css from './OrderPricingDetail.css'
+import css from './OrderPricingDetail.module.css'
 
 const OrderPricingDetail = ({
   paymentDate,

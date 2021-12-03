@@ -4,7 +4,7 @@ import Overlay from 'components/Overlay'
 import ModalPanel from 'Modal/ModalPanel'
 import { Checkout3DSModal } from '../Checkout3DSModal'
 
-import css from '../Checkout3DSModal.css'
+import css from '../Checkout3DSModal.module.css'
 
 describe('Checkout3DSModal', () => {
   let wrapper

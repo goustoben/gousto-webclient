@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import usePrevious from 'react-use/lib/usePrevious'
 import { Button } from 'goustouicomponents'
 import classnames from 'classnames'
-import css from './OrderSummary.css'
+import css from './OrderSummary.module.css'
 
 const useSafePrevious = (value) => {
   const prevValue = usePrevious(value)

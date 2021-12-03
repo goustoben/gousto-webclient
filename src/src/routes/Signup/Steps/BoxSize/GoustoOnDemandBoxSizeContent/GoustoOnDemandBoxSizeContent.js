@@ -8,7 +8,7 @@ import { BoxPricesTabs } from 'routes/BoxPrices/BoxPricesTabs'
 import { BoxPriceSuitableForSection } from 'routes/BoxPrices/BoxPriceBlock/BoxPriceSuitableForSection'
 import { PricePerNRecipesTable } from './PricePerNRecipesTable'
 import { PrimaryButton } from '../PrimaryButton'
-import css from './GoustoOnDemandBoxSizeContent.css'
+import css from './GoustoOnDemandBoxSizeContent.module.css'
 
 export const GoustoOnDemandBoxSizeContent = ({
   onPrimaryButtonClick,

@@ -8,7 +8,7 @@ import { UserRAFLink } from 'components/UserRAFLink'
 import { onEnter } from 'utils/accessibility'
 import { ReferAFriendContainer } from 'components/ReferAFriend'
 import { LinkRow } from './LinkRow'
-import css from './SocialShareSheet.css'
+import css from './SocialShareSheet.module.css'
 import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferralLink, SOCIAL_TYPES } from '../socialReferralHelper'
 
 class SocialShareSheet extends React.PureComponent {

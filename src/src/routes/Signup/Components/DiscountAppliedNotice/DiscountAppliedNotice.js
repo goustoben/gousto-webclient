@@ -1,6 +1,6 @@
 import React from 'react'
 import { signupConfig } from 'config/signup'
-import css from './DiscountAppliedNotice.css'
+import css from './DiscountAppliedNotice.module.css'
 
 export const DiscountAppliedNotice = () => (
   <div className={css.discountAppliedNotice}>

@@ -15,7 +15,7 @@ import { ReferAFriend } from './components/ReferAFriend'
 import { AwinPixel } from './components/AwinPixel'
 import { Market } from './components/Market'
 
-import css from './OrderConfirmation.css'
+import css from './OrderConfirmation.module.css'
 
 const propTypes = {
   ageVerified: PropTypes.bool.isRequired,

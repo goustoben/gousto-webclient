@@ -10,8 +10,8 @@ import { checkoutStyles } from './checkoutStyles'
 import { CheckoutName } from '../CheckoutName'
 import { FrameField } from './FrameField'
 
-import css from './CheckoutFrame.css'
-import checkoutCss from '../../../Checkout.css'
+import css from './CheckoutFrame.module.css'
+import checkoutCss from '../../../Checkout.module.css'
 
 /* global Frames */
 class CheckoutFrame extends React.Component {

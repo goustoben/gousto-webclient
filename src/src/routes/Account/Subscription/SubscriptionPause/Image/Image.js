@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import logger from 'utils/logger'
 import Image from 'Image'
-import css from './Image.css'
+import css from './Image.module.css'
 
 function getPhoto(filename) {
   let photoPath

@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import { RecipeCard } from 'goustouicomponents'
 import { getMediaForRecipeCard } from './recipesUtils'
-import css from './Recipes.css'
+import css from './Recipes.module.css'
 
 export const RecipeCards = ({ openRecipeDetails, recipes, currentCollectionId }) => {
   const handleRecipeClick = (event, recipe) => {

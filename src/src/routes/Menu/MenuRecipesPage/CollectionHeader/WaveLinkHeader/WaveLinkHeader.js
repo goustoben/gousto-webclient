@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Waves } from './components/Waves'
-import css from './WaveLinkHeader.css'
+import css from './WaveLinkHeader.module.css'
 
 const WaveLinkHeader = ({ headerAttributes, onClick }) => {
   const { backgroundColor, color, headerImage, description, link: { collectionSlug}, waveColor } = headerAttributes

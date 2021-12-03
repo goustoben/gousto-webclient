@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Heading } from 'goustouicomponents'
 import { zendesk as zendeskRoutes } from 'config/routes'
 import { addUserIdToUrl } from 'utils/url'
-import css from './CapacityInfo.css'
+import css from './CapacityInfo.module.css'
 
 const ONE_OFF_CONTENT = {
   title: 'Due to extremely high demand, all of our one-off box delivery slots are full',

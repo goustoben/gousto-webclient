@@ -6,7 +6,7 @@ import { Image } from 'routes/Menu/Recipe/Image'
 import SlickCarousel from 'Carousel'
 import { ContentMask } from 'routes/Menu/Recipe/Detail/Carousel/ContentMask'
 import { Arrow } from 'routes/Menu/Recipe/Detail/Carousel/Arrow'
-import css from './Carousel.css'
+import css from './Carousel.module.css'
 
 const Carousel = ({ images, media, view, dots, arrows, isOutOfStock }) => (
   (images.size)

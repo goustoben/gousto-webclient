@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import Svg from 'Svg'
 import { formatOrderPrice } from 'utils/pricing'
-import css from './HeaderContent.css'
+import css from './HeaderContent.module.css'
 
 const poundSign = String.fromCharCode(163)
 

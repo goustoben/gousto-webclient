@@ -5,8 +5,8 @@ import { client } from 'config/routes'
 import humanTimeFormat from 'utils/timeFormat'
 import { Card, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
-import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './OnDeliveryDayWithoutTracking.css'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './OnDeliveryDayWithoutTracking.module.css'
 
 const OnDeliveryDayWithoutTracking = ({
   deliverySlot,

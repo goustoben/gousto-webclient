@@ -3,7 +3,7 @@ import React from 'react'
 import moment from 'moment'
 
 import Svg from 'Svg'
-import css from './DeliveryInfo.css'
+import css from './DeliveryInfo.module.css'
 
 const DeliveryInfo = ({ deliveryDate, cutOffDate, frequency }) => {
   const deliveryDay = moment(deliveryDate).format('dddd')

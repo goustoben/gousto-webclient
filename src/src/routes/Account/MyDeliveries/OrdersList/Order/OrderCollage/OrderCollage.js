@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import Image from 'Image'
 import placeholderSrc from 'media/images/recipe-placeholder.png'
-import css from './OrderCollage.css'
+import css from './OrderCollage.module.css'
 
 const OrderCollage = ({ recipes, orderState }) => {
   const maxRecipes = ['confirmed', 'dispatched'].indexOf(orderState) > -1 ? recipes.size : 4

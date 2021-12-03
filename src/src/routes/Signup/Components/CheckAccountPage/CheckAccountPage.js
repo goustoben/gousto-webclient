@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 import routesConfig from 'config/routes'
-import css from './CheckAccountPage.css'
+import css from './CheckAccountPage.module.css'
 
 export const CheckAccountPage = ({
   isAuthenticated,

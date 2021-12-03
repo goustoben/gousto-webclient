@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import css from './SectionHeader.css'
+import css from './SectionHeader.module.css'
 
 export const SectionHeader = ({ title, children, type, contentAlign, contentSizeMax }) => (
   <header className={css[`${type}Container`]}>

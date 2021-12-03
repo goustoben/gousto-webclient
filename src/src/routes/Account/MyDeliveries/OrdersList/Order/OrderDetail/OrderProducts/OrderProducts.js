@@ -12,7 +12,7 @@ import Content from 'containers/Content'
 import placeholderSrc from 'media/images/recipe-placeholder.png'
 import marketPhotoSrc from 'media/photos/market-place-cover-photo.jpg'
 
-import css from './OrderProducts.css'
+import css from './OrderProducts.module.css'
 
 class OrderProducts extends React.PureComponent {
   render() {

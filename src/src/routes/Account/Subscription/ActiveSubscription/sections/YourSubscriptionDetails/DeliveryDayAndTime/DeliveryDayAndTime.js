@@ -20,7 +20,7 @@ import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
-import css from './DeliveryDayAndTime.css'
+import css from './DeliveryDayAndTime.module.css'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 
 const renderCurrentValue = ({ day, timeRange }) => (

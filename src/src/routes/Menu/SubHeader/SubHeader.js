@@ -6,7 +6,7 @@ import config from 'config/menu'
 import { H3 } from 'Page/Header'
 import InfoToggle from './InfoToggle'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
-import css from './SubHeader.css'
+import css from './SubHeader.module.css'
 
 const propTypes = {
   fromJoin: PropTypes.bool,

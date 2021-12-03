@@ -8,7 +8,7 @@ import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import Link from 'Link'
-import css from './Footer.css'
+import css from './Footer.module.css'
 
 const showHelpPreLogin = (helpPreLoginVisibilityChange) => (
   helpPreLoginVisibilityChange(true)

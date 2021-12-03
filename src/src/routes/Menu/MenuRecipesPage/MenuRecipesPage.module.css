@@ -1,0 +1,40 @@
+@value ScreenXXSMin, ScreenXXSMin from 'styles/screenSizes.module.css';
+@value White from 'styles/colors.module.css';
+
+.communicationPanelContainer {
+  background-color: White;
+  padding: 1rem;
+  @media ScreenXXSMin {
+    padding: 1rem 0 0;
+  }
+}
+
+.communicationPanel {
+  margin: 0 auto;
+  @media ScreenXXSMin {
+    max-width: 1600px;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+}
+
+.willFade {
+  opacity: 1;
+  transition: 0.5s opacity;
+}
+
+.fadeOut {
+  composes: willFade;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.cvBanner {
+  padding: 13px 0 18px;
+}
+
+.menuLoadingErrorMessage {
+  margin: 2em auto;
+  color: red;
+  text-align: center;
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { RecipeTileContainer } from '../components/RecipeTile'
-import css from './RecipeList.css'
+import css from './RecipeList.module.css'
 import { RecipeContextProvider } from '../context/recipeContext'
 import { CTAToAllRecipesContainer } from '../Recipe/CTAToAllRecipes'
 

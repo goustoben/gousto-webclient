@@ -1,0 +1,11 @@
+@value Bluecheese, White from 'styles/colors.module.css';
+
+.link {
+  border: none;
+  color: Bluecheese;
+  text-transform: uppercase;
+  outline: none;
+  background-color: White;
+  cursor: pointer;
+  padding: 0;
+}

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './OrderCutoff.css'
+import css from './OrderCutoff.module.css'
 
 const OrderCutoff = ({ whenCutoff }) => (
   <p className={css.cutoff}>

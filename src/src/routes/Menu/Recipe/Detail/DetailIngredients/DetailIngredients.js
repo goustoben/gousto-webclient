@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 
-import css from '../Detail.css'
+import css from '../Detail.module.css'
 import { Ingredients } from '../../Ingredients'
 
 const DetailIngredients = ({ ingredients }) => {

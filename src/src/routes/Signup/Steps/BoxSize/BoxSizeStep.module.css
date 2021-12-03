@@ -1,0 +1,87 @@
+@value White, Mackerel from 'styles/colors.module.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+
+.boxSizeContainer {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media BreakpointFromMedium {
+    flex-wrap: nowrap;
+  }
+}
+
+.subtitle {
+  margin-bottom: 1rem;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.boxSizeInner {
+  display: flex;
+  justify-content: space-between;
+
+  @media BreakpointToMedium {
+    display: block;
+  }
+}
+
+.carouselItem {
+  background: White;
+  border: 1px solid Mackerel;
+  flex-grow: 1;
+  margin: 0;
+  min-width: 16rem;
+  padding: 1rem 0.75rem;
+
+  &:first-child {
+    margin-right: 0.75rem;
+
+    @media BreakpointToMedium {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 20.75rem;
+    padding: 1.5rem;
+
+    &:first-child {
+     margin-right: 0;
+    }
+  }
+}
+
+.itemHeading {
+  composes: fontStyleL from 'design-language/typography.module.css';
+  margin-bottom: 1rem;
+}
+
+.suitableTitle {
+  margin-bottom: 0.5rem;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+}
+
+.list {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  &::before {
+    content: '';
+    margin-right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url('media/svgs/icon-success-tick.svg');
+  }
+}

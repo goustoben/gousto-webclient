@@ -9,7 +9,7 @@ import configAuth from 'config/auth'
 import Content from 'containers/Content'
 import InputError from 'Form/InputError'
 import { PageContent } from 'Page'
-import css from './ResetPassword.css'
+import css from './ResetPassword.module.css'
 import { FormAlert } from './FormAlert'
 
 const propTypes = {

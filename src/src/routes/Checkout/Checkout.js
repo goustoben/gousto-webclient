@@ -30,7 +30,7 @@ import { ExpandableBoxSummary } from './Components/ExpandableBoxSummary'
 import { CheckoutUrgencyControllerContainer } from './Components/CheckoutUrgency'
 import { CheckoutUrgencyModalContainer } from './Components/CheckoutUrgency/CheckoutUrgencyModal'
 import { CheckoutUrgencyBanner } from './Components/CheckoutUrgency/CheckoutUrgencyBanner'
-import css from './Checkout.css'
+import css from './Checkout.module.css'
 
 const stepMapping = {
   'order-summary': { component: OrderSummary, humanName: 'Summary' },

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import css from './OrderItemSummary.css'
+import css from './OrderItemSummary.module.css'
 
 const OrderItemSummary = ({
   recipes,

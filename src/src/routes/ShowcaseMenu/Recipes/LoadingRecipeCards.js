@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import css from './Recipes.css'
+import css from './Recipes.module.css'
 
 export const N_LOADING_RECIPE_CARDS = 8
 

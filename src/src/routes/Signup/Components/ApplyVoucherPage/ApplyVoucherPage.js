@@ -4,7 +4,7 @@ import { ExpandableSection } from 'goustouicomponents'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 import { InformationalPageTemplate } from '../InformationalPageTemplate'
 import { HeaderContent } from './HeaderContent'
-import css from './ApplyVoucherPage.css'
+import css from './ApplyVoucherPage.module.css'
 
 export const ApplyVoucherPage = ({
   applyVoucherCustomText,

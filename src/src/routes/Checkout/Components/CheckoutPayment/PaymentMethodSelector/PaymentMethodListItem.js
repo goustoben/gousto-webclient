@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { methodDescriptorPropType } from './propTypes'
 import { PaymentMethodToggle } from './PaymentMethodToggle'
-import css from './PaymentMethodSelector.css'
+import css from './PaymentMethodSelector.module.css'
 
 export const PaymentMethodListItem = ({
   methodDescriptor,

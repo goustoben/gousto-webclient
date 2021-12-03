@@ -5,7 +5,7 @@ import { Row } from 'Page/Grid'
 import { getRecipeTitle, getRecipeImages, getRecipeID } from 'selectors/recipe'
 import { client } from 'config/routes'
 import placeholderSrc from 'media/images/product-placeholder.png'
-import css from './Cookbook.css'
+import css from './Cookbook.module.css'
 import { RecipeCard } from './RecipeCard'
 
 const propTypes = {

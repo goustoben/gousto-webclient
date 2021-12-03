@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
-import css from './Calendar.css'
+import css from './Calendar.module.css'
 import { Title } from './Title'
 import { Day } from './Day'
 import { getCalendarDates } from './utils/getCalendarDates'

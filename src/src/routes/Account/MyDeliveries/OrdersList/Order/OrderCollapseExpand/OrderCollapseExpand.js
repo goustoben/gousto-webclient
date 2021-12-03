@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './OrderCollapseExpand.css'
+import css from './OrderCollapseExpand.module.css'
 
 const OrderCollapseExpand = ({ collapsed, onClick }) => (
   <div className={css.arrowBox}>

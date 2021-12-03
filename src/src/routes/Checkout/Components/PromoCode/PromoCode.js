@@ -3,8 +3,8 @@ import React, { PureComponent } from 'react'
 import logger from 'utils/logger'
 import classNames from 'classnames'
 import { checkoutConfig } from 'config/checkout'
-import css from './PromoCode.css'
-import checkoutCss from '../../Checkout.css'
+import css from './PromoCode.module.css'
+import checkoutCss from '../../Checkout.module.css'
 
 const propTypes = {
   promoCode: PropTypes.string,

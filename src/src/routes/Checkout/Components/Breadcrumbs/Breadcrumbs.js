@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'Link'
 import classNames from 'classnames'
 import Svg from 'Svg'
-import css from './Breadcrumbs.css'
+import css from './Breadcrumbs.module.css'
 
 const Breadcrumbs = ({
   currentId,

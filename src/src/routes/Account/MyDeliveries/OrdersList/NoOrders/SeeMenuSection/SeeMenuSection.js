@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import css from './SeeMenuSection.css'
+import css from './SeeMenuSection.module.css'
 
 import OrderRecipe from '../../../../AccountComponents/OrderRecipe'
 

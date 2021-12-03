@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 
 import Icon from 'Icon'
-import css from './Arrow.css'
+import css from './Arrow.module.css'
 
 const Arrow = ({ direction, onClick }) => (
   <button

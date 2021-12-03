@@ -6,7 +6,7 @@ import { boxTypesRedesign } from 'routes/BoxPrices/boxPricesConfig'
 import { Benefits } from 'routes/Home/Benefits'
 import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
-import css from './BoxPriceBlock.css'
+import css from './BoxPriceBlock.module.css'
 
 class BoxPriceBlock extends Component {
   constructor(props) {

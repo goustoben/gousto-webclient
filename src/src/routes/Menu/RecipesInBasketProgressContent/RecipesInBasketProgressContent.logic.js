@@ -10,7 +10,7 @@ import {
 } from 'goustouicomponents'
 import { BoxProgressMessage } from 'routes/Menu/BoxProgressMessage'
 
-import css from './RecipesInBasketProgressContent.css'
+import css from './RecipesInBasketProgressContent.module.css'
 
 const propTypes = {
   selectedRecipesCount: PropTypes.number.isRequired,

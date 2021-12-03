@@ -10,7 +10,7 @@ import {
 } from 'goustouicomponents'
 import { RecipesInBasketProgressContent } from 'routes/Menu/RecipesInBasketProgressContent'
 
-import css from './RecipesInBasketProgress.css'
+import css from './RecipesInBasketProgress.module.css'
 
 const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,

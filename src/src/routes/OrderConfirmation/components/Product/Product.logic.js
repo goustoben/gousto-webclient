@@ -5,7 +5,7 @@ import Overlay from 'Overlay'
 import configProducts from 'config/products'
 import ProductDetailContainer from '../ProductDetails'
 import { ProductPresentation } from './Product.presentation'
-import css from './Product.css'
+import css from './Product.module.css'
 
 const propTypes = {
   basket: PropTypes.instanceOf(Immutable.Map),

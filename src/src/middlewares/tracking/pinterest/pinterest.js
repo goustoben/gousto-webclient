@@ -108,7 +108,7 @@ function getCallbacks() {
  * @param prevState
  */
 export default function Tracker(action, state = {}, prevState) {
-  if (globals.client && getWindow().pintrk) {
+  if (globals.client && global.window && getWindow().pintrk) {
     const callbacks = pinterestTracking.getCallbacks()
 
     if (action.type in callbacks) {

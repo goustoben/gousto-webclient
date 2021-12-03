@@ -13,7 +13,7 @@ import OrderSummaryContainer from '../OrderSummary/OrderSummaryContainer'
 import { ProductList } from '../ProductList'
 import { ReferAFriend } from '../ReferAFriend'
 
-import css from './Market.css'
+import css from './Market.module.css'
 
 const propTypes = {
   ageVerified: PropTypes.bool,

@@ -1,0 +1,97 @@
+@value White from 'styles/colors.module.css';
+@value sizeXL from 'styles/typography.module.css';
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+@value SpacingMD, SpacingXXL from 'sass-loader!styles/spacing.scss';
+@value ModalTop from 'styles/z-index.module.css';
+
+.modalOverlay {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 2000;
+}
+
+.modal {
+	composes: borderSM from 'styles/borders.module.css';
+	position: absolute;
+	border: 1px solid #999;
+	outline: none;
+	background-clip: padding-box;
+	top: SpacingXXL;
+	left: 50%;
+	transform: translateX(-50%);
+	min-width: 321px;
+	width: auto;
+	max-width: 900px;
+	height: auto;
+	background-color: White;
+	z-index: 2001;
+
+	@media ScreenXSMax {
+		top: SpacingMD;
+		width: 100%;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+}
+
+.controlContainer {
+	cursor: pointer;
+	position: absolute;
+	top: SpacingMD;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: sizeXL;
+	line-height: sizeXL;
+}
+
+.narrow {
+	max-width: 32rem !important; /* override Header.module.css .modal passed via className prop */
+}
+
+.leftControl {
+	composes: controlContainer;
+	left: SpacingMD;
+}
+
+.modalCloseButton {
+	composes: controlContainer;
+	right: SpacingMD;
+	position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: ModalTop;
+    border: none;
+    line-height: 0;
+    padding: 9px;
+	background: White;
+    cursor: pointer;
+
+	&:focus {
+		outline: none;
+	}	
+}
+
+.icon {
+	composes: noPadding from 'sass-loader!styles/spacing.scss';
+	font-size: sizeXL;
+	z-index: 2002;
+	cursor: pointer;
+}
+
+.back {
+	composes: icon;
+	composes: fa-basic-class fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+}
+
+.modalCloseIcon {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background-image: url("design-language/media/icon-X.svg");
+	background-position: center;
+	background-repeat: no-repeat;
+}

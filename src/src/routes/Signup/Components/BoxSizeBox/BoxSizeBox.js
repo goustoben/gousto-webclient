@@ -7,7 +7,7 @@ import { Button, Loader } from 'goustouicomponents'
 import Image from 'Image'
 import Immutable from 'immutable'
 import { DiscountAppliedNotice } from '../DiscountAppliedNotice/DiscountAppliedNotice'
-import css from './BoxSizeBox.css'
+import css from './BoxSizeBox.module.css'
 
 const BoxSizeBox = ({
   numPortionChange,

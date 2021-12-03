@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Svg from 'Svg'
-import css from './AppStoreLinks.css'
+import css from './AppStoreLinks.module.css'
 
 const AppStoreLinks = ({ appStoreId, playStoreId, onClick }) => {
   const appStoreHandler = () => onClick('appStore')

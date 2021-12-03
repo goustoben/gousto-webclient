@@ -4,7 +4,7 @@ import moment from 'moment'
 import OrderSummary from 'containers/welcome/OrderSummary'
 import { capitalizeFirstLetter } from 'utils/text'
 
-import css from './OrderSchedule.css'
+import css from './OrderSchedule.module.css'
 import { EventDate } from './EventDate'
 
 const propTypes = {

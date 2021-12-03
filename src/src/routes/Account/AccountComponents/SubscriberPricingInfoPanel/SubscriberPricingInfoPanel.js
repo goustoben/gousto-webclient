@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 
-import css from './SubscriberPricingInfoPanel.css'
+import css from './SubscriberPricingInfoPanel.module.css'
 
 const propTypes = {
   variant: PropTypes.string.isRequired,

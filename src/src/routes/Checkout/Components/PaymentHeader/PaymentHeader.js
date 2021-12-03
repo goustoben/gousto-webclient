@@ -1,6 +1,6 @@
 import React from 'react'
 
-import css from './PaymentHeader.css'
+import css from './PaymentHeader.module.css'
 
 export const PaymentHeader = () => (
   <div className={css.paymentHeader}>

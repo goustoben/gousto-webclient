@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import css from './DiscountBadge.css'
+import css from './DiscountBadge.module.css'
 
 const DiscountBadge = ({ flatDiscountAmount, percentageDiscountAmount }) => (
   <div className={css.discountBadge}>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Surcharge.css'
+import css from './Surcharge.module.css'
 
 const Surcharge = ({ surcharge }) => (
   surcharge > 0 && (

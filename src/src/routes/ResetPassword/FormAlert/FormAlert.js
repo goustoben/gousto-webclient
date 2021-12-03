@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'Link'
 import { Alert } from 'goustouicomponents'
 import configRoutes from 'config/routes'
-import css from './FormAlert.css'
+import css from './FormAlert.module.css'
 
 const customTokenMessage = (
   <span>

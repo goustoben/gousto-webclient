@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { formatPrice } from 'utils/format'
 
-import css from './Price.css'
+import css from './Price.module.css'
 
 const Price = ({ recipeTotal, recipeDiscount, recipeTotalDiscounted }) => (
   recipeTotal > 0 ? (

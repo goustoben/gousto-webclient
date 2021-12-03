@@ -1,0 +1,30 @@
+@value ScreenXXSMin from 'styles/screenSizes.module.css';
+
+.paymentHeader {
+  margin-bottom: 25px;
+}
+
+.headerContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.header {
+  composes: headerMD headlineFont from 'styles/typography.module.css';
+  composes: inlineBlock from 'styles/display.module.css';
+}
+
+.padlockIcon {
+  composes: padlockIcon from 'styles/icons.module.css';
+}
+
+.textSM {
+  composes: textSM from 'styles/typography.module.css';
+  composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.boldInfo {
+  composes: textSM from 'styles/typography.module.css';
+  composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
+}

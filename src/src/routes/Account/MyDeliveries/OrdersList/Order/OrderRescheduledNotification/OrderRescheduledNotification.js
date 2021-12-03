@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import css from './OrderRescheduledNotification.css'
+import css from './OrderRescheduledNotification.module.css'
 
 const OrderRescheduledNotification = ({ oldDeliveryDay, reason }) => (
   <div className={css.notification}>

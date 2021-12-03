@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import Modal from 'react-modal'
-import css from './Overlay.css'
+import css from './Overlay.module.css'
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 if (!__SERVER__) {

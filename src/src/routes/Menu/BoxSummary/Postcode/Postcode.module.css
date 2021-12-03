@@ -1,0 +1,42 @@
+@value Radish, Pepper, Mackerel from 'styles/colors.module.css';
+
+.row {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.module.css';
+}
+
+.supportingText {
+	composes: paragraphXS from 'styles/typography.module.css';
+}
+
+.leadingText {
+	composes: textBold from 'styles/typography.module.css';
+}
+
+.textInput {
+	composes: textLG textCenter textUpper textBold from 'styles/typography.module.css';
+	width: 100%;
+}
+
+.errorText {
+	composes: supportingText;
+	color: Radish;
+}
+
+.title {
+	composes: headerMD headlineFont textCenter from 'styles/typography.module.css';
+	color: Pepper;
+}
+
+.hide {
+	composes: none from 'styles/display.module.css';
+}
+
+.stickyButton {
+	box-shadow: 0px -1px 10px Mackerel;
+	position: fixed;
+	width: 100%;
+	padding: 0.75rem 0.5rem;
+	bottom: 0;
+	left: 0;
+}

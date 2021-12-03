@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 
-import css from './Nutrition.css'
+import css from './Nutrition.module.css'
 
 const NutritionInfo = ({ perPortion, per100Grams, inset }) => (
   <div>

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Segment } from 'goustouicomponents'
 import Link from 'Link'
-import css from './LinkButton.css'
+import css from './LinkButton.module.css'
 
 export const LinkButton = ({ children, clientRouted, color, disabled, fill, to, width }) => (
   <Button fill={fill}>

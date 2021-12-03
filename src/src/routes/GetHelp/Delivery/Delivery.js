@@ -8,7 +8,7 @@ import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
 import { DeliverySimple } from './DeliverySimple'
-import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.css'
+import layoutCss from '../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
 
 const propTypes = {
   isNewSSRDeliveriesEnabled: PropTypes.bool.isRequired,

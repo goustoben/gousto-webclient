@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import css from './DeliverySlot.css'
+import css from './DeliverySlot.module.css'
 
 const WarningExistingOrder = ({ tempDate }) => {
   const date = moment(tempDate, 'YYYY-MM-DD').format('Do MMMM')

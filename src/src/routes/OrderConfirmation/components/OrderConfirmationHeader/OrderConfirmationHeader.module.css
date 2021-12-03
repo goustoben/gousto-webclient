@@ -1,0 +1,8 @@
+.paragraph {
+  padding-bottom: 1rem;
+  margin: 0;
+}
+
+.bold {
+  composes: textBold from 'styles/typography.module.css';
+}

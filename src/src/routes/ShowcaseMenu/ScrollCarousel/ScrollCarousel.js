@@ -4,7 +4,7 @@ import { useScroll, useWindowSize } from 'react-use'
 import { elementScroll, elementScrollTo } from 'utils/scrollUtils'
 import { ArrowButton } from './ArrowButton'
 import { useDebouncedCallback } from './useDebouncedCallback'
-import css from './ScrollCarousel.css'
+import css from './ScrollCarousel.module.css'
 
 export const ScrollCarousel = ({ stepSizePx, children, trackScrollOneStep }) => {
   const carouselRef = useRef(null)

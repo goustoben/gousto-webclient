@@ -6,7 +6,7 @@ import Form from 'Form'
 import { validateEmail } from 'utils/auth'
 import { newsletterSubscribe } from 'apis/customers'
 import { homeConfig } from 'config/home'
-import css from './EmailForm.css'
+import css from './EmailForm.module.css'
 
 class EmailForm extends React.PureComponent {
   constructor() {

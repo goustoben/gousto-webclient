@@ -3,7 +3,7 @@ import PropType from 'prop-types'
 import { Div } from 'Page/Elements'
 import Image from 'Image'
 
-import css from './Loading.css'
+import css from './Loading.module.css'
 
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 

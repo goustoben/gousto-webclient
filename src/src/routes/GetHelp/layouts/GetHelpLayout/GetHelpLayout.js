@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import { CTABack } from 'zest/CTABack'
 import { Card, Heading, LayoutPageWrapper } from 'goustouicomponents'
 import { BottomFixedContentWrapper } from '../../components/BottomFixedContentWrapper'
-import css from './GetHelpLayout.css'
+import css from './GetHelpLayout.module.css'
 
 const propTypes = {
   body: PropTypes.string,

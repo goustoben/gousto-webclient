@@ -5,7 +5,7 @@ import { PageContent, PageHeader } from 'Page'
 import { Confirm } from './Confirm'
 import { Unsubscribed } from './Unsubscribed'
 
-import css from './Unsubscribe.css'
+import css from './Unsubscribe.module.css'
 
 const propTypes = {
   location: PropTypes.shape({

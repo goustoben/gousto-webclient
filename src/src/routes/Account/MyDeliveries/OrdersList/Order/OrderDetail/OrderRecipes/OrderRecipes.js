@@ -7,7 +7,7 @@ import Link from 'Link'
 import routes from 'config/routes'
 import Content from 'containers/Content'
 
-import css from './OrderRecipes.css'
+import css from './OrderRecipes.module.css'
 import OrderRecipeBox from './OrderRecipeBox'
 
 const OrderRecipes = ({

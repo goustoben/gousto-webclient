@@ -4,7 +4,7 @@ import React from 'react'
 import ModalComponent from 'ModalComponent'
 import { OnScreenRecoverySteps } from './OnScreenRecoverySteps'
 
-import css from './OnScreenRecovery.css'
+import css from './OnScreenRecovery.module.css'
 
 const propTypes = {
   visible: PropTypes.bool,

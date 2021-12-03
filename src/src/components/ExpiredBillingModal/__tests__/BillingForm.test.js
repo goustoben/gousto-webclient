@@ -7,7 +7,7 @@ import Dropdown from 'Form/Dropdown'
 import Svg from 'Svg'
 
 import { BillingForm } from '../BillingForm/BillingForm'
-import css from '../BillingForm/BillingForm.css'
+import css from '../BillingForm/BillingForm.module.css'
 
 const submitCardDetails = jest.fn()
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 
-import css from './ModalComponent.css'
+import css from './ModalComponent.module.css'
 
 const ModalTitle = ({ children, className }) => (
   <div className={classnames(css.modalTitle, className)}>

@@ -4,7 +4,7 @@ import Svg from 'Svg'
 import Link from 'Link'
 import { PromoModalWrapper as PromoModal } from 'PromoModal'
 import { H1 } from 'Page/Header'
-import css from '../Header.css'
+import css from '../Header.module.css'
 
 export const SimpleHeader = ({ serverError, className, homeUrl, title, showLoginCTA, onLoginClick }) => (
   <span id={serverError ? 'mobileMenu' : null}>

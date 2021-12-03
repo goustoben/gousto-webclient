@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import css from './TotalPrice.css'
+import css from './TotalPrice.module.css'
 import {
   SubscriptionContext,
 } from '../../../context'

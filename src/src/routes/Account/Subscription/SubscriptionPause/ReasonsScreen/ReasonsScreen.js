@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import Svg from 'Svg'
 import { Cancel } from 'containers/SubscriptionPause/callsToAction'
-import css from './ReasonsScreen.css'
+import css from './ReasonsScreen.module.css'
 
 const SubscriptionPauseReasonsScreen = ({ onReasonChoice, reasons, type }) => (
   <div className={css.container}>

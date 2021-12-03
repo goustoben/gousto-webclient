@@ -2,7 +2,7 @@ import React from 'react'
 import { Heading, LayoutPageWrapper } from 'goustouicomponents'
 import Helmet from 'react-helmet'
 import modernSlavery from 'config/modernSlavery'
-import css from './ModernSlaveryStatement.css'
+import css from './ModernSlaveryStatement.module.css'
 
 const ModernSlaveryStatement = () => (
   <LayoutPageWrapper>

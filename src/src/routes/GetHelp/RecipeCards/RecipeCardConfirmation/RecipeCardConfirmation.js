@@ -7,7 +7,7 @@ import Link from 'components/Link'
 import { Alert, BottomFixedContent, Card, CTA } from 'goustouicomponents'
 import { recipePropType } from '../../getHelpPropTypes'
 import { GetHelpLayout2 } from '../../layouts/GetHelpLayout2'
-import css from './RecipeCardConfirmation.css'
+import css from './RecipeCardConfirmation.module.css'
 
 const RecipeCardConfirmation = ({
   selectedAddress,

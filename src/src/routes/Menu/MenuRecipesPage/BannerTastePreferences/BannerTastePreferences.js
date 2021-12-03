@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './BannerTastePreferences.css'
+import css from './BannerTastePreferences.module.css'
 
 export const BannerTastePreferences = ({ shouldBannerShow }) => {
   if (!shouldBannerShow) {

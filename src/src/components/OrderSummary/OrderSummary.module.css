@@ -1,0 +1,110 @@
+@value ScreenXSMax, ScreenSMMin, ScreenMDMin from 'styles/screenSizes.module.css';
+@value Blackberry from 'styles/colors.module.css';
+
+.container {
+	composes: marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.disclaimer {
+	composes: marginXLTop from 'sass-loader!styles/spacing.scss';
+	composes: paragraphXS textCenter from 'styles/typography.module.css';
+}
+
+.button {
+	composes: paddingSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.footer {
+	composes: marginSMTop marginZeroBottom from 'sass-loader!styles/spacing.scss';
+	composes: textLeft from 'styles/typography.module.css';
+	font-size: 0.95rem;
+	font-weight: bold;
+}
+
+.footerIcon {
+	display: inline-block;
+	margin-left: 0.3rem;
+	font-weight: bold;
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.details {
+	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+	padding-bottom: 50px;
+
+	@media ScreenXSMax {
+		overflow-y: hidden;
+		transition: max-height 0.5s ease-in-out, margin 0.25s ease-in-out 0.25s;
+	}
+}
+
+.slideUp {
+	@media ScreenXSMax {
+		margin-top: 0;
+		margin-bottom: 0;
+		max-height: 0;
+	}
+}
+
+.toggleLink {
+	composes: textLink from 'styles/typography.module.css';
+}
+
+.receipt {
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+	padding-top: 10px;
+}
+
+.updateOrderButton {
+	padding: 13px;
+	background-color: Blackberry;
+}
+.updateOrderButton > .button {
+	padding: 0;
+}
+
+.updateOrderButtonSummary {
+	composes: updateOrderButton;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.updateOrderButtonSummary > div > .button {
+	padding: 0;
+	@media ScreenSMMin {
+    width: 47%;
+  }
+	@media ScreenMDMin {
+		width: 35%;
+	}
+}
+
+.updateOrderButtonSummary > div > .success {
+	max-height: 40px;
+  line-height: 40px;
+	padding: 0;
+	@media ScreenSMMin {
+    width: 47%;
+  }
+	@media ScreenMDMin {
+		width: 35%;
+	}
+}
+
+
+.updateOrderButtonSummary > div {
+	@media ScreenSMMin {
+		display: flex;
+		max-width: 1170px;
+		padding: 0px 20px;
+		margin: 0 auto;
+		justify-content: flex-end;
+	}
+}
+

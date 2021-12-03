@@ -1,0 +1,58 @@
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value White from 'styles/colors.module.css';
+@value S400, CG800, spacingS, spacingM from 'routes/ShowcaseMenu/showcaseMenuStyles.module.css';
+
+.scrollCarouselContainer {
+  position: relative;
+  display: flex;
+}
+
+.scrollCarousel {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 0;
+  margin: auto;
+
+}
+
+.arrowButton {
+  position: absolute;
+  top: 7.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  opacity: 1;
+  transition: opacity 0.2s;
+  background-color: White;
+  border: 2px solid S400;
+  cursor: pointer;
+
+  @media BreakpointToMedium {
+    display: none;
+  }
+}
+
+.invisible {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.leftArrowButton {
+  left: 1rem;
+}
+
+.rightArrowButton {
+  right: 1rem;
+}
+
+.leftArrowIcon {
+  width: 100%;
+  height: 100%;
+  background: url('routes/ShowcaseMenu/images/icon-arrow-left.svg') center no-repeat;
+}
+
+.rightArrowIcon {
+  width: 100%;
+  height: 100%;
+  background: url('routes/ShowcaseMenu/images/icon-arrow-right.svg') center no-repeat;
+}

@@ -1,0 +1,21 @@
+@value 7XLarge, 3XLarge, FontWeightBold, FontFamilyAxiformaBook from 'design-language/typography.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.title {
+  font: FontWeightBold 3XLarge FontFamilyAxiformaBook;
+  margin-bottom: 0;
+
+  @media BreakpointFromMedium {
+    font: FontWeightBold 7XLarge FontFamilyAxiformaBook;
+  }
+}
+
+.rafTitle {
+  line-height: 34px;
+  text-align: center;
+  padding: 0 20px;
+
+  @media BreakpointFromMedium {
+    padding-bottom: 77px;
+  }
+}

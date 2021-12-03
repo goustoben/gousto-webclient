@@ -4,7 +4,7 @@ import Overlay from 'components/Overlay'
 import ModalPanel from 'Modal/ModalPanel'
 import { getUrlParams } from 'utils/url'
 
-import css from './Checkout3DSModal.css'
+import css from './Checkout3DSModal.module.css'
 
 class Checkout3DSModal extends PureComponent {
   onIframeLoad = (e) => {

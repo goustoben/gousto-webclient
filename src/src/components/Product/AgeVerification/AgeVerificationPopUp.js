@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 import { Button } from 'goustouicomponents'
-import css from './AgeVerification.css'
+import css from './AgeVerification.module.css'
 import { modalTitle, underAgeModalText, modalText } from './config'
 
 class AgeVerificationPopUp extends PureComponent {

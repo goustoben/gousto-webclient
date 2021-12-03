@@ -1,0 +1,23 @@
+@value Blackberry from 'styles/colors.module.css';
+@value BreakpointToMedium from 'design-language/breakpoints.module.css';
+@value barDesktopHeight 75px;
+
+.bardesktop {
+	composes: row flex spaceAround from 'styles/flex.module.css';
+	composes: fixed from 'styles/position.module.css';
+	background-color: Blackberry;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 501;
+	height: barDesktopHeight;
+	@media BreakpointToMedium {
+		display: none;
+	}
+}
+
+.buttonsContainer {
+	composes: paddingSMTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: row flex flexEnd verticalCenter from 'styles/flex.module.css';
+	width:50%;
+}

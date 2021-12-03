@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
 import { formatOrderPrice } from 'utils/pricing'
 
-import css from './Receipt.css'
+import css from './Receipt.module.css'
 import { ReceiptLine } from './ReceiptLine'
 import { DeliveryDetails } from './DeliveryDetails'
 

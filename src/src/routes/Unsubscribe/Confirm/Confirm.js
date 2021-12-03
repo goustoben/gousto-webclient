@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Button } from 'goustouicomponents'
 
-import css from './Confirm.css'
+import css from './Confirm.module.css'
 
 export const Confirm = ({ pending, unsubscribeClick, isError, copy, dataTesting }) => (
   <div>

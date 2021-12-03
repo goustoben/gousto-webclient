@@ -11,7 +11,7 @@ import SaveButton from 'OrderSummary/SaveButton'
 import classnames from 'classnames'
 import { isNotAGift } from 'utils/products'
 import { UserCreditMessage } from 'components/UserCreditMessage'
-import css from './OrderSummary.css'
+import css from './OrderSummary.module.css'
 
 const propTypes = {
   prices: ImmutablePropTypes.map,

@@ -1,0 +1,29 @@
+@value ScreenMDMin from 'styles/screenSizes.module.css';
+@value BreakpointToMedium from 'design-language/breakpoints.module.css';
+
+.boxPriceList {
+  composes: accountContainer from 'styles/layout.module.css';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 15px;
+
+  @media ScreenMDMin {
+    flex-direction: row;
+  }
+}
+
+.boxPriceListRedesign {
+  composes: accountContainer from 'styles/layout.module.css';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.938rem 3.125rem;
+  flex-direction: row;
+
+  @media BreakpointToMedium {
+    padding: 0;
+  }
+}

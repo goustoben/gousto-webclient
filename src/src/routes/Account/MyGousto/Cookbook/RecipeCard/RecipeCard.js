@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import Image from 'Image'
 import { Col } from 'Page/Grid'
 import placeholderSrc from 'media/images/product-placeholder.png'
-import css from './RecipeCard.css'
+import css from './RecipeCard.module.css'
 
 const propTypes = {
   link: PropTypes.string,

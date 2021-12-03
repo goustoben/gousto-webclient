@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import config from 'config/media'
 import classNames from 'classnames'
 import LazyLoad from 'react-lazyload'
-import css from './Image.css'
+import css from './Image.module.css'
 
 const propTypes = {
   contain: PropTypes.bool,

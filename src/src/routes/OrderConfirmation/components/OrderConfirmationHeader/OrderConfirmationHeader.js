@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import css from './OrderConfirmationHeader.css'
+import css from './OrderConfirmationHeader.module.css'
 
 const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, whenCutoffTime, whenCutoffDate}) => (
   <div data-testing="orderConfirmationHeader">

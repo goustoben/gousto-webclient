@@ -8,7 +8,7 @@ import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import Svg from 'Svg'
 import { CheckoutTooltip } from 'routes/Checkout/Components/CheckoutTooltip/CheckoutTooltip'
-import css from './BillingForm.css'
+import css from './BillingForm.module.css'
 
 const CURRENT_YEAR = Number(moment().format('YYYY'))
 const MONTHS = ['MM', ...Array.from({ length: 12 }, (v, k) => (k < 9 ? `0${k + 1}` : k + 1))].map(option => ({

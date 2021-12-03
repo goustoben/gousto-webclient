@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
 import { getReferralLink, SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
-import css from './UserRAFLink.css'
+import css from './UserRAFLink.module.css'
 
 class UserRAFLink extends React.PureComponent {
   static fetchData = async ({ store }) => Promise.all([

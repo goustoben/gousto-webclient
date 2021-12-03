@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { Button } from 'goustouicomponents'
 import routes from 'config/routes'
 import Svg from 'Svg'
-import css from './ReferAFriend.css'
+import css from './ReferAFriend.module.css'
 
 const propTypes = {
   referralDetails: PropTypes.instanceOf(Immutable.Map),

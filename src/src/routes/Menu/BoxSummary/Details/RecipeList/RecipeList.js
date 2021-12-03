@@ -5,7 +5,7 @@ import { LayoutContentWrapper } from 'goustouicomponents'
 import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
 import { isAvailableRecipeList } from 'utils/recipe'
 import { UnavailableMessage } from '../UnavailableMessage'
-import css from '../Details.css'
+import css from '../Details.module.css'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {

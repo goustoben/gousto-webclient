@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import css from '../Details.css'
+import css from '../Details.module.css'
 
 const UnavailableMessage = ({ unavailableRecipeList, menuFetchPending, orderSaveError, clearSlot, basketRestorePreviousDate }) => {
   const plural = unavailableRecipeList.size > 1

@@ -3,21 +3,20 @@ import React from 'react'
 import { spacingPropValidation, getSpacingStyles } from 'styles/spacing'
 
 // eslint-disable-next-line import/no-unresolved
-import borders from 'styles/borders.css'
+import borders from 'styles/borders.module.css'
 // eslint-disable-next-line import/no-unresolved
-import colors from 'styles/colors.css'
+import colors from 'styles/colors.module.css'
 // eslint-disable-next-line import/no-unresolved
-import effects from 'styles/effects.css'
+import effects from 'styles/effects.module.css'
 // eslint-disable-next-line import/no-unresolved
-import overlays from 'styles/overlays.css'
+import overlays from 'styles/overlays.module.css'
 // eslint-disable-next-line import/no-unresolved
-import position from 'styles/position.css'
+import position from 'styles/position.module.css'
 // eslint-disable-next-line import/no-unresolved
-import typography from 'styles/typography.css'
+import typography from 'styles/typography.module.css'
 // eslint-disable-next-line import/no-unresolved
-import layout from 'styles/layout.css'
-import bootstrap from 'styles/bootstrap.scss'
-import css from './StyledElement.css'
+import layout from 'styles/layout.module.css'
+import css from './StyledElement.module.css'
 
 const availableClassNames = {
   ...borders,
@@ -26,8 +25,7 @@ const availableClassNames = {
   ...position,
   ...typography,
   ...layout,
-  ...bootstrap,
-  ...css,
+  ...module.css,
 }
 
 const globallySupportedProps = [

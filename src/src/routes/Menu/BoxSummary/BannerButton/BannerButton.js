@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import * as trackingKeys from 'actions/trackingKeys'
 import { isMobile } from 'utils/view'
 import { CheckoutContainer } from './Checkout'
-import css from './BannerButton.css'
+import css from './BannerButton.module.css'
 
 const BannerButton = ({ view, fullWidth }) => {
   const isMobileView = isMobile(view)

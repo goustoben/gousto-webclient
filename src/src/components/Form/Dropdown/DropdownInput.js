@@ -5,14 +5,14 @@ import classNames from 'classnames'
 import { restrictProps } from 'utils/restrictProps'
 import { InputWrapper } from 'Form/InputWrapper'
 // eslint-disable-next-line import/no-unresolved
-import formsCss from 'styles/forms.css'
-import css from './DropdownInput.css'
+import formsCss from 'styles/forms.module.css'
+import css from './DropdownInput.module.css'
 /*
 Using require on the next line as there is an issue importing global styles
 with our current configuration and ts-loader.
 */
 // eslint-disable-next-line no-unused-vars
-const globalReactCss = require('./reactSelect.css')
+const globalReactCss = require('./reactSelect.module.css')
 
 const propTypes = {
   additionalProps: PropTypes.object,

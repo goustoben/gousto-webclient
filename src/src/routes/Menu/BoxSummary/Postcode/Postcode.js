@@ -4,7 +4,7 @@ import Form from 'Form'
 import TextInput from 'Form/Input'
 import { Button, Heading, LayoutContentWrapper } from 'goustouicomponents'
 import DropdownInput from 'Form/Dropdown'
-import css from './Postcode.css'
+import css from './Postcode.module.css'
 
 class Postcode extends React.PureComponent {
   handleChange = (value) => {

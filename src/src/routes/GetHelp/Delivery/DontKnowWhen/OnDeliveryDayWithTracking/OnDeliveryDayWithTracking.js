@@ -6,8 +6,8 @@ import { client } from 'config/routes'
 import humanTimeFormat from 'utils/timeFormat'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
-import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './OnDeliveryDayWithTracking.css'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './OnDeliveryDayWithTracking.module.css'
 
 const redirectToInternal = (link) => {
   browserHistory.push(link)

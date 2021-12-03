@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import css from './InformationBox.css'
+import css from './InformationBox.module.css'
 
 const items = [
   { iconClassName: 'icon-menu', text: 'New menu', secondary: 'every Tuesday' },

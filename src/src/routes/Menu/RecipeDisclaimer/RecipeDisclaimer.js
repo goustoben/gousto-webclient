@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Svg from 'Svg'
-import css from './RecipeDisclaimer.css'
+import css from './RecipeDisclaimer.module.css'
 
 const RecipeDisclaimer = ({ claim }) => {
   if (!claim || !claim.disclaimer || !claim.theme) {

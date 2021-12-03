@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-import css from './Divider.css'
+import css from './Divider.module.css'
 
 export const Divider = ({ hidden }) => {
   const classNames = classnames(

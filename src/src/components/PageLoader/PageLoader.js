@@ -1,6 +1,6 @@
 import React from 'react'
 import Loading from 'Loading'
-import css from './PageLoader.css'
+import css from './PageLoader.module.css'
 
 function PageLoader() {
   return (

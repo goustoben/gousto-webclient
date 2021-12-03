@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import moment from 'moment'
-import css from './Day.css'
+import css from './Day.module.css'
 
 const weekNoDayNoToDay = (weekNo, dayNo) => (
   moment(`${weekNo}-${dayNo}`, 'GGGGWW-E').format('DD')

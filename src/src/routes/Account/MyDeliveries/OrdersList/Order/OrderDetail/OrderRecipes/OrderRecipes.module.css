@@ -1,0 +1,35 @@
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+@value SpacingXXL from 'sass-loader!styles/spacing.scss';
+
+.buttonRow {
+	display: flex;
+
+	@media ScreenXSMax {
+		justify-content: flex-end;
+	}
+}
+
+.textRow {
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.headerRow {
+	display: flex;
+	justify-content: space-between;
+}
+
+.header {
+	composes: textBold from 'styles/typography.module.css';
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.125rem;
+}
+
+.editLink {
+  text-transform: uppercase;
+}
+
+.subHeader {
+	composes: textBold from 'styles/typography.module.css';
+}

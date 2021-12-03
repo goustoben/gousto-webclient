@@ -1,0 +1,43 @@
+@value Blackberry, Cacao, Haricot from 'styles/colors.module.css';
+@value ScreenSMMax from 'styles/screenSizes.module.css';
+@value sizeXXL, sizeXL from 'styles/typography.module.css';
+
+.closeIcon {
+	composes: fa-basic-class fa-times from 'styles/vendor/font-awesome-module.css';
+	composes: paddingMDTop paddingMDRight from 'sass-loader!styles/spacing.scss';
+	color: Cacao;
+	font-size: sizeXXL;
+	cursor: pointer;
+
+	@media ScreenSMMax {
+		font-size: 28px;
+	}
+}
+
+.padlockIcon {
+	composes: fa-basic-class fa-lock from 'styles/vendor/font-awesome-module.css';
+	composes: paddingSMRight paddingSMLeft from 'sass-loader!styles/spacing.scss';
+	color: Cacao;
+	font-size: sizeXL;
+}
+
+.creditCardIcon {
+	composes: fa-basic-class fa-credit-card from 'styles/vendor/font-awesome-module.css';
+	composes: paddingSMRight paddingSMLeft from 'sass-loader!styles/spacing.scss';
+	color: Cacao;
+	font-size: sizeXL;
+}
+
+.calendarIcon {
+	composes: fa-basic-class fa-fw fa-calendar from 'styles/vendor/font-awesome-module.css';
+	composes: paddingSMRight paddingSMLeft from 'sass-loader!styles/spacing.scss';
+	color: Blackberry;
+	font-size: sizeXL;
+}
+
+.checkmarkIcon {
+  composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
+  composes: paddingSMRight paddingSMLeft from 'sass-loader!styles/spacing.scss';
+  color: Haricot;
+  font-size: sizeXL;
+}

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import css from './BoxTypePrices.css'
+import css from './BoxTypePrices.module.css'
 
 const BoxTypePrices = ({ numPortions, totalPrice }) => (
   <div className={css.container}>

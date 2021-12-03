@@ -5,7 +5,7 @@ import { InputWithButton } from 'components/InputWithButton'
 import { Heading, InputField, CTA } from 'goustouicomponents'
 import imageGoustoApp from 'media/images/app-awareness-phone.png'
 import imageRedRice from 'media/images/red-rice-pattern.png'
-import css from './LoginDesktop.css'
+import css from './LoginDesktop.module.css'
 
 const defaultProps = {
   showAppAwareness: false,

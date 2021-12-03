@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Hero.css'
+import css from './Hero.module.css'
 
 export const Hero = ({ imageUrl, headerText, style }) => (
   <div className={css.container} style={{ backgroundImage: `url('${imageUrl}')`, ...style }}>

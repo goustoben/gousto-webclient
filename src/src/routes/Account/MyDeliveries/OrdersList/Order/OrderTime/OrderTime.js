@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './OrderTime.css'
+import css from './OrderTime.module.css'
 
 const OrderTime = ({ start, end }) => (
   <p className={css.time}>

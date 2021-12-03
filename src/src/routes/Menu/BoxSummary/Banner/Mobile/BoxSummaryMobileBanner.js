@@ -14,8 +14,8 @@ import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 import { OpenBoxButton } from './OpenBoxButton'
 import { TitleContainer } from '../../Title'
 
-import css from './BoxSummaryMobileBanner.css'
-import bannerButtonCss from '../../BannerButton/BannerButton.css'
+import css from './BoxSummaryMobileBanner.module.css'
+import bannerButtonCss from '../../BannerButton/BannerButton.module.css'
 import { boxSummaryBannerPropTypes } from '../propTypes'
 
 const BoxSummaryMobileBanner = ({

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
-import css from './BottomButton.css'
+import css from './BottomButton.module.css'
 
 const BottomButton = ({
   children,

@@ -1,0 +1,40 @@
+@value ScreenSMMax from 'styles/screenSizes.module.css';
+@value BreakpointFromLarge, BreakpointToMedium, BreakpointFromXLarge from 'design-language/breakpoints.module.css';
+
+.appStoreContainer {
+  padding-top: 0.5rem;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.storeSVG {
+	width: 100%;
+	height: 50px;
+}
+
+.playstoreLink,
+.appstoreLink {
+	display: inline-block;
+	width: 50%;
+}
+
+.playstoreLink {
+	padding-right: 0.25rem;
+}
+
+.appstoreLink {
+	padding-left: 0.25rem;
+}
+
+.footerAppstoreSvg {
+	composes: storeSVG;
+}
+
+.footerAppleAppstoreSvg {
+	composes: footerAppstoreSvg;
+}
+
+.playStoreSvg {
+	composes: storeSVG;
+
+}

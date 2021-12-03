@@ -1,0 +1,14 @@
+@value BreakpointFromMedium from 'design-language/typography.module.css';
+@value spacingS from 'routes/ShowcaseMenu/showcaseMenuStyles.module.css';
+
+.priceExplanationSection {
+  display: flex;
+  justify-content: center;
+  padding: 0 spacingS;
+  margin-bottom: 1.5rem;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}

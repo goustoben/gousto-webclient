@@ -5,7 +5,7 @@ import { Button, Segment } from 'goustouicomponents'
 import { TitleContainer } from '../../Title'
 import { Description } from '../../Description'
 
-import css from './ExpandBoxSummaryButton.css'
+import css from './ExpandBoxSummaryButton.module.css'
 
 const ExpandBoxSummaryButton = ({ showDetails, pricingPending, numPortions, numRecipes, date, slotId, warning, onClick }) => (
   <div className={css.bsButton}>

@@ -1,0 +1,85 @@
+@value ScreenSMMin, ScreenXXSMax, ScreenMDMax from 'styles/screenSizes.module.css';
+@value White, Duckegg, Pomegranate, Chia, Basa from 'styles/colors.module.css';
+@value sizeSM, textBold noDecor textXS from 'styles/typography.module.css';
+
+.navContainer {
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	margin: auto;
+	background-color: White;
+	border-bottom: 2px solid Basa;
+	@media ScreenXXSMax {
+		padding: 0px;
+	}
+}
+.navInner {
+	composes: accountContainer from 'styles/layout.module.css';
+}
+
+.nav {
+	width: 70%;
+	composes: flex row spaceBetween from 'styles/flex.module.css';
+	list-style: none;
+	margin: 0;
+	padding: 12px 0 0 0;
+	@media ScreenMDMax {
+		width:100%;
+	}
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	display: flex;
+	flex-direction: row;
+}
+
+.tabletHide {
+	composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.desktopHide {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.badge {
+	composes: textBold noDecor textXS from 'styles/typography.module.css';
+	composes: relative from 'styles/position.module.css';
+	background-color: Pomegranate;
+	margin-left: 0.25rem;
+	padding: 3px 6px;
+	border-radius: 100px;
+	line-height: 14px;
+	z-index: 10;
+	color: white;
+	align-self: center;
+	font-weight: 600;
+
+	&:hover {
+		text-decoration: none !important;
+	}
+
+}
+
+.link {
+	composes: noPadding from 'sass-loader!styles/spacing.scss';
+	composes: textUpper from 'styles/typography.module.css';
+	font-size: sizeSM;
+	composes: fullHeight from 'styles/positioning.module.css';
+	@media ScreenXXSMax {
+		font-size: 12px;
+	}
+
+	&:focus, &:active {
+		color: Pomegranate;
+	}
+
+	&:hover {
+		color: Pomegranate;
+		text-decoration: none;
+	}
+}
+
+.linkContainer {
+	display: flex;
+	flex-direction: row;
+}
+

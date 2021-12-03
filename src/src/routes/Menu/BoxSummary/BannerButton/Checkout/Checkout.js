@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
-import css from './Checkout.css'
+import css from './Checkout.module.css'
 import { BaseBannerButton } from '../BaseBannerButton'
 
 const Checkout = (props) => {

@@ -5,7 +5,7 @@ import moment from 'moment'
 import { getSlotTimes } from 'utils/deliveries'
 import { Button, Segment } from 'goustouicomponents'
 
-import css from '../Details.css'
+import css from '../Details.module.css'
 
 const DateHeader = (props) => {
   const {

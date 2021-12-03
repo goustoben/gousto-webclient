@@ -4,7 +4,7 @@ import { client } from 'config/routes'
 import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
 import Link from 'components/Link'
 import { myGoustoOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
-import css from './PreviousOrder.css'
+import css from './PreviousOrder.module.css'
 
 const PreviousOrder = ({
   hasDeliveryToday,

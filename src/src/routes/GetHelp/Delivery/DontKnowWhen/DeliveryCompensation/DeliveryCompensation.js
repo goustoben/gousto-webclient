@@ -6,8 +6,8 @@ import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import { deliveryComplaintCategoryId } from '../../../config'
-import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.css'
-import css from './DeliveryCompensation.css'
+import layoutCss from '../../../layouts/GetHelpLayout2/GetHelpLayout2.module.css'
+import css from './DeliveryCompensation.module.css'
 
 class DeliveryCompensation extends PureComponent {
   static redirectTo(link) {

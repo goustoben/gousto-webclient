@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import { TimeIndicator, Rating } from 'goustouicomponents'
 import { removeDiacritics } from 'utils/sanitizeText'
-import css from './SimpleRecipe.css'
+import css from './SimpleRecipe.module.css'
 
 const SimpleRecipe = ({ media, title, maxMediaSize, averageRating, ratingCount, cookingTime }) => {
   const recipeTitle = removeDiacritics(title)

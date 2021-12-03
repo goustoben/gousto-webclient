@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { getWhyGoustoConfig } from 'config/home'
-import css from './StepsGuide.css'
+import css from './StepsGuide.module.css'
 
 class StepsGuide extends PureComponent {
   renderListItem = (listItem, itemOrder) => (

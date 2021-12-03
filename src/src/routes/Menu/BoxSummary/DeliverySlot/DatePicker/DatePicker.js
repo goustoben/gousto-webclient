@@ -5,7 +5,7 @@ import DropdownInput from 'Form/Dropdown'
 import { Calendar } from '../Calendar'
 import { SlotPicker } from '../SlotPicker'
 
-import css from '../DeliverySlot.css'
+import css from '../DeliverySlot.module.css'
 
 const DatePicker = (props) => {
   const {

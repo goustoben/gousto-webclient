@@ -1,0 +1,56 @@
+@value White, Mackerel, Radish from 'styles/colors.module.css';
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+
+.card {
+  background: White;
+  border: 0.5px solid Mackerel;
+  flex-grow: 1;
+  margin: 0 0.75rem;
+  max-width: 20.75rem;
+
+  @media ScreenXSMax {
+    margin: 0 0.38rem;
+    max-width: 16rem;
+  }
+}
+
+.body {
+  padding: 1.5rem;
+  @media ScreenXSMax {
+    padding: 1rem 0.75rem;
+  }
+}
+
+.img {
+  height: 7.5rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  display: block;
+
+  @media ScreenXSMax {
+    height: 6.25rem;
+  }
+}
+
+.row {
+  display: flex;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+}
+
+.discount {
+  display: block;
+  color: Radish;
+  margin-bottom: -0.4rem;
+}
+
+.discountCol {
+  margin-left: 0.25rem;
+}
+
+.cardCTA {
+  margin-top: 1.5rem;
+}

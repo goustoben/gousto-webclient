@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { BottomFixedContent } from 'goustouicomponents'
-import css from './BottomFixedContentWrapper.css'
+import css from './BottomFixedContentWrapper.module.css'
 
 const BottomFixedContentWrapper = ({ children }) => (
   <BottomFixedContent>

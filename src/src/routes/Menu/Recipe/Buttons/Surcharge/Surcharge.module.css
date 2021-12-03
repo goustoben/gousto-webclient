@@ -1,0 +1,15 @@
+@value Blackberry, Bronze from 'styles/colors.module.css';
+@value sizeSM from 'styles/typography.module.css';
+
+.surcharge {
+	background: Bronze;
+	color: Blackberry;
+	font-size: sizeSM;
+	display: inline-block;
+	border-radius: 4px;
+	padding: 0.125rem 0.25rem;
+	line-height: 18px;
+	margin: -4px 0 0 5px;
+	vertical-align: middle;
+	text-transform: none;
+}

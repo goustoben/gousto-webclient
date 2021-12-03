@@ -1,0 +1,38 @@
+@value White, Blackberry, Basa from 'styles/colors.module.css';
+
+.recipeDetails {
+  position: relative;
+  border: 1px solid Basa;
+  background: White;
+  width: 100%;
+  cursor: pointer;
+}
+
+.recipeTitle {
+  text-align: left;
+  color: Blackberry;
+  margin: 0 0 0.5rem;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  overflow: hidden;
+  height: 3rem;
+}
+
+.simple {
+  min-height: 10rem;
+  position: relative;
+}
+
+.cookingTime {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
+
+.textContainer {
+  text-align: left;
+  padding: 1rem;
+}
+
+.ratingContainer {
+  height: 1.25rem;
+}

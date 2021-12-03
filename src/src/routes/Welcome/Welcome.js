@@ -8,7 +8,7 @@ import ProductSelection from 'containers/welcome/ProductSelection'
 import OrderSummary from 'containers/welcome/OrderSummary'
 import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
 import { AwinPixelContainer } from './AwinPixel'
-import css from './Welcome.css'
+import css from './Welcome.module.css'
 import { AppPromo } from './AppPromo'
 import { OrderSchedule } from './OrderSchedule'
 

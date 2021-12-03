@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import css from './CollectionPicker.css'
+import css from './CollectionPicker.module.css'
 
 export const Pill = ({ isActive, onClick, children }) => (
   <button type="button" className={classNames(css.pill)} onClick={onClick}>

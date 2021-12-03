@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Heading } from 'goustouicomponents'
-import css from './ModuleTitle.css'
+import css from './ModuleTitle.module.css'
 
 const ModuleTitle = ({ title, subTitle }) => (
   <Fragment>

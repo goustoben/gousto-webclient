@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import css from './CarouselArrow.css'
+import css from './CarouselArrow.module.css'
 
 export const Arrow = ({ side, ...props }) => {
   const stripInvalidHtmlProps = (allProps) => {

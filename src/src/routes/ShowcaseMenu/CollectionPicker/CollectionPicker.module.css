@@ -1,0 +1,94 @@
+@value BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+@value Small, FontFamilyAxiformaSemiBold from 'design-language/typography.module.css';
+@value White from 'styles/colors.module.css';
+@value NG50, CG100, S400, spacingS, spacingM from 'routes/ShowcaseMenu/showcaseMenuStyles.module.css';
+
+.collectionPickerFixedLines {
+  margin: 0 auto 0.5rem;
+  padding: 0 spacingS;
+  overflow-x: auto;
+
+  @media BreakpointFromMedium {
+    padding: 0 spacingM;
+  }
+
+  @media BreakpointFromLarge {
+    display: none;
+  }
+}
+
+.collectionPickerWrappedLines {
+  max-width: 75rem;
+  margin: 0 auto 1rem;
+  padding: 0 spacingM;
+
+  @media BreakpointToLarge {
+    display: none;
+  }
+}
+
+.line {
+  display: flex;
+
+  &::after {
+    content: "";
+    flex: 0 0 spacingS;
+
+    @media BreakpointFromMedium {
+      flex: 0 0 spacingM;
+    }
+  }
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.spacer {
+  display: none;
+}
+
+.pill {
+  border: 0;
+  margin: 0 0.5rem 0 0;
+  padding: 0.25rem 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: transparent;
+
+  &:hover, &:focus {
+    outline: none;
+
+    .pillInternal {
+      border-color: S400;
+      outline: none;
+    }
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.pillInternal {
+  border-radius: 3px;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  border: 0;
+  margin: 0;
+  border: 1px solid CG100;
+  background: NG50;
+  text-transform: uppercase;
+  font: Small FontFamilyAxiformaSemiBold !important;
+}
+
+.pillInternalIsActive {
+  color: White;
+  border-color: S400;
+  background: S400;
+}

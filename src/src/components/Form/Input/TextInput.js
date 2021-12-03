@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 // eslint-disable-next-line import/no-unresolved
-import formsCss from 'styles/forms.css'
+import formsCss from 'styles/forms.module.css'
 import { InputWrapper } from 'Form/InputWrapper'
-import css from './input.css'
-import checkoutCss from '../../../routes/Checkout/Checkout.css'
+import css from './input.module.css'
+import checkoutCss from '../../../routes/Checkout/Checkout.module.css'
 
 const propTypes = {
   additionalProps: PropTypes.shape({}),

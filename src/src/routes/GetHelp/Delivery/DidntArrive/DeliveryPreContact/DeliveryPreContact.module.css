@@ -1,0 +1,9 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.mainText {
+  padding-top: 0.5rem;
+
+  @media BreakpointFromMedium {
+    padding-bottom: 0.5rem;
+  }
+}

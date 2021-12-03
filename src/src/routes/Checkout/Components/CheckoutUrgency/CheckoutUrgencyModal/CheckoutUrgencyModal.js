@@ -13,7 +13,7 @@ import {
   checkoutUrgencyExpiredModalPrimaryButtonClicked,
 } from 'actions/trackingKeys'
 import { Clock } from '../Clock'
-import css from './CheckoutUrgencyModal.css'
+import css from './CheckoutUrgencyModal.module.css'
 
 const getModalComponents = (isExpired) => {
   if (isExpired) {

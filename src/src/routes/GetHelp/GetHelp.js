@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { LoadingWrapper } from './LoadingWrapper'
 import { Error } from './components/Error'
-import css from './GetHelp.css'
+import css from './GetHelp.module.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Tooltip } from 'goustouicomponents'
-import css from './InfoToggle.css'
+import css from './InfoToggle.module.css'
 
 const propTypes = {
   children: PropTypes.arrayOf(PropTypes.node),

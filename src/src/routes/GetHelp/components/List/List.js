@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import css from './List.css'
+import css from './List.module.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

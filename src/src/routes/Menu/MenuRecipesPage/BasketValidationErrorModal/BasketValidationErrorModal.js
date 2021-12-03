@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 import { Button } from 'goustouicomponents'
-import css from './BasketValidationErrorModal.css'
+import css from './BasketValidationErrorModal.module.css'
 
 export const BasketValidationErrorModal = ({ title, shouldShow, shouldShowSwapButton, closeModal, brokenRulesToDisplay, basketRecipeSwap }) => (
   <ModalComponent visible={shouldShow} styleName={css.basketErrorModal}>

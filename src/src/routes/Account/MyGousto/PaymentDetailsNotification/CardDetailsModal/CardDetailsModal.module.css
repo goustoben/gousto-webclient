@@ -1,0 +1,17 @@
+@value ScreenXXSMin from 'styles/screenSizes.module.css';
+
+.modalContent {
+  padding: 1.5rem;
+  width: 100%;
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+}
+
+.disableScroll > div {
+  @media ScreenXXSMin {
+    overflow: hidden;
+  }
+}
+
+.bold {
+  composes: fontBold from 'design-language/typography.module.css';
+}

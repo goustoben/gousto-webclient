@@ -4,9 +4,9 @@ import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { completeWizardRecipesPerBox } from 'actions/trackingKeys'
 import { Button } from '../../Button'
-import signupCss from '../../Signup.css'
+import signupCss from '../../Signup.module.css'
 import { Image } from '../../Image'
-import css from './RecipesPerBoxStep.css'
+import css from './RecipesPerBoxStep.module.css'
 
 const RecipesPerBoxStep = ({ basketSetNumRecipes, trackSignupWizardAction, next }) => {
   const handleClick = (value) => {
