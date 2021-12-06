@@ -19,7 +19,6 @@ jest.mock('config/cms', () => ({
 describe('pathToSlug', () => {
   test('maps known paths to their aliases', () => {
     expect(pathToSlug('welcome-to-gousto')).toBe('welcome')
-    expect(pathToSlug('')).toBe('homepage')
   })
 
   test('returns unknown paths as default', () => {

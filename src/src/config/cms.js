@@ -1,6 +1,5 @@
 module.exports = {
   allowedRoutes: [
-    'homepage',
     'welcome',
     'unsubscribe',
     'get-help',
