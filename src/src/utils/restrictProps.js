@@ -1,5 +1,4 @@
-
-function restrictProps(currentProps, restrictedProps, defaultProps = {}) {
+export function restrictProps(currentProps, restrictedProps, defaultProps = {}) {
   const newProps = {
     ...defaultProps,
   }
@@ -11,5 +10,3 @@ function restrictProps(currentProps, restrictedProps, defaultProps = {}) {
 
   return newProps
 }
-
-export default restrictProps

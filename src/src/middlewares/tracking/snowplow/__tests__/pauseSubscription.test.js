@@ -1,8 +1,8 @@
 import sinon from 'sinon'
 
-import pauseSubscriptionTracking from 'middlewares/tracking/snowplow/pauseSubscription'
-import seActions from 'middlewares/tracking/snowplow/pauseSubscription/seActions'
-import seRecoveryAttemptTypesByModalType from 'middlewares/tracking/snowplow/pauseSubscription/seRecoveryAttemptTypesByModalType'
+import { pauseSubscriptionTracking } from 'middlewares/tracking/snowplow/pauseSubscription'
+import { seActions } from 'middlewares/tracking/snowplow/pauseSubscription/seActions'
+import { seRecoveryAttemptTypesByModalType } from 'middlewares/tracking/snowplow/pauseSubscription/seRecoveryAttemptTypesByModalType'
 
 describe('snowplow pauseSubscription Tracking', () => {
   const action = {

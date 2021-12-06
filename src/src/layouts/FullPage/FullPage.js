@@ -5,7 +5,7 @@ import Footer from 'Footer'
 
 import css from './FullPage.css'
 
-const FullPage = ({ children, route }) => (
+export const FullPage = ({ children, route }) => (
   <div className={css.container}>
     <Header />
     {children}
@@ -21,5 +21,3 @@ FullPage.propTypes = {
 FullPage.defaultProps = {
   route: {},
 }
-
-export default FullPage

@@ -1,5 +1,5 @@
-import seActions from './seActions'
-import seRecoveryAttemptTypesByModalType from './seRecoveryAttemptTypesByModalType'
+import { seActions } from './seActions'
+import { seRecoveryAttemptTypesByModalType } from './seRecoveryAttemptTypesByModalType'
 
 const seCategory = 'PauseSubscription'
 

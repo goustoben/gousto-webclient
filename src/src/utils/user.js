@@ -26,12 +26,3 @@ export function getUserOrderRecipeIds(userOrder = new Immutable.Map({})) {
 export function getUserOrderRecipeUuIds(userOrder = new Immutable.Map({})) {
   return userOrder.get('recipeItems', new Immutable.List([])).map(recipeItem => recipeItem.get('recipeUuid')).toArray()
 }
-
-export default {
-  getUserOrderById,
-  getUserOrderGiftIds,
-  getUserOrderGiftProductIds,
-  getUserOrderProductIds,
-  getUserOrderRecipeIds,
-  getUserOrderRecipeUuIds,
-}

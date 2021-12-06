@@ -5,7 +5,7 @@ import Link from 'Link'
 
 import css from './Unsubscribed.css'
 
-const Unsubscribed = ({ copy }) => (
+export const Unsubscribed = ({ copy }) => (
   <div>
     <Link to="/" data-testing="post-unsubscribe-cta">
       {copy.link}
@@ -19,5 +19,3 @@ Unsubscribed.propTypes = {
     link: PropTypes.string,
   }).isRequired,
 }
-
-export default Unsubscribed

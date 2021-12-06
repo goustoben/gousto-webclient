@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-export default function getPauseScreenContentMapped(contentConfig = Immutable.List([]), contentFromStore = Immutable.Map({}), contextFromStore = Immutable.Map({})) {
+export function getPauseScreenContentMapped(contentConfig = Immutable.List([]), contentFromStore = Immutable.Map({}), contextFromStore = Immutable.Map({})) {
   return contentConfig.reduce((workingContent, contentItemConfig) => {
     let finalContentItem = Immutable.Map({
       type: contentItemConfig.get('type'),

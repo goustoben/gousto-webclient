@@ -2,13 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import moment from 'moment'
-import deliverySlotUtils from 'utils/deliverySlot'
+import { toTimeRange } from 'utils/deliverySlot'
 import css from './DeliveryDetails.css'
 
 export const DeliveryDetails = (props) => {
   const { address, date, slot } = props
   const deliveryDate = moment(date).format('ddd, D MMM')
-  const deliveryTime = deliverySlotUtils.toTimeRange(slot)
+  const deliveryTime = toTimeRange(slot)
 
   const shippingDetails = [
     address.get('line1'),

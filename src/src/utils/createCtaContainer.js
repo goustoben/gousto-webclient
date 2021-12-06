@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
-export default function createCtaContainer({ action, text, type, additionalProps } = {}) {
+export function createCtaContainer({ action, text, type, additionalProps } = {}) {
   const mapStateToProps = (state, ownProps) => ({
     ...additionalProps,
     ...ownProps,

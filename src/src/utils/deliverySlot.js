@@ -67,14 +67,3 @@ export const createNextDayDeliveryDays = () => {
 }
 
 /** END: Temp methods for NDD painted door */
-
-export default {
-  toTimeRange,
-  formatNextDayDeliveryDayDate,
-  formatNextDayDeliveryDayLabel,
-  getDateOffset,
-  isAfterCutoff,
-  createNextDayDeliveryDays,
-  generateNextDayDeliverySlots
-}
-

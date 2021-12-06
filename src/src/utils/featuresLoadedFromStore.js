@@ -1,4 +1,4 @@
-export default function featuresLoadedFromStore({ enable, disable, set = {}, features = {}} = {}, store) {
+export function featuresLoadedFromStore({ enable, disable, set = {}, features = {}} = {}, store) {
   const state = store.getState()
   let allMatched = true
 

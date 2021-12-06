@@ -1,4 +1,4 @@
-export default {
+export const seRecoveryAttemptTypesByModalType = {
   promo: 'promo',
   contact: 'contact_cc',
   copy: 'generic',

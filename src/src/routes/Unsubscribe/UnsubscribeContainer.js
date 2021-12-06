@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
 import userActions from 'actions/user'
-import Unsubscribe from './Unsubscribe'
+import { Unsubscribe } from './Unsubscribe'
 
 const mapStateToProps = (state) => ({
   error: state.error.get(actionTypes.UNSUBSCRIBED_USER, ''),

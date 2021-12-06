@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { PageContent, PageHeader } from 'Page'
-import Confirm from './Confirm'
-import Unsubscribed from './Unsubscribed'
+import { Confirm } from './Confirm'
+import { Unsubscribed } from './Unsubscribed'
 
 import css from './Unsubscribe.css'
 
@@ -40,7 +40,7 @@ const defaultProps = {
   },
 }
 
-class Unsubscribe extends React.PureComponent {
+export class Unsubscribe extends React.PureComponent {
   state = {}
 
   unsubscribeHander = () => {
@@ -88,5 +88,3 @@ class Unsubscribe extends React.PureComponent {
 
 Unsubscribe.propTypes = propTypes
 Unsubscribe.defaultProps = defaultProps
-
-export default Unsubscribe

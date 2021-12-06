@@ -1,9 +1,9 @@
-import hashLink from 'routes/hashLinkScroll'
+import { hashLinkScroll } from 'routes/hashLinkScroll'
 import sinon from 'sinon'
 
 const windowUtils = require('utils/window')
 
-describe('hashLink', () => {
+describe('hashLinkScroll', () => {
   let sandbox
   // eslint-disable-next-line no-unused-vars
   let windowLocationStub
@@ -26,7 +26,7 @@ describe('hashLink', () => {
     windowLocationStub = sandbox
       .stub(windowUtils, 'windowLocation')
       .returns({ hash: '#openings' })
-    const hl = hashLink()
+    const hl = hashLinkScroll()
     expect(hl).toEqual(true)
   })
 
@@ -34,7 +34,7 @@ describe('hashLink', () => {
     windowLocationStub = sandbox
       .stub(windowUtils, 'windowLocation')
       .returns({ hash: '' })
-    const hl = hashLink()
+    const hl = hashLinkScroll()
     expect(hl).toEqual(false)
   })
 })

@@ -2,8 +2,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import GoustoImage from 'Image'
-import sanitizeText from 'utils/sanitizeText'
 import { SimpleRecipe } from './SimpleRecipe'
+
+jest.mock('utils/sanitizeText', () => ({
+  removeDiacritics: jest.fn().mockImplementation((param) => param),
+}))
 
 describe('<SimpleRecipe />', () => {
   let wrapper
@@ -24,7 +27,6 @@ describe('<SimpleRecipe />', () => {
   }
 
   beforeEach(() => {
-    jest.spyOn(sanitizeText, 'removeDiacritics').mockImplementation((param) => param)
     wrapper = shallow(<SimpleRecipe {...recipe} />)
   })
 

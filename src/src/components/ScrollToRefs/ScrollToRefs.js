@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import * as domHelper from 'utils/DOMhelper'
+import { scrollToFirstMatchingNode } from 'utils/DOMhelper'
 
 const propTypes = {
   refKeys: PropTypes.array,
@@ -37,7 +37,7 @@ class ScrollToRefs extends PureComponent {
   }
 
   scrollToFirstMatchingRef = refKeys => {
-    domHelper.scrollToFirstMatchingNode(refKeys, this.refs)
+    scrollToFirstMatchingNode(refKeys, this.refs)
   }
 
   render() {

@@ -3,12 +3,8 @@ import ReactDOM from 'react-dom'
 import scrollIntoView from 'scroll-into-view'
 import logger from 'utils/logger'
 
-const DOMHelper = {
-  getBoundingClientRect,
+export const DOMHelper = {
   getFirstMatchingNode,
-  scrollToFirstMatchingNode,
-  getElementHeight,
-  getElementOffsetTop
 }
 
 export function getBoundingClientRect(ref) {
@@ -71,5 +67,3 @@ export const isNodeInRoot = (node, root) => {
 
   return false
 }
-
-export default DOMHelper

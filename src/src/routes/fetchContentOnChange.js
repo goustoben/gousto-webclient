@@ -7,11 +7,6 @@ export const pathToSlug = (path) => {
       path: /^welcome-to-gousto/i,
       slug: 'welcome',
     },
-
-    {
-      path: /^$/i,
-      slug: 'homepage',
-    },
   ]
 
   const mappedPath = mappings.find((mapping) => mapping.path.test(path))

@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import loginFailed from '../global/loginFailed'
+import { loginFailed } from '../global/loginFailed'
 
 describe('loginFailed', () => {
   test('should return the correct action', () => {

@@ -1,5 +1,6 @@
 import { OrderedMap, fromJS } from 'immutable'
-import * as productUtils from 'utils/products'
+import { getCategoriesFromProducts } from 'utils/products'
+
 import {
   getProducts,
   getCategoriesForNavBar,
@@ -8,6 +9,10 @@ import {
   getProductsOutOfStock,
   getProductsLoadError,
 } from '../products'
+
+jest.mock('utils/products', () => ({
+  getCategoriesFromProducts: jest.fn().mockImplementation()
+}))
 
 const createOrderedMap = targetObject => (
   OrderedMap(fromJS(targetObject))
@@ -100,13 +105,11 @@ describe('the products selectors', () => {
 
   describe('the getCategoriesForNavBar selector', () => {
     test('calls the getCategoriesFromProducts utility function', () => {
-      const getCategoriesFromProductsSpy = jest.spyOn(productUtils, 'getCategoriesFromProducts').mockImplementation()
-
       getCategoriesForNavBar.resultFunc(products)
 
-      expect(getCategoriesFromProductsSpy).toHaveBeenCalledWith(products)
+      expect(getCategoriesFromProducts).toHaveBeenCalledWith(products)
 
-      getCategoriesFromProductsSpy.mockClear()
+      getCategoriesFromProducts.mockClear()
     })
   })
 

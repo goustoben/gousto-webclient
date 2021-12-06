@@ -7,7 +7,7 @@ import { setAffiliateSource, setAwinClickChecksum } from 'actions/tracking'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { getIsAuthenticated } from 'selectors/auth'
 
-async function processQuery(query, store, { hashTag = '', }) {
+export async function processQuery(query, store, { hashTag = '', }) {
   if (!query || !store) {
     return
   }
@@ -59,5 +59,3 @@ async function processQuery(query, store, { hashTag = '', }) {
     axe(React, ReactDOM, 1000)
   }
 }
-
-export default processQuery

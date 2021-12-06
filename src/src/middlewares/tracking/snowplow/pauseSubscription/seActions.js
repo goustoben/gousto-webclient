@@ -1,4 +1,4 @@
-export default {
+export const seActions = {
   SUBSCRIPTION_PAUSE_ATTEMPT: 'pause_subscription_attempt',
   START_MODAL_VIEWED: 'StartModalViewed',
   REASON_CATEGORY_MODAL_VIEWED: 'ReasonCategoryModalViewed',

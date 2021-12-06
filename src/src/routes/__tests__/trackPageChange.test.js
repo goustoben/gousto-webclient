@@ -1,5 +1,5 @@
 import { documentLocation } from 'utils/window'
-import trackPageChange from '../trackPageChange'
+import { trackPageChange } from '../trackPageChange'
 
 jest.mock('utils/window', () => ({
   documentLocation: jest.fn(),

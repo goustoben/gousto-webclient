@@ -1,4 +1,4 @@
-import dottify from 'utils/dottify'
+import { dottify } from 'utils/dottify'
 
 describe('dottify', () => {
   test('should turn the first key of the object into a dot separated array', () => {

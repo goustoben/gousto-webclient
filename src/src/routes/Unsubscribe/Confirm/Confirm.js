@@ -5,7 +5,7 @@ import { Button } from 'goustouicomponents'
 
 import css from './Confirm.css'
 
-const Confirm = ({ pending, unsubscribeClick, isError, copy, dataTesting }) => (
+export const Confirm = ({ pending, unsubscribeClick, isError, copy, dataTesting }) => (
   <div>
     <p>
       {copy.body1}
@@ -44,5 +44,3 @@ Confirm.propTypes = {
 Confirm.defaultProps = {
   dataTesting: ''
 }
-
-export default Confirm

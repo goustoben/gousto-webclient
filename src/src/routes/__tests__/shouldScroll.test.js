@@ -1,4 +1,4 @@
-import shouldScroll from 'routes/shouldScroll'
+import { shouldScroll } from 'routes/shouldScroll'
 
 describe('shouldScroll', () => {
   test('should return true if the pathname has changed', () => {
