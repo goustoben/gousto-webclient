@@ -139,6 +139,7 @@ describe('CheckoutPayPalDetails', () => {
     let firePayPalError
     let setPayPalNonce
     let trackEvent
+    let trackSuccessfulCheckoutFlow
     let braintree
     let paypal
     const clientInstance = {
@@ -163,6 +164,7 @@ describe('CheckoutPayPalDetails', () => {
       firePayPalError = jest.fn()
       setPayPalNonce = jest.fn()
       trackEvent = jest.fn()
+      trackSuccessfulCheckoutFlow = jest.fn()
       paypalButtonsInstance = {
         render: jest.fn(() => Promise.resolve()),
       }
@@ -200,6 +202,7 @@ describe('CheckoutPayPalDetails', () => {
         firePayPalError,
         setPayPalNonce,
         trackEvent,
+        trackSuccessfulCheckoutFlow,
       })
     })
 
@@ -303,6 +306,10 @@ describe('CheckoutPayPalDetails', () => {
 
         test('should trigger clickContinuePayPal event', () => {
           expect(trackEvent).toHaveBeenCalledWith(clickContinuePayPal)
+        })
+
+        test('should call trackSuccessfulCheckoutFlow', () => {
+          expect(trackSuccessfulCheckoutFlow).toHaveBeenCalledWith('PayPal signup attempt')
         })
 
         test('should trigger event', () => {
