@@ -39,6 +39,7 @@ const getHelpRoutes = (store) => {
     multipleIngredientsIssues,
     recipeCards,
     recipeCardsConfirmation,
+    recipeCardsSelect,
     repetitiveIngredientsIssues,
     sameDayIngredientIssues
   } = configRoutes.client.getHelp
@@ -104,11 +105,11 @@ const getHelpRoutes = (store) => {
           component={RecipeCardsContainer}
         />
         <Route
-          path={`${recipeCards({ userId: ':userId', orderId: ':orderId' })}/select`}
+          path={`${recipeCardsSelect({ userId: ':userId', orderId: ':orderId' })}`}
           component={RecipeCardsSelectContainer}
         />
         <Route
-          path={`${recipeCards({ userId: ':userId', orderId: ':orderId' })}/${recipeCardsConfirmation}`}
+          path={`${recipeCardsConfirmation({ userId: ':userId', orderId: ':orderId' })}`}
           component={RecipeCardConfirmationContainer}
         />
         <Route

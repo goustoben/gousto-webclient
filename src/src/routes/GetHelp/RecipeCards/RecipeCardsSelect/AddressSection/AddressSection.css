@@ -1,0 +1,8 @@
+.loadingWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-weight: bold;
+}

@@ -1,15 +1,25 @@
 import { getAccessToken } from 'selectors/auth'
+import { getUserId } from 'selectors/user'
+import { getDefaultShippingAddressId, getOrderShippingAddress} from '../selectors/addressSelectors'
 import { fetchShippingAddresses } from '../apis/core'
 import { asyncAndDispatch } from './utils'
+import { getValidAddressForOrder } from '../utils/validateAddress'
 import { actionTypes } from './actionTypes'
 
-export const loadShippingAddresses = (userId) => async (dispatch, getState) => {
+export const loadShippingAddresses = () => async (dispatch, getState) => {
   const accessToken = getAccessToken(getState())
+  const userId = getUserId(getState())
+  const orderAddress = getOrderShippingAddress(getState())
+  const defaultShippingAddressId = getDefaultShippingAddressId(getState())
 
   const getPayload = async () => {
-    const response = await fetchShippingAddresses(accessToken)
+    const { data: userAddresses } = await fetchShippingAddresses(accessToken)
+    const selectedAddress = getValidAddressForOrder(userAddresses, orderAddress, defaultShippingAddressId )
 
-    return response.data
+    return {
+      userAddresses,
+      selectedAddress
+    }
   }
 
   await asyncAndDispatch({

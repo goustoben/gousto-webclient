@@ -1,3 +1,5 @@
+const recipeCards = ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/recipe-cards`
+
 module.exports = {
   address: {
     postcodeLookup: '/address/postcode-lookup',
@@ -45,8 +47,9 @@ module.exports = {
       multipleIngredientsIssues: 'multiple-ingredients-issues',
       ingredients: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/ingredients`,
       orderIssue: 'order-issue',
-      recipeCards: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/recipe-cards`,
-      recipeCardsConfirmation: 'confirmation',
+      recipeCards,
+      recipeCardsConfirmation: ({ userId, orderId }) => `${recipeCards({ userId, orderId })}/confirmation`,
+      recipeCardsSelect: ({ userId, orderId }) => `${recipeCards({ userId, orderId })}/select`,
       repetitiveIngredientsIssues: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/repetitive-ingredient-issues`,
       refund: 'refund',
       sameDayIngredientIssues: 'same-day-ingredient-issues'
