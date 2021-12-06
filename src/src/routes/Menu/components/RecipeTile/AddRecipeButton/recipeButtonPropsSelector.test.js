@@ -1,25 +1,11 @@
-import Immutable from 'immutable'
 import { getRecipeButtonProps } from './recipeButtonPropsSelector'
 
 describe('getRecipesButtonProps', () => {
-  let state
-  const props = {
-    recipeId: '1234'
-  }
-
   describe('when recipe is in basket', () => {
-    beforeEach(() => {
-      state = {
-        basket: Immutable.fromJS({
-          recipes: {
-            1234: '1',
-          }
-        })
-      }
-    })
+    const isInBasket = true
 
     test('should return the props for a remove button', () => {
-      const result = getRecipeButtonProps(state, props)
+      const result = getRecipeButtonProps(isInBasket)
       expect(result).toEqual({
         buttonClassName: 'removeButton',
         lineClassName: 'removeButtonLine',
@@ -27,19 +13,12 @@ describe('getRecipesButtonProps', () => {
       })
     })
   })
-  describe('when recipe is in basket', () => {
-    beforeEach(() => {
-      state = {
-        basket: Immutable.fromJS({
-          recipes: {
-            3444: '1',
-          }
-        })
-      }
-    })
+
+  describe('when recipe is not in basket', () => {
+    const isInBasket = false
 
     test('should return the props for a add button', () => {
-      const result = getRecipeButtonProps(state, props)
+      const result = getRecipeButtonProps(isInBasket)
       expect(result).toEqual({
         buttonClassName: 'addButton',
         lineClassName: 'addButtonLine',

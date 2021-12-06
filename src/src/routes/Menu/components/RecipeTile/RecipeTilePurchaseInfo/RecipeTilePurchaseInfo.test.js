@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
-import { AddRecipeButtonContainer } from '../AddRecipeButton'
+import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptions } from '../SwapAlternativeOptions/SwapAlternativeOptions'
 import { SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions/SwapAlternativeOptionsMobile'
 
@@ -81,8 +81,8 @@ describe('RecipeTilePurchaseInfo', () => {
       wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
     })
 
-    test('should render AddRecipeButtonContainer', () => {
-      expect(wrapper.find(AddRecipeButtonContainer)).toHaveLength(1)
+    test('should render AddRecipeButton', () => {
+      expect(wrapper.find(AddRecipeButton)).toHaveLength(1)
     })
   })
 

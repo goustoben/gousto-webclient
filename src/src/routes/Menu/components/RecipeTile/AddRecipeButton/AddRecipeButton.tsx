@@ -1,28 +1,39 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
+import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useBasket } from 'routes/Menu/domains/basket'
+import { menuBrowseCTAVisibilityChange } from 'actions/menu'
+import { getRecipeButtonProps } from './recipeButtonPropsSelector'
 import css from './AddRecipeButton.css'
 
-export const AddRecipeButton = ({
-  basketRecipeAddAttempt,
-  basketRecipeRemove,
-  recipeId,
-  isInBasket,
-  isBasketLimitReached,
-  buttonProps,
-}) => {
-  const disabled = isBasketLimitReached && !isInBasket
+export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) => {
+  const dispatch = useDispatch()
+  const { canAddRecipes, addRecipe, removeRecipe, limitReached, isRecipeInBasket } = useBasket()
 
-  const buttonAction = (e) => {
-    if (isInBasket) {
-      basketRecipeRemove(recipeId)
-    } else {
-      basketRecipeAddAttempt(recipeId)
-    }
+  const isInBasket = isRecipeInBasket(recipeId)
+  const disabled = limitReached && !isInBasket
+
+  const buttonProps = getRecipeButtonProps(isInBasket)
+
+  const buttonAction: React.EventHandler<SyntheticEvent<unknown>> = (e) => {
     e.stopPropagation()
+
+    if (!canAddRecipes) {
+      dispatch(menuBrowseCTAVisibilityChange(true))
+
+      return
+    }
+
+    if (isInBasket) {
+      removeRecipe(recipeId)
+    } else {
+      addRecipe(recipeId)
+    }
   }
 
-  const buttonKeyPressAction = (e) => {
+  const buttonKeyPressAction: React.KeyboardEventHandler = (e) => {
     e.stopPropagation()
+
     if (e.keyCode === 13) {
       buttonAction(e)
     }
@@ -31,6 +42,7 @@ export const AddRecipeButton = ({
   return (
     <button
       className={css[buttonProps.buttonClassName]}
+      name="addRecipeButton"
       type="button"
       disabled={disabled}
       onClick={buttonAction}
@@ -52,17 +64,7 @@ export const AddRecipeButton = ({
     </button>
   )
 }
+
 AddRecipeButton.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  basketRecipeAddAttempt: PropTypes.func.isRequired,
-  basketRecipeRemove: PropTypes.func.isRequired,
-  isInBasket: PropTypes.bool.isRequired,
-  isBasketLimitReached: PropTypes.bool.isRequired,
-  buttonProps: PropTypes.shape({
-    buttonClassName: PropTypes.string,
-    lineClassName: PropTypes.string,
-    buttonText: PropTypes.string,
-  }).isRequired,
-
 }
-
