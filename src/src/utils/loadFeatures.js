@@ -2,8 +2,7 @@ import { featuresSet } from 'actions/features'
 import globals from 'config/globals'
 import { getWindow } from 'utils/window'
 
-// eslint-disable-next-line import/no-default-export
-export default function loadFeatures({ enable, disable, set = {}, features = {}} = {}, store) {
+export function loadFeatures({ enable, disable, set = {}, features = {}} = {}, store) {
   const featuresArr = []
   if (enable) {
     enable.forEach(feature => {

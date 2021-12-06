@@ -9,7 +9,7 @@ import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
 import { ProductItem } from 'Product/ProductItem'
 import SaveButton from 'OrderSummary/SaveButton'
 import classnames from 'classnames'
-import productUtils from 'utils/products'
+import { isNotAGift } from 'utils/products'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import css from './OrderSummary.css'
 
@@ -104,7 +104,7 @@ class OrderSummary extends PureComponent {
       const product = products.get(productId, Immutable.Map())
 
       // Hide gifts
-      if (!productUtils.isNotAGift(product)) {
+      if (!isNotAGift(product)) {
         return false
       }
 

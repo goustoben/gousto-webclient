@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import featuresLoadedFromStore from 'utils/featuresLoadedFromStore'
+import { featuresLoadedFromStore } from 'utils/featuresLoadedFromStore'
 
 describe('featuresLoadedFromStore', () => {
   let store

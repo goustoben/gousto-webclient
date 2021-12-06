@@ -1,1 +1,1 @@
-export { default } from './FullPage'
+export { FullPage } from './FullPage'

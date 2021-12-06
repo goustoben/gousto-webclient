@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import withError from 'utils/withError'
+import { withError } from 'utils/withError'
 import { BoxPriceBlock } from '../BoxPriceBlock/BoxPriceBlockRedesign'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import css from './BoxPriceList.css'

@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import processQuery from 'utils/processQuery'
+import { processQuery } from 'utils/processQuery'
 import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'

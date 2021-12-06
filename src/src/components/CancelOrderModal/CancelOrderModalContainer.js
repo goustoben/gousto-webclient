@@ -5,4 +5,4 @@ const mapStateToProps = (state) => ({
   cancelOrderModalOpen: state.orderCancelledModalVisibility.get('visibility'),
 })
 
-export default connect(mapStateToProps, {})(CancelOrderModal)
+export const CancelOrderModalContainer = connect(mapStateToProps, {})(CancelOrderModal)

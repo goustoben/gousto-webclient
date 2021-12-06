@@ -1,3 +1,3 @@
-import * as pauseSubscription from './pauseSubscription'
+import * as pauseSubscriptionTracking from './pauseSubscription'
 
-export default pauseSubscription
+export { pauseSubscriptionTracking }

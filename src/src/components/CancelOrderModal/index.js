@@ -1,1 +1,1 @@
-export { default } from './CancelOrderModalContainer'
+export { CancelOrderModalContainer } from './CancelOrderModalContainer'

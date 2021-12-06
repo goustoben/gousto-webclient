@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 
-export default function loginFailed(action, state) {
+export function loginFailed(action, state) {
   return {
     type: action.type,
     data: {

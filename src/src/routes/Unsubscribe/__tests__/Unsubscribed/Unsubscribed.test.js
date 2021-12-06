@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Link from 'Link'
-import Unsubscribed from 'routes/Unsubscribe/Unsubscribed'
+import { Unsubscribed } from 'routes/Unsubscribe/Unsubscribed'
 
 describe('<Unsubscribed />', () => {
   test('<Link /> is present', () => {

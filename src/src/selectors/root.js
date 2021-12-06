@@ -11,15 +11,3 @@ export const getUserAgent = ({ request }) => request.get('userAgent')
 export const getProductCategories = ({ productsCategories }) => productsCategories
 export const getMenuBrowseCTAShow = ({ menuBrowseCTAShow }) => menuBrowseCTAShow
 export const getMenuService = ({ menuService }) => menuService
-
-export default {
-  getStock,
-  getBasket,
-  getRecipes,
-  getUserAgent,
-  getMenuCollections,
-  getMenuCutoffUntil,
-  getReceiveMenuPending,
-  getBoxSummaryDeliveryDays,
-  getMenuService
-}

@@ -1,7 +1,7 @@
 import sinon from 'sinon'
 
 import Immutable from 'immutable'
-import basketTracking from 'middlewares/tracking/snowplow/basket'
+import { basketTracking } from 'middlewares/tracking/snowplow/basket'
 import * as trackingKeys from 'actions/trackingKeys'
 
 describe('snowplow basketOrderLoaded data', () => {

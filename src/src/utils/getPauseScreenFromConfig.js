@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import config from 'config/subscription'
 
-export default function getPauseScreenFromConfig(key) {
+export function getPauseScreenFromConfig(key) {
   let screen = {
     type: key,
   }

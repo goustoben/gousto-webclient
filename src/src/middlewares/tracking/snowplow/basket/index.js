@@ -1,3 +1,3 @@
-import * as basket from './basket'
+import * as basketTracking from './basket'
 
-export default basket
+export { basketTracking }

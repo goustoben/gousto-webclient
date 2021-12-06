@@ -2,7 +2,7 @@ import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
 import configureMockStore from 'redux-mock-store'
-import createCtaContainer from 'utils/createCtaContainer'
+import { createCtaContainer } from 'utils/createCtaContainer'
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
 

@@ -90,11 +90,3 @@ export function sortProductsByPrice(products) {
 
   return [...productsWithPrice, ...freeProducts]
 }
-
-export default {
-  getCategoriesFromProducts,
-  getOneProductFromEachCategory,
-  getProductsByCutoff,
-  isNotAGift,
-  sortProductsByPrice,
-}

@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import DOMHelper, { getBoundingClientRect, getElementHeight, getElementOffsetTop, getFirstMatchingNode, scrollToFirstMatchingNode } from 'utils/DOMhelper'
+import { DOMHelper, getBoundingClientRect, getElementHeight, getElementOffsetTop, getFirstMatchingNode, scrollToFirstMatchingNode } from 'utils/DOMhelper'
 
 jest.mock('react-dom',() => ({
   findDOMNode: jest.fn()

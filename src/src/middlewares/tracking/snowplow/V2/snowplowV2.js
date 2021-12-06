@@ -2,15 +2,13 @@ import { actionTypes } from 'actions/actionTypes'
 import globals from 'config/globals'
 import { getWindow } from 'utils/window'
 import logger from 'utils/logger'
-import trackingGlobals from '../global'
-import basketTracking from '../basket'
-import pauseSubscriptionTracking from '../pauseSubscription'
+import { loginAttempt, loginRememberMe, loginFailed, loginVisibility, logout } from '../global'
+import { basketTracking } from '../basket'
+import { pauseSubscriptionTracking } from '../pauseSubscription'
 import { recipeListViewed } from '../recipes'
 import * as menuTracking from '../menu'
 import { getHelpTracking } from '../getHelp'
 import { trackEventWithData, getPathname } from '../utils'
-
-const { loginAttempt, loginRememberMe, loginFailed, loginVisibility, logout } = trackingGlobals
 
 function userIdentifiedTracking(action) {
   const windowObj = getWindow()

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Confirm from 'routes/Unsubscribe/Confirm'
+import { Confirm } from 'routes/Unsubscribe/Confirm'
 
 import css from 'routes/Unsubscribe/Confirm/Confirm.css'
 

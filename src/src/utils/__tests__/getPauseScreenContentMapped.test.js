@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import getPauseScreenContentMapped from 'utils/getPauseScreenContentMapped'
+import { getPauseScreenContentMapped } from 'utils/getPauseScreenContentMapped'
 
 describe('getPauseScreenContentMapped', () => {
   test('should return an Immutable List', () => {

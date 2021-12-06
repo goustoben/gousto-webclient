@@ -12,7 +12,7 @@ import { PromoModalWrapper as PromoModal } from 'PromoModal'
 import { DuplicateOrderModalWrapperContainer } from 'DuplicateOrderModal'
 import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
-import CancelOrderModal from 'CancelOrderModal'
+import { CancelOrderModalContainer } from 'CancelOrderModal'
 import { ExpiredBillingModalContainer } from 'ExpiredBillingModal'
 import { CookieBannerContainer } from 'CookieBanner'
 import { Button } from 'goustouicomponents'
@@ -473,7 +473,7 @@ class Header extends React.PureComponent {
             </div>
           </header>
           {this.renderLoginModal()}
-          <CancelOrderModal close={this.onCloseCancelBoxModal} />
+          <CancelOrderModalContainer close={this.onCloseCancelBoxModal} />
           <PromoModal />
           <DuplicateOrderModalWrapperContainer />
           <ExpiredBillingModalContainer />

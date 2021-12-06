@@ -1,4 +1,4 @@
-export default function loginRememberMe(action) {
+export function loginRememberMe(action) {
   return {
     type: action.type,
     data: {},

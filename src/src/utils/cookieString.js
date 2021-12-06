@@ -1,6 +1,6 @@
 import globals from 'config/globals'
 
-export default function cookieString(reqCookies) {
+export function cookieString(reqCookies) {
   let cookies
   if (globals.server && reqCookies.request && reqCookies.request.headers && reqCookies.request.headers.cookie) {
     cookies = reqCookies.request.headers.cookie.split(';')

@@ -2,7 +2,7 @@
 
 // source: https://github.com/jfriend00/docReady
 
-export default function(funcName, baseObj) {
+export function docReady(funcName, baseObj) {
     "use strict";
     // The public function name defaults to window.docReady
     // but you can modify the last line of this function to pass in a different object or method name

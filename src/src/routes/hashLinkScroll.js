@@ -1,7 +1,7 @@
 import { windowLocation, getDocumentElement } from 'utils/window'
 import globals from 'config/globals'
 
-function hashLink() {
+export function hashLinkScroll() {
   if (globals.client) {
     const {hash} = windowLocation()
     if (hash) {
@@ -17,5 +17,3 @@ function hashLink() {
 
   return false
 }
-
-export default hashLink

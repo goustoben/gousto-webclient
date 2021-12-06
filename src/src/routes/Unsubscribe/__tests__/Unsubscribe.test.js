@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Confirm from 'routes/Unsubscribe/Confirm'
-import Unsubscribed from 'routes/Unsubscribe/Unsubscribed'
-import Unsubscribe from 'routes/Unsubscribe/Unsubscribe'
+import { Confirm } from 'routes/Unsubscribe/Confirm'
+import { Unsubscribed } from 'routes/Unsubscribe/Unsubscribed'
+import { Unsubscribe } from 'routes/Unsubscribe/Unsubscribe'
 
 describe('<Unsubscribe />', () => {
   test('<Confirm /> is rendering correctly', () => {
