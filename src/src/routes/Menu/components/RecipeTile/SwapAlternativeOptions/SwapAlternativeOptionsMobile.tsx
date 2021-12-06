@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { RecipeAlternativeOptions } from 'routes/Menu/Recipe/VariantRecipeList/VariantRecipeList/RecipeAlternativeOptions'
 import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
 import { useClickOutside } from './useClickOutside'
+import { useTracking } from './useTracking'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const css = require('./SwapAlternativeOptions.css')
@@ -13,6 +14,10 @@ export const SwapAlternativeOptionsMobile: React.FC<{
   categoryId: string;
 }> = ({recipeId, originalId, categoryId}) => {
   const [showModal, setShowModal] = useState(false)
+
+  const collectionId = categoryId
+  const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } = useTracking()
+
   const selectRef = useRef(null)
   useClickOutside(
     selectRef,
@@ -35,6 +40,10 @@ export const SwapAlternativeOptionsMobile: React.FC<{
         onClick={(e) => {
           e.stopPropagation()
           setShowModal(!showModal)
+
+          if (!showModal) {
+            trackRecipeAlternativeOptionsMenuOpen({recipeId, collectionId})
+          }
         }}
       >
         <span className={ showModal ? css.arrowUp : css.arrowDown } />
@@ -61,6 +70,11 @@ export const SwapAlternativeOptionsMobile: React.FC<{
                 originalId={originalId}
                 categoryId={categoryId}
                 closeOnSelection
+                onChangeCheckedRecipe={({previousRecipeId, nextRecipeId}) => trackRecipeAlternativeOptionsMenuSwapRecipes({
+                  collectionId,
+                  previousRecipeId,
+                  nextRecipeId,
+                })}
               />
             </ModalContent>
           </div>

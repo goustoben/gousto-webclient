@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { RecipeAlternativeOptions } from 'routes/Menu/Recipe/VariantRecipeList/VariantRecipeList/RecipeAlternativeOptions'
 import { EscapeKeyPressed } from 'utils/DOMEvents'
 import { useClickOutside } from './useClickOutside'
+import { useTracking } from './useTracking'
+import css from './SwapAlternativeOptions.css'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const classnames = require('classnames')
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const css = require('./SwapAlternativeOptions.css')
 
 export const SwapAlternativeOptions:React.FC<{
   recipeId: string;
@@ -16,6 +16,9 @@ export const SwapAlternativeOptions:React.FC<{
   categoryId: string;
 }> = ({recipeId, originalId, categoryId}) => {
   const [showDrop, setShowDrop] = useState(false)
+
+  const collectionId = categoryId
+  const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } = useTracking()
 
   const selectRef = useRef(null)
   useClickOutside(
@@ -35,6 +38,10 @@ export const SwapAlternativeOptions:React.FC<{
         onClick={(e) => {
           e.stopPropagation()
           setShowDrop(!showDrop)
+
+          if (!showDrop) {
+            trackRecipeAlternativeOptionsMenuOpen({recipeId, collectionId})
+          }
         }}
         onKeyUp={e => {
           e.stopPropagation()
@@ -53,6 +60,11 @@ export const SwapAlternativeOptions:React.FC<{
             originalId={originalId}
             categoryId={categoryId}
             closeOnSelection
+            onChangeCheckedRecipe={({previousRecipeId, nextRecipeId}) => trackRecipeAlternativeOptionsMenuSwapRecipes({
+              collectionId,
+              previousRecipeId,
+              nextRecipeId,
+            })}
           />
         </div>
       )}
