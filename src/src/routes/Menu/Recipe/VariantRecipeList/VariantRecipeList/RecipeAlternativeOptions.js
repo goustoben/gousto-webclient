@@ -12,16 +12,17 @@ import css from './VariantRecipeList.css'
  *  It eventually would replace the VarianRecipeListContainer.
  */
 export const RecipeAlternativeOptions = ({
-  recipeId,
+  recipeId: currentRecipeId,
   originalId,
   categoryId,
   closeOnSelection,
   isOnDetailScreen = false,
+  onChangeCheckedRecipe,
 }) => {
   const { getAlternativeOptionsForRecipe } = useMenu()
   const alternativeOptionsForRecipe = getAlternativeOptionsForRecipe({
     originalId,
-    recipeId,
+    recipeId: currentRecipeId,
     isOnDetailScreen,
     isFromShowcaseMenu: false,
     categoryId,
@@ -35,12 +36,21 @@ export const RecipeAlternativeOptions = ({
       <div className={css.recipeList} role="button" tabIndex={-1} onClick={preventPropagation} onKeyPress={preventPropagation}>
         {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
         <ul className={css.recipeListText}>
-          {alternativeOptionsForRecipe.map(({ recipeId: rId, recipeName, changeCheckedRecipe, isChecked, isFromShowcaseMenu, isOutOfStock, surcharge, allergenInfo}) => (
+          {alternativeOptionsForRecipe.map(({ recipeId, recipeName, changeCheckedRecipe, isChecked, isFromShowcaseMenu, isOutOfStock, surcharge, allergenInfo}) => (
             <VariantRecipeListItem
-              key={rId}
-              recipeId={rId}
+              key={recipeId}
+              recipeId={recipeId}
               recipeName={recipeName}
-              changeCheckedRecipe={changeCheckedRecipe}
+              changeCheckedRecipe={(...args) => {
+                if (onChangeCheckedRecipe) {
+                  onChangeCheckedRecipe({
+                    nextRecipeId: recipeId,
+                    previousRecipeId: currentRecipeId,
+                  })
+                }
+
+                return changeCheckedRecipe(...args)
+              }}
               isChecked={isChecked}
               isOnDetailScreen={isOnDetailScreen}
               isFromShowcaseMenu={isFromShowcaseMenu}
@@ -62,10 +72,15 @@ RecipeAlternativeOptions.propTypes = {
   categoryId: PropTypes.string,
   closeOnSelection: PropTypes.bool,
   isOnDetailScreen: PropTypes.bool,
+  /**
+  * Optional Function to be called upon switching recipes.
+  */
+  onChangeCheckedRecipe: PropTypes.func,
 }
 
 RecipeAlternativeOptions.defaultProps = {
   categoryId: null,
   closeOnSelection: false,
   isOnDetailScreen: false,
+  onChangeCheckedRecipe: null,
 }

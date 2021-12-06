@@ -2,8 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButton } from '../AddRecipeButton'
-import { SwapAlternativeOptions } from '../SwapAlternativeOptions/SwapAlternativeOptions'
-import { SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions/SwapAlternativeOptionsMobile'
+import { SwapAlternativeOptionsMobile, SwapAlternativeOptions } from '../SwapAlternativeOptions'
 
 describe('RecipeTilePurchaseInfo', () => {
   let wrapper
