@@ -1,4 +1,4 @@
-import { SnakeToCamelCase, SnakeCasedValue } from '../../jsonHelper/camelCasing'
+import { SnakeToCamelCase, CamelCasedValue } from '../../jsonHelper/camelCasing'
 import { TypesEqual } from "../../../_testing/typesEqual";
 
 describe('SnakeToCamelCase generic type', () => {
@@ -44,7 +44,7 @@ describe("SnakeCasedValue", () => {
       uncased: true,
     }
 
-    type Output = SnakeCasedValue<Input>
+    type Output = CamelCasedValue<Input>
 
     test('swaps snake_case keys', () => {
       const typeCheck1: TypesEqual<Output, { snakeCase: true }> = true
@@ -62,7 +62,7 @@ describe("SnakeCasedValue", () => {
 
   describe('given an array with records', () => {
     type Input = Array<Record<'snake_case' | 'snake_case_long', string>>
-    type Output = SnakeCasedValue<Input>
+    type Output = CamelCasedValue<Input>
 
     test('transforms array items', () => {
       const typeCheck: TypesEqual<Output, Array<Record<'snakeCase' | 'snakeCaseLong', string>>> = true
