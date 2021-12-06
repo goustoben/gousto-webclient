@@ -18,6 +18,16 @@ export const includeCookiesDefault = false
 export const useMenuServiceDefault = false
 export const useOverwriteRequestMethodDefault = true
 
+/**
+ * To allow fetch monitoring with DataDog, we need to
+ *
+ * 1. Expose fetch on a global context, if in a browser
+ * 2. Call fetch from this context, to benefit from instrumentation
+ */
+const fetchContext = typeof window !== 'undefined' ? window : {}
+
+fetchContext.fetch = isomorphicFetch
+
 export function fetch(
   accessToken,
   url,
@@ -114,7 +124,7 @@ export function fetch(
   let responseRedirected
   let responseUrl
 
-  const fetchPromise = isomorphicFetch(requestUrl, requestDetails)
+  const fetchPromise = fetchContext.fetch(requestUrl, requestDetails)
 
   return fetchWithTimeout(fetchPromise, timeout || DEFAULT_TIME_OUT)
     .then(response => {
