@@ -20,9 +20,11 @@ const getHelpInitialState = fromJS({
     trackingUrl: '',
     hasPassedDeliveryValidation: false,
     deliveryCompensationAmount: null,
+    shippingAddress: null,
   },
   orders: {},
   recipes: [],
+  selectedAddress: {},
   selectedIngredients: {},
   selectedRecipeCards: [],
   shippingAddresses: [],
@@ -32,6 +34,28 @@ const getHelpInitialState = fromJS({
   numOrdersCompensated: null,
   hasSeenRepetitiveIssuesScreen: false,
 })
+
+const filterShippingAddress = (shippingAdress) => {
+  const {
+    name,
+    postcode,
+    town,
+    id,
+    line1,
+    line2,
+    line3,
+  } = shippingAdress
+
+  return {
+    name,
+    postcode,
+    town,
+    id,
+    line1,
+    line2,
+    line3,
+  }
+}
 
 const getHelp = (state, action) => {
   if (!state) {
@@ -52,6 +76,9 @@ const getHelp = (state, action) => {
   }
   case webClientActionTypes.GET_HELP_STORE_ORDER_ID: {
     return state.setIn(['order', 'id'], action.id)
+  }
+  case actionTypes.GET_HELP_STORE_SELECTED_ADDRESS: {
+    return state.set('selectedAddress', fromJS(action.payload.address))
   }
   case webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
     const orderRecipeItems = state.getIn(['order', 'recipeDetailedItems']).toJS()
@@ -112,6 +139,7 @@ const getHelp = (state, action) => {
   }
   case actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS: {
     const { order, recipes } = action.payload
+    const { deliveryDate, shippingAddress, deliverySlot } = order
     const { recipeItems } = order
     const recipeDetailedItems = {}
 
@@ -120,14 +148,17 @@ const getHelp = (state, action) => {
       recipeDetailedItems[recipeId] = recipe.goustoReference
     })
 
+    const filteredShippingAddress = filterShippingAddress(shippingAddress)
+
     return state
       .setIn(['order', 'recipeItems'], fromJS(recipeItems))
       .setIn(['order', 'recipeDetailedItems'], fromJS(recipeDetailedItems))
       .setIn(['order', 'deliverySlot'], fromJS({
-        deliveryEnd: order.deliverySlot.deliveryEnd,
-        deliveryStart: order.deliverySlot.deliveryStart,
+        deliveryEnd: deliverySlot.deliveryEnd,
+        deliveryStart: deliverySlot.deliveryStart,
       }))
-      .setIn(['order', 'deliveryDate'], fromJS(order.deliveryDate))
+      .setIn(['order', 'deliveryDate'], fromJS(deliveryDate))
+      .setIn(['order', 'shippingAddress'], fromJS(filteredShippingAddress))
       .set('recipes', fromJS(recipes))
   }
   case webClientActionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES: {
@@ -206,13 +237,14 @@ const getHelp = (state, action) => {
     return state.set('hasSeenRepetitiveIssuesScreen', action.hasSeenRepetitiveIssuesScreen)
   }
   case actionTypes.GET_HELP_LOAD_SHIPPING_ADDRESSES: {
-    const filteredAddresses = action.payload.map(address => {
+    const filteredAddresses = action.payload.userAddresses.map(address => {
       const { id, line1, line2, line3, name, postcode, town } = address
 
       return { id, line1, line2, line3, name, postcode, town }
     })
 
     return state.set('shippingAddresses', fromJS(filteredAddresses))
+      .set('selectedAddress', fromJS(action.payload.selectedAddress))
   }
   case actionTypes.GET_HELP_SET_SELECTED_RECIPE_CARDS: {
     return state.set('selectedRecipeCards', fromJS(action.payload.recipeIds))

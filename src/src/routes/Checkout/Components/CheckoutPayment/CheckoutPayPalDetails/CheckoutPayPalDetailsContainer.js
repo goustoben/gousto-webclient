@@ -5,7 +5,7 @@ import {
   setPayPalDeviceData,
   setPayPalNonce,
 } from 'actions/checkout'
-import { trackFailedCheckoutFlow } from 'actions/log'
+import { trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getPayPalClientToken, isPayPalReady } from 'selectors/payment'
 import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
@@ -22,6 +22,7 @@ const mapDispatchToProps = {
   trackEvent: trackUTMAndPromoCode,
   firePayPalError,
   clearPayPalErrors,
+  trackSuccessfulCheckoutFlow,
   trackFailedCheckoutFlow,
 }
 

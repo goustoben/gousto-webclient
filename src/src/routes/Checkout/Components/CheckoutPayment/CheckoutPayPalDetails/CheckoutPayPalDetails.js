@@ -91,12 +91,14 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   renderPayPalButton = () => {
-    const { firePayPalError, trackEvent, trackFailedCheckoutFlow } = this.props
+    const { firePayPalError, trackEvent, trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } =
+      this.props
 
     const buttonsConfig = {
       fundingSource: paypal.FUNDING.PAYPAL,
       createBillingAgreement: () => {
         trackEvent(clickContinuePayPal)
+        trackSuccessfulCheckoutFlow('PayPal signup attempt')
 
         return this.createPayment()
       },
@@ -186,6 +188,7 @@ CheckoutPayPalDetails.propTypes = {
   hide: PropTypes.bool,
   isPayPalSetupDone: PropTypes.bool,
   token: PropTypes.string,
+  trackSuccessfulCheckoutFlow: PropTypes.func,
   trackFailedCheckoutFlow: PropTypes.func,
 }
 
@@ -200,6 +203,7 @@ CheckoutPayPalDetails.defaultProps = {
   hide: false,
   isPayPalSetupDone: false,
   token: null,
+  trackSuccessfulCheckoutFlow: () => {},
   trackFailedCheckoutFlow: () => {},
 }
 

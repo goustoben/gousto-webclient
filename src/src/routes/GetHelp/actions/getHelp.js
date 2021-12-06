@@ -102,7 +102,7 @@ export const loadOrderAndRecipesByIds = (orderId) => (
       let { recipeItems: recipeIds, recipeUuids } = order
 
       if (recipeIds.length === 0) {
-        const response = await fetchOrder(accessToken, orderId)
+        const response = await fetchOrder(accessToken, orderId, { include: 'shipping_address' })
         // copying the object so we do not mutate test's mocked response
         order = {...response.data}
         recipeIds = order.recipeItems.map(item => item.recipeId)
@@ -135,6 +135,13 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, delivery
     recipeDetailedItems,
     deliverySlot,
     deliveryDate,
+  },
+})
+
+export const storeSelectedAddress = (address) => ({
+  type: actionTypes.GET_HELP_STORE_SELECTED_ADDRESS,
+  payload: {
+    address,
   },
 })
 

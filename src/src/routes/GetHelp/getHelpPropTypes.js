@@ -1,6 +1,16 @@
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
+export const addressPropType = PropTypes.shape({
+  id: PropTypes.string,
+  line1: PropTypes.string,
+  line2: PropTypes.string,
+  line3: PropTypes.string,
+  name: PropTypes.string,
+  postcode: PropTypes.string,
+  town: PropTypes.string,
+})
+
 export const recipePropType = PropTypes.shape({
   id: PropTypes.string,
   title: PropTypes.string,

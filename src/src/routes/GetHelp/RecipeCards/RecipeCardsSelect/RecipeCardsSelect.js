@@ -6,6 +6,7 @@ import { BottomFixedContent, CTA } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../layouts/GetHelpLayout2'
 import { recipePropType } from '../../getHelpPropTypes'
 import { RecipeCardsList } from './RecipeCardsList'
+import { AddressSectionContainer } from './AddressSection'
 import css from './RecipeCardsSelect.css'
 
 const RecipeCardsSelect = ({
@@ -45,6 +46,7 @@ const RecipeCardsSelect = ({
     >
       <p className={css.subTitle}>Printed recipe cards will arrive in 5-7 working days.</p>
       <RecipeCardsList recipes={recipes} recipeIds={selectedRecipeCards} onInputChange={onInputChange} />
+      <AddressSectionContainer />
       <BottomFixedContent>
         <CTA
           testingSelector="continueRecipeCard"

@@ -29,6 +29,10 @@ jest.mock('react-router', () => ({
   },
 }))
 
+jest.mock('./AddressSection', () => ({
+  AddressSectionContainer: () => <div />
+}))
+
 describe('RecipeCardsSelect', () => {
   let wrapper
   const USER_ID = '2344'
@@ -79,6 +83,10 @@ describe('RecipeCardsSelect', () => {
   test('renders the image and recipe titles for the first recipe', () => {
     expect(wrapper.find('.recipeImage').at(0).prop('src')).toBe(RECIPES[0].imageUrl)
     expect(wrapper.find('.recipeTitle').at(0).text()).toBe(RECIPES[0].title)
+  })
+
+  test('renders the AddressSectionContainer component', () => {
+    expect(wrapper.find('AddressSectionContainer').exists()).toBe(true)
   })
 
   describe('when no recipe cards selected', () => {
