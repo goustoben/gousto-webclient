@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import * as basketUtils from 'utils/basket'
-import * as basketSelectors from 'selectors/basket'
 import * as loggingmanagerActions from 'actions/loggingmanager'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
@@ -8,7 +7,6 @@ import * as basketActions from '../basketRecipes'
 import * as menuCheckoutClickActions from '../menuCheckoutClick'
 import { safeJestMock, multiReturnMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
 import pricingActions from '../../../../actions/pricing'
-import * as menuActions from '../../../../actions/menu'
 import * as menuSelectors from '../../selectors/menu'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
 import * as clientMetrics from '../../apis/clientMetrics'
@@ -859,68 +857,6 @@ describe('basketRecipeSwap', () => {
     test('then it should dipatch clearBasketNotValidError', () => {
       basketActions.basketRecipeSwap()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith('mockedClearBasketNotValidErrorReturn')
-    })
-  })
-})
-
-describe('basketRecipeAddAttempt', () => {
-  let state
-  let getStateSpy
-  let dispatch
-
-  beforeEach(() => {
-    state = {
-      basket: Immutable.Map({
-        recipes: Immutable.Map([['123', 1]]),
-        numPortions: 2,
-        limitReached: false,
-        promoCode: 'test-promo-code',
-        slotId: 'test-slot-id',
-      }),
-      menuRecipeDetails: Immutable.Map({
-        recipeId: '123'
-      })
-    }
-    getStateSpy = () => (state)
-    dispatch = jest.fn()
-  })
-
-  describe('when there is a postcode ', () => {
-    afterEach(() => {
-      jest.resetAllMocks()
-    })
-
-    test('then it should dispatch basketRecipeAdd', () => {
-      safeJestMock(basketSelectors, 'getBasketPostcode').mockReturnValue('SE13 4RT')
-      const basketRecipeAddSpy = safeJestMock(basketActions, 'basketRecipeAdd').mockReturnValue('basketRecipeAddResponse')
-
-      basketActions.basketRecipeAddAttempt('123')(dispatch, getStateSpy)
-      expect(basketRecipeAddSpy).toHaveBeenCalledTimes(1)
-      expect(dispatch).toHaveBeenCalledWith('basketRecipeAddResponse')
-    })
-  })
-
-  describe('when there is no postcode', () => {
-    beforeEach(() => {
-      state = {
-        basket: Immutable.Map({
-          recipes: Immutable.Map([['123', 1]]),
-          postcode: null,
-        }),
-      }
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
-    })
-
-    test('then it should dispatch menuBrowseCTAVisibilityChange', () => {
-      const menuBrowseCTAVisibilityChangeSpy = safeJestMock(menuActions, 'menuBrowseCTAVisibilityChange')
-      menuBrowseCTAVisibilityChangeSpy.mockReturnValue('menuBrowseCTAVisibilityChangeResponse')
-
-      basketActions.basketRecipeAddAttempt('123')(dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenCalledTimes(1)
-      expect(dispatch).toHaveBeenCalledWith('menuBrowseCTAVisibilityChangeResponse')
     })
   })
 })
