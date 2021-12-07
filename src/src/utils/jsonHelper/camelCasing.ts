@@ -22,13 +22,13 @@ type CamelCaseIfString<Input> = Input extends string ? SnakeToCamelCase<Input> :
  * For mapping object properties, e.g. { snake_case: type } => { camelCase: type }, or arrays thereof
  */
 
-export type SnakeCasedValue<T> =
+export type CamelCasedValue<T> =
   T extends Record<string, unknown> ? SnakeToCamelCaseRecord<T> :
-    T extends Array<infer U> ? Array<SnakeCasedValue<U>> :
+    T extends Array<infer U> ? Array<CamelCasedValue<U>> :
       T
 
 type SnakeToCamelCaseRecord<Input extends Record<any, any>> = {
-  [Property in keyof Input as CamelCaseIfString<Property>]: SnakeCasedValue<Input[Property]>
+  [Property in keyof Input as CamelCaseIfString<Property>]: CamelCasedValue<Input[Property]>
 }
 
 
@@ -37,7 +37,7 @@ type SnakeToCamelCaseRecord<Input extends Record<any, any>> = {
  * ============================================================================
  */
 
-export function parseObjectKeysToCamelCase<T>(obj: T): SnakeCasedValue<T> {
+export function parseObjectKeysToCamelCase<T>(obj: T): CamelCasedValue<T> {
   /**
    * This function uses quite a few type assertions. Ideally we would only rarely
    * do that in most of our application code. At a future point we should try
@@ -45,7 +45,7 @@ export function parseObjectKeysToCamelCase<T>(obj: T): SnakeCasedValue<T> {
    */
 
   // Bail out when we reach leaf nodes
-  if (typeof obj !== 'object') return obj as SnakeCasedValue<T>
+  if (typeof obj !== 'object') return obj as CamelCasedValue<T>
 
   return Object.keys(obj).reduce((camelCaseObject, currentKey) => {
     const currentValue = (obj as Record<string, unknown>)[currentKey]
@@ -66,7 +66,7 @@ export function parseObjectKeysToCamelCase<T>(obj: T): SnakeCasedValue<T> {
       ...camelCaseObject,
       [snakeToCamelCase(currentKey)]: parsedValue
     }
-  }, {} as SnakeToCamelCaseRecord<T>) as SnakeCasedValue<T>
+  }, {} as SnakeToCamelCaseRecord<T>) as CamelCasedValue<T>
 }
 
 
