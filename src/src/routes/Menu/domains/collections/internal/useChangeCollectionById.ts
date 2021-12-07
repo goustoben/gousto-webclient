@@ -1,4 +1,3 @@
-/* eslint-disbale-next-line explicit-module-boundary-types */
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 import { filtersCollectionChange } from 'actions/filters'
