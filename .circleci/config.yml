@@ -1,17 +1,21 @@
 ---
 version: 2.1
 
-gousto_platform_image: &gousto_platform_image
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
-      aws_auth:
-        aws_access_key_id: $AWS_ERC_ACCESS_KEY
-        aws_secret_access_key: $AWS_ERC_SECRET_KEY
+gousto_platform_image:
+  &gousto_platform_image
+  - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
+    aws_auth:
+      aws_access_key_id: $AWS_ERC_ACCESS_KEY
+      aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
-circleci_node_image: &circleci_node_image
+circleci_node_image:
+  &circleci_node_image
   - image: cimg/node:14.18.1
     user: root
 
-circleci_node_browsers_image: &circleci_node_browsers_image #image has browser dependencies installed, but not browsers themselves
+circleci_node_browsers_image:
+  #image has browser dependencies installed, but not browsers themselves
+  &circleci_node_browsers_image
   - image: cimg/node:14.18.1-browsers
     user: root
 
@@ -41,11 +45,13 @@ commands:
     steps:
       - run: echo "Uploading to << parameters.bucket >>"
       - run:
-         name: Upload all files excluding images, sets gzip content-encoding header
-         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.ico" --exclude "*.jpg" --exclude "*.png" --exclude "*.gif" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public --acl public-read
+          name: Upload all files excluding images, sets gzip content-encoding header
+          command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.ico" --exclude "*.jpg" --exclude "*.png" --exclude "*.gif" --recursive --content-encoding gzip --cache-control
+            max-age=315360000,no-transform,public --acl public-read
       - run:
-         name: Upload image files to S3, does not set gzip content-encoding header
-         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.jpg" --include "*.png" --include "*.gif" --recursive --cache-control max-age=315360000,no-transform,public --acl public-read
+          name: Upload image files to S3, does not set gzip content-encoding header
+          command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.jpg" --include "*.png" --include "*.gif" --recursive --cache-control max-age=315360000,no-transform,public
+            --acl public-read
 
 jobs:
   setup-ci-variables-scripts:
@@ -256,7 +262,8 @@ jobs:
         type: string
       test_command:
         type: string
-        default: ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
+        default: ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters
+          --reporter-options "configFile=reporterConfig.json"
       test_directory:
         type: string
         default: tests/regression
@@ -431,7 +438,6 @@ jobs:
               --branch "${CIRCLE_BRANCH}" \
               --build-url "${CIRCLE_BUILD_URL}"
 
-
   publish-pacts:
     docker: *gousto_platform_image
     resource_class: large
@@ -447,7 +453,6 @@ jobs:
               --broker-base-url "${TEST_PACT_BROKER_BASE_URL}" \
               --branch "${CIRCLE_BRANCH}" \
               --build-url "${CIRCLE_BUILD_URL}"
-
 
   test-integration-adapters:
     docker: *circleci_node_image
@@ -489,301 +494,17 @@ jobs:
           root: /
           paths:
             - mnt/ramdisk/emulation-server
+  circleci-faster-tests:
+    docker:
+      - image: cimg/node:14.18.1
+    parallelism: 2
+    steps:
+      - checkout
+      - run: "npm install"
+      - run: "npm test $(circleci tests glob tests/**/test_*.js,.jsx,.ts,.tsx | circleci tests split)"
 
 workflows:
-  version: 2
-
-  pull-request-branch:
+  unit-test-timings:
     jobs:
-      - publish-wip-pacts:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              ignore:
-                - /^env-.*/
-                - develop
-                - master
-
-  e2e-manual:
-    jobs:
-      - setup-ci-variables-scripts:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - e2e-manual
-      - test-e2e:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - e2e-manual
-
-  lower-environment:
-    jobs:
-      - setup-ci-variables-scripts:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - install-src-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - build-webclient:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - upload-assets-to-s3:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - deploy-infrastructure-and-webclient-image:
-          name: deploy-infrastructure-and-webclient-image-to-lower-environment
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - create-and-upload-webclient-docker-image-to-ecr
-            - upload-assets-to-s3
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-
-  staging-environment:
-    jobs:
-      - setup-ci-variables-scripts:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - develop
-      - install-src-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - develop
-      - build-webclient:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - develop
-      - upload-assets-to-s3:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - develop
-      - jest-coverage-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - develop
-      - test-integration-adapters:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - develop
-      - verify-emulation-server:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-integration-adapters
-          filters:
-            branches:
-              only:
-                - develop
-      - publish-pacts:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - verify-emulation-server
-          filters:
-            branches:
-              only:
-                - develop
-      - eslint-generate-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - develop
-      - install-regression-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - develop
-      - test-regression:
-          name: test-regression-web
-          platform: web
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-            - install-regression-test-dependencies
-            - verify-emulation-server
-          filters:
-            branches:
-              only:
-                - develop
-      - test-regression:
-          name: test-regression-mobile
-          platform: mobile
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-src-dependencies
-            - install-regression-test-dependencies
-            - verify-emulation-server
-          filters:
-            branches:
-              only:
-                - develop
-      - publish-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - jest-coverage-report
-            - eslint-generate-report
-          filters:
-            branches:
-              only:
-                - develop
-      - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - develop
-      - deploy-infrastructure-and-webclient-image:
-          name: deploy-infrastructure-and-webclient-image-to-staging
-          pact_canideploy_retry_attempts: 18
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - jest-coverage-report
-            - eslint-generate-report
-            - publish-pacts
-            - test-regression-web
-            - test-regression-mobile
-            - create-and-upload-webclient-docker-image-to-ecr
-            - upload-assets-to-s3
-          filters:
-            branches:
-              only:
-                - develop
-      - test-e2e:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - deploy-infrastructure-and-webclient-image-to-staging
-            - verify-emulation-server
-          filters:
-            branches:
-              only:
-                - develop
-
-  production-environment:
-    jobs:
-      - setup-ci-variables-scripts:
-          context: gousto-prod-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - master
-      - install-src-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - master
-      - test-integration-adapters:
-          name: generate-pacts
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - master
-      - publish-pacts:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - generate-pacts
-          filters:
-            branches:
-              only:
-                - master
-      - build-webclient:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - master
-      - upload-assets-to-s3:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - master
-      - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-infrastructure-and-webclient-image:
-          name: deploy-infrastructure-and-webclient-image-to-production
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - publish-pacts
-            - create-and-upload-webclient-docker-image-to-ecr
-            - upload-assets-to-s3
-          filters:
-            branches:
-              only:
-                - master
+      - jest-coverage-report
+      - circleci-faster-tests
