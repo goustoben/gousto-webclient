@@ -1,0 +1,24 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { number, text, array } from '@storybook/addon-knobs'
+import { ExpandingText } from '.'
+
+<Meta title="ExpandingText" component={ExpandingText} />
+
+# ExpandingText
+
+This component shortens text for small screens and adds "read more" button.
+
+`charsPerLine` prop is used as a rough indicator on how many characters per line are available for each breakpoint. Each entry on that array corresponds to screens that are small, medium, large, extra-large. It is used to calculate roughly how many characters are needed to fill in the number of lines. This is a simplified, MVP solution for this component as the automated one involved debouncers and JavaScript to measure the available space.
+
+<Props of={ExpandingText} />
+
+<Preview>
+  <Story name="ExpandingText">
+    <ExpandingText
+      lines={number('lines', 3, { min: 1 })}
+      charsPerLine={array('charsPerLine', ['40', '55', '70', '85'], ',').map(x => parseInt(x, 10))}
+    >
+      {text('text', 'Savour The Summer with this sweet, umami-rich hoisin chicken, with added fresh plums for fruitiness. We like to think of it as Chinese barbecue chicken. Served with charred, nutrient-packed pak choi and some steamed sesame rice. It is tasty and (hoi)sinless! If you are feeling the heat, why not try cooking the chicken on the barbecue.')}
+    </ExpandingText>
+  </Story>
+</Preview>

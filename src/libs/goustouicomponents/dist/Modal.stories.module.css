@@ -1,0 +1,5 @@
+@value Oyster from 'styles/colors.module.css';
+
+#root :global .wrap-out--Modal {
+  background-color: Oyster;
+}

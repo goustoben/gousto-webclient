@@ -1,0 +1,6 @@
+@value NewGrey from 'styles/colors.module.css';
+
+.steps {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  color: NewGrey;
+}

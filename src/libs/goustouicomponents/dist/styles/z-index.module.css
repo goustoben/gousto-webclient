@@ -1,0 +1,5 @@
+/* Z-Index Enumeration */
+
+@value ModalBase 20000;
+@value ModalTop 20010;
+@value Top 10000;

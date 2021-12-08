@@ -1,0 +1,36 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { select, text } from '@storybook/addon-knobs'
+import { OrderState } from '.'
+
+export const states = [
+  'cancelled',
+  'confirmed',
+  'delivered',
+  'dispatched',
+  'menu open',
+  'recipes chosen',
+  'scheduled',
+]
+
+<Meta title="OrderState" component={OrderState} />
+
+# OrderState
+
+<Props of={OrderState} />
+
+# Showcase
+
+<Preview>
+  <>
+    {states.map((state) => (
+      <OrderState state={state} />
+    ))}
+  </>
+</Preview>
+
+<Story name="OrderState">
+  <OrderState
+    state={select('state', states, states[0])}
+    testingSelector={text('testingSelector', 'selector')}
+  />
+</Story>

@@ -1,0 +1,39 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { radios, text } from '@storybook/addon-knobs'
+import { CookieBanner } from '.'
+import { Heading } from '../Heading'
+import { CTA } from '../CTA'
+import css from './CookieBanner.stories.css'
+
+export const restoreLocalStorage = () => {
+  window.localStorage.setItem('isCookieBannerAccepted', null)
+  location.reload();
+}
+
+<Meta title="CookieBanner" component={CookieBanner} />
+
+# CookieBanner
+
+<Props of={CookieBanner} />
+
+# Showcase
+
+<Preview>
+  <Story name="CookieBanner">
+    <CookieBanner
+      testingSelector={text('testingSelector', 'selector')}
+      onCookieBannerDismissed={() => alert('onCookieBannerDismissed')}
+    />
+  </Story>
+</Preview>
+
+## Restore the banner
+When you click on the button to accept the cookie policy it will make the banner disappear. Even if you refresh the page, it will still not be shown. This is because it saves the preference in the local storage.
+
+To restore the local storage cookie preference and the banner click here
+<CTA
+  size="small"
+  onClick={restoreLocalStorage}
+>
+  Restore Cookie Banner
+</CTA>

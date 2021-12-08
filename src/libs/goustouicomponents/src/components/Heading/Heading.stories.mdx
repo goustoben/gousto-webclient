@@ -1,0 +1,27 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, radios, select, text } from '@storybook/addon-knobs'
+import { Heading, headingAvailableSizes, headingAvailableTypes } from './Heading.logic'
+
+<Meta title="Heading" component={Heading} />
+
+# Heading
+
+Note that the `type` prop is for semantic purposes only - it will not affect the size of the heading.
+
+For the benefit of SEO, screen readers, etc. it is important to use the appropriate `type` when implementing this component.
+
+<Props of={Heading} />
+
+## Info
+<Preview>
+  <Story name="Heading">
+    <Heading
+      isCenter={boolean('isCenter', false)}
+      hasMargin={boolean('hasMargin', true)}
+      size={radios('size', headingAvailableSizes, headingAvailableSizes[5])}
+      type={select('type', headingAvailableTypes, headingAvailableTypes[0])}
+    >
+      {text('content', 'This is a heading!')}
+    </Heading>
+  </Story>
+</Preview>

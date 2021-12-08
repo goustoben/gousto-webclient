@@ -1,0 +1,15 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean } from '@storybook/addon-knobs'
+import { Pill } from '.'
+
+export const onClick = () => { alert('You clicked the item') }
+
+<Meta title="Pill" component={Pill} />
+
+<Props of={Pill} />
+
+<Preview>
+  <Story name="Pill">
+    <Pill onClick={onClick} icon={boolean('Icon')}>Click me</Pill>
+  </Story>
+</Preview>

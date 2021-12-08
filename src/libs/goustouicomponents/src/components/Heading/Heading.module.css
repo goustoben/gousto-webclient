@@ -1,0 +1,41 @@
+@value ScreenSMMin from 'styles/screenSizes.module.css';
+@value avenirBookFontStack from 'styles/typography.module.css';
+
+.heading {
+  padding: 0;
+  margin: 0;
+}
+
+.heading--_legacy_medium {
+  font-size: 1rem;
+}
+
+.heading--_legacy_large {
+  font-size: 1.5rem;
+
+  @media ScreenSMMin {
+    font-size: 1.75rem;
+  }
+}
+
+.heading--_legacy_xLarge {
+  font-size: 1.5rem;
+
+  @media ScreenSMMin {
+    font-size: 2.75rem;
+  }
+}
+
+.heading--_legacy_medium,
+.heading--_legacy_large,
+.heading--_legacy_xLarge {
+  font-family: avenirBookFontStack;  /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+}
+
+.isCenter {
+  text-align: center;
+}
+
+.hasMargin {
+  margin-bottom: 0.5rem;
+}

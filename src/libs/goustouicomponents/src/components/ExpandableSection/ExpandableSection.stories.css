@@ -1,0 +1,44 @@
+@value Coconut, White, Blackberry, Mushroom50 from 'styles/colors.module.css';
+
+#root :global .wrap-out--ExpandableSection {
+  background: Coconut !important;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+}
+
+.thead {
+  composes: fontStyleM from "design-language/typography.module.css";
+}
+
+.form {
+  margin-bottom: 2rem;
+}
+
+.styledSection {
+  background: White;
+  color: Blackberry;
+}
+
+.customToggle {
+  display: flex;
+  padding: 0.5rem;
+  background: White;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customToggle div:first-child {
+  flex: 1;
+}
+
+.customContent {
+  padding: 0.5rem;
+  background: Mushroom50;
+}
+
+.bottomSheetContainer {
+  padding: 1rem;
+}

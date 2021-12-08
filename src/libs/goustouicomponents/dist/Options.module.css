@@ -1,0 +1,101 @@
+@value Blackberry, Basa, BluecheeseLighter, Coconut, Oyster from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value ModalHeadingHeight 60px;
+@value OptionsMaxHeight 16.75rem;
+
+/* corresponds to '../DropdownBase.common.module.css' */
+
+@value DropdownPadding 0.75rem;
+
+.dropdown {
+  height: calc(100vh - ModalHeadingHeight);
+  overflow-y: scroll;
+  border-top: none;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  padding-inline-start: 0;
+}
+
+.dropdown:focus {
+    outline: none;
+  }
+
+@media BreakpointFromMedium {
+
+.dropdown {
+    height: auto;
+    max-height: OptionsMaxHeight;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border: 1px solid Basa;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.2)
+}
+  }
+
+@media BreakpointFromMedium {
+
+.isMobile {
+    max-height: initial
+}
+  }
+
+.option {
+  border-bottom: 1px solid Basa;
+  display: flex;
+  justify-content: space-between;
+  padding: DropdownPadding;
+  cursor: pointer;
+  color: Blackberry;
+}
+
+.option:hover,
+  .option:focus {
+    outline: none;
+    background-color: Coconut;
+  }
+
+.option:last-child {
+    border-bottom: none;
+  }
+
+.itemsAreLinks {
+  padding: 0;
+}
+
+/* Increase specificity because the anchor element is rendered externally, but
+   the styles should be common. */
+.itemsAreLinks a:not([class]) {
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+  padding: DropdownPadding;
+  color: Blackberry;
+  border-bottom: none !important;
+}
+.itemsAreLinks a:not([class]):hover,
+  .itemsAreLinks a:not([class]):focus {
+    outline: none;
+    background-color: Coconut;
+  }
+.itemsAreLinks a:not([class]):link,
+  .itemsAreLinks a:not([class]):visited {
+    color: Blackberry;
+  }
+
+.optionSelected {
+  background-color: BluecheeseLighter;
+}
+
+.optionDisabled {
+  cursor: not-allowed;
+  color: Oyster;
+}
+
+.selectedIcon {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url("design-language/media/dropdown-tick.svg");
+  background-size: contain;
+}

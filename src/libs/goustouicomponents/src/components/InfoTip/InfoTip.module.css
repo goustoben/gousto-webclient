@@ -1,0 +1,62 @@
+@value Black, Blackberry, White, CG50 from 'styles/colors.module.css';
+@value TriangleSize 1rem;
+@value BackgroundColor Black;
+
+.infoTipWrapper {
+  text-align: left;
+  border-radius: 0.15rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.infoTipWrapper::before {
+  content: '';
+  height: 0;
+  width: 0;
+  display: block;
+  border-left: TriangleSize solid transparent;
+  border-right: TriangleSize solid transparent;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(TriangleSize * (-1));
+}
+
+.isHidden {
+  display: none;
+}
+
+.positionAbsolute {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + TriangleSize);
+  z-index: 15;
+}
+
+.positionRelative {
+  margin-top: TriangleSize;
+  position: relative;
+}
+
+.darkGrey {
+  background: BackgroundColor;
+  color: White;
+}
+
+.darkGrey::before {
+  border-bottom: TriangleSize solid BackgroundColor;
+  margin: 0 auto;
+}
+
+.lightGrey {
+  background-color: CG50;
+  color: Blackberry;
+  padding: 0.25rem;
+}
+
+.lightGrey::before {
+  border-bottom: TriangleSize solid CG50;
+  margin: 0;
+  margin-left: 0.75rem;
+}

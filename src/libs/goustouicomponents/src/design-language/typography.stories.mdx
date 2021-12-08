@@ -1,0 +1,39 @@
+import { Meta, Preview } from '@storybook/addon-docs/blocks'
+import css from './typography.stories.css'
+import typography from './typography.module.css'
+
+export const TYPOGRAPHY_CLASSES = Object.keys(typography).filter(item => item.startsWith('fontStyle'))
+
+<Meta title="Design Language/Typography" />
+
+# Typography
+
+<Preview>
+  <ul className={css.list}>
+    {TYPOGRAPHY_CLASSES.map(item => (
+      <li key={item} className={css.listItem}>
+        <div className={typography.fontStyleSubHead}>{item}</div>
+        <div className={typography[item]}>A recipe box full of flavour</div>
+      </li>
+    ))}
+  </ul>
+</Preview>
+
+## How to use
+
+### CSS
+```
+.selector {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  ...
+}
+```
+
+### JavaScript
+```
+import typography from 'design-language/typography.module.css'
+
+...
+
+<div className={typography.fontStyleSubHead}>
+```

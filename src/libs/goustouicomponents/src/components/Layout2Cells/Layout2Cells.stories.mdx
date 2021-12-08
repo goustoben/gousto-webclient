@@ -1,0 +1,23 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { Layout2Cells } from '.'
+import css from './Layout2Cells.stories.css'
+
+<Meta title="Layout/Layout2Cells" component={Layout2Cells} />
+
+# Layout2Cells
+
+<Props of={Layout2Cells} />
+
+## Info
+<Preview>
+  <Story name="Layout2Cells">
+    <Layout2Cells>
+      <div className={css.exampleColumn}>
+        Item example
+      </div>
+      <div className={css.exampleColumn}>
+        Item example
+      </div>
+    </Layout2Cells>
+  </Story>
+</Preview>

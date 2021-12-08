@@ -1,0 +1,33 @@
+@import 'normalize.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+.wrap-out,
+.wrap-inner {
+  height: 100%;
+}
+
+.wrap-out {
+  background: #fff;
+}
+
+#root :global #root {
+  height: 100%;
+}
+
+.canvasWrapper {
+  height: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+[class*="css-"]:not(code) {
+  font-family: inherit;
+}

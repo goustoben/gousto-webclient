@@ -1,0 +1,35 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { radios } from '@storybook/addon-knobs'
+import { Alert } from '.'
+import { Heading } from '../Heading'
+
+export const ALERT_RADIOS = {}
+ALERT_RADIOS.label = 'Alert type'
+ALERT_RADIOS.options = {
+  Danger: 'danger',
+  Info: 'info',
+  Success: 'success',
+  Warning: 'warning',
+}
+ALERT_RADIOS.defaultValue = ALERT_RADIOS.options.Info
+
+<Meta title="Alert" component={Alert} />
+
+# Alert
+
+Use this component to draw attention of the user to the result of an action.
+
+<Props of={Alert} />
+
+## Info
+<Preview>
+  <Story name="Alert">
+    <>
+      <Alert type={radios(ALERT_RADIOS.label, ALERT_RADIOS.options, ALERT_RADIOS.defaultValue)}>This is a danger alert</Alert>
+      <Alert type={radios(ALERT_RADIOS.label, ALERT_RADIOS.options, ALERT_RADIOS.defaultValue)}>
+        <Heading type='h3' size='fontStyleM'>Info alert with heading</Heading>
+        <p>This is an info alert</p>
+      </Alert>
+    </>
+  </Story>
+</Preview>

@@ -1,0 +1,43 @@
+@value LightestAccessible, Apricot, Black from 'styles/colors.module.css';
+@value BreakpointFromLarge from 'design-language/breakpoints.module.css';
+
+.ratingContainer {
+  display: inline-flex;
+  align-items: center;
+}
+
+.starsContainer {
+  margin-right: 0.5rem;
+  color: Apricot;
+  font-size: 1rem;
+}
+
+.starsContainerLarge {
+  @media BreakpointFromLarge {
+    font-size: 1.5rem;
+  }
+}
+
+.reviews {
+  color: LightestAccessible;
+}
+
+.reviewsMedium {
+  font-size: 0.75rem;
+}
+
+.reviewsLarge {
+  color: Black;
+}
+
+.starFull {
+  composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.starHalf {
+  composes: fa-basic-class fa-star-half-o from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.starEmpty {
+  composes: fa-basic-class fa-star-o from 'styles/vendor/font-awesome-module.module.css';
+}

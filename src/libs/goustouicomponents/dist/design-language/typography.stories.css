@@ -1,0 +1,13 @@
+@value Blueberry20 from 'styles/colors.module.css';
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem.listItem {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid Blueberry20;
+}

@@ -1,0 +1,28 @@
+@value ScreenXXSMin from 'styles/screenSizes.module.css';
+@value White, Mackerel from 'styles/colors.module.css';
+
+.card {
+  padding: 15px;
+  background: White;
+  width: 100%;
+  max-width: 300px;
+}
+
+@media ScreenXXSMin {
+
+.card {
+    margin: 20px;
+    min-height: 300px
+}
+  }
+
+.card:not(:first-child) {
+  border-top: 1px solid Mackerel;
+}
+
+@media ScreenXXSMin {
+
+.card:not(:first-child) {
+    border: 0
+}
+  }

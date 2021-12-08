@@ -1,0 +1,40 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, radios, text } from '@storybook/addon-knobs'
+import { CommunicationPanel } from '.'
+
+export const COM_PANEL_LEVEL = {}
+COM_PANEL_LEVEL.label = 'Level'
+COM_PANEL_LEVEL.options = {
+  Info: 'info',
+}
+COM_PANEL_LEVEL.defaultValue = COM_PANEL_LEVEL.options.Info
+
+export const COM_PANEL_BODY = {}
+COM_PANEL_BODY.label = 'body'
+COM_PANEL_BODY.content = 'Here is my info communication message that has a lot of text! This text will go on two lines so I can see how it looks! Let us see some Lorem Ipsum facts: Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.'
+
+<Meta title="CommunicationPanel" component={CommunicationPanel} />
+
+# CommunicationPanel
+
+<Props of={CommunicationPanel} />
+
+## Info
+<Preview>
+  <Story name="CommunicationPanel">
+    <>
+      <CommunicationPanel
+        body={text(COM_PANEL_BODY.label, COM_PANEL_BODY.content)}
+        showIcon={boolean('showIcon', true)}
+        level={radios(COM_PANEL_LEVEL.label, COM_PANEL_LEVEL.options, COM_PANEL_LEVEL.defaultValue)}
+        title={text('title', 'Communication title!')}
+      />
+      <br />
+      <CommunicationPanel
+        body={text(COM_PANEL_BODY.label, COM_PANEL_BODY.content)}
+        showIcon={boolean('showIcon', true)}
+        level={radios(COM_PANEL_LEVEL.label, COM_PANEL_LEVEL.options, COM_PANEL_LEVEL.defaultValue)}
+      />
+    </>
+  </Story>
+</Preview>

@@ -1,0 +1,18 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { text } from '@storybook/addon-knobs'
+import { Cuisine } from './index'
+
+<Meta title="Cuisine" component={Cuisine} />
+
+# Cuisine
+
+<Props of={Cuisine} />
+
+## Info
+<Preview>
+  <Story name="Cuisine">
+    <Cuisine
+      name={text('name', 'Chinese')}
+    />
+  </Story>
+</Preview>

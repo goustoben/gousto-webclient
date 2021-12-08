@@ -1,0 +1,29 @@
+@value White, Mackerel from 'styles/colors.module.css';
+@value LayoutPageWrapperDesktopScreenBreakpointMin from 'design-language/utils.module.css';
+
+.card {
+  border-top: 1px solid Mackerel;
+  border-bottom: 1px solid Mackerel;
+}
+
+@media LayoutPageWrapperDesktopScreenBreakpointMin {
+
+.card {
+    border-left: 1px solid Mackerel;
+    border-right: 1px solid Mackerel;
+    background: White;
+    margin-bottom: 1rem;
+    width: 100%
+}
+  }
+
+.lateralBordersOnSmallScreens {
+  border-left: 1px solid Mackerel;
+  border-right: 1px solid Mackerel;
+}
+
+.visibleOnSmallScreens {
+  background: White;
+  margin-bottom: 1rem;
+  width: 100%;
+}

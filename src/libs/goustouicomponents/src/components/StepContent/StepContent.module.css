@@ -1,0 +1,24 @@
+.stepsContainer {
+  margin: auto;
+  position: relative;
+}
+
+.animationContainer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.animation {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  transition: margin-left 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  margin-left: 0;
+}
+
+.stepsContainer,
+.step {
+  display: flex;
+  width: 100%;
+}

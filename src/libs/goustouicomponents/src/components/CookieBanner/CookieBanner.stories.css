@@ -1,0 +1,5 @@
+@value Cacao from 'styles/colors.module.css';
+
+#root :global .wrap-out--CookieBanner > div {
+  max-width: 100%;
+}

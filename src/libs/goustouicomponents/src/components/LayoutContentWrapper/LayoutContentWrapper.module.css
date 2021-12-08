@@ -1,0 +1,44 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value paddingDefault: 0.5rem;
+@value paddingLarge: 1rem;
+@value paddingXLarge: 2rem;
+
+.mediumPaddingHorizontal {
+  padding-left: paddingDefault;
+  padding-right: paddingDefault;
+}
+
+.mediumPaddingVertical {
+  padding-top: paddingDefault;
+  padding-bottom: paddingDefault;
+}
+
+.largePaddingHorizontal {
+  padding-left: paddingLarge;
+  padding-right: paddingLarge;
+}
+
+.largePaddingVertical {
+  padding-top: paddingLarge;
+  padding-bottom: paddingLarge;
+}
+
+.largeOrXLargePaddingHorizontal {
+  padding-left: paddingLarge;
+  padding-right: paddingLarge;
+
+  @media BreakpointFromMedium {
+    padding-left: paddingXLarge;
+    padding-right: paddingXLarge;
+  }
+}
+
+.largeOrXLargePaddingVertical {
+  padding-top: paddingLarge;
+  padding-bottom: paddingLarge;
+
+  @media BreakpointFromMedium {
+    padding-top: paddingXLarge;
+    padding-bottom: paddingXLarge;
+  }
+}

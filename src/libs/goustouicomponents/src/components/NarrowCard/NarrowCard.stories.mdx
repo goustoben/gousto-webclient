@@ -1,0 +1,36 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { NarrowCard, NarrowCardTitle, NarrowCardContent } from '.'
+import css from './NarrowCard.stories.css'
+import CardImage from '../../media/images/icon-gbox.svg'
+
+
+<Meta title="NarrowCard" component={NarrowCard} />
+
+# NarrowCard
+
+## Props for NarrowCard
+<Props of={NarrowCard} />
+
+## Props for NarrowCardTitle
+<Props of={NarrowCardTitle} />
+
+## Props for NarrowCardContent
+<Props of={NarrowCardContent} />
+
+<Preview className={css.wrapper}>
+  <Story name="NarrowCard with image">
+    <NarrowCard>
+        <NarrowCardTitle imageSrc={CardImage}>Title</NarrowCardTitle>
+        <NarrowCardContent>Content goes here</NarrowCardContent>
+    </NarrowCard>
+  </Story>
+</Preview>
+
+<Preview className={css.wrapper}>
+  <Story name="NarrowCard without image">
+    <NarrowCard>
+        <NarrowCardTitle>Title</NarrowCardTitle>
+        <NarrowCardContent>Content goes here</NarrowCardContent>
+    </NarrowCard>
+  </Story>
+</Preview>

@@ -1,0 +1,22 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { CTA } from '../CTA'
+import { BottomFixedContent } from '.'
+import './BottomFixedContent.stories.css'
+
+<Meta title="BottomFixedContent" component={BottomFixedContent} />
+
+# BottomFixedContent
+
+<Props of={BottomFixedContent} />
+
+This is a layout component, it does not have any effect in larger screens so please switch to the mobile view in the canvas tab.
+
+# Showcase
+
+<Preview>
+  <Story name="BottomFixedContent">
+    <BottomFixedContent>
+      <CTA>Fix all issues</CTA>
+    </BottomFixedContent>
+  </Story>
+</Preview>

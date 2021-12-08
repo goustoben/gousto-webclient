@@ -1,0 +1,39 @@
+@value spacing 1rem;
+
+#root :global .wrap-out--ScrollCarousel > div {
+  /* Remove Storybook's padding to show how the component is supposed to actually
+   * be used: the scrolling content should go up to the edge of the screen.
+   */
+  padding: 0;
+}
+
+.testHeader {
+  display: flex;
+  padding: spacing;
+  justify-content: space-between;
+}
+
+.testFooter {
+  padding: spacing;
+  font-size: 0.8em;
+}
+
+.testCards {
+  display: flex;
+  padding: spacing;
+}
+
+.testCard {
+  height: 12rem;
+  flex: 0 0 16rem;
+}
+
+.testCard > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testCard:not(:last-child) {
+  margin-right: 1.5rem;
+}

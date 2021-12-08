@@ -1,0 +1,123 @@
+@value Blueberry, Blackberry, Bluecheese, Mackerel, White, BlueBase, Oyster, LightestAccessible from 'styles/colors.module.css';
+@value tilePadding: 11px;
+
+.container {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  color: Blackberry;
+
+  /* Max H - Keeping to reduce regressions
+  Layout should be controlled by parent IMO */
+  margin-bottom: 25px;
+}
+
+.container input[type="checkbox"] {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+  }
+
+.label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0;
+
+  /* Important to override glorious Bootstrap */
+  font-weight: 400 !important;
+}
+
+.disabled .label {
+    color: Oyster;
+    cursor: not-allowed;
+  }
+
+.disabled .label::before {
+      border-color: #dadada;
+    }
+
+.tile {
+  position: relative;
+  background: White;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.tile:last-child {
+    margin-bottom: 0;
+  }
+
+.tile .label {
+    width: 100%;
+    padding: tilePadding;
+    border: 1px solid Mackerel;
+    border-radius: 3px;
+  }
+
+.tile:not(.disabled) .label:hover {
+        border-color: Bluecheese;
+      }
+
+.tile:not(.disabled) .label:hover::before {
+          border-color: Bluecheese;
+        }
+
+.checkboxBox {
+  content: '';
+  display: inline-block;
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid LightestAccessible;
+  border-radius: 3px;
+  background: white;
+  cursor: pointer;
+  margin-right: tilePadding;
+  transition:
+    background 0.075s ease-in 0.1s,
+    border-color 0.075s linear 0.1s;
+}
+
+.checkboxBox:hover {
+  border-color: Blueberry;
+}
+
+.checkboxDisabled {
+  border-color: Oyster;
+  cursor: not-allowed;
+}
+
+.checkboxDisabled:hover {
+  border-color: Oyster;
+}
+
+/* Filling & unfilling animation */
+input:checked + .checkboxBox {
+  background: Bluecheese;
+  border-color: Bluecheese;
+  transition:
+    background 0.075s ease-in,
+    border-color 0.075s linear;
+}
+
+.checkboxBox::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '';
+  height: 100%;
+  width: 0%;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-image: url("design-language/media/icon-tick-no-background.svg");
+  transition: width 0.1s ease-in;
+}
+
+/* Tick animation */
+input:checked + .checkboxBox::after {
+  width: 100%;
+  transition: width 0.1s ease-in 0.075s;
+}

@@ -1,0 +1,31 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { LegacyWarning } from 'config/LegacyWarning'
+import { Spinner } from '.'
+
+<Meta title="Legacy/Spinner" component={Spinner} />
+
+# Spinner
+
+<LegacyWarning />
+
+<Props of={Spinner} />
+
+## Info
+<Preview>
+  <Story name="Spinner">
+    <>
+      <div style={{float: 'left', width: '30px', height: '30px'}}>
+          <Spinner color="black"/>
+      </div>
+      <div style={{float: 'left', width: '30px', height: '30px', backgroundColor: 'black'}}>
+          <Spinner color="white"/>
+      </div>
+      <div style={{float: 'left', width: '30px', height: '30px'}}>
+          <Spinner color="bluecheese"/>
+      </div>
+      <div style={{float: 'left', width: '30px', height: '30px'}}>
+          <Spinner color="radish"/>
+      </div>
+    </>
+  </Story>
+</Preview>

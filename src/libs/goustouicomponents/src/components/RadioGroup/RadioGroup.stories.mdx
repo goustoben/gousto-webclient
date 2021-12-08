@@ -1,0 +1,54 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { radios } from '@storybook/addon-knobs'
+import { Heading } from '../Heading'
+import { RadioGroup } from '.'
+import { InputRadio } from '../InputRadio'
+
+export const INPUT_RADIO_OPTIONS = {
+  label: 'Radio type',
+  options: {
+    default: 'default',
+    tile: 'tile',
+  },
+  defaultValue: 'tile'
+}
+
+export class ParentComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.onChangeHandler = this.onChangeHandler.bind(this)
+  }
+  onChangeHandler(e) {
+    // handle change event
+  }
+  render() {
+      return (
+          <div>
+              <p>This is a group of radio buttons</p>
+              <RadioGroup
+                  name="test-name"
+                  testingSelector="test-inputRadioGroup"
+                  onChange={this.onChangeHandler}
+              >
+                  <InputRadio name="test" value="0" variant="tile" isChecked>This is a radio button</InputRadio>
+                  <InputRadio name="test" value="1" variant="tile">This is another radio button</InputRadio>
+              </RadioGroup>
+          </div>
+      )
+    }
+}
+
+<Meta title="RadioGroup" component={RadioGroup} />
+
+# RadioGroup
+
+You can click in the radio or in the label.
+
+<Props of={RadioGroup} />
+
+## Info
+<Preview>
+  <Story name="RadioGroup">
+    <ParentComponent/>
+  </Story>
+</Preview>

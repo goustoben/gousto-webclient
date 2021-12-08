@@ -1,0 +1,100 @@
+@value Blackberry, Blueberry, Bluecheese, White from 'styles/colors.module.css';
+@value SpacingXS from 'styles/spacing.module.css';
+@value PrimaryBorderColor, PrimaryHoverBorderColor, NegativeBorderColor, PrimaryDisabledColor, SecondaryDisabledColor from 'styles/buttons.module.css';
+
+.container {
+  composes: row center from 'styles/flex.module.css';
+  composes: borderSM from 'styles/borders.module.css';
+  position: relative;
+  display: flex;
+  border-color: PrimaryBorderColor;
+}
+
+.container.fill:not(.disabled):hover,
+    .container.fill:not(.disabled):active,
+    .container.fill:not(.disabled):focus {
+      border-color: PrimaryHoverBorderColor;
+    }
+
+.container.fill.disabled {
+    border: 1px solid PrimaryDisabledColor;
+    opacity: 1;
+  }
+
+.secondary.noFill {
+    border-color: Blackberry;
+  }
+
+.secondary.noFill:not(.disabled):hover,
+      .secondary.noFill:not(.disabled):active,
+      .secondary.noFill:not(.disabled):focus {
+        border-color: Bluecheese;
+      }
+
+.secondary.fill {
+    border-color: Bluecheese;
+  }
+
+.secondary.fill:not(.disabled):hover,
+      .secondary.fill:not(.disabled):active,
+      .secondary.fill:not(.disabled):focus {
+        border-color: Blueberry;
+      }
+
+.secondary.disabled {
+    border: 1px solid SecondaryDisabledColor;
+  }
+
+.tertiary {
+  border: none;
+}
+
+.quaternary {
+  border: none;
+}
+
+.negative {
+  border-color: NegativeBorderColor;
+}
+
+.negative.fill:not(.disabled):hover,
+    .negative.fill:not(.disabled):active,
+    .negative.fill:not(.disabled):focus {
+      border-color: NegativeBorderColor;
+    }
+
+.disabled {
+  opacity: 0.6;
+}
+
+.widthAuto {
+  display: inline-flex;
+}
+
+.spinnerContainer {
+  display: none;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  bottom: 0;
+  top: 0;
+  border-color: transparent;
+}
+
+.spinner {
+  display: block;
+  width: 36px;
+  height: 25px;
+  margin: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.spinnerShow {
+  opacity: 0.8;
+  z-index: 99;
+  display: block;
+}

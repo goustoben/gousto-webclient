@@ -1,0 +1,25 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { InputField } from '../InputField'
+import { InputErrorMessage } from '.'
+
+
+<Meta title="InputErrorMessage" component={InputErrorMessage} />
+
+# InputErrorMessage
+
+<Props of={InputErrorMessage} />
+
+## Info
+<Preview>
+    <Story name="InputErrorMessage">
+        <form>
+            <InputField
+                label='Email input'
+                placeholder="Type to see error"
+                id="test1"
+                onChange={() => {}}
+                type='email'
+            />
+        </form>
+    </Story>
+</Preview>

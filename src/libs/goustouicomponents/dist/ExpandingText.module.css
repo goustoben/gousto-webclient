@@ -1,0 +1,54 @@
+@value ScreenSize1Max (max-width: 375px);
+@value ScreenSize2Min (min-width: 376px);
+@value ScreenSize2Max (max-width: 475px);
+@value ScreenSize3Min (min-width: 476px);
+@value ScreenSize3Max (max-width: 600px);
+@value ScreenSize4Min (min-width: 601px);
+@value ScreenSize4Max (max-width: 767px);
+@value ScreenSize5Min (min-width: 768px);
+
+@media ScreenSize1Max {
+  .readMoreWrapper:not(.isExpanded) .chunk-1,
+  .readMoreWrapper:not(.isExpanded) .chunk-2,
+  .readMoreWrapper:not(.isExpanded) .chunk-3,
+  .readMoreWrapper:not(.isExpanded) .chunk-4 {
+    display: none;
+  }
+}
+
+@media ScreenSize2Max {
+  .readMoreWrapper:not(.isExpanded) .chunk-2,
+  .readMoreWrapper:not(.isExpanded) .chunk-3,
+  .readMoreWrapper:not(.isExpanded) .chunk-4 {
+    display: none;
+  }
+}
+
+@media ScreenSize3Max {
+  .readMoreWrapper:not(.isExpanded) .chunk-3,
+  .readMoreWrapper:not(.isExpanded) .chunk-4 {
+    display: none;
+  }
+}
+
+@media ScreenSize4Max {
+  .readMoreWrapper:not(.isExpanded) .chunk-4 {
+    display: none;
+  }
+}
+
+.readMoreButton {
+  composes: defaultLinkStyle from 'design-language/anchor.module.css';
+}
+
+@media ScreenSize2Min { .readMoreWrapChunk-2 { display: none; } }
+
+@media ScreenSize3Min { .readMoreWrapChunk-3 { display: none; } }
+
+@media ScreenSize4Min { .readMoreWrapChunk-4 { display: none; } }
+
+@media ScreenSize5Min { .readMoreWrapButton { display: none; } }
+
+.isExpanded .readMoreWrapButton {
+  display: none;
+}

@@ -1,0 +1,24 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { InputField } from '../InputField'
+import { InputLabel } from '.'
+
+
+<Meta title="InputLabel" component={InputLabel} />
+
+# InputLabel
+
+<Props of={InputLabel} />
+
+## Info
+<Preview>
+    <Story name="InputLabel">
+        <form>
+            <InputField
+                label='Title'
+                placeholder="Placeholder"
+                id="test1"
+                onChange={() => {}}
+            />
+        </form>
+    </Story>
+</Preview>

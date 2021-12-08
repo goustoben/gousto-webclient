@@ -1,0 +1,23 @@
+@value Carrot, Haricot, Radish from 'styles/colors.module.css';
+
+.state {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  composes: fontSemiBold from 'design-language/typography.module.css';
+  text-transform: lowercase;
+}
+
+.state::first-letter {
+  text-transform: uppercase;
+}
+
+.state--green {
+  color: Haricot;
+}
+
+.state--orange {
+  color: Carrot;
+}
+
+.state--red {
+  color: Radish;
+}

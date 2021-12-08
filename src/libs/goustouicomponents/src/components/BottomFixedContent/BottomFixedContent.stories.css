@@ -1,0 +1,3 @@
+@value Oyster50 from 'styles/colors.module.css';
+
+#root :global .wrap-out--BottomFixedContent { background: Oyster50 !important; }

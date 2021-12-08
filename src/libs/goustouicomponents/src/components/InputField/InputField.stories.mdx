@@ -1,0 +1,48 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, text, radios } from '@storybook/addon-knobs'
+import { InputField } from '.'
+
+export const INPUT_FIELD_RADIOS = {}
+INPUT_FIELD_RADIOS.label = 'Input type'
+INPUT_FIELD_RADIOS.options = {
+  Text: 'text',
+  Email: 'email',
+  Phone: 'tel'
+}
+INPUT_FIELD_RADIOS.defaultValue = INPUT_FIELD_RADIOS.options.Text
+
+<Meta title="InputField" component={InputField} />
+
+# InputField
+
+<Props of={InputField} />
+
+## Info
+<Preview>
+    <Story name="InputField">
+        <form>
+            <InputField
+                label={text('label', 'Title')}
+                subCopy={text('subcopy', "Subcopy adds extra info")}
+                placeholder={text('placeholder', "Placeholder")}
+                disabled={boolean('disabled', false)}
+                required={boolean('required', false)}
+                type={radios(INPUT_FIELD_RADIOS.label, INPUT_FIELD_RADIOS.options, INPUT_FIELD_RADIOS.defaultValue)}
+                id="test1"
+                onUpdate={() => {}}
+                testingSelector="inputTitle"
+                value={text('value', "")}
+            />
+            <InputField
+                id="test4"
+                type='tel'
+                label="This is a phone number field"
+                subCopy="It has a prefix"
+                phonePrefix={true}
+                placeholder="Placeholder"
+                onUpdate={() => {}}
+                testingSelector="inputPhone"
+            />
+        </form>
+    </Story>
+</Preview>

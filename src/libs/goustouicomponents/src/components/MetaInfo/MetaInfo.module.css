@@ -1,0 +1,16 @@
+@value Blackberry from 'styles/colors.module.css';
+
+.wrapper {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  color: Blackberry;
+  display: inline-flex;
+}
+
+.icon {
+  margin-right: 0.5rem;
+  position: relative;
+
+  /* We're placing a circular icon next to letters, so the value is based on what
+     looks right, not precise science. */
+  top: 2px;
+}

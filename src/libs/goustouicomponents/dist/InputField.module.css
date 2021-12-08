@@ -1,0 +1,63 @@
+@value Blackberry, BlueBase, Blueberry, LightestAccessible, Oyster, Radish, White from 'styles/colors.module.css';
+
+.inputFieldContainer {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  color: Blackberry;
+  margin-bottom: 0.25rem;
+}
+
+.inputPrefixContainer {
+  position: relative;
+}
+
+.phonePrefix {
+  position: absolute;
+  margin: 0;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 1rem;
+  color: LightestAccessible;
+}
+
+.subCopy {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  margin-bottom: 0.5rem;
+}
+
+.inputField {
+  background: White;
+  border: 1px solid Oyster;
+  color: Blackberry;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 0.75rem;
+  width: 100%;
+  box-shadow: none;
+}
+
+.inputPrefix {
+  padding-left: 4rem;
+}
+
+.inputField:hover {
+  border-color: Blueberry;
+}
+
+.inputField:focus {
+  outline: none;
+  border: 1px solid BlueBase;
+}
+
+/* :disabled,
+:disabled:hover,
+:disabled:focus {
+  border: 1px solid Oyster;
+  color: Oyster;
+} */
+
+.inputError,
+.inputError:hover,
+.inputError:focus {
+  border: 1px solid Radish;
+}

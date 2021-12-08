@@ -1,0 +1,27 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { LegacyWarning } from 'config/LegacyWarning'
+import { Button } from '../Button'
+import { Tooltip } from '.'
+
+<Meta title="Legacy/Tooltip" component={Tooltip} />
+
+# Tooltip
+
+<LegacyWarning />
+
+<Props of={Tooltip} />
+
+## Info
+<Preview>
+  <Story name="Tooltip">
+    <Button>
+      <Tooltip
+        message="Hello everyone!"
+        visible={true}
+        style="button"
+      >
+        <Segment>Text</Segment>
+      </Tooltip>
+    </Button>
+  </Story>
+</Preview>

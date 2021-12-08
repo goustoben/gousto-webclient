@@ -1,0 +1,31 @@
+@value Bluecheese, Blueberry, Oyster from '../styles/colors.module.css';
+
+.defaultLinkStyle {
+  display: inline;
+  appearance: none;
+  border: none;
+  border-bottom: 1px solid Oyster !important;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  color: Oyster;
+  transition: all 200ms ease;
+  transition-property: color, border;
+  text-decoration: none;
+}
+
+.defaultLinkStyle[type="button"],
+  .defaultLinkStyle:link,
+  .defaultLinkStyle:visited,
+  .defaultLinkStyle:active {
+    color: Bluecheese;
+  }
+
+.defaultLinkStyle:hover,
+  .defaultLinkStyle:focus {
+    color: Blueberry;
+    border-color: Blueberry;
+  }

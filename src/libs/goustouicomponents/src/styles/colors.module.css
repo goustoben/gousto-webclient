@@ -1,0 +1,101 @@
+@value Tomato #D36148;
+@value Chilli #E0674E;
+@value Chilli50 #FAB0A3;
+@value DarkChilli #C74E35;
+@value Chilli60 #eaa192;
+@value Chilli40 #f2c7bf;
+@value Aubergine #804D59;
+@value Apricot #F4D13D;
+@value Cumin #D8A958;
+@value Maize #FFE4A3;
+@value Oregano #94B277;
+@value Artichoke #CADAAA;
+@value DarkArtichoke #8AB077;
+@value Coriander #00937E;
+@value Mint #6ACBB8;
+@value Blueberry20 #D3E1EA;
+@value BlueberryLight #E7F1FF;
+@value Chocolate #89674C;
+@value Cacao #645B57;
+@value Pepper #938D88;
+@value Pepper30 #D8D8D6;
+@value Pepper40 #CBC8C6;
+@value Pepper60 #A6A19D;
+@value Oyster #9E9492;
+@value Oyster50 #CEC9C8;
+@value Mushroom #F9F5F3;
+@value Ginger #F8EEE4;
+@value Eggshell #FFFDFA;
+@value Chia #35231B;
+@value Parsley #44884F;
+@value DarkParsley #2B6F36;
+@value Parsley60 #8cb594;
+@value Parsley40 #b3ceb8;
+@value White #FFFFFF;
+@value Mushroom50 #FBF9F6;
+@value DarkGrey #868F94;
+@value TrueBlack #000000;
+
+/* Rebrand */
+
+@value DarkPomegranate #C42833;
+@value Pomegranate #FF0032;
+@value Bluecheese #615CFF;
+@value BluecheeseLight #D9DDFF;
+@value BluecheeseLighter #EAEFFF;
+@value Blueberry #3E3AC2;
+@value Duckegg #BBC2FF;
+@value Kale #7D86FE;
+@value Coconut #F4F7FA;
+@value Blackberry #333D47;
+@value DarkBlackberry #333D47;
+@value Oyster #C0C5C9;
+@value Mackerel #D2D6D9;
+@value Basa #EAEBEC;
+@value DarkBasa #DBDBDB;
+@value Haricot #01A92B;
+@value HaricotMedium #99DDAA;
+@value HaricotLight #E2F9E9;
+@value DarkHaricot #018F25;
+@value Carrot #FB6126;
+@value CarrotLight #FDEFE9;
+@value DarkCarrot #BB481C;
+@value Radish #C20026;
+@value RadishLight #FFF0F1;
+@value RadishLightPulse #FFB6BB;
+@value DarkRadish #9C001F;
+@value Bronze #E8C776;
+@value Cauliflower #F4EFE9;
+@value DarkCauliflower #C6BEB4;
+@value Black #333D47;
+@value BlueBase #615CFF;
+@value BlueBaseDarker #3E3AC2;
+@value Bluecheese50 rgba(114, 144, 255, 0.5);
+@value Bluecheese30 rgba(114, 144, 255, 0.3);
+@value Blueberry30 rgba(73, 104, 216, 0.3);
+@value JoeWicks #3A3AB5;
+@value NewGrey #596067;
+@value LightestAccessible #6F7781;
+@value White75 rgba(255, 255, 255, 0.75);
+@value CG50 #ECEDEF;
+
+/* Variations */
+
+@value Radish05 #FBF4F4;
+@value Radish25 #ECC8CA;
+@value Radish40 #FFBEC7;
+@value Radish60 #FF8B94;
+@value DarkHaricot05 #F2F9F4;
+@value BlueCabbage #F2F6F9;
+
+/* Contextual */
+
+@value InYourBoxBg #D1DCE2;
+@value RafBgDefault #F5F6F6;
+
+/* Social Networks colors */
+
+@value colorTwitter #6ab7c5;
+@value colorFacebook #5173a8;
+@value colorFacebookMessenger #0084ff;
+@value colorGplus #da4835;

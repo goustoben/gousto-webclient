@@ -1,0 +1,40 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { CollectionsNavigation, CollectionsNavigationItem } from '.'
+import { Alert } from '../Alert'
+
+
+export const onClick = () => { alert('You clicked the item') }
+
+<Meta title="CollectionsNavigation" component={CollectionsNavigation} />
+
+# CollectionsNavigation
+ This component expects to have `CollectionsNavigationItem` as children. Each `CollectionsNavigationItem` has a required `onClick` prop that is a function that can be passed to control what happens when you click the item. If by default you want one of the `CollectionsNavigationItem` to be active when `CollectionsNavigation` renders, you can pass the `isActive` prop as a boolean.
+
+## Props for CollectionsNavigation
+<Alert type="warning">
+  The only child element accepted by this component is `CollectionsNavigationItem`. Using any other component or HTML element will throw a prop warning.
+</Alert>
+<Props of={CollectionsNavigation} />
+
+## Props for CollectionsNavigationItem
+<Alert type="warning">
+  Only `onClick`, `isActive` and `children` are props that should be set. The other props are part of the internal API of this component and setting them will not have any effect as they will be overwritten when the component is wrapped by `CollectionsNavigation`
+</Alert>
+
+<Props of={CollectionsNavigationItem} />
+
+<Preview>
+  <Story name="CollectionsNavigation">
+    <CollectionsNavigation>
+      <CollectionsNavigationItem isActive onClick={onClick}>All Products (78)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Food Cupboard (10)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Kitchenware (23)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Most Popular (7)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Drinks Cabinet (12)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Snacks (1)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Free from (100)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Desserts (42)</CollectionsNavigationItem>
+      <CollectionsNavigationItem onClick={onClick}>Kids (12)</CollectionsNavigationItem>
+    </CollectionsNavigation>
+  </Story>
+</Preview>

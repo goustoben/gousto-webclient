@@ -1,0 +1,56 @@
+@value Black, White, White75 from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.timeIcon {
+  position: relative;
+  border-radius: 50%;
+  background-color: White75;
+  padding: 0.25rem;
+}
+
+.timeIcon,
+.time {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+@media BreakpointFromMedium {
+
+.timeIcon,
+.time {
+    width: 2.5rem;
+    height: 2.5rem
+}
+  }
+
+.circularChart {
+  display: block;
+}
+
+.circularChartCircleBg {
+  fill: none;
+  stroke: White;
+  stroke-width: 4;
+}
+
+.circularChartCircle {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+  stroke: Black;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.time {
+  fill: Black;
+  composes: fontStyleS from 'design-language/typography.module.css';
+  composes: fontBold from 'design-language/typography.module.css';
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}

@@ -1,0 +1,9 @@
+.title {
+  display: flex;
+  justify-content: space-between;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+}
+
+.spacing {
+  padding-bottom: 0.75rem;
+}

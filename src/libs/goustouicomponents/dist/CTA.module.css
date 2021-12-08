@@ -1,0 +1,144 @@
+@value Blueberry, Bluecheese, BluecheeseLighter, Mackerel, Oyster, White from 'styles/colors.module.css';
+@value sizeSM, sizeLG from 'styles/typography.module.css';
+@value BreakpointToMedium from 'design-language/breakpoints.module.css';
+@value paddingDefault 0.5rem;
+@value paddingVertical 0.75rem;
+
+/* default */
+.cta {
+  display: block;
+  appearance: none;
+  text-align: center;
+  font-size: sizeLG;
+  line-height: 1.6;
+  background: Bluecheese;
+  border-radius: 0.125rem;
+  border: 1px solid Bluecheese;
+  cursor: pointer;
+  color: White;
+  composes: axiforma from 'styles/typography.module.css';
+  padding: 0;
+  font-weight: bold;
+  transition: all 200ms ease;
+  transition-property: border, background;
+  position: relative;
+  white-space: nowrap;
+}
+
+.cta:hover:not([disabled]),
+.cta:focus:not([disabled]),
+.cta:active:not([disabled]) {
+  background-color: Blueberry;
+  border-color: Blueberry;
+}
+
+.cta.isDarkTheme,
+.cta.isDarkTheme:hover,
+.cta.isDarkTheme:focus,
+.cta.isDarkTheme:active {
+  border-color: White;
+  color: Bluecheese;
+  background-color: White;
+}
+
+.secondary {
+  background: White;
+  color: Bluecheese;
+}
+
+.secondary:hover:not([disabled]),
+.secondary:focus:not([disabled]) {
+  border-color: Bluecheese;
+  color: Blueberry;
+  background: BluecheeseLighter;
+}
+
+.secondary.isDarkTheme,
+.secondary.isDarkTheme:hover,
+.secondary.isDarkTheme:focus,
+.secondary.isDarkTheme:active {
+  border-color: White;
+  color: White;
+  background-color: transparent;
+}
+
+.cta[disabled] {
+  cursor: auto;
+}
+
+/* extraInfo */
+.contentWrap {
+  display: flex;
+}
+
+.content,
+.extraInfo {
+  display: block;
+  padding: paddingVertical paddingDefault;
+}
+
+.content {
+  padding: paddingVertical 1.5rem;
+  flex-grow: 1;
+}
+
+.extraInfo {
+  background: Blueberry;
+  color: White;
+}
+
+/* isDisabled */
+.cta.isDisabled {
+  background-color: Oyster;
+  border-color: Oyster;
+  color: White;
+  cursor: not-allowed;
+}
+
+.cta.isDisabled:not(.isDarkTheme):hover {
+  color: White;
+}
+
+.secondary.isDisabled {
+  background-color: White;
+  border-color: Oyster;
+  color: Oyster;
+}
+
+.cta.isDisabled .extraInfo {
+  background-color: Oyster;
+}
+
+/* isLoading */
+.loaderWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: Bluecheese;
+}
+
+.secondary .loaderWrap {
+  background: White;
+}
+
+/* isFullWidth */
+.isFullWidth {
+  width: 100%;
+}
+
+@media BreakpointToMedium {
+  .isFullWidthForSmallScreens {
+    width: 100%;
+  }
+}
+
+/* size */
+.small {
+  font-size: sizeSM;
+  line-height: 1.4;
+}

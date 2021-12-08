@@ -1,0 +1,13 @@
+@value Blackberry, Radish05, Radish25 from 'styles/colors.module.css';
+
+.exampleContent {
+  border: 1px dashed Blackberry;
+  text-align: center;
+  background: Radish05;
+  color: Blackberry;
+}
+
+#root :global .wrap-inner--LayoutContentWrapper {
+  background: Radish25;
+  padding: 0;
+}

@@ -1,0 +1,1 @@
+export { fourNumbersPropType } from './fourNumbersPropType'

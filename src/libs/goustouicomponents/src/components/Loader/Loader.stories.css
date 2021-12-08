@@ -1,0 +1,6 @@
+@value Pepper40 from 'styles/colors.module.css';
+
+#root :global .wrap-out--Loader {
+  padding: 1rem;
+  background: Pepper40;
+}

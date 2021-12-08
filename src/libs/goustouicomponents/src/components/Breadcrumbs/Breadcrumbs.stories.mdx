@@ -1,0 +1,60 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { object } from '@storybook/addon-knobs'
+import LinkTo from '@storybook/addon-links/react'
+import { Breadcrumbs } from '.'
+import css from './Breadcrumbs.stories.css'
+
+<Meta title="Breadcrumbs" component={Breadcrumbs} />
+
+# Breadcrumbs
+
+<Props of={Breadcrumbs} />
+
+Use `renderLinkItem: (item) => node` in order to render custom links
+(e.g. `react-router/Link`). The last item is always plain-text and cannot be
+overridden.
+
+## Showcase
+
+<Preview>
+  <Story name="Breadcrumbs">
+    <>
+      <h2>Breadcrumbs</h2>
+      <div className={css.wrapper}>
+        <Breadcrumbs
+          items={object('items', [
+            {
+              label: 'Cookbook',
+              link: '/cookbook',
+              testingSelector: 'breadcrumbs-cookbook',
+            },
+            {
+              label: 'Chinese Recipes',
+              link: '/cookbook/chinese-recipes',
+              testingSelector: 'breadcrumbs-category',
+            },
+            {
+              label: 'Chinese Hoisin Barbecue Chicken',
+              link: '/cookbook/chinese-recipes/chinese-hoisin-barbecue-chicken',
+              testingSelector: 'breadcrumbs-recipe',
+            },
+          ])}
+        />
+      </div>
+      <h2>Breadcrumbs - custom links</h2>
+      <div className={css.wrapper}>
+        <Breadcrumbs
+          items={[
+            { label: 'Alert', link: 'Alert' },
+            { label: 'Alert story', link: '' },
+          ]}
+          renderLinkItem={({ label, link }) => (
+            <LinkTo kind={link} story={link}>
+              {label}
+            </LinkTo>
+          )}
+        />
+      </div>
+    </>
+  </Story>
+</Preview>

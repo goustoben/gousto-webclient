@@ -1,0 +1,15 @@
+name: Delete canary tag
+
+on: [delete]
+
+jobs:
+  delete-canary-tag:
+    name: Delete canary tag on branch deletion
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete tag
+        uses: dev-drprasad/delete-tag-and-release@v0.1.2
+        with:
+          tag_name: ${{ github.event.ref }}-canary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

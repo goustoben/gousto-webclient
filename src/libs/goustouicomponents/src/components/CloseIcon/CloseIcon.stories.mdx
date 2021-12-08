@@ -1,0 +1,29 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { CloseIcon } from '.'
+import css from './CloseIcon.stories.css'
+
+<Meta title="CloseIcon" component={CloseIcon} />
+
+# CloseIcon
+
+ The parent component must have `position: relative` set to it, as the positioning of the CloseIcon is done using `position: absolute`.
+
+<Props of={CloseIcon} />
+
+<Preview className={css.wrapper}>
+  <Story name="Top left">
+    <>
+      <CloseIcon onClick={() => alert("You've closed something from the top left!")} />
+      The icon is set to top left and the wrapper has `position: relative`
+    </>
+  </Story>
+</Preview>
+
+<Preview className={css.wrapper}>
+  <Story name="Top right">
+    <>
+      <CloseIcon position="top-right" onClick={() => alert("You've closed something from the top right!")} />
+      The icon is set to top right and the wrapper has `position: relative`
+    </>
+  </Story>
+</Preview>

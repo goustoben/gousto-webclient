@@ -1,0 +1,58 @@
+@value Blackberry from 'styles/colors.module.css';
+@value ItemSpacing 0.5rem;
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.listItem {
+  width: calc(25% - (ItemSpacing * 3 / 4));
+  overflow: hidden;
+  position: relative;
+
+  &:not(:last-child) {
+    margin-right: ItemSpacing;
+  }
+}
+
+.listItemContent {
+  width: 100%;
+  padding-top: 100%;
+  border: 1px dashed transparent;
+}
+
+.listItemContent:empty {
+  border-color: Blackberry;
+}
+
+.image {
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.is2x2 {
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.is2x2 .listItem {
+  width: calc(50% - (ItemSpacing / 2));
+  margin: 0;
+
+  &:nth-child(1),
+  &:nth-child(2) {
+    margin-bottom: ItemSpacing;
+  }
+
+  &:nth-child(odd) {
+    margin-right: ItemSpacing;
+  }
+}

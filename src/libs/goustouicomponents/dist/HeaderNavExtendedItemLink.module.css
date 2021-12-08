@@ -1,0 +1,14 @@
+@value Blackberry from 'styles/colors.module.css';
+@value FontWeightBold from 'design-language/typography.module.css';
+
+.navExtenedItemLink {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  display: block;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: Blackberry;
+}
+
+.navExtenedItemLink:hover {
+    font-weight: FontWeightBold !important;
+  }

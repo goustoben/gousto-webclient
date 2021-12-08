@@ -1,0 +1,74 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, radios, select, text } from '@storybook/addon-knobs'
+import { VerticalStages } from '.'
+import { VerticalStagesItem, backgroundColorsAvailable } from '../VerticalStagesItem'
+import { headingAvailableTypes } from '../Heading/Heading.logic'
+
+<Meta title="VerticalStages" component={VerticalStages} />
+
+# VerticalStages
+
+This component expects to have `VerticalStageItem` components as children.
+
+<Props of={VerticalStages} />
+
+# VerticalStagesItem
+
+This component should be used as a child of the VerticalStages component. It is therefore assumed that certain props will be:
+
+1. Required here but only used by VerticalStagesItem used within VerticalStages
+2. Passed down from VerticalStages
+
+If you want to add extra styling to the content wrapper inside VerticalStagesItem, you can pass a className using the `extraClass` prop.
+
+`hasFullWidth` affects only the last step by allowing the content to go below the numbered element.
+
+<Props of={VerticalStagesItem} />
+
+## Info
+<Preview>
+  <Story name="VerticalStages">
+    <>
+      <VerticalStages
+        hasFullWidth={boolean('hasFullWidth', false, 'VerticalStages')}
+        headingType={select('headingType', headingAvailableTypes, headingAvailableTypes[1], 'VerticalStages')}
+      >
+        <VerticalStagesItem
+          title='First step and it has a background!'
+          isCompleted
+          backgroundColor={radios('backgroundColor (step 1)', backgroundColorsAvailable, backgroundColorsAvailable[0], 'VerticalStagesItem')}
+        >
+          <div>
+            You can change the colour of this one with the backgroundColor prop.
+          </div>
+        </VerticalStagesItem>
+        <VerticalStagesItem
+          title='Another completed step'
+          isCompleted={boolean('isCompleted (step 2)', false, 'VerticalStagesItem')}
+        >
+          <div>
+            You can mark this one as completed with the isCompleted prop
+          </div>
+        </VerticalStagesItem>
+        <VerticalStagesItem
+          extraClass={text('extraClass (step 3)', null, 'VerticalStagesItem')}
+          title='An item with lots of content'
+        >
+          <div>
+            You can add extra classes you can use to custom style it by passing the extraClass prop.
+          </div>
+        </VerticalStagesItem>
+        <VerticalStagesItem title={text('title (step 4)', 'Customise me below!', 'VerticalStagesItem')} />
+        <VerticalStagesItem title='A very long heading copy here, you finally reached to the last step!'>
+          <div>
+            Getting better.
+          </div>
+          <br />
+          <div>
+            Now go back to Steps 3 and 4 and finish them off!
+          </div>
+        </VerticalStagesItem>
+      </VerticalStages>
+    </>
+  </Story>
+</Preview>

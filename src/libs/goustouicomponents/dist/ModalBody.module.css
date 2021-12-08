@@ -1,0 +1,6 @@
+@value ModalPadding 0.5rem;
+
+.modalBody {
+  text-align: center;
+  padding: ModalPadding;
+}

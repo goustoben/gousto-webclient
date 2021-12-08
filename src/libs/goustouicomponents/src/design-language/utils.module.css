@@ -1,0 +1,6 @@
+@value BreakpointFromMedium from './breakpoints.module.css';
+
+/* Values used in multiple components that need to be in sync */
+
+@value LayoutPageWrapperDesktopScreenBreakpointMin BreakpointFromMedium;
+@value LayoutPageWrapperPadding 1.5rem;

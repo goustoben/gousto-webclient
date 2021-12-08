@@ -1,0 +1,9 @@
+@value Pepper30 from 'styles/colors.module.css';
+
+#root :global #story--floatcard--float-card .wrap-inner--FloatCard > * {
+  position: static !important;
+}
+
+#root :global .wrap-out--FloatCard {
+  background: Pepper30;
+}

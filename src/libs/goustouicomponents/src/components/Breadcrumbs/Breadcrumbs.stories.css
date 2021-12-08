@@ -1,0 +1,8 @@
+@value Coconut, White from 'styles/colors.module.css';
+
+#root :global .wrap-out--Breadcrumbs { background: Coconut !important; }
+
+.wrapper {
+  background: White;
+  padding: 0.75rem 1rem;
+}

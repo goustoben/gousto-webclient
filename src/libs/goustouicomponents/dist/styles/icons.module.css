@@ -1,0 +1,39 @@
+@value Blackberry, Cacao from './colors.module.css';
+@value ScreenSMMax from './screenSizes.module.css';
+@value sizeXXL, sizeXL from './typography.module.css';
+
+.closeIcon {
+  composes: fa-basic-class fa-times from './vendor/font-awesome-module.module.css';
+  composes: paddingMDTop paddingMDRight from './spacing.module.css';
+  color: Cacao;
+  font-size: sizeXXL;
+  cursor: pointer;
+}
+
+@media ScreenSMMax {
+
+.closeIcon {
+    font-size: 28px
+}
+  }
+
+.padlockIcon {
+  composes: fa-basic-class fa-lock from './vendor/font-awesome-module.module.css';
+  composes: paddingSMRight paddingSMLeft from './spacing.module.css';
+  color: Cacao;
+  font-size: sizeXL;
+}
+
+.creditCardIcon {
+  composes: fa-basic-class fa-credit-card from './vendor/font-awesome-module.module.css';
+  composes: paddingSMRight paddingSMLeft from './spacing.module.css';
+  color: Cacao;
+  font-size: sizeXL;
+}
+
+.calendarIcon {
+  composes: fa-basic-class fa-fw fa-calendar from './vendor/font-awesome-module.module.css';
+  composes: paddingSMRight paddingSMLeft from './spacing.module.css';
+  color: Blackberry;
+  font-size: sizeXL;
+}

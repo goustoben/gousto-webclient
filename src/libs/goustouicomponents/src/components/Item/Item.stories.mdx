@@ -1,0 +1,67 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean } from '@storybook/addon-knobs'
+import IconVan from '../../media/images/icon-van.svg'
+import { Item } from '.'
+
+<Meta title="Item" component={Item} />
+
+# Item
+
+<Props of={Item} />
+
+## Info
+<Preview>
+  <Story name="Item">
+    <>
+      <Item
+        label="This is an item"
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+      />
+      <Item
+        label="This item is hidden on mobile"
+        isHiddenOnMobile
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+      />
+      <Item
+        label="Click me"
+        trackClick={() => alert('trackClick function is called')}
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+      />
+      <Item
+        label="Click me"
+        onClick={() => alert('onClick function is called')}
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+      />
+      <Item
+        label="Very long content will wrap into multiple lines, and the chevron will be vertically aligned to the centre. Very long content will wrap into multiple lines, and the chevron will be vertically aligned to the centre."
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+      />
+      <Item
+        label="Can Items have a subtext?"
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+        subText="Yes, they can"
+      />
+      <Item
+        label="Items can have icons"
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+        subText="This is a subtext"
+        iconPath={IconVan}
+      />
+      <Item
+        label="I have an href, so I'm an <a>"
+        href="im/pointing/somewhere"
+        isLabelHeading={boolean('isLabelHeading', false)}
+        isLinkStyled={boolean('isLinkStyled', true)}
+        subText="hover me to check where I point!"
+        iconPath={IconVan}
+      />
+    </>
+  </Story>
+</Preview>

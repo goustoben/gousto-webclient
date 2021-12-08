@@ -1,0 +1,20 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { number } from '@storybook/addon-knobs'
+import { CookingTime } from './index'
+
+<Meta title="CookingTime" component={CookingTime} />
+
+# CookingTime
+
+<Props of={CookingTime} />
+
+## Info
+<Preview>
+  <Story name="CookingTime">
+    <CookingTime
+      cookingTime={number('cookingTime', 30)}
+    />
+  </Story>
+</Preview>
+
+

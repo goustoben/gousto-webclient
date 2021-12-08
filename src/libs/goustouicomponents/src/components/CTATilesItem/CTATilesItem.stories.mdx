@@ -1,0 +1,52 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, select, text } from '@storybook/addon-knobs'
+import { CTATilesItem } from '.'
+import { CTATiles } from '../CTATiles'
+import { Heading } from '../Heading'
+import './CTATilesItem.stories.css'
+import CardImage from '../../media/images/icon-gbox.svg'
+
+export const CTATileExample = () => (
+  <CTATilesItem
+    image={boolean('Show image', true) && CardImage}
+    onClick={() => alert('You have clicked me!')}
+    target={select('target', ['_blank', '_self', '_parent', '_top'])}
+    testingSelector={text('testingSelector', 'selector')}
+    url={text('url', 'https://example.com')}
+  >
+    {text('content', 'Please click me!')}
+  </CTATilesItem>
+)
+
+<Meta title="CTATilesItem" component={CTATilesItem} />
+
+# CTATilesItem
+
+<Props of={CTATilesItem} />
+
+# CTATiles
+
+If you want to have multiple `CTATilesItem`s in a row, you must use the `CTATiles` wrapper component. This will ensure that the items are displayed correctly with the right proportions.
+
+<Props of={CTATiles} />
+
+## Info
+<Preview>
+  <Story name="CTATilesItem">
+    <>
+      <Heading>An individual CTATilesItem:</Heading>
+      <CTATileExample />
+      <br />
+      <br />
+      <Heading>A list of CTATilesItem components wrapped using CTATiles wrapper component:</Heading>
+      <CTATiles>
+        <CTATileExample />
+        <CTATileExample />
+        <CTATileExample />
+        <CTATileExample />
+        <CTATileExample />
+        <CTATileExample />
+      </CTATiles>
+    </>
+  </Story>
+</Preview>

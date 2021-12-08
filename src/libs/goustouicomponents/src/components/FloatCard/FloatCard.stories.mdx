@@ -1,0 +1,39 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { select, text } from '@storybook/addon-knobs'
+import { FloatCard } from '.'
+import { LayoutContentWrapper } from '../LayoutContentWrapper'
+import './FloatCard.stories.css'
+
+<Meta title="FloatCard" component={FloatCard} />
+
+# FloatCard
+
+FloatCard should show as floating in the bottom left corner of the screen.
+
+If you want the `FloatCard` to be closer or further away from the bottom of the window, you can do that by giving the `offsetVertical` a CSS offset value (e.g. `5rem`). Check the `defaultProps` for the default value given to this.
+
+If you want to pass a custom function when clicking on the close icon, you can do it by passing that function to the `onCloseIconClick` prop.
+
+## closeIcon
+
+* `true` - always showing the close icon
+* `false` - never showing the close icon
+* `small-screens-only` - will have the close icon only on smaller screens
+
+<Props of={FloatCard} />
+
+## Info
+<Preview>
+  <Story name="FloatCard">
+    <FloatCard
+      closeIcon={select('closeIcon', [true, false, 'small-screens-only'], true)}
+      offsetVertical={text('offsetVertical', '1rem')}
+      onCloseIconClick={() => alert('You have clicked the close Icon')}
+    >
+      <LayoutContentWrapper>
+        <p>This is the default FloatCard.</p>
+        <small><i>By default, the float card has no padding. The padding in this example is provided by the LayoutContentWrapper component.</i></small>
+      </LayoutContentWrapper>
+    </FloatCard>
+  </Story>
+</Preview>

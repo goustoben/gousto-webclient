@@ -1,0 +1,74 @@
+@value Blackberry from 'styles/colors.module.css';
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.wrapper {
+  text-align: center;
+  color: Blackberry;
+  padding-top: 2.5rem;
+}
+
+@media BreakpointFromMedium {
+
+.wrapper {
+    padding-top: 4.5rem
+}
+  }
+
+@media BreakpointToMedium {
+
+.showOnDesktop {
+    display: none
+}
+  }
+
+.link,
+.link:active,
+.link:focus,
+.link:hover,
+.link:visited {
+  color: Blackberry;
+  text-decoration: none;
+}
+
+.socialMediaLinks,
+.appStoreLinks,
+.navigationLinks {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.navigationLinks {
+  flex-wrap: wrap;
+}
+
+.socialMediaLinks > li:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.appStoreLinks > li:not(:last-child),
+.navigationLinks > li:not(:last-child) {
+  margin-right: 1.25rem;
+}
+
+.socialMediaIcon {
+  font-size: 1.75rem;
+}
+
+.facebookIcon {
+  composes: fa-basic-class fa-facebook from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.twitterIcon {
+  composes: fa-basic-class fa-twitter from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.youtubeIcon {
+  composes: fa-basic-class fa-youtube from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.instagramIcon {
+  composes: fa-basic-class fa-instagram from 'styles/vendor/font-awesome-module.module.css';
+}

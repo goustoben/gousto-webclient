@@ -1,0 +1,88 @@
+@value Radish05, Blackberry, Radish60 from 'styles/colors.module.css';
+@value URLBarHeight 2.5rem;
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem.listItem {
+  margin-bottom: 1rem;
+  max-width: 30rem;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.wrapper::after {
+  content: '→';
+  font-size: 20px;
+  font-weight: 600;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+}
+
+.wrapperIsTo::after {
+  content: '←';
+  left: auto;
+  right: 50%;
+}
+
+.to,
+.from {
+  width: 50%;
+}
+
+.to {
+  background: Radish05;
+  border: 1px solid Radish60;
+  position: relative;
+}
+
+.to::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: URLBarHeight;
+  background: Radish60;
+}
+
+.to::after {
+  content: 'http://gousto.co.uk/';
+  font-size: 10px;
+  line-height: 1rem;
+  padding-left: 0.25rem;
+  color: Blackberry;
+  position: absolute;
+  display: block;
+  width: calc(100% - 1.5rem);
+  top: 0.75rem;
+  left: 0.75rem;
+  height: 1rem;
+  background: Radish05;
+  border-radius: 0.25rem;
+}
+
+.from {
+  padding-top: URLBarHeight;
+  border: 1px dashed Radish60;
+  border-right: none;
+  border-left: none;
+}
+
+.breakpointValues {
+  padding: 1rem 1.5rem;
+}
+
+.to .breakpointValues {
+  text-align: right;
+}
+
+.breakpointValue.breakpointValue {
+  font-size: 12px;
+}

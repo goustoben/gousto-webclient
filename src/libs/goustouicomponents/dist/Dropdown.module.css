@@ -1,0 +1,32 @@
+@value Pepper30, Black from 'styles/colors.module.css';
+
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.dropdownContainer select {
+  background-color: transparent;
+  border: 1px solid Pepper30;
+  color: Black;
+  padding: 10px 10px;
+  font-size: 16px;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  width: inherit;
+  -webkit-appearance: button;
+  z-index: 1;
+  position: relative;
+  appearance: none;
+}
+
+.arrowDown {
+  composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.module.css';
+  top: 15px;
+  right: 15px;
+  position: absolute;
+  z-index: 0;
+}

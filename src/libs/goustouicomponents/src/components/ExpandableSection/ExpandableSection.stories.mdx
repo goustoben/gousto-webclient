@@ -1,0 +1,167 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean } from '@storybook/addon-knobs'
+import { ExpandableSection } from '.'
+import css from './ExpandableSection.stories.css'
+import { Heading } from '../Heading'
+import { Modal, ModalBody } from '../Modal'
+
+<Meta title="ExpandableSection" component={ExpandableSection} />
+
+# ExpandableSection
+
+<Props of={ExpandableSection} />
+
+You must supply either <code>label</code> or <code>renderToggle</code>.  If the
+former, then a <code>Heading</code> is rendered at the appropriate screen size,
+alongside the chevron showing the toggle state.  If the latter, then you're in
+full control of the toggle surface.
+
+## Showcase
+
+### Simple usage
+<Preview>
+  <Story name="ExpandableSection">
+    <ExpandableSection label="Nutritional information" defaultExpanded={false}>
+      <table className={css.table}>
+        <thead className={css.thead}>
+          <tr>
+            <th>Typical values</th>
+            <th>per 100g</th>
+            <th>per serving</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Energy</th>
+            <td>854 kJ</td>
+            <td>2419 kJ</td>
+          </tr>
+          <tr>
+            <th></th>
+            <td>204 kcal</td>
+            <td>578 kcal</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        *Gousto’s nutritional information only applies to ingredients supplied
+        by Gousto. The cooking process and additional ingredients added at home
+        (listed under “What you’ll need”) will affect total values.
+      </p>
+    </ExpandableSection>
+  </Story>
+</Preview>
+
+### ExpandableSection - expanded by default
+<Preview>
+  <Story name="ExpandableSection - expanded">
+    <>
+      <form className={css.form} onSubmit={(e) => { e.preventDefault() }}>
+        <label>Test input to check keyboard control: <input type="text" autoComplete="off" /></label>
+      </form>
+      <ExpandableSection label="Allergens" defaultExpanded>
+        <b>Allergens highlighted by † (nut, celery, milk)</b>
+        <p>
+          In addition to the recipe specific allergen information provided, due
+          to production and packing methods Gousto boxes may also contain low
+          levels of the following allergens: Cereals containing gluten;
+          Crustaceans; Eggs; Fish; Peanuts; Soya; Milk; Nuts: almonds,
+          hazelnuts, walnuts, cashews ,pecan nuts ,brazil nuts, pistachio nuts,
+          macadamia nuts; Celery; Sesame; Sulphur dioxide and Sulphites; Lupin;
+          Molluscs; Mustard.
+        </p>
+      </ExpandableSection>
+    </>
+  </Story>
+</Preview>
+
+### ExpandableSection - custom class
+<Preview>
+  <Story name="ExpandableSection - custom class">
+    <ExpandableSection label="Can be styled with a class name" className={css.styledSection}>
+      <p>
+        Beetroot water spinach okra water chestnut ricebean pea catsear
+        courgette summer purslane. Water spinach arugula pea tatsoi aubergine
+        spring onion bush tomato kale radicchio turnip chicory salsify pea
+        sprouts fava bean. Dandelion zucchini burdock yarrow chickpea dandelion
+        sorrel courgette turnip greens tigernut soybean radish artichoke wattle
+        seed endive groundnut broccoli arugula.
+      </p>
+    </ExpandableSection>
+  </Story>
+</Preview>
+
+### ExpandableSection - custom toggle and content class name
+`ExpandableSection` can be collapsed by a child component by using the **optional** render function.
+The same function also passes `isExpanded` to allow you to display children based on the state of the ExpandableSection
+
+```
+  <ExpandableSection
+  {...props}
+  >
+    {({ collapseSection }) => (
+      <button onClick={collapseSection}>Collapse section</button>
+    )}
+  </ExpandableSection>
+```
+
+**NB** If you require content to overflow the entire container (i.e. in the case of dropdown options), use the prop `allowOverflow`
+
+<Preview>
+  <Story name="ExpandableSection - custom rendering with render prop">
+    <ExpandableSection
+      isMobile={boolean('isMobile', false)}
+      disableAnimation
+      onExpand={() => { console.log('On Expand')}}
+      label="test label"
+      renderToggle={({ handleClick, isExpanded, label }) => (
+        <div>
+          <div className={css.customToggle}>
+            <b>Heading content</b>
+            <p>
+              isExpanded: {isExpanded ? 'on' : 'off'}
+            </p>
+            <p>
+              label: {label}
+            </p>
+            {/* Note: please avoid elements with tab-index in actual usage as
+                they add an unnecessary step when tabbing. */}
+            <a href="#edit" onClick={handleClick}>Edit</a>
+          </div>
+          { !isExpanded && (
+            <div className={css.customContent}>
+              <p>Collapsed child</p>
+            </div>
+          )}
+        </div>
+      )}
+      contentClassName={css.customContent}
+    >
+      {({ collapseSection, isExpanded }) => (
+        <Modal
+          name="Some Modal"
+          description="Some description"
+          isOpen={isExpanded}
+          animated
+          variant="bottomSheet"
+        >
+          <div className={css.bottomSheetContainer}>
+            <ModalHeader withSeparator align="left">
+              Some sweet header, guy
+            </ModalHeader>
+            <p>
+              Soko radicchio bunya nuts gram dulse silver beet parsnip napa cabbage
+              lotus root sea lettuce brussels sprout cabbage. Catsear cauliflower
+              garbanzo yarrow salsify chicory garlic bell pepper napa cabbage lettuce
+              tomato kale arugula melon sierra leone bologi rutabaga tigernut. Sea
+              lettuce gumbo grape kale kombu cauliflower salsify kohlrabi okra sea
+              lettuce broccoli celery lotus root carrot winter purslane turnip greens
+              garlic
+            </p>
+            <button onClick={collapseSection}>Collapse</button>
+          </div>
+        </Modal>
+      )}
+    </ExpandableSection>
+  </Story>
+</Preview>

@@ -1,0 +1,67 @@
+@value White, Black from 'styles/colors.module.css';
+@value ModalTop from 'styles/z-index.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value ModalContainerMarginTotal 1.5rem;
+@value ModalPadding 0.5rem;
+@value ModalContainerMaxWidthMedium 560px;
+
+.modalContainerRoot {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: ModalTop;
+  background: White;
+  composes: fontStyleBody from "design-language/typography.module.css";
+  overflow: scroll;
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: ModalTop;
+  border: none;
+  line-height: 0;
+  padding: 9px;
+  background: White;
+  cursor: pointer;
+}
+
+.modalCloseButton:focus {
+    outline: none;
+  }
+
+.modalCloseIcon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url("design-language/media/icon-X.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Variants */
+.modalContainerFullScreen {
+  width: 100%;
+}
+
+.modalContainerFloating {
+  width: calc(100% - ModalContainerMarginTotal);
+  max-height: calc(100% - ModalContainerMarginTotal);
+  bottom: unset;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media BreakpointFromMedium {
+
+.modalContainerFloating {
+    width: auto;
+    max-width: ModalContainerMaxWidthMedium
+}
+  }
+
+.modalContainerBottomSheet {
+  composes: modalContainerFullScreen;
+}

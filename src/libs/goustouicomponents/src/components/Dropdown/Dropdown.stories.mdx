@@ -1,0 +1,21 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { DropdownStory } from './Dropdown.storyContainer'
+import LinkTo from '@storybook/addon-links/react'
+import { Dropdown } from '.'
+
+<Meta title="Dropdown" component={Dropdown} />
+
+# Dropdown
+
+<Props of={Dropdown} />
+
+## Showcase
+<Preview>
+  <Story name="Dropdown">
+    <DropdownStory />
+  </Story>
+</Preview>
+
+## See also
+
+<LinkTo kind="NavDropdown" story="NavDropdown">NavDropdown</LinkTo>

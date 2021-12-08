@@ -1,0 +1,75 @@
+@value White, Blackberry, Pepper60 from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value fixedCardWidth 16.5rem;
+
+.recipeCard {
+  width: fixedCardWidth;
+  background: White;
+  border-radius: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hasMargin {
+  margin-bottom: 1.5rem;
+}
+
+.fitHeight {
+  height: 100%;
+}
+
+.isResizable {
+  width: 100%;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  overflow: hidden;
+}
+
+.hasRectangularImageOnMobile {
+  padding-bottom: 67%;
+}
+
+@media BreakpointFromMedium {
+
+.hasRectangularImageOnMobile {
+    padding-bottom: 100%
+}
+  }
+
+.timeContainer {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+}
+
+.recipeImage {
+  position: absolute;
+  width: 100%;
+}
+
+.cardDescription {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipeTitle {
+  color: Blackberry;
+  margin: 0 0 0.5rem;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  flex: 1;
+}
+
+.hasHoverEffect:hover {
+  box-shadow: 0 4px 14px 0 rgba(51, 61, 71, 0.2); /* Blackberry */
+}
+
+.hasHoverEffect:hover .recipeTitle {
+  text-decoration: underline;
+}

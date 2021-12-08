@@ -1,0 +1,34 @@
+@value Blackberry, Blueberry, Bluecheese, LightestAccessible from 'styles/colors.module.css';
+@value FontFamilyAxiformaSemiBold from 'design-language/typography.module.css';
+
+.breadcrumbs {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  display: block;
+  color: LightestAccessible;
+}
+
+.breadcrumbsList {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumbsItem {
+  display: inline;
+  list-style: none;
+
+  &:not(:last-child) {
+    font-family: FontFamilyAxiformaSemiBold; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+  }
+
+  &:not(:last-child)::after {
+    content: attr(data-separator);
+    display: inline-block;
+    padding: 0 0.5rem;
+  }
+}
+
+.text {
+  color: Blackberry;
+}

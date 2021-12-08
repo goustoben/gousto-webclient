@@ -1,0 +1,39 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean } from '@storybook/addon-knobs'
+import { LegacyWarning } from 'config/LegacyWarning'
+import { Alert } from '../Alert'
+import { ItemExpandable } from '.'
+
+<Meta title="Legacy/ItemExpandable" component={ItemExpandable} />
+
+# ItemExpandable
+
+<LegacyWarning />
+
+<Alert type="info">
+Please use <code>ExpandableSection</code> instead.
+</Alert>
+
+<Props of={ItemExpandable} />
+
+## Info
+<Preview>
+  <Story name="ItemExpandable">
+    <>
+      <ItemExpandable
+        label="Expandable Item label"
+        trackClick={() => alert('trackClick function is called')}
+        isLabelHeading={boolean('isLabelHeading', false)}
+      >
+        <div>Hello!</div>
+      </ItemExpandable>
+      <ItemExpandable
+        label="You can have multiple children"
+        isLabelHeading={boolean('isLabelHeading', false)}
+      >
+        <div>Hello!</div>
+        <Button>How are you?</Button>
+      </ItemExpandable>
+    </>
+  </Story>
+</Preview>

@@ -1,0 +1,36 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { ExtraInfo, ExtraInfoMain, ExtraInfoSecondary } from '.'
+import { LayoutContentWrapper } from '../LayoutContentWrapper'
+
+<Meta title="ExtraInfo" component={ExtraInfo} />
+
+# ExtraInfo
+
+## Props for ExtraInfo
+<Props of={ExtraInfo} />
+
+## Props for ExtraInfoMain
+<Props of={ExtraInfoMain} />
+
+## Props for ExtraInfoSecondary
+<Props of={ExtraInfoSecondary} />
+
+<Preview>
+  <Story name="ExtraInfo">
+    <ExtraInfo>
+      <ExtraInfoMain>
+        <LayoutContentWrapper>
+          This area is showing the main content. This will always be visible by default. It is recommended to wrap the content inside the `LayoutContentWrapper` component in order to have the right padding to it, but it is not mandatory. If you want to see the rest of the content, click the button on the right.
+        </LayoutContentWrapper>
+      </ExtraInfoMain>
+      <ExtraInfoSecondary
+        label="Next"
+        title="View more"
+      >
+        <LayoutContentWrapper>
+          This area is showing the secondary content, which is visible only by clicking the button defined by the label and title passed as props. The content of this should always be shorter than the main section, or else it will be cut. Same recommendation for the usage of `LayoutContentWrapper`.
+        </LayoutContentWrapper>
+      </ExtraInfoSecondary>
+    </ExtraInfo>
+  </Story>
+</Preview>

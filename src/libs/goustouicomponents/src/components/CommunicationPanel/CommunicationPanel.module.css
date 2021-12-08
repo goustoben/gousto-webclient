@@ -1,0 +1,48 @@
+@value BlueCabbage, Bluecheese from 'styles/colors.module.css';
+@value axiformaFontStack, sizeMD, sizeXS from 'styles/typography.module.css';
+@value padding: 1rem;
+@value iconSize: 1.25rem;
+
+.baseContainer {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: BlueCabbage;
+  padding: padding;
+  position: relative;
+  font-family: axiformaFontStack; /* stylelint-disable */
+}
+
+.panelTitle {
+  margin: 0;
+  font-weight: 600;
+  font-size: sizeMD;
+  line-height: 1.5rem;
+}
+
+.panelBody {
+  font-size: sizeXS;
+  line-height: 1.5rem;
+}
+
+.info {
+  composes: baseContainer;
+  border-left: 3px solid Bluecheese;
+}
+
+.icon {
+  font-size: iconSize;
+  position: absolute;
+  top: 1.125rem;
+  left: padding;
+  composes: fa-basic-class from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.icon-info {
+  composes: icon;
+  composes: fa-info-circle from 'styles/vendor/font-awesome-module.module.css';
+  color: Bluecheese;
+}
+
+.showIcon {
+  padding-left: calc(iconSize + padding + 0.5rem);
+}

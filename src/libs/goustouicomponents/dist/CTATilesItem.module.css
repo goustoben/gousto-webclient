@@ -1,0 +1,53 @@
+@value Black, White from 'styles/colors.module.css';
+@value axiformaBookFontStack, sizeXS, sizeLG from 'styles/typography.module.css';
+@value ScreenSMMin from 'styles/screenSizes.module.css';
+@value shadowOpacityMedium, shadowIntensityNone, shadowIntensityMedium from 'styles/shadows.module.css';
+@value imageSizeMobile 2.75rem;
+@value imageSizeDestkop 3.5rem;
+@value paddingVertical 0.5rem;
+@value paddingHorizontal 1rem;
+
+.wrapper {
+  background: White;
+  font-family: axiformaBookFontStack; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+  color: Black;
+  text-decoration: none;
+  display: flex;
+  font-size: sizeXS;
+  border-radius: 0.15rem;
+  box-shadow: shadowIntensityNone shadowOpacityMedium;
+  transition: box-shadow 200ms;
+  padding: paddingVertical paddingHorizontal;
+  align-items: center;
+  min-height: calc(imageSizeMobile + 2 * paddingVertical);
+}
+
+@media ScreenSMMin {
+
+.wrapper {
+    font-size: sizeLG;
+    min-height: calc(imageSizeDestkop + 2 * paddingVertical)
+}
+  }
+
+.wrapper:hover,
+  .wrapper:active,
+  .wrapper:focus {
+    text-decoration: underline;
+    box-shadow: shadowIntensityMedium shadowOpacityMedium;
+  }
+
+.image {
+  display: block;
+  width: imageSizeMobile;
+  height: imagesSizeMobile;
+  margin-right: 1rem;
+}
+
+@media ScreenSMMin {
+
+.image {
+    width: imageSizeDestkop;
+    height: imageSizeDestkop
+}
+  }

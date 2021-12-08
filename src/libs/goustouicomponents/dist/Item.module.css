@@ -1,0 +1,73 @@
+@value ScreenXXSMax from 'styles/screenSizes.module.css';
+@value Bluecheese, Blackberry, NewGrey from 'styles/colors.module.css';
+
+.item {
+  display: flex;
+  color: Blackberry;
+  text-align: left;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+  align-items: center;
+  padding: 20px 0;
+  text-decoration: none;
+}
+
+.item:hover {
+  cursor: pointer;
+}
+
+.heading {
+  color: Blackberry;
+}
+
+.subText {
+  color: NewGrey;
+  display: block;
+  composes: fontStyleS from 'design-language/typography.module.css';
+}
+
+.icon {
+  width: 3rem;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+.icon img {
+  display: block;
+  width: 100%;
+}
+
+.textWrapper {
+  padding-right: 1rem;
+  flex-grow: 1;
+}
+
+.linkStyle {
+  color: Bluecheese;
+}
+
+.itemArrow {
+  margin-right: 10px;
+  color: Bluecheese;
+}
+
+.itemArrowRight {
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.module.css';
+  composes: itemArrow;
+}
+
+.itemArrowDown {
+  composes: fa-basic-class fa-chevron-down from 'styles/vendor/font-awesome-module.module.css';
+  composes: itemArrow;
+}
+
+.itemArrowUp {
+  composes: fa-basic-class fa-chevron-up from 'styles/vendor/font-awesome-module.module.css';
+  composes: itemArrow;
+}
+
+@media ScreenXXSMax {
+
+.hiddenOnMobile {
+    display: none
+}
+  }

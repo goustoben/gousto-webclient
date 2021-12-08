@@ -1,0 +1,79 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { LegacyWarning } from 'config/LegacyWarning'
+import { Heading } from '../Heading'
+import { LegacyDropdown } from '.'
+
+export class ParentComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { optionSelected: '123' }
+  }
+  onChangeHandler(id) {
+    const currentState = this.state;
+    this.setState({
+      ...currentState,
+      optionSelected: id,
+    })
+  }
+  render() {
+    const { optionSelected } = this.state
+    const options = [
+      { id: '121', label: 'Label 1' },
+      { id: '122', label: 'Label 2' },
+      { id: '123', label: 'Label 3' },
+    ]
+    const groupedOptions = [
+      { id: '221', label: 'Sub option 1.1', groupLabel: 'Group 1' },
+      { id: '222', label: 'Sub option 1.2', groupLabel: 'Group 1' },
+      { id: '223', label: 'Sub option 2.1', groupLabel: 'Group 2' },
+      { id: '224', label: 'Sub option 2.2', groupLabel: 'Group 2' },
+    ]
+    return (
+      <div>
+        <Heading>A parent component can subscribe to the changes using the `onChange` prop:</Heading>
+        <p>The selected id is {this.state.optionSelected}</p>
+        <LegacyDropdown
+          id="recipeId-ingredientId"
+          options={options}
+          groupedOptions={groupedOptions}
+          optionSelected={optionSelected}
+          onChange={(id) => this.onChangeHandler(id)}
+        />
+      </div>
+    )
+  }
+}
+
+<Meta title="Legacy/LegacyDropdown" component={LegacyDropdown} />
+
+# LegacyDropdown
+
+<LegacyWarning />
+
+<Props of={LegacyDropdown} />
+
+## Info
+<Preview>
+  <Story name="LegacyDropdown">
+    <>
+      <LegacyDropdown
+        id="an-id"
+        options={[
+          { id: '101', label: 'Missing ingredients' },
+          { id: '102', label: 'Wrong ingredients' },
+          { id: '103', label: 'Damaged ingredients' }
+        ]}
+        groupedOptions = {[
+          { id: '221', label: 'Sub option 1.1', groupLabel: 'Group 1' },
+          { id: '222', label: 'Sub option 1.2', groupLabel: 'Group 1' },
+          { id: '223', label: 'Sub option 2.1', groupLabel: 'Group 2' },
+          { id: '224', label: 'Sub option 2.2', groupLabel: 'Group 2' },
+        ]}
+        optionSelected="102"
+        onChange={(id) => { alert(id)}}
+      />
+      <br /><br /><br />
+      <ParentComponent/>
+    </>
+  </Story>
+</Preview>

@@ -1,0 +1,107 @@
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+
+.paddingSmallScreen {
+  padding: 0 0.5rem;
+}
+
+.colSmall12 {
+  min-width: 100%;
+  flex-basis: 100%;
+}
+
+.colSmall6 {
+  min-width: 50%;
+  flex-basis: 50%;
+}
+
+.colSmall4 {
+  min-width: 33.33%;
+  flex-basis: 33.33%;
+}
+
+.colSmall3 {
+  min-width: 25%;
+  flex-basis: 25%;
+}
+
+.colSmall2 {
+  min-width: 16.66%;
+  flex-basis: 16.66%;
+}
+
+.colSmall1 {
+  min-width: 8.33%;
+  flex-basis: 8.33%;
+}
+
+@media BreakpointFromMedium {
+  .paddingMediumScreen {
+    padding: 0 0.75rem;
+  }
+
+  .colMedium12 {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .colMedium6 {
+    min-width: 50%;
+    flex-basis: 50%;
+  }
+
+  .colMedium4 {
+    min-width: 33.33%;
+    flex-basis: 33.33%;
+  }
+
+  .colMedium3 {
+    min-width: 25%;
+    flex-basis: 25%;
+  }
+
+  .colMedium2 {
+    min-width: 16.66%;
+    flex-basis: 16.66%;
+  }
+
+  .colMedium1 {
+    min-width: 8.33%;
+    flex-basis: 8.33%;
+  }
+}
+
+@media BreakpointFromLarge {
+  .paddingLargeScreen {
+    padding: 0 0.75rem;
+  }
+
+  .colLarge12 {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .colLarge6 {
+    min-width: 50%;
+    flex-basis: 50%;
+  }
+
+  .colLarge4 {
+    min-width: 33.33%;
+    flex-basis: 33.33%;
+  }
+
+  .colLarge3 {
+    min-width: 25%;
+    flex-basis: 25%;
+  }
+
+  .colLarge2 {
+    min-width: 16.66%;
+    flex-basis: 16.66%;
+  }
+
+  .colLarge1 {
+    min-width: 8.33%;
+    flex-basis: 8.33%;
+  }
+}

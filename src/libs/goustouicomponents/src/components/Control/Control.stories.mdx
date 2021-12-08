@@ -1,0 +1,29 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { LegacyWarning } from 'config/LegacyWarning'
+import { Control } from '.'
+import { Button } from '../Button'
+import { Segment } from '../Segment'
+
+<Meta title="Legacy/Control" component={Control} />
+
+# Control
+
+<LegacyWarning />
+Use alongside Button and Segment
+
+<Props of={Control} />
+
+## Info
+<Preview>
+  <Story name="Control">
+    <Button>
+      <Segment>
+        <Control placement="left" >-</Control>
+      </Segment>
+      <Segment>ok</Segment>
+      <Segment>
+        <Control placement="right" >+</Control>
+      </Segment>
+    </Button>
+  </Story>
+</Preview>

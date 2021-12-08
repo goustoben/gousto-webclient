@@ -1,0 +1,15 @@
+@value Mushroom, Pepper40 from 'styles/colors.module.css';
+
+#root :global [class*="wrap-out--closeicon"] {
+  background: Pepper40 !important;
+  position: relative;
+}
+
+#root :global [class*="wrap-inner--closeicon"] {
+  position: relative;
+  background: Mushroom;
+  border-radius: 0.25rem;
+  max-width: 80%;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+}

@@ -1,0 +1,52 @@
+@value FontBodySize, FontWeightBold from 'design-language/typography.module.css';
+@value Bluecheese, Oyster, White from 'styles/colors.module.css';
+@value DropdownPadding from './DropdownBase.common.module.css';
+
+.container {
+  position: relative;
+}
+
+.value {
+  padding: DropdownPadding;
+  border-radius: 3px;
+  border: 1px solid Oyster;
+  cursor: pointer;
+  font-size: FontBodySize;
+  font-weight: FontWeightBold;
+  color: Bluecheese;
+  width: 100%;
+  background-color: White;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    border-color: Bluecheese;
+  }
+}
+
+.expanded {
+  padding: calc(DropdownPadding - 1px);
+  border-width: 2px;
+  border-color: Bluecheese;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.chevron {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.chevronExpanded {
+  composes: chevron;
+  background-image: url("design-language/media/dropdown-chevron-up.svg");
+}
+
+.chevronCollapsed {
+  composes: chevron;
+  background-image: url("design-language/media/dropdown-chevron-down.svg");
+}

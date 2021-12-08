@@ -1,0 +1,11 @@
+@value Mackerel from 'styles/colors.module.css';
+
+.wrapper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item:not(:last-child) {
+  border-bottom: 1px solid Mackerel;
+}

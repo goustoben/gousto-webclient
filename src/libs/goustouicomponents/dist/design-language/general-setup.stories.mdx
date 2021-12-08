@@ -1,0 +1,20 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import './general-setup.module.css'
+
+<Meta title="Design Language/New project setup" />
+
+# New project setup
+
+When starting a new project, the default styles of Gousto should be imported. This will:
+
+* import normalize.css
+* set `box-sizing: border-box` as default
+* set generic colors for anchors
+
+## Importing generic styles
+
+At the root of your React app (e.g. `App.js` or `index.js`), add the following:
+
+```
+import from 'goustouicomponents/dist/design-language/general-setup.module.css'
+```

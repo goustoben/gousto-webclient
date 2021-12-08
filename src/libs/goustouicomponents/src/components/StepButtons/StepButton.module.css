@@ -1,0 +1,18 @@
+@value ScreenSMMin from 'styles/screenSizes.module.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  @media ScreenSMMin {
+    flex-direction: row;
+  }
+}
+
+.buttonContinue {
+  margin-bottom: 0.5rem;
+
+  @media ScreenSMMin {
+    margin-right: 1rem;
+  }
+}

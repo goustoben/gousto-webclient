@@ -1,0 +1,25 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { NavDropdownStory } from './NavDropdown.storyContainer'
+import LinkTo from '@storybook/addon-links/react'
+import { NavDropdown } from '.'
+
+<Meta title="NavDropdown" component={NavDropdown} />
+
+# NavDropdown
+
+A component that looks exactly like <LinkTo kind="Dropdown"
+story="Dropdown">Dropdown</LinkTo> but contains links - for SEO purposes.
+
+<Props of={NavDropdown} />
+
+`renderItem` is `(optionShape) => node`; the returned node *must* resolve to an
+`<a>` element (i.e. be either a plain anchor, or a `react-router.Link`);
+otherwise the styling won't work correctly.  The navigation is handled by the
+virtue of the items being links.
+
+## Showcase
+<Preview>
+  <Story name="NavDropdown">
+    <NavDropdownStory />
+  </Story>
+</Preview>

@@ -1,0 +1,115 @@
+@value Bluecheese, Mackerel, White, BlueBase, NewGrey, Oyster from 'styles/colors.module.css';
+@value tilePadding: 11px;
+
+.inputRadioContainer {
+  position: relative;
+  min-height: 1.25rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.inputRadioContainer input[type=radio] {
+  opacity: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+}
+
+.inputRadioMask {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid NewGrey;
+  border-radius: 100%;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.inputRadioMask:hover {
+  border-color: Bluecheese;
+}
+
+.inputRadioLabel {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  padding-left: 1.75rem;
+  margin: 0;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.disabled .inputRadioMask {
+  border-color: Oyster;
+}
+
+.inputRadioContainer:hover .inputRadioMask {
+  border-color: Bluecheese;
+}
+
+.inputRadioMask::before {
+  position: absolute;
+  content: '';
+  background: Bluecheese;
+  border-radius: 100%;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid White;
+  transform: scale(0);
+  transition: transform 0.075s ease-in;
+}
+
+input[type=radio]:checked ~ .inputRadioMask::before {
+  transform: scale(1);
+}
+
+.inputRadioLabelChecked {
+  composes: fontSemiBold from 'design-language/typography.module.css';
+  color: Bluecheese;
+  margin-top: 0;
+}
+
+input[type=radio]:checked ~ .inputRadioMask {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid Bluecheese;
+}
+
+.tile {
+  width: 100%;
+  padding: tilePadding;
+  border: 1px solid Mackerel;
+  border-radius: 3px;
+  cursor: pointer;
+  background: White;
+}
+
+.tile:hover {
+  border-color: Bluecheese;
+}
+
+.tile.checked {
+  padding: calc(tilePadding - 1px);
+  border: 2px solid BlueBase;
+}
+
+.disabled .inputRadioLabel {
+  color: Oyster;
+  cursor: not-allowed;
+}
+
+.disabled .inputRadioLabel::before {
+    border-color: Mackerel;
+  }
+
+.disabled.tile {
+  border-color: Oyster;
+}
+
+.disabled.tile:hover,
+.disabled.tile:hover .inputRadioMask {
+  border-color: Oyster;
+}

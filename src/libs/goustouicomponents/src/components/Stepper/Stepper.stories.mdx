@@ -1,0 +1,76 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, number, object } from '@storybook/addon-knobs'
+import { Stepper } from '.'
+
+<Meta title="Stepper" component={Stepper} />
+
+export const STEPPER_STEP_NUMBER = {}
+STEPPER_STEP_NUMBER.label = 'stepNumber'
+STEPPER_STEP_NUMBER.step = 1
+
+export const STEPPER_CONTENT = {}
+STEPPER_CONTENT.label = 'content'
+STEPPER_CONTENT.defaultValue = { next: 'Next step', skip: 'Skip step' }
+
+export const STEPPER_INDICATOR = {}
+STEPPER_INDICATOR.label = 'stepIndicator'
+STEPPER_INDICATOR.defaultValue = { current: 2, size: 5 }
+
+# StepIndicator
+
+<Props of={Stepper} />
+
+## Info
+<Preview>
+    <Story name="Stepper">
+        <div style={{ display: 'flex' }}>
+          <Stepper
+            content={object(STEPPER_CONTENT.label, STEPPER_CONTENT.defaultValue)}
+            stepNumber={number(STEPPER_STEP_NUMBER.label, STEPPER_STEP_NUMBER.step)}
+            isContinueDisabled={boolean('isContinueDisabled', false)}
+            isSkipButtonVisible={boolean('isSkipButtonVisible', true)}
+            stepIndicator={object(STEPPER_INDICATOR.label, STEPPER_INDICATOR.defaultValue)}
+          >
+            <div>
+              Child 1
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>end text</p>
+            </div>
+            <div>
+              Child 2
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>end text 2</p>
+            </div>
+            <div>
+              Child 3
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>text</p>
+              <p>end text 3</p>
+            </div>
+          </Stepper>
+        </div>
+    </Story>
+</Preview>

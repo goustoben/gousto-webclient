@@ -1,0 +1,163 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "property-no-unknown": [
+      true,
+      {
+        ignoreProperties: ["composes"]
+      },
+    ],
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "each",
+          "include",
+          "mixin",
+          "value"
+        ],
+      },
+    ],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": [
+          "global",
+          "local"
+        ],
+      },
+    ],
+    "no-duplicate-selectors": [
+      true,
+      "severity": "error"
+    ],
+    "rule-empty-line-before": [
+      "always-multi-line", {
+        "except": ["first-nested"],
+        "ignore": ["after-comment"],
+        "severity": "error"
+      },
+    ],
+    "font-family-no-missing-generic-family-keyword": [
+      true,
+      "severity": "error"
+    ],
+    "no-descending-specificity": [
+      true,
+      "severity": "error"
+    ],
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": ["consecutive-duplicates-with-different-values"],
+        "severity": "error"
+      },
+    ],
+    "value-keyword-case": null,
+    "indentation": [
+      2,
+      "severity": "error"
+    ],
+    "comment-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"],
+        "ignore": ["stylelint-commands"],
+        "severity": "error"
+      },
+    ],
+    "color-hex-length": [
+      "short",
+      "severity": "error"
+    ],
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["blockless-after-same-name-blockless"],
+        "ignore": ["first-nested"],
+        "severity": "error"
+      }
+    ],
+    "number-leading-zero": [
+      "always",
+      "severity": "error"
+    ],
+    "max-empty-lines": [
+      1,
+      "severity": "error"
+    ],
+    "no-missing-end-of-source-newline": [
+      true,
+      "severity": "error"
+    ],
+    "no-eol-whitespace": [
+      true,
+      "severity": "error"
+    ],
+    "declaration-empty-line-before": [
+      "always",
+      {
+        "except": [
+          "after-declaration",
+          "first-nested"
+        ],
+        "ignore": [
+          "after-comment",
+          "inside-single-line-block"
+        ],
+        "severity": "error"
+      }
+    ],
+    "selector-descendant-combinator-no-non-space": [
+      true,
+      "severity": "error"
+    ],
+    "color-hex-case": [
+      "lower",
+      "severity": "error"
+    ],
+    "length-zero-no-unit": [
+      true,
+      "severity": "error"
+    ],
+    "declaration-colon-space-after": [
+      "always-single-line",
+      "severity": "error"
+    ],
+    "selector-list-comma-newline-after": [
+      "always",
+      "severity": "error"
+    ],
+    "block-closing-brace-empty-line-before": [
+      "never",
+      "severity": "error"
+    ],
+    "block-closing-brace-space-before": [
+      "always-single-line",
+      "severity": "error"
+    ],
+    "declaration-block-trailing-semicolon": [
+      "always",
+      "severity": "error"
+    ],
+    "function-comma-space-after": [
+      "always-single-line",
+      "severity": "error"
+    ],
+    "block-opening-brace-space-before": [
+      "always",
+      "severity": "error"
+    ],
+    "declaration-colon-newline-after": [
+      "always-multi-line",
+      "severity": "error"
+    ],
+    "selector-pseudo-element-colon-notation": [
+      "double",
+      "severity": "error"
+    ]
+  }
+}
+
+
+

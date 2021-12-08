@@ -1,0 +1,147 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, select, text } from '@storybook/addon-knobs'
+import { Grid } from './Grid.logic'
+import { Column, columnSizes } from '../Column'
+
+<Meta title="Grid System/Grid" component={Grid} />
+
+# Grid
+
+This component is going to be used inside LayoutPageWrapper and is defining the grid system
+
+<Grid>
+  <Column smallScreen={4}>Here goes your column children</Column>
+</Grid>
+
+<Props of={Grid} />
+
+## Info
+<Preview>
+  <Story name="Grid">
+    <>
+      <Grid>
+         <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+         <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+         <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+         <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+        <Column 
+            smallScreen={select('smallScreen', columnSizes, 12)}
+            mediumScreen={select('mediumScreen', columnSizes, 4)}
+            largeScreen={select('largeScreen', columnSizes, 1)}
+            hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+            hasPaddingMediumScreen={boolean('hasPaddingMediumScreen', true)}
+            hasPaddingLargeScreen={boolean('hasPaddingLargeScreen', true)}
+          >
+          {text('Content', 'Here goes your content')}
+        </Column>
+      </Grid>
+    </>
+  </Story>
+</Preview>
+

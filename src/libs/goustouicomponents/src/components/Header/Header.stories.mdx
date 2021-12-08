@@ -1,0 +1,25 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean } from '@storybook/addon-knobs'
+import { Header } from '.'
+import './Header.stories.css'
+
+<Meta title="Header" component={Header} />
+
+# Header
+
+This is an MVP implementation of the header for Gousto. For now, it will not handle anything related to authentication (login/logout).
+
+The menu items are hardcoded and read from `gousto-config/routes.js`. If you want to change the items rendered, the component has them listed at the top of the file. The naming must match the one from the routes file.
+
+<Props of={Header} />
+
+# Showcase
+
+<Preview>
+  <Story name="Header">
+    <Header
+      isAuthenticated={boolean('isAuthenticated', false)}
+      isNavEnabled={boolean('isNavEnabled', true)}
+    />
+  </Story>
+</Preview>

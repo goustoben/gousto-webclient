@@ -1,0 +1,83 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, text, radios } from '@storybook/addon-knobs'
+import { Heading } from '../Heading'
+import { InputCheck } from '.'
+
+export const INPUT_CHECKBOX_OPTIONS = {
+  label: 'Checkbox type',
+  options: {
+    default: 'default',
+    tile: 'tile',
+  },
+  defaultValue: 'default'
+}
+
+export class ParentComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { checkboxValue: false }
+  }
+  onChangeHandler(id, newValue) {
+    const currentState = this.state
+    this.setState({
+      ...currentState,
+      checkboxValue: newValue,
+    })
+  }
+  render() {
+    const { checkboxValue } = this.state
+    return (
+      <div>
+        <Heading>A parent component can subscribe to the changes using the `onChange` prop:</Heading>
+        <p>The checkbox is {checkboxValue ? 'ON' : 'OFF'}</p>
+        <InputCheck
+          id='4'
+          label="This is a checkbox"
+          onChange={(id, newValue) => this.onChangeHandler(id, newValue)}
+          defaultValue={checkboxValue}
+          testingSelector="controlled-checkbox"
+        />
+      </div>
+    )
+  }
+}
+
+<Meta title="InputCheck" component={InputCheck} />
+
+# InputCheck
+
+You can click in the checkbox or in the label.
+
+<Props of={InputCheck} />
+
+## Info
+<Preview>
+  <Story name="InputCheck">
+    <>
+      <InputCheck
+        label={text('label', 'This is a checkbox label')}
+        id={text('id', '1')}
+        testingSelector="input-check"
+        disabled={boolean('disabled', false)}
+        defaultValue={false}
+        type={radios(INPUT_CHECKBOX_OPTIONS.label, INPUT_CHECKBOX_OPTIONS.options, INPUT_CHECKBOX_OPTIONS.defaultValue)}
+        onChange={() => {}}
+      />
+      <InputCheck
+        id="2"
+        testingSelector="input-check-tile"
+        label="This is an example of a checkbox tile"
+        type="tile"
+        onChange={() => {}}
+        disabled={boolean('disabled', false)}
+      />
+      <InputCheck
+        id='3'
+        testingSelector="input-check-onchange"
+        label="This is an example of a checkbox with an onChange callback"
+        onChange={(id, newValue) => { alert(`a callback function is called with the id: ${id} and the new value: ${newValue}`) }}
+      />
+      <ParentComponent/>
+    </>
+  </Story>
+</Preview>

@@ -1,0 +1,143 @@
+@value Basa, Black, Duckegg, Mackerel from 'styles/colors.module.css';
+@value axiformaFontStack from 'styles/typography.module.css';
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.module.css';
+@value StepNumberSize 2.5rem;
+
+.wrapper {
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  background-color: transparent;
+  border-top: 1px solid transparent;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+@media ScreenSMMin {
+
+.wrapper {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent
+}
+  }
+
+.wrapper--transparent {
+  border-top-color: Mackerel;
+  border-bottom: 1px solid Mackerel;
+}
+
+@media ScreenSMMin {
+
+.wrapper--transparent {
+    border-left-color: Mackerel;
+    border-right-color: Mackerel
+}
+  }
+
+.wrapper--lightGrey {
+  background-color: Basa;
+}
+
+.stepNumberWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepNumberWrapper::before,
+.lineBelowNumber {
+  content: '';
+  display: block;
+  background: Black;
+  width: 2px;
+  height: 100%;
+}
+
+.topContentWrapper {
+  display: flex;
+}
+
+.contentWrapper {
+  width: calc(100% - StepNumberSize);
+}
+
+.lineBelowNumber {
+  position: relative;
+}
+
+@media ScreenXSMax {
+
+.wrapper--fullWidth .contentDefaultWidth {
+    display: none
+}
+  }
+
+.wrapper--fullWidth .contentFullWidth.verticalStagesItem {
+  padding-top: 0.5rem;
+}
+
+.lineBelowNumber::after {
+  content: '';
+  height: 1.4rem;
+  width: 2px;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: -1.5rem;
+  background-image: linear-gradient(black 33%, transparent 0%);
+  background-position: right;
+  background-size: 100% 6px;
+  background-repeat: repeat-y;
+}
+
+.lastStep > .lineBelowNumber,
+.lastStep > .lineBelowNumber::after,
+.lastStep::after {
+  display: none;
+}
+
+.stepNumberWrapper::before {
+  height: 1rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.wrapper.isCompleted .stepNumberWrapper::before,
+.wrapper.isCompleted .lineBelowNumber {
+  background: Duckegg;
+}
+
+.wrapper.isCompleted .lineBelowNumber::after {
+  background-image: linear-gradient(Duckegg 33%, transparent 0%);
+}
+
+.stepNumber {
+  border: 2px solid rgb(59, 58, 58);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: StepNumberSize;
+  height: StepNumberSize;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  font-family: axiformaFontStack; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+}
+
+.wrapper.isCompleted .stepNumber {
+  border-color: Duckegg;
+}
+
+.firstStep::before,
+.wrapper.isCompleted .firstStep::before {
+  background: transparent;
+}
+
+.tickIcon {
+  color: Duckegg;
+  composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.verticalStagesItem {
+  padding: 1.25rem 0.75rem 0.75rem;
+}

@@ -1,0 +1,29 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, radios, text } from '@storybook/addon-knobs'
+import { LegacyWarning } from 'config/LegacyWarning'
+import { Button } from '.'
+
+<Meta title="Legacy/Button" component={Button} />
+
+# Button
+
+<LegacyWarning />
+
+**We intend to deprecate this button in the near future. Please consider using the CTA component instead. If it's missing the required styles, consider building them there rather than using this component.**
+
+<Props of={Button} />
+
+## Info
+<Preview>
+  <Story name="Button">
+    <Button
+      color={radios('color', ['primary', 'secondary', 'tertiary', 'quaternary', 'negative'], 'primary')}
+      disabled={boolean('disabled', false)}
+      pending={boolean('pending', false)}
+      width={radios('width', ['auto', 'full'], 'auto')}
+      onClick={() => alert('You have clicked me!')}
+    >
+      {text('Content', 'Click me!')}
+    </Button>
+  </Story>
+</Preview>

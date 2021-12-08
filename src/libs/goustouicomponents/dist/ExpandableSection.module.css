@@ -1,0 +1,88 @@
+@value Bluecheese from 'styles/colors.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value duration 200ms;
+
+.removeBrowserButtonStyles {
+  background: none;
+  border: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  text-align: left;
+  text-transform: none;
+  width: 100%;
+}
+
+.removeBrowserButtonStyles:focus {
+    outline-color: Bluecheese;
+  }
+
+.removeBrowserButtonStyles:active {
+  color: inherit;
+}
+
+.toggleContainer {
+  cursor: pointer;
+  composes: removeBrowserButtonStyles;
+}
+
+.defaultToggle {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+@media BreakpointFromMedium {
+
+.defaultToggle {
+    padding: 2rem
+}
+  }
+
+.headingContainer {
+  flex-grow: 1;
+  padding-right: 1rem;
+}
+
+.arrow {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform duration;
+  background-image: url("design-language/media/expandableSection-chevron-down.svg");
+}
+
+.arrowCollapsed {
+  composes: arrow;
+}
+
+.arrowExpanded {
+  composes: arrow;
+  transform: scaleY(-1);
+}
+
+.contentContainer {
+  height: auto;
+  overflow: hidden;
+}
+
+.allowOverflow {
+  overflow: visible;
+}
+
+.defaultContent {
+  padding: 1rem;
+}
+
+@media BreakpointFromMedium {
+
+.defaultContent {
+    padding: 1rem 2rem 2rem
+}
+  }

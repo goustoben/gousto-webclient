@@ -1,0 +1,3 @@
+@value LightestAccessible from 'styles/colors.module.css';
+
+#root :global .wrap-out--TimeIndicator { background: LightestAccessible !important; }

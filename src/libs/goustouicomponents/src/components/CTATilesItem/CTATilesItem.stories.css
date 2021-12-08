@@ -1,0 +1,3 @@
+@value Oyster from 'styles/colors.module.css';
+
+#root :global .wrap-out--CTATilesItem { background: Oyster !important; }

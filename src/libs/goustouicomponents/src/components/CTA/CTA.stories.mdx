@@ -1,0 +1,46 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, radios, text } from '@storybook/addon-knobs'
+import css from './CTA.stories.css'
+import { CTA } from '.'
+
+export const CTA_SIZE = {}
+CTA_SIZE.label = 'size'
+CTA_SIZE.options = {
+  small: 'small',
+  medium: 'medium',
+}
+CTA_SIZE.defaultValue = CTA_SIZE.options.small
+
+export const CTA_VARIANT = {}
+CTA_VARIANT.label = 'variant'
+CTA_VARIANT.options = {
+  primary: 'primary',
+  secondary: 'secondary',
+}
+CTA_VARIANT.defaultValue = CTA_VARIANT.options.primary
+
+<Meta title="CTA" component={CTA} />
+
+# CTA
+
+This component should be used for anything that qualifies as a call to action.
+
+<Props of={CTA} />
+
+## Info
+<Preview>
+  <Story name="CTA">
+    <CTA
+      extraInfo={text('extraInfo')}
+      isDarkTheme={boolean('isDarkTheme', false)}
+      isDisabled={boolean('isDisabled', false)}
+      isFullWidth={boolean('isFullWidth', false)}
+      isLoading={boolean('isLoading', false)}
+      onClick={() => alert('You have clicked me!')}
+      size={radios(CTA_SIZE.label, CTA_SIZE.options, CTA_SIZE.defaultValue)}
+      variant={radios(CTA_VARIANT.label, CTA_VARIANT.options, CTA_VARIANT.defaultValue)}
+    >
+      {text('Content', 'Click me!')}
+    </CTA>
+  </Story>
+</Preview>

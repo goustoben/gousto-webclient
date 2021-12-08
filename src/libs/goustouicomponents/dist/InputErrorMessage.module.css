@@ -1,0 +1,17 @@
+@value Radish from 'styles/colors.module.css';
+
+.error {
+  composes: fontStyleXS from 'design-language/typography.module.css';
+  color: Radish;
+}
+
+.icon {
+  padding-right: 0.25rem;
+  composes: fa-basic-class from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.errorIcon {
+  composes: icon;
+  composes: fa-exclamation-circle from 'styles/vendor/font-awesome-module.module.css';
+  color: Radish;
+}

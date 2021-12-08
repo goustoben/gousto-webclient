@@ -1,0 +1,75 @@
+import { Meta, Preview } from '@storybook/addon-docs/blocks'
+import { Alert } from '../components/Alert'
+import css from './breakpoints.stories.css'
+import breakpoints from './breakpoints.module.css'
+import legacyBreakpoints from 'styles/screenSizes.module.css'
+
+export const BREAKPOINT_KEYS = Object.keys(breakpoints)
+export const LEGACY_BREAKPOINT_KEYS = Object.keys(legacyBreakpoints)
+
+export const RenderBreakpoint = ({ breakpoint }) => (
+  <div className={css.breakpointValues}>
+    <div className={css.breakpointName}>{breakpoint}</div>
+    <div className={css.breakpointValue}>{breakpoints[breakpoint]}</div>
+  </div>
+)
+
+export const RenderBreakpointVisual = ({ breakpoint }) => {
+  const isTo = breakpoint.includes('To')
+  return (
+    <div className={`${isTo && css.wrapperIsTo} ${css.wrapper}`}>
+      <div className={css.to}>{isTo && <RenderBreakpoint breakpoint={breakpoint} />}</div>
+      <div className={css.from}>{!isTo && <RenderBreakpoint breakpoint={breakpoint} />}</div>
+    </div>
+  )
+}
+
+<Meta title="Design Language/Breakpoints" />
+
+# Breakpoints
+
+<Preview>
+  <ul className={css.list}>
+    {BREAKPOINT_KEYS.map((breakpoint) => <li key={breakpoint} className={css.listItem}><RenderBreakpointVisual breakpoint={breakpoint} /></li>)}
+  </ul>
+</Preview>
+
+## How to use
+
+
+
+- In Zest:
+Please don't use alias to import
+```
+@value <BREAKPOINT_VALUE> from '../.../design-language/breakpoints.module.css';
+```
+- In a project that uses Zest:
+```
+@value <BREAKPOINT_VALUE> from '~goustouicomponents/dist/design-language/breakpoints.module.css';
+```
+
+```
+.selector {
+  @media <BREAKPOINT_VALUE> {
+    ...
+  }
+}
+
+```
+
+The structure of each breakpoint is: `Breakpoint[To|From][Medium|Large|XLarge]`.
+
+### To/From
+
+* `To` - the style inside the breakpoint applies on screens smaller than the breakpoint
+* `From` - the style inside the breakpoint applies on screens larger than the breakpoint
+
+## Legacy breakpoints
+
+<Alert type="warning">
+  These values are legacy and should not be used for new components. If the values above are not suitable for what you need, please get in touch with someone from your UX/UI team.
+</Alert>
+
+<ul>
+  {LEGACY_BREAKPOINT_KEYS.map((breakpoint) => <li key={breakpoint}>{breakpoint} - {legacyBreakpoints[breakpoint]}</li>)}
+</ul>

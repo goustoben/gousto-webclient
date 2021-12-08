@@ -1,0 +1,45 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, text } from '@storybook/addon-knobs'
+import { InfoTip } from '.'
+import css from './InfoTip.stories.css'
+
+<Meta title="InfoTip" component={InfoTip} />
+
+# InfoTip
+
+By default, InfoTip does not have close icon, and the padding is provided by the LayoutContentWrapper component. The parent of the InfoTip requires `position: relative`.
+
+Even if the parent's text style is centered, the text inside the tooltip will be left-aligned.
+
+<Props of={InfoTip} />
+
+## Info
+<Preview>
+  <Story name="InfoTip">
+    <>
+      <div className={css.absoluteParent}>
+        <InfoTip
+          isCloseIconVisible={boolean('isCloseIconVisible', false)}
+          maxWidth={text('maxWidth', 'none')}
+          minWidth={text('minWidth', 'none')}
+        >
+          This is the default InfoTip and has default darkGrey color prop.
+        </InfoTip>
+      </div>
+      <div className={css.relativeParent}>
+        <div>
+          <p>Sibling component</p>
+          <InfoTip
+            isCloseIconVisible={boolean('isCloseIconVisible', false)}
+            color={text('color', 'lightGrey')}
+            maxWidth={text('maxWidthSecond', 'none')}
+            minWidth={text('minWidthSecond', 'none')}
+            position={text('position', 'relative')}
+          >
+            This is the lightGrey InfoTip.
+          </InfoTip>
+        </div>
+      </div>
+    </>
+  </Story>
+</Preview>

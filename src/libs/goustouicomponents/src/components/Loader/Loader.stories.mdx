@@ -1,0 +1,25 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { radios } from '@storybook/addon-knobs'
+import { Loader } from '.'
+import './Loader.stories.css'
+
+export const LOADER_RADIOS = {}
+LOADER_RADIOS.label = 'Loader color'
+LOADER_RADIOS.options = {
+  Bluecheese: 'Bluecheese',
+  White: 'White',
+}
+LOADER_RADIOS.defaultValue = LOADER_RADIOS.options.White
+
+<Meta title="Loader" component={Loader} />
+
+# Laoder
+
+<Props of={Loader} />
+
+## Info
+<Preview>
+  <Story name="Loader">
+    <Loader color={radios(LOADER_RADIOS.label, LOADER_RADIOS.options, LOADER_RADIOS.defaultValue)}/>
+  </Story>
+</Preview>

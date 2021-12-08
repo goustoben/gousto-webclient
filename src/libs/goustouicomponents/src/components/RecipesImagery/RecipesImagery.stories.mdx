@@ -1,0 +1,71 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, select } from '@storybook/addon-knobs'
+import { RecipesImagery } from '.'
+import css from './RecipesImagery.stories.css'
+import picture from '../../media/images/gousto-box.jpg'
+
+export const FIVE_IMAGES = [
+  {
+    src: picture,
+    alt: 'picture1'
+  },
+  {
+    src: picture,
+    alt: 'picture2'
+  },
+  {
+    src: picture,
+    alt: 'picture3'
+  },
+  {
+    src: picture,
+    alt: 'picture4'
+  },
+  {
+    src: picture,
+    alt: 'picture5'
+  }
+]
+export const THREE_IMAGES = FIVE_IMAGES.slice(0, 3)
+
+<Meta title="RecipesImagery" component={RecipesImagery} />
+
+# RecipesImagery
+<Props of={RecipesImagery} />
+
+The component fills in all the available width and shows the images in square shape, even if they are not square.
+
+# Showcase
+#### RecipesImagery when no images are passed
+<Preview>
+  <div className={css.wrapper}>
+    <RecipesImagery />
+  </div>
+</Preview>
+
+#### RecipesImagery when images are passed
+<Preview>
+  <Story name="RecipesImagery">
+    <div className={css.wrapper}>
+      <RecipesImagery
+        items={select(
+          'images',
+          {
+            '0 images': [],
+            '3 images': THREE_IMAGES,
+            '5 images': FIVE_IMAGES,
+          },
+          THREE_IMAGES
+        )}
+        is2x2={boolean('is2x2', false)}
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### RecipesImagery when no images are passed and is2x2 is set to true
+<Preview>
+  <div className={css.wrapperIs2x2}>
+    <RecipesImagery is2x2={true} />
+  </div>
+</Preview>

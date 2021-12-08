@@ -1,0 +1,26 @@
+{
+  "name": "goustouicomponents",
+  "ignore": [
+    "config",
+    "jest",
+    ".editorconfig",
+    ".gitignore",
+    ".gitkeep",
+    "PULL_REQUEST_TEMPLATE.md",
+    "package.json",
+    "sonar-project.properties",
+    "package-lock.json",
+    "src/.babelrc"
+  ],
+  "homepage": "https://github.com/Gousto/ui-components",
+  "version": "11.7.7",
+  "_release": "11.7.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "11.7.7",
+    "commit": "7cc5791209c18001514e436e69eebba1fbdc8ff6"
+  },
+  "_source": "ssh://git@github.com/Gousto/ui-components.git",
+  "_target": "11.7.7",
+  "_originalSource": "git+ssh://git@github.com/Gousto/ui-components.git"
+}

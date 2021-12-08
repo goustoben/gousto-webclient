@@ -1,0 +1,19 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { text, radios } from '@storybook/addon-knobs'
+import { MetaInfo } from './index'
+import { IconChoice } from './MetaInfo.storyContainer'
+
+<Meta title="MetaInfo" component={MetaInfo} />
+
+# MetaInfo
+
+<Props of={MetaInfo} />
+
+## Info
+<Preview>
+  <Story name="MetaInfo">
+    <MetaInfo label={text('label', 'British')}>
+      <IconChoice iconName={radios('icon', ['location', 'clock'], 'location')} />
+    </MetaInfo>
+  </Story>
+</Preview>

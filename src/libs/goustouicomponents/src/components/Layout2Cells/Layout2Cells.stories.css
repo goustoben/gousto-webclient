@@ -1,0 +1,8 @@
+@value Blackberry, Radish05 from 'styles/colors.module.css';
+
+.exampleColumn {
+  border: 1px dashed Blackberry;
+  text-align: center;
+  background: Radish05;
+  color: Blackberry;
+}

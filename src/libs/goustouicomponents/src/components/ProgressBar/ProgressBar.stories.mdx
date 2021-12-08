@@ -1,0 +1,38 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { number, radios } from '@storybook/addon-knobs'
+import { ProgressBar } from '.'
+
+export const PROGRESS_BAR_THEME = {}
+PROGRESS_BAR_THEME.label = 'theme'
+PROGRESS_BAR_THEME.options = {
+  solid: 'solid',
+  'transition-1': 'transition-1',
+}
+PROGRESS_BAR_THEME.defaultValue = PROGRESS_BAR_THEME.options.solid
+
+export const PROGRESS_BAR_PERCENTAGE = {}
+PROGRESS_BAR_PERCENTAGE.label = 'percentage'
+PROGRESS_BAR_PERCENTAGE.options = {
+   range: true,
+   min: 0,
+   max: 100,
+   step: 1,
+}
+
+<Meta title="ProgressBar" component={ProgressBar} />
+
+# ProgressBar
+
+This component should be used for anything that qualifies as a call to action.
+
+<Props of={ProgressBar} />
+
+## Info
+<Preview>
+  <Story name="ProgressBar">
+    <ProgressBar
+      theme={radios(PROGRESS_BAR_THEME.label, PROGRESS_BAR_THEME.options, PROGRESS_BAR_THEME.defaultValue)}
+      percentage={number(PROGRESS_BAR_PERCENTAGE.label, 50, PROGRESS_BAR_PERCENTAGE.options)}
+    />
+  </Story>
+</Preview>

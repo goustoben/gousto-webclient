@@ -1,0 +1,37 @@
+@value White from 'styles/colors.module.css';
+@value ScreenSMMin from 'styles/screenSizes.module.css';
+
+.wrapperFloatCard {
+  position: fixed;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  pointer-events: none;
+  transition: transform 300ms ease-in-out;
+  transform: translateY(0);
+}
+
+.card {
+  background: White;
+  box-shadow: 0 0.5rem 1rem rgba(50, 50, 50, 0.2);
+  border-radius: 0.25rem;
+  min-width: 14rem;
+  max-width: 22rem;
+  position: relative;
+  pointer-events: initial;
+}
+
+.card > *:last-child {
+  margin-bottom: 0;
+}
+
+@media ScreenSMMin {
+
+.smallScreensOnly {
+    display: none
+}
+  }
+
+.isHidden {
+  transform: translateY(100vh);
+}

@@ -1,0 +1,74 @@
+@value Basa, Blackberry, Mackerel, White from 'styles/colors.module.css';
+@value Background Basa;
+@value BorderColor Mackerel;
+@value ExpandingAnimationDuration: 200ms;
+
+.secondaryWrapper {
+  background: Background;
+  flex-shrink: 10;
+  border-left: 1px solid BorderColor;
+}
+
+.secondaryContent {
+  position: absolute;
+  background: Background;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 0;
+  transition: width ExpandingAnimationDuration ease-in;
+  display: flex;
+  overflow: hidden;
+}
+
+.secondaryContent.isExpanded {
+  width: 100%;
+}
+
+.hideMoreInfoBtn,
+.showMoreInfoBtn {
+  appearance: none;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.showMoreInfoBtn {
+  color: Blackberry;
+  text-align: left;
+  font-size: 0.75rem;
+  background: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hideMoreInfoBtn {
+  composes: fa-basic-class from 'styles/vendor/font-awesome-module.module.css';
+  composes: fa-chevron-right from 'styles/vendor/font-awesome-module.module.css';
+  border-right: 1px solid BorderColor;
+  padding: 1rem 0.75rem;
+  font-size: 0.75rem;
+  background: White;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.iconQuestion {
+  composes: fa-basic-class from 'styles/vendor/font-awesome-module.module.css';
+  composes: fa-question-circle from 'styles/vendor/font-awesome-module.module.css';
+  margin-left: 0.25rem;
+  font-size: 1rem;
+}
+
+.secondaryTitle {
+  font-weight: 600;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,126 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, select } from '@storybook/addon-knobs'
+import { Modal, ModalBody, ModalHeader } from '.'
+import { ModalStoryWrapper } from './Modal.storyContainer.js'
+
+import './Modal.stories.module.css'
+
+<Meta title="Modal" component={Modal} />
+
+# Modal
+
+This is a **simple** implementation of a Modal that can be opened/closed from a parent, child or within the `Modal` component itself (`X` icon)
+
+## Usage
+
+**Simple controlled component**
+
+```
+# SomeParentComponent.js
+
+constructor(props) {
+    super(props)
+
+    this.state = {
+        isOpen: false,
+    }
+}
+
+toggleModal = () => {
+    const { isOpen } = this.state
+    this.setState({ isOpen: !isOpen })
+}
+
+render() {
+    return (
+        <Modal
+            name="story" // For accessibility purposes
+            description="some modal description" // For accessibility purposes
+            isOpen={isOpen}
+            handleClose={toggleModal} // Only required to close modal from 'X' icon within the Modal
+            onRequestClose={() => console.log('Post modal close callback')}
+            animated // Can disable animations with a boolean
+            variant="fullScreen" // Currently only "fullScreen", controls Modal styles, config and animation
+        >
+            <ModalHeader textAlign="center">Here's a Modal CTA</ModalHeader>
+            <ModalBody>Some content</ModalBody>
+        </Modal>
+    )
+}
+
+```
+
+**Hide X button and handle visibility from child component**
+
+```
+render() {
+    return (
+        <Modal
+            name="story"
+            description="some modal description"
+            isOpen={isOpen}
+            hideCloseIcon --> hides default Modal 'X'
+        >
+            <Button onClick={toggleModal}>This button now closes the modal</Button>
+        </Modal>
+    )
+}
+```
+
+**Visibility controlled by Redux store**
+
+```
+# SomeComponentContainer.js
+
+const mapDispatchToProps = (dispatch) => {
+    toggleModal: dispatch({ type: TOGGLE_MODAL }) // Action to toggle modal
+}
+
+const mapStateToProps = (state) => {
+    isOpen: state.modal.isOpen // Value in store that stores modal visibility, better still use a selector
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal)
+```
+
+## Props
+<Props of={Modal} />
+
+## Component
+_Note: Disregard `<ModalStoryWrapper/>`, this just provides a way to control the modal for the purposes of this story_
+<Preview>
+    <Story name="Modal">
+        <ModalStoryWrapper>
+            {({ isOpen, toggleModal }) => (
+                <Modal
+                    name="story"
+                    description="some modal description"
+                    isOpen={isOpen}
+                    handleClose={toggleModal}
+                    onRequestClose={() => console.log('Post modal close callback')}
+                    animated={boolean('Animations enabled', true)}
+                    variant={select('Variant', ["floating", "fullScreen", "bottomSheet"], "floating")}
+                    hideCloseIcon={boolean('Hide close icon', false)}
+                    withOverlay={boolean('With optional overlay', false)}
+                >
+                    <ModalHeader
+                        withSeparator={boolean('Header with separator', true)}
+                        align={select('Header alignment', ["left", "center"], "left")}>
+                        Here's a Header
+                    </ModalHeader>
+                    <ModalBody>
+                        <p>Here's something inside a ModalBody component</p>
+                        <p>It gives you a way to quickly pad your content</p>
+                        <p>
+                            Sint commodo elit aute non ad veniam ut magna pariatur commodo exercitation esse cillum incididunt. Ad mollit quis aute dolor nostrud officia fugiat. Minim est ad non culpa labore. In nisi occaecat sint nisi adipisicing elit consectetur laborum pariatur non do.
+                        </p>
+                    </ModalBody>
+                </Modal>
+            )}
+        </ModalStoryWrapper>
+    </Story>
+</Preview>
+
+## Improvements
+
+- In order to guarantee predictable z-index behaviour, this portal should implement a `Portal` or similar - my suggestion is to use a 3rd party lib on migrating to React 16.

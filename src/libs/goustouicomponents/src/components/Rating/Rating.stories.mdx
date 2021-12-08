@@ -1,0 +1,23 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { number, select } from '@storybook/addon-knobs'
+import { Rating } from '.'
+
+<Meta title="Rating" component={Rating} />
+
+# Rating
+
+This component should be used for showing recipe rating.
+
+Max amount of stars is 5 (average). If average is greater than 5 it will always show 5 full stars.
+
+<Props of={Rating} />
+
+<Preview>
+  <Story name="Rating">
+    <Rating
+      amountOfReviews={number('amountOfReviews', 30)}
+      average={number('average', 3.5, { min: 0, max: 5 })}
+      size={select('size', ["Medium", "Large"], "Medium")}
+    />
+  </Story>
+</Preview>

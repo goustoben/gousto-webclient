@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item-0 {
+  width: 20%;
+}
+
+.item-1 {
+  width: 80%;
+}

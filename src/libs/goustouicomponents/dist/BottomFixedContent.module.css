@@ -1,0 +1,17 @@
+@value White from 'styles/colors.module.css';
+@value BreakpointToMedium from 'design-language/breakpoints.module.css';
+@value shadowOpacityLow from 'styles/shadows.module.css';
+
+@media BreakpointToMedium {
+
+.wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 70;
+    background-color: White;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: 0 -4px 8px shadowOpacityLow
+}
+  }

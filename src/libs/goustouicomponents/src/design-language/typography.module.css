@@ -1,0 +1,174 @@
+/* stylelint-disable unit-case, unit-no-unknown, font-family-no-missing-generic-family-keyword */
+
+@value BreakpointFromMedium, BreakpointFromLarge from './breakpoints.module.css';
+
+@font-face {
+  font-family: 'AxiformaBook';
+  src:
+    url('./fonts/Axiforma-Book.woff2') format('woff2'),
+    url('./fonts/Axiforma-Book.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AxiformaSemiBold';
+  src:
+    url('./fonts/Axiforma-SemiBold.woff2') format('woff2'),
+    url('./fonts/Axiforma-SemiBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AxiformaBold';
+  src:
+    url('./fonts/Axiforma-Bold.woff2') format('woff2'),
+    url('./fonts/Axiforma-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@value FontBodySize 15px;
+@value FontFamilyAxiformaBook AxiformaBook,Helvetica,sans-serif;
+@value FontFamilyAxiformaSemiBold AxiformaSemiBold,Helvetica,sans-serif;
+@value FontFamilyAxiformaBold AxiformaBold,Helvetica,sans-serif;
+@value FontWeightBold 600;
+
+/* Font sizes */
+
+@value 2XSmall 10px/16px;
+@value XSmall 12px/20px;
+@value Small 13px/22px;
+@value Medium FontBodySize/24px;
+@value Large 18px/27px;
+@value LargeButton 18px/30px;
+@value XLarge 20px/28px;
+@value 2XLarge 22px/30px;
+@value 3XLarge 24px/32px;
+@value 4XLarge 28px/36px;
+@value 5XLarge 32px/42px;
+@value 6XLarge 34px/44px;
+@value 7XLarge 40px/52px;
+@value 8XLarge 48px/62px;
+@value 9XLarge 64px/72px;
+
+/* Default body font style (needed for general setup) */
+
+@value FontStyleBody Medium FontFamilyAxiformaBook;
+
+.fontLetterSpacingSmall {
+  letter-spacing: -0.005em;
+}
+
+.fontStyleXXS {
+  font: 2XSmall FontFamilyAxiformaBook !important;
+}
+
+.fontStyleXS {
+  font: XSmall FontFamilyAxiformaBook !important;
+}
+
+.fontStyleS {
+  font: Small FontFamilyAxiformaBook !important;
+}
+
+.fontStyleBody {
+  font: FontStyleBody;
+}
+
+.fontStyleSubHead {
+  font: Medium FontFamilyAxiformaSemiBold !important;
+}
+
+.fontStyleButtonS {
+  font: Medium FontFamilyAxiformaSemiBold !important;
+}
+
+.fontStyleButtonL {
+  font: LargeButton FontFamilyAxiformaSemiBold !important;
+}
+
+.fontStyleBodyL {
+  font: Large FontFamilyAxiformaBook !important;
+}
+
+.fontStyleM {
+  font: Large FontFamilyAxiformaSemiBold !important;
+
+  @media BreakpointFromMedium {
+    font: XLarge FontFamilyAxiformaSemiBold !important;
+  }
+}
+
+.fontStyleL {
+  font: XLarge FontFamilyAxiformaSemiBold !important;
+
+  @media BreakpointFromMedium {
+    font: 2XLarge FontFamilyAxiformaSemiBold !important;
+  }
+
+  @media BreakpointFromLarge {
+    font: 3XLarge FontFamilyAxiformaSemiBold !important;
+  }
+}
+
+.fontStyleXL {
+  font: 3XLarge FontFamilyAxiformaSemiBold !important;
+
+  @media BreakpointFromMedium {
+    font: 4XLarge FontFamilyAxiformaSemiBold !important;
+  }
+
+  @media BreakpointFromLarge {
+    font: 5XLarge FontFamilyAxiformaSemiBold !important;
+  }
+}
+
+.fontStyle2XL {
+  composes: fontLetterSpacingSmall;
+  font: 4XLarge FontFamilyAxiformaSemiBold !important;
+
+  @media BreakpointFromMedium {
+    font: 6XLarge FontFamilyAxiformaSemiBold !important;
+  }
+
+  @media BreakpointFromLarge {
+    font: 7XLarge FontFamilyAxiformaSemiBold !important;
+  }
+}
+
+.fontStyle3XL {
+  composes: fontLetterSpacingSmall;
+  font: 5XLarge FontFamilyAxiformaBold !important;
+
+  @media BreakpointFromMedium {
+    font: 7XLarge FontFamilyAxiformaBold !important;
+  }
+
+  @media BreakpointFromLarge {
+    font: 8XLarge FontFamilyAxiformaBold !important;
+  }
+}
+
+.fontStyle4XL {
+  composes: fontLetterSpacingSmall;
+  font: 7XLarge FontFamilyAxiformaBold !important;
+
+  @media BreakpointFromMedium {
+    font: 8XLarge FontFamilyAxiformaBold !important;
+  }
+
+  @media BreakpointFromLarge {
+    font: 9XLarge FontFamilyAxiformaBold !important;
+  }
+}
+
+.fontSemiBold {
+  font-family: FontFamilyAxiformaSemiBold !important;
+}
+
+.fontBold {
+  font-family: FontFamilyAxiformaBold !important;
+}
+/* stylelint-enable unit-case, unit-no-unknown, font-family-no-missing-generic-family-keyword */

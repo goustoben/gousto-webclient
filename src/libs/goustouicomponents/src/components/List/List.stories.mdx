@@ -1,0 +1,23 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { List } from '.'
+import { Item } from '../Item'
+
+<Meta title="List" component={List} />
+
+# List
+
+<Props of={List} />
+
+# Showcase
+
+The `<List />` requires each child to be wrapped in `<List.Item />`. We recommend using this to wrap a list of `<Item />`s components.
+
+<Preview>
+  <Story name="List">
+    <List>
+      <List.Item><Item label="This is an item" /></List.Item>
+      <List.Item><Item label="This is another item" /></List.Item>
+      <List.Item><Item label="And another item" /></List.Item>
+    </List>
+  </Story>
+</Preview>

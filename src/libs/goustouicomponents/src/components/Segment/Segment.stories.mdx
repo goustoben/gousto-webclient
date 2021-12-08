@@ -1,0 +1,29 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { radios } from '@storybook/addon-knobs'
+import { LegacyWarning } from 'config/LegacyWarning'
+import { Segment } from '.'
+import { Button } from '../Button'
+
+export const BUTTON_COLOR = {}
+BUTTON_COLOR.label = 'Color'
+BUTTON_COLOR.options = ['primary', 'secondary', 'tertiary', 'quaternary']
+BUTTON_COLOR.defaultValue = BUTTON_COLOR.options[0]
+
+<Meta title="Legacy/Segment" component={Segment} />
+
+# Segment
+
+<LegacyWarning />
+
+<Props of={Segment} />
+
+## Info
+<Preview>
+  <Story name="Segment">
+    <Button color={radios(BUTTON_COLOR.label, BUTTON_COLOR.options, BUTTON_COLOR.defaultValue)}>
+      <Segment>👍</Segment>
+      <Segment fill={false}>No</Segment>
+      <Segment disabled={true}>👎</Segment>
+    </Button>
+  </Story>
+</Preview>

@@ -1,0 +1,3 @@
+@value Cacao from 'styles/colors.module.css';
+
+#root :global .wrap-out--NarrowCard { background: Cacao !important; }

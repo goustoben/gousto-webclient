@@ -1,0 +1,61 @@
+@value BreakpointToLarge from 'design-language/breakpoints.module.css';
+@value White from 'styles/colors.module.css';
+@value HeaderMarginHorizontal 0.5rem;
+@value HeaderPaddingVertical 0.5rem;
+@value HeaderPaddingHorizontal 0.5rem;
+
+.navListWrapper {
+  @media BreakpointToLarge {
+    display: none;
+  }
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navListItem {
+  margin-left: HeaderMarginHorizontal;
+
+  &:not(:last-child) {
+    margin-right: HeaderMarginHorizontal;
+  }
+}
+
+.navListItemLink {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  composes: fontSemiBold from 'design-language/typography.module.css';
+  display: block;
+  padding: 0.35rem HeaderPaddingHorizontal 0.2rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: White;
+  position: relative;
+}
+
+.navListItemLink::after {
+  content: '';
+  display: block;
+  background: White;
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 100ms ease;
+}
+
+.navListItemLink:hover::after {
+  width: 100%;
+}
+
+.navListItemLinkCTA {
+  border: 1px solid White;
+  border-radius: 0.25rem;
+  padding: 0.35rem 0.75rem 0.25rem;
+}

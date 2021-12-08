@@ -1,0 +1,29 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, select, text  } from '@storybook/addon-knobs'
+import { Column, columnSizes } from './Column.logic'
+import css from './Column.stories.css'
+
+<Meta title="Grid System/Column" component={Column} />
+
+# Column
+
+This component should be used for grid system and should be used only within Grid component.
+
+<Column smallScreen={1}>Here goes your column children</Column>
+
+<Props of={Column} />
+
+## Info
+<Preview>
+  <Story name="Column">
+    <>
+      <Column 
+        smallScreen={select('columnSizes', columnSizes, 12)}
+        extraClass={css.newClass}
+        hasPaddingSmallScreen={boolean('hasPaddingSmallScreen', true)}
+      >
+        {text('Content', 'Here goes your content')}
+      </Column>
+    </>
+  </Story>
+</Preview>

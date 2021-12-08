@@ -1,0 +1,14 @@
+@value White from 'styles/colors.module.css';
+@value Top from 'styles/z-index.module.css';
+
+.wrapper {
+  position: absolute;
+  width: 100%;
+  background: White;
+  z-index: Top;
+  display: none;
+}
+
+.isExpanded {
+  display: block;
+}

@@ -1,0 +1,98 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { number, select, object, boolean, text } from '@storybook/addon-knobs'
+import { MultipleCardsStory } from './RecipeCard.storyContainer'
+import { RecipeCard } from '.'
+import css from './RecipeCard.stories.css'
+
+<Meta title="RecipeCard" component={RecipeCard} />
+
+# RecipeCard
+
+When isResizable is true you can control card size from parent
+
+if isResizable is false it means all cards have fixed sizes for all screns.
+
+<Props of={RecipeCard} />
+
+export const title = 'Roast Veg Tabbouleh With Tahini Dressing'
+export const size = select('size', ["Medium", "Large"], "Medium")
+export const url = 'https://www.gousto.co.uk/cookbook/vegan-recipes'
+export const media = [
+  {
+    url: 'https:\/\/production-media.gousto.co.uk\/cms\/mood-image\/1358-Harissa-Hummus-Roasted-Veg--Freekeh-Salad-x50.jpg',
+    width: 50
+  },
+  {
+    url: 'https:\/\/production-media.gousto.co.uk\/cms\/mood-image\/1358-Harissa-Hummus-Roasted-Veg--Freekeh-Salad-x200.jpg',
+    width: 200
+  },
+  {
+    url: 'https:\/\/production-media.gousto.co.uk\/cms\/mood-image\/1358-Harissa-Hummus-Roasted-Veg--Freekeh-Salad-x400.jpg',
+    width: 400
+  },
+  {
+    url: 'https:\/\/production-media.gousto.co.uk\/cms\/mood-image\/1358-Harissa-Hummus-Roasted-Veg--Freekeh-Salad-x700.jpg',
+    width: 700
+  },
+  {
+    url: 'https:\/\/production-media.gousto.co.uk\/cms\/mood-image\/1358-Harissa-Hummus-Roasted-Veg--Freekeh-Salad-x1000.jpg',
+    width: 1000
+  },
+  {
+    url: 'https:\/\/production-media.gousto.co.uk\/cms\/mood-image\/1358-Harissa-Hummus-Roasted-Veg--Freekeh-Salad-x1500.jpg',
+    width: 1500
+  }
+]
+
+### RecipeCard with rating
+<Preview>
+  <Story name="RecipeCard with rating">
+    <RecipeCard
+      title={text('title', title)}
+      media={object('media', media)}
+      rating={object('rating', { amountOfReviews: 46, average: 4, size })}
+      cookingTime={number('cookingTime', 35)}
+      isResizable={boolean('isResizable', false)}
+      hasHoverEffect={boolean('hasHoverEffect', false)}
+      hasMargin={boolean('hasMargin', true)}
+      hasRectangularImageOnMobile={boolean('hasRectangularImageOnMobile', false)}
+      fitHeight={boolean('fitHeight', false)}
+    />
+  </Story>
+</Preview>
+
+### RecipeCard without rating
+<Preview>
+  <Story name="RecipeCard without rating">
+    <>
+      <RecipeCard
+        title={title}
+        media={media}
+        cookingTime={35}
+        isResizable={false}
+        hasHoverEffect={false}
+      />
+      <RecipeCard
+        title={title}
+        media={media}
+        rating={{ amountOfReviews: null, average: null, size }}
+        cookingTime={35}
+        isResizable={false}
+        hasHoverEffect={false}
+      />
+    </>
+  </Story>
+</Preview>
+
+### Row of cards with variable title length
+<Preview>
+  <Story name="Multiple cards with variable title length">
+    <>
+      <p>
+        This example mimics the layout of a Category page of the
+        content-webclient cookbook: resizable cards of the same height.
+      </p>
+      <MultipleCardsStory nCards={number('nCards', 4, { min: 1, max: 4 })} />
+    </>
+  </Story>
+</Preview>

@@ -1,0 +1,6 @@
+@value BreakpointToMedium (max-width: 639px);
+@value BreakpointFromMedium (min-width: 640px);
+@value BreakpointToLarge (max-width: 959px);
+@value BreakpointFromLarge (min-width: 960px);
+@value BreakpointToXLarge (max-width: 1199px);
+@value BreakpointFromXLarge (min-width: 1200px);

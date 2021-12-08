@@ -1,0 +1,115 @@
+@value Blackberry, Bluecheese, Blueberry, Carrot, DarkHaricot, DarkHaricot05, Mackerel, Oyster, Radish, Radish05, White from './colors.module.css';
+@value inputPlaceholderColor Oyster;
+@value inputDisabledColor Oyster;
+@value inputColor Blackberry;
+@value inputBgColor White;
+@value inputBorderColor Mackerel;
+@value inputBorderColorFocus Oyster;
+@value dropdownSelectedColor White;
+@value dropdownSelectedBgColor Bluecheese;
+@value inputSecondaryColor Bluecheese;
+@value inputSecondaryBgColor White;
+@value inputSecondaryBorderColor Bluecheese;
+@value inputSecondaryBorderColorFocus Blueberry;
+@value dropdownSecondarySelectedColor White;
+@value dropdownSecondarySelectedBgColor Blueberry;
+@value checkRadioSize 18px;
+@value checkRadioBgColorUnchecked White;
+@value checkRadioBorderColorUnchecked Mackerel;
+@value checkRadioBgColorChecked Bluecheese;
+@value checkRadioBorderColorChecked Bluecheese;
+@value checkRadioBorderColorFocus Oyster;
+@value errorColor Radish;
+@value errorBgColor Radish05;
+@value errorBorderColor Radish;
+@value successColor DarkHaricot;
+@value successBgColor DarkHaricot05;
+@value successBorderColor DarkHaricot;
+@value infoColor: Carrot;
+
+.input {
+  composes: block from './display.module.css';
+  composes: borderSM from './borders.module.css';
+  composes: textLG from './typography.module.css';
+  composes: paddingXSTopBottom paddingMDLeftRight from './spacing.module.css';
+  width: 100%;
+  outline: none;
+}
+
+.input::placeholder {
+    color: inputPlaceholderColor;
+    opacity: 1;
+    text-transform: none;
+  }
+
+.input:not(.inputError):not(.inputSuccess) {
+    background-color: inputBgColor;
+    color: inputColor;
+    border-color: inputBorderColor;
+  }
+
+.input:not(.inputError):not(.inputSuccess):hover,
+    .input:not(.inputError):not(.inputSuccess):active,
+    .input:not(.inputError):not(.inputSuccess):focus {
+      border-color: inputBorderColorFocus;
+    }
+
+.input:not(.inputError):not(.inputSuccess).secondary {
+      background-color: inputSecondaryBgColor;
+      color: inputSecondaryColor;
+      border-color: inputSecondaryBorderColor;
+    }
+
+.input:not(.inputError):not(.inputSuccess).secondary:hover,
+      .input:not(.inputError):not(.inputSuccess).secondary:active,
+      .input:not(.inputError):not(.inputSuccess).secondary:focus {
+        border-color: inputSecondaryBorderColorFocus;
+      }
+
+.inputSuccess {
+  background-color: successBgColor;
+  color: successColor;
+}
+
+.inputSuccess,
+  .inputSuccess:hover,
+  .inputSuccess:active,
+  .inputSuccess:focus {
+    border-color: successBorderColor;
+  }
+
+.inputError {
+  background-color: errorBgColor;
+  color: errorColor;
+}
+
+.inputError,
+  .inputError:hover,
+  .inputError:active,
+  .inputError:focus {
+    border-color: errorBorderColor;
+  }
+
+.msg {
+  composes: textXS from './typography.module.css';
+  composes: paddingXXSTop noMargin from './spacing.module.css';
+}
+
+.msg::first-letter {
+    text-transform: capitalize;
+  }
+
+.infoMsg {
+  composes: msg;
+  color: infoColor;
+}
+
+.errorMsg {
+  composes: msg;
+  color: errorColor;
+}
+
+.successMsg {
+  composes: msg;
+  color: successColor;
+}

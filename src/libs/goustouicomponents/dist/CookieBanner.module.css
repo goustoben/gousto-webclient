@@ -1,0 +1,46 @@
+@value Blackberry, White from 'styles/colors.module.css';
+@value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.module.css';
+
+.wrapper {
+  background-color: Blackberry;
+  color: White;
+}
+
+.wrapperContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media BreakpointToMedium {
+
+.wrapperContent {
+    flex-direction: column
+}
+  }
+
+.copy {
+  margin: 0 0 0.5rem 0;
+}
+
+@media BreakpointFromMedium {
+
+.copy {
+    margin: 0 1rem 0 0
+}
+  }
+
+.link {
+  color: White;
+}
+
+.cta {
+  align-self: flex-start;
+}
+
+@media BreakpointFromMedium {
+
+.cta {
+    align-self: auto
+}
+  }

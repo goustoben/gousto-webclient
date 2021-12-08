@@ -1,0 +1,59 @@
+@value Blackberry, Pomegranate, White from 'styles/colors.module.css';
+@value BreakpointFromLarge from 'design-language/breakpoints.module.css';
+@value HeaderPaddingVertical 0.5rem;
+
+.wrapper {
+  background: Pomegranate;
+}
+
+.content {
+  padding-top: HeaderPaddingVertical;
+  padding-bottom: HeaderPaddingVertical;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  width: 6.5rem;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+}
+
+.navExtendedOpenCTA {
+  composes: fa-basic-class fa-bars from 'styles/vendor/font-awesome-module.module.css';
+  appearance: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: White;
+  cursor: pointer;
+  font-size: 1.8rem;
+  transition: all 200ms ease;
+  opacity: 1;
+
+  @media BreakpointFromLarge {
+    display: none;
+  }
+
+  &.isExtended {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: Blackberry;
+    opacity: 0.4;
+    border: none;
+    z-index: 9999;
+
+    &::before {
+      display: none;
+    }
+  }
+}

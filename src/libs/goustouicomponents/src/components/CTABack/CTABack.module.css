@@ -1,0 +1,30 @@
+@value Bluecheese, Oyster from 'styles/colors.module.css';
+
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link,
+.link:active,
+.link:focus,
+.link:hover,
+.link:visited {
+  color: Bluecheese;
+}
+
+.icon {
+  margin-right: 0.5rem;
+}
+
+.icon > path {
+  fill: Bluecheese;
+}
+
+.label {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  composes: fontSemiBold from 'design-language/typography.module.css';
+  border-bottom: 1px solid Oyster;
+}

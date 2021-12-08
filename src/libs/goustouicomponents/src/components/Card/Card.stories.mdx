@@ -1,0 +1,84 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, radios } from '@storybook/addon-knobs'
+import { Heading } from '../Heading'
+import { Item } from '../Item'
+import { List } from '../List'
+import { CTA } from '../CTA'
+import { Card } from '.'
+import css from './Card.stories.css'
+
+<Meta title="Card" component={Card} />
+
+# Card
+
+Note: the size names follow `LayoutContentWrapper`, so `large` is `1rem`, and `large/xlarge` is `1rem` on mobile and `2rem` on tablet and above.
+
+<Props of={Card} />
+
+## Showcase
+
+export const paddingSizes = [
+  'large',
+  'large/xlarge',
+]
+
+### Card when no children are passed
+<Preview>
+  <Story name="Card">
+    <div className={css.wrapper}>
+      <Card
+        hasLateralBordersOnSmallScreens={boolean('hasLateralBordersOnSmallScreens', true)}
+        hasPaddingVertical={boolean('hasPaddingVertical', true)}
+        isVisibleOnSmallScreens={boolean('isVisibleOnSmallScreens', true)}
+        paddingSize={radios('paddingSize', paddingSizes, paddingSizes[0])}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### Card with children passed to it (Header, CTA, some text)
+<Preview>
+  <Story name="Card with children passed">
+    <div className={css.wrapper}>
+      <Card
+        hasLateralBordersOnSmallScreens={boolean('hasLateralBordersOnSmallScreens', true)}
+        hasPaddingVertical={boolean('hasPaddingVertical', true)}
+        isVisibleOnSmallScreens={boolean('isVisibleOnSmallScreens', true)}
+        paddingSize={radios('paddingSize', paddingSizes, paddingSizes[0])}
+      >
+        <Heading size="fontStyleM">
+          Still need help?
+        </Heading>
+        <p>
+          If you can't find the answer to what you're looking for here, our Customer Care team will be able to help.
+        </p>
+        <CTA isFullWidth size="small" onClick={() => alert('Get in touch')}>
+          Get in touch
+        </CTA>
+      </Card>
+    </div>
+  </Story>
+</Preview>
+
+### Card with list of items
+
+Here you can notice how vertical padding is not needed
+
+<Preview>
+  <Story name="Card with list of items">
+    <div className={css.wrapper}>
+      <Card
+        hasLateralBordersOnSmallScreens={boolean('hasLateralBordersOnSmallScreens', true)}
+        hasPaddingVertical={boolean('hasPaddingVertical', true)}
+        isVisibleOnSmallScreens={boolean('isVisibleOnSmallScreens', true)}
+        paddingSize={radios('paddingSize', paddingSizes, paddingSizes[0])}
+      >
+        <List>
+          <List.Item><Item label='Item 1' /></List.Item>
+          <List.Item><Item label='Item 2' /></List.Item>
+          <List.Item><Item label='Item 3' /></List.Item>
+        </List>
+      </Card>
+    </div>
+  </Story>
+</Preview>

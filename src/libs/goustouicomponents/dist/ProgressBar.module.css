@@ -1,0 +1,34 @@
+@value Basa, Bluecheese, Carrot, Haricot, Radish from 'styles/colors.module.css';
+@value ProgressBarHeight 0.5rem;
+@value ProgressBarRadius calc(ProgressBarHeight / 2);
+
+.container {
+  width: 100%;
+  background: Basa;
+  height: ProgressBarHeight;
+  border-radius: ProgressBarRadius;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: ProgressBarRadius;
+  transition: all 500ms ease;
+  transition-property: width, background-color;
+}
+
+.solid {
+  background-color: Bluecheese;
+}
+
+.transition-1 {
+  background-color: Radish;
+}
+
+.transition-1-stop-0 {
+  background-color: Carrot;
+}
+
+.transition-1-stop-1 {
+  background-color: Haricot;
+}

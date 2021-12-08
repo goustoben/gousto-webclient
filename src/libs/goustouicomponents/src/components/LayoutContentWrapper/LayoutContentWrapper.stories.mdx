@@ -1,0 +1,46 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, radios } from '@storybook/addon-knobs'
+import { LayoutContentWrapper } from '.'
+import css from './LayoutContentWrapper.stories.css'
+
+export const PADDING_HORIZONTAL_SIZE = {}
+PADDING_HORIZONTAL_SIZE.label = 'paddingHorizontalSize'
+PADDING_HORIZONTAL_SIZE.options = {
+  medium: 'medium',
+  large: 'large',
+  'large/xlarge': 'large/xlarge',
+}
+PADDING_HORIZONTAL_SIZE.defaultValue = PADDING_HORIZONTAL_SIZE.options.medium
+
+export const PADDING_VERTICAL_SIZE = {}
+PADDING_VERTICAL_SIZE.label = 'paddingVerticalSize'
+PADDING_VERTICAL_SIZE.options = {
+  medium: 'medium',
+  large: 'large',
+  'large/xlarge': 'large/xlarge',
+}
+PADDING_VERTICAL_SIZE.defaultValue = PADDING_VERTICAL_SIZE.options.medium
+
+<Meta title="Layout/LayoutContentWrapper" component={LayoutContentWrapper} />
+
+# LayoutContentWrapper
+
+This layout component is a container that helps wrap the content and adds padding to it. It allows for the disabling of  the horizontal and/or vertical padding, if only one/none is/are needed.
+
+The `large/xlarge` value allows for a degree of responsiveness: on the mobile screen sizes, the padding is 1rem, and on tablet screen sizes and above, the padding is 2rem.
+
+<Props of={LayoutContentWrapper} />
+
+## Info
+<Preview>
+  <Story name="LayoutContentWrapper">
+    <LayoutContentWrapper
+      paddingHorizontal={boolean('paddingHorizontal', true)}
+      paddingVertical={boolean('paddingVertical', true)}
+      paddingHorizontalSize={radios(PADDING_HORIZONTAL_SIZE.label, PADDING_HORIZONTAL_SIZE.options, PADDING_HORIZONTAL_SIZE.defaultValue)}
+      paddingVerticalSize={radios(PADDING_VERTICAL_SIZE.label, PADDING_VERTICAL_SIZE.options, PADDING_VERTICAL_SIZE.defaultValue)}
+    >
+      <div className={css.exampleContent}>Content goes here</div>
+    </LayoutContentWrapper>
+  </Story>
+</Preview>

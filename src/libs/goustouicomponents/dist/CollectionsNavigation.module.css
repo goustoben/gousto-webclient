@@ -1,0 +1,37 @@
+@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.module.css';
+@value Margin 0.5rem;
+
+.listWrapper {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media ScreenSMMax {
+
+.listWrapper {
+    flex-wrap: wrap
+}
+  }
+
+.listItem {
+  list-style: none;
+  display: flex;
+  align-items: flex-end;
+}
+
+@media ScreenSMMax {
+
+.listItem {
+    width: calc(33.3% - (Margin * 0.75));
+    margin-bottom: Margin
+}
+  }
+
+@media ScreenXSMax {
+
+.listItem {
+    width: calc(50% - (Margin * 0.5))
+}
+  }

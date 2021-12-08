@@ -1,0 +1,5 @@
+@value Bluecheese, White, Black from 'styles/colors.module.css';
+
+.radioGroup label:not(:last-child) {
+  margin-bottom: 0.5rem;
+}

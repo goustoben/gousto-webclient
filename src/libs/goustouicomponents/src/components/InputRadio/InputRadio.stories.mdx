@@ -1,0 +1,87 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { boolean, text, radios } from '@storybook/addon-knobs'
+
+import { Heading } from '../Heading'
+import { InputRadio } from '.'
+
+export const INPUT_RADIO_OPTIONS = {
+  label: 'Radio type',
+  options: {
+    default: 'default',
+    tile: 'tile',
+  },
+  defaultValue: 'default',
+  ariaLabel: 'ariaLabel'
+}
+
+export class ParentComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { checkedValue: '' }
+    this.onChangeHandler = this.onChangeHandler.bind(this)
+  }
+  onChangeHandler(e) {
+      this.setState({
+          checkedValue: e.target.value,
+      })
+  }
+  render() {
+      const { checkedValue } = this.state
+      return (
+          <div>
+              <p>This is a radio button</p>
+              <p>You can control them with onChange function </p>
+              <InputRadio
+                  id='radio1'
+                  isChecked={this.state.checkedValue === "inputValue1"}
+                  isDisabled={boolean('isDisabled', false)}
+                  name="demoName"
+                  value="inputValue1"
+                  onChange={this.onChangeHandler}
+                  variant={radios(INPUT_RADIO_OPTIONS.label, INPUT_RADIO_OPTIONS.options, INPUT_RADIO_OPTIONS.defaultValue)}
+                  aria-label={text(INPUT_RADIO_OPTIONS.ariaLabel)}
+              >
+                  <span>This is a radio button</span>
+              </InputRadio>
+              <InputRadio
+                  id='radio2'
+                  isChecked={this.state.checkedValue === "inputValue2"}
+                  isDisabled={boolean('isDisabled', false)}
+                  name="demoName"
+                  value="inputValue2"
+                  onChange={this.onChangeHandler}
+                  variant={INPUT_RADIO_OPTIONS.options.tile}
+              >
+                  <span>This is a radio tile</span>
+              </InputRadio>
+              <br />
+              <InputRadio
+                  id='radio3'
+                  isChecked={this.state.checkedValue === "inputValue3"}
+                  isDisabled={true}
+                  name="demoName"
+                  value="inputValue3"
+                  onChange={this.onChangeHandler}
+                  variant={INPUT_RADIO_OPTIONS.options.tile}
+              >
+                  <span>This is a disabled radio tile</span>
+              </InputRadio>
+          </div>
+      )
+    }
+}
+
+<Meta title="InputRadio" component={InputRadio} />
+
+# InputRadio
+
+You can click in the radio or in the label.
+
+<Props of={InputRadio} />
+
+## Info
+<Preview>
+  <Story name="InputRadio">
+    <ParentComponent/>
+  </Story>
+</Preview>

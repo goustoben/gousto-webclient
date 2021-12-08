@@ -1,0 +1,46 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { ScrollCarousel, ScrollCarouselBody } from '.'
+import css from './ScrollCarousel.stories.css'
+import { TestHeader, TestFooter, TestCards } from './ScrollCarousel.storyContainer'
+
+<Meta title="ScrollCarousel" component={ScrollCarousel} />
+
+# ScrollCarousel
+
+Display an optional header and footer that don't scroll, and content (via
+children of `ScrollCarouselBody`) that scrolls if its width is more than
+available.  The ScrollCarousel component itself takes the full width of the
+parent; we assume that somewhere in the body's `children` there is a component
+that has explicit width.
+
+Note on spacing: if you include this component on a page, for best results you
+shouldn't have `padding` on the page itself, but instead have an equal padding
+on each component except `ScrollCarousel`; so that there is no space between the end
+of the scrollable container and the edge of the screen.
+
+<Props of={ScrollCarousel} />
+
+## Showcase
+### With header and footer
+<Preview>
+  <Story name="ScrollCarousel with header and footer">
+    <ScrollCarousel>
+      <TestHeader />
+      <ScrollCarouselBody>
+        <TestCards />
+      </ScrollCarouselBody>
+      <TestFooter />
+    </ScrollCarousel>
+  </Story>
+</Preview>
+
+### Without header or footer
+<Preview>
+  <Story name="ScrollCarousel without header or footer">
+    <ScrollCarousel>
+      <ScrollCarouselBody>
+        <TestCards />
+      </ScrollCarouselBody>
+    </ScrollCarousel>
+  </Story>
+</Preview>

@@ -1,0 +1,28 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { radios, text } from '@storybook/addon-knobs'
+import { CTABack } from '.'
+import { Heading } from '../Heading'
+
+<Meta title="CTABack" component={CTABack} />
+
+# CTABack
+
+<Props of={CTABack} />
+
+# Showcase
+
+<Preview>
+  <Story name="CTABack">
+    <CTABack
+      testingSelector={text('testingSelector', 'selector')}
+      label={text('label', 'Go Back')}
+      url={text('url', 'https://gousto.co.uk')}
+    />
+  </Story>
+</Preview>
+
+## Default values
+Without any props, the component has a default copy and it directs you to the previous page using javascript.
+<Preview>
+  <CTABack />
+</Preview>

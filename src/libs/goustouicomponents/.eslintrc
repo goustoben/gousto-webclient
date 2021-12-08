@@ -1,0 +1,271 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:you-dont-need-lodash-underscore/compatible",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "rules": {
+    "react/no-children-prop": 2,
+    "react/prop-types": 2,
+    "newline-before-return": 2,
+    "no-sparse-arrays": 2,
+    "no-multi-spaces": 2,
+    "no-multiple-empty-lines": [
+      2,
+      {
+        "max": 1
+      }
+    ],
+    "indent": [
+      2,
+      2,
+      {
+        "ignoredNodes": [
+          "JSXElement"
+        ],
+        "SwitchCase": 1
+      }
+    ],
+    "semi": [
+      2,
+      "never"
+    ],
+    "no-shadow": [
+      2,
+      {
+        "allow": [
+          "resolve",
+          "reject",
+          "done",
+          "cb",
+          "e",
+          "err",
+          "error",
+          "mapStateToProps"
+        ]
+      }
+    ],
+    "no-extra-boolean-cast": 2,
+    "react/no-unused-prop-types": 2,
+    "padded-blocks": 2,
+    "no-plusplus": [
+      2,
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "import/extensions": 2,
+    "import/no-unresolved": [
+      2,
+      {
+        "ignore": [
+          "design-language",
+          "gousto-config"
+        ]
+      }
+    ],
+    "import/prefer-default-export": 0,
+    "import/newline-after-import": 2,
+    "react/jsx-curly-spacing": 2,
+    "react/jsx-indent-props": 2,
+    "react/jsx-filename-extension": 0,
+    "react/no-did-update-set-state": 0, // React says it's ok to do this: https://github.com/yannickcr/eslint-plugin-react/issues/1707
+    "object-curly-spacing": 2,
+    "array-bracket-spacing": 2,
+    "computed-property-spacing": 2,
+    "comma-spacing": 2,
+    "space-in-parens": 2,
+    "function-paren-newline": 2,
+    "object-curly-newline": 2,
+    "arrow-parens": 2,
+    "max-len": 0,
+    "implicit-arrow-linebreak": 2,
+    "no-else-return": 0,
+    "space-unary-ops": 2,
+    "comma-dangle": 2,
+    //beginning of gousto extended warnings
+    "import/no-default-export": 2,
+    "no-underscore-dangle": [
+      2,
+      {
+        "allow": [
+          "__initialState__"
+        ]
+      }
+    ],
+    "no-tabs": 2,
+    "no-mixed-spaces-and-tabs": 2,
+    "no-restricted-globals": 2,
+    "eol-last": 2,
+    "new-cap": 2,
+    "new-parens": 2,
+    "prefer-destructuring": 2,
+    "operator-linebreak": 2,
+    "lines-between-class-members": 2,
+    "comma-style": 2,
+    "prefer-const": 2,
+    "class-methods-use-this": 2,
+    //end of gousto extended warnings
+    //beginning of warnings that are recommended as errors by our eslint plugins
+    "array-callback-return": 2,
+    "camelcase": 2,
+    "consistent-return": 2,
+    "curly": 2,
+    "dot-notation": 2,
+    "eqeqeq": 2,
+    "global-require": 2,
+    "guard-for-in": 2,
+    "import/no-cycle": 2,
+    "import/no-dynamic-require": 2,
+    "import/no-self-import": 2,
+    "import/no-extraneous-dependencies": 2,
+    "jsx-a11y/click-events-have-key-events": 2,
+    "jsx-a11y/no-static-element-interactions": 2,
+    "jsx-a11y/anchor-is-valid": 2,
+    "jsx-a11y/label-has-associated-control": 2,
+    "jsx-a11y/anchor-has-content": 2,
+    "jsx-a11y/no-noninteractive-element-interactions": 2,
+    "jsx-quotes": 2,
+    "key-spacing": 2,
+    "keyword-spacing": 2,
+    "prefer-promise-reject-errors": 2,
+    "no-async-promise-executor": 2,
+    "no-await-in-loop": 2,
+    "no-confusing-arrow": 2,
+    "no-continue": 2,
+    "no-control-regex": 2,
+    "no-floating-decimal": 2,
+    "no-lonely-if": 2,
+    "no-mixed-operators": 2,
+    "no-multi-assign": 2,
+    "no-nested-ternary": 2,
+    "no-param-reassign": 2,
+    "no-prototype-builtins": 2,
+    "no-restricted-properties": 2,
+    "no-restricted-syntax": 2,
+    "no-return-assign": 2,
+    "no-return-await": 2,
+    "no-sequences": 2,
+    "no-spaced-func": 2,
+    "no-throw-literal": 2,
+    "no-trailing-spaces": 2,
+    "no-undef": 2,
+    "no-unneeded-ternary": 2,
+    "no-unused-expressions": 2,
+    "no-unused-vars": 2,
+    "no-use-before-define": 2,
+    "no-useless-escape": 2,
+    "no-useless-return": 2,
+    "no-var": 2,
+    "no-whitespace-before-property": 2,
+    "nonblock-statement-body-position": 2,
+    "object-property-newline": 2,
+    "object-shorthand": 2,
+    "one-var": 2,
+    "one-var-declaration-per-line": 2,
+    "prefer-arrow-callback": 2,
+    "prefer-object-spread": 2,
+    "prefer-template": 2,
+    "quote-props": 2,
+    "radix": 2,
+    "react/jsx-closing-tag-location": 2,
+    "react/jsx-curly-brace-presence": 2,
+    "react/jsx-curly-newline": 2,
+    "react/jsx-indent": 2,
+    "react/jsx-key": 2,
+    "react/jsx-no-target-blank": [
+      2,
+      {
+        "enforceDynamicLinks": "always"
+      }
+    ],
+    "react/jsx-one-expression-per-line": 2,
+    "react/jsx-props-no-multi-spaces": 2,
+    "react/jsx-props-no-spreading": 2,
+    "react/jsx-wrap-multilines": 2,
+    "react/require-default-props": 2,
+    "react/default-props-match-prop-types": 2,
+    "react/destructuring-assignment": 2,
+    "react/display-name": 2,
+    "react/no-unused-state": 2,
+    "react/forbid-prop-types": 2,
+    "react/no-array-index-key": 2,
+    "react/no-deprecated": 2,
+    "react/no-find-dom-node": 2,
+    "react/no-redundant-should-component-update": 2,
+    "react/no-string-refs": 2,
+    "react/no-typos": 2,
+    "react/no-unescaped-entities": 2,
+    "react/self-closing-comp": 2,
+    "react/sort-comp": 2,
+    "react/state-in-constructor": 2,
+    "react/static-property-placement": 2,
+    "react/style-prop-object": 2,
+    "react/no-access-state-in-setstate": 2,
+    "space-before-function-paren": 2,
+    "switch-colon-spacing": 2,
+    "symbol-description": 2,
+    "vars-on-top": 2,
+    "quotes": 1,
+    "react/jsx-fragments": [ //this is set to an error because fragment shortcut is not supported in gousto-webclient
+      2,
+      "element"
+    ]
+  },
+  "env": {
+    "jasmine": true
+  },
+  "globals": {
+    "document": true,
+    "navigator": true,
+    "require": false,
+    "window": true,
+    "__DEV__": false,
+    "__PROD__": false,
+    "__HMR__": false,
+    "__SERVER__": false,
+    "__CLIENT__": false,
+    "__ENV__": false,
+    "__DOMAIN__": false,
+    "__CLIENT_PROTOCOL__": false,
+    "__CLOUDFRONT_URL__": false,
+    "__CHECKOUT_PK__": false,
+    "__TEST__": false,
+    "__GIT_HASH__": false,
+    "ga": false,
+    "hj": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.js"
+      ],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "react/jsx-props-no-spreading": 0
+      }
+    },
+    {
+      "files": [
+        "setup/**/*",
+        "src/**/*.storyContainer.js",
+        "webpack.build.config.js"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    }
+  ]
+}

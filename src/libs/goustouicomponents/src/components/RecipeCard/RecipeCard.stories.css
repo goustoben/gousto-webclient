@@ -1,0 +1,25 @@
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.module.css';
+@value Coconut from 'styles/colors.module.css';
+
+.container {
+  background: Coconut;
+  padding: 1rem;
+  list-style: none;
+  display: flex;
+  margin: 0;
+  flex-wrap: wrap;
+  margin-right: -1rem;
+
+  li {
+    flex: 0 0 100%;
+    padding: 0 1rem 1rem 0;
+
+    @media BreakpointFromMedium {
+      flex-basis: 50%;
+    }
+
+    @media BreakpointFromLarge {
+      flex-basis: 25%;
+    }
+  }
+}

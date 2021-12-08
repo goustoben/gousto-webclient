@@ -1,0 +1,63 @@
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs/blocks'
+import { LayoutPageWrapper } from '.'
+import css from './LayoutPageWrapper.stories.css'
+
+<Meta title="Layout/LayoutPageWrapper" component={LayoutPageWrapper} />
+
+# LayoutPageWrapper
+
+This layout component is a container that helps to keep the content on the page in a consistent wrapper. If offers a predefined left/right padding (that can be disabled in certain cases - see props) and a max width, allowing the developers to control the spread of the information on very large screens.
+
+## Padding on larger screens:
+The padding is only applied on large screens. On mobile, the left and right paddings are set to 0.
+
+## Expose variables from the Layout configuration
+When Zest users want to use this component they may want to align in terms of paddings, margins, etc.
+If a child components of this needs to adapt to the layout of this component there are two exposed CSS variables that can be used to drive those changes:
+- `LayoutPageWrapperDesktopScreenBreakpointMin`: This is the breakpoint in which padding is applied when `padding` prop is `large-screens-only`
+- `LayoutPageWrapperPadding`: This is the value of the padding applied
+
+### Example of use
+- In Zest:
+```
+@value LayoutPageWrapperPadding, LayoutPageWrapperDesktopScreenBreakpointMin from 'design-language/utils.module.css';
+```
+- In a project that uses Zest:
+```
+@value LayoutPageWrapperPadding, LayoutPageWrapperDesktopScreenBreakpointMin from '~goustouicomponents/dist/design-language/utils.module.css';
+```
+
+<Props of={LayoutPageWrapper} />
+
+## Info
+<Preview>
+  <Story name="LayoutPageWrapper">
+    <>
+      <div className={css.exampleWrap}>
+        <LayoutPageWrapper>
+          <div className={css.exampleContent}>Example with padding enabled</div>
+        </LayoutPageWrapper>
+      </div>
+      <div className={css.exampleWrap}>
+        <LayoutPageWrapper padding={false}>
+          <div className={css.exampleContent}>Example with padding disabled</div>
+        </LayoutPageWrapper>
+      </div>
+      <div className={css.exampleWrap}>
+        <LayoutPageWrapper padding="large-screens-only">
+          <div className={css.exampleContent}>Example with padding only on large screens</div>
+        </LayoutPageWrapper>
+      </div>
+       <div className={css.exampleWrap}>
+        <LayoutPageWrapper size="medium">
+          <div className={css.exampleContent}>Example with max width 1200</div>
+        </LayoutPageWrapper>
+      </div>
+      <div className={css.exampleWrap}>
+        <LayoutPageWrapper testingSelector="section-wrapper">
+          <div className={css.exampleContent}>Example with data-testing attribute</div>
+        </LayoutPageWrapper>
+      </div>
+    </>
+  </Story>
+</Preview>

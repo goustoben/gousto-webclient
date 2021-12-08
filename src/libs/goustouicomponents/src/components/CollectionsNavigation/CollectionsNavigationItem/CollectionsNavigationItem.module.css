@@ -1,0 +1,56 @@
+@value Pepper30, Pomegranate, White from 'styles/colors.module.css';
+@value ScreenMDMin, ScreenSMMax from 'styles/screenSizes.module.css';
+@value Padding 0.25rem;
+@value LargePadding 0.5rem;
+
+.item {
+  cursor: pointer;
+  display: block;
+  appearance: none;
+  border: none;
+  margin: 0;
+  padding: Padding LargePadding;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: inset 0 0 Pomegranate;
+  height: 100%;
+  background: none;
+
+  @media ScreenSMMax {
+    border: 1px solid Pepper30;
+    border-radius: Padding;
+    background: White;
+    width: 100%;
+    padding: LargePadding;
+  }
+
+  @media ScreenMDMin {
+    padding-bottom: LargePadding;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    line-height: 1.2;
+  }
+}
+
+.item.isActive,
+.item:hover,
+.item:active,
+.item:focus {
+  color: Pomegranate;
+
+  @media ScreenSMMax {
+    border-bottom: Padding solid Pomegranate;
+    padding-bottom: calc(1px + LargePadding - Padding);
+  }
+
+  @media ScreenMDMin {
+    box-shadow: inset 0 -2px Pomegranate;
+  }
+}
+
+.item.isActive {
+  @media ScreenMDMin {
+    font-weight: 700;
+  }
+}

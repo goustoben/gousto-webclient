@@ -2,7 +2,7 @@ src/manifest.json
 **/node_modules
 src/public
 src/dist
-src/libs/goustouicomponents
+# src/libs/goustouicomponents
 .DS_Store
 .FBCIndex
 Thumbs.db
@@ -28,5 +28,5 @@ src/config/*-local.json5
 .vs
 .idea
 src/config/env.json
-lib
+# lib
 /pact/

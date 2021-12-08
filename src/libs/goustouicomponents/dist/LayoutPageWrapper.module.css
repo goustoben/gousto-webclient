@@ -1,0 +1,27 @@
+@value LayoutPageWrapperDesktopScreenBreakpointMin, LayoutPageWrapperPadding from 'design-language/utils.module.css';
+
+.wrapper {
+  margin: 0 auto;
+}
+
+.paddingHorizontal {
+  padding-left: LayoutPageWrapperPadding;
+  padding-right: LayoutPageWrapperPadding;
+}
+
+@media LayoutPageWrapperDesktopScreenBreakpointMin {
+  .paddingLargeScreens {
+    padding-left: LayoutPageWrapperPadding;
+    padding-right: LayoutPageWrapperPadding;
+  }
+}
+
+.mediumWidth {
+  width: 100%;
+  max-width: 75rem;
+}
+
+.largeWidth {
+  width: 100%;
+  max-width: 100rem;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "goustouicomponents",
+  "ignore": [
+    "config",
+    "jest",
+    ".editorconfig",
+    ".gitignore",
+    ".gitkeep",
+    "PULL_REQUEST_TEMPLATE.md",
+    "package.json",
+    "sonar-project.properties",
+    "package-lock.json",
+    "src/.babelrc"
+  ]
+}

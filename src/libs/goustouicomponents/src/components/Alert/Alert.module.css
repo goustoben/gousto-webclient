@@ -1,0 +1,98 @@
+@value sizeSM from 'styles/typography.module.css';
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+@value (
+  Blackberry,
+  Blueberry,
+  BlueberryLight,
+  Bluecheese,
+  Carrot,
+  CarrotLight,
+  Haricot,
+  HaricotLight,
+  Radish,
+  RadishLight
+) from 'styles/colors.module.css';
+@value padding: 0.75rem;
+@value iconSize: 1.25rem;
+
+.alert {
+  font-size: sizeSM;
+  margin-bottom: 1.5rem;
+  position: relative;
+  min-height: iconSize;
+  padding: padding;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  color: Blackberry;
+}
+
+.alert a {
+  text-decoration: underline;
+  font-weight: bold;
+  color: inherit;
+}
+
+.alert p {
+  margin: 0 0 1rem;
+}
+
+.content :last-child {
+  margin-bottom: 0;
+}
+
+.danger {
+  composes: alert;
+  background-color: RadishLight;
+}
+
+.info {
+  composes: alert;
+  background-color: BlueberryLight;
+}
+
+.success {
+  composes: alert;
+  background-color: HaricotLight;
+}
+
+.warning {
+  composes: alert;
+  background-color: CarrotLight;
+}
+
+.icon {
+  font-size: iconSize;
+  position: absolute;
+  top: padding;
+  left: padding;
+  composes: fa-basic-class from 'styles/vendor/font-awesome-module.module.css';
+}
+
+.icon-danger {
+  composes: icon;
+  composes: fa-exclamation-circle from 'styles/vendor/font-awesome-module.module.css';
+  color: Radish;
+}
+
+.icon-info {
+  composes: icon;
+  composes: fa-info-circle from 'styles/vendor/font-awesome-module.module.css';
+  color: Bluecheese;
+}
+
+.icon-success {
+  composes: icon;
+  composes: fa-check-circle from 'styles/vendor/font-awesome-module.module.css';
+  color: Haricot;
+}
+
+.icon-warning {
+  composes: icon;
+  composes: fa-exclamation-triangle from 'styles/vendor/font-awesome-module.module.css';
+  color: Carrot;
+}
+
+.hasIcon {
+  padding-left: calc(iconSize + 1.75 * padding);
+}
