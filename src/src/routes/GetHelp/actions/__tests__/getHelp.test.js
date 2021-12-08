@@ -9,12 +9,13 @@ import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
 import * as menuApi from '../../apis/menu'
+import { trackingKeys } from '../actionTypes'
 import * as getHelpActionsUtils from '../utils'
 import {
   applyDeliveryRefund,
   getUserOrders,
-  loadOrderById,
   loadOrderAndRecipesByIds,
+  loadOrderById,
   loadTrackingUrl,
   trackAcceptRefundInSSRDeliveries,
   trackClickGetHelpWithThisBox,
@@ -29,14 +30,15 @@ import {
   trackDeselectIngredient,
   trackHelpPreLoginModalDisplayed,
   trackIngredientReasonsConfirmed,
+  trackIngredientsAutoAcceptCheck,
+  trackIngredientsGetInTouchClick,
+  trackIngredientsGoToMyGousto,
   trackMassIssueAlertDisplayed,
   trackNextBoxTrackingClick,
   trackRecipeCardClick,
   trackRecipeCardGetInTouchClick,
+  trackRecipeCardsAddressChangeArticle,
   trackRefundFAQClick,
-  trackIngredientsAutoAcceptCheck,
-  trackIngredientsGetInTouchClick,
-  trackIngredientsGoToMyGousto,
   trackSelectDeliveryCategory,
   trackSelectIngredient,
   validateDeliveryAction,
@@ -878,6 +880,18 @@ describe('GetHelp action generators and thunks', () => {
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'ssr_recipes_click_get_in_touch',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackRecipeCardsAddressChangeArticle', () => {
+    test('creates the tracking action', () => {
+      expect(trackRecipeCardsAddressChangeArticle()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: trackingKeys.openHowCanIAddAddressArticle,
           seCategory: 'help',
         }
       })

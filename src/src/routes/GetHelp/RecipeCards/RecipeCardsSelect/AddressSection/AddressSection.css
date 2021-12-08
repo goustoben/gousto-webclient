@@ -1,3 +1,5 @@
+@value Bluecheese from 'styles/colors.css';
+
 .loadingWrapper {
   display: flex;
   justify-content: center;
@@ -5,4 +7,24 @@
 
 .title {
   font-weight: bold;
+}
+
+.addressSubTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.changeAddress {
+  border: none;
+  background-color: transparent;
+  color: Bluecheese;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+}
+
+.mobileAddressesList {
+  padding: 1rem 1rem 1.5rem;
+}
+
+.mobileAddressesList > label {
+  margin-bottom: 1rem;
 }
