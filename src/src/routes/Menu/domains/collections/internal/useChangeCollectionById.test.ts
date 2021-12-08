@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 import { actionTypes } from 'actions/actionTypes'
-import { mocked } from 'ts-jest/utils'
 import { useChangeCollectionById } from './useChangeCollectionById'
 import { CollectionSlug } from '../constants'
 import { useDisplayedCollections } from './useDisplayedCollections'
@@ -17,9 +16,9 @@ jest.mock('react-redux', () => ({
 jest.mock('./useDisplayedCollections')
 jest.mock('./useLocation')
 
-const mockedUseDispatch = mocked(useDispatch, true)
-const mockedUseDisplayedCollections = mocked(useDisplayedCollections, true)
-const mockedUseLocation = mocked(useLocation, true)
+const mockedUseDispatch = useDispatch as jest.MockedFunction<typeof useDispatch>
+const mockedUseDisplayedCollections = useDisplayedCollections as jest.MockedFunction<typeof useDisplayedCollections>
+const mockedUseLocation = useLocation as jest.MockedFunction<typeof useLocation>
 
 describe('useChangeCollectionById', () => {
   const defaultCollection = createCollectionFromDefaultValues({

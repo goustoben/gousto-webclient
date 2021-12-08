@@ -6,6 +6,8 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn()
 }))
 
+const mockedUseCollectionQuerySlug = useCollectionQuerySlug as jest.MockedFunction<typeof useCollectionQuerySlug>
+const mockedUseSelector = useSelector as jest.MockedFunction<typeof useSelector>
 describe('useCollectionQuerySlug', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -15,11 +17,11 @@ describe('useCollectionQuerySlug', () => {
     const state = {}
 
     beforeEach(() => {
-      useSelector.mockImplementation(selector => selector(state))
+      mockedUseSelector.mockImplementation((selector) => selector(state))
     })
 
     test('should return null', () => {
-      const result = useCollectionQuerySlug(state)
+      const result = mockedUseCollectionQuerySlug()
 
       expect(result).toEqual(null)
     })
@@ -37,11 +39,11 @@ describe('useCollectionQuerySlug', () => {
     }
 
     beforeEach(() => {
-      useSelector.mockImplementation(selector => selector(state))
+      mockedUseSelector.mockImplementation(selector => selector(state))
     })
 
     test('should return slug', () => {
-      const result = useCollectionQuerySlug(state)
+      const result = mockedUseCollectionQuerySlug()
 
       expect(result).toEqual('gluten-free')
     })
@@ -59,11 +61,11 @@ describe('useCollectionQuerySlug', () => {
     }
 
     beforeEach(() => {
-      useSelector.mockImplementation(selector => selector(state))
+      mockedUseSelector.mockImplementation((selector) => selector(state))
     })
 
     test('should return null', () => {
-      const result = useCollectionQuerySlug(state)
+      const result = mockedUseCollectionQuerySlug()
 
       expect(result).toEqual(null)
     })
@@ -79,11 +81,11 @@ describe('useCollectionQuerySlug', () => {
     }
 
     beforeEach(() => {
-      useSelector.mockImplementation(selector => selector(state))
+      mockedUseSelector.mockImplementation((selector) => selector(state))
     })
 
     test('should return null', () => {
-      const result = useCollectionQuerySlug(state)
+      const result = mockedUseCollectionQuerySlug()
 
       expect(result).toEqual(null)
     })
