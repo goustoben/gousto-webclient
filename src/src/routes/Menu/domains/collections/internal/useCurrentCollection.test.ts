@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import { mocked } from 'ts-jest/utils'
 
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
@@ -15,8 +14,8 @@ jest.mock('react-redux', () => ({
 jest.mock('./useCollectionQuerySlug')
 jest.mock('./useDisplayedCollections')
 
-const mockedUseCollectionQuerySlug = mocked(useCollectionQuerySlug, true)
-const mockedUseDisplayedCollections = mocked(useDisplayedCollections, true)
+const mockedUseCollectionQuerySlug = useCollectionQuerySlug as jest.MockedFunction<typeof useCollectionQuerySlug>
+const mockedUseDisplayedCollections = useDisplayedCollections as jest.MockedFunction<typeof useDisplayedCollections>
 
 describe('useCurrentCollection', () => {
   const defaultCollection = createCollectionFromDefaultValues({
