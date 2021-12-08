@@ -237,14 +237,10 @@ const getHelp = (state, action) => {
     return state.set('hasSeenRepetitiveIssuesScreen', action.hasSeenRepetitiveIssuesScreen)
   }
   case actionTypes.GET_HELP_LOAD_SHIPPING_ADDRESSES: {
-    const filteredAddresses = action.payload.userAddresses.map(address => {
-      const { id, line1, line2, line3, name, postcode, town } = address
-
-      return { id, line1, line2, line3, name, postcode, town }
-    })
+    const filteredAddresses = action.payload.userAddresses.map(address => filterShippingAddress(address))
 
     return state.set('shippingAddresses', fromJS(filteredAddresses))
-      .set('selectedAddress', fromJS(action.payload.selectedAddress))
+      .set('selectedAddress', fromJS(filterShippingAddress(action.payload.selectedAddress)))
   }
   case actionTypes.GET_HELP_SET_SELECTED_RECIPE_CARDS: {
     return state.set('selectedRecipeCards', fromJS(action.payload.recipeIds))

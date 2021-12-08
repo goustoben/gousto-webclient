@@ -138,7 +138,7 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, delivery
   },
 })
 
-export const storeSelectedAddress = (address) => ({
+export const setSelectedAddress = (address) => ({
   type: actionTypes.GET_HELP_STORE_SELECTED_ADDRESS,
   payload: {
     address,
@@ -465,6 +465,14 @@ export const trackViewCreditClick = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.viewCreditClick,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
+export const trackRecipeCardsAddressChangeArticle = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.openHowCanIAddAddressArticle,
     seCategory: SE_CATEGORY_HELP,
   },
 })

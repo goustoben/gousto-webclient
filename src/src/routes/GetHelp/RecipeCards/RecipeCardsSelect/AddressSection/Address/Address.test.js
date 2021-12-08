@@ -30,7 +30,7 @@ describe('The Address component', () => {
   })
 
   test('renders the address in a paragraph below the name', () => {
-    expect(wrapper.find('p').at(1).text())
+    expect(wrapper.find('.address').text())
       .toBe(`${LINE1}, ${TOWN}, ${POSTCODE}`)
   })
 
@@ -40,7 +40,7 @@ describe('The Address component', () => {
     })
 
     test('renders the optional lines too', () => {
-      expect(wrapper.find('p').at(1).text())
+      expect(wrapper.find('.address').text())
         .toBe(`${LINE1}, ${LINE2}, ${LINE3}, ${TOWN}, ${POSTCODE}`)
     })
   })
