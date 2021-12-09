@@ -66,6 +66,7 @@ module.exports = {
     __DATADOG_RUM_SDK_APP_ID__: 'RUM_SDK_APP_ID',
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.tests.json',
+      isolatedModules: true
     }
   }
 }
