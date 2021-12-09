@@ -34,17 +34,18 @@
 /tests/regression/cypress.json        @Gousto/frontend-foundations
 
 # squad-radishes ownership
-/src/src/routes/Menu/       @Gousto/squad-radishes
-/src/src/config/collections.js       @Gousto/squad-radishes
-/src/src/config/menu.js       @Gousto/squad-radishes
-/src/src/config/recipes.js       @Gousto/squad-radishes
-/src/src/containers/menu/       @Gousto/squad-radishes
-/src/src/actions/basket.js       @Gousto/squad-radishes
-/src/src/actions/__tests__/basket.test.js       @Gousto/squad-radishes
-/src/src/actions/boxSummary.js       @Gousto/squad-radishes
-/src/src/actions/__tests__/boxSummary.test.js       @Gousto/squad-radishes
-/src/src/actions/menu.js       @Gousto/squad-radishes
-/src/src/actions/__tests__/menu.test.js       @Gousto/squad-radishes
+/src/src/components/FiveRecipesPaintedDoorTest          @Gousto/squad-radishes
+/src/src/routes/Menu/                                   @Gousto/squad-radishes
+/src/src/config/collections.js                          @Gousto/squad-radishes
+/src/src/config/menu.js                                 @Gousto/squad-radishes
+/src/src/config/recipes.js                              @Gousto/squad-radishes
+/src/src/containers/menu/                               @Gousto/squad-radishes
+/src/src/actions/basket.js                              @Gousto/squad-radishes
+/src/src/actions/__tests__/basket.test.js               @Gousto/squad-radishes
+/src/src/actions/boxSummary.js                          @Gousto/squad-radishes
+/src/src/actions/__tests__/boxSummary.test.js           @Gousto/squad-radishes
+/src/src/actions/menu.js                                @Gousto/squad-radishes
+/src/src/actions/__tests__/menu.test.js                 @Gousto/squad-radishes
 /src/src/actions/menuActionHelper.js                    @Gousto/squad-radishes
 /src/src/actions/__tests__/menuActionHelper.test.js     @Gousto/squad-radishes
 /src/src/actions/menuCollections.js                     @Gousto/squad-radishes
