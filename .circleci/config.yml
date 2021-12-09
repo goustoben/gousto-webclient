@@ -118,7 +118,10 @@ jobs:
           name: Test coverage
           working_directory: src
           command: npm run test:jest:ci:coverage
-          no_output_timeout: 30m
+      - run:
+         name: typecheck tests
+         working_directory: src
+         command: npm run typecheck:tests
       - persist_to_workspace:
           root: ~/project
           paths:
