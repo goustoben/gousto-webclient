@@ -120,6 +120,7 @@ jobs:
           command: npm run test:jest:ci:coverage
       - run:
          name: typecheck tests
+         working_directory: src
          command: npm run typecheck:tests
       - persist_to_workspace:
           root: ~/project
