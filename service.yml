@@ -27,6 +27,10 @@ ecs:
       logName: application
       environment:
         ENVIRONMENT: '{{ ENVIRONMENT }}'
+      configuration:
+        datadog_api_key:
+          type: secret
+          description: API key for datadog agent sidecar
 
   taskRolePolicies:
     - effect: Allow
@@ -46,19 +50,26 @@ ecs:
     cpuTargetTrackingScalingPolicyPercentage: 50
     memoryTargetTrackingScalingPolicyPercentage: 20
 
+  datadog:
+    apmEnabled: true
+    logsEnabled: true
+
 environments:
+  - name: env-default
+    datadog: false
+    ecs:
+      memory: 512
+      cpu: 256
+
   - name: staging
+    datadog: false
     ecs:
       memory: 1024
       cpu: 512
       maxCount: 2
 
-  - name: env-default
-    ecs:
-      memory: 512
-      cpu: 256
-
   - name: production
+    datadog: true
     ecs:
       memory: 2048
       cpu: 1024

@@ -1,4 +1,7 @@
 import { extractScriptOptions } from './routes/scripts'
+import { configureDDTracer } from './datadog'
+
+configureDDTracer()
 
 const Koa = require('koa')
 const React = require('react')

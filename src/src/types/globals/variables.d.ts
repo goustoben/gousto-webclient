@@ -8,3 +8,5 @@ declare const __DATADOG_BROWSER_LOGS_TOKEN__: string
 declare const __DATADOG_RUM_SDK_TOKEN__: string
 
 declare const __DATADOG_RUM_SDK_APP_ID__: string
+
+declare const __CIRCLE_BUILD_NUM__: string

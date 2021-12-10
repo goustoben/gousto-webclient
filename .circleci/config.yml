@@ -178,7 +178,7 @@ jobs:
       - run:
           name: Build webclient
           working_directory: src
-          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build
+          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
       - persist_to_workspace:
           root: /
           paths:

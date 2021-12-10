@@ -78,6 +78,7 @@ const webpackEnvVarsServer = {
   __SERVER__: true,
   __TEST__: false,
   'process.env.NODE_ENV': JSON.stringify(build),
+  __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
 
 module.exports = {
