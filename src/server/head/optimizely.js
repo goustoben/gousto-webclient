@@ -6,9 +6,17 @@ export default function optimizely(features) {
     const featuresSerialised = JSON.stringify(features.toJS())
     script = `
       <script>
-        window.__stateFeatures__ = ${featuresSerialised}
+        Object.defineProperty(window, '__stateFeatures__', {
+            get: function(){
+                window.DD_LOGS && DD_LOGS.logger.warn('__stateFeatures__ is used');
+
+                return ${featuresSerialised};
+            },
+        });
 
         window.__featuresLoadedOnServer__ = function(features) {
+          window.DD_LOGS && DD_LOGS.logger.warn('__featuresLoadedOnServer__ is called');
+
           var state = window.__stateFeatures__;
           var allMatched = true;
           if (typeof state === 'object' && state !== null) {
@@ -31,6 +39,8 @@ export default function optimizely(features) {
         }
 
         window.__featuresLoaded__ = function(features) {
+          window.DD_LOGS && DD_LOGS.logger.warn('__featuresLoaded__ is called');
+
           var loadedCheck = window.__featuresLoadedOnServer__;
           if (typeof window.__featuresLoadedFromStore__ === 'function') {
             loadedCheck = window.__featuresLoadedFromStore__;
@@ -40,6 +50,8 @@ export default function optimizely(features) {
         }
 
         window.__ABTestingRedirect__ = function(features, targetURL) {
+          window.DD_LOGS && DD_LOGS.logger.warn('__ABTestingRedirect__ is called');
+
           if (!window.__featuresLoaded__(features)) {
             document.body.setAttribute('style', 'display: none; opacity: 0;');
             window.location.replace(targetURL);
