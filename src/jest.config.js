@@ -64,6 +64,7 @@ module.exports = {
     __DATADOG_BROWSER_LOGS_TOKEN__: 'BROWSER_LOGS_TOKEN',
     __DATADOG_RUM_SDK_TOKEN__: 'RUM_SDK_TOKEN',
     __DATADOG_RUM_SDK_APP_ID__: 'RUM_SDK_APP_ID',
+    __CIRCLE_BUILD_NUM__: 'MOCK_CIRCLE_BUILD_NUM',
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.tests.json',
       isolatedModules: true

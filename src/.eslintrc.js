@@ -266,6 +266,7 @@ module.exports = {
     __DATADOG_RUM_SDK_TOKEN__: true,
     __DATADOG_RUM_SDK_APP_ID__: true,
     __DATADOG_ENABLED__: true,
+    __CIRCLE_BUILD_NUM__: true
   },
   plugins: ['prettier'],
   overrides: [
