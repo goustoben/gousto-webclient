@@ -17,6 +17,7 @@ const baseConfig = {
   entry: {
     main: ['./src/client.js'],
     legacy: ['./src/legacy.js'],
+    performanceTracker: ['./src/performanceTracker/entry.js'],
   },
   mode: 'production',
   module: {
@@ -36,7 +37,7 @@ const baseConfig = {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          chunks: (chunk) => chunk.name !== 'legacy',
+          chunks: (chunk) => chunk.name !== 'legacy' && chunk.name !== 'performanceTracker',
           name: 'vendors',
           enforce: true,
           test: /[\\/]node_modules[\\/]/,
@@ -90,6 +91,7 @@ const addOverridesForDevBuildConfig = (webpackConfig, _clientDevServerEnabled = 
     devtool: 'eval-cheap-module-source-map',
     entry: {
       main: ['./src/client.js'],
+      performanceTracker: ['./src/performanceTracker/entry.js'],
     },
     mode: 'development',
     output: {
