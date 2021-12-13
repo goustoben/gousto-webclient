@@ -22,8 +22,10 @@ export const addTargetToRedirect = ({target = false, location, redirectUrl = '/'
   let redirectWithTarget
 
   if (target) {
-    const encodedUrl = encodeURIComponent(getOrigin() + location.pathname)
-    redirectWithTarget = `${redirectUrl}#login?target=${encodedUrl}`
+    const encodedUrl = (location.search)
+      ? encodeURIComponent(getOrigin() + (location.pathname + location.search))
+      : encodeURIComponent(getOrigin() + (location.pathname))
+    redirectWithTarget = `${redirectUrl}?target=${encodedUrl}#login`
   }
 
   return redirectWithTarget || redirectUrl
