@@ -10,7 +10,7 @@ describe('Referral', () => {
       let wrapper
       const trackUserFreeFoodPageViewSpy = jest.fn()
       const rafOffer = Immutable.fromJS({
-        title: 'Invite your friends to try out Gousto!',
+        title: 'Invite your friends to try out Craft!',
         creditFormatted: '£15',
         firstBoxDiscountFormatted: '60%',
         firstMonthDiscountFormatted: '30%',
