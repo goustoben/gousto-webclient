@@ -246,6 +246,8 @@ const createState = (stateOverrides) => ({
       payment: true,
     },
     goustoRef: null,
+    paypalErrors: {},
+    paypalErrorsReported: false,
   }),
   form: {
     account: {
@@ -1285,7 +1287,7 @@ describe('checkout actions', () => {
   describe('given setCurrentPaymentMethod action', () => {
     describe('when called', () => {
       test('should dispatch PAYMENT_SET_PAYMENT_METHOD', () => {
-        setCurrentPaymentMethod(PaymentMethod.Card)(dispatch)
+        setCurrentPaymentMethod(PaymentMethod.Card)(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
@@ -1296,7 +1298,7 @@ describe('checkout actions', () => {
 
     describe('when payment method is Card', () => {
       test('should dispatch trackUTMAndPromoCode with select_card_payment type', () => {
-        setCurrentPaymentMethod(PaymentMethod.Card)(dispatch)
+        setCurrentPaymentMethod(PaymentMethod.Card)(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledWith({ type: 'trackUTMAndPromoCode' })
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.selectCardPayment)
@@ -1305,10 +1307,18 @@ describe('checkout actions', () => {
 
     describe('when payment method is PayPal', () => {
       test('should dispatch trackUTMAndPromoCode with select_paypal type', () => {
-        setCurrentPaymentMethod(PaymentMethod.PayPal)(dispatch)
+        setCurrentPaymentMethod(PaymentMethod.PayPal)(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledWith({ type: 'trackUTMAndPromoCode' })
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.selectPayPalPayment)
+      })
+    })
+
+    describe('when payment method is PayPal, but it was failed to init', () => {
+      test('PayPal failed attempt should be reported', () => {
+        getState.mockReturnValue(createState( {checkout: Immutable.fromJS( {paypalErrors: {Error: true}} ) }))
+        setCurrentPaymentMethod(PaymentMethod.PayPal)(dispatch, getState)
+        expect(dispatch).toBeCalledWith({ type: actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED})
       })
     })
   })

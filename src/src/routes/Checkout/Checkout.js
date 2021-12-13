@@ -31,6 +31,7 @@ import { CheckoutUrgencyControllerContainer } from './Components/CheckoutUrgency
 import { CheckoutUrgencyModalContainer } from './Components/CheckoutUrgency/CheckoutUrgencyModal'
 import { CheckoutUrgencyBanner } from './Components/CheckoutUrgency/CheckoutUrgencyBanner'
 import css from './Checkout.css'
+import { firePayPalError } from '../../actions/checkout'
 
 const stepMapping = {
   'order-summary': { component: OrderSummary, humanName: 'Summary' },
@@ -390,6 +391,7 @@ class Checkout extends PureComponent {
     const { fetchPayPalClientToken, trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } =
       this.props
     const { paypalScriptsReady } = this.state
+    const { store } = this.context
 
     if (paypalScriptsReady) {
       return
@@ -405,6 +407,7 @@ class Checkout extends PureComponent {
       })
       .catch((error) => {
         trackFailedCheckoutFlow('PayPal scripts have not been loaded', error)
+        store.dispatch(firePayPalError(error))
       })
 
     fetchPayPalClientToken()
