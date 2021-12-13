@@ -114,16 +114,19 @@ describe('routes', () => {
 
   describe('addTargetToRedirect', () => {
     let url
+    const buildRedirectUrl = (location) => {
+      delete global.window.location
+      global.window = Object.create(window)
+      global.window.location = {}
+
+      return addTargetToRedirect({target: true, location})
+    }
+
     describe('when target exists', () => {
       beforeEach(() => {
-        const location = {
+        url = buildRedirectUrl({
           pathname: '/somewhere',
-        }
-
-        delete global.window.location
-        global.window = Object.create(window)
-        global.window.location = {}
-        url = addTargetToRedirect({target: true, location})
+        })
       })
 
       test('then the returned url should contain the target correctly encoded', () => {
@@ -132,6 +135,19 @@ describe('routes', () => {
 
       test('then the returned url should contain the login hash', () => {
         expect(url).toContain('#login')
+      })
+
+      describe('and when target has query parameters', () => {
+        beforeEach(() => {
+          url = buildRedirectUrl({
+            pathname: '/somewhere',
+            search: '?test=promo-code'
+          })
+        })
+
+        test('then thequery parameters are added to the URL', () => {
+          expect(url).toEqual(`/?target=${encodeURIComponent('/somewhere?test=promo-code')}#login`)
+        })
       })
     })
 
