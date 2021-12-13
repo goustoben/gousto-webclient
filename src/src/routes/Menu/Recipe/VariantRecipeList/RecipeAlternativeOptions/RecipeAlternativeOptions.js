@@ -2,15 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useMenu } from 'routes/Menu/domains/menu'
 import { VariantRecipeListItem } from '../VariantRecipeListItem/VariantRecipeListItem'
-import css from './VariantRecipeList.css'
+import css from './RecipeAlternativeOptions.css'
+import { useTrackVariantListDisplay } from './useTracking'
 
-/**
- *  Component that duplicates the VarianRecipeListContainer.
- *
- *  The difference is: it is powered through the hook interface.
- *
- *  It eventually would replace the VarianRecipeListContainer.
- */
 export const RecipeAlternativeOptions = ({
   recipeId: currentRecipeId,
   originalId,
@@ -20,7 +14,7 @@ export const RecipeAlternativeOptions = ({
   onChangeCheckedRecipe,
 }) => {
   const { getAlternativeOptionsForRecipe } = useMenu()
-  const alternativeOptionsForRecipe = getAlternativeOptionsForRecipe({
+  const recipeWithAlternativeOptions = getAlternativeOptionsForRecipe({
     originalId,
     recipeId: currentRecipeId,
     isOnDetailScreen,
@@ -29,14 +23,28 @@ export const RecipeAlternativeOptions = ({
     closeOnSelection,
   })
 
+  // alternative options include the recipe itself
+  const ALTERNATIVE_OPTIONS_STARTING_LENGTH = 1
+
+  const hasAlternativeOptions = recipeWithAlternativeOptions.length > ALTERNATIVE_OPTIONS_STARTING_LENGTH
+
+  useTrackVariantListDisplay({
+    hasAlternativeOptions,
+    view: isOnDetailScreen ? 'details' : 'grid',
+  })
+
   const preventPropagation = (e) => e.stopPropagation()
+
+  if (!hasAlternativeOptions) {
+    return null
+  }
 
   return (
     <>
       <div className={css.recipeList} role="button" tabIndex={-1} onClick={preventPropagation} onKeyPress={preventPropagation}>
         {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
         <ul className={css.recipeListText}>
-          {alternativeOptionsForRecipe.map(({ recipeId, recipeName, changeCheckedRecipe, isChecked, isFromShowcaseMenu, isOutOfStock, surcharge, allergenInfo}) => (
+          {recipeWithAlternativeOptions.map(({ recipeId, recipeName, changeCheckedRecipe, isChecked, isFromShowcaseMenu, isOutOfStock, surcharge, allergenInfo}) => (
             <VariantRecipeListItem
               key={recipeId}
               recipeId={recipeId}

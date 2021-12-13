@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { RecipeAlternativeOptions } from 'routes/Menu/Recipe/VariantRecipeList/VariantRecipeList/RecipeAlternativeOptions'
+import { RecipeAlternativeOptions } from 'routes/Menu/Recipe/VariantRecipeList'
 import { EscapeKeyPressed } from 'utils/DOMEvents'
 import { useClickOutside } from './useClickOutside'
 import { useTracking } from './useTracking'

@@ -1,1 +1,0 @@
-export { VariantRecipeListContainer } from './VariantRecipeListContainer'
