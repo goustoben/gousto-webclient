@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent, cleanup } from '@testing-library/react'
 import Modal from 'react-modal'
 import * as Menu from 'routes/Menu/domains/menu'
+import * as RecipeAlternativeOptionsTracker from 'routes/Menu/Recipe/VariantRecipeList/RecipeAlternativeOptions/useTracking'
 import * as Tracker from './useTracking'
 import { SwapAlternativeOptionsMobile } from './SwapAlternativeOptionsMobile'
 
@@ -45,6 +46,9 @@ describe('<SwapAlternativeOptionsMobile />', () => {
         trackRecipeAlternativeOptionsMenuOpen,
         trackRecipeAlternativeOptionsMenuSwapRecipes,
       }))
+
+    jest.spyOn(RecipeAlternativeOptionsTracker, 'useTrackVariantListDisplay')
+      .mockImplementation()
   })
 
   afterEach(() => {

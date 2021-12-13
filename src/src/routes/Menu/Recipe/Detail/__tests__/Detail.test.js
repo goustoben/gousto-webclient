@@ -10,6 +10,7 @@ import { DetailIngredientsContainer } from '../DetailIngredients'
 import { DetailAllergenIngredientsContainer } from '../DetailAllergenIngredients'
 import { DetailPerPortionContainer } from '../DetailPerPortion'
 import { DetailAttributeGridContainer } from '../DetailAttributeGrid'
+import { RecipeAlternativeOptions } from '../../VariantRecipeList/RecipeAlternativeOptions'
 
 jest.mock('routes/Menu/RecipeDisclaimer', () => ({
   RecipeDisclaimerContainer: () => <div />
@@ -17,10 +18,6 @@ jest.mock('routes/Menu/RecipeDisclaimer', () => ({
 
 jest.mock('../DetailAddRecipe', () => ({
   DetailAddRecipe: () => <div />
-}))
-
-jest.mock('routes/Menu/Recipe/VariantRecipeList/VariantRecipeList', () => ({
-  VariantRecipeListContainer: () => <div />
 }))
 
 jest.mock('react-redux', () => ({
@@ -185,6 +182,15 @@ describe('<Detail />', () => {
   test('should have an <DetailAttributeGridContainer /> with the correct id', () => {
     expect(wrapper.find(DetailAttributeGridContainer)).toHaveLength(1)
     expect(wrapper.find(DetailAttributeGridContainer).prop('recipeId')).toEqual('123')
+  })
+
+  test('should have a <RecipeAlternativeOptions /> with correct props', () => {
+    expect(wrapper.find(RecipeAlternativeOptions)).toHaveLength(1)
+    expect(wrapper.find(RecipeAlternativeOptions).prop('originalId')).toEqual('123')
+    expect(wrapper.find(RecipeAlternativeOptions).prop('recipeId')).toEqual('123')
+    expect(wrapper.find(RecipeAlternativeOptions).prop('isOnDetailScreen')).toEqual(true)
+    expect(wrapper.find(RecipeAlternativeOptions).prop('isFromShowcaseMenu')).toEqual(false)
+    expect(wrapper.find(RecipeAlternativeOptions).prop('categoryId')).toEqual('123')
   })
 
   describe('When isChefPrepared is true', () => {

@@ -653,11 +653,18 @@ export function clearPayPalClientToken() {
 }
 
 export function setCurrentPaymentMethod(paymentMethod, options = {}) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
       paymentMethod
     })
+
+    const state = getState()
+
+    if (paymentMethod === PaymentMethod.PayPal && state.checkout.get('paypalErrors').size && !state.checkout.get('paypalErrorsReported')) {
+      dispatch( { type: actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED})
+      dispatch(feLoggingLogEvent(logLevels.info, 'PayPal signup attempt failed because of init issue'))
+    }
 
     if (!options.disableTracking) {
       const trackingKey = paymentMethod === PaymentMethod.Card

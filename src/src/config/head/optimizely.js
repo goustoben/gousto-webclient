@@ -7,4 +7,5 @@ export default {
   carrots: '16871517734',
   production: '3732210624',
   beetroots: '17499241109',
+  sol: '7728010866',
 }

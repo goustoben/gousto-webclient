@@ -10,7 +10,6 @@ import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Carousel from './Carousel'
 
-import { VariantRecipeListContainer } from '../VariantRecipeList/VariantRecipeList'
 import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
 import { RecipeTag } from '../../components/RecipeTag'
 
@@ -22,6 +21,7 @@ import { DetailAddRecipe } from './DetailAddRecipe'
 
 import css from './Detail.css'
 import titleCss from './DetailTitle.css'
+import { RecipeAlternativeOptions } from '../VariantRecipeList'
 
 export const Detail = (props) => {
   const {
@@ -96,12 +96,12 @@ export const Detail = (props) => {
         </div>
         <div className={css.sectionPanel}>
           <div className={css.variantsContainer}>
-            <VariantRecipeListContainer
+            <RecipeAlternativeOptions
               originalId={id}
               recipeId={menuWithSides ? chosenSideRecipeId : id}
               isOnDetailScreen
               isFromShowcaseMenu={isFromShowcaseMenu}
-              collectionId={currentCollectionId}
+              categoryId={currentCollectionId}
             />
           </div>
           <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>

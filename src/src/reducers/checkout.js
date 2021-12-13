@@ -46,6 +46,7 @@ const checkoutInitialState = Immutable.fromJS({
   goustoRef: null,
   errors: {},
   paypalErrors: {},
+  paypalErrorsReported: false,
   lastReachedStepIndex: 0,
   passwordInfo: {
     value: '',
@@ -68,6 +69,10 @@ export const checkoutReducers = {
     case actionTypes.CHECKOUT_PAYPAL_ERRORS_CLEAR: {
       return state
         .set('paypalErrors', checkoutInitialState.get('paypalErrors'))
+    }
+
+    case actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED: {
+      return state.set('paypalErrorsReported', true)
     }
 
     case actionTypes.CHECKOUT_ADDRESSES_RECEIVE: {
