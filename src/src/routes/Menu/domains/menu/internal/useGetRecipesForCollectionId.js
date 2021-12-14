@@ -24,7 +24,7 @@ export const useGetRecipesForCollectionId = (collections) => {
     const recipeIdsInCollection = getRecipesInCollection(collections, collectionId)
     const dietaryClaims = getDietaryClaimsInCollection(collections, collectionId)
 
-    if (!recipeIdsInCollection) {
+    if (!recipeIdsInCollection || !recipes.size) {
       return { recipes: Immutable.List() }
     }
 
@@ -44,8 +44,8 @@ export const useGetRecipesForCollectionId = (collections) => {
     //  * ensure we prefer to show variants customer explicitly picked
     //  * ensure any out of stock recipes are replaced by in stock alternatives
     //  * ensure any remaining out of stock recipes are moved to the end of the list
-    const originalRecipes = recipes
-      .filter(r => recipeIdsInCollection.includes(r.get('id')))
+    const originalRecipes = recipeIdsInCollection
+      .map(id => recipes.find(other => other.get('id') === id))
       .map(selectedVariantReplacer)
       .map(outOfStockRecipeReplacer)
 
