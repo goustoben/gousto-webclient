@@ -108,3 +108,55 @@ describe('menu domain / useMenu', () => {
     })
   })
 })
+
+describe('getRecipesForCollectionId', () => {
+  const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
+  const RECIPE_2 = Immutable.Map({ id: 'bbbb' })
+  const RECIPE_3 = Immutable.Map({ id: 'cccc' })
+  const RECIPE_4 = Immutable.Map({ id: 'dddd' })
+
+  const COLLECTION_A = createMockCollection('1234-5678', 'One Category', [RECIPE_3, RECIPE_2, RECIPE_4])
+
+  const store = createMockStore({
+    recipes: {
+      [RECIPE_1.get('id')]: RECIPE_1,
+      [RECIPE_2.get('id')]: RECIPE_2,
+      [RECIPE_3.get('id')]: RECIPE_3,
+      [RECIPE_4.get('id')]: RECIPE_4,
+    },
+    menuRecipes: [
+      RECIPE_1.get('id'),
+      RECIPE_2.get('id'),
+      RECIPE_3.get('id'),
+      RECIPE_4.get('id'),
+    ],
+    menuCollections: {
+      [COLLECTION_A.get('id')]: COLLECTION_A,
+    },
+    menuRecipeStock: {
+      [RECIPE_1.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
+      [RECIPE_2.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
+      [RECIPE_3.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
+      [RECIPE_4.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
+    },
+    menu: Immutable.fromJS({
+      menuVariants: Immutable.fromJS({ }),
+    }),
+  })
+
+  const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+
+  describe('when recipes order within collection is different from order in list of all menu recipes', () => {
+    test('ensure the returned value respects the order in the collection', () => {
+      const { result } = renderHook(() => useMenu(), { wrapper })
+
+      const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
+
+      expect(recipes).toEqual(Immutable.List([
+        {recipe: RECIPE_3, originalId: RECIPE_3.get('id')},
+        {recipe: RECIPE_2, originalId: RECIPE_2.get('id')},
+        {recipe: RECIPE_4, originalId: RECIPE_4.get('id')},
+      ]))
+    })
+  })
+})
