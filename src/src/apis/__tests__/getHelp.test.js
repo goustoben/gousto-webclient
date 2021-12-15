@@ -2,6 +2,7 @@ import fetch, { fetchRaw } from 'utils/fetch'
 import {
   applyDeliveryCompensation,
   shouldShowEntryPointTooltip,
+  requestRecipeCardsWithIssueReasons,
   validateDelivery,
 } from '../getHelp'
 
@@ -10,6 +11,7 @@ const MOCK_RESPONSE = { data: [1, 2, 3] }
 const ORDER_DELIVERY_DATE = '2019-07-27 00:00:00'
 const USER_ID = '12345'
 const ORDER_ID = '6789'
+const ADDRESS_ID = '112211'
 const COMPLAINT_CATEGORY_ID = '13578'
 
 jest.mock('utils/fetch')
@@ -50,6 +52,41 @@ describe('getHelp API', () => {
       expect(fetchRaw).toHaveBeenCalledWith(
         'https://production-api.gousto.co.uk/ssrdeliveries/v1/ssrdeliveries/refund',
         { customer_id: USER_ID, order_id: ORDER_ID, category_id: COMPLAINT_CATEGORY_ID },
+        { accessToken: ACCESS_TOKEN, method: 'POST', headers: { 'Content-Type': 'application/json' } }
+      )
+    })
+  })
+
+  describe('Given requestRecipeCardsWithIssueReasons function is called with the correct payload', () => {
+    const ISSUES = [{
+      coreRecipeId: 'c123',
+      complaintCategoryId: 1,
+    }]
+    const ISSUES_TRANSFORMED = [{
+      core_recipe_id: 'c123',
+      category_id: 1,
+    }]
+
+    beforeEach(async () => {
+      response = await requestRecipeCardsWithIssueReasons(
+        ACCESS_TOKEN,
+        USER_ID,
+        ORDER_ID,
+        ADDRESS_ID,
+        ISSUES
+      )
+    })
+
+    test('the fetch function is called with the right parameters', () => {
+      expect(fetchRaw).toHaveBeenCalledTimes(1)
+      expect(fetchRaw).toHaveBeenCalledWith(
+        'https://production-api.gousto.co.uk/ssrrecipecards/v1/request-recipe-cards',
+        {
+          customer_id: USER_ID,
+          order_id: ORDER_ID,
+          address_id: ADDRESS_ID,
+          issues: ISSUES_TRANSFORMED
+        },
         { accessToken: ACCESS_TOKEN, method: 'POST', headers: { 'Content-Type': 'application/json' } }
       )
     })

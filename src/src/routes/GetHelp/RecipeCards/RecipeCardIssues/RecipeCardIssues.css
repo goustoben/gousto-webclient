@@ -1,0 +1,33 @@
+.recipeTitleImage {
+  display: flex;
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  align-items: center;
+}
+
+.recipeImage {
+  object-fit: cover;
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1rem;
+}
+
+.recipeTitle {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  padding: 0;
+  margin: 0;
+}
+
+.recipeRadioButtonGroup  {
+  padding: 0.25rem 0 1rem 0.5rem;
+}
+
+.recipeRadioButtonGroup  > label {
+  padding: 1.25rem 0 0;
+}
+.recipeRadioButtonGroup:not(:first-child) {
+  padding-top: 1.25rem;
+}
+
+.recipeRadioButtonGroup:not(:last-child)  {
+  border-bottom: 1px solid #CED4D9;
+}

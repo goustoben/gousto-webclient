@@ -333,6 +333,19 @@
             }
           }
         },
+        "ssrrecipecards": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://haricots-api.gousto.info/ssrrecipecards/v1",
+              "local": "https://haricots-api.gousto.info/ssrrecipecards/v1"
+            },
+            "serverSide": {
+              "live": "http://haricots-ssrrecipecards.gousto.info",
+              "local": "https://haricots-api.gousto.info/ssrrecipecards/v1"
+            }
+          }
+        },
         "subpauseosr": {
           "1": {
             "versionString": "v1",

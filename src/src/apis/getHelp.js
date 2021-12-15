@@ -74,6 +74,37 @@ const applyDeliveryCompensation = (accessToken, customerId, orderId, complaintCa
   )
 }
 
+const requestRecipeCardsWithIssueReasons = (
+  accessToken,
+  customerId,
+  orderId,
+  addressId,
+  issues,
+) => {
+  const url = `${endpoint('ssrrecipecards')}/request-recipe-cards`
+  const issuesTransformed = issues.map((issue) => ({
+    core_recipe_id: issue.coreRecipeId,
+    category_id: issue.complaintCategoryId,
+  }))
+
+  return fetchRaw(
+    url,
+    {
+      customer_id: customerId,
+      order_id: orderId,
+      address_id: addressId,
+      issues: issuesTransformed,
+    },
+    {
+      accessToken,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }
+  )
+}
+
 const validateDelivery = (accessToken, customerId, orderId) => {
   const url = `${endpoint('ssrdeliveries')}/ssrdeliveries/validate`
 
@@ -101,5 +132,6 @@ export {
   fetchOrderIssues,
   shouldShowEntryPointTooltip,
   applyDeliveryCompensation,
+  requestRecipeCardsWithIssueReasons,
   validateDelivery,
 }
