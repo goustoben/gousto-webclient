@@ -6,8 +6,6 @@
 /**
  * Maps any snake_case string literal to its camelCased equivalent via recursive transformation
  * Template literal types were introduced in TypeScript 4.1
- *
- * todo Upgrade to TS4.5 when possible, leverage tail-recursion elimination for better performance on very long inputs
  */
 export type SnakeToCamelCase<Input extends string> =
   Input extends `${infer Head}_${infer Tail}`
