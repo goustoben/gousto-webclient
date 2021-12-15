@@ -21,6 +21,7 @@ import { IngredientReasons } from './IngredientReasons'
 import { RecipeCardsContainer } from './RecipeCards'
 import { RecipeCardConfirmationContainer } from './RecipeCards/RecipeCardConfirmation'
 import { RecipeCardsSelectContainer } from './RecipeCards/RecipeCardsSelect'
+import { RecipeCardIssuesContainer} from './RecipeCards/RecipeCardIssues'
 import { RepetitiveIngredientsIssuesContainer } from './RepetitiveIngredientsIssues'
 import { Refund } from './Refund'
 import { DidntArriveContainer } from './Delivery/DidntArrive'
@@ -40,6 +41,7 @@ const getHelpRoutes = (store) => {
     recipeCards,
     recipeCardsConfirmation,
     recipeCardsSelect,
+    recipeCardsIssues,
     repetitiveIngredientsIssues,
     sameDayIngredientIssues
   } = configRoutes.client.getHelp
@@ -111,6 +113,10 @@ const getHelpRoutes = (store) => {
         <Route
           path={`${recipeCardsConfirmation({ userId: ':userId', orderId: ':orderId' })}`}
           component={RecipeCardConfirmationContainer}
+        />
+        <Route
+          path={`${recipeCardsIssues({ userId: ':userId', orderId: ':orderId' })}`}
+          component={RecipeCardIssuesContainer}
         />
         <Route
           path={repetitiveIngredientsIssues({ userId: ':userId', orderId: ':orderId' })}

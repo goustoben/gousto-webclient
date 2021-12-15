@@ -50,6 +50,7 @@ module.exports = {
       recipeCards,
       recipeCardsConfirmation: ({ userId, orderId }) => `${recipeCards({ userId, orderId })}/confirmation`,
       recipeCardsSelect: ({ userId, orderId }) => `${recipeCards({ userId, orderId })}/select`,
+      recipeCardsIssues: ({ userId, orderId }) => `${recipeCards({ userId, orderId })}/issues`,
       repetitiveIngredientsIssues: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/repetitive-ingredient-issues`,
       refund: 'refund',
       sameDayIngredientIssues: 'same-day-ingredient-issues'

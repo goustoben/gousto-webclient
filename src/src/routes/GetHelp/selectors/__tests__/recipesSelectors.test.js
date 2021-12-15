@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable'
-import { getSelectedRecipeCardsDetails, getRecipes, getSelectedRecipeCards } from '../recipesSelectors'
+import { getSelectedRecipeCardsDetails, getRecipes, getSelectedRecipeCards, getSelectedRecipeCardIssues } from '../recipesSelectors'
 
 describe('recipesSelector', () => {
   const RECIPES = [{
@@ -37,10 +37,15 @@ describe('recipesSelector', () => {
     goustoReference: '354',
   }]
   const SELECTED_RECIPE_CARDS = ['385']
+
+  const SELECTED_RECIPE_CARD_ISSUES = {
+    385: 'missing'
+  }
   const state = {
     getHelp: fromJS({
       recipes: RECIPES,
       selectedRecipeCards: SELECTED_RECIPE_CARDS,
+      selectedRecipeCardIssues: SELECTED_RECIPE_CARD_ISSUES
     })
   }
 
@@ -49,6 +54,7 @@ describe('recipesSelector', () => {
     ['getSelectedRecipeCardsDetails', getSelectedRecipeCardsDetails, [RECIPES[1]]],
     ['getSelectedRecipeCards', getSelectedRecipeCards, SELECTED_RECIPE_CARDS],
     ['getRecipes', getRecipes, RECIPES],
+    ['getSelectedRecipeCardIssues', getSelectedRecipeCardIssues, SELECTED_RECIPE_CARD_ISSUES]
   ])('Given %s is called', (_selectorName, selector, expectedResult) => {
     beforeEach(() => {
       result = selector(state)

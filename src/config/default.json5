@@ -357,6 +357,19 @@
             }
           }
         },
+        "ssrrecipecards": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://staging-api.gousto.info/ssrrecipecards/v1",
+              "local": "https://staging-api.gousto.info/ssrrecipecards/v1"
+            },
+            "serverSide": {
+              "live": "http://staging-ssrrecipecards.gousto.info",
+              "local": "https://staging-api.gousto.info/ssrrecipecards/v1"
+            }
+          }
+        },
         "subpauseosr": {
           "1": {
             "versionString": "v1",
@@ -789,6 +802,19 @@
             "serverSide": {
               "live": "http://production-ssrdeliveries.gousto.co.uk",
               "local": "https://production-api.gousto.co.uk/ssrdeliveries/v1"
+            }
+          }
+        },
+        "ssrrecipecards": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://production-api.gousto.co.uk/ssrrecipecards/v1",
+              "local": "https://production-api.gousto.co.uk/ssrrecipecards/v1"
+            },
+            "serverSide": {
+              "live": "http://production-ssrrecipecards.gousto.co.uk",
+              "local": "https://production-api.gousto.co.uk/ssrrecipecards/v1"
             }
           }
         },

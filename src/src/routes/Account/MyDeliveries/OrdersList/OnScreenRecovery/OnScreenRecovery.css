@@ -1,6 +1,6 @@
 .modalComponent {
 	@media (max-width: 420px) {
-		width: 320px;
-		transform: none;
+		width: 320px !important;
+		transform: none !important;
 	}
 }
