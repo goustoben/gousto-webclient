@@ -16,6 +16,7 @@ module.exports = {
     browser
       .logJourneyStep('Begin sign-up but stop at payment')
       .url(home.api.launchUrl)
+      .trackDatadog()
       .perform(function (done) {
         cookiePolicy.section.cookiePolicyBanner.dismissCookieBannerIfPresent()
         done()

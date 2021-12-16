@@ -7,6 +7,7 @@ module.exports = {
 
     browser
       .url(`${browser.launch_url}/menu?promo_code=fbb1&no_gtm=1`)
+      .trackDatadog()
 
     body
       .submitPromo()
