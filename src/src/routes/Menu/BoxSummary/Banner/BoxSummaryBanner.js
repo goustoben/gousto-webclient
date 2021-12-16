@@ -18,7 +18,6 @@ const BoxSummaryBanner = ({
   recipes,
   errorText,
   openDetails,
-  isBoxSummaryOpened,
 }) => (
   <section>
     <BoxSummaryMobileBanner
@@ -31,18 +30,17 @@ const BoxSummaryBanner = ({
       recipes={recipes}
       errorText={errorText}
       openDetails={openDetails}
-      isBoxSummaryOpened={isBoxSummaryOpened}
-      onExpandClick={onExpandClick}
     />
     <BoxSummaryDesktopBanner
       numRecipes={numRecipes}
       expandWarning={expandWarning}
+      onExpandClick={onExpandClick}
       showBrowseCTA={showBrowseCTA}
       maxRecipesNum={maxRecipesNum}
       menuRecipesStore={menuRecipesStore}
       recipes={recipes}
       errorText={errorText}
-      onExpandClick={onExpandClick}
+      openDetails={openDetails}
     />
   </section>
 )
@@ -54,7 +52,6 @@ BoxSummaryBanner.propTypes = {
   expandWarning: PropTypes.bool.isRequired,
   onExpandClick: PropTypes.func.isRequired,
   numRecipes: PropTypes.number.isRequired,
-  isBoxSummaryOpened: PropTypes.bool,
 
   ...boxSummaryBannerPropTypes
 }
@@ -63,7 +60,6 @@ BoxSummaryBanner.defaultProps = {
   date: null,
   deliveryDays: [Immutable.Map()],
   slotId: null,
-  isBoxSummaryOpened: false,
 }
 
 export { BoxSummaryBanner }

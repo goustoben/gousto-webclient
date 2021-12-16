@@ -48,6 +48,7 @@ describe('BrowseCTA', () => {
 
     expect(boxDetailsVisibilityChange.callCount).toBe(1)
     expect(boxDetailsVisibilityChange.getCall(0).args[0]).toEqual(true)
+    expect(boxDetailsVisibilityChange.getCall(0).args[1]).toEqual(view)
 
     expect(preventDefault.callCount).toBe(1)
     expect(stopPropagation.callCount).toBe(1)

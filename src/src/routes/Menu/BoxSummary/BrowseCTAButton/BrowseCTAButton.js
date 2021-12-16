@@ -5,12 +5,12 @@ import { Button, Segment } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
 import css from './BrowseCTAButton.css'
 
-const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow) => {
+const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view) => {
   if (!boxSummaryShow) {
     menuBrowseCTAVisibilityChange(false)
-    boxDetailsVisibilityChange(true)
+    boxDetailsVisibilityChange(true, view)
   } else {
-    boxDetailsVisibilityChange(false)
+    boxDetailsVisibilityChange(false, '')
   }
 }
 

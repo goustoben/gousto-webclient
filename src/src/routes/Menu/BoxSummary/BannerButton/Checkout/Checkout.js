@@ -5,7 +5,6 @@ import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
-import { useBasketRequiredFeatureEnabled } from '../../../hooks/useBasketRequiredFeatureEnabled'
 
 const Checkout = (props) => {
   const {
@@ -22,30 +21,9 @@ const Checkout = (props) => {
     checkoutBasket,
     loadingOrderPending,
     menuFetchData,
-    toggleBasketView,
-    isBoxSummaryOpened,
   } = props
 
-  const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
-
-  return isBasketRequiredFeatureEnabled ? (
-    <BaseBannerButton
-      view={view}
-      dataTesting="viewBasketCTA"
-      onClick={() => toggleBasketView(true)}
-      pending={
-        checkoutPending
-        || pricingPending
-        || basketPreviewOrderChangePending
-        || orderSavePending
-        || loadingOrderPending
-        || menuFetchData
-      }
-      color={isBoxSummaryOpened ? 'secondary' : 'primary'}
-    >
-      {isBoxSummaryOpened ? 'Close basket' : 'View basket'}
-    </BaseBannerButton>
-  ) : (
+  return (
     <BaseBannerButton
       view={view}
       dataTesting="boxSummaryButton"
@@ -81,8 +59,6 @@ Checkout.propTypes = {
   pricingPending: PropTypes.bool,
   orderSavePending: PropTypes.bool,
   basketPreviewOrderChangePending: PropTypes.bool,
-  toggleBasketView: PropTypes.func,
-  isBoxSummaryOpened: PropTypes.bool,
 }
 
 Checkout.defaultProps = {
@@ -93,8 +69,6 @@ Checkout.defaultProps = {
   orderSavePending: false,
   recipes: Immutable.Map({}),
   basketPreviewOrderChangePending: false,
-  toggleBasketView: () => {},
-  isBoxSummaryOpened: false,
 }
 
 export { Checkout }

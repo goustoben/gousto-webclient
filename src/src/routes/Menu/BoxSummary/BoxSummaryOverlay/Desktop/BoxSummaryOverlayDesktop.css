@@ -2,61 +2,50 @@
 @value sizeLG from 'styles/typography.css';
 @value barDesktopHeight from '../../Banner/Desktop/BoxSummaryDesktopBanner.css';
 
-.supercontainerDesktop {
-  composes: fixed from 'styles/position.css';
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  height: 100%;
-  pointer-events: none;
+.supercontainerdesktop {
+	composes: fixed from 'styles/position.css';
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	height: 100%;
+	pointer-events: none;
 }
 
 .detailContainer {
-  composes: borderXS from 'styles/borders.css';
-  background-color: White;
+	composes: borderXS from 'styles/borders.css';
+	background-color: White;
 }
 
-.detailContainerDesktop {
-  composes: detailContainer;
-  composes: absolute from 'styles/position.css';
-  width: 330px;
-  bottom: barDesktopHeight;
-  right: 128px;
-  transition: transform 0.2s ease;
-  transform: translate(0px, 100%);
-  max-height: 90%;
-  pointer-events: all;
-  overflow-y: hidden;
-  display: flex;
-  flex-direction: column;
+.detailContainerdesktop {
+	composes: detailContainer;
+	composes: block from 'styles/display.css';
+	composes: absolute from 'styles/position.css';
+	width: 330px;
+	bottom: barDesktopHeight;
+	right: 128px;
+	transition: transform 0.2s ease;
+	transform: translate(0px, 100%);
+	max-height: 90%;
+	pointer-events: all;
+	overflow-y: auto;
 }
 
-.detailContainerDesktopShow {
-  transform: translate(0px, 0%);
-}
-
-.isBasketRequiredFeatureEnabled {
-  right: 36px;
-}
-
-.scrollingContent {
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
-  flex: 1;
+.detailContainerdesktopShow {
+	composes: detailContainerdesktop;
+	transform: translate(0px, 0%);
 }
 
 .closeBtn {
-  composes: fa-basic-class fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
-  composes: absolute from 'styles/position.css';
+	composes: fa-basic-class fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
+	composes: absolute from 'styles/position.css';
 
-  right: SpacingXXS;
-  top: SpacingSM;
+	right: SpacingXXS;
+	top: SpacingSM;
 
-  padding: 0.5rem;
-  width: auto;
+	padding: 0.5rem;
+	width: auto;
 
-  font-size: sizeLG;
-  cursor: pointer;
+	font-size: sizeLG;
+	cursor: pointer;
 }

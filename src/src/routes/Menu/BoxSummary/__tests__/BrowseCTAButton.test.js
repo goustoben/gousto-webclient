@@ -43,6 +43,7 @@ describe('BrowseCTAButton', () => {
       expect(menuBrowseCTAVisibilityChange).toHaveBeenCalledWith(false)
 
       expect(boxDetailsVisibilityChange).toHaveBeenCalledTimes(1)
+      expect(boxDetailsVisibilityChange).toHaveBeenCalledWith(true, view)
     })
   })
 
@@ -61,6 +62,7 @@ describe('BrowseCTAButton', () => {
       expect(menuBrowseCTAVisibilityChange).not.toHaveBeenCalled()
 
       expect(boxDetailsVisibilityChange).toHaveBeenCalledTimes(1)
+      expect(boxDetailsVisibilityChange).toHaveBeenCalledWith(false, '')
     })
   })
 })

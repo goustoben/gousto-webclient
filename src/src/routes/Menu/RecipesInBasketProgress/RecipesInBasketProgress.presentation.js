@@ -15,17 +15,12 @@ import css from './RecipesInBasketProgress.css'
 const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   selectedRecipesCount: PropTypes.number.isRequired,
-  isBasketRequiredFeatureEnabled: PropTypes.bool.isRequired,
-  isMobileViewport: PropTypes.bool.isRequired
 }
 
 const RecipesInBasketProgressPresentation = (
-  { isAuthenticated, selectedRecipesCount, isBasketRequiredFeatureEnabled, isMobileViewport }
+  { isAuthenticated, selectedRecipesCount }
 ) => (
-  <FloatCard
-    closeIcon="small-screens-only"
-    offsetVertical={(isBasketRequiredFeatureEnabled && isMobileViewport) ? '98px' : '8rem'}
-  >
+  <FloatCard closeIcon="small-screens-only" offsetVertical="8rem">
     {
       isAuthenticated ? (
         <div className={css.wrapExtraInfo}>

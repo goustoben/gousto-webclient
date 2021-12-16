@@ -3,19 +3,10 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import { boxSummaryViews } from 'utils/boxSummary'
-import { useSelector, useDispatch } from 'react-redux'
 import { BoxSummaryContent as BoxSummary } from '../BoxSummaryContent/BoxSummaryContent'
 import { DetailsContainer } from '../Details'
 import { PostcodeContainer } from '../Postcode'
 import { DeliverySlotContainer } from '../DeliverySlot'
-import { useBasketRequiredFeatureEnabled } from '../../hooks/useBasketRequiredFeatureEnabled'
-
-jest.mock('../../hooks/useBasketRequiredFeatureEnabled')
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}))
 
 describe('BoxSummaryContent', () => {
   const recipes = Immutable.Map()
@@ -24,14 +15,8 @@ describe('BoxSummaryContent', () => {
     date: '',
     orderId: '',
     numPortions: 2,
-    displayOptions: Immutable.List(),
+    displayOptions: Immutable.List()
   }
-
-  beforeEach(() => {
-    useSelector.mockReturnValue(true)
-    useDispatch.mockReturnValue(() => {})
-    useBasketRequiredFeatureEnabled.mockReturnValue(false)
-  })
 
   describe('boxSummaryCurrentView is boxSummaryViews.POSTCODE', () => {
     test('should ask me to enter my postcode', () => {
@@ -80,16 +65,6 @@ describe('BoxSummaryContent', () => {
         boxSummaryCurrentView=""
       />)
       expect(wrapper.find('div').prop('children')).toBe(null)
-    })
-  })
-
-  describe('boxSummaryCurrentView is none of the defined values', () => {
-    test('wrapper has boxSummaryView class', () => {
-      useBasketRequiredFeatureEnabled.mockReturnValue(true)
-      const wrapper = shallow(<BoxSummary
-        {...defaultProps}
-      />)
-      expect(wrapper.hasClass('boxSummaryView')).toBe(true)
     })
   })
 })

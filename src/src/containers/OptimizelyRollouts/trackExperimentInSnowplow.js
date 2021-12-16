@@ -18,18 +18,6 @@ const experimentsConfig = {
     name: 'Kales remove CFY collection',
     variationName: 'Variation',
     defaultName: 'Control',
-  },
-  beetroots_menu_basket_required_for_existing_users_web_enabled: {
-    id: 'beetroots_menu_basket_required_for_existing_users_web_enabled',
-    name: 'Beetroots menu basket required for existing users web enabled',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
-  beetroots_menu_basket_required_step_for_prospects_web_enabled: {
-    id: 'beetroots_menu_basket_required_step_for_prospects_web_enabled',
-    name: 'Beetroots menu basket required step for prospects web enabled',
-    variationName: 'Variation',
-    defaultName: 'Control',
   }
 }
 

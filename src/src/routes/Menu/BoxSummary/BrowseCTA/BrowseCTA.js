@@ -3,12 +3,12 @@ import React from 'react'
 import { Button } from 'goustouicomponents'
 import css from './BrowseCTA.css'
 
-const handleClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange) => ((e) => {
+const handleClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, view) => ((e) => {
   e.preventDefault()
   e.stopPropagation()
 
   menuBrowseCTAVisibilityChange(false)
-  boxDetailsVisibilityChange(true)
+  boxDetailsVisibilityChange(true, view)
 })
 
 const BrowseCTA = ({ menuBrowseCTAShow, boxDetailsVisibilityChange, menuBrowseCTAVisibilityChange, view }) => (

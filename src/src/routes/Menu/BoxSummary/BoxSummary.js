@@ -31,8 +31,7 @@ class BoxSummary extends React.PureComponent {
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
     slotId: PropTypes.string,
     shouldShowBoxSummary: PropTypes.bool,
-    shouldMenuBrowseCTAShow: PropTypes.bool,
-    isBoxSummaryOpened: PropTypes.bool,
+    shouldMenuBrowseCTAShow: PropTypes.bool
   }
 
   // eslint-disable-next-line react/static-property-placement
@@ -46,8 +45,7 @@ class BoxSummary extends React.PureComponent {
     orderSaveError: null,
     pricingPending: false,
     slotId: null,
-    shouldMenuBrowseCTAShow: false,
-    isBoxSummaryOpened: false,
+    shouldMenuBrowseCTAShow: false
   }
 
   // eslint-disable-next-line react/state-in-constructor
@@ -98,9 +96,9 @@ class BoxSummary extends React.PureComponent {
     }
   }
 
-  open = (isBasketRequiredFeatureEnabled) => {
+  open = () => {
     const { boxDetailsVisibilityChange } = this.props
-    boxDetailsVisibilityChange(true, isBasketRequiredFeatureEnabled)
+    boxDetailsVisibilityChange(true)
   }
 
   close = () => {
@@ -109,12 +107,12 @@ class BoxSummary extends React.PureComponent {
     basketRestorePreviousValues()
   }
 
-  toggle = (isBasketRequiredFeatureEnabled) => {
+  toggle = () => {
     const { showDetails, pricingPending } = this.props
     const show = !showDetails && !pricingPending
 
     if (show) {
-      this.open(isBasketRequiredFeatureEnabled)
+      this.open()
     } else {
       this.close()
     }
@@ -158,8 +156,7 @@ class BoxSummary extends React.PureComponent {
       slotId,
       showDetails,
       isMobile,
-      shouldMenuBrowseCTAShow,
-      isBoxSummaryOpened
+      shouldMenuBrowseCTAShow
     } = this.props
     const numRecipes = this.numRecipes()
 
@@ -178,7 +175,6 @@ class BoxSummary extends React.PureComponent {
           recipes={recipes}
           errorText={this.tooltipError()}
           openDetails={this.open}
-          isBoxSummaryOpened={isBoxSummaryOpened}
         />
         <BoxSummaryOverlayContainer
           isMobile={isMobile}

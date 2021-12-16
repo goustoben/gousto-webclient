@@ -25,10 +25,6 @@
 	}
 }
 
-.hideBanner {
-  display: none;
-}
-
 .mobileText {
 	composes: noMargin from 'sass-loader!styles/spacing.scss';
 	color: White;

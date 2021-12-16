@@ -48,4 +48,3 @@ export const getBoxSummaryTextProps = (state, tempDate, tempSlotId, tempOrderId,
 }
 
 export const getBoxSummaryDismissed = state => state.boxSummaryShow.get('dismissed')
-export const getIsBoxSummaryShow = state => state.boxSummaryShow.get('show')
