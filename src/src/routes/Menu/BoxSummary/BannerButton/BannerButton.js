@@ -6,7 +6,7 @@ import { isMobile } from 'utils/view'
 import { CheckoutContainer } from './Checkout'
 import css from './BannerButton.css'
 
-const BannerButton = ({ view, fullWidth }) => {
+const BannerButton = ({ view, fullWidth, toggleBasketView }) => {
   const isMobileView = isMobile(view)
   const classes = [
     { [css.buttoncontainer]: isMobileView },
@@ -16,7 +16,7 @@ const BannerButton = ({ view, fullWidth }) => {
 
   return (
     <div className={classnames(...classes)}>
-      <CheckoutContainer view={view} section={trackingKeys.menu} />
+      <CheckoutContainer view={view} section={trackingKeys.menu} toggleBasketView={toggleBasketView} />
     </div>
   )
 }
@@ -24,10 +24,12 @@ const BannerButton = ({ view, fullWidth }) => {
 BannerButton.propTypes = {
   view: PropTypes.string.isRequired,
   fullWidth: PropTypes.bool,
+  toggleBasketView: PropTypes.func,
 }
 
 BannerButton.defaultProps = {
   fullWidth: false,
+  toggleBasketView: () => {},
 }
 
 export { BannerButton }

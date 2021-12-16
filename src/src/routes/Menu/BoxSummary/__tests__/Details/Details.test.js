@@ -1,8 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import { LayoutContentWrapper } from 'goustouicomponents'
 import { Details } from '../../Details/Details'
+import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
+import {useBasketRequiredFeatureEnabled} from '../../../hooks/useBasketRequiredFeatureEnabled'
 
+jest.mock('../../../hooks/useBasketRequiredFeatureEnabled')
 jest.mock('../../BannerButton/Checkout', () => ({
   CheckoutContainer: 'CheckoutContainer'
 }))
@@ -61,26 +65,25 @@ describe('Details', () => {
       pricingPending: false,
       prices: Immutable.Map(),
       unavailableRecipeIds: Immutable.Map(),
-      basketNumPortionChange: () => { },
-      portionSizeSelectedTracking: () => { },
-      basketRestorePreviousDate: () => { },
-      boxSummaryVisibilityChange: () => { },
-      clearSlot: () => { },
-      onRemove: () => { },
-      view: 'mobile'
+      basketNumPortionChange: () => {},
+      portionSizeSelectedTracking: () => {},
+      basketRestorePreviousDate: () => {},
+      boxSummaryVisibilityChange: () => {},
+      clearSlot: () => {},
+      onRemove: () => {},
+      view: 'mobile',
+      checkoutBasket: () => {},
+      isBasketRequiredFeatureEnabled: false
     }
+
+    const getCheckoutButtonWrapper = () => (
+      wrapper.find(LayoutContentWrapper).at(2).dive().find(DetailsCheckoutButton)
+        .dive()
+    )
 
     beforeEach(() => {
       wrapper = shallow(<Details {...props} />)
-    })
-
-    test('should render mobile view', () => {
-      expect(wrapper.find('.supercontainermobile').exists()).toBe(true)
-    })
-
-    test('should render desktop view', () => {
-      wrapper.setProps({ view: 'desktop' })
-      expect(wrapper.find('.supercontainerdesktop').exists()).toBe(true)
+      useBasketRequiredFeatureEnabled.mockReturnValue(false)
     })
 
     test('should render BoxProgressAlert', () => {
@@ -105,7 +108,8 @@ describe('Details', () => {
       })
 
       test('should render CTA', () => {
-        expect(wrapper.find('.ctaButton').exists()).toBe(true)
+        const checkoutButton = getCheckoutButtonWrapper()
+        expect(checkoutButton.find('.ctaButton').exists()).toBe(true)
       })
 
       describe('when access token not present', () => {
@@ -143,11 +147,8 @@ describe('Details', () => {
             />)
         })
         test('should render sticky button', () => {
-          expect(wrapper.find('.stickyButton').exists()).toBe(true)
-        })
-
-        test('should use marginBottom for wrapper', () => {
-          expect(wrapper.find('.marginBottom').exists()).toBe(true)
+          const checkoutButton = getCheckoutButtonWrapper()
+          expect(checkoutButton.find('.stickyButton').exists()).toBe(true)
         })
 
         describe('when less than 4 recipes but more then 1 in the basket', () => {
@@ -169,7 +170,8 @@ describe('Details', () => {
           })
 
           test('should render Checkout Container', () => {
-            expect(wrapper.find('CheckoutContainer').exists()).toBe(true)
+            const checkoutButton = getCheckoutButtonWrapper()
+            expect(checkoutButton.find('CheckoutContainer').exists()).toBe(true)
           })
         })
 
@@ -212,7 +214,8 @@ describe('Details', () => {
           })
 
           test('should render checkout button', () => {
-            expect(wrapper.find('CheckoutContainer').exists()).toBe(true)
+            const checkoutButton = getCheckoutButtonWrapper()
+            expect(checkoutButton.find('CheckoutContainer').exists()).toBe(true)
           })
         })
       })

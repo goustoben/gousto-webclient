@@ -49,8 +49,12 @@
 }
 
 .contentFrombottom {
-	composes: content;
-	composes: slideInFromBottom from 'styles/effects.css';
+  composes: content;
+  composes: slideInFromBottom from 'styles/effects.css';
+
+  .beforeClose & {
+    transform: translate(0, 100%);
+  }
 }
 
 .contentFromtop {

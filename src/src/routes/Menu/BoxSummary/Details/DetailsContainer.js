@@ -11,6 +11,7 @@ import {
 import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { basketRecipeRemove } from '../../actions/basketRecipes'
 import { Details } from './Details'
+import { checkoutBasket } from '../../actions/menuCheckoutClick'
 
 const mapStateToProps = (state) => ({
   accessToken: state.auth.get('accessToken'),
@@ -38,6 +39,7 @@ const DetailsContainer = connect(mapStateToProps, {
   showRecipeDetailsOnClick: menuRecipeDetailVisibilityChange,
   boxSummaryVisibilityChange,
   trackingUnavailableRecipeList,
+  checkoutBasket
 })(Details)
 
 export { DetailsContainer }

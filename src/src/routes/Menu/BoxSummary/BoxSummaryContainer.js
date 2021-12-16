@@ -6,6 +6,7 @@ import { getBrowserType } from 'selectors/browser'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { isMobile } from 'utils/view'
+import { getIsBoxSummaryShow } from 'selectors/boxSummary'
 import BoxSummaryDesktop from './BoxSummary'
 import { getMenuBrowseCTAShow } from '../../../selectors/root'
 import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes, shouldShowBoxSummary } from '../../../selectors/basket'
@@ -30,7 +31,8 @@ const mapStateToProps = (state) => ({
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
   pricingPending: state.pricing.get('pending'),
   shouldShowBoxSummary: shouldShowBoxSummary(state),
-  shouldMenuBrowseCTAShow: getMenuBrowseCTAShow(state)
+  shouldMenuBrowseCTAShow: getMenuBrowseCTAShow(state),
+  isBoxSummaryOpened: getIsBoxSummaryShow(state),
 })
 
 const BoxSummaryDesktopContainer = connect(mapStateToProps, {

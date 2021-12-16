@@ -6,14 +6,17 @@ import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
 import { RecipeHolder } from '../RecipeHolder'
 import css from './RecipeList.css'
+import { useBasketRequiredFeatureEnabled } from '../../hooks/useBasketRequiredFeatureEnabled'
 
 const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore, detailVisibilityChange, boxDetailsVisibilityChange, browser, boxSummaryVisible }) => {
+  const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
+
   let emptyRecipes
   let recipesNumber
   const isDesktop = view === 'desktop'
   const onClick = (recipeIds = null) => {
     if (browser === 'mobile') {
-      !boxSummaryVisible && boxDetailsVisibilityChange(true, 'mobile')
+      !boxSummaryVisible && !isBasketRequiredFeatureEnabled && boxDetailsVisibilityChange(true)
     } else {
       detailVisibilityChange(menuRecipesStore.getIn([recipeIds, 'id']))
     }
