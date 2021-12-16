@@ -50,7 +50,6 @@ class Account extends React.PureComponent {
       rateRecipeCount,
     } = this.props
     const pageTitles = {
-      '/my-subscription': 'Manage my Subscription',
       '/my-details': 'My Details',
       '/rate-my-recipes': 'Rate my Recipes',
     }

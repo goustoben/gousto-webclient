@@ -28,6 +28,7 @@ module.exports = {
     cookbookRecipeById: '/cookbook/recipe-by-id',
 
     mySubscription: '/subscription-settings',
+    deprecated__mySubscription: '/my-subscription',
     myDetails2: '/mydetails',
     myReferral2: '/myreferrals',
     rateRecipes2: '/rate-recipes',

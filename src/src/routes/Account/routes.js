@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router'
+import { Route, Redirect } from 'react-router'
 
 import config from 'config/routes'
 import MyDeliveries from './MyDeliveries'
@@ -16,5 +16,9 @@ export const accountRoutes = store => (
     {MyDeliveries}
     {SubscriptionSettings}
     {Referral}
+    <Redirect
+      from={`${config.client.deprecated__mySubscription}*`}
+      to={`${config.client.mySubscription}*`}
+    />
   </Route>
 )
