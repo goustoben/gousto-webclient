@@ -4,7 +4,7 @@ import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import { act, renderHook } from '@testing-library/react-hooks';
 import Immutable from 'immutable'
-import { use5RecipesPaintedDoorTest } from './use5RecipePaintedDoorTest';
+import { use5RecipesPaintedDoorTest } from './use5RecipesPaintedDoorTest';
 import * as UseOptimizely from "../../containers/OptimizelyRollouts/useOptimizely.hook"
 import endpoint from '../../config/endpoint'
 import { setupServer } from 'msw/node'

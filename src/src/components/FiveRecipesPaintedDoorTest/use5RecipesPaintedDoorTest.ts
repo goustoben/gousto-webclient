@@ -9,7 +9,7 @@ import useLocalStorage from "react-use/lib/useLocalStorage";
 
 type Time = string
 type DateTime = string
-type UUID = string;
+type UUID = string
 type Subscription = {
   status: "OK",
   data: {
@@ -47,7 +47,6 @@ const useSubscription = () => {
     accessToken,
     userId,
   ] : null
-  
   return useSWR<Subscription>(parametersForFetcher, getFetcher)
 }
 
@@ -56,7 +55,7 @@ const useIsEligibleForTest = () => {
   const FOUR_RECIPES_BOX = 4
   const { data: request } = useSubscription()
 
-  return  (
+  return (
     request &&
     request.data.subscription.numPortions === TWO_PORTIONS_BOX &&
     request.data.subscription.numRecipes === FOUR_RECIPES_BOX
@@ -64,12 +63,12 @@ const useIsEligibleForTest = () => {
 }
 
 export const use5RecipesPaintedDoorTest = () => {
-  const HAS_SEEN_TEST_IN_MENU_COOKIE_NAME = 'gousto_has_seen_test_in_menu'
-  const HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_COOKIE_NAME = 'gousto_has_seen_test_in_order_confirmation'
+  const HAS_SEEN_TEST_IN_MENU_STORAGE_NAME = 'gousto_has_seen_test_in_menu'
+  const HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME = 'gousto_has_seen_test_in_order_confirmation'
   const OPTIMIZELY_FEATURE_NAME = '5_recipes_painted_door_test'
 
-  const [hasSeenOnMenu, setHasSeenOnMenuValue] = useLocalStorage(HAS_SEEN_TEST_IN_MENU_COOKIE_NAME, false)
-  const [hasSeenOnOrderConfirmation, setOrderConfirmationAsSeenValue] = useLocalStorage(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_COOKIE_NAME, false)
+  const [hasSeenOnMenu, setHasSeenOnMenuValue] = useLocalStorage(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME, false)
+  const [hasSeenOnOrderConfirmation, setOrderConfirmationAsSeenValue] = useLocalStorage(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, false)
   const isEligibleForTest = useIsEligibleForTest()
   const isTestEnabled = useIsOptimizelyFeatureEnabled(isEligibleForTest ? OPTIMIZELY_FEATURE_NAME : null)
   const setMenuAsSeen = () => setHasSeenOnMenuValue(true)

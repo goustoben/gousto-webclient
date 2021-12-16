@@ -40,6 +40,7 @@ module.exports = {
     '<rootDir>/src/components'
   ],
   setupFilesAfterEnv: [
+    '<rootDir>/jest/.setup.ts',
     '<rootDir>/jest/.setup.js'
   ],
   globals: {

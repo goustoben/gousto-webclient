@@ -172,6 +172,11 @@ app.use(async (ctx, next) => {
 if (__DEV__ || withStatic) { // required for local DEV build
   logger.info('Serving static files in /nsassets from /public')
   app.use(convert(koaMount('/nsassets/', koaStatic('public'))))
+
+  // Emulate CloudFront -> S3 behaviour for non-existent assets
+  app.use(convert(koaMount('/nsassets/', (ctx) => {
+    ctx.status = 403
+  })))
 }
 
 if (__PROD__ && __ENV__ === 'local') { // required for local PROD build
