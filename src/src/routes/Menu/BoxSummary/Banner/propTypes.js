@@ -10,5 +10,4 @@ export const boxSummaryBannerPropTypes = {
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
-  openDetails: PropTypes.func.isRequired
 }

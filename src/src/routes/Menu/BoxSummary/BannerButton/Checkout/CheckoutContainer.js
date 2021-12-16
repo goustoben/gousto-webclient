@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
+import { getIsBoxSummaryShow } from 'selectors/boxSummary'
 import { checkoutBasket } from '../../../actions/menuCheckoutClick'
 import { Checkout } from './Checkout'
 
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => ({
   orderSavePending: state.pending.get('ORDER_SAVE', false),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE, null),
   basketPreviewOrderChangePending: state.pending.get('BASKET_PREVIEW_ORDER_CHANGE', false),
+  isBoxSummaryOpened: getIsBoxSummaryShow(state),
 })
 
 const CheckoutContainer = connect(mapStateToProps, {

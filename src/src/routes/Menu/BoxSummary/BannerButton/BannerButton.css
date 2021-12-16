@@ -1,13 +1,13 @@
 .coButtonSegment {
 	padding-bottom: 44px;
 	padding-top: 4px;
-	padding-left: 25px;
-	padding-right: 25px;
 }
 
 .submitButton {
 	padding-top: 5px;
 	min-height: 52px;
+	font-family: AxiformaSemiBold;
+	font-size: 15px;
 }
 
 .buttoncontainer {
@@ -19,5 +19,8 @@
 }
 
 .coButton {
+	min-width: 140px;
 	composes: marginMDLeftRight from 'sass-loader!styles/spacing.scss';
+	font-family: AxiformaSemiBold;
+	font-size: 15px;
 }
