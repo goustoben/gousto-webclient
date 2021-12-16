@@ -1,5 +1,5 @@
 // setup file
-import '@testing-library/jest-dom/extend-expect'
+import React from 'react'
 import MutationObserver from '@sheerun/mutationobserver-shim'
 // Endpoints need to be setup before MSW
 import './.setupEndpoints.js'
@@ -18,6 +18,16 @@ if (global.adapterTest) {
 } else {
   configureEmulatedBrowserEnvironment()
 }
+
+jest.mock('react-modal', () => {
+  const Modal = jest.requireActual('react-modal')
+  // `ariaHideApp` is to disable the warning about aria-hidden
+  // when using `react-modal` inside our tests.
+  const NewModal = (prop) => <Modal {...prop} ariaHideApp={false} />
+  NewModal.setAppElement = () => {}
+
+  return NewModal
+})
 
 function configureAdapterTestEnvironment() {
   jest.setTimeout(30 * 1000)
@@ -77,11 +87,6 @@ function configureEmulatedBrowserEnvironment() {
   }
 
   Enzyme.configure({adapter: new EnzymeAdapter()})
-
-  jest
-    .spyOn(Modal, "setAppElement")
-    .mockImplementation(() => {
-    })
 
 // This clears the cache of swr after each test
   afterAll(() => cache.clear())

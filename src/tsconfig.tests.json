@@ -23,6 +23,7 @@
     "./server"
   ],
   "include": [
+    "./src/jest/.setup.ts",
     "**/__tests__/**/*",
     "**/*.test.*",
     "./src/types/**/*",
