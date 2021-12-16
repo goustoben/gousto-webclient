@@ -3,7 +3,7 @@ import { getBasketRecipes } from 'selectors/basket'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
 import moment from 'moment'
-import { okRecipes } from 'utils/basket'
+import { okRecipes, basketSum } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal, getCutoffForFirstAvailableDate } from 'utils/deliveries'
@@ -40,21 +40,34 @@ export const boxSummaryDeliverySlotChosen = ({ date, slotId, displayMenuForFirst
   }
 )
 
-export const boxSummaryVisibilityChange = (show) => (
+export const boxSummaryVisibilityChange = (show, isBasketRequiredFeatureEnabled) => (
   (dispatch, getState) => {
+    const state = getState()
+    const basketRecipes = state.basket.get('recipes')
+    const amountOfRecipesInBasket = basketSum(basketRecipes)
+    if (isBasketRequiredFeatureEnabled && show) {
+      const type = trackingKeys.clickViewBasket
+      dispatch({
+        type,
+        trackingData: {
+          actionType: type,
+          recipes_added: amountOfRecipesInBasket,
+        }
+      })
+    }
+
     dispatch({
       type: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
       show,
       trackingData: {
         actionType: trackingKeys.changeBoxSummaryVisibility,
         show,
+        recipes_added: amountOfRecipesInBasket,
       },
     })
     if (!show) {
-      const state = getState()
-      const recipes = state.basket.get('recipes')
-      const okRecipeIds = okRecipes(recipes, state.menuRecipes, state.menuRecipeStock, state.basket.get('numPortions'))
-      recipes
+      const okRecipeIds = okRecipes(basketRecipes, state.menuRecipes, state.menuRecipeStock, state.basket.get('numPortions'))
+      basketRecipes
         .filter((amount, recipeId) => !okRecipeIds.has(recipeId))
         .forEach((amount, recipeId) => {
           for (let x = 0; x < amount; x++) {

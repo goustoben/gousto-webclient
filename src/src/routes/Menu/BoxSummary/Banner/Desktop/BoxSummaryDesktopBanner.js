@@ -21,7 +21,6 @@ const BoxSummaryDesktopBanner = ({
   errorText,
   expandWarning,
   onExpandClick,
-  openDetails
 }) => (
   <div className={css.bardesktop}>
     <RecipeListContainer view="desktop" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
@@ -57,7 +56,7 @@ const BoxSummaryDesktopBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BannerButtonContainer view="desktop" open={openDetails} />
+              <BannerButtonContainer view="desktop" toggleBasketView={onExpandClick} />
             </Tooltip>
           )
       }

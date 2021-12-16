@@ -1,8 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
-
+import { useSelector } from 'react-redux'
 import { RecipesInBasketProgress } from '..'
+import { useBasketRequiredFeatureEnabled } from '../../hooks/useBasketRequiredFeatureEnabled'
+
+jest.mock('../../hooks/useBasketRequiredFeatureEnabled')
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
 
 describe('RecipesInBasketProgress Component', () => {
   let wrapper
@@ -15,6 +23,8 @@ describe('RecipesInBasketProgress Component', () => {
     wrapper = mount(
       <RecipesInBasketProgress {...PROPS} />
     )
+    useBasketRequiredFeatureEnabled.mockReturnValue(false)
+    useSelector.mockReturnValue(true)
   })
 
   test('renders without crashing', () => {
@@ -29,6 +39,20 @@ describe('RecipesInBasketProgress Component', () => {
 
     test('it does not render', () => {
       expect(wrapper.html()).toBeNull()
+    })
+  })
+
+  describe('when isBasketRequiredFeatureEnabled and mobile', () => {
+    beforeEach(() => {
+      useBasketRequiredFeatureEnabled.mockReturnValue(true)
+    })
+
+    test('it has 98px vertical offset', () => {
+      const passProps = {...PROPS, selectedRecipesCount: 1, isMobileViewport: true}
+      wrapper = mount(
+        <RecipesInBasketProgress {...passProps} />
+      )
+      expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('98px')
     })
   })
 

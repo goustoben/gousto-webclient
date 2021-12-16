@@ -34,7 +34,7 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-  }
+  },
 }
 
 const Overlay = ({
@@ -44,7 +44,7 @@ const Overlay = ({
   className,
   contentClassName,
   contentLabel,
-  children
+  children,
 }) => {
   // We don't load `react-modal` on the server cause Portals
   // are not currently supported by the server renderer.
@@ -59,16 +59,17 @@ const Overlay = ({
       preventScroll
       onRequestClose={onBackgroundClick}
       shouldCloseOnOverlayClick
+      className={{ beforeClose: css.beforeClose }}
     >
       <div className={classNames(className)}>
         <div
           className={open ? css.animation : css.fadeOutAnimation}
           onClick={open ? onBackgroundClick : () => {}}
-          onKeyPress={open ? onBackgroundClick : () => {} }
+          onKeyPress={open ? onBackgroundClick : () => {}}
           role="button"
           tabIndex={0}
         >
-                  &nbsp;
+          &nbsp;
         </div>
         <div
           className={classNames(contentClassName, css[`contentFrom${from}`], css.overlayContent)}

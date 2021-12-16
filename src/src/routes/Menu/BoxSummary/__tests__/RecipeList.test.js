@@ -5,6 +5,9 @@ import Immutable from 'immutable'
 
 import { RecipeList } from '../RecipeList/RecipeList'
 import { RecipeHolder } from '../RecipeHolder'
+import { useBasketRequiredFeatureEnabled } from '../../hooks/useBasketRequiredFeatureEnabled'
+
+jest.mock('../../hooks/useBasketRequiredFeatureEnabled')
 
 describe('RecipeList', () => {
   let menuRecipesStore
@@ -18,6 +21,7 @@ describe('RecipeList', () => {
       4: 'store4',
     })
     recipes = Immutable.fromJS({ 1: 1, 2: 1, 3: 1, 4: 1 })
+    useBasketRequiredFeatureEnabled.mockReturnValue(false)
   })
 
   test('should return a div', () => {
@@ -85,7 +89,7 @@ describe('RecipeList', () => {
     expect(boxDetailsVisibilityChange).toHaveBeenCalled()
   })
 
-  test('should NOT call boxDetailsVisibilityChange once clicked if browser mobile and box details open', () => {
+  test('should not call boxDetailsVisibilityChange once clicked if browser mobile and box details open', () => {
     const boxDetailsVisibilityChange = jest.fn()
     const wrapper = shallow(
       <RecipeList
@@ -94,6 +98,22 @@ describe('RecipeList', () => {
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
         browser="mobile"
         boxSummaryVisible
+      />,
+    )
+    wrapper.find(RecipeHolder).first().simulate('click')
+    expect(boxDetailsVisibilityChange).not.toHaveBeenCalled()
+  })
+
+  test('should not call boxDetailsVisibilityChange once browser mobile and isBasketRequiredFeatureEnabled', () => {
+    useBasketRequiredFeatureEnabled.mockReturnValue(true)
+    const boxDetailsVisibilityChange = jest.fn()
+    const wrapper = shallow(
+      <RecipeList
+        recipes={Immutable.Map({ 101: {} })}
+        detailVisibilityChange={() => { }}
+        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+        browser="mobile"
+        boxSummaryVisible={false}
       />,
     )
     wrapper.find(RecipeHolder).first().simulate('click')

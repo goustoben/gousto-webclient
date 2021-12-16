@@ -8,19 +8,18 @@ import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
-import * as trackingKeys from 'actions/trackingKeys'
 import { Portions } from './Portions'
 import css from './Details.css'
 import { BoxProgressAlert } from './BoxProgressAlert'
 import { RecipeList } from './RecipeList'
 import { DateHeader } from './DateHeader'
-import { CheckoutContainer } from '../BannerButton/Checkout'
 import {
   HIDE_CHOOSE_RECIPES_CTA,
   HIDE_RECIPE_LIST,
   HIDE_PORTIONS,
   HIDE_PROMO_CODE_TEXT
 } from './displayOptionsProps'
+import { DetailsCheckoutButton } from './DetailsCheckoutButton'
 
 class Details extends React.Component {
   getCtaText = (numRecipes) => {
@@ -79,94 +78,82 @@ class Details extends React.Component {
     const showSecondCta = (numRecipes > 1 && numRecipes < 4) && shouldDisplayFullScreenBoxSummary
     const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText && !showSecondCta
     let btnClassName = css.ctaButton
-    let contentClass = css.content
     if (shouldDisplayFullScreenBoxSummary) {
       btnClassName = css.stickyButton
-      contentClass = css.marginBottom
     }
 
     return (
-      <div className={css[`supercontainer${view}`]}>
-        <div className={css[`container${view}`]}>
-          <div className={contentClass}>
-            <LayoutContentWrapper>
-              <Heading isCenter size="_legacy_large" type="h2">Box Summary</Heading>
-              <DateHeader
-                orderId={orderId}
-                date={date}
-                clearSlot={clearSlot}
-                deliveryDays={deliveryDays}
-                slotId={slotId}
-              />
-              {
-                !displayOptions.contains(HIDE_PORTIONS)
-                && this.renderPortions(this.props)
-              }
-            </LayoutContentWrapper>
-            <LayoutContentWrapper>
-              <p className={css.titleSection}>Recipe Box</p>
-              {
-                numRecipes === 0
-                && <p>Add up to 4 recipes to create your Gousto box. The more you add, the lower the price per portion.</p>
-              }
-            </LayoutContentWrapper>
-            {
-              !displayOptions.contains(HIDE_RECIPE_LIST)
-              && <RecipeList {...this.props} />
-            }
-            <LayoutContentWrapper>
-              <BoxProgressAlert numRecipes={numRecipes} />
-              {showSecondCta && (
-                <Button
-                  color="secondary"
-                  onClick={() => { boxSummaryVisibilityChange(false) }}
-                  width="full"
-                >
-                  {ctaText}
-                </Button>
-              )}
-              {
-                (pricingPending)
-                  ? <div className={css.spinner}><Spinner color="black" /></div>
-                  : (
-                    <div>
-                      <Receipt
-                        dashPricing={numRecipes < config.basket.minRecipesNum}
-                        numRecipes={numRecipes}
-                        numPortions={numPortions}
-                        prices={prices}
-                        deliveryTotalPrice={prices.get('deliveryTotal')}
-                        surcharges={getSurchargeItems(prices.get('items'))}
-                        surchargeTotal={prices.get('surchargeTotal')}
-                        recipeTotalPrice={prices.get('recipeTotal')}
-                        totalToPay={prices.get('total')}
-                        recipeDiscountAmount={prices.get('recipeDiscount')}
-                        recipeDiscountPercent={prices.get('percentageOff')}
-                        extrasTotalPrice={prices.get('productTotal')}
-                        showTitleSection
-                      />
-                      <UserCreditMessage />
-                    </div>
-                  )
-              }
-              {this.renderPromoCodeMessage()}
-              <div className={btnClassName}>
-                {
-                  displayCta ? (
-                    <Button
-                      onClick={() => { boxSummaryVisibilityChange(false) }}
-                      width="full"
-                    >
-                      {ctaText}
-                    </Button>
-                  )
-                    : <CheckoutContainer view={view} section={ trackingKeys.boxSummary } />
-                }
-              </div>
-            </LayoutContentWrapper>
-          </div>
-        </div>
-      </div>
+      <React.Fragment>
+        <LayoutContentWrapper>
+          <Heading isCenter size="_legacy_large" type="h2">Box Summary</Heading>
+          <DateHeader
+            orderId={orderId}
+            date={date}
+            clearSlot={clearSlot}
+            deliveryDays={deliveryDays}
+            slotId={slotId}
+          />
+          {
+            !displayOptions.contains(HIDE_PORTIONS)
+            && this.renderPortions(this.props)
+          }
+        </LayoutContentWrapper>
+        <LayoutContentWrapper>
+          <p className={css.titleSection}>Recipe Box</p>
+          {
+            numRecipes === 0
+            && <p>Add up to 4 recipes to create your Gousto box. The more you add, the lower the price per portion.</p>
+          }
+        </LayoutContentWrapper>
+        {
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          !displayOptions.contains(HIDE_RECIPE_LIST) && <RecipeList {...this.props} />
+        }
+        <LayoutContentWrapper>
+          <BoxProgressAlert numRecipes={numRecipes} />
+          {showSecondCta && (
+            <Button
+              color="secondary"
+              onClick={() => { boxSummaryVisibilityChange(false) }}
+              width="full"
+            >
+              {ctaText}
+            </Button>
+          )}
+          {
+            (pricingPending)
+              ? <div className={css.spinner}><Spinner color="black" /></div>
+              : (
+                <div>
+                  <Receipt
+                    dashPricing={numRecipes < config.basket.minRecipesNum}
+                    numRecipes={numRecipes}
+                    numPortions={numPortions}
+                    prices={prices}
+                    deliveryTotalPrice={prices.get('deliveryTotal')}
+                    surcharges={getSurchargeItems(prices.get('items'))}
+                    surchargeTotal={prices.get('surchargeTotal')}
+                    recipeTotalPrice={prices.get('recipeTotal')}
+                    totalToPay={prices.get('total')}
+                    recipeDiscountAmount={prices.get('recipeDiscount')}
+                    recipeDiscountPercent={prices.get('percentageOff')}
+                    extrasTotalPrice={prices.get('productTotal')}
+                    showTitleSection
+                  />
+                  <UserCreditMessage />
+                </div>
+              )
+          }
+          {this.renderPromoCodeMessage()}
+          <DetailsCheckoutButton
+            btnClassName={btnClassName}
+            displayCta={displayCta}
+            ctaText={ctaText}
+            view={view}
+            onClick={() => { boxSummaryVisibilityChange(false) }}
+          />
+        </LayoutContentWrapper>
+      </React.Fragment>
     )
   }
 }
