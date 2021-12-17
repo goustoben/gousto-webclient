@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
-import config from 'config'
+import templateConfig from 'config/template'
 import { getWindow, redirect } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
 import css from './Page.css'
@@ -68,15 +68,15 @@ class Page extends React.PureComponent {
       <span>
         <div className={classnames(css.container, contentFetchPending ? css.blurStyle : '')}>
           <Helmet
-            title={config.template.head.title}
+            title={templateConfig.head.title}
             meta={[
               {
                 name: 'description',
-                content: config.template.head.description,
+                content: templateConfig.head.description,
               },
               {
                 name: 'keywords',
-                content: config.template.head.keywords,
+                content: templateConfig.head.keywords,
               },
               {
                 name: 'twitter:image',
@@ -84,11 +84,11 @@ class Page extends React.PureComponent {
               },
               {
                 name: 'twitter:description',
-                content: config.template.head.title,
+                content: templateConfig.head.title,
               },
               {
                 name: 'twitter:title',
-                content: config.template.head.title,
+                content: templateConfig.head.title,
               },
             ]}
           />

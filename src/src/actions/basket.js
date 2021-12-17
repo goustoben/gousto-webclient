@@ -1,6 +1,6 @@
 import { push } from 'react-router-redux'
 
-import config from 'config'
+import routesConfig from 'config/routes'
 import basketActions from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import * as trackingKeys from 'actions/trackingKeys'
@@ -533,10 +533,10 @@ export const basketProceedToCheckout = () => (
     dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, false))
 
     try {
-      dispatch(push(config.routes.client['check-out']))
+      dispatch(push(routesConfig.client['check-out']))
     } catch (err) {
       logger.error(err)
-      dispatch(push(config.routes.client.menu))
+      dispatch(push(routesConfig.client.menu))
       dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
     } finally {
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))

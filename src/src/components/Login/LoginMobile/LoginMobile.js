@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import config from 'config'
+import appsConfig from 'config/apps'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import { HeadingWithSeparator } from '../HeadingWithSeparator'
 import css from './LoginMobile.css'
@@ -23,7 +23,7 @@ const LoginMobile = ({
   showAppAwareness,
   trackAppStoreLoginButton,
   trackPlayStoreLoginButton }) => {
-  const { appStoreId, playStoreId } = config.apps
+  const { appStoreId, playStoreId } = appsConfig
 
   const handleClick = (source) => {
     if (source === 'playStore') {

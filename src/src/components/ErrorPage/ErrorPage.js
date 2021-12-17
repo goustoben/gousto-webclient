@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import config from 'config'
+import companyConfig from 'config/company'
 import Svg from 'Svg'
 
 import classNames from 'classnames'
@@ -40,13 +40,13 @@ const ErrorPage = ({ status }) => {
             <h2 className={css.description}>{page.subTitle}</h2>
             <h3 className={css.descriptionSM}>Please try again or contact our customer care team.</h3>
             <h2 className={css.contact}>
-              <a href={`tel:${config.company.telephone.link}`} className={classNames(css.contactLink, css.phoneNumber)}>
+              <a href={`tel:${companyConfig.telephone.link}`} className={classNames(css.contactLink, css.phoneNumber)}>
                 <span className={css.iconEarphone} />
-                {config.company.telephone.number}
+                {companyConfig.telephone.number}
               </a>
-              <a href={`mailto:${config.company.email}`} className={css.contactLink}>
+              <a href={`mailto:${companyConfig.email}`} className={css.contactLink}>
                 <Svg fileName="icon-email" className={css.email} />
-                {config.company.email}
+                {companyConfig.email}
               </a>
             </h2>
           </div>

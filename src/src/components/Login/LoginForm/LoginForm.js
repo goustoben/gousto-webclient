@@ -6,7 +6,7 @@ import { isSecretPingdomEmail } from 'utils/recaptcha'
 import { CTA, InputField } from 'goustouicomponents'
 import CheckBox from 'Form/CheckBox'
 import Form from 'Form'
-import config from 'config'
+import routesConfig from 'config/routes'
 import classNames from 'classnames'
 import css from './LoginForm.css'
 
@@ -176,7 +176,7 @@ class LoginForm extends React.PureComponent {
         <div className={css.appAwarenessBottomContainer}>
           <div className={css.loginOptionsContainer}>
             <div className={css.resetFormContainer}>
-              <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
+              <a href={routesConfig.client.resetForm} className={css.link}>Forgot your password?</a>
             </div>
             <div className={css.rememberMe}>
               <CheckBox

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
-import config from 'config'
+import appsConfig from 'config/apps'
 import * as trackingKeys from 'actions/trackingKeys'
 import { client as clientRoutes, giftCardsURL } from 'config/routes'
 import classNames from 'classnames'
@@ -208,7 +208,7 @@ export const Footer = ({
           </Link>
         </li>
       </ul>
-      <AppStoreLinks appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
+      <AppStoreLinks appStoreId={appsConfig.appStoreId} playStoreId={appsConfig.playStoreId} />
     </div>
   )
 

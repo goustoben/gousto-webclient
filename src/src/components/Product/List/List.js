@@ -6,10 +6,10 @@ import { browserHistory } from 'react-router'
 import { ImageSelection } from 'ImageSelection'
 import { LinkButton } from 'LinkButton'
 import { SectionHeader } from 'SectionHeader'
-import config from 'config'
+import routesConfig from 'config/routes'
 import css from './List.css'
 
-const productsRoute = config.routes.client.orderConfirmation
+const productsRoute = routesConfig.client.orderConfirmation
 
 const ProductList = ({ orderId, products, number, onProductClick, isGoustoOnDemandEnabled }) => (
   <article className={classNames(css.content, { [css.goustoOnDemandContainer]: isGoustoOnDemandEnabled })}>

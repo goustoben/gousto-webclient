@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import { getSurchargeItems } from 'utils/pricing'
 
-import config from 'config'
+import basketConfig from 'config/basket'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
@@ -23,7 +23,7 @@ import { DetailsCheckoutButton } from './DetailsCheckoutButton'
 
 class Details extends React.Component {
   getCtaText = (numRecipes) => {
-    const { maxRecipesNum, minRecipesNum } = config.basket
+    const { maxRecipesNum, minRecipesNum } = basketConfig
     let text = ''
 
     if (numRecipes < maxRecipesNum) {
@@ -126,7 +126,7 @@ class Details extends React.Component {
               : (
                 <div>
                   <Receipt
-                    dashPricing={numRecipes < config.basket.minRecipesNum}
+                    dashPricing={numRecipes < basketConfig.minRecipesNum}
                     numRecipes={numRecipes}
                     numPortions={numPortions}
                     prices={prices}

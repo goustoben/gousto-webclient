@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import config from 'config'
+import basketConfig from 'config/basket'
 import basketReducer from 'reducers/basket'
 import * as basketActions from 'actions/basket'
 import logger from 'utils/logger'
@@ -142,7 +142,7 @@ describe('basket reducer', () => {
       const errorSpy = jest.spyOn(logger, 'error')
 
       const result = basketReducer.basket(state, { type: 'BASKET_NUM_PORTION_CHANGE', numPortions: 'invalid-portion-size' })
-      const expected = Immutable.Map({ numPortions: config.basket.portions.default })
+      const expected = Immutable.Map({ numPortions: basketConfig.portions.default })
 
       expect(errorSpy.mock.calls).toHaveLength(1)
       expect(Immutable.is(result, expected)).toEqual(true)

@@ -1,4 +1,4 @@
-import config from 'config'
+import basketConfig from 'config/basket'
 import { getProductLimitReached, getProductsQtyInCategory } from 'utils/basket'
 
 export function getAllBasketProducts(basket) {
@@ -50,5 +50,5 @@ export function productsOverallLimitReached(basket, includeGiftProducts = true) 
     boxSum += basket.get('gifts').reduce((sum, giftQty) => sum + giftQty, 0)
   }
 
-  return boxSum >= config.basket.maxProductsNum
+  return boxSum >= basketConfig.maxProductsNum
 }

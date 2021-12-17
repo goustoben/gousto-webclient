@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { CTA } from 'goustouicomponents'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import { TickList } from 'TickList'
-import config from 'config'
+import routesConfig from 'config/routes'
+import appsConfig from 'config/apps'
 import css from './AppPromo.css'
 
 const benefits = [
@@ -37,7 +38,7 @@ const mobileAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
     className={classnames(css.mobileAppLink, {
       [css.hideElement]: (device === 'desktop' || device === 'tablet')
     })}
-    href={config.routes.client.appsRedirect}
+    href={routesConfig.client.appsRedirect}
   >
     <CTA isFullWidth>Download the app</CTA>
   </a>
@@ -45,7 +46,7 @@ const mobileAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
 
 const desktopAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
   <div className={classnames({ [css.hideElement]: device === 'mobile' })}>
-    <AppStoreLinks onClick={(e) => onAppLinkClick(e, trackWelcomeAppPromoClick)} appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
+    <AppStoreLinks onClick={(e) => onAppLinkClick(e, trackWelcomeAppPromoClick)} appStoreId={appsConfig.appStoreId} playStoreId={appsConfig.playStoreId} />
   </div>
 )
 

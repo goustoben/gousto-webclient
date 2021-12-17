@@ -1,4 +1,5 @@
-import config from 'config'
+import basketConfig from 'config/basket'
+import menuConfig from 'config/menu'
 import { getAllBasketProducts, getFirstProductCategoryAtLimit, getProductItemLimitReached, productsOverallLimitReached } from 'utils/basketProductLimits'
 import { unset } from './cookieHelper2'
 
@@ -11,7 +12,7 @@ export function okRecipes(recipes, menuRecipes, menuRecipeStock, numPortions) {
 
   const outOfStockRecipes = recipes
     .map((_, recipeId) => [menuRecipeStock.get(recipeId), recipeId])
-    .filter(([stock, recipeId]) => !stock || ((stock.get(String(numPortions), 0) + (recipes.get(recipeId) * numPortions)) <= config.menu.stockThreshold))
+    .filter(([stock, recipeId]) => !stock || ((stock.get(String(numPortions), 0) + (recipes.get(recipeId) * numPortions)) <= menuConfig.stockThreshold))
 
   const unavailableRecipes = notOnMenuRecipes.merge(outOfStockRecipes)
 
@@ -20,9 +21,9 @@ export function okRecipes(recipes, menuRecipes, menuRecipeStock, numPortions) {
   return okRecipesList
 }
 
-export const naiveLimitReached = (basket, maxRecipesNum = config.basket.maxRecipesNum) => basketSum(basket.get('recipes')) >= maxRecipesNum
+export const naiveLimitReached = (basket, maxRecipesNum = basketConfig.maxRecipesNum) => basketSum(basket.get('recipes')) >= maxRecipesNum
 
-export function limitReached(basket, menuRecipes, menuRecipeStock, naive = false, maxRecipesNum = config.basket.maxRecipesNum) {
+export function limitReached(basket, menuRecipes, menuRecipeStock, naive = false, maxRecipesNum = basketConfig.maxRecipesNum) {
   if (naive) {
     return naiveLimitReached(basket, maxRecipesNum)
   }
@@ -48,7 +49,7 @@ export function getProductsQtyInCategory(categoryId, basket, products, includeGi
 export function getProductLimitReached(productId, basket, products, productsCategories) {
   const overallLimitReached = productsOverallLimitReached(basket)
   if (overallLimitReached) {
-    return { type: 'box', value: config.basket.maxProductsNum }
+    return { type: 'box', value: basketConfig.maxProductsNum }
   }
 
   const productItemAtLimit = getProductItemLimitReached(productId, basket, products)

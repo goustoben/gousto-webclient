@@ -1,4 +1,4 @@
-import config from 'config'
+import routesConfig from 'config/routes'
 import MainLayout from 'layouts/MainLayout'
 import { PrivacyStatement } from '../PrivacyStatement/PrivacyStatement'
 import { routes } from '../routes'
@@ -16,7 +16,7 @@ const currentRoutes = routes(reduxStoreMock())
 
 describe('router', () => {
   test('should display the policy statement page when /privacy-statement is called', () => {
-    const path = config.routes.client.privacyPolicy
+    const path = routesConfig.client.privacyPolicy
     const memoryHistory = createMemoryHistory(path)
     match(
       { memoryHistory, routes: currentRoutes, location: path },
