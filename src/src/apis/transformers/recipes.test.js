@@ -1,7 +1,7 @@
 import {menuRecipeMapper, recipesTransformer} from './recipes'
 
-const menuserviceRecipeResponse = require('./menuservice.recipe.json')
-const menuRecipeMapperResult = require('./menuRecipeMapper.result.json')
+import menuserviceRecipeResponse from './menuservice.recipe.json'
+import menuRecipeMapperResult from './menuRecipeMapper.result.json'
 
 describe('transformers/recipes tests', () => {
   describe('recipesTransformer', () => {
