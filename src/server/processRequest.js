@@ -23,7 +23,7 @@ const fetchContentOnChange = require('routes/fetchContentOnChange').default
 const { loggerSetUuid } = require('actions/logger')
 const logger = require('./utils/logger').default
 const encodeState = require('./encodeState')
-const processHeaders = require('./processHeaders')
+const { processHeaders, formatHeaderNames } = require('./processHeaders')
 const htmlTemplate = require('./template')
 
 const fetchAllData = (renderProps, store, headers, path, sessionId) => {
@@ -178,12 +178,12 @@ async function processRequest(ctx, next) {
   }
 
   if (headers) {
-    logger.notice(`[browser-view]: ${processHeaders.formatHeaderNames(headers)}`)
+    logger.notice(`[browser-view]: ${formatHeaderNames(headers)}`)
     if (headers.referer) {
       logger.notice(`[request-referer]: ${headers.referer}`)
     }
 
-    processHeaders.processHeaders(headers, store)
+    processHeaders(headers, store)
   }
 
   if (ctx.request.path === '/header') {

@@ -1,6 +1,6 @@
-const {browserTypeChange, setUserAgent} = require('actions/request')
+import { browserTypeChange, setUserAgent } from 'actions/request'
 
-const formatHeaderNames = headers => {
+export const formatHeaderNames = headers => {
   const matchedHeaders = Object.keys(headers).filter(header => headers[header] === 'true' && header.includes('cloudfront-is'))
   const matchedHeaderNames = matchedHeaders.map(header => {
     let viewer = ''
@@ -15,7 +15,7 @@ const formatHeaderNames = headers => {
   return matchedHeaderNames
 }
 
-const processHeaders = (headers, store) => {
+export const processHeaders = (headers, store) => {
   if (headers['cloudfront-is-mobile-viewer'] === 'true') {
     store.dispatch(browserTypeChange('mobile'))
   }
@@ -32,9 +32,4 @@ const processHeaders = (headers, store) => {
   if (userAgentHeader) {
     store.dispatch(setUserAgent(userAgentHeader))
   }
-}
-
-module.exports = {
-  processHeaders,
-  formatHeaderNames,
 }

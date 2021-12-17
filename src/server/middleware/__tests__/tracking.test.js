@@ -1,8 +1,8 @@
+import { sessionMiddleware } from '../tracking'
+
 jest.mock('uuid', () => ({
   v4: () => 'generated-uuid'
 }))
-
-const { sessionMiddleware } = require('../tracking')
 
 describe('tracking', () => {
   describe('session middleware', () => {

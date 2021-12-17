@@ -1,5 +1,4 @@
-/* eslint-disable no-param-reassign */
-const { appStoreLink, playStoreLink } = require('config/apps')
+import { appStoreLink, playStoreLink } from 'config/apps'
 
 const convertQueryKeys = (querystring) => (querystring ? querystring.replace('utm_source', 'referrer') : querystring)
 
@@ -13,7 +12,7 @@ const withQuery = (url, querystring) => {
   return isContainingQuery(url) ? `${url}&${querystring}` : `${url}?${querystring}`
 }
 
-const appsRedirect = async (ctx, next) => {
+export const appsRedirect = async (ctx, next) => {
   if ((ctx.request.url === '/apps') || ctx.request.url.startsWith('/apps?')) {
     const userAgent = ctx.request.header['user-agent']
 
@@ -28,5 +27,3 @@ const appsRedirect = async (ctx, next) => {
     await next()
   }
 }
-
-module.exports = { appsRedirect }

@@ -1,8 +1,8 @@
-const favIcoUrl = require('media/favicons/favicon.ico')
+import favIcoUrl from 'media/favicons/favicon.ico'
 
-const lg = require('media/favicons/favicon-152.png')
-const md = require('media/favicons/favicon-120.png')
-const sm = require('media/favicons/favicon-76.png')
+import lg from 'media/favicons/favicon-152.png'
+import md from 'media/favicons/favicon-120.png'
+import sm from 'media/favicons/favicon-76.png'
 
 function favicon() {
   return (

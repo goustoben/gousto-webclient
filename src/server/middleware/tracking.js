@@ -1,5 +1,5 @@
-const { v4: uuid } = require('uuid')
-const { secure } = require('config/globals')
+import { v4 as uuid } from 'uuid'
+import { secure } from 'config/globals'
 
 const cookieOptions = {
   secure,
