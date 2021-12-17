@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import config from 'config/head/optimizely'
-const htmlTemplate = require('../template')
+import { htmlTemplate } from '../template'
 
 // mock transit in encodeState
 jest.mock('transit-immutable-js')

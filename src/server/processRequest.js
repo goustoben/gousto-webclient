@@ -24,7 +24,7 @@ const { loggerSetUuid } = require('actions/logger')
 const logger = require('./utils/logger').default
 const encodeState = require('./encodeState')
 const { processHeaders, formatHeaderNames } = require('./processHeaders')
-const htmlTemplate = require('./template')
+const { htmlTemplate } = require('./template')
 
 const fetchAllData = (renderProps, store, headers, path, sessionId) => {
   const { location, params } = renderProps

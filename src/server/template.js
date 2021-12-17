@@ -1,7 +1,7 @@
-const globals = require('config/globals')
-const { newAssetPath, getAssetRootUrl } = require('utils/media')
-const head = require('./head').default
-const encodeState = require('./encodeState')
+import globals from 'config/globals'
+import { newAssetPath, getAssetRootUrl } from 'utils/media'
+import head from './head'
+import encodeState from './encodeState'
 
 const { apiName, domain } = globals
 
@@ -32,7 +32,7 @@ const getPreloadFontsSection = () => fontDescriptors.map(([fontFileName, typeAtt
   `<link ref="preload" href="${newAssetPath(fontFileName)}" as="font" type="${typeAttr}" crossorigin>`
 )).join('\n')
 
-const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts, helmetHead) => (
+export const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts, helmetHead) => (
   `<!doctype html>
    <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
@@ -74,5 +74,3 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
     </body>
   </html>`
 )
-
-module.exports = htmlTemplate
