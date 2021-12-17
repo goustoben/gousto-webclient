@@ -3,41 +3,41 @@ import { configureDDTracer } from './datadog'
 
 configureDDTracer()
 
-const Koa = require('koa')
-const React = require('react')
-const convert = require('koa-convert')
-const koaStatic = require('koa-static')
-const koaMount = require('koa-mount')
-const bodyParser = require('koa-body')
-const { renderToString } = require('react-dom/server')
-const Footer = require('Footer').default
-const { Provider } = require('react-redux')
-const path = require('path')
+import Koa from 'koa'
+import React from 'react'
+import convert from 'koa-convert'
+import koaStatic from 'koa-static'
+import koaMount from 'koa-mount'
+import bodyParser from 'koa-body'
+import { renderToString } from 'react-dom/server'
+import Footer from 'Footer'
+import { Provider } from 'react-redux'
+import path from 'path'
 /* eslint-disable-next-line import/no-extraneous-dependencies */
-const koaWebpack = require('koa-webpack')
+import koaWebpack from 'koa-webpack'
 const app = new Koa()
 
-const globals = require('config/globals')
-const MainLayout = require('layouts/MainLayout').default
-const ErrorPage = require('components/ErrorPage').default
-const Page = require('containers/Page').default
-const { Helmet } = require('react-helmet')
-const GoustoHelmet = require('Helmet/GoustoHelmet').default
+import globals from 'config/globals'
+import MainLayout from 'layouts/MainLayout'
+import ErrorPage from 'components/ErrorPage'
+import Page from 'containers/Page'
+import { Helmet } from 'react-helmet'
+import GoustoHelmet from 'Helmet/GoustoHelmet'
 
-const { clearPersistentStore } = require('middlewares/persist/persistStore')
+import { clearPersistentStore } from 'middlewares/persist/persistStore'
 
 const withStatic = process.env.withStatic === 'true'
 
-const uuidv1 = require('uuid/v1')
-const { loggerSetUuid } = require('actions/logger')
-const logger = require('./utils/logger').default
-const addressLookupRoute = require('./routes/addressLookup').default
-const { performanceTestPage } = require('./routes/performanceTest')
-const routes = require('./routes').default
-const htmlTemplate = require('./template')
-const { appsRedirect } = require('./middleware/apps')
-const { sessionMiddleware } = require('./middleware/tracking')
-const { processRequest, configureHistoryAndStore } = require('./processRequest')
+import uuidv1 from 'uuid/v1'
+import { loggerSetUuid } from 'actions/logger'
+import logger from './utils/logger'
+import addressLookupRoute from './routes/addressLookup'
+import { performanceTestPage } from './routes/performanceTest'
+import routes from './routes'
+import htmlTemplate from './template'
+import { appsRedirect } from './middleware/apps'
+import { sessionMiddleware } from './middleware/tracking'
+import { processRequest, configureHistoryAndStore } from './processRequest'
 
 function enableHmr() {
   koaWebpack({
