@@ -1,8 +1,3 @@
-import { extractScriptOptions } from './routes/scripts'
-import { configureDDTracer } from './datadog'
-
-configureDDTracer()
-
 import Koa from 'koa'
 import React from 'react'
 import convert from 'koa-convert'
@@ -15,7 +10,6 @@ import { Provider } from 'react-redux'
 import path from 'path'
 /* eslint-disable-next-line import/no-extraneous-dependencies */
 import koaWebpack from 'koa-webpack'
-const app = new Koa()
 
 import globals from 'config/globals'
 import MainLayout from 'layouts/MainLayout'
@@ -26,18 +20,24 @@ import GoustoHelmet from 'Helmet/GoustoHelmet'
 
 import { clearPersistentStore } from 'middlewares/persist/persistStore'
 
-const withStatic = process.env.withStatic === 'true'
-
 import uuidv1 from 'uuid/v1'
 import { loggerSetUuid } from 'actions/logger'
+import { configureDDTracer } from './datadog'
+import { extractScriptOptions } from './routes/scripts'
 import logger from './utils/logger'
 import addressLookupRoute from './routes/addressLookup'
 import { performanceTestPage } from './routes/performanceTest'
 import routes from './routes'
-import htmlTemplate from './template'
+import { htmlTemplate } from './template'
 import { appsRedirect } from './middleware/apps'
 import { sessionMiddleware } from './middleware/tracking'
 import { processRequest, configureHistoryAndStore } from './processRequest'
+
+configureDDTracer()
+
+const app = new Koa()
+
+const withStatic = process.env.withStatic === 'true'
 
 function enableHmr() {
   koaWebpack({

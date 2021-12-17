@@ -1,7 +1,5 @@
 import { Helmet } from 'react-helmet'
 import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
-import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
-import { isServerSideFetchEligible } from './utils/renderType'
 import React from 'react'
 
 import { renderToString } from 'react-dom/server'
@@ -10,17 +8,19 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { routes } from 'routes'
 import { configureStore } from 'store'
 import { Provider } from 'react-redux'
-import promoActions from 'actions/promos'
+import { promoActions } from 'actions/promos'
 import { Header } from 'Header/Header'
 import { clearPersistentStore } from 'middlewares/persist/persistStore'
 import { processCookies } from 'utils/processCookies'
-import basketActions from 'actions/basket'
+import { basketPromoCodeUrlChange } from 'actions/basket'
 import processFeaturesQuery from 'utils/processFeaturesQuery'
 import { newAssetPath } from 'utils/media'
 import { authorise } from 'utils/clientAuthorise'
 import GoustoHelmet from 'Helmet/GoustoHelmet'
-import fetchContentOnChange from 'routes/fetchContentOnChange'
+import { fetchContentOnChange } from 'routes/fetchContentOnChange'
 import { loggerSetUuid } from 'actions/logger'
+import { isServerSideFetchEligible } from './utils/renderType'
+import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import logger from './utils/logger'
 import encodeState from './encodeState'
 import { processHeaders, formatHeaderNames } from './processHeaders'
@@ -127,7 +127,7 @@ const createCookies = (ctx, store) => {
   // todo: make sure cookie is correctly set up
   if (ctx.cookies && ctx.request && ctx.request.query && ctx.request.query.promo) {
     ctx.cookies.set('promo_url', ctx.request.query.promo)
-    store.dispatch(basketActions.basketPromoCodeUrlChange(ctx.request.query.promo))
+    store.dispatch(basketPromoCodeUrlChange(ctx.request.query.promo))
   }
 }
 

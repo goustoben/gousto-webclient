@@ -10,7 +10,7 @@ const SignupImage = ({ imageUrl }) => {
 }
 
 SignupImage.propTypes = {
-  name: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
 }
 
 export { SignupImage }

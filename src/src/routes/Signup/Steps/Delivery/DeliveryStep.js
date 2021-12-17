@@ -351,7 +351,7 @@ DeliveryStep.defaultProps = {
   trackDeliverySlotEdited: () => {},
   nextDayDeliveryPaintedDoorFeature: false,
   next: () => {},
-  disabledSlots: [],
+  disabledSlots: Immutable.List(),
   userHasAvailableSlots: true,
   isTastePreferencesEnabled: false,
   isPaymentBeforeChoosingEnabled: false,

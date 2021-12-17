@@ -5,9 +5,8 @@ import Helmet from 'react-helmet'
 import templateConfig from 'config/template'
 import { getWindow, redirect } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
-import css from './Page.css'
-
 import imageUrl from 'media/photos/gousto-share-box.jpg'
+import css from './Page.css'
 
 class Page extends React.PureComponent {
   static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus-3'

@@ -75,14 +75,13 @@ describe('Delivery Step', () => {
 
   test('renders an image in the header', () => {
     expect(wrapper.find('SignupImage')).toHaveLength(1)
-    expect(wrapper.find('SignupImage').prop('name')).toBe('delivery-day')
   })
 
   describe('Capacity Message', () => {
     describe('When all slots are disabled', () => {
       beforeEach(() => {
         wrapper.setProps({
-          disabledSlots: ['2020-02-14_08-12', '2020-02-14_08-19'],
+          disabledSlots: Immutable.fromJS(['2020-02-14_08-12', '2020-02-14_08-19']),
           userHasAvailableSlots: false,
         })
       })
@@ -95,7 +94,7 @@ describe('Delivery Step', () => {
     describe('When slots are available', () => {
       beforeEach(() => {
         wrapper.setProps({
-          disabledSlots: ['2020-02-14_08-12', '2020-02-14_08-19'],
+          disabledSlots: Immutable.fromJS(['2020-02-14_08-12', '2020-02-14_08-19']),
           userHasAvailableSlots: true,
         })
       })
@@ -137,7 +136,9 @@ describe('Delivery Step', () => {
 
     describe('when all slots for a given day are disabled', () => {
       beforeEach(() => {
-        wrapper.setProps({ disabledSlots: ['2020-02-14_08-12', '2020-02-14_08-19'] })
+        wrapper.setProps({
+          disabledSlots: Immutable.fromJS(['2020-02-14_08-12', '2020-02-14_08-19']),
+        })
         deliveryDayDropdown = wrapper.find(DropdownInput).at(0)
       })
 
@@ -194,7 +195,7 @@ describe('Delivery Step', () => {
 
     describe('when slots is  disabled', () => {
       beforeEach(() => {
-        wrapper.setProps({ disabledSlots: ['2020-02-14_08-12'] })
+        wrapper.setProps({ disabledSlots: Immutable.fromJS(['2020-02-14_08-12']) })
         deliverySlotDropdown = wrapper.find(DropdownInput).at(1)
       })
 

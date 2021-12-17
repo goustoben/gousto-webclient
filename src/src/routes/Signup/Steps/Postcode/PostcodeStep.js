@@ -11,7 +11,6 @@ import { Image } from '../../Image'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
 
-
 class PostcodeStep extends PureComponent {
   handleClick = () => {
     const { tempPostcode, nextStepName, changePostcode, signupGetCountByPostcode } = this.props

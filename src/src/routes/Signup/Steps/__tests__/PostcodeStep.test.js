@@ -20,7 +20,6 @@ describe('Postcode Step', () => {
 
   test('renders correctly', () => {
     expect(wrapper.find('SignupImage')).toHaveLength(1)
-    expect(wrapper.find('SignupImage').prop('name')).toBe('where-to-deliver')
 
     expect(wrapper.find('PostcodeStepMessage').exists()).toBe(true)
   })

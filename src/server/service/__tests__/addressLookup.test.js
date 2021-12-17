@@ -1,6 +1,6 @@
+import { fetch } from 'utils/fetch'
 import lookupService from '../addressLookup'
 import config from '../../config/apis'
-import { fetch } from 'utils/fetch'
 
 jest.mock('utils/fetch', () => ({
   fetch: jest.fn()
