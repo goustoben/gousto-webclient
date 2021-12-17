@@ -1,5 +1,8 @@
 import React from 'react'
 import Icon from 'components/Icon'
+import varietyImg from 'routes/Home/WhyChooseGousto/variety.jpg'
+import qualityImg from 'routes/Home/WhyChooseGousto/quality.jpg'
+import simplicityImg from 'routes/Home/WhyChooseGousto/simplicity.jpg'
 
 export const hero = {
   header: 'Endless choice in a recipe box',
@@ -53,7 +56,7 @@ export const getWhyGoustoConfig = () => ({
   steps: [
     {
       title: 'Variety',
-      img: require('routes/Home/WhyChooseGousto/variety.jpg'),
+      img: varietyImg,
       list: [
         '60+ recipes a week, cooked from 10 mins',
         'Family classics, global cuisines plus Joe Wicks’s health range',
@@ -62,7 +65,7 @@ export const getWhyGoustoConfig = () => ({
     },
     {
       title: 'Quality',
-      img: require('routes/Home/WhyChooseGousto/quality.jpg'),
+      img: qualityImg,
       list: [
         'Fresh ingredients from trusted suppliers',
         '100% British fresh meat',
@@ -71,7 +74,7 @@ export const getWhyGoustoConfig = () => ({
     },
     {
       title: 'Simplicity',
-      img: require('routes/Home/WhyChooseGousto/simplicity.jpg'),
+      img: simplicityImg,
       list: [
         'Easy-to-follow recipe cards',
         'Precise ingredients with zero food waste',

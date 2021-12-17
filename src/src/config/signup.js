@@ -1,3 +1,6 @@
+import twoPersonBoxImage from 'media/images/box-prices/two-person-box.jpg'
+import fourPersonBoxImage from 'media/images/box-prices/four-person-box.jpg'
+
 export const PaymentMethod = {
   Card: 'Card',
   PayPal: 'PayPal'
@@ -27,11 +30,11 @@ export const signupConfig = {
     boxSize: {
       2: {
         description: 'This smaller box is packed with enough pre-measured ingredients for each recipe to feed 2 people.',
-        image: require('media/images/box-prices/two-person-box.jpg'),
+        image: twoPersonBoxImage,
       },
       4: {
         description: 'This larger box is packed with enough pre-measured ingredients for each recipe to feed 4 people.',
-        image: require('media/images/box-prices/four-person-box.jpg'),
+        image: fourPersonBoxImage,
       },
     },
     discountApplied: 'Discount applied',
