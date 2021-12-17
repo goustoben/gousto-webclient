@@ -10,9 +10,15 @@ This PR relates to the following [JIRA ticket](http://gousto.atlassian.net/brows
     - [ ] and will make sure that **"Squash and merge"** is selected if the target branch is `develop`
 - [ ] [The most recent `develop` commit](https://github.com/Gousto/gousto-webclient/commits/develop) is in a **passing state**
 - [ ] [The E2E tests](https://app.circleci.com/insights/github/Gousto/gousto-webclient/workflows/e2e) are in a **passing state** -> `develop` :hammer_and_pick: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/develop.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/develop)
-
-- [ ] You shouldn't deploy changes to `develop` that you're not ready to deploy into production (`master`) in the same day
 - [ ] I have completed cross browser testing **/ or /** I have taken a decision that this work is not vulnerable to cross-browser issues
+
+# Deploying
+
+You shouldn't deploy changes to `develop` that you're not ready to deploy into production (`master`) in the same day
+
+- Leaving code in `develop` means that any further code can't be (easily) deployed without either coordinating with the author, or taking responsibility for deploying their code
+- If there is a production incident while there is unmerged code in `develop`, the resolution of the incident can be delayed
+- We work flexibly as a company with set core hours. Just because you are finishing work when you leave the PR open, someone else may still be working and need to deploy
 
 # How has this been tested?
 <!-- Delete check list testing items that is not relevant to you code changes -->
