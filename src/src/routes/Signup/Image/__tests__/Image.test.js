@@ -6,12 +6,12 @@ describe('given Image component', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<SignupImage name="how-many-people" />)
+    wrapper = shallow(<SignupImage imageUrl="how-many-people-url" />)
   })
 
   test('then it should render correctly', () => {
     expect(wrapper.prop('style')).toStrictEqual({
-      backgroundImage: 'url(how-many-people.jpg)',
+      backgroundImage: 'url(how-many-people-url)',
     })
   })
 })

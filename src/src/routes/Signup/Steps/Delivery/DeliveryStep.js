@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import classNames from 'classnames'
+import deliveryDayImage from 'media/photos/delivery-day.jpg'
 import { browserHistory } from 'react-router'
 import DropdownInput from 'Form/Dropdown'
 
@@ -217,7 +218,7 @@ const DeliveryStep = ({
                 ? signupConfig.deliveryOptionsStep.goustoOnDemandTitle
                 : signupConfig.deliveryOptionsStep.title}
             </Heading>
-            {!isWizardWithoutImagesEnabled && <Image name="delivery-day" />}
+            {!isWizardWithoutImagesEnabled && <Image imageUrl={deliveryDayImage} />}
           </div>
           <div className={signupCss.body}>
             <div className={css.container}>
@@ -254,7 +255,7 @@ const DeliveryStep = ({
               ? signupConfig.deliveryOptionsStep.goustoOnDemandTitle
               : signupConfig.deliveryOptionsStep.title}
           </Heading>
-          {!isWizardWithoutImagesEnabled && <Image name="delivery-day" />}
+          {!isWizardWithoutImagesEnabled && <Image imageUrl={deliveryDayImage} />}
         </div>
         {showSocialBelongingBanner && (
           <SocialBelongingBanner

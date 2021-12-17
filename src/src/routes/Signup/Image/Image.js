@@ -3,9 +3,8 @@ import React from 'react'
 
 import css from './Image.css'
 
-const SignupImage = ({ name }) => {
-  // eslint-disable-next-line import/no-dynamic-require, global-require
-  const style = { backgroundImage: `url(${require(`media/photos/${name}.jpg`)})` }
+const SignupImage = ({ imageUrl }) => {
+  const style = { backgroundImage: `url(${imageUrl})` }
 
   return <div className={css.image} style={style} />
 }

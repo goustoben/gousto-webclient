@@ -3,6 +3,7 @@ import React from 'react'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { completeWizardRecipesPerBox } from 'actions/trackingKeys'
+import recipesPerBoxImage from 'media/photos/recipes-per-box.jpg'
 import { Button } from '../../Button'
 import signupCss from '../../Signup.css'
 import { Image } from '../../Image'
@@ -40,7 +41,7 @@ const RecipesPerBoxStep = ({ basketSetNumRecipes, trackSignupWizardAction, next 
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
           <Heading type="h1">{signupConfig.recipesPerBoxStep.title}</Heading>
-          <Image name="recipes-per-box" />
+          <Image imageUrl={recipesPerBoxImage} />
         </div>
         <div className={signupCss.body}>
           <div className={css.container}>{renderButtons()}</div>

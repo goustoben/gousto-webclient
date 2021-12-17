@@ -1,14 +1,16 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { Heading } from 'goustouicomponents'
 import TextInput from 'Form/Input'
 import { signupConfig } from 'config/signup'
-import { Heading } from 'goustouicomponents'
+import whereToDeliverImage from 'media/photos/where-to-deliver.jpg'
 import { PostcodeStepMessage } from './PostcodeStepMessage'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
+
 
 class PostcodeStep extends PureComponent {
   handleClick = () => {
@@ -41,7 +43,7 @@ class PostcodeStep extends PureComponent {
                 ? signupConfig.postCodeStep.goustoOnDemandTitle
                 : signupConfig.postCodeStep.title}
             </Heading>
-            {!isWizardWithoutImagesEnabled && <Image name="where-to-deliver" />}
+            {!isWizardWithoutImagesEnabled && <Image imageUrl={whereToDeliverImage} />}
           </div>
           <div
             className={classNames(css.body, {
