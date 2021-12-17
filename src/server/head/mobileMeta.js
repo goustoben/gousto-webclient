@@ -1,4 +1,4 @@
-const mobileConfig = require('config/apps')
+import mobileConfig from 'config/apps'
 
 function mobileMeta() {
   if (mobileConfig.show_smart_banner) {
