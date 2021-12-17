@@ -1,8 +1,14 @@
 /* eslint-disable global-require */
 
+import boxPricesHeroImage from 'media/images/box-prices/box-prices-hero.jpg'
+import couplesBoxImage from 'media/images/box-prices/couples-box.jpg'
+import familyBoxImage from 'media/images/box-prices/family-box.jpg'
+import mostPopularImage from 'media/images/box-prices/most-popular.png'
+import bestValueImage from 'media/images/box-prices/best-value.png'
+
 export const getHeroDetails = () => ({
   header: 'Box Prices',
-  image: require('media/images/box-prices/box-prices-hero.jpg'),
+  image: boxPricesHeroImage,
 })
 
 export const cta = 'Build My Box'
@@ -17,12 +23,12 @@ export const boxTypes = {
   2: {
     type: '2-Person',
     description: 'Delicious meals for two',
-    image: require('media/images/box-prices/couples-box.jpg'),
+    image: couplesBoxImage,
   },
   4: {
     type: 'Family',
     description: 'Tasty meals for 2 adults and 2-3 children',
-    image: require('media/images/box-prices/family-box.jpg'),
+    image: familyBoxImage,
   },
 }
 
@@ -45,13 +51,13 @@ export const icons = [
   {
     numPortions: 4,
     numPersons: 2,
-    image: require('media/images/box-prices/most-popular.png'),
+    image: mostPopularImage,
     alt: 'Most Popular',
   },
   {
     numPersons: 4,
     numPortions: 4,
-    image: require('media/images/box-prices/best-value.png'),
+    image: bestValueImage,
     alt: 'Best Value',
   },
 ]
