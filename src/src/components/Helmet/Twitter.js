@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 
-const defaultImage = require('media/photos/gousto-share-box.jpg')
+import defaultImage from 'media/photos/gousto-share-box.jpg'
 
 export const Twitter = ({ href, imageUrl }) => (
   <Helmet

@@ -7,7 +7,7 @@ import { getWindow, redirect } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
 import css from './Page.css'
 
-const imageUrl = require('media/photos/gousto-share-box.jpg')
+import imageUrl from 'media/photos/gousto-share-box.jpg'
 
 class Page extends React.PureComponent {
   static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus-3'

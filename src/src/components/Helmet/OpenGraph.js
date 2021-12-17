@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 
-const defaultImage = require('media/photos/gousto-share-box.jpg')
-const localisation = require('config/localisation')
+import defaultImage from 'media/photos/gousto-share-box.jpg'
+import localisation from 'config/localisation'
 
 export const OpenGraph = ({ href, imageUrl }) => (
   <Helmet
