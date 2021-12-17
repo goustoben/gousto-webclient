@@ -1,9 +1,13 @@
 import lookupRoute from 'server/routes/addressLookup'
-jest.mock('server/service/addressLookup')
+import addressLookup from 'server/service/addressLookup'
+
+jest.mock('server/service/addressLookup', () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
 describe('addressLookup', () => {
   let next
-  let mock
 
   const dummyLookupResponse = {
     data: {
@@ -20,9 +24,7 @@ describe('addressLookup', () => {
   beforeEach(() => {
     next = jest.fn()
 
-    // eslint-disable-next-line global-require
-    mock = require('server/service/addressLookup').default
-    mock.mockImplementation(() => dummyLookupResponse)
+    addressLookup.mockImplementation(() => dummyLookupResponse)
   })
 
   describe('Given request path is not /address-postcode-lookup', () => {
@@ -55,8 +57,8 @@ describe('addressLookup', () => {
 
         await lookupRoute(ctx, next)
 
-        expect(mock).toHaveBeenCalled()
-        expect(mock.mock.calls[0][0]).toEqual('AB1 2CD')
+        expect(addressLookup).toHaveBeenCalled()
+        expect(addressLookup.mock.calls[0][0]).toEqual('AB1 2CD')
       })
 
       test('Then it should set the response body', async () => {
