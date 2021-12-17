@@ -2,29 +2,29 @@ import { Helmet } from 'react-helmet'
 import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
-const React = require('react')
+import React from 'react'
 
-const { renderToString } = require('react-dom/server')
-const { match, RouterContext, createMemoryHistory } = require('react-router')
-const { syncHistoryWithStore } = require('react-router-redux')
-const { routes } = require('routes')
-const { configureStore } = require('store')
-const { Provider } = require('react-redux')
-const promoActions = require('actions/promos').default
-const { Header } = require('Header/Header')
-const { clearPersistentStore } = require('middlewares/persist/persistStore')
-const { processCookies } = require('utils/processCookies')
-const basketActions = require('actions/basket').default
-const processFeaturesQuery = require('utils/processFeaturesQuery').default
-const { newAssetPath } = require('utils/media')
-const { authorise } = require('utils/clientAuthorise')
-const GoustoHelmet = require('Helmet/GoustoHelmet').default
-const fetchContentOnChange = require('routes/fetchContentOnChange').default
-const { loggerSetUuid } = require('actions/logger')
-const logger = require('./utils/logger').default
-const encodeState = require('./encodeState')
-const { processHeaders, formatHeaderNames } = require('./processHeaders')
-const { htmlTemplate } = require('./template')
+import { renderToString } from 'react-dom/server'
+import { match, RouterContext, createMemoryHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+import { routes } from 'routes'
+import { configureStore } from 'store'
+import { Provider } from 'react-redux'
+import promoActions from 'actions/promos'
+import { Header } from 'Header/Header'
+import { clearPersistentStore } from 'middlewares/persist/persistStore'
+import { processCookies } from 'utils/processCookies'
+import basketActions from 'actions/basket'
+import processFeaturesQuery from 'utils/processFeaturesQuery'
+import { newAssetPath } from 'utils/media'
+import { authorise } from 'utils/clientAuthorise'
+import GoustoHelmet from 'Helmet/GoustoHelmet'
+import fetchContentOnChange from 'routes/fetchContentOnChange'
+import { loggerSetUuid } from 'actions/logger'
+import logger from './utils/logger'
+import encodeState from './encodeState'
+import { processHeaders, formatHeaderNames } from './processHeaders'
+import { htmlTemplate } from './template'
 
 const fetchAllData = (renderProps, store, headers, path, sessionId) => {
   const { location, params } = renderProps
