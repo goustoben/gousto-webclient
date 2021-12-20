@@ -61,12 +61,14 @@ const Refund = ({
       {' '}
       <strong className={css.confirmationBodyAmount}>
         £
-        {compensation.amount}
+        {compensation.amount.toFixed(2)}
+        {' '}
+        credit
       </strong>
       {' '}
-      credit to your account as an apology, bringing your
+      to your account as an apology, bringing your
       <strong className={css.confirmationBodyAmount}>
-        {` total compensation to £${compensation.totalAmount}.`}
+        {` total compensation to £${compensation.totalAmount.toFixed(2)}.`}
       </strong>
     </p>
   ) : (
@@ -77,7 +79,7 @@ const Refund = ({
       {' '}
       <span className={css.confirmationBodyAmount}>
         £
-        {compensation.amount}
+        {compensation.amount.toFixed(2)}
         {' '}
         credit
       </span>
@@ -160,7 +162,7 @@ const Refund = ({
           {' '}
           {isMultiComplaints && 'additional '}
           £
-          {compensation.amount}
+          {compensation.amount.toFixed(2)}
           {' '}
           credit
         </CTA>

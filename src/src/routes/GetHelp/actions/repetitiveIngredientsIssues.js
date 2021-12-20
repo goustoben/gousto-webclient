@@ -1,6 +1,7 @@
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { actionTypes, trackingKeys } from './actionTypes'
 import { getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
+import { SE_CATEGORY_HELP } from './getHelp'
 
 export const trackContinueToSsrClick = () => (dispatch, getState) => {
   const numOrdersChecked = getNumOrdersChecked(getState())
@@ -11,7 +12,8 @@ export const trackContinueToSsrClick = () => (dispatch, getState) => {
     trackingData: {
       actionType: trackingKeys.continueToSsrClick,
       num_orders_checked: numOrdersChecked,
-      num_orders_compensated: numOrdersCompensated
+      num_orders_compensated: numOrdersCompensated,
+      seCategory: SE_CATEGORY_HELP,
     }
   })
 }

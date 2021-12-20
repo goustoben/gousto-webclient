@@ -63,7 +63,7 @@ const Confirmation = ({
             <p className={css.alertText}>
               {isMultiComplaints && 'Extra '}
               £
-              {creditAmount}
+              {creditAmount.toFixed(2)}
               {' '}
               credit added
             </p>

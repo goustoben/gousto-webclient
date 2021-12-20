@@ -3,6 +3,8 @@ import { safeJestMock } from '_testing/mocks'
 import { trackContinueToSsrClick, updateHasSeenRepetitiveIssuesScreen } from '../repetitiveIngredientsIssues'
 import { actionTypes, trackingKeys } from '../actionTypes'
 import * as selectorsSelectors from '../../selectors/selectors'
+import { SE_CATEGORY_HELP } from '../getHelp'
+
 const getNumOrdersChecked = safeJestMock(selectorsSelectors, 'getNumOrdersChecked')
 const getNumOrdersCompensated = safeJestMock(selectorsSelectors, 'getNumOrdersCompensated')
 
@@ -26,6 +28,7 @@ describe('trackContinueToSsrClick', () => {
           actionType: trackingKeys.continueToSsrClick,
           num_orders_checked: 2,
           num_orders_compensated: 1,
+          seCategory: SE_CATEGORY_HELP,
         }
       })
     })
