@@ -77,7 +77,7 @@ describe('<Confirmation />', () => {
     })
 
     test('with the credit amount', () => {
-      expect(alert.text()).toBe('£2 credit added')
+      expect(alert.text()).toBe('£2.00 credit added')
     })
 
     describe('when it is part of multiple complaints on the same order', () => {
@@ -86,7 +86,7 @@ describe('<Confirmation />', () => {
       })
 
       test('renders the word Extra', () => {
-        expect(alert.text()).toBe('Extra £2 credit added')
+        expect(alert.text()).toBe('Extra £2.00 credit added')
       })
     })
   })

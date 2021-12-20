@@ -15,7 +15,7 @@ describe('<Refund />', () => {
   const createComplaint = jest.fn()
   const trackIngredientsGetInTouchClick = jest.fn()
   const compensation = {
-    amount: 7.77,
+    amount: 7.7,
     type: 'credit'
   }
 
@@ -44,7 +44,7 @@ describe('<Refund />', () => {
 
   describe('when isAnyPending is true', () => {
     beforeEach(() => {
-      wrapper.setProps({isAnyPending: true})
+      wrapper.setProps({ isAnyPending: true })
     })
     test('should render Loading', () => {
       expect(wrapper.find('Loading').exists()).toBe(true)
@@ -55,7 +55,7 @@ describe('<Refund />', () => {
     let GetInTouchLink
 
     beforeEach(() => {
-      wrapper.setProps({isAnyPending: false})
+      wrapper.setProps({ isAnyPending: false })
       GetInTouchLink = wrapper.find('GoustoLink')
       confirmationBody = wrapper.find('.confirmationBody')
     })
@@ -64,7 +64,7 @@ describe('<Refund />', () => {
       getHelpLayout2 = wrapper.find('GetHelpLayout2')
 
       expect(getHelpLayout2).toHaveLength(1)
-      expect(confirmationBody.text()).toContain('We would like to give you £7.77 credit off your next order as an apology for the issues with:')
+      expect(confirmationBody.text()).toContain('We would like to give you £7.70 credit off your next order as an apology for the issues with:')
     })
 
     test('renders Get in touch link', () => {
@@ -77,7 +77,7 @@ describe('<Refund />', () => {
       const Button2 = BottomBar.find('CTA')
 
       expect(BottomBar).toHaveLength(1)
-      expect(Button2.text()).toBe('Claim £7.77 credit')
+      expect(Button2.text()).toBe('Claim £7.70 credit')
     })
 
     describe('and isMultiComplaints is false', () => {
@@ -98,7 +98,7 @@ describe('<Refund />', () => {
 
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
-            expect(confirmationBody.text()).toBe('We would like to give you £7.77 credit off your next order as an apology for the issues with:')
+            expect(confirmationBody.text()).toBe('We would like to give you £7.70 credit off your next order as an apology for the issues with:')
           })
         })
 
@@ -111,7 +111,7 @@ describe('<Refund />', () => {
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
             expect(wrapper.find('p').at(0).text()).toContain('Once again, we’re sorry that you’ve had issues with your previous box too.')
-            expect(confirmationBody.text()).toContain('we’d like to give you £7.77 credit off your next order as an apology for:')
+            expect(confirmationBody.text()).toContain('we’d like to give you £7.70 credit off your next order as an apology for:')
           })
         })
 
@@ -124,7 +124,7 @@ describe('<Refund />', () => {
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
             expect(wrapper.find('p').at(0).text()).toContain('Once again, we’re sorry that 2 of your last 4 boxes have had issues.')
-            expect(confirmationBody.text()).toContain('we’d like to give you £7.77 credit off your next order as an apology for:')
+            expect(confirmationBody.text()).toContain('we’d like to give you £7.70 credit off your next order as an apology for:')
           })
         })
 
@@ -137,7 +137,7 @@ describe('<Refund />', () => {
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
             expect(wrapper.find('p').at(0).text()).toContain('Once again, we’re sorry that all of your last 4 boxes have had issues.')
-            expect(confirmationBody.text()).toContain('we’d like to give you £7.77 credit off your next order as an apology for:')
+            expect(confirmationBody.text()).toContain('we’d like to give you £7.70 credit off your next order as an apology for:')
           })
         })
       })
@@ -145,11 +145,13 @@ describe('<Refund />', () => {
 
     describe('and isMultiComplaints is true', () => {
       beforeEach(() => {
-        wrapper.setProps({ isMultiComplaints: true,
+        wrapper.setProps({
+          isMultiComplaints: true,
           compensation: {
             ...compensation,
             totalAmount: 15
-          } })
+          }
+        })
       })
       describe('and isSsrRepetitiveIssues is false', () => {
         beforeEach(() => {
@@ -160,13 +162,13 @@ describe('<Refund />', () => {
 
         test('layout is rendering correct text', async () => {
           expect(getHelpLayout2).toHaveLength(1)
-          expect(confirmationBody.text()).toContain('We would like to offer you an additional £7.77 credit to your account as an apology, bringing your total compensation to £15.')
+          expect(confirmationBody.text()).toContain('We would like to offer you an additional £7.70 credit to your account as an apology, bringing your total compensation to £15.00.')
         })
 
         test('CTA has correct text', async () => {
           const CTA = wrapper.find('CTA')
 
-          expect(CTA.text()).toBe('Claim additional £7.77 credit')
+          expect(CTA.text()).toBe('Claim additional £7.70 credit')
         })
       })
 
@@ -184,7 +186,7 @@ describe('<Refund />', () => {
 
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
-            expect(confirmationBody.text()).toBe('we’d like to offer you an additional £7.77 credit to your account as an apology, bringing your total compensation to £15.')
+            expect(confirmationBody.text()).toBe('we’d like to offer you an additional £7.70 credit to your account as an apology, bringing your total compensation to £15.00.')
           })
         })
 
@@ -196,7 +198,7 @@ describe('<Refund />', () => {
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
             expect(wrapper.find('p').at(0).text()).toContain('Once again, we’re sorry that you’ve had issues with your previous box too.')
-            expect(confirmationBody.text()).toContain('we’d like to offer you an additional £7.77 credit to your account as an apology, bringing your total compensation to £15.')
+            expect(confirmationBody.text()).toContain('we’d like to offer you an additional £7.70 credit to your account as an apology, bringing your total compensation to £15.')
           })
         })
 
@@ -208,7 +210,7 @@ describe('<Refund />', () => {
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
             expect(wrapper.find('p').at(0).text()).toContain('Once again, we’re sorry that 2 of your last 4 boxes have had issues.')
-            expect(confirmationBody.text()).toContain('we’d like to offer you an additional £7.77 credit to your account as an apology, bringing your total compensation to £15.')
+            expect(confirmationBody.text()).toContain('we’d like to offer you an additional £7.70 credit to your account as an apology, bringing your total compensation to £15.')
           })
         })
 
@@ -220,7 +222,7 @@ describe('<Refund />', () => {
           test('layout is rendering correct text', async () => {
             expect(getHelpLayout2).toHaveLength(1)
             expect(wrapper.find('p').at(0).text()).toContain('Once again, we’re sorry that all of your last 4 boxes have had issues.')
-            expect(confirmationBody.text()).toContain('we’d like to offer you an additional £7.77 credit to your account as an apology, bringing your total compensation to £15.')
+            expect(confirmationBody.text()).toContain('we’d like to offer you an additional £7.70 credit to your account as an apology, bringing your total compensation to £15.')
           })
         })
       })
@@ -249,7 +251,7 @@ describe('<Refund />', () => {
 
     describe('when numberOfIngredients is 1', () => {
       beforeEach(() => {
-        wrapper.setProps({numberOfIngredients: 1})
+        wrapper.setProps({ numberOfIngredients: 1 })
         getHelpLayout2 = wrapper.find('GetHelpLayout2')
       })
       test('header is rendering correctly', () => {
@@ -259,7 +261,7 @@ describe('<Refund />', () => {
 
     describe('when numberOfIngredients is > 1', () => {
       beforeEach(() => {
-        wrapper.setProps({numberOfIngredients: 2})
+        wrapper.setProps({ numberOfIngredients: 2 })
         getHelpLayout2 = wrapper.find('GetHelpLayout2')
       })
       test('header is rendering correctly', () => {
