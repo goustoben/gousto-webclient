@@ -79,11 +79,17 @@ class CheckoutPayPalDetails extends React.PureComponent {
     })
 
   fetchPayPalNonce = async (approveData) => {
-    const { setPayPalNonce, firePayPalError, trackFailedCheckoutFlow } = this.props
+    const {
+      setPayPalNonce,
+      firePayPalError,
+      trackFailedCheckoutFlow,
+      trackSuccessfulCheckoutFlow,
+    } = this.props
 
     try {
       const payload = await this.paypalCheckoutInstance.tokenizePayment(approveData)
       setPayPalNonce(payload.nonce)
+      trackSuccessfulCheckoutFlow('PayPal nonce fetched successfully')
     } catch (error) {
       trackFailedCheckoutFlow('Fetching PayPal nonce has been failed', error)
       firePayPalError(error)
