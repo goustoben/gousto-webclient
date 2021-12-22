@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Header } from 'Header'
 import Footer from 'Footer'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
 import css from './MainLayout.css'
+import { MenuHeader } from '../../routes/Menu/MenuHeader'
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -79,7 +79,7 @@ export class MainLayout extends React.Component {
 
     return (
       <Div className={footerBaseClass} backgroundColor="Coconut">
-        <Header />
+        <MenuHeader />
         {children}
         <Div className={classNames({ [css.pullUp]: route.withRecipeBar })}>
           <Footer type={route.footerType} />
