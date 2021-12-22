@@ -5,12 +5,6 @@ import menuConfig from 'config/menu'
 import { isOutOfStock } from './recipe'
 
 export const getRecipesInCollection = (menuCollections, collectionId) => menuCollections.getIn([collectionId, 'recipesInCollection'], null)
-export const getCollectionDietaryClaims = (menuCollections, collectionId) => menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
-
-export const getDietaryClaimsInCollection = (menuCollections, collectionId) => menuCollections.getIn(
-  [collectionId, 'requirements', 'dietary_claims'],
-  null
-)
 
 export const getCollectionId = collection => collection.get('id')
 const getCollectionSlug = collection => collection.get('slug')
@@ -191,11 +185,6 @@ export const getCollectionsHeaders = createSelector(
 
     return null
   }
-)
-
-export const getCurrentCollectionDietaryClaims = createSelector(
-  [getMenuCollections, getCurrentCollectionId],
-  (menuCollections, currentCollectionId) => menuCollections.getIn([currentCollectionId, 'requirements', 'dietary_claims'], null)
 )
 
 export const getCurrentCollectionThumbnail = createSelector(

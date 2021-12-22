@@ -1,13 +1,18 @@
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import Immutable from 'immutable'
-import { getDietaryClaimsInCollection, getRecipesInCollection } from 'routes/Menu/selectors/collections'
+import { getRecipesInCollection } from 'routes/Menu/selectors/collections'
 import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import { getInStockRecipes } from 'routes/Menu/selectors/recipeList'
 import { getCurrentMenuVariants, getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
 import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
 import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
 import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
+
+const getDietaryClaimsInCollection = (menuCollections, collectionId) => menuCollections.getIn(
+  [collectionId, 'requirements', 'dietary_claims'],
+  null
+)
 
 export const useGetRecipesForCollectionId = (collections) => {
   const recipes = useSelector(getCurrentMenuRecipes)

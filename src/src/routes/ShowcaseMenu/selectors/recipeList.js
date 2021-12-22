@@ -10,7 +10,6 @@ import {
   getCurrentCollectionId,
   getMenuCollections,
   getRecipesInCollection,
-  getCollectionDietaryClaims,
 } from 'routes/Menu/selectors/collections'
 import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import {
@@ -257,6 +256,9 @@ const getReplacements = (recipeList, recipeIds, getVariantFn) =>
       [recipeId]: replacement,
     }
   }, {})
+
+const getCollectionDietaryClaims = (menuCollections, collectionId) =>
+  menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
 
 export const getRecipeListRecipesLogic = (
   currentMenuRecipes,

@@ -31,7 +31,9 @@ const RecipeTile = ({
     showDetailRecipe(recipeId, categoryId)
   }
 
-  const showVariantHeader = !((!recipeVariants || !recipeVariants.alternatives || !recipeVariants.alternatives.size) || isOutOfStock)
+  const hasAlternatives = Boolean(recipeVariants && recipeVariants.alternatives && recipeVariants.alternatives.size)
+
+  const showVariantHeader = hasAlternatives && !isOutOfStock
   const hasTopLeftTag = Boolean(brandAvailability)
 
   const mobileBannerShown = (showVariantHeader && browserType === 'mobile')
@@ -82,7 +84,7 @@ const RecipeTile = ({
             originalId={originalId}
             categoryId={categoryId}
             fdiStyling={fdiStyling}
-            hasAlternativeOptions={showVariantHeader}
+            hasAlternativeOptions={hasAlternatives}
           />
         </div>
       </div>

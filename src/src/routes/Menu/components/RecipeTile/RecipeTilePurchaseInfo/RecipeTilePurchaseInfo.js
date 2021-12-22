@@ -9,7 +9,6 @@ export const RecipeTilePurchaseInfo = ({
   recipeId,
   originalId,
   categoryId,
-  recipeVariants,
   surcharge,
   isOutOfStock,
   isFineDineIn,
@@ -21,7 +20,7 @@ export const RecipeTilePurchaseInfo = ({
     return null
   }
 
-  const surchageOnTop = (Boolean(recipeVariants) && recipeVariants.length !== 0)
+  const surchageOnTop = hasAlternativeOptions
 
   return (
     <div className={classnames(css.purchaseInfoWrapper, { [css.surchageOnTop]: surchageOnTop })}>
@@ -63,7 +62,6 @@ RecipeTilePurchaseInfo.propTypes = {
   recipeId: PropTypes.string.isRequired,
   originalId: PropTypes.string,
   categoryId: PropTypes.string,
-  recipeVariants: PropTypes.arrayOf(PropTypes.shape),
   surcharge: PropTypes.number,
   isOutOfStock: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool.isRequired,
@@ -75,7 +73,6 @@ RecipeTilePurchaseInfo.propTypes = {
 RecipeTilePurchaseInfo.defaultProps = {
   originalId: null,
   surcharge: 0,
-  recipeVariants: null,
   categoryId: null,
   fdiStyling: false,
 }
