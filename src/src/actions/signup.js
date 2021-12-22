@@ -119,6 +119,7 @@ export function signupGoToMenu() {
   return (dispatch) => {
     dispatch(trackUTMAndPromoCode(clickSeeThisWeeksMenu))
     dispatch(redirect(routes.client.menu))
+    dispatch({type: actionTypes.WIZARD_SEEN})
   }
 }
 

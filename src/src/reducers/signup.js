@@ -12,6 +12,7 @@ const initialState = Immutable.fromJS({
   },
   isDiscountAppliedBarDismissed: false,
   showcaseMenuSeen: false,
+  isInWizardFunnel: false,
 })
 
 const signup = {
@@ -40,6 +41,19 @@ const signup = {
       return state
         .setIn(['wizard', 'amountOfCustomers'], action.count || null)
         .setIn(['wizard', 'district'], action.district || null)
+    }
+
+    case actionTypes.WIZARD_SEEN: {
+      return state.set('isInWizardFunnel', true)
+    }
+
+    case actionTypes.PAGE_CHANGED: {
+      const funnelPaths = ['/menu', '/signup', '/check-out']
+      const isInFunnelPage = funnelPaths.some(path => action.newLocation.includes(path))
+
+      const isWizardSeen = state.get('isInWizardFunnel')
+
+      return state.set('isInWizardFunnel', isInFunnelPage && isWizardSeen)
     }
 
     default: {
