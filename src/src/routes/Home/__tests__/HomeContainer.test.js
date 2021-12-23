@@ -32,9 +32,10 @@ describe('HomeContainer', () => {
       }),
     }),
   })
+  const redirectLoggedInUser = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<HomeContainer store={store} />)
+    wrapper = shallow(<HomeContainer store={store} redirectLoggedInUser={redirectLoggedInUser} />)
   })
 
   test('should be rendered properly', () => {

@@ -9,6 +9,15 @@ import typography from 'design-language/typography.css'
 import { AppBannerDetails } from './AppBannerDetails'
 import css from './AppBanner.css'
 
+const propTypes = {
+  name: PropTypes.string.isRequired,
+  ratings: PropTypes.string.isRequired,
+  showAppBanner: PropTypes.bool.isRequired,
+  appBannerDismiss: PropTypes.func.isRequired,
+  trackingAppPromoCTAClick: PropTypes.func.isRequired,
+  trackingAppPromoBannerView: PropTypes.func.isRequired,
+}
+
 class AppBanner extends Component {
   componentDidMount() {
     const { showAppBanner } = this.props
@@ -49,18 +58,6 @@ class AppBanner extends Component {
   }
 }
 
-AppBanner.propTypes = {
-  name: PropTypes.string,
-  ratings: PropTypes.string,
-  showAppBanner: PropTypes.bool.isRequired,
-  appBannerDismiss: PropTypes.func.isRequired,
-  trackingAppPromoCTAClick: PropTypes.func.isRequired,
-  trackingAppPromoBannerView: PropTypes.func.isRequired,
-}
-
-AppBanner.defaultProps = {
-  name: null,
-  ratings: null,
-}
+AppBanner.propTypes = propTypes
 
 export { AppBanner }

@@ -4,7 +4,6 @@ import Overlay from 'Overlay'
 import { SubscriptionPauseScreenContainer } from './SubscriptionPauseScreen'
 
 const propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
   dataLoaded: PropTypes.bool,
   showModal: PropTypes.bool,
   fetchData: PropTypes.func.isRequired,
@@ -20,43 +19,37 @@ const defaultProps = {
 class SubscriptionPause extends React.Component {
   componentDidMount() {
     const {
-      isAuthenticated,
       subscriptionPauseFetchReasons,
       userLoadNewOrders
     } = this.props
 
-    if (isAuthenticated) {
-      subscriptionPauseFetchReasons()
-      userLoadNewOrders()
-    }
+    subscriptionPauseFetchReasons()
+    userLoadNewOrders()
   }
 
   shouldComponentUpdate(nextProps) {
     const {
-      isAuthenticated,
       showModal,
       dataLoaded,
     } = this.props
 
     const {
-      isAuthenticated: nextIsAuthenticated,
       showModal: nextShowModal,
       dataLoaded: nextDataLoaded,
     } = nextProps
 
-    return isAuthenticated !== nextIsAuthenticated
-        || showModal !== nextShowModal
-        || dataLoaded !== nextDataLoaded
+    return showModal !== nextShowModal
+      || dataLoaded !== nextDataLoaded
   }
 
   componentDidUpdate() {
     const {
-      isAuthenticated,
       showModal,
+      dataLoaded,
       fetchData,
     } = this.props
 
-    if (isAuthenticated && showModal && fetchData) {
+    if (showModal && dataLoaded && fetchData) {
       fetchData()
     }
   }

@@ -2,17 +2,18 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import { ReactReduxContext } from 'react-redux'
+import menuFetchData from 'routes/Menu/fetchData'
 import { CTA, seo } from 'config/home'
 import routesConfig from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
 import { menuLoadBoxPrices } from 'actions/menu'
 import { PromoBanner } from './PromoBanner'
 import { HomeSections } from './HomeSections'
-import { fetchMenuForCarousel } from './homeActions'
 
 const propTypes = {
   isAuthenticated: PropTypes.bool,
   variant: PropTypes.string,
+  redirectLoggedInUser: PropTypes.func,
   isSignupReductionEnabled: PropTypes.bool,
   pricePerServing: PropTypes.string,
 }
@@ -20,6 +21,7 @@ const propTypes = {
 const defaultProps = {
   variant: 'default',
   isAuthenticated: false,
+  redirectLoggedInUser: () => {},
   isSignupReductionEnabled: false,
   pricePerServing: null,
 }
@@ -34,19 +36,18 @@ class Home extends Component {
 
   componentDidMount() {
     const { store } = this.context
-    const { pricePerServing } = this.props
+    const { redirectLoggedInUser, pricePerServing } = this.props
+    redirectLoggedInUser()
     Home.fetchData({ store, options: { pricePerServing } })
 
-    // requestIdleCallback is not supported on Safari:
-    // https://caniuse.com/?search=requestidlecallback.  For the browsers that
-    // do support it, we delay loading recipes because it's not critical for
-    // page rendering.
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(() => {
-        store.dispatch(fetchMenuForCarousel())
-      })
-    } else {
-      store.dispatch(fetchMenuForCarousel())
+    this.prefetchTimer = setTimeout(() => {
+      store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
+    }, 500)
+  }
+
+  componentWillUnmount() {
+    if (this.prefetchTimer) {
+      clearTimeout(this.prefetchTimer)
     }
   }
 
