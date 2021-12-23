@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { knownVariants, defaultVariant } from 'config/home'
-import actions from 'actions/auth'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getPricePerServing } from 'routes/BoxPrices/boxPricesSelectors'
 import { getIsSignupReductionEnabled } from 'selectors/features'
@@ -20,10 +19,6 @@ const mapStateToProps = (state, props) => ({
   pricePerServing: getPricePerServing(state),
 })
 
-const mapDispatchToProps = {
-  redirectLoggedInUser: actions.redirectLoggedInUser,
-}
-
-const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(Home)
+const HomeContainer = connect(mapStateToProps)(Home)
 
 export { HomeContainer }

@@ -6,6 +6,4 @@ const mapStateToProps = (state) => ({
   homeCarouselRecipes: getRecipesFromAllRecipesCollection(state),
 })
 
-const RecipeCarouselContainer = connect(mapStateToProps, {})(RecipeCarousel)
-
-export { RecipeCarouselContainer }
+export const RecipeCarouselContainer = connect(mapStateToProps, {})(RecipeCarousel)

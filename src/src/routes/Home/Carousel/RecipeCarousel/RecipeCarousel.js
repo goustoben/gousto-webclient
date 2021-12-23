@@ -1,12 +1,40 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Carousel from 'Carousel'
 import { formatRecipeTitle } from 'utils/recipe'
 import { SimpleRecipe } from '../SimpleRecipe'
 import { Arrow } from '../CarouselArrow/CarouselArrow'
 import css from './RecipeCarousel.css'
-import { orderRecipes } from './orderRecipes'
+import simpleRecipeCss from '../SimpleRecipe/SimpleRecipe.css'
+
+const N_LOADING_RECIPES = 7
+
+const createLoadingStateRecipes = () => {
+  const result = []
+  for (let index = 0; index < N_LOADING_RECIPES; ++index) {
+    result.push({ index })
+  }
+
+  return result
+}
+
+// The Children of Carousel get passed to react-slick/Slider, which expects an
+// array so we cannot render it as a React component, even a Fragment (if we do
+// so, then they are not arranged in the horizonal flexbox).
+const renderLoadingStateRecipes = () =>
+  createLoadingStateRecipes().map(({ index }) => (
+    <div className={css.recipeContainer} key={index}>
+      <div className={css.recipe}>
+        <div className={simpleRecipeCss.recipeDetails}>
+          <div className={simpleRecipeCss.simple}>
+            <div className={css.loadingImagePlaceholder} />
+          </div>
+          <div className={css.loadingTextContainerPlaceholder} />
+        </div>
+      </div>
+    </div>
+  ))
 
 const RecipeCarousel = ({ homeCarouselRecipes }) => (
   <div className={`homepageSlider ${css.container}`}>
@@ -33,36 +61,34 @@ const RecipeCarousel = ({ homeCarouselRecipes }) => (
       ]}
       lazyLoad
     >
-      {orderRecipes(homeCarouselRecipes)
-        .map((recipe) => (
-          <div className={css.recipeContainer} key={recipe.get('id')}>
-            <div className={css.recipe} key={recipe.get('id')}>
-              <SimpleRecipe
-                title={formatRecipeTitle(
-                  recipe.get('title'),
-                  recipe.get('boxType', ''),
-                  recipe.get('dietType', '')
-                )}
-                media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
-                averageRating={recipe.getIn(['rating', 'average']) || 0}
-                ratingCount={recipe.getIn(['rating', 'count'])}
-                maxMediaSize={400}
-                cookingTime={recipe.get('cookingTime')}
-              />
-            </div>
-          </div>
-        ))
-        .toArray()}
+      {homeCarouselRecipes
+        ? homeCarouselRecipes
+            .map((recipe) => (
+              <div className={css.recipeContainer} key={recipe.get('id')}>
+                <div className={css.recipe}>
+                  <SimpleRecipe
+                    title={formatRecipeTitle(
+                      recipe.get('title'),
+                      recipe.get('boxType', ''),
+                      recipe.get('dietType', '')
+                    )}
+                    media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
+                    averageRating={recipe.getIn(['rating', 'average']) || 0}
+                    ratingCount={recipe.getIn(['rating', 'count'])}
+                    maxMediaSize={400}
+                    cookingTime={recipe.get('cookingTime')}
+                  />
+                </div>
+              </div>
+            ))
+            .toArray()
+        : renderLoadingStateRecipes()}
     </Carousel>
   </div>
 )
 
 RecipeCarousel.propTypes = {
   homeCarouselRecipes: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-}
-
-Arrow.propTypes = {
-  side: PropTypes.string.isRequired,
 }
 
 export { RecipeCarousel }
