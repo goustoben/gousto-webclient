@@ -102,6 +102,5 @@ describe('<RecipeTileContainer />', () => {
     expect(wrapper.find('RecipeTile').prop('showDetailRecipe')).toEqual(expect.any(Function))
     expect(wrapper.find('RecipeTile').prop('isFineDineIn')).toEqual(true)
     expect(wrapper.find('RecipeTile').prop('brandAvailability')).toEqual(expectedAvailability)
-    expect(wrapper.find('RecipeTile').prop('browserType')).toEqual('desktop')
   })
 })

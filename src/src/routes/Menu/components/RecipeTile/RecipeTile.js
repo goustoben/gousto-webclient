@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Immutable from 'immutable'
+import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
@@ -10,7 +11,6 @@ import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeader
 import { Title, BrandTag } from '../Recipe'
 
 const RecipeTile = ({
-  browserType,
   recipe,
   recipeId,
   originalId,
@@ -22,6 +22,8 @@ const RecipeTile = ({
   categoryId,
   fdiStyling,
 }) => {
+  const deviceType = useDeviceType()
+
   if (!recipe) {
     return null
   }
@@ -36,8 +38,8 @@ const RecipeTile = ({
   const showVariantHeader = hasAlternatives && !isOutOfStock
   const hasTopLeftTag = Boolean(brandAvailability)
 
-  const mobileBannerShown = (showVariantHeader && browserType === 'mobile')
-  const desktopBannerShown = (showVariantHeader && (browserType === 'desktop' || browserType === 'tablet'))
+  const mobileBannerShown = (showVariantHeader && deviceType === DeviceType.MOBILE)
+  const desktopBannerShown = (showVariantHeader && (deviceType === DeviceType.DESKTOP || deviceType === DeviceType.TABLET))
 
   return (
     <div
@@ -50,7 +52,7 @@ const RecipeTile = ({
     >
       {
         // mobile banner needs to sit outside of TileImage
-        (browserType === 'mobile')
+        (deviceType === DeviceType.MOBILE)
         && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />
       }
 
@@ -93,7 +95,6 @@ const RecipeTile = ({
 }
 
 RecipeTile.propTypes = {
-  browserType: PropTypes.oneOf(['desktop', 'tablet', 'mobile']).isRequired,
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipeId: PropTypes.string.isRequired,
   originalId: PropTypes.string,

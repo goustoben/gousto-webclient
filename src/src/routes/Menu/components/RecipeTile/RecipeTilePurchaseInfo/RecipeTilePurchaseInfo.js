@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
 import css from './RecipeTilePurchaseInfo.css'
@@ -13,9 +14,10 @@ export const RecipeTilePurchaseInfo = ({
   isOutOfStock,
   isFineDineIn,
   fdiStyling,
-  browserType,
   hasAlternativeOptions,
 }) => {
+  const deviceType = useDeviceType()
+
   if (isOutOfStock) {
     return null
   }
@@ -49,7 +51,7 @@ export const RecipeTilePurchaseInfo = ({
         <AddRecipeButton recipeId={recipeId} />
         {hasAlternativeOptions
             && (
-              browserType === 'mobile'
+              deviceType === DeviceType.MOBILE
                 ? <SwapAlternativeOptionsMobile recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
                 : <SwapAlternativeOptions recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
             )}
@@ -66,7 +68,6 @@ RecipeTilePurchaseInfo.propTypes = {
   isOutOfStock: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool.isRequired,
   fdiStyling: PropTypes.bool,
-  browserType: PropTypes.string.isRequired,
   hasAlternativeOptions: PropTypes.bool.isRequired,
 }
 

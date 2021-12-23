@@ -3,6 +3,11 @@ import { shallow } from 'enzyme'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptionsMobile, SwapAlternativeOptions } from '../SwapAlternativeOptions'
+import { useDeviceType } from '../../../../../hooks/useDeviceType'
+
+jest.mock('../../../../../hooks/useDeviceType')
+
+const mockedUseDeviceType = useDeviceType
 
 describe('RecipeTilePurchaseInfo', () => {
   let wrapper
@@ -11,7 +16,6 @@ describe('RecipeTilePurchaseInfo', () => {
     isOutOfStock: false,
     recipeId: '123',
     isFineDineIn: false,
-    browserType: 'mobile',
     hasAlternativeOptions: false,
     categoryId: 'some category ID',
     originalId: 'some Original ID',
@@ -156,13 +160,14 @@ describe('RecipeTilePurchaseInfo', () => {
   })
 
   describe('when there are Alternative options for recipe', () => {
-    describe('when it is mobile browser', () => {
+    describe('when it is mobile device', () => {
       beforeEach(() => {
         const props = {
           ...defaultProps,
-          hasAlternativeOptions: true,
-          browserType: 'mobile',
+          hasAlternativeOptions: true
         }
+        mockedUseDeviceType.mockReturnValue('mobile')
+
         wrapper = shallow(<RecipeTilePurchaseInfo
           {...props}
         />)
@@ -185,8 +190,8 @@ describe('RecipeTilePurchaseInfo', () => {
         const props = {
           ...defaultProps,
           hasAlternativeOptions: true,
-          browserType: 'desktop',
         }
+        mockedUseDeviceType.mockReturnValue('desktop')
         wrapper = shallow(<RecipeTilePurchaseInfo
           {...props}
         />)
