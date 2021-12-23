@@ -4,7 +4,6 @@ import moment from 'moment'
 import config from 'config'
 import * as trackingKeys from 'actions/trackingKeys'
 import { client as clientRoutes, giftCardsURL } from 'config/routes'
-import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import Link from 'Link'
@@ -141,10 +140,10 @@ export const Footer = ({
   const trackWeeklyRecipesClick = () => trackNavigationClick({ actionType: trackingKeys.clickRecipeNavigationFooter })
   const renderFullList = () => (
     <ul className={css.menuList}>
-      <li className={classNames(css.mobileHide, css.menuItem)}>
+      <li className={css.menuItem}>
         <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
       </li>
-      <li className={classNames(css.mobileHide, css.menuItem)}>
+      <li className={css.menuItem}>
         {/* eslint-disable-next-line */}
         <span data-test="week-recipes" onClick={trackWeeklyRecipesClick} role="button" tabIndex={0}>
           <Link
@@ -174,7 +173,7 @@ export const Footer = ({
       <li className={css.menuItem}>
         <Link to={clientRoutes.blog} data-selid="footer-blog" title="Blog" clientRouted={false} secondary>Blog</Link>
       </li>
-      <li className={classNames(css.mobileHide, css.menuItem)}>
+      <li className={css.menuItem}>
         <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
       </li>
       {renderPrivacyLink()}
