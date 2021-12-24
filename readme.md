@@ -27,7 +27,7 @@ $ npm i
 
 # 5. start the app in development mode
 # For hot module reload see [Detailed guide](./detailed-setup.md) to setup.
-
+$ npm run build:client  
 $ npm run dev
 
 ```
