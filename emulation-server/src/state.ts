@@ -11,17 +11,19 @@ export type Session = {
 }
 
 export type State = {
-    recipes?: [Recipe];
-    sessions?: [Session];
-    orders?: [Order];
-    users?: [User]
+    recipes: Recipe[];
+    sessions: Session[];
+    orders: Order[];
+    users: User[]
 };
 
 export function createState() {
-    let state: State = {};
+    const getDefaultState = () => ({orders: [], recipes: [], sessions: [], users: []});
+
+    let state: State = getDefaultState();
 
     function setState(newState: State): void {
-        state = _.cloneDeep(newState);
+        state = _.merge(getDefaultState(), _.cloneDeep(newState));
     }
 
     function getState(): State {

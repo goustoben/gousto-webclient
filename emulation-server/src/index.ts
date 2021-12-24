@@ -2,13 +2,12 @@ import Router from '@koa/router';
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import logger from 'koa-logger';
-import {createState, Order, Recipe, State} from "./state";
+import {createState, Order, Recipe} from "./state";
 import cors from "@koa/cors"
 import proxy from 'koa-better-http-proxy'
 import {Command} from "commander";
 import {withSnakeCaseProperties} from "./utils/responseRendering";
 import {isAuthorizedRequest} from "./utils/authorization";
-import _ from "lodash";
 
 function getServerConfiguration() {
     const command = new Command();
@@ -86,11 +85,11 @@ router.put('/_config/state/Gousto2-Core', ctx => {
     ctx.status = 200
 })
 
-function getOrder(orderId: string, ordersState: [Order]) {
+function getOrder(orderId: string, ordersState: Order[]) {
     return ordersState.find(order => order.id === orderId);
 }
 
-function getRecipes(recipeIds: string[], recipesState: [Recipe]) {
+function getRecipes(recipeIds: string[], recipesState: Recipe[]) {
     return recipeIds.map(recipeId => recipesState.find(recipe => recipe.id === recipeId)!);
 }
 
@@ -111,19 +110,18 @@ router.get('/order/:orderId', ctx => {
         return
     }
 
-    if (!state.orders) {
-        ctx.status = 404
-        return
-    }
+    ctx.status = 200
 
-    const order = getOrder(ctx.params.orderId, state.orders!);
+    const order = getOrder(ctx.params.orderId, state.orders);
 
     if (!order) {
-        ctx.status = 404
+        ctx.body = {
+            error: ''
+        }
         return
     }
 
-    const recipes = getRecipes(order.recipeIds, state.recipes!);
+    const recipes = getRecipes(order.recipeIds, state.recipes);
 
     ctx.status = 200
 
@@ -140,15 +138,13 @@ router.put('/user/:authUserId/marketing/unsubscribe_emails', ctx => {
 
     const state = getState();
 
-    if (state.users) {
-        const user = state.users.find(user => user.authUserId === ctx.params.authUserId);
+    const user = state.users.find(user => user.authUserId === ctx.params.authUserId);
 
-        if (user) {
-            if (ctx.request.body.marketing_unsubscribe_token === user.marketingUnsubscribeToken) {
-                ctx.headers["content-type"] = 'application/json'
-                ctx.status = 200
-                return
-            }
+    if (user) {
+        if (ctx.request.body.marketing_unsubscribe_token === user.marketingUnsubscribeToken) {
+            ctx.headers["content-type"] = 'application/json'
+            ctx.status = 200
+            return
         }
     }
 

@@ -2,7 +2,7 @@
  * @jest-environment ./jest/goustoServiceAdapterTestEnvironment
  */
 
-import { term } from '@pact-foundation/pact/src/dsl/matchers'
+import { term, string } from '@pact-foundation/pact/src/dsl/matchers'
 import { givenInitialState } from '../__support__/pactUtils'
 import { createAdapter } from '../../Gousto2-Core/getOrder'
 
@@ -107,7 +107,16 @@ describe('Get order', () => {
           }
         })
         .willRespondWith({
-          status: 404
+          status: 200,
+          headers: {
+            'Content-Type': term({
+              matcher: 'application/json',
+              generate: 'application/json',
+            })
+          },
+          body: {
+            error: string('any error')
+          }
         })
     )
 
