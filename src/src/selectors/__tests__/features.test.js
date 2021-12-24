@@ -9,8 +9,6 @@ import {
   isOsrOfferFeatureEnabled,
   getAbandonBasket,
   getIsCustomNoticeEnabled,
-  getGoToMyGousto,
-  getGoToMyDeliveries,
   getPromoBannerEnabled,
   getPromoBannerText,
   getPromoBannerCode,
@@ -54,8 +52,6 @@ describe('when features are defined', () => {
     [getAbandonBasket, 'abandonBasket'],
     [getAppBanner, 'appBanner'],
     [getFullScreenBoxSummary, 'fullScreenBoxSummary'],
-    [getGoToMyDeliveries, 'goToMyDeliveries'],
-    [getGoToMyGousto, 'goToMyGousto'],
     [getIsCommunicationPanelEnabled, 'isCommunicationPanelEnabled'],
     [getIsSignupReductionEnabled, 'enableSignupReduction'],
     [getLogoutUserDisabledSlots, 'logoutUserDisabledSlots', [

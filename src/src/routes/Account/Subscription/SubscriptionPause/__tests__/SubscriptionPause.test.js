@@ -13,7 +13,8 @@ const mockProps = {
   userLoadNewOrders: mockUserLoadNewOrders,
   dataLoaded: true,
   fetchData: mockFetchData,
-  showModal: true
+  showModal: true,
+  isAuthenticated: true,
 }
 
 const shouldComponentUpdateSpy = jest.spyOn(SubscriptionPause.prototype, 'render')
@@ -24,7 +25,7 @@ const mountWithProps = (props = {}) => {
   )
 }
 
-describe('Given I render SubScriptionPause', () => {
+describe('Given I render SubscriptionPause', () => {
   beforeEach(() => {
     mountWithProps()
   })

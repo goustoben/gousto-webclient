@@ -368,7 +368,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
   }
 }
 
-function userLoadNewOrders() {
+export function userLoadNewOrders() {
   return async (dispatch, getState) => {
     const forceRefresh = getIsGoustoOnDemandEnabled(getState())
     // eslint-disable-next-line no-use-before-define

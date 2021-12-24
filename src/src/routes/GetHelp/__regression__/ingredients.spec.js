@@ -32,7 +32,7 @@ describe('Given the customer is logged in', () => {
   describe('When the order is eligible for ingredients refund and I click "Any issues with this box?" on last delivery in My Gousto', () => {
     beforeEach(() => {
       cy.visit('/')
-      cy.wait(['@identifyRequest', '@userCurrentRequest'])
+      cy.wait(['@identifyRequest'])
 
       cy.clock(new Date(2020, 4, 28).getTime(), ['Date'])
 
@@ -52,7 +52,6 @@ describe('Given the customer is logged in', () => {
 
     describe('And the issue "Ingredients" is clicked', () => {
       beforeEach(() => {
-        cy.wait(['@userCurrentSubscriptionRequest', '@userCurrentOrdersRequest'])
         selectOrderIssue('ingredient')
       })
 

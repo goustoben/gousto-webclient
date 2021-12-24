@@ -1,13 +1,16 @@
 import { connect } from 'react-redux'
 import actions, { fetchData } from 'actions/subscriptionPause'
-import userActions from 'actions/user'
+import { userLoadNewOrders } from 'actions/user'
+import { getIsAuthenticated } from 'selectors/auth'
 import SubscriptionPause from './SubscriptionPause'
 
 const mapStateToProps = state => {
   const { subscriptionPause } = state
   const reasons = subscriptionPause.get('reasons')
+  const isAuthenticated = getIsAuthenticated(state)
 
   return {
+    isAuthenticated,
     dataLoaded: reasons.size > 0,
     showModal: subscriptionPause.get('inProgress'),
   }
@@ -16,7 +19,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchData,
   subscriptionPauseFetchReasons: actions.subscriptionPauseFetchReasons,
-  userLoadNewOrders: userActions.userLoadNewOrders,
+  userLoadNewOrders,
 }
 
 const SubscriptionContainer = connect(

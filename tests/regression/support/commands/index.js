@@ -73,7 +73,7 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
 
   cy.visit('/')
 
-  cy.wait(['@getMenu', '@getBrand', '@getStock'])
+  cy.wait(['@getMenu'])
 })
 
 Cypress.Commands.add('setupMenu', ({ platform }) => {
