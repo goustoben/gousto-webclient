@@ -80,6 +80,10 @@ describe('RecipeCardConfirmation', () => {
     expect(wrapper.find('GoustoLink .recipeCookbookLink').prop('to')).toEqual(`/cookbook/recipe-by-id/${RECIPE_CARDS[0].id}`)
   })
 
+  test('renders the cookbook links for the selected recipes with clientRouted false', () => {
+    expect(wrapper.find('GoustoLink.recipeCookbookLink').prop('clientRouted')).toBe(false)
+  })
+
   test('cookbook links dispatch a tracking action when clicked', () => {
     wrapper.find('GoustoLink .recipeCookbookLink').at(0).simulate('click')
     expect(trackPrintedRecipeCardClickRecipe).toHaveBeenCalled()

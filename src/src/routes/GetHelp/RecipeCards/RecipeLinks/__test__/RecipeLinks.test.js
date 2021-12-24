@@ -1,9 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { browserHistory } from 'react-router'
+import { windowOpen } from 'utils/window'
 import { RecipeLinks } from '../RecipeLinks'
-
-browserHistory.push = jest.fn()
+jest.mock('utils/window', () => ({
+  windowOpen: jest.fn()
+}))
 
 describe('the RecipeLinks component', () => {
   let wrapper
@@ -74,7 +75,7 @@ describe('the RecipeLinks component', () => {
       })
 
       test('redirects to the corresponding cookbook page of the recipe', () => {
-        expect(browserHistory.push).toHaveBeenCalledWith(`/cookbook/recipe-by-id/${recipe.id}`)
+        expect(windowOpen).toHaveBeenCalledWith(`/cookbook/recipe-by-id/${recipe.id}`, false)
       })
     })
   })

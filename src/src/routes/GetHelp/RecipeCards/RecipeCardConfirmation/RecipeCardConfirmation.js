@@ -24,6 +24,7 @@ const RecipeCardConfirmation = ({
       key={id}
       className={css.recipeCookbookLink}
       to={`${routes.cookbookRecipeById}/${id}`}
+      clientRouted={false}
       tracking={trackPrintedRecipeCardClickRecipe}
     >
       {title}

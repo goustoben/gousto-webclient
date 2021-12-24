@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
 import { Item } from 'goustouicomponents'
 import routes from 'config/routes'
+import { windowOpen } from 'utils/window'
 import { List } from '../../components/List'
 import { recipePropType } from '../../getHelpPropTypes'
 import css from './RecipeLinks.css'
@@ -18,7 +18,8 @@ const handleClick = (orderId, recipeId, userId, trackRecipeCardClick) => {
   trackRecipeCardClick(recipeId)
   window.sessionStorage.setItem('orderId', orderId)
   window.sessionStorage.setItem('userId', userId)
-  browserHistory.push(`${routes.client.cookbookRecipeById}/${recipeId}`)
+  const isNewTab = false
+  windowOpen(`${routes.client.cookbookRecipeById}/${recipeId}`, isNewTab)
 }
 
 function RecipeLinks({ orderId, recipes, trackRecipeCardClick, userId }) {
