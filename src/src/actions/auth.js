@@ -12,8 +12,7 @@ import config from 'config/auth'
 import configRoutes from 'config/routes'
 import moment from 'moment'
 import logger from 'utils/logger'
-import { redirect, documentLocation } from 'utils/window'
-import { getGoToMyGousto, getGoToMyDeliveries } from 'selectors/features'
+import { redirect } from 'utils/window'
 import { trackUserLogin } from 'actions/loggingmanager'
 
 import statusActions from './status'
@@ -42,20 +41,6 @@ const userRememberMe = rememberMe => ({
   type: actionTypes.USER_REMEMBER_ME,
   rememberMe,
 })
-
-const redirectLoggedInUser = () => (
-  async (dispatch, getState) => {
-    const { auth } = getState()
-    const isAuthenticated = auth.get('isAuthenticated')
-
-    const { pathname } = documentLocation()
-
-    if (pathname === '/' && isAuthenticated) {
-      if (getGoToMyGousto(getState())) return redirect(configRoutes.client.myGousto)
-      if (getGoToMyDeliveries(getState())) return redirect(configRoutes.client.myDeliveries)
-    }
-  }
-)
 
 /* auth */
 const authenticate = (email, password, rememberMe, recaptchaToken) => (
@@ -201,7 +186,6 @@ const authActions = {
   storeSignupRecaptchaToken,
   userRememberMe,
   userAuthenticated,
-  redirectLoggedInUser,
 }
 
 export default authActions

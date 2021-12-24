@@ -5,7 +5,7 @@ const isMeat = (recipe) => recipe.get('dietType', '').toLowerCase() === 'meat'
 const isFish = (recipe) => recipe.get('dietType', '').toLowerCase() === 'fish'
 const isOther = (recipe) => !(isFish(recipe) || isMeat(recipe))
 
-const orderRecipes = (recipesMap) => {
+export const orderRecipes = (recipesMap) => {
   const recipes = recipesMap.toList()
   const featuredRecipes = recipes.filter((recipe) => recipe.get('isFeaturedRecipe'))
   const meatRecipes = recipes
@@ -48,5 +48,3 @@ const orderRecipes = (recipesMap) => {
     Immutable.OrderedMap({})
   )
 }
-
-export { orderRecipes }

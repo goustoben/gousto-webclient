@@ -50,6 +50,8 @@ const Overlay = ({
   // are not currently supported by the server renderer.
   if (__SERVER__) return null
 
+  const modalClassName = { base: '', afterOpen: '', beforeClose: css.beforeClose }
+
   return (
     <Modal
       isOpen={open}
@@ -59,7 +61,7 @@ const Overlay = ({
       preventScroll
       onRequestClose={onBackgroundClick}
       shouldCloseOnOverlayClick
-      className={{ beforeClose: css.beforeClose }}
+      className={modalClassName}
     >
       <div className={classNames(className)}>
         <div

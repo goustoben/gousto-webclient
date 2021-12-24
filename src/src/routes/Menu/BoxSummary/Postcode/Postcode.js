@@ -127,7 +127,7 @@ class Postcode extends React.PureComponent {
             <p className={css.leadingText}>We deliver for free up to 7 days a week depending on where you live</p>
           </div>
           {addresses ? this.savedAddresses() : this.noSavedAddresses()}
-          <div className={shouldDisplayFullScreenBoxSummary && css.stickyButton}>
+          <div className={shouldDisplayFullScreenBoxSummary ? css.stickyButton : null}>
             <Button
               data-testing="menuSubmitPostcode"
               disabled={disabled}

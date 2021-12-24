@@ -5,12 +5,13 @@ import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getRecipeId } from 'utils/recipe'
 import { getRecipesInCollection } from '../../../Menu/selectors/collections'
+import { orderRecipes } from './orderRecipes'
 
-const getRecipesFromAllRecipesCollection = createSelector(
+export const getRecipesFromAllRecipesCollection = createSelector(
   [getMenuCollections, getCurrentMenuRecipes],
   (menuCollections, allRecipes) => {
-    if (allRecipes.size <= 0) {
-      return Immutable.OrderedMap({})
+    if (allRecipes.size === 0) {
+      return null
     }
 
     const recipesIdsInCollection =
@@ -30,11 +31,13 @@ const getRecipesFromAllRecipesCollection = createSelector(
         return recipeSlug && !isOvenReady && !isEveryDayFavourites && recipe
       })
 
-    return recipesOrderedByCollectionIds.reduce(
+    const recipesMap = recipesOrderedByCollectionIds.reduce(
       (reducerState, recipe) => reducerState.set(recipe.get('id'), recipe),
       Immutable.OrderedMap({})
     )
+
+    const result = orderRecipes(recipesMap)
+
+    return result
   }
 )
-
-export { getRecipesFromAllRecipesCollection }

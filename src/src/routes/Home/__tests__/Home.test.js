@@ -4,10 +4,12 @@ import PropTypes from 'prop-types'
 import configureMockStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import Helmet from 'react-helmet'
-import menuFetchData from 'routes/Menu/fetchData'
+import { fetchMenuForCarousel } from 'routes/Home/homeActions'
 import { Home } from '../Home'
 
-jest.mock('routes/Menu/fetchData')
+jest.mock('routes/Home/homeActions', () => ({
+  fetchMenuForCarousel: jest.fn(),
+}))
 
 // We add legacy context to access the store to test the Home
 // component. This is cause enzyme only supports legacy context
@@ -21,7 +23,7 @@ describe('Home', () => {
   let wrapper
 
   beforeEach(() => {
-    menuFetchData.mockImplementation(
+    fetchMenuForCarousel.mockImplementation(
       jest.fn(() => ({
         type: 'action',
       }))
@@ -45,7 +47,7 @@ describe('Home', () => {
       basket: { get: jest.fn() },
     })
 
-    wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} store={store} />, {
+    wrapper = shallow(<Home store={store} />, {
       context: { store },
     })
   })
@@ -57,7 +59,7 @@ describe('Home', () => {
   describe('componentDidMount', () => {
     beforeEach(() => {
       jest.useFakeTimers()
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} store={store} />, {
+      wrapper = shallow(<Home store={store} />, {
         context: { store },
       })
       wrapper.instance().context = store
@@ -68,21 +70,8 @@ describe('Home', () => {
       jest.clearAllTimers()
     })
 
-    test('should call menu fetch data after 2.5 seconds', () => {
-      expect(menuFetchData).not.toHaveBeenCalled()
-      jest.advanceTimersByTime(4000)
-      expect(menuFetchData).toHaveBeenCalled()
-    })
-  })
-
-  describe('componentWillUnmount', () => {
-    test('should not call menu fetch data if unmounted within 2.5 seconds', () => {
-      jest.useFakeTimers()
-      expect(menuFetchData).not.toHaveBeenCalled()
-      wrapper.unmount()
-      jest.advanceTimersByTime(3500)
-      expect(menuFetchData).not.toHaveBeenCalled()
-      jest.clearAllTimers()
+    test('should fetch recipes for the carousel', () => {
+      expect(fetchMenuForCarousel).toHaveBeenCalled()
     })
   })
 
