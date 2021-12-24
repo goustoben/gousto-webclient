@@ -6,6 +6,10 @@ import { term } from '@pact-foundation/pact/src/dsl/matchers'
 import { givenInitialState } from '../__support__/pactUtils'
 import { createAdapter } from '../../Gousto2-Core/getOrder'
 
+const timeRegexPattern = '^[0-2]\\d:[0-5]\\d:[0-5]\\d$'
+
+const dateTimeRegexPattern = '^\\d{4}-[0-1]\\d-[0-3]\\d [0-2]\\d:[0-5]\\d:[0-5]\\d$'
+
 describe('Get order', () => {
   let getOrder
   let accessToken
@@ -18,24 +22,20 @@ describe('Get order', () => {
   test('should get order', async () => {
     await pact.addInteraction(
       givenInitialState({
+        recipes: [
+          {id: '1111111', uuid: 'recipe-item-1-uuid'},
+          {id: '2222222', uuid: 'recipe-item-2-uuid'}
+        ],
         orders: [{
-          id: 'the-order-id',
-          recipeItems: [
-            {recipeId: 'recipe-item-1-recipeId', recipeUuid: 'recipe-item-1-uuid'},
-            {recipeId: 'recipe-item-2-recipeId', recipeUuid: 'recipe-item-2-uuid'}
-          ],
-          deliveryDate: '2021-11-18 10:49:21',
-          deliverySlot: {
-            deliveryStart: '08:00:00',
-            deliveryEnd: '18:59:59',
-          }
+          id: '123456789',
+          recipeIds: ['1111111', '2222222'],
         }],
         sessions: [{accessToken: 'the-session-access-token'}]
       })
         .uponReceiving('request for an order')
         .withRequest({
           method: 'GET',
-          path: '/order/the-order-id',
+          path: '/order/123456789',
           headers: {
             Authorization: 'Bearer the-session-access-token',
           }
@@ -49,29 +49,43 @@ describe('Get order', () => {
             })
           },
           body: {
-            id: 'the-order-id',
-            recipe_items: [
-              {recipe_id: 'recipe-item-1-recipeId', recipe_uuid: 'recipe-item-1-uuid'},
-              {recipe_id: 'recipe-item-2-recipeId', recipe_uuid: 'recipe-item-2-uuid'}
-            ],
-            delivery_date: '2021-11-18 10:49:21',
-            delivery_slot: {
-              delivery_start: '08:00:00',
-              delivery_end: '18:59:59',
+            status: 'ok',
+            result: {
+              data: {
+                id: '123456789',
+                recipe_items: [
+                  {recipe_id: '1111111', recipe_uuid: 'recipe-item-1-uuid'},
+                  {recipe_id: '2222222', recipe_uuid: 'recipe-item-2-uuid'}
+                ],
+                delivery_date: term({
+                  matcher: dateTimeRegexPattern,
+                  generate: '2021-11-18 00:00:00',
+                }),
+                delivery_slot: {
+                  delivery_start: term({
+                    matcher: timeRegexPattern,
+                    generate: '08:00:00',
+                  }),
+                  delivery_end: term({
+                    matcher: timeRegexPattern,
+                    generate: '18:59:59',
+                  }),
+                }
+              }
             }
           }
         })
     )
 
-    const order = await getOrder('the-order-id')
+    const order = await getOrder(123456789)
 
     expect(order).toEqual({
-      id: 'the-order-id',
+      id: '123456789',
       recipeItems: [
-        {recipeId: 'recipe-item-1-recipeId', recipeUuid: 'recipe-item-1-uuid'},
-        {recipeId: 'recipe-item-2-recipeId', recipeUuid: 'recipe-item-2-uuid'}
+        {recipeId: '1111111', recipeUuid: 'recipe-item-1-uuid'},
+        {recipeId: '2222222', recipeUuid: 'recipe-item-2-uuid'}
       ],
-      deliveryDate: '2021-11-18 10:49:21',
+      deliveryDate: '2021-11-18 00:00:00',
       deliverySlot: {
         deliveryStart: '08:00:00',
         deliveryEnd: '18:59:59',
@@ -105,13 +119,13 @@ describe('Get order', () => {
 
     await pact.addInteraction(
       givenInitialState({
-        orders: [{id: 'the-order-id'}],
+        orders: [{id: 123456789}],
         sessions: [{accessToken: 'the-session-access-token'}]
       })
         .uponReceiving('request for an order using an invalid access token')
         .withRequest({
           method: 'GET',
-          path: '/order/the-order-id',
+          path: '/order/123456789',
           headers: {
             Authorization: 'Bearer an-invalid-session-access-token',
           }
@@ -121,25 +135,25 @@ describe('Get order', () => {
         })
     )
 
-    await expect(getOrder('the-order-id')).rejects.toBeDefined()
+    await expect(getOrder(123456789)).rejects.toBeDefined()
   })
 
   test('should throw exception when attempting to retrieve an order without providing an access token', async () => {
     await pact.addInteraction(
       givenInitialState({
-        orders: [{id: 'the-order-id'}],
+        orders: [{id: 123456789}],
         sessions: [{accessToken: 'the-session-access-token'}]
       })
         .uponReceiving('request for an order without providing an access token')
         .withRequest({
           method: 'GET',
-          path: '/order/the-order-id',
+          path: '/order/123456789',
         })
         .willRespondWith({
           status: 401
         })
     )
 
-    await expect(getOrder('the-order-id')).rejects.toBeDefined()
+    await expect(getOrder(123456789)).rejects.toBeDefined()
   })
 })

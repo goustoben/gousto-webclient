@@ -2,12 +2,13 @@ import Router from '@koa/router';
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import logger from 'koa-logger';
-import {createState} from "./state";
+import {createState, Order, Recipe, State} from "./state";
 import cors from "@koa/cors"
 import proxy from 'koa-better-http-proxy'
 import {Command} from "commander";
 import {withSnakeCaseProperties} from "./utils/responseRendering";
 import {isAuthorizedRequest} from "./utils/authorization";
+import _ from "lodash";
 
 function getServerConfiguration() {
     const command = new Command();
@@ -69,9 +70,38 @@ router.put('/_config/state/Gousto2-Core', ctx => {
         return
     }
 
-    setState(ctx.request.body)
+    const state = ctx.request.body;
+
+    const orders = state['orders'];
+
+    if (orders) {
+        orders.forEach((orderState: any) => {
+            orderState.deliveryDate = new Date();
+            orderState.deliverySlot = {deliveryStart: '08:00:00', deliveryEnd: '18:59:59'};
+        });
+    }
+
+    setState(state)
+
     ctx.status = 200
 })
+
+function getOrder(orderId: string, ordersState: [Order]) {
+    return ordersState.find(order => order.id === orderId);
+}
+
+function getRecipes(recipeIds: string[], recipesState: [Recipe]) {
+    return recipeIds.map(recipeId => recipesState.find(recipe => recipe.id === recipeId)!);
+}
+
+function renderOrderWithRecipes(order: Order, recipes: Recipe[]) {
+    const orderDto = withSnakeCaseProperties(order);
+    delete orderDto.recipe_ids;
+    orderDto.recipe_items = recipes.map(recipe => ({recipe_id: recipe.id, recipe_uuid: recipe.uuid}));
+    orderDto.delivery_date = order.deliveryDate.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+    return orderDto;
+}
 
 router.get('/order/:orderId', ctx => {
     const state = getState();
@@ -81,18 +111,28 @@ router.get('/order/:orderId', ctx => {
         return
     }
 
-    if (state.orders) {
-        const order = state.orders.find(order => order.id === ctx.params.orderId);
-
-        if (order) {
-            ctx.status = 200
-            ctx.body = withSnakeCaseProperties(order)
-            return
-        }
+    if (!state.orders) {
+        ctx.status = 404
+        return
     }
 
-    ctx.status = 404
-    return
+    const order = getOrder(ctx.params.orderId, state.orders!);
+
+    if (!order) {
+        ctx.status = 404
+        return
+    }
+
+    const recipes = getRecipes(order.recipeIds, state.recipes!);
+
+    ctx.status = 200
+
+    ctx.body = {
+        status: 'ok',
+        result: {
+            data: renderOrderWithRecipes(order, recipes)
+        }
+    }
 })
 
 router.put('/user/:authUserId/marketing/unsubscribe_emails', ctx => {
