@@ -311,6 +311,7 @@ describe('getHelp reducer', () => {
       line1: 'Gousto Shepherds Building',
       line2: 'Unit 1.8/1.9',
       line3: 'Charecroft Way',
+      shippingDefault: true
     }
     const FETCH_ORDER_RESPONSE = {
       data: {
@@ -530,6 +531,7 @@ describe('getHelp reducer', () => {
         name: 'New Home',
         postcode: 'W5 3PB',
         town: 'London',
+        shippingDefault: true,
         irrelevantField: 'some-value',
       },
       {
@@ -540,6 +542,7 @@ describe('getHelp reducer', () => {
         name: 'New Home',
         postcode: 'W5 3PB',
         town: 'London',
+        shippingDefault: false,
         irrelevantField: 'some-value',
       },
     ]
@@ -564,6 +567,7 @@ describe('getHelp reducer', () => {
           name: 'New Home',
           postcode: 'W5 3PB',
           town: 'London',
+          shippingDefault: true,
         },
         {
           id: '2',
@@ -573,6 +577,7 @@ describe('getHelp reducer', () => {
           name: 'New Home',
           postcode: 'W5 3PB',
           town: 'London',
+          shippingDefault: false,
         },
       ]
       expect(newState.get('shippingAddresses').toJS()).toEqual(FILTERED_ADDRESSES)

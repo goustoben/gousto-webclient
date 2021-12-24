@@ -12,8 +12,7 @@ const fetchShippingAddresses = safeJestMock(coreApi, 'fetchShippingAddresses')
 const ACCESS_TOKEN = 'adfjlakjds13'
 const ACTION_TYPE = 'GET_HELP_LOAD_SHIPPING_ADDRESSES'
 const USER_ID = '1234'
-const ADDRESSES = [{ id: '1' }, { id: '2' }]
-const DEFAULT_SHIPPING_ADDRESS_ID = '1'
+const ADDRESSES = [{ id: '1', shippingDefault: true }, { id: '2', shippingDefault: false }]
 const RESPONSE = {
   status: 'ok',
   data: ADDRESSES
@@ -30,8 +29,7 @@ const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
 describe('loadShippingAddresses', () => {
   jest.spyOn(authSelectors, 'getAccessToken').mockReturnValue(ACCESS_TOKEN)
   jest.spyOn(userSelectors, 'getUserId').mockReturnValue(USER_ID)
-  jest.spyOn(addressSelectors, 'getDefaultShippingAddressId').mockReturnValue(DEFAULT_SHIPPING_ADDRESS_ID)
-  jest.spyOn(addressSelectors, 'getOrderShippingAddress').mockReturnValue(DEFAULT_SHIPPING_ADDRESS_ID)
+  jest.spyOn(addressSelectors, 'getOrderShippingAddress').mockReturnValue(ADDRESSES[0])
   beforeAll(async () => {
     fetchShippingAddresses.mockResolvedValue(RESPONSE)
     await loadShippingAddresses()(dispatch, getState)

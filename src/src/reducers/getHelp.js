@@ -36,7 +36,7 @@ const getHelpInitialState = fromJS({
   hasSeenRepetitiveIssuesScreen: false,
 })
 
-const filterShippingAddress = (shippingAdress) => {
+const filterShippingAddress = (shippingAddress) => {
   const {
     name,
     postcode,
@@ -45,7 +45,8 @@ const filterShippingAddress = (shippingAdress) => {
     line1,
     line2,
     line3,
-  } = shippingAdress
+    shippingDefault
+  } = shippingAddress
 
   return {
     name,
@@ -55,6 +56,7 @@ const filterShippingAddress = (shippingAdress) => {
     line1,
     line2,
     line3,
+    shippingDefault
   }
 }
 

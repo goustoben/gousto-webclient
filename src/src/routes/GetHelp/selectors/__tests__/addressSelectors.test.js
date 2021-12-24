@@ -1,7 +1,6 @@
 import { fromJS } from 'immutable'
 
 import {
-  getDefaultShippingAddressId,
   getShippingAddresses,
   getSelectedAddress,
   getOrderShippingAddress
@@ -49,7 +48,6 @@ describe('addressSelectors', () => {
   let result
 
   describe.each([
-    ['getDefaultShippingAddressId', getDefaultShippingAddressId, DEFAULT_SHIPPING_ADDRESS_ID],
     ['getShippingAddresses', getShippingAddresses, ADDRESSES],
     ['getOrderShippingAddress', getOrderShippingAddress, ADDRESS],
     ['getSelectedAddress', getSelectedAddress, ADDRESS],
