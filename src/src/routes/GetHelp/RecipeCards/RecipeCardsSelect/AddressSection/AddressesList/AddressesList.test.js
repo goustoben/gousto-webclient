@@ -73,6 +73,10 @@ describe('AddressesList', () => {
     expect(wrapper.find('.helpArticle').prop('to')).toBe('/help-centre/article/4402897919761')
   })
 
+  test('the link is not clientRouted', () => {
+    expect(wrapper.find('.helpArticle').prop('clientRouted')).toBe(false)
+  })
+
   test('passes down the tracking function to the How can I add a new address article', () => {
     expect(wrapper.find('.helpArticle').prop('tracking')).toBe(trackRecipeCardsAddressChangeArticleMock)
   })

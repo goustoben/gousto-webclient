@@ -52,7 +52,7 @@ const AddressesList = ({
       }
       <Link
         className={css.helpArticle}
-        clientRouted
+        clientRouted={false}
         tracking={trackRecipeCardsAddressChangeArticle}
         to={`${client.helpCentre}${howToChangeAddressArticle}`}
       >

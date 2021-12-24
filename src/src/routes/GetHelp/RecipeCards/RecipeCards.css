@@ -1,3 +1,16 @@
-.copy {
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value LayoutPageWrapperDesktopScreenBreakpointMin from 'design-language/utils.module.css';
+
+.subHead {
 	composes: fontStyleSubHead from 'design-language/typography.module.css';
+}
+
+.copyOutOfCard {
+	margin-left: 1.5rem;
+	margin-right: 1.5rem;
+
+	@media LayoutPageWrapperDesktopScreenBreakpointMin {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }

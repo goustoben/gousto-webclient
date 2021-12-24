@@ -29,8 +29,12 @@ export function windowLocation() {
 /**
  * Opens new tab for Chrome, new window for Safari and Firefox.
  */
-export function windowOpen(url) {
-  window.open(url, '_blank', 'noopener noreferrer')
+export function windowOpen(url, isNewTab = true) {
+  if (isNewTab) {
+    window.open(url, '_blank', 'noopener noreferrer')
+  } else {
+    window.open(url, '_self', 'noopener noreferrer')
+  }
 }
 
 // eslint-disable-next-line import/no-default-export

@@ -1,0 +1,19 @@
+.recipeRow {
+  width: 100%;
+}
+
+li:not(:first-child) > .recipeRow {
+  padding-top: 1rem;
+}
+
+li:not(:last-child) > .recipeRow {
+  padding-bottom: 1rem;
+}
+
+.recipeImage {
+  float: left;
+  object-fit: cover;
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1rem;
+}

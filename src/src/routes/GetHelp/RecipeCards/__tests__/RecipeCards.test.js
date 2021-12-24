@@ -1,9 +1,15 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import routes from 'config/routes'
 import { RecipeCards } from '../RecipeCards.logic'
-import { RecipeCardContent } from '../RecipeCardContent'
+
+jest.mock('../RecipeLinks', () => ({
+  RecipeLinksContainer: () => <div />
+}))
 
 describe('<RecipeCards />', () => {
+  const USER_ID = '1111',
+  const ORDER_ID = '1234'
   const TEST_RECIPES = [
     {
       id: '1',
@@ -32,15 +38,15 @@ describe('<RecipeCards />', () => {
   ]
 
   let wrapper
-  const trackRecipeCardClick = jest.fn()
-  const trackRecipeCardGetInTouchClick = jest.fn()
+  const trackClickChoosePrintedRecipeCards = jest.fn()
 
   beforeEach(() => {
     wrapper = mount(
       <RecipeCards
+        orderId={ORDER_ID}
         recipes={TEST_RECIPES}
-        trackRecipeCardClick={trackRecipeCardClick}
-        trackRecipeCardGetInTouchClick={trackRecipeCardGetInTouchClick}
+        trackClickChoosePrintedRecipeCards={trackClickChoosePrintedRecipeCards}
+        userId={USER_ID}
       />
     )
   })
@@ -50,24 +56,53 @@ describe('<RecipeCards />', () => {
   })
 
   test('renders the right page title', () => {
-    expect(wrapper.find('GetHelpLayout2').prop('headingText')).toBe('Get help with your box')
+    expect(wrapper.find('GetHelpLayout2').prop('headingText'))
+      .toBe('What recipe card was affected?')
   })
 
-  test('passes the recipes to RecipeList component', () => {
-    expect(wrapper.find('RecipeList').prop('recipes')).toEqual(TEST_RECIPES)
+  test('renders a paragraph with the right copy', () => {
+    expect(wrapper.find('GetHelpLayout2').find('p').at(0).text())
+      .toBe('You will be taken to the recipe steps in the Cookbook')
   })
 
-  test('passes RecipeCardContent as child to RecipeList', () => {
-    expect(wrapper.find('RecipeList').props().children.type).toBe(RecipeCardContent)
+  test('passes the recipes, userId and orderId to RecipeLinksContainer component', () => {
+    const recipeLinks = wrapper.find('RecipeLinksContainer')
+    expect(recipeLinks.prop('recipes')).toEqual(TEST_RECIPES)
+    expect(recipeLinks.prop('userId')).toEqual(USER_ID)
+    expect(recipeLinks.prop('orderId')).toEqual(ORDER_ID)
   })
 
-  test('passes tracking function to RecipeCardContent', () => {
-    expect(wrapper.find('RecipeList').props().children.props.trackRecipeCardClick)
-      .toEqual(trackRecipeCardClick)
+  describe('in a second card', () => {
+    let card
+
+    beforeEach(() => {
+      card = wrapper.find('Card').at(1)
+    })
+
+    test('renders the right heading', () => {
+      expect(card.find('h2').text()).toBe('Do you want printed recipe cards?')
+    })
+
+    test('renders the right copy', () => {
+      expect(card.find('p').text())
+        .toEqual('We can send printed recipe cards but please allow\u00a05-7 working days\u00a0for the cards to arrive.')
+    })
+
+    test('renders a CTA with the right text pointing to /recipe-cards/select', () => {
+      const link = card.find('GoustoLink')
+      expect(link.prop('to'))
+        .toBe(routes.client.getHelp.recipeCardsSelect({ userId: USER_ID, orderId: ORDER_ID }))
+      expect(link.find('CTA').text()).toBe('Choose printed recipe cards')
+    })
   })
 
-  test('passes tracking get in touch function to RecipeCardContent', () => {
-    expect(wrapper.find('RecipeList').props().children.props.trackRecipeCardGetInTouchClick)
-      .toEqual(trackRecipeCardGetInTouchClick)
+  describe('when the Choose Printed CTA is clicked', () => {
+    beforeEach(() => {
+      wrapper.find('Card').at(1).find('CTA').simulate('click')
+    })
+
+    test('trackClickChoosePrintedRecipeCards is called', () => {
+      expect(trackClickChoosePrintedRecipeCards).toHaveBeenCalledTimes(1)
+    })
   })
 })

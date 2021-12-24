@@ -18,6 +18,7 @@ import {
   loadOrderById,
   loadTrackingUrl,
   trackAcceptRefundInSSRDeliveries,
+  trackClickChoosePrintedRecipeCards,
   trackClickGetHelpWithThisBox,
   trackClickGetInTouchInSSRDeliveries,
   trackClickMyGoustoInSSRDeliveries,
@@ -36,7 +37,6 @@ import {
   trackMassIssueAlertDisplayed,
   trackNextBoxTrackingClick,
   trackRecipeCardClick,
-  trackRecipeCardGetInTouchClick,
   trackRecipeCardsAddressChangeArticle,
   trackRefundFAQClick,
   trackSelectDeliveryCategory,
@@ -866,21 +866,9 @@ describe('GetHelp action generators and thunks', () => {
       expect(trackRecipeCardClick(RECIPE_ID)).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
-          actionType: 'ssr_click_view_recipe',
+          actionType: 'ssr_printed_recipe_cards_click_view_cookbook',
           seCategory: 'help',
           recipe_id: RECIPE_ID,
-        }
-      })
-    })
-  })
-
-  describe('trackRecipeCardGetInTouchClick', () => {
-    test('creates the tracking action', () => {
-      expect(trackRecipeCardGetInTouchClick()).toEqual({
-        type: webClientActionTypes.TRACKING,
-        trackingData: {
-          actionType: 'ssr_recipes_click_get_in_touch',
-          seCategory: 'help',
         }
       })
     })
@@ -1211,6 +1199,18 @@ describe('GetHelp action generators and thunks', () => {
           })
         })
       })
+    })
+  })
+})
+
+describe('trackClickChoosePrintedRecipeCards', () => {
+  test('creates the tracking action', () => {
+    expect(trackClickChoosePrintedRecipeCards()).toEqual({
+      type: webClientActionTypes.TRACKING,
+      trackingData: {
+        actionType: 'ssr_click_choose_printed_recipe_cards',
+        seCategory: 'help',
+      }
     })
   })
 })

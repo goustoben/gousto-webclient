@@ -22,7 +22,7 @@ const ADDRESSES = [
     town: 'London',
   },
 ]
-const DEFAULT_SHIPPING_ADDRESS_ID = '123'
+const DEFAULT_SHIPPING_ADDRESS_ID = ADDRESS
 
 const DELETED_ORDER_ADDRESS = {
   id: '345',
@@ -37,13 +37,13 @@ describe('Given getValidAddressForOrder is called', () => {
   let result
   describe.each([
     ['And userAddresses is null', null, [], ADDRESS, DEFAULT_SHIPPING_ADDRESS_ID],
-    ['And the defaultShippingAddressId is null', null, ADDRESS, ADDRESS, null],
+    ['And the defaultShippingAddress is null', null, ADDRESS, ADDRESS, null],
     ['And orderAddress is null ', null, ADDRESS, null, DEFAULT_SHIPPING_ADDRESS_ID],
     ['And orderAddress is existing', ADDRESS, ADDRESSES, ADDRESS, DEFAULT_SHIPPING_ADDRESS_ID],
     ['And orderAddress has been deleted ', ADDRESS, ADDRESSES, DELETED_ORDER_ADDRESS, DEFAULT_SHIPPING_ADDRESS_ID],
-  ])('%s', (_testCase, expectedResult, userAddresses, orderAddress, defaultShippingAddressId) => {
+  ])('%s', (_testCase, expectedResult, userAddresses, orderAddress, defaultShippingAddress) => {
     beforeEach(() => {
-      result = getValidAddressForOrder(userAddresses, orderAddress, defaultShippingAddressId)
+      result = getValidAddressForOrder(userAddresses, orderAddress, defaultShippingAddress)
     })
 
     test(`returns ${!expectedResult ? null : 'the valid address'}`, () => {
