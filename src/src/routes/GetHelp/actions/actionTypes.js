@@ -23,7 +23,6 @@ const trackingKeys = {
   helpPreLoginModalDisplayed: 'help_login_modal_displayed',
   openHowCanIAddAddressArticle: 'open_how_can_i_add_address_article',
   ssrClickDoneRefundAccepted: 'ssr_ingredients_done_click',
-  ssrClickViewRecipe: 'ssr_click_view_recipe',
   ssrDeliveriesAcceptRefund: 'ssr_deliveries_accept_refund',
   ssrDeliveriesClickGetInTouch: 'ssr_deliveries_click_get_in_touch',
   ssrDeliveriesClickTrackMyBox: 'ssr_deliveries_click_track_my_box',
@@ -39,10 +38,11 @@ const trackingKeys = {
   ssrPrintedRecipeCardsClickCookbook: 'ssr_printed_recipe_cards_click_cookbook',
   ssrPrintedRecipeCardsClickDone: 'ssr_printed_recipe_cards_click_done',
   ssrPrintedRecipeCardsClickRecipe: 'ssr_printed_recipe_cards_click_recipe',
+  ssrPrintedRecipeCardsClickViewCookbook: 'ssr_printed_recipe_cards_click_view_cookbook',
   ssrPrintedRecipeCardsConfirmOrder: 'ssr_printed_recipe_cards_confirm_order',
   ssrPrintedRecipeCardsContinue: 'ssr_printed_recipe_cards_continue',
-  ssrRecipesClickGetInTouch: 'ssr_recipes_click_get_in_touch',
   ssrSelectIngredient: 'ssr_select_ingredient',
+  ssrClickChoosePrintedRecipeCards: 'ssr_click_choose_printed_recipe_cards',
   viewCreditClick: 'view_credit_click',
 }
 

@@ -283,17 +283,9 @@ export const trackDeselectIngredient = (selectedIngredient) => ({
 export const trackRecipeCardClick = recipeId => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
-    actionType: trackingKeys.ssrClickViewRecipe,
+    actionType: trackingKeys.ssrPrintedRecipeCardsClickViewCookbook,
     seCategory: SE_CATEGORY_HELP,
     recipe_id: recipeId,
-  }
-})
-
-export const trackRecipeCardGetInTouchClick = () => ({
-  type: webClientActionTypes.TRACKING,
-  trackingData: {
-    actionType: trackingKeys.ssrRecipesClickGetInTouch,
-    seCategory: SE_CATEGORY_HELP,
   }
 })
 
@@ -473,6 +465,14 @@ export const trackRecipeCardsAddressChangeArticle = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.openHowCanIAddAddressArticle,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
+export const trackClickChoosePrintedRecipeCards = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrClickChoosePrintedRecipeCards,
     seCategory: SE_CATEGORY_HELP,
   },
 })
