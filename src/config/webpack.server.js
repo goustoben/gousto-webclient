@@ -5,6 +5,7 @@ const nodeExternals = require('webpack-node-externals')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
+const { fontRules, imageRules } = require('./build/libs/rules')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
 const { webpackEnvVarsServer, cloudfrontUrl, build, clientProtocol } = require('./build/libs/webpack-env-vars.js')
@@ -43,7 +44,7 @@ const config = {
           /*transpile Javascript but don't typecheck at build time */
           transpileOnly: true
         }
-      },      
+      },
       {
         test: /^(?!.*(test\.ts|spec\.ts)).*\.ts(x){0,1}$/,
         exclude: /node_modules/,
@@ -60,46 +61,12 @@ const config = {
         test: /\.css$/,
         loader: `css-loader/locals?modules&importLoaders=0&localIdentName=${cssHashPattern}!postcss-loader`,
       },
-
       {
         test: /\.scss$/,
         loader: `css-loader/locals?modules&importLoaders=1&localIdentName=${cssHashPattern}!postcss-loader!sass-loader`,
       },
-      {
-        test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
-      },
-      {
-        test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff2',
-      },
-      {
-        test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader',
-      },
-      /* {
-        test: /\.(jpe?g|png|gif|svg)$/,
-        loader: 'image-webpack-loader',
-        // This will apply the loader before the other ones
-        enforce: 'pre',
-      }, */
-      {
-        test: /\.(jpe?g|png|gif)$/,
-        loader: 'url-loader',
-        options: {
-          // Images larger than 10 KB won’t be inlined
-          limit: 10 * 1024
-        }
-      },
-      { test: /\.ico$/,
-        loader: 'file-loader',
-      },
-      { test: /\.svg$/,
-        loaders: [
-          'svg-url-loader',
-          'image-webpack-loader',
-        ],
-      },
+      ...fontRules,
+      ...imageRules,
     ],
   },
   plugins: [

@@ -21,13 +21,13 @@ orbs:
 
 commands:
   gzip:
-    description: "Apply gzip compression, excludes images"
+    description: "Apply gzip compression to text files"
     parameters:
       target:
         type: string
     steps:
-      - run: echo "Compressing << parameters.target >>. Initial size - $(du -sh << parameters.target >>)"
-      - run: find << parameters.target >> -type f -not \( -iname '*.ico' -or -iname '*.jpg' -or -iname '*.png' -or -iname '*.gif' \) -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
+      - run: echo "Compressing in << parameters.target >>. Initial size - $(du -sh << parameters.target >>)"
+      - run: find << parameters.target >> -type f \( -iname '*.js' -or -iname '*.css' \) -exec gzip "{}" \; -exec mv "{}.gz" "{}" \;
       - run: echo "Size after compression - $(du -sh << parameters.target >>)"
 
   upload-to-s3:
@@ -41,11 +41,11 @@ commands:
     steps:
       - run: echo "Uploading to << parameters.bucket >>"
       - run:
-         name: Upload all files excluding images, sets gzip content-encoding header
-         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.ico" --exclude "*.jpg" --exclude "*.png" --exclude "*.gif" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public --acl public-read
+         name: Upload all text files, sets gzip content-encoding header
+         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.js" --include "*.css" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public --acl public-read
       - run:
-         name: Upload image files to S3, does not set gzip content-encoding header
-         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.jpg" --include "*.png" --include "*.gif" --recursive --cache-control max-age=315360000,no-transform,public --acl public-read
+         name: Upload binary files to S3, does not set gzip content-encoding header
+         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.js" --exclude "*.css" --recursive --cache-control max-age=315360000,no-transform,public --acl public-read
 
 jobs:
   setup-ci-variables-scripts:
@@ -191,6 +191,14 @@ jobs:
     steps:
       - attach_workspace:
           at: /
+      # The build puts its results into `dist` for server, and into `public`
+      # for client.  The asset files in the latter are a superset of the ones
+      # in former, except for the icon files.  We need those to appear at the
+      # bucket, so before uploading we copy them into public (from which we do
+      # the upload).
+      - run:
+          name: Make sure icon files will get uploaded
+          command: cp src/dist/*.ico src/public
       - gzip:
           target: src/public
       - run:
