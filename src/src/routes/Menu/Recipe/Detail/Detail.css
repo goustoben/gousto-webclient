@@ -115,3 +115,11 @@
   }
 }
 
+.recipeTagHolder {
+  position: relative;
+  top: 0;
+
+  @media ScreenSMMin {
+    top: 1rem;
+  }
+}
