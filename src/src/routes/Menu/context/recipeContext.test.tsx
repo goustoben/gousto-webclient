@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { RecipeContextProvider, useRecipe, useRecipeField, useRecipeCookingTime, useRecipeBrandTag } from './recipeContext'
+import { RecipeContextProvider, useRecipe, useRecipeField, useRecipeCookingTime, useRecipeBrandTag, useRecipeBrandTagline, useRecipeBrandAvailabilityTagline, useRecipeBrandAvailabilityTag } from './recipeContext'
 
 describe('recipeContext', () => {
   const images = Immutable.fromJS([
@@ -199,6 +199,263 @@ describe('recipeContext', () => {
 
       test('returns correct tag', () => {
         expect(result.current).toEqual(null)
+      })
+    })
+  })
+
+  describe('useRecipeBrandTagline', () => {
+    describe('when recipe is not found in context', () => {
+      const localWrapper: React.FC = ({ children }) => <>{children}</>
+
+      it('should return null', () => {
+        const { result } = renderHook(() => useRecipeBrandTagline(), { wrapper: localWrapper })
+        expect(result.current).toEqual(null)
+      })
+    })
+
+    describe('when recipe is found and has a tagline', () => {
+      const localRecipe = Immutable.fromJS({
+        id: '12345',
+        title: 'A Recipe Title',
+        tagline: 'test-tagline',
+        media: {
+          images
+        }
+      })
+      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+
+      it('it should return the tagline', () => {
+        const { result } = renderHook(() => useRecipeBrandTagline(), { wrapper: localWrapper })
+        expect(result.current).toEqual('test-tagline')
+      })
+    })
+  })
+
+  describe('useRecipeBrandAvailabilityTagline', () => {
+    describe('when recipe is not found in the context', () => {
+      const localWrapper: React.FC = ({ children }) => <>{children}</>
+
+      it('should return null', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        expect(result.current).toEqual(null)
+      })
+    })
+
+    describe('when recipe is found and has an availability tag', () => {
+      const localRecipe = Immutable.fromJS({
+        id: '12345',
+        title: 'A Recipe Title',
+        availability: 'test-availability',
+      })
+      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+
+      it('it should return the tagline', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        expect(result.current).toEqual('test-availability')
+      })
+    })
+
+    describe('when recipe is found and is new', () => {
+      const localRecipe = Immutable.fromJS({
+        id: '12345',
+        title: 'A Recipe Title',
+        availability: undefined,
+        isNew: true
+      })
+      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+
+      it('it should return new-eme', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        expect(result.current).toEqual('new-eme')
+      })
+    })
+
+    describe('when recipe is found, is new and has availiblity tag', () => {
+      const localRecipe = Immutable.fromJS({
+        id: '12345',
+        title: 'A Recipe Title',
+        availability: 'hello-there',
+        isNew: true,
+      })
+      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+
+      it('it should return availibility tag', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        expect(result.current).toEqual('hello-there')
+      })
+    })
+  })
+
+  describe('useRecipeBrandAvailabilityTag', () => {
+    const brand = {
+      data: {
+        tags: [
+          {
+            slug: 'new-eme',
+            text: 'New',
+            type: 'general',
+            themes: [{
+              name: 'light',
+              color: '#01A92B',
+              borderColor: '#01A92B'
+            }]
+          },
+          {
+            slug: 'limited-edition-eme',
+            text: 'Limited Edition',
+            type: 'general',
+            themes: [{
+              name: 'light',
+              color: '#01A92B',
+              borderColor: '#01A92B'
+            }]
+          },
+          {
+            slug: 'joe-wicks-eme',
+            text: 'Joe Wicks',
+            type: 'general',
+            themes: [{
+              name: 'light',
+              color: '#01A92B',
+              borderColor: '#01A92B'
+            }]
+          },
+          {
+            slug: 'health-kitchen-eme',
+            text: 'Health Kitchen',
+            type: 'general',
+            themes: [{
+              name: 'light',
+              color: '#01A92B',
+              borderColor: '#01A92B'
+            }]
+          },
+          {
+            slug: 'fine-dine-in-eme',
+            text: 'Fine Dine In',
+            type: 'general',
+            themes: [{
+              name: 'light',
+              color: '#01A92B',
+              borderColor: '#01A92B'
+            }]
+          },
+          {
+            slug: 'available-weekly-eme',
+            text: 'Everyday Favourites',
+            type: 'general',
+            themes: [{
+              name: 'light',
+              color: '#01A92B',
+              borderColor: '#01A92B'
+            }]
+          },
+          {
+            slug: 'mexico-limited-edition-eme',
+            text: 'Dough It Yourself Pizza',
+            type: 'general',
+            themes: [{
+              name: 'light',
+              color: '#01A92B',
+              borderColor: '#01A92B'
+            }]
+          },
+        ]
+      }
+    }
+    const newTag = {
+      type: 'general',
+      slug: 'new-eme',
+      text: 'New',
+      themes: undefined,
+      theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
+    }
+    const limitedEditionTag = {
+      slug: 'limited-edition-eme',
+      text: 'Limited Edition',
+      theme: {borderColor: '#01A92B', color: '#01A92B', name: 'light'},
+      themes: undefined,
+      type: 'general',
+    }
+
+    describe('when tags are not defined', () => {
+      const mockStore = configureMockStore()
+      const store = mockStore({})
+
+      const localRecipe = Immutable.fromJS({
+        id: '12345',
+        title: 'A Recipe Title',
+      })
+
+      const localWrapper: React.FC = ({ children }) => (
+        <Provider store={store}>
+          <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+        </Provider>
+      )
+
+      it('should return null', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        expect(result.current).toEqual(null)
+      })
+    })
+
+    describe('when recipe is not new and without promotion', () => {
+      const mockStore = configureMockStore()
+      const store = mockStore({ brand })
+
+      const localWrapper: React.FC = ({ children }) => (
+        <Provider store={store}>
+          <>{children}</>
+        </Provider>
+      )
+
+      it('should return null', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        expect(result.current).toEqual(null)
+      })
+    })
+
+    describe('when recipe has limited-edition-eme promotion', () => {
+      const mockStore = configureMockStore()
+      const store = mockStore({ brand })
+
+      const localRecipe = Immutable.fromJS({
+        id: '12345',
+        title: 'A Recipe Title',
+        availability: 'limited-edition-eme',
+      })
+
+      const localWrapper: React.FC = ({ children }) => (
+        <Provider store={store}>
+          <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+        </Provider>
+      )
+
+      it('should return limited edition recipe tag', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        expect(result.current).toEqual(limitedEditionTag)
+      })
+    })
+
+    describe('when recipe has new-eme promotion', () => {
+      const mockStore = configureMockStore()
+      const store = mockStore({ brand })
+
+      const localRecipe = Immutable.fromJS({
+        id: '12345',
+        title: 'A Recipe Title',
+        availability: 'new-eme',
+      })
+
+      const localWrapper: React.FC = ({ children }) => (
+        <Provider store={store}>
+          <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+        </Provider>
+      )
+
+      it('should return new-eme recipe tag', () => {
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        expect(result.current).toEqual(newTag)
       })
     })
   })

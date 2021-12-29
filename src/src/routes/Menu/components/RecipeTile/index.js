@@ -1,1 +1,1 @@
-export { RecipeTileContainer } from './RecipeTileContainer'
+export { RecipeTile } from './RecipeTile'

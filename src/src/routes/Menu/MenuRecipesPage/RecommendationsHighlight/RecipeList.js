@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
 import { RecipeContextProvider } from 'routes/Menu/context/recipeContext'
-import { RecipeTileContainer } from 'routes/Menu/components/RecipeTile'
+import { RecipeTile } from 'routes/Menu/components/RecipeTile'
 
 import css from './RecipeList.css'
 
@@ -25,7 +25,7 @@ const RecipeList = ({ collectionId, recipes }) => {
     <div className={css.recipeList}>
       {recipes.map(({ recipe, originalId }) => (
         <RecipeContextProvider key={recipe.get('id')} value={recipe}>
-          <RecipeTileContainer
+          <RecipeTile
             recipeId={recipe.get('id')}
             originalId={originalId}
             categoryId={collectionId}

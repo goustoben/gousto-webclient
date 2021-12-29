@@ -1,39 +1,67 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import Immutable from 'immutable'
+import React, { SyntheticEvent } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
-import { TileImageContainer } from './TileImage'
-import { RecipeTag } from '../RecipeTag'
-import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
-import css from './RecipeTile.css'
+import { useMenu } from '../../domains/menu'
 import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
+import { showDetailRecipe } from '../../actions/menuRecipeDetails'
+import { getRecipeOutOfStock as baseGetRecipeOutOfStock } from '../../selectors/recipe'
+import { useRecipeIsFineDineIn, useRecipeBrandAvailabilityTag } from '../../context/recipeContext'
+import { useCollections } from '../../domains/collections'
+import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
+import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
+import { TileImageContainer } from './TileImage'
+import css from './RecipeTile.css'
 
-const RecipeTile = ({
-  recipe,
+const classnames = require('classnames')
+
+type RecipeTileProps = {
+  recipeId: string;
+  originalId: string;
+  categoryId?: string;
+  fdiStyling?: boolean;
+}
+
+// delete this when import uses TS
+const getRecipeOutOfStock = baseGetRecipeOutOfStock as (state: any, options: { recipeId: string }) => boolean
+
+const RecipeTile: React.FC<RecipeTileProps> = ({
   recipeId,
   originalId,
-  showDetailRecipe,
-  isOutOfStock,
-  isFineDineIn,
-  recipeVariants,
-  brandAvailability,
-  categoryId,
-  fdiStyling,
+  categoryId: collectionIdOverride,
+  fdiStyling = false,
 }) => {
+  const dispatch = useDispatch()
+  const { getAlternativeOptionsForRecipe } = useMenu()
+  const { currentCollectionId } = useCollections()
+  const isOutOfStock = useSelector(state => getRecipeOutOfStock(state, { recipeId }))
+  const isFineDineIn = useRecipeIsFineDineIn()
+  const brandAvailability = useRecipeBrandAvailabilityTag()
+
   const deviceType = useDeviceType()
 
-  if (!recipe) {
+  // should never happen but caters for loading state
+  if (currentCollectionId === null) {
     return null
   }
 
-  const onClick = (e) => {
+  const categoryId = collectionIdOverride || currentCollectionId
+
+  const alternatives = getAlternativeOptionsForRecipe({
+    originalId,
+    recipeId,
+    categoryId,
+    isOnDetailScreen: false,
+    isFromShowcaseMenu: false
+  })
+
+  const onClick = (e: SyntheticEvent) => {
     e.stopPropagation()
-    showDetailRecipe(recipeId, categoryId)
+    dispatch(showDetailRecipe(recipeId, categoryId))
   }
 
-  const hasAlternatives = Boolean(recipeVariants && recipeVariants.alternatives && recipeVariants.alternatives.size)
+  // alternative options include the recipe itself
+  const hasAlternatives = alternatives.length > 1
 
   const showVariantHeader = hasAlternatives && !isOutOfStock
   const hasTopLeftTag = Boolean(brandAvailability)
@@ -92,30 +120,6 @@ const RecipeTile = ({
       </div>
     </div>
   )
-}
-
-RecipeTile.propTypes = {
-  recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
-  recipeId: PropTypes.string.isRequired,
-  originalId: PropTypes.string,
-  showDetailRecipe: PropTypes.func.isRequired,
-  isOutOfStock: PropTypes.bool.isRequired,
-  brandAvailability: PropTypes.shape({
-    slug: PropTypes.string,
-    text: PropTypes.string,
-    theme: PropTypes.object,
-  }),
-  isFineDineIn: PropTypes.bool.isRequired,
-  recipeVariants: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  categoryId: PropTypes.string,
-  fdiStyling: PropTypes.bool,
-}
-
-RecipeTile.defaultProps = {
-  originalId: null,
-  brandAvailability: null,
-  categoryId: null,
-  fdiStyling: true,
 }
 
 export { RecipeTile }

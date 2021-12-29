@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import { RecipeList } from './RecipeList'
-import { RecipeTileContainer } from '../components/RecipeTile'
+import { RecipeTile } from '../components/RecipeTile'
 
 jest.mock('actions/tracking', () => ({
   trackRecipeOrderDisplayed: jest.fn()
@@ -100,7 +100,7 @@ describe('RecipeList', () => {
           browserType="desktop"
         />,
       )
-      expect(wrapper.find(RecipeTileContainer).exists()).toBe(false)
+      expect(wrapper.find(RecipeTile).exists()).toBe(false)
     })
   })
 

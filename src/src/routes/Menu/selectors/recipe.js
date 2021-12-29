@@ -239,37 +239,3 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
 
   return { type: 'alternatives', alternatives: alternativesDietaryClaims, variantsList: alternativesDietaryClaims }
 }
-
-export const getTaglineByRecipeId = createSelector(
-  [getRecipes, getRecipeIdFromProps],
-  (recipes, recipeId) => {
-    const recipe = recipes.get(recipeId)
-
-    if (!recipe) {
-      return null
-    }
-
-    return recipe.get('tagline')
-  }
-)
-
-export const getBrandAvailabilityByRecipeId = createSelector(
-  [getRecipes, getRecipeIdFromProps],
-  (recipes, recipeId) => {
-    const recipe = recipes.get(recipeId)
-
-    if (!recipe) {
-      return null
-    }
-
-    const availability = recipe.get('availability')
-
-    // Return new-eme when recipe has isNew to true and
-    // when we do not have any availability in meta
-    if (!availability && recipe.get('isNew')) {
-      return 'new-eme'
-    }
-
-    return availability
-  }
-)
