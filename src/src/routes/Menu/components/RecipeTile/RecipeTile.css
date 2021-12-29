@@ -124,3 +124,17 @@
         font-size: sizeMD;
     }
 }
+
+.recipeTagHolder {
+  position: absolute;
+  top: 0.5rem;
+
+  @media ScreenSMMin {
+    top: 1rem;
+  }
+}
+
+.recipeTagHolderShifted {
+  position: absolute;
+  top: 2.625rem;
+}

@@ -5,7 +5,7 @@ import { useMenu } from '../../domains/menu'
 import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { getRecipeOutOfStock as baseGetRecipeOutOfStock } from '../../selectors/recipe'
-import { useRecipeIsFineDineIn, useRecipeBrandAvailabilityTag } from '../../context/recipeContext'
+import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useCollections } from '../../domains/collections'
 import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
@@ -36,7 +36,6 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   const { currentCollectionId } = useCollections()
   const isOutOfStock = useSelector(state => getRecipeOutOfStock(state, { recipeId }))
   const isFineDineIn = useRecipeIsFineDineIn()
-  const brandAvailability = useRecipeBrandAvailabilityTag()
 
   const deviceType = useDeviceType()
 
@@ -64,7 +63,6 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   const hasAlternatives = alternatives.length > 1
 
   const showVariantHeader = hasAlternatives && !isOutOfStock
-  const hasTopLeftTag = Boolean(brandAvailability)
 
   const mobileBannerShown = (showVariantHeader && deviceType === DeviceType.MOBILE)
   const desktopBannerShown = (showVariantHeader && (deviceType === DeviceType.DESKTOP || deviceType === DeviceType.TABLET))
@@ -94,9 +92,13 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           categoryId={categoryId}
           showVariantHeader={desktopBannerShown}
         />
-        {hasTopLeftTag && (
-          <RecipeTag brandTag={brandAvailability} showVariantHeader={showVariantHeader} />
-        )}
+        <span
+          className={classnames(css.recipeTagHolder, {
+            [css.recipeTagHolderShifted]: showVariantHeader,
+          })}
+        >
+          <RecipeTag />
+        </span>
         <div
           className={classnames(
             css.recipeTileInfo,

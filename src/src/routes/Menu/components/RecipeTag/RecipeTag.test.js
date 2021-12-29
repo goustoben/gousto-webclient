@@ -1,13 +1,22 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import * as RecipeContext from 'routes/Menu/context/recipeContext'
 
 import { RecipeTag } from './RecipeTag'
 
 describe('RecipeTag', () => {
-  let brandTag
   describe('when given null brandTag', () => {
+    beforeEach(() => {
+      jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag')
+        .mockImplementation(() => null)
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
     test('should return null', () => {
-      const wrapper = shallow(<RecipeTag brandTag={brandTag} />)
+      const wrapper = shallow(<RecipeTag />)
 
       expect(wrapper.getElement()).toBe(null)
     })
@@ -15,15 +24,20 @@ describe('RecipeTag', () => {
 
   describe('when given new brand tag', () => {
     beforeEach(() => {
-      brandTag = {
-        slug: 'new',
-        text: 'New',
-        theme: { borderColor: '#01A92B', color: '#01A92B', name: 'light' },
-      }
+      jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag')
+        .mockImplementation(() => ({
+          slug: 'new',
+          text: 'New',
+          theme: { borderColor: '#01A92B', color: '#01A92B', name: 'light' },
+        }))
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
     })
 
     test('should find recipe tag span', () => {
-      const wrapper = shallow(<RecipeTag brandTag={brandTag} />)
+      const wrapper = shallow(<RecipeTag />)
 
       expect(wrapper.type()).toBe('span')
       expect(wrapper.find('span').first().prop('className')).toEqual('recipeTag')
@@ -31,7 +45,7 @@ describe('RecipeTag', () => {
     })
 
     test('should find recipe tag div', () => {
-      const wrapper = shallow(<RecipeTag type="div" brandTag={brandTag} />)
+      const wrapper = shallow(<RecipeTag type="div" />)
 
       expect(wrapper.type()).toBe('div')
       expect(wrapper.find('div').first().prop('className')).toEqual('recipeTag')

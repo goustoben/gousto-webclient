@@ -12,7 +12,6 @@ import Carousel from './Carousel'
 
 import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
 import { RecipeTag } from '../../components/RecipeTag'
-import { useRecipeBrandAvailabilityTag } from '../../context/recipeContext'
 
 import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
@@ -40,7 +39,6 @@ export const Detail = (props) => {
   } = props
 
   const currentCollectionId = useSelector(getMenuCategoryIdForDetails)
-  const brandAvailability = useRecipeBrandAvailabilityTag()
 
   if (! currentCollectionId) {
     return null
@@ -83,7 +81,9 @@ export const Detail = (props) => {
             <div className={css.titleHidden}>
               <Title className={titleClass} />
             </div>
-            <RecipeTag brandTag={brandAvailability} isOnDetailScreen />
+            <span className={css.recipeTagHolder}>
+              <RecipeTag />
+            </span>
             <RecipeRating count={count} average={average} />
           </div>
         </div>
