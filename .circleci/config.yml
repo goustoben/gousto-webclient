@@ -226,7 +226,7 @@ jobs:
           name: Install CI dependencies
           command: apt-get -y update && apt-get -y install jq
       - browser-tools/install-chrome:
-          chrome-version: 90.0.4430.72
+          chrome-version: 96.0.4664.110
       - browser-tools/install-chromedriver
       - aws-cli/setup:
           aws-access-key-id: AWS_ERC_ACCESS_KEY
