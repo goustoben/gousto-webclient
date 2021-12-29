@@ -1,3 +1,4 @@
+import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { optimizelyRolloutsExperiment } from '../../actions/trackingKeys'
 
 const experimentsConfig = {
@@ -36,14 +37,15 @@ const experimentsConfig = {
     name: 'Beetroots menu nav links hidden after wizard web enabled',
     variationName: 'Variation',
     defaultName: 'Control',
-  }
+  },
 }
 
 // When several different places in the app work off the same feature flag,
 // it's superfluous to send the tracking requests beyond the first.
 const sentCache = new Map()
 
-const createKey = (featureName, authUserId, sessionId) => [featureName, authUserId, sessionId].join(':')
+const createKey = (featureName, authUserId, sessionId) =>
+  [featureName, authUserId, sessionId].join(':')
 
 export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId) => (dispatch) => {
   const experimentData = experimentsConfig[featureName]
@@ -55,16 +57,25 @@ export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnable
 
     sentCache.set(key, isOptimizelyFeatureEnabled)
 
+    const trackingData = {
+      actionType: optimizelyRolloutsExperiment,
+      experiment_id: experimentData.id,
+      experiment_name: experimentData.name,
+      variation_name: isOptimizelyFeatureEnabled
+        ? experimentData.variationName
+        : experimentData.defaultName,
+      user_logged_in: Boolean(authUserId),
+      session_id: sessionId,
+    }
+
+    dispatch(
+      feLoggingLogEvent(logLevels.info, 'track Optimizely Rollouts experiment', {
+        trackingData
+      })
+    )
     dispatch({
       type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
-      trackingData: {
-        actionType: optimizelyRolloutsExperiment,
-        experiment_id: experimentData.id,
-        experiment_name: experimentData.name,
-        variation_name: isOptimizelyFeatureEnabled ? experimentData.variationName : experimentData.defaultName,
-        user_logged_in: Boolean(authUserId),
-        session_id: sessionId
-      }
+      trackingData,
     })
   }
 }
