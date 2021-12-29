@@ -8,7 +8,6 @@ import { tutorialViewedExpireTime } from 'config/cookies'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 
 import {
-  shouldJfyTutorialBeVisible,
   setTutorialViewed,
   setTutorialVisible,
   tutorialTracking,
@@ -53,71 +52,6 @@ describe('tutorial actions', () => {
       }),
       visible: Immutable.Map({
         ...visible,
-      })
-    })
-  })
-
-  // TODO: Revisit when the `kales_remove_cfy_collection` experiment is over
-  describe.skip('shouldJfyTutorialBeVisible', () => {
-    describe('when tutorial has been seen and collection is present', () => {
-      beforeEach(() => {
-        getState.mockReturnValueOnce(getTutorialState({
-          collections: { slug: 'recommendations' },
-          viewed: { justforyou: 2 },
-        }))
-      })
-
-      it('should call dispatch with correct action and properties', async () => {
-        await shouldJfyTutorialBeVisible()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.SET_TUTORIAL_VISIBLE,
-          name: 'justforyou',
-          value: false
-        })
-      })
-    })
-
-    describe("when tutorial hasn't been seen and collection isn't present", () => {
-      beforeEach(() => {
-        getState.mockReturnValueOnce(getTutorialState({
-          collections: { slug: 'all-recipes' },
-          viewed: { justforyou: 0 },
-        }))
-      })
-
-      it('should call dispatch with correct action and properties', async () => {
-        await shouldJfyTutorialBeVisible()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.SET_TUTORIAL_VISIBLE,
-          name: 'justforyou',
-          value: false
-        })
-      })
-    })
-
-    describe("when tutorial hasn't been seen and collection is present", () => {
-      beforeEach(() => {
-        getState.mockReturnValueOnce(getTutorialState({
-          collections: {
-            slug: 'recommendations',
-            properties: Immutable.Map({
-              tutorial: 'jfy'
-            })
-          },
-          viewed: { justforyou: 0 },
-        }))
-      })
-
-      it('should call dispatch with correct action and properties', async () => {
-        await shouldJfyTutorialBeVisible()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.SET_TUTORIAL_VISIBLE,
-          name: 'justforyou',
-          value: true
-        })
       })
     })
   })

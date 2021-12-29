@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { applyPromoCodeAndShowModal } from 'actions/home'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
@@ -53,7 +52,6 @@ const mapDispatchToProps = {
   menuLoadDays: actions.menuLoadDays,
   loginVisibilityChange: actions.loginVisibilityChange,
   basketNumPortionChange: actions.basketNumPortionChange,
-  shouldJfyTutorialBeVisible,
   orderCheckoutAction: actions.orderCheckout,
   onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,

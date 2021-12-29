@@ -31,8 +31,6 @@ describe('Menu', () => {
   let requiredProps
   let mountOptions
 
-  const shouldJfyTutorialBeVisibleMock = jest.fn()
-
   const getStateMock = () => ({
     features: Immutable.fromJS({
       menuService: {
@@ -42,8 +40,6 @@ describe('Menu', () => {
   })
 
   beforeEach(() => {
-    shouldJfyTutorialBeVisibleMock.mockClear()
-
     requiredProps = {
       basketNumPortionChange: () => { },
       disabled: false,
@@ -63,7 +59,6 @@ describe('Menu', () => {
           resolve()
         })
       ),
-      shouldJfyTutorialBeVisible: shouldJfyTutorialBeVisibleMock,
       recipesCount: 3,
       onOverlayClick: jest.fn(),
       fetchData: jest.fn(),
@@ -252,26 +247,6 @@ describe('Menu', () => {
       )
 
       expect(basketNumPortionChange).toHaveBeenCalledWith(4)
-    })
-
-    test('should call shouldJfyTutorialBeVisible', async () => {
-      await mount(
-        <Menu
-          {...requiredProps}
-          basketNumPortionChange={basketNumPortionChangeSpy}
-          query={{ num_portions: '4' }}
-        />,
-        {
-          context: {
-            store: {
-              getState: getStateMock,
-              subscribe: () => { }
-            },
-          },
-        },
-      )
-
-      expect(shouldJfyTutorialBeVisibleMock).toHaveBeenCalled()
     })
   })
 

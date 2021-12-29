@@ -1,1 +1,1 @@
-export { JustForYouTutorialContainer as JustForYouTutorial } from './JustForYouTutorialContainer'
+export { JustForYouTutorial } from './JustForYouTutorial'

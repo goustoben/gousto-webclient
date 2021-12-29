@@ -49,17 +49,12 @@ export class MenuRecipesPage extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      shouldJfyTutorialBeVisible,
-      isLoading,
       loadOptimizelySDK,
       orderId,
       query,
       params,
       fetchMenuData,
     } = this.props
-    if (!isLoading && prevProps.isLoading !== isLoading) {
-      shouldJfyTutorialBeVisible()
-    }
 
     loadOptimizelySDK()
 
@@ -72,6 +67,7 @@ export class MenuRecipesPage extends PureComponent {
 
   getMenuRecipeListContent = () => {
     const {
+      isLoading,
       showLoading,
       stateRecipeCount,
       isSignupReductionEnabled,
@@ -123,7 +119,7 @@ export class MenuRecipesPage extends PureComponent {
             {menuLoadingErrorMessage}
           </h2>
         ) : null}
-        <JustForYouTutorial />
+        { !isLoading && <JustForYouTutorial />}
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
 
@@ -169,7 +165,6 @@ MenuRecipesPage.propTypes = {
   showRecommendationHighlight: PropTypes.bool.isRequired,
   showLoading: PropTypes.bool.isRequired,
   stateRecipeCount: PropTypes.number.isRequired,
-  shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
   basketOrderLoaded: PropTypes.func.isRequired,
   portionSizeSelectedTracking: PropTypes.func.isRequired,
   orderId: PropTypes.string,
