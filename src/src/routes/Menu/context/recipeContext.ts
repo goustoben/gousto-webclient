@@ -48,8 +48,35 @@ type BrandTag = {
   },
 }
 
-export const useRecipeBrandTag = (): BrandTag | null => {
-  const tagline = useRecipeField<string | null>('tagline', null)
+export const useRecipeBrandTagline = (): string | null => {
+  const recipe = useRecipe()
+
+  if (!recipe) {
+    return null
+  }
+
+  return recipe.get('tagline') as string
+}
+
+export const useRecipeBrandAvailabilityTagline = (): string | null => {
+  const recipe = useRecipe()
+
+  if (!recipe) {
+    return null
+  }
+
+  const availability = recipe.get('availability', null) as string | null
+
+  // Return new-eme when recipe has isNew to true and
+  // when we do not have any availability in meta
+  if (!availability && recipe.get('isNew')) {
+    return 'new-eme'
+  }
+
+  return availability
+}
+
+const useTag = (tagline: string | null): BrandTag | null => {
   const brandTags = useSelector(getAllTags)
 
   if (!tagline || !brandTags) {
@@ -57,4 +84,26 @@ export const useRecipeBrandTag = (): BrandTag | null => {
   }
 
   return findTag(brandTags, tagline)
+}
+
+export const useRecipeBrandTag = (): BrandTag | null => {
+  const tagline = useRecipeBrandTagline()
+
+  return useTag(tagline)
+}
+
+export const useRecipeBrandAvailabilityTag = (): BrandTag | null => {
+  const tagline = useRecipeBrandAvailabilityTagline()
+
+  return useTag(tagline)
+}
+
+export const useRecipeIsFineDineIn = (): boolean => {
+  const recipe = useRecipe()
+
+  if (!recipe) {
+    return false
+  }
+
+  return recipe.get('isFineDineIn', false) as boolean
 }

@@ -5,9 +5,8 @@ import moment from 'moment'
 
 import { Detail } from './Detail'
 import { closeRecipeDetails } from '../../actions/closeRecipeDetails'
-import { getBrandAvailability } from '../../selectors/recipeTags'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   let [cutoffDate] = getCutoffs(state.basket, state.boxSummaryDeliveryDays) // eslint-disable-line prefer-const
   if (!cutoffDate) {
     cutoffDate = moment()
@@ -20,7 +19,6 @@ function mapStateToProps(state, ownProps) {
   return {
     menuWithSides: false,
     cutoffDate,
-    brandAvailability: getBrandAvailability(state, { recipeId: ownProps.id }),
   }
 }
 

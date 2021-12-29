@@ -12,6 +12,7 @@ import Carousel from './Carousel'
 
 import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
 import { RecipeTag } from '../../components/RecipeTag'
+import { useRecipeBrandAvailabilityTag } from '../../context/recipeContext'
 
 import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
@@ -35,11 +36,11 @@ export const Detail = (props) => {
     position, surcharge,
     isChefPrepared, isFineDineIn,
     menuWithSides,
-    brandAvailability,
     isFromShowcaseMenu
   } = props
 
   const currentCollectionId = useSelector(getMenuCategoryIdForDetails)
+  const brandAvailability = useRecipeBrandAvailabilityTag()
 
   if (! currentCollectionId) {
     return null
@@ -173,11 +174,6 @@ Detail.propTypes = {
   isFineDineIn: PropTypes.bool,
   surcharge: PropTypes.number,
   menuWithSides: PropTypes.bool,
-  brandAvailability: PropTypes.shape({
-    slug: PropTypes.string,
-    text: PropTypes.string,
-    theme: PropTypes.shape({}),
-  }),
   isFromShowcaseMenu: PropTypes.bool,
 }
 
@@ -188,6 +184,5 @@ Detail.defaultProps = {
   isFineDineIn: false,
   chosenSideRecipeId: null,
   menuWithSides: false,
-  brandAvailability: {},
   isFromShowcaseMenu: false,
 }

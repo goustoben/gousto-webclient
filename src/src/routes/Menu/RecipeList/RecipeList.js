@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { RecipeTileContainer } from '../components/RecipeTile'
+import { RecipeTile } from '../components/RecipeTile'
 import css from './RecipeList.css'
 import { RecipeContextProvider } from '../context/recipeContext'
 import { CTAToAllRecipesContainer } from '../Recipe/CTAToAllRecipes'
@@ -33,7 +33,7 @@ class RecipeList extends React.PureComponent {
       <div className={css.emeRecipeList}>
         {recipes.map((value) => (
           <RecipeContextProvider key={value.recipe.get('id')} value={value.recipe}>
-            <RecipeTileContainer
+            <RecipeTile
               recipeId={value.recipe.get('id')}
               originalId={value.originalId}
               categoryId={currentCollectionId}
