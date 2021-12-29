@@ -42,7 +42,9 @@ export const useIsOptimizelyFeatureEnabled = (name) => {
   }, [name, dispatch, userIdForOptimizely, userId, sessionId, getIsMounted])
 
   const cookieOverride = get(Cookies, 'gousto_optimizely_overwrites')
-  const override = cookieOverride && typeof cookieOverride === 'object' ? cookieOverride[name] || null : null
+  const override = cookieOverride && typeof cookieOverride === 'object'
+    ? (cookieOverride[name] ?? null)
+    : null
 
   if (override !== null) {
     return override

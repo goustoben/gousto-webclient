@@ -2,7 +2,6 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from 'actions'
-import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getIsTastePreferencesEnabled } from 'selectors/features'
 import { getUserId } from 'selectors/user'
 import { getBasketOrderId, getNumPortions } from 'selectors/basket'
@@ -40,7 +39,6 @@ const MenuRecipesPageWrapper = (ownProps) => {
 
   const actionDispatchers = bindActionCreators({
     checkQueryParams,
-    shouldJfyTutorialBeVisible,
     basketOrderLoaded: actions.basketOrderLoaded,
     portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
     loadOptimizelySDK,
@@ -67,7 +65,6 @@ const MenuRecipesPageWrapper = (ownProps) => {
       query={query}
       // dispatches below
       checkQueryParams={actionDispatchers.checkQueryParams}
-      shouldJfyTutorialBeVisible={actionDispatchers.shouldJfyTutorialBeVisible}
       basketOrderLoaded={actionDispatchers.basketOrderLoaded}
       portionSizeSelectedTracking={actionDispatchers.portionSizeSelectedTracking}
       loadOptimizelySDK={actionDispatchers.loadOptimizelySDK}

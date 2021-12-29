@@ -39,7 +39,6 @@ class Menu extends React.PureComponent {
       boxSummaryDeliveryDaysLoad,
       menuLoadingBoxPrices,
       menuLoadBoxPrices,
-      shouldJfyTutorialBeVisible,
       menuCalculateTimeToUsable,
       fetchData,
       applyPromoCodeAndShowModal
@@ -67,8 +66,6 @@ class Menu extends React.PureComponent {
     if (!disabled && !menuLoadingBoxPrices) {
       promises.push(menuLoadBoxPrices())
     }
-
-    promises.push(shouldJfyTutorialBeVisible())
 
     promises.push(applyPromoCodeAndShowModal())
 
