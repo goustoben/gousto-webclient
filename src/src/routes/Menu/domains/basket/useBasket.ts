@@ -7,14 +7,13 @@ import { useNumPortions } from './internal/useNumPortions'
 export const useBasket = () => {
   const orderId = useOrderId()
   const menuId = useMenuId()
-  const numPortions = useNumPortions()
 
   return {
     ...useBasketRecipes(),
     ...useBasketDelivery(),
+    ...useNumPortions(),
 
     orderId,
     menuId,
-    numPortions,
   }
 }

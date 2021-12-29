@@ -79,7 +79,9 @@ return <span>Menu ID for basket: { menuId }</span>
 ### Portion count
 
 ```ts
-const { numPortions } = useBasket()
+const { setNumPortions, numPortions } = useBasket()
+
+const change = () => setNumPortions(2)
 
 return <span>{ numPortions } portions</span>
 ```
