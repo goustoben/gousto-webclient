@@ -60,14 +60,26 @@ const javascriptRule = (tsconfigPath = "../../../tsconfig.json") => ({
   include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
 })
 
+// Favicon and Axiforma fonts are used on the landing pages created through
+// Unbounce (cook.gousto.co.uk), accessed by the URL pointing to the
+// production-asssets bucket.  The reuse is desirable because we hope the user
+// navigates to gousto-webclient right after the LP, and g-w will load a bit
+// faster because fonts and icons are already in the browser cache.
+const fileLoaderPreservingName = {
+  loader: 'file-loader',
+  options: {
+    name: '[name].[ext]',
+  },
+}
+
 const fontRules = [
   {
     test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-    loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+    use: [fileLoaderPreservingName],
   },
   {
     test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-    loader: 'url-loader?limit=10000&mimetype=application/font-woff2',
+    use: [fileLoaderPreservingName],
   },
   {
     test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -84,7 +96,10 @@ const imageRules = [
       limit: 10 * 1024,
     },
   },
-  { test: /\.ico$/, loader: 'file-loader' },
+  {
+    test: /\.ico$/,
+    use: [fileLoaderPreservingName],
+  },
   { test: /\.svg$/, loaders: ['svg-url-loader', 'image-webpack'] },
 ]
 
@@ -102,5 +117,7 @@ const getClientRules = (tsconfigPath = "./tsconfig.client.json", isDevelopmentBu
 }
 
 module.exports = {
+  fontRules,
+  imageRules,
   getClientRules
 }

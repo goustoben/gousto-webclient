@@ -272,50 +272,114 @@ module.exports = {
         paypalWindow: {
           selector: 'n/a', // nightwatch requires it, but we never use it
           elements: {
-            acceptAllCookiesButton: {
-              selector: 'button#acceptAllButton'
+            acceptAllButton: {
+              selector: 'button#acceptAllButton',
+            },
+            loginIframe: {
+              selector: '#injectedUnifiedLogin iframe',
             },
             consentButton: {
-              selector: 'button#consentButton,input#confirmButtonTop'
+              selector: 'button#consentButton,input#confirmButtonTop',
             },
             emailField: {
-              selector: 'input#email'
+              selector: 'input#email',
             },
             nextButton: {
-              selector: 'button[value="Next"]'
+              selector: 'button[value="Next"]',
             },
             passwordField: {
-              selector: 'input#password'
+              selector: 'input#password',
             },
             loginButton: {
-              selector: 'button[value="Login"]'
+              selector: 'button[value="Login"]',
             }
           },
           props: {
             paypalUserEmail: 'goustoe2etest@mailinator.com',
-            paypalUserPassword: 'goustoe2etest'
+            paypalUserPassword: 'goustoe2etest',
           },
           commands: [{
-            asyncWaitPaypalWindowIsOpen: function (browser, done) {
+            // Notes on the interactions with the PayPal window:
+            //
+            // 1. Nightwatch's @-notation for elements doesn't seem to work
+            // inside the PayPal window.
+            //
+            // 2. Using JavaScript to click buttons to avoid other elements
+            // (e.g. cookie acceptance banner) intercepting clicks. This is
+            // an anti-pattern when testing our own UI but acceptable here
+            // since we just need the PayPal transaction to complete.
+
+            asyncWaitPaypalWindowIsOpen: function (browser, mainWindowHandle, setPaypalWindowHandle, done) {
+              let windowHandles
+
               const check = function (callback) {
                 browser.windowHandles(function (commandResult) {
-                  const result = commandResult.status === 0 && commandResult.value.length === 2
-                  callback(result)
+                  if (commandResult.status === 0) {
+                    windowHandles = commandResult.value
+                    callback(windowHandles.length === 2)
+                  } else {
+                    callback(false)
+                  }
                 })
               }
 
               pollCondition(check, function (pollResult) {
                 if (pollResult === 'conditionMet') {
+                  const paypalWindowHandle =
+                    windowHandles[0] === mainWindowHandle
+                    ? windowHandles[1]
+                    : windowHandles[0]
+                  setPaypalWindowHandle(paypalWindowHandle)
+
                   done()
                 } else {
                   browser.assert.fail('Expected the PayPal window to open')
                 }
               })
             },
-            asyncLoginAndConfirmPayment: async function (browser, done) {
+            asyncSwitchToPaypalWindow: function (browser, paypalWindowHandle, done) {
+              browser
+                .switchWindow(paypalWindowHandle)
+                .waitForElementVisible(this.elements.acceptAllButton.selector)
+                .safelyClick(this.elements.acceptAllButton.selector)
+                .perform(() => {
+                  done()
+                })
+            },
+            runStepByStepFlow: function (browser, done) {
+              console.info('Running the step by step login flow (original)')
+              browser
+                .waitForElementVisible(this.elements.emailField.selector)
+                .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
+                .executeAndThrowOnFailure(`document.querySelector('${this.elements.nextButton.selector}').click()`)
+                .waitForElementVisible(this.elements.passwordField.selector)
+                .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
+                .executeAndThrowOnFailure(`document.querySelector('${this.elements.loginButton.selector}').click()`)
+                .waitForElementVisible(this.elements.consentButton.selector)
+                .executeAndThrowOnFailure(`document.querySelector('${this.elements.consentButton.selector}').click()`)
+                .perform(() => {
+                  done()
+                })
+            },
+            runWholeFormInIframeFlow: function (browser, done) {
+              console.info('Running the whole form in iframe login flow (newer)')
+              browser
+                .switchToFrameBySelector(this.elements.loginIframe.selector, 'gw-e2etest-paypalLoginFrame')
+                .waitForElementVisible(this.elements.emailField.selector)
+                .pause(SMALL_DELAY)
+                .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
+                .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
+                .executeAndThrowOnFailure(`document.querySelector('${this.elements.loginButton.selector}').click()`)
+                .frameParent()
+                .waitForElementVisible(this.elements.consentButton.selector)
+                .pause(SMALL_DELAY)
+                .executeAndThrowOnFailure(`document.querySelector('${this.elements.consentButton.selector}').click()`)
+                .perform(() => {
+                  done()
+                })
+            },
+            asyncLoginAndConfirmPayment: function (browser, mainWindowHandle, done) {
               try {
-                let mainWindowHandle, windowHandles, paypalWindowHandle;
-
                 const isPaypalWindowClosed = function (callback) {
                   browser.windowHandles(function (commandResult) {
                     const result = commandResult.status === 0 && commandResult.value.length === 1
@@ -323,39 +387,49 @@ module.exports = {
                   })
                 }
 
-                browser
-                  .windowHandle(result => mainWindowHandle = result.value)
-                  .windowHandles(result => windowHandles = result.value)
-                  .perform(() => {
-                    browser.assert.equal(windowHandles.length, 2, 'The PayPal window is open')
-                    paypalWindowHandle = windowHandles[0] === mainWindowHandle ? windowHandles[1] : windowHandles[0];
-
-                    browser
-                      .switchWindow(paypalWindowHandle)
-                      .waitForElementVisible(this.elements.emailField.selector)
-                      // Nightwatch's @-notation for elements doesn't seem to work inside the PayPal window
-                      .setValue(this.elements.emailField.selector, this.props.paypalUserEmail)
-                      // Using javascript to click button to avoid other elements (e.g. cookie acceptance banner) intercepting click
-                      // This is an anti-pattern when testing our own UI but acceptable here since we just need the PayPal transaction to complete
-                      .executeAndThrowOnFailure(`document.querySelector('${this.elements.nextButton.selector}').click()`)
-                      .waitForElementVisible(this.elements.passwordField.selector)
-                      .setValue(this.elements.passwordField.selector, this.props.paypalUserPassword)
-                      // See earlier comment about javascript button clicking
-                      .executeAndThrowOnFailure(`document.querySelector('${this.elements.loginButton.selector}').click()`)
-                      .waitForElementVisible(this.elements.consentButton.selector)
-                      // See earlier comment about javascript button clicking
-                      .executeAndThrowOnFailure(`document.querySelector('${this.elements.consentButton.selector}').click()`)
-                      .switchWindow(mainWindowHandle)
-                      .perform(() => {
-                        pollCondition(isPaypalWindowClosed, function (pollResult) {
-                          if (pollResult === 'conditionMet') {
-                            done()
-                          } else {
-                            browser.assert.fail('Expected the PayPal window to close')
-                          }
-                        })
+                const onFlowComplete = () => {
+                  browser
+                    .switchWindow(mainWindowHandle)
+                    .perform(() => {
+                      pollCondition(isPaypalWindowClosed, function (pollResult) {
+                        if (pollResult === 'conditionMet') {
+                          done()
+                        } else {
+                          browser.assert.fail('Expected the PayPal window to close')
+                        }
                       })
-                  })
+                    })
+                }
+
+                const conditions = [
+                  {
+                    tag: 'stepByStepFlow',
+                    checkFn: (callback) => {
+                      const selector = this.elements.emailField.selector
+                      asyncIsElementBySelectorPresent(browser, selector, callback)
+                    }
+                  },
+                  {
+                    tag: 'wholeFormInIframeFlow',
+                    checkFn: (callback) => {
+                      const selector = this.elements.loginIframe.selector
+                      asyncIsElementBySelectorPresent(browser, selector, callback)
+                    }
+                  }
+                ]
+
+                const onPollDone = (pollResult, passedTag) => {
+                  if (pollResult === 'timeRanOut') {
+                    browser.assert.fail('Expected either email field or the login form iframe to be present in the PayPal window')
+                    done()
+                  } else if (passedTag === 'stepByStepFlow') {
+                    this.runStepByStepFlow(browser, onFlowComplete)
+                  } else if (passedTag === 'wholeFormInIframeFlow') {
+                    this.runWholeFormInIframeFlow(browser, onFlowComplete)
+                  }
+                }
+
+                pollRace(conditions, onPollDone, this.api.globals.waitForConditionTimeout)
               }
               catch (e) {
                 console.warn('Failed PayPal flow with error', e)
@@ -368,7 +442,8 @@ module.exports = {
 
       commands: [{
         ensureCheckoutLoaded: function () {
-          this.waitForElementPresent('@totalPrice')
+          // the order preview endpoint on staging takes a long time.
+          this.waitForElementPresent('@totalPrice', 60000)
         },
         submitBoxDetailsSection: function () {
           this.section.boxdetails.checkIfRecipeSummaryVisible()

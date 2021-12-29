@@ -11,12 +11,18 @@ module.exports = {
 
     browser.end()
   },
-  tags: ['sign-up', 'paypal', 'unstable'],
+  tags: ['sign-up', 'paypal'],
 }
 
 function continueSignUpWithAPayPalAccount(browser) {
   const checkout = browser.page.checkoutV2()
   const welcome = browser.page.welcome()
+
+  let mainWindowHandle, paypalWindowHandle
+
+  const setPaypalWindowHandle = (value) => {
+    paypalWindowHandle = value
+  }
 
   browser
     .logJourneyStep('Continue sign-up with a PayPal account')
@@ -24,14 +30,29 @@ function continueSignUpWithAPayPalAccount(browser) {
       checkout.section.checkoutContainer.section.payment.selectPaypalPaymentMethod(browser)
       done()
     })
+    .windowHandle(result => {
+      mainWindowHandle = result.value
+    })
     .perform(function (browser, done) {
       checkout.section.checkoutContainer.section.payment.asyncClickPaypalSetupButton(browser, done)
     })
     .perform(function (browser, done) {
-      checkout.section.checkoutContainer.section.paypalWindow.asyncWaitPaypalWindowIsOpen(browser, done)
+      checkout.section.checkoutContainer.section.paypalWindow.asyncWaitPaypalWindowIsOpen(
+        browser,
+        mainWindowHandle,
+        setPaypalWindowHandle,
+        done
+      )
     })
     .perform(function (browser, done) {
-      checkout.section.checkoutContainer.section.paypalWindow.asyncLoginAndConfirmPayment(browser, done)
+      checkout.section.checkoutContainer.section.paypalWindow.asyncSwitchToPaypalWindow(
+        browser,
+        paypalWindowHandle,
+        done
+      )
+    })
+    .perform(function (browser, done) {
+      checkout.section.checkoutContainer.section.paypalWindow.asyncLoginAndConfirmPayment(browser, mainWindowHandle, done)
     })
     .perform(function (browser, done) {
       checkout.section.checkoutContainer.section.payment.checkPaypalSetupButtonIsInvisible(browser)
