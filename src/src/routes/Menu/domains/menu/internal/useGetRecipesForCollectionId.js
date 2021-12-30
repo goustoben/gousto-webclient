@@ -51,6 +51,7 @@ export const useGetRecipesForCollectionId = (collections) => {
     //  * ensure any remaining out of stock recipes are moved to the end of the list
     const originalRecipes = recipeIdsInCollection
       .map(id => recipes.find(other => other.get('id') === id))
+      .filter(recipe => Boolean(recipe))
       .map(selectedVariantReplacer)
       .map(outOfStockRecipeReplacer)
 
