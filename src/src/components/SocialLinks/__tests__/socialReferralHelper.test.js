@@ -1,20 +1,20 @@
 import Immutable from 'immutable'
-import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
-import { trackingReferFriendSocialSharing } from 'actions/user'
+// import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
+// import { trackingReferFriendSocialSharing } from 'actions/user'
 import {
   getMessage,
   getReferralLink,
   getWhatsappReferralLink,
   getTextMessageReferralLink,
-  getMessengerReferralLink,
-  getFacebookReferralLink,
-  SOCIAL_TYPES,
+  // getMessengerReferralLink,
+  // getFacebookReferralLink,
+  // SOCIAL_TYPES,
 } from '../socialReferralHelper'
 import { mockWindowLocationAssign } from '../../../../jest/mockWindowLocationAssign'
 
-jest.mock('actions/loggingmanager', () => ({
-  trackUserFreeFoodLinkShare: jest.fn(),
-}))
+// jest.mock('actions/loggingmanager', () => ({
+//   trackUserFreeFoodLinkShare: jest.fn(),
+// }))
 
 jest.mock('actions/user', () => ({
   trackingReferFriendSocialSharing: jest.fn(),
@@ -72,7 +72,7 @@ describe('Social Referral Helper', () => {
         firstName,
         offer,
         mockTrackingFunc,
-        trackUserFreeFoodLinkShare
+        // trackUserFreeFoodLinkShare
       )
     })
 
@@ -87,9 +87,9 @@ describe('Social Referral Helper', () => {
       )
     })
 
-    test('should call tracking event link', () => {
-      expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.whatsapp })
-    })
+    // test('should call tracking event link', () => {
+    //   expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.whatsapp })
+    // })
   })
 
   describe('getTextMessageReferralLink', () => {
@@ -103,7 +103,7 @@ describe('Social Referral Helper', () => {
         firstName,
         offer,
         mockTrackingFunc,
-        trackUserFreeFoodLinkShare
+        // trackUserFreeFoodLinkShare
       )
     })
 
@@ -117,39 +117,39 @@ describe('Social Referral Helper', () => {
       expect(mockAssign).toHaveBeenCalledWith(`sms:?&body=${encodeURIComponent(message)}`)
     })
 
-    test('should call tracking event link', () => {
-      expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.text })
-    })
+    // test('should call tracking event link', () => {
+    //   expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.text })
+    // })
   })
 
-  describe('getMessengerReferralLink', () => {
-    beforeEach(() => {
-      getMessengerReferralLink(
-        referralCode,
-        firstName,
-        trackingReferFriendSocialSharing,
-        'mobile',
-        trackUserFreeFoodLinkShare
-      )
-    })
+  // describe('getMessengerReferralLink', () => {
+  //   beforeEach(() => {
+  //     getMessengerReferralLink(
+  //       referralCode,
+  //       firstName,
+  //       trackingReferFriendSocialSharing,
+  //       'mobile',
+  //       // trackUserFreeFoodLinkShare
+  //     )
+  //   })
 
-    test('should trigger tracking event', () => {
-      expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.messenger })
-    })
-  })
+  //   // test('should trigger tracking event', () => {
+  //   //   expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.messenger })
+  //   // })
+  // })
 
-  describe('getFacebookReferralLink', () => {
-    beforeEach(() => {
-      getFacebookReferralLink(
-        referralCode,
-        firstName,
-        trackingReferFriendSocialSharing,
-        trackUserFreeFoodLinkShare
-      )
-    })
+  // describe('getFacebookReferralLink', () => {
+  //   beforeEach(() => {
+  //     getFacebookReferralLink(
+  //       referralCode,
+  //       firstName,
+  //       trackingReferFriendSocialSharing,
+  //       // trackUserFreeFoodLinkShare
+  //     )
+  //   })
 
-    test('should trigger tracking event', () => {
-      expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.facebook })
-    })
-  })
+  //   // test('should trigger tracking event', () => {
+  //   //   expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.facebook })
+  //   // })
+  // })
 })
