@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import logger from 'utils/logger'
 import classNames from 'classnames'
 import { checkoutConfig } from 'config/checkout'
+import { InputField, Icon } from '@gousto-internal/zest-react'
 import css from './PromoCode.css'
 import checkoutCss from '../../Checkout.css'
 
@@ -111,16 +112,25 @@ class PromoCode extends PureComponent {
       result = {
         inputClassName: css.inputError,
         iconClassName: css.inputIconError,
+        zestInputStatus: 'Error',
+        zestIconVariant: 'Error',
+        zestIconName: 'warning',
       }
     } else if (this.promoCodeAdded() && hasValidPromoCode) {
       result = {
         inputClassName: css.inputSuccess,
         iconClassName: css.inputIconSuccess,
+        zestInputStatus: 'Success',
+        zestIconVariant: 'Confirmation',
+        zestIconName: 'tick',
       }
     } else {
       result = {
         inputClassName: css.input,
         iconClassName: null,
+        zestInputStatus: null,
+        zestIconVariant: null,
+        zestIconName: null,
       }
     }
 
@@ -172,12 +182,13 @@ class PromoCode extends PureComponent {
   }
 
   render() {
-    const { value } = this.state
-    const { inputClassName, iconClassName } = this.getDisplayOptions()
+    const { value, hasError } = this.state
+    const { inputClassName, iconClassName, zestInputStatus, zestIconVariant, zestIconName } =
+      this.getDisplayOptions()
 
     return (
       <div className={css.inputGroup}>
-        <div className={css.inputContainer}>
+        {/* <div className={css.inputContainer}>
           <div className={css.discountLabel}>Discount code</div>
           <div className={css.inputWrapper}>
             <input
@@ -195,7 +206,14 @@ class PromoCode extends PureComponent {
             />
           </div>
         </div>
-        {this.renderMessage()}
+        {this.renderMessage()} */}
+        <InputField
+          label="Discount code"
+          variant={zestInputStatus}
+          validationMessage={hasError && checkoutConfig.errorMessage.invalidPromocode}
+          onChange={this.handleChange}
+          rightAccessory={hasError && <Icon name={zestIconName} variant={zestIconVariant} />}
+        />
       </div>
     )
   }

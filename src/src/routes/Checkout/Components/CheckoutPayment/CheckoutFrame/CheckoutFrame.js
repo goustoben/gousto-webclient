@@ -4,6 +4,27 @@ import logger from 'utils/logger'
 import { hasPropUpdated } from 'utils/react'
 import { actionTypes } from 'actions/actionTypes'
 
+import { jsx } from '@emotion/react'
+import {
+  Icon,
+  Box,
+  Text,
+  InputField,
+  Grid,
+  Col,
+  Label,
+  FontWeight,
+  Checkbox,
+  Heading5,
+  Button,
+  Radio,
+  Space,
+  Color,
+  FlexDirection,
+  AlignItems,
+  TextAlign,
+  Link,
+} from '@gousto-internal/zest-react'
 import { publicKey } from '../config'
 import { getErrorType } from './utils'
 import { checkoutStyles } from './checkoutStyles'
@@ -26,6 +47,8 @@ class CheckoutFrame extends React.Component {
       isCardNumberEmpty: true,
       isExpiryEmpty: true,
       isCVVEmpty: true,
+      radioGroup: [true, false],
+      isBillingAddressChecked: true,
     }
   }
 
@@ -230,7 +253,13 @@ class CheckoutFrame extends React.Component {
 
   render() {
     const { receiveRef, sectionName } = this.props
-    const { showCardNumberError, showExpiryDateError, showCVVError } = this.state
+    const {
+      showCardNumberError,
+      showExpiryDateError,
+      showCVVError,
+      radioGroup,
+      isBillingAddressChecked,
+    } = this.state
 
     return (
       <form
@@ -239,6 +268,120 @@ class CheckoutFrame extends React.Component {
         name="payment-form"
         onSubmit={this.handleSubmit}
       >
+        <Grid wrap style={{ maxWidth: '100%' }}>
+          <Col size={12} paddingBottom={4}>
+            <Heading5>Payment method</Heading5>
+          </Col>
+          <Col size={12} paddingBottom={4}>
+            <Radio
+              checked={radioGroup[0]}
+              onClick={() => {
+                this.setState({ radioGroup: [true, false] })
+              }}
+              outline
+              focused
+            >
+              {(focused) => (
+                <Box flexGrow={1} display="flex" flexDirection={FlexDirection.Row}>
+                  <Space size={2} direction="horizontal" />
+                  <Box flexGrow={1}>
+                    <Text
+                      color={focused ? Color.Secondary_400 : Color.ColdGrey_800}
+                      fontWeight={focused ? FontWeight.SemiBold : FontWeight.Normal}
+                      size={2}
+                    >
+                      Card payment
+                    </Text>
+                  </Box>
+                  <Box display="flex">
+                    <Icon name="payment" />
+                  </Box>
+                </Box>
+              )}
+            </Radio>
+            <Space size={2} direction="vertical" />
+            <Radio
+              outline
+              checked={radioGroup[1]}
+              onClick={() => {
+                this.setState({ radioGroup: [false, true] })
+              }}
+            >
+              Paypal
+            </Radio>
+          </Col>
+          <Col size={12} paddingBottom={4}>
+            <Box color="defaultFontColor">
+              <InputField
+                label="Card Number"
+                rightAccessory={<Icon name="secure" variant="Inherit" />}
+              />
+            </Box>
+          </Col>
+          <Col size={12} paddingBottom={4}>
+            <InputField label="Name on card" />
+          </Col>
+          <Col size={6} paddingBottom={4} paddingRight={4}>
+            <InputField label="Expiry (MM/YY)" />
+          </Col>
+          <Col size={6} paddingBottom={4}>
+            <InputField label="Security code (CVV)" />
+          </Col>
+          <Col size={12}>
+            <Label for="checkbox">
+              <Text size={2} fontWeight={FontWeight.SemiBold}>
+                Billing address
+              </Text>
+            </Label>
+            <Checkbox
+              id="checkbox"
+              checked={isBillingAddressChecked}
+              onClick={() => {
+                this.setState((state) => ({
+                  isBillingAddressChecked: !state.isBillingAddressChecked,
+                }))
+              }}
+            >
+              My billing address is the same as my delivery address
+            </Checkbox>
+          </Col>
+          <Col size={12} paddingBottom={4}>
+            <Button width="100%">Start your subscription</Button>
+          </Col>
+          <Col
+            size={12}
+            paddingBottom={4}
+            display="flex"
+            alignItems={AlignItems.Center}
+            flexDirection={FlexDirection.Column}
+          >
+            <Box
+              width={['90%', '90%', '60%', '60%']}
+              display="flex"
+              flexDirection={FlexDirection.Row}
+              paddingBottom={8}
+            >
+              <Box>
+                <Icon name="tick" variant="Confirmation" />
+              </Box>
+              <Text textAlign={TextAlign.Center}>
+                <span style={{ fontWeight: 'bold', color: Color.ColdGrey_100 }}>
+                  No commitment. No cancellation fees.{' '}
+                </span>
+                Skip a box or cancel your subscription online at at anytime.
+              </Text>
+            </Box>
+            <Box>
+              <Text textAlign={TextAlign.Center} size={1}>
+                By placing your order you agree to our
+                <br />
+                <Link size={1} href="/terms-and-conditions">
+                  Terms and Conditions
+                </Link>
+              </Text>
+            </Box>
+          </Col>
+        </Grid>
         <div className={css.row}>
           <FrameField
             header="Card number"

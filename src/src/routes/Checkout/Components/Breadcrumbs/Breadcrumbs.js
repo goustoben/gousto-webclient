@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Link from 'Link'
+// import Link from 'Link'
 import classNames from 'classnames'
 import Svg from 'Svg'
+
+import { jsx } from '@emotion/react'
+import { Link } from '@gousto-internal/zest-react'
 import css from './Breadcrumbs.css'
 
 const Breadcrumbs = ({
@@ -22,14 +25,7 @@ const Breadcrumbs = ({
             {index > lastReachedStepIndex ? (
               <span className={css.futureItem}>{label}</span>
             ) : (
-              <Link
-                clientRouted
-                to={`/check-out/${id}`}
-                tracking={trackNavigation(label)}
-                className={classNames(css.linkItem, { [css.isActive]: id === currentId })}
-              >
-                {label}
-              </Link>
+              <Link size={1}>{label}</Link>
             )}
             <Svg
               fileName="icon-chevron-small-right"

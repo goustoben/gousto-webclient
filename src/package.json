@@ -111,7 +111,7 @@
     "validator": "10.4.0"
   },
   "devDependencies": {
-    "@gousto-internal/zest-react": "^0.9.5",
+    "@gousto-internal/zest-react": "^0.10.3",
     "@pact-foundation/pact": "^9.16.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@sheerun/mutationobserver-shim": "^0.3.3",

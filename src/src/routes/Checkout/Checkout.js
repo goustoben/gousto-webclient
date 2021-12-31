@@ -12,6 +12,8 @@ import ModalPanel from 'Modal/ModalPanel'
 import { Login } from 'Login'
 import { Div } from 'Page/Elements'
 import { getPreviewOrderErrorName } from 'utils/order'
+import { jsx } from '@emotion/react'
+import { ThemeProvider, Reset } from '@gousto-internal/zest-react'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
 import { checkoutSteps } from './checkoutConfig'
@@ -32,6 +34,8 @@ import { CheckoutUrgencyModalContainer } from './Components/CheckoutUrgency/Chec
 import { CheckoutUrgencyBanner } from './Components/CheckoutUrgency/CheckoutUrgencyBanner'
 import css from './Checkout.css'
 import { firePayPalError } from '../../actions/checkout'
+
+import { designToken, fontStyles } from '../../config/theme'
 
 const stepMapping = {
   'order-summary': { component: OrderSummary, humanName: 'Summary' },
@@ -456,31 +460,35 @@ class Checkout extends PureComponent {
       prices,
       trackUTMAndPromoCode,
     } = this.props
+    //
 
     return (
-      <CheckoutUrgencyControllerContainer>
-        <Div data-testing="checkoutContainer">
-          <Div className={css.checkoutContent}>
-            {stepName !== 'order-summary' && (
-              <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
-                <ExpandableBoxSummary
-                  totalToPay={prices.get('total')}
-                  totalWithoutDiscount={prices.get('recipeTotal')}
-                  trackUTMAndPromoCode={trackUTMAndPromoCode}
-                  promoCodeValid={prices.get('promoCodeValid')}
-                >
-                  {this.renderSummaryAndYourBox()}
-                </ExpandableBoxSummary>
-              </div>
-            )}
-            <CheckoutUrgencyBanner />
-            {stepName !== 'order-summary' && this.renderProgressBar(stepName)}
-            {this.renderCheckoutSteps()}
-            {this.renderLoginModal()}
+      <ThemeProvider tokens={designToken}>
+        <Reset styles={fontStyles} />
+        <CheckoutUrgencyControllerContainer>
+          <Div data-testing="checkoutContainer">
+            <Div className={css.checkoutContent}>
+              {stepName !== 'order-summary' && (
+                <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
+                  <ExpandableBoxSummary
+                    totalToPay={prices.get('total')}
+                    totalWithoutDiscount={prices.get('recipeTotal')}
+                    trackUTMAndPromoCode={trackUTMAndPromoCode}
+                    promoCodeValid={prices.get('promoCodeValid')}
+                  >
+                    {this.renderSummaryAndYourBox()}
+                  </ExpandableBoxSummary>
+                </div>
+              )}
+              <CheckoutUrgencyBanner />
+              {stepName !== 'order-summary' && this.renderProgressBar(stepName)}
+              {this.renderCheckoutSteps()}
+              {this.renderLoginModal()}
+            </Div>
           </Div>
-        </Div>
-        <CheckoutUrgencyModalContainer />
-      </CheckoutUrgencyControllerContainer>
+          <CheckoutUrgencyModalContainer />
+        </CheckoutUrgencyControllerContainer>
+      </ThemeProvider>
     )
   }
 }

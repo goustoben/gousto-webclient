@@ -6,6 +6,17 @@ import Receipt from 'Receipt'
 import Loading from 'Loading'
 import { getSurchargeItems } from 'utils/pricing'
 import { basketSum } from 'utils/basket'
+import { jsx } from '@emotion/react'
+import {
+  Icon,
+  Space,
+  Box,
+  Color,
+  AlignItems,
+  FlexDirection,
+  Heading5,
+  Space,
+} from '@gousto-internal/zest-react'
 import { SectionHeader } from '../SectionHeader'
 import { PromoCode } from '../PromoCode'
 import css from './Summary.css'
@@ -50,17 +61,32 @@ class Summary extends PureComponent {
 
     return (
       <div className={css.summaryContainerRedesign} data-testing="checkoutOrderSummary">
-        <SectionHeader title="Order total" />
+        <Heading5>Order total</Heading5>
+        <Space size={4} direction="vertical" />
         {isLoading ? (
           <div className={css.loaderContainer}>
             <Loading className={css.loadingImage} />
           </div>
         ) : (
           <Fragment>
-            <div className={css.pricePerServingBlock}>
-              <div className={css.discountIcon} />
-              <PricePerServingMessage isPriceInCheckout />
-            </div>
+            <Box
+              bg={Color.Success_50}
+              borderColor={Color.Success_100}
+              borderStyle="solid"
+              borderWidth={0.5}
+              borderRadius={2}
+              paddingV={3}
+              display="flex"
+              alignItems={AlignItems.Center}
+              flexDirection={FlexDirection.Column}
+            >
+              <Box display="flex" flexDirection={FlexDirection.Row}>
+                <Icon name="offer_percentage" variant="Confirmation" />
+                <Space size={1} direction="horizontal" />
+                <PricePerServingMessage isPriceInCheckout />
+              </Box>
+            </Box>
+            <Space size={2} direction="horizontal" />
             <div className={css.details}>
               <Receipt
                 numRecipes={numRecipes}

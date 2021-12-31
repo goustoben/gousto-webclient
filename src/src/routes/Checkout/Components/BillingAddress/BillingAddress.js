@@ -21,30 +21,31 @@ export class BillingAddress extends React.PureComponent {
       formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
 
     return (
-      <div className={css.container} data-testing="checkoutBillingAddressContainer">
-        <div className={checkoutCss.fieldHeader}>Billing address</div>
-        <CheckBox
-          checked={!isBillingAddressDifferent}
-          childLabelClassName={css.checkboxLabel}
-          dataTesting="checkoutBillingAddressToggle"
-          label="My billing address is the same as my delivery address"
-          onChange={this.toggleDeliveryAddress}
-        />
-        {isBillingAddressDifferent ? (
-          <div className={css.addressContainer}>
-            <BillingAddressContainer
-              isDelivery={false}
-              asyncValidate={asyncValidate}
-              formName={form}
-              sectionName={sectionName}
-              formValues={formValues || {}}
-              onSaveAction={this.toggleDeliveryAddress}
-              receiveRef={receiveRef}
-              scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-            />
-          </div>
-        ) : null}
-      </div>
+      <div />
+      // <div className={css.container} data-testing="checkoutBillingAddressContainer">
+      //   <div className={checkoutCss.fieldHeader}>Billing address</div>
+      //   <CheckBox
+      //     checked={!isBillingAddressDifferent}
+      //     childLabelClassName={css.checkboxLabel}
+      //     dataTesting="checkoutBillingAddressToggle"
+      //     label="My billing address is the same as my delivery address"
+      //     onChange={this.toggleDeliveryAddress}
+      //   />
+      //   {isBillingAddressDifferent ? (
+      //     <div className={css.addressContainer}>
+      //       <BillingAddressContainer
+      //         isDelivery={false}
+      //         asyncValidate={asyncValidate}
+      //         formName={form}
+      //         sectionName={sectionName}
+      //         formValues={formValues || {}}
+      //         onSaveAction={this.toggleDeliveryAddress}
+      //         receiveRef={receiveRef}
+      //         scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+      //       />
+      //     </div>
+      //   ) : null}
+      // </div>
     )
   }
 }

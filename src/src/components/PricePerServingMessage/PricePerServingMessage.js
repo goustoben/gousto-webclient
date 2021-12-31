@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { formatOrderPrice } from 'utils/pricing'
+import { jsx } from '@emotion/react'
+import { Text, FontWeight, Space, Color } from '@gousto-internal/zest-react'
 
 import css from './PricePerServingMessage.css'
 
@@ -13,23 +15,36 @@ const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null, isPr
           £
           {fullPrice}
         </s>
-        {' '}
       </span>
     ) : null
 
     return (
-      <p className={classNames(css.pricePerServingMessage, { [css.priceMessageInCheckout]: isPriceInCheckout })}>
-        Price per serving:
-        {' '}
-        {oldPrice}
+      <>
+        <Text fontWeight={FontWeight.SemiBold}>
+          Price per serving:
+        </Text>
+        <Space size={2} direction="horizontal" />
+        <Text style={{textDecoration: 'line-through'}}>
+          £
+          {fullPrice}
+        </Text>
         {isPriceInCheckout
           ? (
-            <span className={css.newPriceInCheckout}>
-              {formatOrderPrice(discountedPrice)}
-            </span>
+            <>
+              <Space size={2} direction="horizontal" />
+              <Text fontWeight={FontWeight.SemiBold} size={3} color={Color.Success_800}>
+                {formatOrderPrice(discountedPrice)}
+              </Text>
+            </>
           )
-          : `£${discountedPrice}`}
-      </p>
+          : (
+            <Text>
+              `£$
+              {discountedPrice}
+              `
+            </Text>
+          )}
+      </>
     )
   } else {
     return null

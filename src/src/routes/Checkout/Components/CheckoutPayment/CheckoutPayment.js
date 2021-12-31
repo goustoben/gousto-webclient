@@ -187,7 +187,8 @@ class CheckoutPayment extends React.Component {
     const { isPayPalReady, currentPaymentMethod } = this.props
     const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : false
 
-    return <SubmitButton onClick={this.handleClick} isDisabled={isDisabled} />
+    return <div />
+    // <SubmitButton onClick={this.handleClick} isDisabled={isDisabled} />
   }
 
   renderErrorMessage() {
@@ -251,14 +252,14 @@ class CheckoutPayment extends React.Component {
         className={classNames(css.paymentContainer, { [css.hide]: prerender })}
         data-testing="checkoutPaymentSection"
       >
-        <SectionHeader title="Payment method" subtitle={sectionSubtitle} />
-        {!isGoustoOnDemandEnabled && (
-          <PaymentMethodSelector
-            currentPaymentMethod={currentPaymentMethod}
-            setCurrentPaymentMethod={setCurrentPaymentMethod}
-            isPayPalReady={isPayPalReady}
-          />
-        )}
+        {/* <SectionHeader title="Payment method" subtitle={sectionSubtitle} />
+          {!isGoustoOnDemandEnabled && (
+            <PaymentMethodSelector
+              currentPaymentMethod={currentPaymentMethod}
+              setCurrentPaymentMethod={setCurrentPaymentMethod}
+              isPayPalReady={isPayPalReady}
+            />
+          )} */}
         {this.renderCardContent()}
         {this.renderPaypalContent()}
         <div className={css.row}>

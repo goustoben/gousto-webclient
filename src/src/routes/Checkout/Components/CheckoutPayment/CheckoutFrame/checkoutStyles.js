@@ -1,3 +1,5 @@
+import { designToken } from '../../../../../config/theme'
+
 const baseColor = '#333d47'
 
 export const checkoutStyles = {
@@ -10,7 +12,7 @@ export const checkoutStyles = {
     minHeight: '3rem',
     height: '3rem',
     letterSpacing: 0,
-    fontFamily: 'Avenir, Roboto, sans-serif',
+    fontFamily: designToken.FontFamilies.ui,
     color: baseColor,
   },
   placeholder: {

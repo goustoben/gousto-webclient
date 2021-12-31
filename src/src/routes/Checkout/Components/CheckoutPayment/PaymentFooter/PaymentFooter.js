@@ -5,8 +5,8 @@ import { TermsAndConditions } from '../../TermsAndConditions'
 
 export const PaymentFooter = ({ isGoustoOnDemandEnabled }) => (
   <Fragment>
-    {isGoustoOnDemandEnabled ? null : <SubscriptionTransparency />}
-    <TermsAndConditions />
+    {/* {isGoustoOnDemandEnabled ? null : <SubscriptionTransparency />}
+    <TermsAndConditions /> */}
   </Fragment>
 )
 
