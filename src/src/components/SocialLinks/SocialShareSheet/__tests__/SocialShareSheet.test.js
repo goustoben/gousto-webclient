@@ -1,16 +1,16 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { ReferAFriendContainer } from 'components/ReferAFriend'
-import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
+// import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { trackingReferFriendSocialSharing } from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
 import { SocialShareSheet } from '../SocialShareSheet'
 import { LinkRow } from '../LinkRow'
 import { SOCIAL_TYPES } from '../../socialReferralHelper'
 
-jest.mock('actions/loggingmanager', () => ({
-  trackUserFreeFoodLinkShare: jest.fn(),
-}))
+// jest.mock('actions/loggingmanager', () => ({
+//   trackUserFreeFoodLinkShare: jest.fn(),
+// }))
 
 jest.mock('actions/user', () => ({
   trackingReferFriendSocialSharing: jest.fn(),
@@ -28,7 +28,7 @@ describe('SocialShareSheet', () => {
           onClose={mockOnClose}
           referralCode={referralCode}
           rafOffer={rafOffer}
-          trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+          // trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
           trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
         />
       )
@@ -69,7 +69,7 @@ describe('SocialShareSheet', () => {
         .find('.emailHeader')
         .simulate('click', { preventDefault: e => e })
 
-      expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.email })
+      // expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.email })
       expect(trackingReferFriendSocialSharing).toHaveBeenCalledWith(
         actionTypes.REFER_FRIEND_LINK_SHARE,
         'ReferFriendLink Share',

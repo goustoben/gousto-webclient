@@ -25,7 +25,7 @@ const propTypes = {
   isLoading: PropTypes.bool,
   device: PropTypes.string,
   trackUserFreeFoodPageView: PropTypes.func,
-  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
+  // trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -61,7 +61,7 @@ class Referral extends Component {
       trackingReferFriendSocialSharing,
       isLoading,
       device,
-      trackUserFreeFoodLinkShare,
+      // trackUserFreeFoodLinkShare,
     } = this.props
     const offerTitle = rafOffer.get('title')
     const offerCredit = rafOffer.get('creditFormatted')
@@ -94,7 +94,7 @@ class Referral extends Component {
                 classLinkContainer={css.linkContainer}
                 referralCode={referralCode}
                 trackingReferFriend={trackingReferFriend}
-                trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+                // trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
               >
                 <div id="referral-code-box" aria-label="referral code">
                   <textarea className={`${css.displayedLink}`} readOnly>
@@ -109,7 +109,7 @@ class Referral extends Component {
                 offerCredit={offerCredit}
                 elementType="page"
                 trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
-                trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+                // trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
               />
               <div className={css.mobileShow}>
                 <SocialShareSheetCTA referralCode={referralCode} trackingReferFriend={trackingReferFriend} isFixed />

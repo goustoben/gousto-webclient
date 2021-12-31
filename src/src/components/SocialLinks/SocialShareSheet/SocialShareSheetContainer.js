@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getReferralOffer, getUserFirstName } from 'selectors/user'
 import { trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
-import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
+// import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 
 import { SocialShareSheet } from './SocialShareSheet'
 
@@ -14,5 +14,5 @@ const mapStateToProps = (state) => ({
 export const SocialShareSheetContainer = connect(mapStateToProps, {
   trackingReferFriend,
   trackingReferFriendSocialSharing,
-  trackUserFreeFoodLinkShare,
+  // trackUserFreeFoodLinkShare,
 })(SocialShareSheet)

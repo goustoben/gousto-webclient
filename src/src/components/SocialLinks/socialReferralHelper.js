@@ -25,14 +25,15 @@ export const getReferralLink = (referralCode, userFirstName = '', UTM = '') => {
   return `cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${UTM}`
 }
 
+// commenting out all reference to trackUserFreeFoodLinkShare as hotfix to fix bug over NY period
 export const getFacebookReferralLink = (
   referralCode,
   userFirstName,
   trackingReferFriendSocialSharing,
-  trackUserFreeFoodLinkShare,
+  // trackUserFreeFoodLinkShare,
 ) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.facebook)
-  trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.facebook })
+  // trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.facebook })
 
   const facebookUTM = '&utm_source=facebook&utm_medium=sharebutton_raf_page&utm_campaign=raf_facebook_share'
   const referralLink = getReferralLink(referralCode, userFirstName, facebookUTM)
@@ -52,10 +53,10 @@ export const getMessengerReferralLink = (
   userFirstName,
   trackingReferFriendSocialSharing,
   device,
-  trackUserFreeFoodLinkShare,
+  // trackUserFreeFoodLinkShare,
 ) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.messenger)
-  trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.messenger })
+  // trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.messenger })
 
   const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
   const referralLink = getReferralLink(referralCode, userFirstName, messengerUTM)
@@ -82,10 +83,10 @@ export const getWhatsappReferralLink = (
   userFirstName,
   rafOffer,
   trackingReferFriendSocialSharing,
-  trackUserFreeFoodLinkShare,
+  // trackUserFreeFoodLinkShare,
 ) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.whatsapp)
-  trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.whatsapp })
+  // trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.whatsapp })
 
   const whatsappUTM = '&utm_source=whatsapp&utm_medium=sharebutton_raf_page&utm_campaign=raf_whatsapp_share'
   const referralLink = getReferralLink(referralCode, userFirstName, whatsappUTM)
@@ -100,10 +101,10 @@ export const getTextMessageReferralLink = (
   userFirstName,
   rafOffer,
   trackingReferFriendSocialSharing,
-  trackUserFreeFoodLinkShare,
+  // trackUserFreeFoodLinkShare,
 ) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.text)
-  trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.text })
+  // trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.text })
 
   const textMessageUTM = '&utm_source=text_message&utm_medium=sharebutton_raf_page&utm_campaign=raf_text_message_share'
   const referralLink = getReferralLink(referralCode, userFirstName, textMessageUTM)

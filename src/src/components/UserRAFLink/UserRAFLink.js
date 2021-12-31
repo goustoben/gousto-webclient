@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
-import { getReferralLink, SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
+import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
 import css from './UserRAFLink.css'
 
 class UserRAFLink extends React.PureComponent {
@@ -21,9 +21,9 @@ class UserRAFLink extends React.PureComponent {
   }
 
   onCopy(trackingReferFriend) {
-    const { trackUserFreeFoodLinkShare } = this.props
+    // const { trackUserFreeFoodLinkShare } = this.props
     trackingReferFriend(actionTypes.REFER_FRIEND_LINK_COPIED, 'ReferFriendLink Copied')
-    trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.link })
+    // trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.link })
 
     clearTimeout(this.timeout)
     this.setState({ copiedMessageVisible: true })
@@ -61,7 +61,7 @@ UserRAFLink.propTypes = {
   children: PropTypes.node.isRequired,
   trackingReferFriend: PropTypes.func.isRequired,
   isModal: PropTypes.bool.isRequired,
-  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
+  // trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
 export { UserRAFLink }
