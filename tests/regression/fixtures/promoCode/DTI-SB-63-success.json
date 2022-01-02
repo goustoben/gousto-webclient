@@ -2,12 +2,12 @@
   "status": "ok",
   "result": {
     "data": {
-      "code": "DTI-SB-5030",
+      "code": "DTI-SB-63",
       "details": {
         "discount-whole-order-percent": "50"
       },
       "codeData": {
-        "code": "DTI-SB-5030",
+        "code": "DTI-SB-63",
         "campaign": {
           "id": 4580,
           "media_id": null,
