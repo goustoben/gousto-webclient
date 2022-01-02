@@ -8,7 +8,7 @@ export const hero = {
 
 export const CTA = {
   text: 'Get started',
-  stickyCTA: 'Get started with 50% off',
+  stickyCTA: 'Get started with 60% off',
   join: (
     <span>
       Get started{' '}
@@ -35,8 +35,8 @@ export const CTA = {
 }
 
 export const promo = {
-  defaultPromoCode: 'DTI-SB-5030',
-  defaultBannerText: 'Get 50% off your first box and 30% off your first month',
+  defaultPromoCode: 'DTI-SB-63',
+  defaultBannerText: 'Get 60% off your first box and 30% off your first month',
 }
 
 export const emailForm = {
