@@ -12,7 +12,7 @@ describe('Promo Code', () => {
 
   describe('when a user checks out for the first time', () => {
     describe("and doesn't have a promo code in their basket", () => {
-      const promoCode = 'DTI-SB-5030'
+      const promoCode = 'DTI-SB-63'
 
       beforeEach(() => {
         cy.stubAll3rdParties()

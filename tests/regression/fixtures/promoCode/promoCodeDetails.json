@@ -4,7 +4,7 @@
         "data": {
             "code": "RET-REACTFEB19EMOB",
             "details": {
-                "discount-whole-order-percent": "20"
+                "discount-whole-order-percent": "30"
             },
             "codeData": {
                 "code": "RET-REACTFEB19EMOB",
@@ -15,8 +15,8 @@
                     "landing_details_2": "",
                     "landing_details_3": "",
                     "landing_url": "",
-                    "modal_text": "<p class=\"lead\">You've got 20% off all boxes for a month.</p>\r\n<p class=\"lead\">Browse from our weekly menu of 50 recipes and get cooking!</p>",
-                    "raw_modal_text": "You've got 20% off all boxes for a month.\nBrowse from our weekly menu of 50 recipes and get cooking!",
+                    "modal_text": "<p class=\"lead\">You've got 30% off all boxes for a month.</p>\r\n<p class=\"lead\">Browse from our weekly menu of 50 recipes and get cooking!</p>",
+                    "raw_modal_text": "You've got 30% off all boxes for a month.\nBrowse from our weekly menu of 50 recipes and get cooking!",
                     "modal_title": "",
                     "enabled": true,
                     "is_for_existing": true,

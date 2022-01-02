@@ -52,14 +52,14 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   cy.clearCookies()
   cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
-  cy.route('GET', /promo_code=DTI-SB-5030/, 'fixture:prices/2person2portionDiscount.json').as('pricesDiscount')
+  cy.route('GET', /promo_code=DTI-SB-63/, 'fixture:prices/2person2portionDiscount.json').as('pricesDiscount')
 
   cy.route(
     'GET',
-    /promocode\/DTI-SB-5030/,
+    /promocode\/DTI-SB-63/,
     withDiscount
-      ? 'fixture:promoCode/DTI-SB-5030-success.json'
-      : 'fixture:promoCode/DTI-SB-5030-failure.json'
+      ? 'fixture:promoCode/DTI-SB-63-success.json'
+      : 'fixture:promoCode/DTI-SB-63-failure.json'
   ).as('getPromoCode')
 
   cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
