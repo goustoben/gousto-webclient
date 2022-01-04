@@ -73,7 +73,7 @@ describe('The AddressSection component', () => {
 
       describe('When selectedAddress is still loading', () => {
         beforeEach(() => {
-          wrapper.setProps({ selectedAddress: null })
+          wrapper.setProps({ selectedAddress: {} })
         })
 
         test('renders the Loading component', () => {

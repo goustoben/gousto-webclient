@@ -35,6 +35,7 @@ describe('RecipeCardIssues', () => {
         selectedRecipeCardsDetails={SELECTED_RECIPES}
         setRecipeCardRequestWithIssueReasons={setRecipeCardRequestWithIssueReasons}
         didRequestError={false}
+        isRequestPending={false}
         cleanErrorForRecipeCards={jest.fn()}
       />
     )
@@ -112,6 +113,16 @@ describe('RecipeCardIssues', () => {
 
     test('the CTA is enabled', () => {
       expect(wrapper.find('CTA').prop('isDisabled')).toBe(false)
+    })
+  })
+
+  describe('when the request is pending', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isRequestPending: true })
+    })
+
+    test('the CTA is in loading state', () => {
+      expect(wrapper.find('CTA').prop('isLoading')).toBe(true)
     })
   })
 

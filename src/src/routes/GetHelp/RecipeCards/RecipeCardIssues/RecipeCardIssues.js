@@ -10,14 +10,16 @@ import layoutCss from '../../layouts/GetHelpLayout2/GetHelpLayout2.css'
 import css from './RecipeCardIssues.css'
 
 const RecipeCardIssues = ({
-  setRecipeCardRequestWithIssueReasons,
-  selectedRecipeCardsDetails,
-  didRequestError,
   cleanErrorForRecipeCards,
+  didRequestError,
+  isRequestPending,
   params: {
     userId,
     orderId,
-  }, }) => {
+  },
+  selectedRecipeCardsDetails,
+  setRecipeCardRequestWithIssueReasons,
+}) => {
   const [selectedIssueTypes, setSelectedIssueTypes] = useState({})
 
   useEffect(() => {
@@ -95,6 +97,7 @@ const RecipeCardIssues = ({
           isFullWidth
           size="small"
           isDisabled={isContinueButtonDisabled}
+          isLoading={isRequestPending}
           onClick={() => {
             setRecipeCardRequestWithIssueReasons(userId, orderId, selectedIssueTypes)
           }}
@@ -107,14 +110,15 @@ const RecipeCardIssues = ({
   )
 }
 RecipeCardIssues.propTypes = {
-  setRecipeCardRequestWithIssueReasons: PropTypes.func.isRequired,
-  selectedRecipeCardsDetails: PropTypes.arrayOf(recipePropType).isRequired,
-  didRequestError: PropTypes.bool.isRequired,
   cleanErrorForRecipeCards: PropTypes.func.isRequired,
+  didRequestError: PropTypes.bool.isRequired,
+  isRequestPending: PropTypes.bool.isRequired,
   params: PropTypes.shape({
     orderId: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
   }).isRequired,
+  selectedRecipeCardsDetails: PropTypes.arrayOf(recipePropType).isRequired,
+  setRecipeCardRequestWithIssueReasons: PropTypes.func.isRequired,
 }
 
 export { RecipeCardIssues }
