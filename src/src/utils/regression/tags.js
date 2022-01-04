@@ -12,3 +12,10 @@ export const withPlatformTags = (...tags) => {
 
   return { it: window.it, describe: window.describe }
 }
+
+export const isPlatform = (...tags) => {
+  const envPlatform = Cypress.env('platform') || ''
+  const platformTags = envPlatform.split(/[,]+/)
+
+  return tags.some(tag => platformTags.includes(tag))
+}

@@ -37,6 +37,10 @@ describe('RecipeCardsSelect', () => {
   let wrapper
   const USER_ID = '2344'
   const ORDER_ID = '5667'
+  const URL_PARAMS = {
+    userId: USER_ID,
+    orderId: ORDER_ID,
+  }
   const RECIPES = [{
     id: '1',
     title: 'test 1',
@@ -55,8 +59,7 @@ describe('RecipeCardsSelect', () => {
   beforeEach(() => {
     wrapper = mount(
       <RecipeCardsSelect
-        userId={USER_ID}
-        orderId={ORDER_ID}
+        params={URL_PARAMS}
         recipes={RECIPES}
         selectedRecipeCards={[]}
         location={{ query: {} }}
@@ -94,8 +97,7 @@ describe('RecipeCardsSelect', () => {
     beforeEach(() => {
       wrapper = mount(
         <RecipeCardsSelect
-          userId={USER_ID}
-          orderId={ORDER_ID}
+          params={URL_PARAMS}
           recipes={RECIPES}
           selectedRecipeCards={[]}
           location={{ query: {} }}
@@ -119,8 +121,7 @@ describe('RecipeCardsSelect', () => {
     beforeEach(() => {
       wrapper = mount(
         <RecipeCardsSelect
-          userId={USER_ID}
-          orderId={ORDER_ID}
+          params={URL_PARAMS}
           recipes={RECIPES}
           selectedRecipeCards={['1']}
           location={{ query: {} }}
@@ -143,8 +144,7 @@ describe('RecipeCardsSelect', () => {
     beforeEach(() => {
       wrapper = shallow(
         <RecipeCardsSelect
-          userId={USER_ID}
-          orderId={ORDER_ID}
+          params={URL_PARAMS}
           recipes={RECIPES}
           selectedRecipeCards={[]}
           location={{ query: {} }}
@@ -170,8 +170,7 @@ describe('RecipeCardsSelect', () => {
     beforeEach(() => {
       wrapper = mount(
         <RecipeCardsSelect
-          userId={USER_ID}
-          orderId={ORDER_ID}
+          params={URL_PARAMS}
           recipes={RECIPES}
           selectedRecipeCards={[]}
           location={{ query: { recipeId: '1'} }}

@@ -28,6 +28,7 @@ const RecipeCardsList = ({ recipes, recipeIds, onInputChange }) => (
             label={label}
             onChange={onInputChange}
             defaultValue={recipeIds.includes(recipe.id)}
+            testingSelector="getHelpRecipeSelect"
           />
         )
       })}

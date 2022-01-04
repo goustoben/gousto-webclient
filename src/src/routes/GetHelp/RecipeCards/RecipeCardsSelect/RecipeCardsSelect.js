@@ -10,10 +10,9 @@ import { AddressSectionContainer } from './AddressSection'
 import css from './RecipeCardsSelect.css'
 
 const RecipeCardsSelect = ({
+  params,
   recipes,
   selectedRecipeCards,
-  userId,
-  orderId,
   setSelectedRecipeCards,
   trackContinueToRecipeCardsIssues,
   location
@@ -24,6 +23,8 @@ const RecipeCardsSelect = ({
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const { orderId, userId } = params
 
   const onInputChange = (id, isChecked) => {
     let recipeIdsSelected
@@ -63,10 +64,12 @@ const RecipeCardsSelect = ({
 }
 
 RecipeCardsSelect.propTypes = {
+  params: PropTypes.shape({
+    orderId: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+  }).isRequired,
   recipes: PropTypes.arrayOf(recipePropType).isRequired,
   selectedRecipeCards: PropTypes.arrayOf(PropTypes.string).isRequired,
-  userId: PropTypes.string.isRequired,
-  orderId: PropTypes.string.isRequired,
   setSelectedRecipeCards: PropTypes.func.isRequired,
   trackContinueToRecipeCardsIssues: PropTypes.func.isRequired,
   location: PropTypes.shape({
