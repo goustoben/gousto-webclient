@@ -1,2 +1,2 @@
 export { CollectionSlug } from './constants'
-export { useCollections } from './useCollections'
+export { useCollections, useAllCollections } from './useCollections'

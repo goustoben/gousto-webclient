@@ -1,1 +1,1 @@
-export { useMenu } from './useMenu'
+export { useMenu, useGetAlternativeOptionsForRecipeLight } from './useMenu'
