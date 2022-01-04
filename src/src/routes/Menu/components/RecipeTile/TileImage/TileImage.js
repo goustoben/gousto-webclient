@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
 import { SoldOutOverlay } from '../../../Recipe/SoldOutOverlay'
-import { VariantHeaderContainer } from '../../../Recipe/VariantHeader/VariantHeaderContainer'
+import { VariantHeader } from '../../../Recipe/VariantHeader'
 
 import css from './TileImage.css'
 import { Image } from '../../Recipe'
@@ -10,6 +10,7 @@ import { Image } from '../../Recipe'
 const TileImage = ({
   recipeId,
   categoryId,
+  originalId,
   showVariantHeader,
   title,
   isOutOfStock,
@@ -28,13 +29,14 @@ const TileImage = ({
       <CookingTimeIcon />
     </div>
 
-    {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />}
+    {showVariantHeader && <VariantHeader recipeId={recipeId} categoryId={categoryId} originalId={originalId} />}
   </button>
 )
 
 TileImage.propTypes = {
   recipeId: PropTypes.string.isRequired,
   categoryId: PropTypes.string.isRequired,
+  originalId: PropTypes.string.isRequired,
   title: PropTypes.string,
   isOutOfStock: PropTypes.bool,
   onClick: PropTypes.func,

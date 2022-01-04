@@ -1,8 +1,8 @@
 import React, { SyntheticEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
-import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
+import { VariantHeader } from '../../Recipe/VariantHeader'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { getRecipeOutOfStock as baseGetRecipeOutOfStock } from '../../selectors/recipe'
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
@@ -12,6 +12,7 @@ import { Title, BrandTag } from '../Recipe'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImageContainer } from './TileImage'
 import css from './RecipeTile.css'
+import { useIfRecipeIdIsOutOfStock } from './Hooks'
 
 const classnames = require('classnames')
 
@@ -34,7 +35,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   const dispatch = useDispatch()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const { currentCollectionId } = useCollections()
-  const isOutOfStock = useSelector(state => getRecipeOutOfStock(state, { recipeId }))
+  const isOutOfStock = useIfRecipeIdIsOutOfStock(recipeId)
   const isFineDineIn = useRecipeIsFineDineIn()
 
   const deviceType = useDeviceType()
@@ -79,7 +80,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
       {
         // mobile banner needs to sit outside of TileImage
         (deviceType === DeviceType.MOBILE)
-        && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />
+        && <VariantHeader recipeId={recipeId} categoryId={categoryId} originalId={originalId} />
       }
 
       <div
@@ -90,6 +91,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
         <TileImageContainer
           recipeId={recipeId}
           categoryId={categoryId}
+          originalId={originalId}
           showVariantHeader={desktopBannerShown}
         />
         <span

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { getRecipeOutOfStock, getRecipeSurcharge } from '../../../selectors/recipe'
+import { getRecipeOutOfStock, getRecipeSurcharge } from '../../selectors/recipe'
 
 export const useIfRecipeIdIsOutOfStock = (recipeId) =>
   useSelector(state => getRecipeOutOfStock(state, { recipeId }))

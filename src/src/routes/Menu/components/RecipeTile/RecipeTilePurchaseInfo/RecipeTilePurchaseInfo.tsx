@@ -6,7 +6,7 @@ import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu
 import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
 import css from './RecipeTilePurchaseInfo.css'
-import { useGetSurchargeForRecipeId, useIfRecipeIdIsOutOfStock } from './Hooks'
+import { useGetSurchargeForRecipeId, useIfRecipeIdIsOutOfStock } from '../Hooks'
 
 const classnames = require('classnames')
 
