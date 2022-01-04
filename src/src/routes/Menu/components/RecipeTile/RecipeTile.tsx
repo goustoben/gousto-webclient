@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
-import { useMenu } from '../../domains/menu'
+import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
 import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { getRecipeOutOfStock as baseGetRecipeOutOfStock } from '../../selectors/recipe'
@@ -9,7 +9,7 @@ import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useCollections } from '../../domains/collections'
 import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
-import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
+import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImageContainer } from './TileImage'
 import css from './RecipeTile.css'
 
@@ -32,7 +32,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   fdiStyling = false,
 }) => {
   const dispatch = useDispatch()
-  const { getAlternativeOptionsForRecipe } = useMenu()
+  const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const { currentCollectionId } = useCollections()
   const isOutOfStock = useSelector(state => getRecipeOutOfStock(state, { recipeId }))
   const isFineDineIn = useRecipeIsFineDineIn()
@@ -111,12 +111,10 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
 
           <Title className={css.recipeTileTitle} />
 
-          <RecipeTilePurchaseInfoContainer
-            recipeId={recipeId}
+          <RecipeTilePurchaseInfo
             originalId={originalId}
             categoryId={categoryId}
             fdiStyling={fdiStyling}
-            hasAlternativeOptions={hasAlternatives}
           />
         </div>
       </div>

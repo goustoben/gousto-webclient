@@ -1,1 +1,1 @@
-export { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfoContainer'
+export { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'

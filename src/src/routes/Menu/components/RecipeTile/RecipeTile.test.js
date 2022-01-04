@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import { RecipeTile } from './RecipeTile'
 import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
-import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
+import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { Title, BrandTag } from '../Recipe'
 import * as MenuRecipeDetails from '../../actions/menuRecipeDetails'
 import * as RecipeContext from '../../context/recipeContext'
@@ -72,8 +72,8 @@ describe('RecipeTile', () => {
     test('should contain one BrandTag component', () => {
       expect(wrapper.find(BrandTag)).toHaveLength(1)
     })
-    test('should contain an RecipeTilePurchaseInfoContainer ', () => {
-      expect(wrapper.find(RecipeTilePurchaseInfoContainer)).toHaveLength(1)
+    test('should contain an RecipeTilePurchaseInfo ', () => {
+      expect(wrapper.find(RecipeTilePurchaseInfo)).toHaveLength(1)
     })
   })
 

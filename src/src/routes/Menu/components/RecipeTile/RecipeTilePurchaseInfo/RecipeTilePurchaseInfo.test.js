@@ -1,9 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import * as RecipeContext from 'routes/Menu/context/recipeContext'
+import * as MenuHook from 'routes/Menu/domains/menu'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptionsMobile, SwapAlternativeOptions } from '../SwapAlternativeOptions'
 import { useDeviceType } from '../../../../../hooks/useDeviceType'
+import * as RecipeTilePurchaseInfoHooks from './Hooks'
 
 jest.mock('../../../../../hooks/useDeviceType')
 
@@ -12,18 +15,22 @@ const mockedUseDeviceType = useDeviceType
 describe('RecipeTilePurchaseInfo', () => {
   let wrapper
   const defaultProps = {
-    surcharge: 0,
-    isOutOfStock: false,
-    recipeId: '123',
-    isFineDineIn: false,
     hasAlternativeOptions: false,
     categoryId: 'some category ID',
     originalId: 'some Original ID',
   }
 
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('when the recipe is out of stock', () => {
     beforeEach(() => {
-      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} isOutOfStock />)
+      mockHooks({
+        useIfRecipeIdIsOutOfStock: true,
+        useGetSurchargeForRecipeId: 0,
+      })
+      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
     })
 
     test('should return null', () => {
@@ -33,7 +40,11 @@ describe('RecipeTilePurchaseInfo', () => {
 
   describe('When the recipe has a surcharge', () => {
     beforeEach(() => {
-      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} surcharge={0.75} />)
+      mockHooks({
+        useIfRecipeIdIsOutOfStock: false,
+        useGetSurchargeForRecipeId: 0.75,
+      })
+      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
     })
     test('then it should render surcharge info', () => {
       expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
@@ -42,38 +53,41 @@ describe('RecipeTilePurchaseInfo', () => {
 
     describe('when the surcharge prop is more than two decimal places', () => {
       test('should render the surcharge per portion to the nearest 1p', () => {
-        wrapper = shallow(<RecipeTilePurchaseInfo
-          {...defaultProps}
-          surcharge={1.992342}
-        />)
+        mockHooks({
+          useIfRecipeIdIsOutOfStock: false,
+          useGetSurchargeForRecipeId: 1.992342,
+        })
+        wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
 
         expect(wrapper.find('.surchargeAmountText').text()).toEqual('+£1.99')
       })
       test('should add 2 zeros for a whole number', () => {
-        wrapper = shallow(<RecipeTilePurchaseInfo
-          {...defaultProps}
-          surcharge={2}
-        />)
+        mockHooks({
+          useIfRecipeIdIsOutOfStock: false,
+          useGetSurchargeForRecipeId: 2,
+        })
+        wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
 
         expect(wrapper.find('.surchargeAmountText').text()).toEqual('+£2.00')
       })
     })
     describe('when the surcharge provided is zero', () => {
       test('should render nothing', () => {
-        wrapper = shallow(<RecipeTilePurchaseInfo
-          {...defaultProps}
-          surcharge={0}
-        />)
+        mockHooks({
+          useIfRecipeIdIsOutOfStock: false,
+          useGetSurchargeForRecipeId: 0,
+        })
+        wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
         expect(wrapper.find('.surchargeAmountText')).toHaveLength(0)
       })
     })
     describe('when the recipe is out of stock', () => {
       test('should render nothing', () => {
-        wrapper = shallow(<RecipeTilePurchaseInfo
-          {...defaultProps}
-          surcharge={2}
-          isOutOfStock
-        />)
+        mockHooks({
+          useIfRecipeIdIsOutOfStock: true,
+          useGetSurchargeForRecipeId: 2,
+        })
+        wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
         expect(wrapper.find('.surchargeInfo')).toHaveLength(0)
       })
     })
@@ -81,6 +95,10 @@ describe('RecipeTilePurchaseInfo', () => {
 
   describe('when recipe is in stock', () => {
     beforeEach(() => {
+      mockHooks({
+        useIfRecipeIdIsOutOfStock: false,
+        useGetSurchargeForRecipeId: 0,
+      })
       wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
     })
 
@@ -91,11 +109,12 @@ describe('RecipeTilePurchaseInfo', () => {
 
   describe('when isFineDineIn is true and fdiStyling is false', () => {
     beforeEach(() => {
-      wrapper = shallow(<RecipeTilePurchaseInfo
-        {...defaultProps}
-        surcharge={0.75}
-        isFineDineIn
-      />)
+      mockHooks({
+        useGetSurchargeForRecipeId: 0.75,
+        useIfRecipeIdIsOutOfStock: false,
+        useRecipeIsFineDineIn: true,
+      })
+      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
     })
 
     test('should have class of surchargeInfo', () => {
@@ -105,9 +124,13 @@ describe('RecipeTilePurchaseInfo', () => {
 
   describe('when isFineDineIn is false and fdiStyling is true', () => {
     beforeEach(() => {
+      mockHooks({
+        useGetSurchargeForRecipeId: 0.75,
+        useIfRecipeIdIsOutOfStock: false,
+        useRecipeIsFineDineIn: false,
+      })
       wrapper = shallow(<RecipeTilePurchaseInfo
         {...defaultProps}
-        surcharge={0.75}
         fdiStyling
       />)
     })
@@ -119,9 +142,13 @@ describe('RecipeTilePurchaseInfo', () => {
 
   describe('when isFineDineIn and fdiStyling are false', () => {
     beforeEach(() => {
+      mockHooks({
+        useGetSurchargeForRecipeId: 0.75,
+        useIfRecipeIdIsOutOfStock: false,
+        useRecipeIsFineDineIn: false,
+      })
       wrapper = shallow(<RecipeTilePurchaseInfo
         {...defaultProps}
-        surcharge={0.75}
       />)
     })
 
@@ -132,10 +159,13 @@ describe('RecipeTilePurchaseInfo', () => {
 
   describe('when isFineDineIn and fdiStyling are true', () => {
     beforeEach(() => {
+      mockHooks({
+        useGetSurchargeForRecipeId: 0.75,
+        useIfRecipeIdIsOutOfStock: false,
+        useRecipeIsFineDineIn: true,
+      })
       wrapper = shallow(<RecipeTilePurchaseInfo
         {...defaultProps}
-        surcharge={0.75}
-        isFineDineIn
         fdiStyling
       />)
     })
@@ -147,6 +177,11 @@ describe('RecipeTilePurchaseInfo', () => {
 
   describe('when there is no Alternative options for a recipe', () => {
     beforeEach(() => {
+      mockHooks({
+        useGetSurchargeForRecipeId: 0,
+        useIfRecipeIdIsOutOfStock: false,
+        useRecipeIsFineDineIn: false,
+      })
       wrapper = shallow(<RecipeTilePurchaseInfo
         {...defaultProps}
         hasAlternativeOptions={false}
@@ -168,6 +203,13 @@ describe('RecipeTilePurchaseInfo', () => {
         }
         mockedUseDeviceType.mockReturnValue('mobile')
 
+        mockHooks({
+          useGetSurchargeForRecipeId: 0,
+          useIfRecipeIdIsOutOfStock: false,
+          useRecipeIsFineDineIn: false,
+          alternativeOptionsForRecipe: ['content does not really matter for the test', 'foo'],
+        })
+
         wrapper = shallow(<RecipeTilePurchaseInfo
           {...props}
         />)
@@ -179,7 +221,7 @@ describe('RecipeTilePurchaseInfo', () => {
       })
 
       test('should pass the necessary props down to the swapping alternative options component', () => {
-        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('recipeId')).toEqual(defaultProps.recipeId)
+        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('recipeId')).toEqual('123')
         expect(wrapper.find(SwapAlternativeOptionsMobile).prop('originalId')).toEqual(defaultProps.originalId)
         expect(wrapper.find(SwapAlternativeOptionsMobile).prop('categoryId')).toEqual(defaultProps.categoryId)
       })
@@ -192,6 +234,12 @@ describe('RecipeTilePurchaseInfo', () => {
           hasAlternativeOptions: true,
         }
         mockedUseDeviceType.mockReturnValue('desktop')
+        mockHooks({
+          useGetSurchargeForRecipeId: 0,
+          useIfRecipeIdIsOutOfStock: false,
+          useRecipeIsFineDineIn: false,
+          alternativeOptionsForRecipe: ['content does not really matter for the test', 'foo'],
+        })
         wrapper = shallow(<RecipeTilePurchaseInfo
           {...props}
         />)
@@ -203,10 +251,43 @@ describe('RecipeTilePurchaseInfo', () => {
       })
 
       test('should pass the necessary props down to the swapping alternative options component', () => {
-        expect(wrapper.find(SwapAlternativeOptions).prop('recipeId')).toEqual(defaultProps.recipeId)
+        expect(wrapper.find(SwapAlternativeOptions).prop('recipeId')).toEqual('123')
         expect(wrapper.find(SwapAlternativeOptions).prop('originalId')).toEqual(defaultProps.originalId)
         expect(wrapper.find(SwapAlternativeOptions).prop('categoryId')).toEqual(defaultProps.categoryId)
       })
     })
   })
 })
+
+const mockHooks = ({
+  useIfRecipeIdIsOutOfStock,
+  useGetSurchargeForRecipeId,
+  useRecipeIsFineDineIn,
+  alternativeOptionsForRecipe = [],
+  useRecipeField = '123',
+}) => {
+  if (useIfRecipeIdIsOutOfStock !== undefined) {
+    jest.spyOn(RecipeTilePurchaseInfoHooks, 'useIfRecipeIdIsOutOfStock')
+      .mockImplementation(() => useIfRecipeIdIsOutOfStock)
+  }
+
+  if (useGetSurchargeForRecipeId !== undefined) {
+    jest.spyOn(RecipeTilePurchaseInfoHooks, 'useGetSurchargeForRecipeId')
+      .mockImplementation(() => useGetSurchargeForRecipeId)
+  }
+
+  if (useRecipeIsFineDineIn !== undefined) {
+    jest.spyOn(RecipeContext, 'useRecipeIsFineDineIn')
+      .mockImplementation(() => useRecipeIsFineDineIn)
+  }
+
+  if (alternativeOptionsForRecipe !== undefined) {
+    jest.spyOn(MenuHook, 'useGetAlternativeOptionsForRecipeLight')
+      .mockImplementation(() => () => alternativeOptionsForRecipe)
+  }
+
+  if (useRecipeField !== undefined) {
+    jest.spyOn(RecipeContext, 'useRecipeField')
+      .mockImplementation(() => useRecipeField)
+  }
+}

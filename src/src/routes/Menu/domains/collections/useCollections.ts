@@ -5,9 +5,11 @@ import { useCurrentCollection } from './internal/useCurrentCollection'
 import { useChangeCollectionById } from './internal/useChangeCollectionById'
 import { MenuCollection } from '../../types'
 
+export const useAllCollections = () => useSelector(getMenuCollections)
+
 export const useCollections = () => {
   const currentCollection = useCurrentCollection()
-  const allCollections = useSelector(getMenuCollections)
+  const allCollections = useAllCollections()
   const displayedCollections = useDisplayedCollections()
   const changeCollectionById = useChangeCollectionById()
 

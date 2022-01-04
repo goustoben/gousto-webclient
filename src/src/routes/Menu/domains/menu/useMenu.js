@@ -1,4 +1,4 @@
-import { useCollections } from '../collections'
+import { useCollections, useAllCollections } from '../collections'
 import { useAlternativeOptions } from './internal/useAlternativeOptions'
 import { useGetRecipesForCollectionId } from './internal/useGetRecipesForCollectionId'
 
@@ -13,4 +13,14 @@ export const useMenu = () => {
     getRecipesForCollectionId,
     getAlternativeOptionsForRecipe,
   }
+}
+
+/**
+ * Produces getter function to retrieve alternatives for a recipe.
+ */
+export const useGetAlternativeOptionsForRecipeLight = () => {
+  const allCollections = useAllCollections()
+  const { getAlternativeOptionsForRecipe } = useAlternativeOptions({allCollections})
+
+  return getAlternativeOptionsForRecipe
 }
