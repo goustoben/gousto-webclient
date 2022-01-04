@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import { CTA } from 'goustouicomponents'
 import { boxTypesRedesign } from 'routes/BoxPrices/boxPricesConfig'
 import { Benefits } from 'routes/Home/Benefits'
+import { promo } from 'config/home'
+import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
 import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import css from './BoxPriceBlock.css'
@@ -17,10 +19,12 @@ class BoxPriceBlock extends Component {
   }
 
   render() {
-    const { boxInfo, numPersons, boxPricesBoxSizeSelected, selectedBox } = this.props
+    const { boxInfo, numPersons, boxPricesBoxSizeSelected, selectedBox, trackUTMAndPromoCode } =
+      this.props
     const { selected } = this.state
     const boxTypeConfig = boxTypesRedesign[numPersons]
-    const { title, ctaText } = boxTypeConfig
+    const { title, boxSizeTrackingValue } = boxTypeConfig
+    const { boxPricesCTAText } = promo
 
     return (
       <div
@@ -31,20 +35,29 @@ class BoxPriceBlock extends Component {
           <BoxPriceSuitableForSection numPersons={numPersons} />
           <p className={css.subhead}>Select number of recipes</p>
           <div className={css.buttonGroup}>
-            {boxInfo.map((item, index) => (
-              <button
-                key={item.num_portions}
-                type="button"
-                onClick={() =>
-                  this.setState({
-                    selected: index,
-                  })
-                }
-                className={selected === index ? css.boxSizeButtonActive : css.boxSizeButton}
-              >
-                {item.num_portions}
-              </button>
-            ))}
+            {boxInfo.map((item, index) => {
+              const numRecipes = item.num_portions
+
+              return (
+                <button
+                  key={numRecipes}
+                  type="button"
+                  onClick={() => {
+                    trackUTMAndPromoCode(boxPricesClickRecipeNumber, {
+                      box_size: boxSizeTrackingValue,
+                      number_of_recipes: numRecipes,
+                    })
+
+                    this.setState({
+                      selected: index,
+                    })
+                  }}
+                  className={selected === index ? css.boxSizeButtonActive : css.boxSizeButton}
+                >
+                  {numRecipes}
+                </button>
+              )
+            })}
           </div>
           {2 - selected > 0 ? (
             <div className={css.selectDescription}>
@@ -72,7 +85,7 @@ class BoxPriceBlock extends Component {
           </div>
           <div className={css.ctaContainer}>
             <CTA isFullWidth onClick={() => boxPricesBoxSizeSelected(numPersons)}>
-              {ctaText}
+              {boxPricesCTAText}
             </CTA>
           </div>
           <div className={css.benefitContainer}>
@@ -89,6 +102,7 @@ BoxPriceBlock.propTypes = {
   numPersons: PropTypes.number.isRequired,
   boxPricesBoxSizeSelected: PropTypes.func,
   selectedBox: PropTypes.number.isRequired,
+  trackUTMAndPromoCode: PropTypes.func.isRequired,
 }
 
 BoxPriceBlock.defaultProps = {

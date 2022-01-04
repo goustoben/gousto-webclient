@@ -17,6 +17,7 @@ describe('Given BoxPriceBlockRedesign', () => {
       total: '29.99',
     },
   ]
+  const trackUTMAndPromoCode = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
@@ -25,6 +26,7 @@ describe('Given BoxPriceBlockRedesign', () => {
         numPersons={2}
         selectedBox={2}
         boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+        trackUTMAndPromoCode={trackUTMAndPromoCode}
       />
     )
   })

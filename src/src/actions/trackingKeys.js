@@ -130,3 +130,5 @@ export const clickCorporateEnquiriesLinkFooter = 'click_corporate_enquiry_footer
 export const clickGiftCardsFooterLink = 'click_gift_cards_footer'
 export const continueToSsrClick = 'continue_to_ssr_click'
 export const clickViewBasket = 'view_basket'
+export const boxPricesClickTab = 'box_prices_click_tab'
+export const boxPricesClickRecipeNumber = 'box_prices_click_recipe_number'

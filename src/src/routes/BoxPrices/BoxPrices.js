@@ -30,6 +30,7 @@ class BoxPrices extends React.PureComponent {
       numPersonsToBoxDescriptors,
       loading,
       error,
+      trackUTMAndPromoCode,
     } = this.props
     const { image, header } = getHeroDetails()
 
@@ -41,6 +42,7 @@ class BoxPrices extends React.PureComponent {
           loading={loading}
           boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
           numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
+          trackUTMAndPromoCode={trackUTMAndPromoCode}
         />
       </div>
     ) : (
@@ -77,6 +79,7 @@ BoxPrices.propTypes = {
   isBoxPricesRedesignEnabled: PropTypes.bool,
   boxPricesBoxSizeSelected: PropTypes.func,
   numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
+  trackUTMAndPromoCode: PropTypes.func,
 }
 
 BoxPrices.defaultProps = {
@@ -85,6 +88,7 @@ BoxPrices.defaultProps = {
   isBoxPricesRedesignEnabled: false,
   boxPricesBoxSizeSelected: () => {},
   numPersonsToBoxDescriptors: null,
+  trackUTMAndPromoCode: () => {},
 }
 
 BoxPrices.contextType = ReactReduxContext
