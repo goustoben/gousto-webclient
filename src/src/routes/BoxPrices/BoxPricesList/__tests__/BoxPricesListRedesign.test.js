@@ -8,6 +8,7 @@ describe('Given BoxPriceList component', () => {
   let wrapper
 
   const boxPricesBoxSizeSelected = jest.fn()
+  const trackUTMAndPromoCode = jest.fn()
 
   beforeEach(() => {
     wrapper = mount(
@@ -15,6 +16,7 @@ describe('Given BoxPriceList component', () => {
         numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
         boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
         selectedBox={2}
+        trackUTMAndPromoCode={trackUTMAndPromoCode}
       />
     )
   })

@@ -9,7 +9,11 @@ describe('BoxPricesRedesign', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <BoxPricesRedesign numPersonsToBoxDescriptors={numPersonsToBoxDescriptors} loading={false} />
+      <BoxPricesRedesign
+        numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
+        loading={false}
+        trackUTMAndPromoCode={jest.fn()}
+      />
     )
   })
 

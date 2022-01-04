@@ -9,6 +9,7 @@ const BoxPricesListRedesign = ({
   numPersonsToBoxDescriptors,
   boxPricesBoxSizeSelected,
   selectedBox,
+  trackUTMAndPromoCode,
 }) => (
   <div className={css.boxPriceListRedesign}>
     {Object.entries(numPersonsToBoxDescriptors).map(([numPersonsStr, boxDescriptors]) => {
@@ -22,6 +23,7 @@ const BoxPricesListRedesign = ({
           boxInfo={boxDescriptors}
           boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
           selectedBox={selectedBox}
+          trackUTMAndPromoCode={trackUTMAndPromoCode}
         />
       )
     })}
@@ -32,6 +34,7 @@ BoxPricesListRedesign.propTypes = {
   numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
   boxPricesBoxSizeSelected: PropTypes.func,
   selectedBox: PropTypes.number.isRequired,
+  trackUTMAndPromoCode: PropTypes.func.isRequired,
 }
 
 BoxPricesListRedesign.defaultProps = {
