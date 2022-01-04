@@ -6,6 +6,7 @@ import { setRecipeCardRequestWithIssueReasons, cleanErrorForRecipeCards } from '
 
 const mapStateToProps = (state) => ({
   didRequestError: Boolean(state.error.get(actionTypes.GET_HELP_SET_SELECTED_RECIPE_CARDS_ISSUES, null)),
+  isRequestPending: Boolean(state.pending.get(actionTypes.GET_HELP_SET_SELECTED_RECIPE_CARDS_ISSUES), false),
   selectedRecipeCardsDetails: getSelectedRecipeCardsDetails(state),
 })
 

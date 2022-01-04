@@ -72,7 +72,7 @@ const AddressSection = ({
             </button>
           )}
       </div>
-      {selectedAddress
+      {selectedAddress.name
         ? (getAddressSectionContent())
         : (
           <div className={css.loadingWrapper}>
