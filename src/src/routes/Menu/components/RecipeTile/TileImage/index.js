@@ -1,1 +1,1 @@
-export { TileImageContainer } from './TileImageContainer'
+export { TileImage } from './TileImage'

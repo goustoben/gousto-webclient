@@ -10,7 +10,7 @@ import { useCollections } from '../../domains/collections'
 import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
-import { TileImageContainer } from './TileImage'
+import { TileImage } from './TileImage'
 import css from './RecipeTile.css'
 import { useIfRecipeIdIsOutOfStock } from './Hooks'
 
@@ -65,8 +65,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
 
   const showVariantHeader = hasAlternatives && !isOutOfStock
 
-  const mobileBannerShown = (showVariantHeader && deviceType === DeviceType.MOBILE)
-  const desktopBannerShown = (showVariantHeader && (deviceType === DeviceType.DESKTOP || deviceType === DeviceType.TABLET))
+  const mobileBannerShown = showVariantHeader && deviceType === DeviceType.MOBILE
 
   return (
     <div
@@ -88,11 +87,9 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           [css.recipeTileIsFineDineIn]: isFineDineIn && fdiStyling
         })}
       >
-        <TileImageContainer
-          recipeId={recipeId}
+        <TileImage
           categoryId={categoryId}
           originalId={originalId}
-          showVariantHeader={desktopBannerShown}
         />
         <span
           className={classnames(css.recipeTagHolder, {
