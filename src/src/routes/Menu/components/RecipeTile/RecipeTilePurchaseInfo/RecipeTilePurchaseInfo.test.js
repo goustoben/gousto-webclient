@@ -6,7 +6,7 @@ import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptionsMobile, SwapAlternativeOptions } from '../SwapAlternativeOptions'
 import { useDeviceType } from '../../../../../hooks/useDeviceType'
-import * as RecipeTilePurchaseInfoHooks from './Hooks'
+import * as RecipeTilePurchaseInfoHooks from '../Hooks'
 
 jest.mock('../../../../../hooks/useDeviceType')
 
