@@ -98,6 +98,7 @@ const RecipeCardIssues = ({
           onClick={() => {
             setRecipeCardRequestWithIssueReasons(userId, orderId, selectedIssueTypes)
           }}
+          testingSelector="getHelpRecipeCardConfirm"
         >
           Confirm
         </CTA>

@@ -10,6 +10,10 @@ jest.mock('../RecipeLinks', () => ({
 describe('<RecipeCards />', () => {
   const USER_ID = '1111',
   const ORDER_ID = '1234'
+  const URL_PARAMS = {
+    userId: USER_ID,
+    orderId: ORDER_ID,
+  }
   const TEST_RECIPES = [
     {
       id: '1',
@@ -43,10 +47,9 @@ describe('<RecipeCards />', () => {
   beforeEach(() => {
     wrapper = mount(
       <RecipeCards
-        orderId={ORDER_ID}
+        params={URL_PARAMS}
         recipes={TEST_RECIPES}
         trackClickChoosePrintedRecipeCards={trackClickChoosePrintedRecipeCards}
-        userId={USER_ID}
       />
     )
   })

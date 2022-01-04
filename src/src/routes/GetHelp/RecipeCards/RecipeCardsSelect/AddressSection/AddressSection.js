@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import actual from 'actual'
 import PropTypes from 'prop-types'
-import { Card , Modal, ModalHeader } from 'goustouicomponents'
+import { Card, Modal, ModalHeader } from 'goustouicomponents'
 import Loading from 'Loading'
 
 import { addressPropType } from '../../../getHelpPropTypes'
@@ -20,7 +20,7 @@ const AddressSection = ({
   }
   useEffect(() => {
     loadShippingAddresses()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const getAddressSectionContent = () => {
     if (isChangeClicked) {
@@ -61,15 +61,16 @@ const AddressSection = ({
       <div className={css.addressSubTitle}>
         <p className={css.title}>Delivery Address</p>
         {(showChangeButton && !isChangeClicked)
-           && (
-           <button
-             className={css.changeAddress}
-             type="button"
-             onClick={() => setChangeClicked(true)}
-           >
-             Change
-           </button>
-           )}
+          && (
+            <button
+              className={css.changeAddress}
+              type="button"
+              onClick={() => setChangeClicked(true)}
+              data-testing="changeAddressButton"
+            >
+              Change
+            </button>
+          )}
       </div>
       {selectedAddress
         ? (getAddressSectionContent())
