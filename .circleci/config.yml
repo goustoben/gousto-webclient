@@ -442,7 +442,6 @@ jobs:
               --branch "${CIRCLE_BRANCH}" \
               --build-url "${CIRCLE_BUILD_URL}"
 
-
   publish-pacts:
     docker: *gousto_platform_image
     resource_class: large
@@ -709,8 +708,6 @@ workflows:
           pact_canideploy_retry_attempts: 18
           context: gousto-beta-aws-app-circleci
           requires:
-            - jest-coverage-report
-            - eslint-generate-report
             - publish-pacts
             - test-regression-web
             - test-regression-mobile
