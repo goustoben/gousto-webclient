@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { RecipeTile } from './RecipeTile'
-import { TileImageContainer } from './TileImage'
+import { TileImage } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { Title, BrandTag } from '../Recipe'
@@ -61,8 +61,8 @@ describe('RecipeTile', () => {
       expect(wrapper.type()).toBe('div')
     })
 
-    test('should contain one TileImageContainer component', () => {
-      expect(wrapper.find(TileImageContainer)).toHaveLength(1)
+    test('should contain one TileImage component', () => {
+      expect(wrapper.find(TileImage)).toHaveLength(1)
     })
 
     test('should contain one RecipeTag component', () => {
@@ -85,8 +85,8 @@ describe('RecipeTile', () => {
       />)
     })
 
-    test('should contain one TileImageContainer component', () => {
-      expect(wrapper.find(TileImageContainer)).toHaveLength(1)
+    test('should contain one TileImage component', () => {
+      expect(wrapper.find(TileImage)).toHaveLength(1)
     })
   })
 

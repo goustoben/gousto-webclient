@@ -18,6 +18,7 @@ describe('RecipeTilePurchaseInfo', () => {
     hasAlternativeOptions: false,
     categoryId: 'some category ID',
     originalId: 'some Original ID',
+    fdiStyling: false,
   }
 
   afterEach(() => {
