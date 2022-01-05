@@ -15,7 +15,7 @@ const renderOrders = (closeOrders) => {
         <Order
           id={orderId}
           date={moment(order.get('deliveryDate')).format('dddd, Do MMMM')}
-          numPeople={order.getIn(['box', 'numPeople'])}
+          numPeople={order.getIn(['box', 'numPortions'])}
           numRecipes={order.getIn(['box', 'numRecipes'])}
         />
       </div>
