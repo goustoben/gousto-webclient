@@ -64,6 +64,7 @@
   text-align: right;
   @media ScreenXXSMax {
     font-size: 12px;
+    margin-left: auto;
     /* We don't have defined 12px font size */
   }
 }
