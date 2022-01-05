@@ -1,14 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-// import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
+import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { trackingReferFriendSocialSharing } from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
 import { SocialShareButtons } from '..'
 import { SOCIAL_TYPES } from '../../socialReferralHelper'
 
-// jest.mock('actions/loggingmanager', () => ({
-//   trackUserFreeFoodLinkShare: jest.fn(),
-// }))
+jest.mock('actions/loggingmanager', () => ({
+  trackUserFreeFoodLinkShare: jest.fn(),
+}))
 
 jest.mock('actions/user', () => ({
   trackingReferFriendSocialSharing: jest.fn(),
@@ -23,7 +23,7 @@ describe('SocialShareButtons', () => {
     beforeEach(() => {
       wrapper = shallow(
         <SocialShareButtons
-          // trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+          trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
           trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
         />
       )
@@ -33,7 +33,7 @@ describe('SocialShareButtons', () => {
     })
 
     test('then the tracking event should be called', () => {
-      // expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.email })
+      expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.email })
       expect(trackingReferFriendSocialSharing).toHaveBeenCalledWith(
         actionTypes.REFER_FRIEND_LINK_SHARE,
         'ReferFriendLink Share',

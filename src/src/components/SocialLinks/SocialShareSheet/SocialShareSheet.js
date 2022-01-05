@@ -18,11 +18,11 @@ class SocialShareSheet extends React.PureComponent {
   }
 
   toggleEmailModal = () => {
-    const { trackingReferFriendSocialSharing } = this.props
+    const { trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare } = this.props
     const { isEmailFormOpen } = this.state
     if (!isEmailFormOpen) {
       trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.email)
-      // trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.email })
+      trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.email })
     }
 
     this.setState((prevState) => ({ isEmailFormOpen: !prevState.isEmailFormOpen }))
@@ -36,7 +36,7 @@ class SocialShareSheet extends React.PureComponent {
       trackingReferFriend,
       userFirstName,
       rafOffer,
-      // trackUserFreeFoodLinkShare,
+      trackUserFreeFoodLinkShare,
     } = this.props
     const { isEmailFormOpen } = this.state
 
@@ -63,15 +63,16 @@ class SocialShareSheet extends React.PureComponent {
           </div>
         </div>
 
-        <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName="icon-text-message-colour" rowName={SOCIAL_TYPES.text} />
-        <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName="icon-whatsapp-colour" rowName={SOCIAL_TYPES.whatsapp} />
-        <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }} svgName="icon-facebook-colour" rowName={SOCIAL_TYPES.facebook} />
+        <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare) }} svgName="icon-text-message-colour" rowName={SOCIAL_TYPES.text} />
+        <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare) }} svgName="icon-whatsapp-colour" rowName={SOCIAL_TYPES.whatsapp} />
+        <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare) }} svgName="icon-facebook-colour" rowName={SOCIAL_TYPES.facebook} />
 
         <UserRAFLink
           classContainer={css.row}
           classLinkContainer={css.rafLinkWrapper}
           referralCode={referralCode}
           trackingReferFriend={trackingReferFriend}
+          trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
           isModal
         >
           <div>
@@ -93,7 +94,7 @@ SocialShareSheet.propTypes = {
   trackingReferFriend: PropTypes.func.isRequired,
   userFirstName: PropTypes.string.isRequired,
   rafOffer: PropTypes.instanceOf(Immutable.Map),
-  // trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
+  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
 SocialShareSheet.defaultProps = {

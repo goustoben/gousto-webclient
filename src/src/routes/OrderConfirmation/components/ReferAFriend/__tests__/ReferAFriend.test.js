@@ -21,6 +21,7 @@ describe('ReferAFriend', () => {
       device: 'test',
       trackingReferFriend: jest.fn(),
       trackingReferFriendSocialSharing: jest.fn(),
+      trackUserFreeFoodLinkShare: jest.fn(),
     }
 
     wrapper = shallow(<ReferAFriend rafOffer={rafOffer} {...testProps} />)

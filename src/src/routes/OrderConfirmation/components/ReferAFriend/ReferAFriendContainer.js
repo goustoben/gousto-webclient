@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
+import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
 import { getReferralOffer, getReferralCode, getUserFirstName } from 'selectors/user'
 import { ReferAFriend } from './ReferAFriend'
@@ -14,4 +15,5 @@ const mapStateToProps = (state) => ({
 export const ReferAFriendContainer = connect(mapStateToProps, {
   trackingReferFriend,
   trackingReferFriendSocialSharing,
+  trackUserFreeFoodLinkShare,
 })(ReferAFriend)
