@@ -16,7 +16,7 @@ const propTypes = {
   offerCredit: PropTypes.string.isRequired,
   elementType: PropTypes.string,
   trackingReferFriendSocialSharing: PropTypes.func.isRequired,
-  // trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
+  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -28,11 +28,10 @@ class SocialShareButtons extends PureComponent {
     this.state = { isEmailModalOpen: false }
   }
 
-  // commenting out all reference to trackUserFreeFoodLinkShare as hotfix to fix bug over NY period
   openEmailModal = () => {
-    const { trackingReferFriendSocialSharing } = this.props
+    const { trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare } = this.props
     trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.email)
-    // trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.email })
+    trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.email })
     this.setState({ isEmailModalOpen: true })
   }
 
@@ -46,7 +45,7 @@ class SocialShareButtons extends PureComponent {
       userFirstName,
       trackingReferFriendSocialSharing,
       device,
-      // trackUserFreeFoodLinkShare,
+      trackUserFreeFoodLinkShare,
     } = this.props
 
     getMessengerReferralLink(
@@ -54,7 +53,7 @@ class SocialShareButtons extends PureComponent {
       userFirstName,
       trackingReferFriendSocialSharing,
       device,
-      // trackUserFreeFoodLinkShare,
+      trackUserFreeFoodLinkShare,
     )
   }
 
@@ -63,14 +62,14 @@ class SocialShareButtons extends PureComponent {
       referralCode,
       userFirstName,
       trackingReferFriendSocialSharing,
-      // trackUserFreeFoodLinkShare,
+      trackUserFreeFoodLinkShare,
     } = this.props
 
     getFacebookReferralLink(
       referralCode,
       userFirstName,
       trackingReferFriendSocialSharing,
-      // trackUserFreeFoodLinkShare,
+      trackUserFreeFoodLinkShare,
     )
   }
 

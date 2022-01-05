@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
-import { trackUserFreeFoodPageView } from 'actions/loggingmanager'
+import { trackUserFreeFoodPageView, trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { getReferralOffer, getReferralCode, getUserFirstName, getLoadingStateForOffer } from 'selectors/user'
 
 import { Referral } from './Referral'
@@ -19,7 +19,7 @@ const ReferralContainer = connect(mapStateToProps, {
   trackingReferFriend,
   trackingReferFriendSocialSharing,
   trackUserFreeFoodPageView,
-  // trackUserFreeFoodLinkShare,
+  trackUserFreeFoodLinkShare,
 })(Referral)
 
 export { ReferralContainer }

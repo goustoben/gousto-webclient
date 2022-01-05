@@ -39,7 +39,7 @@ describe('DuplicateOrderModal', () => {
           id: '42',
           deliveryDate: '1990-01-01T02:02:00Z',
           box: {
-            numPeople: '4',
+            numPortions: '4',
             numRecipes: '2',
           },
         },
@@ -47,7 +47,7 @@ describe('DuplicateOrderModal', () => {
           id: '52',
           deliveryDate: '1991-01-01T02:02:00Z',
           box: {
-            numPeople: '12',
+            numPortions: '12',
             numRecipes: '20',
           },
         },

@@ -20,9 +20,10 @@ const propTypes = {
   device: PropTypes.string.isRequired,
   trackingReferFriend: PropTypes.func.isRequired,
   trackingReferFriendSocialSharing: PropTypes.func.isRequired,
+  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
-const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingReferFriend, trackingReferFriendSocialSharing }) => {
+const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingReferFriend, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare }) => {
   const yourOffer = rafOffer.get('creditFormatted')
   const theirBoxOffer = rafOffer.get('firstBoxDiscountFormatted')
   const theirMonthOffer = rafOffer.get('firstMonthDiscountFormatted')
@@ -40,6 +41,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
           classLinkContainer={css.rafLink}
           referralCode={referralCode}
           trackingReferFriend={trackingReferFriend}
+          trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
           isModal
         >
           <SocialButton text="Copy Invite Link" type="link" elementType="component" />
@@ -51,6 +53,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
           device={device}
           offerCredit={yourOffer}
           trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
+          trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
           elementType="component"
         />
       </div>
