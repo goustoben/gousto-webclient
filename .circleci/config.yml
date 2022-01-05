@@ -65,6 +65,7 @@ jobs:
     working_directory: /mnt/ramdisk
     steps:
       - checkout
+      - codeartifact_authenticate
       - run:
           name: Download platform deploy scripts and set the ENVIRONMENT variable from the branch name
           command: /gousto/platform-setup.sh
@@ -102,7 +103,6 @@ jobs:
       - setup_remote_docker
       - attach_workspace:
           at: /
-      - codeartifact_authenticate
       - run:
           name: Setup Github SSH access
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
