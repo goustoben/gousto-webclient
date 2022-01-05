@@ -47,6 +47,17 @@ commands:
          name: Upload image files to S3, does not set gzip content-encoding header
          command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.jpg" --include "*.png" --include "*.gif" --recursive --cache-control max-age=315360000,no-transform,public --acl public-read
 
+  codeartifact_authenticate:
+    description: Authenticate with AWS CodeArtifact
+    steps:
+      - run: >
+          aws codeartifact login
+          --tool npm
+          --repository proxy-repository
+          --domain gousto
+          --domain-owner ${AWS_CODEARTIFACT_ACCOUNT_NUMBER}
+          --region ${AWS_CODEARTIFACT_REGION}
+
 jobs:
   setup-ci-variables-scripts:
     docker: *gousto_platform_image #stock image missing /gousto directory
@@ -91,6 +102,7 @@ jobs:
       - setup_remote_docker
       - attach_workspace:
           at: /
+      - codeartifact_authenticate
       - run:
           name: Setup Github SSH access
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
