@@ -45,11 +45,11 @@ describe('MyDeliveries', () => {
   })
 
   describe('rendering', () => {
-    const expectAlertAndRetryButton = (container) => {
+    const expectAlertAndRetryButton = (container, errorMessage) => {
       const alert = container.find('Alert')
       const buttons = container.find('Button')
       expect(alert.length).toEqual(1)
-      expect(alert.find('p').prop('children')).toEqual('We\'re not able to display your deliveries right now. Please try again later.')
+      expect(alert.find('p').prop('children')).toEqual(errorMessage)
       expect(buttons.length).toEqual(1)
       expect(buttons.at(0).childAt(0).text()).toEqual('Retry')
     }
@@ -58,7 +58,8 @@ describe('MyDeliveries', () => {
       wrapper.setProps({
         isFetchingOrders: false,
         isFetchingAddresses: false,
-        didErrorFetchingOrders: null,
+        didErrorFetchingPendingOrders: null,
+        didErrorFetchingProjectedOrders: null,
         didErrorFetchingAddresses: null,
       })
     })
@@ -92,25 +93,38 @@ describe('MyDeliveries', () => {
       expect(wrapper.find('Loading').length).toEqual(0)
     })
 
-    test('should render an error Alert and retry button when fetching orders fails', () => {
+    test('should render a specific error Alert and retry button when fetching orders fails', () => {
+      const errorMessage = 'We\'re not able to display your upcoming orders right now. Please try again later.'
       wrapper.setProps({
         didErrorFetchingPendingOrders: 'error'
       })
-      expectAlertAndRetryButton(wrapper)
+      expectAlertAndRetryButton(wrapper, errorMessage)
     })
 
-    test('should render an error Alert and retry button when fetching projected orders fails', () => {
+    test('should render a specific error Alert and retry button when fetching projected orders fails', () => {
+      const errorMessage = 'We\'re not able to display your future deliveries right now. Please try again later.'
       wrapper.setProps({
         didErrorFetchingProjectedOrders: 'error'
       })
-      expectAlertAndRetryButton(wrapper)
+      expectAlertAndRetryButton(wrapper, errorMessage)
     })
 
-    test('should render an error Alert and retry button when fetching addresses fails', () => {
+    test('should render a specific error Alert and retry button when fetching addresses fails', () => {
+      const errorMessage = 'We\'re not able to display your deliveries right now due to an issue retrieving your address. Please try again later.'
       wrapper.setProps({
         didErrorFetchingAddresses: 'error'
       })
-      expectAlertAndRetryButton(wrapper)
+      expectAlertAndRetryButton(wrapper, errorMessage)
+    })
+
+    test('should render a generic error Alert and retry button when fetching addresses and orders fails', () => {
+      const errorMessage = 'We\'re not able to display your deliveries right now. Please try again later.'
+      wrapper.setProps({
+        didErrorFetchingAddresses: 'error',
+        didErrorFetchingProjectedOrders: 'error',
+        didErrorFetchingPendingOrders: 'error'
+      })
+      expectAlertAndRetryButton(wrapper, errorMessage)
     })
   })
 

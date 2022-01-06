@@ -21,6 +21,33 @@ class MyDeliveries extends React.PureComponent {
     signupSetGoustoOnDemandEnabled(false)
   }
 
+  getErrorMessage() {
+    const {
+      didErrorFetchingPendingOrders,
+      didErrorFetchingProjectedOrders,
+      didErrorFetchingAddresses,
+    } = this.props
+
+    const errorMessages = {
+      pendingOrderError: 'We\'re not able to display your upcoming orders right now. Please try again later.',
+      projectedOrderError: 'We\'re not able to display your future deliveries right now. Please try again later.',
+      addressError: 'We\'re not able to display your deliveries right now due to an issue retrieving your address. Please try again later.',
+      genericError: 'We\'re not able to display your deliveries right now. Please try again later.'
+    }
+
+    if (didErrorFetchingAddresses !== null
+      && (didErrorFetchingProjectedOrders !== null
+      || didErrorFetchingPendingOrders !== null)) {
+      return errorMessages.genericError
+    }
+
+    if (didErrorFetchingAddresses !== null) {
+      return errorMessages.addressError
+    }
+
+    return didErrorFetchingPendingOrders !== null ? errorMessages.pendingOrderError : errorMessages.projectedOrderError
+  }
+
   fetchOrdersAndAddresses = async () => {
     const { userId, userLoadAddresses, userLoadData, userLoadNewOrders } = this.props
 
@@ -40,10 +67,10 @@ class MyDeliveries extends React.PureComponent {
     this.fetchOrdersAndAddresses()
   }
 
-  static renderFetchError = (retryFetch) => (
+  static renderFetchError = (retryFetch, errorMessage) => (
     <div>
       <Alert type="danger">
-        <p>We&#39;re not able to display your deliveries right now. Please try again later.</p>
+        <p>{errorMessage}</p>
       </Alert>
       <div className={css.button}>
         <Button onClick={retryFetch}>Retry</Button>
@@ -72,7 +99,9 @@ class MyDeliveries extends React.PureComponent {
     }
 
     if (didErrorFetchingPendingOrders !== null || didErrorFetchingProjectedOrders !== null || didErrorFetchingAddresses !== null) {
-      return MyDeliveries.renderFetchError(this.retryFetch)
+      const errorMessage = this.getErrorMessage()
+
+      return MyDeliveries.renderFetchError(this.retryFetch, errorMessage)
     }
 
     return <OrdersList />
