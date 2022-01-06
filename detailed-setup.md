@@ -163,22 +163,19 @@ We have two variables we can set for `node-config` to pick up specific files. Th
 
 These are the files, and the order of execution:
 
-1. default environment variable. We keep all keys in here, so it's a singular place we can see all our variable. **Will always be loaded**.
+1. Node-config starts with the `default` file. We keep all keys in here, so it's a singular place we can see all our variables. **Will always be loaded**.
    * `config/default.json5`
 
-2. This is load based on the `NODE_CONFIG_ENV`, if not defined will not be loaded
+2. If there's an env var `NODE_CONFIG_ENV`, Node-config loads `config/${NODE_CONFIG_ENV}.json5`
    * e.g. `config/staging.json5`
-   * `config/{NODE_CONFIG_ENV}.json5`
 
-3. this is load based on the `NODE_APP_INSTANCE`, if not defined will not be loaded
+3. If there's an env var `NODE_APP_INSTANCE`, Node-config loads `config/${NODE_APP_INSTANCE}.json5`
    * e.g. `config/local.json5`
-   * `config/{NODE_APP_INSTANCE}.json5`
 
-4. This is load based on the `NODE_CONFIG_ENV` and `NODE_APP_INSTANCE`, if neither are defined will not be loaded
-  * `config/staging-local.json5`
-  * `config/{NODE_CONFIG_ENV}-{NODE_APP_INSTANCE}.json5`
+4. If both vars exist, Node-config loads `config/{NODE_CONFIG_ENV}-{NODE_APP_INSTANCE}.json5`
+   * e.g. `config/staging-local.json5`
 
-5. This file can/will load variable from shell that are defined, this file is the last called and if the environment variables exist/defined it will overwrite that variable in the JSON file. **Will always be loaded**.
+5. Finally, Node-config looks for a file called `custom-environment-variables.json5`. It always loads this last, giving it highest priority. **Will always be loaded**.
   * `config/custom-environment-variables.json5`
 
 See [`node-config`](https://github.com/lorenwest/node-config) for more information.

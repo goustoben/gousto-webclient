@@ -1,4 +1,5 @@
-// config/custom-environment-variables.json
+// These values may be overridden by config/custom-environment-variables.json
+// See https://github.com/Gousto/gousto-webclient/blob/develop/detailed-setup.md#quick-guide-to-node-config
 {
   "build": 'development',
   "environment_name": "local",
@@ -13,7 +14,6 @@
   "datadog_rum_sdk_app_id": "",
   "datadog_enabled": false,
   "hmr_enabled": false,
-  "client_dev_server_enabled": false,
   "recaptcha_referral_public_key": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
   "recaptcha_referral_private_key": "",
   "running_env": "local",
@@ -23,7 +23,7 @@
   "api_token": "inbound_frontend_access_key_goes_here",
   "auth_client_id": "6",
   "auth_client_secret": "frontend_service_secret",
-  //Having to define the team envs here is really horrible, but I think it is required.
+  // Having to define the team envs here is really horrible, but I think it is required.
   // The variable used to define which config file is loaded such as
   // radishes.json5 is not set per environment as it is found in package.json
   // The api_name is overridden on hosted envs by the custom-environment-variables.json5 which is why this works.
