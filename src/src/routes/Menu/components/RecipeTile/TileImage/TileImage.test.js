@@ -3,16 +3,18 @@ import { shallow } from 'enzyme'
 import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
 import { VariantHeader } from 'routes/Menu/Recipe/VariantHeader/VariantHeader'
 import * as RecipeContext from 'routes/Menu/context/recipeContext'
+import * as MenuHook from 'routes/Menu/domains/menu'
 import { Image } from '../../Recipe'
 import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
-import * as RecipeTileHooks from '../Hooks'
 import { TileImage } from './TileImage'
 import css from './TileImage.css'
 
 describe('<TileImage />', () => {
   beforeEach(() => {
-    jest.spyOn(RecipeTileHooks, 'useIfRecipeIdIsOutOfStock')
-      .mockImplementation(() => false)
+    jest.spyOn(MenuHook, 'useStock')
+      .mockImplementation(() => ({
+        isRecipeOutOfStock: () => false,
+      }))
     jest.spyOn(RecipeContext, 'useRecipeField')
       .mockImplementation(() => '1234')
   })

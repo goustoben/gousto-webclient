@@ -8,6 +8,7 @@ import { getMenuCategoryIdForDetails } from 'routes/Menu/selectors/menuRecipeDet
 import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
+import { useStock } from 'routes/Menu/domains/menu'
 import Carousel from './Carousel'
 
 import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
@@ -29,7 +30,6 @@ export const Detail = (props) => {
     closeRecipeDetails,
     media, title,
     view, count, average,
-    isOutOfStock,
     description, youWillNeed,
     equipment,
     position, surcharge,
@@ -39,10 +39,13 @@ export const Detail = (props) => {
   } = props
 
   const currentCollectionId = useSelector(getMenuCategoryIdForDetails)
+  const { isRecipeOutOfStock } = useStock()
 
   if (! currentCollectionId) {
     return null
   }
+
+  const isOutOfStock = isRecipeOutOfStock(id)
 
   const recipeLegalDetailId = chosenSideRecipeId || id
   const titleClass = classnames(
@@ -164,7 +167,6 @@ Detail.propTypes = {
   view: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
   average: PropTypes.number,
-  isOutOfStock: PropTypes.bool.isRequired,
   description: PropTypes.string.isRequired,
   youWillNeed: PropTypes.instanceOf(Immutable.List).isRequired,
   equipment: PropTypes.instanceOf(Immutable.List).isRequired,

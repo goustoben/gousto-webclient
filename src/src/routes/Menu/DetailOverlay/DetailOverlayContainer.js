@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { getBrowserType } from 'selectors/browser'
 import { getRecipePosition } from 'selectors/collections'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
-import { getRecipeOutOfStock } from '../selectors/recipe'
 import { DetailOverlay } from './DetailOverlay'
 import { menuRecipeDetailVisibilityChange } from '../actions/menuRecipeDetails'
 
@@ -16,7 +15,6 @@ const mapStateToProps = (state, ownProps) => {
     position: getRecipePosition(state, getMenuRecipeIdForDetails(state)),
     browserType: getBrowserType(state),
     menuRecipeDetailShow: recipeId,
-    isOutOfStock: getRecipeOutOfStock(state, { recipeId: getMenuRecipeIdForDetails(state) }),
   }
 }
 

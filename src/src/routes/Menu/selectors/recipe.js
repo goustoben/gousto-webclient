@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
-import { getRecipes, getStock, getBasket } from 'selectors/root'
+import { getRecipes, getBasket } from 'selectors/root'
 import { formatRecipeTitle, getSurcharge, getSurchargePerPortion, getDietaryTags } from 'utils/recipe'
 import { getNumPortions } from 'selectors/basket'
 import menuConfig from 'config/menu'
@@ -51,11 +51,6 @@ export const isOutOfStock = (recipeId, numPortions, recipesStock) => {
 
   return (stock <= menuConfig.stockThreshold)
 }
-
-export const getRecipeOutOfStock = createSelector(
-  [getRecipeIdFromProps, getStock, getNumPortions, getRecipeIdInBasket],
-  (recipeId, menuRecipeStock, numPortions, inBasket) => (isOutOfStock(recipeId, numPortions, menuRecipeStock) && !inBasket)
-)
 
 export const getSurchargeForRecipe = (recipeId, numPortions, recipes) => {
   const meals = recipes.getIn([recipeId, 'meals'])

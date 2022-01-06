@@ -25,6 +25,13 @@ jest.mock('react-redux', () => ({
   useSelector: () => '123',
 }))
 
+jest.mock('routes/Menu/domains/menu', () => ({
+  ...jest.requireActual('routes/Menu/domains/menu'),
+  useStock: () => ({
+    isRecipeOutOfStock: () => false,
+  })
+}))
+
 describe('<Detail />', () => {
   const DETAIL = (
     <Detail
@@ -41,7 +48,6 @@ describe('<Detail />', () => {
       inBasket={false}
       description="Recipe description"
       closeRecipeDetails={() => {}}
-      isOutOfStock={false}
     />
   )
 
@@ -237,7 +243,6 @@ describe('DetailContainer', () => {
 
     wrapper = shallow(
       <DetailContainer
-        isOutOfStock={false}
         media={Immutable.fromJS([{urls: [{width: 10}]}])}
         equipment={Immutable.List(['spoon, mixer'])}
         id="123"

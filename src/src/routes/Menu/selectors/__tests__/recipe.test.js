@@ -3,7 +3,6 @@ import * as recipeUtils from 'utils/recipe'
 import { safeJestMock } from '../../../../_testing/mocks'
 import {
   getRecipeTitle,
-  getRecipeOutOfStock,
   getRecipeSurcharge,
   getTagDefinition,
   getRecipeDisclaimerProps,
@@ -61,87 +60,6 @@ describe('menu recipe selectors', () => {
         const result = getRecipeTitle.resultFunc(allRecipes, recipeId)
 
         expect(result).toEqual('foo - bar - quz')
-      })
-    })
-  })
-
-  describe('getRecipeOutOfStock', () => {
-    const recipeId = '111'
-    const numPortions = 2
-    let props
-
-    beforeEach(() => {
-      props = {
-        recipeId
-      }
-    })
-
-    describe('when stock is lower than threshold', () => {
-      test('should return true', () => {
-        const menuRecipeStock = Immutable.fromJS({
-          [recipeId]: { [numPortions]: -1000, 4: -1000 },
-          222: { 2: 1000, 4: 1000 },
-        })
-        const state = {
-          menuRecipeStock,
-          basket: Immutable.fromJS({
-            numPortions,
-            recipes: {}
-          }),
-        }
-        const result = getRecipeOutOfStock(state, props)
-        expect(result).toEqual(true)
-      })
-    })
-
-    describe('when stock is higher than threshold', () => {
-      test('should return false', () => {
-        const menuRecipeStock = Immutable.fromJS({
-          [recipeId]: { [numPortions]: 1000, 4: 1000 },
-          222: { 2: 1000, 4: 1000 },
-        })
-        const state = {
-          menuRecipeStock,
-          basket: Immutable.fromJS({
-            numPortions,
-            recipes: {}
-          }),
-        }
-        const result = getRecipeOutOfStock(state, props)
-        expect(result).toEqual(false)
-      })
-    })
-
-    describe('when recipe is in basket', () => {
-      test('should return false', () => {
-        const menuRecipeStock = Immutable.fromJS({
-          [recipeId]: { [numPortions]: -1000, 4: -1000 },
-          222: { 2: 1000, 4: 1000 },
-        })
-        const state = {
-          menuRecipeStock,
-          basket: Immutable.fromJS({
-            numPortions,
-            recipes: { [recipeId]: 1 }
-          }),
-        }
-        const result = getRecipeOutOfStock(state, props)
-        expect(result).toEqual(false)
-      })
-    })
-
-    describe('when no stock is provided', () => {
-      test('should return false', () => {
-        const menuRecipeStock = Immutable.fromJS({})
-        const state = {
-          menuRecipeStock,
-          basket: Immutable.fromJS({
-            numPortions,
-            recipes: { [recipeId]: 1 }
-          }),
-        }
-        const result = getRecipeOutOfStock(state, props)
-        expect(result).toEqual(false)
       })
     })
   })

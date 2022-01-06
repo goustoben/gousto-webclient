@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import * as MenuHooks from 'routes/Menu/domains/menu'
 import { RecipeTile } from './RecipeTile'
 import { TileImage } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
@@ -31,6 +32,7 @@ describe('RecipeTile', () => {
   jest.spyOn(MenuRecipeDetails, 'showDetailRecipe').mockImplementation(mockShowDetailRecipe)
   jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag').mockImplementation(() => true)
   jest.spyOn(RecipeContext, 'useRecipeIsFineDineIn').mockImplementation(() => false)
+  jest.spyOn(MenuHooks, 'useStock').mockImplementation(() => ({isRecipeOutOfStock: jest.fn()}))
 
   let wrapper
   let defaultProps

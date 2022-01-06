@@ -18,7 +18,6 @@ const propTypes = {
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
   browserType: PropTypes.string.isRequired,
-  isOutOfStock: PropTypes.bool.isRequired,
   onCloseOverlay: PropTypes.func.isRequired,
   isFromShowcaseMenu: PropTypes.bool,
 }
@@ -78,7 +77,7 @@ class DetailOverlay extends PureComponent {
   }
 
   render() {
-    const { showOverlay, menuRecipeDetailShow, recipesStore, numPortions, position, browserType, isOutOfStock, isFromShowcaseMenu } = this.props
+    const { showOverlay, menuRecipeDetailShow, recipesStore, numPortions, position, browserType, isFromShowcaseMenu } = this.props
     const recipeId = menuRecipeDetailShow
     const detailRecipe = recipesStore.get(recipeId)
 
@@ -105,7 +104,6 @@ class DetailOverlay extends PureComponent {
             title={detailRecipe.get('title', '')}
             count={detailRecipe.getIn(['rating', 'count'], 0)}
             average={detailRecipe.getIn(['rating', 'average'], 0)}
-            isOutOfStock={isOutOfStock}
             description={detailRecipe.get('description')}
             availability={detailRecipe.get('availability')}
             youWillNeed={detailRecipe.get('basics')}

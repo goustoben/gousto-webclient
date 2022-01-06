@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useRecipeField, useRecipeIsFineDineIn } from 'routes/Menu/context/recipeContext'
-import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
+import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
 import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
 import css from './RecipeTilePurchaseInfo.css'
-import { useGetSurchargeForRecipeId, useIfRecipeIdIsOutOfStock } from '../Hooks'
+import { useGetSurchargeForRecipeId } from '../Hooks'
 
 const classnames = require('classnames')
 
@@ -23,10 +23,11 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
 }) => {
   const deviceType = useDeviceType()
   const recipeId = useRecipeField<string>('id', null)
-  const isOutOfStock = useIfRecipeIdIsOutOfStock(recipeId)
   const surcharge = useGetSurchargeForRecipeId(recipeId)
   const isFineDineIn = useRecipeIsFineDineIn()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
+  const { isRecipeOutOfStock } = useStock()
+  const isOutOfStock = isRecipeOutOfStock(recipeId)
 
   if (isOutOfStock) {
     return null
