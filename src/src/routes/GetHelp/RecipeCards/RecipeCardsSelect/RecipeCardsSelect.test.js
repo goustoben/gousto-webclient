@@ -56,6 +56,8 @@ describe('RecipeCardsSelect', () => {
     url: 'https://test-2.com',
   }]
 
+  const checkRecipeCardsEligibilityMock = jest.fn()
+
   beforeEach(() => {
     wrapper = mount(
       <RecipeCardsSelect
@@ -65,6 +67,7 @@ describe('RecipeCardsSelect', () => {
         location={{ query: {} }}
         setSelectedRecipeCards={jest.fn()}
         trackContinueToRecipeCardsIssues={jest.fn()}
+        checkRecipeCardsEligibility={checkRecipeCardsEligibilityMock}
       />)
   })
 
@@ -92,6 +95,11 @@ describe('RecipeCardsSelect', () => {
     expect(wrapper.find('AddressSectionContainer').exists()).toBe(true)
   })
 
+  test('calls the checkRecipeCardsEligibilityMock with the right parameters', () => {
+    const coreRecipeIds = ['1', '2']
+    expect(checkRecipeCardsEligibilityMock).toHaveBeenCalledWith(USER_ID, ORDER_ID, coreRecipeIds)
+  })
+
   describe('when no recipe cards selected', () => {
     const setSelectedRecipeCardsMock = jest.fn()
     beforeEach(() => {
@@ -103,6 +111,7 @@ describe('RecipeCardsSelect', () => {
           location={{ query: {} }}
           setSelectedRecipeCards={setSelectedRecipeCardsMock}
           trackContinueToRecipeCardsIssues={jest.fn()}
+          checkRecipeCardsEligibility={jest.fn()}
         />)
       wrapper.find('InputCheck input').at(0).simulate('change')
     })
@@ -127,6 +136,7 @@ describe('RecipeCardsSelect', () => {
           location={{ query: {} }}
           setSelectedRecipeCards={setSelectedRecipeCardsMock}
           trackContinueToRecipeCardsIssues={jest.fn()}
+          checkRecipeCardsEligibility={jest.fn()}
         />)
       wrapper.find('InputCheck input').at(0).simulate('change')
     })
@@ -150,6 +160,7 @@ describe('RecipeCardsSelect', () => {
           location={{ query: {} }}
           setSelectedRecipeCards={jest.fn()}
           trackContinueToRecipeCardsIssues={trackContinueToRecipeCardsIssuesMock}
+          checkRecipeCardsEligibility={jest.fn()}
         />)
 
       wrapper.find('CTA').simulate('click')
@@ -176,6 +187,7 @@ describe('RecipeCardsSelect', () => {
           location={{ query: { recipeId: '1'} }}
           setSelectedRecipeCards={setSelectedRecipeCardsMock}
           trackContinueToRecipeCardsIssues={jest.fn()}
+          checkRecipeCardsEligibility={jest.fn()}
         />)
       wrapper.find('InputCheck input').at(0).simulate('change')
     })

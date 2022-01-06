@@ -1,14 +1,17 @@
-Gousto Web Client
-====
+# Gousto Web Client
 
-#### master :shield: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/master.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/master)
-#### develop :hammer_and_pick: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/develop.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/develop)
-#### env-carrots :carrot: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-carrots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-carrots)
-#### env-haricots [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-haricots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-haricots)
-#### env-radishes [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-radishes.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-radishes)
-#### env-rockets :rocket: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-rockets.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-rockets)
-#### env-beetroots [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-beetroots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-beetroots)
-#### env-parsnips (kale) [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-parsnips.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-parsnips)
+Webclient is the Node/React app that serves www.gousto.co.uk. It's owned by [guild-frontend](https://gousto.slack.com/archives/C52LRFWBY).
+
+- [Quick start](#quick-start)
+- [Pre-requisites](#pre-requisites)
+- [Tests](#tests)
+- [Detailed setup](#detailed-setup)
+- [Code analysis](#code-analysis)
+- [Project history](#project-history)
+
+Further documentation
+
+- [Architecture decision records](docs/decisions)
 
 ## Quick start
 
@@ -27,7 +30,7 @@ $ npm i
 
 # 5. start the app in development mode
 # For hot module reload see [Detailed guide](./detailed-setup.md) to setup.
-$ npm run build:client  
+$ npm run build:client
 $ npm run dev
 
 ```
@@ -82,12 +85,15 @@ $ npm run test:debug:mobile
 
 ```
 
-## Detailed guide
-For a more detailed guide to running Webclient and its supporting tests, including how to get it running with Gousto2-Frontend please see the [Detailed guide](./detailed-setup.md)
+## Detailed setup
+For a more detailed guide to running Webclient and its supporting tests, including how to get it running with
+Gousto2-Frontend please see the [Detailed guide](docs/detailed-setup.md)
 
-## [Code Health](#code-health)
+## Code analysis
+
 ### Run code health locally
-Create a CircleCI access token (“Personal API Tokens” https://circleci.com/account/api) and set it as environment variable:
+Create a CircleCI access token (“Personal API Tokens” https://circleci.com/account/api) and set it as environment
+variable:
 ```
 export CIRCLECI_ACCESS_TOKEN=XXXX
 ```
@@ -96,9 +102,7 @@ Then in `src` run:
 ./scripts/compare-code-health.sh
 ```
 
-## Webpack bundle analyzer
-
-### Usage
+### Webpack bundle analyzer
 
 In top `src`, invoke `GW_ENABLE_BUNDLE_ANALYZER=1 npm run build`. It will
 generate a file `src/public/stats.json`.
@@ -112,7 +116,7 @@ In local development, open the browser window at
 http://frontend.gousto.local:8080/?axe=1 in order to enable Axe. This will show
 the accessibility-related warnings on the pages.
 
-# Project history
+## Project history
 
 Gousto-Webclient was originally ported from Gousto2-Frontend. You can view the Git history of the JS code at:
 https://github.com/Gousto/Gousto2-FrontEnd/blob/750691d7/src/nodeserver/src

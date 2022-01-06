@@ -10,6 +10,7 @@ import { AddressSectionContainer } from './AddressSection'
 import css from './RecipeCardsSelect.css'
 
 const RecipeCardsSelect = ({
+  checkRecipeCardsEligibility,
   params,
   recipes,
   selectedRecipeCards,
@@ -17,14 +18,18 @@ const RecipeCardsSelect = ({
   trackContinueToRecipeCardsIssues,
   location
 }) => {
+  const { orderId, userId } = params
+
   useEffect(() => {
+    const coreRecipeIds = recipes.map(recipe => recipe.id)
+    if (coreRecipeIds.length) {
+      checkRecipeCardsEligibility(userId, orderId, coreRecipeIds)
+    }
     if (location?.query?.recipeId && recipes.find(({id}) => id === location.query.recipeId)) {
       setSelectedRecipeCards([location.query.recipeId])
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const { orderId, userId } = params
 
   const onInputChange = (id, isChecked) => {
     let recipeIdsSelected
@@ -64,6 +69,7 @@ const RecipeCardsSelect = ({
 }
 
 RecipeCardsSelect.propTypes = {
+  checkRecipeCardsEligibility: PropTypes.func.isRequired,
   params: PropTypes.shape({
     orderId: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,

@@ -169,6 +169,9 @@ module.exports = {
     recommendations: '/recommendations',
     steps: '/steps',
   },
+  ssrrecipecards: {
+    validate: '/validate',
+  },
   subscriptionCommand: {
     skip: '/skip',
     unSkip: '/unskip',

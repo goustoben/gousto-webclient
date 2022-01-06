@@ -253,6 +253,16 @@ const getHelp = (state, action) => {
     return state.set('selectedRecipeCardIssues', fromJS(action.payload.issues))
   }
 
+  case actionTypes.GET_HELP_CHECK_RECIPE_CARDS_ELIGIBILITY: {
+    const recipes = state.get('recipes').toJS()
+    const recipesWithEligibility = recipes.map(recipe => ({
+      ...recipe,
+      isRecipeCardEligible: action.payload.eligibleCoreRecipeIds.includes(recipe.id)
+    }))
+
+    return state.set('recipes', fromJS(recipesWithEligibility))
+  }
+
   default:
     return state
   }

@@ -12,6 +12,7 @@ describe('Given I am logged in', () => {
     cy.intercept('POST', /ssr\/v1\/ssr\/validate/, { fixture: 'getHelp/ssr/validate.json' })
     cy.intercept('GET', 'order/16269494*', { fixture: 'getHelp/order/order26May20.json' })
     cy.intercept('POST', /ssrrecipecards\/v1\/request-recipe-cards/, { fixture: 'getHelp/ssrrecipecards/requestRecipeCards.json' })
+    cy.intercept('GET', /ssrrecipecards\/v1\/validate/, { fixture: 'getHelp/ssrrecipecards/validate.json' })
     cy.loginV2()
   })
 

@@ -116,6 +116,17 @@ describe('RecipeCardIssues', () => {
     })
   })
 
+  describe('while the state is being populated and selectedIssueTypes is an empty object', () => {
+    beforeEach(() => {
+      // We do this to simulate the empty state.selectedIssueTypes while the component is mounting
+      wrapper.setProps({ selectedRecipeCardsDetails: []})
+    })
+
+    test('the CTA is disabled', () => {
+      expect(wrapper.find('CTA').prop('isDisabled')).toBe(true)
+    })
+  })
+
   describe('when the request is pending', () => {
     beforeEach(() => {
       wrapper.setProps({ isRequestPending: true })
