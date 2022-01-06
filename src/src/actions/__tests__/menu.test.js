@@ -327,7 +327,6 @@ describe('menu actions', () => {
       expect(result).toEqual({
         type: actionTypes.MENU_LOAD_COMPLETE,
         timeToLoadMs: 12345,
-        useMenuService: true
       })
     })
   })

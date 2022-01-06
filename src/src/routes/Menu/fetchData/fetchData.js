@@ -233,7 +233,7 @@ export default function fetchData({ query, params }, force, background, userMenu
       selectCollectionFromQuery(query)(dispatch, getState)
 
       const timeTaken = Math.round(now() - startTime)
-      dispatch(menuLoadComplete(timeTaken, true))
+      dispatch(menuLoadComplete(timeTaken))
     } catch (e) {
       dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
       throw e

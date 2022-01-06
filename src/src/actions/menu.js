@@ -341,10 +341,9 @@ export const forceMenuLoad = (forceLoad) => ({
   forceLoad,
 })
 
-export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
+export const menuLoadComplete = (timeToLoadMs) => ({
   type: actionTypes.MENU_LOAD_COMPLETE,
   timeToLoadMs,
-  useMenuService
 })
 
 export const clearSelectedRecipeVariants = () => ({

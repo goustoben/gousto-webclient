@@ -624,7 +624,7 @@ describe('menu fetchData', () => {
 
         await fetchData({ query, params }, false, false)(dispatch, getState)
 
-        expect(menuLoadComplete).toHaveBeenCalledWith(expectedValue, true)
+        expect(menuLoadComplete).toHaveBeenCalledWith(expectedValue)
         expect(dispatch.mock.calls[11]).toEqual([menuLoadCompleteResult])
       })
     })
