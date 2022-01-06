@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useStock } from 'routes/Menu/domains/menu'
 import { useRecipeField } from 'routes/Menu/context/recipeContext'
 import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
 import { VariantHeader } from 'routes/Menu/Recipe/VariantHeader'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 
 import { Image, CookingTimeIcon } from '../../Recipe'
-import { useIfRecipeIdIsOutOfStock } from '../Hooks'
 import css from './TileImage.css'
 
 const isOnBiggerScreen = (deviceType: string) => deviceType === DeviceType.DESKTOP || deviceType === DeviceType.TABLET
@@ -19,7 +19,8 @@ export const TileImage: React.FC<{
   originalId,
 }) => {
   const recipeId = useRecipeField<string>('id', null)
-  const isOutOfStock = useIfRecipeIdIsOutOfStock(recipeId)
+  const { isRecipeOutOfStock } = useStock()
+  const isOutOfStock = isRecipeOutOfStock(recipeId)
   const deviceType = useDeviceType()
 
   const showVariantHeader = isOnBiggerScreen(deviceType)

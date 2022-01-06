@@ -1,4 +1,5 @@
 import { Map } from 'immutable'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { basketRecipeAdd, basketRecipeRemove } from 'routes/Menu/actions/basketRecipes'
 import { getBasketRecipes } from '../../../../../selectors/basket'
@@ -45,7 +46,11 @@ export const useBasketRecipes = () => {
   const recipeQuantities = useRecipeQuantities()
   const canAddRecipes = useCanAddRecipes()
 
-  const isRecipeInBasket = (recipeId: string) => recipeQuantities.get(recipeId, 0) > 0
+  const isRecipeInBasket = useCallback(
+    (recipeId: string) => recipeQuantities.get(recipeId, 0) > 0,
+    [recipeQuantities]
+  )
+
   const limitReached = sumQuantities(recipeQuantities) >= USER_RECIPE_LIMIT
 
   return {
