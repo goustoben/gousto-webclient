@@ -619,6 +619,34 @@ describe('getHelp reducer', () => {
     })
   })
 
+  describe('given an action with type GET_HELP_CHECK_RECIPE_CARDS_ELIGIBILITY is received', () => {
+    const eligibleCoreRecipeIds = ['111', '333']
+
+    beforeEach(() => {
+      newState = getHelp(
+        getHelpInitialState.set('recipes', fromJS([
+          { id: '111' },
+          { id: '222' },
+          { id: '333' },
+        ])),
+        {
+          type: actionTypes.GET_HELP_CHECK_RECIPE_CARDS_ELIGIBILITY,
+          payload: {
+            eligibleCoreRecipeIds
+          }
+        }
+      )
+    })
+
+    test('the new state has the recipe card eligibility in each recipe', () => {
+      expect(newState.get('recipes').toJS()).toEqual([
+        { id: '111', isRecipeCardEligible: true },
+        { id: '222', isRecipeCardEligible: false },
+        { id: '333', isRecipeCardEligible: true },
+      ])
+    })
+  })
+
   describe('given an unknown action type is received', () => {
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {

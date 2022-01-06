@@ -36,9 +36,15 @@ const RecipeCardIssues = ({
   }, [selectedRecipeCardsDetails])
 
   const isContinueButtonDisabled = useMemo(
-    () => Object.values(selectedIssueTypes).some(
-      ({complaintCategoryId}) => complaintCategoryId === null
-    ),
+    () => {
+      const issues = Object.values(selectedIssueTypes)
+
+      if (issues.length === 0) {
+        return true
+      }
+
+      return issues.some(({complaintCategoryId}) => complaintCategoryId === null)
+    },
     [selectedIssueTypes]
   )
 
