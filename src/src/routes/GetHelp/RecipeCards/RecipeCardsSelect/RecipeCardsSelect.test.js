@@ -9,18 +9,20 @@ jest.mock('goustouicomponents', () => ({
   CTA: ({children}) => children,
   // mock implementation for InputCheck to be able to test logic from onChange
   // eslint-disable-next-line react/prop-types
-  InputCheck: ({ onChange, id, defaultValue, label }) => {
+  InputCheck: ({ onChange, id, defaultValue, label, disabled }) => {
     const onInputChange = () => onChange(id, !defaultValue)
 
     return (
       <div>
         {label}
-        <input id={id} type="checkbox" onChange={onInputChange} />
+        <input id={id} disabled={disabled} type="checkbox" onChange={onInputChange} />
       </div>
     )
   },
   Heading: () => <div />,
   LayoutPageWrapper: ({children}) => children,
+  // eslint-disable-next-line react/prop-types
+  InfoTip: ({children}) => <div>{children}</div>,
 }))
 
 jest.mock('react-router', () => ({
@@ -46,7 +48,8 @@ describe('RecipeCardsSelect', () => {
     title: 'test 1',
     imageUrl: 'imageurl-for-test-1',
     ingredients: [{ uuid: '1', label: 'test' }],
-    url: 'https://test-1.com'
+    url: 'https://test-1.com',
+    isRecipeCardEligible: true,
   },
   {
     id: '2',
@@ -54,6 +57,7 @@ describe('RecipeCardsSelect', () => {
     imageUrl: 'imageurl-for-test-1',
     ingredients: [{ uuid: '2', label: 'test' }, { uuid: '2222', label: 'test2' }],
     url: 'https://test-2.com',
+    isRecipeCardEligible: false,
   }]
 
   const checkRecipeCardsEligibilityMock = jest.fn()
@@ -68,6 +72,7 @@ describe('RecipeCardsSelect', () => {
         setSelectedRecipeCards={jest.fn()}
         trackContinueToRecipeCardsIssues={jest.fn()}
         checkRecipeCardsEligibility={checkRecipeCardsEligibilityMock}
+        isRequestPending={false}
       />)
   })
 
@@ -91,6 +96,22 @@ describe('RecipeCardsSelect', () => {
     expect(wrapper.find('.recipeTitle').at(0).text()).toBe(RECIPES[0].title)
   })
 
+  test('renders the image for the second recipe as disabled', () => {
+    expect(wrapper.find('.recipeImageDisabled').at(0).prop('src')).toBe(RECIPES[1].imageUrl)
+  })
+
+  test('renders the input and label for the second recipe as disabled', () => {
+    expect(wrapper.find('InputCheck input').at(1).prop('disabled')).toBe(true)
+  })
+
+  test('renders the InfoTip for the second recipe', () => {
+    expect(wrapper.find('.recipeCardInputCheck').at(1).find('InfoTip').exists()).toBe(true)
+  })
+
+  test('renders the InfoTip for the second recipe', () => {
+    expect(wrapper.find('.recipeCardInputCheck').at(1).find('InfoTip').text()).toBe('You have already requested a printed card for this recipe.')
+  })
+
   test('renders the AddressSectionContainer component', () => {
     expect(wrapper.find('AddressSectionContainer').exists()).toBe(true)
   })
@@ -98,6 +119,16 @@ describe('RecipeCardsSelect', () => {
   test('calls the checkRecipeCardsEligibilityMock with the right parameters', () => {
     const coreRecipeIds = ['1', '2']
     expect(checkRecipeCardsEligibilityMock).toHaveBeenCalledWith(USER_ID, ORDER_ID, coreRecipeIds)
+  })
+
+  describe('when isRequestPending is set to true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isRequestPending: true })
+    })
+
+    test('renders the LoadingWrapper', () => {
+      expect(wrapper.find('LoadingWrapper').exists()).toBe(true)
+    })
   })
 
   describe('when no recipe cards selected', () => {
@@ -112,12 +143,13 @@ describe('RecipeCardsSelect', () => {
           setSelectedRecipeCards={setSelectedRecipeCardsMock}
           trackContinueToRecipeCardsIssues={jest.fn()}
           checkRecipeCardsEligibility={jest.fn()}
+          isRequestPending={false}
         />)
       wrapper.find('InputCheck input').at(0).simulate('change')
     })
 
     test('CTA is disabled', () => {
-      expect( wrapper.find('CTA').prop('isDisabled')).toBe(true)
+      expect(wrapper.find('CTA').prop('isDisabled')).toBe(true)
     })
 
     test('and click on first recipe, setSelectedRecipeCardsMock is called with array of selected recipe id', () => {
@@ -137,6 +169,7 @@ describe('RecipeCardsSelect', () => {
           setSelectedRecipeCards={setSelectedRecipeCardsMock}
           trackContinueToRecipeCardsIssues={jest.fn()}
           checkRecipeCardsEligibility={jest.fn()}
+          isRequestPending={false}
         />)
       wrapper.find('InputCheck input').at(0).simulate('change')
     })
@@ -161,6 +194,7 @@ describe('RecipeCardsSelect', () => {
           setSelectedRecipeCards={jest.fn()}
           trackContinueToRecipeCardsIssues={trackContinueToRecipeCardsIssuesMock}
           checkRecipeCardsEligibility={jest.fn()}
+          isRequestPending={false}
         />)
 
       wrapper.find('CTA').simulate('click')
@@ -188,6 +222,7 @@ describe('RecipeCardsSelect', () => {
           setSelectedRecipeCards={setSelectedRecipeCardsMock}
           trackContinueToRecipeCardsIssues={jest.fn()}
           checkRecipeCardsEligibility={jest.fn()}
+          isRequestPending={false}
         />)
       wrapper.find('InputCheck input').at(0).simulate('change')
     })
