@@ -1,4 +1,5 @@
 @value White, Blackberry from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.module.css';
 
 .arrowRight {
 	composes: absolute from 'styles/position.css';
@@ -10,16 +11,20 @@
 }
 
 .recipeSection {
-	composes: paddingSMTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
 	composes: row flex flexStart from 'styles/flex.css';
-	width: 50%;
+	padding: 10px;
+	flex: 0 0 50%;
 	background-color: White;
 	border-top: 1px solid Blackberry;
+	@media ScreenXSMax {
+		padding: 10px 0;
+	}
 }
 
 .recipeSectionMobile {
+	composes: row flex flexStart from 'styles/flex.css';
 	width: 70%;
-	composes: row flex spaceAround from 'styles/flex.css';
+	justify-content: flex-start;
 }
 
 .invisible {

@@ -7,9 +7,9 @@ import Image from 'Image'
 import { RecipeHolder } from '../RecipeHolder'
 
 describe('RecipeHolder', () => {
-  test('should return a span', () => {
+  test('should return a div', () => {
     const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" />)
-    expect(wrapper.type()).toBe('span')
+    expect(wrapper.type()).toBe('div')
   })
 
   test('should have an image if reicpe is defined', () => {
@@ -24,7 +24,7 @@ describe('RecipeHolder', () => {
     const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" />)
     expect(
       wrapper
-        .find('span')
+        .find('div')
         .children()
         .first()
         .text(),
@@ -34,7 +34,7 @@ describe('RecipeHolder', () => {
   test('should not break if the recipe has no images', () => {
     const recipe = Immutable.fromJS({ media: { images: [] } })
     const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" recipe={recipe} />)
-    expect(wrapper.type()).toBe('span')
+    expect(wrapper.type()).toBe('div')
     expect(wrapper.find(Image).length).toBe(1)
     expect(wrapper.find(Image).prop('media')).toEqual(Immutable.List([]))
   })

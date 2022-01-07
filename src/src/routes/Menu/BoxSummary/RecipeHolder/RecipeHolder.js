@@ -7,18 +7,16 @@ import { getFeaturedImage } from 'utils/image'
 import { isMobile, DESKTOP_VIEW } from 'utils/view'
 import css from './RecipeHolder.css'
 
-const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
+const RecipeHolder = ({ recipe, view, onClick, browserType, children }) => {
   const isMobileView = isMobile(view)
 
   return (
-    <span
+    <div
       className={classnames(
-        css.recipeHolder,
         css[view],
+        css.recipeHolder,
         { [css.borderNone]: recipe.size > 0 },
         { [css.placeHolder]: recipe.size < 1 },
-        { [css.recipeImg]: !isMobileView },
-        { [css.widthMobile]: isMobileView }
       )}
       onClick={onClick}
       onKeyPress={onClick}
@@ -35,8 +33,8 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
             )}
           />
         )
-        : 'Add recipe'}
-    </span>
+        : <div className={css.paddingForAddRecipes}>{children}</div>}
+    </div>
   )
 }
 
@@ -44,13 +42,15 @@ RecipeHolder.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map),
   view: PropTypes.string,
   onClick: PropTypes.func,
-  browserType: PropTypes.string.isRequired
+  browserType: PropTypes.string.isRequired,
+  children: PropTypes.node,
 }
 
 RecipeHolder.defaultProps = {
   recipe: Immutable.Map({}),
   view: DESKTOP_VIEW,
-  onClick: () => { }
+  onClick: () => { },
+  children: 'Add recipe',
 }
 
 export { RecipeHolder }

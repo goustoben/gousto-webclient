@@ -8,7 +8,7 @@
 .total {
 	composes: textStrike from 'styles/typography.css';
 	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
-	@media ScreenSMMin and ScreenMLMax {
+	@media ScreenMLMax {
 		display: block;
 	}
 }
