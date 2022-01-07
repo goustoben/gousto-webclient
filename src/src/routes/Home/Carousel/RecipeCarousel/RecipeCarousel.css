@@ -27,12 +27,3 @@
   display: flex;
   flex-wrap: nowrap;
 }
-
-.loadingImagePlaceholder {
-  width: 100%;
-  padding-bottom: 100%;
-}
-
-.loadingTextContainerPlaceholder {
-  height: 3rem;
-}

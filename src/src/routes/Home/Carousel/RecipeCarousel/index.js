@@ -1,1 +1,1 @@
-export { RecipeCarouselContainer } from './RecipeCarouselContainer'
+export { RecipeCarouselContainer as RecipeCarousel } from './RecipeCarouselContainer'

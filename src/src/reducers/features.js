@@ -18,6 +18,12 @@ export const defaultFeatures = () => ({
   disabledSlots: {
     value: '',
   },
+  goToMyGousto: {
+    value: false,
+  },
+  goToMyDeliveries: {
+    value: false,
+  },
   rafAboveCarouselOnWelcomePage: {
     value: false,
   },
