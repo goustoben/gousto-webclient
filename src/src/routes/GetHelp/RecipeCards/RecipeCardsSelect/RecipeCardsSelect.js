@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { BottomFixedContent, CTA } from 'goustouicomponents'
+import { LoadingWrapper } from '../../LoadingWrapper'
 import { GetHelpLayout2 } from '../../layouts/GetHelpLayout2'
 import { recipePropType } from '../../getHelpPropTypes'
 import { RecipeCardsList } from './RecipeCardsList'
@@ -13,6 +14,7 @@ const RecipeCardsSelect = ({
   checkRecipeCardsEligibility,
   params,
   recipes,
+  isRequestPending,
   selectedRecipeCards,
   setSelectedRecipeCards,
   trackContinueToRecipeCardsIssues,
@@ -46,6 +48,10 @@ const RecipeCardsSelect = ({
     browserHistory.push(`${client.getHelp.recipeCards({ userId, orderId })}/issues`)
   }
 
+  if (isRequestPending) {
+    return <LoadingWrapper />
+  }
+
   return (
     <GetHelpLayout2
       headingText="Choose printed recipe cards"
@@ -75,6 +81,7 @@ RecipeCardsSelect.propTypes = {
     userId: PropTypes.string.isRequired,
   }).isRequired,
   recipes: PropTypes.arrayOf(recipePropType).isRequired,
+  isRequestPending: PropTypes.bool.isRequired,
   selectedRecipeCards: PropTypes.arrayOf(PropTypes.string).isRequired,
   setSelectedRecipeCards: PropTypes.func.isRequired,
   trackContinueToRecipeCardsIssues: PropTypes.func.isRequired,
