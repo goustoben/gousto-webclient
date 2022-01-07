@@ -1,4 +1,4 @@
-@value White, Pepper from 'styles/colors.css';
+@value White, Pepper, Basa from 'styles/colors.css';
 @value sizeXXL, sizeXS from 'styles/typography.css';
 @value ScreenXSMax from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingLG, SpacingMD from 'sass-loader!styles/spacing.scss';
@@ -26,30 +26,32 @@
 	color: White;
 }
 
-.recipeImg {
-	max-height: holderHeight;
-}
-
 .imgMobile {
 	composes: noRadius from 'styles/borders.css';
-	width:100%;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
 }
 
 .placeHolder {
 	composes: textCenter from 'styles/typography.css';
-	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
-	padding: 0.6rem 0.5rem 1rem 0.6rem;
-	padding-bottom: SpacingLG;
 	font-size: 11px;
-	max-width: 60px;
+}
 
-	@media ScreenXSMax {
-		margin-left: 0;
-		margin-right: 0;
-		padding-bottom: 0;
-		padding-left: SpacingXXS;
-		padding-right: SpacingXXS;
-	}
+.recipeHolder {
+	max-height: calc(holderHeight - 1px);
+	height: calc(holderHeight - 1px);
+	border: 1px Basa dashed;
+	display: flex;
+	flex: 1 0;
+	overflow: hidden;
+	justify-content: center;
+	align-items: center;
+	margin-right: 3px;
+}
+
+.recipeHolder:first-child {
+	margin-left: 3px;
 }
 
 .inline {
@@ -63,19 +65,19 @@
 }
 
 .desktop {
-	composes: inline recipeImg;
+	max-height: holderHeight;
+	height: 100%;
 	composes: borderBase borderDashed from 'styles/borders.css';
 }
 
 .borderNone {
 	composes: borderNone from 'styles/borders.css';
-	composes: paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
 
 	@media ScreenXSMax {
 		padding: 0;
 	}
 }
 
-.widthMobile {
-	width: 25%;
+.paddingForAddRecipes {
+	padding: 4px;
 }

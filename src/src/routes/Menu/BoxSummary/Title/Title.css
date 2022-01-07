@@ -1,4 +1,5 @@
-@value ScreenSMMin, ScreenMLMax, Screen3XSMax from 'styles/screenSizes.css';
+@value ScreenMLMax, Screen3XSMax from 'styles/screenSizes.css';
+@value BreakpointToMedium from 'design-language/breakpoints.css';
 @value sizeXS from 'styles/typography.css';
 
 .desktopText {
@@ -12,7 +13,7 @@
 }
 
 .title {
-	composes: headerMD textUpper textBold from 'styles/typography.css';
+	composes: headerMD textUpper textBold from 'styles/typography.css';	
 }
 
 .titledesktop {
@@ -48,9 +49,11 @@
 	margin-left: auto;
 	text-align: right;
 	display: inline-block;
-	min-width: 120px;
-	@media ScreenSMMin and ScreenMLMax {
-		min-width: auto
+	min-width: auto;
+	
+	@media BreakpointToMedium {
+		display: flex;
+		flex-direction: row;
 	}
 }
 

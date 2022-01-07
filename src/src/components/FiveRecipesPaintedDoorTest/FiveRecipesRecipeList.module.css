@@ -1,0 +1,14 @@
+@value Blackberry from 'styles/colors.css';
+@value FontFamilyAxiformaSemiBold from 'design-language/typography.css';
+
+.number {
+	font-size: 12px;
+	display: block;
+	color: Blackberry;
+	font-family: FontFamilyAxiformaSemiBold;
+}
+
+.perServing {
+	font-size: 10px;
+	color: Blackberry;
+}

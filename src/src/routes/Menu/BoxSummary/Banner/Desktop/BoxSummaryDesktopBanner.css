@@ -1,6 +1,7 @@
 @value Blackberry from 'styles/colors.css';
 @value BreakpointToMedium from 'design-language/breakpoints.css';
 @value barDesktopHeight 75px;
+@value ScreenXSMax from 'styles/screenSizes.module.css';
 
 .bardesktop {
 	composes: row flex spaceAround from 'styles/flex.css';
@@ -11,13 +12,14 @@
 	width: 100%;
 	z-index: 501;
 	height: barDesktopHeight;
+
 	@media BreakpointToMedium {
 		display: none;
 	}
 }
 
 .buttonsContainer {
-	composes: paddingSMTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
 	composes: row flex flexEnd verticalCenter from 'styles/flex.css';
-	width:50%;
+	padding: 10px 5px;
+	flex: 0 0 50%;
 }

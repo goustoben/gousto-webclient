@@ -6,14 +6,14 @@ import css from './Price.css'
 
 const Price = ({ recipeTotal, recipeDiscount, recipeTotalDiscounted }) => (
   recipeTotal > 0 ? (
-    <div>
+    <React.Fragment>
       <span className={recipeDiscount > 0 ? css.total : ''}>
         {formatPrice(recipeTotal)}
       </span>
       <span className={recipeDiscount > 0 ? css.discount : css.hide}>
         {formatPrice(recipeTotalDiscounted)}
       </span>
-    </div>
+    </React.Fragment>
   ) : (
     <div>
       £
