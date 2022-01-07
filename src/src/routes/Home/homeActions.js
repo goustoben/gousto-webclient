@@ -9,10 +9,7 @@ import { menuCollectionsReceive, menuReceiveMenu } from 'actions/menuActionHelpe
 export const fetchMenuForCarousel = () => async (dispatch, getState) => {
   const accessToken = getAccessToken(getState())
   const query = {}
-  const menuResponse = await fetchMenus(accessToken, query, {
-    disableIncludeIngredients: true,
-    disableAddAlternatives: true,
-  })
+  const menuResponse = await fetchMenus(accessToken, query)
 
   await dispatch(menuServiceDataReceived(menuResponse, accessToken))
 
