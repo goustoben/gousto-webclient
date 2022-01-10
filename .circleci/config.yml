@@ -426,6 +426,7 @@ jobs:
     working_directory: /mnt/ramdisk
     steps:
       - checkout
+      - codeartifact_authenticate # Authenticate
       - run:
           name: Install dependencies
           working_directory: src
