@@ -18,14 +18,12 @@ type RecipeTileProps = {
   recipeId: string;
   originalId: string;
   categoryId?: string;
-  fdiStyling?: boolean;
 }
 
 const RecipeTile: React.FC<RecipeTileProps> = ({
   recipeId,
   originalId,
   categoryId: collectionIdOverride,
-  fdiStyling = false,
 }) => {
   const dispatch = useDispatch()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
@@ -81,7 +79,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
 
       <div
         className={classnames(css.recipeTileContainer, {
-          [css.recipeTileIsFineDineIn]: isFineDineIn && fdiStyling
+          [css.recipeTileIsFineDineIn]: isFineDineIn
         })}
       >
         <TileImage
@@ -110,7 +108,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           <RecipeTilePurchaseInfo
             originalId={originalId}
             categoryId={categoryId}
-            fdiStyling={fdiStyling}
+            fdiStyling={isFineDineIn}
           />
         </div>
       </div>
