@@ -5,6 +5,8 @@ import { touch } from 'redux-form'
 import Input from 'Form/Input'
 import DropdownInput from 'Form/Dropdown'
 import CheckBox from 'Form/CheckBox'
+import { jsx } from '@emotion/react'
+import { InputField, Checkbox } from '@gousto-internal/citrus-react'
 
 import InputError from 'Form/InputError'
 import { Label } from 'Form/Label'
@@ -54,7 +56,6 @@ export class ReduxFormInput extends React.PureComponent {
 
   render() {
     const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, onFocus, dataTesting, ...inputProps } = this.props
-
     let Component
     switch (inputType) {
     case 'Input': {
@@ -76,34 +77,64 @@ export class ReduxFormInput extends React.PureComponent {
 
     const error = Boolean(meta && meta.touched && meta.error)
 
-    const inputEl = React.createElement(Component, {
-      ...inputProps,
-      ...input,
-      error,
-      inputType,
-      'data-testing': dataTesting,
-      dataTesting,
-      onChange: this.onChange,
-      isInCheckout: true,
-      inputPrefix,
-      [input.onFocus]: onFocus,
-    })
+    // const inputEl = React.createElement(Component, {
+    //   ...inputProps,
+    //   ...input,
+    //   error,
+    //   inputType,
+    //   'data-testing': dataTesting,
+    //   dataTesting,
+    //   onChange: this.onChange,
+    //   isInCheckout: true,
+    //   inputPrefix,
+    //   [input.onFocus]: onFocus,
+    // })
 
     return (
-      <div>
-        {label && <Label label={label} subLabel={subLabel} />}
-        <div className={css.flexRow}>
-          {inputEl && (
+      <>
+        {Component === Input && (
+        <InputField
+          {...inputProps}
+          {...input}
+          label={label}
+          onChange={(e) => this.onChange(e.target.value)}
+          validationMessage={error && meta.error}
+          status={error && 'Error'}
+          isInCheckout
+          data-testing={dataTesting}
+        />
+        )}
+
+        {Component === CheckBox && (
+        <Checkbox
+          onChange={(e) => this.onChange(e.target.checked)}
+          isInCheckout
+          data-testing={dataTesting}
+          checked={!!input.value}
+        >
+          {inputProps.childLabel}
+        </Checkbox>
+        )}
+
+        {/* <div>
+          {label && <Label label={label} subLabel={subLabel} />}
+          <div className={css.flexRow}>
+            {inputEl && (
             <div className={css.flexItem}>
               {inputEl}
             </div>
-          )}
-          {React.isValidElement(inputSuffix) && inputSuffix}
-        </div>
-        <div data-testing={`${dataTesting}Error`}>
-          {error && <InputError>{meta.error}</InputError>}
-        </div>
-      </div>
+            )}
+            {React.isValidElement(inputSuffix) && inputSuffix}
+          </div>
+          <div data-testing={`${dataTesting}Error`}>
+            {error && (
+            <InputError>
+              {meta.error}
+            </InputError>
+            )}
+          </div>
+        </div> */}
+      </>
     )
   }
 }

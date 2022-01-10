@@ -6,6 +6,17 @@ import { ReduxFormInput } from 'Form/ReduxFormInput'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { checkoutClickContinueToDelivery, checkoutClickPrivacyPolicy } from 'actions/trackingKeys'
+import { jsx } from '@emotion/react'
+import {
+  Text,
+  Box,
+  FontWeight,
+  AlignItems,
+  JustifyContent,
+  Link,
+  FlexDirection,
+  Label,
+} from '@gousto-internal/citrus-react'
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
 import { CheckoutButton } from '../CheckoutButton'
@@ -42,21 +53,40 @@ class AboutYou extends PureComponent {
     const { onLoginClick, isGoustoOnDemandEnabled } = this.props
 
     return (
-      <span className={css.emailLabelContainer}>
-        Email address
-        <span className={classNames(css.account, { [css.isHidden]: isGoustoOnDemandEnabled })}>
-          Have an account?&nbsp;
-          <span
-            className={css.link}
-            role="button"
-            tabIndex="0"
-            onClick={onLoginClick}
-            onKeyDown={onEnter(onLoginClick)}
-          >
-            Log in
+      <>
+        <Box
+          display="flex"
+          alignItems={AlignItems.Center}
+          justifyContent={JustifyContent.SpaceBetween}
+        >
+          <Text size={2} fontWeight={FontWeight.SemiBold}>
+            Email address
+          </Text>
+          {!isGoustoOnDemandEnabled && (
+            <Box display="flex" flexDirection={FlexDirection.Row}>
+              <Text size={1}>Have an account?&nbsp;</Text>
+              <Link size={1} onClick={onLoginClick} onKeyDown={onEnter(onLoginClick)}>
+                Log in
+              </Link>
+            </Box>
+          )}
+        </Box>
+        {/* <span className={css.emailLabelContainer}>
+          Email address
+          <span className={classNames(css.account, { [css.isHidden]: isGoustoOnDemandEnabled })}>
+            Have an account?&nbsp;
+            <span
+              className={css.link}
+              role="button"
+              tabIndex="0"
+              onClick={onLoginClick}
+              onKeyDown={onEnter(onLoginClick)}
+            >
+              Log in
+            </span>
           </span>
-        </span>
-      </span>
+        </span> */}
+      </>
     )
   }
 

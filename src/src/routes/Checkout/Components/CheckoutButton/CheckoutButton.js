@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import { Loader } from 'goustouicomponents'
+import { jsx } from '@emotion/react'
+import { Button } from '@gousto-internal/citrus-react'
 import css from './CheckoutButton.css'
 
 const CheckoutButton = ({
@@ -22,22 +24,39 @@ const CheckoutButton = ({
   })
 
   return (
-    <button
-      className={className}
-      data-testing={testingSelector}
-      disabled={isDisabled || isLoading}
-      onClick={onClick}
-      onKeyDown={onClick}
-      type="submit"
-    >
-      {isLoading ? (
-        <span className={css.loaderContainer}>
-          <Loader color="White" />
-        </span>
-      ) : (
-        children
-      )}
-    </button>
+    <>
+      <button
+        className={className}
+        data-testing={testingSelector}
+        disabled={isDisabled || isLoading}
+        onClick={onClick}
+        onKeyDown={onClick}
+        type="submit"
+      >
+        {isLoading ? (
+          <span className={css.loaderContainer}>
+            <Loader color="White" />
+          </span>
+        ) : (
+          children
+        )}
+      </button>
+      <Button
+        data-testing={testingSelector}
+        disabled={!!(isDisabled || isLoading)}
+        onClick={onClick}
+        onKeyDown={onClick}
+        width={isFullWidth && '100%'}
+      >
+        {isLoading ? (
+          <span className={css.loaderContainer}>
+            <Loader color="White" />
+          </span>
+        ) : (
+          children
+        )}
+      </Button>
+    </>
   )
 }
 

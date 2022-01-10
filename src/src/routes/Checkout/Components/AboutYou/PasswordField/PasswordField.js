@@ -3,6 +3,8 @@ import React, { useState, useRef } from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { useDebounce } from 'react-use'
+import { jsx } from '@emotion/react'
+import { InputField } from '@gousto-internal/citrus-react'
 import checkoutCss from '../../../Checkout.css'
 
 const propTypes = {
@@ -79,30 +81,56 @@ export const PasswordField = ({
     }
   }
 
+  const getInputStatus = () => {
+    if ((touched && !value) || (passwordErrors.length > 0 && value)) {
+      return 'Error'
+    } else if (value) {
+      return 'Success'
+    }
+  }
+
   return (
-    <div className={classNames({ [checkoutCss.relative]: inputSuffix })}>
-      <label htmlFor="password">
-        <p className={checkoutCss.label}>Password</p>
-        <input
-          id="password"
-          className={classNames(checkoutCss.password, checkoutCss.checkoutInput, {
-            [checkoutCss.checkoutInputError]:
-              (touched && !value) || (passwordErrors.length > 0 && value),
-            [checkoutCss.validPassword]: passwordErrors.length === 0 && value,
-          })}
-          name={name}
-          value={value}
-          type={type}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          data-testing={dataTesting}
-          onChange={handleChange}
-          ref={inputRef}
-          autoComplete="new-password"
-        />
-        {inputSuffix}
-      </label>
-    </div>
+    <>
+      <InputField
+        id="password"
+        label="Password"
+        type={type}
+        name={name}
+        value={value}
+        data-testing={dataTesting}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        ref={inputRef}
+        autoComplete="new-password"
+        status={getInputStatus()}
+        rightAccessory={inputSuffix}
+      />
+
+      {/* <div className={classNames({ [checkoutCss.relative]: inputSuffix })}>
+        <label htmlFor="password">
+          <p className={checkoutCss.label}>Password</p>
+          <input
+            id="password"
+            className={classNames(checkoutCss.password, checkoutCss.checkoutInput, {
+              [checkoutCss.checkoutInputError]:
+                (touched && !value) || (passwordErrors.length > 0 && value),
+              [checkoutCss.validPassword]: passwordErrors.length === 0 && value,
+            })}
+            name={name}
+            value={value}
+            type={type}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            data-testing={dataTesting}
+            onChange={handleChange}
+            ref={inputRef}
+            autoComplete="new-password"
+          />
+          {inputSuffix}
+        </label>
+      </div> */}
+    </>
   )
 }
 
