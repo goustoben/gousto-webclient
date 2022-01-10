@@ -5,6 +5,7 @@
   border: 1px solid Basa;
   background: White;
   width: 100%;
+  cursor: pointer;
 }
 
 .recipeTitle {

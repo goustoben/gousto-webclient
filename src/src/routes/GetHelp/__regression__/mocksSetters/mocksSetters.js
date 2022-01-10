@@ -12,5 +12,5 @@ export const setMocksLoginHomePage = () => {
 
   cy.visit('/')
 
-  cy.wait(['@identifyRequest'])
+  cy.wait(['@identifyRequest', '@userCurrentRequest'])
 }
