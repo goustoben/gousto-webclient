@@ -20,6 +20,16 @@ orbs:
   aws-cli: circleci/aws-cli@1.4.1
 
 commands:
+  codeartifact_authenticate:
+    description: Authenticate with AWS CodeArtifact
+    steps:
+      - run: >
+          aws codeartifact login
+          --tool npm
+          --repository proxy-repository
+          --domain gousto
+          --domain-owner ${AWS_CODEARTIFACT_ACCOUNT_NUMBER}
+          --region ${AWS_CODEARTIFACT_REGION}
   gzip:
     description: "Apply gzip compression, excludes images"
     parameters:
@@ -94,6 +104,7 @@ jobs:
       - run:
           name: Setup Github SSH access
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - codeartifact_authenticate # Authenticate
       - run:
           name: Install dependencies
           working_directory: src
