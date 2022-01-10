@@ -21,6 +21,7 @@ describe('Given I am logged in and visit the home page', () => {
       cy.route('GET', /order\/16269494/, '@currentOrder')
 
       cy.clock(dateAfterBoxDelivered.getTime(), ['Date'])
+      cy.wait(['@userCurrentSubscriptionRequest', '@userCurrentOrdersRequest'])
 
       clickMyGousto()
 

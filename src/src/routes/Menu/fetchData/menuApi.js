@@ -19,9 +19,7 @@ const getTasteProfileIdFromQuery = (query) => {
   return null
 }
 
-export function fetchMenus(accessToken, query, extraParameters = {}) {
-  const { disableIncludeIngredients = false, disableAddAlternatives = false} = extraParameters
-
+export function fetchMenus(accessToken, query) {
   const fetchOptions = {
     ...options,
     accessToken,
@@ -42,13 +40,9 @@ export function fetchMenus(accessToken, query, extraParameters = {}) {
   }
 
   const requestQueryParams = {
-    addAlternatives: !disableAddAlternatives,
+    include: 'ingredients',
+    addAlternatives: true,
     ...adminLinkData,
-    ...(
-      disableIncludeIngredients ? {} : {
-        include: 'ingredients',
-      }
-    )
   }
 
   const tasteProfileId = getTasteProfileIdFromQuery(query)

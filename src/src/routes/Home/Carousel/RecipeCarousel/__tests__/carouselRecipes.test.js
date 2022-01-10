@@ -14,9 +14,9 @@ describe('getRecipesFromAllRecipesCollection', () => {
       allRecipes = Immutable.fromJS({})
     })
 
-    test('then should return null', () => {
+    test('then should return an empty object', () => {
       const result = getRecipesFromAllRecipesCollection.resultFunc(menuCollections, allRecipes)
-      expect(result).toBeNull()
+      expect(result.toJSON()).toEqual({})
     })
   })
 

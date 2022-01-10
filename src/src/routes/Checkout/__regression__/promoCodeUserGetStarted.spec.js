@@ -20,7 +20,7 @@ describe('Promo Code', () => {
         cy.wait(['@promoCodeDetails'])
       })
 
-      it('then it should be redirected to box-size page and promo modal is shown', () => {
+      it('then it should be redirected to box-size page and promo modal is hired', () => {
         cy.get('[data-testing="promoModal"]').should('be.visible')
       })
     })
