@@ -2,7 +2,7 @@ module.exports = {
   head: {
     title: 'Food Delivery | Try Our Recipe Kits | Gousto',
     keywords: 'Gousto,recipe delivery,ingredients,fresh,healthy food,cooking',
-    fbAppID: '294160790674968',
+    fbAppID: '245584327705619',
     fbAdmins: [
       '100008548455745',
       '537082922',
