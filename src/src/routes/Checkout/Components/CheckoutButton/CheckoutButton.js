@@ -25,7 +25,7 @@ const CheckoutButton = ({
 
   return (
     <>
-      <button
+      {/* <button
         className={className}
         data-testing={testingSelector}
         disabled={isDisabled || isLoading}
@@ -40,7 +40,7 @@ const CheckoutButton = ({
         ) : (
           children
         )}
-      </button>
+      </button> */}
       <Button
         data-testing={testingSelector}
         disabled={!!(isDisabled || isLoading)}

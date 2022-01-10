@@ -77,18 +77,18 @@ export class ReduxFormInput extends React.PureComponent {
 
     const error = Boolean(meta && meta.touched && meta.error)
 
-    // const inputEl = React.createElement(Component, {
-    //   ...inputProps,
-    //   ...input,
-    //   error,
-    //   inputType,
-    //   'data-testing': dataTesting,
-    //   dataTesting,
-    //   onChange: this.onChange,
-    //   isInCheckout: true,
-    //   inputPrefix,
-    //   [input.onFocus]: onFocus,
-    // })
+    const inputEl = React.createElement(Component, {
+      ...inputProps,
+      ...input,
+      error,
+      inputType,
+      'data-testing': dataTesting,
+      dataTesting,
+      onChange: this.onChange,
+      isInCheckout: true,
+      inputPrefix,
+      [input.onFocus]: onFocus,
+    })
 
     return (
       <>
@@ -116,7 +116,8 @@ export class ReduxFormInput extends React.PureComponent {
         </Checkbox>
         )}
 
-        {/* <div>
+        {Component !== CheckBox && Component !== Input && (
+        <div>
           {label && <Label label={label} subLabel={subLabel} />}
           <div className={css.flexRow}>
             {inputEl && (
@@ -133,7 +134,8 @@ export class ReduxFormInput extends React.PureComponent {
             </InputError>
             )}
           </div>
-        </div> */}
+        </div>
+        )}
       </>
     )
   }
