@@ -40,8 +40,20 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       })
 
       it('Then the right errors should be displayed', () => {
-        cy.get('[data-testing="checkoutFirstNameInputError"]').should('be.visible')
-        cy.get('[data-testing="checkoutLastNameInputError"]').should('be.visible')
+        cy.get('[data-testing="checkoutFirstNameInput"]')
+          .parent()
+          .parent()
+          .should(
+            'contain',
+            "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
+          )
+        cy.get('[data-testing="checkoutLastNameInput"]')
+          .parent()
+          .parent()
+          .should(
+            'contain',
+            "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
+          )
       })
     })
 
@@ -54,8 +66,20 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       })
 
       it('Then the right errors should be displayed', () => {
-        cy.get('[data-testing="checkoutFirstNameInputError"]').should('not.be.visible')
-        cy.get('[data-testing="checkoutLastNameInputError"]').should('not.be.visible')
+        cy.get('[data-testing="checkoutFirstNameInput"]')
+          .parent()
+          .parent()
+          .should(
+            'not.contain',
+            "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
+          )
+        cy.get('[data-testing="checkoutLastNameInput"]')
+          .parent()
+          .parent()
+          .should(
+            'not.contain',
+            "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
+          )
       })
     })
 

@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { useDebounce } from 'react-use'
-import { jsx } from '@emotion/react'
 import { InputField } from '@gousto-internal/citrus-react'
 import checkoutCss from '../../../Checkout.css'
 

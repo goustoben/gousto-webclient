@@ -9,16 +9,18 @@ import { trackPageChange } from 'routes/trackPageChange'
 import { hashLinkScroll } from 'routes/hashLinkScroll'
 import fetchContentOnChange from 'routes/fetchContentOnChange'
 import { documentLocation } from 'utils/window'
-import { ThemeProvider } from '@gousto-internal/citrus-react'
+import { ThemeProvider, Reset } from '@gousto-internal/citrus-react'
+import { designToken } from '../config/designToken'
 
-export const AppContainer = ({ history, routes, store, tokens }) => (
+export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
     <SWRConfig
       value={{
         revalidateOnFocus: false
       }}
     >
-      <ThemeProvider tokens={tokens}>
+      <ThemeProvider tokens={designToken}>
+        <Reset />
         <Router
           history={history}
           // eslint-disable-next-line
@@ -40,5 +42,4 @@ AppContainer.propTypes = {
   history: PropTypes.object.isRequired,
   routes: PropTypes.node.isRequired,
   store: PropTypes.object.isRequired,
-  tokens: PropTypes.object.isRequired,
 }

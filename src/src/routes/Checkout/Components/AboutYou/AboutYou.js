@@ -6,7 +6,6 @@ import { ReduxFormInput } from 'Form/ReduxFormInput'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { checkoutClickContinueToDelivery, checkoutClickPrivacyPolicy } from 'actions/trackingKeys'
-import { jsx } from '@emotion/react'
 import {
   Text,
   Box,

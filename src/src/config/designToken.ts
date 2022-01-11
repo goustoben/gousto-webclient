@@ -1,3 +1,5 @@
+import { defaultDesignTokens } from '@gousto-internal/citrus-react'
+
 export const designToken = {
     "FontFamilies": {
         "ui": "\"AxiformaBook\", Helvetica, sans-serif",

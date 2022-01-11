@@ -22,7 +22,6 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { initializeDatadog } from './middlewares/datadog/initialize'
 import { configureStore } from './store'
 import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
-import { designToken } from './config/designToken'
 
 docReady('docReady', window)
 
@@ -62,7 +61,6 @@ window.docReady(() => {
         history={history}
         routes={routes(store)}
         store={store}
-        tokens={designToken}
       />,
       reactRootDOM
     )

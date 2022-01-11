@@ -5,7 +5,6 @@ import { touch } from 'redux-form'
 import Input from 'Form/Input'
 import DropdownInput from 'Form/Dropdown'
 import CheckBox from 'Form/CheckBox'
-import { jsx } from '@emotion/react'
 import { InputField, Checkbox } from '@gousto-internal/citrus-react'
 
 import InputError from 'Form/InputError'
