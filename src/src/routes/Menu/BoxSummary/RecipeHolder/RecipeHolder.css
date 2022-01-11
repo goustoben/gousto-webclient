@@ -67,6 +67,7 @@
 .desktop {
 	max-height: holderHeight;
 	height: 100%;
+	max-width: 60px;
 	composes: borderBase borderDashed from 'styles/borders.css';
 }
 
