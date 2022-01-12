@@ -32,12 +32,6 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
-  beetroots_menu_nav_links_hidden_after_wizard_web_enabled: {
-    id: 'beetroots_menu_nav_links_hidden_after_wizard_web_enabled',
-    name: 'Beetroots menu nav links hidden after wizard web enabled',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
 }
 
 // When several different places in the app work off the same feature flag,
