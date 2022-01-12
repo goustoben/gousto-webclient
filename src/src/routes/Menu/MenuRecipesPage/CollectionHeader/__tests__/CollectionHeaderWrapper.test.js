@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { CollectionHeaderWrapper } from '../CollectionHeaderWrapper'
-import { WaveLinkHeaderContainer, SimpleLinkHeaderContainer } from '../LinkHeaderContainer'
+import { WaveLinkHeaderContainer } from '../LinkHeaderContainer'
 
 describe('CollectionHeaderWrapper', () => {
   let collectionsHeaders
@@ -58,36 +58,6 @@ describe('CollectionHeaderWrapper', () => {
 
     test('should return WaveLinkHeaderContainer', () => {
       expect(wrapper.find(WaveLinkHeaderContainer)).toHaveLength(1)
-    })
-  })
-
-  describe('when collectionsHeaders is simple-link-header', () => {
-    beforeEach(() => {
-      collectionsHeaders = {
-        id: 'header-id',
-        type: 'simple-link-header',
-        attributes: {}
-      }
-      wrapper = shallow(<CollectionHeaderWrapper collectionsHeaders={collectionsHeaders} />)
-    })
-
-    test('should return SimpleLinkHeaderContainer', () => {
-      expect(wrapper.find(SimpleLinkHeaderContainer)).toHaveLength(1)
-    })
-  })
-
-  describe('when collectionsHeaders is recipe-link-header', () => {
-    beforeEach(() => {
-      collectionsHeaders = {
-        id: 'header-id',
-        type: 'recipe-link-header',
-        attributes: {}
-      }
-      wrapper = shallow(<CollectionHeaderWrapper collectionsHeaders={collectionsHeaders} />)
-    })
-
-    test('should return SimpleLinkHeaderContainer', () => {
-      expect(wrapper.find('RecipeLinkHeader')).toHaveLength(1)
     })
   })
 })
