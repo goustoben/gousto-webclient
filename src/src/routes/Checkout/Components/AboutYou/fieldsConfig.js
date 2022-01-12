@@ -54,7 +54,7 @@ export const fieldsConfig = ({ loginCTA, sectionName, passState, trackPrivacyPol
         onKeyPress={togglePasswordVisibility}
       /> */}
       <Icon
-        name="show"
+        name={isPassVisible ? 'hide' : 'show'}
         variant="Inherit"
         role="button"
         onClick={togglePasswordVisibility}

@@ -14,7 +14,6 @@ import {
   JustifyContent,
   Link,
   FlexDirection,
-  Label,
 } from '@gousto-internal/citrus-react'
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'

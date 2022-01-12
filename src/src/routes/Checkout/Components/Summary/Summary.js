@@ -6,6 +6,17 @@ import Receipt from 'Receipt'
 import Loading from 'Loading'
 import { getSurchargeItems } from 'utils/pricing'
 import { basketSum } from 'utils/basket'
+import {
+  Box,
+  Color,
+  BorderStyle,
+  AlignItems,
+  FlexDirection,
+  Icon,
+  JustifyContent,
+  Space,
+  IconVariant,
+} from '@gousto-internal/citrus-react'
 import { SectionHeader } from '../SectionHeader'
 import { PromoCode } from '../PromoCode'
 import css from './Summary.css'
@@ -57,10 +68,29 @@ class Summary extends PureComponent {
           </div>
         ) : (
           <Fragment>
-            <div className={css.pricePerServingBlock}>
+            {/* <div className={css.pricePerServingBlock}>
               <div className={css.discountIcon} />
               <PricePerServingMessage isPriceInCheckout />
-            </div>
+            </div> */}
+            <Box
+              bg={Color.Success_50}
+              borderWidth={0.5}
+              borderStyle={BorderStyle.Solid}
+              borderColor={Color.Success_200}
+              borderRadius={1}
+              paddingV={3}
+              display="flex"
+              flexDirection={FlexDirection.Columm}
+              alignItems={AlignItems.Center}
+              justifyContent={JustifyContent.Center}
+            >
+              <Box display="flex" flexDirection={FlexDirection.Row}>
+                <Icon variant={IconVariant.Confirmation} name="offer_percentage" />
+                <Space direction="horizontal" size={1} />
+                <PricePerServingMessage isPriceInCheckout />
+              </Box>
+            </Box>
+            <Space size={5} />
             <div className={css.details}>
               <Receipt
                 numRecipes={numRecipes}
