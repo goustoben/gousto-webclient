@@ -2,6 +2,7 @@ const path = require('path')
 
 const { getClientPlugins } = require('./build/libs/plugins')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 const { build, publicPath, clientDevServerEnabled, hmrEnabled } = require('./build/libs/webpack-env-vars.js')
 const { logBuildInfo } = require('./build/libs/logs')
@@ -13,7 +14,7 @@ logBuildInfo(isDevelopmentBuild)
 
 const baseConfig = {
   context: path.resolve(__dirname, '..'),
-  devtool: false,
+  devtool: 'source-map',
   entry: {
     main: ['./src/client.js'],
     legacy: ['./src/legacy.js'],
@@ -34,6 +35,15 @@ const baseConfig = {
     publicPath,
   },
   optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin({
+      parallel: true,
+      sourceMap: true,
+      terserOptions: {
+        mangle: true,
+        compress: true,
+      },
+    })],
     splitChunks: {
       cacheGroups: {
         vendor: {
