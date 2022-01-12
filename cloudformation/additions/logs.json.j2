@@ -2,7 +2,7 @@
   "Type": "AWS::Logs::MetricFilter",
   "Properties": {
       "LogGroupName": {"Ref": "EcsApplicationLogGroup"},
-      "FilterPattern": '{$.message = "auth/login catch {\"code\":500,\"errors\":[],\"message\":\"Timeout\",\"status\":500}"}',
+      "FilterPattern": "{$.message = \"auth/login catch {\\\"code\\\":500,\\\"errors\\\":[],\\\"message\\\":\\\"Timeout\\\",\\\"status\\\":500}\"}",
       "MetricTransformations": [
           {
               "MetricValue": "1",
