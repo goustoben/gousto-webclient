@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import logger from 'utils/logger'
 import classNames from 'classnames'
 import { checkoutConfig } from 'config/checkout'
+import { InputField } from '@gousto-internal/citrus-react'
 import css from './PromoCode.css'
 import checkoutCss from '../../Checkout.css'
 
@@ -127,6 +128,19 @@ class PromoCode extends PureComponent {
     return result
   }
 
+  getInputStatus = () => {
+    const { promoCode } = this.props
+    const { hasError, hasValidPromoCode } = this.state
+
+    if (promoCode && hasError) {
+      return 'Error'
+    } else if (this.promoCodeAdded() && hasValidPromoCode) {
+      return 'Success'
+    }
+
+    return null
+  }
+
   handleChange = (e) => {
     const { value } = e.target
 
@@ -172,13 +186,24 @@ class PromoCode extends PureComponent {
   }
 
   render() {
-    const { value } = this.state
+    const { value, hasError } = this.state
     const { inputClassName, iconClassName } = this.getDisplayOptions()
+    const status = this.getInputStatus()
 
     return (
       <div className={css.inputGroup}>
         <div className={css.inputContainer}>
-          <div className={css.discountLabel}>Discount code</div>
+          <InputField
+            label="Discount code"
+            type="text"
+            name="promoCode"
+            data-testing="promoCodeInput"
+            value={value}
+            onChange={this.handleChange}
+            status={status}
+            validationMessage={hasError && checkoutConfig.errorMessage.invalidPromocode}
+          />
+          {/* <div className={css.discountLabel}>Discount code</div>
           <div className={css.inputWrapper}>
             <input
               type="text"
@@ -193,9 +218,9 @@ class PromoCode extends PureComponent {
                 [css.isHidden]: !iconClassName,
               })}
             />
-          </div>
+          </div> */}
         </div>
-        {this.renderMessage()}
+        {/* {this.renderMessage()} */}
       </div>
     )
   }
