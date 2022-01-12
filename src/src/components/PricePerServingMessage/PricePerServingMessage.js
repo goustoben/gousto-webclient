@@ -33,11 +33,22 @@ const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null, isPr
             </Text>
           </Box>
         )}
-        <Box css={{marginLeft: 11}}>
-          <Text fontWeight={FontWeight.Bold} size={3} color={Color.Success_900}>
-            {isPriceInCheckout ? formatOrderPrice(discountedPrice) : `£${discountedPrice}`}
-          </Text>
-        </Box>
+        {isPriceInCheckout
+          ? (
+            <Box css={{marginLeft: 11}}>
+              <Text fontWeight={FontWeight.Bold} size={3} color={Color.Success_900}>
+                {formatOrderPrice(discountedPrice)}
+              </Text>
+            </Box>
+
+          ) : (
+            <Text>
+              `£$
+              {discountedPrice}
+              `
+            </Text>
+          )}
+
         {/* <p className={classNames(css.pricePerServingMessage, { [css.priceMessageInCheckout]: isPriceInCheckout })}>
           Price per serving:
           {' '}
