@@ -1,8 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { GradientInfoHeader } from './GradientInfoHeader'
-import { RecipeLinkHeader } from './RecipeLinkHeader'
-import { WaveLinkHeaderContainer, SimpleLinkHeaderContainer } from './LinkHeaderContainer'
+import { WaveLinkHeaderContainer } from './LinkHeaderContainer'
 
 const CollectionHeaderWrapper = ({ collectionsHeaders }) => {
   if (!collectionsHeaders) {
@@ -17,15 +16,6 @@ const CollectionHeaderWrapper = ({ collectionsHeaders }) => {
   case 'wave-link-header':
     return (
       <WaveLinkHeaderContainer headerAttributes={collectionsHeaders.attributes} />
-    )
-  case 'simple-link-header':
-    return (
-      <SimpleLinkHeaderContainer headerAttributes={collectionsHeaders.attributes} />
-    )
-
-  case 'recipe-link-header':
-    return (
-      <RecipeLinkHeader headerAttributes={collectionsHeaders.attributes} />
     )
   default:
     return null

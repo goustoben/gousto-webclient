@@ -1,1 +1,0 @@
-export { SimpleLinkHeader } from './SimpleLinkHeader'
