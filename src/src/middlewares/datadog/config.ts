@@ -6,6 +6,7 @@ export const commonConfig: Partial<LogsInitConfiguration & RumInitConfiguration>
   sampleRate: 1,
   service: 'gousto-webclient',
   env: __ENV__,
+  version: __CIRCLE_BUILD_NUM__,
 }
 
 export const browserLogsConfig: LogsInitConfiguration = {

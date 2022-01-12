@@ -42,6 +42,7 @@ const webpackEnvVarsBase = {
   __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
   __TEST__: false,
+  __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
 
 const webpackEnvVarsDev = {
@@ -78,7 +79,6 @@ const webpackEnvVarsServer = {
   __SERVER__: true,
   __TEST__: false,
   'process.env.NODE_ENV': JSON.stringify(build),
-  __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
 
 module.exports = {
