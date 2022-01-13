@@ -2,7 +2,7 @@ import { OrderedMap as IOrderedMap } from 'immutable'
 import { CollectionSlug } from '../constants'
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
-import { MenuCollection } from '../../../types'
+import { MenuCollection } from 'routes/Menu/types'
 
 const getCollectionBySlug = (collections: IOrderedMap<string, MenuCollection>, slug: string) => {
   if (!slug) {

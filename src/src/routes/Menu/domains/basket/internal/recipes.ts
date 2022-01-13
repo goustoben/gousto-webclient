@@ -2,8 +2,7 @@ import { Map } from 'immutable'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { basketRecipeAdd, basketRecipeRemove } from 'routes/Menu/actions/basketRecipes'
-import { getBasketRecipes } from '../../../../../selectors/basket'
-import { useBasketDelivery } from './delivery'
+import { getBasketRecipes, getBasketPostcode } from 'selectors/basket'
 
 const USER_RECIPE_LIMIT = 4
 
@@ -28,7 +27,7 @@ const useModifyRecipes = () => {
  * Users can add recipes if the basket has a postcode
  */
 const useCanAddRecipes = () => {
-  const { postcode } = useBasketDelivery()
+  const postcode = useSelector(getBasketPostcode)
 
   return Boolean(postcode)
 }
