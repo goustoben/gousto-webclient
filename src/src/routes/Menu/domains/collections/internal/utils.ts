@@ -1,4 +1,4 @@
-import { createMenuCollection } from '../../../types'
+import { createMenuCollection } from 'routes/Menu/types'
 
 export const createCollectionFromDefaultValues = (collection: {}) => {
   const defaultValues = {

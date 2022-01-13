@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 import { OrderedMap as IOrderedMap } from 'immutable'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { MenuCollection } from '../../../types'
-import { getDisplayedCollections } from '../../../selectors/collections'
+import { MenuCollection } from 'routes/Menu/types'
+import { getDisplayedCollections } from 'routes/Menu/selectors/collections'
 import { CollectionSlug } from '../constants'
 
 export const useDisplayedCollections = (): IOrderedMap<string, MenuCollection> => {

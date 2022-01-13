@@ -7,9 +7,6 @@ import { Checkout } from './Checkout'
 const mapStateToProps = (state) => ({
   recipes: state.basket.get('recipes'),
   numPortions: state.basket.get('numPortions'),
-  promoCode: state.basket.get('promoCode'),
-  postcode: state.basket.get('postcode'),
-  addressId: state.basket.getIn(['address', 'id'], ''),
   checkoutPending: state.pending.get(actionTypes.BASKET_CHECKOUT),
   loadingOrderPending: state.pending.get(actionTypes.LOADING_ORDER, false),
   menuFetchData: state.pending.get(actionTypes.MENU_FETCH_DATA, false),

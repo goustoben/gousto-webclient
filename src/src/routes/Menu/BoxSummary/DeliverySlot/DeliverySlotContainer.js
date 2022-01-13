@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import Immutable from 'immutable'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
@@ -8,7 +7,7 @@ import { getFullScreenBoxSummary } from 'selectors/features'
 import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
-import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
+import { getNumPortions } from 'selectors/basket'
 import { getBoxSummaryTextProps } from 'selectors/boxSummary'
 import { getLoadingStateForOrder } from 'selectors/user'
 import { DeliverySlot } from './DeliverySlot'
@@ -24,16 +23,10 @@ function mapStateToProps(state) {
   } = getTempDeliveryOptions(state)
 
   return {
-    address: state.basket.get('address'),
-    date: getBasketDate(state),
-    prevDate: state.basket.get('prevDate'),
     deliveryDays,
-    postcode: getBasketPostcode(state),
     menuPending: state.menuReceiveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
-    prevSlotId: state.basket.get('prevSlotId'),
     userOrders: state.user.get('orders'),
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
-    basketRecipeNo: state.basket.get('recipes', Immutable.Map({})).size,
     tempDate,
     tempSlotId,
     tempOrderId,

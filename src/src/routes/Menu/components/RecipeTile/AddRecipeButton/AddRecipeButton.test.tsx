@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { render, cleanup, fireEvent, screen, ByRoleOptions } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { createMockInitialState, createMockStore } from '../../../_testing/createMockStore'
 import { AddRecipeButton } from './AddRecipeButton'
@@ -40,9 +40,11 @@ describe('AddRecipeButton', () => {
     let state: ReturnType<typeof createMockInitialState>
 
     beforeEach(() => {
+      const postcode = 'W3 7UP'
+
       state = createMockInitialState({
         basket: {
-          postcode: 'W3 7UP'
+          postcode,
         }
       })
     })

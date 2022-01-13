@@ -24,7 +24,6 @@ function mapStateToProps(state) {
     postcodePending: state.basket.get('postcodePending'),
     prevPostcode: state.basket.get('prevPostcode'),
     addresses: state.user.get('shippingAddresses'),
-    address: state.basket.get('address'),
     chosenAddress,
     tempPostcode,
     isVisible: state.boxSummaryShow.get('show', false),
