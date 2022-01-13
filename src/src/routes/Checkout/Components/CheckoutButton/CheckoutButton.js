@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Loader } from 'goustouicomponents'
 import { jsx } from '@emotion/react'
-import { Button } from '@gousto-internal/citrus-react'
+import { Button, Box, AlignItems, JustifyContent } from '@gousto-internal/citrus-react'
 import css from './CheckoutButton.css'
 
 const CheckoutButton = ({
@@ -47,6 +47,7 @@ const CheckoutButton = ({
         onClick={onClick}
         onKeyDown={onClick}
         width={isFullWidth && '100%'}
+        height="3rem"
       >
         {isLoading ? (
           <span className={css.loaderContainer}>
