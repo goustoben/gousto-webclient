@@ -22,6 +22,7 @@ export class AddressOverhaul extends PureComponent {
           <Space size={2} />
           <Box>
             <Link
+              role="button"
               tabIndex="0"
               size={1}
               onClick={this.handleEditAddressManually}
@@ -78,7 +79,7 @@ export class AddressOverhaul extends PureComponent {
 
         {!(isEditingManually || isAddressSelected) && (
           <div className={css.enterAddressManually}>
-            <span
+            {/* <span
               role="button"
               tabIndex="0"
               onClick={this.handleEditAddressManually}
@@ -87,7 +88,18 @@ export class AddressOverhaul extends PureComponent {
               data-testing="checkoutEnterAddressManually"
             >
               Enter address manually
-            </span>
+            </span> */}
+            <Link
+              size={1}
+              role="button"
+              tabIndex="0"
+              onClick={this.handleEditAddressManually}
+              onKeyDown={onEnter(this.handleEditAddressManually)}
+              className={css.editAddressLink}
+              data-testing="checkoutEnterAddressManually"
+            >
+              Enter address manually
+            </Link>
           </div>
         )}
       </Fragment>
