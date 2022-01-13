@@ -26,7 +26,7 @@ import {
   trackUnexpectedSignup,
 } from 'actions/tracking'
 
-import { PaymentMethod, signupConfig } from 'config/signup'
+import { PaymentMethod } from 'config/signup'
 
 import logger from 'utils/logger'
 import { deliveryTariffTypes } from 'utils/deliveries'
@@ -34,9 +34,6 @@ import {
   transformPendingOrders,
   transformProjectedDeliveries,
 } from 'utils/myDeliveries'
-import {
-  getIsDecoupledPaymentEnabled,
-} from 'selectors/features'
 import { skipDates } from 'routes/Account/apis/subscription'
 import * as orderV2Apis from 'routes/Account/MyDeliveries/apis/orderV2'
 
@@ -250,7 +247,6 @@ describe('user actions', () => {
     let state
 
     beforeEach(() => {
-      getIsDecoupledPaymentEnabled.mockReturnValue(false)
       customerSignup.mockClear()
       state = {
         basket: Immutable.fromJS({
@@ -307,8 +303,6 @@ describe('user actions', () => {
     })
 
     describe('when card method is selected', () => {
-      const sca3ds = true
-      const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
       const goustoRef = '105979923'
 
       beforeEach(() => {
@@ -323,30 +317,6 @@ describe('user actions', () => {
         getState.mockReturnValue(state)
       })
 
-      test('should add "3ds=true" param to the user signup request', async () => {
-        const expected = expect.objectContaining({
-          '3ds': 1
-        })
-
-        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
-
-        expect(customerSignup).toHaveBeenCalledWith(null, expected)
-      })
-
-      test('should replace card token by checkout session id for the user signup request', async () => {
-        const expected = expect.objectContaining({
-          payment_method: expect.objectContaining({
-            card: expect.objectContaining({
-              card_token: sessionId
-            })
-          })
-        })
-
-        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
-
-        expect(customerSignup).toHaveBeenCalledWith(null, expected)
-      })
-
       test('should add gousto_ref param for the user signup request', async () => {
         const expected = expect.objectContaining({
           customer: expect.objectContaining({
@@ -354,55 +324,7 @@ describe('user actions', () => {
           })
         })
 
-        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
-
-        expect(customerSignup).toHaveBeenCalledWith(null, expected)
-      })
-    })
-
-    describe('when PayPal payment method is selected', () => {
-      const sca3ds = true
-      const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
-
-      beforeEach(() => {
-        state = {
-          ...state,
-          payment: Immutable.fromJS({
-            paymentMethod: PaymentMethod.PayPal,
-            paypalNonce: 'vbfv_ss8',
-            paypalDeviceData: 'test-device-data',
-          }),
-          features: Immutable.fromJS({
-            ndd: {
-              value: deliveryTariffTypes.NON_NDD,
-            },
-          })
-        }
-        getState.mockReturnValue(state)
-      })
-
-      test('should not add "3ds=true" param to the user signup request', async () => {
-        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
-
-        expect(customerSignup.mock.calls[0][1]['3ds']).toBe(0)
-      })
-
-      test('should have PayPal payment method', async () => {
-        const expected = expect.objectContaining({
-          payment_method: {
-            is_default: 1,
-            type: signupConfig.payment_types.paypal,
-            name: 'My PayPal',
-            paypal: {
-              payment_provider: 'paypal',
-              active: 1,
-              token: 'vbfv_ss8',
-              device_data: 'test-device-data',
-            }
-          }
-        })
-
-        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
+        await userSubscribe()(dispatch, getState)
 
         expect(customerSignup).toHaveBeenCalledWith(null, expected)
       })
@@ -534,17 +456,7 @@ describe('user actions', () => {
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
             delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
-            gousto_ref: '105979923'
-          },
-          payment_method: {
-            is_default: 1,
-            type: 'card',
-            name: 'My Card',
-            card: {
-              active: 1,
-              card_token: undefined,
-              payment_provider: 'checkout',
-            }
+            gousto_ref: '105979923',
           },
           addresses: {
             billing_address: {
@@ -574,9 +486,8 @@ describe('user actions', () => {
             delivery_slot_id: undefined,
             box_id: 123
           },
-          '3ds': 0,
           decoupled: {
-            payment: 0,
+            payment: 1,
           }
         }
       })
@@ -623,111 +534,6 @@ describe('user actions', () => {
 
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
         })
-      })
-    })
-
-    describe('isDecoupledPaymentEnabled is enabled', () => {
-      let expected
-
-      beforeEach(() => {
-        state = {
-          basket: Immutable.fromJS({
-            boxId: 123,
-          }),
-          checkout: Immutable.fromJS({
-            goustoRef: '105979923',
-          }),
-          pricing: Immutable.fromJS({
-            prices: {
-              total: '24.55',
-              promoCode: false
-            }
-          }),
-          tracking: Immutable.fromJS({
-            asource: null
-          }),
-          request: Immutable.fromJS({
-            browser: 'desktop'
-          }),
-          features: Immutable.fromJS({
-            ndd: {
-              value: ''
-            }
-          }),
-          form: {
-            account: {
-              values: {
-                account: {
-                  email: 'test_email@test.com'
-                }
-              }
-            },
-            ...formValues,
-          },
-          payment: Immutable.fromJS({
-            paymentMethod: PaymentMethod.Card,
-          })
-        }
-        expected = {
-          order_id: undefined,
-          promocode: '',
-          customer: {
-            tariff_id: '',
-            phone_number: '',
-            email: 'test_email@test.com',
-            name_first: 'John',
-            name_last: 'Doe',
-            promo_code: '',
-            password: undefined,
-            age_verified: 0,
-            marketing_do_allow_email: 0,
-            marketing_do_allow_thirdparty: 0,
-            delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
-            gousto_ref: '105979923',
-          },
-          addresses: {
-            billing_address: {
-              county: '',
-              line1: '',
-              line2: '',
-              line3: '',
-              name: 'My Address',
-              postcode: '',
-              town: '',
-              type: 'billing',
-            },
-            shipping_address: {
-              county: '',
-              delivery_instructions: undefined,
-              line1: '',
-              line2: '',
-              line3: '',
-              name: 'My Address',
-              postcode: '',
-              town: '',
-              type: 'shipping',
-            },
-          },
-          subscription: {
-            interval_id: 1,
-            delivery_slot_id: undefined,
-            box_id: 123
-          },
-          decoupled: {
-            payment: 1,
-          }
-        }
-
-        getIsDecoupledPaymentEnabled.mockReturnValue(true)
-        getState.mockReturnValue(state)
-      })
-
-      test('should remove payment data from request', async () => {
-        const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
-
-        await userSubscribe()(dispatch, getState)
-
-        expect(customerSignupSpy).toHaveBeenCalledWith(null, expected)
       })
     })
 

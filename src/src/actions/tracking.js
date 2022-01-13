@@ -8,7 +8,6 @@ import logger from 'utils/logger'
 import { getUserOrderById } from 'utils/user'
 import { getUTM } from 'utils/utm'
 import { getPreviewOrderId } from 'selectors/basket'
-import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
@@ -323,9 +322,7 @@ export const trackSubscriptionCreated = () => (dispatch, getState) => {
   const orderId = getPreviewOrderId(state)
   const userId = state.user.get('id')
   const subscriptionId = state.user.get('subscription').get('id')
-  const type = getIsDecoupledPaymentEnabled(state)
-    ? trackingKeys.subscriptionCreatedDecoupling
-    : trackingKeys.subscriptionCreated
+  const type = trackingKeys.subscriptionCreated
 
   dispatch({
     type,

@@ -2,7 +2,7 @@
 import Immutable from 'immutable'
 import * as cookieHelper from 'utils/cookieHelper2'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchReference, fetchPromoCodeValidity } from 'apis/customers'
+import { fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
 
 import { actionTypes } from 'actions/actionTypes'
@@ -23,15 +23,12 @@ import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 import {
   checkoutActions,
   trackPurchase,
-  checkoutNon3DSSignup,
-  checkout3DSSignup,
   checkPaymentAuth,
   fireCheckoutError,
   fireCheckoutPendingEvent,
   checkoutPostSignup,
   checkoutClearErrors,
   checkoutSignupPayment,
-  checkoutDecoupledPaymentSignup,
   trackPromocodeChange,
   checkoutAddressLookup,
   trackCheckoutButtonPressed,
@@ -45,7 +42,7 @@ import {
   checkoutStepIndexReached,
   handlePromoCodeRemoved,
   handleCheckoutError,
-  fetchGoustoRef,
+  fetchGoustoRef, checkoutCardAuthorisation
 } from 'actions/checkout'
 
 jest.mock('utils/basket', () => ({
@@ -85,12 +82,6 @@ jest.mock('apis/customers', () => ({
     status: 'ok',
     data: {
       goustoRef: '105979923'
-    }
-  })),
-  fetchPromoCodeValidity: jest.fn((request) => Promise.resolve({
-    status: 'ok',
-    data: {
-      valid: request.promo_code === 'DTI-SB-P30M'
     }
   })),
 }))
@@ -318,9 +309,6 @@ const createState = (stateOverrides) => ({
     isPromoCodeValidationEnabled: {
       value: false,
     },
-    isDecoupledPaymentEnabled: {
-      value: false,
-    },
   }),
   ...stateOverrides,
 })
@@ -485,58 +473,16 @@ describe('checkout actions', () => {
 
   describe('checkoutSignup', () => {
     beforeEach(() => {
-      jest.spyOn(checkoutActions, 'checkout3DSSignup')
-      jest.spyOn(checkoutActions, 'checkoutNon3DSSignup')
-      jest.spyOn(checkoutActions, 'checkoutDecoupledPaymentSignup')
       jest.spyOn(checkoutActions, 'trackSignupPageChange')
       jest.spyOn(checkoutActions, 'fetchGoustoRef')
+      jest.spyOn(checkoutActions, 'resetDuplicateCheck')
+      jest.spyOn(checkoutActions, 'clearGoustoRef')
+      jest.spyOn(checkoutActions, 'checkoutCardAuthorisation')
+      jest.spyOn(checkoutActions, 'checkoutSignupPayment')
     })
 
     afterEach(() => {
       jest.clearAllMocks()
-    })
-
-    describe('when decoupled payments enabled', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createState({
-          features: Immutable.fromJS({
-            isDecoupledPaymentEnabled: {
-              value: true
-            }
-          })
-        }))
-      })
-
-      test('should fetch gousto reference', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
-      })
-
-      test('should send "Submit" tracking event', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
-      })
-
-      test('should init decoupled payment signup flow', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.checkoutDecoupledPaymentSignup).toHaveBeenCalled()
-      })
-
-      test('should not init 3ds or non-3ds signup flow', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.checkout3DSSignup).not.toHaveBeenCalled()
-        expect(checkoutActions.checkoutNon3DSSignup).not.toHaveBeenCalled()
-      })
-    })
-
-    test('should fetch gousto reference', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
-
-      expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
     })
 
     test('should send "Submit" tracking event', async () => {
@@ -545,10 +491,40 @@ describe('checkout actions', () => {
       expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
     })
 
-    test('should init 3DS signup flow', async () => {
+    test('should fetch gousto reference', async () => {
       await checkoutActions.checkoutSignup()(dispatch, getState)
 
-      expect(checkoutActions.checkout3DSSignup).toHaveBeenCalled()
+      expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
+    })
+
+    test('should reset duplicate check state', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
+
+      expect(checkoutActions.resetDuplicateCheck).toHaveBeenCalled()
+    })
+
+    test('should init subscribe user', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
+
+      expect(userSubscribe).toHaveBeenCalled()
+    })
+
+    test('should init checkout payment signup flow', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
+
+      expect(checkoutActions.checkoutCardAuthorisation).toHaveBeenCalled()
+    })
+
+    test('should init card authorisation', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
+
+      expect(checkoutActions.checkoutCardAuthorisation).toHaveBeenCalled()
+    })
+
+    test('should not init payment', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
+
+      expect(checkoutActions.checkoutSignupPayment).not.toHaveBeenCalled()
     })
 
     describe('when PayPal payment method selected', () => {
@@ -560,80 +536,16 @@ describe('checkout actions', () => {
         }))
       })
 
-      test('should fetch gousto reference', async () => {
+      test('should not init card authorisation', async () => {
         await checkoutActions.checkoutSignup()(dispatch, getState)
 
-        expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
+        expect(checkoutActions.checkoutCardAuthorisation).not.toHaveBeenCalled()
       })
 
-      test('should init non 3DS signup flow', async () => {
+      test('should init payment', async () => {
         await checkoutActions.checkoutSignup()(dispatch, getState)
 
-        expect(checkoutActions.checkoutNon3DSSignup).toHaveBeenCalled()
-      })
-    })
-  })
-
-  describe('checkoutNon3DSSignup', () => {
-    beforeEach(() => {
-      getState.mockReturnValue(createState())
-
-      jest.spyOn(checkoutActions, 'clearGoustoRef')
-    })
-
-    test('should subscribe user', async () => {
-      await checkoutNon3DSSignup()(dispatch, getState)
-
-      expect(userSubscribe).toHaveBeenCalled()
-    })
-
-    test('should clear gousto ref', async () => {
-      await checkoutNon3DSSignup()(dispatch, getState)
-
-      expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
-    })
-
-    describe('when there is an error', () => {
-      beforeEach(() => {
-        userSubscribe.mockImplementation( () => {
-          throw new Error('test error')
-        })
-      })
-
-      test('then it should instead track and set an error', async () => {
-        await checkoutNon3DSSignup()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith({ type: 'trackCheckoutError' })
-        expect(trackCheckoutError).toHaveBeenCalledWith('CHECKOUT_SIGNUP', undefined, 'checkoutNon3DSSignup')
-
-        expect(dispatch).toHaveBeenCalledWith({ type: 'error_action' })
-        expect(statusActions.error).toHaveBeenCalledWith('CHECKOUT_SIGNUP', null)
-
-        expect(checkoutCreatePreviewOrder).not.toHaveBeenCalled()
-      })
-
-      test('should clear gousto reference', async () => {
-        await checkoutNon3DSSignup()(dispatch, getState)
-
-        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
-      })
-    })
-
-    describe('when an error triggers removal of the order preview', () => {
-      beforeEach(() => {
-        userSubscribe.mockImplementation(() => {
-          // This simulates a throw in src/src/utils/fetch.js.
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            code: '422-payment-failed'
-          }
-        })
-      })
-
-      test('then it should re-create the order preview', async () => {
-        await checkoutNon3DSSignup()(dispatch, getState)
-
-        expect(checkoutCreatePreviewOrder).toHaveBeenCalled()
+        expect(checkoutActions.checkoutSignupPayment).toHaveBeenCalled()
       })
     })
   })
@@ -687,147 +599,6 @@ describe('checkout actions', () => {
     })
   })
 
-  describe('checkout3DSSignup', () => {
-    beforeEach(() => {
-      const checkoutState = createState()
-        .checkout.set('goustoRef', '105979923')
-      getState.mockReturnValue(createState({
-        checkout: checkoutState
-      }))
-      jest.spyOn(checkoutActions, 'clearGoustoRef')
-    })
-
-    describe('when promo code is not applied', () => {
-      beforeEach(() => {
-        const state = createState()
-        state.basket = state.basket.set('promoCode', false)
-        getState.mockReturnValue(state)
-      })
-
-      test('should not validate it', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(fetchPromoCodeValidity).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('when valid promo code is applied', () => {
-      test('should validate it', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(fetchPromoCodeValidity).toHaveBeenCalled()
-      })
-
-      test('should continue signup process', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(authPayment).toHaveBeenCalled()
-      })
-    })
-
-    describe('when invalid promo code is applied', () => {
-      beforeEach(() => {
-        const state = createState()
-        state.basket = state.basket.set('promoCode', 'FF6-AX-KD')
-        getState.mockReturnValue(state)
-      })
-
-      test('should validate it', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(fetchPromoCodeValidity).toHaveBeenCalled()
-      })
-
-      test('should reset promo code', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(basketPromoCodeChange).toHaveBeenCalled()
-        expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
-      })
-
-      test('should show duplicated promo code error', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith(statusActions.error(actionTypes.CHECKOUT_SIGNUP, '409-duplicate-details'))
-        expect(dispatch).toHaveBeenCalledWith(statusActions.error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-      })
-
-      test('should update pricing', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(pricingActions.pricingRequest).toHaveBeenCalled()
-      })
-
-      test('should discard pending signup', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith(statusActions.pending(actionTypes.CHECKOUT_SIGNUP, false))
-      })
-
-      test('should prevent signup process', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(authPayment).not.toHaveBeenCalled()
-      })
-
-      test('should not clear gousto reference', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(checkoutActions.clearGoustoRef).not.toHaveBeenCalled()
-      })
-    })
-
-    test('should make payment auth request', async () => {
-      const expected = {
-        order_id: '100004',
-        card_token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
-        amount: 3448,
-        gousto_ref: '105979923',
-        '3ds': true,
-        success_url: `http://localhost${routes.client.payment.success}`,
-        failure_url: `http://localhost${routes.client.payment.failure}`,
-        decoupled: false,
-      }
-
-      await checkout3DSSignup()(dispatch, getState)
-
-      expect(authPayment).toHaveBeenCalledWith(expected, sessionId)
-    })
-
-    test('should show 3ds challenge modal', async () => {
-      await checkout3DSSignup()(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.PAYMENT_SHOW_MODAL,
-        challengeUrl: 'https://bank.uk/3dschallenge',
-      })
-    })
-
-    test('should trigger 3dsmodal_display event', async () => {
-      await checkout3DSSignup()(dispatch, getState)
-
-      expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
-    })
-
-    test('should not clear gousto reference', async () => {
-      await checkout3DSSignup()(dispatch, getState)
-
-      expect(checkoutActions.clearGoustoRef).not.toHaveBeenCalled()
-    })
-
-    describe('when auth payment request failed', () => {
-      beforeEach(() => {
-        authPayment.mockRejectedValueOnce(new Error('Failed request'))
-      })
-
-      test('should clear gousto reference', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
-      })
-    })
-  })
-
   describe('checkPaymentAuth', () => {
     beforeEach(() => {
       getState.mockReturnValue(createState())
@@ -848,60 +619,12 @@ describe('checkout actions', () => {
         expect(checkPayment).toHaveBeenCalledWith(checkoutSuccessfulSessionId, sessionId)
       })
 
-      test('should subscribe user', () => {
-        expect(userSubscribe).toHaveBeenCalledWith(true, 'src_qvgsjghtdjjuhdznipp5najdza')
-      })
-
       test('should trigger 3ds_success event', () => {
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeSuccessful)
       })
 
       test('should not trigger 3ds_failed event', () => {
         expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
-      })
-
-      test('should clear gousto reference', () => {
-        expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
-      })
-    })
-
-    describe('when decoupled payment enabled and payment authorization is successful', () => {
-      const checkoutSuccessfulSessionId = 'success_session_id'
-
-      beforeEach(async () => {
-        getState.mockReturnValue(createState({
-          features: Immutable.fromJS({
-            isDecoupledPaymentEnabled: {
-              value: true
-            }
-          })
-        }))
-
-        jest.spyOn(checkoutActions, 'checkoutSignupPayment')
-        jest.spyOn(checkoutActions, 'resetDuplicateCheck')
-        jest.spyOn(checkoutActions, 'checkoutPostSignup')
-
-        await checkPaymentAuth(checkoutSuccessfulSessionId, sessionId)(dispatch, getState)
-      })
-
-      afterEach(() => {
-        jest.clearAllMocks()
-      })
-
-      test('should continue decoupled payment', async () => {
-        expect(checkoutActions.checkoutSignupPayment).toHaveBeenCalledWith('src_qvgsjghtdjjuhdznipp5najdza')
-      })
-
-      test('should not reset duplicate check', async () => {
-        expect(checkoutActions.resetDuplicateCheck).not.toHaveBeenCalled()
-      })
-
-      test('should not subscribe user', () => {
-        expect(userSubscribe).not.toHaveBeenCalled()
-      })
-
-      test('should trigger post signup', () => {
-        expect(checkoutActions.checkoutPostSignup).not.toHaveBeenCalled()
       })
     })
 
@@ -940,24 +663,14 @@ describe('checkout actions', () => {
         expect(checkoutCreatePreviewOrder).toHaveBeenCalled()
       })
     })
-
-    test('should show payment modal', async () => {
-      await checkout3DSSignup()(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.PAYMENT_SHOW_MODAL,
-        challengeUrl: 'https://bank.uk/3dschallenge',
-      })
-    })
   })
 
-  describe('checkoutDecoupledPaymentSignup', () => {
+  describe('checkoutCardAuthorisation', () => {
     const checkoutState = createState()
       .checkout.set('goustoRef', '105979923')
 
     beforeEach(() => {
-      jest.spyOn(checkoutActions, 'resetDuplicateCheck')
-      jest.spyOn(checkoutActions, 'checkoutPostSignup')
+      jest.spyOn(checkoutActions, 'clearGoustoRef')
 
       getState.mockReturnValue(createState({
         checkout: checkoutState
@@ -977,16 +690,16 @@ describe('checkout actions', () => {
         '3ds': true,
         success_url: `http://localhost${routes.client.payment.success}`,
         failure_url: `http://localhost${routes.client.payment.failure}`,
-        decoupled: false,
+        decoupled: true,
       }
 
-      await checkoutDecoupledPaymentSignup()(dispatch, getState)
+      await checkoutCardAuthorisation()(dispatch, getState)
 
       expect(authPayment).toHaveBeenCalledWith(expected, sessionId)
     })
 
     test('should show 3ds challenge modal', async () => {
-      await checkoutDecoupledPaymentSignup()(dispatch, getState)
+      await checkoutCardAuthorisation()(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.PAYMENT_SHOW_MODAL,
@@ -995,13 +708,13 @@ describe('checkout actions', () => {
     })
 
     test('should trigger 3dsmodal_display event', async () => {
-      await checkoutDecoupledPaymentSignup()(dispatch, getState)
+      await checkoutCardAuthorisation()(dispatch, getState)
 
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
     })
 
     test('should not clear gousto reference', async () => {
-      await checkoutDecoupledPaymentSignup()(dispatch, getState)
+      await checkoutCardAuthorisation()(dispatch, getState)
 
       expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
     })
@@ -1012,23 +725,9 @@ describe('checkout actions', () => {
       })
 
       test('should clear gousto reference', async () => {
-        await checkoutDecoupledPaymentSignup()(dispatch, getState)
+        await checkoutCardAuthorisation()(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
-      })
-    })
-
-    describe('when PayPal is selected', () => {
-      test('should initiate signup request', async () => {
-        await checkoutDecoupledPaymentSignup()(dispatch, getState)
-
-        expect(userSubscribe).toHaveBeenCalledWith(false, null)
-      })
-
-      test('should not clear gousto reference', async () => {
-        await checkoutDecoupledPaymentSignup()(dispatch, getState)
-
-        expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       })
     })
   })
@@ -1317,7 +1016,9 @@ describe('checkout actions', () => {
     describe('when payment method is PayPal, but it was failed to init', () => {
       test('PayPal failed attempt should be reported', () => {
         getState.mockReturnValue(createState( {checkout: Immutable.fromJS( {paypalErrors: {Error: true}} ) }))
+
         setCurrentPaymentMethod(PaymentMethod.PayPal)(dispatch, getState)
+
         expect(dispatch).toBeCalledWith({ type: actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED})
       })
     })
@@ -1399,67 +1100,52 @@ describe('checkout actions', () => {
   })
 
   describe('given handleCheckoutError helper method is called', () => {
-    const error = {
+    const initiator = 'fake_initiator'
+    const signupError = {
       code: false,
       message: 'Error message',
     }
-    const initiator = 'fake_initiator'
+    const paymentError = {
+      code: '422-payment-failed',
+      message: 'Error message',
+    }
 
     test('then it should track checkout error', () => {
-      handleCheckoutError(error, initiator, dispatch, getState)
+      handleCheckoutError(signupError, initiator, dispatch, getState)
 
       expect(trackCheckoutError).toHaveBeenCalledWith(
         actionTypes.CHECKOUT_SIGNUP,
-        error.code,
+        signupError.code,
         initiator,
       )
     })
 
     test('then it should dispatch error', () => {
-      handleCheckoutError(error, initiator, dispatch, getState)
+      handleCheckoutError(signupError, initiator, dispatch, getState)
 
       expect(statusActions.error).toHaveBeenCalledWith(
         actionTypes.CHECKOUT_SIGNUP,
-        error.code,
+        signupError.code,
       )
     })
 
-    describe('when decoupled payment is enabled', () => {
-      let paymentError
+    test('then it should track checkout error as CHECKOUT_PAYMENT', () => {
+      handleCheckoutError(paymentError, initiator, dispatch, getState)
 
-      beforeEach(() => {
-        getState.mockReturnValue(createState({
-          features: Immutable.fromJS({
-            isDecoupledPaymentEnabled: {
-              value: true
-            }
-          })
-        }))
+      expect(trackCheckoutError).toHaveBeenCalledWith(
+        actionTypes.CHECKOUT_PAYMENT,
+        paymentError.code,
+        initiator
+      )
+    })
 
-        paymentError = {
-          code: '422-payment-failed',
-          message: 'Error message',
-        }
-      })
+    test('then it should dispatch error as CHECKOUT_PAYMENT', () => {
+      handleCheckoutError(paymentError, initiator, dispatch, getState)
 
-      test('then it should track checkout error as CHECKOUT_PAYMENT', () => {
-        handleCheckoutError(paymentError, initiator, dispatch, getState)
-
-        expect(trackCheckoutError).toHaveBeenCalledWith(
-          actionTypes.CHECKOUT_PAYMENT,
-          paymentError.code,
-          initiator
-        )
-      })
-
-      test('then it should dispatch error as CHECKOUT_PAYMENT', () => {
-        handleCheckoutError(paymentError, initiator, dispatch, getState)
-
-        expect(statusActions.error).toHaveBeenCalledWith(
-          actionTypes.CHECKOUT_PAYMENT,
-          paymentError.code,
-        )
-      })
+      expect(statusActions.error).toHaveBeenCalledWith(
+        actionTypes.CHECKOUT_PAYMENT,
+        paymentError.code,
+      )
     })
   })
 

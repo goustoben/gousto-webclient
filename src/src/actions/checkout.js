@@ -13,7 +13,7 @@ import { isValidPromoCode } from 'utils/order'
 
 import { validateUserPassword } from 'apis/auth'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchPromoCodeValidity, fetchReference } from 'apis/customers'
+import { fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
 
 import { getSignupRecaptchaToken } from 'selectors/auth'
@@ -21,19 +21,17 @@ import { getPreviewOrderId, getPromoCode, getBasketRecipes } from 'selectors/bas
 import {
   accountFormName,
   deliveryFormName,
-  getPromoCodeValidationDetails,
   getPasswordValue,
   getSignupE2ETestName,
 } from 'selectors/checkout'
 import { getSessionId } from 'selectors/cookies'
-import { getIsPaymentBeforeChoosingEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
+import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import {
-  getDecoupledPaymentData,
+  isCardPayment,
   getPaymentAuthData,
-  getCardPaymentDetails,
-  getPayPalPaymentDetails, is3DSCardPayment, isCardPayment
+  getPaymentData,
+  getPaymentProvider,
 } from 'selectors/payment'
-import { getUserId } from 'selectors/user'
 
 import {
   feLoggingLogEvent,
@@ -62,7 +60,7 @@ import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
 export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
 
 const { pending, error } = statusActions
-const { errorsThatClearOrderPreview, errorsToHandleForDecoupledPayment, passwordRules } = checkoutConfig
+const { errorsThatClearOrderPreview, errorsToHandleForSignupPayment, passwordRules } = checkoutConfig
 
 /* eslint-disable no-use-before-define */
 export const checkoutActions = {
@@ -71,12 +69,10 @@ export const checkoutActions = {
   checkoutPostSignup,
   checkoutAddressLookup,
   checkoutSignup,
-  checkoutDecoupledPaymentSignup,
-  checkoutNon3DSSignup,
-  checkout3DSSignup,
+  checkoutCardAuthorisation,
+  checkoutSignupPayment,
   fetchGoustoRef,
   clearGoustoRef,
-  checkoutSignupPayment,
   resetDuplicateCheck,
   trackSignupPageChange,
   trackingOrderPlaceAttempt,
@@ -170,9 +166,9 @@ export const handlePromoCodeRemoved = async (dispatch, getState) => {
   }
 }
 
-export const handleCheckoutError = async (err, initiator, dispatch, getState, options = {}) => {
+export const handleCheckoutError = async (err, initiator, dispatch, getState) => {
   const { code } = err
-  const errorName = getIsDecoupledPaymentEnabled(getState()) && errorsToHandleForDecoupledPayment.includes(code)
+  const errorName = errorsToHandleForSignupPayment.includes(code)
     ? actionTypes.CHECKOUT_PAYMENT
     : actionTypes.CHECKOUT_SIGNUP
 
@@ -181,15 +177,11 @@ export const handleCheckoutError = async (err, initiator, dispatch, getState, op
   dispatch(trackCheckoutError(errorName, code, initiator))
   dispatch(error(errorName, code))
   if (code === errorCodes.duplicateDetails || code === errorCodes.promoCodeHasBeenUsed) {
-    if (options.skipPromoCodeRemovedCheck) {
-      return
-    }
-
     await handlePromoCodeRemoved(dispatch, getState)
   } else if (errorsThatClearOrderPreview.includes(code)) {
     // Certain error scenarios trigger the rollback logic which removes the
     // order preview, hence the preview order id stored at the client becomes
-    // invalid.  Regenerate the order preview when such an error is detected.
+    // invalid. Regenerate the order preview when such an error is detected.
     await dispatch(checkoutCreatePreviewOrder())
   }
 }
@@ -197,128 +189,53 @@ export const handleCheckoutError = async (err, initiator, dispatch, getState, op
 export function checkoutSignup() {
   return async (dispatch, getState) => {
     dispatch(feLoggingLogEvent(logLevels.info, 'signup started'))
-
-    const state = getState()
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
-    await dispatch(checkoutActions.fetchGoustoRef())
-
-    if (getIsDecoupledPaymentEnabled(state)) {
-      return dispatch(checkoutActions.checkoutDecoupledPaymentSignup())
-    }
-
-    if (is3DSCardPayment(state)) {
-      return dispatch(checkoutActions.checkout3DSSignup())
-    }
-
-    return dispatch(checkoutActions.checkoutNon3DSSignup())
-  }
-}
-
-export function checkoutNon3DSSignup() {
-  return async (dispatch, getState) => {
-    let needClearGoustoRef = true
 
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
 
     try {
+      await dispatch(checkoutActions.fetchGoustoRef())
       dispatch(checkoutActions.resetDuplicateCheck())
-      await dispatch(userSubscribe(false, null))
-      await dispatch(checkoutActions.checkoutPostSignup())
+      await dispatch(userSubscribe())
     } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.error, `Non3ds signup failed: ${err.message}`))
-      needClearGoustoRef = err.code !== errorCodes.duplicateDetails
-      await handleCheckoutError(err, 'checkoutNon3DSSignup', dispatch, getState)
-    } finally {
-      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
-      if (needClearGoustoRef) {
+      dispatch(feLoggingLogEvent(logLevels.error, `Signup failed: ${err.message}`))
+      await handleCheckoutError(err, 'checkoutSignup', dispatch, getState)
+      if (err.code !== errorCodes.duplicateDetails) {
         dispatch(checkoutActions.clearGoustoRef())
       }
+      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+
+      return
+    }
+
+    if (isCardPayment(getState())) {
+      await dispatch(checkoutActions.checkoutCardAuthorisation())
+    } else {
+      await dispatch(checkoutActions.checkoutSignupPayment())
     }
   }
 }
 
-export function checkout3DSSignup() {
+export function checkoutCardAuthorisation() {
   return async (dispatch, getState) => {
-    dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
-    dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
-
-    const state = getState()
-
     try {
-      const promoCodeValidityDetails = getPromoCodeValidationDetails(state)
-      if (promoCodeValidityDetails.promo_code) {
-        const validationResult = await fetchPromoCodeValidity(promoCodeValidityDetails)
-
-        if (!validationResult.data.valid) {
-          dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.duplicateDetails, 'checkout3DSSignup'))
-          dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.duplicateDetails))
-          await handlePromoCodeRemoved(dispatch, getState)
-          dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
-
-          return
-        }
-      }
-
-      const reqData = getPaymentAuthData(state)
-      const sessionId = getSessionId()
+      const reqData = getPaymentAuthData(getState())
       if (reqData.order_id) {
-        const { data } = await authPayment(reqData, sessionId)
+        const { data } = await authPayment(reqData, getSessionId())
         dispatch({
           type: actionTypes.PAYMENT_SHOW_MODAL,
           challengeUrl: data.responsePayload.redirectLink,
         })
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
       } else {
-        dispatch(feLoggingLogEvent(logLevels.error, 'auth payment failed: order_id does not exist'))
+        dispatch(feLoggingLogEvent(logLevels.error, 'Auth payment failed: order_id does not exist'))
       }
     } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.error, `auth payment failed: ${err.message}`))
-      const skipPromoCodeRemovedCheck = err.code !== errorCodes.promoCodeHasBeenUsed
-      await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck })
-      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      dispatch(feLoggingLogEvent(logLevels.error, `Auth payment failed: ${err.message}`))
+      await handleCheckoutError(err, 'checkoutCardAuthorisation', dispatch, getState)
       dispatch(checkoutActions.clearGoustoRef())
-    }
-  }
-}
-
-export function checkoutDecoupledPaymentSignup() {
-  return async (dispatch, getState) => {
-    let needClearGoustoRef = false
-    const state = getState()
-
-    dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
-    dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
-
-    try {
-      dispatch(checkoutActions.resetDuplicateCheck())
-      await dispatch(userSubscribe(false, null))
-
-      if (is3DSCardPayment(state)) {
-        const reqData = getPaymentAuthData(state)
-        const sessionId = getSessionId()
-        if (reqData.order_id) {
-          const { data } = await authPayment(reqData, sessionId)
-          dispatch({
-            type: actionTypes.PAYMENT_SHOW_MODAL,
-            challengeUrl: data.responsePayload.redirectLink,
-          })
-          dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
-        } else {
-          dispatch(feLoggingLogEvent(logLevels.error, 'decoupled auth payment failed: order_id does not exist'))
-        }
-      } else {
-        await dispatch(checkoutActions.checkoutSignupPayment())
-      }
-    } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.error, `Decoupled signup failed: ${err.message}`))
-      needClearGoustoRef = err.code !== errorCodes.duplicateDetails
-      await handleCheckoutError(err, 'checkoutDecoupledPaymentSignup', dispatch, getState)
-    } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
-      if (needClearGoustoRef) {
-        dispatch(checkoutActions.clearGoustoRef())
-      }
     }
   }
 }
@@ -327,92 +244,53 @@ export function checkoutSignupPayment(sourceId = null) {
   return async (dispatch, getState) => {
     try {
       const state = getState()
-      const reqData = getDecoupledPaymentData(state)
       const sessionId = getSessionId()
-      const provider = isCardPayment(state)
-        ? getCardPaymentDetails(state)
-        : getPayPalPaymentDetails(state)
+      const provider = getPaymentProvider(state)
+      const reqData = getPaymentData(state)
 
       if (sourceId) {
         reqData.card_token = sourceId
       }
 
-      await signupPayment(reqData, provider.payment_provider, sessionId)
+      await signupPayment(reqData, provider, sessionId)
       await dispatch(checkoutActions.checkoutPostSignup())
     } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.error, `signup payment failed: ${err.message}`))
+      dispatch(feLoggingLogEvent(logLevels.error, `Signup payment failed: ${err.message}`))
       await handleCheckoutError(err, 'checkoutSignupPayment', dispatch, getState)
     } finally {
-      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
       dispatch(checkoutActions.clearGoustoRef())
+      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
     }
   }
 }
 
-export const checkPaymentAuth = (sessionId) => (
+export const checkPaymentAuth = (checkoutSessionId) => (
   async (dispatch, getState) => {
     dispatch({ type: actionTypes.PAYMENT_HIDE_MODAL })
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
 
     try {
-      const goustoSessionId = getSessionId()
-      const { data } = await checkPayment(sessionId, goustoSessionId)
+      const { data } = await checkPayment(checkoutSessionId, getSessionId())
       if (data && data.approved) {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeSuccessful))
 
         dispatch(feLoggingLogEvent(logLevels.info, 'signup 3ds challenge success'))
-        if (getIsDecoupledPaymentEnabled(getState())) {
-          await dispatch(checkoutActions.checkoutSignupPayment(data.sourceId))
-        } else {
-          dispatch(checkoutActions.resetDuplicateCheck())
-          await dispatch(userSubscribe(true, data.sourceId))
-          await dispatch(checkoutActions.checkoutPostSignup())
-        }
+        await dispatch(checkoutActions.checkoutSignupPayment(data.sourceId))
       } else {
         dispatch(feLoggingLogEvent(logLevels.info, 'signup 3ds challenge failed'))
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
         dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed, 'checkPaymentAuth'))
         dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed))
         await dispatch(checkoutCreatePreviewOrder())
+        dispatch(checkoutActions.clearGoustoRef())
+        dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
       }
     } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.error, `check 3ds payment failed: ${err.message}`))
+      dispatch(feLoggingLogEvent(logLevels.error, `Check payment auth failed: ${err.message}`))
       await handleCheckoutError(err, 'checkPaymentAuth', dispatch, getState)
-    } finally {
-      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
       dispatch(checkoutActions.clearGoustoRef())
+      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
     }
-  }
-)
-
-export const trackPurchase = ({ orderId }) => (
-  (dispatch, getState) => {
-    const state = getState()
-    const { pricing } = state
-    const promoCode = getPromoCode(state)
-    const prices = pricing.get('prices')
-    const totalPrice = prices.get('grossTotal')
-    const shippingPrice = prices.get('deliveryTotal')
-    const gaIDTracking = gaTrackingConfig[__ENV__]// eslint-disable-line no-underscore-dangle
-
-    if (typeof ga !== 'undefined') {
-      ga('create', gaIDTracking, 'auto', 'gousto')
-      ga('gousto.require', 'ec')
-      ga('gousto.ec:setAction', 'purchase', {
-        id: orderId,
-        revenue: totalPrice,
-        shipping: shippingPrice,
-        coupon: promoCode
-      })
-      ga('gousto.send', 'pageview')
-    }
-
-    dispatch(trackAffiliatePurchase({
-      orderId,
-      total: prices.get('total', ''),
-      commissionGroup: 'FIRSTPURCHASE',
-      promoCode,
-    }))
   }
 )
 
@@ -456,6 +334,37 @@ export function checkoutPostSignup() {
     }
   }
 }
+
+export const trackPurchase = ({ orderId }) => (
+  (dispatch, getState) => {
+    const state = getState()
+    const { pricing } = state
+    const promoCode = getPromoCode(state)
+    const prices = pricing.get('prices')
+    const totalPrice = prices.get('grossTotal')
+    const shippingPrice = prices.get('deliveryTotal')
+    const gaIDTracking = gaTrackingConfig[__ENV__]// eslint-disable-line no-underscore-dangle
+
+    if (typeof ga !== 'undefined') {
+      ga('create', gaIDTracking, 'auto', 'gousto')
+      ga('gousto.require', 'ec')
+      ga('gousto.ec:setAction', 'purchase', {
+        id: orderId,
+        revenue: totalPrice,
+        shipping: shippingPrice,
+        coupon: promoCode
+      })
+      ga('gousto.send', 'pageview')
+    }
+
+    dispatch(trackAffiliatePurchase({
+      orderId,
+      total: prices.get('total', ''),
+      commissionGroup: 'FIRSTPURCHASE',
+      promoCode,
+    }))
+  }
+)
 
 export function validatePassword(password) {
   return async (dispatch) => {
@@ -708,23 +617,6 @@ export const checkoutStepIndexReached = (stepIndex) => dispatch => {
   dispatch({
     type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
     stepIndex
-  })
-}
-
-export const trackWelcomeToGoustoButton = (orderId) => (dispatch, getState) => {
-  const state = getState()
-  const type = trackingKeys.checkoutWelcomeToGousto
-  const promoCode = state.promoStore.keySeq().first()
-  const userId = getUserId(state)
-
-  dispatch({
-    type,
-    trackingData: {
-      actionType: type,
-      promoCode,
-      orderId,
-      userId,
-    }
   })
 }
 

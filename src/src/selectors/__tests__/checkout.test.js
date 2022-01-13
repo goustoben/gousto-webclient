@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { hasCheckoutError, getPromoCodeValidationDetails, getFeLoggingCorrelationData } from 'selectors/checkout'
+import { hasCheckoutError, getFeLoggingCorrelationData } from 'selectors/checkout'
 
 jest.mock('utils/cookieHelper2', () => ({
   get: () => 'fake_session_id'
@@ -58,43 +58,6 @@ describe('checkout selectors', () => {
       test('should return false', () => {
         expect(hasCheckoutError(state)).toBe(false)
       })
-    })
-  })
-
-  describe('getPromoCodeValidationDetails', () => {
-    const state = {
-      basket: Immutable.fromJS({
-        promoCode: 'DTI-SB-P30M'
-      }),
-      form: {
-        delivery: {
-          values: {
-            delivery: Immutable.fromJS({
-              phone: '7503075906',
-              postcode: 'W3 7UP',
-              houseNo: 'FLAT 12, MORRIS HOUSE',
-              lastName: 'Name'
-            })
-          }
-        }
-      },
-      request: Immutable.fromJS({
-        browser: 'desktop'
-      }),
-    }
-
-    test('should return promo code validation details', () => {
-      const expected = {
-        promo_code: 'DTI-SB-P30M',
-        phone_number: '07503075906',
-        postcode: 'W3 7UP',
-        line1: 'FLAT 12, MORRIS HOUSE',
-        name_last: 'Name',
-      }
-
-      const result = getPromoCodeValidationDetails(state)
-
-      expect(result).toEqual(expected)
     })
   })
 

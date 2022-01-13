@@ -60,9 +60,6 @@ export const defaultFeatures = () => ({
   isNewSSRDeliveriesEnabled: {
     value: false
   },
-  isDecoupledPaymentEnabled: {
-    value: false
-  },
   isGoustoOnDemandEnabled: {
     value: false
   },

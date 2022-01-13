@@ -8,20 +8,15 @@ import {
   isModalOpen,
   isPayPalReady,
   isCardPayment,
-  is3DSCardPayment,
+  getPaymentProvider,
   getCanSubmitPaymentDetails,
   getCardPaymentDetails,
   getPayPalPaymentDetails,
   getPaymentAuthData,
-  getDecoupledPaymentData,
+  getPaymentData,
 } from 'selectors/payment'
 
-import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import routes from 'config/routes'
-
-jest.mock('selectors/features', () => ({
-  getIsDecoupledPaymentEnabled: jest.fn(() => false),
-}))
 
 describe('payment selectors', () => {
   let state = {}
@@ -170,29 +165,25 @@ describe('payment selectors', () => {
     })
   })
 
-  describe('given is3DSCardPayment method', () => {
+  describe('given getPaymentProvider method', () => {
     describe('when payment method is PayPal', () => {
-      beforeEach(() => {
-        state.payment = state.payment.set('paymentMethod', PaymentMethod.PayPal)
-      })
+      test('then should return "paypal"', () => {
+        const result = getPaymentProvider(state)
 
-      test('then should return false', () => {
-        const result = is3DSCardPayment(state)
-
-        expect(result).toBe(false)
+        expect(result).toBe('paypal')
       })
     })
+  })
 
-    describe('when payment method is Card', () => {
-      beforeEach(() => {
-        state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
-      })
+  describe('when payment method is Card', () => {
+    beforeEach(() => {
+      state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
+    })
 
-      test('then should return true', () => {
-        const result = is3DSCardPayment(state)
+    test('then should return "checkout"', () => {
+      const result = getPaymentProvider(state)
 
-        expect(result).toBe(true)
-      })
+      expect(result).toBe('checkout')
     })
   })
 
@@ -275,7 +266,7 @@ describe('payment selectors', () => {
           '3ds': true,
           success_url: `http://localhost${routes.client.payment.success}`,
           failure_url: `http://localhost${routes.client.payment.failure}`,
-          decoupled: false
+          decoupled: true
         }
 
         const result = getPaymentAuthData(state)
@@ -283,25 +274,9 @@ describe('payment selectors', () => {
         expect(result).toEqual(expected)
       })
     })
-
-    describe('when payment decoupling enabled', () => {
-      beforeEach(() => {
-        getIsDecoupledPaymentEnabled.mockReturnValueOnce(true)
-      })
-
-      test('then should send decoupled param value true', () => {
-        const expected = {
-          decoupled: true
-        }
-
-        const result = getPaymentAuthData(state)
-
-        expect(result).toEqual(expect.objectContaining(expected))
-      })
-    })
   })
 
-  describe('given getDecoupledPaymentData method', () => {
+  describe('given getPaymentData method', () => {
     describe('when payment method is card', () => {
       beforeEach(() => {
         state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
@@ -315,7 +290,7 @@ describe('payment selectors', () => {
           '3ds': true,
         }
 
-        const result = getDecoupledPaymentData(state)
+        const result = getPaymentData(state)
 
         expect(result).toEqual(expected)
       })
@@ -330,7 +305,7 @@ describe('payment selectors', () => {
           device_data: deviceData
         }
 
-        const result = getDecoupledPaymentData(state)
+        const result = getPaymentData(state)
 
         expect(result).toEqual(expected)
       })

@@ -30,7 +30,6 @@ import {
   placeOrder,
   clickSubmitOrder,
   subscriptionCreated,
-  subscriptionCreatedDecoupling,
   discountVisibilityBannerDisplayed,
   clickAccountBreadcrumb,
   checkoutClickContinueToPayment,
@@ -39,9 +38,6 @@ import {
 import globals from 'config/globals'
 import { PaymentMethod } from 'config/signup'
 import logger from 'utils/logger'
-import {
-  getIsDecoupledPaymentEnabled
-} from 'selectors/features'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
@@ -49,7 +45,6 @@ jest.mock('utils/logger', () => ({
 
 jest.mock('selectors/features', () => ({
   getIsPromoCodeValidationEnabled: jest.fn(() => false),
-  getIsDecoupledPaymentEnabled: jest.fn(() => false),
 }))
 
 describe('tracking actions', () => {
@@ -173,7 +168,6 @@ describe('tracking actions', () => {
 
   describe('trackRecipeOrderDisplayed', () => {
     const displayedOrder = ['6', '3', '2']
-    const collectionId = '678'
     let state = {
       basket: Immutable.Map({
         orderId: '1234567',
@@ -841,43 +835,24 @@ describe('tracking actions', () => {
         const orderId = 'order_123'
         const userId = 'user_234'
         const subscriptionId = 'subscription_345'
-        const expected = {
-          type: subscriptionCreated,
-          trackingData: {
-            actionType: subscriptionCreated,
-            referral: '123',
-            promoCode: 'promo2',
-            paymentMethod: PaymentMethod.Card,
-            userId,
-            orderId,
-            subscriptionId,
+
+        test('then should have correct event data', () => {
+          const expected = {
+            type: subscriptionCreated,
+            trackingData: {
+              actionType: subscriptionCreated,
+              referral: '123',
+              promoCode: 'promo2',
+              paymentMethod: PaymentMethod.Card,
+              userId,
+              orderId,
+              subscriptionId,
+            }
           }
-        }
 
-        describe('when decoupled payment is disabled', () => {
-          test('then should have correct event data', () => {
-            expected.type = subscriptionCreated
-            expected.trackingData.actionType = subscriptionCreated
+          trackSubscriptionCreated()(dispatch, getState)
 
-            trackSubscriptionCreated()(dispatch, getState)
-
-            expect(dispatch).toHaveBeenCalledWith(expected)
-          })
-        })
-
-        describe('when decoupled payment is enabled', () => {
-          beforeEach(() => {
-            getIsDecoupledPaymentEnabled.mockReturnValueOnce(true)
-          })
-
-          test('then should have correct event data', () => {
-            expected.type = subscriptionCreatedDecoupling
-            expected.trackingData.actionType = subscriptionCreatedDecoupling
-
-            trackSubscriptionCreated()(dispatch, getState)
-
-            expect(dispatch).toHaveBeenCalledWith(expected)
-          })
+          expect(dispatch).toHaveBeenCalledWith(expected)
         })
       })
     })
