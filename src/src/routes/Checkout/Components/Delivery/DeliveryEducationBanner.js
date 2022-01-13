@@ -32,7 +32,7 @@ const DeliveryEducationBanner = () => (
         <Text>Delivery slot updates on the day via text and email.</Text>
       </Box>
     </Box>
-    <div className={css.deliveryEducationBanner}>
+    {/* <div className={css.deliveryEducationBanner}>
       <div className={css.deliverySection}>
         <div className={css.insulatedPackaging} />
         <p>Insulated packaging keeps your ingredients fresh for up to 12 hours.</p>
@@ -41,7 +41,7 @@ const DeliveryEducationBanner = () => (
         <div className={css.deliverySlot} />
         <p>Delivery slot updates on the day via text and email.</p>
       </div>
-    </div>
+    </div> */}
   </>
 )
 
