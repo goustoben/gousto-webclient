@@ -116,6 +116,17 @@ In local development, open the browser window at
 http://frontend.gousto.local:8080/?axe=1 in order to enable Axe. This will show
 the accessibility-related warnings on the pages.
 
+## Storybook explorer
+
+The application has [Storybook](https://storybook.js.org/) based tool for browsing main components from the application. The stories
+demo components in different states, which allows quick feedback loop without hardship of data setup.
+
+To get the [Storybook](https://storybook.js.org/) running execute following command from `src/` directory:
+```
+npm run storybook
+```
+It should launch the tool in the browser at `http://localhost:6006/`
+
 ## Project history
 
 Gousto-Webclient was originally ported from Gousto2-Frontend. You can view the Git history of the JS code at:

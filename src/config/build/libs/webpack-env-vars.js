@@ -41,6 +41,10 @@ const webpackEnvVarsBase = {
   __HMR__: hmrEnabled,
   __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
+  /**
+   * Boolean flag indicating if the build done under Storybook
+   */
+  __STORYBOOK__: false,
   __TEST__: false,
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }

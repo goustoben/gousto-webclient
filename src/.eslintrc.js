@@ -1,27 +1,27 @@
-const fs = require('fs')
+const fs = require('fs');
 
-const srcFileAliases = fs
-  .readdirSync('./src', { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
-  // We load `style` manually to highligh that its a shared alias
-  .filter((dirent) => dirent.name !== 'style')
-  .map(({ name }) => {
-    return [name, './src/' + name]
-  })
-
-const componentFileAliases = fs
-  .readdirSync('./src/components', { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
-  .map(({ name }) => {
-    return [name, './src/components/' + name]
-  })
-
+const srcFileAliases = fs.readdirSync('./src', {
+  withFileTypes: true
+}).filter(dirent => dirent.isDirectory()) // We load `style` manually to highligh that its a shared alias
+.filter(dirent => dirent.name !== 'style').map(({
+  name
+}) => {
+  return [name, './src/' + name];
+});
+const componentFileAliases = fs.readdirSync('./src/components', {
+  withFileTypes: true
+}).filter(dirent => dirent.isDirectory()).map(({
+  name
+}) => {
+  return [name, './src/components/' + name];
+});
 /*
  HACK
  Extracting the ruleset into its own variable and using them as a base to
  override for for Typescript files.
  Doing this feels a bit hacky, but it's a start.
  */
+
 const ruleDefinitions = {
   "array-bracket-spacing": 0,
   "array-callback-return": 1,
@@ -41,27 +41,26 @@ const ruleDefinitions = {
   "global-require": 1,
   "guard-for-in": 1,
   "implicit-arrow-linebreak": 0,
-  "import/extensions": [
-    "error",
-    "ignorePackages",
-    {
-      "js": "never",
-      "jsx": "never",
-      "ts": "never",
-      "tsx": "never"
-    }
-  ],
+  "import/extensions": ["error", "ignorePackages", {
+    "js": "never",
+    "jsx": "never",
+    "ts": "never",
+    "tsx": "never"
+  }],
   "import/named": 2,
   "import/namespace": 2,
   "import/newline-after-import": 0,
-  "import/no-cycle": 0, // takes 90+ seconds to run due to size of codebase
+  "import/no-cycle": 0,
+  // takes 90+ seconds to run due to size of codebase
   "import/no-default-export": 1,
   "import/no-dynamic-require": 1,
   "import/no-extraneous-dependencies": 1,
   "import/no-self-import": 1,
   "import/no-unresolved": 2,
   "import/prefer-default-export": 0,
-  "indent": [2, 2, { "ignoredNodes": ["JSXElement"] }],
+  "indent": [2, 2, {
+    "ignoredNodes": ["JSXElement"]
+  }],
   "jsx-a11y/anchor-has-content": 1,
   "jsx-a11y/anchor-is-valid": 1,
   "jsx-a11y/click-events-have-key-events": 1,
@@ -90,10 +89,14 @@ const ruleDefinitions = {
   "no-mixed-spaces-and-tabs": 1,
   "no-multi-assign": 1,
   "no-multi-spaces": 2,
-  "no-multiple-empty-lines": [2, { "max": 1 }],
+  "no-multiple-empty-lines": [2, {
+    "max": 1
+  }],
   "no-nested-ternary": 1,
   "no-param-reassign": 1,
-  "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+  "no-plusplus": [2, {
+    "allowForLoopAfterthoughts": true
+  }],
   "no-prototype-builtins": 1,
   "no-restricted-globals": 1,
   "no-restricted-properties": 1,
@@ -101,27 +104,23 @@ const ruleDefinitions = {
   "no-return-assign": 1,
   "no-return-await": 1,
   "no-sequences": 1,
-  "no-shadow": [
-    2,
-    {
-      "allow": ["resolve", "reject", "done", "cb", "e", "err", "error", "mapStateToProps"]
-    }
-  ],
+  "no-shadow": [2, {
+    "allow": ["resolve", "reject", "done", "cb", "e", "err", "error", "mapStateToProps"]
+  }],
   "no-spaced-func": 1,
   "no-sparse-arrays": 2,
   "no-tabs": 1,
   "no-throw-literal": 1,
   "no-trailing-spaces": 1,
   "no-undef": 2,
-  "no-underscore-dangle": [
-    1,
-    {
-      "allow": ["__initialState__"]
-    }
-  ],
+  "no-underscore-dangle": [1, {
+    "allow": ["__initialState__"]
+  }],
   "no-unneeded-ternary": 1,
   "no-unused-expressions": 1,
-  "no-unused-vars": [1, { "argsIgnorePattern": "^_" }],
+  "no-unused-vars": [1, {
+    "argsIgnorePattern": "^_"
+  }],
   "no-use-before-define": "off",
   "no-useless-escape": 1,
   "no-useless-return": 1,
@@ -158,7 +157,9 @@ const ruleDefinitions = {
   "react/jsx-indent": 1,
   "react/jsx-indent-props": 0,
   "react/jsx-key": 1,
-  "react/jsx-no-target-blank": [1, { "enforceDynamicLinks": "always" }],
+  "react/jsx-no-target-blank": [1, {
+    "enforceDynamicLinks": "always"
+  }],
   "react/jsx-one-expression-per-line": 1,
   "react/jsx-props-no-multi-spaces": 1,
   "react/jsx-props-no-spreading": 1,
@@ -167,7 +168,8 @@ const ruleDefinitions = {
   "react/no-array-index-key": 1,
   "react/no-children-prop": 2,
   "react/no-deprecated": 1,
-  "react/no-did-update-set-state": 0, // React says it's ok to do this: https://github.com/yannickcr/eslint-plugin-react/issues/1707
+  "react/no-did-update-set-state": 0,
+  // React says it's ok to do this: https://github.com/yannickcr/eslint-plugin-react/issues/1707
   "react/no-find-dom-node": 1,
   "react/no-redundant-should-component-update": 1,
   "react/no-string-refs": 1,
@@ -182,26 +184,17 @@ const ruleDefinitions = {
   "react/state-in-constructor": 1,
   "react/static-property-placement": 1,
   "react/style-prop-object": 1,
-  "semi" : [2, "never"],
+  "semi": [2, "never"],
   "space-before-function-paren": 1,
   "space-in-parens": 0,
   "space-unary-ops": 0,
   "switch-colon-spacing": 1,
   "symbol-description": 1,
   "vars-on-top": 1
-}
-
+};
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: [
-    'airbnb',
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:react-hooks/recommended',
-  ],
+  extends: ["airbnb", "eslint:recommended", "plugin:react/recommended", "plugin:jsx-a11y/recommended", "plugin:import/errors", "plugin:import/warnings", "plugin:react-hooks/recommended", "plugin:storybook/recommended"],
   settings: {
     'import/resolver': {
       // Resolving to our webpack config didn't work within the time-box
@@ -212,29 +205,17 @@ module.exports = {
       //   }
       // },
       node: {
-        paths: ['.'],
+        paths: ['.']
       },
       alias: {
-        map: [
-          ['store', './src/store.js'],
-          ['jsdom', './fallbacks/jsdom'],
-          ['goustouicomponents', './libs/goustouicomponents/src/main'],
-          ['zest', './libs/goustouicomponents/dist'],
-          ['design-language', './libs/goustouicomponents/dist/design-language'],
-          ['server', './server'],
-          ['styles', './libs/goustouicomponents/dist/styles'],
-          ['styles', './src/styles'],
-          ['fixtures', '../tests/regression/fixtures'],
-          ...srcFileAliases,
-          ...componentFileAliases,
-        ],
-        extensions: ['.js', '.ts', '.tsx', '.css'],
-      },
-    },
+        map: [['store', './src/store.js'], ['jsdom', './fallbacks/jsdom'], ['goustouicomponents', './libs/goustouicomponents/src/main'], ['zest', './libs/goustouicomponents/dist'], ['design-language', './libs/goustouicomponents/dist/design-language'], ['server', './server'], ['styles', './libs/goustouicomponents/dist/styles'], ['styles', './src/styles'], ['fixtures', '../tests/regression/fixtures'], ...srcFileAliases, ...componentFileAliases],
+        extensions: ['.js', '.ts', '.tsx', '.css']
+      }
+    }
   },
   rules: ruleDefinitions,
   env: {
-    jasmine: true,
+    jasmine: true
   },
   "globals": {
     "document": true,
@@ -266,91 +247,71 @@ module.exports = {
     __DATADOG_RUM_SDK_TOKEN__: true,
     __DATADOG_RUM_SDK_APP_ID__: true,
     __DATADOG_ENABLED__: true,
-    __CIRCLE_BUILD_NUM__: true
+    __CIRCLE_BUILD_NUM__: true,
+    __STORYBOOK__: false,
   },
   plugins: ['prettier'],
-  overrides: [
-    {
-      files: ['**/*.ts', '**/*.tsx'],
-      extends: [
-        'plugin:@typescript-eslint/recommended',
-        'airbnb',
-        'eslint:recommended',
-        'plugin:react/recommended',
-        'plugin:jsx-a11y/recommended',
-        'plugin:import/errors',
-        'plugin:import/warnings',
-        'plugin:react-hooks/recommended',
-      ],
-      globals: { Atomics: 'readonly', SharedArrayBuffer: 'readonly' },
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-        ecmaVersion: 2018,
-        sourceType: 'module',
-        project: './tsconfig.json',
+  overrides: [{
+    files: ['**/*.ts', '**/*.tsx'],
+    extends: ['plugin:@typescript-eslint/recommended', 'airbnb', 'eslint:recommended', 'plugin:react/recommended', 'plugin:jsx-a11y/recommended', 'plugin:import/errors', 'plugin:import/warnings', 'plugin:react-hooks/recommended'],
+    globals: {
+      Atomics: 'readonly',
+      SharedArrayBuffer: 'readonly'
+    },
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true
       },
-      plugins: ['@typescript-eslint', 'prettier', 'react'],
-      rules: {
-        ...ruleDefinitions, ...{
-          '@typescript-eslint/ban-ts-comment': 'warn',
-          '@typescript-eslint/no-empty-function': 1,
-          '@typescript-eslint/no-var-requires': 1,
-          '@typescript-eslint/no-use-before-define': ['warn'],
-          '@typescript-eslint/explicit-module-boundary-types': 'off'
-        },
+      ecmaVersion: 2018,
+      sourceType: 'module',
+      project: './tsconfig.json'
+    },
+    plugins: ['@typescript-eslint', 'prettier', 'react'],
+    rules: { ...ruleDefinitions,
+      ...{
+        '@typescript-eslint/ban-ts-comment': 'warn',
+        '@typescript-eslint/no-empty-function': 1,
+        '@typescript-eslint/no-var-requires': 1,
+        '@typescript-eslint/no-use-before-define': ['warn'],
+        '@typescript-eslint/explicit-module-boundary-types': 'off'
       }
+    }
+  }, {
+    files: ['**/*.test.js'],
+    env: {
+      jest: true
     },
-    {
-      files: ['**/*.test.js'],
-      env: {
-        jest: true,
-      },
-      rules: {
-        'react/display-name': 0,
-        'react/jsx-props-no-spreading': 0,
-      },
-    },
-    {
-      files: ['**/__regression__/**/*.js'],
-      globals: {
-        Cypress: 'readonly',
-        cy: 'readonly',
-        before: 'readonly',
-      },
-    },
-    {
-      // Make eslint rules agree with prettier.
-      files: [
-        'src/routes/Checkout/**/*.js',
-        'src/routes/Home/**/*.js',
-        'src/routes/Payment/**/*.js',
-        'src/routes/Signup/**/*.js',
-        'src/routes/ShowcaseMenu/**/*.js',
-        'src/middlewares/tracking/dataLayerTracker/*.js',
-        'src/routes/BoxPrices/**/*.js',
-        "src/performanceTracker/**/*.js",
-      ],
-      rules: {
-        'prettier/prettier': 'error',
-        'operator-linebreak': [
-          1,
-          'after',
-          {
-            overrides: {
-              '?': 'before',
-              ':': 'before',
-            },
-          },
-        ],
-        indent: 0,
-        'newline-per-chained-call': 0,
-        'no-confusing-arrow': 0,
-        'react/jsx-indent': 0,
-        'react/jsx-one-expression-per-line': 0,
-        'react/jsx-wrap-multilines': 0,
-        'react/jsx-curly-newline': 0,
-      },
-    },
-  ],
-}
+    rules: {
+      'react/display-name': 0,
+      'react/jsx-props-no-spreading': 0
+    }
+  }, {
+    files: ['**/__regression__/**/*.js'],
+    globals: {
+      Cypress: 'readonly',
+      cy: 'readonly',
+      before: 'readonly'
+    }
+  }, {
+    // Make eslint rules agree with prettier.
+    files: ['src/routes/Checkout/**/*.js', 'src/routes/Home/**/*.js', 'src/routes/Payment/**/*.js', 'src/routes/Signup/**/*.js', 'src/routes/ShowcaseMenu/**/*.js', 'src/middlewares/tracking/dataLayerTracker/*.js', 'src/routes/BoxPrices/**/*.js', "src/performanceTracker/**/*.js"],
+    rules: {
+      'prettier/prettier': 'error',
+      'operator-linebreak': [1, 'after', {
+        overrides: {
+          '?': 'before',
+          ':': 'before'
+        }
+      }],
+      indent: 0,
+      'newline-per-chained-call': 0,
+      'no-confusing-arrow': 0,
+      'react/jsx-indent': 0,
+      'react/jsx-one-expression-per-line': 0,
+      'react/jsx-wrap-multilines': 0,
+      'react/jsx-curly-newline': 0
+    }
+  }]
+};
+

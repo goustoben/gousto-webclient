@@ -5,7 +5,7 @@ import Modal from 'react-modal'
 import css from './Overlay.css'
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-if (!__SERVER__) {
+if (!__SERVER__ && !__STORYBOOK__) {
   Modal.setAppElement('#react-root')
 }
 
