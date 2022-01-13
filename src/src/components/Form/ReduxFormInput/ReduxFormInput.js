@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { touch } from 'redux-form'
 
-import Input from 'Form/Input'
+// import Input from 'Form/Input'
 import DropdownInput from 'Form/Dropdown'
 import CheckBox from 'Form/CheckBox'
-import { InputField, Checkbox } from '@gousto-internal/citrus-react'
+import { InputField, Checkbox, Input, Select, SelectField } from '@gousto-internal/citrus-react'
 
 import InputError from 'Form/InputError'
 import { Label } from 'Form/Label'
@@ -55,56 +55,69 @@ export class ReduxFormInput extends React.PureComponent {
 
   render() {
     const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, onFocus, dataTesting, ...inputProps } = this.props
-    let Component
-    switch (inputType) {
-    case 'Input': {
-      Component = Input
-      break
-    }
-    case 'DropDown': {
-      Component = DropdownInput
-      break
-    }
-    case 'CheckBox': {
-      Component = CheckBox
-      break
-    }
-    default: {
-      Component = Input
-    }
-    }
-
     const error = Boolean(meta && meta.touched && meta.error)
 
-    const inputEl = React.createElement(Component, {
-      ...inputProps,
-      ...input,
-      error,
-      inputType,
-      'data-testing': dataTesting,
-      dataTesting,
-      onChange: this.onChange,
-      isInCheckout: true,
-      inputPrefix,
-      [input.onFocus]: onFocus,
-    })
+    switch (inputType) {
+    case 'DropDown': {
+      // const inputEl = React.createElement(DropdownInput, {
+      //   ...inputProps,
+      //   ...input,
+      //   error,
+      //   inputType,
+      //   'data-testing': dataTesting,
+      //   dataTesting,
+      //   onChange: this.onChange,
+      //   isInCheckout: true,
+      //   inputPrefix,
+      //   [input.onFocus]: onFocus,
+      // })
 
-    return (
-      <>
-        {Component === Input && (
-        <InputField
+      // <div>
+      //     {label && <Label label={label} subLabel={subLabel} />}
+      //     <div className={css.flexRow}>
+      //       {inputEl && (
+      //       <div className={css.flexItem}>
+      //         {inputEl}
+      //       </div>
+      //       )}
+      //       {React.isValidElement(inputSuffix) && inputSuffix}
+      //     </div>
+      //     <div data-testing={`${dataTesting}Error`}>
+      //       {error && (
+      //       <InputError>
+      //         {meta.error}
+      //       </InputError>
+      //       )}
+      //     </div>
+      //   </div>
+
+      return label ? (
+        <SelectField
           {...inputProps}
           {...input}
-          label={label}
-          onChange={(e) => this.onChange(e.target.value)}
-          validationMessage={error && meta.error}
-          status={error && 'Error'}
-          isInCheckout
+          fullWdith
           data-testing={dataTesting}
-        />
-        )}
-
-        {Component === CheckBox && (
+          onChange={(e) => this.onChange(e.target.value)}
+          isInCheckout
+          label={label}
+        >
+          {inputProps.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+        </SelectField>
+      ) : (
+        <Select
+          {...inputProps}
+          {...input}
+          fullWdith
+          data-testing={dataTesting}
+          onChange={(e) => this.onChange(e.target.value)}
+          isInCheckout
+        >
+          {inputProps.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+        </Select>
+      )
+    }
+    case 'CheckBox': {
+      return (
         <Checkbox
           onChange={(e) => this.onChange(e.target.checked)}
           isInCheckout
@@ -113,30 +126,69 @@ export class ReduxFormInput extends React.PureComponent {
         >
           {inputProps.childLabel}
         </Checkbox>
-        )}
+      )
+    }
+    default: {
+      return label
+        ? (
+          <InputField
+            {...inputProps}
+            {...input}
+            label={label}
+            onChange={(e) => this.onChange(e.target.value)}
+            validationMessage={error && meta.error}
+            status={error && 'Error'}
+            isInCheckout
+            data-testing={dataTesting}
+          />
+        ) : (
+          <Input
+            {...inputProps}
+            {...input}
+            label={label}
+            onChange={(e) => this.onChange(e.target.value)}
+            validationMessage={error && meta.error}
+            status={error && 'Error'}
+            isInCheckout
+            data-testing={dataTesting}
+          />
+        )
+    }
+    }
 
-        {Component !== CheckBox && Component !== Input && (
-        <div>
-          {label && <Label label={label} subLabel={subLabel} />}
-          <div className={css.flexRow}>
-            {inputEl && (
-            <div className={css.flexItem}>
-              {inputEl}
-            </div>
-            )}
-            {React.isValidElement(inputSuffix) && inputSuffix}
-          </div>
-          <div data-testing={`${dataTesting}Error`}>
-            {error && (
-            <InputError>
-              {meta.error}
-            </InputError>
-            )}
-          </div>
-        </div>
-        )}
-      </>
-    )
+    // const inputEl = React.createElement(Component, {
+    //   ...inputProps,
+    //   ...input,
+    //   error,
+    //   inputType,
+    //   'data-testing': dataTesting,
+    //   dataTesting,
+    //   onChange: this.onChange,
+    //   isInCheckout: true,
+    //   inputPrefix,
+    //   [input.onFocus]: onFocus,
+    // })
+
+    // return (
+    //     <div>
+    //       {label && <Label label={label} subLabel={subLabel} />}
+    //       <div className={css.flexRow}>
+    //         {inputEl && (
+    //         <div className={css.flexItem}>
+    //           {inputEl}
+    //         </div>
+    //         )}
+    //         {React.isValidElement(inputSuffix) && inputSuffix}
+    //       </div>
+    //       <div data-testing={`${dataTesting}Error`}>
+    //         {error && (
+    //         <InputError>
+    //           {meta.error}
+    //         </InputError>
+    //         )}
+    //       </div>
+    //     </div>
+    // )
   }
 }
 
