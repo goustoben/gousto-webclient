@@ -43,6 +43,22 @@ describe('OrderDeliveryAddress', () => {
       line3: ''
     }
   })
+  const shippingAddress = Immutable.fromJS({
+    companyName: '',
+    county: 'Greater London',
+    name: 'Shipping Address',
+    postcode: 'W3 7UP',
+    state: 'valid',
+    town: 'London',
+    deleted: false,
+    customerId: '1',
+    deliveryInstructions: 'Front Porch',
+    type: 'shipping',
+    id: '99',
+    line1: 'Unit 3, Test Building',
+    line2: 'Test Street',
+    line3: ''
+  })
   const orderAddressChangeMock = jest.fn()
   const userTrackToggleEditAddressSectionMock = jest.fn()
 
@@ -57,6 +73,7 @@ describe('OrderDeliveryAddress', () => {
       isPendingUpdateAddress={false}
       userTrackToggleEditAddressSection={userTrackToggleEditAddressSectionMock}
       userTrackAddressSelected={() => {}}
+      shippingAddress={null}
     />)
   })
 
@@ -65,9 +82,26 @@ describe('OrderDeliveryAddress', () => {
   })
 
   describe('render', () => {
-    test('should render the current shipping address passed', () => {
+    test('should render the shipping address from the user addresses if shippingAddress is not passed', () => {
       expect(wrapper.find('.currentAddress').text()).toContain('My Address')
       expect(wrapper.find('.currentAddress').text()).toContain('Unit 1, Morris House, Swainson Road, LONDON, W3 7UP')
+    })
+
+    test('should render the shipping address from the shippingAddress passed', () => {
+      const wrapperWithShippingAddress = shallow(<OrderDeliveryAddress
+        orderId="8"
+        orderState="menu open"
+        shippingAddressId="99"
+        addresses={addresses}
+        orderAddressChange={orderAddressChangeMock}
+        hasError={false}
+        isPendingUpdateAddress={false}
+        userTrackToggleEditAddressSection={userTrackToggleEditAddressSectionMock}
+        userTrackAddressSelected={() => {}}
+        shippingAddress={shippingAddress}
+      />)
+      expect(wrapperWithShippingAddress.find('.currentAddress').text()).toContain('Shipping Address')
+      expect(wrapperWithShippingAddress.find('.currentAddress').text()).toContain('Unit 3, Test Building, Test Street, London, W3 7UP')
     })
 
     test('should not render a <LinkButton/> if state is scheduled', () => {
