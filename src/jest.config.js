@@ -69,6 +69,7 @@ module.exports = {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.tests.json',
       isolatedModules: true
-    }
+    },
+    __STORYBOOK__: false,
   }
 }

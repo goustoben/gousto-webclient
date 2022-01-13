@@ -220,3 +220,8 @@
 /tests/regression/fixtures/payments/                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                    @Gousto/squad-beetroots
 /src/src/middlewares/tracking/dataLayerTracker/         @Gousto/squad-beetroots
+
+# squad-kales ownership
+/src/src/.storybook/                                    @Gousto/squad-kales
+/src/src/*.stories.[tj]s                                @Gousto/squad-kales
+/src/src/*.stories.[tj]sx                               @Gousto/squad-kales
