@@ -12,6 +12,7 @@ import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
 import { getSlotTimes } from 'utils/deliveries'
 
+import { Text, FontWeight } from '@gousto-internal/citrus-react'
 import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
 import { SectionHeader } from '../SectionHeader'
@@ -109,9 +110,13 @@ export class Delivery extends React.PureComponent {
 
     return (
       <div className={css.dateContainer}>
-        Your selected delivery day is &nbsp;
+        <Text>Your selected delivery day is &nbsp;</Text>
+        <Text fontWeight={FontWeight.Bold}>{deliveryDate}</Text>
+        <Text>,&nbsp;</Text>
+        <Text css={{ textTransform: 'uppercase' }}>{deliveryTime}</Text>
+        {/* Your selected delivery day is &nbsp;
         <div className={css.boldDeliveryDate}>{deliveryDate}</div>,&nbsp;
-        <div className={css.upperCase}>{deliveryTime}</div>
+        <div className={css.upperCase}>{deliveryTime}</div> */}
       </div>
     )
   }

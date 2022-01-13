@@ -30,6 +30,7 @@ const DeliveryCard = ({ iconName, children, dataTesting, cardStyle, customClass 
         paddingH={4}
         display="flex"
         flexDirection={FlexDirection.Row}
+        data-testing={dataTesting}
       >
         {renderIcon()}
         <Space direction="horizontal" size={3} />

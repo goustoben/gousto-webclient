@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
 import { onEnter } from 'utils/accessibility'
+import { Text, Link, Space, Box } from '@gousto-internal/citrus-react'
 import { Postcode } from '../Postcode'
 import { AddressInputs } from '../AddressInputs'
 import { DeliveryCard } from '../../Delivery/DeliveryCard'
 import css from '../Address.css'
-
 export class AddressOverhaul extends PureComponent {
   handleEditAddressManually = () => {
     const { onEnterAddressManuallyClick } = this.props
@@ -16,9 +16,21 @@ export class AddressOverhaul extends PureComponent {
     const { currentAddress } = this.props
 
     return (
-      <DeliveryCard iconName="icon-home" dataTesting="deliveryCardAddress">
+      <DeliveryCard iconName="icon-home" dataTesting="deliveryCardAddress" display="flex">
         <div className={css.addressContainer}>
-          <p className={css.deliveryAddress}>{currentAddress}</p>
+          <Text>{currentAddress}</Text>
+          <Space size={2} />
+          <Box>
+            <Link
+              tabIndex="0"
+              size={1}
+              onClick={this.handleEditAddressManually}
+              onKeyDown={onEnter(this.handleEditAddressManually)}
+            >
+              Edit address
+            </Link>
+          </Box>
+          {/* <p className={css.deliveryAddress}>{currentAddress}</p>
           <div>
             <span
               className={css.editAddressLink}
@@ -29,7 +41,7 @@ export class AddressOverhaul extends PureComponent {
             >
               Edit address
             </span>
-          </div>
+          </div> */}
         </div>
       </DeliveryCard>
     )
