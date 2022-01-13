@@ -126,7 +126,7 @@ export const checkoutConfig = {
     '422-payment-function-error',
     '3ds-challenge-failed',
   ],
-  errorsToHandleForDecoupledPayment: [
+  errorsToHandleForSignupPayment: [
     '422-payment-failed',
     '422-insufficient-funds',
     '422-declined-do-not-honour',

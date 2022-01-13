@@ -77,10 +77,10 @@ class OrderDeliveryAddress extends React.PureComponent {
   }
 
   render() {
-    const { addresses, orderState, shippingAddressId, isPendingUpdateAddress, hasError } = this.props
+    const { addresses, orderState, shippingAddressId, isPendingUpdateAddress, hasError, shippingAddress: orderShippingAddress, } = this.props
     const { editAddressOpen, selectedAddressId } = this.state
     const submitDisabled = selectedAddressId === shippingAddressId
-    const shippingAddress = addresses.find(address => address.get('id') === shippingAddressId)
+    const shippingAddress = orderShippingAddress || addresses.find(address => address.get('id') === shippingAddressId)
     const formattedShippingAddress = this.formatAddress(shippingAddress)
     const { client } = config.routes
 
@@ -95,7 +95,7 @@ class OrderDeliveryAddress extends React.PureComponent {
             />
           ) : null}
         </div>
-        <div className={css.currentAddress}>
+        <div className={css.currentAddress} data-testing="orderDeliveryAddress">
           <p className={css.header}>{shippingAddress.get('name')}</p>
           <p>{formattedShippingAddress}</p>
         </div>
@@ -138,6 +138,7 @@ OrderDeliveryAddress.propTypes = {
   isPendingUpdateAddress: PropTypes.bool,
   userTrackToggleEditAddressSection: PropTypes.func,
   userTrackAddressSelected: PropTypes.func,
+  shippingAddress: PropTypes.instanceOf(Immutable.Map({})),
 }
 
 OrderDeliveryAddress.defaultProps = {
@@ -150,6 +151,7 @@ OrderDeliveryAddress.defaultProps = {
   isPendingUpdateAddress: false,
   userTrackToggleEditAddressSection: () => null,
   userTrackAddressSelected: () => null,
+  shippingAddress: Immutable.Map({}),
 }
 
 export { OrderDeliveryAddress }

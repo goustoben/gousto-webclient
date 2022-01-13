@@ -42,6 +42,18 @@ describe('My Deliveries', () => {
       cy.contains('You cannot restore this box').should('be.visible')
       cy.get('[data-testing="pendingOrder"]').first().should('contain', 'Cancelled')
     })
+
+    it('should show the delivery address if the address is within the current user addresses', () => {
+      cy.get('[data-testing="pendingOrder"]').first().click()
+      cy.get('[data-testing="orderDeliveryAddress"]').should('be.visible')
+      cy.get('[data-testing="orderDeliveryAddress"]').contains('My Address').should('exist')
+    })
+
+    it('should show the delivery address if the address is not within the current user addresses', () => {
+      cy.get('[data-testing="pendingOrder"]').eq(1).click()
+      cy.get('[data-testing="orderDeliveryAddress"]').should('be.visible')
+      cy.get('[data-testing="orderDeliveryAddress"]').contains('My Deleted Address').should('exist')
+    })
   })
 
   describe('projected deliveries with new subscription api', () => {

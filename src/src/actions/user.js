@@ -19,10 +19,9 @@ import {
 } from 'selectors/checkout'
 import {
   getNDDFeatureValue,
-  getIsDecoupledPaymentEnabled,
   getIsGoustoOnDemandEnabled,
 } from 'selectors/features'
-import { getCardPaymentDetails, getPayPalPaymentDetails, isCardPayment } from 'selectors/payment'
+import { isCardPayment } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
 
 import logger from 'utils/logger'
@@ -624,10 +623,9 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
   }
 }
 
-function buildSignupRequestData(state, sca3ds, sourceId) {
+function buildSignupRequestData(state) {
   const { form, basket, promoAgeVerified } = state
 
-  const isDecoupledPaymentEnabled = getIsDecoupledPaymentEnabled(state)
   const isGoustoOnDemandEnabled = getIsGoustoOnDemandEnabled(state)
 
   const isCard = isCardPayment(state)
@@ -644,7 +642,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const intervalId = delivery.get('interval_id', 1)
   const promoCode = getPromoCode(state) || ''
 
-  const reqData = {
+  return {
     order_id: getPreviewOrderId(state),
     promocode: promoCode,
     session_id: getSessionId(),
@@ -680,39 +678,12 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
       ...(isGoustoOnDemandEnabled && { paused: Number(isGoustoOnDemandEnabled || false) }),
     },
     decoupled: {
-      payment: Number(isDecoupledPaymentEnabled || false),
-    }
+      payment: 1,
+    },
   }
-
-  if (!isDecoupledPaymentEnabled) {
-    let paymentMethod
-    if (isCard) {
-      paymentMethod = {
-        is_default: 1,
-        type: signupConfig.payment_types.card,
-        name: 'My Card',
-        card: getCardPaymentDetails(state)
-      }
-      if (sca3ds) {
-        paymentMethod.card.card_token = sourceId
-      }
-    } else {
-      paymentMethod = {
-        is_default: 1,
-        type: signupConfig.payment_types.paypal,
-        name: 'My PayPal',
-        paypal: getPayPalPaymentDetails(state)
-      }
-    }
-
-    reqData.payment_method = paymentMethod
-    reqData['3ds'] = Number((isCard && sca3ds) || false)
-  }
-
-  return reqData
 }
 
-export function userSubscribe(sca3ds = false, sourceId = null) {
+export function userSubscribe() {
   return async (dispatch, getState) => {
     const state = getState()
     if (!state.basket.get('boxId')) {
@@ -726,7 +697,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
     const prices = state.pricing.get('prices')
     const signupTestName = getSignupE2ETestName(state)
     try {
-      const reqData = buildSignupRequestData(state, sca3ds, sourceId)
+      const reqData = buildSignupRequestData(state)
 
       const { data } = await customerSignup(null, reqData)
 

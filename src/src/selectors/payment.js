@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 import { PaymentMethod } from 'config/signup'
 import routes from 'config/routes'
-import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import { getPreviewOrderId } from 'selectors/basket'
 
 export const getCurrentPaymentMethod = state => state.payment.get('paymentMethod')
@@ -23,11 +22,11 @@ export const isCardPayment = state => (
   getCurrentPaymentMethod(state) === PaymentMethod.Card
 )
 
-export const is3DSCardPayment = state => isCardPayment(state)
-
 export const getCanSubmitPaymentDetails = state => (
   getCurrentPaymentMethod(state) === PaymentMethod.Card || isPayPalReady(state)
 )
+
+export const getPaymentProvider = state => (isCardPayment(state) ? 'checkout' : 'paypal')
 
 export const getCardPaymentDetails = state => ({
   payment_provider: 'checkout',
@@ -55,11 +54,11 @@ export const getPaymentAuthData = state => {
     '3ds': true,
     success_url: window.location.origin + success,
     failure_url: window.location.origin + failure,
-    decoupled: getIsDecoupledPaymentEnabled(state)
+    decoupled: true
   }
 }
 
-export const getDecoupledPaymentData = state => {
+export const getPaymentData = state => {
   const { checkout } = state
   const result = {
     order_id: getPreviewOrderId(state),
