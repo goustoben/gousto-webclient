@@ -514,6 +514,39 @@ jobs:
 workflows:
   version: 2
 
+  max-test:
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - FEF-309-dev-warnings
+      - install-src-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+          filters:
+            branches:
+              only:
+                - FEF-309-dev-warnings
+      - build-webclient:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-src-dependencies
+          filters:
+            branches:
+              only:
+                - FEF-309-dev-warnings
+      - upload-source-maps-to-datadog:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient
+          filters:
+            branches:
+              only:
+                - FEF-309-dev-warnings
+
   pull-request-branch:
     jobs:
       - publish-wip-pacts:
