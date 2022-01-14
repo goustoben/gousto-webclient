@@ -1,5 +1,6 @@
 const path = require('path')
 const ExtractText = require('extract-text-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const { cssLoaders, scssLoaders } = require('./postcss-loaders')
 
 const cssProductionRules = [
@@ -103,6 +104,33 @@ const imageRules = [
   { test: /\.svg$/, loaders: ['svg-url-loader', 'image-webpack'] },
 ]
 
+const getClientDevtool = (isDevelopmentBuild = false) => isDevelopmentBuild ? false : 'source-map'
+
+const getClientOptimization = (isDevelopmentBuild = false) => ({
+  splitChunks: {
+    cacheGroups: {
+      vendor: {
+        chunks: (chunk) => chunk.name !== 'legacy' && chunk.name !== 'performanceTracker',
+        name: 'vendors',
+        enforce: true,
+        test: /[\\/]node_modules[\\/]/,
+      },
+    },
+  },
+  // Only minify deployed builds
+  ...(!isDevelopmentBuild && {
+    minimize: true,
+    minimizer: [new TerserPlugin({
+      parallel: true,
+      sourceMap: true,
+      terserOptions: {
+        mangle: true,
+        compress: true,
+      },
+    })],
+  })
+})
+
 const combineRules = (tsRule, jsRule, cssRules) => ([
     tsRule,
     jsRule,
@@ -119,5 +147,7 @@ const getClientRules = (tsconfigPath = "./tsconfig.client.json", isDevelopmentBu
 module.exports = {
   fontRules,
   imageRules,
+  getClientDevtool,
+  getClientOptimization,
   getClientRules
 }
