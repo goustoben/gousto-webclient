@@ -193,7 +193,7 @@ jobs:
       - run:
           name: Upload sourcemaps to datadog
           working_directory: src
-          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${CIRCLE_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto.info/build/latest/" npm run datadog:upload-sourcemaps
+          command: DATADOG_SITE="datadoghq.eu" DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" source ~/.circlerc && npx @datadog/datadog-ci sourcemaps upload ./public --service gousto-webclient --release-version ${CIRCLE_BUILD_NUM} --minified-path-prefix https://${ENVIRONMENT}-assets.gousto.info/build/latest/
 
   upload-assets-to-s3:
     docker: *gousto_platform_image

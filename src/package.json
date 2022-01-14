@@ -44,8 +44,7 @@
     "clean-install": "rm -rf ./node_modules && npm i",
     "typecheck:tests": "tsc -p ./tsconfig.tests.json",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "datadog:upload-sourcemaps": "datadog-ci sourcemaps upload $BUILD_DIR --service gousto-webclient --release-version $CIRCLE_BUILD_NUM --minified-path-prefix $ASSET_URL_PREFIX"
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@axe-core/react": "^4.1.1",
@@ -114,7 +113,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
-    "@datadog/datadog-ci": "^0.17.12",
     "@pact-foundation/pact": "^9.16.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@sheerun/mutationobserver-shim": "^0.3.3",
