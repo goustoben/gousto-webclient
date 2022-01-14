@@ -32,6 +32,7 @@ const DeliveryEducationBanner = () => (
         <Text>Delivery slot updates on the day via text and email.</Text>
       </Box>
     </Box>
+    <Space size={8} />
     {/* <div className={css.deliveryEducationBanner}>
       <div className={css.deliverySection}>
         <div className={css.insulatedPackaging} />
