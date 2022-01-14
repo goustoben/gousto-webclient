@@ -109,6 +109,9 @@ const addOverridesForDevBuildConfig = (webpackConfig, _clientDevServerEnabled = 
       filename: '[name].bundle.js',
       publicPath,
     },
+    optimization: {
+      minimize: false,
+    },
   }
 
   const devConfigWithServer = {
