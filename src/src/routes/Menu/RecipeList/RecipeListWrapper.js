@@ -11,8 +11,6 @@ import { RecipeContextProvider } from '../context/recipeContext'
 import { CTAToAllRecipesContainer } from '../Recipe/CTAToAllRecipes'
 import css from './RecipeList.css'
 
-// const RefTile = React.forwardRef((props, ref) => <RecipeTile />)
-
 const RecipeListWrapper = (ownProps) => {
   const dispatch = useDispatch()
   const { currentCollectionId } = useCollections()
@@ -26,32 +24,19 @@ const RecipeListWrapper = (ownProps) => {
   const ref = useRef()
   const onScreen = useOnScreen(ref)
 
-  const [expanded, setExpanded] = useState({[currentCollectionId]: false})
+  const [expanded, setExpanded] = useState(null)
 
-
-  useEffect(() => {
-    setExpanded(false)
-  }, [currentCollectionId])
-
-  // console.log(`>>>>>>>>> ${onScreen}`)
-  // console.log('>>>>>>>>>> ref after init:', JSON.stringify(expanded, null, 2))
-
-  // const [limitedRecipes, setLimitedRecipes] = useState(recipes.slice(0, 20))
-  // console.log(`>>>> limitedRecipes?.length ${limitedRecipes?.length}`)
-  const limitedRecipes = onScreen || expanded ? recipes : recipes.slice(0, 20)
-
-  if (onScreen && ! expanded) {
-    setExpanded(true)
+  if (expanded !== null && expanded !== currentCollectionId) {
+    setExpanded(null)
   }
 
-  // React.forwardRef()
+  console.log(`>>>>>>>>> onScreen(${onScreen}) || expanded(${JSON.stringify(expanded)}) || recipesNumber(${recipes?.size})`)
 
-  // const onScreen = useOnScreen(ref)
-  // useEffect(() => {
-  //   if (onScreen) {
-  //     setLimitedRecipes(recipes)
-  //   }
-  // }, [onScreen, recipes])
+  const limitedRecipes = expanded === currentCollectionId ? recipes : recipes.slice(0, 20)
+
+  if (onScreen && expanded == null) {
+    setExpanded(currentCollectionId)
+  }
 
   return (
     <div className={css.emeRecipeList}>
@@ -61,12 +46,10 @@ const RecipeListWrapper = (ownProps) => {
             recipeId={value.recipe.get('id')}
             originalId={value.originalId}
             categoryId={currentCollectionId}
-            // ref={index === 19 ? ref : undefined}
-            // ref={ref}
           />
         </RecipeContextProvider>
       ))}
-      <div ref={ref}>VPP!</div>
+      <div ref={ref}>&nbsp;</div>
       <CTAToAllRecipesContainer />
     </div>
 
@@ -109,29 +92,3 @@ const useOnScreen = (ref, rootMargin = '0px') => {
 
   return isIntersecting
 }
-
-// const OPTIONS = {
-//   root: null,
-//   rootMargin: '0px 0px 0px 0px',
-//   threshold: 0,
-// }
-
-// const useOnScreen = (elementRef) => {
-//   const [isVisible, setIsVisible] = useState(false)
-
-//   useEffect(() => {
-//     if (elementRef.current) {
-//       const observer = new IntersectionObserver((entries, obs) => {
-//         entries.forEach((entry) => {
-//           if (entry.isIntersecting) {
-//             setIsVisible(true)
-//             obs.unobserve(elementRef.current)
-//           }
-//         })
-//       }, OPTIONS)
-//       observer.observe(elementRef.current)
-//     }
-//   }, [elementRef])
-
-//   return isVisible
-// }
