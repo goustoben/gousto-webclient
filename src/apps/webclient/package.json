@@ -121,6 +121,7 @@
     "@types/enzyme": "^3.10.11",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/jest": "^27.0.2",
+    "@types/koa": "^2.13.4",
     "@types/node": "^16.10.2",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",

@@ -1,5 +1,6 @@
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
+import { configMiddleware } from './middleware/config'
 
 configureDDTracer()
 
@@ -152,6 +153,8 @@ app.use(performanceTestPage)
 app.use(bodyParser({ multipart: true }))
 routes.auth(app)
 routes.user(app)
+
+app.use(configMiddleware)
 
 app.use(async (ctx, next) => {
   if (ctx.request.path === '/ping') {

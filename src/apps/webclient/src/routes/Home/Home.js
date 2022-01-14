@@ -9,6 +9,7 @@ import { generateHref } from 'Helmet/GoustoHelmet'
 import { menuLoadBoxPrices } from 'actions/menu'
 import { PromoBanner } from './PromoBanner'
 import { HomeSections } from './HomeSections'
+import { useConfig } from '../../containers/ConfigProvider'
 
 const propTypes = {
   isAuthenticated: PropTypes.bool,
@@ -24,6 +25,24 @@ const defaultProps = {
   redirectLoggedInUser: () => {},
   isSignupReductionEnabled: false,
   pricePerServing: null,
+}
+
+const ConfigConsumer = () => {
+  const config = useConfig()
+
+  return (
+    <>
+      {typeof config === 'object' ? (
+        Object.entries(config).map(([key, val], idx) => (
+          <h1 key={`config=${idx}`}>
+            {key}: {val}
+          </h1>
+        ))
+      ) : (
+        <h1>No config yet</h1>
+      )}
+    </>
+  )
 }
 
 class Home extends Component {
@@ -92,6 +111,7 @@ class Home extends Component {
           ]}
         />
         <PromoBanner />
+        <ConfigConsumer />
         <HomeSections
           modules={modules}
           ctaUri={ctaUri}
