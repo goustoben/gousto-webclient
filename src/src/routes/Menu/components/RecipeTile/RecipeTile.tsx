@@ -20,15 +20,7 @@ type RecipeTileProps = {
   categoryId?: string
 }
 
-// eslint-disable-next-line react/display-name
-export const RecipeTile: React.FC<RecipeTileProps> = React.forwardRef((props, ref: any) => {
-  // eslint-disable-next-line react/prop-types
-  const { recipeId, originalId, categoryId: collectionIdOverride } = props
-
-  if (ref) {
-    console.log(`>>>>>>>>>> ref passed:`, ref)
-  }
-
+export const RecipeTile: React.FC<RecipeTileProps> = ({ recipeId, originalId, categoryId: collectionIdOverride }) => {
   const dispatch = useDispatch()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const { currentCollectionId } = useCollections()
@@ -74,7 +66,6 @@ export const RecipeTile: React.FC<RecipeTileProps> = React.forwardRef((props, re
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
       onClick={onClick}
       onKeyPress={onClick}
-      ref={ref}
     >
       {
         // mobile banner needs to sit outside of TileImage
@@ -114,4 +105,4 @@ export const RecipeTile: React.FC<RecipeTileProps> = React.forwardRef((props, re
       </div>
     </div>
   )
-})
+}
