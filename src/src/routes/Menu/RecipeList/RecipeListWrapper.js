@@ -28,7 +28,24 @@ const RecipeListWrapper = (ownProps) => {
 
   const [previosCategoryId, setPreviousCategoryId] = useState(currentCollectionId)
 
-  if (previosCategoryId !== currentCollectionId) {
+  const categoryWasFlipped = previosCategoryId !== currentCollectionId
+
+  const getTheTopScrollingPoint = () => {
+    const currentScrollTop = document.body.scrollTop || document.documentElement.scrollTop || 0
+
+    if (currentScrollTop < 150) {
+      return currentScrollTop
+    }
+
+    return 150
+  }
+
+  useEffect(
+    () => window.scrollTo(0, getTheTopScrollingPoint()),
+    [currentCollectionId]
+  )
+
+  if (categoryWasFlipped) {
     resetOnScreen()
     setExpanded(false)
     setPreviousCategoryId(currentCollectionId)
