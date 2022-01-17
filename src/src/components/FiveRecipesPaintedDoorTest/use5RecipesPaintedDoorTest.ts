@@ -1,17 +1,17 @@
-import useSWR from "swr"
+import useSWR from 'swr'
 import { useSelector } from 'react-redux'
-import { useIsOptimizelyFeatureEnabled } from "../../containers/OptimizelyRollouts/useOptimizely.hook"
+import useLocalStorage from 'react-use/lib/useLocalStorage'
+import { useIsOptimizelyFeatureEnabled } from '../../containers/OptimizelyRollouts/useOptimizely.hook'
 import { getFetcher } from '../../routes/Menu/apis/fetch'
 import { buildSubscriptionCommandUrl } from '../../routes/Account/apis/subscription'
-import { getAccessToken } from "../../selectors/auth"
-import { getUserId } from "../../selectors/user"
-import useLocalStorage from "react-use/lib/useLocalStorage";
+import { getAccessToken } from '../../selectors/auth'
+import { getUserId } from '../../selectors/user'
 
 type Time = string
 type DateTime = string
 type UUID = string
 type Subscription = {
-  status: "OK",
+  status: 'OK',
   data: {
     userId: string,
     subscription: {
@@ -25,12 +25,12 @@ type Subscription = {
       updatedBy: UUID,
       authUserId: UUID,
       deliverySlotDay: number,
-      boxType: "gourmet" | "vegetarian",
+      boxType: 'gourmet' | 'vegetarian',
       updatedAt: DateTime,
       userId: string,
       numRecipes: 2 | 3 | 4,
       versionId: UUID,
-      intervalUnit: "weeks" | "months",
+      intervalUnit: 'weeks' | 'months',
       lastChangeType: string,
     }
   }
@@ -47,6 +47,7 @@ const useSubscription = () => {
     accessToken,
     userId,
   ] : null
+
   return useSWR<Subscription>(parametersForFetcher, getFetcher)
 }
 
@@ -56,9 +57,9 @@ const useIsEligibleForTest = () => {
   const { data: request } = useSubscription()
 
   return (
-    request &&
-    request.data.subscription.numPortions === TWO_PORTIONS_BOX &&
-    request.data.subscription.numRecipes === FOUR_RECIPES_BOX
+    request
+    && request.data.subscription.numPortions === TWO_PORTIONS_BOX
+    && request.data.subscription.numRecipes === FOUR_RECIPES_BOX
   )
 }
 
@@ -77,9 +78,11 @@ export const use5RecipesPaintedDoorTest = () => {
 
   return {
     isEnabled,
-    hasSeenOnMenu: hasSeenOnMenu,
-    hasSeenOnOrderConfirmation: hasSeenOnOrderConfirmation,
+    hasSeenOnMenu,
+    hasSeenOnOrderConfirmation,
     setMenuAsSeen,
-    setOrderConfirmationAsSeen
+    setOrderConfirmationAsSeen,
+    // TODO: proper implementation in TR-9773
+    isNewUser: false
   }
 }
