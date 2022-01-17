@@ -7,6 +7,12 @@ import { MenuCollection } from '../../types'
 
 export const useAllCollections = () => useSelector(getMenuCollections)
 
+export const useCurrentCollectionId = () => {
+  const currentCollection = useCurrentCollection()
+
+  return currentCollection ? currentCollection.get('id') : null
+}
+
 export const useCollections = () => {
   const currentCollection = useCurrentCollection()
   const allCollections = useAllCollections()

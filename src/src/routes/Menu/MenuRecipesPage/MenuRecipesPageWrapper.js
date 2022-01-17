@@ -5,7 +5,7 @@ import actions from 'actions'
 import { getIsTastePreferencesEnabled } from 'selectors/features'
 import { getUserId } from 'selectors/user'
 import { getBasketOrderId, getNumPortions } from 'selectors/basket'
-import { useCollections } from '../domains/collections'
+import { useCurrentCollectionId } from '../domains/collections'
 import { checkQueryParams } from '../actions/menuRecipeDetails'
 import { loadOptimizelySDK } from '../../../actions/optimizely'
 
@@ -22,7 +22,7 @@ const MenuRecipesPageWrapper = (ownProps) => {
   } = ownProps
 
   const dispatch = useDispatch()
-  const { currentCollectionId } = useCollections()
+  const currentCollectionId = useCurrentCollectionId()
 
   const showRecommendationHighlight = useShowRecommendationsHighlight()
 

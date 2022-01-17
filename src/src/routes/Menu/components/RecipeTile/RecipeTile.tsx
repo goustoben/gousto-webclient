@@ -5,7 +5,7 @@ import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/do
 import { VariantHeader } from '../../Recipe/VariantHeader'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
-import { useCollections } from '../../domains/collections'
+import { useCurrentCollectionId } from '../../domains/collections'
 import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
@@ -23,7 +23,7 @@ type RecipeTileProps = {
 export const RecipeTile: React.FC<RecipeTileProps> = ({ recipeId, originalId, categoryId: collectionIdOverride }) => {
   const dispatch = useDispatch()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
-  const { currentCollectionId } = useCollections()
+  const currentCollectionId = useCurrentCollectionId()
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)
 

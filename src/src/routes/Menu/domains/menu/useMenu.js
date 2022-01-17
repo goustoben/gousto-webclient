@@ -1,9 +1,9 @@
-import { useCollections, useAllCollections } from '../collections'
+import { useAllCollections } from '../collections'
 import { useAlternativeOptions } from './internal/useAlternativeOptions'
 import { useGetRecipesForCollectionId } from './internal/useGetRecipesForCollectionId'
 
 export const useMenu = () => {
-  const { allCollections } = useCollections()
+  const allCollections = useAllCollections()
 
   const { getAlternativeOptionsForRecipe } = useAlternativeOptions({allCollections})
 
