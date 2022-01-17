@@ -11,6 +11,23 @@ import { RecipeContextProvider } from '../context/recipeContext'
 import { CTAToAllRecipesContainer } from '../Recipe/CTAToAllRecipes'
 import css from './RecipeList.css'
 
+const HEADER_HEIGHT = 150
+
+const NUMBER_OF_INITIALLY_LOADED_RECIPES = 20
+
+/**
+ * Determine the Y scroll point the view port has to go upon switching to new Collection/Category
+*/
+const getTheTopScrollingPoint = () => {
+  const currentScrollTop = document.body.scrollTop || document.documentElement.scrollTop || 0
+
+  if (currentScrollTop < HEADER_HEIGHT) {
+    return currentScrollTop
+  }
+
+  return HEADER_HEIGHT
+}
+
 const RecipeListWrapper = (ownProps) => {
   const dispatch = useDispatch()
   const { currentCollectionId } = useCollections()
@@ -22,23 +39,11 @@ const RecipeListWrapper = (ownProps) => {
   }, dispatch)
 
   const ref = useRef()
-  const [onScreen, resetOnScreen] = useOnScreen(ref)
-
+  const [onScreen, resetOnScreen] = useOnScreen(ref, '600px')
   const [expanded, setExpanded] = useState(false)
+  const [previousCategoryId, setPreviousCategoryId] = useState(currentCollectionId)
 
-  const [previosCategoryId, setPreviousCategoryId] = useState(currentCollectionId)
-
-  const categoryWasFlipped = previosCategoryId !== currentCollectionId
-
-  const getTheTopScrollingPoint = () => {
-    const currentScrollTop = document.body.scrollTop || document.documentElement.scrollTop || 0
-
-    if (currentScrollTop < 150) {
-      return currentScrollTop
-    }
-
-    return 150
-  }
+  const categoryWasFlipped = previousCategoryId !== currentCollectionId
 
   useEffect(
     () => window.scrollTo(0, getTheTopScrollingPoint()),
@@ -53,7 +58,7 @@ const RecipeListWrapper = (ownProps) => {
 
   console.log(`>>>>>>>>> onScreen(${onScreen}) || expanded(${expanded}) || recipesNumber(${recipes?.size})`)
 
-  const limitedRecipes = expanded ? recipes : recipes.slice(0, 20)
+  const limitedRecipes = expanded ? recipes : recipes.slice(0, NUMBER_OF_INITIALLY_LOADED_RECIPES)
 
   if (onScreen && ! expanded) {
     setExpanded(true)
@@ -61,7 +66,7 @@ const RecipeListWrapper = (ownProps) => {
 
   return (
     <div className={css.emeRecipeList}>
-      {limitedRecipes.map((value, index) => (
+      {limitedRecipes.map((value) => (
         <RecipeContextProvider key={value.recipe.get('id')} value={value.recipe}>
           <RecipeTile
             recipeId={value.recipe.get('id')}
@@ -73,21 +78,11 @@ const RecipeListWrapper = (ownProps) => {
       <div ref={ref}>&nbsp;</div>
       <CTAToAllRecipesContainer />
     </div>
-
-  // <RecipeList
-  //   // eslint-disable-next-line react/jsx-props-no-spreading
-  //   {...ownProps}
-  //   currentCollectionId={currentCollectionId}
-  //   recipes={limitedRecipes}
-  //   trackRecipeOrderDisplayed={actionDispatchers.trackRecipeOrderDisplayed}
-  //   ref={ref}
-  // />
   )
 }
 
 export { RecipeListWrapper }
 
-// Hook
 const useOnScreen = (ref, rootMargin = '0px') => {
   // State and setter for storing whether element is visible
   const [isIntersecting, setIntersecting] = useState(false)
