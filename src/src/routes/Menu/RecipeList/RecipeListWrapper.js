@@ -22,9 +22,14 @@ const RecipeListWrapper = (ownProps) => {
   }, dispatch)
 
   const ref = useRef()
-  const onScreen = useOnScreen(ref)
+  const [onScreen, resetOnScreen] = useOnScreen(ref)
 
   const [expanded, setExpanded] = useState(null)
+
+  useEffect(() => {
+    setExpanded(false)
+    resetOnScreen()
+  }, [currentCollectionId])
 
   if (expanded !== null && expanded !== currentCollectionId) {
     setExpanded(null)
@@ -90,5 +95,5 @@ const useOnScreen = (ref, rootMargin = '0px') => {
     }
   }, []) // Empty array ensures that effect is only run on mount and unmount
 
-  return isIntersecting
+  return [isIntersecting, () => setIntersecting(false)]
 }
