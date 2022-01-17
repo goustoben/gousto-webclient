@@ -88,3 +88,7 @@
 .content {
   composes: fontStyleBody from 'design-language/typography.css';
 }
+
+.strike {
+  text-decoration: line-through;
+}
