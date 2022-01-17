@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { bindActionCreators } from 'redux'
 import { useDispatch } from 'react-redux'
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
@@ -24,23 +24,26 @@ const RecipeListWrapper = (ownProps) => {
   const ref = useRef()
   const [onScreen, resetOnScreen] = useOnScreen(ref)
 
-  const [expanded, setExpanded] = useState(null)
+  const [expanded, setExpanded] = useState(false)
 
-  useEffect(() => {
-    setExpanded(false)
+  const [previosCategoryId, setPreviousCategoryId] = useState(currentCollectionId)
+
+  if (previosCategoryId !== currentCollectionId) {
     resetOnScreen()
-  }, [currentCollectionId])
-
-  if (expanded !== null && expanded !== currentCollectionId) {
-    setExpanded(null)
+    setExpanded(false)
+    setPreviousCategoryId(currentCollectionId)
   }
+  // useEffect(() => {
+  //   resetOnScreen()
+  //   setExpanded(false)
+  // }, [currentCollectionId])
 
-  console.log(`>>>>>>>>> onScreen(${onScreen}) || expanded(${JSON.stringify(expanded)}) || recipesNumber(${recipes?.size})`)
+  console.log(`>>>>>>>>> onScreen(${onScreen}) || expanded(expanded) || recipesNumber(${recipes?.size})`)
 
-  const limitedRecipes = expanded === currentCollectionId ? recipes : recipes.slice(0, 20)
+  const limitedRecipes = expanded ? recipes : recipes.slice(0, 20)
 
-  if (onScreen && expanded == null) {
-    setExpanded(currentCollectionId)
+  if (onScreen && ! expanded) {
+    setExpanded(true)
   }
 
   return (
