@@ -33,12 +33,8 @@ const RecipeListWrapper = (ownProps) => {
     setExpanded(false)
     setPreviousCategoryId(currentCollectionId)
   }
-  // useEffect(() => {
-  //   resetOnScreen()
-  //   setExpanded(false)
-  // }, [currentCollectionId])
 
-  console.log(`>>>>>>>>> onScreen(${onScreen}) || expanded(expanded) || recipesNumber(${recipes?.size})`)
+  console.log(`>>>>>>>>> onScreen(${onScreen}) || expanded(${expanded}) || recipesNumber(${recipes?.size})`)
 
   const limitedRecipes = expanded ? recipes : recipes.slice(0, 20)
 
