@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { CTA, Modal } from 'goustouicomponents'
 import Overlay from 'Overlay'
 import headerImage from 'media/images/five-recipes/five-recipes.jpg'
