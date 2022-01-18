@@ -54,7 +54,7 @@ describe('ShowcaseMenu', () => {
     })
   })
 
-  describe('when mounted', () => {
+  xdescribe('when mounted', () => {
     const state = {
       ribbon: Immutable.fromJS({}),
       basket: Immutable.fromJS({}),

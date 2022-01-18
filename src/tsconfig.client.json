@@ -1,9 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "lib": ["ES2015", "ES2015.Promise", "dom"],
-    "sourceMap": true
-  },
   "exclude": [
     "./**/node_modules",
     "./config",

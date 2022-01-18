@@ -38,6 +38,7 @@ import {
   getIsCorporateEnquiriesLinkVisible,
   getIsSsrRepetitiveIssues,
   getIsGiftCardsLinkVisible,
+  getIsBackClosesModalEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -91,6 +92,7 @@ describe('when features are defined', () => {
     [getIsCorporateEnquiriesLinkVisible, 'isCorporateEnquiriesLinkVisible'],
     [getIsSsrRepetitiveIssues, 'isSsrRepetitiveIssues'],
     [getIsGiftCardsLinkVisible, 'isGiftCardsLinkVisible'],
+    [getIsBackClosesModalEnabled, 'isBackClosesModalEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

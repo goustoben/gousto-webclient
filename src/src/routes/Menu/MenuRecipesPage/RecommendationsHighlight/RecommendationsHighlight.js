@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import { useMenu } from 'routes/Menu/domains/menu'
-import { DetailOverlayContainer } from '../../DetailOverlay'
+import { DetailOverlay } from '../../DetailOverlay'
 
 import { RecipeList } from './RecipeList'
 
@@ -40,7 +40,7 @@ const RecommendationsHighlight = () => {
       <div className={menuCss.menuContainer}>
         <RecipeList collectionId={RECOMMENDATIONS_ID} recipes={recommendationRecipes} />
 
-        <DetailOverlayContainer showOverlay />
+        <DetailOverlay showOverlay />
       </div>
     )
   }
@@ -70,7 +70,7 @@ const RecommendationsHighlight = () => {
 
       <RecipeList collectionId={ALL_RECIPES_ID} recipes={remainingRecipes} />
 
-      <DetailOverlayContainer showOverlay />
+      <DetailOverlay showOverlay />
     </div>
   )
 }

@@ -1,1 +1,1 @@
-export { DetailOverlayContainer } from './DetailOverlayContainer'
+export { DetailOverlay } from './DetailOverlay'

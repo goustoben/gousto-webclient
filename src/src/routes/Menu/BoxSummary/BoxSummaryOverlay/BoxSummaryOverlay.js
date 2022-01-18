@@ -3,12 +3,15 @@ import PropTypes from 'prop-types'
 import { boxSummaryOverlayPropTypes } from './propTypes'
 import { BoxSummaryOverlayMobile } from './Mobile/BoxSummaryOverlayMobile'
 import { BoxSummaryOverlayDesktop } from './Desktop/BoxSummaryOverlayDesktop'
+import { useBrowserBack } from '../../../../hooks/useBrowserBack'
 
-const BoxSummaryOverlay = ({ isMobile, onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions, shouldDisplayFullScreenBoxSummary, orderSaveError}) => {
+const BoxSummaryOverlay = ({ isMobile, onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions,
+  shouldDisplayFullScreenBoxSummary, orderSaveError, isBackClosesModalEnabled }) => {
+  const onClose = useBrowserBack(isBackClosesModalEnabled && showDetails ? onCloseClick : null)
   if (isMobile) {
     return (
       <BoxSummaryOverlayMobile
-        onCloseClick={onCloseClick}
+        onCloseClick={isBackClosesModalEnabled ? onClose : onCloseClick}
         onToggleVisibility={onToggleVisibility}
         showDetails={showDetails}
         date={date}
@@ -21,7 +24,7 @@ const BoxSummaryOverlay = ({ isMobile, onCloseClick, onToggleVisibility, showDet
 
   return (
     <BoxSummaryOverlayDesktop
-      onCloseClick={onCloseClick}
+      onCloseClick={isBackClosesModalEnabled ? onClose : onCloseClick}
       onToggleVisibility={onToggleVisibility}
       showDetails={showDetails}
       date={date}

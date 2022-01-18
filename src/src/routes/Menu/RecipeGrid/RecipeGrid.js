@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { RecipeListWrapper } from '../RecipeList'
-import { DetailOverlayContainer } from '../DetailOverlay'
+import { DetailOverlay } from '../DetailOverlay'
 
 import css from '../Menu.css'
 
@@ -26,7 +26,7 @@ class RecipeGrid extends PureComponent {
         data-testing="menuRecipesList"
       >
         <RecipeListWrapper />
-        <DetailOverlayContainer
+        <DetailOverlay
           showOverlay={shouldShowOverlay}
         />
       </div>

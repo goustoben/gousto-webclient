@@ -236,6 +236,7 @@ module.exports = {
   rules: ruleDefinitions,
   env: {
     jasmine: true,
+    jest: true,
   },
   "globals": {
     "document": true,
