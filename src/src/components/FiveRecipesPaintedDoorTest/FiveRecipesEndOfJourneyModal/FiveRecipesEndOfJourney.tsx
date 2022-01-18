@@ -7,6 +7,7 @@ import { use5RecipesPaintedDoorTest } from '../use5RecipesPaintedDoorTest'
 import { EndOfJourneyNewUserModal } from './EndOfJourneyNewUser'
 import { EndOfJourneySubscriptionUserModal } from './EndOfJourneySubscriptionUser'
 import { useCreateTrackEvent } from '../../../hooks/useTracking'
+import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 
 interface Props {
   isOpen: boolean
@@ -22,6 +23,11 @@ export const FiveRecipesEndOfJourney = ({ isOpen, onClose }: Props) => {
     trackEvent({
       event: 'five-recipes-modal-closed',
     })
+    if(isNewUser) {
+      sendClientMetric('menu-5-recipes-painted-new-user-end', 1, 'Count')
+    } else {
+      sendClientMetric('menu-5-recipes-painted-existing-user-end', 1, 'Count')
+    }
     onClose()
   }
 

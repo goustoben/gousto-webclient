@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-
+import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
 import * as FiveRecipeHooks from '../use5RecipesPaintedDoorTest'
 import * as Tracking from '../../../hooks/useTracking'
 import { FiveRecipesEndOfJourney } from './FiveRecipesEndOfJourney'
@@ -11,8 +11,11 @@ describe('<FiveRecipesEndOfJourney />', () => {
   const trackEvent = jest.fn()
   const setMenuAsSeen = jest.fn()
   const onClose = jest.fn()
+  let sendClientMetricSpy
+
   beforeEach(() => {
     use5RecipesPaintedDoorTestSpy = jest.spyOn(FiveRecipeHooks, 'use5RecipesPaintedDoorTest')
+    sendClientMetricSpy = jest.spyOn(clientMetrics, 'sendClientMetric')
     jest.spyOn(Tracking, 'useCreateTrackEvent').mockImplementation(() => trackEvent)
   })
 
@@ -56,26 +59,64 @@ describe('<FiveRecipesEndOfJourney />', () => {
     })
   })
 
-  it('should show credit box to subscribed users', () => {
-    use5RecipesPaintedDoorTestSpy.mockReturnValue({
-      isEnabled: true,
-      hasSeenOnMenu: false,
-      isNewUser: false,
-    })
-    render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
+  describe('when the user is an existing user', () => {
+    it('should show credit box to subscribed users', () => {
+      use5RecipesPaintedDoorTestSpy.mockReturnValue({
+        isEnabled: true,
+        hasSeenOnMenu: false,
+        isNewUser: false,
+      })
+      render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
 
-    expect(screen.queryByText('£5 credit')).toBeTruthy()
+      expect(screen.queryByText('£5 credit')).toBeTruthy()
+    })
+
+    it('should send a client metric `menu-5-recipes-painted-existing-user-end`', () => {
+      use5RecipesPaintedDoorTestSpy.mockReturnValue({
+        isEnabled: true,
+        hasSeenOnMenu: false,
+        isNewUser: false,
+        setMenuAsSeen
+      })
+
+      render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
+
+      expect(screen.queryByRole('heading')).toHaveTextContent('Shh, let’s keep this between us')
+
+      fireEvent.click(screen.getByText('Back to menu'))
+
+      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(1, 'menu-5-recipes-painted-existing-user-end', 1, 'Count')
+    })
   })
 
-  it('should not show credit box to new users', () => {
-    use5RecipesPaintedDoorTestSpy.mockReturnValue({
-      isEnabled: true,
-      hasSeenOnMenu: false,
-      isNewUser: true,
+  describe('when the user is a new user', () => {
+    it('should not show credit box to new users', () => {
+      use5RecipesPaintedDoorTestSpy.mockReturnValue({
+        isEnabled: true,
+        hasSeenOnMenu: false,
+        isNewUser: true,
+      })
+
+      render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
+
+      expect(screen.queryByText('£5 credit')).toBeFalsy()
     })
 
-    render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
+    it('should send a client metric `menu-5-recipes-painted-new-user-end`', () => {
+      use5RecipesPaintedDoorTestSpy.mockReturnValue({
+        isEnabled: true,
+        hasSeenOnMenu: false,
+        isNewUser: true,
+        setMenuAsSeen,
+      })
 
-    expect(screen.queryByText('£5 credit')).toBeFalsy()
+      render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
+
+      expect(screen.queryByRole('heading')).toHaveTextContent('Shh, let’s keep this between us')
+
+      fireEvent.click(screen.getByText('Back to menu'))
+
+      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(1, 'menu-5-recipes-painted-new-user-end', 1, 'Count')
+    })
   })
 })
