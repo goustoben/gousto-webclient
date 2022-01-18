@@ -290,7 +290,8 @@ describe('pricing actions', () => {
       })
     })
 
-    describe('when feature flag `radishes_order_api_pricing_web_enabled` is enabled', () => {
+    // TODO: When radishes pickup Order V2 work this flag and V1 will be removed as part of that work
+    describe.skip('when feature flag `radishes_order_api_pricing_web_enabled` is enabled', () => {
       beforeEach(() => {
         jest.spyOn(optimizelyUtils, 'isOptimizelyFeatureEnabledFactory')
           .mockReturnValue(() => Promise.resolve(true))

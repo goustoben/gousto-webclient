@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import { getDeliveryTariffId, getSlot } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getIsOrderWithoutRecipes, getOrderV2 } from 'routes/Menu/selectors/order'
-import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { getAccessToken, getAuthUserId } from 'selectors/auth'
 import { transformOrderPricesV2ToOrderV1 } from 'routes/Menu/transformers/orderPricesV2ToV1'
 import { getOrderPrice } from 'routes/Menu/apis/orderV2'
@@ -114,8 +113,9 @@ const getPricingRequestParamsV1 = (state) => {
   return pricingRequestParams
 }
 
-const getPricing = async (dispatch, getState) => {
-  const useOrderPricingV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_pricing_web_enabled')(dispatch, getState)
+const getPricing = async (_, getState) => {
+  // TODO: When radishes pickup Order V2 work this flag and V1 will be removed as part of that work
+  const useOrderPricingV2 = false
   const state = getState()
 
   if (useOrderPricingV2) {

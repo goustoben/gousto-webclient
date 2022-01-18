@@ -9,9 +9,11 @@ import { trackPageChange } from 'routes/trackPageChange'
 import { hashLinkScroll } from 'routes/hashLinkScroll'
 import fetchContentOnChange from 'routes/fetchContentOnChange'
 import { documentLocation } from 'utils/window'
+import { SetupOptimizelyOverride } from 'containers/OptimizelyRollouts'
 
 export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
+    <SetupOptimizelyOverride />
     <SWRConfig
       value={{
         revalidateOnFocus: false
