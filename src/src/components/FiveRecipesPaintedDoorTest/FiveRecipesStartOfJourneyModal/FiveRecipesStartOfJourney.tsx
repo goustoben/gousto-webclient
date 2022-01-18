@@ -4,6 +4,7 @@ import Overlay from 'Overlay'
 import headerImage from 'media/images/five-recipes/five-recipes.jpg'
 import css from '../FiveRecipesModal.module.css'
 import { use5RecipesPaintedDoorTest } from '../use5RecipesPaintedDoorTest'
+import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 
 interface Props {
   discount: number
@@ -12,7 +13,14 @@ interface Props {
 export const FiveRecipesStartOfJourney = ({ discount }: Props) => {
   const { isEnabled, hasSeenOnMenu, isNewUser } = use5RecipesPaintedDoorTest()
   const [isOpen, updateIsOpen] = React.useState(isEnabled && !hasSeenOnMenu)
-  const onModalClose = () => updateIsOpen(false)
+  const onModalClose = () => {
+    updateIsOpen(false)
+    if(isNewUser) {
+      sendClientMetric('menu-5-recipes-painted-new-user-start', 1, 'Count')
+    } else {
+      sendClientMetric('menu-5-recipes-painted-existing-user-start', 1, 'Count')
+    }
+  }
 
   if (!isOpen) {
     return null

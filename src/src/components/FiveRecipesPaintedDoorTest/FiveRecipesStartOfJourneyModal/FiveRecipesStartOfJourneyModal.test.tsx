@@ -4,14 +4,17 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import * as FiveRecipeHooks from '../use5RecipesPaintedDoorTest'
 import { FiveRecipesStartOfJourney } from './FiveRecipesStartOfJourney'
 import { JestSpyInstance } from '../../../types/jest'
+import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
 
 describe('<FiveRecipesStartOfJourney />', () => {
   let use5RecipesPaintedDoorTestSpy: JestSpyInstance<
     typeof FiveRecipeHooks.use5RecipesPaintedDoorTest
   >
+  let sendClientMetricSpy: JestSpyInstance<typeof clientMetrics.sendClientMetric>
 
   beforeEach(() => {
     use5RecipesPaintedDoorTestSpy = jest.spyOn(FiveRecipeHooks, 'use5RecipesPaintedDoorTest')
+    sendClientMetricSpy = jest.spyOn(clientMetrics, 'sendClientMetric')
   })
 
   afterEach(jest.clearAllMocks)
@@ -73,38 +76,75 @@ describe('<FiveRecipesStartOfJourney />', () => {
 
         expect(screen.queryByRole('heading')).not.toBeInTheDocument()
       })
-      it('should apply the correct discount for new users', () => {
-        use5RecipesPaintedDoorTestSpy.mockReturnValue({
-          isEnabled: true,
-          hasSeenOnMenu: false,
-          isNewUser: true,
+
+      describe('when the users is a new user', () => {
+        it('should apply the correct discount for new users', () => {
+          use5RecipesPaintedDoorTestSpy.mockReturnValue({
+            isEnabled: true,
+            hasSeenOnMenu: false,
+            isNewUser: true,
+          })
+
+          render(<FiveRecipesStartOfJourney discount={10.5} />)
+          expect(screen.queryByText('£3.65 per serving.')).toBeTruthy()
+          expect(screen.queryByText('£4.08')).toHaveClass('strike')
         })
 
-        render(<FiveRecipesStartOfJourney discount={10.5} />)
-        expect(screen.queryByText('£3.65 per serving.')).toBeTruthy()
-        expect(screen.queryByText('£4.08')).toHaveClass('strike')
+        it('should send a client metric `menu-5-recipes-painted-new-user-start`', () => {
+          use5RecipesPaintedDoorTestSpy.mockReturnValue({
+            isEnabled: true,
+            hasSeenOnMenu: false,
+            isNewUser: true,
+          })
+
+          render(<FiveRecipesStartOfJourney discount={10.5} />)
+
+          fireEvent.click(screen.getByText('Choose my recipes'))
+
+          expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+          expect(sendClientMetricSpy).toHaveBeenCalledWith('menu-5-recipes-painted-new-user-start', 1, 'Count')
+        })
       })
-      it('should apply the correct discount for existing subscribers', () => {
-        use5RecipesPaintedDoorTestSpy.mockReturnValue({
-          isEnabled: true,
-          hasSeenOnMenu: false,
-          isNewUser: false,
+
+      describe('when is an existing users', () => {
+        it('should apply the correct discount for existing subscribers', () => {
+          use5RecipesPaintedDoorTestSpy.mockReturnValue({
+            isEnabled: true,
+            hasSeenOnMenu: false,
+            isNewUser: false,
+          })
+
+          render(<FiveRecipesStartOfJourney discount={20} />)
+
+          expect(screen.queryByText('£3.26 per serving.')).toBeTruthy()
         })
 
-        render(<FiveRecipesStartOfJourney discount={20} />)
+        it('should apply the correct discount for existing subscribers', () => {
+          use5RecipesPaintedDoorTestSpy.mockReturnValue({
+            isEnabled: true,
+            hasSeenOnMenu: false,
+            isNewUser: false,
+          })
 
-        expect(screen.queryByText('£3.26 per serving.')).toBeTruthy()
-      })
-      it('should apply the correct discount for existing subscribers', () => {
-        use5RecipesPaintedDoorTestSpy.mockReturnValue({
-          isEnabled: true,
-          hasSeenOnMenu: false,
-          isNewUser: false,
+          render(<FiveRecipesStartOfJourney discount={0} />)
+
+          expect(screen.queryByText('£4.08 per serving.')).toBeTruthy()
         })
 
-        render(<FiveRecipesStartOfJourney discount={0} />)
+        it('should send a client metric `menu-5-recipes-painted-existing-user-start`', () => {
+          use5RecipesPaintedDoorTestSpy.mockReturnValue({
+            isEnabled: true,
+            hasSeenOnMenu: false,
+            isNewUser: false,
+          })
 
-        expect(screen.queryByText('£4.08 per serving.')).toBeTruthy()
+          render(<FiveRecipesStartOfJourney discount={10.5} />)
+
+          fireEvent.click(screen.getByText('Choose my recipes'))
+
+          expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+          expect(sendClientMetricSpy).toHaveBeenCalledWith('menu-5-recipes-painted-existing-user-start', 1, 'Count')
+        })
       })
     })
   })
