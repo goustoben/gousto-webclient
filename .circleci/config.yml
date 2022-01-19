@@ -307,7 +307,7 @@ jobs:
       - run:
           name: Build local application
           working_directory: src
-          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn build
+          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build
       - run:
           name: Update local DNS configuration
           command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
