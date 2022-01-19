@@ -76,7 +76,7 @@ If the `develop` build is failing, especially on end-to-end tests, it makes it d
 
 There is a script which does some reporting of the repo based on the `CODEOWNERS` file. You can use this script from inside the `src` directory, with the following commands:
 
-### npm run codeowners:report
+### yarn codeowners:report
 
 Lists the number of files owned by each owner
 
@@ -88,7 +88,7 @@ Files by owner:
  - @Gousto/squad-haricots: 199 files
 ```
 
-### npm run codeowners:unowned
+### yarn codeowners:unowned
 
 Lists the number of unowned files in the repository (i.e. owned by `@Gousto/guild-frontend`)
 

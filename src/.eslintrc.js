@@ -201,7 +201,6 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:react-hooks/recommended',
-    'plugin:storybook/recommended',
   ],
   settings: {
     'import/resolver': {

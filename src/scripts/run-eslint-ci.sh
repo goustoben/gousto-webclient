@@ -1,7 +1,7 @@
 #!/bin/bash
 
 func() {
-  npm run --silent eslint -- -f json > eslint-results.json
+  yarn --silent run eslint -f json > eslint-results.json
 
   local eslint_exit_code=$?
 

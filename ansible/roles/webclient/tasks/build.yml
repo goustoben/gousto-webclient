@@ -11,22 +11,21 @@
 - name: set {{ node_version }} as default version
   copy: dest="{{ nvm_root }}/alias/default" content="{{ node_version }}"
 
-- name: npm cache clean
-  command: npm cache clean
+- name: Install yarn
+  sudo: yes
+  command: npm install -g yarn
+
+- name: Clean cached dependencies
+  command: yarn cache clean
   args:
     chdir: "{{ directory }}"
 
-- name: npm install
-  command: npm ci && npm run postinstall
+- name: Install dependencies
+  command: yarn install --immutable
   args:
     chdir: "{{ directory }}"
 
-- name: npm link
-  command: npm link
-  args:
-    chdir: "{{ directory }}"
-
-- name: npm run build nodeserver
-  command: npm run build:dev
+- name: Build dev app
+  command: yarn build:dev
   args:
     chdir: "{{ directory }}"

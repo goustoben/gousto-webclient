@@ -25,21 +25,16 @@ if [ "$1" == "dev" ]; then
 
     if [ ! -d src/node_modules ]; then
       printf "\e[1;33;4;44mnode_modules missing, installing, this may take a loooooong time\e[0m\n"
-      docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run webclient npm install
+      docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run webclient yarn install
     fi
 
-    if [ ! -d src/libs/goustouicomponents ]; then
-      printf "\e[1;33;4;44mgoustouicomponents missing, installing\e[0m\n"
-      docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run webclient npm run postinstall
-    fi
-
-    docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run --service-ports webclient bash -c "npm run start:dev & npm run watch"
+    docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run --service-ports webclient bash -c "yarn start:dev & yarn watch"
     exit 0
   elif [ "$2" == "--host" ]; then
     printf "\e[1;33;4;44mRunning Webclient on the host\e[0m\n"
     printf "\033[1m\033[37mURL:\033[0m \033[1m\033[35mhttp://frontend.gousto.local:8080/\033[0m\n"
     cd src
-    npm run start:dev & npm run watch
+    yarn start:dev & yarn watch
     exit 0
   fi
 fi

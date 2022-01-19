@@ -33,27 +33,23 @@ jobs:
         path: |
           **/node_modules
           **/src/libs
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/bower.json') }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
-      run: npm ci
+      run: yarn install --immutable
       working-directory: src
     - name: Run Gousto service adapter tests
-      run: npm run test:gousto-adapters
+      run: yarn run test:gousto-adapters
       working-directory: src
-    - name: Install emulation server dependencies
-      if: steps.cache-node-modules.outputs.cache-hit != 'true'
-      run: npm ci
-      working-directory: emulation-server
     - name: Start emulation server
       run: |
-        npm start &
+        yarn start &
         ../scripts/waitForHttpPath.sh 3000 /_config/state 10
       working-directory: emulation-server
     - name: Verify emulation server satisfies Pact file expectations
-      run: npm test
+      run: yarn test
       working-directory: emulation-server

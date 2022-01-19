@@ -1,0 +1,13 @@
+{
+  "name": "gousto-webclient",
+  "version": "1.0.0",
+  "packageManager": "yarn@3.1.1",
+  "author": "Gousto",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "emulation-server",
+    "src",
+    "tests/e2e",
+    "tests/regression"
+  ]
+}

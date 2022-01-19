@@ -24,9 +24,22 @@ yarn-error.log
 src/_coverage
 src/vendor
 src/config/*-local.json5
+
 # VSCode
 .vs
 .idea
 src/config/env.json
 lib
 /pact/
+
+# Yarn
+# This is the recommended configuration for non-zero-installs.
+# Storing the Yarn releases and plugins in version control is intentional.
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+package-lock.json
