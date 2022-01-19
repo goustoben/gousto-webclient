@@ -34,7 +34,6 @@ Append the following entry to your local host file if you don't already have it,
 127.0.0.1 frontend.gousto.local
 ```
 
-
 ### Step 3: Run development environment
 
 **Note:** VPN is required to connect to staging before running web-client.
@@ -44,7 +43,7 @@ Webclient can either be run without G2FE as a standalone on port 80, or as part 
 To access the service simply navigate to `frontend.gousto.local:8080` or if running with G2FE as well, simply navigate to `frontend.gousto.local`.
 
 #### Running Webclient with HMR
-* `npm run dev` will build the server and then run it with HMR enabled.
+* `yarn run dev` will build the server and then run it with HMR enabled.
   You'll see output from the server build initially and then the server will start, as it starts the HMR middleware will be invoked and this will build the client for the first time and should result in HMR being enabled for the client. (This process can take upwards of two minutes the first time you do it, so please be patient)
   *PLEASE NOTE*: Using this option does not have a watch on the server files or use nodemon so changes to the server will involve restarting and rebuilding. It might be possible to start the server with nodemon and have changes update automatically but this is not currently included.
 
@@ -60,16 +59,18 @@ A script in the repo root called `./run.sh` has been created to help with all of
 
   To rebuild the app when running with `./run.sh run` do the following
 - rebuild the image by doing `docker image rm webclient` and then re-execute `./run.sh build`.
+
 #### Option Two [Deprecated]
 * `./run.sh build` will build a Docker image using the checked out files to run the Webclient service.
-* `./run.sh dev --docker` will run the image in a Docker container, but bind mounts in your local repo over the top. You can use this to develop code without installing npm or node etc. It will be a little slower than native development.
+* `./run.sh dev --docker` will run the image in a Docker container, but bind mounts in your local repo over the top. You can use this to develop code without installing Yarn or node etc. It will be a little slower than native development.
 
-When running with `./run.sh dev --docker` the app will rebuild by itself thanks to `npm run watch`.
+When running with `./run.sh dev --docker` the app will rebuild by itself thanks to `yarn watch`.
+
 #### Option Three [Deprecated]
-* `./run.sh dev --host` will build and run the service on the host. This will require node installed. This command has npm script command if you are in the `src/` folder and you can use `npm run dev`.
+* `./run.sh dev --host` will build and run the service on the host. This will require node installed. This command has a Yarn command if you are in the `src/` folder - you can use `yarn dev`.
 
-**If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `npm rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**
-**Alternatively just rm your node_modules folder, `dev --docker` will reinstall for you. With `dev --host` you'll have to run `npm install` yourself**
+**If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `yarn rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**
+**Alternatively just rm your node_modules folder, `dev --docker` will reinstall for you. With `dev --host` you'll have to run `yarn install` yourself**
 
 All files that this script uses can be found under the folder `dev-env`.
 
@@ -220,78 +221,27 @@ Routing is handled by the old-stack [Gousto2-Frontend](https://github.com/Gousto
 
 See the [G2FE readme](https://github.com/Gousto/Gousto2-FrontEnd) for how to add a new route to the frontend.
 
-## Testing
-### Running unit tests
-
-```shell
-cd ~/code/goustowebclient/src
-npm run test:jest
-```
-
-Additional commands:
-- Run on one file: `npm run test:jest:one <filename>`
-- Run a watcher on one file: `npm run test:jest:one:watch <filename>`
-- Run a watcher on all files: `npm run  test:jest:watch`
-
-Note:
-You may need to get the latest version of watchman to run Jest's watch mode.
-```shell
-brew install watchman
-```
-
-### Running regression tests
-The regression tests have their own `package.json` which can be found under `tests/regression`. All commands assume you are within that directory and have already started the server locally with `npm run dev` command in `src` folder.
-
-```shell
-npm install
-```
-
-#### Running them in the CLI
-For mobile
-```shell
-npm run test:mobile
-```
-
-For web
-```shell
-npm run test:web
-```
-
-#### Running them through the Cypress UI
-For mobile
-```shell
-npm run test:debug:mobile
-```
-
-For web
-```shell
-npm run test:debug:web
-```
+## Testing - advanced
 
 #### Running regression tests against a deployed environment
 Prepend any of the run commands above setting the environment variable `CYPRESS_baseUrl` to test a deployed version of the webclient
 _Please note - if the environment that you wish to test requires VPN access, you will also need to be on the VPN_
 
 ```shell
-CYPRESS_baseUrl=https://rockets-www.gousto.info npm run test:debug:web
+CYPRESS_baseUrl=https://rockets-www.gousto.info yarn test:debug:web
 ```
 
 All data should be mocked. Cypress has been configured to return a 404 for any real api calls.
 
 ### Running end-to-end tests
-2. Nightwatch/Chromedriver:
-```shell
-cd /tests/e2e
-npm ci
-```
 
-#### Local environment (for your local machine, even if you point to Staging)
 First, have the application running and pointing to Staging
 
 Then run the e2e tests:
+
 ```shell
-cd ~/code/goustowebclient/tests/e2e
-npm test
+cd tests/e2e
+yarn test
 ```
 
 #### Staging environment
@@ -299,22 +249,23 @@ npm test
 cd ../tests/e2e
 
 # Start chromedriver
-npm run chromedriver:start
+yarn chromedriver:start
 
 # Separate terminal window
-npm run test:staging
+yarn test:staging
 ```
 
 To run a specific tag (look at the end of the test files for the tags) use:
-`npm run test -- --tag gousto`
+`yarn test -- --tag gousto`
 
 ## [Code editor setup](#code-editor-setup)
-Please install [EditorConfig](https://editorconfig.org/) for your text editor or IDE, it basically support most if not all commonly used editors (Sublime Text, VS Code, Vim, Brackets, Atom, all JetBrains products and etc). The purpose of this plugin is to ensure that everyone pushes code with the same code indentation, spacing and some other less common known configs such as ensure all file to have a final new line. It is super simple to use, just install the plugin then you won't need to do anything else. The plugin will automatically apply indentation rules from the .editorconfig file in the root of the repo.
 
-Why is this important? Imagine two developer working on the same file, one person has tab indentation with size of 4, and the other has space indentation with size of 2. Even if they change nothing in the shared file, just by running commands such as `format document` git will pick it up as all lines changed. This makes tracking and tracing changes very difficult (not mentioning how eye strain it is when it comes to code review).
+Please install [EditorConfig](https://editorconfig.org/) for your text editor or IDE, it basically supports most if not all commonly used editors (Sublime Text, VS Code, Vim, Brackets, Atom, all JetBrains products and etc). The purpose of this plugin is to ensure that everyone pushes code with the same code indentation, spacing and some other less common known configs such as ensure all file to have a final new line. It is super simple to use, just install the plugin then you won't need to do anything else. The plugin will automatically apply indentation rules from the .editorconfig file in the root of the repo.
+
+Why is this important? Imagine two developers working on the same file, one person has tab indentation with size of 4, and the other has space indentation with size of 2. Even if they change nothing in the shared file, just by running commands such as `format document` git will pick it up as all lines changed. This makes tracking and tracing changes very difficult (not mentioning how eye strain it is when it comes to code review).
 
 ### Use of Prettier
-This project is in the process of gradual migration to Prettier.  As such, only the files whitelisted under `src/.prettierignore` should be formatted with prettier.
+This project is in the process of gradual migration to Prettier. As such, only the files whitelisted under `src/.prettierignore` should be formatted with prettier.
 
 This means that generally, you shouldn't configure your IDE to format every file on save: instead it should respect the `.prettierignore` file if it's possible.  Sorry for the inconvenience.
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-npm run test:jest:ci:coverage
+yarn test:jest:ci:coverage
 
 ./scripts/run-eslint-ci.sh
 

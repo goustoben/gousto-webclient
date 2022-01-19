@@ -25,19 +25,18 @@ $ cd gousto-webclient/src
 # 3. Add a development-local.json5 config file and setup your hosts file
 # See Pre-requisites below
 
-# 4. install node_modules
-$ npm i
+# 4. Install all dependencies
+$ yarn install
 
-# 5. start the app in development mode
-# For hot module reload see [Detailed guide](./detailed-setup.md) to setup.
-$ npm run build:client
-$ npm run dev
-
+# 5. Start the main webclient in development mode
+# For hot module reload see [Detailed guide](./docs/detailed-setup.md) to setup.
+$ yarn build:client
+$ yarn dev
 ```
 
 ## Pre-requisites
-<!-- (TODO: Add a script to automate these steps behind npm run init --local) -->
-<!--This should be covered by running `npm run init --local` but in the event it's not working ...-->
+
+* You'll need to have Yarn installed - if you install Yarn 1 (`npm install yarn -g`), it will bootstrap Yarn 3 from `.yarn/releases/yarn-3.1.1.cjs`
 * You'll need to have a `development-local.json5` config file for everything to run correctly [Follow this guide](./docs/detailed-setup.md#step-1-add-a-secrets-file-to-point-to-the-staging-environment)
 * You will have to run the site on `frontend.gousto.local` you can do this by [Setting up your local hosts file to run webclient](./docs/detailed-setup.md#step-2-add-an-entry-to-your-local-host-file)
 * You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See  [Node version management](./docs/detailed-setup.md#node-version-management) for further details.
@@ -47,42 +46,41 @@ $ npm run dev
 ## Tests
 
 ### Unit tests
+
 ```bash
 # run unit tests
 $ cd src
-$ npm run test:jest
+$ yarn run test:jest
 
-# watch an unit tests
-$ npm run test:jest:watch ./path/to/file.js
+# watch all unit tests
+$ yarn run test:jest:watch
+
+# watch one unit test
+$ yarn run test:jest:watch ./path/to/file.test.js
 ```
 
-### Cypress tests
+### Cypress (regression) tests
 
 ```bash
 
-# 1. build and run the website (server and client)
+# 1. Build and run the webapp (server and client)
 $ cd src
-$ npm run dev
+$ yarn dev
 
-# 2. in a new terminal window run Cypress tests
-$ cd test/regression
+# 2. In a new terminal window open Cypress tests
+$ cd ../tests/regression
 
-# 3. install the dependencies for the Cypress tests if you need to
-$ npm i
-
-# 4a. then run the tests
+# 3. Run the tests in the command line
 # Desktop
-$ npm run test:web
+$ yarn test:web
 #Mobile
-$ npm run test:mobile
+$ yarn test:mobile
 
-# 4b. OR run the tests in the Cypress test runner
+# 4. Problems? Debug by running the tests in the Cypress test runner
 # Desktop
-$ npm run test:debug:web
-#Mobile
-$ npm run test:debug:mobile
-
-
+$ yarn test:debug:web
+# Mobile
+$ yarn test:debug:mobile
 ```
 
 ## Detailed setup
@@ -104,10 +102,10 @@ Then in `src` run:
 
 ### Webpack bundle analyzer
 
-In top `src`, invoke `GW_ENABLE_BUNDLE_ANALYZER=1 npm run build`. It will
+In top `src`, invoke `GW_ENABLE_BUNDLE_ANALYZER=1 yarn build`. It will
 generate a file `src/public/stats.json`.
 
-Invoke `npm run bundle-analyzer`. It will open a browser window at
+Invoke `yarn bundle-analyzer`. It will open a browser window at
 http://127.0.0.1:8888 with the size stats for each bundle and its dependencies.
 
 ## Axe - accessibility testing engine

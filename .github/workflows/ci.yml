@@ -33,20 +33,20 @@ jobs:
         path: |
           **/node_modules
           **/src/libs
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/bower.json') }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
-      run: npm ci
+      run: yarn install --immutable
       working-directory: src
     - name: Run tests
-      run: npm run test:jest:ci:coverage
+      run: yarn run test:jest:ci:coverage
       working-directory: src
     - name: Typecheck tests
-      run: npm run typecheck:tests
+      run: yarn run typecheck:tests
       working-directory: src
     - name: Lint
       run: ./scripts/run-eslint-ci.sh

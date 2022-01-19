@@ -10,9 +10,9 @@
     "*.scss"
   ],
   "scripts": {
-    "dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build:server && npm run start",
-    "postinstall": "npm --prefix ../emulation-server install && bower install --force --allow-root",
-    "start": "./scripts/fork.sh 'NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run server' 'npm --prefix ../emulation-server run dev:proxy-staging'",
+    "dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn build:server && yarn start",
+    "bower-install": "bower install --force --allow-root",
+    "start": "./scripts/fork.sh 'NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn server' 'yarn workspace webclient-emulation-server dev:proxy-staging'",
     "server": "node dist/server.js",
     "start:with-static": "withStatic=true npm run start",
     "start:dev:inspect": "nodemon --inspect=0.0.0.0 dist/server.js",

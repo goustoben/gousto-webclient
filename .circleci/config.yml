@@ -70,6 +70,10 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
+            - mnt/ramdisk/package.json
+            - mnt/ramdisk/yarn.lock
+            - mnt/ramdisk/.yarn
+            - mnt/ramdisk/.yarnrc.yml
             - mnt/ramdisk/src
             - mnt/ramdisk/tests
             - mnt/ramdisk/regression
@@ -83,7 +87,7 @@ jobs:
             - mnt/ramdisk/emulation-server
             - root/.circlerc
 
-  install-src-dependencies:
+  install-dependencies:
     docker: *circleci_node_image
     resource_class: medium
     working_directory: /mnt/ramdisk
@@ -96,14 +100,19 @@ jobs:
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
       - run:
           name: Install dependencies
-          working_directory: src
-          command: |
-            npm ci
-            npm run postinstall
+          command: yarn install --immutable
       - persist_to_workspace:
           root: /
           paths:
+            - mnt/ramdisk/node_modules # Also contains .yarn-state.yml
+            # Workspace node_modules
             - mnt/ramdisk/src
+            - mnt/ramdisk/emulation-server
+            - mnt/ramdisk/tests
+            # Regression test Cypress binary
+            - root/.cache/Cypress
+            # Yarn install-state.gz
+            - mnt/ramdisk/.yarn
 
   jest-coverage-report:
     docker: *circleci_node_image
@@ -117,11 +126,11 @@ jobs:
       - run:
           name: Test coverage
           working_directory: src
-          command: npm run test:jest:ci:coverage
+          command: yarn test:jest:ci:coverage
       - run:
          name: typecheck tests
          working_directory: src
-         command: npm run typecheck:tests
+         command: yarn typecheck:tests
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -178,6 +187,7 @@ jobs:
       - run:
           name: Build webclient
           working_directory: src
+          # Use NPM for now to inject setup-common npm config vars; BODA should supercede this
           command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
       - persist_to_workspace:
           root: /
@@ -193,7 +203,7 @@ jobs:
       - run:
           name: Upload sourcemaps to datadog
           working_directory: src
-          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${CIRCLE_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto.info/build/latest/" npm run datadog:upload-sourcemaps
+          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${CIRCLE_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto.info/build/latest/" yarn datadog:upload-sourcemaps
 
   upload-assets-to-s3:
     docker: *gousto_platform_image
@@ -252,17 +262,13 @@ jobs:
           aws-secret-access-key: AWS_ERC_SECRET_KEY
           aws-region: AWS_DEFAULT_REGION
       - run:
-          name: Install E2E test dependencies
-          working_directory: tests/e2e
-          command: npm install --only=prod
-      - run:
           name: Lease CI node access to public ALB
           working_directory: scripts
           command: source ~/.circlerc && ./lease-access.sh
       - run:
           name: Run E2E tests
           working_directory: tests/e2e
-          command: chromedriver start & npm run test:staging
+          command: chromedriver start & yarn test:staging
       - store_test_results:
           path: tests/e2e/reports
       - store_artifacts:
@@ -301,19 +307,19 @@ jobs:
       - run:
           name: Build local application
           working_directory: src
-          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build
+          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn build
       - run:
           name: Update local DNS configuration
           command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
       - run:
           name: Start local application
           working_directory: src
-          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run server
+          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn server
           background: true
       - run:
           name: Start emulation server
           working_directory: emulation-server
-          command: npm start
+          command: yarn start
           background: true
       - run:
           name: Wait for emulation server to be ready
@@ -353,7 +359,7 @@ jobs:
           name: Create reports
           when: on_fail
           working_directory: << parameters.test_directory >>
-          command: npm run report
+          command: yarn report
       - store_test_results:
           path: /mnt/ramdisk/tests/regression/test_results/cypress
       - store_artifacts:
@@ -411,23 +417,6 @@ jobs:
                     --environment "${ENVIRONMENT}" \
                     --broker-base-url "${TEST_PACT_BROKER_BASE_URL}"
 
-  install-regression-test-dependencies:
-    docker: *circleci_node_image
-    resource_class: medium
-    working_directory: /mnt/ramdisk
-    steps:
-      - attach_workspace:
-          at: /
-      - run:
-          name: Install regression test dependencies
-          working_directory: tests/regression
-          command: npm ci
-      - persist_to_workspace:
-          root: /
-          paths:
-            - mnt/ramdisk/tests/regression/node_modules
-            - root/.cache/Cypress
-
   publish-wip-pacts:
     docker: *gousto_platform_image
     resource_class: large
@@ -436,14 +425,11 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          working_directory: src
-          command: |
-            npm ci
-            npm run postinstall
+          command: npm install -g yarn && yarn install --immutable
       - run:
           name: Run Gousto service adapter tests
           working_directory: src
-          command: npm run test:gousto-adapters
+          command: yarn test:gousto-adapters
       - run:
           name: Publish pact files
           command: |
@@ -479,7 +465,7 @@ jobs:
           at: /
       - run:
           name: Run Gousto service adapter tests
-          command: npm run test:gousto-adapters
+          command: yarn test:gousto-adapters
       - persist_to_workspace:
           root: /
           paths:
@@ -493,19 +479,16 @@ jobs:
       - attach_workspace:
           at: /
       - run:
-          name: Install emulation server dependencies
-          command: npm ci
-      - run:
           name: Start emulation server
           background: true
-          command: npm start
+          command: yarn start
       - run:
           name: Wait for emulation server to be ready
           working_directory: /mnt/ramdisk/scripts
           command: ./waitForHttpPath.sh 3000 /_config/state 10
       - run:
           name: Verify emulation server satisfies Pact file expectations
-          command: npm test
+          command: yarn test
       - persist_to_workspace:
           root: /
           paths:
@@ -550,7 +533,7 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-      - install-src-dependencies:
+      - install-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
@@ -561,7 +544,7 @@ workflows:
       - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-src-dependencies
+            - install-dependencies
           filters:
             branches:
               only:
@@ -601,7 +584,7 @@ workflows:
             branches:
               only:
                 - develop
-      - install-src-dependencies:
+      - install-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
@@ -612,7 +595,7 @@ workflows:
       - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-src-dependencies
+            - install-dependencies
           filters:
             branches:
               only:
@@ -628,7 +611,7 @@ workflows:
       - jest-coverage-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-src-dependencies
+            - install-dependencies
           filters:
             branches:
               only:
@@ -636,7 +619,7 @@ workflows:
       - test-integration-adapters:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-src-dependencies
+            - install-dependencies
           filters:
             branches:
               only:
@@ -660,15 +643,7 @@ workflows:
       - eslint-generate-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-src-dependencies
-          filters:
-            branches:
-              only:
-                - develop
-      - install-regression-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
+            - install-dependencies
           filters:
             branches:
               only:
@@ -678,8 +653,7 @@ workflows:
           platform: web
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-src-dependencies
-            - install-regression-test-dependencies
+            - install-dependencies
             - verify-emulation-server
           filters:
             branches:
@@ -690,8 +664,7 @@ workflows:
           platform: mobile
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-src-dependencies
-            - install-regression-test-dependencies
+            - install-dependencies
             - verify-emulation-server
           filters:
             branches:
@@ -746,7 +719,7 @@ workflows:
             branches:
               only:
                 - master
-      - install-src-dependencies:
+      - install-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
@@ -758,7 +731,7 @@ workflows:
           name: generate-pacts
           context: gousto-prod-aws-app-circleci
           requires:
-            - install-src-dependencies
+            - install-dependencies
           filters:
             branches:
               only:
@@ -774,7 +747,7 @@ workflows:
       - build-webclient:
           context: gousto-prod-aws-app-circleci
           requires:
-            - install-src-dependencies
+            - install-dependencies
           filters:
             branches:
               only:
