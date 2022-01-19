@@ -47,7 +47,7 @@ describe('<Detail />', () => {
       stock={100}
       inBasket={false}
       description="Recipe description"
-      closeRecipeDetails={() => {}}
+      onClose={() => {}}
     />
   )
 
@@ -113,12 +113,12 @@ describe('<Detail />', () => {
     })
   })
 
-  test('should render an overlay which calls the closeRecipeDetails function prop on click', () => {
-    const closeRecipeDetails = jest.fn()
-    wrapper.setProps({ closeRecipeDetails })
+  test('should render an overlay which calls the onClose function prop on click', () => {
+    const onClose = jest.fn()
+    wrapper.setProps({ onClose })
     wrapper.find('.modalContainer').simulate('click')
 
-    expect(closeRecipeDetails).toHaveBeenCalledTimes(1)
+    expect(onClose).toHaveBeenCalledTimes(1)
   })
 
   test('should contain one recipe disclaimer ', () => {

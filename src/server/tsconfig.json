@@ -2,8 +2,13 @@
   "extends": "../tsconfig.json",
   "outDir": "../lib/server",
   "compilerOptions": {
-    "lib": ["ES2015", "ES2015.Promise"],
     "downlevelIteration": true
+    // We use `require('routes')` in the server code (`processRequest.js:10`) which uses has methods
+    // that use the DOM (`document`). This means we extend the tsconfig with `lib` have `dom` to support
+    // these files that are imports.
+    // TODO: We should separate the methods that require the DOM from the method we are importing so that
+    // we can change our type definitions for `lib`.
+    // "lib": ["ES2015", "ES2015.Promise"],
   },
   "exclude": [
     "./config",

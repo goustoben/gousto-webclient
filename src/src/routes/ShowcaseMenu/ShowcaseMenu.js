@@ -5,7 +5,7 @@ import { SignupLayout } from 'layouts/SignupLayout'
 import { HotjarTrigger } from 'HotjarTrigger'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { DiscountAppliedBarContainer } from 'routes/Signup/Components/DiscountAppliedBar/DiscountAppliedBarContainer'
-import { DetailOverlayContainer } from 'routes/Menu/DetailOverlay'
+import { DetailOverlay } from 'routes/Menu/DetailOverlay'
 import {
   collectionDescriptorsInLinesPropType,
   collectionDescriptorsLinePropType,
@@ -54,7 +54,7 @@ export const ShowcaseMenu = ({
         <InformationBox />
         <CTASection onClick={proceed} />
         <PriceExplanationSection />
-        <DetailOverlayContainer showOverlay isFromShowcaseMenu />
+        <DetailOverlay showOverlay isFromShowcaseMenu />
       </div>
     </SignupLayout>
   )

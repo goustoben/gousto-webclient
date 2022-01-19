@@ -27,7 +27,7 @@ import { RecipeAlternativeOptions } from '../VariantRecipeList'
 export const Detail = (props) => {
   const {
     id, chosenSideRecipeId,
-    closeRecipeDetails,
+    onClose,
     media, title,
     view, count, average,
     description, youWillNeed,
@@ -61,8 +61,8 @@ export const Detail = (props) => {
       className={css.modalContainer}
       role="button"
       tabIndex={0}
-      onKeyPress={closeRecipeDetails}
-      onClick={closeRecipeDetails}
+      onKeyPress={onClose}
+      onClick={onClose}
       data-testing="menuRecipeDetailsClose"
     >
       <div role="button" tabIndex={0} className={css.container} onKeyPress={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
@@ -74,8 +74,8 @@ export const Detail = (props) => {
                 className={css.closeIcon}
                 role="button"
                 tabIndex={0}
-                onKeyPress={closeRecipeDetails}
-                onClick={closeRecipeDetails}
+                onKeyPress={onClose}
+                onClick={onClose}
                 data-testing="menuRecipeDetailsClose"
               />
             </div>
@@ -170,7 +170,7 @@ Detail.propTypes = {
   description: PropTypes.string.isRequired,
   youWillNeed: PropTypes.instanceOf(Immutable.List).isRequired,
   equipment: PropTypes.instanceOf(Immutable.List).isRequired,
-  closeRecipeDetails: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   position: PropTypes.number,
   isChefPrepared: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool,
