@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux'
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
 
 import { RecipeList } from './RecipeList'
-import { useCollections } from '../domains/collections/useCollections'
+import { useCurrentCollectionId } from '../domains/collections'
 import { useMenu } from '../domains/menu'
 
 const RecipeListWrapper = (ownProps) => {
   const dispatch = useDispatch()
-  const { currentCollectionId } = useCollections()
+  const currentCollectionId = useCurrentCollectionId()
   const { getRecipesForCollectionId } = useMenu()
   const { recipes } = getRecipesForCollectionId(currentCollectionId)
 
