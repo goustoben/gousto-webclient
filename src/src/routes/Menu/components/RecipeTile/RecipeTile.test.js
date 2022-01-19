@@ -18,7 +18,7 @@ jest.mock('react-redux', () => ({
 
 jest.mock('../../domains/collections', () => ({
   ...jest.requireActual('../../domains/collections'),
-  useCollections: jest.fn().mockImplementation(() => ({ currentCollectionId: 'foo' }))
+  useCurrentCollectionId: jest.fn().mockImplementation(() => 'foo' )
 }))
 
 jest.mock('routes/Menu/domains/menu/internal/useAlternativeOptions', () => ({

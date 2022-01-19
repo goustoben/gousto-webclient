@@ -61,3 +61,9 @@ export const useCurrentCollection = (): MenuCollection | null => {
 
   return null
 }
+
+export const useCurrentCollectionId = () => {
+  const currentCollection = useCurrentCollection()
+
+  return currentCollection ? currentCollection.get('id') : null
+}
