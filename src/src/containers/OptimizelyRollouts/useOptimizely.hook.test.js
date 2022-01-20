@@ -17,6 +17,12 @@ jest.mock('react-redux', () => ({
 }))
 jest.mock('utils/cookieHelper2')
 jest.mock('./trackExperimentInSnowplow')
+jest.mock('config/globals', () => ({
+  __esModule: true,
+  default: {
+    client: true,
+  }
+}))
 
 describe('useOptimizely', () => {
   let state = {}
@@ -161,7 +167,11 @@ describe('useOptimizely', () => {
       jest.clearAllMocks()
     })
 
-    describe('when user and session are not present', () => {
+    describe('when user and snowplow user id are not present', () => {
+      beforeEach(() => {
+        window.Snowplow = null
+      })
+
       it('should return null', async () => {
         const { result } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
 
@@ -222,7 +232,7 @@ describe('useOptimizely', () => {
 
             await waitForNextUpdate()
 
-            expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', false, 'user_id', undefined])
+            expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', false, 'user_id', undefined, 'user_id'])
           })
         })
 
@@ -247,7 +257,7 @@ describe('useOptimizely', () => {
 
             await waitForNextUpdate()
 
-            expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, 'user_id', undefined])
+            expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, 'user_id', undefined, 'user_id'])
           })
         })
 
@@ -277,17 +287,26 @@ describe('useOptimizely', () => {
 
               await waitForNextUpdate()
 
-              expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, 'user_id', 'session_id'])
+              expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, 'user_id', 'session_id', 'user_id'])
             })
           })
         })
       })
     })
 
-    describe('when client has a valid session id and loaded optimizely', () => {
+    describe('when client has a valid snowplow id and loaded optimizely', () => {
       beforeEach(() => {
         goustoSessionId = 'session_id'
         hasValidInstanceSpy.mockReturnValue(true)
+        window.Snowplow = {
+          getTrackerCf() {
+            return {
+              getDomainUserId() {
+                return 'snowplowUserId'
+              }
+            }
+          }
+        }
       })
 
       describe('when client has a valid overwrite cookie', () => {
@@ -358,7 +377,7 @@ describe('useOptimizely', () => {
           const isEnabled = result.current
 
           expect(isEnabled).toBe(false)
-          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'session_id')
+          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
         })
 
         it('should track experiment in snowplow', async () => {
@@ -366,7 +385,7 @@ describe('useOptimizely', () => {
 
           await waitForNextUpdate()
 
-          expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', false, '', 'session_id'])
+          expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', false, '', 'session_id', 'snowplowUserId'])
         })
       })
 
@@ -381,7 +400,7 @@ describe('useOptimizely', () => {
           const isEnabled = result.current
 
           expect(isEnabled).toBe(true)
-          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'session_id')
+          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
         })
 
         it('should track experiment in snowplow', async () => {
@@ -389,7 +408,7 @@ describe('useOptimizely', () => {
 
           await waitForNextUpdate()
 
-          expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, '', 'session_id'])
+          expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, '', 'session_id', 'snowplowUserId'])
         })
       })
     })

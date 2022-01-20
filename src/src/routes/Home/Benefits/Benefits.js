@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { useIsOptimizelyFeatureEnabled, OptimizelyFeature } from 'containers/OptimizelyRollouts'
 import css from './Benefits.css'
 
 const allBenefits = [
@@ -23,6 +24,10 @@ const allBenefits = [
 export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody }) => {
   const benefits = allBenefits.filter((benefit) => benefit.id === byId)
 
+  const isTestAllocationHookEnabled = useIsOptimizelyFeatureEnabled(
+    'beetroots_test_allocation_hook_web'
+  )
+
   return (
     <div
       className={classNames(css.container, {
@@ -42,6 +47,19 @@ export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody }) => {
           </div>
         ))}
       </div>
+      <div
+        className={css.isHidden}
+        data-testing={`beetroots_test_allocation_hook_web=${isTestAllocationHookEnabled}`}
+      />
+      <OptimizelyFeature name="beetroots_test_allocation_container_web" enabled>
+        <div className={css.isHidden} data-testing="beetroots_test_allocation_container_web=true" />
+      </OptimizelyFeature>
+      <OptimizelyFeature name="beetroots_test_allocation_container_web" enabled={false}>
+        <div
+          className={css.isHidden}
+          data-testing="beetroots_test_allocation_container_web=false"
+        />
+      </OptimizelyFeature>
     </div>
   )
 }

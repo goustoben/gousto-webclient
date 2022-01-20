@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { homeGetStarted, applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
@@ -22,7 +23,9 @@ jest.mock('utils/home', () => ({
 }))
 
 describe('home actions', () => {
-  const getState = jest.fn()
+  const getState = jest.fn(() => ({
+    auth: Immutable.fromJS({}),
+  }))
   const dispatchSpy = jest.fn()
   const CTA_URI = '/ctaTest'
   const promoCode = 'DTI-test-home-actions'
