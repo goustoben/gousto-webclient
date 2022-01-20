@@ -1,0 +1,4 @@
+{
+  "main.js": "main.bundle.js",
+  "performanceTracker.js": "performanceTracker.bundle.js"
+}
