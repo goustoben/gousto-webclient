@@ -9,6 +9,7 @@ import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { useStock } from 'routes/Menu/domains/menu'
+import { useAllCollections } from '../../domains/collections'
 import Carousel from './Carousel'
 
 import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
@@ -38,15 +39,17 @@ export const Detail = (props) => {
     isFromShowcaseMenu
   } = props
 
-  const currentCollectionId = useSelector(getMenuCategoryIdForDetails)
   const { isRecipeOutOfStock } = useStock()
+  const allCollections = useAllCollections()
 
-  if (! currentCollectionId) {
-    return null
+  let currentCollectionId = useSelector(getMenuCategoryIdForDetails)
+  if (!currentCollectionId) {
+    currentCollectionId = Object.values(allCollections.toJSON())
+      .filter((c) => !!c)
+      .find((collectionObj) => collectionObj.recipesInCollection?.indexOf(id) > -1).id
   }
 
   const isOutOfStock = isRecipeOutOfStock(id)
-
   const recipeLegalDetailId = chosenSideRecipeId || id
   const titleClass = classnames(
     titleCss.containerLG,
