@@ -59,3 +59,7 @@
 .truckIcon {
   background-image: url('media/svgs/icon-truck-right.svg');
 }
+
+.isHidden {
+  display: none;
+}

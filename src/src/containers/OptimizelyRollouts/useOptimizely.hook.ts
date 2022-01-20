@@ -5,6 +5,7 @@ import { get } from 'utils/cookieHelper2'
 import { useLocalStorage } from 'usehooks-ts/dist/useLocalStorage'
 import useMountedState from 'react-use/lib/useMountedState'
 import { getAuthUserId } from 'selectors/auth'
+import { getUserIdForOptimizely } from './optimizelyUtils'
 import { locationQuery } from 'selectors/routing'
 import { getOptimizelyInstance, hasValidInstance, timeout } from './optimizelySDK'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
@@ -93,7 +94,7 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
   const userId = useSelector(getAuthUserId)
   const getIsMounted = useMountedState()
   const sessionId = getSessionId()
-  const userIdForOptimizely = userId || sessionId
+  const userIdForOptimizely = getUserIdForOptimizely(userId)
   const [hasOverride, valueOfOverride] = useGetOptimizelyOverride(name)
 
   useEffect(() => {
@@ -145,7 +146,7 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
 
         const featureValue = optimizelyInstance.isFeatureEnabled(name, userIdForOptimizely)
 
-        dispatch(trackExperimentInSnowplow(name, featureValue, userId, sessionId))
+        dispatch(trackExperimentInSnowplow(name, featureValue, userId, sessionId, userIdForOptimizely))
         setEnabled(featureValue)
       })
     })

@@ -1,17 +1,44 @@
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { getAuthUserId } from 'selectors/auth'
+import globalsConfig from 'config/globals'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 import { getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
 
-export const isOptimizelyFeatureEnabledFactory = (featureName) =>
+export const getSnowplowDomainUserId = () => {
+  if (!globalsConfig.client) {
+    return null
+  }
+  if (!window.Snowplow) {
+    return null
+  }
+
+  // Corresponds to 'cf' defined in the Snowplow tag in GTM.
+  // https://tagmanager.google.com/#/container/accounts/13119862/containers/669372/workspaces/1000271/tags
+  const tracker = window.Snowplow.getTrackerCf()
+  if (!tracker) {
+    return null
+  }
+
+  const result = tracker.getDomainUserId()
+
+  return result
+}
+
+export const getUserIdForOptimizely = (userId) => {
+  const userIdForOptimizely = userId || getSnowplowDomainUserId()
+
+  return userIdForOptimizely
+}
+
+export const isOptimizelyFeatureEnabledFactory = (name) =>
   async (dispatch, getState) => {
     const withVersionPrefixAsFalse = false
-    const authUserId = getAuthUserId(getState())
+    const userId = getAuthUserId(getState())
     const sessionId = get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
-    const userId = authUserId || sessionId
+    const userIdForOptimizely = getUserIdForOptimizely(userId)
 
-    if (!userId) {
+    if (!userIdForOptimizely) {
       return false
     }
 
@@ -21,9 +48,9 @@ export const isOptimizelyFeatureEnabledFactory = (featureName) =>
       return false
     }
 
-    const isEnabled = optimizelyInstance.isFeatureEnabled(featureName, userId)
+    const featureValue = optimizelyInstance.isFeatureEnabled(name, userIdForOptimizely)
 
-    dispatch(trackExperimentInSnowplow(featureName, isEnabled, authUserId, sessionId))
+    dispatch(trackExperimentInSnowplow(name, featureValue, userId, sessionId, userIdForOptimizely))
 
-    return isEnabled
+    return featureValue
   }

@@ -44,7 +44,7 @@ describe('trackExperimentInSnowplow', () => {
       })
 
       test('should call snowplow only once', () => {
-        expect(dispatch).toHaveBeenCalledTimes(2)
+        expect(dispatch).toHaveBeenCalledTimes(1)
       })
     })
 

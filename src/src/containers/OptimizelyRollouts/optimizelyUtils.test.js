@@ -7,6 +7,13 @@ import {
 import * as snowplow from './trackExperimentInSnowplow'
 import * as optimizelySdk from './optimizelySDK'
 
+jest.mock('config/globals', () => ({
+  __esModule: true,
+  default: {
+    client: true,
+  }
+}))
+
 describe('isOptimizelyFeatureEnabledFactory', () => {
   let cookieGetSpy
   let hasValidInstanceSpy
@@ -29,10 +36,12 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
     jest.clearAllMocks()
   })
 
-  describe('when user and session are not present', () => {
+  describe('when user and snowplow user id are not present', () => {
     it('should return false', async () => {
       getState.mockReturnValue(({ auth: Map({}) }))
       cookieGetSpy.mockReturnValue(undefined)
+
+      window.Snowplow = null
 
       const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
@@ -48,6 +57,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
     beforeEach(() => {
       getState.mockReturnValue({ auth: Map({ id: 'user_id' }) })
       cookieGetSpy.mockReturnValue(undefined)
+      window.Snowplow = null
     })
 
     describe('when optimizely does not load successfully', () => {
@@ -76,7 +86,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
           const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
           expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'user_id')
-          expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', false, 'user_id', undefined)
+          expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', false, 'user_id', undefined, 'user_id')
           expect(isEnabled).toBe(false)
         })
       })
@@ -88,7 +98,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
           const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
           expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'user_id')
-          expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, 'user_id', undefined)
+          expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, 'user_id', undefined, 'user_id')
           expect(isEnabled).toBe(true)
         })
       })
@@ -102,7 +112,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
             const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
             expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'user_id')
-            expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, 'user_id', 'session_id')
+            expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, 'user_id', 'session_id', 'user_id')
             expect(isEnabled).toBe(true)
           })
         })
@@ -110,11 +120,21 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
     })
   })
 
-  describe('when client has a valid session id and loaded optimizely', () => {
+  describe('when client has a valid snowplow user id and loaded optimizely', () => {
     beforeEach(() => {
       getState.mockReturnValue(({ auth: Map({}) }))
       cookieGetSpy.mockReturnValue('session_id')
       hasValidInstanceSpy.mockReturnValue(true)
+
+      window.Snowplow = {
+        getTrackerCf() {
+          return {
+            getDomainUserId() {
+              return 'snowplowUserId'
+            }
+          }
+        }
+      }
     })
 
     describe('when the feature is not enabled', () => {
@@ -123,8 +143,8 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
 
         const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
-        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'session_id')
-        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', false, undefined, 'session_id')
+        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
+        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', false, undefined, 'session_id', 'snowplowUserId')
         expect(isEnabled).toBe(false)
       })
     })
@@ -135,8 +155,8 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
 
         const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
-        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'session_id')
-        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, undefined, 'session_id')
+        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
+        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, undefined, 'session_id', 'snowplowUserId')
         expect(isEnabled).toBe(true)
       })
     })

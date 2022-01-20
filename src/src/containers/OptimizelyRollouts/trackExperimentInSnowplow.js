@@ -1,4 +1,3 @@
-import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { optimizelyRolloutsExperiment } from '../../actions/trackingKeys'
 
 const experimentsConfig = {
@@ -32,6 +31,24 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
+  beetroots_test_allocation_hook_web: {
+    id: 'beetroots_test_allocation_hook_web',
+    name: 'Beetroots - Optimizely Rollouts allocation, hook mechanism',
+    variationName: 'Variation',
+    defaultName: 'Control',
+  },
+  beetroots_test_allocation_container_web: {
+    id: 'beetroots_test_allocation_container_web',
+    name: 'Beetroots - Optimizely Rollouts allocation, container mechanism',
+    variationName: 'Variation',
+    defaultName: 'Control',
+  },
+  beetroots_test_allocation_factory_web: {
+    id: 'beetroots_test_allocation_factory_web',
+    name: 'Beetroots - Optimizely Rollouts allocation, factory mechanism',
+    variationName: 'Variation',
+    defaultName: 'Control',
+  },
 }
 
 // When several different places in the app work off the same feature flag,
@@ -41,7 +58,7 @@ const sentCache = new Map()
 const createKey = (featureName, authUserId, sessionId) =>
   [featureName, authUserId, sessionId].join(':')
 
-export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId) => (dispatch) => {
+export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId, userIdForOptimizely) => (dispatch) => {
   const experimentData = experimentsConfig[featureName]
   if (experimentData) {
     const key = createKey(featureName, authUserId, sessionId)
@@ -60,13 +77,9 @@ export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnable
         : experimentData.defaultName,
       user_logged_in: Boolean(authUserId),
       session_id: sessionId,
+      user_id_for_optimizely: userIdForOptimizely,
     }
 
-    dispatch(
-      feLoggingLogEvent(logLevels.info, 'track Optimizely Rollouts experiment', {
-        trackingData
-      })
-    )
     dispatch({
       type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
       trackingData,
