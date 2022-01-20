@@ -6,3 +6,6 @@
 
 # [TG-3453] reformat routes/Checkout with prettier (#3375)
 8cb265f172880f9b4c961d38fc2879ce47854f20
+
+# [FEF-288] Move src into src/apps/webclient (#4582)
+0bad1f061284ec4bfd07d6eb6d0a0c0fd9993199

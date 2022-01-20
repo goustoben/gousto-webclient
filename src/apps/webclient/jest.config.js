@@ -10,7 +10,7 @@ module.exports = {
     '**/?(*.)(test).(j|t)s?(x)'
   ],
   moduleNameMapper: {
-    'fixtures/(.*)$': '<rootDir>/../tests/regression/fixtures/$1',
+    'fixtures/(.*)$': '<rootDir>/../../../tests/regression/fixtures/$1',
     goustouicomponents: '<rootDir>/libs/goustouicomponents/src/main',
     'zest/(.*)$': '<rootDir>/libs/goustouicomponents/dist/$1',
     'gousto-config': '<rootDir>/libs/goustouicomponents/src/gousto-config',

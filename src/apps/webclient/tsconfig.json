@@ -25,7 +25,7 @@
       "config/*": ["./src/config/*"],
       "containers/*": ["./src/containers/*"],
       "design-language": ["../libs/goustouicomponents/dist/design-language"],
-      "fixtures": ["../tests/regression/fixtures"],
+      "fixtures": ["../../../tests/regression/fixtures"],
       "goustouicomponents": ["../libs/goustouicomponents/./main"],
       "hoc/*": ["./src/hoc/*"],
       "hooks/*": ["./src/hooks/*"],

@@ -1,3 +1,13 @@
+# Compilation
 public/*
 dist/*
+manifest.json
+
+# Config
 config/*-local.json5
+
+# Bower
+libs/goustouicomponents
+
+# Tests
+coverage

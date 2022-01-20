@@ -1,7 +1,7 @@
 module.exports = [
   // Reason: Cannot be unit tested
-  'src/src/client.js',
+  'src/apps/webclient/client.js',
 
   // Reason: Cannot be unit tested
-  'src/src/legacy.js',
+  'src/apps/webclient/legacy.js',
 ]

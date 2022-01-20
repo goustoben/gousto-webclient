@@ -37,7 +37,7 @@ commands:
         type: string
       path:
         type: string
-        default: src/public/
+        default: src/apps/webclient/public/
     steps:
       - run: echo "Uploading to << parameters.bucket >>"
       - run:
@@ -123,16 +123,16 @@ jobs:
           at: ~/project
       - run:
           name: Test coverage
-          working_directory: src
+          working_directory: src/apps/webclient
           command: yarn test:jest:ci:coverage
       - run:
          name: typecheck tests
-         working_directory: src
+         working_directory: src/apps/webclient
          command: yarn typecheck:tests
       - persist_to_workspace:
           root: ~/project
           paths:
-            - mnt/ramdisk/src/coverage/coverage-summary.json
+            - mnt/ramdisk/src/apps/webclient/coverage/coverage-summary.json
 
   eslint-generate-report:
     docker: *circleci_node_image
@@ -145,12 +145,12 @@ jobs:
           at: /
       - run:
           name: eslint report
-          working_directory: src
+          working_directory: src/apps/webclient
           command: scripts/run-eslint-ci.sh
       - persist_to_workspace:
           root: /
           paths:
-            - mnt/ramdisk/src/eslint-results.json
+            - mnt/ramdisk/src/apps/webclient/eslint-results.json
 
   publish-code-health:
     docker: *circleci_node_image
@@ -166,7 +166,7 @@ jobs:
           command: mkdir /tmp/artifacts
       - run:
           name: Generate code health
-          working_directory: src
+          working_directory: src/apps/webclient
           command: node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
       - store_artifacts:
           path: /tmp/artifacts
@@ -184,7 +184,7 @@ jobs:
       - run: echo $ENVIRONMENT
       - run:
           name: Build webclient
-          working_directory: src
+          working_directory: src/apps/webclient
           # Use NPM for now to inject setup-common npm config vars; BODA should supercede this
           command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
       - persist_to_workspace:
@@ -200,7 +200,7 @@ jobs:
           at: /
       - run:
           name: Upload sourcemaps to datadog
-          working_directory: src
+          working_directory: src/apps/webclient
           command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${CIRCLE_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto.info/build/latest/" yarn datadog:upload-sourcemaps
 
   upload-assets-to-s3:
@@ -217,9 +217,10 @@ jobs:
       # the upload).
       - run:
           name: Make sure icon files will get uploaded
-          command: cp src/dist/*.ico src/public
+          command: cp dist/*.ico public
+          working_directory: src/apps/webclient
       - gzip:
-          target: src/public
+          target: src/apps/webclient/public
       - run:
           name: Set assets bucket variable
           command: |
@@ -282,7 +283,7 @@ jobs:
         type: string
       test_command:
         type: string
-        default: ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
+        default: ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/apps/webclient/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
       test_directory:
         type: string
         default: tests/regression
@@ -301,17 +302,17 @@ jobs:
           at: /
       - run:
           name: Create minimal config file
-          command: 'echo "{\"running_env\": \"local\", \"checkout_pk\": \"${CHECKOUTCOM_PK_STAGING}\"}" > src/config/development-local.json5'
+          command: 'echo "{\"running_env\": \"local\", \"checkout_pk\": \"${CHECKOUTCOM_PK_STAGING}\"}" > src/apps/webclient/config/development-local.json5'
       - run:
           name: Build local application
-          working_directory: src
+          working_directory: src/apps/webclient
           command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build
       - run:
           name: Update local DNS configuration
           command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
       - run:
           name: Start local application
-          working_directory: src
+          working_directory: src/apps/webclient
           command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn server
           background: true
       - run:

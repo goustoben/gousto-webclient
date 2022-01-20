@@ -224,7 +224,7 @@ module.exports = {
           ['server', './server'],
           ['styles', './libs/goustouicomponents/dist/styles'],
           ['styles', './src/styles'],
-          ['fixtures', '../tests/regression/fixtures'],
+          ['fixtures', '../../../tests/regression/fixtures'],
           ...srcFileAliases,
           ...componentFileAliases,
         ],

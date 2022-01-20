@@ -5,7 +5,7 @@
   "author": "Gousto",
   "license": "UNLICENSED",
   "workspaces": [
-    "src",
+    "src/apps/webclient",
     "tests/e2e",
     "tests/regression"
   ]

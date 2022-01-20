@@ -248,7 +248,7 @@ export const promoActions = {
   promoApplyCheckoutCode
 }
 
-// src/src/legacy.js file uses the default export, and I'd rather not change
+// src/apps/webclient/legacy.js file uses the default export, and I'd rather not change
 // it.
 
 // eslint-disable-next-line import/no-default-export

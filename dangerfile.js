@@ -16,7 +16,7 @@ const path = require('path')
 
 const checkIfPackageJsonIsUpdated = () => {
   const packageJson = danger.git.fileMatch('package.json')
-  const lockfile = danger.git.fileMatch('package-lock.json')
+  const lockfile = danger.git.fileMatch('yarn.lock')
 
   // Remind people to update lockfiles
   if (packageJson.modified && !lockfile.modified) {
@@ -171,7 +171,7 @@ function ownerMatcher(pathString) {
 
 const createGetOwners = () => {
   const file = fs
-    .readFileSync(path.resolve(__dirname, '../CODEOWNERS'))
+    .readFileSync(path.resolve(__dirname, 'CODEOWNERS'))
     .toString()
   const lines = file
     .split(/\r\n|\r|\n/)
