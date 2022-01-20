@@ -516,10 +516,18 @@ workflows:
             branches:
               only:
                 - e2e-manual
-      - test-e2e:
+      - install-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
+          filters:
+            branches:
+              only:
+                - e2e-manual
+      - test-e2e:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
           filters:
             branches:
               only:
