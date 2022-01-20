@@ -9,29 +9,30 @@
 /src/bower.json @Gousto/guild-frontend
 
 # frontend-foundations ownership
-/.dockerignore        @Gousto/frontend-foundations
-/service.yml        @Gousto/frontend-foundations
-/Dockerfile        @Gousto/frontend-foundations
-/ansible/        @Gousto/frontend-foundations
-/cloudformation/        @Gousto/frontend-foundations
-/images/        @Gousto/frontend-foundations
-/scripts/        @Gousto/frontend-foundations
-/setup/        @Gousto/frontend-foundations
-/.circleci/        @Gousto/frontend-foundations
-/.github/        @Gousto/frontend-foundations
-/.gitignore        @Gousto/frontend-foundations
-/.git-blame-ignore-revs        @Gousto/frontend-foundations
-/src/.bowerrc        @Gousto/frontend-foundations
-/src/.eslintignore        @Gousto/frontend-foundations
-/src/.eslintrc        @Gousto/frontend-foundations
-/src/config/        @Gousto/frontend-foundations
-/src/scripts/        @Gousto/frontend-foundations
-/src/server/        @Gousto/frontend-foundations
-/src/__tests__/.eslintrc        @Gousto/frontend-foundations
-/src/src/routes/index.js        @Gousto/frontend-foundations
-/src/src/_testing/        @Gousto/frontend-foundations
-/src/src/store.js        @Gousto/frontend-foundations
-/tests/regression/cypress.json        @Gousto/frontend-foundations
+/package.json                                           @Gousto/frontend-foundations
+/.dockerignore                                          @Gousto/frontend-foundations
+/service.yml                                            @Gousto/frontend-foundations
+/Dockerfile                                             @Gousto/frontend-foundations
+/ansible/                                               @Gousto/frontend-foundations
+/cloudformation/                                        @Gousto/frontend-foundations
+/images/                                                @Gousto/frontend-foundations
+/scripts/                                               @Gousto/frontend-foundations
+/setup/                                                 @Gousto/frontend-foundations
+/.circleci/                                             @Gousto/frontend-foundations
+/.github/                                               @Gousto/frontend-foundations
+/.gitignore                                             @Gousto/frontend-foundations
+/.git-blame-ignore-revs                                 @Gousto/frontend-foundations
+/src/.bowerrc                                           @Gousto/frontend-foundations
+/src/.eslintignore                                      @Gousto/frontend-foundations
+/src/.eslintrc                                          @Gousto/frontend-foundations
+/src/config/                                            @Gousto/frontend-foundations
+/src/scripts/                                           @Gousto/frontend-foundations
+/src/server/                                            @Gousto/frontend-foundations
+/src/__tests__/.eslintrc                                @Gousto/frontend-foundations
+/src/src/routes/index.js                                @Gousto/frontend-foundations
+/src/src/_testing/                                      @Gousto/frontend-foundations
+/src/src/store.js                                       @Gousto/frontend-foundations
+/tests/regression/cypress.json                          @Gousto/frontend-foundations
 
 # squad-radishes ownership
 /src/src/components/FiveRecipesPaintedDoorTest          @Gousto/squad-radishes
