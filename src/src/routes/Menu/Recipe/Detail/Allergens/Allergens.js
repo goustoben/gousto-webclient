@@ -20,7 +20,7 @@ const Allergens = ({ allergens, inset }) => (
     <h1 className={css.heading}>Allergens</h1>
     {(allergens.size > 0) ? (
       <dl>
-        <span>
+        <span data-testing="allergen">
           For allergens, see ingredients in
           <span className={css.bold}> BOLD. </span>
           <span className={css.bold}>

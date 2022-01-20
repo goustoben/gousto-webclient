@@ -68,6 +68,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
       tabIndex={0}
       className={css.recipeTile}
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
+      data-testing-id={recipeId}
       onClick={onClick}
       onKeyPress={onClick}
     >
