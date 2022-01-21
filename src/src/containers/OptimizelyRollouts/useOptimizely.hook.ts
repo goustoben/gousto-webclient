@@ -94,7 +94,13 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
   const userId = useSelector(getAuthUserId)
   const getIsMounted = useMountedState()
   const sessionId = getSessionId()
-  const userIdForOptimizely = getUserIdForOptimizely(userId)
+  const [userIdForOptimizely, setUserIdForOptimizely] = useState<null | string>(null)
+  useEffect(() => {
+    getUserIdForOptimizely(userId).then(result => {
+      setUserIdForOptimizely(result)
+    })
+  }, [userId])
+
   const [hasOverride, valueOfOverride] = useGetOptimizelyOverride(name)
 
   useEffect(() => {

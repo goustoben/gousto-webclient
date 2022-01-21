@@ -8,6 +8,7 @@ import {
   useIsOptimizelyFeatureEnabled
 } from './useOptimizely.hook'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
+import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 import * as optimizelySdk from './optimizelySDK'
 
 jest.mock('react-redux', () => ({
@@ -169,7 +170,7 @@ describe('useOptimizely', () => {
 
     describe('when user and snowplow user id are not present', () => {
       beforeEach(() => {
-        window.Snowplow = null
+        window.snowplow = null
       })
 
       it('should return null', async () => {
@@ -191,11 +192,14 @@ describe('useOptimizely', () => {
           ...state,
           auth: state.auth.set('id', 'user_id')
         }
+        window.snowplow = null
       })
 
       describe('when optimizely does not load successfully', () => {
         it('should return null', async () => {
-          const { result } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+          const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+
+          await waitForNextUpdate()
 
           const isEnabled = result.current
 
@@ -298,15 +302,7 @@ describe('useOptimizely', () => {
       beforeEach(() => {
         goustoSessionId = 'session_id'
         hasValidInstanceSpy.mockReturnValue(true)
-        window.Snowplow = {
-          getTrackerCf() {
-            return {
-              getDomainUserId() {
-                return 'snowplowUserId'
-              }
-            }
-          }
-        }
+        mockSnowplowCallbackAPI()
       })
 
       describe('when client has a valid overwrite cookie', () => {
@@ -315,7 +311,9 @@ describe('useOptimizely', () => {
             getItemSpy.mockReturnValue(JSON.stringify('flag=true'))
             isFeatureEnabled.mockReturnValue(false)
 
-            const { result } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+            const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+
+            await waitForNextUpdate()
 
             const isEnabled = result.current
 
@@ -329,7 +327,9 @@ describe('useOptimizely', () => {
             getItemSpy.mockReturnValue(JSON.stringify('flag=false'))
             isFeatureEnabled.mockReturnValue(true)
 
-            const { result } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+            const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+
+            await waitForNextUpdate()
 
             const isEnabled = result.current
 
@@ -356,8 +356,10 @@ describe('useOptimizely', () => {
       })
 
       describe('when the feature provided is `null`', () => {
-        it('should return false', () => {
-          const { result } = renderHook(() => useIsOptimizelyFeatureEnabled(null))
+        it('should return false', async () => {
+          const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled(null))
+
+          await waitForNextUpdate()
 
           const isEnabled = result.current
 

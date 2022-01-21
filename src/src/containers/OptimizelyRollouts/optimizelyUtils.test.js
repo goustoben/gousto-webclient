@@ -6,6 +6,7 @@ import {
 } from './optimizelyUtils'
 import * as snowplow from './trackExperimentInSnowplow'
 import * as optimizelySdk from './optimizelySDK'
+import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 
 jest.mock('config/globals', () => ({
   __esModule: true,
@@ -41,7 +42,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
       getState.mockReturnValue(({ auth: Map({}) }))
       cookieGetSpy.mockReturnValue(undefined)
 
-      window.Snowplow = null
+      window.snowplow = null
 
       const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
@@ -57,7 +58,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
     beforeEach(() => {
       getState.mockReturnValue({ auth: Map({ id: 'user_id' }) })
       cookieGetSpy.mockReturnValue(undefined)
-      window.Snowplow = null
+      window.snowplow = null
     })
 
     describe('when optimizely does not load successfully', () => {
@@ -126,15 +127,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
       cookieGetSpy.mockReturnValue('session_id')
       hasValidInstanceSpy.mockReturnValue(true)
 
-      window.Snowplow = {
-        getTrackerCf() {
-          return {
-            getDomainUserId() {
-              return 'snowplowUserId'
-            }
-          }
-        }
-      }
+      mockSnowplowCallbackAPI()
     })
 
     describe('when the feature is not enabled', () => {
