@@ -292,9 +292,11 @@ export function isDaySlotLeadTimeActive(slot) {
 const doesSlotHaveDeliveryFees = (slot) => parseFloat(slot.get('deliveryPrice', 0)) !== 0
 
 export function doesDayHaveSlotsWithoutDeliveryFees(day) {
-  const slotsWithoutDeliveryFess = day.get('slots', []).filter(slot => isDaySlotLeadTimeActive(slot) && !doesSlotHaveDeliveryFees(slot))
+  const slotsWithoutDeliveryFees = day.get('slots', []).filter(slot => isDaySlotLeadTimeActive(slot) && !doesSlotHaveDeliveryFees(slot))
 
-  return slotsWithoutDeliveryFess.size > 0
+  const result = slotsWithoutDeliveryFees.size > 0
+
+  return result
 }
 
 /**
@@ -309,6 +311,14 @@ export const compareMoments = (moment1, moment2) => {
   } else {
     return 0
   }
+}
+
+const deliveryDayHasAnAvailableSlot = (deliveryDay, disabledSlots) => {
+  const result = deliveryDay
+    .get('slots')
+    .some((slot) => !disabledSlots.includes(slot.get('disabledSlotId')))
+
+  return result
 }
 
 export function getLandingDay(state, options = {}) {
@@ -363,10 +373,17 @@ export function getLandingDay(state, options = {}) {
       day = deliveryDays.find(deliveryDay => deliveryDay.get('date') === defaultDate)
     }
 
-    // if we don't have user orders or an explicit date fall back to the default date, so long as that date has a free slot available.
+    // if we don't have user orders or an explicit date fall back to the
+    // default date, so long as that date has a free slot available.
     if (!day) {
-      const defaultDay = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
-      day = (defaultDay && doesDayHaveSlotsWithoutDeliveryFees(defaultDay)) ? defaultDay : null
+      const defaultDay = deliveryDays.find((deliveryDay) => deliveryDay.get('isDefault'))
+      if (
+        defaultDay
+        && doesDayHaveSlotsWithoutDeliveryFees(defaultDay)
+        && deliveryDayHasAnAvailableSlot(defaultDay, disabledSlots)
+      ) {
+        day = defaultDay
+      }
     }
 
     // if we have none of the above get the first one
@@ -374,7 +391,7 @@ export function getLandingDay(state, options = {}) {
       day = deliveryDays
         .filter(deliveryDay => {
           const isDateAvailable = !deliveryDay.get('alternateDeliveryDay')
-          const isSlotAvailable = deliveryDay.get('slots').some(slot => !disabledSlots.includes(slot.get('disabledSlotId')))
+          const isSlotAvailable = deliveryDayHasAnAvailableSlot(deliveryDay, disabledSlots)
 
           return isDateAvailable && isSlotAvailable
         })
