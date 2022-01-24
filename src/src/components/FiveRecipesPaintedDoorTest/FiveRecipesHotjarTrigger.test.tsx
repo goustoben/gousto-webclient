@@ -4,6 +4,7 @@ import { render} from '@testing-library/react'
 import { FiveRecipesHotjarTrigger } from './FiveRecipesHotjarTrigger'
 import * as FiveRecipeHooks from './use5RecipesPaintedDoorTest'
 import { JestSpyInstance } from '../../types/jest'
+import { NEW_USER, EXISTING_USER } from './use5RecipesPaintedDoorTest'
 
 describe('<FiveRecipesHotjarTrigger />', () => {
   let use5RecipesPaintedDoorTestSpy: JestSpyInstance<
@@ -42,8 +43,7 @@ describe('<FiveRecipesHotjarTrigger />', () => {
     describe('When the users has seen the Order confirmation pages', () => {
       it('should not trigger HotJar', () => {
         use5RecipesPaintedDoorTestSpy.mockReturnValue({
-          isEnabled: true,
-          isNewUser: false,
+          userSeenOnMenu: null,
           hasSeenOnOrderConfirmation: true,
           setOrderConfirmationAsSeen,
         })
@@ -58,8 +58,7 @@ describe('<FiveRecipesHotjarTrigger />', () => {
     describe('When the users is new sign-up', () => {
       it('should trigger HotJar', () => {
         use5RecipesPaintedDoorTestSpy.mockReturnValue({
-          isEnabled: true,
-          isNewUser: true,
+          userSeenOnMenu: NEW_USER,
           hasSeenOnOrderConfirmation: false,
           setOrderConfirmationAsSeen,
         })
@@ -75,8 +74,7 @@ describe('<FiveRecipesHotjarTrigger />', () => {
     describe('When the users is an existing users', () => {
       it('should trigger HotJar', () => {
         use5RecipesPaintedDoorTestSpy.mockReturnValue({
-          isEnabled: true,
-          isNewUser: false,
+          userSeenOnMenu: EXISTING_USER,
           hasSeenOnOrderConfirmation: false,
           setOrderConfirmationAsSeen,
         })

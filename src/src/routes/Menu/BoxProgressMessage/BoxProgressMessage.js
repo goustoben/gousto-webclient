@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import config from 'config/basket'
+import { use5RecipesPaintedDoorTest } from '../../../components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest'
 
 const BoxProgressMessage = ({ numRecipes, className }) => {
-  const { maxRecipesNum, minRecipesNum } = config
-
+  const { minRecipesNum } = config
+  const { maxRecipes: maxRecipesNum } = use5RecipesPaintedDoorTest()
   if (numRecipes <= 0) {
     return (
       <p className={className}>

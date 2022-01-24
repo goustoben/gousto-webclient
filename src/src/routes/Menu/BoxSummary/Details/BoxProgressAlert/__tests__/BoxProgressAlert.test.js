@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
+import { useSelector, useDispatch } from 'react-redux'
 import config from 'config/basket'
 import { BoxProgressAlert } from '../BoxProgressAlert'
 
@@ -8,13 +9,21 @@ jest.mock('components/PricePerServingMessage', () => ({
   PricePerServingMessage: () => <div>PricePerServingMessage</div>,
 }))
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
+
 describe('<BoxProgressAlert', () => {
+  beforeEach(() => {
+    useSelector.mockReturnValue(true)
+    useDispatch.mockReturnValue(() => {})
+  })
+
   test('renders without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(
-      <BoxProgressAlert numRecipes={0} />,
-      div
-    )
+    ReactDOM.render(<BoxProgressAlert numRecipes={0} />, div)
   })
 
   describe('when mounted', () => {

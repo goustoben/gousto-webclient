@@ -46,6 +46,12 @@ const Overlay = ({
   contentLabel,
   children,
 }) => {
+  // This fixes an intermittent issue with modals unmounting and not clearing the blur on the body
+  // which happens when the modal opens before the page finishes loading
+  React.useEffect(() => () => open && window?.document.body.classList.remove('ReactModal__Body--open'),
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+    [])
+
   // We don't load `react-modal` on the server cause Portals
   // are not currently supported by the server renderer.
   if (__SERVER__) return null

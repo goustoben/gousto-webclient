@@ -1,12 +1,18 @@
-import React, { FC } from 'react'
+import React from 'react'
 import buttonCss from './FiveRecipesAddRecipeButton.module.css'
 import { FiveRecipesEndOfJourneyModal } from './FiveRecipesEndOfJourneyModal'
 
-export const FiveRecipesAddRecipeButton: FC = () => {
+export const FiveRecipesAddRecipeButton = ({ onDetailsPage }: { onDetailsPage?: boolean }) => {
   const [isOpen, updateIsOpen] = React.useState(false)
 
-  const openModel = () => updateIsOpen(true)
-  const onModalClose = () => updateIsOpen(false)
+  const onModalClose = () => {
+    updateIsOpen(false)
+  }
+
+  const onClick = (ev: React.MouseEvent | React.KeyboardEvent) => {
+    ev.stopPropagation()
+    updateIsOpen(true)
+  }
 
   return (
     <>
@@ -14,11 +20,11 @@ export const FiveRecipesAddRecipeButton: FC = () => {
         className={buttonCss.addButton}
         name="addRecipeButton"
         type="button"
-        onClick={openModel}
-        onKeyPress={openModel}
+        onClick={onClick}
         aria-label="Add recipe"
       >
         <span className={buttonCss.buttonText}>
+          {!onDetailsPage && (
           <svg
             width="14"
             height="14"
@@ -29,7 +35,8 @@ export const FiveRecipesAddRecipeButton: FC = () => {
             <line className={buttonCss.addButtonLine} y1="7" x2="14" y2="7" strokeWidth="2" />
             <line x1="7" y1="14" x2="7" stroke="white" strokeWidth="2" />
           </svg>
-          <span className={buttonCss.hideOnMobile}>Add recipe</span>
+          )}
+          <span className={onDetailsPage ? '' : buttonCss.hideOnMobile}>Add recipe</span>
         </span>
       </button>
 

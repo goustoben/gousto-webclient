@@ -1,19 +1,25 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-
 import Immutable from 'immutable'
-
+import { useSelector, useDispatch } from 'react-redux'
 import { RecipeList } from '../RecipeList/RecipeList'
 import { RecipeHolder } from '../RecipeHolder'
 import { useBasketRequiredFeatureEnabled } from '../../hooks/useBasketRequiredFeatureEnabled'
 
 jest.mock('../../hooks/useBasketRequiredFeatureEnabled')
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
 
 describe('RecipeList', () => {
   let menuRecipesStore
   let recipes
 
   beforeEach(() => {
+    useSelector.mockReturnValue(true)
+    useDispatch.mockReturnValue(() => {})
     menuRecipesStore = Immutable.fromJS({
       1: 'store1',
       2: 'store2',

@@ -5,8 +5,8 @@ import { get } from 'utils/cookieHelper2'
 import { useLocalStorage } from 'usehooks-ts/dist/useLocalStorage'
 import useMountedState from 'react-use/lib/useMountedState'
 import { getAuthUserId } from 'selectors/auth'
-import { getUserIdForOptimizely } from './optimizelyUtils'
 import { locationQuery } from 'selectors/routing'
+import { getUserIdForOptimizely } from './optimizelyUtils'
 import { getOptimizelyInstance, hasValidInstance, timeout } from './optimizelySDK'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 
@@ -21,16 +21,6 @@ type OptimizelyInstance = {
 
 const KEY_FOR_FEATURES_OVERRIDES = 'opt_features'
 
-// TODO: Remove this when we fix our support for DOM types
-type GlobalWithWindow = {
-  window?: {
-    localStorage?: {
-      // eslint-disable-next-line no-unused-vars
-      removeItem: (name: string) => void
-    }
-  }
-}
-
 /**
  * This hooks is added to the top App component to allow use to override Optimizely features.
  *
@@ -42,19 +32,20 @@ type GlobalWithWindow = {
  */
 export const useSetupOptimizelyOverride = () => {
   const query = useSelector(locationQuery)
-  const { [KEY_FOR_FEATURES_OVERRIDES]: features = null } = (query || {})
-  const [localStorageFeatures, setLocalStorageFeatures] = useLocalStorage(KEY_FOR_FEATURES_OVERRIDES, '')
+  const { [KEY_FOR_FEATURES_OVERRIDES]: features = null } = query || {}
+  const [localStorageFeatures, setLocalStorageFeatures] = useLocalStorage(
+    KEY_FOR_FEATURES_OVERRIDES,
+    ''
+  )
 
   useEffect(() => {
-    if (typeof (global as GlobalWithWindow)?.window === 'undefined') return
+    if (typeof global?.window === 'undefined') return
 
     if (features == null) return
 
     if (features === '') {
-      if (!localStorageFeatures) return
-
-      // eslint-disable-next-line no-unused-expressions
-      (global as GlobalWithWindow)?.window?.localStorage?.removeItem(KEY_FOR_FEATURES_OVERRIDES)
+      if (!localStorageFeatures) return // eslint-disable-next-line no-unused-expressions
+      global?.window?.localStorage?.removeItem(KEY_FOR_FEATURES_OVERRIDES)
 
       return
     }
@@ -64,7 +55,7 @@ export const useSetupOptimizelyOverride = () => {
     if (lowerCaseFeatures === localStorageFeatures) return
 
     setLocalStorageFeatures(lowerCaseFeatures)
-  },[features, localStorageFeatures, setLocalStorageFeatures])
+  }, [features, localStorageFeatures, setLocalStorageFeatures])
 }
 
 const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
@@ -152,11 +143,15 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
 
         const featureValue = optimizelyInstance.isFeatureEnabled(name, userIdForOptimizely)
 
-        dispatch(trackExperimentInSnowplow(name, featureValue, userId, sessionId, userIdForOptimizely))
+        dispatch(
+          trackExperimentInSnowplow(name, featureValue, userId, sessionId, userIdForOptimizely)
+        )
         setEnabled(featureValue)
       })
     })
   }, [name, dispatch, hasOverride, userIdForOptimizely, userId, sessionId, getIsMounted])
+
+  if (name == null) return null
 
   if (hasOverride) return valueOfOverride
 

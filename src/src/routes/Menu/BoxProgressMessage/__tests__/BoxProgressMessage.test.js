@@ -1,10 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import { mount } from 'enzyme'
 import config from 'config/basket'
 import { BoxProgressMessage } from '../BoxProgressMessage'
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
+
 describe('<BoxProgressMessage />', () => {
+  beforeEach(() => {
+    useSelector.mockReturnValue(true)
+    useDispatch.mockReturnValue(() => {})
+  })
+
   const NO_RECIPES_TEXT = `Add ${config.maxRecipesNum} recipes for the best price per serving`
   const FULL_BOX_TEXT = 'Nice! You\'ve got the best price per serving'
   const MORE_RECIPES_TEXT = 'Add more recipes to complete your box'

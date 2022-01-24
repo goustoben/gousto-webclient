@@ -1,8 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import { mount } from 'enzyme'
 
 import { RecipesInBasketProgressContent} from '..'
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
 
 describe('RecipesInBasketProgressContent', () => {
   let wrapper
@@ -11,6 +18,8 @@ describe('RecipesInBasketProgressContent', () => {
   }
 
   beforeEach(() => {
+    useSelector.mockReturnValue(true)
+    useDispatch.mockReturnValue(() => {})
     wrapper = mount(
       <RecipesInBasketProgressContent {...props} />
     )
