@@ -20,6 +20,11 @@ orbs:
   aws-cli: circleci/aws-cli@1.4.1
 
 commands:
+  codeartifact_authenticate:
+    description: Authenticate with AWS CodeArtifact
+    steps:
+      - run: aws codeartifact login --tool npm --repository proxy-repository --domain gousto --domain-owner 472493421475
+
   gzip:
     description: "Apply gzip compression to text files"
     parameters:
@@ -98,6 +103,7 @@ jobs:
       - run:
           name: Setup Github SSH access
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - codeartifact_authenticate
       - run:
           name: Install dependencies
           command: yarn install --immutable
@@ -405,6 +411,7 @@ jobs:
     working_directory: /mnt/ramdisk
     steps:
       - checkout
+      - codeartifact_authenticate
       - run:
           name: Install dependencies
           command: npm install -g yarn && yarn install --immutable
