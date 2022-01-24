@@ -20,6 +20,11 @@ orbs:
   aws-cli: circleci/aws-cli@1.4.1
 
 commands:
+  codeartifact_authenticate:
+    description: Authenticate with AWS CodeArtifact
+    steps:
+      - run: aws codeartifact login --tool npm --repository proxy-repository --domain gousto --domain-owner 472493421475
+
   gzip:
     description: "Apply gzip compression to text files"
     parameters:
@@ -97,6 +102,7 @@ jobs:
       - run:
           name: Setup Github SSH access
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - codeartifact_authenticate
       - run:
           name: Install dependencies
           command: yarn install --immutable
@@ -369,6 +375,102 @@ jobs:
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
           command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
+<<<<<<< HEAD
+=======
+      - when:
+          condition:
+            or:
+              - equal: [ develop, << pipeline.git.branch >> ]
+              - equal: [ main, << pipeline.git.branch >> ]
+              - equal: [ master, << pipeline.git.branch >> ]
+          steps:
+            - run:
+                name: Run pact record-deployment
+                command: |
+                  source ~/.circlerc && PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker record-deployment \
+                    --pacticipant "${CIRCLE_PROJECT_REPONAME}" \
+                    --version "${CIRCLE_SHA1}" \
+                    --environment "${ENVIRONMENT}" \
+                    --broker-base-url "${TEST_PACT_BROKER_BASE_URL}"
+
+  publish-wip-pacts:
+    docker: *gousto_platform_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
+    steps:
+      - checkout
+      - codeartifact_authenticate
+      - run:
+          name: Install dependencies
+          command: npm install -g yarn && yarn install --immutable
+      - run:
+          name: Run Gousto service adapter tests
+          working_directory: src
+          command: yarn test:gousto-adapters
+      - run:
+          name: Publish pact files
+          command: |
+            PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker publish pact/pacts \
+              --consumer-app-version "${CIRCLE_SHA1}" \
+              --broker-base-url "${TEST_PACT_BROKER_BASE_URL}" \
+              --branch "${CIRCLE_BRANCH}" \
+              --build-url "${CIRCLE_BUILD_URL}"
+
+  publish-pacts:
+    docker: *gousto_platform_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+          name: Publish pact files
+          command: |
+            PACT_BROKER_TOKEN="${TEST_PACT_BROKER_TOKEN}" pact-broker publish pact/pacts \
+              --consumer-app-version "${CIRCLE_SHA1}" \
+              --broker-base-url "${TEST_PACT_BROKER_BASE_URL}" \
+              --branch "${CIRCLE_BRANCH}" \
+              --build-url "${CIRCLE_BUILD_URL}"
+
+
+  test-integration-adapters:
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk/src
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+          name: Run Gousto service adapter tests
+          command: yarn test:gousto-adapters
+      - persist_to_workspace:
+          root: /
+          paths:
+            - mnt/ramdisk/pact/pacts
+
+  verify-emulation-server:
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk/emulation-server
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+          name: Start emulation server
+          background: true
+          command: yarn start
+      - run:
+          name: Wait for emulation server to be ready
+          working_directory: /mnt/ramdisk/scripts
+          command: ./waitForHttpPath.sh 3000 /_config/state 10
+      - run:
+          name: Verify emulation server satisfies Pact file expectations
+          command: yarn test
+      - persist_to_workspace:
+          root: /
+          paths:
+            - mnt/ramdisk/emulation-server
+>>>>>>> 3e6b1a47e (Modify circleCI build for codeartifact authenticate)
 
 workflows:
   version: 2
