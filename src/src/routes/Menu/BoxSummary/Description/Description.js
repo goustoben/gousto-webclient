@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Description.css'
+import { use5RecipesPaintedDoorTest } from '../../../../components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest'
 
 const Description = ({ numPortions, numRecipes, view, deliveryOptions, warning }) => {
-  let statusText = `Choose 2, 3 or 4 meals for ${numPortions} people`
+  const { isEnabled, hasSeenOnMenu } = use5RecipesPaintedDoorTest()
+  let statusText = isEnabled && !hasSeenOnMenu ? 'Choose up to 5 meals for 2 people' : `Choose 2, 3 or 4 meals for ${numPortions} people`
+
   if (numRecipes > 0) {
     statusText = `${numRecipes} meal${numRecipes > 1 ? 's' : ''} for ${numPortions} people added`
   }

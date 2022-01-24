@@ -3,12 +3,26 @@
 
 .number {
 	font-size: 12px;
-	display: block;
+	display: flex;
 	color: Blackberry;
 	font-family: FontFamilyAxiformaSemiBold;
+	flex: 0 0 15px;
 }
 
 .perServing {
 	font-size: 10px;
 	color: Blackberry;
+	display: flex;
+	flex: 1 0;
+	line-height: 1;
+}
+
+@media  (min-width: 456px) { 
+	.perServing {
+		line-height: 1.5;
+	}
+}
+
+.perServing:first-child {
+	align-items: center
 }

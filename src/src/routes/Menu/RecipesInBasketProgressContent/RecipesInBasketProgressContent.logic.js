@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { maxRecipesNum } from 'config/basket'
 
 import {
   Layout2Cells,
@@ -9,6 +8,7 @@ import {
   ProgressBar,
 } from 'goustouicomponents'
 import { BoxProgressMessage } from 'routes/Menu/BoxProgressMessage'
+import { use5RecipesPaintedDoorTest } from '../../../components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest'
 
 import css from './RecipesInBasketProgressContent.css'
 
@@ -16,12 +16,9 @@ const propTypes = {
   selectedRecipesCount: PropTypes.number.isRequired,
 }
 
-const recipeCountToPercentage = (selectedRecipesCount) => (
-  Math.round((selectedRecipesCount / maxRecipesNum) * 100)
-)
-
 const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
-  const isBasketFull = selectedRecipesCount >= maxRecipesNum
+  const { maxRecipes } = use5RecipesPaintedDoorTest()
+  const isBasketFull = selectedRecipesCount >= maxRecipes
 
   const cardClasses = classnames(
     css.cardContentWrapper,
@@ -31,7 +28,7 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
     }
   )
 
-  const percentage = recipeCountToPercentage(selectedRecipesCount)
+  const percentage = Math.round((selectedRecipesCount / maxRecipes) * 100)
 
   return (
     <div className={cardClasses}>

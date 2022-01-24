@@ -40,7 +40,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
     expect(setMenuAsSeen).toBeCalledTimes(1)
     expect(trackEvent).toHaveBeenNthCalledWith(1, {
-      event: 'five-recipes-modal-closed'
+      event: 'five-recipes-modal-closed',
     })
   })
 
@@ -55,7 +55,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
     expect(setMenuAsSeen).toBeCalledTimes(1)
     expect(trackEvent).toHaveBeenNthCalledWith(1, {
-      event: 'five-recipes-modal-closed'
+      event: 'five-recipes-modal-closed',
     })
   })
 
@@ -68,7 +68,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
       })
       render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
 
-      expect(screen.queryByText('£5 credit')).toBeTruthy()
+      expect(screen.queryByText('£0 credit')).toBeTruthy()
     })
 
     it('should send a client metric `menu-5-recipes-painted-existing-user-end`', () => {
@@ -76,7 +76,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
         isEnabled: true,
         hasSeenOnMenu: false,
         isNewUser: false,
-        setMenuAsSeen
+        setMenuAsSeen,
       })
 
       render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
@@ -85,7 +85,12 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
       fireEvent.click(screen.getByText('Back to menu'))
 
-      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(1, 'menu-5-recipes-painted-existing-user-end', 1, 'Count')
+      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(
+        1,
+        'menu-5-recipes-painted-existing-user-end',
+        1,
+        'Count'
+      )
     })
   })
 
@@ -99,7 +104,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
       render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
 
-      expect(screen.queryByText('£5 credit')).toBeFalsy()
+      expect(screen.queryByText('£0 credit')).toBeFalsy()
     })
 
     it('should send a client metric `menu-5-recipes-painted-new-user-end`', () => {
@@ -116,7 +121,12 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
       fireEvent.click(screen.getByText('Back to menu'))
 
-      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(1, 'menu-5-recipes-painted-new-user-end', 1, 'Count')
+      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(
+        1,
+        'menu-5-recipes-painted-new-user-end',
+        1,
+        'Count'
+      )
     })
   })
 })

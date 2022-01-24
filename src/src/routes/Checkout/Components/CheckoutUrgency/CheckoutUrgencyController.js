@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { checkoutUrgencyStatuses } from 'routes/Checkout/checkoutUrgencyConfig'
-import { useInterval } from 'react-use'
+import useInterval from 'react-use/lib/useInterval'
 import {
   checkoutUrgencyInitialModalDisplayed,
   checkoutUrgencyExpiredModalDisplayed,

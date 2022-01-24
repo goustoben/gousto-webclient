@@ -20,6 +20,7 @@ import {
   HIDE_PROMO_CODE_TEXT
 } from './displayOptionsProps'
 import { DetailsCheckoutButton } from './DetailsCheckoutButton'
+import { RecipesAmount } from './RecipesAmount'
 
 class Details extends React.Component {
   getCtaText = (numRecipes) => {
@@ -101,8 +102,15 @@ class Details extends React.Component {
         <LayoutContentWrapper>
           <p className={css.titleSection}>Recipe Box</p>
           {
-            numRecipes === 0
-            && <p>Add up to 4 recipes to create your Gousto box. The more you add, the lower the price per portion.</p>
+            numRecipes === 0 && (
+              <p>
+                Add up to
+                {' '}
+                <RecipesAmount />
+                {' '}
+                recipes to create your Gousto box. The more you add, the lower the price per portion.
+              </p>
+            )
           }
         </LayoutContentWrapper>
         {

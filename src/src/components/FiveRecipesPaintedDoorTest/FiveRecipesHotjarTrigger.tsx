@@ -1,12 +1,13 @@
 import React from 'react'
 import { HotjarTrigger } from 'components/HotjarTrigger/HotjarTrigger'
-import { use5RecipesPaintedDoorTest } from './use5RecipesPaintedDoorTest'
+import { use5RecipesPaintedDoorTest, NEW_USER } from './use5RecipesPaintedDoorTest'
 
 export const FiveRecipesHotjarTrigger = () => {
-  const { isEnabled, isNewUser, hasSeenOnOrderConfirmation, setOrderConfirmationAsSeen } = use5RecipesPaintedDoorTest()
-  const shouldTriggerHotJar = isEnabled && !hasSeenOnOrderConfirmation
-  const [shouldInvokeForSubscriptionUser] = React.useState(shouldTriggerHotJar && !isNewUser)
-  const [shouldInvokeForNewUser] = React.useState(shouldTriggerHotJar && isNewUser)
+  const { userSeenOnMenu, hasSeenOnOrderConfirmation, setOrderConfirmationAsSeen } = use5RecipesPaintedDoorTest()
+  const shouldTriggerHotJar = userSeenOnMenu && !hasSeenOnOrderConfirmation
+  const isNewUser = userSeenOnMenu === NEW_USER
+  const [shouldInvokeForSubscriptionUser] = React.useState(Boolean(shouldTriggerHotJar && !isNewUser))
+  const [shouldInvokeForNewUser] = React.useState(Boolean(shouldTriggerHotJar && isNewUser))
 
   React.useEffect(() => {
     if (shouldTriggerHotJar && !hasSeenOnOrderConfirmation) {

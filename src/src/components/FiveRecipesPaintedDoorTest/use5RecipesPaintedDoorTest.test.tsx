@@ -1,8 +1,5 @@
-import React from 'react'
 import { rest, RestRequest } from 'msw'
-import configureMockStore from 'redux-mock-store'
-import { Provider } from 'react-redux'
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
 import * as modalSelectors from 'selectors/modals'
 import * as authSelectors from 'selectors/auth'
@@ -19,6 +16,7 @@ import * as UseOptimizely from '../../containers/OptimizelyRollouts/useOptimizel
 
 import endpoint from '../../config/endpoint'
 import { Nullable } from '../../types'
+import { renderHookWithStore, createStore } from '../../../jest/helper'
 import 'jest-localstorage-mock'
 
 const user = {
@@ -43,7 +41,7 @@ const getIsAuthenticated = safeJestMock(authSelectors, 'getIsAuthenticated')
 const getUserId = (req: RestRequest) => req.headers.get('x-gousto-user-id')
 
 const server = setupServer(
-  rest.get(`${endpoint('subscriptioncommand')}/subscriptions/*`, (req, res, ctx) => {
+  rest.get(`${endpoint('subscriptionquery')}/subscriptions/*`, (req, res, ctx) => {
     const userId = getUserId(req)
 
     if (userId === user.with2PortionBox3Recipes) {
@@ -67,7 +65,7 @@ describe('use5RecipesPaintedDoorTest', () => {
 
   beforeEach(() => {
     // to fully reset the state between tests, clear the storage
-    localStorage.clear()
+    global.localStorage.clear()
 
     useIsOptimizelyFeatureEnabled = jest
       .spyOn(UseOptimizely, 'useIsOptimizelyFeatureEnabled')
@@ -89,8 +87,17 @@ describe('use5RecipesPaintedDoorTest', () => {
   // Clean up after the tests are finished.
   afterAll(() => server.close())
 
-  const createStore = (userId?: Nullable<string>, accessToken?: Nullable<string>) => {
-    const initialState = {
+  const renderUse5RecipesPaintedDoorTest = (
+    userId?: Nullable<string>,
+    accessToken?: Nullable<string>
+  ) => {
+    if (userId || accessToken) {
+      getIsAuthenticated.mockReturnValue(true)
+    } else {
+      getIsAuthenticated.mockReturnValue(false)
+    }
+
+    const state = {
       user: Immutable.fromJS({
         id: userId || null,
       }),
@@ -99,32 +106,14 @@ describe('use5RecipesPaintedDoorTest', () => {
       }),
     }
 
-    const mockStore = configureMockStore()
-
-    const store = mockStore(initialState)
-
-    // eslint-disable-next-line no-undef
-    store.dispatch = jest.fn().mockReturnValue(Promise.resolve())
-
-    return store
+    return renderHookWithStore(() => use5RecipesPaintedDoorTest(), createStore(state))
   }
-
-  const createWrapper =
-    (userId?: Nullable<string>, accessToken?: Nullable<string>) =>
-    ({ children }: { children: React.ReactNode }) =>
-      <Provider store={createStore(userId, accessToken)}>{children}</Provider>
-
-  const renderHookWithStore = (userId?: Nullable<string>, accessToken?: Nullable<string>) =>
-    renderHook(() => use5RecipesPaintedDoorTest(), { wrapper: createWrapper(userId, accessToken) })
 
   describe('isEnabled', () => {
     describe('when user is authenticated', () => {
-      beforeEach(() => {
-        getIsAuthenticated.mockReturnValue(true)
-      })
       describe('when there is no user id in the store', () => {
         it('should return false', () => {
-          const { result } = renderHookWithStore(null, 'token')
+          const { result } = renderUse5RecipesPaintedDoorTest(null, 'token')
 
           expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
           expect(result.current.isEnabled).toBe(false)
@@ -133,7 +122,7 @@ describe('use5RecipesPaintedDoorTest', () => {
 
       describe('when there is no access token in the store', () => {
         it('should return false', () => {
-          const { result } = renderHookWithStore('userId', null)
+          const { result } = renderUse5RecipesPaintedDoorTest('userId', null)
 
           expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
           expect(result.current.isEnabled).toBe(false)
@@ -144,7 +133,7 @@ describe('use5RecipesPaintedDoorTest', () => {
         it('should return false', () => {
           // as this requests fails and we don't use `error` from SWR
           // `waitForNextUpdate` doesn't need to be called as there is no update
-          const { result } = renderHookWithStore()
+          const { result } = renderUse5RecipesPaintedDoorTest()
           expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
           expect(result.current.isEnabled).toBe(false)
         })
@@ -153,7 +142,7 @@ describe('use5RecipesPaintedDoorTest', () => {
       describe('when user has a invalid subscription', () => {
         describe('when user has 2 portions and 3 recipes per box', () => {
           it('should return false', async () => {
-            const { result, waitForNextUpdate } = renderHookWithStore(
+            const { result, waitForNextUpdate } = renderUse5RecipesPaintedDoorTest(
               user.with2PortionBox3Recipes,
               'token'
             )
@@ -167,7 +156,7 @@ describe('use5RecipesPaintedDoorTest', () => {
 
         describe('when user has 4 portions and 4 recipes per box', () => {
           it('should return false', async () => {
-            const { result, waitForNextUpdate } = renderHookWithStore(
+            const { result, waitForNextUpdate } = renderUse5RecipesPaintedDoorTest(
               user.with4PortionBox4Recipes,
               'token'
             )
@@ -183,11 +172,9 @@ describe('use5RecipesPaintedDoorTest', () => {
       describe('when user has a valid subscription', () => {
         describe('when user is not in the test', () => {
           it('should return false', async () => {
-            useIsOptimizelyFeatureEnabled = jest
-              .spyOn(UseOptimizely, 'useIsOptimizelyFeatureEnabled')
-              .mockReturnValue(false)
+            useIsOptimizelyFeatureEnabled.mockReturnValue(false)
 
-            const { result, waitForNextUpdate } = renderHookWithStore(
+            const { result, waitForNextUpdate } = renderUse5RecipesPaintedDoorTest(
               user.with2PortionBox4Recipes,
               'token'
             )
@@ -205,7 +192,10 @@ describe('use5RecipesPaintedDoorTest', () => {
           })
 
           it('should return true', () => {
-            const { result } = renderHookWithStore(user.with2PortionBox4Recipes, 'token')
+            const { result } = renderUse5RecipesPaintedDoorTest(
+              user.with2PortionBox4Recipes,
+              'token'
+            )
             expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(OPTIMIZELY_ENABLE_SUBSCRIBED)
             expect(useIsOptimizelyFeatureEnabled).not.toBeCalledWith(OPTIMIZELY_ENABLE_SIGNUP_FLOW)
             expect(result.current.isEnabled).toBe(true)
@@ -215,9 +205,6 @@ describe('use5RecipesPaintedDoorTest', () => {
     })
 
     describe('when user is not authenticated', () => {
-      beforeEach(() => {
-        getIsAuthenticated.mockReturnValue(false)
-      })
       describe('when user comes from signup flow', () => {
         describe('when user is NOT in the test', () => {
           beforeEach(() => {
@@ -225,7 +212,7 @@ describe('use5RecipesPaintedDoorTest', () => {
           })
 
           it('should return false', () => {
-            const { result } = renderHookWithStore()
+            const { result } = renderUse5RecipesPaintedDoorTest()
 
             expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(OPTIMIZELY_ENABLE_SIGNUP_FLOW)
             expect(result.current.isEnabled).toBe(false)
@@ -238,7 +225,7 @@ describe('use5RecipesPaintedDoorTest', () => {
           })
 
           it('should return true', () => {
-            const { result } = renderHookWithStore()
+            const { result } = renderUse5RecipesPaintedDoorTest()
 
             expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(OPTIMIZELY_ENABLE_SIGNUP_FLOW)
             expect(useIsOptimizelyFeatureEnabled).not.toBeCalledWith(OPTIMIZELY_ENABLE_SUBSCRIBED)
@@ -251,7 +238,7 @@ describe('use5RecipesPaintedDoorTest', () => {
             })
 
             it('should return false', () => {
-              const { result } = renderHookWithStore()
+              const { result } = renderUse5RecipesPaintedDoorTest()
 
               expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
               expect(result.current.isEnabled).toBe(false)
@@ -264,15 +251,16 @@ describe('use5RecipesPaintedDoorTest', () => {
     describe('hasSeenOnMenu', () => {
       describe('when the user has not yet seen the 5 recipes on the menu', () => {
         it('should return false', () => {
-          localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
-          localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
+          global.localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
+          global.localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
 
-          const { result } = renderHookWithStore()
+          const { result } = renderUse5RecipesPaintedDoorTest()
 
-          expect(localStorage.getItem).toBeCalledTimes(2)
-          expect(localStorage.getItem).toHaveBeenNthCalledWith(
-            1,
+          expect(global.localStorage.getItem).toHaveBeenCalledWith(
             HAS_SEEN_TEST_IN_MENU_STORAGE_NAME
+          )
+          expect(global.localStorage.getItem).toHaveBeenCalledWith(
+            HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
           )
           expect(result.current.hasSeenOnMenu).toBe(false)
         })
@@ -280,13 +268,15 @@ describe('use5RecipesPaintedDoorTest', () => {
 
       describe('when the user has seen the 5 recipes on the menu', () => {
         it('should return true', () => {
-          localStorage.setItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME, 'true')
-          localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
+          global.localStorage.setItem(
+            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
+            JSON.stringify('new_user')
+          )
+          global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
 
-          const { result } = renderHookWithStore()
+          const { result } = renderUse5RecipesPaintedDoorTest()
 
-          expect(localStorage.getItem).toBeCalledTimes(2)
-          expect(localStorage.getItem).toHaveBeenNthCalledWith(
+          expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
             1,
             HAS_SEEN_TEST_IN_MENU_STORAGE_NAME
           )
@@ -298,13 +288,15 @@ describe('use5RecipesPaintedDoorTest', () => {
     describe('hasSeenOnOrderConfirmation', () => {
       describe('when the user has not yet seen the 5 recipes on the order confirmation page', () => {
         it('should return false', () => {
-          localStorage.setItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME, 'true')
-          localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
+          global.localStorage.setItem(
+            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
+            JSON.stringify('new_user')
+          )
+          global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
 
-          const { result } = renderHookWithStore()
+          const { result } = renderUse5RecipesPaintedDoorTest()
 
-          expect(localStorage.getItem).toBeCalledTimes(2)
-          expect(localStorage.getItem).toHaveBeenNthCalledWith(
+          expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
             2,
             HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
           )
@@ -314,13 +306,12 @@ describe('use5RecipesPaintedDoorTest', () => {
 
       describe('when the user has seen the 5 recipes on the order confirmation page', () => {
         it('should return true', () => {
-          localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
-          localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
+          global.localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
+          global.localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
 
-          const { result } = renderHookWithStore()
+          const { result } = renderUse5RecipesPaintedDoorTest()
 
-          expect(localStorage.getItem).toBeCalledTimes(2)
-          expect(localStorage.getItem).toHaveBeenNthCalledWith(
+          expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
             2,
             HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
           )
@@ -330,27 +321,51 @@ describe('use5RecipesPaintedDoorTest', () => {
     })
 
     describe('markMenuAsSeen', () => {
-      it('should set the HAS_SEEN_TEST_IN_MENU_STORAGE_NAME to be true', () => {
-        const { result } = renderHookWithStore()
+      describe('when user is a new user', () => {
+        it('should set the HAS_SEEN_TEST_IN_MENU_STORAGE_NAME to be `new_user`', () => {
+          const { result } = renderUse5RecipesPaintedDoorTest()
 
-        expect(result.current.hasSeenOnMenu).toBe(false)
+          expect(result.current.hasSeenOnMenu).toBe(false)
 
-        act(() => {
-          result.current.setMenuAsSeen()
+          act(() => {
+            result.current.setMenuAsSeen()
+          })
+
+          expect(global.localStorage.setItem).toHaveBeenNthCalledWith(
+            2,
+            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
+            '"new_user"'
+          )
+          expect(result.current.hasSeenOnMenu).toBe(true)
+          expect(result.current.userSeenOnMenu).toBe('new_user')
         })
+      })
 
-        expect(localStorage.setItem).toHaveBeenNthCalledWith(
-          1,
-          HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
-          'true'
-        )
-        expect(result.current.hasSeenOnMenu).toBe(true)
+      describe('when user is an existing user', () => {
+        it('should set the HAS_SEEN_TEST_IN_MENU_STORAGE_NAME to be `existing_user`', async () => {
+          useIsOptimizelyFeatureEnabled.mockReturnValue(true)
+
+          const { result } = renderUse5RecipesPaintedDoorTest(user.with2PortionBox4Recipes, 'token')
+
+          expect(result.current.hasSeenOnMenu).toBe(false)
+
+          act(() => {
+            result.current.setMenuAsSeen()
+          })
+
+          expect(global.localStorage.setItem).toHaveBeenCalledWith(
+            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
+            '"existing_user"'
+          )
+          expect(result.current.hasSeenOnMenu).toBe(true)
+          expect(result.current.userSeenOnMenu).toBe('existing_user')
+        })
       })
     })
 
     describe('setOrderConfirmationAsSeen', () => {
-      it('should set theHAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME to be true', () => {
-        const { result } = renderHookWithStore()
+      it('should set the HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME to be true', () => {
+        const { result } = renderUse5RecipesPaintedDoorTest()
 
         expect(result.current.hasSeenOnOrderConfirmation).toBe(false)
 
@@ -358,8 +373,7 @@ describe('use5RecipesPaintedDoorTest', () => {
           result.current.setOrderConfirmationAsSeen()
         })
 
-        expect(localStorage.setItem).toHaveBeenNthCalledWith(
-          1,
+        expect(global.localStorage.setItem).toHaveBeenCalledWith(
           HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME,
           'true'
         )

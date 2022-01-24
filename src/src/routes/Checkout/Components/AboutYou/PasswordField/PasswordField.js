@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useState, useRef } from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
-import { useDebounce } from 'react-use'
+import useDebounce from 'react-use/lib/useDebounce'
 import checkoutCss from '../../../Checkout.css'
 
 const propTypes = {

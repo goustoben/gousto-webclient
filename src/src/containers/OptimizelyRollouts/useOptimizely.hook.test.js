@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { get } from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { renderHook } from '@testing-library/react-hooks'
-import {
-  useSetupOptimizelyOverride,
-  useIsOptimizelyFeatureEnabled
-} from './useOptimizely.hook'
+import { useSetupOptimizelyOverride, useIsOptimizelyFeatureEnabled } from './useOptimizely.hook'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 import * as optimizelySdk from './optimizelySDK'
@@ -14,7 +11,7 @@ import * as optimizelySdk from './optimizelySDK'
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn()
+  useSelector: jest.fn(),
 }))
 jest.mock('utils/cookieHelper2')
 jest.mock('./trackExperimentInSnowplow')
@@ -22,7 +19,7 @@ jest.mock('config/globals', () => ({
   __esModule: true,
   default: {
     client: true,
-  }
+  },
 }))
 
 describe('useOptimizely', () => {
@@ -39,7 +36,7 @@ describe('useOptimizely', () => {
     // eslint-disable-next-line no-proto
     removeItemSpy = jest.spyOn(window.localStorage.__proto__, 'removeItem')
 
-    useSelector.mockImplementation(selector => selector(state))
+    useSelector.mockImplementation((selector) => selector(state))
   })
 
   describe('useSetupOptimizelyOverride', () => {
@@ -64,10 +61,10 @@ describe('useOptimizely', () => {
             routing: {
               locationBeforeTransitions: {
                 query: {
-                  opt_features: 'flag=true'
-                }
-              }
-            }
+                  opt_features: 'flag=true',
+                },
+              },
+            },
           }
         })
 
@@ -100,10 +97,10 @@ describe('useOptimizely', () => {
             routing: {
               locationBeforeTransitions: {
                 query: {
-                  opt_features: ''
-                }
-              }
-            }
+                  opt_features: '',
+                },
+              },
+            },
           }
         })
 
@@ -143,9 +140,13 @@ describe('useOptimizely', () => {
 
     beforeEach(() => {
       useDispatch.mockReturnValue(dispatch)
-      trackExperimentInSnowplow.mockImplementation((...args) => ['call_trackExperimentInSnowplow', ...args])
+      trackExperimentInSnowplow.mockImplementation((...args) => [
+        'call_trackExperimentInSnowplow',
+        ...args,
+      ])
       hasValidInstanceSpy = jest.spyOn(optimizelySdk, 'hasValidInstance')
-      getOptimizelyInstanceSpy = jest.spyOn(optimizelySdk, 'getOptimizelyInstance')
+      getOptimizelyInstanceSpy = jest
+        .spyOn(optimizelySdk, 'getOptimizelyInstance')
         .mockResolvedValue({ isFeatureEnabled, onReady })
 
       goustoSessionId = undefined
@@ -190,7 +191,7 @@ describe('useOptimizely', () => {
       beforeEach(() => {
         state = {
           ...state,
-          auth: state.auth.set('id', 'user_id')
+          auth: state.auth.set('id', 'user_id'),
         }
         window.snowplow = null
       })
@@ -221,7 +222,9 @@ describe('useOptimizely', () => {
           })
 
           it('should return false', async () => {
-            const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+            const { result, waitForNextUpdate } = renderHook(() =>
+              useIsOptimizelyFeatureEnabled('flag')
+            )
 
             await waitForNextUpdate()
 
@@ -236,7 +239,14 @@ describe('useOptimizely', () => {
 
             await waitForNextUpdate()
 
-            expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', false, 'user_id', undefined, 'user_id'])
+            expect(dispatch).toHaveBeenCalledWith([
+              'call_trackExperimentInSnowplow',
+              'flag',
+              false,
+              'user_id',
+              undefined,
+              'user_id',
+            ])
           })
         })
 
@@ -246,7 +256,9 @@ describe('useOptimizely', () => {
           })
 
           it('should return true', async () => {
-            const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+            const { result, waitForNextUpdate } = renderHook(() =>
+              useIsOptimizelyFeatureEnabled('flag')
+            )
 
             await waitForNextUpdate()
 
@@ -261,7 +273,14 @@ describe('useOptimizely', () => {
 
             await waitForNextUpdate()
 
-            expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, 'user_id', undefined, 'user_id'])
+            expect(dispatch).toHaveBeenCalledWith([
+              'call_trackExperimentInSnowplow',
+              'flag',
+              true,
+              'user_id',
+              undefined,
+              'user_id',
+            ])
           })
         })
 
@@ -276,7 +295,9 @@ describe('useOptimizely', () => {
             })
 
             it('should return true', async () => {
-              const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+              const { result, waitForNextUpdate } = renderHook(() =>
+                useIsOptimizelyFeatureEnabled('flag')
+              )
 
               await waitForNextUpdate()
 
@@ -291,7 +312,14 @@ describe('useOptimizely', () => {
 
               await waitForNextUpdate()
 
-              expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, 'user_id', 'session_id', 'user_id'])
+              expect(dispatch).toHaveBeenCalledWith([
+                'call_trackExperimentInSnowplow',
+                'flag',
+                true,
+                'user_id',
+                'session_id',
+                'user_id',
+              ])
             })
           })
         })
@@ -343,7 +371,9 @@ describe('useOptimizely', () => {
             getItemSpy.mockReturnValue(JSON.stringify('other=false'))
             isFeatureEnabled.mockReturnValue(true)
 
-            const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+            const { result, waitForNextUpdate } = renderHook(() =>
+              useIsOptimizelyFeatureEnabled('flag')
+            )
 
             await waitForNextUpdate()
 
@@ -372,7 +402,9 @@ describe('useOptimizely', () => {
         it('should return false', async () => {
           isFeatureEnabled.mockReturnValue(false)
 
-          const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+          const { result, waitForNextUpdate } = renderHook(() =>
+            useIsOptimizelyFeatureEnabled('flag')
+          )
 
           await waitForNextUpdate()
 
@@ -387,7 +419,14 @@ describe('useOptimizely', () => {
 
           await waitForNextUpdate()
 
-          expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', false, '', 'session_id', 'snowplowUserId'])
+          expect(dispatch).toHaveBeenCalledWith([
+            'call_trackExperimentInSnowplow',
+            'flag',
+            false,
+            '',
+            'session_id',
+            'snowplowUserId',
+          ])
         })
       })
 
@@ -395,7 +434,9 @@ describe('useOptimizely', () => {
         it('should return true', async () => {
           isFeatureEnabled.mockReturnValue(true)
 
-          const { result, waitForNextUpdate } = renderHook(() => useIsOptimizelyFeatureEnabled('flag'))
+          const { result, waitForNextUpdate } = renderHook(() =>
+            useIsOptimizelyFeatureEnabled('flag')
+          )
 
           await waitForNextUpdate()
 
@@ -410,7 +451,14 @@ describe('useOptimizely', () => {
 
           await waitForNextUpdate()
 
-          expect(dispatch).toHaveBeenCalledWith(['call_trackExperimentInSnowplow', 'flag', true, '', 'session_id', 'snowplowUserId'])
+          expect(dispatch).toHaveBeenCalledWith([
+            'call_trackExperimentInSnowplow',
+            'flag',
+            true,
+            '',
+            'session_id',
+            'snowplowUserId',
+          ])
         })
       })
     })

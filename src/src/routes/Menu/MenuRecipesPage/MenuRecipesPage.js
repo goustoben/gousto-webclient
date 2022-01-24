@@ -18,6 +18,7 @@ import css from './MenuRecipesPage.css'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
 import { RecommendationsHighlight } from './RecommendationsHighlight/RecommendationsHighlight'
+import { FiveRecipesStartOfJourneyModal } from '../../../components/FiveRecipesPaintedDoorTest/FiveRecipesStartOfJourneyModal'
 
 export class MenuRecipesPage extends PureComponent {
   async componentDidMount() {
@@ -122,7 +123,6 @@ export class MenuRecipesPage extends PureComponent {
         { !isLoading && <JustForYouTutorial />}
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
-
         <MenuSidesModalContainer />
       </div>
     )
@@ -146,6 +146,7 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div data-testing="menuRecipes">
+        <FiveRecipesStartOfJourneyModal />
         {
           showLoading
             ? (

@@ -1,9 +1,19 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-
+import { useSelector, useDispatch } from 'react-redux'
 import { Description } from '../Description'
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
+
 describe('Description', () => {
+  beforeEach(() => {
+    useSelector.mockReturnValue(true)
+    useDispatch.mockReturnValue(() => {})
+  })
   test('should return a paragraph', () => {
     const wrapper = shallow(
       <Description view="desktop" numPortions={2} numRecipes={1} />,

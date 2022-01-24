@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
+import * as UseShouldShowPaintedDoorButton from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
 import { Detail } from '../Detail'
 import { DetailContainer } from '../DetailContainer'
 import { DetailIngredientsContainer } from '../DetailIngredients'
@@ -12,17 +13,18 @@ import { DetailPerPortionContainer } from '../DetailPerPortion'
 import { DetailAttributeGridContainer } from '../DetailAttributeGrid'
 import { RecipeAlternativeOptions } from '../../VariantRecipeList/RecipeAlternativeOptions'
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: () => '123',
+  useDispatch: jest.fn(),
+}))
+
 jest.mock('routes/Menu/RecipeDisclaimer', () => ({
   RecipeDisclaimerContainer: () => <div />
 }))
 
 jest.mock('../DetailAddRecipe', () => ({
   DetailAddRecipe: () => <div />
-}))
-
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: () => '123',
 }))
 
 jest.mock('routes/Menu/domains/menu', () => ({
@@ -52,8 +54,12 @@ describe('<Detail />', () => {
   )
 
   let wrapper
+  let useShouldShowPaintedDoorButton
 
   beforeEach(() => {
+    useShouldShowPaintedDoorButton = jest.spyOn(UseShouldShowPaintedDoorButton, 'useShouldShowPaintedDoorButton')
+    useShouldShowPaintedDoorButton.mockReturnValue(false)
+
     wrapper = shallow(DETAIL)
   })
 
@@ -222,6 +228,27 @@ describe('<Detail />', () => {
 
     test('should render Carousel', () => {
       expect(wrapper.find('Carousel')).toHaveLength(1)
+    })
+  })
+
+  describe('When user is in the experiment', () => {
+    beforeEach(() => {
+      useShouldShowPaintedDoorButton.mockReturnValue(true)
+      wrapper = shallow(DETAIL)
+    })
+
+    test('should render FiveRecipesAddRecipeButton', () => {
+      expect(wrapper.find('FiveRecipesAddRecipeButton')).toHaveLength(1)
+    })
+  })
+  describe('When user is NOT in the experiment', () => {
+    beforeEach(() => {
+      useShouldShowPaintedDoorButton.mockReturnValue(false)
+      wrapper = shallow(DETAIL)
+    })
+
+    test('should render FiveRecipesAddRecipeButton', () => {
+      expect(wrapper.find('FiveRecipesAddRecipeButton')).toHaveLength(0)
     })
   })
 })

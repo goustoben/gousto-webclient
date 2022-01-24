@@ -9,6 +9,8 @@ import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { useStock } from 'routes/Menu/domains/menu'
+import { useShouldShowPaintedDoorButton } from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
+import { FiveRecipesAddRecipeButton } from 'components/FiveRecipesPaintedDoorTest/FiveRecipesAddRecipeButton'
 import { useAllCollections } from '../../domains/collections'
 import Carousel from './Carousel'
 
@@ -22,25 +24,35 @@ import { DetailAttributeGridContainer } from './DetailAttributeGrid'
 import { DetailAddRecipe } from './DetailAddRecipe'
 
 import css from './Detail.css'
+import cssDetailAddRecipe from './DetailAddRecipe/DetailAddRecipe.css'
+
 import titleCss from './DetailTitle.css'
 import { RecipeAlternativeOptions } from '../VariantRecipeList'
 
 export const Detail = (props) => {
   const {
-    id, chosenSideRecipeId,
+    id,
+    chosenSideRecipeId,
     onClose,
-    media, title,
-    view, count, average,
-    description, youWillNeed,
+    media,
+    title,
+    view,
+    count,
+    average,
+    description,
+    youWillNeed,
     equipment,
-    position, surcharge,
-    isChefPrepared, isFineDineIn,
+    position,
+    surcharge,
+    isChefPrepared,
+    isFineDineIn,
     menuWithSides,
-    isFromShowcaseMenu
+    isFromShowcaseMenu,
   } = props
 
   const { isRecipeOutOfStock } = useStock()
   const allCollections = useAllCollections()
+  const fiveRecipesEnabled = useShouldShowPaintedDoorButton(id)
 
   let currentCollectionId = useSelector(getMenuCategoryIdForDetails)
   if (!currentCollectionId) {
@@ -51,13 +63,10 @@ export const Detail = (props) => {
 
   const isOutOfStock = isRecipeOutOfStock(id)
   const recipeLegalDetailId = chosenSideRecipeId || id
-  const titleClass = classnames(
-    titleCss.containerLG,
-    {
-      [titleCss.detailHeading]: view === 'detail',
-      [titleCss.fineDineInDetailHeading]: view === 'fineDineInDetail'
-    }
-  )
+  const titleClass = classnames(titleCss.containerLG, {
+    [titleCss.detailHeading]: view === 'detail',
+    [titleCss.fineDineInDetailHeading]: view === 'fineDineInDetail',
+  })
 
   return (
     <div
@@ -68,7 +77,13 @@ export const Detail = (props) => {
       onClick={onClose}
       data-testing="menuRecipeDetailsClose"
     >
-      <div role="button" tabIndex={0} className={css.container} onKeyPress={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
+      <div
+        role="button"
+        tabIndex={0}
+        className={css.container}
+        onKeyPress={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={css.header}>
           <div className={css.stickyHeader}>
             <div className={css.titleFlex}>
@@ -94,12 +109,11 @@ export const Detail = (props) => {
           </div>
         </div>
         <div className={css.imageContainer}>
-          {isFineDineIn
-            ? (
-              <Carousel images={media} isOutOfStock={isOutOfStock} />
-            ) : (
-              <Image media={media} title={title} view={view} isOutOfStock={isOutOfStock} />
-            )}
+          {isFineDineIn ? (
+            <Carousel images={media} isOutOfStock={isOutOfStock} />
+          ) : (
+            <Image media={media} title={title} view={view} isOutOfStock={isOutOfStock} />
+          )}
         </div>
         <div className={css.sectionPanel}>
           <div className={css.variantsContainer}>
@@ -113,25 +127,28 @@ export const Detail = (props) => {
           </div>
           <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
           <p className={css.infoBoxText}>{description}</p>
-          <DetailAttributeGridContainer recipeId={recipeLegalDetailId} isChefPrepared={isChefPrepared} />
+          <DetailAttributeGridContainer
+            recipeId={recipeLegalDetailId}
+            isChefPrepared={isChefPrepared}
+          />
           <RecipeDisclaimerContainer recipeId={id} />
           {equipment && !!equipment.size && (
-          <p className={css.additionalInfo}>
-            Equipment required:
-            {equipment.toJS().join(', ')}
-          </p>
+            <p className={css.additionalInfo}>
+              Equipment required:
+              {equipment.toJS().join(', ')}
+            </p>
           )}
           {youWillNeed && !!youWillNeed.size && (
-          <p className={css.additionalInfo}>
-            What you&#8217;ll need:
-            {youWillNeed.map((item, idx) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <span key={idx}>
-                {item}
-                {(youWillNeed.size - 1) !== idx && ', '}
-              </span>
-            ))}
-          </p>
+            <p className={css.additionalInfo}>
+              What you&#8217;ll need:
+              {youWillNeed.map((item, idx) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <span key={idx}>
+                  {item}
+                  {youWillNeed.size - 1 !== idx && ', '}
+                </span>
+              ))}
+            </p>
           )}
         </div>
         <div className={css.row}>
@@ -143,9 +160,19 @@ export const Detail = (props) => {
         <div className={css.row}>
           <DetailAllergenIngredientsContainer recipeId={recipeLegalDetailId} />
         </div>
-        {
-          isFromShowcaseMenu ? null : (
-            <div className={css.stickyContainer}>
+        {isFromShowcaseMenu ? null : (
+          <div className={css.stickyContainer}>
+            {fiveRecipesEnabled && (
+              <div
+                className={classnames(
+                  cssDetailAddRecipe.addRecipeWrapper,
+                  cssDetailAddRecipe.dropperContainer
+                )}
+              >
+                <FiveRecipesAddRecipeButton onDetailsPage />
+              </div>
+            )}
+            {!fiveRecipesEnabled && (
               <DetailAddRecipe
                 id={id}
                 isOutOfStock={isOutOfStock}
@@ -154,9 +181,9 @@ export const Detail = (props) => {
                 position={position}
                 buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
               />
-            </div>
-          )
-        }
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
