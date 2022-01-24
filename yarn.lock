@@ -374,6 +374,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.13.10":
+  version: 7.16.7
+  resolution: "@babel/runtime@npm:7.16.7::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40babel%2Fruntime%2F-%2Fruntime-7.16.7.tgz"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 47912f0aaacd1cab2e2552aaf3e6eaffbcaf2d5ac9b07a89a12ac0d42029cb92c070b0d16f825e4277c4a34677c54d8ffe85e1f7c6feb57de58f700eec67ce2f
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.16.7, @babel/template@npm:^7.3.3":
   version: 7.16.7
   resolution: "@babel/template@npm:7.16.7"
@@ -573,6 +582,97 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/cache@npm:^11.7.1":
+  version: 11.7.1
+  resolution: "@emotion/cache@npm:11.7.1::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Fcache%2F-%2Fcache-11.7.1.tgz"
+  dependencies:
+    "@emotion/memoize": ^0.7.4
+    "@emotion/sheet": ^1.1.0
+    "@emotion/utils": ^1.0.0
+    "@emotion/weak-memoize": ^0.2.5
+    stylis: 4.0.13
+  checksum: cf7aa8fe3bacfdedcda94b53e76a7635e122043439715fcfbf7f1a81340cfe6099a59134481a03ec3e0437466566d18528577d1e6ea92f5b98c372b8b38a8f35
+  languageName: node
+  linkType: hard
+
+"@emotion/hash@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "@emotion/hash@npm:0.8.0::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Fhash%2F-%2Fhash-0.8.0.tgz"
+  checksum: 4b35d88a97e67275c1d990c96d3b0450451d089d1508619488fc0acb882cb1ac91e93246d471346ebd1b5402215941ef4162efe5b51534859b39d8b3a0e3ffaa
+  languageName: node
+  linkType: hard
+
+"@emotion/memoize@npm:^0.7.4":
+  version: 0.7.5
+  resolution: "@emotion/memoize@npm:0.7.5::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Fmemoize%2F-%2Fmemoize-0.7.5.tgz"
+  checksum: 83da8d4a7649a92c72f960817692bc6be13cc13e107b9f7e878d63766525ed4402881bfeb3cda61145c050281e7e260f114a0a2870515527346f2ef896b915b3
+  languageName: node
+  linkType: hard
+
+"@emotion/react@npm:^11.7.1":
+  version: 11.7.1
+  resolution: "@emotion/react@npm:11.7.1::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Freact%2F-%2Freact-11.7.1.tgz"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@emotion/cache": ^11.7.1
+    "@emotion/serialize": ^1.0.2
+    "@emotion/sheet": ^1.1.0
+    "@emotion/utils": ^1.0.0
+    "@emotion/weak-memoize": ^0.2.5
+    hoist-non-react-statics: ^3.3.1
+  peerDependencies:
+    "@babel/core": ^7.0.0
+    react: ">=16.8.0"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    "@types/react":
+      optional: true
+  checksum: 3392aa71f9c68c16022947959f7f842174e6b075b3baf58e185462411cd9b5a87557109a9225b1abaa2d7200a08b7cb9d7f21aa035f0d36b2c89e19b2a124e02
+  languageName: node
+  linkType: hard
+
+"@emotion/serialize@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@emotion/serialize@npm:1.0.2::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Fserialize%2F-%2Fserialize-1.0.2.tgz"
+  dependencies:
+    "@emotion/hash": ^0.8.0
+    "@emotion/memoize": ^0.7.4
+    "@emotion/unitless": ^0.7.5
+    "@emotion/utils": ^1.0.0
+    csstype: ^3.0.2
+  checksum: ff84fbe09ec06e7ad3deaef5c5b5ea6af6a522e8efe49c2b398b875d06872626284a83b6b18b7f777750c94264a61e7924157d869d9bca2f675731bbb91a6055
+  languageName: node
+  linkType: hard
+
+"@emotion/sheet@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@emotion/sheet@npm:1.1.0::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Fsheet%2F-%2Fsheet-1.1.0.tgz"
+  checksum: a4b74e16a8fea1157413efe4904f5f679d724323cb605d66d20a0b98744422f5d411fca927ceb52e4de454a0a819c5273ca9496db9f011b4ecd17b9f1b212007
+  languageName: node
+  linkType: hard
+
+"@emotion/unitless@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "@emotion/unitless@npm:0.7.5::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Funitless%2F-%2Funitless-0.7.5.tgz"
+  checksum: f976e5345b53fae9414a7b2e7a949aa6b52f8bdbcc84458b1ddc0729e77ba1d1dfdff9960e0da60183877873d3a631fa24d9695dd714ed94bcd3ba5196586a6b
+  languageName: node
+  linkType: hard
+
+"@emotion/utils@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@emotion/utils@npm:1.0.0::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Futils%2F-%2Futils-1.0.0.tgz"
+  checksum: 3ce8048441a915447d9ef51eb6d1d4cbcce8c8d1647bc7a23333ce2fb2249e74cf9471670d6f49a716e93ff633c9e7a6633517698e17391aebfc40c9d0cabcc0
+  languageName: node
+  linkType: hard
+
+"@emotion/weak-memoize@npm:^0.2.5":
+  version: 0.2.5
+  resolution: "@emotion/weak-memoize@npm:0.2.5::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40emotion%2Fweak-memoize%2F-%2Fweak-memoize-0.2.5.tgz"
+  checksum: 27d402b0c683b94658220b6d47840346ee582329ca2a15ec9c233492e0f1a27687ccb233b76eedc922f2e185e444cc89f7b97a81a1d3e5ae9f075bab08e965ea
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
@@ -580,6 +680,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
+=======
+"@gousto-internal/citrus-react@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "@gousto-internal/citrus-react@npm:0.12.0::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.12.0.tgz"
+  dependencies:
+    classnames: ^2.3.1
+    focus-visible: ^5.2.0
+  peerDependencies:
+    "@emotion/react": ^11.7.0
+    react: ">=16"
+  checksum: 6c69b502bd8e77453d87f07674c863ca60cbcabe4e317abb4247bba90338d2b82e64862ed1ca23162906ddcf3ea7853f822a7b1f96ae60ff0eb06b62874159e3
+  languageName: node
+  linkType: hard
+
+"@hapi/bourne@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@hapi/bourne@npm:2.0.0"
+  checksum: 2ea0922101d3fecec43428194c72c5dbe0be908dd7ad07347879dc720820ac410ead79a4c349a2e1726e8af062464160c6d32b6566bbc4c60865923f9d7dd006
+  languageName: node
+  linkType: hard
+
+>>>>>>> 6f245aacd (Modify .yarnrc.yml for codeartifact)
 "@hapi/hoek@npm:^9.0.0":
   version: 9.2.1
   resolution: "@hapi/hoek@npm:9.2.1"
@@ -3997,6 +4120,13 @@ __metadata:
   version: 2.2.6
   resolution: "classnames@npm:2.2.6"
   checksum: 09a4fda780158aa8399079898eabeeca0c48c28641d9e4de140db7412e5e346843039ded1af0152f755afc2cc246ff8c3d6f227bf0dcb004e070b7fa14ec54cc
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "classnames@npm:2.3.1::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2Fclassnames%2F-%2Fclassnames-2.3.1.tgz"
+  checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
   languageName: node
   linkType: hard
 
@@ -8448,7 +8578,168 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+<<<<<<< HEAD
 "graceful-fs@npm:^4.1.10, graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.15, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6":
+=======
+"goustowebclient@workspace:src":
+  version: 0.0.0-use.local
+  resolution: "goustowebclient@workspace:src"
+  dependencies:
+    "@axe-core/react": ^4.1.1
+    "@datadog/browser-logs": ^3.8.0
+    "@datadog/browser-rum": ^3.8.0
+    "@datadog/datadog-ci": ^0.17.12
+    "@emotion/react": ^11.7.1
+    "@gousto-internal/citrus-react": ^0.12.0
+    "@optimizely/optimizely-sdk": ^4.1.0
+    "@pact-foundation/pact": ^9.16.4
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
+    "@sheerun/mutationobserver-shim": ^0.3.3
+    "@testing-library/jest-dom": ^5.14.1
+    "@testing-library/react": ^12.0.0
+    "@testing-library/react-hooks": ^3.4.2
+    "@types/classnames": ^2.3.1
+    "@types/enzyme": ^3.10.11
+    "@types/isomorphic-fetch": 0.0.35
+    "@types/jest": ^27.0.2
+    "@types/node": ^16.10.2
+    "@types/react-router-redux": ^5.0.20
+    "@typescript-eslint/eslint-plugin": ^4.33.0
+    "@typescript-eslint/parser": ^4.33.0
+    "@wojtekmaj/enzyme-adapter-react-17": ^0.6.2
+    actual: 0.4.0
+    airbnb-prop-types: ^2.16.0
+    axios: ^0.24.0
+    bower: 1.8.8
+    classnames: 2.2.6
+    codeowners: ^4.2.0
+    concat-stream: ^2.0.0
+    cookies-js: 1.2.3
+    css-loader: 1.0.1
+    cssnano: 4.1.8
+    cssnano-preset-advanced: 4.0.6
+    dd-trace: ^1.5.1
+    dompurify: ^2.0.8
+    enzyme: 3.9.0
+    eslint: ^6.8.0
+    eslint-config-airbnb: ^18.0.1
+    eslint-import-resolver-alias: ^1.1.2
+    eslint-plugin-import: ^2.20.1
+    eslint-plugin-jsx-a11y: ^6.2.3
+    eslint-plugin-prettier: ^3.3.1
+    eslint-plugin-react: ^7.18.3
+    eslint-plugin-react-hooks: ^4.1.2
+    extract-text-webpack-plugin: 4.0.0-beta.0
+    file-loader: 2.0.0
+    gousto-lumberjack-js: "git@github.com:Gousto/lumberjack-js-package.git#v1.0.4"
+    identity-obj-proxy: 3.0.0
+    ignore: ^5.1.8
+    image-webpack-loader: 4.6.0
+    immutable: 3.8.2
+    isomorphic-fetch: 2.2.1
+    jest: ^27.4.3
+    jest-environment-node: ^27.2.5
+    jest-fetch-mock: ^3.0.3
+    jest-localstorage-mock: ^2.4.18
+    jsdom: 11.3.0
+    json5: ^2.2.0
+    jsonfile: 4.0.0
+    koa: 2.5.1
+    koa-body: 2.5.0
+    koa-convert: 1.2.0
+    koa-mount: 2.0.0
+    koa-static: 3.0.0
+    koa-webpack: ^6.0.0
+    libphonenumber-js: ^1.9.23
+    libphonenumber-metadata-generator: ^1.0.1
+    mockdate: ^2.0.5
+    moment: 2.22.2
+    msw: ^0.33.0
+    node-config: "npm:config@^3.3.3"
+    node-sass: ^4.13.1
+    nodemon: 1.18.3
+    normalize.css: ^8.0.1
+    npm-run-all: 4.1.3
+    optimize-css-assets-webpack-plugin: 5.0.1
+    performance-now: ^2.1.0
+    perfume.js: ^6.2.0
+    postcss: 7.0.7
+    postcss-flexbugs-fixes: 4.1.0
+    postcss-import: 12.0.1
+    postcss-loader: 3
+    postcss-nested: 4.1.1
+    postcss-preset-env: 6.5.0
+    postcss-reporter: 6
+    postcss-safe-parser: 4.0.1
+    prettier: ^2.3.2
+    promise-timeout: ^1.3.0
+    prop-types: 15.7.2
+    qs: 6.5.2
+    query-string: 4.2.3
+    rc-tooltip: 4.0.3
+    react: 17.0.2
+    react-async-script: ^1.2.0
+    react-copy-to-clipboard: 5.0.1
+    react-dom: 17.0.2
+    react-helmet: 5.0.3
+    react-immutable-proptypes: 2.1.0
+    react-lazyload: 2.3.0
+    react-markdown: 2.5.0
+    react-media: ^1.10.0
+    react-modal: ^3.12.1
+    react-portal: ^4.2.1
+    react-redux: 7.2.4
+    react-refresh: ^0.10.0
+    react-router: 3.2.3
+    react-router-redux: 4.0.8
+    react-router-scroll: 0.4.3
+    react-select: ^1.2.1
+    react-slick: 0.25.2
+    react-test-renderer: 16.13.1
+    react-transition-group: ^2.9.0
+    react-use: ^15.3.4
+    redux: 4.0.5
+    redux-form: ^8.3.7
+    redux-logger: 3.0.6
+    redux-mock-store: 1.1.1
+    redux-thunk: 2.3.0
+    request: ^2.88.0
+    reselect: 3.0.1
+    sass-loader: 7.1.0
+    scroll: 2.0.3
+    scroll-into-view: 1.8.0
+    seedrandom: 2.4.3
+    simple-progress-webpack-plugin: 1.1.2
+    sinon: 2.1.0
+    source-map-support: 0.5.9
+    speed-measure-webpack-plugin: ^1.3.1
+    spinkit: 1.2.5
+    style-loader: 0.23.1
+    svg-url-loader: ^2.3.2
+    swr: ^0.5.6
+    terser-webpack-plugin: 1.1.0
+    transit-immutable-js: 0.7.0
+    transit-js: 0.8.861
+    ts-jest: ^27.1.0
+    ts-loader: ^8.3.0
+    tslib: ^2.3.1
+    typescript: ^4.5.2
+    url: 0.11.0
+    url-loader: 1.1.2
+    usehooks-ts: ^2.2.0
+    uuid: 3.3.2
+    validator: 10.4.0
+    webpack: ^4.44.2
+    webpack-bundle-analyzer: 3.3.2
+    webpack-cli: 3.1.2
+    webpack-hot-middleware: ^2.25.0
+    webpack-manifest-plugin: 2.0.4
+    webpack-node-externals: 1.7.2
+  languageName: unknown
+  linkType: soft
+
+"graceful-fs@npm:^4.1.10, graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.15, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.2, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6":
+>>>>>>> 6f245aacd (Modify .yarnrc.yml for codeartifact)
   version: 4.2.9
   resolution: "graceful-fs@npm:4.2.9"
   checksum: 68ea4e07ff2c041ada184f9278b830375f8e0b75154e3f080af6b70f66172fabb4108d19b3863a96b53fc068a310b9b6493d86d1291acc5f3861eb4b79d26ad6
@@ -8718,6 +9009,15 @@ __metadata:
 "hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
+  dependencies:
+    react-is: ^16.7.0
+  checksum: b1538270429b13901ee586aa44f4cc3ecd8831c061d06cb8322e50ea17b3f5ce4d0e2e66394761e6c8e152cd8c34fb3b4b690116c6ce2bd45b18c746516cb9e8
+  languageName: node
+  linkType: hard
+
+"hoist-non-react-statics@npm:^3.3.1":
+  version: 3.3.2
+  resolution: "hoist-non-react-statics@npm:3.3.2::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2Fhoist-non-react-statics%2F-%2Fhoist-non-react-statics-3.3.2.tgz"
   dependencies:
     react-is: ^16.7.0
   checksum: b1538270429b13901ee586aa44f4cc3ecd8831c061d06cb8322e50ea17b3f5ce4d0e2e66394761e6c8e152cd8c34fb3b4b690116c6ce2bd45b18c746516cb9e8
@@ -18362,7 +18662,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylis@npm:^4.0.6":
+"stylis@npm:4.0.13, stylis@npm:^4.0.6":
   version: 4.0.13
   resolution: "stylis@npm:4.0.13"
   checksum: 8ea7a87028b6383c6a982231c4b5b6150031ce028e0fdaf7b2ace82253d28a8af50cc5a9da8a421d3c7c4441592f393086e332795add672aa4a825f0fe3713a3
