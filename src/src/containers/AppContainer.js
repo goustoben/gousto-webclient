@@ -10,6 +10,8 @@ import { hashLinkScroll } from 'routes/hashLinkScroll'
 import fetchContentOnChange from 'routes/fetchContentOnChange'
 import { documentLocation } from 'utils/window'
 import { SetupOptimizelyOverride } from 'containers/OptimizelyRollouts'
+import { ThemeProvider, Reset } from '@gousto-internal/citrus-react'
+import { designToken } from '../config/designToken'
 
 export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
@@ -19,18 +21,21 @@ export const AppContainer = ({ history, routes, store }) => (
         revalidateOnFocus: false
       }}
     >
-      <Router
-        history={history}
-        // eslint-disable-next-line
+      <ThemeProvider tokens={designToken}>
+        <Reset />
+        <Router
+          history={history}
+          // eslint-disable-next-line
         render={__CLIENT__ ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
-        onUpdate={() => {
-          trackPageChange(store)
-          hashLinkScroll()
-          fetchContentOnChange(documentLocation().pathname, store)
-        }}
-      >
-        {routes}
-      </Router>
+          onUpdate={() => {
+            trackPageChange(store)
+            hashLinkScroll()
+            fetchContentOnChange(documentLocation().pathname, store)
+          }}
+        >
+          {routes}
+        </Router>
+      </ThemeProvider>
     </SWRConfig>
   </Provider>
 )
