@@ -5,18 +5,11 @@ import MutationObserver from '@sheerun/mutationobserver-shim'
 import './.setupEndpoints.js'
 import { server } from "./.msw"
 import Modal from 'react-modal'
-import { Pact } from "@pact-foundation/pact"
-import path from "path"
-import { rmdirSync } from "fs"
 
 const Enzyme = require('enzyme');
 const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
 
-if (global.adapterTest) {
-  configureAdapterTestEnvironment()
-} else {
-  configureEmulatedBrowserEnvironment()
-}
+configureEmulatedBrowserEnvironment()
 
 jest.mock('react-modal', () => {
   const Modal = jest.requireActual('react-modal')
@@ -27,34 +20,6 @@ jest.mock('react-modal', () => {
 
   return NewModal
 })
-
-function configureAdapterTestEnvironment() {
-  jest.setTimeout(30 * 1000)
-
-  const pathOutputDirectoryPath = path.join(__dirname, '..', '..', 'pact')
-
-  if (!global.pactDirectoryReset) {
-    rmdirSync(pathOutputDirectoryPath, {recursive: true})
-    global.pactDirectoryReset = true
-  }
-
-  const pact = new Pact({
-    consumer: 'gousto-webclient',
-    provider: global.pactProvider,
-    dir: path.join(pathOutputDirectoryPath, 'pacts'),
-    pactfileWriteMode: 'update',
-    log: path.join(pathOutputDirectoryPath, 'logs', 'pact-file-generation','pact.log'),
-    logLevel: process.env.PACT_LOG_LEVEL ? process.env.PACT_LOG_LEVEL : 'error'
-  })
-
-  global.pact = pact
-
-  beforeAll(() => pact.setup())
-
-  afterEach(() => pact.verify())
-
-  afterAll(() => pact.finalize())
-}
 
 function configureEmulatedBrowserEnvironment() {
   global.MutationObserver = global.MutationObserver || MutationObserver

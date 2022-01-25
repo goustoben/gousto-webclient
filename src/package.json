@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn build:server && yarn start",
     "bower-install": "bower install --force --allow-root",
-    "start": "./scripts/fork.sh 'NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn server' 'yarn workspace webclient-emulation-server dev:proxy-staging'",
+    "start": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn server",
     "server": "node dist/server.js",
     "start:with-static": "withStatic=true npm run start",
     "start:dev:inspect": "nodemon --inspect=0.0.0.0 dist/server.js",
@@ -36,7 +36,6 @@
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent --coverage",
-    "test:gousto-adapters": "jest --config=src/adapters/gousto/__tests__/jest.config.js",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "eslint": "eslint .",
     "codeowners:report": "node ./scripts/codeowners-report/codeowners-report.js",
@@ -113,7 +112,6 @@
   },
   "devDependencies": {
     "@datadog/datadog-ci": "^0.17.12",
-    "@pact-foundation/pact": "^9.16.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@sheerun/mutationobserver-shim": "^0.3.3",
     "@testing-library/jest-dom": "^5.14.1",
@@ -210,8 +208,5 @@
   },
   "engines": {
     "node": "14.x"
-  },
-  "config": {
-    "pact_do_not_track": true
   }
 }

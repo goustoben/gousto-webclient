@@ -19,8 +19,7 @@ module.exports = {
     '^.+\\.(css|scss)$': 'identity-obj-proxy'
   },
   testPathIgnorePatterns: [
-    '<rootDir>/libs/goustouicomponents',
-    '<rootDir>/src/adapters/gousto/__tests__/'
+    '<rootDir>/libs/goustouicomponents'
   ],
   transform: {
     '^.+\\.js?$': 'ts-jest',

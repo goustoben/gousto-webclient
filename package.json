@@ -5,7 +5,6 @@
   "author": "Gousto",
   "license": "UNLICENSED",
   "workspaces": [
-    "emulation-server",
     "src",
     "tests/e2e",
     "tests/regression"

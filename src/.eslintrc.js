@@ -262,7 +262,6 @@ module.exports = {
     "hj": true,
     "after": true,
     "Cypress": true,
-    "pact": true,
     __DATADOG_BROWSER_LOGS_TOKEN__: true,
     __DATADOG_RUM_SDK_TOKEN__: true,
     __DATADOG_RUM_SDK_APP_ID__: true,

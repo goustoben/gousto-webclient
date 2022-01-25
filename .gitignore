@@ -30,7 +30,6 @@ src/config/*-local.json5
 .idea
 src/config/env.json
 lib
-/pact/
 
 # Yarn
 # This is the recommended configuration for non-zero-installs.
