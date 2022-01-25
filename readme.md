@@ -43,17 +43,17 @@ $ cd src/apps/webclient # OR yw webclient <command> (see above)
 # 5. Start the main webclient in development mode
 # For hot module reload see [Detailed guide](./docs/detailed-setup.md) to setup.
 $ yarn build:client
-$ yarn dev
+$ yarn dev .
 ```
 
 ## Pre-requisites
 
-* You'll need to have Yarn installed - if you install Yarn 1 (`npm install yarn -g`), it will bootstrap Yarn 3 from `.yarn/releases/yarn-3.1.1.cjs`
-* You'll need to have a `development-local.json5` config file for everything to run correctly [Follow this guide](./docs/detailed-setup.md#step-1-add-a-secrets-file-to-point-to-the-staging-environment)
-* You will have to run the site on `frontend.gousto.local` you can do this by [Setting up your local hosts file to run webclient](./docs/detailed-setup.md#step-2-add-an-entry-to-your-local-host-file)
-* You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See  [Node version management](./docs/detailed-setup.md#node-version-management) for further details.
-  * Note: Apple M1 owners - you'll need to set node to version `14` in `.nvmrc`. Be careful not to commit this change.
-* If you're not in the office you'll need to be connected to the VPN
+- You'll need to have Yarn installed - if you install Yarn 1 (`npm install yarn -g`), it will bootstrap Yarn 3 from `.yarn/releases/yarn-3.1.1.cjs`
+- You'll need to have a `development-local.json5` config file for everything to run correctly [Follow this guide](./docs/detailed-setup.md#step-1-add-a-secrets-file-to-point-to-the-staging-environment)
+- You will have to run the site on `frontend.gousto.local` you can do this by [Setting up your local hosts file to run webclient](./docs/detailed-setup.md#step-2-add-an-entry-to-your-local-host-file)
+- You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See [Node version management](./docs/detailed-setup.md#node-version-management) for further details.
+  - Note: Apple M1 owners - you'll need to set node to version `14` in `.nvmrc`. Be careful not to commit this change.
+- If you're not in the office you'll need to be connected to the VPN
 
 ## Tests
 
@@ -96,18 +96,23 @@ $ yarn test:debug:mobile
 ```
 
 ## Detailed setup
+
 For a more detailed guide to running Webclient and its supporting tests, including how to get it running with
 Gousto2-Frontend please see the [Detailed guide](docs/detailed-setup.md)
 
 ## Code analysis
 
 ### Run code health locally
+
 Create a CircleCI access token (“Personal API Tokens” https://circleci.com/account/api) and set it as environment
 variable:
+
 ```
 export CIRCLECI_ACCESS_TOKEN=XXXX
 ```
+
 Then in `src` run:
+
 ```
 ./scripts/compare-code-health.sh
 ```
