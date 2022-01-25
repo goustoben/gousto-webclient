@@ -403,10 +403,13 @@ jobs:
     working_directory: /mnt/ramdisk
     steps:
       - checkout
+      - run:
+        name: Bootstrap yarn
+        command: npm install -g yarn && yarn -v
       - codeartifact_authenticate
       - run:
           name: Install dependencies
-          command: npm install -g yarn && yarn install --immutable
+          command: yarn install --immutable
       - run:
           name: Run Gousto service adapter tests
           working_directory: src
