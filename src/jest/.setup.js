@@ -3,7 +3,6 @@ import React from 'react'
 import MutationObserver from '@sheerun/mutationobserver-shim'
 // Endpoints need to be setup before MSW
 import './.setupEndpoints.js'
-import { cache } from "swr"
 import { server } from "./.msw"
 import Modal from 'react-modal'
 import { Pact } from "@pact-foundation/pact"
@@ -87,9 +86,6 @@ function configureEmulatedBrowserEnvironment() {
   }
 
   Enzyme.configure({adapter: new EnzymeAdapter()})
-
-// This clears the cache of swr after each test
-  afterAll(() => cache.clear())
 
 // Establish API mocking before all tests.
   beforeAll(() => {
