@@ -1,1 +1,1 @@
-export {useAlternativeOptions} from './useAlternativeOptions'
+export { useAlternativeOptions } from './useAlternativeOptions'

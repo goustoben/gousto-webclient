@@ -7,14 +7,14 @@ import * as Redux from 'react-redux'
 import { mount, ReactWrapper } from 'enzyme'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import {closeRecipeDetails} from '../../actions/closeRecipeDetails'
+import { closeRecipeDetails } from '../../actions/closeRecipeDetails'
 
 jest.mock('routes/Menu/Recipe/Detail', () => ({
   DetailContainer: jest.fn(() => <div id="DetailContainer" />),
 }))
 
 jest.mock('../../actions/closeRecipeDetails', () => ({
-  closeRecipeDetails: jest.fn()
+  closeRecipeDetails: jest.fn(),
 }))
 
 const mockedStoreContents = {
@@ -62,7 +62,7 @@ describe('DetailOverlay component', () => {
     })
     describe('when Escape key is pressed', () => {
       it('should not call onCloseOverlay', () => {
-        const event = new global.KeyboardEvent('keyup', { keyCode: 27, })
+        const event = new global.KeyboardEvent('keyup', { keyCode: 27 })
         window.document.dispatchEvent(event)
         expect(closeRecipeDetails).not.toHaveBeenCalled()
       })
@@ -93,7 +93,7 @@ describe('DetailOverlay component', () => {
 
     describe('when Escape key is pressed', () => {
       it('should call onCloseOverlay', () => {
-        const event = new global.KeyboardEvent('keyup', { keyCode: 27, } )
+        const event = new global.KeyboardEvent('keyup', { keyCode: 27 })
         window.document.dispatchEvent(event)
         expect(closeRecipeDetails).toHaveBeenCalled()
       })

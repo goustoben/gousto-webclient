@@ -1,29 +1,36 @@
-import {Map} from 'immutable'
+import { Map } from 'immutable'
 
 type Recipe = Map<string, string>
 
 type ReplacerResult = {
-  recipe: Recipe;
-  originalId: string;
+  recipe: Recipe
+  originalId: string
 }
 
 type ReplacementMap = {
-  [k:string]: string;
+  [k: string]: string
 }
 
 // eslint-disable-next-line no-unused-vars
-type GetSelectedVariantsReplacer = (args: { recipes: Recipe[], replacementMap: ReplacementMap }) => (recipe: Recipe) => ReplacerResult;
+type GetSelectedVariantsReplacer = (args: {
+  recipes: Recipe[]
+  replacementMap: ReplacementMap
+}) => (recipe: Recipe) => ReplacerResult
 
-export const getSelectedVariantsReplacer: GetSelectedVariantsReplacer = ({recipes, replacementMap}) => (recipe: Recipe): ReplacerResult => {
-  let newRecipe = recipe
+export const getSelectedVariantsReplacer: GetSelectedVariantsReplacer =
+  ({ recipes, replacementMap }) =>
+  (recipe: Recipe): ReplacerResult => {
+    let newRecipe = recipe
 
-  if (replacementMap[recipe.get('id')]) {
-    const replacementRecipe = recipes.find(r1 => r1.get('id') === replacementMap[recipe.get('id')])
+    if (replacementMap[recipe.get('id')]) {
+      const replacementRecipe = recipes.find(
+        (r1) => r1.get('id') === replacementMap[recipe.get('id')]
+      )
 
-    if (replacementRecipe) {
-      newRecipe = replacementRecipe
+      if (replacementRecipe) {
+        newRecipe = replacementRecipe
+      }
     }
-  }
 
-  return {recipe: newRecipe, originalId: recipe.get('id')}
-}
+    return { recipe: newRecipe, originalId: recipe.get('id') }
+  }

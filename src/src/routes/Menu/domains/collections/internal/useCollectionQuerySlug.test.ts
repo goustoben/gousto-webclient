@@ -3,10 +3,12 @@ import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: jest.fn()
+  useSelector: jest.fn(),
 }))
 
-const mockedUseCollectionQuerySlug = useCollectionQuerySlug as jest.MockedFunction<typeof useCollectionQuerySlug>
+const mockedUseCollectionQuerySlug = useCollectionQuerySlug as jest.MockedFunction<
+  typeof useCollectionQuerySlug
+>
 const mockedUseSelector = useSelector as jest.MockedFunction<typeof useSelector>
 describe('useCollectionQuerySlug', () => {
   beforeEach(() => {
@@ -32,14 +34,14 @@ describe('useCollectionQuerySlug', () => {
       routing: {
         locationBeforeTransitions: {
           query: {
-            collection: 'gluten-free'
-          }
+            collection: 'gluten-free',
+          },
         },
-      }
+      },
     }
 
     beforeEach(() => {
-      mockedUseSelector.mockImplementation(selector => selector(state))
+      mockedUseSelector.mockImplementation((selector) => selector(state))
     })
 
     test('should return slug', () => {
@@ -54,10 +56,10 @@ describe('useCollectionQuerySlug', () => {
       routing: {
         locationBeforeTransitions: {
           query: {
-            collection: ''
-          }
+            collection: '',
+          },
         },
-      }
+      },
     }
 
     beforeEach(() => {
@@ -75,9 +77,9 @@ describe('useCollectionQuerySlug', () => {
     const state = {
       routing: {
         locationBeforeTransitions: {
-          query: {}
+          query: {},
         },
-      }
+      },
     }
 
     beforeEach(() => {

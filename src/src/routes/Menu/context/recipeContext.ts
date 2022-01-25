@@ -18,7 +18,10 @@ RecipeContext.displayName = 'RecipeContext'
 
 export const RecipeContextProvider = RecipeContext.Provider
 export const useRecipe = (): Recipe => useContext(RecipeContext)
-export const useRecipeField = <TField = unknown>(fieldSelector: string | string[], notSetValue?: unknown): TField => {
+export const useRecipeField = <TField = unknown>(
+  fieldSelector: string | string[],
+  notSetValue?: unknown
+): TField => {
   const recipe = useRecipe()
 
   if (Array.isArray(fieldSelector)) {
@@ -33,19 +36,20 @@ export const useRecipeTitle = (): string => useRecipeField<string>('title')
 export const useRecipeCookingTime = (): number => {
   const recipe = useRecipe()
   const numPortions = useSelector(getNumPortions)
-  const cookingTime = numPortions === 4 ? recipe.get('cookingTimeFamily') : recipe.get('cookingTime')
+  const cookingTime =
+    numPortions === 4 ? recipe.get('cookingTimeFamily') : recipe.get('cookingTime')
 
   return cookingTime as number
 }
 
 type BrandTag = {
-  slug: string,
-  text: string,
+  slug: string
+  text: string
   theme: {
-    name: string,
-    color: string,
-    borderColor: string,
-  },
+    name: string
+    color: string
+    borderColor: string
+  }
 }
 
 export const useRecipeBrandTagline = (): string | null => {

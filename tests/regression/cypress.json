@@ -11,8 +11,7 @@
   "chromeWebSecurity": false,
   "experimentalFetchPolyfill": true,
   "env": {
-    "WAF_ACCESS_TOKEN": "MOCK_TOKEN_VALUE",
-    "GOUSTO_SERVICE_EMULATION_BASE_URL": "http://localhost:3000"
+    "WAF_ACCESS_TOKEN": "MOCK_TOKEN_VALUE"
   },
   "blockHosts": [
     "*googletagmanager.com",

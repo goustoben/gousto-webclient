@@ -14,8 +14,12 @@ jest.mock('react-redux', () => ({
 jest.mock('./useCollectionQuerySlug')
 jest.mock('./useDisplayedCollections')
 
-const mockedUseCollectionQuerySlug = useCollectionQuerySlug as jest.MockedFunction<typeof useCollectionQuerySlug>
-const mockedUseDisplayedCollections = useDisplayedCollections as jest.MockedFunction<typeof useDisplayedCollections>
+const mockedUseCollectionQuerySlug = useCollectionQuerySlug as jest.MockedFunction<
+  typeof useCollectionQuerySlug
+>
+const mockedUseDisplayedCollections = useDisplayedCollections as jest.MockedFunction<
+  typeof useDisplayedCollections
+>
 
 describe('useCurrentCollection', () => {
   const defaultCollection = createCollectionFromDefaultValues({

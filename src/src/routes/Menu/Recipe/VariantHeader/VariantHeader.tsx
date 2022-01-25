@@ -40,9 +40,9 @@ const getTextOverride = (recipeId: string) => {
 }
 
 export const VariantHeader: React.FC<{
-  recipeId: string;
-  categoryId: string;
-  originalId: string;
+  recipeId: string
+  categoryId: string
+  originalId: string
 }> = ({ recipeId, categoryId, originalId }) => {
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)
@@ -67,14 +67,7 @@ export const VariantHeader: React.FC<{
   const text = textOverride || `${alternativeCount} options available`
 
   return (
-    <div
-      className={classnames(
-        css.variantHeader,
-        css.themeBlue,
-        css.positionTop,
-        css.textLeft
-      )}
-    >
+    <div className={classnames(css.variantHeader, css.themeBlue, css.positionTop, css.textLeft)}>
       {text}
     </div>
   )

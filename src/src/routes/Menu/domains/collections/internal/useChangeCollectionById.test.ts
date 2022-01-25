@@ -17,7 +17,9 @@ jest.mock('./useDisplayedCollections')
 jest.mock('./useLocation')
 
 const mockedUseDispatch = useDispatch as jest.MockedFunction<typeof useDispatch>
-const mockedUseDisplayedCollections = useDisplayedCollections as jest.MockedFunction<typeof useDisplayedCollections>
+const mockedUseDisplayedCollections = useDisplayedCollections as jest.MockedFunction<
+  typeof useDisplayedCollections
+>
 const mockedUseLocation = useLocation as jest.MockedFunction<typeof useLocation>
 
 describe('useChangeCollectionById', () => {

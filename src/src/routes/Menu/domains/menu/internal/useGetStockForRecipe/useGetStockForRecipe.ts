@@ -3,19 +3,22 @@ import Immutable from 'immutable'
 import { MenuRecipeStock } from './types'
 
 type UseGetStockForRecipeArgs = {
-  menuRecipeStock: MenuRecipeStock;
-  numPortions: number;
+  menuRecipeStock: MenuRecipeStock
+  numPortions: number
 }
 
-export const useGetStockForRecipe = ({menuRecipeStock, numPortions}: UseGetStockForRecipeArgs) => {
+export const useGetStockForRecipe = ({
+  menuRecipeStock,
+  numPortions,
+}: UseGetStockForRecipeArgs) => {
   const getStockForRecipe = useCallback(
     /**
      * Get the stock level for a given `recipeId` or `null` if stock level data is not available.
      */
     (recipeId: string): number | null => {
-      const noRecipeProvided = ! recipeId
-      const noRecipesStock = ! menuRecipeStock
-      const recipesStockIsNotImmutable = ! Immutable.Iterable.isIterable(menuRecipeStock)
+      const noRecipeProvided = !recipeId
+      const noRecipesStock = !menuRecipeStock
+      const recipesStockIsNotImmutable = !Immutable.Iterable.isIterable(menuRecipeStock)
 
       if (noRecipeProvided || noRecipesStock || recipesStockIsNotImmutable) {
         return null

@@ -262,7 +262,6 @@ module.exports = {
     "hj": true,
     "after": true,
     "Cypress": true,
-    "pact": true,
     __DATADOG_BROWSER_LOGS_TOKEN__: true,
     __DATADOG_RUM_SDK_TOKEN__: true,
     __DATADOG_RUM_SDK_APP_ID__: true,
@@ -332,6 +331,8 @@ module.exports = {
         'src/middlewares/tracking/dataLayerTracker/*.js',
         'src/routes/BoxPrices/**/*.js',
         "src/performanceTracker/**/*.js",
+        'src/routes/Menu/**/*.ts',
+        'src/routes/Menu/**/*.tsx',
       ],
       rules: {
         'prettier/prettier': 'error',
