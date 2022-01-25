@@ -106,6 +106,9 @@ jobs:
       - codeartifact_authenticate
       - run:
           name: Install dependencies
+          command: yarn -v
+      - run:
+          name: Install dependencies
           command: yarn install --immutable
       - persist_to_workspace:
           root: /
