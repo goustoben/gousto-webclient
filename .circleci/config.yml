@@ -416,8 +416,8 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Bootstrap yarn
-        command: npm install -g yarn && yarn -v
+          name: Bootstrap yarn
+          command: npm install -g yarn && yarn -v
       - codeartifact_authenticate
       - run:
           name: Install dependencies
