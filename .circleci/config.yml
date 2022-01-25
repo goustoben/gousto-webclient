@@ -414,10 +414,10 @@ jobs:
       - codeartifact_authenticate
       - run:
           name: Logging npm version
-          command: npm -v
+          command: npm install -g yarn && yarn -v
       - run:
           name: Install dependencies
-          command: npm install -g yarn && yarn install --immutable
+          command: yarn install --immutable
       - run:
           name: Run Gousto service adapter tests
           working_directory: src
