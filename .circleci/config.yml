@@ -21,9 +21,13 @@ orbs:
 
 commands:
   codeartifact_authenticate:
-    description: Authenticate with AWS CodeArtifact
+    description: Authenticate with AWS CodeArtifact for Yarn 2.X+
     steps:
-      - run: aws codeartifact login --tool npm --repository proxy-repository --domain gousto --domain-owner 472493421475
+      - run: 
+          yarn config set npmRegistryServer "https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/" &&
+          CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner 472493421475 --query authorizationToken --output text` &&
+          yarn config set 'npmRegistries["https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}" &&
+          yarn config set 'npmRegistries["https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/"].npmAlwaysAuth' "true"
 
   gzip:
     description: "Apply gzip compression to text files"
@@ -401,11 +405,8 @@ jobs:
       - checkout
       - codeartifact_authenticate
       - run:
-          name: Logging npm version
-          command: npm install -g yarn && yarn -v
-      - run:
           name: Install dependencies
-          command: yarn install --immutable
+          command: npm install -g yarn && yarn install --immutable
       - run:
           name: Run Gousto service adapter tests
           working_directory: src
