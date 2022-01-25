@@ -148,6 +148,7 @@ export const trackRecipeOrderDisplayed = (displayedOrder) => (
   (dispatch, getState) => {
     const state = getState()
     const date = state.basket.get('date')
+    const currentMenuId = state.basket.get('currentMenuId')
     const deliveryDayId = state.boxSummaryDeliveryDays.getIn([date, 'id'])
     const orderId = state.basket.get('orderId')
     const browseMode = state.menuBrowseCtaShow
@@ -166,6 +167,7 @@ export const trackRecipeOrderDisplayed = (displayedOrder) => (
       browseMode,
       recommenderVersion,
       isRecommendationsShown,
+      currentMenuId
     })
   }
 )

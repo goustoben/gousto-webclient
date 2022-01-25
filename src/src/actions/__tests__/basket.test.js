@@ -77,6 +77,7 @@ describe('basket actions', () => {
         tracking: Immutable.fromJS({}),
         basket: Immutable.fromJS({
           promoCode: 'test-promo-code',
+          currentMenuId: 'test-menu-id',
           recipes: {
             1122: 1,
             1334: 3,
@@ -90,6 +91,7 @@ describe('basket actions', () => {
         trackingData: {
           actionType: trackingKeys.clickCheckout,
           promoCode: 'test-promo-code',
+          menu_id: 'test-menu-id',
           section,
           recipes: Immutable.Map({
             1122: 1,
