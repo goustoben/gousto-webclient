@@ -475,6 +475,7 @@ export const basketCheckoutClicked = section => (
   (dispatch, getState) => {
     const { basket } = getState()
     const recipes = basket.get('recipes')
+    const menuId = basket.get('currentMenuId')
     const {promoCode, UTM} = getUTMAndPromoCode(getState())
     dispatch({
       type: actionTypes.BASKET_CHECKOUT_CLICKED,
@@ -484,6 +485,7 @@ export const basketCheckoutClicked = section => (
         promoCode,
         section,
         recipes,
+        menu_id: menuId
       },
     })
   }
