@@ -29,7 +29,7 @@ const DetailOverlay = ({
   const showOverlay = Boolean(useSelector(getMenuRecipeIdForDetails)) && showOverlayProp
   const recipeId = useSelector(getMenuRecipeIdForDetails)
   const menuRecipeDetailShow = recipeId || ''
-  const position = useSelector(state => getRecipePosition(state, recipeId)) || null
+  const position = useSelector((state) => getRecipePosition(state, recipeId)) || null
   const browserType = useSelector(getBrowserType)
   const isBackClosesModalEnabled = useSelector(getIsBackClosesModalEnabled)
   const recipesStore = useSelector(getRecipes)
@@ -68,14 +68,7 @@ const DetailOverlay = ({
   const media = isFineDineIn ? images : featuredImage
 
   return (
-    <Modal
-      isOpen={showOverlay}
-      onBackCallback={
-        isBackClosesModalEnabled
-          ? onClose
-          : null
-      }
-    >
+    <Modal isOpen={showOverlay} onBackCallback={isBackClosesModalEnabled ? onClose : null}>
       <RecipeContextProvider value={detailRecipe}>
         <DetailContainer
           id={detailRecipe.get('id')}

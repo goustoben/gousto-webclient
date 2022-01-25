@@ -9,21 +9,18 @@ import { useTracking } from './useTracking'
 const css = require('./SwapAlternativeOptions.css')
 
 export const SwapAlternativeOptionsMobile: React.FC<{
-  recipeId: string;
-  originalId: string;
-  categoryId: string;
-}> = ({recipeId, originalId, categoryId}) => {
+  recipeId: string
+  originalId: string
+  categoryId: string
+}> = ({ recipeId, originalId, categoryId }) => {
   const [showModal, setShowModal] = useState(false)
 
   const collectionId = categoryId
-  const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } = useTracking()
+  const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } =
+    useTracking()
 
   const selectRef = useRef(null)
-  useClickOutside(
-    selectRef,
-    () => setShowModal(false),
-    [showModal],
-  )
+  useClickOutside(selectRef, () => setShowModal(false), [showModal])
 
   const onCloseModal = (e: SyntheticEvent) => {
     e.stopPropagation()
@@ -31,22 +28,20 @@ export const SwapAlternativeOptionsMobile: React.FC<{
   }
 
   return (
-    <div
-      className={ css.outerWrapper }
-    >
+    <div className={css.outerWrapper}>
       <button
         type="button"
-        className={ css.button }
+        className={css.button}
         onClick={(e) => {
           e.stopPropagation()
           setShowModal(!showModal)
 
           if (!showModal) {
-            trackRecipeAlternativeOptionsMenuOpen({recipeId, collectionId})
+            trackRecipeAlternativeOptionsMenuOpen({ recipeId, collectionId })
           }
         }}
       >
-        <span className={ showModal ? css.arrowUp : css.arrowDown } />
+        <span className={showModal ? css.arrowUp : css.arrowDown} />
       </button>
       {showModal && (
         <ModalComponent
@@ -58,23 +53,27 @@ export const SwapAlternativeOptionsMobile: React.FC<{
         >
           <ModalTitle className={css.variantRecipeListModalTitleWrapper}>
             <h1 className={css.variantRecipeListModalTitle}>Options available</h1>
-            <button type="button" className={css.variantRecipeListModalCloseX} onClick={onCloseModal} />
+            <button
+              type="button"
+              className={css.variantRecipeListModalCloseX}
+              onClick={onCloseModal}
+            />
           </ModalTitle>
 
-          <div
-            ref={selectRef}
-          >
+          <div ref={selectRef}>
             <ModalContent className={css.variantRecipeListModalContent}>
               <RecipeAlternativeOptions
                 recipeId={recipeId}
                 originalId={originalId}
                 categoryId={categoryId}
                 closeOnSelection
-                onChangeCheckedRecipe={({previousRecipeId, nextRecipeId}) => trackRecipeAlternativeOptionsMenuSwapRecipes({
-                  collectionId,
-                  previousRecipeId,
-                  nextRecipeId,
-                })}
+                onChangeCheckedRecipe={({ previousRecipeId, nextRecipeId }) =>
+                  trackRecipeAlternativeOptionsMenuSwapRecipes({
+                    collectionId,
+                    previousRecipeId,
+                    nextRecipeId,
+                  })
+                }
               />
             </ModalContent>
           </div>

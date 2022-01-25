@@ -15,9 +15,9 @@ import css from './RecipeTile.css'
 const classnames = require('classnames')
 
 type RecipeTileProps = {
-  recipeId: string;
-  originalId: string;
-  categoryId?: string;
+  recipeId: string
+  originalId: string
+  categoryId?: string
 }
 
 const RecipeTile: React.FC<RecipeTileProps> = ({
@@ -47,7 +47,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
     recipeId,
     categoryId,
     isOnDetailScreen: false,
-    isFromShowcaseMenu: false
+    isFromShowcaseMenu: false,
   })
 
   const onClick = (e: SyntheticEvent) => {
@@ -74,19 +74,17 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
     >
       {
         // mobile banner needs to sit outside of TileImage
-        (deviceType === DeviceType.MOBILE)
-        && <VariantHeader recipeId={recipeId} categoryId={categoryId} originalId={originalId} />
+        deviceType === DeviceType.MOBILE && (
+          <VariantHeader recipeId={recipeId} categoryId={categoryId} originalId={originalId} />
+        )
       }
 
       <div
         className={classnames(css.recipeTileContainer, {
-          [css.recipeTileIsFineDineIn]: isFineDineIn
+          [css.recipeTileIsFineDineIn]: isFineDineIn,
         })}
       >
-        <TileImage
-          categoryId={categoryId}
-          originalId={originalId}
-        />
+        <TileImage categoryId={categoryId} originalId={originalId} />
         <span
           className={classnames(css.recipeTagHolder, {
             [css.recipeTagHolderShifted]: showVariantHeader,
@@ -95,12 +93,9 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           <RecipeTag />
         </span>
         <div
-          className={classnames(
-            css.recipeTileInfo,
-            {
-              [css.variantPushDown]: mobileBannerShown
-            }
-          )}
+          className={classnames(css.recipeTileInfo, {
+            [css.variantPushDown]: mobileBannerShown,
+          })}
         >
           <BrandTag />
 

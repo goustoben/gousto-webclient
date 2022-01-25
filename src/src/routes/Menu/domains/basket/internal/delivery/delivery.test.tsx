@@ -16,7 +16,7 @@ describe('basket domain / delivery', () => {
     slotId,
     date,
     chosenAddress,
-    postcode
+    postcode,
   })
 
   const wrapper: React.FC = ({ children }) => <Provider store={store}>{children}</Provider>
@@ -38,7 +38,7 @@ describe('basket domain / delivery', () => {
 
     expect(result.current.address).toEqual({
       id: chosenAddress.get('id'),
-      postcode
+      postcode,
     })
   })
 

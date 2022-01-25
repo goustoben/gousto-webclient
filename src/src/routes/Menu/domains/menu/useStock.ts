@@ -9,10 +9,10 @@ export const useStock = () => {
   const menuRecipeStock = useSelector<RootStateOrAny, MenuRecipeStock>(getStock)
   const { numPortions, isRecipeInBasket } = useBasket()
 
-  const getStockForRecipe = useGetStockForRecipe({menuRecipeStock, numPortions})
+  const getStockForRecipe = useGetStockForRecipe({ menuRecipeStock, numPortions })
 
   const isRecipeOutOfStock = useCallback(
-    ((recipeId: string) => {
+    (recipeId: string) => {
       const stockLevelForRecipe = getStockForRecipe(recipeId)
 
       if (stockLevelForRecipe === null) {
@@ -21,8 +21,8 @@ export const useStock = () => {
         return false
       }
 
-      return (stockLevelForRecipe <= menuConfig.stockThreshold) && !isRecipeInBasket(recipeId)
-    }),
+      return stockLevelForRecipe <= menuConfig.stockThreshold && !isRecipeInBasket(recipeId)
+    },
     [getStockForRecipe, isRecipeInBasket]
   )
 
@@ -31,4 +31,3 @@ export const useStock = () => {
     isRecipeOutOfStock,
   }
 }
-

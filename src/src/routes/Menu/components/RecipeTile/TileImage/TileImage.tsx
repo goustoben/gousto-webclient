@@ -9,15 +9,13 @@ import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { Image, CookingTimeIcon } from '../../Recipe'
 import css from './TileImage.css'
 
-const isOnBiggerScreen = (deviceType: string) => deviceType === DeviceType.DESKTOP || deviceType === DeviceType.TABLET
+const isOnBiggerScreen = (deviceType: string) =>
+  deviceType === DeviceType.DESKTOP || deviceType === DeviceType.TABLET
 
 export const TileImage: React.FC<{
-  categoryId: string;
-  originalId: string;
-}> = ({
-  categoryId,
-  originalId,
-}) => {
+  categoryId: string
+  originalId: string
+}> = ({ categoryId, originalId }) => {
   const recipeId = useRecipeField<string>('id', null)
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)

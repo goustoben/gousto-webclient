@@ -7,11 +7,7 @@ type PartialInitialState = Partial<{
 }>
 
 export const createMockInitialState = ({ basket }: PartialInitialState) => ({
-  basket: (
-    basket
-      ? basketInitialState().merge(basket)
-      : basketInitialState()
-  )
+  basket: basket ? basketInitialState().merge(basket) : basketInitialState(),
 })
 
 export const createMockStore = (partialState: PartialInitialState) => {

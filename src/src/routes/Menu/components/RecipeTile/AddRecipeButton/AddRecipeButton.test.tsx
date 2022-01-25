@@ -84,9 +84,11 @@ describe('AddRecipeButton', () => {
     let state: ReturnType<typeof createMockInitialState>
 
     beforeEach(() => {
+      const postcode = 'W3 7UP'
+      
       state = createMockInitialState({
         basket: {
-          postcode: 'W3 7UP',
+          postcode,
           orderId: '123',
           recipes: Immutable.Map(),
         },
@@ -100,6 +102,7 @@ describe('AddRecipeButton', () => {
 
       test('click should dispatch basketRecipeRemove', () => {
         const store = createMockStore(state)
+        
         render(
           <Provider store={store}>
             <AddRecipeButton recipeId={recipeId} />

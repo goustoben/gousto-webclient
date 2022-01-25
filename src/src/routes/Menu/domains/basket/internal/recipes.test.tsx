@@ -7,17 +7,22 @@ import { createMockBasketStore } from './testing/createMockBasketStore'
 import { useBasketRecipes } from './recipes'
 
 jest.mock('routes/Menu/actions/basketRecipes', () => ({
-  basketRecipeAdd: jest.fn().mockImplementation(
-    (recipeId, view) => ['call_basketRecipeAdd', recipeId, view]
-  ),
-  basketRecipeRemove: jest.fn().mockImplementation(
-    (recipeId, view, position) => ['call_basketRecipeRemove', recipeId, view, position]
-  )
+  basketRecipeAdd: jest
+    .fn()
+    .mockImplementation((recipeId, view) => ['call_basketRecipeAdd', recipeId, view]),
+  basketRecipeRemove: jest
+    .fn()
+    .mockImplementation((recipeId, view, position) => [
+      'call_basketRecipeRemove',
+      recipeId,
+      view,
+      position,
+    ]),
 }))
 
 describe('basket domain / recipes', () => {
   const store = createMockBasketStore({
-    postcode: 'W3 7UP'
+    postcode: 'W3 7UP',
   })
 
   const wrapper: React.FC = ({ children }) => <Provider store={store}>{children}</Provider>
@@ -30,10 +35,12 @@ describe('basket domain / recipes', () => {
 
   describe('when postcode not in store', () => {
     const noPostcodeStore = createMockBasketStore({
-      postcode: ''
+      postcode: '',
     })
 
-    const noPostcodeWrapper: React.FC = ({ children }) => <Provider store={noPostcodeStore}>{children}</Provider>
+    const noPostcodeWrapper: React.FC = ({ children }) => (
+      <Provider store={noPostcodeStore}>{children}</Provider>
+    )
 
     test('canAddRecipes is false', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: noPostcodeWrapper })
@@ -62,7 +69,12 @@ describe('basket domain / recipes', () => {
 
     result.current.removeRecipe(recipeId, view, position)
 
-    expect(store.dispatch).toHaveBeenCalledWith(['call_basketRecipeRemove', recipeId, view, position])
+    expect(store.dispatch).toHaveBeenCalledWith([
+      'call_basketRecipeRemove',
+      recipeId,
+      view,
+      position,
+    ])
   })
 
   describe('when basket contains a recipe with quantity 1', () => {
@@ -70,11 +82,13 @@ describe('basket domain / recipes', () => {
 
     const recipeStore = createMockBasketStore({
       recipes: Immutable.Map({
-        [recipeId]: 1
-      })
+        [recipeId]: 1,
+      }),
     })
 
-    const recipeWrapper: React.FC = ({ children }) => <Provider store={recipeStore}>{children}</Provider>
+    const recipeWrapper: React.FC = ({ children }) => (
+      <Provider store={recipeStore}>{children}</Provider>
+    )
 
     test('limitReached is false', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
@@ -104,11 +118,13 @@ describe('basket domain / recipes', () => {
 
     const recipeStore = createMockBasketStore({
       recipes: Immutable.Map({
-        [recipeId]: 4
-      })
+        [recipeId]: 4,
+      }),
     })
 
-    const recipeWrapper: React.FC = ({ children }) => <Provider store={recipeStore}>{children}</Provider>
+    const recipeWrapper: React.FC = ({ children }) => (
+      <Provider store={recipeStore}>{children}</Provider>
+    )
 
     test('limitReached is true', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
@@ -132,11 +148,13 @@ describe('basket domain / recipes', () => {
     const recipeStore = createMockBasketStore({
       recipes: Immutable.Map({
         [recipeIdA]: 2,
-        [recipeIdB]: 2
-      })
+        [recipeIdB]: 2,
+      }),
     })
 
-    const recipeWrapper: React.FC = ({ children }) => <Provider store={recipeStore}>{children}</Provider>
+    const recipeWrapper: React.FC = ({ children }) => (
+      <Provider store={recipeStore}>{children}</Provider>
+    )
 
     test('limitReached is true', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })

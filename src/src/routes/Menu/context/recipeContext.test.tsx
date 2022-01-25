@@ -3,22 +3,33 @@ import { renderHook } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { RecipeContextProvider, useRecipe, useRecipeField, useRecipeCookingTime, useRecipeBrandTag, useRecipeBrandTagline, useRecipeBrandAvailabilityTagline, useRecipeBrandAvailabilityTag } from './recipeContext'
+import {
+  RecipeContextProvider,
+  useRecipe,
+  useRecipeField,
+  useRecipeCookingTime,
+  useRecipeBrandTag,
+  useRecipeBrandTagline,
+  useRecipeBrandAvailabilityTagline,
+  useRecipeBrandAvailabilityTag,
+} from './recipeContext'
 
 describe('recipeContext', () => {
   const images = Immutable.fromJS([
     { type: 'homepage-image', urls: ['a.png'] },
-    { type: 'mood-image', urls: ['b.png'] }
+    { type: 'mood-image', urls: ['b.png'] },
   ])
 
   const recipe = Immutable.fromJS({
     id: '12345',
     title: 'A Recipe Title',
     media: {
-      images
-    }
+      images,
+    },
   })
-  const wrapper: React.FC = ({ children }) => <RecipeContextProvider value={recipe}>{children}</RecipeContextProvider>
+  const wrapper: React.FC = ({ children }) => (
+    <RecipeContextProvider value={recipe}>{children}</RecipeContextProvider>
+  )
 
   describe('useRecipe', () => {
     test('returns recipe from context', () => {
@@ -29,7 +40,8 @@ describe('recipeContext', () => {
   })
 
   describe('useRecipeField', () => {
-    const render = (field: string | string[], defaultValue?: any) => renderHook(() => useRecipeField(field, defaultValue), { wrapper })
+    const render = (field: string | string[], defaultValue?: any) =>
+      renderHook(() => useRecipeField(field, defaultValue), { wrapper })
 
     test('returns recipe id correctly', () => {
       const { result } = render('id')
@@ -80,7 +92,11 @@ describe('recipeContext', () => {
     const cookingTime = 30
     const cookingTimeFamily = 40
 
-    const renderUseRecipeCookingTimeHook = ({ numPortions }: { numPortions: number | undefined }) => {
+    const renderUseRecipeCookingTimeHook = ({
+      numPortions,
+    }: {
+      numPortions: number | undefined
+    }) => {
       const mockStore = configureMockStore()
       const store = mockStore({
         basket: Immutable.fromJS({
@@ -93,7 +109,7 @@ describe('recipeContext', () => {
         id: '12345',
         title: 'A Recipe Title',
         media: {
-          images
+          images,
         },
         cookingTime,
         cookingTimeFamily,
@@ -137,22 +153,26 @@ describe('recipeContext', () => {
       slug: 'new-eme',
       text: 'New',
       type: 'general',
-      themes: [{
-        name: 'light',
-        color: '#01A92B',
-        borderColor: '#01A92B'
-      }]
+      themes: [
+        {
+          name: 'light',
+          color: '#01A92B',
+          borderColor: '#01A92B',
+        },
+      ],
     }
 
     const TAG_2 = {
       slug: 'limited-edition-eme',
       text: 'Limited Edition',
       type: 'general',
-      themes: [{
-        name: 'light',
-        color: '#01A92B',
-        borderColor: '#01A92B'
-      }]
+      themes: [
+        {
+          name: 'light',
+          color: '#01A92B',
+          borderColor: '#01A92B',
+        },
+      ],
     }
 
     const renderUseRecipeTaglineHook = ({ tagline }: { tagline: string }) => {
@@ -160,22 +180,22 @@ describe('recipeContext', () => {
       const store = mockStore({
         brand: {
           data: {
-            tags: [ TAG_1, TAG_2 ]
-          }
+            tags: [TAG_1, TAG_2],
+          },
         },
       })
 
-      const recipe = Immutable.fromJS({
+      const recipeWithTagline = Immutable.fromJS({
         id: '12345',
         title: 'A Recipe Title',
         media: {
-          images
+          images,
         },
-        tagline
+        tagline,
       })
       const customWrapper: React.FC = ({ children }) => (
         <Provider store={store}>
-          <RecipeContextProvider value={recipe}>{children}</RecipeContextProvider>
+          <RecipeContextProvider value={recipeWithTagline}>{children}</RecipeContextProvider>
         </Provider>
       )
 
@@ -219,10 +239,12 @@ describe('recipeContext', () => {
         title: 'A Recipe Title',
         tagline: 'test-tagline',
         media: {
-          images
-        }
+          images,
+        },
       })
-      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      const localWrapper: React.FC = ({ children }) => (
+        <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      )
 
       it('it should return the tagline', () => {
         const { result } = renderHook(() => useRecipeBrandTagline(), { wrapper: localWrapper })
@@ -236,7 +258,9 @@ describe('recipeContext', () => {
       const localWrapper: React.FC = ({ children }) => <>{children}</>
 
       it('should return null', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual(null)
       })
     })
@@ -247,10 +271,14 @@ describe('recipeContext', () => {
         title: 'A Recipe Title',
         availability: 'test-availability',
       })
-      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      const localWrapper: React.FC = ({ children }) => (
+        <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      )
 
       it('it should return the tagline', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual('test-availability')
       })
     })
@@ -260,12 +288,16 @@ describe('recipeContext', () => {
         id: '12345',
         title: 'A Recipe Title',
         availability: undefined,
-        isNew: true
+        isNew: true,
       })
-      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      const localWrapper: React.FC = ({ children }) => (
+        <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      )
 
       it('it should return new-eme', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual('new-eme')
       })
     })
@@ -277,10 +309,14 @@ describe('recipeContext', () => {
         availability: 'hello-there',
         isNew: true,
       })
-      const localWrapper: React.FC = ({ children }) => <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      const localWrapper: React.FC = ({ children }) => (
+        <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
+      )
 
       it('it should return availibility tag', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTagline(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual('hello-there')
       })
     })
@@ -294,74 +330,88 @@ describe('recipeContext', () => {
             slug: 'new-eme',
             text: 'New',
             type: 'general',
-            themes: [{
-              name: 'light',
-              color: '#01A92B',
-              borderColor: '#01A92B'
-            }]
+            themes: [
+              {
+                name: 'light',
+                color: '#01A92B',
+                borderColor: '#01A92B',
+              },
+            ],
           },
           {
             slug: 'limited-edition-eme',
             text: 'Limited Edition',
             type: 'general',
-            themes: [{
-              name: 'light',
-              color: '#01A92B',
-              borderColor: '#01A92B'
-            }]
+            themes: [
+              {
+                name: 'light',
+                color: '#01A92B',
+                borderColor: '#01A92B',
+              },
+            ],
           },
           {
             slug: 'joe-wicks-eme',
             text: 'Joe Wicks',
             type: 'general',
-            themes: [{
-              name: 'light',
-              color: '#01A92B',
-              borderColor: '#01A92B'
-            }]
+            themes: [
+              {
+                name: 'light',
+                color: '#01A92B',
+                borderColor: '#01A92B',
+              },
+            ],
           },
           {
             slug: 'health-kitchen-eme',
             text: 'Health Kitchen',
             type: 'general',
-            themes: [{
-              name: 'light',
-              color: '#01A92B',
-              borderColor: '#01A92B'
-            }]
+            themes: [
+              {
+                name: 'light',
+                color: '#01A92B',
+                borderColor: '#01A92B',
+              },
+            ],
           },
           {
             slug: 'fine-dine-in-eme',
             text: 'Fine Dine In',
             type: 'general',
-            themes: [{
-              name: 'light',
-              color: '#01A92B',
-              borderColor: '#01A92B'
-            }]
+            themes: [
+              {
+                name: 'light',
+                color: '#01A92B',
+                borderColor: '#01A92B',
+              },
+            ],
           },
           {
             slug: 'available-weekly-eme',
             text: 'Everyday Favourites',
             type: 'general',
-            themes: [{
-              name: 'light',
-              color: '#01A92B',
-              borderColor: '#01A92B'
-            }]
+            themes: [
+              {
+                name: 'light',
+                color: '#01A92B',
+                borderColor: '#01A92B',
+              },
+            ],
           },
           {
             slug: 'mexico-limited-edition-eme',
             text: 'Dough It Yourself Pizza',
             type: 'general',
-            themes: [{
-              name: 'light',
-              color: '#01A92B',
-              borderColor: '#01A92B'
-            }]
+            themes: [
+              {
+                name: 'light',
+                color: '#01A92B',
+                borderColor: '#01A92B',
+              },
+            ],
           },
-        ]
-      }
+        ],
+      },
     }
     const newTag = {
       type: 'general',
@@ -373,7 +423,7 @@ describe('recipeContext', () => {
     const limitedEditionTag = {
       slug: 'limited-edition-eme',
       text: 'Limited Edition',
-      theme: {borderColor: '#01A92B', color: '#01A92B', name: 'light'},
+      theme: { borderColor: '#01A92B', color: '#01A92B', name: 'light' },
       themes: undefined,
       type: 'general',
     }
@@ -394,7 +444,9 @@ describe('recipeContext', () => {
       )
 
       it('should return null', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual(null)
       })
     })
@@ -410,7 +462,9 @@ describe('recipeContext', () => {
       )
 
       it('should return null', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual(null)
       })
     })
@@ -432,7 +486,9 @@ describe('recipeContext', () => {
       )
 
       it('should return limited edition recipe tag', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual(limitedEditionTag)
       })
     })
@@ -454,7 +510,9 @@ describe('recipeContext', () => {
       )
 
       it('should return new-eme recipe tag', () => {
-        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), { wrapper: localWrapper })
+        const { result } = renderHook(() => useRecipeBrandAvailabilityTag(), {
+          wrapper: localWrapper,
+        })
         expect(result.current).toEqual(newTag)
       })
     })

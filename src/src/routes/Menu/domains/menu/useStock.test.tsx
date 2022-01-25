@@ -18,10 +18,12 @@ describe('useStock', () => {
             2: 100,
             4: 200,
             8: 0,
-          }
+          },
         }),
       })
-      const wrapper = ({ children }: {children: React.ReactElement}) => <Provider store={store}>{children}</Provider>
+      const wrapper = ({ children }: { children: React.ReactElement }) => (
+        <Provider store={store}>{children}</Provider>
+      )
       const { result } = renderHook(() => useStock(), { wrapper })
 
       expect(result.current.getStockForRecipe(recipeId)).toEqual(100)
@@ -40,10 +42,12 @@ describe('useStock', () => {
           menuRecipeStock: Immutable.fromJS({
             [recipeId]: {
               [numPortions]: menuConfig.stockThreshold - 1,
-            }
+            },
           }),
         })
-        const wrapper = ({ children }: {children: React.ReactElement}) => <Provider store={store}>{children}</Provider>
+        const wrapper = ({ children }: { children: React.ReactElement }) => (
+          <Provider store={store}>{children}</Provider>
+        )
         const { result } = renderHook(() => useStock(), { wrapper })
 
         expect(result.current.isRecipeOutOfStock(recipeId)).toEqual(true)
@@ -58,10 +62,12 @@ describe('useStock', () => {
           menuRecipeStock: Immutable.fromJS({
             [recipeId]: {
               [numPortions]: menuConfig.stockThreshold + 1,
-            }
+            },
           }),
         })
-        const wrapper = ({ children }: {children: React.ReactElement}) => <Provider store={store}>{children}</Provider>
+        const wrapper = ({ children }: { children: React.ReactElement }) => (
+          <Provider store={store}>{children}</Provider>
+        )
         const { result } = renderHook(() => useStock(), { wrapper })
 
         expect(result.current.isRecipeOutOfStock(recipeId)).toEqual(false)
@@ -74,15 +80,17 @@ describe('useStock', () => {
         const store = mockStore({
           basket: Immutable.fromJS({
             numPortions,
-            recipes: { [recipeId]: 1 }
+            recipes: { [recipeId]: 1 },
           }),
           menuRecipeStock: Immutable.fromJS({
             [recipeId]: {
               [numPortions]: 0,
-            }
+            },
           }),
         })
-        const wrapper = ({ children }: {children: React.ReactElement}) => <Provider store={store}>{children}</Provider>
+        const wrapper = ({ children }: { children: React.ReactElement }) => (
+          <Provider store={store}>{children}</Provider>
+        )
         const { result } = renderHook(() => useStock(), { wrapper })
 
         expect(result.current.isRecipeOutOfStock(recipeId)).toEqual(false)
@@ -95,11 +103,13 @@ describe('useStock', () => {
         const store = mockStore({
           basket: Immutable.fromJS({
             numPortions,
-            recipes: { [recipeId]: 1 }
+            recipes: { [recipeId]: 1 },
           }),
           menuRecipeStock: Immutable.fromJS({}),
         })
-        const wrapper = ({ children }: {children: React.ReactElement}) => <Provider store={store}>{children}</Provider>
+        const wrapper = ({ children }: { children: React.ReactElement }) => (
+          <Provider store={store}>{children}</Provider>
+        )
         const { result } = renderHook(() => useStock(), { wrapper })
 
         expect(result.current.isRecipeOutOfStock(recipeId)).toEqual(false)

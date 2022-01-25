@@ -5,11 +5,14 @@ import css from './RecipeTag.css'
 
 const classnames = require('classnames')
 
-const getTagStyle = (theme: {borderColor?: string}) => ({ ...theme, border: theme.borderColor ? '1px solid' : 'none' })
+const getTagStyle = (theme: { borderColor?: string }) => ({
+  ...theme,
+  border: theme.borderColor ? '1px solid' : 'none',
+})
 
 const defaultType = 'span'
 
-export const RecipeTag: React.FC<{type?: string}> = ({ type = defaultType}) => {
+export const RecipeTag: React.FC<{ type?: string }> = ({ type = defaultType }) => {
   const brandTag = useRecipeBrandAvailabilityTag()
 
   if (!brandTag) {
@@ -32,4 +35,3 @@ RecipeTag.propTypes = {
 RecipeTag.defaultProps = {
   type: defaultType,
 }
-

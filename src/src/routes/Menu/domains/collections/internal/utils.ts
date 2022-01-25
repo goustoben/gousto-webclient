@@ -14,6 +14,7 @@ export const createCollectionFromDefaultValues = (collection: {}) => {
     featuredCategoryOrder: 0,
     isFeaturedCategory: false,
   }
+
   return createMenuCollection({
     ...defaultValues,
     ...collection,

@@ -9,29 +9,22 @@ import css from './SwapAlternativeOptions.css'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const classnames = require('classnames')
 
-
-export const SwapAlternativeOptions:React.FC<{
-  recipeId: string;
-  originalId: string;
-  categoryId: string;
-}> = ({recipeId, originalId, categoryId}) => {
+export const SwapAlternativeOptions: React.FC<{
+  recipeId: string
+  originalId: string
+  categoryId: string
+}> = ({ recipeId, originalId, categoryId }) => {
   const [showDrop, setShowDrop] = useState(false)
 
   const collectionId = categoryId
-  const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } = useTracking()
+  const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } =
+    useTracking()
 
   const selectRef = useRef(null)
-  useClickOutside(
-    selectRef,
-    () => setShowDrop(false),
-    [showDrop],
-  )
+  useClickOutside(selectRef, () => setShowDrop(false), [showDrop])
 
   return (
-    <div
-      ref={selectRef}
-      className={ css.outerWrapper }
-    >
+    <div ref={selectRef} className={css.outerWrapper}>
       <button
         type="button"
         className={css.button}
@@ -40,10 +33,10 @@ export const SwapAlternativeOptions:React.FC<{
           setShowDrop(!showDrop)
 
           if (!showDrop) {
-            trackRecipeAlternativeOptionsMenuOpen({recipeId, collectionId})
+            trackRecipeAlternativeOptionsMenuOpen({ recipeId, collectionId })
           }
         }}
-        onKeyUp={e => {
+        onKeyUp={(e) => {
           e.stopPropagation()
 
           if (EscapeKeyPressed(e)) {
@@ -54,17 +47,22 @@ export const SwapAlternativeOptions:React.FC<{
         <span className={showDrop ? css.arrowUp : css.arrowDown} />
       </button>
       {showDrop && (
-        <div className={classnames(css.dropWrapper, { [css.isExpanded]: showDrop })} aria-hidden={!showDrop}>
+        <div
+          className={classnames(css.dropWrapper, { [css.isExpanded]: showDrop })}
+          aria-hidden={!showDrop}
+        >
           <RecipeAlternativeOptions
             recipeId={recipeId}
             originalId={originalId}
             categoryId={categoryId}
             closeOnSelection
-            onChangeCheckedRecipe={({previousRecipeId, nextRecipeId}) => trackRecipeAlternativeOptionsMenuSwapRecipes({
-              collectionId,
-              previousRecipeId,
-              nextRecipeId,
-            })}
+            onChangeCheckedRecipe={({ previousRecipeId, nextRecipeId }) =>
+              trackRecipeAlternativeOptionsMenuSwapRecipes({
+                collectionId,
+                previousRecipeId,
+                nextRecipeId,
+              })
+            }
           />
         </div>
       )}

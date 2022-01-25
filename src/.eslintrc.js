@@ -332,6 +332,8 @@ module.exports = {
         'src/middlewares/tracking/dataLayerTracker/*.js',
         'src/routes/BoxPrices/**/*.js',
         "src/performanceTracker/**/*.js",
+        'src/routes/Menu/**/*.ts',
+        'src/routes/Menu/**/*.tsx',
       ],
       rules: {
         'prettier/prettier': 'error',

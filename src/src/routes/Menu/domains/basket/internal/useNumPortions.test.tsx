@@ -6,7 +6,9 @@ import { useNumPortions } from './useNumPortions'
 
 jest.mock('actions/basket', () => ({
   ...jest.requireActual('actions/basket'),
-  basketNumPortionChange: jest.fn().mockImplementation(newNumPortions => ['call_basketNumPortionChange', newNumPortions]),
+  basketNumPortionChange: jest
+    .fn()
+    .mockImplementation((newNumPortions) => ['call_basketNumPortionChange', newNumPortions]),
 }))
 
 describe('basket domain / useNumPortions', () => {

@@ -11,9 +11,9 @@ import { useGetSurchargeForRecipeId } from '../Hooks'
 const classnames = require('classnames')
 
 type RecipeTilePurchaseInfoProps = {
-  originalId: string;
-  categoryId: string;
-  fdiStyling: boolean;
+  originalId: string
+  categoryId: string
+  fdiStyling: boolean
 }
 
 export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
@@ -38,7 +38,7 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
     originalId,
     categoryId,
     isOnDetailScreen: false,
-    isFromShowcaseMenu: false
+    isFromShowcaseMenu: false,
   })
 
   // alternative options include the recipe itself
@@ -49,15 +49,11 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
   return (
     <div className={classnames(css.purchaseInfoWrapper, { [css.surchageOnTop]: surchargeOnTop })}>
       {surcharge ? (
-        <div className={
-          classnames(
-            css.surchargeInfo,
-            {
-              [css.surchargeInfoIsFineDineIn]: isFineDineIn && fdiStyling,
-              [css.surchargeInfoRow]: surchargeOnTop
-            }
-          )
-        }
+        <div
+          className={classnames(css.surchargeInfo, {
+            [css.surchargeInfoIsFineDineIn]: isFineDineIn && fdiStyling,
+            [css.surchargeInfoRow]: surchargeOnTop,
+          })}
         >
           <span className={css.surchargeAmountText}>
             +£
@@ -71,12 +67,20 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
       ) : null}
       <div className={css.buttonsWrapper}>
         <AddRecipeButton recipeId={recipeId} />
-        {hasAlternativeOptions
-            && (
-              deviceType === DeviceType.MOBILE
-                ? <SwapAlternativeOptionsMobile recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
-                : <SwapAlternativeOptions recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
-            )}
+        {hasAlternativeOptions &&
+          (deviceType === DeviceType.MOBILE ? (
+            <SwapAlternativeOptionsMobile
+              recipeId={recipeId}
+              originalId={originalId}
+              categoryId={categoryId}
+            />
+          ) : (
+            <SwapAlternativeOptions
+              recipeId={recipeId}
+              originalId={originalId}
+              categoryId={categoryId}
+            />
+          ))}
       </div>
     </div>
   )
