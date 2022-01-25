@@ -105,8 +105,8 @@ jobs:
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
       - codeartifact_authenticate
       - run:
-          name: Install dependencies
-          command: yarn -v
+          name: Logging npm version
+          command: npm -v
       - run:
           name: Install dependencies
           command: yarn install --immutable
