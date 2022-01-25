@@ -6,11 +6,13 @@ export function routeMatches(ctx, path, method) {
   return ctx.path === path && ctx.method.toLowerCase() === method.toLowerCase()
 }
 
+const wildcardSubdomainCookieDomain = `.${__DOMAIN__}`
+
 export function addSessionCookies(ctx, response, rememberMe) {
   const { expiresIn, accessToken, refreshToken } = response.data
   const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
 
-  set(ctx.cookies, 'oauth_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, true, true)
+  set(ctx.cookies, 'oauth_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, true, true, undefined, undefined, wildcardSubdomainCookieDomain)
   set(ctx.cookies, 'oauth_recipe_feedback_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, false, true, '/rate-my-recipes')
   set(ctx.cookies, 'oauth_help_centre_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, false, true, '/help-centre')
   set(ctx.cookies, 'oauth_taste_profile_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, false, true, '/taste-profile')
@@ -20,7 +22,7 @@ export function addSessionCookies(ctx, response, rememberMe) {
 }
 
 export function removeSessionCookies(ctx) {
-  set(ctx.cookies, 'oauth_token', { access_token: '' }, null, true, true, true)
+  set(ctx.cookies, 'oauth_token', { access_token: '' }, null, true, true, true, undefined, undefined, wildcardSubdomainCookieDomain)
   set(ctx.cookies, 'oauth_recipe_feedback_token', { access_token: '' }, null, true, true, true, '/rate-my-recipes')
   set(ctx.cookies, 'oauth_help_centre_token', { access_token: '' }, null, true, true, true, '/help-centre')
   set(ctx.cookies, 'oauth_taste_profile_token', { access_token: '' }, null, true, true, true, '/taste-profile')

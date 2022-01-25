@@ -116,29 +116,26 @@ export function get(cookies, key, withVersionPrefix = true, shouldDecode = true)
   return result
 }
 
-export function set(cookies, key, val, days, withVersionPrefix = true, httpOnly = false, overwrite = false, path = '/', sameSite = 'Lax') {
+export function set(cookies, key, val, days, withVersionPrefix = true, httpOnly = false, overwrite = false, path = '/', sameSite = 'Lax', domain) {
   const prefixedKey = withVersionPrefix ? getKey(key) : key
 
   if (cookies && typeof cookies.set === 'function') {
     if (days) {
       const expires = moment().add(days * 24, 'hours')
-      cookies.set(prefixedKey, encode(val), { expires: expires.toDate(), httpOnly, overwrite, path, sameSite })
+      cookies.set(prefixedKey, encode(val), { expires: expires.toDate(), httpOnly, overwrite, path, sameSite, domain })
     } else {
-      cookies.set(prefixedKey, encode(val), { httpOnly, overwrite, path, sameSite })
+      cookies.set(prefixedKey, encode(val), { httpOnly, overwrite, path, sameSite, domain })
     }
   } else {
     logger.error({ message: 'no cookies to set on' })
   }
 }
 
-export function unset(cookies, key, withVersionPrefix = true, path = '/') {
+export function unset(cookies, key, withVersionPrefix = true, path = '/', domain) {
   const prefixedKey = withVersionPrefix ? getKey(key) : key
 
   if (cookies && typeof cookies.set === 'function') {
-    cookies.set(prefixedKey, null, { expires: new Date('1970-01-01'), httpOnly: false, path })
-    if (__ENV__ === 'production') {
-      cookies.set(prefixedKey, null, { expires: new Date('1970-01-01'), httpOnly: false, domain: '.gousto.co.uk', path })
-    }
+    cookies.set(prefixedKey, null, { expires: new Date('1970-01-01'), httpOnly: false, path, domain })
   } else {
     logger.error({ message: 'no cookies to delete on' })
   }
