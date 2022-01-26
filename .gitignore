@@ -23,6 +23,10 @@ yarn-error.log
 src/apps/webclient/config/env.json
 lib
 
+# Prevent accidental commits after FEF-288
+src/
+!src/apps/webclient
+
 # Yarn
 # This is the recommended configuration for non-zero-installs.
 # Storing the Yarn releases and plugins in version control is intentional.

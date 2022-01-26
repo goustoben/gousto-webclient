@@ -9,7 +9,7 @@
 /src/apps/webclient/bower.json @Gousto/guild-frontend
 
 # frontend-foundations ownership
-/src                                                    @Gousto/frontend-foundations
+/src/                                                   @Gousto/frontend-foundations
 /package.json                                           @Gousto/frontend-foundations
 /.dockerignore                                          @Gousto/frontend-foundations
 /service.yml                                            @Gousto/frontend-foundations
