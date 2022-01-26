@@ -92,6 +92,7 @@ describe('basket actions', () => {
           actionType: trackingKeys.clickCheckout,
           promoCode: 'test-promo-code',
           menu_id: 'test-menu-id',
+          transaction_type: 'transactional',
           section,
           recipes: Immutable.Map({
             1122: 1,
