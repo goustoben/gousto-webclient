@@ -13,7 +13,6 @@ import { MenuRecipesPage } from './MenuRecipesPage'
 import { isMenuLoading, getMenuLoadingErrorMessage, getRecipeCount } from '../selectors/menu'
 import fetchData from '../fetchData'
 import { isSignupReductionEnabled, shouldShowCommunicationPanel, shouldShowCapacityInfo } from '../selectors/signupReduction'
-import { useShowRecommendationsHighlight } from './RecommendationsHighlight/useShowRecommendationsHighlight'
 
 const MenuRecipesPageWrapper = (ownProps) => {
   const {
@@ -23,8 +22,6 @@ const MenuRecipesPageWrapper = (ownProps) => {
 
   const dispatch = useDispatch()
   const currentCollectionId = useCurrentCollectionId()
-
-  const showRecommendationHighlight = useShowRecommendationsHighlight()
 
   const showTastePreferencesLoading = useSelector(getIsTastePreferencesEnabled)
   const stateRecipeCount = useSelector(getRecipeCount)
@@ -50,7 +47,6 @@ const MenuRecipesPageWrapper = (ownProps) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...ownProps}
       showTastePreferencesLoading={showTastePreferencesLoading}
-      showRecommendationHighlight={showRecommendationHighlight}
       stateRecipeCount={stateRecipeCount}
       menuCurrentCollectionId={currentCollectionId}
       showLoading={showLoading}

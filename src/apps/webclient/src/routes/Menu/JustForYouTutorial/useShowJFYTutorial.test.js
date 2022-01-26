@@ -4,7 +4,6 @@ import { renderHook } from '@testing-library/react-hooks'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 import * as TutorialActions from 'actions/tutorial'
-import * as UseOptimizely from '../../../containers/OptimizelyRollouts/useOptimizely.hook'
 import { useShowJFYTutorial } from './useShowJFYTutorial'
 
 describe('useShowJFYTutorial', () => {
@@ -50,17 +49,6 @@ describe('useShowJFYTutorial', () => {
         }),
       })
       expect(result.current).toEqual(false)
-    })
-  })
-
-  describe('when Chosen For You section is hidden due to experiment', () => {
-    test('should not render', () => {
-      jest.spyOn(UseOptimizely, 'useIsOptimizelyFeatureEnabled')
-        .mockImplementationOnce(() => true)
-
-      const { result } = renderUseShowCFYTutorialHook()
-      expect(result.current).toEqual(false)
-      jest.clearAllMocks()
     })
   })
 

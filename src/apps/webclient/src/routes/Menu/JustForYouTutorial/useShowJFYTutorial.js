@@ -1,7 +1,6 @@
 
 import { useSelector } from 'react-redux'
 import { getUserAgent } from 'selectors/root'
-import { useIsOptimizelyFeatureEnabled } from '../../../containers/OptimizelyRollouts'
 import { CollectionSlug, useCollections } from '../domains/collections'
 
 const isIgnoredBrowser = (userAgent) => {
@@ -18,14 +17,9 @@ const isIgnoredBrowser = (userAgent) => {
 }
 
 export const useShowJFYTutorial = () => {
-  const isCFYSectionHidden = useIsOptimizelyFeatureEnabled('kales_remove_cfy_collection')
   const userAgent = useSelector(getUserAgent)
   const jfyTutorialSeen = useSelector(({tutorial}) => Boolean(tutorial && tutorial.getIn(['viewed', 'justforyou'])))
   const { collections } = useCollections()
-
-  if (isCFYSectionHidden) {
-    return false
-  }
 
   if (isIgnoredBrowser(userAgent)) {
     return false

@@ -101,7 +101,7 @@ export const post = async (auth, url, data, headers) => fetch('POST', auth, url,
 class HTTPError extends Error {}
 
 /**
- * Make a POST request. We required a flat version of `get` to support SWR.
+ * Make a GET request. We required a flat version of `get` to support SWR.
  *
  * @param {string} url - the request URL
  * @param {{}} [data] - request data; put into the querystring of a GET request, otherwise in the body]
