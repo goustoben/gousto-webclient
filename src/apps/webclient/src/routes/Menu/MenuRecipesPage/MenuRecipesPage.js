@@ -17,7 +17,6 @@ import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
-import { RecommendationsHighlight } from './RecommendationsHighlight/RecommendationsHighlight'
 import { FiveRecipesStartOfJourneyModal } from '../../../components/FiveRecipesPaintedDoorTest/FiveRecipesStartOfJourneyModal'
 
 export class MenuRecipesPage extends PureComponent {
@@ -75,7 +74,6 @@ export class MenuRecipesPage extends PureComponent {
       showCommunicationPanel,
       menuLoadingErrorMessage,
       query,
-      showRecommendationHighlight,
     } = this.props
     const { communicationPanel } = menuConfig
 
@@ -105,13 +103,7 @@ export class MenuRecipesPage extends PureComponent {
         <CollectionHeaderWrapperContainer />
 
         {
-          showRecommendationHighlight
-          && <RecommendationsHighlight />
-        }
-
-        {
-          !showRecommendationHighlight
-          && stateRecipeCount
+          stateRecipeCount
           && <RecipeGrid query={query} />
         }
 
@@ -163,7 +155,6 @@ export class MenuRecipesPage extends PureComponent {
 }
 MenuRecipesPage.propTypes = {
   showTastePreferencesLoading: PropTypes.bool.isRequired,
-  showRecommendationHighlight: PropTypes.bool.isRequired,
   showLoading: PropTypes.bool.isRequired,
   stateRecipeCount: PropTypes.number.isRequired,
   basketOrderLoaded: PropTypes.func.isRequired,
