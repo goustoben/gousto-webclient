@@ -3,11 +3,13 @@
 if [ "$1" == "build" ]; then
   ssh-add -K
   printf "\e[1;33;4;44mCleaning repo directory, building images and installing dependencies\e[0m\n"
-  rm -rf src/node_modules
-  rm -rf src/libs/goustouicomponents
-  rm -rf src/dist
-  rm -rf src/public
-  rm src/manifest.json
+  cd src/apps/webclient
+  rm -rf node_modules
+  rm -rf libs/goustouicomponents
+  rm -rf dist
+  rm -rf public
+  rm manifest.json
+  cd ../../..
   docker build --progress=plain --ssh=default --file="dev-env/Dockerfile" -t webclient .
   exit 0
 fi
@@ -23,17 +25,17 @@ if [ "$1" == "dev" ]; then
     printf "\e[1;33;4;44mRunning Webclient in Docker with bind mounts to the host\e[0m\n"
     ssh-add -K
 
-    if [ ! -d src/node_modules ]; then
+    if [ ! -d src/apps/webclient/node_modules ]; then
       printf "\e[1;33;4;44mnode_modules missing, installing, this may take a loooooong time\e[0m\n"
       docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run webclient yarn install
     fi
 
-    docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run --service-ports webclient bash -c "yarn start:dev & yarn watch"
+    docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run --service-ports webclient bash -c "yarn workspace webclient start:dev & yarn workspace webclient watch"
     exit 0
   elif [ "$2" == "--host" ]; then
     printf "\e[1;33;4;44mRunning Webclient on the host\e[0m\n"
     printf "\033[1m\033[37mURL:\033[0m \033[1m\033[35mhttp://frontend.gousto.local:8080/\033[0m\n"
-    cd src
+    cd src/apps/webclient
     yarn start:dev & yarn watch
     exit 0
   fi
