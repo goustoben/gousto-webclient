@@ -103,8 +103,8 @@ export class MenuRecipesPage extends PureComponent {
         <CollectionHeaderWrapperContainer />
 
         {
-          stateRecipeCount
-          && <RecipeGrid query={query} />
+          stateRecipeCount &&
+          <RecipeGrid query={query} />
         }
 
         {showError ? (

@@ -58,8 +58,8 @@ const BoxSummaryMobileBanner = ({
         <RecipeListContainer view={MOBILE_VIEW} recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
 
         {
-          showBrowseCTA
-          && (
+          showBrowseCTA &&
+          (
             <Tooltip
               message={errorText}
               visible={!!errorText}
@@ -73,13 +73,13 @@ const BoxSummaryMobileBanner = ({
           )
         }
         {
-          showBrowseCTA
-          && <BrowseCTAContainer view={MOBILE_VIEW} />
+          showBrowseCTA &&
+          <BrowseCTAContainer view={MOBILE_VIEW} />
         }
 
         {
-          !showBrowseCTA
-          && (
+          !showBrowseCTA &&
+          (
             <Tooltip
               message={errorText}
               visible={!!errorText}

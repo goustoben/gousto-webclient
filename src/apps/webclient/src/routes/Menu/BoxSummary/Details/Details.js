@@ -95,8 +95,8 @@ class Details extends React.Component {
             slotId={slotId}
           />
           {
-            !displayOptions.contains(HIDE_PORTIONS)
-            && this.renderPortions(this.props)
+            !displayOptions.contains(HIDE_PORTIONS) &&
+            this.renderPortions(this.props)
           }
         </LayoutContentWrapper>
         <LayoutContentWrapper>

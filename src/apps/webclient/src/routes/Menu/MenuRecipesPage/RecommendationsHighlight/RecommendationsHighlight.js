@@ -11,12 +11,12 @@ import css from './RecommendationsHighlight.css'
 // remove all recipes from `input` that are in `recipesToRemove`
 const removeMatchingRecipes = (input, recipesToRemove) => (
   input.filter(recipe =>
-    recipe
-    && recipe.recipe
-    && recipesToRemove.some(other => (
-      other
-      && other.recipe
-      && other.recipe.get('id') === recipe.recipe.get('id')
+    recipe &&
+    recipe.recipe &&
+    recipesToRemove.some(other => (
+      other &&
+      other.recipe &&
+      other.recipe.get('id') === recipe.recipe.get('id')
     )) === false
   )
 )
@@ -48,8 +48,8 @@ const RecommendationsHighlight = () => {
   return (
     <div className={menuCss.menuContainer}>
       {
-        Boolean(recommendationRecipes.size)
-        && (
+        Boolean(recommendationRecipes.size) &&
+        (
           <React.Fragment>
             <div className={css.headerContainer}>
               <h2 className={css.header}>Chosen for you</h2>

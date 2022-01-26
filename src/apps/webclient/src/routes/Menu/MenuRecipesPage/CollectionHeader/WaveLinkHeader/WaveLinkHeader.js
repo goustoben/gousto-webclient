@@ -25,8 +25,8 @@ const WaveLinkHeader = ({ headerAttributes, onClick }) => {
           <span className={css.arrowRight} style={{color}} />
         </div>
         <div style={{color: `${color}`}} className={css.waveLinkInfo}>
-          {headerImage[0]
-          && (
+          {headerImage[0] &&
+          (
           <img
             className={css.waveLinkTitleImage}
             src={headerImage[0].url}
