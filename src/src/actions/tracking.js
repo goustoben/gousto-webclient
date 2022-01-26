@@ -9,7 +9,7 @@ import { getUserOrderById } from 'utils/user'
 import { getUTM } from 'utils/utm'
 import { getPreviewOrderId } from 'selectors/basket'
 import { getCurrentPaymentMethod } from 'selectors/payment'
-import { getUTMAndPromoCode } from 'selectors/tracking'
+import { getUTMAndPromoCode, getTransactionType } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { sendAwinS2SData } from 'actions/awin'
 
@@ -149,6 +149,7 @@ export const trackRecipeOrderDisplayed = (displayedOrder) => (
     const state = getState()
     const date = state.basket.get('date')
     const currentMenuId = state.basket.get('currentMenuId')
+    const transactionType = getTransactionType(state)
     const deliveryDayId = state.boxSummaryDeliveryDays.getIn([date, 'id'])
     const orderId = state.basket.get('orderId')
     const browseMode = state.menuBrowseCtaShow
@@ -167,7 +168,8 @@ export const trackRecipeOrderDisplayed = (displayedOrder) => (
       browseMode,
       recommenderVersion,
       isRecommendationsShown,
-      currentMenuId
+      currentMenuId,
+      transactionType
     })
   }
 )

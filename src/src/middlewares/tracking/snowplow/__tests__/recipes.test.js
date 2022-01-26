@@ -14,7 +14,8 @@ describe('snowplow recipe tracking events', () => {
       browseMode: false,
       recommenderVersion: '1',
       isRecommendationsShown: true,
-      currentMenuId: 'test-menu-id'
+      currentMenuId: 'test-menu-id',
+      transactionType: 'test-transaction-type'
     }
 
     test('should return an object with type view_recipe_list', () => {
@@ -35,7 +36,8 @@ describe('snowplow recipe tracking events', () => {
           browse_mode: false,
           recommender_version: '1',
           is_recommendations_shown: true,
-          menu_id: 'test-menu-id'
+          menu_id: 'test-menu-id',
+          transaction_type: 'test-transaction-type'
         },
       })
     })

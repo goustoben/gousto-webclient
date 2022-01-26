@@ -10,11 +10,11 @@ import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import { getUserOrders } from 'selectors/user'
 import { getBasketRecipes } from 'selectors/basket'
+import { getTransactionType , getUTMAndPromoCode } from 'selectors/tracking'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import { boxSummaryDeliveryDaysLoad } from './boxSummary'
 import { actionTypes } from './actionTypes'
-import { getUTMAndPromoCode } from '../selectors/tracking'
 import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import { trackingOrderCheckout } from './tracking'
 import { getIsAuthenticated } from '../selectors/auth'
@@ -473,10 +473,12 @@ export const basketRestorePreviousDate = () => (
 
 export const basketCheckoutClicked = section => (
   (dispatch, getState) => {
-    const { basket } = getState()
+    const state = getState()
+    const { basket } = state
     const recipes = basket.get('recipes')
     const menuId = basket.get('currentMenuId')
-    const {promoCode, UTM} = getUTMAndPromoCode(getState())
+    const transactionType = getTransactionType(state)
+    const {promoCode, UTM} = getUTMAndPromoCode(state)
     dispatch({
       type: actionTypes.BASKET_CHECKOUT_CLICKED,
       trackingData: {
@@ -485,7 +487,8 @@ export const basketCheckoutClicked = section => (
         promoCode,
         section,
         recipes,
-        menu_id: menuId
+        menu_id: menuId,
+        transaction_type: transactionType
       },
     })
   }

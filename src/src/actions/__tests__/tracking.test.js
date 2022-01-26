@@ -227,6 +227,8 @@ describe('tracking actions', () => {
         orderId: '1234567',
         recommenderVersion: '1',
         isRecommendationsShown: false,
+        currentMenuId: undefined,
+        transactionType: 'not set',
       })
     })
 

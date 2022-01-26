@@ -4,6 +4,7 @@ export const recipeListViewed = (action) => ({
   type: trackingKeys.viewRecipeList,
   data: {
     menu_id: action.currentMenuId,
+    transaction_type: action.transactionType,
     displayed_order: action.displayedOrder,
     collection_id: action.collectionId,
     diet_types: action.dietTypes,
