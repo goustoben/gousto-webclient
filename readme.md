@@ -13,20 +13,32 @@ Further documentation
 
 - [Architecture decision records](docs/decisions)
 
-## Quick start
+## Modularisation
+
+We're trialling a gradual move of Webclient to a more modular structure. That means the project is now a Yarn 3 project
+using workspaces.
+
+To work on the main webclient, you'll need to run commands for the main workspace. You can do that one of two ways:
+
+1. You `cd` into the new folder, e.g. `cd src/apps/webclient`
+2. You call `yarn workspace webclient <command>`.
+   - You could also set a bash alias. Add `alias yw="yarn workspace"` to your `~/.zshrc`, and you need only type
+     `yw webclient <command>`. This will work in other Yarn workspace projects.
+
+## Quick start (main webclient)
 
 ```bash
 # 1. clone this repo
 $ git clone git@github.com:Gousto/gousto-webclient.git
 
-# 2. move to the source directory
-$ cd gousto-webclient/src
-
-# 3. Add a development-local.json5 config file and setup your hosts file
+# 2. Add a development-local.json5 config file and setup your hosts file
 # See Pre-requisites below
 
-# 4. Install all dependencies
+# 3. Install all dependencies
 $ yarn install
+
+# 4. Go to webclient subfolder
+$ cd src/apps/webclient # OR yw webclient <command> (see above)
 
 # 5. Start the main webclient in development mode
 # For hot module reload see [Detailed guide](./docs/detailed-setup.md) to setup.
@@ -49,7 +61,7 @@ $ yarn dev
 
 ```bash
 # run unit tests
-$ cd src
+$ cd src/apps/webclient
 $ yarn run test:jest
 
 # watch all unit tests
@@ -64,16 +76,16 @@ $ yarn run test:jest:watch ./path/to/file.test.js
 ```bash
 
 # 1. Build and run the webapp (server and client)
-$ cd src
+$ cd src/apps/webclient
 $ yarn dev
 
 # 2. In a new terminal window open Cypress tests
-$ cd ../tests/regression
+$ cd <repo>/tests/regression
 
 # 3. Run the tests in the command line
 # Desktop
 $ yarn test:web
-#Mobile
+# Mobile
 $ yarn test:mobile
 
 # 4. Problems? Debug by running the tests in the Cypress test runner
@@ -102,8 +114,8 @@ Then in `src` run:
 
 ### Webpack bundle analyzer
 
-In top `src`, invoke `GW_ENABLE_BUNDLE_ANALYZER=1 yarn build`. It will
-generate a file `src/public/stats.json`.
+In the webclient app folder, invoke `GW_ENABLE_BUNDLE_ANALYZER=1 yarn build`. It will
+generate a file `public/stats.json`.
 
 Invoke `yarn bundle-analyzer`. It will open a browser window at
 http://127.0.0.1:8888 with the size stats for each bundle and its dependencies.

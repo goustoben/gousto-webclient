@@ -1,5 +1,5 @@
 {
-  "name": "goustowebclient",
+  "name": "webclient",
   "version": "0.0.1",
   "description": "Isomorphic Gousto WebClient",
   "main": "dist/server.js",
@@ -14,7 +14,7 @@
     "bower-install": "bower install --force --allow-root",
     "start": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn server",
     "server": "node dist/server.js",
-    "start:with-static": "withStatic=true npm run start",
+    "start:with-static": "withStatic=true yarn start",
     "start:dev:inspect": "nodemon --inspect=0.0.0.0 dist/server.js",
     "start:dev": "mkdir -p dist && touch ./dist/server.js && nodemon dist/server.js",
     "start:devlocal": "nodemon dist/server.js",
@@ -40,7 +40,7 @@
     "eslint": "eslint .",
     "codeowners:report": "node ./scripts/codeowners-report/codeowners-report.js",
     "codeowners:unowned": "node ./scripts/codeowners-report/codeowners-report.js --unowned",
-    "clean-install": "rm -rf ./node_modules && npm i",
+    "clean-install": "rm -rf ./node_modules && yarn install",
     "typecheck:tests": "tsc -p ./tsconfig.tests.json",
     "datadog:upload-sourcemaps": "datadog-ci sourcemaps upload $BUILD_DIR --service gousto-webclient --release-version $CIRCLE_BUILD_NUM --minified-path-prefix $ASSET_URL_PREFIX"
   },

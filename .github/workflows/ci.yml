@@ -32,7 +32,7 @@ jobs:
       with:
         path: |
           **/node_modules
-          **/src/libs
+          src/apps/webclient/libs
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -41,18 +41,15 @@ jobs:
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: yarn install --immutable
-      working-directory: src
     - name: Lint
       run: ./scripts/run-eslint-ci.sh
-      working-directory: src
+      working-directory: src/apps/webclient
     - name: Typecheck tests
-      run: yarn run typecheck:tests
-      working-directory: src
+      run: yarn workspace webclient typecheck:tests
     - name: Run tests
-      run: yarn run test:jest:ci:coverage
-      working-directory: src
+      run: yarn workspace webclient test:jest:ci:coverage
     - name: Compare code health
       run: git fetch origin develop && git diff --name-status origin/develop | node ./scripts/compare-code-health.js develop tmp/artifacts/code_health.json
-      working-directory: src
+      working-directory: src/apps/webclient
       env:
         CIRCLECI_ACCESS_TOKEN: ${{ secrets.CIRCLECI_ACCESS_TOKEN }}

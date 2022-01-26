@@ -10,13 +10,13 @@
       "request": "launch",
       "runtimeArgs": [
         "--inspect-brk",
-        "${workspaceRoot}/src/node_modules/.bin/jest",
+        "${workspaceRoot}/src/apps/webclient/node_modules/.bin/jest",
         "--runInBand"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "port": 9229,
-      "cwd": "${workspaceRoot}/src/",
+      "cwd": "${workspaceRoot}/src/apps/webclient",
     }
   ]
 }

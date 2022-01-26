@@ -8,8 +8,6 @@ jobs:
   dangerJS:
     name: Danger JS
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./src
     steps:
     - uses: actions/checkout@master
     - name: Use Node.js 14.x

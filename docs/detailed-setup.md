@@ -43,7 +43,8 @@ Webclient can either be run without G2FE as a standalone on port 80, or as part 
 To access the service simply navigate to `frontend.gousto.local:8080` or if running with G2FE as well, simply navigate to `frontend.gousto.local`.
 
 #### Running Webclient with HMR
-* `yarn run dev` will build the server and then run it with HMR enabled.
+
+* `yarn dev` (in `src/apps/webclient`) will build the server and then run it with HMR enabled.
   You'll see output from the server build initially and then the server will start, as it starts the HMR middleware will be invoked and this will build the client for the first time and should result in HMR being enabled for the client. (This process can take upwards of two minutes the first time you do it, so please be patient)
   *PLEASE NOTE*: Using this option does not have a watch on the server files or use nodemon so changes to the server will involve restarting and rebuilding. It might be possible to start the server with nodemon and have changes update automatically but this is not currently included.
 
@@ -156,7 +157,8 @@ Because of a migration to prettier, there were several bulk formatting changes. 
 
 ## Quick guide to `node-config`
 
-We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack. `node-config` is a file based, and looks at files inside our `src/config` folder.
+We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack.
+`node-config` is a file based, and looks at files inside our `src/apps/webclient/config` folder.
 
 We have two variables we can set for `node-config` to pick up specific files. The first being  `NODE_CONFIG_ENV` which we set to match the environment (e.g. `development`, `radishes`, `staging`, `production`) and the second is `NODE_APP_INSTANCE` which we set to the where the app is running (`local`, `live`).
 
@@ -265,18 +267,18 @@ Please install [EditorConfig](https://editorconfig.org/) for your text editor or
 Why is this important? Imagine two developers working on the same file, one person has tab indentation with size of 4, and the other has space indentation with size of 2. Even if they change nothing in the shared file, just by running commands such as `format document` git will pick it up as all lines changed. This makes tracking and tracing changes very difficult (not mentioning how eye strain it is when it comes to code review).
 
 ### Use of Prettier
-This project is in the process of gradual migration to Prettier. As such, only the files whitelisted under `src/.prettierignore` should be formatted with prettier.
+This project is in the process of gradual migration to Prettier. As such, only the files whitelisted under `src/apps/webclient/.prettierignore` should be formatted with prettier.
 
 This means that generally, you shouldn't configure your IDE to format every file on save: instead it should respect the `.prettierignore` file if it's possible.  Sorry for the inconvenience.
 
 #### Migrating a new route
 
-If you'd like to introduce prettier inside an unmigrated-yet route, please follow these steps:
+If you'd like to introduce prettier inside an unmigrated-yet route, please follow these steps in `src/apps/webclient`:
 
 1. Modify "files" section under "Make eslint rules agree with prettier" in
-   `src/.eslintrc.js`
-2. Modify the end of `src/.prettierignore`
-3. In the top `src`, invoke `prettier -w src`
+   `.eslintrc.js`
+2. Modify the end of `.prettierignore`
+3. Invoke `prettier -w src`
 4. Review changes to catch any weirdness (due to automatic semicolon insertion
    or a human-visible change in a React component output)
 5. Invoke `./scripts/compare-code-health.sh`

@@ -1,8 +1,4 @@
-src/manifest.json
 **/node_modules
-src/public
-src/dist
-src/libs/goustouicomponents
 .DS_Store
 .FBCIndex
 Thumbs.db
@@ -18,17 +14,13 @@ tests/regression/results
 tests/regression/reports
 tests/regression/videos
 tests/load/__pycache__
-src/coverage/
 **/eslint-results.json
 yarn-error.log
-src/_coverage
-src/vendor
-src/config/*-local.json5
 
 # VSCode
 .vs
 .idea
-src/config/env.json
+src/apps/webclient/config/env.json
 lib
 
 # Yarn

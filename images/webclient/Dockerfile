@@ -23,13 +23,13 @@ RUN mkdir -p /home/docker/app
 RUN chown -R docker:docker /home/docker
 
 # COPY BUILT APPLICATION TO RUN DIRECTORY FOR NON-DEVELOPERS
-COPY --chown=docker:docker src/dist/ /home/docker/app/dist/
-COPY --chown=docker:docker src/node_modules/ /home/docker/app/node_modules/
-COPY --chown=docker:docker src/config/ /home/docker/app/config/
-COPY --chown=docker:docker src/public/ /home/docker/app/public/
-COPY --chown=docker:docker src/process-docker.json /home/docker/app/process-docker.json
-COPY --chown=docker:docker src/manifest.json /home/docker/app/manifest.json
-COPY --chown=docker:docker src/ecs_start.sh /home/docker/app/ecs_start.sh
+COPY --chown=docker:docker src/apps/webclient/dist/ /home/docker/app/dist/
+COPY --chown=docker:docker src/apps/webclient/node_modules/ /home/docker/app/node_modules/
+COPY --chown=docker:docker src/apps/webclient/config/ /home/docker/app/config/
+COPY --chown=docker:docker src/apps/webclient/public/ /home/docker/app/public/
+COPY --chown=docker:docker src/apps/webclient/process-docker.json /home/docker/app/process-docker.json
+COPY --chown=docker:docker src/apps/webclient/manifest.json /home/docker/app/manifest.json
+COPY --chown=docker:docker src/apps/webclient/ecs_start.sh /home/docker/app/ecs_start.sh
 
 USER docker
 EXPOSE 80
