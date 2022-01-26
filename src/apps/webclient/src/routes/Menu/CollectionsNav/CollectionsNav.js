@@ -244,8 +244,8 @@ class CollectionsNav extends React.PureComponent {
     const rect = ele.getBoundingClientRect()
 
     return (
-      rect.left >= 0
-      && (rect.right + rect.width) <= (parent.innerWidth || document.documentElement.clientWidth)
+      rect.left >= 0 &&
+      (rect.right + rect.width) <= (parent.innerWidth || document.documentElement.clientWidth)
     )
   }
 

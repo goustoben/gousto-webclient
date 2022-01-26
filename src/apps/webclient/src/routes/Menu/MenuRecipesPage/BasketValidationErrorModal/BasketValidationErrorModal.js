@@ -18,8 +18,8 @@ export const BasketValidationErrorModal = ({ title, shouldShow, shouldShowSwapBu
           <div key={`${idx + 1}`} className={css.basketErrorRuleRow}>
             <p>{description}</p>
             <h2 className={css.basketErrorContentTitle}>Currently in your basket:</h2>
-            {recipes
-                  && (
+            {recipes &&
+                  (
                   <ul className={css.basketErrorList}>
                     {
                       recipes.map((recipe, index) => (
@@ -42,8 +42,8 @@ export const BasketValidationErrorModal = ({ title, shouldShow, shouldShowSwapBu
           : <Button className={css.basketErrorModalCloseFullButton} width="full" color="primary" onClick={closeModal}>Close</Button>
       }
       {
-        shouldShowSwapButton
-        && <Button className={css.basketErrorModalSwapButton} color="primary" onClick={basketRecipeSwap}>Swap meal</Button>
+        shouldShowSwapButton &&
+        <Button className={css.basketErrorModalSwapButton} color="primary" onClick={basketRecipeSwap}>Swap meal</Button>
       }
     </ModalFooter>
 

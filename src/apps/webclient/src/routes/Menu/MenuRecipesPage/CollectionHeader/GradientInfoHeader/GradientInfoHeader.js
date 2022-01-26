@@ -39,8 +39,8 @@ const GradientInfoHeader = ({ headerAttributes }) => {
           }}
         >
           {
-            headerImage[0]
-            && (
+            headerImage[0] &&
+            (
             <img
               src={getGradientImageSrc(headerAttributes, 'headerImage')}
               alt={altText}

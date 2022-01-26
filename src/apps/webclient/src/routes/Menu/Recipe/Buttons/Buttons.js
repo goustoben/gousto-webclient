@@ -20,8 +20,8 @@ class Buttons extends React.Component {
     const viewsToExclude = config.recipeDetailViews
 
     const shouldApplyClass = Boolean(
-      surchargePerPortion
-      && !viewsToExclude.includes(view)
+      surchargePerPortion &&
+      !viewsToExclude.includes(view)
     )
     const otherClassNames = otherClasses.map(name => css[name])
 

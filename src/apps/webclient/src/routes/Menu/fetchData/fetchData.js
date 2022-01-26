@@ -21,9 +21,9 @@ import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from '
 import { sendClientMetric } from '../apis/clientMetrics'
 
 const requiresMenuRecipesClear = (state, orderId) => (
-  orderId
-    && getIsAuthenticated(state)
-    && state.basket.get('recipes').size
+  orderId &&
+    getIsAuthenticated(state) &&
+    state.basket.get('recipes').size
 )
 
 const chooseFirstDate = () => async (dispatch, getState) => {
@@ -107,18 +107,18 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
     const shippingAddresses = getState().user.get('shippingAddresses')
 
     const addressToSelect = (
-      shippingAddresses.find(address => address.shippingDefault === true)
-      || shippingAddresses.first()
+      shippingAddresses.find(address => address.shippingDefault === true) ||
+      shippingAddresses.first()
     )
 
     await dispatch(actions.basketReset(addressToSelect))
   }
 
   if (
-    query.day_id
-    || query.slot_id
-    || getBasketDate(getState())
-    || getState().basket.get('slotId')
+    query.day_id ||
+    query.slot_id ||
+    getBasketDate(getState()) ||
+    getState().basket.get('slotId')
   ) {
     try {
       await dispatch(actions.menuLoadDays())
@@ -171,14 +171,14 @@ const shouldFetchData = (state, params, force, userMenuVariant) => {
   const isMenuVariantDifferent = userMenuVariant && getMenuFetchVariant(state) !== getUserMenuVariant(state)
 
   return (
-    force
-      || isAccessTokenDifferent
-      || isMenuVariantDifferent
-      || !menuRecipes
-      || (menuRecipes && menuRecipes.size <= threshold)
-      || stale
-      || requiresClear
-      || !menuCollections.size
+    force ||
+      isAccessTokenDifferent ||
+      isMenuVariantDifferent ||
+      !menuRecipes ||
+      (menuRecipes && menuRecipes.size <= threshold) ||
+      stale ||
+      requiresClear ||
+      !menuCollections.size
   )
 }
 
