@@ -2,12 +2,14 @@ import { useCallback } from 'react'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import { getStock } from 'selectors/root'
 import menuConfig from 'config/menu'
-import { useBasket } from '../basket'
 import { useGetStockForRecipe, MenuRecipeStock } from './internal/useGetStockForRecipe'
+import { useIsRecipeInBasket } from '../basket/internal/useIsRecipeInBasket'
+import { useNumPortions } from '../basket/internal/useNumPortions'
 
 export const useStock = () => {
   const menuRecipeStock = useSelector<RootStateOrAny, MenuRecipeStock>(getStock)
-  const { numPortions, isRecipeInBasket } = useBasket()
+  const isRecipeInBasket = useIsRecipeInBasket()
+  const { numPortions } = useNumPortions()
 
   const getStockForRecipe = useGetStockForRecipe({ menuRecipeStock, numPortions })
 

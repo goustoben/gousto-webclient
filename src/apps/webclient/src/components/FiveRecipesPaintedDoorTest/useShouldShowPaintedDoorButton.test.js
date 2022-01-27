@@ -4,6 +4,7 @@ import { useShouldShowPaintedDoorButton } from './useShouldShowPaintedDoorButton
 jest.mock('routes/Menu/domains/basket', () => ({
   ...jest.requireActual('routes/Menu/domains/basket'),
   useBasket: jest.fn(),
+  useIsRecipeInBasket: jest.fn(),
 }))
 
 const Basket = require('routes/Menu/domains/basket')
@@ -17,7 +18,7 @@ const parameters = {
   isInExperiment: false,
   isSeenOnMenu: false,
   isLimitReached: false,
-  isRecipeInBasket: false
+  isRecipeInBasket: false,
 }
 const setup = () => {
   use5RecipesPaintedDoorTest.mockReturnValue({
@@ -25,9 +26,9 @@ const setup = () => {
     hasSeenOnMenu: parameters.isSeenOnMenu,
   })
   Basket.useBasket.mockReturnValue({
-    limitReached: parameters.isLimitReached,
-    isRecipeInBasket: () => parameters.isRecipeInBasket,
+    reachedLimit: parameters.isLimitReached,
   })
+  Basket.useIsRecipeInBasket.mockReturnValue(() => parameters.isRecipeInBasket)
 }
 
 describe('useShouldShowPaintedDoorButton', () => {
