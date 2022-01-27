@@ -44,6 +44,7 @@ export const CheckoutUrgencyBanner = () => {
       borderStyle={BorderStyle.Solid}
       borderColor={Color.Warning_100}
       borderWidth={1}
+      borderRadius={3}
       paddingV={1}
       paddingH={1}
     >
