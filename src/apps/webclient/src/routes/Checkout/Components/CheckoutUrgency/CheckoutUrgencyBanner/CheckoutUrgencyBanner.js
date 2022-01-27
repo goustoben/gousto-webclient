@@ -3,6 +3,7 @@ import { CheckoutUrgencyContext } from 'routes/Checkout/Components/CheckoutUrgen
 import Svg from 'Svg'
 import { formatSeconds } from '../checkoutUrgencyUtils'
 import css from './CheckoutUrgencyBanner.css'
+import { Badge, Box, Color } from '@gousto-internal/citrus-react'
 
 export const CheckoutUrgencyBanner = () => {
   const remainingSeconds = useContext(CheckoutUrgencyContext)
