@@ -12,6 +12,7 @@ import {
   AlignItems,
   JustifyContent,
   BorderStyle,
+  Icon,
 } from '@gousto-internal/citrus-react'
 
 // export const CheckoutUrgencyBanner = () => {
@@ -49,7 +50,7 @@ export const CheckoutUrgencyBanner = () => {
       paddingH={2}
     >
       <Box>
-        <Svg className={css.icon} fileName="icon-timer-red" />
+        <Icon name="time" variant="Error" />
       </Box>
       <Space size={1} direction="horizontal" />
       <Box paddingV={(0, 1)}> Checkout within {formattedTime} to avoid losing your recipes</Box>
