@@ -43,10 +43,10 @@ export const CheckoutUrgencyBanner = () => {
       bg={Color.Warning_50}
       borderStyle={BorderStyle.Solid}
       borderColor={Color.Warning_100}
-      borderWidth={1}
+      borderWidth={0.5}
       borderRadius={3}
-      paddingV={1}
-      paddingH={1}
+      paddingV={2}
+      paddingH={2}
     >
       <Box>
         <Svg className={css.icon} fileName="icon-timer-red" />
