@@ -37,14 +37,21 @@ export const CheckoutUrgencyBanner = () => {
   const formattedTime = formatSeconds(remainingSeconds)
 
   return (
-    <Box bg={Color.Warning_50} borderStyle={BorderStyle.Solid} borderColor={Color.Warning_100}>
-      <Box className={css.container} display="flex" alignItems={AlignItems.Center}>
-        <Box>
-          <Svg className={css.icon} fileName="icon-timer-red" />
-        </Box>
-        <Space size={1} direction="horizontal" />
-        <Box paddingV={(0, 1)}> Checkout within {formattedTime} to avoid losing your recipes</Box>
+    <Box
+      className={css.container}
+      display="flex"
+      bg={Color.Warning_50}
+      borderStyle={BorderStyle.Solid}
+      borderColor={Color.Warning_100}
+      borderWidth={1}
+      paddingV={1}
+      paddingH={1}
+    >
+      <Box>
+        <Svg className={css.icon} fileName="icon-timer-red" />
       </Box>
+      <Space size={1} direction="horizontal" />
+      <Box paddingV={(0, 1)}> Checkout within {formattedTime} to avoid losing your recipes</Box>
     </Box>
   )
 }
