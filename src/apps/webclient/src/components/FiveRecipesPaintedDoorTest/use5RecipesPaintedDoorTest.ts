@@ -5,6 +5,8 @@ import { useLocalStorage } from 'usehooks-ts'
 import { getPromoModalVisible } from 'selectors/modals'
 import routes from 'config/routes'
 import React from 'react'
+import { isMenuLoading } from 'routes/Menu/selectors/menu'
+import { getPromoCode } from 'selectors/basket'
 import { useIsOptimizelyFeatureEnabled } from '../../containers/OptimizelyRollouts/useOptimizely.hook'
 import { getFetcher } from '../../routes/Menu/apis/fetch'
 import { buildSubscriptionQueryUrl } from '../../routes/Account/apis/subscription'
@@ -51,13 +53,15 @@ const useSubscription = () => {
   })
 }
 
-const useHasSubscriptionFor2People4Recipes = () => {
+const useIsUserValidForSubscriptionFeature = () => {
   const TWO_PORTIONS_BOX = 2
   const FOUR_RECIPES_BOX = 4
   const { data: request } = useSubscription()
+  const isLoading = useSelector(isMenuLoading)
 
   return (
-    request
+    !isLoading
+    && request
     && request?.data?.subscription?.numPortions === TWO_PORTIONS_BOX
     && request?.data?.subscription?.numRecipes === FOUR_RECIPES_BOX
   )
@@ -68,12 +72,14 @@ const SESSION_KEY_FOR_PATHNAME_FOR_PROMO_CODE = 'pathname_for_promo_code'
 const useIsUserValidForNewUserFeature = () => {
   // Prevent experiment from clashing with Promo Code modal
   const promoModalVisible = useSelector(getPromoModalVisible)
+  const hasPromoCode = useSelector(getPromoCode)
   const [pathnameForPromoCode, setPathnameForPromoCode] = useLocalStorage<string>(
     SESSION_KEY_FOR_PATHNAME_FOR_PROMO_CODE,
     ''
   )
   const isAuthenticated = useSelector(getIsAuthenticated)
   const isNewUser = !isAuthenticated
+  const isLoading = useSelector(isMenuLoading)
 
   React.useEffect(() => {
     if (promoModalVisible && typeof window !== 'undefined') {
@@ -82,7 +88,7 @@ const useIsUserValidForNewUserFeature = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [promoModalVisible])
 
-  return !promoModalVisible && isNewUser && !pathnameForPromoCode.includes('menu')
+  return hasPromoCode && !isLoading && !promoModalVisible && isNewUser && !pathnameForPromoCode.includes('menu')
 }
 
 export const HAS_SEEN_TEST_IN_MENU_STORAGE_NAME = 'gousto_has_seen_test_in_menu'
@@ -107,10 +113,10 @@ export const use5RecipesPaintedDoorTest = () => {
   const setMenuAsSeen = () => setHasSeenOnMenuValue(isNewUser ? NEW_USER : EXISTING_USER)
   const setOrderConfirmationAsSeen = () => setOrderConfirmationAsSeenValue(true)
 
-  const hasSubscriptionFor2People4Recipes = useHasSubscriptionFor2People4Recipes()
+  const isSubscribedAndEnabled = useIsUserValidForSubscriptionFeature()
   const isNewUserAndEnabled = useIsUserValidForNewUserFeature()
   const isEnabledForSubscriptionUser = useIsOptimizelyFeatureEnabled(
-    hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLE_SUBSCRIBED : null
+    isSubscribedAndEnabled ? OPTIMIZELY_ENABLE_SUBSCRIBED : null
   )
   const isEnabledForSignUpUser = useIsOptimizelyFeatureEnabled(
     isNewUserAndEnabled ? OPTIMIZELY_ENABLE_SIGNUP_FLOW : null
