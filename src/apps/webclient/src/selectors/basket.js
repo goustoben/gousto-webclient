@@ -23,6 +23,7 @@ export const getBasketLimitReached = ({ basket }) => basket.get('limitReached', 
 export const getBasketSlotId = ({ basket }) => basket.get('slotId')
 export const getBasketPostcode = ({ basket }) => basket.get('postcode')
 export const getBasketMenuId = ({ basket }) => basket.get('currentMenuId')
+export const isFirstRecipeAdded = ({ basket }) => basket.get('hasAddedFirstRecipe')
 
 export const getBasketProducts = ({ basket }) => basket.get('products')
 

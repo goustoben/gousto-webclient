@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
-import { useBasket } from 'routes/Menu/domains/basket'
+import { useBasket, useIsRecipeInBasket } from 'routes/Menu/domains/basket'
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { useShouldShowPaintedDoorButton } from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
 import { FiveRecipesAddRecipeButton } from 'components/FiveRecipesPaintedDoorTest/FiveRecipesAddRecipeButton'
@@ -10,10 +10,10 @@ import css from './AddRecipeButton.css'
 
 export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) => {
   const dispatch = useDispatch()
-  const { canAddRecipes, addRecipe, removeRecipe, limitReached, isRecipeInBasket } = useBasket()
-
+  const { canAddRecipes, addRecipe, removeRecipe, reachedLimit } = useBasket()
+  const isRecipeInBasket = useIsRecipeInBasket()
   const isInBasket = isRecipeInBasket(recipeId)
-  const disabled = limitReached && !isInBasket
+  const disabled = reachedLimit && !isInBasket
 
   const buttonProps = getRecipeButtonProps(isInBasket)
 
