@@ -11,6 +11,7 @@ import {
   Display,
   AlignItems,
   JustifyContent,
+  BorderStyle,
 } from '@gousto-internal/citrus-react'
 
 // export const CheckoutUrgencyBanner = () => {
@@ -36,8 +37,8 @@ export const CheckoutUrgencyBanner = () => {
   const formattedTime = formatSeconds(remainingSeconds)
 
   return (
-    <Box bg={Color.Warning_50} borderWidth={3} borderColor={Color.Warning_200}>
-      <Box className={css.container} paddingV={1} display="flex" alignItems={AlignItems.Center}>
+    <Box bg={Color.Warning_50} borderStyle={BorderStyle.Solid} borderColor={Color.Warning_100}>
+      <Box className={css.container} display="flex" alignItems={AlignItems.Center}>
         <Box>
           <Svg className={css.icon} fileName="icon-timer-red" />
         </Box>
