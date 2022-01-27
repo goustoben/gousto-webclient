@@ -21,6 +21,7 @@ const useAddValidRecipeToBasket = () => {
   const menuRecipes = useSelector(getBasketRecipes)
   const firstRecipeAdded = useSelector(isFirstRecipeAdded)
   const slotId = useSelector(getBasketSlotId)
+  const { promoCode, UTM } = useSelector(getUTMAndPromoCode)
 
   const { isRecipeOutOfStock } = useStock()
   const collection = useCurrentCollectionId()
@@ -77,7 +78,6 @@ const useAddValidRecipeToBasket = () => {
       },
     })
 
-    const { promoCode, UTM } = getUTMAndPromoCode()
     reachedLimit = limitReached(menuRecipes)
     if (reachedLimit) {
       dispatch({
