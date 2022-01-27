@@ -61,7 +61,7 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery') => {
     validationRules.deliveryInstructionsCustom = {
       rules: [
         { name: 'isLength', options: { min: 5 } },
-        { name: 'isLength', options: { max: 50 } },
+        { name: 'isLength', options: { max: 32 } },
       ],
       field: 'delivery instruction',
     }
