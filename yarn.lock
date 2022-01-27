@@ -680,8 +680,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@gousto-internal/citrus-react@npm:^0.12.0":
   version: 0.12.0
   resolution: "@gousto-internal/citrus-react@npm:0.12.0::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.12.0.tgz"
@@ -695,14 +693,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hapi/bourne@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@hapi/bourne@npm:2.0.0"
-  checksum: 2ea0922101d3fecec43428194c72c5dbe0be908dd7ad07347879dc720820ac410ead79a4c349a2e1726e8af062464160c6d32b6566bbc4c60865923f9d7dd006
-  languageName: node
-  linkType: hard
-
->>>>>>> 6f245aacd (Modify .yarnrc.yml for codeartifact)
 "@hapi/hoek@npm:^9.0.0":
   version: 9.2.1
   resolution: "@hapi/hoek@npm:9.2.1"
@@ -7808,6 +7798,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"focus-visible@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "focus-visible@npm:5.2.0"
+  checksum: 876f646ef453680d3d34e9f9b23961527ffd5ccaed8690f423d4fbfa37ff023d98a490972bc1387850e37ec2e44958c81f6096ef95b67462e5c4b5404cf1dbb9
+  languageName: node
+  linkType: hard
+
 "follow-redirects@npm:^1.14.0, follow-redirects@npm:^1.14.4":
   version: 1.14.7
   resolution: "follow-redirects@npm:1.14.7"
@@ -8578,168 +8575,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-<<<<<<< HEAD
 "graceful-fs@npm:^4.1.10, graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.15, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6":
-=======
-"goustowebclient@workspace:src":
-  version: 0.0.0-use.local
-  resolution: "goustowebclient@workspace:src"
-  dependencies:
-    "@axe-core/react": ^4.1.1
-    "@datadog/browser-logs": ^3.8.0
-    "@datadog/browser-rum": ^3.8.0
-    "@datadog/datadog-ci": ^0.17.12
-    "@emotion/react": ^11.7.1
-    "@gousto-internal/citrus-react": ^0.12.0
-    "@optimizely/optimizely-sdk": ^4.1.0
-    "@pact-foundation/pact": ^9.16.4
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
-    "@sheerun/mutationobserver-shim": ^0.3.3
-    "@testing-library/jest-dom": ^5.14.1
-    "@testing-library/react": ^12.0.0
-    "@testing-library/react-hooks": ^3.4.2
-    "@types/classnames": ^2.3.1
-    "@types/enzyme": ^3.10.11
-    "@types/isomorphic-fetch": 0.0.35
-    "@types/jest": ^27.0.2
-    "@types/node": ^16.10.2
-    "@types/react-router-redux": ^5.0.20
-    "@typescript-eslint/eslint-plugin": ^4.33.0
-    "@typescript-eslint/parser": ^4.33.0
-    "@wojtekmaj/enzyme-adapter-react-17": ^0.6.2
-    actual: 0.4.0
-    airbnb-prop-types: ^2.16.0
-    axios: ^0.24.0
-    bower: 1.8.8
-    classnames: 2.2.6
-    codeowners: ^4.2.0
-    concat-stream: ^2.0.0
-    cookies-js: 1.2.3
-    css-loader: 1.0.1
-    cssnano: 4.1.8
-    cssnano-preset-advanced: 4.0.6
-    dd-trace: ^1.5.1
-    dompurify: ^2.0.8
-    enzyme: 3.9.0
-    eslint: ^6.8.0
-    eslint-config-airbnb: ^18.0.1
-    eslint-import-resolver-alias: ^1.1.2
-    eslint-plugin-import: ^2.20.1
-    eslint-plugin-jsx-a11y: ^6.2.3
-    eslint-plugin-prettier: ^3.3.1
-    eslint-plugin-react: ^7.18.3
-    eslint-plugin-react-hooks: ^4.1.2
-    extract-text-webpack-plugin: 4.0.0-beta.0
-    file-loader: 2.0.0
-    gousto-lumberjack-js: "git@github.com:Gousto/lumberjack-js-package.git#v1.0.4"
-    identity-obj-proxy: 3.0.0
-    ignore: ^5.1.8
-    image-webpack-loader: 4.6.0
-    immutable: 3.8.2
-    isomorphic-fetch: 2.2.1
-    jest: ^27.4.3
-    jest-environment-node: ^27.2.5
-    jest-fetch-mock: ^3.0.3
-    jest-localstorage-mock: ^2.4.18
-    jsdom: 11.3.0
-    json5: ^2.2.0
-    jsonfile: 4.0.0
-    koa: 2.5.1
-    koa-body: 2.5.0
-    koa-convert: 1.2.0
-    koa-mount: 2.0.0
-    koa-static: 3.0.0
-    koa-webpack: ^6.0.0
-    libphonenumber-js: ^1.9.23
-    libphonenumber-metadata-generator: ^1.0.1
-    mockdate: ^2.0.5
-    moment: 2.22.2
-    msw: ^0.33.0
-    node-config: "npm:config@^3.3.3"
-    node-sass: ^4.13.1
-    nodemon: 1.18.3
-    normalize.css: ^8.0.1
-    npm-run-all: 4.1.3
-    optimize-css-assets-webpack-plugin: 5.0.1
-    performance-now: ^2.1.0
-    perfume.js: ^6.2.0
-    postcss: 7.0.7
-    postcss-flexbugs-fixes: 4.1.0
-    postcss-import: 12.0.1
-    postcss-loader: 3
-    postcss-nested: 4.1.1
-    postcss-preset-env: 6.5.0
-    postcss-reporter: 6
-    postcss-safe-parser: 4.0.1
-    prettier: ^2.3.2
-    promise-timeout: ^1.3.0
-    prop-types: 15.7.2
-    qs: 6.5.2
-    query-string: 4.2.3
-    rc-tooltip: 4.0.3
-    react: 17.0.2
-    react-async-script: ^1.2.0
-    react-copy-to-clipboard: 5.0.1
-    react-dom: 17.0.2
-    react-helmet: 5.0.3
-    react-immutable-proptypes: 2.1.0
-    react-lazyload: 2.3.0
-    react-markdown: 2.5.0
-    react-media: ^1.10.0
-    react-modal: ^3.12.1
-    react-portal: ^4.2.1
-    react-redux: 7.2.4
-    react-refresh: ^0.10.0
-    react-router: 3.2.3
-    react-router-redux: 4.0.8
-    react-router-scroll: 0.4.3
-    react-select: ^1.2.1
-    react-slick: 0.25.2
-    react-test-renderer: 16.13.1
-    react-transition-group: ^2.9.0
-    react-use: ^15.3.4
-    redux: 4.0.5
-    redux-form: ^8.3.7
-    redux-logger: 3.0.6
-    redux-mock-store: 1.1.1
-    redux-thunk: 2.3.0
-    request: ^2.88.0
-    reselect: 3.0.1
-    sass-loader: 7.1.0
-    scroll: 2.0.3
-    scroll-into-view: 1.8.0
-    seedrandom: 2.4.3
-    simple-progress-webpack-plugin: 1.1.2
-    sinon: 2.1.0
-    source-map-support: 0.5.9
-    speed-measure-webpack-plugin: ^1.3.1
-    spinkit: 1.2.5
-    style-loader: 0.23.1
-    svg-url-loader: ^2.3.2
-    swr: ^0.5.6
-    terser-webpack-plugin: 1.1.0
-    transit-immutable-js: 0.7.0
-    transit-js: 0.8.861
-    ts-jest: ^27.1.0
-    ts-loader: ^8.3.0
-    tslib: ^2.3.1
-    typescript: ^4.5.2
-    url: 0.11.0
-    url-loader: 1.1.2
-    usehooks-ts: ^2.2.0
-    uuid: 3.3.2
-    validator: 10.4.0
-    webpack: ^4.44.2
-    webpack-bundle-analyzer: 3.3.2
-    webpack-cli: 3.1.2
-    webpack-hot-middleware: ^2.25.0
-    webpack-manifest-plugin: 2.0.4
-    webpack-node-externals: 1.7.2
-  languageName: unknown
-  linkType: soft
-
-"graceful-fs@npm:^4.1.10, graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.15, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.2, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6":
->>>>>>> 6f245aacd (Modify .yarnrc.yml for codeartifact)
   version: 4.2.9
   resolution: "graceful-fs@npm:4.2.9"
   checksum: 68ea4e07ff2c041ada184f9278b830375f8e0b75154e3f080af6b70f66172fabb4108d19b3863a96b53fc068a310b9b6493d86d1291acc5f3861eb4b79d26ad6
@@ -20059,6 +19895,8 @@ __metadata:
     "@datadog/browser-logs": ^3.8.0
     "@datadog/browser-rum": ^3.8.0
     "@datadog/datadog-ci": ^0.17.12
+    "@emotion/react": ^11.7.1
+    "@gousto-internal/citrus-react": ^0.12.0
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@sheerun/mutationobserver-shim": ^0.3.3
