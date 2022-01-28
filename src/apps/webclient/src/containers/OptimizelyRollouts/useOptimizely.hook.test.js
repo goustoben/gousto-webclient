@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { get } from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { renderHook } from '@testing-library/react-hooks'
-import { useSetupOptimizelyOverride, useIsOptimizelyFeatureEnabled } from './useOptimizely.hook'
+import {
+  useSetupOptimizelyOverride,
+  useIsOptimizelyFeatureEnabled,
+  useUserIdForOptimizely
+} from './useOptimizely.hook'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 import * as optimizelySdk from './optimizelySDK'
@@ -124,6 +128,68 @@ describe('useOptimizely', () => {
             expect(setItemSpy).not.toBeCalled()
             expect(removeItemSpy).not.toBeCalled()
           })
+        })
+      })
+    })
+  })
+
+  describe('useUserIdForOptimizely', () => {
+    describe('when user and snowplow user id are not present', () => {
+      beforeEach(() => {
+        window.snowplow = null
+        state = {
+          auth: Immutable.Map({
+            id: '',
+          }),
+        }
+      })
+
+      it('should return null', async () => {
+        const { result } = renderHook(() => useUserIdForOptimizely())
+
+        const userID = result.current
+
+        expect(userID).toBe(null)
+      })
+    })
+
+    describe('when theres is valid snowplow user id', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          auth: Immutable.fromJS({ id: undefined })
+        }
+        mockSnowplowCallbackAPI()
+      })
+
+      describe('and no auth user id is present', () => {
+        it('should return the snowplow id', async () => {
+          const { result, waitForNextUpdate } = renderHook(() => useUserIdForOptimizely())
+
+          await waitForNextUpdate()
+
+          const userID = result.current
+
+          expect(userID).toBe('snowplowUserId')
+        })
+      })
+
+      describe('when the user has an auth user id', () => {
+        beforeEach(() => {
+          state = {
+            ...state,
+            auth: Immutable.fromJS({ id: 'user_id' })
+          }
+        })
+
+        it('should return the auth user id', async () => {
+          const { result, waitForNextUpdate } = renderHook(() => useUserIdForOptimizely())
+
+          await waitForNextUpdate()
+
+          const userID = result.current
+
+          expect(userID).toBe('user_id')
         })
       })
     })

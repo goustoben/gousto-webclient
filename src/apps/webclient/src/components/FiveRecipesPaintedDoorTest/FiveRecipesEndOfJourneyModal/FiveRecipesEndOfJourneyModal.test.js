@@ -11,11 +11,11 @@ describe('<FiveRecipesEndOfJourney />', () => {
   const trackEvent = jest.fn()
   const setMenuAsSeen = jest.fn()
   const onClose = jest.fn()
-  let sendClientMetricSpy
+  const sendClientMetricMock = jest.fn()
 
   beforeEach(() => {
     use5RecipesPaintedDoorTestSpy = jest.spyOn(FiveRecipeHooks, 'use5RecipesPaintedDoorTest')
-    sendClientMetricSpy = jest.spyOn(clientMetrics, 'sendClientMetric')
+    jest.spyOn(clientMetrics, 'useSendClientMetric').mockReturnValue(sendClientMetricMock)
     jest.spyOn(Tracking, 'useCreateTrackEvent').mockImplementation(() => trackEvent)
   })
 
@@ -85,7 +85,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
       fireEvent.click(screen.getByText('Back to menu'))
 
-      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(
+      expect(sendClientMetricMock).toHaveBeenNthCalledWith(
         1,
         'menu-5-recipes-painted-existing-user-end',
         1,
@@ -121,7 +121,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
       fireEvent.click(screen.getByText('Back to menu'))
 
-      expect(sendClientMetricSpy).toHaveBeenNthCalledWith(
+      expect(sendClientMetricMock).toHaveBeenNthCalledWith(
         1,
         'menu-5-recipes-painted-new-user-end',
         1,
