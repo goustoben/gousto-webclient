@@ -8,7 +8,7 @@ import {
   ProgressBar,
 } from 'goustouicomponents'
 import { BoxProgressMessage } from 'routes/Menu/BoxProgressMessage'
-import { use5RecipesPaintedDoorTest } from '../../../components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest'
+import { use5RecipesPaintedDoorTest } from 'components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest'
 
 import css from './RecipesInBasketProgressContent.css'
 

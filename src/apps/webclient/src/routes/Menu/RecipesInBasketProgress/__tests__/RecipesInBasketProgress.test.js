@@ -1,18 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
-import { useSelector } from 'react-redux'
-import { RecipesInBasketProgress } from '..'
-import { useBasketRequiredFeatureEnabled } from '../../hooks/useBasketRequiredFeatureEnabled'
+import { RecipesInBasketProgressPresentation } from '../RecipesInBasketProgress.presentation'
 
-jest.mock('../../hooks/useBasketRequiredFeatureEnabled')
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}))
+jest.mock('components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest', () =>
+  ({
+    use5RecipesPaintedDoorTest: jest.fn(() => ({ maxRecipes: 4 })),
+  })
+)
 
-describe('RecipesInBasketProgress Component', () => {
+describe('RecipesInBasketProgressPresentation Component', () => {
   let wrapper
   const PROPS = {
     isAuthenticated: false,
@@ -21,15 +18,13 @@ describe('RecipesInBasketProgress Component', () => {
 
   beforeEach(() => {
     wrapper = mount(
-      <RecipesInBasketProgress {...PROPS} />
+      <RecipesInBasketProgressPresentation {...PROPS} />
     )
-    useBasketRequiredFeatureEnabled.mockReturnValue(false)
-    useSelector.mockReturnValue(true)
   })
 
   test('renders without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(<RecipesInBasketProgress {...PROPS} />, div)
+    ReactDOM.render(<RecipesInBasketProgressPresentation {...PROPS} />, div)
   })
 
   describe('when no recipes are selected', () => {
@@ -39,20 +34,6 @@ describe('RecipesInBasketProgress Component', () => {
 
     test('it does not render', () => {
       expect(wrapper.html()).toBeNull()
-    })
-  })
-
-  describe('when isBasketRequiredFeatureEnabled and mobile', () => {
-    beforeEach(() => {
-      useBasketRequiredFeatureEnabled.mockReturnValue(true)
-    })
-
-    test('it has 98px vertical offset', () => {
-      const passProps = {...PROPS, selectedRecipesCount: 1, isMobileViewport: true}
-      wrapper = mount(
-        <RecipesInBasketProgress {...passProps} />
-      )
-      expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('98px')
     })
   })
 
