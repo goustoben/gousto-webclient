@@ -11,19 +11,6 @@ import { menuOverlayClick } from './actions/menuOverlayClick'
 import fetchData from './fetchData'
 import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable'
 
-const flattenRecipes = (recipes) => {
-  const recipesToJs = recipes.toJS()
-  const flattenedRecipes = []
-
-  Object.keys(recipesToJs).forEach((key) => {
-    for (let i = 0; i < recipesToJs[key]; i++) {
-      flattenedRecipes.push(key)
-    }
-  })
-
-  return flattenedRecipes
-}
-
 function mapStateToProps(state, ownProps) {
   const query = ownProps.location && ownProps.location.query
   const showOverlay = state.boxSummaryShow.get('show') || state.menuBrowseCTAShow
@@ -41,7 +28,6 @@ function mapStateToProps(state, ownProps) {
       false
     ),
     forceLoad: state.menu.get('forceLoad', false),
-    recipesCount: flattenRecipes(state.basket.get('recipes')).length,
     postcode: state.basket.get('postcode'),
     isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   }
@@ -62,4 +48,4 @@ const mapDispatchToProps = {
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
-export { flattenRecipes, MenuContainer }
+export { MenuContainer }

@@ -97,7 +97,6 @@ class Menu extends React.PureComponent {
       showOverlay,
       isAuthenticated,
       query,
-      recipesCount,
       children,
       isPaymentBeforeChoosingEnabled,
     } = this.props
@@ -127,10 +126,7 @@ class Menu extends React.PureComponent {
             />
           </div>
           <BoxSummaryContainer />
-          <RecipesInBasketProgress
-            isAuthenticated={isAuthenticated}
-            selectedRecipesCount={recipesCount}
-          />
+          <RecipesInBasketProgress isAuthenticated={isAuthenticated} />
         </div>
       </MainLayout>
     )

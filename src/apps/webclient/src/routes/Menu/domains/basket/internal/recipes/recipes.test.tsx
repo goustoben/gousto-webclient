@@ -9,7 +9,7 @@ import { useBasketRecipes, useIsRecipeInBasket } from './index'
 jest.mock('routes/Menu/domains/basket/internal/recipes/useAddRecipe', () => ({
   useAddRecipe: jest
     .fn()
-    .mockImplementation((recipeId, view) => ['call_addRecipe', recipeId, view])
+    .mockImplementation((recipeId, view) => ['call_addRecipe', recipeId, view]),
 }))
 
 jest.mock('routes/Menu/domains/basket/internal/recipes/useRemoveRecipe', () => ({
@@ -79,6 +79,12 @@ describe('basket domain / recipes', () => {
       expect(isInBasket).toEqual(true)
     })
 
+    test('recipeCount is 1', () => {
+      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+
+      expect(result.current.recipeCount).toEqual(1)
+    })
+
     test('isRecipeInBasket is false for a different id', () => {
       const { result } = renderHook(() => useIsRecipeInBasket(), { wrapper: recipeWrapper })
 
@@ -105,6 +111,12 @@ describe('basket domain / recipes', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
 
       expect(result.current.reachedLimit).toEqual(true)
+    })
+
+    test('recipeCount is 4', () => {
+      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+
+      expect(result.current.recipeCount).toEqual(4)
     })
 
     test('isRecipeInBasket is true for the recipe Id', () => {
@@ -135,6 +147,12 @@ describe('basket domain / recipes', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
 
       expect(result.current.reachedLimit).toEqual(true)
+    })
+
+    test('recipeCount is 4', () => {
+      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+
+      expect(result.current.recipeCount).toEqual(4)
     })
 
     test('isRecipeInBasket is true for the first recipe', () => {

@@ -14,7 +14,6 @@ export const menuPropTypes = {
   menuLoadingBoxPrices: PropTypes.bool,
   params: PropTypes.object,
   query: PropTypes.object,
-  recipesCount: PropTypes.number.isRequired,
   tariffId: PropTypes.number,
 }
 
