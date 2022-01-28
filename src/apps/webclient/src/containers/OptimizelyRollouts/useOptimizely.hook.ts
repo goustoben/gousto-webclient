@@ -6,6 +6,7 @@ import { useLocalStorage } from 'usehooks-ts/dist/useLocalStorage'
 import useMountedState from 'react-use/lib/useMountedState'
 import { getAuthUserId } from 'selectors/auth'
 import { locationQuery } from 'selectors/routing'
+import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { getUserIdForOptimizely } from './optimizelyUtils'
 import { getOptimizelyInstance, hasValidInstance, timeout } from './optimizelySDK'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
@@ -58,7 +59,7 @@ export const useSetupOptimizelyOverride = () => {
   }, [features, localStorageFeatures, setLocalStorageFeatures])
 }
 
-const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
+export const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
   const overridesAsOff: [false, false] = [false, false]
   const [localStorageFeatures] = useLocalStorage(KEY_FOR_FEATURES_OVERRIDES, '')
 
@@ -79,7 +80,7 @@ const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
 
 const getSessionId = () => get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
 
-export const useUserIdForOptimizely = () =>{
+export const useUserIdForOptimizely = () => {
   const userId = useSelector(getAuthUserId)
   const [userIdForOptimizely, setUserIdForOptimizely] = useState<null | string>(null)
   useEffect(() => {
@@ -90,6 +91,8 @@ export const useUserIdForOptimizely = () =>{
 
   return userIdForOptimizely
 }
+
+const overrideTracking: {[key: string]: boolean} = {}
 
 export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
   const dispatch = useDispatch()
@@ -112,7 +115,18 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
     }
 
     // if we have an experiment override, we can return the value of the override
-    if (hasOverride) return
+    if (hasOverride) {
+      if (!overrideTracking[name]) {
+        overrideTracking[name] = true
+        dispatch(feLoggingLogEvent(logLevels.info, 'optimizelyFeatureEnabled-override', {
+          userId,
+          sessionId,
+          featureName: name
+        }))
+      }
+
+      return
+    }
 
     getOptimizelyInstance().then((optimizelyInstance: OptimizelyInstance | null) => {
       // if optimizely instance is not returned, we can't check if the feature is enabled
