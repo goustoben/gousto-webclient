@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { get } from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { renderHook } from '@testing-library/react-hooks'
+import * as ActionsLog from 'actions/log'
 import {
   useSetupOptimizelyOverride,
   useIsOptimizelyFeatureEnabled,
@@ -11,6 +12,7 @@ import {
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 import * as optimizelySdk from './optimizelySDK'
+import * as OptimizelyHook from './useOptimizely.hook'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -526,6 +528,70 @@ describe('useOptimizely', () => {
             'snowplowUserId',
           ])
         })
+      })
+    })
+    describe('when the override flag is disabled', () => {
+      let feLoggingLogEvent
+      let useGetOptimizelyOverride
+
+      beforeEach(() => {
+        mockSnowplowCallbackAPI()
+        useGetOptimizelyOverride = jest.spyOn(OptimizelyHook, 'useGetOptimizelyOverride')
+        useGetOptimizelyOverride.mockReturnValue([false])
+        feLoggingLogEvent = jest.spyOn(ActionsLog, 'feLoggingLogEvent')
+      })
+
+      it('should not log the override flag ', async () => {
+        const { waitForNextUpdate } = renderHook(() =>
+          useIsOptimizelyFeatureEnabled('flag')
+        )
+        await waitForNextUpdate()
+
+        expect(feLoggingLogEvent).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when the override flag is enabled', () => {
+      let feLoggingLogEvent
+      let useGetOptimizelyOverride
+
+      beforeEach(() => {
+        mockSnowplowCallbackAPI()
+        useGetOptimizelyOverride = jest.spyOn(OptimizelyHook, 'useGetOptimizelyOverride')
+        useGetOptimizelyOverride.mockReturnValue([true])
+        feLoggingLogEvent = jest.spyOn(ActionsLog, 'feLoggingLogEvent')
+        state = {
+          auth: Immutable.Map({
+            id: 'user_id',
+          }),
+        }
+      })
+
+      it('should log the call with override only once per feature', async () => {
+        // Simulate multiple calls of the hook
+        renderHook(() => useIsOptimizelyFeatureEnabled('flag1'))
+        renderHook(() => useIsOptimizelyFeatureEnabled('flag1'))
+        renderHook(() => useIsOptimizelyFeatureEnabled('flag2'))
+        const { result, waitForNextUpdate } = renderHook(() =>
+          useIsOptimizelyFeatureEnabled('flag2')
+        )
+
+        await waitForNextUpdate()
+
+        const isEnabled = result.current
+        expect(dispatch).toHaveBeenCalledTimes(2)
+        expect(feLoggingLogEvent).toHaveBeenCalledTimes(2)
+        expect(feLoggingLogEvent).toHaveBeenCalledWith(ActionsLog.logLevels.info, 'optimizelyFeatureEnabled-override', {
+          userId: 'user_id',
+          sessionId: undefined,
+          featureName: 'flag1'
+        })
+        expect(feLoggingLogEvent).toHaveBeenCalledWith(ActionsLog.logLevels.info, 'optimizelyFeatureEnabled-override', {
+          userId: 'user_id',
+          sessionId: undefined,
+          featureName: 'flag2'
+        })
+        expect(isEnabled).toBe(undefined)
       })
     })
   })
