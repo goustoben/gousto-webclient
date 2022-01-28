@@ -2,7 +2,7 @@ import React from 'react'
 import { CTA, Modal } from 'goustouicomponents'
 import Overlay from 'Overlay'
 import headerImage from 'media/images/five-recipes/five-recipes.jpg'
-import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
+import { useSendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import css from '../FiveRecipesModal.module.css'
 import { use5RecipesPaintedDoorTest } from '../use5RecipesPaintedDoorTest'
 
@@ -13,6 +13,7 @@ interface Props {
 export const FiveRecipesStartOfJourney = ({ discount }: Props) => {
   const { isEnabled, hasSeenOnMenu, isNewUser } = use5RecipesPaintedDoorTest()
   const [isOpen, updateIsOpen] = React.useState(false)
+  const sendClientMetric = useSendClientMetric()
 
   React.useEffect(() => {
     if (isEnabled && !hasSeenOnMenu) {

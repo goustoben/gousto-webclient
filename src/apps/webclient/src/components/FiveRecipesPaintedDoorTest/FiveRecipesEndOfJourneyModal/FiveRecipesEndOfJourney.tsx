@@ -1,7 +1,7 @@
 import React, { FC, MouseEvent } from 'react'
 import { CTA, Modal } from 'goustouicomponents'
 import Overlay from 'Overlay'
-import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
+import { useSendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import headerImage from 'media/images/five-recipes/coming-soon.jpg'
 import css from '../FiveRecipesModal.module.css'
 import { use5RecipesPaintedDoorTest } from '../use5RecipesPaintedDoorTest'
@@ -16,6 +16,7 @@ interface Props {
 
 export const FiveRecipesEndOfJourney = ({ isOpen, onClose }: Props) => {
   const trackEvent = useCreateTrackEvent()
+  const sendClientMetric = useSendClientMetric()
   const { isNewUser, setMenuAsSeen } = use5RecipesPaintedDoorTest()
   const onModalClose = (ev: MouseEvent) => {
     ev.stopPropagation()

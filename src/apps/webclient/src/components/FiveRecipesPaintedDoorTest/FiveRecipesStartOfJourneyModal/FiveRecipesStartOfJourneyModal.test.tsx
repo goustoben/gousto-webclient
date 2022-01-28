@@ -10,11 +10,12 @@ describe('<FiveRecipesStartOfJourney />', () => {
   let use5RecipesPaintedDoorTestSpy: JestSpyInstance<
     typeof FiveRecipeHooks.use5RecipesPaintedDoorTest
   >
-  let sendClientMetricSpy: JestSpyInstance<typeof clientMetrics.sendClientMetric>
+  let sendClientMetricMock = jest.fn()
 
   beforeEach(() => {
+    sendClientMetricMock = jest.fn()
     use5RecipesPaintedDoorTestSpy = jest.spyOn(FiveRecipeHooks, 'use5RecipesPaintedDoorTest')
-    sendClientMetricSpy = jest.spyOn(clientMetrics, 'sendClientMetric')
+    jest.spyOn(clientMetrics, 'useSendClientMetric').mockReturnValue(sendClientMetricMock)
   })
 
   afterEach(jest.clearAllMocks)
@@ -102,7 +103,7 @@ describe('<FiveRecipesStartOfJourney />', () => {
           fireEvent.click(screen.getByText('Choose my recipes'))
 
           expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-          expect(sendClientMetricSpy).toHaveBeenCalledWith('menu-5-recipes-painted-new-user-start', 1, 'Count')
+          expect(sendClientMetricMock).toHaveBeenCalledWith('menu-5-recipes-painted-new-user-start', 1, 'Count')
         })
       })
 
@@ -143,7 +144,7 @@ describe('<FiveRecipesStartOfJourney />', () => {
           fireEvent.click(screen.getByText('Choose my recipes'))
 
           expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-          expect(sendClientMetricSpy).toHaveBeenCalledWith('menu-5-recipes-painted-existing-user-start', 1, 'Count')
+          expect(sendClientMetricMock).toHaveBeenCalledWith('menu-5-recipes-painted-existing-user-start', 1, 'Count')
         })
       })
     })

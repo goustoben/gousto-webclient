@@ -1,8 +1,10 @@
+import { renderHook } from '@testing-library/react-hooks'
 import { safeJestMock } from '_testing/mocks'
 import fetch from 'utils/fetch'
 import logger from 'utils/logger'
 import MockDate from 'mockdate'
-import { sendClientMetric } from '../clientMetrics'
+import * as useOptimizely from 'containers/OptimizelyRollouts/useOptimizely.hook'
+import { sendClientMetric, useSendClientMetric } from '../clientMetrics'
 
 jest.mock('utils/fetch', () =>
   jest.fn().mockResolvedValue({ data: [1, 2, 3] })
@@ -28,8 +30,10 @@ describe('clientMetrics', () => {
     MockDate.reset()
   })
 
-  describe('sendClientMetric', () => {
-    test('should POST the correct data to the correct endpoint', async () => {
+  describe('useSendClientMetric', () => {
+    test('with user id from optimizely', async () => {
+      jest.spyOn(useOptimizely, 'useUserIdForOptimizely').mockReturnValue('user_id')
+
       const expectedReqData = {
         client: 'web',
         name: 'menu-load-complete',
@@ -39,12 +43,60 @@ describe('clientMetrics', () => {
 
       const headers = {
         'Content-Type': 'application/json',
+        'x-gousto-device-id': undefined,
+        'x-gousto-user-id': 'user_id',
       }
 
-      await sendClientMetric('menu-load-complete', 1.0, 'Count')
+      const { result } = renderHook(() => useSendClientMetric())
+
+      await result.current('menu-load-complete', 1.0, 'Count')
 
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
+    })
+  })
+
+  describe('sendClientMetric', () => {
+    describe('with a user id', () => {
+      test('should POST the correct data to the correct endpoint', async () => {
+        const expectedReqData = {
+          client: 'web',
+          name: 'menu-load-complete',
+          value: 1.0,
+          unit: 'Count'
+        }
+
+        const headers = {
+          'Content-Type': 'application/json',
+          'x-gousto-device-id': undefined,
+          'x-gousto-user-id': 'userId',
+        }
+
+        await sendClientMetric('menu-load-complete', 1.0, 'Count', 'userId')
+
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
+      })
+    })
+
+    describe('without a user id', () => {
+      test('should POST the correct data to the correct endpoint', async () => {
+        const expectedReqData = {
+          client: 'web',
+          name: 'menu-load-complete',
+          value: 1.0,
+          unit: 'Count'
+        }
+
+        const headers = {
+          'Content-Type': 'application/json',
+        }
+
+        await sendClientMetric('menu-load-complete', 1.0, 'Count')
+
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
+      })
     })
 
     describe('when fetch errors', () => {

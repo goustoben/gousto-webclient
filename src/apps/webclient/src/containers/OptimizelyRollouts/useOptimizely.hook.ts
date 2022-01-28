@@ -59,7 +59,7 @@ export const useSetupOptimizelyOverride = () => {
 }
 
 const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
-  const overridesAsOff: [boolean, boolean] = [false, false]
+  const overridesAsOff: [false, false] = [false, false]
   const [localStorageFeatures] = useLocalStorage(KEY_FOR_FEATURES_OVERRIDES, '')
 
   if (name === null) {
@@ -70,21 +70,17 @@ const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
     return overridesAsOff
   }
 
-  const hasOverride = localStorageFeatures?.includes(name)
+  const hasOverride = Boolean(localStorageFeatures?.includes(name))
   const stringToCheck = `${name}=true`.toLowerCase()
-  const valueOfOverride = localStorageFeatures?.includes(stringToCheck)
+  const valueOfOverride = Boolean(localStorageFeatures?.includes(stringToCheck))
 
   return [hasOverride, valueOfOverride]
 }
 
 const getSessionId = () => get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
 
-export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
-  const dispatch = useDispatch()
-  const [isEnabled, setEnabled] = useState<null | boolean>(null)
+export const useUserIdForOptimizely = () =>{
   const userId = useSelector(getAuthUserId)
-  const getIsMounted = useMountedState()
-  const sessionId = getSessionId()
   const [userIdForOptimizely, setUserIdForOptimizely] = useState<null | string>(null)
   useEffect(() => {
     getUserIdForOptimizely(userId).then(result => {
@@ -92,6 +88,16 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
     })
   }, [userId])
 
+  return userIdForOptimizely
+}
+
+export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
+  const dispatch = useDispatch()
+  const [isEnabled, setEnabled] = useState<null | boolean>(null)
+  const getIsMounted = useMountedState()
+  const sessionId = getSessionId()
+  const userId = useSelector(getAuthUserId)
+  const userIdForOptimizely = useUserIdForOptimizely()
   const [hasOverride, valueOfOverride] = useGetOptimizelyOverride(name)
 
   useEffect(() => {
