@@ -1,13 +1,14 @@
-import React, { FC, MouseEvent } from 'react'
+import React from 'react'
 import { CTA, Modal } from 'goustouicomponents'
 import Overlay from 'Overlay'
 import { useSendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import headerImage from 'media/images/five-recipes/coming-soon.jpg'
+import { useFiveRecipesTracking } from 'components/FiveRecipesPaintedDoorTest/useFiveRecipesTracking'
+import { experimentFiveRecipesEndOfJourneyClosed, experimentFiveRecipesEndOfJourneyOpened } from 'actions/trackingKeys'
 import css from '../FiveRecipesModal.module.css'
 import { use5RecipesPaintedDoorTest } from '../use5RecipesPaintedDoorTest'
 import { EndOfJourneyNewUserModal } from './EndOfJourneyNewUser'
 import { EndOfJourneySubscriptionUserModal } from './EndOfJourneySubscriptionUser'
-import { useCreateTrackEvent } from '../../../hooks/useTracking'
 
 interface Props {
   isOpen: boolean
@@ -15,15 +16,15 @@ interface Props {
 }
 
 export const FiveRecipesEndOfJourney = ({ isOpen, onClose }: Props) => {
-  const trackEvent = useCreateTrackEvent()
   const sendClientMetric = useSendClientMetric()
+  const trackFiveRecipes = useFiveRecipesTracking()
   const { isNewUser, setMenuAsSeen } = use5RecipesPaintedDoorTest()
-  const onModalClose = (ev: MouseEvent) => {
+  const onModalClose = (ev: React.MouseEvent) => {
     ev.stopPropagation()
     setMenuAsSeen()
-    trackEvent({
-      event: 'five-recipes-modal-closed',
-    })
+
+    trackFiveRecipes(experimentFiveRecipesEndOfJourneyClosed)
+
     if (isNewUser) {
       sendClientMetric('menu-5-recipes-painted-new-user-end', 1, 'Count')
     } else {
@@ -31,6 +32,12 @@ export const FiveRecipesEndOfJourney = ({ isOpen, onClose }: Props) => {
     }
     onClose()
   }
+
+  React.useEffect(() => {
+    if (isOpen) {
+      trackFiveRecipes(experimentFiveRecipesEndOfJourneyOpened)
+    }
+  }, [isOpen])
 
   return (
     <Overlay open={isOpen} from="top" onBackgroundClick={onModalClose}>

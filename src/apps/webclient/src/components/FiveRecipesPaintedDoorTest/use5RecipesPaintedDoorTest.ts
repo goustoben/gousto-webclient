@@ -115,6 +115,7 @@ export const use5RecipesPaintedDoorTest = () => {
 
   const isSubscribedAndEnabled = useIsUserValidForSubscriptionFeature()
   const isNewUserAndEnabled = useIsUserValidForNewUserFeature()
+
   const isEnabledForSubscriptionUser = useIsOptimizelyFeatureEnabled(
     isSubscribedAndEnabled ? OPTIMIZELY_ENABLE_SUBSCRIBED : null
   )
@@ -123,6 +124,11 @@ export const use5RecipesPaintedDoorTest = () => {
   )
 
   const isEnabled = Boolean(isEnabledForSubscriptionUser || isEnabledForSignUpUser)
+
+  let experimentId
+  if (isEnabled) {
+    experimentId = isSubscribedAndEnabled ? OPTIMIZELY_ENABLE_SUBSCRIBED : OPTIMIZELY_ENABLE_SIGNUP_FLOW
+  }
 
   return {
     isEnabled,
@@ -133,5 +139,6 @@ export const use5RecipesPaintedDoorTest = () => {
     setOrderConfirmationAsSeen,
     isNewUser,
     maxRecipes: isEnabled && !userSeenOnMenu ? 5 : 4,
+    experimentId
   }
 }
