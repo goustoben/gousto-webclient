@@ -36,7 +36,7 @@ export const FiveRecipesStartOfJourney = ({ discount }: Props) => {
 
   const costPerSeveringForFiveRecipes = 4.08
   const price = (costPerSeveringForFiveRecipes * (1 - discount / 100)).toFixed(2)
-  const pricePerServing = ` £${price} per serving.`
+  const pricePerServing = `£${price} per serving.`
 
   return (
     <Overlay open={isOpen} from="top" onBackgroundClick={onModalClose}>
@@ -53,9 +53,9 @@ export const FiveRecipesStartOfJourney = ({ discount }: Props) => {
             <div className={css.contentContainer}>
               <h4 className={css.subHeader}>Hungry for 5 recipes?</h4>
               <p className={css.content}>
-                Give our new feature a try and add a 5th recipe to your next Gousto box for only
-                {isNewUser && <span className={css.strike}>£4.08 </span>}
-                <strong>{pricePerServing}</strong>
+                Give our new feature a try and add a 5th recipe to your next Gousto box for only&nbsp;
+                {isNewUser && <span className={css.strike}>£4.08</span>}
+                <strong>&nbsp;{pricePerServing}</strong>
               </p>
               <CTA size="medium" onClick={onModalClose} variant="primary" isFullWidth>
                 Choose my recipes
