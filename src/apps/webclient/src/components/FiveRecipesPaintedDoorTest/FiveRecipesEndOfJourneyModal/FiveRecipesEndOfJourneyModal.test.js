@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
+import * as Tracking from 'components/FiveRecipesPaintedDoorTest/useFiveRecipesTracking'
 import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
+import { experimentFiveRecipesEndOfJourneyClosed, experimentFiveRecipesEndOfJourneyOpened } from 'actions/trackingKeys'
 import * as FiveRecipeHooks from '../use5RecipesPaintedDoorTest'
-import * as Tracking from '../../../hooks/useTracking'
 import { FiveRecipesEndOfJourney } from './FiveRecipesEndOfJourney'
 
 describe('<FiveRecipesEndOfJourney />', () => {
@@ -16,7 +17,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
   beforeEach(() => {
     use5RecipesPaintedDoorTestSpy = jest.spyOn(FiveRecipeHooks, 'use5RecipesPaintedDoorTest')
     jest.spyOn(clientMetrics, 'useSendClientMetric').mockReturnValue(sendClientMetricMock)
-    jest.spyOn(Tracking, 'useCreateTrackEvent').mockImplementation(() => trackEvent)
+    jest.spyOn(Tracking, 'useFiveRecipesTracking').mockImplementation(() => trackEvent)
   })
 
   afterEach(jest.clearAllMocks)
@@ -35,13 +36,12 @@ describe('<FiveRecipesEndOfJourney />', () => {
     render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
 
     expect(screen.queryByRole('heading')).toHaveTextContent('Shh, let’s keep this between us')
+    expect(trackEvent).toHaveBeenNthCalledWith(1, experimentFiveRecipesEndOfJourneyOpened)
 
     fireEvent.click(screen.getByLabelText('Close Icon'))
 
     expect(setMenuAsSeen).toBeCalledTimes(1)
-    expect(trackEvent).toHaveBeenNthCalledWith(1, {
-      event: 'five-recipes-modal-closed',
-    })
+    expect(trackEvent).toHaveBeenNthCalledWith(2, experimentFiveRecipesEndOfJourneyClosed)
   })
 
   it('should render the modal and they can close by clicking "Choose my recipes"', () => {
@@ -50,13 +50,12 @@ describe('<FiveRecipesEndOfJourney />', () => {
     render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
 
     expect(screen.queryByRole('heading')).toHaveTextContent('Shh, let’s keep this between us')
+    expect(trackEvent).toHaveBeenNthCalledWith(1, experimentFiveRecipesEndOfJourneyOpened)
 
     fireEvent.click(screen.getByText('Back to menu'))
 
     expect(setMenuAsSeen).toBeCalledTimes(1)
-    expect(trackEvent).toHaveBeenNthCalledWith(1, {
-      event: 'five-recipes-modal-closed',
-    })
+    expect(trackEvent).toHaveBeenNthCalledWith(2, experimentFiveRecipesEndOfJourneyClosed)
   })
 
   describe('when the user is an existing user', () => {

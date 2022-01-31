@@ -43,7 +43,7 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) =>
     }
   }
 
-  if (fiveRecipesEnabled) return <FiveRecipesAddRecipeButton />
+  if (fiveRecipesEnabled) return <FiveRecipesAddRecipeButton recipeId={recipeId} />
 
   return (
     <button

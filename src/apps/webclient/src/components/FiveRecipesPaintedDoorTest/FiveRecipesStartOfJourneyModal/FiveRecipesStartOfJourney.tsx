@@ -5,6 +5,8 @@ import headerImage from 'media/images/five-recipes/five-recipes.jpg'
 import { useSendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import css from '../FiveRecipesModal.module.css'
 import { use5RecipesPaintedDoorTest } from '../use5RecipesPaintedDoorTest'
+import { experimentFiveRecipesStartOfJourneyClosed, experimentFiveRecipesStartOfJourneyOpened } from 'actions/trackingKeys'
+import { useFiveRecipesTracking } from 'components/FiveRecipesPaintedDoorTest/useFiveRecipesTracking'
 
 interface Props {
   discount: number
@@ -13,7 +15,19 @@ interface Props {
 export const FiveRecipesStartOfJourney = ({ discount }: Props) => {
   const { isEnabled, hasSeenOnMenu, isNewUser } = use5RecipesPaintedDoorTest()
   const [isOpen, updateIsOpen] = React.useState(false)
+  const trackFiveRecipes = useFiveRecipesTracking()
   const sendClientMetric = useSendClientMetric()
+  const onModalClose = () => {
+    updateIsOpen(false)
+    
+    trackFiveRecipes(experimentFiveRecipesStartOfJourneyClosed)
+
+    if (isNewUser) {
+      sendClientMetric('menu-5-recipes-painted-new-user-start', 1, 'Count')
+    } else {
+      sendClientMetric('menu-5-recipes-painted-existing-user-start', 1, 'Count')
+    }
+  }
 
   React.useEffect(() => {
     if (isEnabled && !hasSeenOnMenu) {
@@ -21,14 +35,11 @@ export const FiveRecipesStartOfJourney = ({ discount }: Props) => {
     }
   }, [isEnabled, hasSeenOnMenu])
 
-  const onModalClose = () => {
-    updateIsOpen(false)
-    if (isNewUser) {
-      sendClientMetric('menu-5-recipes-painted-new-user-start', 1, 'Count')
-    } else {
-      sendClientMetric('menu-5-recipes-painted-existing-user-start', 1, 'Count')
+  React.useEffect(() => {
+    if (isOpen) {
+      trackFiveRecipes(experimentFiveRecipesStartOfJourneyOpened)
     }
-  }
+  }, [isOpen])
 
   if (!isOpen) {
     return null
@@ -39,7 +50,7 @@ export const FiveRecipesStartOfJourney = ({ discount }: Props) => {
   const pricePerServing = `£${price} per serving.`
 
   return (
-    <Overlay open={isOpen} from="top" onBackgroundClick={onModalClose}>
+    <Overlay open={isOpen} from="top" onBackgroundClick={ev => ev.stopPropagation()}>
       <div className={css.hideScroll}>
         <Modal
           isOpen={isOpen}
