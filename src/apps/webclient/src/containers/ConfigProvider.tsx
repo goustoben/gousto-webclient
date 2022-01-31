@@ -14,6 +14,8 @@ type Config = {
 
 const ConfigContext = createContext<Config>({ MAX_VARIABLE: undefined })
 
+// Does this need to be isomorphic for server-side routes?
+// It shouldn't make the call if __server__
 export const ConfigProvider: React.FC = ({ children }) => {
   const { data, error } = useSWR<{ data: Config }>('/config', basicFetch)
 
