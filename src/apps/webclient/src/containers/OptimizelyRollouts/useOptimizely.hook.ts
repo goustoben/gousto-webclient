@@ -6,6 +6,7 @@ import { useLocalStorage } from 'usehooks-ts/dist/useLocalStorage'
 import useMountedState from 'react-use/lib/useMountedState'
 import { getAuthUserId } from 'selectors/auth'
 import { locationQuery } from 'selectors/routing'
+import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { getUserIdForOptimizely } from './optimizelyUtils'
 import { getOptimizelyInstance, hasValidInstance, timeout } from './optimizelySDK'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
@@ -58,8 +59,8 @@ export const useSetupOptimizelyOverride = () => {
   }, [features, localStorageFeatures, setLocalStorageFeatures])
 }
 
-const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
-  const overridesAsOff: [boolean, boolean] = [false, false]
+export const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
+  const overridesAsOff: [false, false] = [false, false]
   const [localStorageFeatures] = useLocalStorage(KEY_FOR_FEATURES_OVERRIDES, '')
 
   if (name === null) {
@@ -70,21 +71,17 @@ const useGetOptimizelyOverride = (name: string | null): [boolean, boolean] => {
     return overridesAsOff
   }
 
-  const hasOverride = localStorageFeatures?.includes(name)
+  const hasOverride = Boolean(localStorageFeatures?.includes(name))
   const stringToCheck = `${name}=true`.toLowerCase()
-  const valueOfOverride = localStorageFeatures?.includes(stringToCheck)
+  const valueOfOverride = Boolean(localStorageFeatures?.includes(stringToCheck))
 
   return [hasOverride, valueOfOverride]
 }
 
 const getSessionId = () => get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
 
-export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
-  const dispatch = useDispatch()
-  const [isEnabled, setEnabled] = useState<null | boolean>(null)
+export const useUserIdForOptimizely = () => {
   const userId = useSelector(getAuthUserId)
-  const getIsMounted = useMountedState()
-  const sessionId = getSessionId()
   const [userIdForOptimizely, setUserIdForOptimizely] = useState<null | string>(null)
   useEffect(() => {
     getUserIdForOptimizely(userId).then(result => {
@@ -92,6 +89,18 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
     })
   }, [userId])
 
+  return userIdForOptimizely
+}
+
+const overrideTracking: {[key: string]: boolean} = {}
+
+export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
+  const dispatch = useDispatch()
+  const [isEnabled, setEnabled] = useState<null | boolean>(null)
+  const getIsMounted = useMountedState()
+  const sessionId = getSessionId()
+  const userId = useSelector(getAuthUserId)
+  const userIdForOptimizely = useUserIdForOptimizely()
   const [hasOverride, valueOfOverride] = useGetOptimizelyOverride(name)
 
   useEffect(() => {
@@ -106,7 +115,18 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
     }
 
     // if we have an experiment override, we can return the value of the override
-    if (hasOverride) return
+    if (hasOverride) {
+      if (!overrideTracking[name]) {
+        overrideTracking[name] = true
+        dispatch(feLoggingLogEvent(logLevels.info, 'optimizelyFeatureEnabled-override', {
+          userId,
+          sessionId,
+          featureName: name
+        }))
+      }
+
+      return
+    }
 
     getOptimizelyInstance().then((optimizelyInstance: OptimizelyInstance | null) => {
       // if optimizely instance is not returned, we can't check if the feature is enabled

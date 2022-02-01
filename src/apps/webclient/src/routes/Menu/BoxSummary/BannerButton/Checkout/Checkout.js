@@ -34,12 +34,12 @@ const Checkout = (props) => {
       dataTesting="viewBasketCTA"
       onClick={() => toggleBasketView(true)}
       pending={
-        checkoutPending
-        || pricingPending
-        || basketPreviewOrderChangePending
-        || orderSavePending
-        || loadingOrderPending
-        || menuFetchData
+        checkoutPending ||
+        pricingPending ||
+        basketPreviewOrderChangePending ||
+        orderSavePending ||
+        loadingOrderPending ||
+        menuFetchData
       }
       color={isBoxSummaryOpened ? 'secondary' : 'primary'}
     >
@@ -51,12 +51,12 @@ const Checkout = (props) => {
       dataTesting="boxSummaryButton"
       disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
       pending={
-        checkoutPending
-        || pricingPending
-        || basketPreviewOrderChangePending
-        || orderSavePending
-        || loadingOrderPending
-        || menuFetchData
+        checkoutPending ||
+        pricingPending ||
+        basketPreviewOrderChangePending ||
+        orderSavePending ||
+        loadingOrderPending ||
+        menuFetchData
       }
       spinnerClassName={css.coSpinner}
       spinnerContainerClassName={css.coSpinnerContainer}

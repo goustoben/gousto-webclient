@@ -38,3 +38,6 @@ export const getCurrentPromoCodeCustomText2 = createSelector(
     return promoCodeData.getIn(['campaign', 'landingDetails2'], null)
   }
 )
+
+export const getIsSkipWizardEnabled = ({ features }) =>
+  features && features.getIn(['isSkipWizardEnabled', 'value'], false)

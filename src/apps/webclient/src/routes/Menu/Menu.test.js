@@ -59,7 +59,6 @@ describe('Menu', () => {
           resolve()
         })
       ),
-      recipesCount: 3,
       onOverlayClick: jest.fn(),
       fetchData: jest.fn(),
       menuCalculateTimeToUsable: jest.fn(),
@@ -117,10 +116,6 @@ describe('Menu', () => {
 
         test('should be rendered', () => {
           expect(recipesInBasketProgress).toHaveLength(1)
-        })
-
-        test('should have the correct number of selected recipes', () => {
-          expect(recipesInBasketProgress.prop('selectedRecipesCount')).toBe(3)
         })
 
         test('has the isAuthenticated prop passed to it', () => {
@@ -295,15 +290,6 @@ describe('Menu', () => {
         }})
       })
       test('should not call fetch data function', () => {
-        expect(requiredProps.fetchData).toHaveBeenCalledTimes(1)
-      })
-    })
-
-    describe('when component did update with recipesCount property', () => {
-      beforeEach(() => {
-        wrapper.setProps({recipesCount: 3})
-      })
-      test('should not trigger fetch ', () => {
         expect(requiredProps.fetchData).toHaveBeenCalledTimes(1)
       })
     })

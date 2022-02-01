@@ -4,16 +4,29 @@ import Immutable from 'immutable'
 import { render, fireEvent, screen } from '@testing-library/react'
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import * as UseShouldShowPaintedDoorButton from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
+import * as Use5RecipesPaintedDoorTest from 'components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest'
 import { createMockInitialState, createMockStore } from '../../../_testing/createMockStore'
 import { AddRecipeButton } from './AddRecipeButton'
-import { JestSpyInstance } from '../../../../../types/jest'
 
-jest.mock('../../../actions/basketRecipes', () => ({
-  ...jest.requireActual('../../../actions/basketRecipes'),
-  basketRecipeRemove: jest
+jest.mock('routes/Menu/domains/basket/internal/recipes/useAddRecipe', () => ({
+  useAddRecipe: jest
     .fn()
-    .mockImplementation((recipeId) => ['call_basketRecipeRemove', recipeId]),
-  basketRecipeAdd: jest.fn().mockImplementation((recipeId) => ['call_basketRecipeAdd', recipeId]),
+    .mockImplementation(() => (recipeId:string, view:string) => ['call_addRecipe', recipeId, view])
+}))
+
+jest.mock('routes/Menu/domains/basket/internal/recipes/useRemoveRecipe', () => ({
+  useRemoveRecipe: jest
+    .fn()
+    .mockImplementation(() => (recipeId:string, view:string, position:number) => [
+      'call_removeRecipe',
+      recipeId,
+      view,
+      position,
+    ]),
+}))
+
+jest.mock('components/FiveRecipesPaintedDoorTest/FiveRecipesAddRecipeButton', () => ({
+  FiveRecipesAddRecipeButton: () => <div data-testid="FiveRecipesAddRecipeButton" />,
 }))
 
 jest.mock('selectors/user', () => ({
@@ -43,18 +56,22 @@ jest.mock('selectors/auth', () => ({
   getAuthUserId: () => '',
 }))
 
-const useShouldShowPaintedDoorButton = jest.spyOn(
-  UseShouldShowPaintedDoorButton,
-  'useShouldShowPaintedDoorButton'
-)
-
-beforeEach(() => {
-  useShouldShowPaintedDoorButton.mockReturnValue(false)
-})
-
 describe('AddRecipeButton', () => {
   const recipeId = '1234'
   const otherRecipeId = '5678'
+
+  let useShouldShowPaintedDoorButton = jest.spyOn(
+    UseShouldShowPaintedDoorButton,
+    'useShouldShowPaintedDoorButton'
+  )
+
+  beforeEach(() => {
+    useShouldShowPaintedDoorButton = jest.spyOn(
+      UseShouldShowPaintedDoorButton,
+      'useShouldShowPaintedDoorButton'
+    )
+    useShouldShowPaintedDoorButton.mockReturnValue(false)
+  })
 
   describe('when can NOT add recipes (no postcode in store)', () => {
     const state = createMockInitialState({
@@ -84,56 +101,12 @@ describe('AddRecipeButton', () => {
     let state: ReturnType<typeof createMockInitialState>
 
     beforeEach(() => {
-      const postcode = 'W3 7UP'
-      
       state = createMockInitialState({
         basket: {
-          postcode,
+          postcode: 'W3 7UP',
           orderId: '123',
           recipes: Immutable.Map(),
         },
-      })
-    })
-
-    describe('when recipe already in basket', () => {
-      beforeEach(() => {
-        state.basket = state.basket.setIn(['recipes', recipeId], 1)
-      })
-
-      test('click should dispatch basketRecipeRemove', () => {
-        const store = createMockStore(state)
-        
-        render(
-          <Provider store={store}>
-            <AddRecipeButton recipeId={recipeId} />
-          </Provider>
-        )
-
-        const button = screen.getByRole('button' as any)
-        fireEvent.click(button)
-
-        expect(store.dispatch).toHaveBeenCalledWith(['call_basketRecipeRemove', recipeId])
-      })
-    })
-
-    describe('when recipe NOT already in basket', () => {
-      beforeEach(() => {
-        state.basket = state.basket.setIn(['recipes', recipeId], 0)
-      })
-
-      test('click should dispatch basketRecipeAdd', () => {
-        const store = createMockStore(state)
-
-        render(
-          <Provider store={store}>
-            <AddRecipeButton recipeId={recipeId} />
-          </Provider>
-        )
-
-        const button = screen.getByRole('button' as any)
-        fireEvent.click(button)
-
-        expect(store.dispatch).toHaveBeenCalledWith(['call_basketRecipeAdd', recipeId])
       })
     })
 
@@ -169,8 +142,8 @@ describe('AddRecipeButton', () => {
             <AddRecipeButton recipeId="not in basket" />
           </Provider>
         )
-        const button = screen.getByRole('button' as any)
-        expect(button).not.toHaveAttribute('data-testing')
+        const button = screen.getByTestId('FiveRecipesAddRecipeButton')
+        expect(button).toBeInTheDocument()
       })
     })
     describe('when useShouldShowPaintedDoorButton experiment is false', () => {

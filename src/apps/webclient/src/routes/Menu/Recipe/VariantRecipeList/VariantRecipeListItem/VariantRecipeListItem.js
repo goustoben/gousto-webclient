@@ -20,8 +20,8 @@ const VariantRecipeListItem = ({
         <span className={css.titleText}>{recipeName}</span>
       </div>
       {
-        (surcharge && !isOutOfStock && !isFromShowcaseMenu)
-        && (
+        (surcharge && !isOutOfStock && !isFromShowcaseMenu) &&
+        (
           <div className={
             classnames(
               css.extraInformation,

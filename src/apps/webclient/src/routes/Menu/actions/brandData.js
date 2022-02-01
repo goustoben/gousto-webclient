@@ -2,15 +2,8 @@ import logger from 'utils/logger'
 import { getAccessToken , getAuthUserId } from 'selectors/auth'
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
-import { fetchBrandMenuHeaders, fetchBrandInfo } from 'apis/brand'
+import { fetchBrandMenuHeaders } from 'apis/brand'
 import { actionTypes } from '../../../actions/actionTypes'
-
-export function brandDataReceived(response) {
-  return ({
-    type: actionTypes.BRAND_DATA_RECEIVED,
-    response,
-  })
-}
 
 export const menuCollectionsHeadersReceived = (collectionHeaders) => ({
   type: actionTypes.MENU_COLLECTIONS_HEADERS_RECEIVED,
@@ -39,20 +32,5 @@ export function getBrandMenuHeaders() {
     }
 
     dispatch(menuCollectionsHeadersReceived(collectionHeaders))
-  }
-}
-
-export function getBrandInfo() {
-  return async (dispatch, getState) => {
-    const accessToken = getAccessToken(getState())
-    const sessionId = get(Cookies, 'gousto_session_id', false, false)
-    const userId = getAuthUserId(getState())
-
-    try {
-      const brandResponse = await fetchBrandInfo(accessToken, sessionId, userId)
-      dispatch(brandDataReceived(brandResponse))
-    } catch (err) {
-      logger.notice({ message: `Brand Theme failed to load: ${err.message}`, errors: [err] })
-    }
   }
 }

@@ -54,38 +54,6 @@ const imageUrlMap = (urls) => urls.map((url) => ({
   width: url.width,
 }))
 
-const roundelTransformer = (roundel, brandData = {}) => {
-  if (roundel
-    && roundel.slug
-    && brandData.data
-    && brandData.data.roundels
-    && brandData.data.roundels.length > 0) {
-    const match = brandData.data.roundels.find((item) => item.slug === roundel.slug)
-
-    if (match) {
-      return {
-        name: match.name,
-        celebrity: true,
-        media: {
-          images: [
-            {
-              title: match.name,
-              description: '',
-              type: 'headshot-image',
-              urls: [
-                {
-                  src: match.images[0].url,
-                  width: 0,
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
-  }
-}
-
 const shelfLifeTransformer = (minDays, maxDays) => `${minDays}-${maxDays}`
 
 const surchargeTransformer = (surcharge) => {
@@ -116,7 +84,6 @@ export {
   formatIngredients,
   micronutrientsTransformer,
   imageUrlMap,
-  roundelTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
   isFineDineInTransformer,

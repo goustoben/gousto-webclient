@@ -3,6 +3,8 @@ import { act } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
 import * as modalSelectors from 'selectors/modals'
 import * as authSelectors from 'selectors/auth'
+import * as menuSelectors from 'routes/Menu/selectors/menu'
+import * as basketSelectors from 'selectors/basket'
 import { setupServer } from 'msw/node'
 import { safeJestMock } from '_testing/mocks'
 import {
@@ -23,21 +25,29 @@ const user = {
   with2PortionBox3Recipes: 'with-2-portion-box-3-recipes',
   with4PortionBox4Recipes: 'with-4-portion-box-4-recipes',
   with2PortionBox4Recipes: 'with-2-portion-box-4-recipes',
+  withInactiveSubscription: 'with-inactive-subscription',
+  error: 'error',
 }
 
-const createSubscriptionResponse = (numPortions: 2 | 4, numRecipes: 2 | 3 | 4) => ({
+const createSubscriptionResponse = (
+  numPortions: 2 | 4,
+  numRecipes: 2 | 3 | 4,
+  status = 'active'
+) => ({
   status: 'OK',
   data: {
     userId: 'user-id',
     subscription: {
+      status,
       numPortions,
       numRecipes,
     },
   },
 })
 const getPromoModalVisible = safeJestMock(modalSelectors, 'getPromoModalVisible')
+const getPromoCode = safeJestMock(basketSelectors, 'getPromoCode')
 const getIsAuthenticated = safeJestMock(authSelectors, 'getIsAuthenticated')
-
+const isMenuLoading = safeJestMock(menuSelectors, 'isMenuLoading')
 const getUserId = (req: RestRequest) => req.headers.get('x-gousto-user-id')
 
 const server = setupServer(
@@ -56,20 +66,35 @@ const server = setupServer(
       return res(ctx.json(createSubscriptionResponse(4, 4)))
     }
 
+    if (userId === user.withInactiveSubscription) {
+      return res(ctx.json(createSubscriptionResponse(2, 4, 'inactive')))
+    }
+
+    if (userId === user.error) {
+      return res(ctx.json({ status: 'error ' }))
+    }
+
     return res(ctx.json(createSubscriptionResponse(2, 2)))
   })
 )
 
 describe('use5RecipesPaintedDoorTest', () => {
   let useIsOptimizelyFeatureEnabled: jest.SpyInstance<any, [name?: any]>
+  const expectOptimizelyCalledWithNoFeatureFlag = () => {
+    expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
+    expect(useIsOptimizelyFeatureEnabled).not.toHaveBeenCalledWith(OPTIMIZELY_ENABLE_SIGNUP_FLOW)
+    expect(useIsOptimizelyFeatureEnabled).not.toHaveBeenCalledWith(OPTIMIZELY_ENABLE_SUBSCRIBED)
+  }
 
   beforeEach(() => {
     // to fully reset the state between tests, clear the storage
     global.localStorage.clear()
-
+    getPromoCode.mockReturnValue(true)
+    isMenuLoading.mockReturnValue(false)
+    getPromoModalVisible.mockReturnValue(false)
     useIsOptimizelyFeatureEnabled = jest
       .spyOn(UseOptimizely, 'useIsOptimizelyFeatureEnabled')
-      .mockImplementation(() => null)
+      .mockImplementation((name) => !!name)
   })
 
   // Establish API mocking before all tests.
@@ -110,12 +135,22 @@ describe('use5RecipesPaintedDoorTest', () => {
   }
 
   describe('isEnabled', () => {
+    describe('when the menu is still loading', () => {
+      beforeEach(() => {
+        isMenuLoading.mockReturnValue(true)
+      })
+      it('should return false', () => {
+        renderUse5RecipesPaintedDoorTest(null, 'token')
+
+        expectOptimizelyCalledWithNoFeatureFlag()
+      })
+    })
     describe('when user is authenticated', () => {
       describe('when there is no user id in the store', () => {
         it('should return false', () => {
           const { result } = renderUse5RecipesPaintedDoorTest(null, 'token')
 
-          expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
+          expectOptimizelyCalledWithNoFeatureFlag()
           expect(result.current.isEnabled).toBe(false)
         })
       })
@@ -124,7 +159,7 @@ describe('use5RecipesPaintedDoorTest', () => {
         it('should return false', () => {
           const { result } = renderUse5RecipesPaintedDoorTest('userId', null)
 
-          expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
+          expectOptimizelyCalledWithNoFeatureFlag()
           expect(result.current.isEnabled).toBe(false)
         })
       })
@@ -133,8 +168,8 @@ describe('use5RecipesPaintedDoorTest', () => {
         it('should return false', () => {
           // as this requests fails and we don't use `error` from SWR
           // `waitForNextUpdate` doesn't need to be called as there is no update
-          const { result } = renderUse5RecipesPaintedDoorTest()
-          expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
+          const { result } = renderUse5RecipesPaintedDoorTest(user.error)
+          expectOptimizelyCalledWithNoFeatureFlag()
           expect(result.current.isEnabled).toBe(false)
         })
       })
@@ -149,7 +184,7 @@ describe('use5RecipesPaintedDoorTest', () => {
 
             await waitForNextUpdate()
 
-            expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
+            expectOptimizelyCalledWithNoFeatureFlag()
             expect(result.current.isEnabled).toBe(false)
           })
         })
@@ -163,7 +198,21 @@ describe('use5RecipesPaintedDoorTest', () => {
 
             await waitForNextUpdate()
 
-            expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
+            expectOptimizelyCalledWithNoFeatureFlag()
+            expect(result.current.isEnabled).toBe(false)
+          })
+        })
+
+        describe('when user has inactive subscription', () => {
+          it('should return false', async () => {
+            const { result, waitForNextUpdate } = renderUse5RecipesPaintedDoorTest(
+              user.withInactiveSubscription,
+              'token'
+            )
+
+            await waitForNextUpdate()
+
+            expectOptimizelyCalledWithNoFeatureFlag()
             expect(result.current.isEnabled).toBe(false)
           })
         })
@@ -173,15 +222,13 @@ describe('use5RecipesPaintedDoorTest', () => {
         describe('when user is not in the test', () => {
           it('should return false', async () => {
             useIsOptimizelyFeatureEnabled.mockReturnValue(false)
-
             const { result, waitForNextUpdate } = renderUse5RecipesPaintedDoorTest(
               user.with2PortionBox4Recipes,
               'token'
             )
-
             await waitForNextUpdate()
 
-            expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(OPTIMIZELY_ENABLE_SUBSCRIBED)
+            expect(useIsOptimizelyFeatureEnabled).toHaveBeenCalledWith(OPTIMIZELY_ENABLE_SUBSCRIBED)
             expect(result.current.isEnabled).toBe(false)
           })
         })
@@ -214,7 +261,6 @@ describe('use5RecipesPaintedDoorTest', () => {
           it('should return false', () => {
             const { result } = renderUse5RecipesPaintedDoorTest()
 
-            expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(OPTIMIZELY_ENABLE_SIGNUP_FLOW)
             expect(result.current.isEnabled).toBe(false)
           })
         })
@@ -222,6 +268,7 @@ describe('use5RecipesPaintedDoorTest', () => {
         describe('when user is in the test', () => {
           beforeEach(() => {
             useIsOptimizelyFeatureEnabled.mockReturnValue(true)
+            isMenuLoading.mockReturnValue(false)
           })
 
           it('should return true', () => {
@@ -231,154 +278,167 @@ describe('use5RecipesPaintedDoorTest', () => {
             expect(useIsOptimizelyFeatureEnabled).not.toBeCalledWith(OPTIMIZELY_ENABLE_SUBSCRIBED)
             expect(result.current.isEnabled).toBe(true)
           })
-          describe('when user has promo active', () => {
+
+          describe('when promo modal is visible', () => {
             beforeEach(() => {
-              useIsOptimizelyFeatureEnabled.mockReturnValue(false)
               getPromoModalVisible.mockReturnValue(true)
             })
 
             it('should return false', () => {
-              const { result } = renderUse5RecipesPaintedDoorTest()
+              renderUse5RecipesPaintedDoorTest()
 
               expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
-              expect(result.current.isEnabled).toBe(false)
+            })
+          })
+
+          describe('when the promocode is present', () => {
+            beforeEach(() => {
+              getPromoCode.mockReturnValue(true)
+            })
+            it('should return true', () => {
+              const { result } = renderUse5RecipesPaintedDoorTest()
+
+              expect(useIsOptimizelyFeatureEnabled).toHaveBeenCalledWith(
+                OPTIMIZELY_ENABLE_SIGNUP_FLOW
+              )
+              expect(useIsOptimizelyFeatureEnabled).not.toHaveBeenCalledWith(
+                OPTIMIZELY_ENABLE_SUBSCRIBED
+              )
+              expect(result.current.isEnabled).toBe(true)
+            })
+          })
+
+          describe('when the promocode is not present', () => {
+            beforeEach(() => {
+              getPromoCode.mockReturnValue(false)
+            })
+            it('should return false', () => {
+              renderUse5RecipesPaintedDoorTest()
+
+              expectOptimizelyCalledWithNoFeatureFlag()
             })
           })
         })
       })
     })
+  })
+  describe('hasSeenOnMenu', () => {
+    describe('when the user has not yet seen the 5 recipes on the menu', () => {
+      it('should return false', () => {
+        global.localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
+        global.localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
 
-    describe('hasSeenOnMenu', () => {
-      describe('when the user has not yet seen the 5 recipes on the menu', () => {
-        it('should return false', () => {
-          global.localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
-          global.localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
-
-          const { result } = renderUse5RecipesPaintedDoorTest()
-
-          expect(global.localStorage.getItem).toHaveBeenCalledWith(
-            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME
-          )
-          expect(global.localStorage.getItem).toHaveBeenCalledWith(
-            HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
-          )
-          expect(result.current.hasSeenOnMenu).toBe(false)
-        })
-      })
-
-      describe('when the user has seen the 5 recipes on the menu', () => {
-        it('should return true', () => {
-          global.localStorage.setItem(
-            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
-            JSON.stringify('new_user')
-          )
-          global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
-
-          const { result } = renderUse5RecipesPaintedDoorTest()
-
-          expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
-            1,
-            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME
-          )
-          expect(result.current.hasSeenOnMenu).toBe(true)
-        })
-      })
-    })
-
-    describe('hasSeenOnOrderConfirmation', () => {
-      describe('when the user has not yet seen the 5 recipes on the order confirmation page', () => {
-        it('should return false', () => {
-          global.localStorage.setItem(
-            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
-            JSON.stringify('new_user')
-          )
-          global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
-
-          const { result } = renderUse5RecipesPaintedDoorTest()
-
-          expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
-            2,
-            HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
-          )
-          expect(result.current.hasSeenOnOrderConfirmation).toBe(false)
-        })
-      })
-
-      describe('when the user has seen the 5 recipes on the order confirmation page', () => {
-        it('should return true', () => {
-          global.localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
-          global.localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
-
-          const { result } = renderUse5RecipesPaintedDoorTest()
-
-          expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
-            2,
-            HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
-          )
-          expect(result.current.hasSeenOnOrderConfirmation).toBe(true)
-        })
-      })
-    })
-
-    describe('markMenuAsSeen', () => {
-      describe('when user is a new user', () => {
-        it('should set the HAS_SEEN_TEST_IN_MENU_STORAGE_NAME to be `new_user`', () => {
-          const { result } = renderUse5RecipesPaintedDoorTest()
-
-          expect(result.current.hasSeenOnMenu).toBe(false)
-
-          act(() => {
-            result.current.setMenuAsSeen()
-          })
-
-          expect(global.localStorage.setItem).toHaveBeenNthCalledWith(
-            2,
-            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
-            '"new_user"'
-          )
-          expect(result.current.hasSeenOnMenu).toBe(true)
-          expect(result.current.userSeenOnMenu).toBe('new_user')
-        })
-      })
-
-      describe('when user is an existing user', () => {
-        it('should set the HAS_SEEN_TEST_IN_MENU_STORAGE_NAME to be `existing_user`', async () => {
-          useIsOptimizelyFeatureEnabled.mockReturnValue(true)
-
-          const { result } = renderUse5RecipesPaintedDoorTest(user.with2PortionBox4Recipes, 'token')
-
-          expect(result.current.hasSeenOnMenu).toBe(false)
-
-          act(() => {
-            result.current.setMenuAsSeen()
-          })
-
-          expect(global.localStorage.setItem).toHaveBeenCalledWith(
-            HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
-            '"existing_user"'
-          )
-          expect(result.current.hasSeenOnMenu).toBe(true)
-          expect(result.current.userSeenOnMenu).toBe('existing_user')
-        })
-      })
-    })
-
-    describe('setOrderConfirmationAsSeen', () => {
-      it('should set the HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME to be true', () => {
         const { result } = renderUse5RecipesPaintedDoorTest()
 
+        expect(result.current.hasSeenOnMenu).toBe(false)
+      })
+    })
+
+    describe('when the user has seen the 5 recipes on the menu', () => {
+      it('should return true', () => {
+        global.localStorage.setItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME, JSON.stringify('new_user'))
+        global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
+
+        const { result } = renderUse5RecipesPaintedDoorTest()
+
+        expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
+          1,
+          HAS_SEEN_TEST_IN_MENU_STORAGE_NAME
+        )
+        expect(result.current.hasSeenOnMenu).toBe(true)
+      })
+    })
+  })
+
+  describe('hasSeenOnOrderConfirmation', () => {
+    describe('when the user has not yet seen the 5 recipes on the order confirmation page', () => {
+      it('should return false', () => {
+        global.localStorage.setItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME, JSON.stringify('new_user'))
+        global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
+
+        const { result } = renderUse5RecipesPaintedDoorTest()
+
+        expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
+          2,
+          HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
+        )
         expect(result.current.hasSeenOnOrderConfirmation).toBe(false)
+      })
+    })
 
-        act(() => {
-          result.current.setOrderConfirmationAsSeen()
-        })
+    describe('when the user has seen the 5 recipes on the order confirmation page', () => {
+      it('should return true', () => {
+        global.localStorage.removeItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME)
+        global.localStorage.setItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME, 'true')
 
-        expect(global.localStorage.setItem).toHaveBeenCalledWith(
-          HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME,
-          'true'
+        const { result } = renderUse5RecipesPaintedDoorTest()
+
+        expect(global.localStorage.getItem).toHaveBeenNthCalledWith(
+          2,
+          HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME
         )
         expect(result.current.hasSeenOnOrderConfirmation).toBe(true)
       })
+    })
+  })
+
+  describe('markMenuAsSeen', () => {
+    describe('when user is a new user', () => {
+      it('should set the HAS_SEEN_TEST_IN_MENU_STORAGE_NAME to be `new_user`', () => {
+        const { result } = renderUse5RecipesPaintedDoorTest()
+
+        expect(result.current.hasSeenOnMenu).toBe(false)
+
+        act(() => {
+          result.current.setMenuAsSeen()
+        })
+
+        expect(global.localStorage.setItem).toHaveBeenCalledWith(
+          HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
+          '"new_user"'
+        )
+        expect(result.current.hasSeenOnMenu).toBe(true)
+        expect(result.current.userSeenOnMenu).toBe('new_user')
+      })
+    })
+
+    describe('when user is an existing user', () => {
+      it('should set the HAS_SEEN_TEST_IN_MENU_STORAGE_NAME to be `existing_user`', async () => {
+        useIsOptimizelyFeatureEnabled.mockReturnValue(true)
+
+        const { result } = renderUse5RecipesPaintedDoorTest(user.with2PortionBox4Recipes, 'token')
+
+        expect(result.current.hasSeenOnMenu).toBe(false)
+
+        act(() => {
+          result.current.setMenuAsSeen()
+        })
+
+        expect(global.localStorage.setItem).toHaveBeenCalledWith(
+          HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
+          '"existing_user"'
+        )
+        expect(result.current.hasSeenOnMenu).toBe(true)
+        expect(result.current.userSeenOnMenu).toBe('existing_user')
+      })
+    })
+  })
+
+  describe('setOrderConfirmationAsSeen', () => {
+    it('should set the HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME to be true', () => {
+      const { result } = renderUse5RecipesPaintedDoorTest()
+
+      expect(result.current.hasSeenOnOrderConfirmation).toBe(false)
+
+      act(() => {
+        result.current.setOrderConfirmationAsSeen()
+      })
+
+      expect(global.localStorage.setItem).toHaveBeenCalledWith(
+        HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME,
+        'true'
+      )
+      expect(result.current.hasSeenOnOrderConfirmation).toBe(true)
     })
   })
 })

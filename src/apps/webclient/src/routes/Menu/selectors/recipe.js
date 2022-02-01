@@ -74,14 +74,6 @@ export const getRecipeSidesSurcharge = createSelector(
   }
 )
 
-const getTagBySlugFromProps = (state, props) => props.slug
-
-const getBrandFromState = state => state.brand
-export const getAllTags = createSelector(
-  [getBrandFromState],
-  brand => ((brand && brand.data && brand.data.tags) ? brand.data.tags : [])
-)
-
 export const findTag = (allTags, tag) => {
   const foundTag = allTags && allTags.find((tagData) => tagData.slug === tag)
 
@@ -97,14 +89,6 @@ export const findTag = (allTags, tag) => {
 
   return null
 }
-export const getTagDefinition = createSelector(
-  [getAllTags, getTagBySlugFromProps],
-  (allTags, tag) => {
-    const nonEmeTags = (allTags || []).filter((tagData) => !tagData.slug.endsWith('-eme'))
-
-    return findTag(nonEmeTags, tag)
-  }
-)
 
 const getClaimForRecipeId = createSelector(
   [getRecipes, getRecipeIdFromProps],
@@ -127,8 +111,10 @@ const getClaimForRecipeId = createSelector(
   }
 )
 
+const getBrandTagsFromProps = (state, props) => props.brandTags
+
 export const getRecipeDisclaimerProps = createSelector(
-  [getClaimForRecipeId, getAllTags],
+  [getClaimForRecipeId, getBrandTagsFromProps],
   (claim, allTags) => {
     if (!claim) {
       return null

@@ -472,25 +472,6 @@ describe('transformers/recipes tests', () => {
             'Vegetable oil'
           ],
           boxType: 'gourmet',
-          roundelImage: {
-            name: 'Health Kitchen - Healthy heart',
-            celebrity: true,
-            media: {
-              images: [
-                {
-                  title: 'Health Kitchen - Healthy heart',
-                  description: '',
-                  type: 'headshot-image',
-                  urls: [
-                    {
-                      src: 'url/img.png',
-                      width: 0,
-                    }
-                  ]
-                }
-              ]
-            }
-          },
           chefPrepared: true,
           cookingTime: 25,
           cookingTimeFamily: 30,
@@ -1337,25 +1318,6 @@ describe('transformers/recipes tests', () => {
               'Vegetable oil'
             ],
             boxType: 'gourmet',
-            roundelImage: {
-              name: 'Health Kitchen - Healthy heart',
-              celebrity: true,
-              media: {
-                images: [
-                  {
-                    title: 'Health Kitchen - Healthy heart',
-                    description: '',
-                    type: 'headshot-image',
-                    urls: [
-                      {
-                        src: 'url/img.png',
-                        width: 0,
-                      }
-                    ]
-                  }
-                ]
-              }
-            },
             chefPrepared: true,
             cookingTime: 25,
             cookingTimeFamily: 30,

@@ -11,6 +11,12 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }))
 
+jest.mock('components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest', () =>
+  ({
+    use5RecipesPaintedDoorTest: jest.fn(() => ({ maxRecipes: 4 })),
+  })
+)
+
 describe('RecipesInBasketProgressContent', () => {
   let wrapper
   const props = {

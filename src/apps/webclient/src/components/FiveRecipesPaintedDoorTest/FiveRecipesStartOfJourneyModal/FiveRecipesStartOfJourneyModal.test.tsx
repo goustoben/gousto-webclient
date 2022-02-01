@@ -5,16 +5,21 @@ import * as FiveRecipeHooks from '../use5RecipesPaintedDoorTest'
 import { FiveRecipesStartOfJourney } from './FiveRecipesStartOfJourney'
 import { JestSpyInstance } from '../../../types/jest'
 import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
+import * as Tracking from 'components/FiveRecipesPaintedDoorTest/useFiveRecipesTracking'
+import { experimentFiveRecipesStartOfJourneyClosed, experimentFiveRecipesStartOfJourneyOpened } from 'actions/trackingKeys'
 
 describe('<FiveRecipesStartOfJourney />', () => {
   let use5RecipesPaintedDoorTestSpy: JestSpyInstance<
     typeof FiveRecipeHooks.use5RecipesPaintedDoorTest
   >
-  let sendClientMetricSpy: JestSpyInstance<typeof clientMetrics.sendClientMetric>
+  let sendClientMetricMock = jest.fn()
+  const trackEvent = jest.fn()
 
   beforeEach(() => {
+    sendClientMetricMock = jest.fn()
     use5RecipesPaintedDoorTestSpy = jest.spyOn(FiveRecipeHooks, 'use5RecipesPaintedDoorTest')
-    sendClientMetricSpy = jest.spyOn(clientMetrics, 'sendClientMetric')
+    jest.spyOn(clientMetrics, 'useSendClientMetric').mockReturnValue(sendClientMetricMock)
+    jest.spyOn(Tracking, 'useFiveRecipesTracking').mockImplementation(() => trackEvent)
   })
 
   afterEach(jest.clearAllMocks)
@@ -56,9 +61,11 @@ describe('<FiveRecipesStartOfJourney />', () => {
         render(<FiveRecipesStartOfJourney discount={60.0} />)
 
         expect(screen.queryByRole('heading')).toHaveTextContent(/Hungry for 5 recipes?/i)
-
+        expect(trackEvent).toHaveBeenNthCalledWith(1, experimentFiveRecipesStartOfJourneyOpened)
+        
         fireEvent.click(screen.getByLabelText('Close Icon'))
 
+        expect(trackEvent).toHaveBeenNthCalledWith(2, experimentFiveRecipesStartOfJourneyClosed)
         expect(screen.queryByRole('heading')).not.toBeInTheDocument()
       })
 
@@ -71,9 +78,11 @@ describe('<FiveRecipesStartOfJourney />', () => {
         render(<FiveRecipesStartOfJourney discount={60.0} />)
 
         expect(screen.queryByRole('heading')).toHaveTextContent(/Hungry for 5 recipes?/i)
+        expect(trackEvent).toHaveBeenNthCalledWith(1, experimentFiveRecipesStartOfJourneyOpened)
 
         fireEvent.click(screen.getByText('Choose my recipes'))
 
+        expect(trackEvent).toHaveBeenNthCalledWith(2, experimentFiveRecipesStartOfJourneyClosed)
         expect(screen.queryByRole('heading')).not.toBeInTheDocument()
       })
 
@@ -102,7 +111,7 @@ describe('<FiveRecipesStartOfJourney />', () => {
           fireEvent.click(screen.getByText('Choose my recipes'))
 
           expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-          expect(sendClientMetricSpy).toHaveBeenCalledWith('menu-5-recipes-painted-new-user-start', 1, 'Count')
+          expect(sendClientMetricMock).toHaveBeenCalledWith('menu-5-recipes-painted-new-user-start', 1, 'Count')
         })
       })
 
@@ -143,7 +152,7 @@ describe('<FiveRecipesStartOfJourney />', () => {
           fireEvent.click(screen.getByText('Choose my recipes'))
 
           expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-          expect(sendClientMetricSpy).toHaveBeenCalledWith('menu-5-recipes-painted-existing-user-start', 1, 'Count')
+          expect(sendClientMetricMock).toHaveBeenCalledWith('menu-5-recipes-painted-existing-user-start', 1, 'Count')
         })
       })
     })

@@ -3,17 +3,20 @@ import Immutable from 'immutable'
 
 import { renderHook } from '@testing-library/react-hooks'
 import { Provider } from 'react-redux'
-import { createMockBasketStore } from './testing/createMockBasketStore'
-import { useBasketRecipes } from './recipes'
+import { createMockBasketStore } from '../testing/createMockBasketStore'
+import { useBasketRecipes, useIsRecipeInBasket } from './index'
 
-jest.mock('routes/Menu/actions/basketRecipes', () => ({
-  basketRecipeAdd: jest
+jest.mock('routes/Menu/domains/basket/internal/recipes/useAddRecipe', () => ({
+  useAddRecipe: jest
     .fn()
-    .mockImplementation((recipeId, view) => ['call_basketRecipeAdd', recipeId, view]),
-  basketRecipeRemove: jest
+    .mockImplementation((recipeId, view) => ['call_addRecipe', recipeId, view]),
+}))
+
+jest.mock('routes/Menu/domains/basket/internal/recipes/useRemoveRecipe', () => ({
+  useRemoveRecipe: jest
     .fn()
     .mockImplementation((recipeId, view, position) => [
-      'call_basketRecipeRemove',
+      'call_removeRecipe',
       recipeId,
       view,
       position,
@@ -49,34 +52,6 @@ describe('basket domain / recipes', () => {
     })
   })
 
-  test('addRecipe dispatches basketRecipeAdd', () => {
-    const { result } = renderHook(() => useBasketRecipes(), { wrapper })
-
-    const recipeId = 'aaaa-bbbb'
-    const view = 'grid'
-
-    result.current.addRecipe(recipeId, view)
-
-    expect(store.dispatch).toHaveBeenCalledWith(['call_basketRecipeAdd', recipeId, view])
-  })
-
-  test('removeRecipe dispatches basketRecipeRemove', () => {
-    const { result } = renderHook(() => useBasketRecipes(), { wrapper })
-
-    const recipeId = 'aaaa-bbbb'
-    const view = 'grid'
-    const position = 10
-
-    result.current.removeRecipe(recipeId, view, position)
-
-    expect(store.dispatch).toHaveBeenCalledWith([
-      'call_basketRecipeRemove',
-      recipeId,
-      view,
-      position,
-    ])
-  })
-
   describe('when basket contains a recipe with quantity 1', () => {
     const recipeId = '1234-5678'
 
@@ -93,21 +68,27 @@ describe('basket domain / recipes', () => {
     test('limitReached is false', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
 
-      expect(result.current.limitReached).toEqual(false)
+      expect(result.current.reachedLimit).toEqual(false)
     })
 
     test('isRecipeInBasket is true for the recipe Id', () => {
-      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+      const { result } = renderHook(() => useIsRecipeInBasket(), { wrapper: recipeWrapper })
 
-      const isInBasket = result.current.isRecipeInBasket(recipeId)
+      const isInBasket = result.current(recipeId)
 
       expect(isInBasket).toEqual(true)
     })
 
-    test('isRecipeInBasket is false for a different id', () => {
+    test('recipeCount is 1', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
 
-      const isInBasket = result.current.isRecipeInBasket('zzzz-fake-id')
+      expect(result.current.recipeCount).toEqual(1)
+    })
+
+    test('isRecipeInBasket is false for a different id', () => {
+      const { result } = renderHook(() => useIsRecipeInBasket(), { wrapper: recipeWrapper })
+
+      const isInBasket = result.current('zzzz-fake-id')
 
       expect(isInBasket).toEqual(false)
     })
@@ -129,13 +110,19 @@ describe('basket domain / recipes', () => {
     test('limitReached is true', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
 
-      expect(result.current.limitReached).toEqual(true)
+      expect(result.current.reachedLimit).toEqual(true)
+    })
+
+    test('recipeCount is 4', () => {
+      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+
+      expect(result.current.recipeCount).toEqual(4)
     })
 
     test('isRecipeInBasket is true for the recipe Id', () => {
-      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+      const { result } = renderHook(() => useIsRecipeInBasket(), { wrapper: recipeWrapper })
 
-      const isInBasket = result.current.isRecipeInBasket(recipeId)
+      const isInBasket = result.current(recipeId)
 
       expect(isInBasket).toEqual(true)
     })
@@ -159,21 +146,27 @@ describe('basket domain / recipes', () => {
     test('limitReached is true', () => {
       const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
 
-      expect(result.current.limitReached).toEqual(true)
+      expect(result.current.reachedLimit).toEqual(true)
+    })
+
+    test('recipeCount is 4', () => {
+      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+
+      expect(result.current.recipeCount).toEqual(4)
     })
 
     test('isRecipeInBasket is true for the first recipe', () => {
-      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+      const { result } = renderHook(() => useIsRecipeInBasket(), { wrapper: recipeWrapper })
 
-      const isInBasket = result.current.isRecipeInBasket(recipeIdA)
+      const isInBasket = result.current(recipeIdA)
 
       expect(isInBasket).toEqual(true)
     })
 
     test('isRecipeInBasket is true for the second recipe', () => {
-      const { result } = renderHook(() => useBasketRecipes(), { wrapper: recipeWrapper })
+      const { result } = renderHook(() => useIsRecipeInBasket(), { wrapper: recipeWrapper })
 
-      const isInBasket = result.current.isRecipeInBasket(recipeIdB)
+      const isInBasket = result.current(recipeIdB)
 
       expect(isInBasket).toEqual(true)
     })

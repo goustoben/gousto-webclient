@@ -17,10 +17,10 @@ export const getMenuCollections = state => state.menuCollections
 export const getMenuRecipeStock = state => state.menuRecipeStock
 export const getCollectionSlugFromQuery = state => {
   if (
-    !state.routing
-    || !state.routing.locationBeforeTransitions
-    || !state.routing.locationBeforeTransitions.query
-    || !state.routing.locationBeforeTransitions.query.collection
+    !state.routing ||
+    !state.routing.locationBeforeTransitions ||
+    !state.routing.locationBeforeTransitions.query ||
+    !state.routing.locationBeforeTransitions.query.collection
   ) {
     return null
   }

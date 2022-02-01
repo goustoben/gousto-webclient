@@ -20,6 +20,8 @@ import { menuLoadBoxPrices } from 'actions/menu'
 import { getPromoCode } from 'selectors/basket'
 import { promoGet } from 'actions/promos'
 import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
+import { hotjarSkipWizard } from 'actions/trackingKeys'
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
 import css from './Signup.css'
 
@@ -70,6 +72,7 @@ const propTypes = {
   signupSetStep: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
   isWizardWithoutImagesEnabled: PropTypes.bool,
+  shouldSkipWizardByFeature: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -98,6 +101,7 @@ const defaultProps = {
   signupSetStep: () => {},
   isGoustoOnDemandEnabled: false,
   isWizardWithoutImagesEnabled: false,
+  shouldSkipWizardByFeature: false,
 }
 
 const postCodePath = '/signup/postcode'
@@ -116,6 +120,7 @@ class Signup extends PureComponent {
       isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams,
       isGoustoOnDemandEnabled,
+      shouldSkipWizardByFeature,
     } = options
 
     if (isPaymentBeforeChoosingEnabled) {
@@ -160,6 +165,12 @@ class Signup extends PureComponent {
       if (basketPromoCode && !getCurrentPromoCodeData(state)) {
         await store.dispatch(promoGet(basketPromoCode))
       }
+    }
+
+    if (shouldSkipWizardByFeature && !isGoustoOnDemandEnabled) {
+      invokeHotjarEvent(hotjarSkipWizard)
+
+      return store.dispatch(actions.redirect(routes.client.menu))
     }
 
     if (isPaymentBeforeChoosingV2Enabled) {
@@ -228,6 +239,7 @@ class Signup extends PureComponent {
       isPaymentBeforeChoosingV2Enabled,
       signupSetStep,
       isGoustoOnDemandEnabled,
+      shouldSkipWizardByFeature,
     } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
@@ -237,6 +249,7 @@ class Signup extends PureComponent {
       isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams: true,
       isGoustoOnDemandEnabled,
+      shouldSkipWizardByFeature,
     }
 
     Signup.fetchData({ store, query, params, options })

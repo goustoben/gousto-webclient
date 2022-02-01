@@ -3,10 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { get } from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { renderHook } from '@testing-library/react-hooks'
-import { useSetupOptimizelyOverride, useIsOptimizelyFeatureEnabled } from './useOptimizely.hook'
+import * as ActionsLog from 'actions/log'
+import {
+  useSetupOptimizelyOverride,
+  useIsOptimizelyFeatureEnabled,
+  useUserIdForOptimizely
+} from './useOptimizely.hook'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 import * as optimizelySdk from './optimizelySDK'
+import * as OptimizelyHook from './useOptimizely.hook'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -124,6 +130,68 @@ describe('useOptimizely', () => {
             expect(setItemSpy).not.toBeCalled()
             expect(removeItemSpy).not.toBeCalled()
           })
+        })
+      })
+    })
+  })
+
+  describe('useUserIdForOptimizely', () => {
+    describe('when user and snowplow user id are not present', () => {
+      beforeEach(() => {
+        window.snowplow = null
+        state = {
+          auth: Immutable.Map({
+            id: '',
+          }),
+        }
+      })
+
+      it('should return null', async () => {
+        const { result } = renderHook(() => useUserIdForOptimizely())
+
+        const userID = result.current
+
+        expect(userID).toBe(null)
+      })
+    })
+
+    describe('when theres is valid snowplow user id', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          auth: Immutable.fromJS({ id: undefined })
+        }
+        mockSnowplowCallbackAPI()
+      })
+
+      describe('and no auth user id is present', () => {
+        it('should return the snowplow id', async () => {
+          const { result, waitForNextUpdate } = renderHook(() => useUserIdForOptimizely())
+
+          await waitForNextUpdate()
+
+          const userID = result.current
+
+          expect(userID).toBe('snowplowUserId')
+        })
+      })
+
+      describe('when the user has an auth user id', () => {
+        beforeEach(() => {
+          state = {
+            ...state,
+            auth: Immutable.fromJS({ id: 'user_id' })
+          }
+        })
+
+        it('should return the auth user id', async () => {
+          const { result, waitForNextUpdate } = renderHook(() => useUserIdForOptimizely())
+
+          await waitForNextUpdate()
+
+          const userID = result.current
+
+          expect(userID).toBe('user_id')
         })
       })
     })
@@ -460,6 +528,70 @@ describe('useOptimizely', () => {
             'snowplowUserId',
           ])
         })
+      })
+    })
+    describe('when the override flag is disabled', () => {
+      let feLoggingLogEvent
+      let useGetOptimizelyOverride
+
+      beforeEach(() => {
+        mockSnowplowCallbackAPI()
+        useGetOptimizelyOverride = jest.spyOn(OptimizelyHook, 'useGetOptimizelyOverride')
+        useGetOptimizelyOverride.mockReturnValue([false])
+        feLoggingLogEvent = jest.spyOn(ActionsLog, 'feLoggingLogEvent')
+      })
+
+      it('should not log the override flag ', async () => {
+        const { waitForNextUpdate } = renderHook(() =>
+          useIsOptimizelyFeatureEnabled('flag')
+        )
+        await waitForNextUpdate()
+
+        expect(feLoggingLogEvent).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when the override flag is enabled', () => {
+      let feLoggingLogEvent
+      let useGetOptimizelyOverride
+
+      beforeEach(() => {
+        mockSnowplowCallbackAPI()
+        useGetOptimizelyOverride = jest.spyOn(OptimizelyHook, 'useGetOptimizelyOverride')
+        useGetOptimizelyOverride.mockReturnValue([true])
+        feLoggingLogEvent = jest.spyOn(ActionsLog, 'feLoggingLogEvent')
+        state = {
+          auth: Immutable.Map({
+            id: 'user_id',
+          }),
+        }
+      })
+
+      it('should log the call with override only once per feature', async () => {
+        // Simulate multiple calls of the hook
+        renderHook(() => useIsOptimizelyFeatureEnabled('flag1'))
+        renderHook(() => useIsOptimizelyFeatureEnabled('flag1'))
+        renderHook(() => useIsOptimizelyFeatureEnabled('flag2'))
+        const { result, waitForNextUpdate } = renderHook(() =>
+          useIsOptimizelyFeatureEnabled('flag2')
+        )
+
+        await waitForNextUpdate()
+
+        const isEnabled = result.current
+        expect(dispatch).toHaveBeenCalledTimes(2)
+        expect(feLoggingLogEvent).toHaveBeenCalledTimes(2)
+        expect(feLoggingLogEvent).toHaveBeenCalledWith(ActionsLog.logLevels.info, 'optimizelyFeatureEnabled-override', {
+          userId: 'user_id',
+          sessionId: undefined,
+          featureName: 'flag1'
+        })
+        expect(feLoggingLogEvent).toHaveBeenCalledWith(ActionsLog.logLevels.info, 'optimizelyFeatureEnabled-override', {
+          userId: 'user_id',
+          sessionId: undefined,
+          featureName: 'flag2'
+        })
+        expect(isEnabled).toBe(undefined)
       })
     })
   })

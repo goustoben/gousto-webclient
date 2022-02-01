@@ -2,11 +2,10 @@ const path = require('path')
 
 const { getClientPlugins } = require('./build/libs/plugins')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 const { build, publicPath, clientDevServerEnabled, hmrEnabled } = require('./build/libs/webpack-env-vars.js')
 const { logBuildInfo } = require('./build/libs/logs')
-const { getClientRules } = require('./build/libs/rules')
+const { getClientRules, getClientDevtool, getClientOptimization } = require('./build/libs/rules')
 
 const isDevelopmentBuild = build === 'development'
 
@@ -14,7 +13,7 @@ logBuildInfo(isDevelopmentBuild)
 
 const baseConfig = {
   context: path.resolve(__dirname, '..'),
-  devtool: 'source-map',
+  devtool: getClientDevtool(isDevelopmentBuild),
   entry: {
     main: ['./src/client.js'],
     legacy: ['./src/legacy.js'],
@@ -34,27 +33,7 @@ const baseConfig = {
     chunkFilename: '[name].bundle.[chunkhash].js',
     publicPath,
   },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin({
-      parallel: true,
-      sourceMap: true,
-      terserOptions: {
-        mangle: true,
-        compress: true,
-      },
-    })],
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          chunks: (chunk) => chunk.name !== 'legacy' && chunk.name !== 'performanceTracker',
-          name: 'vendors',
-          enforce: true,
-          test: /[\\/]node_modules[\\/]/,
-        },
-      },
-    },
-  },
+  optimization: getClientOptimization(isDevelopmentBuild),
   plugins: getClientPlugins(isDevelopmentBuild, hmrEnabled),
   resolve: {
     alias: {
