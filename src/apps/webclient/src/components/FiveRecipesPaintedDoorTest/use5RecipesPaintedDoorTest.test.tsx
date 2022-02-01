@@ -25,14 +25,20 @@ const user = {
   with2PortionBox3Recipes: 'with-2-portion-box-3-recipes',
   with4PortionBox4Recipes: 'with-4-portion-box-4-recipes',
   with2PortionBox4Recipes: 'with-2-portion-box-4-recipes',
+  withInactiveSubscription: 'with-inactive-subscription',
   error: 'error',
 }
 
-const createSubscriptionResponse = (numPortions: 2 | 4, numRecipes: 2 | 3 | 4) => ({
+const createSubscriptionResponse = (
+  numPortions: 2 | 4,
+  numRecipes: 2 | 3 | 4,
+  status = 'active'
+) => ({
   status: 'OK',
   data: {
     userId: 'user-id',
     subscription: {
+      status,
       numPortions,
       numRecipes,
     },
@@ -58,6 +64,10 @@ const server = setupServer(
 
     if (userId === user.with4PortionBox4Recipes) {
       return res(ctx.json(createSubscriptionResponse(4, 4)))
+    }
+
+    if (userId === user.withInactiveSubscription) {
+      return res(ctx.json(createSubscriptionResponse(2, 4, 'inactive')))
     }
 
     if (userId === user.error) {
@@ -192,6 +202,20 @@ describe('use5RecipesPaintedDoorTest', () => {
             expect(result.current.isEnabled).toBe(false)
           })
         })
+
+        describe('when user has inactive subscription', () => {
+          it('should return false', async () => {
+            const { result, waitForNextUpdate } = renderUse5RecipesPaintedDoorTest(
+              user.withInactiveSubscription,
+              'token'
+            )
+
+            await waitForNextUpdate()
+
+            expectOptimizelyCalledWithNoFeatureFlag()
+            expect(result.current.isEnabled).toBe(false)
+          })
+        })
       })
 
       describe('when user has a valid subscription', () => {
@@ -297,7 +321,6 @@ describe('use5RecipesPaintedDoorTest', () => {
         })
       })
     })
-
   })
   describe('hasSeenOnMenu', () => {
     describe('when the user has not yet seen the 5 recipes on the menu', () => {
@@ -313,10 +336,7 @@ describe('use5RecipesPaintedDoorTest', () => {
 
     describe('when the user has seen the 5 recipes on the menu', () => {
       it('should return true', () => {
-        global.localStorage.setItem(
-          HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
-          JSON.stringify('new_user')
-        )
+        global.localStorage.setItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME, JSON.stringify('new_user'))
         global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
 
         const { result } = renderUse5RecipesPaintedDoorTest()
@@ -333,10 +353,7 @@ describe('use5RecipesPaintedDoorTest', () => {
   describe('hasSeenOnOrderConfirmation', () => {
     describe('when the user has not yet seen the 5 recipes on the order confirmation page', () => {
       it('should return false', () => {
-        global.localStorage.setItem(
-          HAS_SEEN_TEST_IN_MENU_STORAGE_NAME,
-          JSON.stringify('new_user')
-        )
+        global.localStorage.setItem(HAS_SEEN_TEST_IN_MENU_STORAGE_NAME, JSON.stringify('new_user'))
         global.localStorage.removeItem(HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME)
 
         const { result } = renderUse5RecipesPaintedDoorTest()
