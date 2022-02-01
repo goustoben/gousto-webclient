@@ -22,10 +22,12 @@ jest.mock('utils/home', () => ({
   getPromoBannerState: jest.fn(),
 }))
 
+const defaultState = {
+  auth: Immutable.fromJS({}),
+}
+
 describe('home actions', () => {
-  const getState = jest.fn(() => ({
-    auth: Immutable.fromJS({}),
-  }))
+  const getState = jest.fn(() => defaultState)
   const dispatchSpy = jest.fn()
   const CTA_URI = '/ctaTest'
   const promoCode = 'DTI-test-home-actions'
@@ -35,18 +37,35 @@ describe('home actions', () => {
   })
 
   describe('given homeGetStarted is dispatched', () => {
-    test('then it should redirect to the specified UrI', async () => {
+    test('then it should redirect to the specified URI', async () => {
       await homeGetStarted(CTA_URI)(dispatchSpy, getState)
 
       expect(redirect).toHaveBeenCalledWith(CTA_URI)
     })
 
-    test('If sectionForTracking is supplied, then also the tracking event is sent', async () => {
+    test('when sectionForTracking is supplied, then also the tracking event is sent', async () => {
       const sectionForTracking = 'testSection'
 
       await homeGetStarted(CTA_URI, sectionForTracking)(dispatchSpy, getState)
 
       expect(trackGetStarted).toHaveBeenCalledWith(sectionForTracking)
+    })
+
+    describe('when isSkipWizardEnabled is on', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          ...defaultState,
+          features: Immutable.fromJS({
+            isSkipWizardEnabled: { value: true },
+          }),
+        })
+      })
+
+      test('then it should redirect to the menu instead', async () => {
+        await homeGetStarted(CTA_URI)(dispatchSpy, getState)
+
+        expect(redirect).toHaveBeenCalledWith('/menu')
+      })
     })
   })
 
