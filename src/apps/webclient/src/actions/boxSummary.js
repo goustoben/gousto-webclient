@@ -1,5 +1,5 @@
 import { fetchDeliveryDays } from 'apis/deliveries'
-import { getBasketRecipes } from 'selectors/basket'
+import { getBasketRecipes, getBasketPostcode, getBasketSlotId } from 'selectors/basket'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
 import moment from 'moment'
@@ -74,6 +74,19 @@ export const boxSummaryVisibilityChange = (show, isBasketRequiredFeatureEnabled)
             dispatch(basketRecipeRemove(recipeId))
           }
         })
+
+      // When closing by a cross on the "delivery slot" step, proceed as though
+      // on CTA click, i.e. confirm the slot selected by default as chosen.
+      const basketPostcode = getBasketPostcode(state)
+      const basketSlotId = getBasketSlotId(state)
+      if (basketPostcode && !basketSlotId) {
+        const landing = getLandingDay(state, { useCurrentSlot: true })
+
+        const tempDate = state.temp.get('date', landing.date)
+        const tempSlotId = state.temp.get('slotId', landing.slotId)
+
+        dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
+      }
     }
   }
 )
