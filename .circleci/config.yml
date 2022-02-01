@@ -60,10 +60,10 @@ commands:
           name: Authenticate with AWS CodeArtifact for Yarn 2.X+
           command: |
             yarn config unset npmScopes &&
-            CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner ${AWS_CODEARTIFACT_ACCOUNT_NUMBER} --query authorizationToken --output text` &&
-            yarn config set npmRegistryServer "https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/" &&
-            yarn config set 'npmRegistries["https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}" &&
-            yarn config set 'npmRegistries["https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/"].npmAlwaysAuth' "true"
+            CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner 472493421475 --query authorizationToken --output text` &&
+            yarn config set npmRegistryServer "https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/" &&
+            yarn config set 'npmRegistries["https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}" &&
+            yarn config set 'npmRegistries["https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/"].npmAlwaysAuth' "true"
 
   codeartifact_cleanup:
     description: Unset yarn config to prevent issues in other pipelines caused by image caching
@@ -73,13 +73,13 @@ commands:
           command: |
             yarn config unset npmRegistryServer &&
             yarn config unset npmScopes &&
-            yarn config unset npmRegistries["https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/"]
+            yarn config unset npmRegistries["https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/"]
       - run:
           name: Clear yarn Cache
           command: yarn cache clear
       - run:
           name: Clear npm config
-          command: npm config delete //gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/
+          command: npm config delete //gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/
 
 jobs:
   setup-ci-variables-scripts:
