@@ -1,4 +1,5 @@
 import React from 'react'
+import * as reactRedux from 'react-redux'
 import { shallow } from 'enzyme'
 import { RecipeDisclaimer } from '../RecipeDisclaimer'
 
@@ -13,12 +14,13 @@ describe('RecipeDisclaimer', () => {
       iconColor: 'green'
     }
   }
+
   describe('when the recipe contains a disclaimer', () => {
     beforeEach(() => {
+     jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => claim)
+
       wrapper = shallow(
-        <RecipeDisclaimer
-          claim={claim}
-        />
+        <RecipeDisclaimer />
       )
     })
 
@@ -36,25 +38,30 @@ describe('RecipeDisclaimer', () => {
   })
 
   describe('when there is no disclaimer', () => {
+    beforeEach(() => {
+      jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => null)
+    })
+
+    afterAll(() => jest.clearAllMocks())
+
     test('should not display the disclaimer', () => {
       wrapper = shallow(
-        <RecipeDisclaimer
-          claim={null}
-        />
+        <RecipeDisclaimer />
       )
       expect(wrapper.find('.disclaimerWrapper').exists()).toBe(false)
     })
   })
 
   describe('when there is no theme', () => {
+    beforeEach(() => {
+      jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => null)
+    })
+
+    afterAll(() => jest.clearAllMocks())
+
     test('should not display the disclaimer', () => {
       wrapper = shallow(
-        <RecipeDisclaimer
-          claim={{
-            ...claim,
-            theme: undefined
-          }}
-        />
+        <RecipeDisclaimer />
       )
       expect(wrapper.find('.disclaimerWrapper').exists()).toBe(false)
     })

@@ -6,7 +6,6 @@ import {
   equipmentTransformer,
   formatIngredients,
   micronutrientsTransformer,
-  roundelTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
   isFineDineInTransformer,
@@ -14,12 +13,11 @@ import {
   isNewTransformer
 } from './recipes/recipeHelpers'
 
-function recipeTransformer({ normalisedAttributes, brandData, individualRecipeId, finalIngredients, isFeaturedRecipe, activeMenu, recipeMeta }) {
+function recipeTransformer({ normalisedAttributes, individualRecipeId, finalIngredients, isFeaturedRecipe, activeMenu, recipeMeta }) {
   return {
     allergens: allergensTransformer(normalisedAttributes.allergens),
     basics: basicsTransformer(normalisedAttributes.basics),
     boxType: normalisedAttributes.box_type ? normalisedAttributes.box_type.slug : '',
-    roundelImage: roundelTransformer(normalisedAttributes.roundel, brandData),
     chefPrepared: normalisedAttributes.chef_prepared,
     cookingTime: normalisedAttributes.prep_times.for2,
     cookingTimeFamily: normalisedAttributes.prep_times.for4,
@@ -87,7 +85,7 @@ function recipeTransformer({ normalisedAttributes, brandData, individualRecipeId
   }
 }
 
-const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
+const recipesTransformer = (activeMenu, menuServiceData) => {
   if (!activeMenu || !activeMenu.relationships) {
     return undefined
   }
@@ -110,7 +108,7 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
     // use the first recipe as the featured one (base on recommendations)
     const isFeaturedRecipe = index === 0
 
-    return recipeTransformer({ normalisedAttributes, brandData, finalIngredients, activeMenu, individualRecipeId, isFeaturedRecipe, recipeMeta })
+    return recipeTransformer({ normalisedAttributes, finalIngredients, activeMenu, individualRecipeId, isFeaturedRecipe, recipeMeta })
   })
 }
 

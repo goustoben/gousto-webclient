@@ -3,6 +3,8 @@ import { renderHook } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import * as brandHooks from '../domains/brand'
+import { Tag } from '../domains/brand/types'
 import {
   RecipeContextProvider,
   useRecipe,
@@ -30,6 +32,8 @@ describe('recipeContext', () => {
   const wrapper: React.FC = ({ children }) => (
     <RecipeContextProvider value={recipe}>{children}</RecipeContextProvider>
   )
+
+  afterAll(() => jest.resetAllMocks())
 
   describe('useRecipe', () => {
     test('returns recipe from context', () => {
@@ -149,7 +153,7 @@ describe('recipeContext', () => {
   })
 
   describe('useRecipeBrandTag', () => {
-    const TAG_1 = {
+    const TAG_1: Tag = {
       slug: 'new-eme',
       text: 'New',
       type: 'general',
@@ -162,7 +166,7 @@ describe('recipeContext', () => {
       ],
     }
 
-    const TAG_2 = {
+    const TAG_2: Tag = {
       slug: 'limited-edition-eme',
       text: 'Limited Edition',
       type: 'general',
@@ -176,13 +180,19 @@ describe('recipeContext', () => {
     }
 
     const renderUseRecipeTaglineHook = ({ tagline }: { tagline: string }) => {
+      const spy = jest.spyOn(brandHooks, 'useBrandInfo')
+      spy.mockImplementation(() => ({
+        brand: {
+          carousels: [],
+          foodBrandColours: [],
+          roundels: [],
+          tags: [TAG_1, TAG_2],
+        }
+      }))
+
       const mockStore = configureMockStore()
       const store = mockStore({
-        brand: {
-          data: {
-            tags: [TAG_1, TAG_2],
-          },
-        },
+        auth: Immutable.fromJS({}),
       })
 
       const recipeWithTagline = Immutable.fromJS({

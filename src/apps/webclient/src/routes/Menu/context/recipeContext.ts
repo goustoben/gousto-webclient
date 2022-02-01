@@ -2,7 +2,8 @@ import Immutable from 'immutable'
 import { createContext, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { getNumPortions } from 'selectors/basket'
-import { findTag, getAllTags } from '../selectors/recipe'
+import { useBrandInfo } from '../domains/brand'
+import { findTag } from '../selectors/recipe'
 
 type Recipe = Immutable.Map<string, unknown>
 
@@ -81,9 +82,10 @@ export const useRecipeBrandAvailabilityTagline = (): string | null => {
 }
 
 const useTag = (tagline: string | null): BrandTag | null => {
-  const brandTags = useSelector(getAllTags)
+  const brandInfo = useBrandInfo()
+  const brandTags = brandInfo.brand?.tags || []
 
-  if (!tagline || !brandTags) {
+  if (!tagline || !brandTags.length) {
     return null
   }
 

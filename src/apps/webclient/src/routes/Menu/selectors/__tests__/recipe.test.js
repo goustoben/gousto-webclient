@@ -4,7 +4,6 @@ import { safeJestMock } from '../../../../_testing/mocks'
 import {
   getRecipeTitle,
   getRecipeSurcharge,
-  getTagDefinition,
   getRecipeDisclaimerProps,
   getVariantsForRecipeForCurrentCollection,
   getRecipeIsFineDineIn,
@@ -156,109 +155,6 @@ describe('menu recipe selectors', () => {
     })
   })
 
-  describe('getTagDefinition', () => {
-    describe('When a tag slug includes "eme"', () => {
-      test('should filter the tag and return the filtered tag theme info', () => {
-        const props = {
-          slug: 'new',
-        }
-
-        const state = {
-          brand: {
-            data: {
-              tags: [{
-                type: 'general',
-                slug: 'new-eme',
-                text: 'New',
-                themes: [{
-                  name: 'light',
-                  color: '#01A92B',
-                  borderColor: '#01A92B'
-                }]
-              }, {
-                type: 'general',
-                slug: 'new',
-                text: 'New',
-                themes: [{
-                  name: 'light',
-                  color: '#01A92B',
-                  borderColor: '#01A92B'
-                }]
-              }]
-            }
-          }
-        }
-
-        const result = getTagDefinition(state, props)
-
-        expect(result).toEqual({
-          type: 'general',
-          slug: 'new',
-          text: 'New',
-          theme: {
-            name: 'light',
-            color: '#01A92B',
-            borderColor: '#01A92B'
-          }
-        })
-      })
-    })
-
-    describe('when matching tag for slug exists', () => {
-      test('should return the tag theme info', () => {
-        const props = {
-          slug: 'new',
-        }
-
-        const state = {
-          brand: {
-            data: {
-              tags: [{
-                type: 'general',
-                slug: 'new',
-                text: 'New',
-                themes: [{
-                  name: 'light',
-                  color: '#01A92B',
-                  borderColor: '#01A92B'
-                }]
-              }]
-            }
-          }
-        }
-        const result = getTagDefinition(state, props)
-        expect(result).toEqual({
-          type: 'general',
-          slug: 'new',
-          text: 'New',
-          theme: {
-            name: 'light',
-            color: '#01A92B',
-            borderColor: '#01A92B'
-          }
-        })
-      })
-    })
-
-    describe('when no matching tag for slug exists', () => {
-      test('should return null', () => {
-        const props = {
-          slug: 'new',
-        }
-
-        const state = {
-          brand: {
-            data: {
-              tags: []
-            }
-          }
-        }
-        const result = getTagDefinition(state, props)
-        expect(result).toEqual(null)
-      })
-    })
-  })
-
   describe('recipe detail props selectors', () => {
     let state
     beforeEach(() => {
@@ -298,21 +194,6 @@ describe('menu recipe selectors', () => {
             }
           },
         }),
-        brand: {
-          data: {
-            tags: [
-              {
-                slug: 'health-kitchen',
-                icon: 'health-kitchen-heart',
-                themes: [{
-                  name: 'light',
-                  backgroundColor: 'green',
-                  iconColor: 'lightGreen'
-                }]
-              }
-            ]
-          }
-        }
       }
     })
 
@@ -495,7 +376,18 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has health claims', () => {
         const props = {
-          recipeId: '1'
+          recipeId: '1',
+          brandTags: [
+            {
+              slug: 'health-kitchen',
+              icon: 'health-kitchen-heart',
+              themes: [{
+                name: 'light',
+                backgroundColor: 'green',
+                iconColor: 'lightGreen'
+              }]
+            }
+          ],
         }
 
         test('should return disclaimer', () => {

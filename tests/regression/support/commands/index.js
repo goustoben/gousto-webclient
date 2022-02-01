@@ -62,7 +62,6 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
       : 'fixture:promoCode/DTI-SB-63-failure.json'
   ).as('getPromoCode')
 
-  cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
   cy.route('GET', 'deliveries/v1.0/days**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
   cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
   cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
@@ -73,7 +72,7 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
 
   cy.visit('/')
 
-  cy.wait(['@getMenu', '@getBrand', '@getStock'])
+  cy.wait(['@getMenu', '@getStock'])
 })
 
 Cypress.Commands.add('setupMenu', ({ platform }) => {

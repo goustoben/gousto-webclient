@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import Svg from 'Svg'
+import { useBrandInfo } from '../domains/brand'
+import { getRecipeDisclaimerProps } from '../selectors/recipe'
 import css from './RecipeDisclaimer.css'
 
-const RecipeDisclaimer = ({ claim }) => {
+const RecipeDisclaimer = ({ recipeId }) => {
+  const brandInfo = useBrandInfo()
+  const brandTags = brandInfo.brand?.tags || []
+
+  const claim = useSelector(state => getRecipeDisclaimerProps(state, { brandTags, recipeId }))
+
   if (!claim || !claim.disclaimer || !claim.theme) {
     return null
   }
@@ -17,19 +25,7 @@ const RecipeDisclaimer = ({ claim }) => {
 }
 
 RecipeDisclaimer.propTypes = {
-  claim: PropTypes.shape({
-    disclaimer: PropTypes.string,
-    icon: PropTypes.string,
-    theme: PropTypes.shape({
-      color: PropTypes.string,
-      backgroundColor: PropTypes.string,
-      iconColor: PropTypes.string
-    })
-  })
-}
-
-RecipeDisclaimer.defaultProps = {
-  claim: null,
+  recipeId: PropTypes.string.isRequired,
 }
 
 export { RecipeDisclaimer }
