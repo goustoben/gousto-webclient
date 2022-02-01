@@ -67,10 +67,9 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date) => {
     return
   }
 
-  const brandData = state.brand
   const activeMenu = activeMenuForDate(menuServiceData, date)
   const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
-  const transformedRecipes = recipesTransformer(activeMenu, menuServiceData, brandData)
+  const transformedRecipes = recipesTransformer(activeMenu, menuServiceData)
 
   dispatch(menuCollectionsReceive(transformedCollections))
   dispatch(menuReceiveMenu(transformedRecipes))

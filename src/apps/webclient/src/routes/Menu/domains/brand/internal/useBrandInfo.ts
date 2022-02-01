@@ -17,7 +17,14 @@ export const useBrandInfo: () => { error?: Error; brand?: BrandData } = () => {
 
   const { data: response, error } = useSWR<{data: BrandData}, Error>(
     [url, requestParameters, accessToken, authUserId],
-    getFetcher
+    getFetcher,
+    // Treat the Brand info as an immutable resource, which is not changed
+    // within user's session
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   )
 
   if (!response?.data) {

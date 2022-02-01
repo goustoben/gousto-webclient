@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import { Title } from 'routes/Menu/components/Recipe'
-import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import * as UseShouldShowPaintedDoorButton from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
 import { Detail } from '../Detail'
 import { DetailContainer } from '../DetailContainer'
@@ -17,10 +16,6 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: () => '123',
   useDispatch: jest.fn(),
-}))
-
-jest.mock('routes/Menu/RecipeDisclaimer', () => ({
-  RecipeDisclaimerContainer: () => <div />
 }))
 
 jest.mock('../DetailAddRecipe', () => ({
@@ -128,8 +123,8 @@ describe('<Detail />', () => {
   })
 
   test('should contain one recipe disclaimer ', () => {
-    expect(wrapper.find(RecipeDisclaimerContainer)).toHaveLength(1)
-    expect(wrapper.find(RecipeDisclaimerContainer).prop('recipeId')).toEqual('123')
+    expect(wrapper.find('RecipeDisclaimer')).toHaveLength(1)
+    expect(wrapper.find('RecipeDisclaimer').prop('recipeId')).toEqual('123')
   })
 
   describe('Equipment required', () => {

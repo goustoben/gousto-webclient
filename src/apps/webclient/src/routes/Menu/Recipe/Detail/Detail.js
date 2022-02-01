@@ -11,10 +11,10 @@ import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { useStock } from 'routes/Menu/domains/menu'
 import { useShouldShowPaintedDoorButton } from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
 import { FiveRecipesAddRecipeButton } from 'components/FiveRecipesPaintedDoorTest/FiveRecipesAddRecipeButton'
+import { RecipeDisclaimer } from '../../RecipeDisclaimer/RecipeDisclaimer'
 import { useAllCollections } from '../../domains/collections'
 import Carousel from './Carousel'
 
-import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
 import { RecipeTag } from '../../components/RecipeTag'
 
 import { DetailIngredientsContainer } from './DetailIngredients'
@@ -131,7 +131,7 @@ export const Detail = (props) => {
             recipeId={recipeLegalDetailId}
             isChefPrepared={isChefPrepared}
           />
-          <RecipeDisclaimerContainer recipeId={id} />
+          <RecipeDisclaimer recipeId={id} />
           {equipment && !!equipment.size && (
             <p className={css.additionalInfo}>
               Equipment required:

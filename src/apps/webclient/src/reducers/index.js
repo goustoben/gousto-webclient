@@ -36,7 +36,6 @@ import { onScreenRecoveryReducers } from './onScreenRecovery'
 import { getHelp } from './getHelp'
 import { logger } from './logger'
 import { menuService } from './menuService'
-import { brand } from './brand'
 import { experimentsReducer } from './experiments'
 import { loggingManager } from './loggingmanager'
 import { feedback } from './feedback'
@@ -50,7 +49,6 @@ const reducers = {
   ...auth,
   ...basket,
   ...boxSummary,
-  brand,
   ...checkoutReducers,
   ...checkoutUrgencyReducers,
   ...collections,

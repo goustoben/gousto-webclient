@@ -6,6 +6,7 @@ import * as recipeContext from '../../../context/recipeContext'
 import { Image } from './Image'
 
 jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
   useSelector: jest.fn()
 }))
 
