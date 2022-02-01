@@ -24,7 +24,7 @@ type Subscription = {
       deliverySlotStartTime: Time
       interval: number
       deliverySlotEndTime: Time
-      status: string
+      status: 'active' | 'inactive'
       createdAt: DateTime
       numPortions: 2 | 4
       updatedBy: UUID
@@ -62,6 +62,7 @@ const useIsUserValidForSubscriptionFeature = () => {
   return (
     !isLoading
     && request
+    && request?.data?.subscription?.status === 'active'
     && request?.data?.subscription?.numPortions === TWO_PORTIONS_BOX
     && request?.data?.subscription?.numRecipes === FOUR_RECIPES_BOX
   )
