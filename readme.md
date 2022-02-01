@@ -34,13 +34,16 @@ $ git clone git@github.com:Gousto/gousto-webclient.git
 # 2. Add a development-local.json5 config file and setup your hosts file
 # See Pre-requisites below
 
-# 3. Install all dependencies
+# 3. Retrieve a CodeArtifact token to enable installation of private Gousto packages
+# See Getting a CodeArtifact Token below
+
+# 4. Install all dependencies
 $ yarn install
 
-# 4. Go to webclient subfolder
+# 5. Go to webclient subfolder
 $ cd src/apps/webclient # OR yw webclient <command> (see above)
 
-# 5. Start the main webclient in development mode
+# 6. Start the main webclient in development mode
 # For hot module reload see [Detailed guide](./docs/detailed-setup.md) to setup.
 $ yarn build:client
 $ yarn dev
@@ -54,6 +57,35 @@ $ yarn dev
 * You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See  [Node version management](./docs/detailed-setup.md#node-version-management) for further details.
   * Note: Apple M1 owners - you'll need to set node to version `14` in `.nvmrc`. Be careful not to commit this change.
 * If you're not in the office you'll need to be connected to the VPN
+
+## Getting a CodeArtifact Token
+
+In order to download private Gousto packages from CodeArtifact, we need to perform some configuration:
+
+### First run
+* [Ensure you have AWS CLI V2 installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#cliv2-mac-install-cmd). You can check your version with `aws --version`
+
+* Configure your AWS CLI for the Gousto Artefacts profile - [instructions here](https://gousto.atlassian.net/wiki/spaces/TECH/pages/3620536327/AWS+Access+through+OKTA#Accessing-the-AWS-CLI---setting-up-named-profiles). Select the following option when prompted:
+
+  * `There are X AWS accounts available to you` - Select `Gousto Artefacts` account
+
+_The step above creates an AWS profile called `CodeArtifact`, which authenticates via OKTA_
+
+* Create a `~/.zshrc`/`.bashrc` alias to quickly get an authorization token
+
+```shell
+# ~/.zshrc or ~/.bashrc
+
+alias ca-authenticate="export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner 472493421475 --query authorizationToken --output text --profile EngineerCodeArtifact-472493421475`"
+```
+
+The alias above gets an authentication token for CodeArtifact, and then exports it as the variable `CODEARTIFACT_AUTH_TOKEN`. This variable is then used in `.yarnrc.yml` to enable installation of private packages.
+
+_After creating the alias above, remember to run `source ~/.zshrc (or ~/.bashrc)`_
+
+### Prior to running `yarn install`
+
+`ca-authenticate`
 
 ## Tests
 

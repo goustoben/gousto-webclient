@@ -10,12 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v2.1.5
-      with:
-        node-version: 14.x
-    - name: Danger
-      run: yarn dlx danger ci
-      working-directory: ${{env.working-directory}}
+    - name: Danger JS Action
+      uses: danger/danger-js@9.1.8
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DANGER_DISABLE_TRANSPILATION: true

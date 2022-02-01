@@ -7,6 +7,12 @@ gousto_platform_image: &gousto_platform_image
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
+gousto_node_image: &gousto_node_image
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/node14:latest
+      aws_auth:
+        aws_access_key_id: $AWS_ERC_ACCESS_KEY
+        aws_secret_access_key: $AWS_ERC_SECRET_KEY
+
 circleci_node_image: &circleci_node_image
   - image: cimg/node:14.18.1
     user: root
@@ -46,6 +52,34 @@ commands:
       - run:
          name: Upload binary files to S3, does not set gzip content-encoding header
          command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.js" --exclude "*.css" --recursive --cache-control max-age=315360000,no-transform,public --acl public-read
+
+  codeartifact_authenticate:
+    description: Authenticate with AWS CodeArtifact for Yarn 2.X+
+    steps:
+      - run:
+          name: Authenticate with AWS CodeArtifact for Yarn 2.X+
+          command: |
+            yarn config unset npmScopes &&
+            CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner ${AWS_CODEARTIFACT_ACCOUNT_NUMBER} --query authorizationToken --output text` &&
+            yarn config set npmRegistryServer "https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/" &&
+            yarn config set 'npmRegistries["https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}" &&
+            yarn config set 'npmRegistries["https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/"].npmAlwaysAuth' "true"
+
+  codeartifact_cleanup:
+    description: Unset yarn config to prevent issues in other pipelines caused by image caching
+    steps:
+      - run:
+          name: Clean up yarn config for CodeArtifact
+          command: |
+            yarn config unset npmRegistryServer &&
+            yarn config unset npmScopes &&
+            yarn config unset npmRegistries["https://gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/"]
+      - run:
+          name: Clear yarn Cache
+          command: yarn cache clear
+      - run:
+          name: Clear npm config
+          command: npm config delete //gousto-${AWS_CODEARTIFACT_ACCOUNT_NUMBER}.d.codeartifact.${AWS_CODEARTIFACT_REGION}.amazonaws.com/npm/proxy-repository/
 
 jobs:
   setup-ci-variables-scripts:
@@ -87,7 +121,7 @@ jobs:
             - root/.circlerc
 
   install-dependencies:
-    docker: *circleci_node_image
+    docker: *gousto_node_image
     resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
@@ -97,9 +131,11 @@ jobs:
       - run:
           name: Setup Github SSH access
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - codeartifact_authenticate
       - run:
           name: Install dependencies
           command: yarn install --immutable
+      - codeartifact_cleanup
       - persist_to_workspace:
           root: /
           paths:
