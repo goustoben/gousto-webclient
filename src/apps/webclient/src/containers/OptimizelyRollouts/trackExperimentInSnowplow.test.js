@@ -71,8 +71,32 @@ describe('trackExperimentInSnowplow', () => {
     })
   })
 
-  describe('when no experimentsConfig for featureName', () => {
-    const featureName = 'testFeatureWithNoData'
+  describe('when there is no experimentsConfig for featureName', () => {
+    const featureName = 'test_feature_with_no_config'
+
+    beforeEach(() => {
+      const isOptimizelyFeatureEnabled = true
+      trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, '', '')(dispatch)
+    })
+
+    test('should send dispatch with auto-generated config', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
+        trackingData: {
+          actionType: 'optimizely_rollouts_experiment',
+          experiment_id: 'test_feature_with_no_config',
+          experiment_name: 'test feature with no config',
+          variation_name: 'Variation',
+          session_id: '',
+          user_id_for_optimizely: undefined,
+          user_logged_in: false,
+        },
+      })
+    })
+  })
+
+  describe('when there is no featureName', () => {
+    const featureName = ''
 
     beforeEach(() => {
       const isOptimizelyFeatureEnabled = false
