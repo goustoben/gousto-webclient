@@ -67,7 +67,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
       })
       render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
 
-      expect(screen.queryByText('£0 credit')).toBeTruthy()
+      expect(screen.queryByText('£2.50 credit')).toBeTruthy()
     })
 
     it('should send a client metric `menu-5-recipes-painted-existing-user-end`', () => {
@@ -103,7 +103,7 @@ describe('<FiveRecipesEndOfJourney />', () => {
 
       render(<FiveRecipesEndOfJourney isOpen onClose={onClose} />)
 
-      expect(screen.queryByText('£0 credit')).toBeFalsy()
+      expect(screen.queryByText('£2.50 credit')).toBeFalsy()
     })
 
     it('should send a client metric `menu-5-recipes-painted-new-user-end`', () => {

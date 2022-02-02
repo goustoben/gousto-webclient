@@ -68,7 +68,7 @@ const useIsUserValidForSubscriptionFeature = () => {
   )
 }
 
-const SESSION_KEY_FOR_PATHNAME_FOR_PROMO_CODE = 'pathname_for_promo_code'
+const SESSION_KEY_FOR_PATHNAME_FOR_PROMO_CODE = 'radishes_5_recipes_painted_door_pathname_for_promo_code'
 
 const useIsUserValidForNewUserFeature = () => {
   // Prevent experiment from clashing with Promo Code modal
@@ -92,7 +92,7 @@ const useIsUserValidForNewUserFeature = () => {
   return hasPromoCode && !isLoading && !promoModalVisible && isNewUser && !pathnameForPromoCode.includes('menu')
 }
 
-export const HAS_SEEN_TEST_IN_MENU_STORAGE_NAME = 'gousto_has_seen_test_in_menu'
+export const HAS_SEEN_TEST_IN_MENU_STORAGE_NAME = 'radishes_5_recipes_painted_door_has_seen'
 export const HAS_SEEN_TEST_IN_ORDER_CONFIRMATION_STORAGE_NAME = 'gousto_has_seen_test_in_order_confirmation'
 export const OPTIMIZELY_ENABLE_SUBSCRIBED = 'radishes_5_recipes_painted_door_test_subscribed_user_web_enabled'
 export const OPTIMIZELY_ENABLE_SIGNUP_FLOW = 'radishes_5_recipes_painted_door_test_sign_up_user_web_enabled'

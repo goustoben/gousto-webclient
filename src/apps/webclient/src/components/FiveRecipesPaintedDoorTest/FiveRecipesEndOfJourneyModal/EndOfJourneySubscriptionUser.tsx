@@ -15,7 +15,7 @@ export const EndOfJourneySubscriptionUserModal = () => (
         <span className={css.yesCopy}>YOU</span>
       </div>
       <span className={css.creditCopy}>
-        We've added <strong>£0 credit</strong> to your Gousto account
+        We will add <strong>£2.50 credit</strong> to your Gousto account
       </span>
     </div>
 
