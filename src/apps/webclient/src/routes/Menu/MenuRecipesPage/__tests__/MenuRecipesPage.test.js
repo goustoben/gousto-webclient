@@ -2,14 +2,14 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
-import { CollectionsNavWrapper } from '../../CollectionsNav'
+import { CollectionsNavWrapper } from '../../components/CollectionsNav'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from '../BannerTastePreferences'
 
-jest.mock('routes/Menu/SubHeader')
-jest.mock('../../CollectionsNav', () => ({ CollectionsNavWrapper: 'CollectionsNav' }))
-jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
+jest.mock('routes/Menu/components/SubHeader')
+jest.mock('routes/Menu/components/CollectionsNav', () => ({ CollectionsNavWrapper: 'CollectionsNav' }))
+jest.mock('routes/Menu/components/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 jest.mock('../BasketValidationErrorModal', () => ({ BasketValidationErrorModalContainer: 'BasketValidationErrorModalContainer'}))
 
 describe('initial render', () => {

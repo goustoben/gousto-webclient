@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import css from '../Detail.css'
 
-import { RecipeMicronutrientsContainer } from '../../../RecipeMicronutrients'
+import { RecipeMicronutrientsContainer } from '../RecipeMicronutrients'
 import { NutritionInfo } from '../Nutrition'
 import { NutritionDisclaimerText } from '../NutritionDisclaimerText'
 
