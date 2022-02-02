@@ -8,9 +8,9 @@ import browserHelper from 'utils/browserHelper'
 
 import MainLayout from 'layouts/MainLayout'
 import { ShowcaseMenuContainer } from 'routes/ShowcaseMenu'
+import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
 import { BoxSummaryContainer } from './BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
-import { RecipesInBasketProgress } from './RecipesInBasketProgress'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
 import css from './Menu.css'

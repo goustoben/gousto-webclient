@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import config from 'config/basket'
 import { Alert } from 'goustouicomponents'
-import { BoxProgressMessage } from 'routes/Menu/BoxProgressMessage'
 import { PricePerServingMessage } from 'components/PricePerServingMessage'
+import { BoxProgressMessage } from '../../../components/BoxProgressMessage'
 
 const BoxProgressAlert = ({ numRecipes }) => {
   const hasMaxRecipes = numRecipes >= config.maxRecipesNum

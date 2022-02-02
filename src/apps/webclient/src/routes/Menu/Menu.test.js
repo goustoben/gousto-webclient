@@ -14,7 +14,7 @@ jest.mock('./BoxSummary', () => ({
   BoxSummaryContainer: () => <div />
 }))
 jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
-jest.mock('routes/Menu/RecipesInBasketProgress', () => ({
+jest.mock('routes/Menu/components/RecipesInBasketProgress', () => ({
   RecipesInBasketProgress: () => <div />
 }))
 jest.mock('./RecipeMeta', () => ({
