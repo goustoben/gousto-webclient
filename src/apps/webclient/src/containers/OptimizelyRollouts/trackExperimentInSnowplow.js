@@ -63,6 +63,19 @@ const experimentsConfig = {
   },
 }
 
+const getConfig = (featureName) => {
+  if (experimentsConfig[featureName]) {
+    return experimentsConfig[featureName]
+  }
+
+  return {
+    id: featureName,
+    name: featureName.replace(/_/g, ' '),
+    variationName: 'Variation',
+    defaultName: 'Control',
+  }
+}
+
 // When several different places in the app work off the same feature flag,
 // it's superfluous to send the tracking requests beyond the first.
 const sentCache = new Map()
@@ -70,31 +83,38 @@ const sentCache = new Map()
 const createKey = (featureName, authUserId, sessionId) =>
   [featureName, authUserId, sessionId].join(':')
 
-export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId, userIdForOptimizely) => (dispatch) => {
-  const experimentData = experimentsConfig[featureName]
-  if (experimentData) {
-    const key = createKey(featureName, authUserId, sessionId)
-    if (sentCache.has(key) && sentCache.get(key) === isOptimizelyFeatureEnabled) {
-      return
+export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId, userIdForOptimizely) =>
+  (dispatch) => {
+    if (!featureName) {
+      return null
     }
 
-    sentCache.set(key, isOptimizelyFeatureEnabled)
+    const experimentData = getConfig(featureName)
+    if (experimentData) {
+      const key = createKey(featureName, authUserId, sessionId)
+      if (sentCache.has(key) && sentCache.get(key) === isOptimizelyFeatureEnabled) {
+        return null
+      }
 
-    const trackingData = {
-      actionType: optimizelyRolloutsExperiment,
-      experiment_id: experimentData.id,
-      experiment_name: experimentData.name,
-      variation_name: isOptimizelyFeatureEnabled
-        ? experimentData.variationName
-        : experimentData.defaultName,
-      user_logged_in: Boolean(authUserId),
-      session_id: sessionId,
-      user_id_for_optimizely: userIdForOptimizely,
+      sentCache.set(key, isOptimizelyFeatureEnabled)
+
+      const trackingData = {
+        actionType: optimizelyRolloutsExperiment,
+        experiment_id: experimentData.id,
+        experiment_name: experimentData.name,
+        variation_name: isOptimizelyFeatureEnabled
+          ? experimentData.variationName
+          : experimentData.defaultName,
+        user_logged_in: Boolean(authUserId),
+        session_id: sessionId,
+        user_id_for_optimizely: userIdForOptimizely,
+      }
+
+      dispatch({
+        type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
+        trackingData,
+      })
     }
 
-    dispatch({
-      type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
-      trackingData,
-    })
+    return null
   }
-}
