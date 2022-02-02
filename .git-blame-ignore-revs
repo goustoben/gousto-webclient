@@ -12,3 +12,6 @@
 
 # [KAL-XXX] Run Prettier on all files in routes/Menu (#4625)
 0359799da587f7182f52ff736af678e2893bc90c
+
+# [KAL-XXX] Restructure routes/Menu, remove unused code (#4647)
+847f29b7e22ff581ab8625de42db7d2577c29866
