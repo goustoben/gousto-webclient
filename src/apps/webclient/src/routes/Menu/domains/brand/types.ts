@@ -36,3 +36,54 @@ export type BrandData = {
   roundels: Roundel[]
   tags: Tag[]
 }
+
+/**
+ * Collection data in context of Menu Headers Branding information
+ */
+export type BrandCollection = {
+  type: 'collection'
+  id: string
+  header: string
+}
+
+/**
+ * Collections per menu information
+ */
+export type MenuHeadersBrandData = {
+  id: string
+  relationships: {
+    collections: {
+      data: BrandCollection[]
+    }
+  }[]
+  type: 'menu'
+}
+
+/**
+ * Image data in context of Menu Headers Branding information
+ */
+type BrandHeaderImage = {
+  width: number
+  height: number
+  url: string
+  altText: string
+}
+
+export type MenuHeadersIncludesData = {
+  id: string
+  type: 'gradient-info-header' | 'wave-link-header'
+  attributes: {
+    headerImage: BrandHeaderImage[]
+    description: string
+    color: string
+    backgroundColor?: string
+    gradientColor?: string
+    image?: BrandHeaderImage[]
+    imageLocation?: 'right'
+    waveColor?: string
+    link?: {
+      collectionId: string
+      collectionSlug: string
+    }
+  }
+}
