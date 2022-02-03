@@ -11,7 +11,6 @@ export const menuInitialState = Immutable.Map({
   menuLimits: [],
   menuVariants: Immutable.fromJS({}),
   selectedRecipeVariants: {},
-  collectionHeaders: {},
   hasCalculatedTimeToUsable: false,
   hasVisitedNonMenuPage: false,
   menuPrefetched: true,
@@ -56,10 +55,6 @@ const menu = {
 
     case actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS: {
       return state.set('selectedRecipeVariants', {})
-    }
-
-    case actionTypes.MENU_COLLECTIONS_HEADERS_RECEIVED: {
-      return state.set('collectionHeaders', action.payload.collectionHeaders)
     }
 
     case actionTypes.MENU_SET_CALCULATED_TIME_TO_USABLE: {

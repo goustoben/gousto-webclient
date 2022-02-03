@@ -1,1 +1,1 @@
-export { CollectionHeaderWrapperContainer } from './CollectionHeaderWrapperContainer'
+export { CollectionHeaderWrapper } from './CollectionHeaderWrapper'

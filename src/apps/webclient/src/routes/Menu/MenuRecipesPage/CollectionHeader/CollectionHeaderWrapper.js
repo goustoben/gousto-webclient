@@ -1,9 +1,15 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import { useSelector } from 'react-redux'
+import { getCollectionsHeaders } from '../../selectors/collections'
+import { useBrandHeadersInfo } from '../../domains/brand'
 import { GradientInfoHeader } from './GradientInfoHeader'
 import { WaveLinkHeaderContainer } from './LinkHeaderContainer'
 
-const CollectionHeaderWrapper = ({ collectionsHeaders }) => {
+const CollectionHeaderWrapper = () => {
+  const { headers, collectionsPerMenu } = useBrandHeadersInfo()
+  const collectionsHeaders = useSelector((state) => getCollectionsHeaders(state, { headers, collectionsPerMenu }))
+
   if (!collectionsHeaders) {
     return null
   }
