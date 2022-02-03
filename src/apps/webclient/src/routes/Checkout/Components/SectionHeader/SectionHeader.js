@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import css from './SectionHeader.css'
+import { Heading6, Text, Space } from '@gousto-internal/citrus-react'
 
 export const SectionHeader = ({ title, subtitle }) => (
-  <div className={css.sectionContainer}>
-    <div className={classNames(css.sectionTitle, { [css.hasMargin]: subtitle })}>{title}</div>
-    {subtitle && <p className={css.sectionSubtitle}>{subtitle}</p>}
-  </div>
+  <>
+    <Heading6>{title}</Heading6>
+    {subtitle && <Text size={1}>{subtitle}</Text>}
+    <Space size={[3, 6]} />
+  </>
 )
 
 SectionHeader.propTypes = {
