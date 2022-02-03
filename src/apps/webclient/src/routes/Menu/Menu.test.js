@@ -13,12 +13,12 @@ jest.mock('actions/order')
 jest.mock('./BoxSummary', () => ({
   BoxSummaryContainer: () => <div />
 }))
-jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
+jest.mock('routes/Menu/components/Detail/DetailOverlay', () => ('DetailOverlay'))
 jest.mock('routes/Menu/components/RecipesInBasketProgress', () => ({
   RecipesInBasketProgress: () => <div />
 }))
-jest.mock('./RecipeMeta', () => ({
-  RecipeMeta: () => <div />
+jest.mock('./components/RecipeMeta', () => ({
+  DetailRecipeMetaContainer: () => <div />
 }))
 
 jest.mock('react-lazyload', () => ({

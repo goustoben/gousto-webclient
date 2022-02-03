@@ -10,7 +10,7 @@ import MainLayout from 'layouts/MainLayout'
 import { ShowcaseMenuContainer } from 'routes/ShowcaseMenu'
 import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
 import { BoxSummaryContainer } from './BoxSummary'
-import { RecipeMeta } from './RecipeMeta'
+import { DetailRecipeMetaContainer } from './components/RecipeMeta'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
 import css from './Menu.css'
@@ -116,7 +116,7 @@ class Menu extends React.PureComponent {
             meta={menu.helmet.meta}
             style={menu.helmet.style}
           />
-          <RecipeMeta query={query} />
+          <DetailRecipeMetaContainer query={query} />
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
             <p className={css.legal}>{menu.legal}</p>

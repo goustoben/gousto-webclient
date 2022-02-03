@@ -5,7 +5,7 @@ import { SignupLayout } from 'layouts/SignupLayout'
 import { HotjarTrigger } from 'HotjarTrigger'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { DiscountAppliedBarContainer } from 'routes/Signup/Components/DiscountAppliedBar/DiscountAppliedBarContainer'
-import { DetailOverlay } from 'routes/Menu/DetailOverlay'
+import { DetailOverlay } from 'routes/Menu/components/Detail/DetailOverlay'
 import {
   collectionDescriptorsInLinesPropType,
   collectionDescriptorsLinePropType,

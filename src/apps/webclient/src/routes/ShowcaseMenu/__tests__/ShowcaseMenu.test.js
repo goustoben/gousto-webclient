@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme'
 import { Provider } from 'react-redux'
 import { ShowcaseMenu } from '../ShowcaseMenu'
 
-jest.mock('routes/Menu/DetailOverlay', () => ({
+jest.mock('routes/Menu/components/Detail/DetailOverlay', () => ({
   DetailOverlayContainer: jest.fn(() => <div />),
 }))
 

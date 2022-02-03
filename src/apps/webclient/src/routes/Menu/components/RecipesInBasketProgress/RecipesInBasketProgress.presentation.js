@@ -27,7 +27,7 @@ const RecipesInBasketProgressPresentation = (
   return (
     <FloatCard
       closeIcon="small-screens-only"
-      offsetVertical={'8rem'}
+      offsetVertical="8rem"
     >
       {
         isAuthenticated ? (
