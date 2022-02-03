@@ -664,6 +664,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@features/recipe-tile@workspace:src/modules/features/recipe-tile":
+  version: 0.0.0-use.local
+  resolution: "@features/recipe-tile@workspace:src/modules/features/recipe-tile"
+  dependencies:
+    "@types/react": ^17.0.38
+  peerDependencies:
+    react: 17.0.2
+  languageName: unknown
+  linkType: soft
+
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
@@ -19586,12 +19596,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"usehooks-ts@npm:^2.2.0":
-  version: 2.2.1
-  resolution: "usehooks-ts@npm:2.2.1"
+"usehooks-ts@npm:2.2.0":
+  version: 2.2.0
+  resolution: "usehooks-ts@npm:2.2.0"
   peerDependencies:
     react: ">=16.8.0"
-  checksum: 019be04d601f2af72238b3e983d9bad95d6db49bd78a1ed83fb6e9a4c57a669630a34ad3e8c71b8f02c25e0f80ea5149c7323a5a9e8b8c8251533e88f99249af
+  checksum: 904a3bfdbed85101b94672db93d75e12430c293235020cb055e4b0a841023df3f0d8c3d0c5a78b5c2e62deb370b1506a62e7a13d3c77a87c451126662ea44d89
   languageName: node
   linkType: hard
 
@@ -20002,7 +20012,7 @@ __metadata:
     typescript: ^4.5.2
     url: 0.11.0
     url-loader: 1.1.2
-    usehooks-ts: ^2.2.0
+    usehooks-ts: 2.2.0
     uuid: 3.3.2
     validator: 10.4.0
     webpack: ^4.44.2

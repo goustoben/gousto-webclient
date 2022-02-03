@@ -16,6 +16,7 @@ const baseConfig = {
   devtool: getClientDevtool(isDevelopmentBuild),
   entry: {
     main: ['./src/client.js'],
+    // Legacy.js is used to render the standalone header and footer routes used by G2FE
     legacy: ['./src/legacy.js'],
     performanceTracker: ['./src/performanceTracker/entry.js'],
   },
