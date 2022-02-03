@@ -8,7 +8,7 @@ import { Attributes } from 'Product/Attributes'
 import Buttons from 'Product/Buttons'
 import { formatPrice } from 'utils/format'
 import { onEnter } from 'utils/accessibility'
-import { SubIngredients } from 'routes/Menu/Recipe/Detail/SubIngredients'
+import { SubIngredients } from 'routes/Menu/components/Detail/SubIngredients'
 import css from './Detail.css'
 
 export const getAllergenListFromAttributes = (attributes = []) => {

@@ -13,7 +13,6 @@ import { menuLoadComplete } from 'actions/menu'
 import { menuServiceDataReceived } from 'actions/menuService'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { basketRecipeAdd } from '../actions/basketRecipes'
-import { getBrandMenuHeaders } from '../actions/brandData'
 import { fetchMenus, fetchMenusWithUserId } from './menuApi'
 import { getPreviewMenuDateForCutoff } from '../selectors/menuService'
 
@@ -215,8 +214,6 @@ export default function fetchData({ query, params }, force, background, userMenu
     const menuResponse = await fetchMenuPromise
 
     dispatch(menuServiceDataReceived(menuResponse, accessToken, userMenuVariant))
-
-    dispatch(getBrandMenuHeaders())
 
     try {
       if (query.error) {

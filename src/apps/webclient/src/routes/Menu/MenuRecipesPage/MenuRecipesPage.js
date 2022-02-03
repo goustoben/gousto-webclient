@@ -6,7 +6,7 @@ import menuConfig from 'config/menu'
 import { ReactReduxContext } from 'react-redux'
 import { AppModalContainer } from 'components/AppModal'
 import { CollectionsNavWrapper } from '../components/CollectionsNav'
-import { RecipeGrid } from '../RecipeGrid'
+import { RecipeGrid } from './RecipeGrid'
 import { JustForYouTutorial } from '../components/JustForYouTutorial'
 import { SubHeaderContainer } from '../components/SubHeader'
 import Loading from '../Loading'
@@ -15,7 +15,7 @@ import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
-import { CollectionHeaderWrapperContainer } from './CollectionHeader'
+import { CollectionHeaderWrapper } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
 import { FiveRecipesStartOfJourneyModal } from '../../../components/FiveRecipesPaintedDoorTest/FiveRecipesStartOfJourneyModal'
 
@@ -100,7 +100,7 @@ export class MenuRecipesPage extends PureComponent {
 
         {!showLoading && <CollectionsNavWrapper />}
 
-        <CollectionHeaderWrapperContainer />
+        <CollectionHeaderWrapper />
 
         {
           stateRecipeCount &&

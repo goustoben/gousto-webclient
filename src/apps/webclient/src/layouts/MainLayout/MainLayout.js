@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
 import css from './MainLayout.css'
-import { MenuHeader } from '../../routes/Menu/MenuHeader'
+import { MenuHeader } from './MenuHeader'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

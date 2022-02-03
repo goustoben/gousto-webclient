@@ -160,13 +160,12 @@ export const getCurrentCollectionSlug = createSelector(
   }
 )
 
-const getCollectionHeaders = ({ menu }) => menu.get('collectionHeaders')
-const getHeaders = (state) => getCollectionHeaders(state).headers
+const getCollectionsPerMenuFromProps = (_, { collectionsPerMenu }) => collectionsPerMenu
 
 const getCurrentMenuCollectionsWithHeaders = createSelector(
-  [getCollectionHeaders, getBasketMenuId],
-  (collectionHeaders, menuId) => {
-    const currentMenuCollections = collectionHeaders.collectionsPerMenu && collectionHeaders.collectionsPerMenu.find(menu => menu.id === menuId)
+  [getCollectionsPerMenuFromProps, getBasketMenuId],
+  (collectionsPerMenu, menuId) => {
+    const currentMenuCollections = collectionsPerMenu && collectionsPerMenu.find(menu => menu.id === menuId)
     if (currentMenuCollections) {
       return currentMenuCollections.relationships.collections.data
     }
@@ -175,11 +174,13 @@ const getCurrentMenuCollectionsWithHeaders = createSelector(
   }
 )
 
+const getHeadersFromProps = (_, { headers }) => headers
+
 export const getCollectionsHeaders = createSelector(
-  [getCurrentMenuCollectionsWithHeaders, getCurrentCollectionId, getHeaders],
+  [getCurrentMenuCollectionsWithHeaders, getCurrentCollectionId, getHeadersFromProps],
   (collectionWithHeaders, collectionId, headers) => {
     const collectionInfo = collectionWithHeaders && collectionWithHeaders.find(collection => collection.id === collectionId)
-    if (collectionInfo) {
+    if (collectionInfo && headers) {
       return headers.find(header => header.id === collectionInfo.header)
     }
 

@@ -6,7 +6,6 @@ import {
   menuLoadingError
 } from '../../actions/menu'
 import { selectRecipeVariantAction, initSelectedRecipeVariantAction } from '../../routes/Menu/actions/menuRecipeDetails'
-import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandData'
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 
@@ -203,42 +202,6 @@ describe('menu reducer', () => {
         const action = clearSelectedRecipeVariants()
 
         const result = menu.menu(stateWithSelectedVariants, action)
-        expect(result).toEqual(expectedState)
-      })
-    })
-
-    describe('MENU_COLLECTIONS_HEADERS_RECEIVED', () => {
-      const menuHeaderData = {
-        id: '342',
-        type: 'menu',
-        relationships: {
-          collections: {
-            data: [{
-              header: 'header-wave-id',
-              id: 'collection-id',
-              type: 'collection'
-            }]
-          }
-        }
-      }
-
-      const headerData = {
-        attributes: {},
-        id: 'header-wave-id',
-        type: 'wave-link-header'
-      }
-
-      test('should set recipeVariantDropdownExpanded entry to the recipe id', () => {
-        const action = menuCollectionsHeadersReceived({
-          collectionsPerMenu: [menuHeaderData],
-          headers: [headerData]
-        })
-        const result = menu.menu(menuInitialState, action)
-        const expectedState = menuInitialState.set('collectionHeaders', {
-          collectionsPerMenu: [menuHeaderData],
-          headers: [headerData]
-        })
-
         expect(result).toEqual(expectedState)
       })
     })

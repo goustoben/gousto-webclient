@@ -420,34 +420,32 @@ describe('collections selectors', () => {
 
   describe('getCollectionsHeaders', () => {
     let state
+    const collectionsPerMenu = [
+      {
+        id: '342',
+        type: 'menu',
+        relationships: {
+          collections: {
+            data: [{
+              header: 'header-wave-id',
+              id: 'collection-id',
+              type: 'collection'
+            }]
+          }
+        }
+      }
+    ]
+    const headers = [
+      {
+        attributes: {},
+        id: 'header-wave-id',
+        type: 'wave-link-header'
+      }
+    ]
+
     beforeEach(() => {
       state = {
-        menu: Immutable.Map({
-          collectionHeaders: {
-            collectionsPerMenu: [
-              {
-                id: '342',
-                type: 'menu',
-                relationships: {
-                  collections: {
-                    data: [{
-                      header: 'header-wave-id',
-                      id: 'collection-id',
-                      type: 'collection'
-                    }]
-                  }
-                }
-              }
-            ],
-            headers: [
-              {
-                attributes: {},
-                id: 'header-wave-id',
-                type: 'wave-link-header'
-              }
-            ]
-          }
-        }),
+        menu: Immutable.Map({}),
         menuCollections: Immutable.fromJS({
           'collection-id': {
             published: true,
@@ -465,7 +463,7 @@ describe('collections selectors', () => {
       }
     })
     test('should return the correct collections headers', () => {
-      const result = getCollectionsHeaders(state)
+      const result = getCollectionsHeaders(state, { collectionsPerMenu, headers })
       expect(result).toEqual({
         attributes: {},
         id: 'header-wave-id',
@@ -484,7 +482,7 @@ describe('collections selectors', () => {
         }
       })
       test('should return null', () => {
-        const result = getCollectionsHeaders(state)
+        const result = getCollectionsHeaders(state, { collectionsPerMenu, headers })
         expect(result).toEqual(null)
       })
     })
