@@ -10,7 +10,7 @@ import { hashLinkScroll } from 'routes/hashLinkScroll'
 import fetchContentOnChange from 'routes/fetchContentOnChange'
 import { documentLocation } from 'utils/window'
 import { SetupOptimizelyOverride } from 'containers/OptimizelyRollouts'
-import { ThemeProvider, Reset } from '@gousto-internal/citrus-react'
+import { ThemeProvider } from '@gousto-internal/citrus-react'
 
 export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
@@ -21,7 +21,6 @@ export const AppContainer = ({ history, routes, store }) => (
       }}
     >
       <ThemeProvider>
-        <Reset />
         <Router
           history={history}
           // eslint-disable-next-line
