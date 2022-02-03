@@ -25,8 +25,6 @@ To work on the main webclient, you'll need to run commands for the main workspac
    - You could also set a bash alias. Add `alias yw="yarn workspace"` to your `~/.zshrc`, and you need only type
      `yw webclient <command>`. This will work in other Yarn workspace projects.
 
-Information on modules can be found [here](docs/modules.md).
-
 ## Quick start (main webclient)
 
 ```bash
