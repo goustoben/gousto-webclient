@@ -108,6 +108,7 @@ jobs:
             - mnt/ramdisk/yarn.lock
             - mnt/ramdisk/.yarn
             - mnt/ramdisk/.yarnrc.yml
+            - mnt/ramdisk/tsconfig.json
             - mnt/ramdisk/src
             - mnt/ramdisk/tests
             - mnt/ramdisk/regression

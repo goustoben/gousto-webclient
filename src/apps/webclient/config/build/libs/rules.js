@@ -40,7 +40,12 @@ const typescriptRule = (tsconfigPath = "./tsconfig.json") => ({
           }
       }
   ],
-  include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
+  include: [
+    path.resolve('./src'),
+    path.resolve('./libs/goustouicomponents/src'),
+    // We directly compile internal feature modules, rather than pulling from a /dist
+    path.resolve('../../modules/features')
+  ],
 })
 
 const javascriptRule = (tsconfigPath = "../../../tsconfig.json") => ({
@@ -58,7 +63,12 @@ const javascriptRule = (tsconfigPath = "../../../tsconfig.json") => ({
           }
       }
   ],
-  include: [path.resolve('./src'), path.resolve('./libs/goustouicomponents/src')],
+  include: [
+    path.resolve('./src'),
+    path.resolve('./libs/goustouicomponents/src'),
+    // We directly compile internal feature modules, rather than pulling from a /dist
+    path.resolve('../../modules/features')
+  ],
 })
 
 // Favicon and Axiforma fonts are used on the landing pages created through

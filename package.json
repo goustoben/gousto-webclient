@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "workspaces": [
     "src/apps/webclient",
+    "src/modules/features/*",
     "tests/e2e",
     "tests/regression"
   ]

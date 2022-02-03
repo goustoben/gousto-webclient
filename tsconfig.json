@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": false,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": false,
+    "jsx": "react",
+    "lib": ["ES2015", "ES2015.Promise", "dom"],
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "strict": true
+  },
+  "exclude": [
+    "node_modules",
+    "**/node_modules"
+  ]
+}

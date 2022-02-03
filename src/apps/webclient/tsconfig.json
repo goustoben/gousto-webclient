@@ -1,17 +1,11 @@
 {
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "checkJs": false,
-    "esModuleInterop": true,
-    "experimentalDecorators": false,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": false,
     "jsx": "react",
     "lib": ["ES2015", "ES2015.Promise", "dom"],
-    "module": "ES2015",
-    "moduleResolution": "node",
     "outDir": "../lib/client",
     "types": ["jest", "node"],
     "paths": {
@@ -46,7 +40,6 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
     "target": "es5"
   },
   "include": [

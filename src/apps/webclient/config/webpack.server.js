@@ -86,13 +86,19 @@ const config = {
       path.resolve(__dirname, '../src/components'),
       path.resolve('./libs/goustouicomponents/src'),
       path.resolve(__dirname, '../node_modules/spinkit'),
+      path.resolve('./node_modules')
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css'],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
   },
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    // Workspaces are linked via node_modules, so need whitelisting
+    whitelist: [
+      /^@features\/.+/
+    ]
+  })],
   stats: debug ? {
     hash: true,
     version: true,
