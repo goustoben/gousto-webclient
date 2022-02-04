@@ -9,7 +9,7 @@ import browserHelper from 'utils/browserHelper'
 import MainLayout from 'layouts/MainLayout'
 import { ShowcaseMenuContainer } from 'routes/ShowcaseMenu'
 import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
-import { BoxSummaryContainer } from './BoxSummary'
+import { BoxSummaryContainer } from './components/BoxSummary'
 import { DetailRecipeMetaContainer } from './components/RecipeMeta'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 

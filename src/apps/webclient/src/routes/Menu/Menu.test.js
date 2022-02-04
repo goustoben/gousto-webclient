@@ -10,7 +10,7 @@ jest.mock('utils/browserHelper', () => ({
   isChrome: () => { }
 }))
 jest.mock('actions/order')
-jest.mock('./BoxSummary', () => ({
+jest.mock('./components/BoxSummary', () => ({
   BoxSummaryContainer: () => <div />
 }))
 jest.mock('routes/Menu/components/Detail/DetailOverlay', () => ('DetailOverlay'))

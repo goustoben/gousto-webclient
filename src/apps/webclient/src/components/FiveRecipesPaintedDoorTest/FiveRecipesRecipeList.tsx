@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { ImmutableMap } from 'routes/Menu/types/immutableMap'
 import css from './FiveRecipesRecipeList.module.css'
-import { RecipeHolder } from '../../routes/Menu/BoxSummary/RecipeHolder/RecipeHolder'
+import { RecipeHolder } from '../../routes/Menu/components/BoxSummary/RecipeHolder/RecipeHolder'
 
 type Props = {
   // eslint-disable-next-line react/no-unused-prop-types
