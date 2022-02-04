@@ -4,16 +4,9 @@ import classNames from 'classnames'
 import actual from 'actual'
 import css from './Button.css'
 
-const ctaText = (
-  isLastStep,
-  isTastePreferencesEnabled,
-  isPaymentBeforeChoosingEnabled,
-  showcaseMenuSeen
-) => {
+const ctaText = (isLastStep, isTastePreferencesEnabled) => {
   if (isLastStep) {
-    if (isPaymentBeforeChoosingEnabled) {
-      return showcaseMenuSeen ? 'Continue to sign up' : 'See this week’s menu'
-    } else if (isTastePreferencesEnabled) {
+    if (isTastePreferencesEnabled) {
       return 'Show me recipes'
     } else {
       return 'Confirm'
@@ -31,13 +24,10 @@ const Button = ({
   onClick,
   isLastStep,
   isTastePreferencesEnabled,
-  isPaymentBeforeChoosingEnabled,
   showcaseMenuSeen,
   ...buttonProps
 }) => {
-  const buttonText =
-    children ||
-    ctaText(isLastStep, isTastePreferencesEnabled, isPaymentBeforeChoosingEnabled, showcaseMenuSeen)
+  const buttonText = children || ctaText(isLastStep, isTastePreferencesEnabled)
 
   const className = classNames(css.cta, {
     [css.isDisabled]: buttonProps.disabled,
@@ -63,7 +53,6 @@ Button.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.node,
   isTastePreferencesEnabled: PropTypes.bool,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
   showcaseMenuSeen: PropTypes.bool,
 }
 
@@ -71,7 +60,6 @@ Button.defaultProps = {
   onClick: () => {},
   children: undefined,
   isTastePreferencesEnabled: false,
-  isPaymentBeforeChoosingEnabled: false,
   showcaseMenuSeen: false,
 }
 

@@ -13,11 +13,7 @@ import {
 import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
-import {
-  getIsPaymentBeforeChoosingEnabled,
-  getIsPaymentBeforeChoosingV3Enabled,
-  getIsGoustoOnDemandEnabled,
-} from 'selectors/features'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -31,8 +27,6 @@ function mapStateToProps(state, ownProps) {
     isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     isMobile: state.request.get('browser') === 'mobile',
     lastReachedStepIndex: getCheckoutLastReachedStepIndex(state),
-    isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
-    isPaymentBeforeChoosingV3Enabled: getIsPaymentBeforeChoosingV3Enabled(state),
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
 }

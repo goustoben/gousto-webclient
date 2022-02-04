@@ -126,7 +126,6 @@ const DeliveryStep = ({
   disabledSlots,
   userHasAvailableSlots,
   isTastePreferencesEnabled,
-  isPaymentBeforeChoosingEnabled,
   trackSignupWizardAction,
   showcaseMenuSeen,
   district,
@@ -167,9 +166,7 @@ const DeliveryStep = ({
 
   const onShowRecipe = () => {
     let nextStep
-    if (isPaymentBeforeChoosingEnabled && showcaseMenuSeen) {
-      nextStep = () => browserHistory.push('/check-out')
-    } else if (isTastePreferencesEnabled) {
+    if (isTastePreferencesEnabled) {
       nextStep = () => redirect('/taste-preferences')
     } else {
       nextStep = next
@@ -178,7 +175,7 @@ const DeliveryStep = ({
     boxSummaryDeliverySlotChosen({
       date: tempDate,
       slotId: tempSlotId,
-      displayMenuForFirstWeekOnly: isPaymentBeforeChoosingEnabled,
+      displayMenuForFirstWeekOnly: false,
     }).then(nextStep)
   }
 
@@ -326,7 +323,6 @@ DeliveryStep.propTypes = {
   disabledSlots: PropTypes.instanceOf(Immutable.List),
   userHasAvailableSlots: PropTypes.bool,
   isTastePreferencesEnabled: PropTypes.bool,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
   trackSignupWizardAction: PropTypes.func.isRequired,
   showcaseMenuSeen: PropTypes.bool,
   district: PropTypes.string,
@@ -353,7 +349,6 @@ DeliveryStep.defaultProps = {
   disabledSlots: [],
   userHasAvailableSlots: true,
   isTastePreferencesEnabled: false,
-  isPaymentBeforeChoosingEnabled: false,
   showcaseMenuSeen: false,
   district: null,
   amountOfCustomers: null,

@@ -17,9 +17,6 @@ describe('CheckoutPaymentContainer', () => {
     pending: Immutable.fromJS({}),
     basket: Immutable.fromJS({}),
     features: Immutable.fromJS({
-      isPaymentBeforeChoosingEnabled: {
-        value: false,
-      },
       isGoustoOnDemandEnabled: {
         value: false,
       },

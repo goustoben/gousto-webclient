@@ -95,7 +95,7 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated, promoCodeUrl, fromJoin, isPaymentBeforeChoosingEnabled } = this.props
+    const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
     const menuItems = getDeepClonedMenuItems()
     let pathLocal = path
     if (path.indexOf('/') === -1) {
@@ -119,12 +119,9 @@ class Header extends React.PureComponent {
       homeMenuItem.url = client.join
     }
 
-    const isShowcaseMenu = isPaymentBeforeChoosingEnabled && !isAuthenticated
-    const menu = isShowcaseMenu ? showcaseMenuItem : menuItems.menu
-
     const desktopItems = [
       !isAuthenticated && menuItems.boxPrices,
-      menu,
+      menuItems.menu,
       isAuthenticated && menuItems.referFriend,
       menuItems.sustainability,
       menuItems.help,
@@ -132,7 +129,7 @@ class Header extends React.PureComponent {
 
     const mobileItems = [
       !isAuthenticated && menuItems.boxPrices,
-      menu,
+      menuItems.menu,
       menuItems.sustainability,
       menuItems.help,
     ].filter(item => item)
@@ -377,7 +374,6 @@ class Header extends React.PureComponent {
       routing,
       isAppAwarenessEnabled,
       showLoginCTA,
-      isPaymentBeforeChoosingEnabled,
       hasLoginModal,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
@@ -448,7 +444,7 @@ class Header extends React.PureComponent {
                     {this.renderAuthLink()}
                   </span>
                   {
-                    (isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled && !isPaymentBeforeChoosingEnabled)
+                    (isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled)
                     && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button>
                   }
                   <MobileMenu
@@ -509,7 +505,6 @@ Header.propTypes = {
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
   showLoginCTA: PropTypes.bool,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
   hasLoginModal: PropTypes.bool,
 }
 
@@ -531,7 +526,6 @@ Header.defaultProps = {
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
   showLoginCTA: false,
-  isPaymentBeforeChoosingEnabled: false,
   hasLoginModal: false,
 }
 

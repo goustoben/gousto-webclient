@@ -6,7 +6,6 @@ import { applyPromoCodeAndShowModal } from 'actions/home'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import { hotjarSkipWizard } from 'actions/trackingKeys'
 import { getBasketPostcode } from 'selectors/basket'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { getPromoBannerState } from 'utils/home'
 import { findStepBySlug } from 'utils/signup'
 import { invokeHotjarEvent } from 'utils/hotjarUtils'
@@ -17,7 +16,6 @@ export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getStat
   const state = getState()
   const postcode = getBasketPostcode(state)
   const { canApplyPromo } = getPromoBannerState(state)
-  const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
   const destination = postcode ? 'menu' : 'wizard'
 
   dispatch(trackClickBuildMyBox(`${numPersons} people`, destination))
@@ -26,7 +24,7 @@ export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getStat
   if (destination === 'menu') {
     dispatch(redirect(routesConfig.client.menu))
   } else {
-    const destinationStep = isPaymentBeforeChoosingEnabled ? findStepBySlug('recipes-per-box') : findStepBySlug('postcode')
+    const destinationStep = findStepBySlug('postcode')
 
     if (canApplyPromo) {
       await dispatch(applyPromoCodeAndShowModal())

@@ -1,11 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import {
-  getIsTastePreferencesEnabled,
-  getIsPaymentBeforeChoosingEnabled,
-  getIsPaymentBeforeChoosingV2Enabled,
-  getIsGoustoOnDemandEnabled,
-} from 'selectors/features'
+import { getIsTastePreferencesEnabled, getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { signupDismissDiscountAppliedBar, signupSetStep } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
@@ -32,8 +27,6 @@ const mapStateToProps = (state, ownProps) => {
     ]),
     promoModalVisible: state.promoModalVisible,
     promoBannerState: getPromoBannerState(state),
-    isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
-    isPaymentBeforeChoosingV2Enabled: getIsPaymentBeforeChoosingV2Enabled(state),
     isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
     isWizardWithoutImagesEnabled: getIsWizardWithoutImagesEnabled(state),

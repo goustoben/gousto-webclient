@@ -3,8 +3,6 @@ import { deliveryTariffTypes } from 'utils/deliveries'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getOrderDetails,
-  getIsOrderWithoutRecipes,
-  getDetailsForOrderWithoutRecipes,
   getOrderAction,
   getCouldBasketBeExpired,
   getOrderForUpdateOrderV1,
@@ -147,59 +145,6 @@ describe('order selectors', () => {
           address_id: null,
           promo_code: '1234'
         })
-      })
-    })
-  })
-
-  describe('getIsOrderWithoutRecipes', () => {
-    const cases = [
-      // isPaymentBeforeChoosingEnabled, isAuthenticated, expected
-      [ false, false, false ],
-      [ true, false, true ],
-      [ false, true, false ],
-      [ true, true, false ],
-    ]
-
-    describe.each(cases)('when isPaymentBeforeChoosingEnabled is %s and isAuthenticated is %s', (isPaymentBeforeChoosingEnabled, isAuthenticated, expected) => {
-      const state = createState({
-        features: {
-          isPaymentBeforeChoosingV1Enabled: { value: isPaymentBeforeChoosingEnabled },
-        },
-        auth: {
-          isAuthenticated
-        }
-      })
-
-      test(`then should return ${expected}`, () => {
-        expect(getIsOrderWithoutRecipes(state)).toBe(expected)
-      })
-    })
-  })
-
-  describe('getDetailsForOrderWithoutRecipes', () => {
-    test('returns an object like getOrderDetails but with feature flag and additional fields', () => {
-      const state = createState({
-        basket: {
-          numRecipes: 3,
-          promoCode: '1234'
-        }
-      })
-
-      const orderDetails = getDetailsForOrderWithoutRecipes(state)
-
-      expect(orderDetails).toEqual({
-        delivery_day_id: 'delivery-days-id',
-        delivery_slot_id: 'slot-core-id',
-        recipe_choices: [],
-        promo_code: '1234',
-        day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-        delivery_tariff_id: deliveryTariffTypes.NON_NDD,
-        address_id: null,
-        get_order_without_recipes: true,
-        number_of_recipes: 3,
-        number_of_portions: 2,
-        box_type: 'gourmet',
-        promocode: '1234'
       })
     })
   })

@@ -98,12 +98,7 @@ class Menu extends React.PureComponent {
       isAuthenticated,
       query,
       children,
-      isPaymentBeforeChoosingEnabled,
     } = this.props
-
-    if (isPaymentBeforeChoosingEnabled && !isAuthenticated) {
-      return <ShowcaseMenuContainer />
-    }
 
     const { isChrome } = this.state
     const overlayShowCSS = (showOverlay && isChrome) ? css.blur : null

@@ -9,7 +9,7 @@ import windowUtils from 'utils/window'
 import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import { getUserId } from 'selectors/user'
-import { getIsPaymentBeforeChoosingEnabled, getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import pricingActions from './pricing'
@@ -174,7 +174,6 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
   async (dispatch, getState) => {
     const state = getState()
     const userId = getUserId(state)
-    const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
     const location = documentLocation()
     const onCheckout = location.pathname.includes('check-out')
     let destination = false
@@ -212,7 +211,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
           return
         }
 
-        const welcomePage = isPaymentBeforeChoosingEnabled ? client.checkoutWelcome : client.welcome
+        const welcomePage = client.welcome
         dispatch(push(`${welcomePage}/${orderId}`))
       } else {
         dispatch(loginVisibilityChange(false))

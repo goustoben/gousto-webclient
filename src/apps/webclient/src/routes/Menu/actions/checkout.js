@@ -19,8 +19,6 @@ import {
   getSlotForBoxSummaryDeliveryDays,
   getCouldBasketBeExpired,
   getOrderDetails,
-  getDetailsForOrderWithoutRecipes,
-  getIsOrderWithoutRecipes,
 } from '../selectors/order'
 
 import { orderAssignToUser } from './order'
@@ -47,13 +45,11 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     return
   }
 
-  const isOrderWithoutRecipes = getIsOrderWithoutRecipes(state)
-
-  const orderDetails = isOrderWithoutRecipes ? getDetailsForOrderWithoutRecipes(state) : getOrderDetails(state)
+  const orderDetails = getOrderDetails(state)
 
   const couldBasketBeExpired = getCouldBasketBeExpired(getState())
 
-  if (couldBasketBeExpired && !isOrderWithoutRecipes) {
+  if (couldBasketBeExpired) {
     const { router: { locationBeforeTransitions: { pathName: path } = {} } = {} } = getState()
 
     logger.warning({
@@ -75,9 +71,6 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     const { data: previewOrder = {} } = await createPreviewOrder(orderDetails)
     dispatch(basketPreviewOrderChange(String(previewOrder.order.id), previewOrder.order.boxId, previewOrder.surcharges))
     dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
-    if (isOrderWithoutRecipes) {
-      dispatch(pricingSuccess(previewOrder.prices))
-    }
 
     dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.running))
   } catch (e) {
