@@ -78,16 +78,37 @@ _The step above creates an AWS profile called `CodeArtifact`, which authenticate
 ```shell
 # ~/.zshrc or ~/.bashrc
 
-alias ca-authenticate="export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner 472493421475 --query authorizationToken --output text --profile EngineerCodeArtifact-472493421475`"
+function ca-authenticate() {
+  set -x
+  export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner 472493421475 --query authorizationToken --output text --profile EngineerCodeArtifact-472493421475`
+}
 ```
 
 The alias above gets an authentication token for CodeArtifact, and then exports it as the variable `CODEARTIFACT_AUTH_TOKEN`. This variable is then used in `.yarnrc.yml` to enable installation of private packages.
 
-_After creating the alias above, remember to run `source ~/.zshrc (or ~/.bashrc)`_
+_After creating/updating the alias above, remember to run `source ~/.zshrc (or ~/.bashrc)`_
 
 ### Prior to running `yarn install`
 
 `ca-authenticate`
+
+## Re-authenticating
+
+The CodeArtifact authorization token retrieved using `ca-authenticate` will expire in **six hours**.
+
+Once your token has expired, you may re-authenticate with the following commands:
+
+```shell
+# Log into AWS again via OKTA
+aws sso login --profile EngineerCodeArtifact-472493421475
+```
+
+```shell
+# Retrieve a fresh CodeArtifact token
+ca-authenticate
+```
+
+You will then be able to run `yarn install`
 
 ## Tests
 
