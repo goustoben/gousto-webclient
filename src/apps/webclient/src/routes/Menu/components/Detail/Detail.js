@@ -11,12 +11,12 @@ import { Image } from '../../Recipe/Image'
 import { Title } from '../Recipe'
 import { RecipeRating } from '../../Recipe/Rating'
 import { useStock } from '../../domains/menu'
-import { RecipeDisclaimer } from '../../RecipeDisclaimer/RecipeDisclaimer'
 import { useAllCollections } from '../../domains/collections'
 import Carousel from './Carousel'
 
 import { RecipeTag } from '../RecipeTag'
 
+import { RecipeDisclaimer } from './RecipeDisclaimer'
 import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
 import { DetailPerPortionContainer } from './DetailPerPortion'
