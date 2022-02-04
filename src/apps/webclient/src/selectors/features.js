@@ -114,24 +114,6 @@ export const getIsMyGoustoBannerSubscriberPricingEnabled = ({ features }) => (
   features && features.getIn(['isMyGoustoBannerSubscriberPricingEnabled', 'value'], false)
 )
 
-export const getIsPaymentBeforeChoosingV1Enabled = ({ features }) => (
-  features && features.getIn(['isPaymentBeforeChoosingV1Enabled', 'value'], false)
-)
-
-export const getIsPaymentBeforeChoosingV2Enabled = ({ features }) => (
-  features && features.getIn(['isPaymentBeforeChoosingV2Enabled', 'value'], false)
-)
-
-export const getIsPaymentBeforeChoosingV3Enabled = ({ features }) => (
-  features && features.getIn(['isPaymentBeforeChoosingV3Enabled', 'value'], false)
-)
-
-export const getIsPaymentBeforeChoosingEnabled = createSelector(
-  [getIsPaymentBeforeChoosingV1Enabled, getIsPaymentBeforeChoosingV2Enabled, getIsPaymentBeforeChoosingV3Enabled],
-  (isPaymentBeforeChoosingV1Enabled, isPaymentBeforeChoosingV2Enabled, isPaymentBeforeChoosingV3Enabled) =>
-    isPaymentBeforeChoosingV1Enabled || isPaymentBeforeChoosingV2Enabled || isPaymentBeforeChoosingV3Enabled
-)
-
 export const getIsGoustoOnDemandEnabled = ({ features }) => (
   features && features.getIn(['isGoustoOnDemandEnabled', 'value'], false)
 )

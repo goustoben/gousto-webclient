@@ -25,7 +25,6 @@ import {
   getSignupE2ETestName,
 } from 'selectors/checkout'
 import { getSessionId } from 'selectors/cookies'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import {
   isCardPayment,
   getPaymentAuthData,
@@ -152,18 +151,11 @@ export const fireCheckoutError = (errorName, errorValue = true) => dispatch => {
 // Note: this is a helper method, not an action.  It should be called directly
 // instead of dispatched.
 export const handlePromoCodeRemoved = async (dispatch, getState) => {
-  const state = getState()
-  const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
-
   dispatch(basketPromoCodeChange(''))
   dispatch(basketPromoCodeAppliedChange(false))
   dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
 
-  if (isPaymentBeforeChoosingEnabled) {
-    await dispatch(checkoutCreatePreviewOrder())
-  } else {
-    dispatch(pricingRequest())
-  }
+  dispatch(pricingRequest())
 }
 
 export const handleCheckoutError = async (err, initiator, dispatch, getState) => {
@@ -621,12 +613,5 @@ export const checkoutStepIndexReached = (stepIndex) => dispatch => {
 }
 
 export const sendRequestToUpdateOrderSummaryPrices = () => async (dispatch, getState) => {
-  const state = getState()
-  const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
-
-  if (isPaymentBeforeChoosingEnabled) {
-    await dispatch(checkoutCreatePreviewOrder())
-  } else {
-    await dispatch(pricingRequest())
-  }
+  await dispatch(pricingRequest())
 }

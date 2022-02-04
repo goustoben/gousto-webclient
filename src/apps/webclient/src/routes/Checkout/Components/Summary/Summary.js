@@ -17,8 +17,6 @@ const propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   isLoading: PropTypes.bool,
   showPromocode: PropTypes.bool,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
-  numberOfRecipes: PropTypes.number,
   isGoustoOnDemandEnabled: PropTypes.bool,
   totalToPay: PropTypes.string,
 }
@@ -28,25 +26,15 @@ const defaultProps = {
   basketRecipes: Immutable.Map({}),
   isLoading: false,
   showPromocode: true,
-  isPaymentBeforeChoosingEnabled: false,
-  numberOfRecipes: 0,
   isGoustoOnDemandEnabled: false,
   totalToPay: '',
 }
 
 class Summary extends PureComponent {
   render() {
-    const {
-      prices,
-      basketRecipes,
-      isLoading,
-      showPromocode,
-      isPaymentBeforeChoosingEnabled,
-      numberOfRecipes,
-      isGoustoOnDemandEnabled,
-      totalToPay,
-    } = this.props
-    const numRecipes = isPaymentBeforeChoosingEnabled ? numberOfRecipes : basketSum(basketRecipes)
+    const { prices, basketRecipes, isLoading, showPromocode, isGoustoOnDemandEnabled, totalToPay } =
+      this.props
+    const numRecipes = basketSum(basketRecipes)
 
     return (
       <div className={css.summaryContainerRedesign} data-testing="checkoutOrderSummary">

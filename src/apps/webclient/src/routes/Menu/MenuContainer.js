@@ -4,7 +4,6 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { applyPromoCodeAndShowModal } from 'actions/home'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 
 import Menu from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
@@ -29,7 +28,6 @@ function mapStateToProps(state, ownProps) {
     ),
     forceLoad: state.menu.get('forceLoad', false),
     postcode: state.basket.get('postcode'),
-    isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   }
 }
 

@@ -9,7 +9,6 @@ import { stepByName } from 'utils/signup'
 import { signupConfig } from 'config/signup'
 import { getAccessToken } from 'selectors/auth'
 import { getUTMAndPromoCode } from 'selectors/tracking'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import logger from 'utils/logger'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
@@ -93,14 +92,9 @@ export function signupNextStep(stepName) {
       if (isCurrentlyTheLastStep && (step.get('name') === lastWizardStep || !slug)) {
         dispatch(signupTracking())
 
-        const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
-        if (isPaymentBeforeChoosingEnabled) {
-          return dispatch(redirect(routes.client.menu))
-        } else {
-          const path = `${routes.client.signup}/${signupConfig.sellThePropositionPagePath}`
+        const path = `${routes.client.signup}/${signupConfig.sellThePropositionPagePath}`
 
-          return dispatch(redirect(path))
-        }
+        return dispatch(redirect(path))
       }
 
       try {

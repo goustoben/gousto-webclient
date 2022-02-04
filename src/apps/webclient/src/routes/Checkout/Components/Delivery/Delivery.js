@@ -33,7 +33,6 @@ const propTypes = {
   date: PropTypes.string.isRequired,
   submit: PropTypes.func,
   aboutYouErrors: PropTypes.bool,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -47,7 +46,6 @@ const defaultProps = {
   scrollToFirstMatchingRef: () => {},
   submit: () => {},
   aboutYouErrors: false,
-  isPaymentBeforeChoosingEnabled: false,
 }
 
 export class Delivery extends React.PureComponent {
@@ -117,7 +115,7 @@ export class Delivery extends React.PureComponent {
   }
 
   render() {
-    const { sectionName, isPaymentBeforeChoosingEnabled } = this.props
+    const { sectionName } = this.props
 
     return (
       <div
@@ -159,10 +157,7 @@ export class Delivery extends React.PureComponent {
             </div>
             {this.renderAddress()}
           </FormSection>
-          <HotjarTrigger
-            name="pbc_delivery_and_payment"
-            shouldInvoke={isPaymentBeforeChoosingEnabled}
-          />
+          <HotjarTrigger name="pbc_delivery_and_payment" shouldInvoke={false} />
         </div>
       </div>
     )

@@ -65,8 +65,6 @@ const propTypes = {
     basketPromo: PropTypes.string,
   }),
   trackDiscountVisibility: PropTypes.func,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
-  isPaymentBeforeChoosingV2Enabled: PropTypes.bool,
   isDiscountAppliedBarDismissed: PropTypes.bool,
   signupDismissDiscountAppliedBar: PropTypes.func,
   signupSetStep: PropTypes.func,
@@ -94,8 +92,6 @@ const defaultProps = {
   isTastePreferencesEnabled: false,
   orderDiscount: '',
   trackDiscountVisibility: () => {},
-  isPaymentBeforeChoosingEnabled: false,
-  isPaymentBeforeChoosingV2Enabled: false,
   isDiscountAppliedBarDismissed: false,
   signupDismissDiscountAppliedBar: () => {},
   signupSetStep: () => {},
@@ -115,17 +111,9 @@ class Signup extends PureComponent {
     const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
     const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
     const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
-    const {
-      isPaymentBeforeChoosingEnabled,
-      isPaymentBeforeChoosingV2Enabled,
-      shouldSetStepFromParams,
-      isGoustoOnDemandEnabled,
-      shouldSkipWizardByFeature,
-    } = options
+    const { shouldSetStepFromParams, isGoustoOnDemandEnabled, shouldSkipWizardByFeature } = options
 
-    if (isPaymentBeforeChoosingEnabled) {
-      steps = Immutable.List(signupConfig.paymentBeforeChoosingSteps)
-    } else if (querySteps.length) {
+    if (querySteps.length) {
       steps = Immutable.List(querySteps)
     } else if (featureSteps.length) {
       steps = Immutable.List(featureSteps)
@@ -171,12 +159,6 @@ class Signup extends PureComponent {
       invokeHotjarEvent(hotjarSkipWizard)
 
       return store.dispatch(actions.redirect(routes.client.menu))
-    }
-
-    if (isPaymentBeforeChoosingV2Enabled) {
-      return store.dispatch(
-        actions.redirect(`${routes.client.menu}${getPromocodeQueryParam(promoCode, '?')}`)
-      )
     }
 
     // No Step specified and no query string specified
@@ -235,8 +217,6 @@ class Signup extends PureComponent {
       location,
       params,
       orderDiscount,
-      isPaymentBeforeChoosingEnabled,
-      isPaymentBeforeChoosingV2Enabled,
       signupSetStep,
       isGoustoOnDemandEnabled,
       shouldSkipWizardByFeature,
@@ -245,8 +225,6 @@ class Signup extends PureComponent {
     const query = location ? location.query : {}
     const options = {
       orderDiscount,
-      isPaymentBeforeChoosingEnabled,
-      isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams: true,
       isGoustoOnDemandEnabled,
       shouldSkipWizardByFeature,

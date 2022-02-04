@@ -29,9 +29,6 @@ import {
   getIsMultiSkipEnabled,
   getIsSubscriberPricingEnabled,
   getIsMyGoustoBannerSubscriberPricingEnabled,
-  getIsPaymentBeforeChoosingV1Enabled,
-  getIsPaymentBeforeChoosingV2Enabled,
-  getIsPaymentBeforeChoosingEnabled,
   getIsGoustoOnDemandEnabled,
   getIsAutoAcceptEnabled,
   getSsrTwoComplaintsSameDay,
@@ -84,8 +81,6 @@ describe('when features are defined', () => {
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled'],
     [getIsMyGoustoBannerSubscriberPricingEnabled, 'isMyGoustoBannerSubscriberPricingEnabled'],
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled'],
-    [getIsPaymentBeforeChoosingV1Enabled, 'isPaymentBeforeChoosingV1Enabled'],
-    [getIsPaymentBeforeChoosingV2Enabled, 'isPaymentBeforeChoosingV2Enabled'],
     [getIsGoustoOnDemandEnabled, 'isGoustoOnDemandEnabled'],
     [getIsAutoAcceptEnabled, 'isAutoAcceptEnabled'],
     [getSsrTwoComplaintsSameDay, 'ssrTwoComplaintsSameDay'],
@@ -109,34 +104,5 @@ describe('when features are defined', () => {
         expect(selector(state)).toBe(featureFlagValue)
       })
     })
-  })
-
-  describe('isPaymentBeforeChoosingEnabled', () => {
-    const pbcCases = [
-      [false, false, false],
-      [false, true, true],
-      [true, false, true],
-      [true, true, true],
-    ]
-
-    describe.each(pbcCases)(
-      'when v1 is %s and v2 is %s',
-      (isPaymentBeforeChoosingV1Enabled, isPaymentBeforeChoosingV2Enabled, expected) => {
-        beforeEach(() => {
-          state.features = Immutable.fromJS({
-            isPaymentBeforeChoosingV1Enabled: {
-              value: isPaymentBeforeChoosingV1Enabled,
-            },
-            isPaymentBeforeChoosingV2Enabled: {
-              value: isPaymentBeforeChoosingV2Enabled,
-            },
-          })
-        })
-
-        test(`then isPaymentBeforeChoosingEnabled should be ${expected}`, () => {
-          expect(getIsPaymentBeforeChoosingEnabled(state)).toBe(expected)
-        })
-      }
-    )
   })
 })

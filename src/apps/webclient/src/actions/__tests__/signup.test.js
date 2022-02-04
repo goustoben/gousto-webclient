@@ -207,34 +207,6 @@ describe('signup actions', () => {
         expect(redirect).toHaveBeenCalledWith('/signup/about')
       })
     })
-
-    describe('and when isPaymentBeforeChoosingEnabled is on', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          signup: Immutable.fromJS({
-            wizard: {
-              steps: ['box-size', 'recipesPerBox', 'postcode', 'delivery'],
-              isLastStep: true,
-            },
-          }),
-          features: Immutable.fromJS({
-            isPaymentBeforeChoosingV1Enabled: {
-              value: true
-            },
-          })
-        })
-        stepByName.mockReturnValue(Immutable.Map({
-          name: 'delivery',
-          slug: 'delivery',
-        }))
-      })
-
-      test('then it should redirect to the menu page', () => {
-        signupNextStep('delivery')(dispatch, getState)
-
-        expect(redirect).toHaveBeenCalledWith('/menu')
-      })
-    })
   })
 
   describe('signupCookForKidsChange action', () => {

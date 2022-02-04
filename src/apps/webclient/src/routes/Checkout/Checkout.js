@@ -25,7 +25,7 @@ import { CheckoutPaymentContainer } from './Components/CheckoutPayment'
 
 import { Breadcrumbs } from './Components/Breadcrumbs'
 import { Summary } from './Components/Summary'
-import { BoxDetailsContainer, YourBoxDetailsContainer } from './Components/BoxDetails'
+import { BoxDetailsContainer } from './Components/BoxDetails'
 import { ExpandableBoxSummary } from './Components/ExpandableBoxSummary'
 import { CheckoutUrgencyControllerContainer } from './Components/CheckoutUrgency'
 import { CheckoutUrgencyModalContainer } from './Components/CheckoutUrgency/CheckoutUrgencyModal'
@@ -69,8 +69,6 @@ const propTypes = {
   isMobile: PropTypes.bool,
   checkoutStepIndexReached: PropTypes.func,
   lastReachedStepIndex: PropTypes.number,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
-  isPaymentBeforeChoosingV3Enabled: PropTypes.bool,
   isGoustoOnDemandEnabled: PropTypes.bool,
 }
 
@@ -99,8 +97,6 @@ const defaultProps = {
   isMobile: false,
   checkoutStepIndexReached: () => {},
   lastReachedStepIndex: 0,
-  isPaymentBeforeChoosingEnabled: false,
-  isPaymentBeforeChoosingV3Enabled: false,
   isGoustoOnDemandEnabled: false,
 }
 
@@ -171,18 +167,7 @@ class Checkout extends PureComponent {
 
   componentDidMount() {
     const { store } = this.context
-    const {
-      query = {},
-      params = {},
-      trackSignupStep,
-      changeRecaptcha,
-      fetchGoustoRef,
-      isPaymentBeforeChoosingV3Enabled,
-    } = this.props
-
-    if (isPaymentBeforeChoosingV3Enabled && !checkoutSteps.includes('order-summary')) {
-      checkoutSteps.unshift('order-summary')
-    }
+    const { query = {}, params = {}, trackSignupStep, changeRecaptcha, fetchGoustoRef } = this.props
 
     Checkout.fetchData({ store, query, params })
       .then(() => {
@@ -234,13 +219,7 @@ class Checkout extends PureComponent {
     return steps[index + 1]
   }
 
-  getStepMapping = () => {
-    const { isPaymentBeforeChoosingEnabled } = this.props
-
-    return isPaymentBeforeChoosingEnabled
-      ? { ...stepMapping, recipes: { component: <div />, humanName: 'Recipes' } }
-      : stepMapping
-  }
+  getStepMapping = () => stepMapping
 
   getNextStepName = (steps, currentStep) => {
     const nextStepURL = this.getNextStep(steps, currentStep)
@@ -322,23 +301,20 @@ class Checkout extends PureComponent {
 
   renderSummaryAndYourBox = () => {
     const { isCreatingPreviewOrder } = this.state
-    const { isPaymentBeforeChoosingEnabled, isGoustoOnDemandEnabled } = this.props
+    const { isGoustoOnDemandEnabled } = this.props
 
     return (
       <Fragment>
         <Summary isLoading={isCreatingPreviewOrder} showPromocode={!isGoustoOnDemandEnabled} />
-        {isPaymentBeforeChoosingEnabled ? <YourBoxDetailsContainer /> : <BoxDetailsContainer />}
+        <BoxDetailsContainer />
       </Fragment>
     )
   }
 
   renderProgressBar = (currentStep) => {
-    const { isPaymentBeforeChoosingEnabled, trackCheckoutNavigationLinks, lastReachedStepIndex } =
-      this.props
+    const { trackCheckoutNavigationLinks, lastReachedStepIndex } = this.props
 
-    const breadcrumbSteps = isPaymentBeforeChoosingEnabled
-      ? [...checkoutSteps, 'recipes']
-      : checkoutSteps
+    const breadcrumbSteps = checkoutSteps
 
     const breadcrumbStep = this.getStepMapping()
     const progressSteps = breadcrumbSteps.reduce((accumulatedSteps, stepName) => {
@@ -358,7 +334,6 @@ class Checkout extends PureComponent {
         items={progressSteps}
         trackCheckoutNavigationLinks={trackCheckoutNavigationLinks}
         lastReachedStepIndex={lastReachedStepIndex}
-        isPaymentBeforeChoosingEnabled={isPaymentBeforeChoosingEnabled}
       />
     )
   }

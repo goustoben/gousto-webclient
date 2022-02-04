@@ -12,7 +12,7 @@ import {
   getNumRecipes,
   getPromoCode
 } from 'selectors/basket'
-import { getNDDFeatureValue, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import { getNDDFeatureValue } from 'selectors/features'
 import { createSelector } from 'reselect'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getBoxSummaryDeliveryDays } from 'selectors/root'
@@ -93,28 +93,6 @@ export const getOrderDetails = createSelector([
     ...(promoCode ? { promo_code: promoCode } : {})
   }
 })
-
-export const getIsOrderWithoutRecipes = createSelector(
-  [getIsPaymentBeforeChoosingEnabled, getIsAuthenticated],
-  (isPaymentBeforeChoosingEnabled, isAuthenticated) =>
-    isPaymentBeforeChoosingEnabled && !isAuthenticated
-)
-
-export const getDetailsForOrderWithoutRecipes = createSelector(
-  [getOrderDetails, getNumRecipes, getNumPortions, getPromoCode],
-  (orderDetails, numRecipes, numPortions, promoCode) => ({
-    ...orderDetails,
-    recipe_choices: [],
-    get_order_without_recipes: true,
-    number_of_recipes: numRecipes,
-    number_of_portions: numPortions,
-    box_type: 'gourmet',
-    // Note: base orderDetails already includes promoCode, but by promo_code
-    // key.  The functionality of the service under the feature flag expects
-    // promocode argument instead though.
-    promocode: promoCode,
-  })
-)
 
 export const getCouldBasketBeExpired = createSelector(
   [getOrderDetailsForBasket, getBasketRecipes],

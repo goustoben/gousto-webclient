@@ -6,7 +6,6 @@ import { getIsAuthenticated } from 'selectors/auth'
 import {
   getAbandonBasket,
   getIsMobileTopBannerAppAwarenessEnabled,
-  getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
@@ -26,7 +25,6 @@ const mapStateToProps = (state) => ({
   abandonBasketFeature: getAbandonBasket(state),
   showAppAwareness: getIsAppAwarenessLoginEnabled(state),
   isAppAwarenessEnabled: getIsMobileTopBannerAppAwarenessEnabled(state),
-  isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

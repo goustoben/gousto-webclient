@@ -37,17 +37,5 @@ describe('Button', () => {
         expect(wrapper.prop('children')).toBe('Show me recipes')
       })
     })
-
-    describe('and when isPaymentBeforeChoosingEnabled is on', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          isPaymentBeforeChoosingEnabled: true,
-        })
-      })
-
-      test('then the text should correspond to the design', () => {
-        expect(wrapper.prop('children')).toBe('See this week’s menu')
-      })
-    })
   })
 })

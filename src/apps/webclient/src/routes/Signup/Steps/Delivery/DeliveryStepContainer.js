@@ -8,7 +8,6 @@ import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selecto
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
   getIsTastePreferencesEnabled,
-  getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
 import { trackSignupWizardAction, trackSocialBelongingBannerAppearance } from 'actions/signup'
@@ -36,7 +35,6 @@ function mapStateToProps(state) {
     disabledSlots,
     userHasAvailableSlots: userHasAvailableSlots(state),
     isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
-    isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
     showcaseMenuSeen: state.signup.get('showcaseMenuSeen'),
     district: state.signup.getIn(['wizard', 'district']),
     amountOfCustomers: state.signup.getIn(['wizard', 'amountOfCustomers']),

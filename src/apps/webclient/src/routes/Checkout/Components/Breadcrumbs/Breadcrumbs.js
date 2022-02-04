@@ -5,13 +5,7 @@ import classNames from 'classnames'
 import Svg from 'Svg'
 import css from './Breadcrumbs.css'
 
-const Breadcrumbs = ({
-  currentId,
-  items,
-  trackCheckoutNavigationLinks,
-  lastReachedStepIndex,
-  isPaymentBeforeChoosingEnabled,
-}) => {
+const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReachedStepIndex }) => {
   const trackNavigation = (label) => () => trackCheckoutNavigationLinks(label)
 
   return (
@@ -35,7 +29,6 @@ const Breadcrumbs = ({
               fileName="icon-chevron-small-right"
               className={classNames(css.breadcrumbsSeparator, {
                 [css.hidden]: index === items.length - 1,
-                [css.removeMargin]: isPaymentBeforeChoosingEnabled,
               })}
             />
           </li>
@@ -55,11 +48,6 @@ Breadcrumbs.propTypes = {
   currentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   trackCheckoutNavigationLinks: PropTypes.func.isRequired,
   lastReachedStepIndex: PropTypes.number.isRequired,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
-}
-
-Breadcrumbs.defaultProps = {
-  isPaymentBeforeChoosingEnabled: false,
 }
 
 export { Breadcrumbs }

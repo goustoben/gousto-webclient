@@ -2,7 +2,7 @@ import { requestPricing } from 'apis/pricing'
 import Immutable from 'immutable'
 import { getDeliveryTariffId, getSlot } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
-import { getIsOrderWithoutRecipes, getOrderV2 } from 'routes/Menu/selectors/order'
+import { getOrderV2 } from 'routes/Menu/selectors/order'
 import { getAccessToken, getAuthUserId } from 'selectors/auth'
 import { transformOrderPricesV2ToOrderV1 } from 'routes/Menu/transformers/orderPricesV2ToV1'
 import { getOrderPrice } from 'routes/Menu/apis/orderV2'
@@ -149,11 +149,10 @@ export const pricingRequest = () => async (dispatch, getState) => {
   const state = getState()
   const deliverySlotId = getBasketSlotId(state)
   const recipesCount = getBasketRecipesCount(state)
-  const isOrderWithoutRecipes = getIsOrderWithoutRecipes(state)
 
   if (!deliverySlotId) return
 
-  if (!isOrderWithoutRecipes && recipesCount < 2) {
+  if (recipesCount < 2) {
     dispatch(pricingClear())
 
     return

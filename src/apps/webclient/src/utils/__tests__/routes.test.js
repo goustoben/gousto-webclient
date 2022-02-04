@@ -178,13 +178,12 @@ describe('routes', () => {
     const replace = jest.fn()
     const redirectUrl = '/redirectUrl'
 
-    describe('when isPaymentBeforeChoosingEnabled is false and isAuthenticated is true', () => {
+    describe('when isAuthenticated is true', () => {
       beforeEach(() => {
         store = {
           getState: () => ({
             auth: Immutable.Map({
               isAuthenticated: true,
-              isPaymentBeforeChoosingEnabled: false
             })
           })
         }

@@ -1162,27 +1162,5 @@ describe('checkout actions', () => {
       expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_ERROR_DUPLICATE, true)
       expect(pricingActions.pricingRequest).toHaveBeenCalledWith()
     })
-
-    describe('when isPaymentBeforeChoosingEnabled is on', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createState({
-          features: Immutable.fromJS({
-            isPaymentBeforeChoosingV1Enabled: {
-              value: true
-            },
-          }),
-        }))
-      })
-
-      test('then it should create a new preview order instead', async () => {
-        await handlePromoCodeRemoved(dispatch, getState)
-
-        expect(basketPromoCodeChange).toHaveBeenCalledWith('')
-        expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(false)
-        expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_ERROR_DUPLICATE, true)
-        expect(pricingActions.pricingRequest).not.toHaveBeenCalledWith()
-        expect(checkoutCreatePreviewOrder).toHaveBeenCalledWith()
-      })
-    })
   })
 })

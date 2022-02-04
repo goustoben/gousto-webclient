@@ -1,7 +1,6 @@
 import config from 'config/routes'
 import authActions from 'actions/auth'
 import { getIsAuthenticated, getAccessToken, getRefreshToken, getExpiresAt } from 'selectors/auth'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 
 /**
  * Get origin url on the client
@@ -74,8 +73,7 @@ export function checkGuest(store, redirectUrl = '/') {
   return (_, replace, next) => {
     const state = store.getState()
     const isAuthenticated = getIsAuthenticated(state)
-    const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
-    if (isAuthenticated && !isPaymentBeforeChoosingEnabled) {
+    if (isAuthenticated) {
       replace(redirectUrl)
     }
     next()

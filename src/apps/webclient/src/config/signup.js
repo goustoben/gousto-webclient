@@ -5,7 +5,6 @@ export const PaymentMethod = {
 
 export const signupConfig = {
   defaultSteps: ['boxSize', 'postcode', 'delivery'],
-  paymentBeforeChoosingSteps: ['boxSize', 'recipesPerBox', 'postcode', 'delivery'],
   steps: [
     { name: 'boxSize', slug: 'box-size' },
     { name: 'recipesPerBox', slug: 'recipes-per-box' },

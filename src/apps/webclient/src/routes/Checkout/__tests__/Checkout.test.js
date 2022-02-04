@@ -721,102 +721,38 @@ describe('Given Checkout component', () => {
   })
 
   describe('getStepMapping', () => {
-    describe('given isPaymentBeforeChoosingEnabled feature flag', () => {
-      describe('when isPaymentBeforeChoosingEnabled is false', () => {
-        beforeEach(() => {
-          wrapper.setProps({
-            isPaymentBeforeChoosingEnabled: false,
-          })
-        })
-
-        test('then should return default step mapping', () => {
-          const expected = {
-            account: {
-              humanName: 'Account',
-              component: expect.any(Object),
-            },
-            delivery: {
-              humanName: 'Delivery',
-              component: expect.any(Object),
-            },
-            payment: {
-              humanName: 'Payment',
-              component: expect.any(Object),
-            },
-          }
-          expect(wrapper.instance().getStepMapping()).toEqual(expect.objectContaining(expected))
-        })
-      })
-
-      describe('and when isPaymentBeforeChoosingEnabled is true', () => {
-        test('then should add new recipes step to-and-return step mapping', () => {
-          const expected = {
-            account: {
-              humanName: 'Account',
-              component: expect.any(Object),
-            },
-            delivery: {
-              humanName: 'Delivery',
-              component: expect.any(Object),
-            },
-            payment: {
-              humanName: 'Payment',
-              component: expect.any(Object),
-            },
-            recipes: {
-              humanName: 'Recipes',
-              component: <div />,
-            },
-          }
-          wrapper.setProps({
-            isPaymentBeforeChoosingEnabled: true,
-          })
-          expect(wrapper.instance().getStepMapping()).toEqual(expect.objectContaining(expected))
-        })
-      })
+    test('then should return default step mapping', () => {
+      const expected = {
+        account: {
+          humanName: 'Account',
+          component: expect.any(Object),
+        },
+        delivery: {
+          humanName: 'Delivery',
+          component: expect.any(Object),
+        },
+        payment: {
+          humanName: 'Payment',
+          component: expect.any(Object),
+        },
+      }
+      expect(wrapper.instance().getStepMapping()).toEqual(expect.objectContaining(expected))
     })
   })
 
   describe('getNextStepName', () => {
     const steps = ['account', 'delivery', 'payment']
 
-    describe('given checkout steps and feature flag', () => {
-      describe('when isPaymentBeforeChoosingEnabled is false', () => {
-        beforeEach(() => {
-          wrapper.setProps({
-            isPaymentBeforeChoosingEnabled: false,
-          })
-        })
-
-        test('then should return default next step name', () => {
-          const spy = jest.spyOn(wrapper.instance(), 'getStepMapping')
-          wrapper.instance().getNextStep = jest.fn()
-          const getNextStepMock = wrapper
-            .instance()
-            .getNextStep.mockImplementationOnce(() => 'payment')
-          expect(wrapper.instance().getNextStepName(steps, 'currentStep')).toBe('Payment')
-          expect(getNextStepMock).toHaveBeenCalledWith(steps, 'currentStep')
-          expect(spy).toHaveBeenCalled()
-        })
-      })
-
-      describe('when isPaymentBeforeChoosingEnabled is true', () => {
-        beforeEach(() => {
-          wrapper.setProps({
-            isPaymentBeforeChoosingEnabled: true,
-          })
-        })
-
-        test('then should return default next step name', () => {
-          const spy = jest.spyOn(wrapper.instance(), 'getStepMapping')
-          wrapper.instance().getNextStep = jest.fn()
-          const getNextStepMock = wrapper
-            .instance()
-            .getNextStep.mockImplementationOnce(() => 'recipes')
-          expect(wrapper.instance().getNextStepName(steps, 'currentStep')).toBe('Recipes')
-          expect(getNextStepMock).toHaveBeenCalledWith(steps, 'currentStep')
-          expect(spy).toHaveBeenCalled()
-        })
+    describe('given checkout steps', () => {
+      test('then should return default next step name', () => {
+        const spy = jest.spyOn(wrapper.instance(), 'getStepMapping')
+        wrapper.instance().getNextStep = jest.fn()
+        const getNextStepMock = wrapper
+          .instance()
+          .getNextStep.mockImplementationOnce(() => 'payment')
+        expect(wrapper.instance().getNextStepName(steps, 'currentStep')).toBe('Payment')
+        expect(getNextStepMock).toHaveBeenCalledWith(steps, 'currentStep')
+        expect(spy).toHaveBeenCalled()
       })
     })
   })
