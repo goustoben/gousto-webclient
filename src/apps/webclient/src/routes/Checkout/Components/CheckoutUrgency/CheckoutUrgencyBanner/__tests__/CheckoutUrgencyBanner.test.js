@@ -14,8 +14,6 @@ describe('CheckoutUrgencyBanner', () => {
   })
 
   test('renders correctly', () => {
-    expect(wrapper.find('.content').text()).toBe(
-      'Checkout within 9:02 to avoid losing your recipes'
-    )
+    expect(wrapper.text()).toBe('Checkout within 9:02 to avoid losing your recipes')
   })
 })
