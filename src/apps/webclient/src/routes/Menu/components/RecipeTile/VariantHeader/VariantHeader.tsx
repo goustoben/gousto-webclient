@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
+import { useGetAlternativeOptionsForRecipeLight, useStock } from '../../../domains/menu'
+import { useRecipeField } from '../../../context/recipeContext'
 import css from './VariantHeader.css'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -40,13 +41,22 @@ const getTextOverride = (recipeId: string) => {
 }
 
 export const VariantHeader: React.FC<{
-  recipeId: string
   categoryId: string
   originalId: string
-}> = ({ recipeId, categoryId, originalId }) => {
+}> = ({ categoryId, originalId }) => {
   const { isRecipeOutOfStock } = useStock()
-  const isOutOfStock = isRecipeOutOfStock(recipeId)
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
+  const recipeId = useRecipeField<string>('id', null)
+
+  if (!recipeId) {
+    return null
+  }
+
+  const isOutOfStock = isRecipeOutOfStock(recipeId)
+
+  if (isOutOfStock) {
+    return null
+  }
 
   const alternatives = getAlternativeOptionsForRecipe({
     recipeId,
@@ -56,13 +66,12 @@ export const VariantHeader: React.FC<{
     isFromShowcaseMenu: false,
   })
 
-  const textOverride = getTextOverride(recipeId)
-
   // alternatives includes recipe itself, hence checking against `1`
-  if (!alternatives || alternatives.length <= 1 || isOutOfStock) {
+  if (!alternatives || alternatives.length <= 1) {
     return null
   }
 
+  const textOverride = getTextOverride(recipeId)
   const alternativeCount = alternatives.length
   const text = textOverride || `${alternativeCount} options available`
 
@@ -74,7 +83,6 @@ export const VariantHeader: React.FC<{
 }
 
 VariantHeader.propTypes = {
-  recipeId: PropTypes.string.isRequired,
   categoryId: PropTypes.string.isRequired,
   originalId: PropTypes.string.isRequired,
 }

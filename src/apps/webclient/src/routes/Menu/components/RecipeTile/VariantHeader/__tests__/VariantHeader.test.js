@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import * as MenuHooks from 'routes/Menu/domains/menu'
+import * as RecipeContext from '../../../../context/recipeContext'
 import { VariantHeader } from '../VariantHeader'
 
 describe('VariantHeader', () => {
@@ -11,6 +12,7 @@ describe('VariantHeader', () => {
       mockHooks({
         useGetAlternativeOptionsForRecipeLight: null,
         isRecipeOutOfStock: false,
+        recipeId: 'recipe ID',
       })
 
       const wrapper = mount(<VariantHeader />)
@@ -25,6 +27,7 @@ describe('VariantHeader', () => {
           mockHooks({
             useGetAlternativeOptionsForRecipeLight: [],
             isRecipeOutOfStock: false,
+            recipeId: 'recipe ID',
           })
 
           const wrapper = mount(<VariantHeader />)
@@ -39,6 +42,7 @@ describe('VariantHeader', () => {
               { id: '1200-1200', coreRecipeId: '1200', displayName: 'Recipe' },
             ],
             isRecipeOutOfStock: false,
+            recipeId: 'recipe ID',
           })
 
           const wrapper = mount(<VariantHeader />)
@@ -57,6 +61,7 @@ describe('VariantHeader', () => {
               { id: '1234-1234', coreRecipeId: '1234', displayName: 'Alternative Two' }
             ],
             isRecipeOutOfStock: false,
+            recipeId: 'recipe ID',
           })
           wrapper = mount(<VariantHeader />)
         })
@@ -69,8 +74,16 @@ describe('VariantHeader', () => {
           const override = 'Swap for Lean Beef'
 
           beforeEach(() => {
-            // Use one of the hardcoded recipe IDs
-            wrapper = mount(<VariantHeader recipeId="527" />)
+            mockHooks({
+              useGetAlternativeOptionsForRecipeLight: [
+                { id: '1200-1200', coreRecipeId: '1200', displayName: 'Recipe' },
+                { id: '1230-1230', coreRecipeId: '1230', displayName: 'Alternative One' },
+                { id: '1234-1234', coreRecipeId: '1234', displayName: 'Alternative Two' }
+              ],
+              isRecipeOutOfStock: false,
+              recipeId: '527',
+            })
+            wrapper = mount(<VariantHeader />)
           })
 
           test('then it should render the text', () => {
@@ -91,6 +104,7 @@ describe('VariantHeader', () => {
               { id: '1237-1237', coreRecipeId: '1237', displayName: 'Alternative Five' },
             ],
             isRecipeOutOfStock: false,
+            recipeId: 'recipe ID',
           })
 
           const wrapper = mount(<VariantHeader />)
@@ -107,6 +121,7 @@ describe('VariantHeader', () => {
               { id: '1234-1234', coreRecipeId: '1234', displayName: 'Alternative Two' },
             ],
             isRecipeOutOfStock: true,
+            recipeId: 'recipe ID',
           })
           const wrapper = mount(<VariantHeader />)
           expect(wrapper.find('.variantHeader')).toHaveLength(0)
@@ -119,6 +134,7 @@ describe('VariantHeader', () => {
 const mockHooks = ({
   useGetAlternativeOptionsForRecipeLight = [],
   isRecipeOutOfStock = false,
+  recipeId,
 } = {}) => {
   if (useGetAlternativeOptionsForRecipeLight !== undefined) {
     jest.spyOn(MenuHooks, 'useGetAlternativeOptionsForRecipeLight')
@@ -130,5 +146,10 @@ const mockHooks = ({
       .mockImplementation(() => ({
         isRecipeOutOfStock: () => isRecipeOutOfStock,
       }))
+  }
+
+  if (recipeId !== undefined) {
+    jest.spyOn(RecipeContext, 'useRecipeField')
+      .mockImplementation(() => recipeId)
   }
 }
