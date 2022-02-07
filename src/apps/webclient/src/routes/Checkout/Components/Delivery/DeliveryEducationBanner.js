@@ -13,7 +13,6 @@ import React from 'react'
 const DeliveryEducationBanner = () => (
   <>
     <Box
-      data-testing="delivery-education-banner"
       bg={Color.Informative_50}
       paddingH={4}
       paddingV={3.5}
@@ -30,9 +29,7 @@ const DeliveryEducationBanner = () => (
           <Icon name="cool" variant={IconVariant.Inherit} />
         </Text>
         <Space size={4} direction="horizontal" />
-        <Text size={2} data-testing="delivery-education-info">
-          Insulated packaging keeps your ingredients fresh for up to 12 hours.
-        </Text>
+        <Text size={2}>Insulated packaging keeps your ingredients fresh for up to 12 hours.</Text>
       </Box>
       <Space size={2} />
       <Box display="flex" AlignItems={AlignItems.Center}>
@@ -40,9 +37,7 @@ const DeliveryEducationBanner = () => (
           <Icon name="delivery" variant={IconVariant.Inherit} />
         </Text>
         <Space size={4} direction="horizontal" />
-        <Text size={2} data-testing="delivery-education-info">
-          Delivery slot updates on the day via text and email.
-        </Text>
+        <Text size={2}>Delivery slot updates on the day via text and email.</Text>
       </Box>
     </Box>
     <Space size={8} />
