@@ -10,7 +10,6 @@ import { getMenuCategoryIdForDetails } from '../../selectors/menuRecipeDetails'
 import { Image } from '../../Recipe/Image'
 import { Title } from '../Recipe'
 import { RecipeRating } from '../../Recipe/Rating'
-import { useStock } from '../../domains/menu'
 import { useAllCollections } from '../../domains/collections'
 import Carousel from './Carousel'
 
@@ -50,7 +49,6 @@ export const Detail = (props) => {
     isFromShowcaseMenu,
   } = props
 
-  const { isRecipeOutOfStock } = useStock()
   const allCollections = useAllCollections()
   const fiveRecipesEnabled = useShouldShowPaintedDoorButton(id)
 
@@ -61,7 +59,6 @@ export const Detail = (props) => {
       .find((collectionObj) => collectionObj.recipesInCollection?.indexOf(id) > -1).id
   }
 
-  const isOutOfStock = isRecipeOutOfStock(id)
   const recipeLegalDetailId = chosenSideRecipeId || id
   const titleClass = classnames(titleCss.containerLG, {
     [titleCss.detailHeading]: view === 'detail',
@@ -110,9 +107,9 @@ export const Detail = (props) => {
         </div>
         <div className={css.imageContainer}>
           {isFineDineIn ? (
-            <Carousel images={media} isOutOfStock={isOutOfStock} />
+            <Carousel images={media} />
           ) : (
-            <Image media={media} title={title} view={view} isOutOfStock={isOutOfStock} />
+            <Image media={media} title={title} view={view} />
           )}
         </div>
         <div className={css.sectionPanel}>
@@ -175,7 +172,6 @@ export const Detail = (props) => {
             {!fiveRecipesEnabled && (
               <DetailAddRecipe
                 id={id}
-                isOutOfStock={isOutOfStock}
                 view={view}
                 surcharge={surcharge}
                 position={position}

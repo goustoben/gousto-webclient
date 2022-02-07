@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from '../../../domains/menu'
-import { useRecipeField } from '../../../context/recipeContext'
+import { useRecipeId } from '../../../context/recipeContext'
 import css from './VariantHeader.css'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -46,7 +46,7 @@ export const VariantHeader: React.FC<{
 }> = ({ categoryId, originalId }) => {
   const { isRecipeOutOfStock } = useStock()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
-  const recipeId = useRecipeField<string>('id', null)
+  const recipeId = useRecipeId()
 
   if (!recipeId) {
     return null
