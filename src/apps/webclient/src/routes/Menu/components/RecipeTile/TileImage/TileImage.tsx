@@ -3,10 +3,10 @@ import React from 'react'
 import { useStock } from 'routes/Menu/domains/menu'
 import { useRecipeField } from 'routes/Menu/context/recipeContext'
 import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
-import { VariantHeader } from 'routes/Menu/Recipe/VariantHeader'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 
 import { Image, CookingTimeIcon } from '../../Recipe'
+import { VariantHeader } from '../VariantHeader'
 import css from './TileImage.css'
 
 const isOnBiggerScreen = (deviceType: string) =>
@@ -34,7 +34,7 @@ export const TileImage: React.FC<{
       </div>
 
       {showVariantHeader && (
-        <VariantHeader recipeId={recipeId} categoryId={categoryId} originalId={originalId} />
+        <VariantHeader categoryId={categoryId} originalId={originalId} />
       )}
     </button>
   )

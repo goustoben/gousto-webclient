@@ -2,12 +2,12 @@ import React, { SyntheticEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
-import { VariantHeader } from '../../Recipe/VariantHeader'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useCurrentCollectionId } from '../../domains/collections'
 import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
+import { VariantHeader } from './VariantHeader'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
 import css from './RecipeTile.css'
@@ -75,7 +75,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
       {
         // mobile banner needs to sit outside of TileImage
         deviceType === DeviceType.MOBILE && (
-          <VariantHeader recipeId={recipeId} categoryId={categoryId} originalId={originalId} />
+          <VariantHeader categoryId={categoryId} originalId={originalId} />
         )
       }
 

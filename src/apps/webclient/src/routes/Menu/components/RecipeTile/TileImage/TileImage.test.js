@@ -1,11 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
-import { VariantHeader } from 'routes/Menu/Recipe/VariantHeader/VariantHeader'
 import * as RecipeContext from 'routes/Menu/context/recipeContext'
 import * as MenuHook from 'routes/Menu/domains/menu'
 import { Image } from '../../Recipe'
 import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
+import { VariantHeader } from '../VariantHeader'
 import { TileImage } from './TileImage'
 import css from './TileImage.css'
 
@@ -58,7 +58,6 @@ describe('<TileImage />', () => {
       <TileImage categoryId="abcde" originalId="foo bar" />
     )
     expect(wrapper.find(VariantHeader).length).toEqual(1)
-    expect(wrapper.find(VariantHeader).prop('recipeId')).toEqual('1234')
     expect(wrapper.find(VariantHeader).prop('categoryId')).toEqual('abcde')
     expect(wrapper.find(VariantHeader).prop('originalId')).toEqual('foo bar')
   })
