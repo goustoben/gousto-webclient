@@ -13,30 +13,28 @@ const CheckoutButton = ({
   children,
   variant,
   noHorizontalPadding,
-}) => {
-  return (
-    <Button
-      colorVariant={
-        variant === 'secondary' ? ButtonColorVariant.Secondary : ButtonColorVariant.PrimaryButton
-      }
-      type="submit"
-      disabled={!!(isDisabled || isLoading)}
-      onClick={onClick}
-      onKeyDown={onClick}
-      data-testing={testingSelector}
-      width={isFullWidth && '100%'}
-      height="3rem"
-    >
-      {isLoading ? (
-        <span className={css.loaderContainer}>
-          <Loader color="White" />
-        </span>
-      ) : (
-        children
-      )}
-    </Button>
-  )
-}
+}) => (
+  <Button
+    colorVariant={
+      variant === 'secondary' ? ButtonColorVariant.Secondary : ButtonColorVariant.PrimaryButton
+    }
+    type="submit"
+    disabled={!!(isDisabled || isLoading)}
+    onClick={onClick}
+    onKeyDown={onClick}
+    data-testing={testingSelector}
+    width={isFullWidth && '100%'}
+    height="3rem"
+  >
+    {isLoading ? (
+      <span className={css.loaderContainer}>
+        <Loader color="White" />
+      </span>
+    ) : (
+      children
+    )}
+  </Button>
+)
 
 CheckoutButton.propTypes = {
   onClick: PropTypes.func,
