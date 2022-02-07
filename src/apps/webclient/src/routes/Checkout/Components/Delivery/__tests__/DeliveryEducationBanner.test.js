@@ -10,13 +10,20 @@ describe('DeliveryEducationBanner', () => {
   })
 
   test('should renders properly', () => {
+    // console.log(wrapper.debug())
     const expectedInsulatedPackaging =
       'Insulated packaging keeps your ingredients fresh for up to 12 hours.'
     const expectedDeliverySlot = 'Delivery slot updates on the day via text and email.'
 
-    expect(wrapper.hasClass('deliveryEducationBanner')).toBeTruthy()
-    expect(wrapper.find('.deliverySection')).toHaveLength(2)
-    expect(wrapper.find('.deliverySection p').at(0).text()).toEqual(expectedInsulatedPackaging)
-    expect(wrapper.find('.deliverySection p').at(1).text()).toEqual(expectedDeliverySlot)
+    expect(wrapper.find('[data-testing="delivery-education-banner"]')).toBeTruthy()
+    // expect(wrapper.find('.deliverySection')).toHaveLength(2)
+    expect(wrapper.find('[data-testing="delivery-education-banner"]').children()).toHaveLength(3)
+
+    expect(wrapper.find('[data-testing="delivery-education-info"]').at(0).text()).toEqual(
+      expectedInsulatedPackaging
+    )
+    expect(wrapper.find('[data-testing="delivery-education-info"]').at(1).text()).toEqual(
+      expectedDeliverySlot
+    )
   })
 })

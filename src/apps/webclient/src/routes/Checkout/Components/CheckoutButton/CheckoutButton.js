@@ -1,6 +1,6 @@
+import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
 import React from 'react'
-import classNames from 'classnames'
 import { Loader } from 'goustouicomponents'
 import css from './CheckoutButton.css'
 
@@ -14,21 +14,18 @@ const CheckoutButton = ({
   variant,
   noHorizontalPadding,
 }) => {
-  const className = classNames(css.cta, {
-    [css.isDisabled]: isDisabled,
-    [css.isFullWidth]: isFullWidth,
-    [css.secondary]: variant === 'secondary',
-    [css.noHorizontalPadding]: noHorizontalPadding,
-  })
-
   return (
-    <button
-      className={className}
-      data-testing={testingSelector}
-      disabled={isDisabled || isLoading}
+    <Button
+      colorVariant={
+        variant === 'secondary' ? ButtonColorVariant.Secondary : ButtonColorVariant.PrimaryButton
+      }
+      type="submit"
+      disabled={!!(isDisabled || isLoading)}
       onClick={onClick}
       onKeyDown={onClick}
-      type="submit"
+      data-testing={testingSelector}
+      width={isFullWidth && '100%'}
+      height="3rem"
     >
       {isLoading ? (
         <span className={css.loaderContainer}>
@@ -37,7 +34,7 @@ const CheckoutButton = ({
       ) : (
         children
       )}
-    </button>
+    </Button>
   )
 }
 
