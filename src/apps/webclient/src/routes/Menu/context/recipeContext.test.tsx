@@ -14,6 +14,7 @@ import {
   useRecipeBrandTagline,
   useRecipeBrandAvailabilityTagline,
   useRecipeBrandAvailabilityTag,
+  useRecipeId,
 } from './recipeContext'
 
 describe('recipeContext', () => {
@@ -88,6 +89,44 @@ describe('recipeContext', () => {
         const { result } = render(['media', 'another-field-that-isnt-there'], defaultValue)
 
         expect(result.current).toEqual(defaultValue)
+      })
+    })
+
+    describe('when there is no Recipe context around', () => {
+      const render = (field: string | string[], defaultValue?: any) =>
+        renderHook(() => useRecipeField(field, defaultValue))
+
+      describe('when called with default value', () => {
+        test('returns default value', () => {
+          const { result } = render('id', 'default_recipe_id')
+          expect(result.current).toBe('default_recipe_id')
+        })
+      })
+
+      describe('when called without default value', () => {
+        test('returns undefined', () => {
+          const { result } = render('id')
+          expect(result.current).toBe(undefined)
+        })
+      })
+    })
+  })
+
+  describe('useRecipeId', () => {
+    describe('when there is a Recipe context', () => {
+      const render = () => renderHook(() => useRecipeId(), { wrapper })
+
+      test('returns the recipe Id', () => {
+        const { result } = render()
+        expect(result.current).toBe('12345')
+      })
+    })
+
+    describe('when there is no Recipe context', () => {
+      const render = () => renderHook(() => useRecipeId())
+      test('returns null', () => {
+        const { result } = render()
+        expect(result.current).toBe(null)
       })
     })
   })

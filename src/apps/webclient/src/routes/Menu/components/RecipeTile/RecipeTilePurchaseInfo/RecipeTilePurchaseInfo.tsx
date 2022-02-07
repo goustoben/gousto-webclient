@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
-import { useRecipeField, useRecipeIsFineDineIn } from 'routes/Menu/context/recipeContext'
+import { useRecipeId, useRecipeIsFineDineIn } from 'routes/Menu/context/recipeContext'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
 import { AddRecipeButton } from '../AddRecipeButton'
 import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
@@ -22,11 +22,16 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
   fdiStyling,
 }) => {
   const deviceType = useDeviceType()
-  const recipeId = useRecipeField<string>('id', null)
+  const recipeId = useRecipeId()
   const surcharge = useGetSurchargeForRecipeId(recipeId)
   const isFineDineIn = useRecipeIsFineDineIn()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const { isRecipeOutOfStock } = useStock()
+
+  if (!recipeId) {
+    return null
+  }
+
   const isOutOfStock = isRecipeOutOfStock(recipeId)
 
   if (isOutOfStock) {

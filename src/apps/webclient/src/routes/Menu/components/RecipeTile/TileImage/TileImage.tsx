@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { useStock } from 'routes/Menu/domains/menu'
-import { useRecipeField } from 'routes/Menu/context/recipeContext'
-import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
+import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 
 import { Image, CookingTimeIcon } from '../../Recipe'
@@ -16,16 +14,12 @@ export const TileImage: React.FC<{
   categoryId: string
   originalId: string
 }> = ({ categoryId, originalId }) => {
-  const recipeId = useRecipeField<string>('id', null)
-  const { isRecipeOutOfStock } = useStock()
-  const isOutOfStock = isRecipeOutOfStock(recipeId)
   const deviceType = useDeviceType()
-
   const showVariantHeader = isOnBiggerScreen(deviceType)
 
   return (
     <button type="button" className={css.imageWrapper}>
-      <SoldOutOverlay isOutOfStock={isOutOfStock} />
+      <SoldOutOverlay />
 
       <div className={css.recipeImageAndCookingTimeWrapper}>
         <Image lazy className={css.imageStyle} />

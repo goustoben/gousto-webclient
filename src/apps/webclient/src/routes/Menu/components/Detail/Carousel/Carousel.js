@@ -8,7 +8,7 @@ import { ContentMask } from './ContentMask'
 import { Arrow } from './Arrow'
 import css from './Carousel.css'
 
-const Carousel = ({ images, media, view, dots, arrows, isOutOfStock }) => (
+const Carousel = ({ images, media, view, dots, arrows }) => (
   (images.size)
     ? (
       <div className={css.carousel}>
@@ -28,13 +28,13 @@ const Carousel = ({ images, media, view, dots, arrows, isOutOfStock }) => (
                 <p className={css.imageTitle}>{image.get('title')}</p>
                 <p className={css.imageDescription}>{image.get('description')}</p>
               </ContentMask>
-              <Image media={image.get('urls')} title={image.get('title')} view={view} isOutOfStock={isOutOfStock} lazy={false} />
+              <Image media={image.get('urls')} title={image.get('title')} view={view} lazy={false} />
             </div>
           ))}
         </SlickCarousel>
       </div>
     ) : (
-      <Image media={media} isOutOfStock={isOutOfStock} />
+      <Image media={media} />
     )
 )
 
@@ -44,7 +44,6 @@ Carousel.propTypes = {
   view: PropTypes.oneOf(['fineDineInDetail']),
   dots: PropTypes.bool,
   arrows: PropTypes.bool,
-  isOutOfStock: PropTypes.bool
 }
 
 Carousel.defaultProps = {
@@ -53,7 +52,6 @@ Carousel.defaultProps = {
   view: 'fineDineInDetail',
   dots: true,
   arrows: true,
-  isOutOfStock: false
 }
 
 export default Carousel

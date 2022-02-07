@@ -3,11 +3,11 @@ import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 import GoustoImage from 'Image'
-import { SoldOutOverlay } from '../SoldOutOverlay'
+import { SoldOutOverlay } from '../../components/Recipe/SoldOutOverlay'
 
 import css from './Image.css'
 
-const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, isOutOfStock, lazy }) => (
+const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, lazy }) => (
   <div
     className={classnames(
       { [css[view]]: ['list', 'fineDineIn'].indexOf(view) !== -1 },
@@ -20,7 +20,9 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, isOut
     onMouseEnter={mouseEnter}
     onMouseLeave={mouseLeave}
   >
-    {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />) }
+    {/* Showing SoldOutOverlay when the recipe does not have media is slightly
+    misleading. Maybe it is worth bringing special replacer instead? */}
+    {(media.size > 0) && (<SoldOutOverlay />)}
     {(media.size > 0) && (
       <GoustoImage
         media={media}
@@ -40,7 +42,6 @@ Image.propTypes = {
   mouseEnter: PropTypes.func,
   mouseLeave: PropTypes.func,
   maxMediaSize: PropTypes.number,
-  isOutOfStock: PropTypes.bool,
   lazy: PropTypes.bool,
 }
 
@@ -49,7 +50,6 @@ Image.defaultProps = {
   view: 'grid',
   mouseEnter: () => {},
   mouseLeave: () => {},
-  isOutOfStock: false,
   maxMediaSize: null,
   lazy: true
 }

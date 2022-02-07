@@ -25,6 +25,10 @@ export const useRecipeField = <TField = unknown>(
 ): TField => {
   const recipe = useRecipe()
 
+  if (!recipe) {
+    return notSetValue as TField
+  }
+
   if (Array.isArray(fieldSelector)) {
     return recipe.getIn(fieldSelector, notSetValue)
   }
@@ -33,6 +37,7 @@ export const useRecipeField = <TField = unknown>(
 }
 
 export const useRecipeTitle = (): string => useRecipeField<string>('title')
+export const useRecipeId = (): string | null => useRecipeField<string | null>('id', null)
 
 export const useRecipeCookingTime = (): number => {
   const recipe = useRecipe()

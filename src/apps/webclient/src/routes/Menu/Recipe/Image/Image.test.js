@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import { Image } from 'routes/Menu/Recipe/Image'
 import GoustoImage from 'Image'
-import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
+import { SoldOutOverlay } from '../../components/Recipe/SoldOutOverlay'
 
 describe('<Image />', () => {
   let wrapper
