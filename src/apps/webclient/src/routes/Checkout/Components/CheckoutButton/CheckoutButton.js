@@ -24,7 +24,6 @@ const CheckoutButton = ({
     onKeyDown={onClick}
     data-testing={testingSelector}
     width={isFullWidth && '100%'}
-    height="3rem"
   >
     {isLoading ? (
       <span className={css.loaderContainer}>
