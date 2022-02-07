@@ -10,7 +10,6 @@ describe('DeliveryEducationBanner', () => {
   })
 
   test('should renders properly', () => {
-    // console.log(wrapper.debug())
     const expectedInsulatedPackaging =
       'Insulated packaging keeps your ingredients fresh for up to 12 hours.'
     const expectedDeliverySlot = 'Delivery slot updates on the day via text and email.'
