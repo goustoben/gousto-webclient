@@ -1,13 +1,34 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import classnames from 'classnames'
 import GoustoImage from 'Image'
-import { SoldOutOverlay } from '../../components/Recipe/SoldOutOverlay'
+import classnames from 'classnames'
+import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
+import css from './DetailImage.css'
 
-import css from './Image.css'
+type DetailImageProps = {
+  media: Immutable.List<
+    Partial<{
+      width: number
+      src: string
+    }>
+  >
+  title: string
+  view: 'list' | 'fineDineIn' | 'fineDineInDetail' | 'simple' | 'detail' | 'grid'
+  mouseEnter: () => void
+  mouseLeave: () => void
+  maxMediaSize: number | null
+  lazy: boolean
+}
 
-const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, lazy }) => (
+export const DetailImage = ({
+  media,
+  title = '',
+  view = 'grid',
+  mouseEnter = () => {},
+  mouseLeave = () => {},
+  maxMediaSize = null,
+  lazy = true,
+}: DetailImageProps) => (
   <div
     className={classnames(
       { [css[view]]: ['list', 'fineDineIn'].indexOf(view) !== -1 },
@@ -15,15 +36,15 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, lazy 
       { [css.detail]: view === 'detail' },
       { [css.fineDineInDetail]: view === 'fineDineInDetail' },
       { [css.simple]: view === 'simple' },
-      css.placeholder,
+      css.placeholder
     )}
     onMouseEnter={mouseEnter}
     onMouseLeave={mouseLeave}
   >
     {/* Showing SoldOutOverlay when the recipe does not have media is slightly
     misleading. Maybe it is worth bringing special replacer instead? */}
-    {(media.size > 0) && (<SoldOutOverlay />)}
-    {(media.size > 0) && (
+    {media.size > 0 && <SoldOutOverlay />}
+    {media.size > 0 && (
       <GoustoImage
         media={media}
         title={title}
@@ -31,27 +52,6 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, lazy 
         className={css.recipeImg}
         lazy={lazy}
       />
-    ) }
+    )}
   </div>
 )
-
-Image.propTypes = {
-  media: PropTypes.instanceOf(Immutable.List),
-  title: PropTypes.string,
-  view: PropTypes.string,
-  mouseEnter: PropTypes.func,
-  mouseLeave: PropTypes.func,
-  maxMediaSize: PropTypes.number,
-  lazy: PropTypes.bool,
-}
-
-Image.defaultProps = {
-  title: '',
-  view: 'grid',
-  mouseEnter: () => {},
-  mouseLeave: () => {},
-  maxMediaSize: null,
-  lazy: true
-}
-
-export { Image }

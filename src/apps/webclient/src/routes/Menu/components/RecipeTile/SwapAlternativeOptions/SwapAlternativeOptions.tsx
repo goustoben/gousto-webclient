@@ -1,13 +1,11 @@
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { RecipeAlternativeOptions } from 'routes/Menu/Recipe/VariantRecipeList'
 import { EscapeKeyPressed } from 'utils/DOMEvents'
 import { useClickOutside } from './useClickOutside'
 import { useTracking } from './useTracking'
 import css from './SwapAlternativeOptions.css'
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const classnames = require('classnames')
 
 export const SwapAlternativeOptions: React.FC<{
   recipeId: string

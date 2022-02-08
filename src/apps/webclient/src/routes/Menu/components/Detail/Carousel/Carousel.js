@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import SlickCarousel from 'Carousel'
-import { Image } from '../../../Recipe/Image'
+import { DetailImage as Image } from '../DetailImage'
 import { ContentMask } from './ContentMask'
 import { Arrow } from './Arrow'
 import css from './Carousel.css'

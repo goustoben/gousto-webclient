@@ -1,0 +1,1 @@
+export { DetailImage } from './DetailImage'

@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from '../../../domains/menu'
 import { useRecipeId } from '../../../context/recipeContext'
 import css from './VariantHeader.css'
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const classnames = require('classnames')
 
 const LEAN_BEEF_OVERRIDES = [
   '390',

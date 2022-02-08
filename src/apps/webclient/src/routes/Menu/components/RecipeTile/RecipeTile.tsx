@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from 'react'
 import { useDispatch } from 'react-redux'
+import classnames from 'classnames'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
@@ -11,8 +12,6 @@ import { VariantHeader } from './VariantHeader'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
 import css from './RecipeTile.css'
-
-const classnames = require('classnames')
 
 type RecipeTileProps = {
   recipeId: string
