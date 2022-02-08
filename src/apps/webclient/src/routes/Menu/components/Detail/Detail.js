@@ -3,28 +3,20 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { useSelector } from 'react-redux'
-
-import { useShouldShowPaintedDoorButton } from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
-import { FiveRecipesAddRecipeButton } from 'components/FiveRecipesPaintedDoorTest/FiveRecipesAddRecipeButton'
 import { getMenuCategoryIdForDetails } from '../../selectors/menuRecipeDetails'
 import { Image } from '../../Recipe/Image'
 import { Title } from '../Recipe'
 import { RecipeRating } from '../../Recipe/Rating'
 import { useAllCollections } from '../../domains/collections'
 import Carousel from './Carousel'
-
 import { RecipeTag } from '../RecipeTag'
-
 import { RecipeDisclaimer } from './RecipeDisclaimer'
 import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
 import { DetailPerPortionContainer } from './DetailPerPortion'
 import { DetailAttributeGridContainer } from './DetailAttributeGrid'
 import { DetailAddRecipe } from './DetailAddRecipe'
-
 import css from './Detail.css'
-import cssDetailAddRecipe from './DetailAddRecipe/DetailAddRecipe.css'
-
 import titleCss from './DetailTitle.css'
 import { RecipeAlternativeOptions } from '../../Recipe/VariantRecipeList'
 
@@ -50,7 +42,6 @@ export const Detail = (props) => {
   } = props
 
   const allCollections = useAllCollections()
-  const fiveRecipesEnabled = useShouldShowPaintedDoorButton(id)
 
   let currentCollectionId = useSelector(getMenuCategoryIdForDetails)
   if (!currentCollectionId) {
@@ -159,25 +150,13 @@ export const Detail = (props) => {
         </div>
         {isFromShowcaseMenu ? null : (
           <div className={css.stickyContainer}>
-            {fiveRecipesEnabled && (
-              <div
-                className={classnames(
-                  cssDetailAddRecipe.addRecipeWrapper,
-                  cssDetailAddRecipe.dropperContainer
-                )}
-              >
-                <FiveRecipesAddRecipeButton onDetailsPage />
-              </div>
-            )}
-            {!fiveRecipesEnabled && (
-              <DetailAddRecipe
-                id={id}
-                view={view}
-                surcharge={surcharge}
-                position={position}
-                buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
-              />
-            )}
+            <DetailAddRecipe
+              id={id}
+              view={view}
+              surcharge={surcharge}
+              position={position}
+              buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
+            />
           </div>
         )}
       </div>

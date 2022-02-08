@@ -17,7 +17,6 @@ import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
 import { CollectionHeaderWrapper } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
-import { FiveRecipesStartOfJourneyModal } from '../../../components/FiveRecipesPaintedDoorTest/FiveRecipesStartOfJourneyModal'
 
 export class MenuRecipesPage extends PureComponent {
   async componentDidMount() {
@@ -138,7 +137,6 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div data-testing="menuRecipes">
-        <FiveRecipesStartOfJourneyModal />
         {
           showLoading
             ? (

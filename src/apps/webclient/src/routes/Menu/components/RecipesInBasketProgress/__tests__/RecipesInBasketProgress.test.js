@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 import { RecipesInBasketProgressPresentation } from '../RecipesInBasketProgress.presentation'
 
-jest.mock('components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest', () =>
-  ({
-    use5RecipesPaintedDoorTest: jest.fn(() => ({ maxRecipes: 4 })),
-  })
-)
-
 describe('RecipesInBasketProgressPresentation Component', () => {
   let wrapper
   const PROPS = {

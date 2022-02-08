@@ -10,7 +10,6 @@ import {
   VerticalStages,
   VerticalStagesItem,
 } from 'goustouicomponents'
-import { FiveRecipesHotjarTrigger } from 'components/FiveRecipesPaintedDoorTest/FiveRecipesHotjarTrigger'
 import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
 import { ReferAFriend } from './components/ReferAFriend'
 import { AwinPixel } from './components/AwinPixel'
@@ -86,7 +85,6 @@ class OrderConfirmation extends PureComponent {
 
     return (
       <LayoutPageWrapper padding="large-screens-only">
-        <FiveRecipesHotjarTrigger />
         <div
           className={css.pageContent}
           data-testing="orderConfirmationContainer"

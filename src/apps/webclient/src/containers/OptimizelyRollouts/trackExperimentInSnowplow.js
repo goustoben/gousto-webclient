@@ -49,18 +49,6 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
-  radishes_5_recipes_painted_door_test_subscribed_user_web_enabled: {
-    id: 'radishes_5_recipes_painted_door_test_subscribed_user_web_enabled',
-    name: 'Radishes - Five Recipes Painted Door Test - Subscribed Users',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
-  radishes_5_recipes_painted_door_test_sign_up_user_web_enabled: {
-    id: 'radishes_5_recipes_painted_door_test_sign_up_user_web_enabled',
-    name: 'Radishes - Five Recipes Painted Door Test - New Users',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
 }
 
 const getConfig = (featureName) => {

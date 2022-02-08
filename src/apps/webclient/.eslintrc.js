@@ -192,6 +192,7 @@ const ruleDefinitions = {
 }
 
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
   extends: [
     'airbnb',

@@ -1,16 +1,16 @@
 {
   "name": "@features/recipe-tile",
   "version": "1.0.0",
-  "main": "index.tsx",
+  "main": "src/index.tsx",
   "scripts": {
     "dev": "echo 'No devtool",
-    "lint": "echo 'No linter'",
+    "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
     "test-unit": "echo 'No unit tests'"
   },
   "peerDependencies": {
     "react": "17.0.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.38"
+    "@types/react": "17.0.38"
   }
 }

@@ -49,6 +49,8 @@ const baseConfig = {
       path.resolve('./src'),
       path.resolve('./src/components'),
       path.resolve('./libs/goustouicomponents/src'),
+      // Because this is an absolute path, it **won't** discover node_modules at the top level of the project.
+      // We'll need to revisit this should we enable hoisting
       path.resolve('./node_modules'),
     ],
     extensions: ['.js', '.json', '.ts', '.tsx', '.css', '.scss'],
