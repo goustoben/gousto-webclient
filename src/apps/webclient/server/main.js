@@ -194,7 +194,7 @@ app.use(processRequest)
 
 const port = __ENV__ === 'local' ? 8080 : 80
 
-if (__HMR__) {
+if (__DEV__) {
   enableHmr()
 }
 

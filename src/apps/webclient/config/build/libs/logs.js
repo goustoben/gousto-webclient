@@ -1,9 +1,10 @@
-const { build, envName, apiName, domain, clientProtocol, runningEnv, publicPath, hmrEnabled } = require('./webpack-env-vars.js')
+const { build, envName, apiName, domain, clientProtocol, runningEnv, publicPath } = require('./webpack-env-vars.js')
 
 const logBuildInfo = (isDevelopmentBuild) => console.log(`
 
 ================
 isDevelopmentBuild = ${isDevelopmentBuild}
+HMR ENABLED: ${isDevelopmentBuild}
 CLIENT BUILD: ${build},
 CLIENT PROTOCOL: ${clientProtocol},
 DOMAIN: ${domain},
@@ -14,7 +15,6 @@ NODE_ENV=${process.env.NODE_ENV}
 POINTING TO API ENVIRONMENT: ${apiName},
 PUBLIC PATH: ${publicPath},
 RUNNING ENVIRONMENT: ${runningEnv}
-HMR ENABLED: ${hmrEnabled}
 ================`)
 
 module.exports = {

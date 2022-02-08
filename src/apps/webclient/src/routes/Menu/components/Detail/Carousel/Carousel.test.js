@@ -1,12 +1,9 @@
 import React from 'react'
 import Immutable from 'immutable'
-
 import { shallow } from 'enzyme'
-
-import { Image } from 'routes/Menu/Recipe/Image'
 import SlickCarousel from 'Carousel'
+import { DetailImage as Image } from '../DetailImage'
 import { ContentMask } from './ContentMask'
-
 import Carousel from './Carousel'
 
 describe('<Carousel />', () => {

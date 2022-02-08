@@ -1,4 +1,5 @@
 module.exports = {
+  displayName: '@apps/webclient',
   testEnvironment: 'jsdom',
   preset: 'ts-jest',
   coverageReporters: [
@@ -45,7 +46,6 @@ module.exports = {
   globals: {
     __DEV__: false,
     __PROD__: true,
-    __HMR__: false,
     __SERVER__: false,
     __CLIENT__: true,
     __CLOUDFRONT_URL__: 'test.com',
@@ -69,5 +69,5 @@ module.exports = {
       tsconfig: '<rootDir>/tsconfig.tests.json',
       isolatedModules: true
     }
-  }
+  },
 }

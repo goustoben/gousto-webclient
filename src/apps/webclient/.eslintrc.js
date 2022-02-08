@@ -245,7 +245,6 @@ module.exports = {
     "window": true,
     "__DEV__": false,
     "__PROD__": false,
-    "__HMR__": false,
     "__SERVER__": false,
     "__CLIENT__": false,
     "__ENV__": false,

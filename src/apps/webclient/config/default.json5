@@ -13,7 +13,6 @@
   "datadog_rum_sdk_token": "",
   "datadog_rum_sdk_app_id": "",
   "datadog_enabled": false,
-  "hmr_enabled": false,
   "recaptcha_referral_public_key": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
   "recaptcha_referral_private_key": "",
   "running_env": "local",

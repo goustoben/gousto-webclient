@@ -20,7 +20,6 @@ This file is used by node-config (see below for more info).
   "api_token": "inbound_frontend_access_key_goes_here",
   "auth_client_secret": "frontend_service_secret_goes_here",
   "checkout_pk": "checkout_pk_test_token_goes_here",
-  "hmr_enabled": true, // enable this for local Hot module replacement
   "client_dev_server_enabled": true, // enable this for webpack dev server configuration in the client build
 }
 ```
