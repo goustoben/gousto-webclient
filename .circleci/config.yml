@@ -104,22 +104,22 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - mnt/ramdisk/package.json
-            - mnt/ramdisk/yarn.lock
+            - root/.circlerc
             - mnt/ramdisk/.yarn
-            - mnt/ramdisk/.yarnrc.yml
-            - mnt/ramdisk/tsconfig.json
+            - mnt/ramdisk/ansible
+            - mnt/ramdisk/ci_scripts
+            - mnt/ramdisk/cloudformation
+            - mnt/ramdisk/images
+            - mnt/ramdisk/package.json
+            - mnt/ramdisk/scripts
+            - mnt/ramdisk/setup
             - mnt/ramdisk/src
             - mnt/ramdisk/tests
-            - mnt/ramdisk/regression
-            - mnt/ramdisk/ansible
-            - mnt/ramdisk/cloudformation
+            - mnt/ramdisk/.eslintrc.js
+            - mnt/ramdisk/.yarnrc.yml
             - mnt/ramdisk/service.yml
-            - mnt/ramdisk/setup
-            - mnt/ramdisk/scripts
-            - mnt/ramdisk/ci_scripts
-            - mnt/ramdisk/images
-            - root/.circlerc
+            - mnt/ramdisk/tsconfig.json
+            - mnt/ramdisk/yarn.lock
 
   install-dependencies:
     docker: *gousto_node_image

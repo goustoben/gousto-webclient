@@ -56,6 +56,8 @@ jobs:
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: yarn install --immutable
+    - name: Lint modules
+      run: yarn workspaces foreach --verbose run lint
     - name: Lint
       run: ./scripts/run-eslint-ci.sh
       working-directory: src/apps/webclient
