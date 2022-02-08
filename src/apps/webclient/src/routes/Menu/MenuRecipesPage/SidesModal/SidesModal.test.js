@@ -5,6 +5,8 @@ import { user } from 'routes/Menu/apis/sides.hook.mock'
 import Modal from 'react-modal'
 import { SidesModal } from './SidesModal'
 
+jest.setTimeout(10000)
+
 Modal.setAppElement(document.body)
 
 describe('<SideModal />', () => {

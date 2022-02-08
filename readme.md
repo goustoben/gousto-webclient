@@ -111,7 +111,7 @@ You will then be able to run `yarn install`
 
 ## Tests
 
-### Unit tests
+### Unit tests - webclient
 
 ```bash
 # run unit tests
@@ -123,6 +123,30 @@ $ yarn run test:jest:watch
 
 # watch one unit test
 $ yarn run test:jest:watch ./path/to/file.test.js
+```
+
+### Unit tests - modules
+
+(preferred)
+
+```bash
+# run unit tests
+$ yw @features/recipe-tile test:unit
+```
+
+OR
+
+```bash
+# run unit tests
+$ yarn run test:unit --selectProjects @features/recipe-tile
+```
+
+OR
+
+```bash
+# run unit tests
+$ cd src/modules/features/recipe-tile
+$ yarn run test:unit
 ```
 
 ### Cypress (regression) tests

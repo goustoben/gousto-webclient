@@ -12,6 +12,6 @@ export type Props = {
 
 export function RecipeTile() {
   return (
-    <p className={css.testModule}>Recipe tile</p>
+    <p data-testid="recipe-tile" className={css.testModule}>Recipe tile</p>
   )
 }
