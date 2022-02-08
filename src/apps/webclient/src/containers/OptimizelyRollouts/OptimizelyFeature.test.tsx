@@ -1,3 +1,5 @@
+// This is to pass the type check for jest-dom extending expect
+import '@testing-library/jest-dom';
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { safeJestMock } from '_testing/mocks'

@@ -6,9 +6,7 @@ import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
 import { RecipeHolder } from '../RecipeHolder'
 import css from './RecipeList.css'
-import { use5RecipesPaintedDoorTest } from '../../../../../components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest'
 import { useBasketRequiredFeatureEnabled } from '../../../hooks/useBasketRequiredFeatureEnabled'
-import { FiveRecipesRecipeList } from '../../../../../components/FiveRecipesPaintedDoorTest/FiveRecipesRecipeList'
 
 const RecipeList = ({
   maxRecipesNum,
@@ -33,8 +31,6 @@ const RecipeList = ({
       detailVisibilityChange(menuRecipesStore.getIn([recipeIds, 'id']))
     }
   }
-  const { isEnabled, hasSeenOnMenu } = use5RecipesPaintedDoorTest()
-  const fiveRecipesEnabled = isEnabled && !hasSeenOnMenu
 
   if (filledSlots > maxRecipesNum) {
     const e = new Error(`Invalid number of recipes: ${filledSlots}. Invalid Array Length`)
@@ -70,13 +66,11 @@ const RecipeList = ({
           ))
       }
 
-      {fiveRecipesEnabled ? (
-        <FiveRecipesRecipeList view={view} browser={browser} filledRecipes={filledSlots} />
-      ) : (
+      {
         Array.from({ length: emptySlots }).map((_, index) => (
           <RecipeHolder data-testing="empty" view={view} key={index} browserType={browser} />
         ))
-      )}
+      }
 
       {isDesktop ? <span className={css.arrowRight} /> : ''}
     </div>

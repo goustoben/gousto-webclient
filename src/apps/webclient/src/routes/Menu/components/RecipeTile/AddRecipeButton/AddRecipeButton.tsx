@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useBasket, useIsRecipeInBasket } from 'routes/Menu/domains/basket'
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
-import { useShouldShowPaintedDoorButton } from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
-import { FiveRecipesAddRecipeButton } from 'components/FiveRecipesPaintedDoorTest/FiveRecipesAddRecipeButton'
 import { getRecipeButtonProps } from './recipeButtonPropsSelector'
 import css from './AddRecipeButton.css'
 
@@ -16,8 +14,6 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) =>
   const disabled = reachedLimit && !isInBasket
 
   const buttonProps = getRecipeButtonProps(isInBasket)
-
-  const fiveRecipesEnabled = useShouldShowPaintedDoorButton(recipeId)
 
   const buttonAction: React.EventHandler<SyntheticEvent<unknown>> = (e) => {
     e.stopPropagation()
@@ -42,8 +38,6 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) =>
       buttonAction(e)
     }
   }
-
-  if (fiveRecipesEnabled) return <FiveRecipesAddRecipeButton recipeId={recipeId} />
 
   return (
     <button

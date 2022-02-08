@@ -2,20 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { mount } from 'enzyme'
-
-import { RecipesInBasketProgressContent} from '..'
+import { RecipesInBasketProgressContent } from '..'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }))
-
-jest.mock('components/FiveRecipesPaintedDoorTest/use5RecipesPaintedDoorTest', () =>
-  ({
-    use5RecipesPaintedDoorTest: jest.fn(() => ({ maxRecipes: 4 })),
-  })
-)
 
 describe('RecipesInBasketProgressContent', () => {
   let wrapper

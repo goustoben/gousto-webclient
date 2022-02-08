@@ -2,7 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
-import * as UseShouldShowPaintedDoorButton from 'components/FiveRecipesPaintedDoorTest/useShouldShowPaintedDoorButton'
 import { Title } from '../../Recipe'
 import { Detail } from '../Detail'
 import { DetailContainer } from '../DetailContainer'
@@ -49,12 +48,8 @@ describe('<Detail />', () => {
   )
 
   let wrapper
-  let useShouldShowPaintedDoorButton
 
   beforeEach(() => {
-    useShouldShowPaintedDoorButton = jest.spyOn(UseShouldShowPaintedDoorButton, 'useShouldShowPaintedDoorButton')
-    useShouldShowPaintedDoorButton.mockReturnValue(false)
-
     wrapper = shallow(DETAIL)
   })
 
@@ -223,27 +218,6 @@ describe('<Detail />', () => {
 
     test('should render Carousel', () => {
       expect(wrapper.find('Carousel')).toHaveLength(1)
-    })
-  })
-
-  describe('When user is in the experiment', () => {
-    beforeEach(() => {
-      useShouldShowPaintedDoorButton.mockReturnValue(true)
-      wrapper = shallow(DETAIL)
-    })
-
-    test('should render FiveRecipesAddRecipeButton', () => {
-      expect(wrapper.find('FiveRecipesAddRecipeButton')).toHaveLength(1)
-    })
-  })
-  describe('When user is NOT in the experiment', () => {
-    beforeEach(() => {
-      useShouldShowPaintedDoorButton.mockReturnValue(false)
-      wrapper = shallow(DETAIL)
-    })
-
-    test('should render FiveRecipesAddRecipeButton', () => {
-      expect(wrapper.find('FiveRecipesAddRecipeButton')).toHaveLength(0)
     })
   })
 })

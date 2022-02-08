@@ -20,7 +20,6 @@ import {
   HIDE_PROMO_CODE_TEXT
 } from './displayOptionsProps'
 import { DetailsCheckoutButton } from './DetailsCheckoutButton'
-import { RecipesAmount } from './RecipesAmount'
 
 class Details extends React.Component {
   getCtaText = (numRecipes) => {
@@ -78,6 +77,7 @@ class Details extends React.Component {
     const ctaText = this.getCtaText(numRecipes)
     const showSecondCta = (numRecipes > 1 && numRecipes < 4) && shouldDisplayFullScreenBoxSummary
     const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText && !showSecondCta
+    const { maxRecipesNum } = config.basket
     let btnClassName = css.ctaButton
     if (shouldDisplayFullScreenBoxSummary) {
       btnClassName = css.stickyButton
@@ -104,11 +104,7 @@ class Details extends React.Component {
           {
             numRecipes === 0 && (
               <p>
-                Add up to
-                {' '}
-                <RecipesAmount />
-                {' '}
-                recipes to create your Gousto box. The more you add, the lower the price per portion.
+                Add up to {maxRecipesNum} recipes to create your Gousto box. The more you add, the lower the price per portion.
               </p>
             )
           }
