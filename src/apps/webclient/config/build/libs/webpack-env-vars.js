@@ -1,5 +1,4 @@
 const nodeConfig = require('node-config')
-const childProcess = require('child_process')
 
 const apiName = nodeConfig.get('api_name')
 const apiToken = nodeConfig.get('api_token')
@@ -17,7 +16,6 @@ const datadogEnabled = nodeConfig.get('datadog_enabled')
 const domain = nodeConfig.get('domain')
 const endpoints = nodeConfig.get('endpoints')
 const envName = nodeConfig.get('environment_name')
-const hmrEnabled = nodeConfig.get('hmr_enabled')
 const recaptchaReferralPrivateKey = nodeConfig.get('recaptcha_referral_private_key')
 const recaptchaReferralPublicKey = nodeConfig.get('recaptcha_referral_public_key')
 const runningEnv = nodeConfig.get('running_env')
@@ -38,7 +36,6 @@ const webpackEnvVarsBase = {
   __DOMAIN__: JSON.stringify(domain),
   __ENDPOINTS__: JSON.stringify(endpoints),
   __ENV__: JSON.stringify(envName),
-  __HMR__: hmrEnabled,
   __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
   __TEST__: false,
@@ -50,7 +47,6 @@ const webpackEnvVarsDev = {
   __CLIENT__: true,
   __DEV__: JSON.stringify('development'),
   __DOMAIN__: JSON.stringify(domain),
-  __HMR__: true,
   __PROD__: false,
   __SERVER__: false,
   __TEST__: false,
@@ -60,7 +56,7 @@ const webpackEnvVarsDev = {
 const webpackEnvVarsClient = {
   ...webpackEnvVarsBase,
   __CLIENT__: true,
-  __DEV__: build === ('development' || 'hmr'),
+  __DEV__: build === 'development',
   __PROD__: build === 'production',
   __SERVER__: false,
   __TEST__: false,
@@ -97,7 +93,6 @@ module.exports = {
   domain,
   endpoints,
   envName,
-  hmrEnabled,
   publicPath,
   recaptchaReferralPrivateKey,
   recaptchaReferralPublicKey,

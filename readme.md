@@ -46,7 +46,6 @@ $ yarn install
 $ cd src/apps/webclient # OR yw webclient <command> (see above)
 
 # 6. Start the main webclient in development mode
-# For hot module reload see [Detailed guide](./docs/detailed-setup.md) to setup.
 $ yarn build:client
 $ yarn dev
 ```

@@ -32,7 +32,7 @@ Running a development instance of Webclient on a developer machine is a two-step
 
 First, the server build is executed. Once it's completed, successfully, the server is started and then the client build is invoked via a KOA plugin from the server application code in: `src/server/main.js` which imports `src/src/config/globals.js` (which includes a lot of the injected environment variables).
 
-If HMR is enabled (see `hmr_enabled` environment variable) then on each change in the client sourcecode a rebuild of the client module is triggered.
+HMR is enabled by default in development mode - each change in the **client** sourcecode a rebuild of the client module is triggered.
 
 Deployed builds
 ---------------
@@ -101,7 +101,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "datadog_rum_sdk_token": "",
   "domain": "",
   "environment_name": "",
-  "hmr_enabled": false,
   "recaptcha_referral_private_key": "",
   "recaptcha_referral_public_key": "",
   "running_env": "",
@@ -266,17 +265,6 @@ Used as a key (`list['local] vs list['production']`) for optimizely configuratio
 More often used as a value to drive conditional logic, i.e. for logging.
 
 Referenced ~20 files.
-
-hmr_enabled
------------
-```
-    boolean: true | false
-```
-(Aliased by `__HMR__`, `hmrEnabled` in the code).
-
-Specifies if HMR is enabled within this build of Webclient. (Local builds only)
-
-Referenced in: `src/server/template.js` and `src/server/main.js`
 
 recaptcha_referral_private_key
 ------------------------------

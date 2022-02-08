@@ -59,7 +59,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
         window.__initialState__ = ${encodeState(initialState)}
       </script>
 
-      ${(__HMR__ || __DEV__) ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
+      ${(__DEV__) ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
       ${(helmetHead && helmetHead.link) ? helmetHead.link.toString() : ''}
       ${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
       ${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}

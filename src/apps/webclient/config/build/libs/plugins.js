@@ -53,29 +53,22 @@ const getProductionClientPlugins = () => {
   return result
 }
 
-const getDevelopmentClientPlugins = (isHmrEnabled) => {
-  const result = [
+const getDevelopmentClientPlugins = () => {
+  return [
     new SimpleProgressWebpackPlugin({
       format: 'compact',
     }),
+    new ReactRefreshWebpackPlugin({
+      overlay: false,
+    }),
   ]
-
-  if (isHmrEnabled) {
-    result.push(
-      new ReactRefreshWebpackPlugin({
-        overlay: false,
-      })
-    )
-  }
-
-  return result
 }
 
-const getClientPlugins = (isDevelopmentBuild = false, isHmrEnabled = false) => {
+const getClientPlugins = (isDevelopmentBuild = false) => {
   const webpackEnvVars = isDevelopmentBuild ? webpackEnvVarsDev : webpackEnvVarsClient
 
   const buildSpecificPlugins = isDevelopmentBuild
-    ? getDevelopmentClientPlugins(isHmrEnabled)
+    ? getDevelopmentClientPlugins()
     : getProductionClientPlugins()
 
   return [...getDefaultPlugins(webpackEnvVars), ...buildSpecificPlugins]

@@ -3,7 +3,7 @@ const path = require('path')
 const { getClientPlugins } = require('./build/libs/plugins')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
-const { build, publicPath, clientDevServerEnabled, hmrEnabled } = require('./build/libs/webpack-env-vars.js')
+const { build, publicPath, clientDevServerEnabled } = require('./build/libs/webpack-env-vars.js')
 const { logBuildInfo } = require('./build/libs/logs')
 const { getClientRules, getClientDevtool, getClientOptimization } = require('./build/libs/rules')
 
@@ -35,7 +35,7 @@ const baseConfig = {
     publicPath,
   },
   optimization: getClientOptimization(isDevelopmentBuild),
-  plugins: getClientPlugins(isDevelopmentBuild, hmrEnabled),
+  plugins: getClientPlugins(isDevelopmentBuild),
   resolve: {
     alias: {
       ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', false),
@@ -110,17 +110,19 @@ const addOverridesForDevBuildConfig = (webpackConfig, _clientDevServerEnabled = 
       port: 8080,
       public: 'frontend.gousto.local',
       watchOptions: { aggregateTimeout: 300, poll: 1000 },
-      writeToDisk: true
+      writeToDisk: true,
     },
   }
 
-  return _clientDevServerEnabled ?  devConfigWithServer : baseDevConfig
+  return _clientDevServerEnabled ? devConfigWithServer : baseDevConfig
 }
 
 const smp = new SpeedMeasurePlugin({
   disable: !process.env.MEASURE,
 })
 
-const config = isDevelopmentBuild ? addOverridesForDevBuildConfig(baseConfig, clientDevServerEnabled) : baseConfig
+const config = isDevelopmentBuild
+  ? addOverridesForDevBuildConfig(baseConfig, clientDevServerEnabled)
+  : baseConfig
 
 module.exports = smp.wrap(config)

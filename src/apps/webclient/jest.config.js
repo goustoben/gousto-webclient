@@ -45,7 +45,6 @@ module.exports = {
   globals: {
     __DEV__: false,
     __PROD__: true,
-    __HMR__: false,
     __SERVER__: false,
     __CLIENT__: true,
     __CLOUDFRONT_URL__: 'test.com',
