@@ -12,7 +12,7 @@ describe('Given PasswordCriteria', () => {
   })
 
   test('should be rendered correctly', () => {
-    expect(wrapper.find('.criteriaContainer').exists()).toBeTruthy()
-    expect(wrapper.find('.errorsList').exists()).toBeTruthy()
+    expect(wrapper.find('[data-testing="criteria-container"]').exists()).toBeTruthy()
+    expect(wrapper.find('[data-testing="errors-list"]').exists()).toBeTruthy()
   })
 })

@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import classNames from 'classnames'
+import {
+  Text,
+  Color,
+  FontWeight,
+  Box,
+  Icon,
+  Space,
+  IconVariant,
+  AlignItems,
+} from '@gousto-internal/citrus-react'
 import { passwordCriteria } from './errors'
-import css from './PasswordCriteria.css'
 
 const max = 'validation.max.string.password'
 const min = 'validation.min.string.password'
@@ -14,24 +22,42 @@ export const PasswordCriteria = ({ password, passwordErrors, showFailedCriteria 
     maxValue ? item.rule !== min : item.rule !== max
   )
 
+  const getCriteriaStyle = (rule) => {
+    if (!passwordErrors.includes(rule) && password) {
+      return {
+        textColor: Color.Success_800,
+        iconName: 'tick',
+        iconVariant: IconVariant.Confirmation,
+      }
+    } else if (showFailedCriteria) {
+      return { textColor: Color.Error_800, iconName: 'close', iconVariant: IconVariant.Error }
+    }
+
+    return { textColor: Color.Inherit, iconName: 'bullet_point', iconVariant: IconVariant.Inherit }
+  }
+
   return (
-    <div className={css.criteriaContainer}>
-      <div className={css.criteriaTitle}>Password requirements:</div>
-      <ul className={css.errorsList}>
+    <Box data-testing="criteria-container">
+      <Text size={1} fontWeight={FontWeight.SemiBold}>
+        Password requirements:
+      </Text>
+      <Space size={2} />
+      <Box data-testing="errors-list" paddingBottom={4}>
         {requirements.map(({ message, rule }) => {
-          const className =
-            !passwordErrors.includes(rule) && password ? css.success : css.defaultMessage
-          const errorClassName =
-            showFailedCriteria && className === css.defaultMessage ? css.error : ''
+          const { textColor, iconName, iconVariant } = getCriteriaStyle(rule)
 
           return (
-            <li key={rule} className={classNames(css.message, className, errorClassName)}>
-              {message}
-            </li>
+            <Box key={rule} display="flex" alignItems={AlignItems.Center}>
+              <Icon name={iconName} variant={iconVariant} />
+              <Space size={2} direction="horizontal" />
+              <Text size={1} color={textColor}>
+                {message}
+              </Text>
+            </Box>
           )
         })}
-      </ul>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
