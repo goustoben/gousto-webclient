@@ -1,7 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import classnames from 'classnames'
-import css from './ReceiptLine.css'
+import {
+  Text,
+  FontWeight,
+  Box,
+  FlexDirection,
+  JustifyContent,
+  Color,
+  Space,
+  AlignItems,
+} from '@gousto-internal/citrus-react'
 
 export const ReceiptLine = ({
   label,
@@ -10,30 +18,112 @@ export const ReceiptLine = ({
   showLineAbove,
   dataTesting,
   isReceiptInCheckout,
-}) => (
-  <div>
-    {
-      showLineAbove
-        ? <div className={classnames(css.horizontalLineAbove, { [css.checkoutLine]: isReceiptInCheckout })} />
-        : null
+}) => {
+  const getLineProps = () => {
+    const defaultProps = {
+      labelProps: {},
+      contentProps: {},
+      spaceSize: 2,
     }
-    <p
-      className={classnames(css.receiptLine,
-        { [css.small]: lineStyle === 'small' },
-        { [css.normal]: lineStyle === 'normal' },
-        { [css.bold]: lineStyle === 'bold' },
-        { [css.primary]: lineStyle === 'primary' },
-        { [css.highlighted]: lineStyle === 'highlighted' },
-        { [css.checkoutPrimary]: lineStyle === 'checkoutPrimary' },
-        { [css.checkoutBold]: lineStyle === 'checkoutBold' },
-        { [css.checkoutNormal]: lineStyle === 'checkoutNormal' },
+
+    const styles = {
+      bold: {
+        labelProps: {
+          fontWeight: FontWeight.Bold,
+          size: 2,
+        },
+        contentProps: {
+          fontWeight: FontWeight.Bold,
+          size: 2,
+        },
+        spaceSize: 2,
+      },
+      primary: {
+        labelProps: {
+          fontWeight: FontWeight.Bold,
+          size: 2,
+          color: Color.Success_600,
+        },
+        contentProps: {
+          fontWeight: FontWeight.Bold,
+          size: 2,
+          color: Color.Success_600,
+        },
+        spaceSize: 2,
+      },
+      highlighted: {
+        labelProps: {
+          size: 2,
+          uppercase: true,
+        },
+        contentProps: {
+          size: 4,
+        },
+        spaceSize: 2,
+      },
+      checkoutBold: {
+        labelProps: {
+          fontWeight: FontWeight.Bold,
+          size: 3,
+        },
+        contentProps: {
+          fontWeight: FontWeight.Bold,
+          size: 3,
+        },
+        spaceSize: 6,
+      },
+      checkoutPrimary: {
+        labelProps: {
+          fontWeight: FontWeight.SemiBold,
+          color: Color.Success_800,
+        },
+        contentProps: {
+          fontWeight: FontWeight.SemiBold,
+          color: Color.Success_800,
+        },
+        spaceSize: 0,
+      },
+      checkoutNormal: { labelProps: {}, contentProps: {}, spaceSize: 0 },
+      truncateLabel: {
+        labelProps: {
+          style: { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+          size: 3,
+        },
+        contentProps: {},
+        spaceSize: 0,
+      },
+    }
+
+    return styles[lineStyle] || defaultProps
+  }
+
+  const { contentProps, labelProps, spaceSize } = getLineProps()
+
+  return (
+    <>
+      {showLineAbove && (
+        <>
+          <Space size={isReceiptInCheckout ? 2 : 1} />
+          <Box height="1px" bg={Color.NeutralGrey_100} />
+          <Space size={isReceiptInCheckout ? 2 : 1} />
+        </>
       )}
-    >
-      <span className={classnames(css.label, { [css.truncateLabel]: lineStyle === 'truncateLabel' })}>{label}</span>
-      <span className={css.content} data-testing={dataTesting}>{children}</span>
-    </p>
-  </div>
-)
+      <Box
+        display="flex"
+        flexDirection={FlexDirection.Row}
+        justifyContent={JustifyContent.SpaceBetween}
+        alignItems={AlignItems.FlexEnd}
+      >
+        {/* eslint-disable react/jsx-props-no-spreading */}
+        <Text {...labelProps}>{label}</Text>
+        <Text data-testing={dataTesting} {...contentProps}>
+          {children}
+        </Text>
+      </Box>
+      <Space size={spaceSize} />
+    </>
+  )
+}
 
 ReceiptLine.propTypes = {
   label: PropTypes.string,
@@ -47,7 +137,7 @@ ReceiptLine.propTypes = {
     'truncateLabel',
     'checkoutPrimary',
     'checkoutBold',
-    'checkoutNormal'
+    'checkoutNormal',
   ]),
   showLineAbove: PropTypes.bool,
   dataTesting: PropTypes.string,
