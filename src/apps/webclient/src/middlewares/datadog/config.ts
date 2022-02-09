@@ -6,10 +6,11 @@ export const RUM_SDK_CLIENT_TOKEN = 'pub5434f4d0f23379cbe71d4b5693ae81a5'
 export const RUM_SDK_APP_ID = '3fc47a59-383f-4906-a976-581959ba13b1'
 
 export const DATADOG_ENABLED_ENVS = ['production']
+export const DATADOG_CLIENT_SAMPLE_RATE = 15
 
 export const commonConfig: Partial<LogsInitConfiguration & RumInitConfiguration> = {
   site: 'datadoghq.eu',
-  sampleRate: 1,
+  sampleRate: DATADOG_CLIENT_SAMPLE_RATE,
   service: 'gousto-webclient',
   env: __ENV__,
   version: __CIRCLE_BUILD_NUM__,

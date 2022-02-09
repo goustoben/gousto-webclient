@@ -4,6 +4,8 @@ import { serverReferAFriend, fetchUserCredit, applyPromo } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as prospectAPI from 'apis/prospect'
+import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 
 import { actionTypes } from 'actions/actionTypes'
 import { placeOrder } from 'actions/trackingKeys'
@@ -40,6 +42,7 @@ import * as orderV2Apis from 'routes/Account/MyDeliveries/apis/orderV2'
 jest.mock('selectors/features')
 
 jest.mock('apis/user', () => ({
+  fetchUser: () => Promise.resolve({ data: { user: { id: 'MOCK_USER_ID' } } }),
   serverReferAFriend: jest.fn(),
   fetchUserCredit: jest.fn(),
   applyPromo: jest.fn(),
@@ -80,6 +83,7 @@ jest.mock('actions/tracking', () => ({
   trackNewOrder: jest.fn(() => ({ action: 'track_new_order' })),
   trackSubscriptionCreated: jest.fn(() => ({ action: 'track_subscription_created' })),
   trackUnexpectedSignup: jest.fn(() => ({ action: 'track_unexpected_signup' })),
+  trackUserAttributes: jest.fn()
 }))
 
 jest.mock('apis/prospect', () => ({
@@ -104,6 +108,18 @@ jest.mock('utils/logger', () => ({
 jest.mock('utils/myDeliveries', () => ({
   transformPendingOrders: jest.fn(),
   transformProjectedDeliveries: jest.fn(),
+}))
+
+jest.mock('@datadog/browser-logs', () => ({
+  datadogLogs: {
+    addLoggerGlobalContext: jest.fn()
+  }
+}))
+
+jest.mock('@datadog/browser-rum', () => ({
+  datadogRum: {
+    addRumGlobalContext: jest.fn()
+  }
 }))
 
 const formValues = {
@@ -150,7 +166,13 @@ const formValues = {
   },
 }
 
+const noOp = () => {}
+
 describe('user actions', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   const [dispatch, getState] = [jest.fn(), jest.fn()]
 
   describe('userClearData', () => {
@@ -160,6 +182,52 @@ describe('user actions', () => {
       userActions.userClearData()(dispatchSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.USER_CLEAR_DATA
+      })
+    })
+  })
+
+  describe('userLoadData', () => {
+    describe('if client-side rendered', () => {
+      beforeEach(() => {
+        userActions.userLoadData()(noOp, () => ({
+          auth: {
+            get: () => 'mock-access-token'
+          }
+        }))
+      })
+
+      test('it adds userID to DD logger context', () => {
+        expect(datadogLogs.addLoggerGlobalContext).toHaveBeenCalledWith('userID', 'MOCK_USER_ID')
+      })
+
+      test('it adds userID to DD RUM context', () => {
+        expect(datadogRum.addRumGlobalContext).toHaveBeenCalledWith('userID', 'MOCK_USER_ID')
+      })
+    })
+
+    describe('if server-side rendered', () => {
+      beforeEach(() => {
+        // eslint-disable-next-line
+        global.__CLIENT__ = false
+
+        userActions.userLoadData()(noOp, () => ({
+          auth: {
+            get: () => 'mock-access-token'
+          }
+        }))
+      })
+
+      afterAll(() => {
+        // eslint-disable-next-line
+        global.__CLIENT__ = true
+      })
+
+      test('DD logger context is not modified', () => {
+        expect(datadogLogs.addLoggerGlobalContext).not.toHaveBeenCalled()
+      })
+
+      test('DD RUM context is not modified', () => {
+        expect(datadogRum.addRumGlobalContext).not.toHaveBeenCalled()
       })
     })
   })
