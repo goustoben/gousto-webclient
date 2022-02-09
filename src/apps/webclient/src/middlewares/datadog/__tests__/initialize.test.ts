@@ -2,10 +2,13 @@ import * as browserLogsSDK from '@datadog/browser-logs'
 import * as RUMSDK from '@datadog/browser-rum'
 
 import { initializeDatadog } from '../initialize'
-import { getMockedCommonConfig } from '../mocks'
-
-// Overriding const declaration so we can reassign it for testing
-declare let __DATADOG_ENABLED__: boolean
+import {
+  DATADOG_ENABLED_ENVS,
+  BROWSER_LOGS_CLIENT_TOKEN,
+  RUM_SDK_APP_ID,
+  RUM_SDK_CLIENT_TOKEN,
+} from '../config'
+import { getClientEnvironment } from 'utils/browserEnvironment'
 
 jest.mock('@datadog/browser-logs', () => ({
   datadogLogs: {
@@ -19,6 +22,10 @@ jest.mock('@datadog/browser-rum', () => ({
   },
 }))
 
+jest.mock('../../../utils/browserEnvironment', () => ({
+  getClientEnvironment: jest.fn(),
+}))
+
 afterAll(() => {
   jest.restoreAllMocks()
 })
@@ -27,31 +34,36 @@ afterEach(() => {
   jest.clearAllMocks()
 })
 
-const mockedSharedConfig = getMockedCommonConfig({ env: 'production' })
-
 describe('Given datadog is enabled', () => {
   beforeEach(() => {
-    // eslint-disable-next-line no-underscore-dangle
-    __DATADOG_ENABLED__ = true
+    ;(getClientEnvironment as jest.Mock).mockReturnValue(DATADOG_ENABLED_ENVS[0])
 
     initializeDatadog()
   })
 
   test('Then it should initialize datadogLogs SDK with the expected config', () => {
     expect(browserLogsSDK.datadogLogs.init).toHaveBeenCalledWith({
-      ...mockedSharedConfig,
-      clientToken: 'BROWSER_LOGS_TOKEN',
+      clientToken: BROWSER_LOGS_CLIENT_TOKEN,
+      env: 'production',
       forwardErrorsToLogs: true,
+      sampleRate: 1,
+      service: 'gousto-webclient',
+      site: 'datadoghq.eu',
+      version: 'MOCK_CIRCLE_BUILD_NUM',
     })
   })
 
   test('Then it should initialize datadogRum SDK with the expected config', () => {
     expect(RUMSDK.datadogRum.init).toHaveBeenCalledWith({
-      ...mockedSharedConfig,
-      applicationId: 'RUM_SDK_APP_ID',
-      clientToken: 'RUM_SDK_TOKEN',
-      trackInteractions: false,
+      applicationId: RUM_SDK_APP_ID,
+      clientToken: RUM_SDK_CLIENT_TOKEN,
       defaultPrivacyLevel: 'mask-user-input',
+      env: 'production',
+      sampleRate: 1,
+      service: 'gousto-webclient',
+      site: 'datadoghq.eu',
+      trackInteractions: false,
+      version: 'MOCK_CIRCLE_BUILD_NUM',
     })
   })
 })
@@ -59,7 +71,7 @@ describe('Given datadog is enabled', () => {
 describe('Given datadog is not enabled', () => {
   beforeEach(() => {
     // eslint-disable-next-line no-underscore-dangle
-    __DATADOG_ENABLED__ = false
+    ;(getClientEnvironment as jest.Mock).mockReturnValue('local')
   })
 
   test('Then it should NOT initialize datadogLogs SDK', () => {
