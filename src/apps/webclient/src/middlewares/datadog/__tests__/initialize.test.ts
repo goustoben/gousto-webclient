@@ -7,6 +7,7 @@ import {
   BROWSER_LOGS_CLIENT_TOKEN,
   RUM_SDK_APP_ID,
   RUM_SDK_CLIENT_TOKEN,
+  DATADOG_CLIENT_SAMPLE_RATE,
 } from '../config'
 import { getClientEnvironment } from 'utils/browserEnvironment'
 
@@ -46,7 +47,7 @@ describe('Given datadog is enabled', () => {
       clientToken: BROWSER_LOGS_CLIENT_TOKEN,
       env: 'production',
       forwardErrorsToLogs: true,
-      sampleRate: 1,
+      sampleRate: DATADOG_CLIENT_SAMPLE_RATE,
       service: 'gousto-webclient',
       site: 'datadoghq.eu',
       version: 'MOCK_CIRCLE_BUILD_NUM',
@@ -59,7 +60,7 @@ describe('Given datadog is enabled', () => {
       clientToken: RUM_SDK_CLIENT_TOKEN,
       defaultPrivacyLevel: 'mask-user-input',
       env: 'production',
-      sampleRate: 1,
+      sampleRate: DATADOG_CLIENT_SAMPLE_RATE,
       service: 'gousto-webclient',
       site: 'datadoghq.eu',
       trackInteractions: false,

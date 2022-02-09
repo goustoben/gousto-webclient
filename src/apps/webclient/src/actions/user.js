@@ -1,5 +1,7 @@
 import moment from 'moment'
 import Immutable from 'immutable'
+import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 
 import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
@@ -303,6 +305,14 @@ function userLoadData() {
 
     if (__CLIENT__) {
       dispatch(trackUserAttributes())
+
+      try {
+        datadogLogs.addLoggerGlobalContext('userID', user.id)
+        datadogRum.addRumGlobalContext('userID', user.id)
+      } catch(err) {
+        // eslint-disable-next-line no-console
+        console.error('Error setting DD context:', err)
+      }
     }
 
     dispatch(subscriptionLoadData())
