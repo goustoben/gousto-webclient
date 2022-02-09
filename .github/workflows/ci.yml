@@ -56,14 +56,16 @@ jobs:
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: yarn install --immutable
-    - name: Lint modules
-      run: yarn workspaces foreach --verbose run lint
-    - name: Lint
+    - name: Lint (modules)
+      run: yarn workspaces foreach --include '@features/*' --verbose run lint
+    - name: Unit test (modules)
+      run: yarn workspaces foreach --include '@features/*' --verbose run test:unit
+    - name: Lint (apps/webclient)
       run: ./scripts/run-eslint-ci.sh
       working-directory: src/apps/webclient
     - name: Typecheck tests
       run: yarn workspace webclient typecheck:tests
-    - name: Run tests
+    - name: Unit test (apps/webclient)
       run: yarn workspace webclient test:jest:ci:coverage
     - name: Compare code health
       run: git fetch origin develop && git diff --name-status origin/develop | node ./scripts/compare-code-health.js develop tmp/artifacts/code_health.json
