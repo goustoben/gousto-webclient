@@ -95,10 +95,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "client_dev_server_enabled": false,
   "client_protocol": "",
   "cloudfront_url": "",
-  "datadog_browser_logs_token": "",
-  "datadog_enabled": false,
-  "datadog_rum_sdk_app_id": "",
-  "datadog_rum_sdk_token": "",
   "domain": "",
   "environment_name": "",
   "recaptcha_referral_private_key": "",
@@ -196,50 +192,6 @@ cloudfront_url
 Assets location (via Cloudfront). Used as a variable in the server code via either: `src/server/template.js` or `src/server/processRequest.js`.
 
 See `newAssetPath` & `getAssetRootUrl` in `src/src/utils/media.js`.
-
-datadog_browser_logs_token
---------------------------
-```
-    string: [datadog browser logs token]
-```
-(Aliased by `__DATADOG_BROWSER_LOGS_TOKEN__`, `datadogBrowserLogsToken` in the code).
-
-Token used when we send browser logs to Datadog API.
-
-See: `src/src/middlewares/datadog/config.ts`
-
-datadog_enabled
----------------
-```
-    boolean: true | false
-```
-(Aliased by `__DATADOG_ENABLED__`, `datadogEnabled` in the code).
-
-Enables / disables Datadog in the application.
-
-Referenced in: `src/src/middlewares/datadog/initialize.ts`
-
-datadog_rum_sdk_app_id
-----------------------
-```
-    string: [datadog real user monitoring sdk app id]
-```
-(Aliased by `__DATADOG_RUM_SDK_APP_ID__`, `datadogRumSdkAppId` in the code).
-
-Application Id used to identify the app when making calls to Datadog, for Real User Monitoring.
-
-Referenced in: `src/src/middlewares/datadog/initialize.ts`
-
-datadog_rum_sdk_token
----------------------
-```
-    string: [datadog real user monitoring token]
-```
-(Aliased by `__DATADOG_RUM_SDK_TOKEN__`, `datadogRumSDKToken` in the code).
-
-Access token used when making calls to Datadog, for Real User Monitoring.
-
-Referenced in: `src/src/middlewares/datadog/initialize.ts`
 
 domain
 ------

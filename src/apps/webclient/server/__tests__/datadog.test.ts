@@ -1,4 +1,5 @@
 import { configureDDTracer } from '../datadog'
+import { DATADOG_ENABLED_ENVS } from '../../src/middlewares/datadog/config'
 
 const mockUse = jest.fn()
 const mockInit = jest.fn(() => ({
@@ -18,7 +19,7 @@ describe('datadog', () => {
 
     describe('when datadog is enabled', () => {
       beforeEach(() => {
-        global.__DATADOG_ENABLED__ = true
+        global.__ENV__ = DATADOG_ENABLED_ENVS[0]
         configureDDTracer()
       })
 
@@ -30,17 +31,17 @@ describe('datadog', () => {
           version: 'MOCK_CIRCLE_BUILD_NUM',
         })
       })
-  
+
       it('configures dd-trace as expected', () => {
         expect(mockUse).toHaveBeenCalledWith('http', {
           blocklist: ['/ping'],
         })
       })
     })
-    
+
     describe('when datadog is not enabled', () => {
       beforeEach(() => {
-        global.__DATADOG_ENABLED__ = false
+        global.__ENV__ = 'local'
         configureDDTracer()
       })
 
@@ -48,6 +49,5 @@ describe('datadog', () => {
         expect(mockInit).not.toHaveBeenCalled()
       })
     })
-
   })
 })
