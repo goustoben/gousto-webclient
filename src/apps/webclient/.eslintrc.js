@@ -291,6 +291,7 @@ module.exports = {
         ...ruleDefinitions, ...{
           '@typescript-eslint/ban-ts-comment': 'warn',
           '@typescript-eslint/no-empty-function': 1,
+          '@typescript-eslint/no-loss-of-precision': 'off', // Disabled until we upgrade to ESLint v7
           '@typescript-eslint/no-var-requires': 1,
           '@typescript-eslint/no-use-before-define': ['warn'],
           '@typescript-eslint/explicit-module-boundary-types': 'off'
