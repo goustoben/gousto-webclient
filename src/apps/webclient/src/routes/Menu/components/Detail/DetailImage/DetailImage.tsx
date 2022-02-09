@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import classnames from 'classnames'
 import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
+import { DetailViewType } from '../types'
 import css from './DetailImage.css'
 
 type DetailImageProps = {
@@ -13,7 +14,7 @@ type DetailImageProps = {
     }>
   >
   title: string
-  view: 'list' | 'fineDineIn' | 'fineDineInDetail' | 'simple' | 'detail' | 'grid'
+  view: DetailViewType
   mouseEnter: () => void
   mouseLeave: () => void
   maxMediaSize: number | null
