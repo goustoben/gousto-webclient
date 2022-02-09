@@ -254,7 +254,6 @@ module.exports = {
     "__CHECKOUT_PK__": false,
     "__RECAPTCHA_RAF_PUBK__": false,
     "__RECAPTCHA_RAF_PVTK__": false,
-    "__TEST__": false,
     "__API_TOKEN__": false,
     "__AUTH_CLIENT_SECRET__": false,
     "__AUTH_CLIENT_ID__": false,

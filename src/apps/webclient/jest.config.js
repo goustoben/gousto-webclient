@@ -57,7 +57,6 @@ module.exports = {
     __API_ENV__: 'production',
     __RUNNING_ENV__: 'live',
     __DOMAIN__: 'gousto.local',
-    __TEST__: true,
     'process.env.NODE_ENV': 'production',
     __ENDPOINTS__: {},
     __DATADOG_ENABLED__: false,

@@ -38,7 +38,6 @@ const webpackEnvVarsBase = {
   __ENV__: JSON.stringify(envName),
   __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
-  __TEST__: false,
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
 
@@ -49,7 +48,6 @@ const webpackEnvVarsDev = {
   __DOMAIN__: JSON.stringify(domain),
   __PROD__: false,
   __SERVER__: false,
-  __TEST__: false,
   'process.env.NODE_ENV': JSON.stringify('development'),
 }
 
@@ -59,7 +57,6 @@ const webpackEnvVarsClient = {
   __DEV__: build === 'development',
   __PROD__: build === 'production',
   __SERVER__: false,
-  __TEST__: false,
   'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
 }
 
@@ -73,7 +70,6 @@ const webpackEnvVarsServer = {
   __PROD__: build === 'production',
   __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
   __SERVER__: true,
-  __TEST__: false,
   'process.env.NODE_ENV': JSON.stringify(build),
 }
 
