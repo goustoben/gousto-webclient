@@ -1,0 +1,53 @@
+@value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
+@value White, Blackberry from 'styles/colors.css';
+@value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
+
+.collectionLinkTile {
+    width: 100%;
+    position: relative;
+    height: 5.8rem;
+    flex-direction: column;
+    background-color: White;
+    margin-top: 0.8rem;
+}
+
+.arrowRightWrapper {
+  height: 100%;
+  display: flex;
+  align-content: center;
+  right: 1rem;
+  position: absolute;
+  width: 1rem;
+}
+
+.arrowRight {
+  position: absolute;
+  top: 2.5rem;
+  composes: fa-basic-class fa-fw fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  cursor: pointer;
+}
+
+.collectionLinkInfo {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.collectionLinkName {
+    margin-left: 1rem;
+}
+
+.collectionLinkCount {
+    margin-left: 0.2em;
+}
+
+.collectionLinkCount, .collectionLinkName{
+    font-family: axiformaFontStack;
+    font-size: sizeS;
+    align-self: center;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
