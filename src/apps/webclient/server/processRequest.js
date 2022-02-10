@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
 const React = require('react')
@@ -107,15 +108,17 @@ const renderHTML = (store, renderProps, url, userAgent, scripts) => {
     />
   )
 
+  const windowExists = canUseWindow()
+
   return new Promise(resolve => {
     const reactHTML = renderToString(components)
-    if (__CLIENT__) {
+    if (windowExists) {
       logger.notice({ message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime) })
     }
     startTime = new Date()
     const helmetHead = __SERVER__ ? Helmet.renderStatic() : Helmet.peek
     const template = htmlTemplate(reactHTML, store.getState(), userAgent, scripts, helmetHead)
-    if (__CLIENT__) {
+    if (windowExists) {
       logger.notice({ message: 'renderHTML/template', elapsedTime: (new Date() - startTime) })
     }
 
