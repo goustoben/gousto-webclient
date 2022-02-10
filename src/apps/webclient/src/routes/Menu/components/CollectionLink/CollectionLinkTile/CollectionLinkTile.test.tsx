@@ -26,8 +26,28 @@ describe('CollectionLinkTile', () => {
     jest.spyOn(Menu, 'useMenu').mockImplementation(
       () =>
         ({
-          getRecipesForCollectionId: (a: string) => ({
-            recipes: Immutable.fromJS(['recipe1', 'recipe2']),
+          getRecipesForCollectionId: () => ({
+            recipes: Immutable.List([
+              {
+                recipe: Immutable.fromJS({
+                  media: {
+                    images: [
+                      {
+                        type: 'mood-image',
+                        title: 'Nice image',
+                        urls: [
+                          {
+                            src: 'https://production-media.gousto.co.uk/cms/mood-image/1457-Butternut-Squash--Coconut-Dal-x700.jpg',
+                            width: 700,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                }),
+              },
+              'recipe2',
+            ]),
           }),
         } as any)
     )
@@ -86,9 +106,7 @@ describe('CollectionLinkTile', () => {
         jest.spyOn(Menu, 'useMenu').mockImplementation(
           () =>
             ({
-              getRecipesForCollectionId: (a: string) => {
-                return { recipes: null }
-              },
+              getRecipesForCollectionId: (a: string) => ({ recipes: null }),
             } as any)
         )
       })
