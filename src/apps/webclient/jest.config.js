@@ -48,7 +48,6 @@ module.exports = {
     __DEV__: false,
     __PROD__: true,
     __SERVER__: false,
-    __CLIENT__: true,
     __CLOUDFRONT_URL__: 'test.com',
     __CLIENT_PROTOCOL__: 'https',
     __CHECKOUT_PK__: '',
