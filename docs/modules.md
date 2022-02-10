@@ -32,7 +32,7 @@ src
   modules
     features
       > these are internal packages for webclient features, owned by individual teams
-    libs
+    library
       > these are pieces of common code that can be treated like internal libraries
 ```
 
@@ -95,4 +95,5 @@ to fix forward.
 |-----------|------------------------------------------------|-------------------------|
 | dev       | Spin up local dev environment for this feature | Yes, in feature modules |
 | lint      | Lint files within module                       | Yes, all                |
-| test-unit | Runs unit tests for module                     | Yes, all                |
+| test:unit | Runs unit tests for module                     | Yes, all                |
+| typecheck | Validates TypeScript in module                 | Yes, all                |

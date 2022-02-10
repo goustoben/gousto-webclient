@@ -10,7 +10,8 @@ export type Props = {
 // Feature modules can depend on media images
 // const webclientMediaImage = require('media/images/box-prices/best-value.png')
 
-export function RecipeTile() {
+export function RecipeTile(props: Props) {
+  console.log(props.bool)
   return (
     <p data-testid="recipe-tile" className={css.testModule}>Recipe tile</p>
   )

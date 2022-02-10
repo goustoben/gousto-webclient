@@ -1766,8 +1766,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@features/recipe-tile@workspace:src/modules/features/recipe-tile"
   dependencies:
+    "@library/import-types": "workspace:*"
     "@testing-library/react": 12.1.2
-    "@types/react": 17.0.38
     jest-css-modules: 2.1.0
   peerDependencies:
     react: 17.0.2
@@ -2284,6 +2284,12 @@ __metadata:
   checksum: 07455477a0123d9a38afb503739eeff2c5424afa8d3dbdcc7f9502f13604488a4b1d9742fc7288832a52a6422cf1e1c0a1d51f69a39052f14d27c9a0420b6629
   languageName: node
   linkType: hard
+
+"@library/import-types@workspace:*, @library/import-types@workspace:src/modules/library/import-types":
+  version: 0.0.0-use.local
+  resolution: "@library/import-types@workspace:src/modules/library/import-types"
+  languageName: unknown
+  linkType: soft
 
 "@mswjs/cookies@npm:^0.1.6":
   version: 0.1.7
@@ -2849,7 +2855,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:^27.0.2":
+"@types/jest@npm:*, @types/jest@npm:27.4.0, @types/jest@npm:^27.0.2":
   version: 27.4.0
   resolution: "@types/jest@npm:27.4.0"
   dependencies:
@@ -2945,7 +2951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.11":
+"@types/react-dom@npm:17.0.11, @types/react-dom@npm:^17.0.11":
   version: 17.0.11
   resolution: "@types/react-dom@npm:17.0.11"
   dependencies:
@@ -10147,6 +10153,9 @@ __metadata:
     "@babel/preset-env": 7.16.11
     "@babel/preset-react": 7.16.7
     "@babel/preset-typescript": 7.16.7
+    "@types/jest": 27.4.0
+    "@types/react": 17.0.38
+    "@types/react-dom": 17.0.11
     "@typescript-eslint/eslint-plugin": 5.10.2
     "@typescript-eslint/parser": 5.10.2
     babel-jest: 27.5.0
