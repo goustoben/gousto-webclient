@@ -36,6 +36,7 @@ import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import { getSessionId } from 'selectors/cookies'
 import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscription'
 import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
@@ -303,7 +304,7 @@ function userLoadData() {
       user
     })
 
-    if (__CLIENT__) {
+    if (canUseWindow()) {
       dispatch(trackUserAttributes())
 
       try {
