@@ -12,6 +12,7 @@ import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode, getTransactionType } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { sendAwinData } from 'actions/awin'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 const collectionRecommendationSlug = 'recommendations'
 
@@ -83,7 +84,7 @@ export const setAwinClickChecksum = (awc) => (
 
 export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) =>
   async (dispatch, getState) => {
-    if (!(globals.client && window.AWIN)) {
+    if (!(canUseWindow() && window.AWIN)) {
       await dispatch(
         feLoggingLogEvent(
           logLevels.error,
