@@ -7,17 +7,6 @@ import css from './Loading.css'
 
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
-export const LoadingTastePreferences = () => (
-  <div>
-    <Image
-      media={getImage('Loading-Icon-building-menu.gif')}
-      title="animation"
-      className={css.tastePreferences}
-    />
-    <p className={css.tastePreferencesContent}><strong>Building your menu</strong></p>
-  </div>
-)
-
 export const LoadingOverlay = () => (
   <Div
     fixed

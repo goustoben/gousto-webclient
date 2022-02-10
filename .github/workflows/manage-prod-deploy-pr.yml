@@ -57,7 +57,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `Production Deploy [owner - @${process.env.AUTHOR_USERNAME}]`,
-              body: `When merging into \`master\` choose **"Create a merge commit"**.\n\nPlease install https://github.com/Gousto/chrome-ext-merge-autoselector\n\n- [ ] ${process.env.COMMIT_MSG} @${process.env.AUTHOR_USERNAME}`,
+              body: `When merging this PR, choose **"Create a merge commit"**. Do not "Squash" this PR!\n\nPlease install https://github.com/Gousto/chrome-ext-merge-autoselector\n\n- [ ] ${process.env.COMMIT_MSG} @${process.env.AUTHOR_USERNAME}`,
               head: "develop",
               base: "master"
             })

@@ -11,10 +11,9 @@ import { JustForYouTutorial } from '../components/JustForYouTutorial'
 import { SubHeaderContainer } from '../components/SubHeader'
 import Loading from '../Loading'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
-import { CapacityInfo } from '../components/CapacityInfo'
-import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
+import { CapacityInfo } from './CapacityInfo'
 import { CollectionHeaderWrapper } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
 
@@ -64,10 +63,21 @@ export class MenuRecipesPage extends PureComponent {
     }
   }
 
+  getModals = () => {
+    const { isLoading } = this.props
+
+    return (
+      <>
+        {!isLoading && <JustForYouTutorial />}
+        <AppModalContainer key="app-modal" />
+        <BasketValidationErrorModalContainer />
+        <MenuSidesModalContainer />
+      </>
+    )
+  }
+
   getMenuRecipeListContent = () => {
     const {
-      isLoading,
-      showLoading,
       stateRecipeCount,
       isSignupReductionEnabled,
       showCommunicationPanel,
@@ -95,9 +105,8 @@ export class MenuRecipesPage extends PureComponent {
         ) : null}
         <SubHeaderContainer />
         <MenuDateRangeContainer variant="mobile" />
-        <BannerTastePreferencesContainer />
 
-        {!showLoading && <CollectionsNavWrapper />}
+        <CollectionsNavWrapper />
 
         <CollectionHeaderWrapper />
 
@@ -111,48 +120,39 @@ export class MenuRecipesPage extends PureComponent {
             {menuLoadingErrorMessage}
           </h2>
         ) : null}
-        { !isLoading && <JustForYouTutorial />}
-        <AppModalContainer key="app-modal" />
-        <BasketValidationErrorModalContainer />
-        <MenuSidesModalContainer />
+
+        {this.getModals()}
       </div>
     )
   }
 
-  getMenuContent = () => {
-    const {
-      userId,
-      shouldShowCapacityInfo
-    } = this.props
-    if (shouldShowCapacityInfo) {
-      return <CapacityInfo userId={userId} />
+  render() {
+    const { showLoading, shouldShowCapacityInfo, userId } = this.props
+
+    if (showLoading) {
+      return (
+        <div data-testing="menuRecipes">
+          <Loading loading />
+        </div>
+      )
     }
 
-    return this.getMenuRecipeListContent()
-  }
-
-  render() {
-    const { showLoading, showTastePreferencesLoading } = this.props
-    const fadeCss = (showLoading) ? css.fadeOut : css.willFade
+    if (shouldShowCapacityInfo) {
+      return (
+        <div data-testing="menuRecipes">
+          <CapacityInfo userId={userId} />
+        </div>
+      )
+    }
 
     return (
       <div data-testing="menuRecipes">
-        {
-          showLoading
-            ? (
-              <Loading
-                loading={showLoading}
-                showTastePreferencesLoading={showTastePreferencesLoading}
-              />
-            )
-            : <div className={fadeCss}>{this.getMenuContent()}</div>
-        }
+        <div className={css.willFade}>{this.getMenuRecipeListContent()}</div>
       </div>
     )
   }
 }
 MenuRecipesPage.propTypes = {
-  showTastePreferencesLoading: PropTypes.bool.isRequired,
   showLoading: PropTypes.bool.isRequired,
   stateRecipeCount: PropTypes.number.isRequired,
   basketOrderLoaded: PropTypes.func.isRequired,

@@ -2,7 +2,6 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from 'actions'
-import { getIsTastePreferencesEnabled } from 'selectors/features'
 import { getUserId } from 'selectors/user'
 import { getBasketOrderId, getNumPortions } from 'selectors/basket'
 import { useCurrentCollectionId } from '../domains/collections'
@@ -23,7 +22,6 @@ const MenuRecipesPageWrapper = (ownProps) => {
   const dispatch = useDispatch()
   const currentCollectionId = useCurrentCollectionId()
 
-  const showTastePreferencesLoading = useSelector(getIsTastePreferencesEnabled)
   const stateRecipeCount = useSelector(getRecipeCount)
   const showLoading = useSelector(isMenuLoading)
   const storeOrderId = useSelector(getBasketOrderId)
@@ -46,7 +44,6 @@ const MenuRecipesPageWrapper = (ownProps) => {
     <MenuRecipesPage
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...ownProps}
-      showTastePreferencesLoading={showTastePreferencesLoading}
       stateRecipeCount={stateRecipeCount}
       menuCurrentCollectionId={currentCollectionId}
       showLoading={showLoading}
