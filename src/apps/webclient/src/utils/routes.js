@@ -1,6 +1,7 @@
 import config from 'config/routes'
 import authActions from 'actions/auth'
 import { getIsAuthenticated, getAccessToken, getRefreshToken, getExpiresAt } from 'selectors/auth'
+import { canUseWindow } from './browserEnvironment'
 
 /**
  * Get origin url on the client
@@ -8,7 +9,7 @@ import { getIsAuthenticated, getAccessToken, getRefreshToken, getExpiresAt } fro
  * @private
  */
 function getOrigin() {
-  if (__CLIENT__) {
+  if (canUseWindow()) {
     return (window.location.origin)
       ? `${window.location.origin}/`
       : ''
