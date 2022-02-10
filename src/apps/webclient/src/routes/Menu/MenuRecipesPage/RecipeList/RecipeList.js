@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import { CollectionLink } from '../../components/CollectionLink'
 import { RecipeTile } from '../../components/RecipeTile'
-import css from './RecipeList.css'
 import { RecipeContextProvider } from '../../context/recipeContext'
 import { CTAToAllRecipesContainer } from '../../Recipe/CTAToAllRecipes'
+import css from './RecipeList.css'
+import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -27,18 +29,21 @@ class RecipeList extends React.PureComponent {
   }
 
   render() {
-    const { recipes, currentCollectionId } = this.props
+    const { recipes, currentCollectionId, isDietaryCollectionLinksEnabled } = this.props
 
     return (
       <div className={css.emeRecipeList}>
-        {recipes.map((value) => (
-          <RecipeContextProvider key={value.recipe.get('id')} value={value.recipe}>
-            <RecipeTile
-              recipeId={value.recipe.get('id')}
-              originalId={value.originalId}
-              categoryId={currentCollectionId}
-            />
-          </RecipeContextProvider>
+        {recipes.map((value, index) => (
+          <React.Fragment key={value.recipe.get('id')}>
+            {isDietaryCollectionLinksEnabled && showDietaryCollectionLinks({collectionId: currentCollectionId, atIndex: index}) && <CollectionLink />}
+            <RecipeContextProvider value={value.recipe}>
+              <RecipeTile
+                recipeId={value.recipe.get('id')}
+                originalId={value.originalId}
+                categoryId={currentCollectionId}
+              />
+            </RecipeContextProvider>
+          </React.Fragment>
         ))}
         <CTAToAllRecipesContainer />
       </div>
@@ -49,7 +54,12 @@ class RecipeList extends React.PureComponent {
 RecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   currentCollectionId: PropTypes.string.isRequired,
-  trackRecipeOrderDisplayed: PropTypes.func.isRequired
+  trackRecipeOrderDisplayed: PropTypes.func.isRequired,
+  isDietaryCollectionLinksEnabled: PropTypes.bool,
+}
+
+RecipeList.defaultProps = {
+  isDietaryCollectionLinksEnabled: false,
 }
 
 export { RecipeList }

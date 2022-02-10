@@ -13,12 +13,6 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
-  kales_remove_cfy_collection: {
-    id: 'kales_remove_cfy_collection',
-    name: 'Kales remove CFY collection',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
   beetroots_menu_basket_required_for_existing_users_web_enabled: {
     id: 'beetroots_menu_basket_required_for_existing_users_web_enabled',
     name: 'Beetroots menu basket required for existing users web enabled',
@@ -46,6 +40,12 @@ const experimentsConfig = {
   beetroots_test_allocation_factory_web: {
     id: 'beetroots_test_allocation_factory_web',
     name: 'Beetroots - Optimizely Rollouts allocation, factory mechanism',
+    variationName: 'Variation',
+    defaultName: 'Control',
+  },
+  kales_dietary_category_links: {
+    id: 'kales_dietary_category_links',
+    name: 'Kales Dietary Category Links',
     variationName: 'Variation',
     defaultName: 'Control',
   },
