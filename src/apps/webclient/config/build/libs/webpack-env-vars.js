@@ -36,7 +36,6 @@ const webpackEnvVarsBase = {
 const webpackEnvVarsDev = {
   ...webpackEnvVarsBase,
   __CLIENT__: true,
-  __DEV__: JSON.stringify('development'),
   __DOMAIN__: JSON.stringify(domain),
   __PROD__: false,
   __SERVER__: false,
@@ -46,7 +45,6 @@ const webpackEnvVarsDev = {
 const webpackEnvVarsClient = {
   ...webpackEnvVarsBase,
   __CLIENT__: true,
-  __DEV__: build === 'development',
   __PROD__: build === 'production',
   __SERVER__: false,
   'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),

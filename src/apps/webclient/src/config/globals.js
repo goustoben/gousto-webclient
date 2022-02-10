@@ -5,7 +5,6 @@ module.exports = {
   secure: __CLIENT_PROTOCOL__ === 'https',
   prod: __PROD__,
   env: __ENV__,
-  dev: __DEV__,
   domain: __DOMAIN__,
   protocol: __CLIENT_PROTOCOL__,
   apiName: __API_ENV__,

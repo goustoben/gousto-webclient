@@ -2,6 +2,7 @@ import moment from 'moment'
 import now from 'performance-now'
 import actions from 'actions'
 import logger from 'utils/logger'
+import { isDev } from 'utils/browserEnvironment'
 import { actionTypes } from 'actions/actionTypes'
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'
@@ -163,7 +164,7 @@ const selectCollectionFromQuery = (query) => (dispatch, getState) => {
 const shouldFetchData = (state, params, force, userMenuVariant) => {
   const {menuRecipes} = state
   const {menuCollections} = state
-  const threshold = (__DEV__) ? 4 : 8
+  const threshold = isDev() ? 4 : 8
   const stale = moment(state.menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
   const requiresClear = requiresMenuRecipesClear(state, params.orderId)
   const isAccessTokenDifferent = getMenuAccessToken(state) !== getAccessToken(state)
