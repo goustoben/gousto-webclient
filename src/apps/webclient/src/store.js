@@ -16,8 +16,8 @@ import { gtmMiddleware } from 'middlewares/tracking/gtm'
 import affiliateWindow from 'middlewares/tracking/affiliateWindow'
 import { dataLayerTracker } from 'middlewares/tracking/dataLayerTracker'
 import persistenceConfig from 'config/storePersistence'
+import { canUseWindow, isDev } from 'utils/browserEnvironment'
 import globals from 'config/globals'
-import { isDev } from 'utils/browserEnvironment'
 
 class GoustoStore {
   constructor() {
@@ -39,12 +39,12 @@ class GoustoStore {
       optimizelyTracker,
     ]
 
-    const reduxDevtoolsInstalled = globals.client && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function' // eslint-disable-line no-underscore-dangle
+    const reduxDevtoolsInstalled = canUseWindow() && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function' // eslint-disable-line no-underscore-dangle
 
     /**
      * If we're a dev build running in the browser, and Redux devtools aren't installed, add a fallback state logger
      */
-    if (globals.client && isDev() && !reduxDevtoolsInstalled) {
+    if (canUseWindow() && isDev() && !reduxDevtoolsInstalled) {
       const stateTransformer = (state) => {
         const newState = {}
         for (const i of Object.keys(state)) {
@@ -60,7 +60,7 @@ class GoustoStore {
       middleware.push(createLogger({ stateTransformer }))
     }
 
-    if (cookies && globals.client) {
+    if (cookies && canUseWindow()) {
       middleware.push(persistenceMiddleware(persistenceConfig, cookies))
     }
 
