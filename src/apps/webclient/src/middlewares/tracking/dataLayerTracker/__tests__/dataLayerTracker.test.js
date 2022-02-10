@@ -1,9 +1,16 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import { dataLayerTracker } from '../dataLayerTracker'
 
+jest.mock('utils/browserEnvironment')
+
 describe('given dataLayerTracker middleware is invoked', () => {
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
+
   const state = {
     routing: {
       locationBeforeTransitions: {
@@ -46,8 +53,7 @@ describe('given dataLayerTracker middleware is invoked', () => {
 
   describe('when not on the client', () => {
     beforeEach(() => {
-      // eslint-disable-next-line no-global-assign
-      __CLIENT__ = false
+      canUseWindow.mockReturnValue(false)
       window.dataLayer = []
     })
 
@@ -64,8 +70,7 @@ describe('given dataLayerTracker middleware is invoked', () => {
 
   describe('when on the client', () => {
     beforeEach(() => {
-      // eslint-disable-next-line no-global-assign
-      __CLIENT__ = true
+      canUseWindow.mockReturnValue(true)
       window.dataLayer = []
     })
 

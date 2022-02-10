@@ -4,6 +4,7 @@ import { getBasketRecipes } from 'selectors/basket'
 import { getRecipeTotalDiscounted, getTotalDiscount, getPricingPromoCode } from 'selectors/pricing'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import { checkoutSteps } from 'routes/Checkout/checkoutConfig'
+import { canUseWindow } from 'utils/browserEnvironment'
 import {
   getUserDetails,
   getProductsValueForSingleRecipeById,
@@ -13,8 +14,8 @@ import {
   getOrderDetails,
 } from './dataLayerTrackerUtils'
 
-const sendDataLayerEvent = (event) => {
-  if (!(__CLIENT__ && window.dataLayer)) {
+export const sendDataLayerEvent = (event) => {
+  if (!(canUseWindow() && window.dataLayer)) {
     return
   }
 
