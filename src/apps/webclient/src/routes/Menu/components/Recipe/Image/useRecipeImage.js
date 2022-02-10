@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { useRecipeField } from 'routes/Menu/context/recipeContext'
 import { findImageUrls } from './findImageUrls'
 
-const getDefaultImage = (srcs) => {
+export const getDefaultImage = (srcs) => {
   if (srcs.size === 0) {
     return null
   }
