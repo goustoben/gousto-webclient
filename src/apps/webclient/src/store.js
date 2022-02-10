@@ -17,6 +17,7 @@ import affiliateWindow from 'middlewares/tracking/affiliateWindow'
 import { dataLayerTracker } from 'middlewares/tracking/dataLayerTracker'
 import persistenceConfig from 'config/storePersistence'
 import globals from 'config/globals'
+import { isDev } from 'utils/browserEnvironment'
 
 class GoustoStore {
   constructor() {
@@ -43,7 +44,7 @@ class GoustoStore {
     /**
      * If we're a dev build running in the browser, and Redux devtools aren't installed, add a fallback state logger
      */
-    if (globals.dev && globals.client && !reduxDevtoolsInstalled) {
+    if (globals.client && isDev() && !reduxDevtoolsInstalled) {
       const stateTransformer = (state) => {
         const newState = {}
         for (const i of Object.keys(state)) {
