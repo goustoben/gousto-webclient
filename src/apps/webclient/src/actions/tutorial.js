@@ -1,5 +1,6 @@
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { tutorialViewedExpireTime } from 'config/cookies'
 import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from './actionTypes'
@@ -15,7 +16,7 @@ export const setTutorialVisible = (name, value) => (
 )
 
 export const persistTutorialViewed = (getState) => {
-  if (__CLIENT__) {
+  if (canUseWindow()) {
     const viewed = getState().tutorial.get('viewed').toJS()
 
     set(Cookies, 'tutorial_viewed', viewed, tutorialViewedExpireTime)

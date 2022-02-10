@@ -4,6 +4,7 @@ import { actionTypes } from 'actions/actionTypes'
 
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { tutorialViewedExpireTime } from 'config/cookies'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 
@@ -26,12 +27,15 @@ jest.mock('config/cookies', () => ({
 
 jest.mock('containers/OptimizelyRollouts')
 
+jest.mock('utils/browserEnvironment')
+
 describe('tutorial actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
 
   beforeEach(() => {
     isOptimizelyFeatureEnabledFactory.mockImplementation(() => async () => false)
+    canUseWindow.mockReturnValue(true)
   })
 
   afterEach(() => {
@@ -102,7 +106,7 @@ describe('tutorial actions', () => {
 
     describe('when on the server', () => {
       beforeEach(() => {
-        global.__CLIENT__ = false
+        canUseWindow.mockReturnValue(false)
       })
 
       test('should not set a cookie', () => {
@@ -114,7 +118,7 @@ describe('tutorial actions', () => {
 
     describe('when on the client', () => {
       beforeEach(() => {
-        global.__CLIENT__ = true
+        canUseWindow.mockReturnValue(true)
       })
 
       test('should set a tutorial viewed cookie with tutorial viewed state', () => {
