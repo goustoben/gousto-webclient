@@ -2139,9 +2139,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gousto-internal/citrus-react@npm:^0.14.0":
-  version: 0.14.1
-  resolution: "@gousto-internal/citrus-react@npm:0.14.1::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.14.1.tgz"
+"@gousto-internal/citrus-react@npm:^0.15.5":
+  version: 0.15.5
+  resolution: "@gousto-internal/citrus-react@npm:0.15.5::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.15.5.tgz"
   dependencies:
     classnames: ^2.3.1
     focus-visible: ^5.2.0
@@ -2149,7 +2149,7 @@ __metadata:
     "@emotion/react": ^11.7.0
     react: ">=16"
     react-modal: ^3.14.3
-  checksum: 5e839cdb0fb7e83c06f5a1e8aab874bc9b2fa487f0f9b9f4a64859a7067f166373c44ea91aae50b98dfd617f021341b90acdf3eb9fbea0ad285861f1ebfcd244
+  checksum: 72755e015b3fe59990d08e7b77edd7f42456248e976750f48435cf5c7a9ddfa90dbeb5227386ee84a0a1998d832d9ac37b98b44a96cd9a8617452a5d5b2e6d14
   languageName: node
   linkType: hard
 
@@ -4020,7 +4020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hoist-non-react-statics@npm:^3.3.0":
+"@types/hoist-non-react-statics@npm:^3.3.0, @types/hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.1
   resolution: "@types/hoist-non-react-statics@npm:3.3.1"
   dependencies:
@@ -4254,6 +4254,17 @@ __metadata:
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
+  languageName: node
+  linkType: hard
+
+"@types/react-async-script@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@types/react-async-script@npm:1.2.1"
+  dependencies:
+    "@types/hoist-non-react-statics": ^3.3.1
+    "@types/react": "*"
+    hoist-non-react-statics: ^3.3.1
+  checksum: 47cb491aad33c13fb5f8e22a8781135a5445d31491b141ec6b7e42d071c3ece2a7cbf0544538fd878d582129bbee8f88adfc7d4010845a696749bdb73cfcd74f
   languageName: node
   linkType: hard
 
@@ -12551,6 +12562,7 @@ __metadata:
     "@storybook/react": ^6.4.18
     "@types/jest": 27.4.0
     "@types/react": 17.0.38
+    "@types/react-async-script": ^1.2.1
     "@types/react-dom": 17.0.11
     "@typescript-eslint/eslint-plugin": 5.10.2
     "@typescript-eslint/parser": 5.10.2
@@ -21493,6 +21505,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.27.0":
+  version: 7.27.0
+  resolution: "react-hook-form@npm:7.27.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17
+  checksum: 643c643e6d52b2427e73853abe0255e39f4c323c87862b1651e7153adaf1f3db27b843dda9ea32306db102d1e9e1e00e49c2ded13705ede0706235b53ef69e24
+  languageName: node
+  linkType: hard
+
 "react-immutable-proptypes@npm:2.1.0":
   version: 2.1.0
   resolution: "react-immutable-proptypes@npm:2.1.0"
@@ -26215,7 +26236,7 @@ __metadata:
     "@datadog/browser-rum": ^3.8.0
     "@datadog/datadog-ci": ^0.17.12
     "@emotion/react": ^11.7.0
-    "@gousto-internal/citrus-react": ^0.14.0
+    "@gousto-internal/citrus-react": ^0.15.5
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@sheerun/mutationobserver-shim": ^0.3.3
@@ -26307,6 +26328,7 @@ __metadata:
     react-copy-to-clipboard: 5.0.1
     react-dom: 17.0.2
     react-helmet: 5.0.3
+    react-hook-form: ^7.27.0
     react-immutable-proptypes: 2.1.0
     react-lazyload: 2.3.0
     react-markdown: 2.5.0

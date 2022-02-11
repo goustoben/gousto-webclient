@@ -24,7 +24,7 @@ const defaultProps = {
 }
 
 export class ReCAPTCHA extends React.Component {
-  state={}
+  state = {}
 
   getValue () {
     if (this.props.grecaptcha && this.state.widgetId !== undefined) {
@@ -93,3 +93,6 @@ export class ReCAPTCHA extends React.Component {
     );
   }
 }
+
+ReCAPTCHA.propTypes = propTypes
+ReCAPTCHA.defaultProps = defaultProps
