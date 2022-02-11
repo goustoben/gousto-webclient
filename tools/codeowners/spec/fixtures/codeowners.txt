@@ -1,0 +1,54 @@
+
+# Foundations owned folders
+/.github/ @Gousto/iOS-Foundations
+/Analytics/ @Gousto/iOS-Foundations
+/Authentication/ @Gousto/iOS-Foundations
+/Core/ @Gousto/iOS-Foundations
+/Frameworks/ @Gousto/iOS-Foundations
+/HTTP/ @Gousto/iOS-Foundations
+/HTTPStubbing/ @Gousto/iOS-Foundations
+/Persistence/ @Gousto/iOS-Foundations
+/Shared/ @Gousto/iOS-Foundations
+/TestingUtilities/ @Gousto/iOS-Foundations
+/FeatureAppKit/ @Gousto/iOS-Foundations
+/Tools/ @Gousto/iOS-Foundations
+/UI/ @Gousto/iOS-Foundations
+/bin/ @Gousto/iOS-Foundations
+/danger/ @Gousto/iOS-Foundations
+/fastlane/ @Gousto/iOS-Foundations
+
+# Foundations owned files
+/Cartfile.* @Gousto/iOS-Foundations
+/.Dependencies.lock @Gousto/iOS-Foundations
+/Gemfile @Gousto/iOS-Foundations
+/Brewfile @Gousto/iOS-Foundations
+/.swiftlint.yml @Gousto/iOS-Foundations
+/.git* @Gousto/iOS-Foundations
+/environment @Gousto/iOS-Foundations
+
+# New trackers should be run via Foundations
+/Shared/Sources/Extensions/Analytics+Platform.swift @Gousto/iOS-Foundations
+/Gousto/Sources/Analytics/Trackers/MulticastTracker.swift @Gousto/iOS-Foundations
+
+# Haricots owned files
+/Account/ @Gousto/iOS-Haricots
+/CustomerManagement/ @Gousto/iOS-Haricots
+/Help/ @Gousto/iOS-Haricots
+
+# Jalapenos owned files
+/Cookbook/ @Gousto/iOS-Jalapenos
+
+# Radishes owned files
+/Marketplace/ @Gousto/iOS-Radishes
+/Menu/ @Gousto/iOS-Radishes
+/OrderManagement/ @Gousto/iOS-Radishes
+
+# Rockets owned files
+/Dashboard/ @Gousto/iOS-Rockets
+/Onboarding/ @Gousto/iOS-Rockets
+/RAF/ @Gousto/iOS-Rockets
+/Subscription/ @Gousto/iOS-Rockets
+/SubscriptionManagement/ @Gousto/iOS-Rockets
+
+# Turnips owned files
+/RecipeFeedback/ @Gousto/iOS-Turnips

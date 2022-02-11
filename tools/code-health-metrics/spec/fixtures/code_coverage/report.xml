@@ -1,0 +1,122 @@
+<testsuites tests="2687" failures="0">
+<testsuite name="HelpTests" tests="3" failures="0" time="3.2655881643295288">
+<testcase classname="AvailableMenusViewModelTests" name="testDefaultsToLoading()" time="2.10165798664093018"> </testcase>
+<testcase classname="AvailableMenusViewModelTests" name="testLoadingFromTheViewModelLoadsFromTheMenuDownloader()" time="0.08189809322357178"> </testcase>
+<testcase classname="AvailableMenusViewModelTests" name="testMenusCanBeLoaded()" time="0.08203208446502686"> </testcase>
+</testsuite>
+<testsuite name="RAFTests" tests="20" failures="0" time="1.6082271337509155">
+<testcase classname="RAFControllerTests" name="testRAFViewControllerDidAppear()" time="0.1123809814453125"> </testcase>
+<testcase classname="RAFControllerTests" name="testRAFViewControllerDidSelectCopyLink()" time="0.19384706020355225"> </testcase>
+<testcase classname="RAFControllerTests" name="testRAFViewControllerDidSelectInfo()" time="0.0955890417098999"> </testcase>
+<testcase classname="RAFControllerTests" name="testRAFViewControllerDidSelectShareLink()" time="0.4773370027542114"> </testcase>
+<testcase classname="RAFControllerTests" name="testRAFViewControllerDidSelectTryAgain()" time="0.10069096088409424"> </testcase>
+<testcase classname="RAFFlowCoordinatorTests" name="testPresentationStyleInitializer()" time="1.10683393478393555"> </testcase>
+<testcase classname="RAFFlowCoordinatorTests" name="testViewControllerInitializer()" time="0.07989096641540527"> </testcase>
+<testcase classname="RAFUserActivityResolverTests" name="testCanResolveFailure()" time="0.06484007835388184"> </testcase>
+<testcase classname="RAFUserActivityResolverTests" name="testCanResolveSuccess()" time="0.08450102806091309"> </testcase>
+<testcase classname="RAFUserActivityResolverTests" name="testResolveNotLoggedInFailure()" time="0.0756080150604248"> </testcase>
+<testcase classname="RAFUserActivityResolverTests" name="testResolveSuccess()" time="0.07507705688476562"> </testcase>
+<testcase classname="RAFViewControllerTests" name="testDidSelectInfoDelegate()" time="0.007220029830932617"> </testcase>
+<testcase classname="RAFViewControllerTests" name="testInitWithContext()" time="0.0052950382232666016"> </testcase>
+<testcase classname="RAFViewControllerTests" name="testViewDidAppearDelegate()" time="0.02878403663635254"> </testcase>
+<testcase classname="ReferFriendContextTests" name="testACampaignCanBeLoaded()" time="0.03638195991516113"> </testcase>
+<testcase classname="ReferFriendContextTests" name="testReferralURLCanBeGeneratedFromAUser()" time="0.021490931510925293"> </testcase>
+<testcase classname="ReferFriendContextTests" name="testWhenThereIsNoUserThereIsNoURL()" time="0.014410972595214844"> </testcase>
+<testcase classname="ReferFriendContextTests" name="testWhenTheUserLogsOutTheCampaignDetailsAreCleared()" time="0.02005302906036377"> </testcase>
+<testcase classname="UserCurrentRAFCampaignDetailsRequestTests" name="testValidResponseUpdatesUserPaymentMethod()" time="0.003242015838623047"> </testcase>
+<testcase classname="UserCurrentRAFCampaignDetailsResponseTests" name="testValidResponse()" time="0.004752993583679199"> </testcase>
+</testsuite>
+<testsuite name="MenuAppTests" tests="3" failures="0" time="0.2655881643295288">
+<testcase classname="AvailableMenusViewModelTests" name="testDefaultsToLoading()" time="0.10165798664093018"> </testcase>
+<testcase classname="AvailableMenusViewModelTests" name="testLoadingFromTheViewModelLoadsFromTheMenuDownloader()" time="0.08189809322357178"> </testcase>
+<testcase classname="AvailableMenusViewModelTests" name="testMenusCanBeLoaded()" time="0.08203208446502686"> </testcase>
+</testsuite>
+<testsuite name="RAFUITests" tests="3" failures="0" time="70.24226117134094">
+<testcase classname="RAFUITests" name="testCampaignErrorResponse()" time="22.23599410057068"> </testcase>
+<testcase classname="RAFUITests" name="testCampaignSuccessfulResponse()" time="24.140944004058838"> </testcase>
+<testcase classname="RAFUITests" name="testShareLink()" time="23.865323066711426"> </testcase>
+</testsuite>
+<testsuite name="UITests" tests="81" failures="0" time="5141.622688651085">
+<testcase classname="SignUpDeliveryFlowUITests" name="testAddButtonIsDisabledBeforeYouEnterPostcode()" time="38.148781061172485"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testAddingOneRecipeToBasketDoesNotLetYouProgress()" time="51.06840491294861"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testAddingPromoCodeUpdatesPrices()" time="63.83188593387604"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testAddingRecipeFromReviewScreenUpdates()" time="61.07056498527527"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testAddressValidationAppearsCorrectly()" time="66.33240306377411"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testCardValidationCheckout()" time="131.12944996356964"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testEditingOrderWorks()" time="61.60557997226715"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testLeaveSafelyInstructions()" time="84.61072397232056"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testPersonalDetailsValidation()" time="153.04754209518433"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testReviewOrderAddRecipeTakesYouBackToMenu()" time="54.793724060058594"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testSelectingChangePostcodeNavigatesToPostcodeScreen()" time="51.033812046051025"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testSettingPostcodeSetsDefaultSlot()" time="48.62340593338013"></testcase>
+<testcase classname="SignUpDeliveryFlowUITests" name="testSignUpFlowCreatesOrder()" time="155.74492001533508"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testRestoringCancelledScheduledOrder()" time="61.478399991989136"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testSubscriptionOrderWithProducts()" time="85.13438892364502"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testSubscriptionOrderWithRecipeSpecificSides()" time="104.79860699176788"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testSubscriptionOrderWithRecipeSpecificSidesWhenSidesAPIFailsThenGoToProductPage()" time="68.11127293109894"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testSubscriptionOrderWithRecipeSpecificSidesWhenZeroSidesReturnedThenGoToProductPage()" time="58.24632501602173"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testSubscriptionOrderWithSides()" time="100.71844696998596"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testSubscriptionOrderWithSidesWhenSidesAPIFailsThenGoToProductPage()" time="64.73114001750946"></testcase>
+<testcase classname="OrderSubscriptionUITests" name="testSubscriptionOrderWithSidesWhenZeroSidesReturnedThenGoToProductPage()" time="65.12104594707489"></testcase>
+<testcase classname="FutureDeliveryOrderSkipRecoveryUITests" name="testDiscountReminderForFutureDeliveryAndKeep()" time="58.801648020744324"></testcase>
+<testcase classname="FutureDeliveryOrderSkipRecoveryUITests" name="testDiscountReminderForFutureDeliveryAndSkip()" time="50.36675989627838"></testcase>
+<testcase classname="FutureDeliveryOrderSkipRecoveryUITests" name="testNoIntervention()" time="46.0167590379715"></testcase>
+<testcase classname="FutureDeliveryOrderSkipRecoveryUITests" name="testSkipInOneTapAndKeep()" time="48.91024696826935"></testcase>
+<testcase classname="FutureDeliveryOrderSkipRecoveryUITests" name="testSkipInOneTapAndSkip()" time="47.18815898895264"></testcase>
+<testcase classname="FutureDeliveryOrderSkipRecoveryUITests" name="testValuePropositionForFutureDeliveryAndKeep()" time="50.28504705429077"></testcase>
+<testcase classname="FutureDeliveryOrderSkipRecoveryUITests" name="testValuePropositionForFutureDeliveryAndSkip()" time="48.20502007007599"></testcase>
+<testcase classname="DeeplinkUITests" name="testDeepLinkWorksWithColdAppLaunch()" time="86.89219903945923"></testcase>
+<testcase classname="DeeplinkUITests" name="testMarketplacePreviewIsShown()" time="86.88289999961853"></testcase>
+<testcase classname="DeeplinkUITests" name="testOneOffBoxDefaultValues()" time="45.77392303943634"></testcase>
+<testcase classname="DeeplinkUITests" name="testOneOffBoxSlotIdError()" time="41.24404799938202"></testcase>
+<testcase classname="DeeplinkUITests" name="testOneOffBoxSuccessfull()" time="73.39282894134521"></testcase>
+<testcase classname="DeeplinkUITests" name="testSalesforceRedirectDeepLinkToOneOffBoxDefaultValues()" time="42.604663014411926"></testcase>
+<testcase classname="AccountUITests" name="testAccountDetails()" time="47.97164702415466"></testcase>
+<testcase classname="AccountUITests" name="testAddAddress()" time="90.25054109096527"></testcase>
+<testcase classname="AccountUITests" name="testEditAddress()" time="64.73217499256134"></testcase>
+<testcase classname="AccountUITests" name="testEditPersonalDetails()" time="111.51275897026062"></testcase>
+<testcase classname="DashboardTransactionalEditOrderUITests" name="testAddExtrasToEditStateOrder()" time="62.17410099506378"></testcase>
+<testcase classname="DashboardTransactionalEditOrderUITests" name="testAddRecipeToEditStateOrder()" time="61.96113204956055"></testcase>
+<testcase classname="DashboardTransactionalEditOrderUITests" name="testAddRecipeToEditStateOrderFromCollection()" time="66.26064097881317"></testcase>
+<testcase classname="DashboardTransactionalEditOrderUITests" name="testChangeAddressToScottishOne()" time="58.87152898311615"></testcase>
+<testcase classname="DashboardTransactionalEditOrderUITests" name="testValidateAddedRecipeToEditStateOrderOnDashboard()" time="65.13971900939941"></testcase>
+<testcase classname="OrderJourneyOneOffOrder" name="testCreatingAnOrderWithNoUpcomingDeliveries()" time="44.162933111190796"></testcase>
+<testcase classname="OrderJourneyOneOffOrder" name="testCreatingAnOrderWithUpcomingDeliveries()" time="105.57350301742554"></testcase>
+<testcase classname="OrderJourneyOneOffOrder" name="testItemsFromTheMarketplaceCanBeAdded()" time="121.1356029510498"></testcase>
+<testcase classname="SubscriptionSettingsUITests" name="testPauseSubscriptionButtonUpdatesSubscription()" time="53.43692100048065"></testcase>
+<testcase classname="SubscriptionSettingsUITests" name="testSkipBoxButton()" time="54.100292921066284"></testcase>
+<testcase classname="SubscriptionSettingsUITests" name="testSubscriptionScreenFieldsAreShown()" time="52.27829694747925"></testcase>
+<testcase classname="SubscriptionSettingsUITests" name="testSubscriptionScreenFieldsUpdateSubscription()" time="49.52559995651245"></testcase>
+<testcase classname="DashboardTransactionalNoUpcomingOrdersUITests" name="testFeaturedRecipeNavigatesToRecipeDetailsPage()" time="49.20366096496582"></testcase>
+<testcase classname="DashboardTransactionalNoUpcomingOrdersUITests" name="testMenuPreviewNavigatesToRecipeDetails()" time="51.95407998561859"></testcase>
+<testcase classname="DashboardTransactionalNoUpcomingOrdersUITests" name="testTransactionalDashboardStateIsCorrect()" time="48.75414800643921"></testcase>
+<testcase classname="HelpIntegrationUITests" name="testHelpIntegrationFromAccount()" time="39.626240968704224"></testcase>
+<testcase classname="HelpIntegrationUITests" name="testHelpIntegrationFromDashboardPastOrder()" time="45.186012983322144"></testcase>
+<testcase classname="HelpIntegrationUITests" name="testHelpIntegrationFromPastOrderDetails()" time="48.33805298805237"></testcase>
+<testcase classname="PastDeliveriesUITest" name="testEmptyPastLabelVisibleWhenNoPastOrders()" time="55.339173913002014"></testcase>
+<testcase classname="PastDeliveriesUITest" name="testGetHelpWithBox()" time="54.30156898498535"></testcase>
+<testcase classname="PastDeliveriesUITest" name="testPastOrderRecipeDetailsFromPastOrdersSection()" time="51.25231194496155"></testcase>
+<testcase classname="RecipeDetailsUITests" name="testOutOfStockRecipeCanNotBeAddedToCart()" time="85.79533004760742"></testcase>
+<testcase classname="RecipeDetailsUITests" name="testRecipeIngredientsAllergensAndNutritionalInformation()" time="76.46326994895935"></testcase>
+<testcase classname="CustomisableRecipeUITests" name="testSubscriptionAwaitingCustomisation()" time="139.7052630186081"></testcase>
+<testcase classname="CancelFutureDeliveriesUITests" name="testManageSubscriptionAfterCancellingAllFutureDeliveries()" time="52.23323690891266"></testcase>
+<testcase classname="CancelFutureDeliveriesUITests" name="testPauseSubscriptionAfterCancellingAllFutureDeliveries()" time="55.1723929643631"></testcase>
+<testcase classname="DashboardDeliverySectionUITests" name="testTodaysBoxSectionWithNoUpcoming()" time="46.029473066329956"></testcase>
+<testcase classname="DashboardDeliverySectionUITests" name="testTodaysBoxSectionWithUpcoming()" time="65.79573798179626"></testcase>
+<testcase classname="CookbookDeeplinkUITests" name="testError()" time="34.95155107975006"></testcase>
+<testcase classname="CookbookDeeplinkUITests" name="testItDeepLinksToCookbook()" time="33.99248492717743"></testcase>
+<testcase classname="CookbookDeeplinkUITests" name="testThatDeepLinksToCookbookWork()" time="40.29687690734863"></testcase>
+<testcase classname="ConfirmedOrderUITests" name="testConfirmedOrderDeliveryDetailsSections()" time="48.673370003700256"></testcase>
+<testcase classname="ConfirmedOrderUITests" name="testConfirmedOrderRecipeDetailsFromDeliverySection()" time="58.8707230091095"></testcase>
+<testcase classname="UpcomingDeliveryOrderSkipRecoveryUITests" name="testDiscountReminderForUpcomingDeliveryAndKeep()" time="54.42546796798706"></testcase>
+<testcase classname="UpcomingDeliveryOrderSkipRecoveryUITests" name="testDiscountReminderForUpcomingDeliveryAndSkip()" time="56.81714594364166"></testcase>
+<testcase classname="FrequencyIncentivizationPromo" name="testFrequencyProgressUpdatesWhenAnOrderIsPlaced()" time="99.38480401039124"></testcase>
+<testcase classname="SubscriptionUITests" name="testMarketplacePreviewIsShown()" time="73.83614706993103"></testcase>
+<testcase classname="SignUpDeliveryPostcodeUITests" name="testIncorrectlyFormattedPostcodeDoesNotEnableButton()" time="31.727606058120728"></testcase>
+<testcase classname="SignUpDeliveryPostcodeUITests" name="testIncorrectPasswordDisplaysError()" time="31.387104034423828"></testcase>
+<testcase classname="RAFIntegrationTests" name="testRAFIntegration()" time="41.00032103061676"></testcase>
+<testcase classname="NextDayDeliveryUITests" name="testNextDayDelivery()" time="42.793646931648254"></testcase>
+<testcase classname="RateRecipesDeeplinkUITests" name="testDeepLinkingToTheRateRecipeShowsTheRateRecipeScreen()" time="33.80460703372955"></testcase>
+<testcase classname="CookbookIntegrationUITests" name="testCookbookIntegrationFromTabBar()" time="29.47845709323883"></testcase>
+</testsuite>
+</testsuites>
