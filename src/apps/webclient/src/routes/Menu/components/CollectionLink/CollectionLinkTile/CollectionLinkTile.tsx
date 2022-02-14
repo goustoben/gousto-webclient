@@ -6,9 +6,10 @@ import { useCollections } from '../../../domains/collections'
 import { MenuCollection } from '../../../types'
 import { findImageUrls } from '../../Recipe/Image/findImageUrls'
 import { getDefaultImage } from '../../Recipe/Image/useRecipeImage'
+import { useTracking } from "./tracking"
 
-const extractImageFromRecipe = (recipe: any): string => {
-  const images = recipe?.recipe?.getIn(['media', 'images']) || Immutable.List()
+const extractImageFromRecipe = (recipe: Immutable.Map<string, string>): string => {
+  const images = recipe.getIn(['media', 'images']) || Immutable.List()
   const imageUrls = findImageUrls(images)
   const imageURL = getDefaultImage(imageUrls)
 
@@ -20,19 +21,32 @@ type CollectionLinkProps = {
 }
 
 const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
+  const track = useTracking()
   const { changeCollectionById } = useCollections()
   const { getRecipesForCollectionId } = useMenu()
   const collectionId = collection.get('id')
   const collectionName = collection.get('shortTitle')
-  const numberOfRecipesInCollection = getRecipesForCollectionId(collection.get('id'))?.recipes?.size
 
-  const onClick = useCallback(() => changeCollectionById(collectionId), [collectionId])
+  const recipes = getRecipesForCollectionId(collectionId).recipes
+  const recipe = (recipes.size) ? recipes.first().recipe : null
 
-  if (!numberOfRecipesInCollection) {
+  const onClick = useCallback(() => {
+    if (!recipe) {
+      return
+    }
+
+    changeCollectionById(collectionId)
+
+    track({
+      targetCollectionId: collectionId,
+      recipeId: recipe.get('id'),
+    })
+  }, [collectionId, recipe])
+
+  if (!recipe) {
     return null
   }
 
-  const recipe = getRecipesForCollectionId(collection.get('id')).recipes.first()
   const imageURL = extractImageFromRecipe(recipe)
 
   return (
@@ -52,7 +66,7 @@ const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
           <img className={css.collectionLinkImage} src={imageURL} alt={collectionName} />
         )}
         <p className={css.collectionLinkName}>{collectionName}</p>
-        <p className={css.collectionLinkCount}>({numberOfRecipesInCollection})</p>
+        <p className={css.collectionLinkCount}>({recipes.size})</p>
       </div>
     </div>
   )
