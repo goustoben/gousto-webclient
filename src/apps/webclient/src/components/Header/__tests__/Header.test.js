@@ -7,9 +7,12 @@ import { helpPreLoginVisibilityChange } from 'actions/login'
 import { Header } from 'Header/Header'
 import routesConfig from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { AbandonBasketModal } from '../../AbandonBasketModal'
 
 jest.mock('actions')
 jest.mock('actions/login')
+jest.mock('utils/browserEnvironment')
 
 const { loginVisibilityChange } = actions
 
@@ -41,7 +44,7 @@ describe('Header', () => {
   let wrapper
   const trackNavigationClick = jest.fn()
 
-  beforeEach(() => {
+  const renderHeader = (props = {}) => {
     wrapper = shallow(
       <Header
         loginVisibilityChange={loginVisibilityChange}
@@ -49,9 +52,15 @@ describe('Header', () => {
         closeBoxModalVisibilityChange={() => {}}
         logoutUser={() => {}}
         trackNavigationClick={trackNavigationClick}
+        routing={{ foo: { bar: 123 } }}
+        {...props}
       />,
       { context: { store } }
     )
+  }
+
+  beforeEach(() => {
+    renderHeader()
   })
 
   test('renders the <CookieBanner />', () => {
@@ -193,16 +202,32 @@ describe('Header', () => {
 
   describe('when abandonBasketFeature flag is set to true', () => {
     beforeEach(() => {
-      wrapper.setProps({ abandonBasketFeature: true })
+      window.sessionStorage.removeItem('isNotFirstLoadOfSession')
     })
 
-    describe('and isNotFirstLoadOfSession is not set to true', () => {
+    describe('when window is available', () => {
       beforeEach(() => {
-        window.sessionStorage.removeItem('isNotFirstLoadOfSession')
+        canUseWindow.mockReturnValue(true)
+        renderHeader({ abandonBasketFeature: true })
       })
 
-      test('renders the <AbandonBasketModal />', () => {
-        expect(wrapper.find('Connect(AbandonBasketModal)').exists()).toBe(true)
+      describe('and isNotFirstLoadOfSession is not set to true', () => {
+        test('renders the <AbandonBasketModal />', () => {
+          expect(wrapper.find(AbandonBasketModal).exists()).toBe(true)
+        })
+      })
+    })
+
+    describe('when window is not available', () => {
+      beforeEach(() => {
+        canUseWindow.mockReturnValue(false)
+        renderHeader({ abandonBasketFeature: true })
+      })
+
+      describe('and isNotFirstLoadOfSession is not set to true', () => {
+        test('does not render the <AbandonBasketModal />', () => {
+          expect(wrapper.find(AbandonBasketModal).exists()).toBe(false)
+        })
       })
     })
   })
