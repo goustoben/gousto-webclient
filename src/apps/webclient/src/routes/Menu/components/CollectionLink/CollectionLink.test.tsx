@@ -1,8 +1,11 @@
+import { Provider } from 'react-redux'
 import Immutable from 'immutable'
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import * as Collections from 'routes/Menu/domains/collections'
 import * as Menu from 'routes/Menu/domains/menu'
+import { MenuCollection } from 'routes/Menu/types'
+import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import * as UseDisplayedCollections from './useDietaryCollections'
 import { CollectionLink } from '.'
 import { createCollectionFromDefaultValues } from '../../domains/collections/internal/utils'
@@ -33,17 +36,25 @@ describe('CollectionLink', () => {
       .mockImplementation(() =>
         Immutable.OrderedMap({ a: defaultCollection, b: collectionTwo, c: collectionThree })
       )
+
     jest.spyOn(Collections, 'useCollections').mockImplementation(
       () =>
-        ({
-          changeCollectionById: (a: string) => {},
-        } as any)
+      ({
+        changeCollectionById: (a: string) => { },
+      } as any)
     )
     jest.spyOn(Menu, 'useMenu').mockImplementation(
       () =>
-        ({
-          getRecipesForCollectionId: (a: string) => ({ recipes: Immutable.fromJS(['recipe one']) }),
-        } as any)
+      ({
+        getRecipesForCollectionId: (a: string) => ({
+          recipes: Immutable.List([{
+            recipe: Immutable.Map({
+              id: 'recipe-one'
+            }),
+            originalId: 'recipe-one',
+          }]),
+        }),
+      } as any)
     )
   })
 
@@ -51,38 +62,47 @@ describe('CollectionLink', () => {
     jest.clearAllMocks()
   })
 
-  describe('rendering the CollectionLink', () => {
-    test('title should be displayed', () => {
-      const renderOptions = () => render(<CollectionLink />)
-      renderOptions()
-      const text = screen.getByText('Looking for something?')
-      expect(text).toBeTruthy()
-    })
+  const store = createMockStore({})
+  const renderForTest = () => render(
+    <Provider store={store}>
+      <CollectionLink />
+    </Provider>
+  )
 
-    test('subtitle should be displayed', () => {
-      const renderOptions = () => render(<CollectionLink />)
-      renderOptions()
-      const text = screen.getByText('Explore categories to find the perfect recipes.')
-      expect(text).toBeTruthy()
-    })
-    describe('When there is at least one collection', () => {
-      test('Then the CollectionLinkTile should be rendered for each collection', () => {
-        const renderOptions = () => render(<CollectionLink />)
-        renderOptions()
+  describe('rendering the CollectionLink', () => {
+    describe('when there is at least one collection', () => {
+      test('title should be displayed', () => {
+        renderForTest()
+
+        const text = screen.getByText('Looking for something?')
+        expect(text).toBeTruthy()
+      })
+
+      test('subtitle should be displayed', () => {
+        renderForTest()
+
+        const text = screen.getByText('Explore categories to find the perfect recipes.')
+        expect(text).toBeTruthy()
+      })
+
+      test.only('the CollectionLinkTile should be rendered for each collection', () => {
+        renderForTest()
+
         const components = screen.getAllByRole('button')
         expect(components).toHaveLength(3)
       })
     })
-    describe('When there are not any collections', () => {
+
+    describe('when there are not any collections', () => {
       beforeEach(() => {
         jest
           .spyOn(UseDisplayedCollections, 'useDietaryCollections')
-          .mockImplementation((() => null) as any)
+          .mockImplementation((() => Immutable.OrderedMap<string, MenuCollection>({})))
       })
 
-      test('Then the CollectionLinkTile should not be rendered', () => {
-        const renderOptions = () => render(<CollectionLink />)
-        renderOptions()
+      test('then the CollectionLinkTile should not be rendered', () => {
+        renderForTest()
+
         const components = screen.queryAllByRole('button')
         expect(components).toHaveLength(0)
       })
