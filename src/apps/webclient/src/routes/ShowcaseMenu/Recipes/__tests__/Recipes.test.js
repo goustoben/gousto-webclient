@@ -1,6 +1,9 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+
+import { canUseWindow } from 'utils/browserEnvironment'
+
 import { Recipes } from '../Recipes'
 
 jest.mock('../Recipes.css', () => ({
@@ -11,12 +14,17 @@ jest.mock('../Recipes.css', () => ({
   },
 }))
 
+jest.mock('utils/browserEnvironment')
+
 describe('Recipes', () => {
   let wrapper
   const openRecipeDetails = jest.fn()
   const trackScrollOneStep = jest.fn()
+
   describe('when rendered', () => {
     beforeEach(() => {
+      jest.resetAllMocks()
+
       wrapper = shallow(
         <Recipes
           currentCollectionId="id1"
@@ -69,8 +77,7 @@ describe('Recipes', () => {
 
   describe('when rendered on client', () => {
     beforeEach(() => {
-      // eslint-disable-next-line no-underscore-dangle
-      global.__CLIENT__ = true
+      canUseWindow.mockReturnValue(true)
 
       global.getComputedStyle = jest.fn(() => ({
         fontSize: 16,
@@ -85,11 +92,6 @@ describe('Recipes', () => {
       )
     })
 
-    afterEach(() => {
-      // eslint-disable-next-line no-underscore-dangle
-      delete global.__CLIENT__
-    })
-
     test('then it should pass correct step size', () => {
       const carousel = wrapper.find('ScrollCarousel')
       expect(carousel.prop('stepSizePx')).toBe(256)
@@ -98,8 +100,8 @@ describe('Recipes', () => {
 
   describe('when rendered on server', () => {
     beforeEach(() => {
-      // eslint-disable-next-line no-underscore-dangle
-      global.__CLIENT__ = false
+      canUseWindow.mockReturnValue(false)
+
       wrapper = shallow(
         <Recipes
           currentCollectionId="id1"
@@ -107,11 +109,6 @@ describe('Recipes', () => {
           trackScrollOneStep={trackScrollOneStep}
         />
       )
-    })
-
-    afterEach(() => {
-      // eslint-disable-next-line no-underscore-dangle
-      delete global.__CLIENT__
     })
 
     test('then it should ignore window-related apis', () => {
