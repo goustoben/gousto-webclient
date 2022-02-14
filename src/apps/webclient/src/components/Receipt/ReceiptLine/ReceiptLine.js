@@ -11,6 +11,113 @@ import {
   AlignItems,
 } from '@gousto-internal/citrus-react'
 
+const ReceiptLineContainer = ({children}) => (
+  <Box
+    display="flex"
+    flexDirection={FlexDirection.Row}
+    justifyContent={JustifyContent.SpaceBetween}
+    alignItems={AlignItems.FlexEnd}
+  >
+    {children}
+  </Box>
+)
+
+const ReceptLineBoldStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text fontWeight={FontWeight.Bold} size={2}>{label}</Text>
+      <Text data-testing={dataTesting} fontWeight={FontWeight.Bold} size={2}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={2} />
+  </>
+)
+
+const ReceptLinePrimaryStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text fontWeight={FontWeight.Bold} size={2} color={Color.Success_600}>{label}</Text>
+      <Text data-testing={dataTesting} fontWeight={FontWeight.Bold} size={2} color={Color.Success_600}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={2} />
+  </>
+)
+
+const ReceptLineHighlightedStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text uppercase size={2}>{label}</Text>
+      <Text data-testing={dataTesting} size={4}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={2} />
+  </>
+)
+
+const ReceptLineCheckoutBoldStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text fontWeight={FontWeight.Bold} size={3}>{label}</Text>
+      <Text data-testing={dataTesting} fontWeight={FontWeight.Bold} size={3}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={6} />
+  </>
+)
+
+const ReceptLineCheckoutPrimaryStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text fontWeight={FontWeight.SemiBold} color={Color.Success_800}>{label}</Text>
+      <Text data-testing={dataTesting} fontWeight={FontWeight.SemiBold} color={Color.Success_800}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={0} />
+  </>
+)
+
+const ReceptLineCheckoutNormalStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text>{label}</Text>
+      <Text data-testing={dataTesting}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={0} />
+  </>
+)
+
+const ReceptLineTruncateLabelStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{label}</Text>
+      <Text data-testing={dataTesting}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={0} />
+  </>
+)
+
+const ReceptLineDefaultStyle = ({label, children, dataTesting}) => (
+  <>
+    <ReceiptLineContainer>
+      <Text>{label}</Text>
+      <Text data-testing={dataTesting}>
+        {children}
+      </Text>
+    </ReceiptLineContainer>
+    <Space size={2} />
+  </>
+)
+
 export const ReceiptLine = ({
   label,
   children,
@@ -19,85 +126,58 @@ export const ReceiptLine = ({
   dataTesting,
   isReceiptInCheckout,
 }) => {
-  const getLineProps = () => {
-    const defaultProps = {
-      labelProps: {},
-      contentProps: {},
-      spaceSize: 2,
+  const renderStyledReceiptLine = () => {
+    switch (lineStyle) {
+    case 'bold':
+      return (
+        <ReceptLineBoldStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLineBoldStyle>
+      )
+    case 'primary':
+      return (
+        <ReceptLinePrimaryStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLinePrimaryStyle>
+      )
+    case 'highlighted':
+      return (
+        <ReceptLineHighlightedStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLineHighlightedStyle>
+      )
+    case 'checkoutBold':
+      return (
+        <ReceptLineCheckoutBoldStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLineCheckoutBoldStyle>
+      )
+    case 'checkoutPrimary':
+      return (
+        <ReceptLineCheckoutPrimaryStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLineCheckoutPrimaryStyle>
+      )
+    case 'checkoutNormal':
+      return (
+        <ReceptLineCheckoutNormalStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLineCheckoutNormalStyle>
+      )
+    case 'truncateLabel':
+      return (
+        <ReceptLineTruncateLabelStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLineTruncateLabelStyle>
+      )
+    default:
+      return (
+        <ReceptLineDefaultStyle label={label} dataTesting={dataTesting}>
+          {children}
+        </ReceptLineDefaultStyle>
+      )
     }
-
-    const styles = {
-      bold: {
-        labelProps: {
-          fontWeight: FontWeight.Bold,
-          size: 2,
-        },
-        contentProps: {
-          fontWeight: FontWeight.Bold,
-          size: 2,
-        },
-        spaceSize: 2,
-      },
-      primary: {
-        labelProps: {
-          fontWeight: FontWeight.Bold,
-          size: 2,
-          color: Color.Success_600,
-        },
-        contentProps: {
-          fontWeight: FontWeight.Bold,
-          size: 2,
-          color: Color.Success_600,
-        },
-        spaceSize: 2,
-      },
-      highlighted: {
-        labelProps: {
-          size: 2,
-          uppercase: true,
-        },
-        contentProps: {
-          size: 4,
-        },
-        spaceSize: 2,
-      },
-      checkoutBold: {
-        labelProps: {
-          fontWeight: FontWeight.Bold,
-          size: 3,
-        },
-        contentProps: {
-          fontWeight: FontWeight.Bold,
-          size: 3,
-        },
-        spaceSize: 6,
-      },
-      checkoutPrimary: {
-        labelProps: {
-          fontWeight: FontWeight.SemiBold,
-          color: Color.Success_800,
-        },
-        contentProps: {
-          fontWeight: FontWeight.SemiBold,
-          color: Color.Success_800,
-        },
-        spaceSize: 0,
-      },
-      checkoutNormal: { labelProps: {}, contentProps: {}, spaceSize: 0 },
-      truncateLabel: {
-        labelProps: {
-          style: { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
-          size: 3,
-        },
-        contentProps: {},
-        spaceSize: 0,
-      },
-    }
-
-    return styles[lineStyle] || defaultProps
   }
-
-  const { contentProps, labelProps, spaceSize } = getLineProps()
 
   return (
     <>
@@ -108,19 +188,7 @@ export const ReceiptLine = ({
           <Space size={isReceiptInCheckout ? 2 : 1} />
         </>
       )}
-      <Box
-        display="flex"
-        flexDirection={FlexDirection.Row}
-        justifyContent={JustifyContent.SpaceBetween}
-        alignItems={AlignItems.FlexEnd}
-      >
-        {/* eslint-disable react/jsx-props-no-spreading */}
-        <Text {...labelProps}>{label}</Text>
-        <Text data-testing={dataTesting} {...contentProps}>
-          {children}
-        </Text>
-      </Box>
-      <Space size={spaceSize} />
+      {renderStyledReceiptLine()}
     </>
   )
 }
@@ -151,4 +219,46 @@ ReceiptLine.defaultProps = {
   showLineAbove: false,
   dataTesting: null,
   isReceiptInCheckout: false,
+}
+
+ReceiptLineContainer.propTypes = {
+  children: PropTypes.node,
+}
+
+const lineStylePropTypes = {
+  label: PropTypes.string,
+  children: PropTypes.node,
+  dataTesting: PropTypes.string,
+}
+
+ReceptLineBoldStyle.propTypes = {
+  ...lineStylePropTypes
+}
+
+ReceptLinePrimaryStyle.propTypes = {
+  ...lineStylePropTypes
+}
+
+ReceptLineHighlightedStyle.propTypes = {
+  ...lineStylePropTypes
+}
+
+ReceptLineCheckoutBoldStyle.propTypes = {
+  ...lineStylePropTypes
+}
+
+ReceptLineCheckoutPrimaryStyle.propTypes = {
+  ...lineStylePropTypes
+}
+
+ReceptLineCheckoutNormalStyle.propTypes = {
+  ...lineStylePropTypes
+}
+
+ReceptLineTruncateLabelStyle.propTypes = {
+  ...lineStylePropTypes
+}
+
+ReceptLineDefaultStyle.propTypes = {
+  ...lineStylePropTypes
 }
