@@ -222,13 +222,13 @@ ReceiptLine.defaultProps = {
 }
 
 ReceiptLineContainer.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 }
 
 const lineStylePropTypes = {
-  label: PropTypes.string,
-  children: PropTypes.node,
-  dataTesting: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  dataTesting: PropTypes.string.isRequired,
 }
 
 ReceptLineBoldStyle.propTypes = {
