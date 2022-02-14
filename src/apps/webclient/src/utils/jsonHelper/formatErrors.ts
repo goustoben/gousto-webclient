@@ -6,15 +6,18 @@ import { filterExists, last } from 'utils/array'
  */
 
 type ResponseError = {
-  error ?: number,
-  message ?: string,
+  error?: number,
+  message?: string,
 }
-
 
 /**
  * Module
  * ============================================================================
  */
+
+export function formatBadStatus<R, M>(response: R, meta: M) {
+  return { response, meta }
+}
 
 export function formatErrorsWithCode(errors: ResponseError[]) {
   const errorCodes = errors.map(error => error.error).filter(filterExists)
@@ -23,10 +26,19 @@ export function formatErrorsWithCode(errors: ResponseError[]) {
   return {
     code: last(errorCodes) || 500,
     errors,
-    message: ', ' + errorMessages.join(', ') // Replicates original behaviour of ported code
+    message: `, ${errorMessages.join(', ')}` // Replicates original behaviour of ported code
   }
 }
 
 export function formatErrorArray(errors: ResponseError[]): string {
   return errors.reduce((str, error) => `${str} ${error.message}`, '')
 }
+
+export function formatMalformed() {
+  return 'Response is malformed' as const
+}
+
+export function formatUnmatched(response: Record<string | number, unknown>) {
+  return response
+}
+

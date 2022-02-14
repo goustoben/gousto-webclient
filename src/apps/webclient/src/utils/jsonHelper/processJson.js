@@ -1,4 +1,12 @@
-import { formatErrorArray, formatErrorsWithCode } from './formatErrors'
+import {
+  formatBadStatus,
+  formatErrorArray,
+  formatErrorsWithCode,
+  formatMalformed,
+  formatUnmatched
+} from './formatErrors'
+
+import { formatSuccessResponse } from './formatResponses'
 
 /**
  * This code has been largely untouched since it was first committed by
@@ -10,26 +18,23 @@ export function processJSON([response, status]) {
   return new Promise((resolve, reject) => { // eslint-disable-line consistent-return
     const meta = response.meta || null
     if (response.status === 'ok') {
-      let cbData = response
-      if (response.result) {
-        cbData = response.result
-        if (response.result.data) {
-          cbData = response.result.data
-        }
-      } else if (response.data && response.included) {
-        return resolve({ response })
-      } else if (response.data) {
-        cbData = response.data
-      }
-      resolve({ response: cbData, meta })
+      return resolve(
+        formatSuccessResponse(response, meta)
+      )
     } else if (Array.isArray(response.errors)) {
       try {
-        reject(formatErrorsWithCode(response.errors))
+        return reject(
+          formatErrorsWithCode(response.errors)
+        )
       } catch (err) {
-        reject(formatErrorArray(response.errors))
+        return reject(
+          formatErrorArray(response.errors)
+        )
       }
     } else if (Array.isArray(response.data)) {
-      reject(formatErrorArray(response.data))
+      return reject(
+        formatErrorArray(response.data)
+      )
     } else if (response.error) {
       const errorObj = {
         code: 500,
@@ -48,11 +53,17 @@ export function processJSON([response, status]) {
       }
       reject(errorObj)
     } else if (typeof response === 'object' && status < 400) {
-      resolve({ response, meta })
+      return resolve(
+        formatBadStatus(response, meta)
+      )
     } else if (typeof response === 'object') {
-      reject(response)
+      return reject(
+        formatUnmatched(response)
+      )
     } else {
-      return reject('Response is malformed') // eslint-disable-line prefer-promise-reject-errors
+      return reject(
+        formatMalformed()
+      )
     }
   })
 }
