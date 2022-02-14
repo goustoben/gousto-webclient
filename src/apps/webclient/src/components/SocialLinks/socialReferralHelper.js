@@ -1,4 +1,4 @@
-import globals from 'config/globals'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { actionTypes } from 'actions/actionTypes'
 import fbSettings from 'config/template'
 import defaultOffer from 'config/referral'
@@ -37,7 +37,7 @@ export const getFacebookReferralLink = (
   const facebookUTM = '&utm_source=facebook&utm_medium=sharebutton_raf_page&utm_campaign=raf_facebook_share'
   const referralLink = getReferralLink(referralCode, userFirstName, facebookUTM)
 
-  if (globals.client) {
+  if (canUseWindow() && window.FB) {
     window.FB.ui({
       method: 'share',
       mobile_iframe: true,
@@ -60,20 +60,20 @@ export const getMessengerReferralLink = (
   const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
   const referralLink = getReferralLink(referralCode, userFirstName, messengerUTM)
 
-  if (device === 'desktop' || device === 'tablet') {
-    if (globals.client) {
+  if (canUseWindow()) {
+    if (device === 'desktop' || device === 'tablet') {
       window.FB.ui({
         method: 'send',
         mobile_iframe: true,
         link: referralLink,
         redirect_uri: referralLink,
       })
-    }
-  } else if (globals.client) {
-    const { fbAppID } = fbSettings.head
-    const shareurl = `https://www.facebook.com/dialog/share?app_id=${fbAppID}&display=popup&href=${referralLink}&redirect_uri=https://${referralLink}`
+    } else {
+      const { fbAppID } = fbSettings.head
+      const shareurl = `https://www.facebook.com/dialog/share?app_id=${fbAppID}&display=popup&href=${referralLink}&redirect_uri=https://${referralLink}`
 
-    window.open(shareurl)
+      window.open(shareurl)
+    }
   }
 }
 
