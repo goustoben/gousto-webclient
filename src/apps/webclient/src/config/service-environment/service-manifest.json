@@ -42,7 +42,7 @@
   "core": [
     {
       "version": 1,
-      "basePath": null
+      "basePath": ""
     }
   ],
   "customers": [
@@ -188,7 +188,7 @@
   "webclient": [
     {
       "version": 1,
-      "basePath": null
+      "basePath": "https://www.gousto.co.uk"
     }
   ],
   "workable": [
