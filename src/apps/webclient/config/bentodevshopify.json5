@@ -1,0 +1,443 @@
+{
+  api_name: 'bentodevshopify',
+  domain: 'gousto-bento.info',
+  running_env: 'live',
+  datadog_enabled: false,
+  endpoints: {
+    bentodevshopify: {
+      envDomain: 'gousto-bento.info',
+      services: {
+        auth: {
+          '1': {
+            versionString: 'v1.0.0',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info/auth/v1.0.0',
+              local: 'https://bentodevshopify-api.gousto-bento.info/auth/v1.0.0',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-auth.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info/auth/v1.0.0',
+            },
+          },
+          '2': {
+            versionString: 'v2',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info/auth/v2',
+              local: 'https://bentodevshopify-api.gousto-bento.info/auth/v2',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-auth.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info/auth/v2',
+            },
+          },
+        },
+        brand: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info/brand/v1',
+              local: 'https://bentodevshopify-api.gousto-bento.info/brand/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-brand.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info/brand/v1',
+            },
+          },
+        },
+        clientmetrics: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info/clientmetrics/v1',
+              local: 'https://bentodevshopify-api.gousto-bento.info/clientmetrics/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-clientmetrics.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info/clientmetrics/v1',
+            },
+          },
+        },
+        collections: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info/collections/v1',
+              local: 'https://bentodevshopify-api.gousto-bento.info/collections/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-collections.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info/collections/v1',
+            },
+          },
+        },
+        complaints: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info/complaints/v1',
+              local: 'https://bentodevshopify-api.gousto-bento.info/complaints/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-complaints.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info/complaints/v1',
+            },
+          },
+        },
+        content: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info/content/v1',
+              local: 'https://bentodevshopify-api.gousto-bento.info/content/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-content.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info/content/v1',
+            },
+          },
+        },
+        core: {
+          '1': {
+            versionString: '',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-core.gousto-bento.info',
+              local: 'https://bentodevshopify-api.gousto-bento.info',
+            },
+          },
+        },
+        customers: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/customers/v1',
+              local: 'https://bentodevshopify-api.gousto.info/customers/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-customers.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/customers/v1',
+            },
+          },
+          '2': {
+            versionString: 'v2',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/customers/v2',
+              local: 'https://bentodevshopify-api.gousto.info/customers/v2',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-customers.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/customers/v2',
+            },
+          },
+        },
+        deliveries: {
+          '1': {
+            versionString: 'v1.0',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/deliveries/v1.0',
+              local: 'https://bentodevshopify-api.gousto.info/deliveries/v1.0',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-deliveries.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/deliveries/v1.0',
+            },
+          },
+        },
+        felogging: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/felogging/v1',
+              local: 'https://bentodevshopify-api.gousto.info/felogging/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-felogging.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/felogging/v1',
+            },
+          },
+        },
+        loggingmanager: {
+          '1': {
+            versionString: '',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/loggingmanager',
+              local: 'https://bentodevshopify-api.gousto.info/loggingmanager',
+            },
+            serverSide: {
+              live: 'https://bentodevshopify-api.gousto.info/loggingmanager',
+              local: 'https://bentodevshopify-api.gousto.info/loggingmanager',
+            },
+          },
+        },
+        menu: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/menu/v1',
+              local: 'https://bentodevshopify-api.gousto.info/menu/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-menu.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/menu/v1',
+            },
+          },
+        },
+        order: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/order/v1',
+              local: 'https://bentodevshopify-api.gousto.info/order/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-order.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/order/v1',
+            },
+          },
+          '2': {
+            versionString: 'v2',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/order/v2',
+              local: 'https://bentodevshopify-api.gousto.info/order/v2',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-order.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/order/v2',
+            },
+          },
+        },
+        orders: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/orders/v1',
+              local: 'https://bentodevshopify-api.gousto.info/orders/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-orders.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/orders/v1',
+            },
+          },
+          '2': {
+            versionString: 'v2',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/orders/v2',
+              local: 'https://bentodevshopify-api.gousto.info/orders/v2',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-orders.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/orders/v2',
+            },
+          },
+        },
+        orderskiprecovery: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/orderskiprecovery/v1',
+              local: 'https://bentodevshopify-api.gousto.info/orderskiprecovery/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-orderskiprecovery.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/orderskiprecovery/v1',
+            },
+          },
+        },
+        payments: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/payments/v1',
+              local: 'https://bentodevshopify-api.gousto.info/payments/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-payments.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/payments/v1',
+            },
+          },
+        },
+        products: {
+          '1': {
+            versionString: 'v1.0',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/products/v1.0',
+              local: 'https://bentodevshopify-api.gousto.info/products/v1.0',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-products.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/products/v1.0',
+            },
+          },
+          '2': {
+            versionString: 'v2.0',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/products/v2.0',
+              local: 'https://bentodevshopify-api.gousto.info/products/v2.0',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-products.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/products/v2.0',
+            },
+          },
+        },
+        recipes: {
+          '1': {
+            versionString: 'v2',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/recipes/v2',
+              local: 'https://bentodevshopify-api.gousto.info/recipes/v2',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-recipes.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/recipes/v2',
+            },
+          },
+        },
+        ssr: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/ssr/v1',
+              local: 'https://bentodevshopify-api.gousto.info/ssr/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-ssr.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/ssr/v1',
+            },
+          },
+          '2': {
+            versionString: 'v2',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/ssr/v2',
+              local: 'https://bentodevshopify-api.gousto.info/ssr/v2',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-ssr.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/ssr/v2',
+            },
+          },
+        },
+        ssrdeliveries: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/ssrdeliveries/v1',
+              local: 'https://bentodevshopify-api.gousto.info/ssrdeliveries/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-ssrdeliveries.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/ssrdeliveries/v1',
+            },
+          },
+        },
+        subpauseosr: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/subpauseosr/v1',
+              local: 'https://bentodevshopify-api.gousto.info/subpauseosr/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-subpauseosr.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/subpauseosr/v1',
+            },
+          },
+        },
+        subscriptioncommand: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/subscriptioncommand/v1',
+              local: 'https://bentodevshopify-api.gousto.info/subscriptioncommand/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-subscriptioncommand.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/subscriptioncommand/v1',
+            },
+          },
+        },
+        subscriptionquery: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/subscriptionquery/v1',
+              local: 'https://bentodevshopify-api.gousto.info/subscriptionquery/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-subscriptionquery.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/subscriptionquery/v1',
+            },
+          },
+        },
+        tastepreferences: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/tastepreferences/v1',
+              local: 'https://bentodevshopify-api.gousto.info/tastepreferences/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-tastepreferences.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/tastepreferences/v1',
+            },
+          },
+        },
+        userbucketing: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/userbucketing/v1',
+              local: 'https://bentodevshopify-api.gousto.info/userbucketing/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-userbucketing.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/userbucketing/v1',
+            },
+          },
+        },
+        userfeedback: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/userfeedback/v1',
+              local: 'https://bentodevshopify-api.gousto.info/userfeedback/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-userfeedback.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/userfeedback/v1',
+            },
+          },
+        },
+        webclient: {
+          '1': {
+            versionString: '',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-webclient.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info',
+            },
+          },
+        },
+        workable: {
+          '1': {
+            versionString: 'v1',
+            clientSide: {
+              live: 'https://bentodevshopify-api.gousto.info/workable/v1',
+              local: 'https://bentodevshopify-api.gousto.info/workable/v1',
+            },
+            serverSide: {
+              live: 'http://bentodevshopify-workable.gousto.info',
+              local: 'https://bentodevshopify-api.gousto.info/workable/v1',
+            },
+          },
+        },
+      },
+    },
+  },
+}
