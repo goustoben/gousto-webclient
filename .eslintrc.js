@@ -7,9 +7,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:react-hooks/recommended',
-  ],
-  ignorePatterns: [
-    '.eslintrc.js'
+    'plugin:storybook/recommended'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -19,17 +17,15 @@ module.exports = {
     ecmaVersion: 2018,
     tsconfigRootDir: __dirname
   },
-  plugins: [
-    '@typescript-eslint'
-  ],
+  plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     '@typescript-eslint/explicit-function-return-type': 'off'
   },
   settings: {
     react: {
-      version: "17.0.2"
+      version: '17.0.2'
     }
   }
 }

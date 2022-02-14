@@ -2,24 +2,31 @@
 
 Webclient is gradually moving towards a modular architecture. This document explains
 
-- [the context for why we're doing this](#context)
-- [how modules fit together](#how-modules-fit-together)
-- [rules for writing modules](#rules-for-writing-feature-modules)
-- [scripts modules should provide](#scripts-modules-should-provide)
+- [Context](#context)
+- [How modules fit together](#how-modules-fit-together)
+  - [Dependency direction](#dependency-direction)
+- [Compiling modules](#compiling-modules)
+  - [node_modules and dependencies](#node_modules-and-dependencies)
+- [Module tooling](#module-tooling)
+  - [Testing and linting](#testing-and-linting)
+  - [Local dev](#local-dev)
+- [Feature module requirements](#feature-module-requirements)
+  - [Feature module boilerplate](#feature-module-boilerplate)
+  - [Feature module scripts](#feature-module-scripts)
 
 ## Context
 
 Webclient is a big project comprising approximately 360,000 lines of code at the time of writing. As a monolith it has
 posed us several challenges for developer experience and CI scalability.
 
-- You have to spin up the whole webclient, and have its backend (staging) data dependencies available, to get through
+- You have to spin up the whole webclient, and have all its backend (staging) data dependencies available, to get through
   to the part you are working on.
 - You have to compile, test and lint over a million lines of code (with dependencies) every time you build or test in CI
 - You have to run the entire regression test suite even when you change a simple line of text
 - The whole thing has to be rebuilt and redeployed for even small changes
 
 Cumulatively these make for a poor development experience. Modularisation is primarily about solving that, but it also
-comes with other benefits, as it lets us mark out distinct areas of code with clear boundaries.
+lets us mark out distinct areas of code with clear boundaries.
 
 ## How modules fit together
 
@@ -43,15 +50,49 @@ At present, we ask teams to not yet add new modules without speaking to FEF.
 
 ### Dependency direction
 
-- Apps cannot be dependencies of anything else
-- Features may be dependencies of apps ONLY
-- Libs may be dependencies of other modules, including libs (but avoid circular dependencies)
+- Apps may depend on libs or features
+- Features may depend on libraries
+- Libraries _may_ depend on libraries, but it's advisable not to. Circular dependencies are prohibited.
 
-### Compilation & Deployment
+## Compiling modules
 
 As there is only one runnable app, `webclient`, we make it compile all the code. We don't have an intermediary step where
 we compile feature modules, then compile that into the bundles. This will happen later as we explore "partial deployments"
 to reduce deploy times.
+
+Because of this, all the actual compilation logic for the bundles lives inside the `webclient` Webpack config. Any other
+`.babelrc` or similar files you see are (currently) just for local development tools. The same applies for `tsconfig.json`.
+
+### node_modules and dependencies
+
+Right now we use Yarn with node_modules and hoisting turned off. That means every module has its own `node_modules` with
+locally discoverable dependencies. We may refactor this to a plug 'n' play model if the performance benefits are
+compelling, but this will require Webpack config changes.
+
+At the top level of the project we have `devDependencies` that are used just by local dev tools. These will include
+dependencies for code under test, like React.
+
+The `webclient` webpack config only pulls `node_modules` local to that module. This means that, for example, if you have
+a feature module that references `react`, webpack will pull that dependency from `src/apps/webclient/node_modules`,
+rather than bundle a duplicate from the root level.
+
+**When compiling webclient:**
+```
+apps/webclient                                                  apps/webclient/node_modules
+       |                                                                          ^
+       +-- imports --> modules/features/foo                                       |
+                                         |                                        | (webclient webpack .resolves config)
+                                         +-- imports --> 'react'                  |
+                                                            |                     |
+                                                            +-- is bundled from --+
+```
+
+For this reason, it's important to keep the same React (etc) version in lockstep across modules.
+
+At some point we'll implement "partial builds" where modules are compiled in isolation, with the ability to inject
+dependencies via webpack. This should simplify things.
+
+## Module tooling
 
 ### Testing and linting
 
@@ -60,9 +101,9 @@ Modules will have their own unit tests and linting. In the medium term they will
 ### Local dev
 
 Modules can either be tested within `webclient` (with the `dev` flow providing HMR) or tested with their own `dev` command.
-We are looking at using Storybook to power the module dev workflow.
+We are using Storybook to power the module dev workflow.
 
-## Rules for writing feature modules
+## Feature module requirements
 
 **Documentation:** a module must have a `README.md` that
 
@@ -83,17 +124,32 @@ We are looking at using Storybook to power the module dev workflow.
 - Any sharing of React context should be sparing and completely type safe.
 - Use type safe props as much as possible
 
-⚠️ **You are responsible for consuming external state in a type-safe way**
+⚠️ **Inter-module dependencies must be expressed via typed contracts**
 
-If a team deploys a change that breaks your code, and there was no way for them to detect your dependency on them via type
-checking, that is **your team's** problem, **not** the team that shipped the change. It will be **your team's** responsibility
-to fix forward.
+What this means is that if your module relies on external state or data, that must be discoverable via the type system.
+Only by types can we use static analysis to determine if code should integrate - testing the whole thing integrates,
+every time, eventually proves too time-consuming at scale.
 
-## Scripts modules should provide
+This makes it **your** responsibility to express your needs via either a typed interface to your module, or using a typed
+React context. If another team makes a change that "breaks" your code, because they couldn't use types to discover the
+dependency, that will be treated as  **your team's** problem. It will be **your team's** responsibility to fix forward.
 
-| Command   | Description                                    | Required                |
-|-----------|------------------------------------------------|-------------------------|
-| dev       | Spin up local dev environment for this feature | Yes, in feature modules |
-| lint      | Lint files within module                       | Yes, all                |
-| test:unit | Runs unit tests for module                     | Yes, all                |
-| typecheck | Validates TypeScript in module                 | Yes, all                |
+### Feature module boilerplate
+
+| File              | Purpose(s)                                                                              |
+|-------------------|-----------------------------------------------------------------------------------------|
+| .babelrc          | Helps local dev tools like Storybook and Jest compile the module's code                 |
+| README.md         | Describes what the feature is, who owns it, and how to use it                           |
+| jest.config.js    | Supports running Jest tests for this module specifically                                |
+| package.json      | Needed by Yarn to establish a **workspace**. The `name` field sets the workspace name.  |
+| postcss.config.js | Needed by Webclient Webpack build                                                       |
+| tsconfig.json     | Helps local dev tools like Storybook and Jest compile the module TS                     |
+
+### Feature module scripts
+
+| Command   | Description                                    | Required           |
+|-----------|------------------------------------------------|--------------------|
+| dev       | Spin up local dev environment for this feature | In feature modules |
+| lint      | Lint files within module                       | Yes                |
+| test:unit | Runs unit tests for module                     | Yes                |
+| typecheck | Validates TypeScript in module                 | Yes                |
