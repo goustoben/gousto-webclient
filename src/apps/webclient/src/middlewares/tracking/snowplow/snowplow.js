@@ -1,6 +1,7 @@
+import { canUseWindow } from 'utils/browserEnvironment'
 
 export default (action, state = {}) => {
-  if (__CLIENT__ && window.dataLayer) {
+  if (canUseWindow() && window.dataLayer) {
     const { actionType, seCategory: category } = action
     const actionValue = {}
     Object.keys(action)
