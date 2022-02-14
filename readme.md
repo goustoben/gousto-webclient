@@ -204,6 +204,43 @@ In local development, open the browser window at
 http://frontend.gousto.local:8080/?axe=1 in order to enable Axe. This will show
 the accessibility-related warnings on the pages.
 
+## Storybook
+
+The application has [Storybook](https://storybook.js.org/) based tool for browsing main components from the application. The stories
+demo components in different states, which allows quick feedback loop without hardship of data setup.
+
+To get the [Storybook](https://storybook.js.org/) running for ALL the components execute following command from the root directory:
+
+```bash
+yarn storybook
+```
+
+To get [Storybook](https://storybook.js.org/) running for A SINGLE MODULE execute following command from the root directory (NOTE: you must have a `.storybook/main.ts` config in the module for this to work):
+
+(preferred)
+
+```bash
+$ yw @features/recipe-tile dev
+```
+
+OR
+
+```bash
+$ yarn dev -c ./src/modules/features/recipe-tile
+```
+
+OR
+
+```bash
+$ cd src/modules/features/recipe-tile
+$ yarn dev
+```
+
+If you use a module-based storybook config please remember to update the main config with any changes
+too so that running from the root still works.
+
+It should launch the tool in the browser at `http://localhost:6006/`
+
 ## Project history
 
 Gousto-Webclient was originally ported from Gousto2-Frontend. You can view the Git history of the JS code at:

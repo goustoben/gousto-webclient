@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.tsx",
   "scripts": {
-    "dev": "echo 'No devtool",
+    "dev": "yarn run --top-level start-storybook -p 6006",
     "test:unit": "yarn run --top-level jest",
     "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
     "typecheck": "yarn run --top-level tsc --noEmit"
