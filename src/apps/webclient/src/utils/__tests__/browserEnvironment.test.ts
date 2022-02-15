@@ -86,6 +86,13 @@ const setWindow = (val?: unknown) => {
   global.window = val
 }
 
+let win: typeof window
+
+const setWindow = (val?: unknown) => {
+  // @ts-expect-error need to be able to set window to undefined
+  global.window = val
+}
+
 describe('client config', () => {
   beforeAll(() => {
     win = global.window
