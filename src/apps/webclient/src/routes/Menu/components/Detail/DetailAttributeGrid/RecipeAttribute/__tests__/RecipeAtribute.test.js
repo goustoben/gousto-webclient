@@ -18,11 +18,6 @@ describe('Recipe Attribute', () => {
     expect(wrapper.find('span').length).toEqual(1)
   })
 
-  test('should return null when show is false', () => {
-    const wrapper = shallow( <RecipeAttribute name="cookingTime" value={1} show={false} /> )
-    expect(wrapper.type()).toEqual(null)
-  })
-
   test('should display the cooking time correctly', () => {
     const wrapper = shallow(<RecipeAttribute name="cookingTime" value={1} />)
     expect( wrapper.find('span').text()).toContain('Takes 1 mins')
@@ -75,10 +70,5 @@ describe('Recipe Attribute', () => {
   test('should display equipment required label without the equipment listed ', () => {
     const wrapper = shallow(<RecipeAttribute name="equipmentRequired" value={Immutable.fromJS(['Spoon', 'Egg Beater'])} />)
     expect(wrapper.find('span').text()).toContain('Equipment required')
-  })
-
-  test('should display the equipment in a comma separated list when view="list" ', () => {
-    const wrapper = shallow(<RecipeAttribute name="equipmentRequired" value={Immutable.fromJS(['Spoon', 'Egg Beater'])} view="list" />)
-    expect(wrapper.find('span').text()).toContain('Spoon, Egg Beater')
   })
 })

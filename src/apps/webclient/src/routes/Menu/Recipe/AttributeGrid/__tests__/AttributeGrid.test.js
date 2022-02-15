@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
-import { RecipeAttribute } from 'routes/Menu/Recipe/RecipeAttribute'
+import { RecipeAttribute } from '../../../components/Detail/DetailAttributeGrid/RecipeAttribute'
 
 describe('AttributeGrid', () => {
   const cookingTime = 1

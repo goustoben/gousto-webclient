@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import classnames from 'classnames'
 import css from './AttributeGrid.css'
 import { recipePriorityOrder, detailedRecipePriorityOrder} from './config'
-import { RecipeAttribute } from '../RecipeAttribute'
+import { RecipeAttribute } from '../../components/Detail/DetailAttributeGrid/RecipeAttribute'
 
 const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWithin, equipment, diet, fiveADay, cals, cuisine, dairyFree, numPortions, glutenFree, fineDineInStyle}) => {
   const attributes = [

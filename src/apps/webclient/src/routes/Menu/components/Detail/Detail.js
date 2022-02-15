@@ -123,12 +123,14 @@ export const Detail = (props) => {
           {equipment && !!equipment.size && (
             <p className={css.additionalInfo}>
               Equipment required:
+              {' '}
               {equipment.toJS().join(', ')}
             </p>
           )}
           {youWillNeed && !!youWillNeed.size && (
             <p className={css.additionalInfo}>
               What you&#8217;ll need:
+              {' '}
               {youWillNeed.map((item, idx) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <span key={idx}>
