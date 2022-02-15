@@ -9,7 +9,7 @@ import { getOrderPrice } from 'routes/Menu/apis/orderV2'
 import { getBasketRecipesCount, getBasketSlotId } from 'selectors/basket'
 import { actionTypes } from './actionTypes'
 
-const pricingPending = () => ({
+export const pricingPending = () => ({
   type: actionTypes.PRICING_PENDING,
 })
 
@@ -18,12 +18,12 @@ export const pricingSuccess = (prices) => ({
   prices,
 })
 
-const pricingFailure = (message) => ({
+export const pricingFailure = (message) => ({
   type: actionTypes.PRICING_FAILURE,
   message,
 })
 
-const pricingReset = () => ({
+export const pricingReset = () => ({
   type: actionTypes.PRICING_RESET,
 })
 
