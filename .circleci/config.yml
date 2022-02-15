@@ -2,22 +2,23 @@
 version: 2.1
 
 gousto_platform_image: &gousto_platform_image
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
-      aws_auth:
-        aws_access_key_id: $AWS_ERC_ACCESS_KEY
-        aws_secret_access_key: $AWS_ERC_SECRET_KEY
+  - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
+    aws_auth:
+      aws_access_key_id: $AWS_ERC_ACCESS_KEY
+      aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 gousto_node_image: &gousto_node_image
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/node14:latest
-      aws_auth:
-        aws_access_key_id: $AWS_ERC_ACCESS_KEY
-        aws_secret_access_key: $AWS_ERC_SECRET_KEY
+  - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/node14:latest
+    aws_auth:
+      aws_access_key_id: $AWS_ERC_ACCESS_KEY
+      aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 circleci_node_image: &circleci_node_image
   - image: cimg/node:14.18.1
     user: root
 
-circleci_node_browsers_image: &circleci_node_browsers_image #image has browser dependencies installed, but not browsers themselves
+circleci_node_browsers_image:
+  &circleci_node_browsers_image #image has browser dependencies installed, but not browsers themselves
   - image: cimg/node:14.18.1-browsers
     user: root
 
@@ -47,11 +48,11 @@ commands:
     steps:
       - run: echo "Uploading to << parameters.bucket >>"
       - run:
-         name: Upload all text files, sets gzip content-encoding header
-         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.js" --include "*.css" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public --acl public-read
+          name: Upload all text files, sets gzip content-encoding header
+          command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*" --include "*.js" --include "*.css" --recursive --content-encoding gzip --cache-control max-age=315360000,no-transform,public --acl public-read
       - run:
-         name: Upload binary files to S3, does not set gzip content-encoding header
-         command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.js" --exclude "*.css" --recursive --cache-control max-age=315360000,no-transform,public --acl public-read
+          name: Upload binary files to S3, does not set gzip content-encoding header
+          command: aws s3 cp << parameters.path >> << parameters.bucket >> --exclude "*.js" --exclude "*.css" --recursive --cache-control max-age=315360000,no-transform,public --acl public-read
 
   codeartifact_authenticate:
     description: Authenticate with AWS CodeArtifact for Yarn 2.X+
@@ -169,9 +170,9 @@ jobs:
           working_directory: src/apps/webclient
           command: yarn test:jest:ci:coverage
       - run:
-         name: Typecheck tests (apps/webclient)
-         working_directory: src/apps/webclient
-         command: yarn typecheck:tests
+          name: Typecheck tests (apps/webclient)
+          working_directory: src/apps/webclient
+          command: yarn typecheck:tests
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -226,7 +227,8 @@ jobs:
           at: /
       - run:
           name: Setup environment and npm variables for build
-          command: source ~/.circlerc && setup/setup-common.sh
+          # The Gousto environment SSM parameters are in root/.circlerc
+          command: source ~/.circlerc && source /root/.circlerc && setup/setup-common.sh
       - run: echo $ENVIRONMENT
       - run:
           name: Build webclient
@@ -378,7 +380,7 @@ jobs:
           command: ./waitForHttpPath.sh 8080 / 10
       - when:
           condition:
-            equal: [ web, << parameters.platform >> ]
+            equal: [web, << parameters.platform >>]
           steps:
             - run:
                 name: Run regression tests
@@ -390,7 +392,7 @@ jobs:
                   NODE_OPTIONS: << parameters.test_node_options >>
       - when:
           condition:
-            equal: [ mobile, << parameters.platform >> ]
+            equal: [mobile, << parameters.platform >>]
           steps:
             - run:
                 name: Run regression tests
@@ -423,6 +425,12 @@ jobs:
     steps:
       - attach_workspace:
           at: /
+      - run:
+          name: Test env
+          command: source /root/.circlerc | printenv | sed 's;=.*;;' | sort
+      - run:
+          name: Break it
+          command: asdfsdf
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
           command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
