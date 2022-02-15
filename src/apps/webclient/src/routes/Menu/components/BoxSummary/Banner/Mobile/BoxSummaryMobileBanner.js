@@ -13,7 +13,7 @@ import { BrowseCTAContainer } from '../../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 
 import { OpenBoxButton } from './OpenBoxButton'
-import { Title } from '../../Title'
+import { TitleContainer } from '../../Title'
 
 import css from './BoxSummaryMobileBanner.css'
 import bannerButtonCss from '../../BannerButton/BannerButton.css'
@@ -52,7 +52,7 @@ const BoxSummaryMobileBanner = ({
     >
       <div>
         {!isBasketRequiredFeatureEnabled && <OpenBoxButton />}
-        <Title view={MOBILE_VIEW} date={date} finalisedSlot={slotId !== ''} slotTime={slotTime} />
+        <TitleContainer view={MOBILE_VIEW} date={date} finalisedSlot={slotId !== ''} slotTime={slotTime} />
       </div>
       <div className={css.summaryMobile}>
         <RecipeListContainer view={MOBILE_VIEW} recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
