@@ -6,11 +6,6 @@ import css from './CollectionLink.css'
 const CollectionLink = () => {
   const dietaryCollections = useDietaryCollections()
 
-  // get first recipe from each collection
-  // this will give recipe id, use this recipe id to get recipe object and then get image from that recipe
-
-  // collection?.get('recipesInCollection')
-
   if (!dietaryCollections || dietaryCollections.size === 0) {
     return null
   }

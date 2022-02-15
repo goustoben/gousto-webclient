@@ -65,8 +65,8 @@ const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
         {imageURL && (
           <img className={css.collectionLinkImage} src={imageURL} alt={collectionName} />
         )}
-        <p className={css.collectionLinkName}>{collectionName}</p>
-        <p className={css.collectionLinkCount}>({recipes.size})</p>
+        <span className={css.collectionLinkName}>{collectionName}</span>
+        <span className={css.collectionLinkCount}>({recipes.size})</span>
       </div>
     </div>
   )
