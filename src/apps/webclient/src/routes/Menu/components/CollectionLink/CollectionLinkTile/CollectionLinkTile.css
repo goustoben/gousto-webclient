@@ -1,20 +1,27 @@
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
-@value White, Blackberry from 'styles/colors.css';
+@value White, Blackberry, Bluecheese from 'styles/colors.css';
 @value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
 
 .collectionLinkTile {
     width: 100%;
     position: relative;
-    height: 5.8rem;
+    height: 3rem;
     flex-direction: column;
     background-color: White;
     margin-top: 0.8rem;
+    @media ScreenSMMin {
+        height: 5.8rem;
+    }
 }
+.collectionLinkTile:hover {
+    box-shadow: 0 4px 14px 0 rgb(51 61 71 / 20%);
+    cursor: pointer;
+  }
 
 .arrowRightWrapper {
   height: 100%;
   display: flex;
-  align-content: center;
+  align-items: center;
   right: 1rem;
   position: absolute;
   width: 1rem;
@@ -22,9 +29,9 @@
 
 .arrowRight {
   position: absolute;
-  top: 2.5rem;
   composes: fa-basic-class fa-fw fa-chevron-right from 'styles/vendor/font-awesome-module.css';
   cursor: pointer;
+  color: Bluecheese;
 }
 
 .collectionLinkInfo {
@@ -37,17 +44,19 @@
 
 .collectionLinkName {
     margin-left: 1rem;
-}
-
-.collectionLinkCount {
-    margin-left: 0.2em;
-}
-
-.collectionLinkCount, .collectionLinkName{
     font-family: axiformaFontStack;
     font-size: sizeS;
     align-self: center;
     font-weight: 600;
+    line-height: 1.6;
+}
+
+.collectionLinkCount {
+    margin-left: 0.2em;
+    font-family: axiformaFontStack;
+    font-size: sizeS;
+    align-self: center;
+    font-weight: 400;
     line-height: 1.6;
 }
 
