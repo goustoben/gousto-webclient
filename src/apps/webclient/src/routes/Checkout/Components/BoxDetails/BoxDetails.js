@@ -3,8 +3,17 @@ import React from 'react'
 import moment from 'moment'
 import Immutable from 'immutable'
 import routes from 'config/routes'
-import Link from 'Link'
 import { getSlotTimes } from 'utils/deliveries'
+import {
+  Heading6,
+  Link,
+  Box,
+  Space,
+  Text,
+  FontWeight,
+  JustifyContent,
+  Color,
+} from '@gousto-internal/citrus-react'
 import { RecipeSummary } from '../RecipeSummary'
 import css from './BoxDetails.css'
 
@@ -14,23 +23,22 @@ export const BoxDetails = ({ numPortions, date, deliveryDays, slotId }) => {
 
   return (
     <div className={css.container} data-testing="checkoutBoxDetailsSection">
-      <div className={css.headerWrapper}>
-        <h3 className={css.header}>{`Your box (${numPortions} people)`}</h3>
-        <span className={css.editOrder}>
-          <Link to={routes.client.menu} clientRouted>
-            Edit order
-          </Link>
-        </span>
-      </div>
+      <Box display="flex" justifyContent={JustifyContent.SpaceBetween}>
+        <Heading6>{`Your box (${numPortions} people)`}</Heading6>
+        <Link size={1} href={routes.client.menu}>
+          Edit order
+        </Link>
+      </Box>
+      <Space size={5} />
 
       <RecipeSummary />
 
-      <div className={css.separator} />
-      <div className={css.headerWrapper}>
-        <h3 className={css.header}>Delivery date</h3>
-      </div>
-      <p className={css.deliveryDate}>{deliveryDate}</p>
-      <p className={css.deliveryTime}>{deliveryTime}</p>
+      <Box height="1px" bg={Color.NeutralGrey_100} />
+      <Space size={4} />
+      <Heading6>Delivery date</Heading6>
+      <Space size={5} />
+      <Text fontWeight={FontWeight.SemiBold}>{deliveryDate}</Text>
+      <Text uppercase>{deliveryTime}</Text>
     </div>
   )
 }

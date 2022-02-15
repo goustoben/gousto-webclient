@@ -1,13 +1,6 @@
 @value White, Bluecheese, Oyster, Mackerel, Pepper30 from 'styles/colors.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
-.headerWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-
 .header {
   composes: fontStyleM from 'design-language/typography.css';
   margin-bottom: 0;
