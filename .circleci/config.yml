@@ -311,6 +311,9 @@ jobs:
           working_directory: scripts
           command: source ~/.circlerc && ./lease-access.sh
       - run:
+          name: Find Datadog RUM sessions for E2E tests here ⬇️
+          command: echo "https://datadoghq.eu/rum/explorer?query=%40application.id%3A7eaa558f-a187-40c5-b743-9fd52d7aff3a&tab=session&from_ts=1640000000000&to_ts=1740000000000&live=true"
+      - run:
           name: Run E2E tests
           working_directory: tests/e2e
           command: chromedriver start & yarn test:staging
