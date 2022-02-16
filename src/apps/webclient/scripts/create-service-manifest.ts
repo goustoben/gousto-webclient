@@ -60,10 +60,10 @@ const transformServiceVersions = (serviceVersions: ConfigEndpointServiceVersions
 }
 
 const transformEndpointsToManifest = (endpoints: ConfigEndpoints): ServiceManifest => {
-  return Object.keys(endpoints).reduce((acc: ServiceManifest, serviceName: string) => {
+  return Object.entries(endpoints).reduce((acc: ServiceManifest, [serviceName, serviceVersion]) => {
     return {
       ...acc,
-      [serviceName]: transformServiceVersions(endpoints[serviceName])
+      [serviceName]: transformServiceVersions(serviceVersion)
     }
   }, {})
 }
