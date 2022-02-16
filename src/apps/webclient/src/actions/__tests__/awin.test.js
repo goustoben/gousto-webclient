@@ -1,46 +1,48 @@
-import { sendAwinS2SData } from 'actions/awin'
-import { awinServerToServer } from 'apis/awin'
+import { sendAwinData } from 'actions/awin'
+import { trackAwinOrder } from 'apis/tracking'
 import logger from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
 }))
 
-jest.mock('apis/awin')
+jest.mock('apis/tracking')
 
 describe('awin actions', () => {
   const dispatchSpy = jest.fn()
-  const awinParams = {
+  const orderId = '12345'
+  const awin = {
     merchant: '5070',
     amount: '12.50',
-    ref: '12345',
     cr: 'GBR',
-    vc: 'DTI-CODE',
     parts: 'commissionGroup:12.50',
     cks: '5070_awin_click_checksum',
-    user_id: '54321',
+  }
+  const awinParams = {
+    orderId,
+    ...awin,
   }
 
-  describe('given sendAwinS2SData is dispatched', () => {
+  describe('given sendAwinData is dispatched', () => {
     beforeEach(() => {
       jest.clearAllMocks()
     })
 
     test('then it should send data to awin s2s', async () => {
-      await sendAwinS2SData(awinParams)(dispatchSpy)
+      await sendAwinData(awinParams)(dispatchSpy)
 
-      expect(awinServerToServer).toHaveBeenCalledWith(awinParams)
+      expect(trackAwinOrder).toHaveBeenCalledWith({ order_id: orderId }, awin)
     })
 
-    describe('when awinServerToServer is failed', () => {
+    describe('when trackAwinOrder is failed', () => {
       beforeEach(() => {
-        awinServerToServer.mockImplementation( () => {
+        trackAwinOrder.mockImplementation( () => {
           throw new Error('test error')
         })
       })
 
       test('then it should log a warning', async () => {
-        await sendAwinS2SData(awinParams)(dispatchSpy)
+        await sendAwinData(awinParams)(dispatchSpy)
 
         expect(logger.warning).toHaveBeenCalled()
       })
