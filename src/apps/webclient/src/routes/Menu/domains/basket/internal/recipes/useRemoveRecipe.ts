@@ -1,5 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
+import { pricingRequest } from 'actions/pricing'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as trackingKeys from 'actions/trackingKeys'
@@ -49,6 +50,7 @@ export const useRemoveRecipe = () => {
         })
       }
 
+      dispatch(pricingRequest())
       dispatch(trackUserAddRemoveRecipe())
     },
     [menuRecipes, numPortions, collection, reachedLimit, dispatch]
