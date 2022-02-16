@@ -32,35 +32,35 @@ export type EnvironmentConfigServices ={
 }
 
 export type EnvironmentConfigServiceList = {
-  auth:                EnvironmentConfigServiceVersion;
-  brand:               EnvironmentConfigServiceVersion;
-  clientmetrics:       EnvironmentConfigServiceVersion;
-  collections:         EnvironmentConfigServiceVersion;
-  complaints:          EnvironmentConfigServiceVersion;
-  content:             EnvironmentConfigServiceVersion;
-  core:                EnvironmentConfigServiceVersion;
-  customers:           EnvironmentConfigServiceVersion;
-  deliveries:          EnvironmentConfigServiceVersion;
-  felogging:           EnvironmentConfigServiceVersion;
-  loggingmanager:      EnvironmentConfigServiceVersion;
-  menu:                EnvironmentConfigServiceVersion;
-  order:               EnvironmentConfigServiceVersion;
-  orders:              EnvironmentConfigServiceVersion;
-  orderskiprecovery:   EnvironmentConfigServiceVersion;
-  payments:            EnvironmentConfigServiceVersion;
-  products:            EnvironmentConfigServiceVersion;
-  recipes:             EnvironmentConfigServiceVersion;
-  ssr:                 EnvironmentConfigServiceVersion;
-  ssrdeliveries:       EnvironmentConfigServiceVersion;
-  ssrrecipecards:      EnvironmentConfigServiceVersion;
-  subpauseosr:         EnvironmentConfigServiceVersion;
-  subscriptioncommand: EnvironmentConfigServiceVersion;
-  subscriptionquery:   EnvironmentConfigServiceVersion;
-  tastepreferences:    EnvironmentConfigServiceVersion;
-  userbucketing:       EnvironmentConfigServiceVersion;
-  userfeedback:        EnvironmentConfigServiceVersion;
-  webclient:           EnvironmentConfigServiceVersion;
-  workable:            EnvironmentConfigServiceVersion;
+  auth:                EnvironmentConfigServiceVersions;
+  brand:               EnvironmentConfigServiceVersions;
+  clientmetrics:       EnvironmentConfigServiceVersions;
+  collections:         EnvironmentConfigServiceVersions;
+  complaints:          EnvironmentConfigServiceVersions;
+  content:             EnvironmentConfigServiceVersions;
+  core:                EnvironmentConfigServiceVersions;
+  customers:           EnvironmentConfigServiceVersions;
+  deliveries:          EnvironmentConfigServiceVersions;
+  felogging:           EnvironmentConfigServiceVersions;
+  loggingmanager:      EnvironmentConfigServiceVersions;
+  menu:                EnvironmentConfigServiceVersions;
+  order:               EnvironmentConfigServiceVersions;
+  orders:              EnvironmentConfigServiceVersions;
+  orderskiprecovery:   EnvironmentConfigServiceVersions;
+  payments:            EnvironmentConfigServiceVersions;
+  products:            EnvironmentConfigServiceVersions;
+  recipes:             EnvironmentConfigServiceVersions;
+  ssr:                 EnvironmentConfigServiceVersions;
+  ssrdeliveries:       EnvironmentConfigServiceVersions;
+  ssrrecipecards:      EnvironmentConfigServiceVersions;
+  subpauseosr:         EnvironmentConfigServiceVersions;
+  subscriptioncommand: EnvironmentConfigServiceVersions;
+  subscriptionquery:   EnvironmentConfigServiceVersions;
+  tastepreferences:    EnvironmentConfigServiceVersions;
+  userbucketing:       EnvironmentConfigServiceVersions;
+  userfeedback:        EnvironmentConfigServiceVersions;
+  webclient:           EnvironmentConfigServiceVersions;
+  workable:            EnvironmentConfigServiceVersions;
 }
 
 export type EnvironmentConfigServiceUrlGroup = {
@@ -83,7 +83,7 @@ export enum VersionString {
   V20 = "v2.0",
 }
 
-export type EnvironmentConfigServiceVersion = {
+export type EnvironmentConfigServiceVersions = {
   [version: string]: EnvironmentConfigServiceUrlGroup
 }
 
@@ -118,7 +118,7 @@ const parseJson = (jsonString: string) => JSON.parse(jsonString)
 
 const getEndpointsForEnvironment = (environment: string) => (json: EnvironmentConfig): EnvironmentConfigServiceList => json.endpoints[environment].services
 
-const transformServiceVersions = (serviceVersions: EnvironmentConfigServiceVersion): ServiceVersion[] => {
+const transformServiceVersions = (serviceVersions: EnvironmentConfigServiceVersions): ServiceVersion[] => {
   return Object.keys(serviceVersions).map(version => ({
     version: Number(version),
     basePath: serviceVersions[version].clientSide.live.replace(URL_PREFIX, "")
