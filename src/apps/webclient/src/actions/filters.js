@@ -1,9 +1,6 @@
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { actionTypes } from './actionTypes'
-import {
-  trackCTAToAllRecipesClicked,
-} from './tracking'
 import { trackProductFiltering } from './products'
 import { getDisplayedCollections } from '../routes/Menu/selectors/collections'
 
@@ -55,13 +52,6 @@ export function collectionFilterChange(collectionId) {
 export const changeCollectionById = (id = ALL_RECIPES_COLLECTION_ID) => (
   (dispatch) => {
     dispatch(collectionFilterChange(id))
-  }
-)
-
-export const changeCollectionToAllRecipesViaCTA = () => (
-  (dispatch) => {
-    dispatch(collectionFilterChange(ALL_RECIPES_COLLECTION_ID))
-    dispatch(trackCTAToAllRecipesClicked())
   }
 )
 
