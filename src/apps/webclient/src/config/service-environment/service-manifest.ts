@@ -1,4 +1,19 @@
-{
+/*
+ * @type {ServiceManifest} - type for describing the service manifest
+ */
+export type ServiceManifest = {
+  [key: string]: ServiceVersion[]
+}
+
+/*
+ * @type {ServiceVersion} - type for describing the service and its version in the service manifest
+ */
+export type ServiceVersion = {
+  version: number,
+  basePath: string
+}
+
+export const serviceManifest: ServiceManifest = {
   "auth": [
     {
       "version": 1,

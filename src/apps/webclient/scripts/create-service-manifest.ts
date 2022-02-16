@@ -1,3 +1,7 @@
+/*
+* NOTE: execute this script with:
+*   npx ts-node -O '{"module":"commonjs"}' create-service-manifest.ts
+* */
 import * as fs from 'fs'
 import { resolve } from 'path'
 
@@ -64,7 +68,7 @@ export type EnvironmentConfigServiceList = {
 }
 
 export type EnvironmentConfigServiceUrlGroup = {
-  versionString: VersionString;
+  versionString: string;
   clientSide:    EnvironmentConfigServiceUrls;
   serverSide:    EnvironmentConfigServiceUrls;
 }
@@ -72,15 +76,6 @@ export type EnvironmentConfigServiceUrlGroup = {
 export type EnvironmentConfigServiceUrls ={
   live:  string;
   local: string;
-}
-
-export enum VersionString {
-  Empty = "",
-  V1 = "v1",
-  V10 = "v1.0",
-  V100 = "v1.0.0",
-  V2 = "v2",
-  V20 = "v2.0",
 }
 
 export type EnvironmentConfigServiceVersions = {
@@ -105,7 +100,7 @@ export type ServiceManifest = {
 const JSON5_FILEPATH = '../config/default.json5'
 const ENCODING = 'utf8'
 const URL_PREFIX = 'https://production-api.gousto.co.uk'
-const OUTPUT_FILEPATH = '../src/config/service-environment/service-manifest.json'
+const OUTPUT_FILEPATH = '../src/config/service-environment/service-manifest.ts'
 const ENV_PRODUCTION = 'production'
 
 const pipe = (...fns: any[]) => (init: unknown) => fns.reduce((acc, fn) => fn(acc), init)
@@ -134,12 +129,31 @@ const transformEndpointsToManifest = (endpoints: EnvironmentConfigServiceList): 
   }, {})
 }
 
-const writeManifestFile = (serviceManifest: ServiceManifest) => {
+const toTypescriptString = (serviceManifest: ServiceManifest): string => `/*
+ * @type {ServiceManifest} - type for describing the service manifest
+ */
+export type ServiceManifest = {
+  [key: string]: ServiceVersion[]
+}
+
+/*
+ * @type {ServiceVersion} - type for describing the service and its version in the service manifest
+ */
+export type ServiceVersion = {
+  version: number,
+  basePath: string
+}
+
+export const serviceManifest: ServiceManifest = ${JSON.stringify(serviceManifest, null, 2)}
+`
+
+const writeManifestFile = (serviceManifestTypescriptString: string) => {
   const filePath = resolve(__dirname, OUTPUT_FILEPATH)
 
   return fs.writeFileSync(
     filePath,
-    JSON.stringify(serviceManifest, null, 2)+"\n",ENCODING
+    serviceManifestTypescriptString,
+    ENCODING
   )
 }
 
@@ -149,6 +163,7 @@ const createManifestFromConfig = pipe(
   parseJson,
   getEndpointsForEnvironment(ENV_PRODUCTION),
   transformEndpointsToManifest,
+  toTypescriptString,
   writeManifestFile
 )
 
