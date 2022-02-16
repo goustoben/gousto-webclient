@@ -1,7 +1,10 @@
 import * as fs from 'fs'
 import { resolve } from 'path'
 
-// old types for the service configuration
+/**
+ * @deprecated
+ * old types for the service configuration
+*/
 export type ConfigEndpoints = {
   [serviceName: string]: ConfigEndpointServiceVersions
 }
