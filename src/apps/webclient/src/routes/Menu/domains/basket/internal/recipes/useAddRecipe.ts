@@ -2,7 +2,6 @@ import { Map } from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
-import { pricingRequest } from 'actions/pricing'
 import { useSelector, useDispatch } from 'react-redux'
 import { usePrevious } from 'react-use'
 import { menuRecipeDetailVisibilityChange } from 'routes/Menu/actions/menuRecipeDetails'
@@ -26,7 +25,6 @@ const useAddValidRecipeToBasket = () => {
   const { isRecipeOutOfStock } = useStock()
   const collection = useCurrentCollectionId()
   const { numPortions } = useNumPortions()
-
   const prevRecipes = usePrevious(menuRecipes)
 
   const dispatch = useDispatch()
@@ -91,8 +89,6 @@ const useAddValidRecipeToBasket = () => {
         },
       })
     }
-
-    dispatch(pricingRequest())
 
     let recipesCount = 0
 

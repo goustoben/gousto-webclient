@@ -1,1 +1,1 @@
-export { TitleContainer } from './TitleContainer'
+export { Title } from './Title'
