@@ -13,7 +13,7 @@ export const createMockInitialState = ({ auth, basket }: PartialInitialState) =>
   basket: basket ? basketInitialState().merge(basket) : basketInitialState(),
 })
 
-export const createMockStore = (partialState: PartialInitialState) => {
+export const createMockStore = (partialState: PartialInitialState = {}) => {
   const initialState = createMockInitialState(partialState)
   const mockStore = configureMockStore()
 

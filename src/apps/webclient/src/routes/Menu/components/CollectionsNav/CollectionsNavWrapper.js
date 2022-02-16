@@ -16,7 +16,7 @@ const CollectionsNavWrapper = (ownProps) => {
     <CollectionsNav
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...ownProps}
-      collectionFilterChange={changeCollectionById}
+      changeCollectionById={changeCollectionById}
       menuCollections={collections}
       menuCurrentCollectionId={currentCollectionId}
       isPolicyAccepted={isPolicyAccepted}

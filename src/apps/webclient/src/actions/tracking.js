@@ -171,17 +171,6 @@ export const trackRecipeOrderDisplayed = (displayedOrder) => (
   }
 )
 
-export const trackCTAToAllRecipesClicked = () => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.TRACKING_CTA_TO_ALL_RECIPES_CLICKED,
-      trackingData: {
-        actionType: trackingKeys.clickAllRecipes,
-      }
-    })
-  }
-)
-
 export const trackNavigationClick = (trackingData) => (
   (dispatch) => {
     dispatch({

@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { CollectionLink } from '../../components/CollectionLink'
 import { RecipeTile } from '../../components/RecipeTile'
 import { RecipeContextProvider } from '../../context/recipeContext'
-import { CTAToAllRecipesContainer } from '../../Recipe/CTAToAllRecipes'
+import { CTAToAllRecipes } from '../CTAToAllRecipes'
 import css from './RecipeList.css'
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
 
@@ -45,7 +45,7 @@ class RecipeList extends React.PureComponent {
             </RecipeContextProvider>
           </React.Fragment>
         ))}
-        <CTAToAllRecipesContainer />
+        <CTAToAllRecipes />
       </div>
     )
   }

@@ -4,7 +4,6 @@ import { actionTypes } from '../actionTypes'
 import {
   collectionFilterChange,
   changeCollectionById,
-  changeCollectionToAllRecipesViaCTA,
   filterProductCategory
 } from '../filters'
 
@@ -159,13 +158,6 @@ describe('filters actions', () => {
     test('should dispatch one action', () => {
       changeCollectionById()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(1)
-    })
-  })
-
-  describe('changeCollectionToAllRecipesViaCTA', () => {
-    test('should dispatch two actions', () => {
-      changeCollectionToAllRecipesViaCTA()(dispatchSpy, getStateSpy)
-      expect(dispatchSpy.mock.calls.length).toBe(2)
     })
   })
 

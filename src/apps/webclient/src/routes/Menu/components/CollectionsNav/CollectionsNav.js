@@ -161,7 +161,7 @@ class CollectionsNav extends React.PureComponent {
   }
 
   prevCollection = () => {
-    const { menuCurrentCollectionId, menuCollections, collectionFilterChange } = this.props
+    const { menuCurrentCollectionId, menuCollections, changeCollectionById } = this.props
     const prevIdx = menuCollections
       .map(collection => collection.get('id'))
       .toList()
@@ -173,7 +173,7 @@ class CollectionsNav extends React.PureComponent {
     }
 
     if (getWindow().innerWidth < MOBILE_BREAKPOINT && prevCollectionId) {
-      collectionFilterChange(prevCollectionId)
+      changeCollectionById(prevCollectionId)
     } else {
       let offsetWidth = 0
 
@@ -191,7 +191,7 @@ class CollectionsNav extends React.PureComponent {
   }
 
   nextCollection = () => {
-    const { menuCurrentCollectionId, menuCollections, collectionFilterChange } = this.props
+    const { menuCurrentCollectionId, menuCollections, changeCollectionById } = this.props
     const nextIdx = menuCollections
       .map(collection => collection.get('id'))
       .toList()
@@ -202,7 +202,7 @@ class CollectionsNav extends React.PureComponent {
       nextCollectionId = menuCollections.toList().getIn([nextIdx, 'id'], null)
     }
     if (getWindow().innerWidth < MOBILE_BREAKPOINT && nextCollectionId) {
-      collectionFilterChange(nextCollectionId)
+      changeCollectionById(nextCollectionId)
     } else {
       let offsetWidth = 0
 
@@ -220,10 +220,10 @@ class CollectionsNav extends React.PureComponent {
   }
 
   changeCollection = (collectionId) => {
-    const { collectionFilterChange } = this.props
+    const { changeCollectionById } = this.props
     const { navBarOffsetTop } = this.state
     if (!collectionId) return
-    collectionFilterChange(collectionId)
+    changeCollectionById(collectionId)
     const position = 0
     if (document && document.body) {
       if (actual('width', 'px') < 768) {
@@ -344,7 +344,7 @@ class CollectionsNav extends React.PureComponent {
 
 CollectionsNav.propTypes = {
   menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-  collectionFilterChange: PropTypes.func.isRequired,
+  changeCollectionById: PropTypes.func.isRequired,
   menuCurrentCollectionId: PropTypes.string,
   isPolicyAccepted: PropTypes.bool,
 }
