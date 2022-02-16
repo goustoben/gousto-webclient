@@ -86,7 +86,8 @@ export type EnvironmentConfigServiceVersions = {
  * @type {ServiceVersion} - type for describing the service and its version in the service manifest
  */
 export type ServiceVersion = {
-  version: number,
+  version: string,
+  majorVersion: number,
   basePath: string
 }
 
@@ -115,7 +116,8 @@ const getEndpointsForEnvironment = (environment: string) => (json: EnvironmentCo
 
 const transformServiceVersions = (serviceVersions: EnvironmentConfigServiceVersions): ServiceVersion[] => {
   return Object.keys(serviceVersions).map(version => ({
-    version: Number(version),
+    majorVersion: Number(version),
+    version: serviceVersions[version].versionString,
     basePath: serviceVersions[version].clientSide.live.replace(URL_PREFIX, "")
   }))
 }
@@ -140,7 +142,8 @@ export type ServiceManifest = {
  * @type {ServiceVersion} - type for describing the service and its version in the service manifest
  */
 export type ServiceVersion = {
-  version: number,
+  version: string,
+  majorVersion: number,
   basePath: string
 }
 
