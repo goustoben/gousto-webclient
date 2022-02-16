@@ -1,12 +1,13 @@
-@value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
+@value axiformaFontStack, sizeSM, sizeMD from 'styles/typography.css';
 @value White, Blackberry from 'styles/colors.css';
 @value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
 
 .collectionLink {
     width: 100%;
     position: relative;
-    margin: 0 0.75rem 0.75rem 0.75rem;
+    margin: 0.75rem 0.75rem 1.25rem 0.75rem;
     flex-direction: column;
+
 
     @media ScreenSMMin {
         margin: 0 1rem 1rem 0;
@@ -40,5 +41,13 @@
     @media ScreenSMMin {
         display: flex;
         flex-direction: column;
+    }
+}
+
+.collectionLinkHeading {
+    font-size: sizeMD;
+    font-weight: 600;
+    @media ScreenSMMin {
+        font-size: 20px;
     }
 }
