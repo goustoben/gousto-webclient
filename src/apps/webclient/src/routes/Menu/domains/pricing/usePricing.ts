@@ -35,9 +35,10 @@ const useGetPricing = (shouldFetch: boolean): { error: any; data: Pricing | null
   const dispatch = useDispatch()
   const { accessToken, authUserId } = useAuth()
   const orderRequest = useSelector(getOrderV2)
-  const url = shouldFetch ? `${endpoint('order', 2)}/prices` : null
+  const url = `${endpoint('order', 2)}/prices`
+  const params = shouldFetch ? [url, { data: orderRequest }, accessToken, authUserId] : null
   const { data: response, error } = useSWR<{ data: any; included: any }, Error>(
-    [url, { data: orderRequest }, accessToken, authUserId],
+    params,
     postFetcher,
     {
       revalidateIfStale: false,
@@ -74,7 +75,7 @@ export const usePricing = (): { pricing?: Pricing | null; pending: boolean } => 
   const deliverySlotId = useSelector(getBasketSlotId)
   const recipesCount = useSelector(getBasketRecipesCount)
   const shouldFetch = recipesCount > 1 && !!deliverySlotId
-  let { error, data } = useGetPricing(shouldFetch)
+  const { error, data } = useGetPricing(shouldFetch)
 
   useEffect(() => {
     if (recipesCount < 2) {

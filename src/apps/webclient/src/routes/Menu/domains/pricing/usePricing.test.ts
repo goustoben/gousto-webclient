@@ -43,7 +43,7 @@ describe('usePricing', () => {
     useDispatchMock.mockReturnValue(dispatch)
     getOrderV2.mockReturnValue({ testdata: 'test' })
     useSWRMock.mockImplementation(
-      jest.fn(([url]) => (url ? { data: pricingMockedResponse } : { error: true }))
+      jest.fn((params) => (params ? { data: pricingMockedResponse } : { error: true }))
     )
   })
 
