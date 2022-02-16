@@ -1,52 +1,60 @@
-import { shallow } from 'enzyme'
+import { render } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
-import { RecipeSummary } from 'routes/Checkout/Components/RecipeSummary'
 import { BoxDetails } from 'routes/Checkout/Components/BoxDetails/BoxDetails'
-import Link from 'Link'
+
+jest.mock('routes/Checkout/Components/RecipeSummary', () => ({
+  RecipeSummary: () => {
+    const MockRecipeSummary = 'mock-recipe-summary'
+
+    return <MockRecipeSummary />
+  },
+}))
 
 describe('BoxDetails', () => {
-  let recipes
   let wrapper
 
   beforeEach(() => {
-    recipes = Immutable.Map({ 1: 1, 2: 1, 3: 1, 4: 1 })
-    wrapper = shallow(<BoxDetails recipes={recipes} />)
-  })
-
-  test('should return a div', () => {
-    expect(wrapper.type()).toEqual('div')
+    const deliveryDays = Immutable.fromJS({
+      '2016-06-26': {
+        slots: [
+          {
+            id: 'slot1',
+            deliveryStartTime: '08:00:00',
+            deliveryEndTime: '12:00:00',
+          },
+        ],
+      },
+    })
+    wrapper = render(
+      <BoxDetails numPortions={2} date="2016-06-26" deliveryDays={deliveryDays} slotId="slot1" />
+    )
   })
 
   test('should have 1 RecipeSummary', () => {
-    expect(wrapper.find(RecipeSummary).length).toEqual(1)
+    expect(wrapper.find('mock-recipe-summary').length).toEqual(1)
   })
 
-  test('should return a h3', () => {
-    expect(wrapper.find('h3').length).toEqual(2)
+  test('should render the correct "Your box" header', () => {
+    expect(wrapper.find('h6').length).toEqual(2)
+    expect(wrapper.find('h6').first().text()).toEqual('Your box (2 people)')
   })
 
-  test('should return <Link> components', () => {
-    expect(wrapper.find(Link).length).toEqual(1)
+  test('should render a "Delivery date" header', () => {
+    expect(wrapper.find('h6').last().text()).toEqual('Delivery date')
   })
 
-  test('should return a <Link> when max recipes is not reached', () => {
-    recipes = Immutable.fromJS({ 1: 1, 2: 1 })
-    wrapper = shallow(<BoxDetails recipes={recipes} />)
-    expect(wrapper.find(Link).length).toEqual(1)
+  test('should render a link to edit order', () => {
+    expect(wrapper.find('a').length).toEqual(1)
+    expect(wrapper.find('a').text()).toEqual('Edit order')
+    expect(wrapper.find('a').prop('href')).toEqual('/menu')
   })
 
-  test('should render 1 <RecipeSummary>', () => {
-    expect(wrapper.find(RecipeSummary).length).toEqual(1)
+  test('should render the correctly formatted delivery date', () => {
+    expect(wrapper.text().includes('Sunday 26th June')).toBe(true)
   })
 
-  test('should render a <div> with no props', () => {
-    expect(wrapper.type()).toEqual('div')
-  })
-
-  test('should contain <Link> when max recipe count specified and not reach', () => {
-    recipes = Immutable.Map({ 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 })
-    wrapper = shallow(<BoxDetails maxRecipesNum={8} recipes={recipes} />)
-    expect(wrapper.find(Link).length).toEqual(1)
+  test('should render the correctly formatted delivery time', () => {
+    expect(wrapper.text().includes('8am - 12pm')).toBe(true)
   })
 })
