@@ -3,7 +3,6 @@ import React from 'react'
 import classNames from 'classnames'
 import moment from 'moment'
 
-import { usePricing } from 'routes/Menu/domains/pricing'
 import { Spinner } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
 import { Price } from '../Price'
@@ -14,6 +13,10 @@ const propTypes = {
   view: PropTypes.string,
   spinnerClassName: PropTypes.string,
   spinnerContainerClassName: PropTypes.string,
+  pending: PropTypes.bool,
+  recipeTotal: PropTypes.number,
+  recipeDiscount: PropTypes.number,
+  recipeTotalDiscounted: PropTypes.number,
   slotTime: PropTypes.string,
 }
 
@@ -23,41 +26,52 @@ const defaultProps = {
   spinnerClassName: '',
   spinnerContainerClassName: '',
   slotTime: '',
+  pending: false,
+  recipeTotal: 0,
+  recipeDiscount: 0,
+  recipeTotalDiscounted: 0,
 }
 
-function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassName }) {
-  const { pricing, pending } = usePricing()
-  const spinnerClassNames = {
-    [css.spinnerContainer]: true,
-    spinnerContainerClassName,
-    [css.spinnerShow]: pending,
-  }
+class Title extends React.PureComponent {
+  render() {
+    const { recipeTotal, recipeDiscount, recipeTotalDiscounted, slotTime, date, view, pending, spinnerClassName, spinnerContainerClassName } = this.props
+    const spinnerClassNames = {
+      [css.spinnerContainer]: true,
+      spinnerContainerClassName,
+      [css.spinnerShow]: pending,
+    }
 
-  return (
-    <div className={css.titleWrapper}>
-      <p className={css[`title${view}`]}>
-        {date ? <span className={css.showDate}>{moment(date).format('ddd D MMM')}</span> : null}
-        {slotTime ? <span className={css.showDate}> {slotTime}</span> : null}
-      </p>
-      <div className={classNames(css[`title${view}`], css.price)}>
-        {pending ? (
-          isMobile(view) && (
-            <div className={classNames(spinnerClassNames)}>
-              <span className={classNames(css.spinner, spinnerClassName)}>
-                <Spinner />
-              </span>
-            </div>
-          )
-        ) : (
-          <Price
-            recipeTotal={parseFloat(pricing?.recipeTotal || 0)}
-            recipeDiscount={parseFloat(pricing?.recipeDiscount || 0)}
-            recipeTotalDiscounted={parseFloat(pricing?.recipeTotalDiscounted || 0)}
-          />
-        )}
+    return (
+      <div className={css.titleWrapper}>
+        <p className={css[`title${view}`]}>
+          {date ? <span className={css.showDate}>{moment(date).format('ddd D MMM')}</span> : null}
+          {slotTime ? (
+            <span className={css.showDate}>
+              {' '}
+              {slotTime}
+            </span>
+          ) : null}
+        </p>
+        <div className={classNames(css[`title${view}`], css.price)}>
+          {
+            pending ? isMobile(view) && (
+              <div className={classNames(spinnerClassNames)}>
+                <span className={classNames(css.spinner, spinnerClassName)}>
+                  <Spinner />
+                </span>
+              </div>
+            ) : (
+              <Price
+                recipeTotal={recipeTotal}
+                recipeDiscount={recipeDiscount}
+                recipeTotalDiscounted={recipeTotalDiscounted}
+              />
+            )
+          }
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 Title.propTypes = propTypes
