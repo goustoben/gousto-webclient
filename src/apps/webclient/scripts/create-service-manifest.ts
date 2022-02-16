@@ -4,7 +4,7 @@ import { resolve } from 'path'
 /**
  * @type {EnvironmentConfig} old types for the service configuration
 */
-export interface EnvironmentConfig {
+export type EnvironmentConfig = {
   build:                          string;
   environment_name:               string;
   api_name:                       string;
@@ -26,7 +26,7 @@ export type EnvironmentConfigEndpoints = {
   [key: string]: EnvironmentConfigServices;
 }
 
-export type EnvironmentConfigServices ={
+export type EnvironmentConfigServices = {
   envDomain: string;
   services:  EnvironmentConfigServiceList;
 }
