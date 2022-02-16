@@ -1,9 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { useBasketRequiredFeatureEnabled } from 'routes/Menu/hooks/useBasketRequiredFeatureEnabled'
+import * as Redux from 'react-redux'
 import Immutable from 'immutable'
 import { Checkout } from '../Checkout'
 import { BaseBannerButton } from '../../BaseBannerButton'
-import { useBasketRequiredFeatureEnabled } from '../../../../../hooks/useBasketRequiredFeatureEnabled'
 
 jest.mock('../../../../../hooks/useBasketRequiredFeatureEnabled')
 
@@ -29,7 +30,7 @@ describe('CheckoutButton', () => {
       isBoxSummaryOpened: false,
       toggleBasketView: () => {}
     }
-
+    jest.spyOn(Redux, 'useSelector').mockReturnValue(true) // getIsSimplifyBasketBarEnabled
     useBasketRequiredFeatureEnabled.mockReturnValue(false)
   })
 
@@ -77,8 +78,7 @@ describe('CheckoutButton', () => {
       const checkoutProps = { ...propsToPass, ...props }
       wrapper = shallow(<Checkout {...checkoutProps} />)
       const child = wrapper.find(BaseBannerButton)
-
-      child.prop('onClick')()
+      child.simulate('click', { stopPropagation: () => undefined })
     }
 
     test('when the button\'s nested child is clicked it should trigger a basket checkout', () => {

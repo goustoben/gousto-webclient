@@ -29,6 +29,10 @@ export class MenuRecipesPage extends PureComponent {
       numPortions,
       checkQueryParams,
       fetchMenuData,
+      promoGet,
+      promoCode,
+      promoCodeFromPromoStore,
+      promoGetPending,
     } = this.props
     // if server rendered
     if (orderId && orderId === storeOrderId) {
@@ -43,6 +47,11 @@ export class MenuRecipesPage extends PureComponent {
       portionSizeSelectedTracking(numPortions, orderId)
     }
     checkQueryParams()
+    if (!promoCodeFromPromoStore &&
+      !promoGetPending &&
+      promoCode !== '') {
+      promoGet(promoCode)
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -174,6 +183,11 @@ MenuRecipesPage.propTypes = {
   loadOptimizelySDK: PropTypes.func.isRequired,
   menuLoadingErrorMessage: PropTypes.string,
   fetchMenuData: PropTypes.func.isRequired,
+  promoGet: PropTypes.func.isRequired,
+  promoCode: PropTypes.string.isRequired,
+
+  promoCodeFromPromoStore: PropTypes.string.isRequired,
+  promoGetPending: PropTypes.func.isRequired,
 }
 MenuRecipesPage.defaultProps = {
   orderId: null,

@@ -34,6 +34,8 @@ import {
   getIsCorporateEnquiriesLinkVisible,
   getIsSsrRepetitiveIssues,
   getIsGiftCardsLinkVisible,
+  getIsBackClosesModalEnabled,
+  getIsSimplifyBasketBarEnabled
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -84,6 +86,8 @@ describe('when features are defined', () => {
     [getIsCorporateEnquiriesLinkVisible, 'isCorporateEnquiriesLinkVisible'],
     [getIsSsrRepetitiveIssues, 'isSsrRepetitiveIssues'],
     [getIsGiftCardsLinkVisible, 'isGiftCardsLinkVisible'],
+    [getIsBackClosesModalEnabled, 'isBackClosesModalEnabled'],
+    [getIsSimplifyBasketBarEnabled, 'isSimplifyBasketBarEnabled']
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

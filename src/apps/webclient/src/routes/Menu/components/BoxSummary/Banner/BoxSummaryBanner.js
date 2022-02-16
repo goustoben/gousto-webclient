@@ -33,6 +33,8 @@ const BoxSummaryBanner = ({
       openDetails={openDetails}
       isBoxSummaryOpened={isBoxSummaryOpened}
       onExpandClick={onExpandClick}
+      expandWarning={expandWarning}
+      numRecipes={numRecipes}
     />
     <BoxSummaryDesktopBanner
       numRecipes={numRecipes}

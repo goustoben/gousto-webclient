@@ -1,32 +1,53 @@
 @value sizeXS from 'styles/typography.css';
 @value ScreenMLMax from 'styles/screenSizes.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value FS-200 #9CDC9E;
+@value FS-800 #008610;
 
 .desktopText {
-	composes: noMargin from 'sass-loader!styles/spacing.scss';
-	font-size: 15px;
+  composes: noMargin from 'sass-loader!styles/spacing.scss';
+  font-size: 15px;
 
-	@media ScreenMLMax {
-		display: none;
-	}
+  @media ScreenMLMax {
+    display: none;
+  }
 }
 
 .mobileText {
-	composes: noMargin from 'sass-loader!styles/spacing.scss';
-	color: White;
+  composes: noMargin from 'sass-loader!styles/spacing.scss';
+  color: White;
 }
 
 .descriptiondesktop {
-	composes: desktopText;
-	composes: paragraphXS noTransform from 'styles/typography.css';
-	color: inherit;
-	font-size: sizeXS;
+  composes: desktopText;
+  composes: paragraphXS noTransform from 'styles/typography.css';
+  color: inherit;
+  font-size: sizeXS;
 }
 
 .descriptionmobile {
-	composes: mobileText;
-	composes: paragraphXS from 'styles/typography.css';
+  composes: mobileText;
+  composes: paragraphXS from 'styles/typography.css';
 }
 
 .warningIcon {
-	composes: fa-basic-class fa-exclamation-triangle fa-fw from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-exclamation-triangle fa-fw from 'styles/vendor/font-awesome-module.css';
+}
+
+.isSimplifyBasketBarEnabled {
+  color: FS-200;
+  composes: fontStyleXS from 'design-language/typography.css';
+
+  @media ScreenMLMax {
+    /* undo display: none from .desktopText */
+    display: block;
+  }
+
+  @media BreakpointFromMedium {
+    color: FS-800;
+  }
+}
+
+.canCheckout {
+  composes: fontSemiBold from 'design-language/typography.css';
 }

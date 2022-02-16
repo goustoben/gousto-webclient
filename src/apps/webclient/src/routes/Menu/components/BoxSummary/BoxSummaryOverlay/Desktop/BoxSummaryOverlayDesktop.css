@@ -1,6 +1,6 @@
 @value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value sizeLG from 'styles/typography.css';
-@value barDesktopHeight from '../../Banner/Desktop/BoxSummaryDesktopBanner.css';
+@value barDesktopHeight, barHeightIsSimplifyBasketBarEnabled from '../../Banner/Desktop/BoxSummaryDesktopBanner.css';
 
 .supercontainerDesktop {
   composes: fixed from 'styles/position.css';
@@ -30,6 +30,11 @@
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.detailContainerDesktopVariant {
+  bottom: barHeightIsSimplifyBasketBarEnabled;
+  transform: translate(0px, calc(100% + barDesktopHeight));
 }
 
 .detailContainerDesktopShow {

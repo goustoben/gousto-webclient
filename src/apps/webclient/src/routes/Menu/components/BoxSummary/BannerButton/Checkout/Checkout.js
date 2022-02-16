@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import { useSelector } from 'react-redux'
 import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
+import { useBasketRequiredFeatureEnabled } from 'routes/Menu/hooks/useBasketRequiredFeatureEnabled'
+import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
-import { useBasketRequiredFeatureEnabled } from '../../../../hooks/useBasketRequiredFeatureEnabled'
+import { CheckoutCounter } from '../CheckoutCounter/CheckoutCounter'
 
 const Checkout = (props) => {
   const {
@@ -25,23 +28,34 @@ const Checkout = (props) => {
     menuFetchData,
     toggleBasketView,
     isBoxSummaryOpened,
+    isButtonHovered,
+    shouldRenderCounter,
   } = props
   const { pricing } = usePricing()
   const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
+  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+  const isPending =
+    checkoutPending ||
+    pricingPending ||
+    basketPreviewOrderChangePending ||
+    orderSavePending ||
+    loadingOrderPending ||
+    menuFetchData
+  const isDisabled =
+    checkoutPending ||
+    basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum
+
+  const handleClick = useCallback((e) => {
+    e.stopPropagation()
+    checkoutBasket({ section, view, pricing })
+  }, [checkoutBasket, section, view, pricing])
 
   return isBasketRequiredFeatureEnabled ? (
     <BaseBannerButton
       view={view}
       dataTesting="viewBasketCTA"
       onClick={() => toggleBasketView(true)}
-      pending={
-        checkoutPending ||
-        pricingPending ||
-        basketPreviewOrderChangePending ||
-        orderSavePending ||
-        loadingOrderPending ||
-        menuFetchData
-      }
+      pending={isPending}
       color={isBoxSummaryOpened ? 'secondary' : 'primary'}
     >
       {isBoxSummaryOpened ? 'Close basket' : 'View basket'}
@@ -50,20 +64,25 @@ const Checkout = (props) => {
     <BaseBannerButton
       view={view}
       dataTesting="boxSummaryButton"
-      disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
-      pending={
-        checkoutPending ||
-        pricingPending ||
-        basketPreviewOrderChangePending ||
-        orderSavePending ||
-        loadingOrderPending ||
-        menuFetchData
+      disabled={isDisabled}
+      pending={isSimplifyBasketBarEnabled ? false : isPending}
+      spinnerClassName={isSimplifyBasketBarEnabled ? css.displayNone : css.coSpinner}
+      spinnerContainerClassName={
+        isSimplifyBasketBarEnabled ? css.displayNone : css.coSpinnerContainer
       }
-      spinnerClassName={css.coSpinner}
-      spinnerContainerClassName={css.coSpinnerContainer}
-      onClick={() => checkoutBasket({ section, view, pricing })}
+      onClick={handleClick}
+      isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled}
     >
-      Checkout
+      {isSimplifyBasketBarEnabled ? (
+        <>
+          <div className={css.checkoutLabel}>Checkout</div>
+          {shouldRenderCounter && (
+            <CheckoutCounter isDisabled={isDisabled} isButtonHovered={isButtonHovered} />
+          )}
+        </>
+      ) : (
+        <>Checkout</>
+      )}
     </BaseBannerButton>
   )
 }
@@ -84,6 +103,8 @@ Checkout.propTypes = {
   basketPreviewOrderChangePending: PropTypes.bool,
   toggleBasketView: PropTypes.func,
   isBoxSummaryOpened: PropTypes.bool,
+  isButtonHovered: PropTypes.bool,
+  shouldRenderCounter: PropTypes.bool,
 }
 
 Checkout.defaultProps = {
@@ -96,6 +117,8 @@ Checkout.defaultProps = {
   basketPreviewOrderChangePending: false,
   toggleBasketView: () => {},
   isBoxSummaryOpened: false,
+  isButtonHovered: false,
+  shouldRenderCounter: false,
 }
 
 export { Checkout }

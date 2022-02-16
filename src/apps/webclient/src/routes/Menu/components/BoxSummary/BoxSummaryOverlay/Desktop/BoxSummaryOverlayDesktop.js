@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-
+import { useSelector } from 'react-redux'
+import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
 import { DetailsCTAGroup } from '../../Details/DetailsCTAGroup/DetailsCTAGroup'
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
 import css from './BoxSummaryOverlayDesktop.css'
@@ -17,11 +18,13 @@ const BoxSummaryOverlayDesktop = ({
   orderSaveError,
 }) => {
   const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
+  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
 
   return (
     <div className={css.supercontainerDesktop}>
       <div
         className={classNames(css.detailContainerDesktop, {
+          [css.detailContainerDesktopVariant]: isSimplifyBasketBarEnabled,
           [css.detailContainerDesktopShow]: showDetails,
           [css.isBasketRequiredFeatureEnabled]: isBasketRequiredFeatureEnabled,
         })}

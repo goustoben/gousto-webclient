@@ -1,3 +1,7 @@
+import { createSelector } from 'reselect'
+
+export const getFeatures = ({ features }) => features
+
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
   features
     ? features.getIn(['nextDayDeliveryPaintedDoor', 'value'])
@@ -128,4 +132,14 @@ export const getIsSsrRepetitiveIssues = ({ features }) => (
 
 export const getIsGiftCardsLinkVisible = ({ features }) => (
   features && features.getIn(['isGiftCardsLinkVisible', 'value'], true)
+)
+
+export const getIsBackClosesModalEnabled = createSelector(
+  getFeatures,
+  features => features.getIn(['isBackClosesModalEnabled', 'value'], false)
+)
+
+export const getIsSimplifyBasketBarEnabled = createSelector(
+  getFeatures,
+  features => features.getIn(['isSimplifyBasketBarEnabled', 'value'], false)
 )

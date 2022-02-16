@@ -1,15 +1,17 @@
 import { mount } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 
 import { boxSummaryViews } from 'utils/boxSummary'
 import { basketSum, okRecipes } from 'utils/basket'
-import { BannerButton } from './BannerButton'
+import { BannerButton } from '../BannerButton'
 
-import { CheckoutContainer } from './Checkout'
+import { CheckoutContainer } from '../Checkout'
 
-jest.mock('../BannerButton/Checkout', () => ({
-  CheckoutContainer: () => <div />
+jest.mock('../Checkout', () => ({
+  CheckoutContainer: () => <div />,
 }))
 
 jest.mock('utils/basket', () => ({
@@ -23,27 +25,31 @@ jest.mock('config/basket', () => ({
 
 describe('BannerButton', () => {
   let openSpy
-  const getState = jest.fn().mockReturnValue({
+
+  const mockStore = configureMockStore()
+  const mockedStore = mockStore({
     auth: Immutable.fromJS({
       isAuthenticated: false,
     }),
     basket: Immutable.fromJS({
       recipes: {},
-      numPortions: 2
+      numPortions: 2,
     }),
     boxSummaryDeliveryDays: Immutable.fromJS({}),
     error: Immutable.fromJS({}),
     user: Immutable.fromJS({
-      orders: {}
+      orders: {},
     }),
     experiments: Immutable.fromJS({
-      experiments: {}
+      experiments: {},
     }),
-    pending: Immutable.fromJS({
-    })
+    pending: Immutable.fromJS({}),
+    features: Immutable.fromJS({}),
   })
+
   const props = {
-    open: () => { }
+    view: 'mobile',
+    open: () => {},
   }
   beforeEach(() => {
     openSpy = jest.fn()
@@ -54,22 +60,11 @@ describe('BannerButton', () => {
   describe('when boxSummaryCurrentView is Details', () => {
     let wrapper
     beforeEach(() => {
-      wrapper = mount(<BannerButton {...props} boxSummaryCurrentView={boxSummaryViews.DETAILS} open={openSpy} />, {
-        context: {
-          store: {
-            getState,
-            dispatch: jest.fn(),
-            subscribe: jest.fn()
-          }
-        },
-        childContextTypes: {
-          store: {
-            getState,
-            dispatch: jest.fn(),
-            subscribe: jest.fn()
-          }
-        }
-      })
+      wrapper = mount(
+        <Provider store={mockedStore}>
+          <BannerButton {...props} boxSummaryCurrentView={boxSummaryViews.DETAILS} open={openSpy} />
+        </Provider>
+      )
     })
 
     test('should show CheckoutContainer if boxSummaryCurrentView', () => {
@@ -77,13 +72,21 @@ describe('BannerButton', () => {
     })
 
     test('should show CheckoutContainer on mobile with the view prop as "mobile"', () => {
-      wrapper.setProps({ view: 'mobile' })
       expect(wrapper.find(CheckoutContainer)).toHaveLength(1)
       expect(wrapper.find(CheckoutContainer).prop('view')).toEqual('mobile')
     })
 
-    test('should show CheckoutContainer on mobile with the view prop as "mobile"', () => {
-      wrapper.setProps({ view: 'desktop' })
+    test('should show CheckoutContainer on desktop with the view prop as "desktop"', () => {
+      wrapper = mount(
+        <Provider store={mockedStore}>
+          <BannerButton
+            {...props}
+            boxSummaryCurrentView={boxSummaryViews.DETAILS}
+            open={openSpy}
+            view="desktop"
+          />
+        </Provider>
+      )
       expect(wrapper.find(CheckoutContainer)).toHaveLength(1)
       expect(wrapper.find(CheckoutContainer).prop('view')).toEqual('desktop')
     })
