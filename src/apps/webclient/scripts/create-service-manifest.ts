@@ -20,7 +20,7 @@ export type ServiceUrls = {
   local: string;
 }
 
-export type EndpointVersionString = '' | 'v1' | 'v1.0' | 'v1.0.0' | 'v2' | 'v2.0';
+export type EndpointVersionString = '' | `v${number}` | `v${number}.${number}` | `v${number}.${number}.${number}`
 
 export type ConfigEndpointServiceVersions = {
   [version: string]: ServiceDetails;
