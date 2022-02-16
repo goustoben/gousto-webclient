@@ -11,7 +11,7 @@ import { getPreviewOrderId } from 'selectors/basket'
 import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode, getTransactionType } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
-import { sendAwinS2SData } from 'actions/awin'
+import { sendAwinData } from 'actions/awin'
 
 const collectionRecommendationSlug = 'recommendations'
 
@@ -119,16 +119,6 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
 
     const state = getState()
     const awc = state.tracking.get('awc', '')
-    const awinServerToServerParams = {
-      merchant: '5070',
-      amount: total,
-      ref: orderId,
-      cr: 'GBR',
-      vc: promoCode,
-      parts: `${commissionGroup}:${total}`,
-      cks: awc,
-      user_id: state.user.get('id'),
-    }
 
     // Example #2 from
     // https://wiki.awin.com/index.php/Advertiser_Tracking_Guide/Standard_Implementation#Conversion_Tag
@@ -140,7 +130,14 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
 
     window.AWIN.Tracking.run()
     if (awc) {
-      dispatch(sendAwinS2SData(awinServerToServerParams))
+      dispatch(sendAwinData({
+        orderId,
+        merchant: '5070',
+        cr: 'GBR',
+        amount: total,
+        parts: `${commissionGroup}:${total}`,
+        cks: awc,
+      }))
     }
   }
 

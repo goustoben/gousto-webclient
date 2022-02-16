@@ -1,9 +1,12 @@
 import logger from 'utils/logger'
-import { awinServerToServer } from 'apis/awin'
+import { trackAwinOrder } from 'apis/tracking'
 
-export const sendAwinS2SData = (awinParams) => async (dispatch) => {
+export const sendAwinData = ({ orderId, ...awin }) => async () => {
   try {
-    await dispatch(awinServerToServer(awinParams))
+    await trackAwinOrder({
+      order_id: orderId
+    },
+    awin)
   } catch (err) {
     logger.warning('error saving parameters for AWIN', err)
   }
