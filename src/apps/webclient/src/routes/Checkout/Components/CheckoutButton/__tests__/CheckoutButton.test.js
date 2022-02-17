@@ -11,7 +11,7 @@ describe('CheckoutButton', () => {
   })
 
   test('Should render correctly', () => {
-    expect(wrapper.find('[data-testing="checkoutCTA"]').exists()).toBeTruthy()
+    expect(wrapper.find('button').exists()).toBeTruthy()
   })
 
   describe('When button is clicked', () => {

@@ -26,7 +26,7 @@ describe('Given ApplyVoucherPage', () => {
 
   describe('when Apply voucher CTA is clicked', () => {
     beforeEach(() => {
-      wrapper.find('button').find({ 'data-testing': 'applyVoucherCTA' }).simulate('click')
+      wrapper.find('CheckoutButton').simulate('click')
     })
 
     test('then signupApplyVoucherGoToDeliveries should be called', () => {

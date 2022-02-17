@@ -52,28 +52,27 @@ $ yarn dev
 
 ## Pre-requisites
 
-- You'll need to have Yarn installed - if you install Yarn 1 (`npm install yarn -g`), it will bootstrap Yarn 3 from `.yarn/releases/yarn-3.1.1.cjs`
-- You'll need to have a `development-local.json5` config file for everything to run correctly [Follow this guide](./docs/detailed-setup.md#step-1-add-a-secrets-file-to-point-to-the-staging-environment)
-- You will have to run the site on `frontend.gousto.local` you can do this by [Setting up your local hosts file to run webclient](./docs/detailed-setup.md#step-2-add-an-entry-to-your-local-host-file)
-- You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See [Node version management](./docs/detailed-setup.md#node-version-management) for further details.
-  - Note: Apple M1 owners - you'll need to set node to version `14` in `.nvmrc`. Be careful not to commit this change.
-- If you're not in the office you'll need to be connected to the VPN
+* You'll need to have Yarn installed - if you install Yarn 1 (`npm install yarn -g`), it will bootstrap Yarn 3 from `.yarn/releases/yarn-3.1.1.cjs`
+* You'll need to have a `development-local.json5` config file for everything to run correctly [Follow this guide](./docs/detailed-setup.md#step-1-add-a-secrets-file-to-point-to-the-staging-environment)
+* You will have to run the site on `frontend.gousto.local` you can do this by [Setting up your local hosts file to run webclient](./docs/detailed-setup.md#step-2-add-an-entry-to-your-local-host-file)
+* You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See  [Node version management](./docs/detailed-setup.md#node-version-management) for further details.
+  * Note: Apple M1 owners - you'll need to set node to version `14` in `.nvmrc`. Be careful not to commit this change.
+* If you're not in the office you'll need to be connected to the VPN
 
 ## Getting a CodeArtifact Token
 
 In order to download private Gousto packages from CodeArtifact, we need to perform some configuration:
 
 ### First run
+* [Ensure you have AWS CLI V2 installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#cliv2-mac-install-cmd). You can check your version with `aws --version`
 
-- [Ensure you have AWS CLI V2 installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#cliv2-mac-install-cmd). You can check your version with `aws --version`
+* Configure your AWS CLI for the Gousto Artefacts profile - [instructions here](https://gousto.atlassian.net/wiki/spaces/TECH/pages/3620536327/AWS+Access+through+OKTA#Accessing-the-AWS-CLI---setting-up-named-profiles). Select the following option when prompted:
 
-- Configure your AWS CLI for the Gousto Artefacts profile - [instructions here](https://gousto.atlassian.net/wiki/spaces/TECH/pages/3620536327/AWS+Access+through+OKTA#Accessing-the-AWS-CLI---setting-up-named-profiles). Select the following option when prompted:
-
-  - `There are X AWS accounts available to you` - Select `Gousto Artefacts` account
+  * `There are X AWS accounts available to you` - Select `Gousto Artefacts` account
 
 _The step above creates an AWS profile called `CodeArtifact`, which authenticates via OKTA_
 
-- Create a `~/.zshrc`/`.bashrc` alias to quickly get an authorization token
+* Create a `~/.zshrc`/`.bashrc` alias to quickly get an authorization token
 
 ```shell
 # ~/.zshrc or ~/.bashrc
@@ -175,23 +174,18 @@ $ yarn test:debug:mobile
 ```
 
 ## Detailed setup
-
 For a more detailed guide to running Webclient and its supporting tests, including how to get it running with
 Gousto2-Frontend please see the [Detailed guide](docs/detailed-setup.md)
 
 ## Code analysis
 
 ### Run code health locally
-
 Create a CircleCI access token (“Personal API Tokens” https://circleci.com/account/api) and set it as environment
 variable:
-
 ```
 export CIRCLECI_ACCESS_TOKEN=XXXX
 ```
-
 Then in `src` run:
-
 ```
 ./scripts/compare-code-health.sh
 ```
