@@ -13,7 +13,7 @@ import { ErrorMessage } from '../ErrorMessage'
 import { Checkout3DSModal } from './Checkout3DSModal'
 import { PaymentMethodSelector } from './PaymentMethodSelector'
 import { CheckoutCardDetails } from './CheckoutCardDetails'
-import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
+import { CheckoutPayPalDetailsWrapper } from './CheckoutPayPalDetails'
 
 import { SectionHeader } from '../SectionHeader'
 import { PaymentFooter } from './PaymentFooter'
@@ -219,7 +219,7 @@ class CheckoutPayment extends React.Component {
     const { paypalScriptsReady, currentPaymentMethod } = this.props
 
     return (
-      <CheckoutPayPalDetails
+      <CheckoutPayPalDetailsWrapper
         hide={currentPaymentMethod !== PaymentMethod.PayPal}
         paypalScriptsReady={paypalScriptsReady}
       />

@@ -1,7 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import logger from 'utils/logger'
 import { getBasketRecipes } from 'selectors/basket'
-import { getRecipeTotalDiscounted, getTotalDiscount, getPricingPromoCode } from 'selectors/pricing'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import { checkoutSteps } from 'routes/Checkout/checkoutConfig'
 import { canUseWindow } from 'utils/browserEnvironment'
@@ -85,11 +84,13 @@ export const addRecipeToBasket = ({ recipeId, orderId }, state) => {
 }
 
 export const signupPurchaseCompleted = (action, state) => {
-  const { orderId, basketRecipes } = action
+  const { orderId, basketRecipes, pricing } = action
 
-  const totalPrice = getRecipeTotalDiscounted(state)
-  const totalDiscount = getTotalDiscount(state)
-  const promoCode = getPricingPromoCode(state)
+  const {
+    recipeTotalDiscounted: totalPrice,
+    totalDiscount,
+    promoCode
+  } = pricing
 
   sendEcommerceEvent(
     'purchase_welcome',

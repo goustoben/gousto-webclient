@@ -3,7 +3,6 @@ import {
   firePayPalError,
   clearPayPalErrors,
   setPayPalDeviceData,
-  setPayPalNonce,
 } from 'actions/checkout'
 import { trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode } from 'actions/tracking'
@@ -18,7 +17,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setPayPalDeviceData,
-  setPayPalNonce,
   trackEvent: trackUTMAndPromoCode,
   firePayPalError,
   clearPayPalErrors,

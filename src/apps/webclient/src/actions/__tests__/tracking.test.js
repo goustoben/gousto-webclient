@@ -937,11 +937,6 @@ describe('tracking actions', () => {
           payment: Immutable.fromJS({
             paymentMethod: PaymentMethod.Card,
           }),
-          pricing: Immutable.fromJS({
-            prices: {
-              promoCode: 'promo2',
-            }
-          }),
           user: Immutable.fromJS({
             id: 'user_234',
             subscription: {
@@ -952,6 +947,10 @@ describe('tracking actions', () => {
         dispatch = jest.fn()
         getState = jest.fn().mockReturnValue(state)
       })
+
+      const pricing = {
+        promoCode: 'promo2',
+      }
 
       describe('when fired', () => {
         const orderId = 'order_123'
@@ -972,7 +971,7 @@ describe('tracking actions', () => {
             }
           }
 
-          trackSubscriptionCreated()(dispatch, getState)
+          trackSubscriptionCreated({ pricing })(dispatch, getState)
 
           expect(dispatch).toHaveBeenCalledWith(expected)
         })

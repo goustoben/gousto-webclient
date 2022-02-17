@@ -34,7 +34,6 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
   menuLoadDays: actions.menuLoadDays,
   redirect: actions.redirect,
-  submitOrder: actions.checkoutSignup,
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
   trackSignupStep: actions.trackSignupPageChange,
   loginVisibilityChange: actions.loginVisibilityChange,

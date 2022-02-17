@@ -42,13 +42,6 @@ describe('given dataLayerTracker middleware is invoked', () => {
         739: 1,
       },
     }),
-    pricing: Immutable.fromJS({
-      prices: {
-        recipeTotalDiscounted: '20.00',
-        totalDiscount: '19.99',
-        promoCode: 'JOEWICKSGOUSTO',
-      },
-    }),
   }
 
   describe('when not on the client', () => {
@@ -297,6 +290,11 @@ describe('given dataLayerTracker middleware is invoked', () => {
           basketRecipes: Immutable.fromJS({
             672: 2,
           }),
+          pricing: {
+            recipeTotalDiscounted: '20.00',
+            promoCode: 'JOEWICKSGOUSTO',
+            totalDiscount: '19.99',
+          }
         }
 
         dataLayerTracker(action, state)

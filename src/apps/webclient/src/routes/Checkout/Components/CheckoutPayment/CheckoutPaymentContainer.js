@@ -13,6 +13,7 @@ import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
 import { formatOrderPrice } from 'utils/pricing'
 import { getPricingTotalAmount } from 'selectors/pricing'
+import { useSubmitOrder } from '../../useSubmitOrder'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
@@ -55,7 +56,11 @@ const ConnectedCheckoutPaymentContainer = connect(
 )(CheckoutPayment)
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-const Plain = (props) => <ConnectedCheckoutPaymentContainer {...props} />
+const Plain = (props) => {
+  const submitOrder = useSubmitOrder()
+
+  return <ConnectedCheckoutPaymentContainer {...props} submitOrder={submitOrder} />
+}
 
 export const CheckoutPaymentContainer = addInitialValues(
   formContainer(Plain, getValidationRules(sectionName), sectionName),
