@@ -1,6 +1,4 @@
-import Immutable from 'immutable'
-
-export function getSurchargeItems(items = Immutable.List([])) {
+export function getSurchargeItems(items = []) {
   return items
     .filter((item) => (item.get('type') ? item.get('type') === 'Surcharge' : false))
 }

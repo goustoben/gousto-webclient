@@ -1,1 +1,1 @@
-export { PricePerServingMessageContainer as PricePerServingMessage } from './PricePerServingMessageContainer'
+export { PricePerServingMessage } from './PricePerServingMessage'

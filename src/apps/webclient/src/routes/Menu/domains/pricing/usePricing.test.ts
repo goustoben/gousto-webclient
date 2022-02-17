@@ -1,15 +1,13 @@
-import useSWR from 'swr'
 import { useDispatch } from 'react-redux'
 import { renderHook } from '@testing-library/react-hooks'
 import { safeJestMock } from '_testing/mocks'
 import * as basketSelectors from 'selectors/basket'
 import * as orderSelectors from 'routes/Menu/selectors/order'
+import { useAuth } from '../auth'
 import { usePricing } from './usePricing'
-import { pricingMockedResponse } from './usePricing.mock'
+import { user } from './usePricing.mock'
 
 const dispatch = jest.fn()
-
-jest.mock('swr', () => jest.fn())
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -20,7 +18,7 @@ jest.mock('react-redux', () => ({
 jest.mock('../auth', () => ({
   useAuth: jest.fn(() => ({
     accessToken: 'test-accessToken',
-    authUserId: 'test-authUserId',
+    authUserId: user.valid,
   })),
 }))
 
@@ -29,6 +27,7 @@ safeJestMock(basketSelectors, 'getBasketRecipesCount')
 safeJestMock(orderSelectors, 'getOrderV2')
 
 const useDispatchMock = useDispatch as jest.MockedFunction<typeof useDispatch>
+const useAuthMock = useAuth as jest.MockedFunction<typeof useAuth>
 const getBasketSlotId = basketSelectors.getBasketSlotId as jest.MockedFunction<
   typeof basketSelectors.getBasketSlotId
 >
@@ -36,15 +35,15 @@ const getBasketRecipesCount = basketSelectors.getBasketRecipesCount as jest.Mock
   typeof basketSelectors.getBasketRecipesCount
 >
 const getOrderV2 = orderSelectors.getOrderV2 as jest.MockedFunction<any>
-const useSWRMock = useSWR as jest.MockedFunction<any>
 
 describe('usePricing', () => {
   beforeEach(() => {
     useDispatchMock.mockReturnValue(dispatch)
     getOrderV2.mockReturnValue({ testdata: 'test' })
-    useSWRMock.mockImplementation(
-      jest.fn((params) => (params ? { data: pricingMockedResponse } : { error: true }))
-    )
+    useAuthMock.mockReturnValue({
+      accessToken: Math.random().toString(), // controls SWR cache
+      authUserId: user.valid,
+    })
   })
 
   afterEach(() => {
@@ -55,8 +54,10 @@ describe('usePricing', () => {
       getBasketSlotId.mockReturnValue('test')
       getBasketRecipesCount.mockReturnValue(2)
     })
-    it('should return valid pricing informations', () => {
-      const { result } = renderHook(() => usePricing())
+    it('should return valid pricing informations', async () => {
+      const { result, waitForNextUpdate } = renderHook(() => usePricing())
+      expect(result.current.isValid).toBe(true)
+      await waitForNextUpdate()
 
       expect(result.current.pricing?.recipeTotal).toBe('29.99')
     })
@@ -69,8 +70,9 @@ describe('usePricing', () => {
     })
     it('should not have any pricing information', () => {
       const { result } = renderHook(() => usePricing())
-
+      expect(result.current.isValid).toBe(false)
       expect(result.current.pricing).toBe(null)
+      expect(result.current.pending).toBe(false)
     })
   })
 
@@ -81,13 +83,13 @@ describe('usePricing', () => {
     })
     it('should not have any pricing information', () => {
       const { result } = renderHook(() => usePricing())
-
+      expect(result.current.isValid).toBe(false)
       expect(result.current.pricing).toBe(null)
+      expect(result.current.pending).toBe(false)
     })
 
-    it('should reset the prices store', () => {
+    it('should reset the prices store', async () => {
       renderHook(() => usePricing())
-
       expect(dispatch).toHaveBeenCalledWith({ type: 'PRICING_RESET' })
     })
   })
@@ -96,13 +98,26 @@ describe('usePricing', () => {
     beforeEach(() => {
       getBasketSlotId.mockReturnValue('test')
       getBasketRecipesCount.mockReturnValue(2)
-      useSWRMock.mockReturnValue({ data: null })
+      useAuthMock.mockReturnValue({
+        accessToken: Math.random().toString(),
+        authUserId: user.idle,
+      })
     })
 
-    it('should dispatch pending action', () => {
-      renderHook(() => usePricing())
-
+    it('should dispatch pending action', async () => {
+      const { waitForNextUpdate } = renderHook(() => usePricing())
+      await waitForNextUpdate()
       expect(dispatch).toHaveBeenCalledWith({ type: 'PRICING_PENDING' })
+    })
+
+    it('should be in pending state until it has response', async () => {
+      const { result, waitFor } = renderHook(() => usePricing())
+      expect(result.current.pending).toBe(true)
+
+      await waitFor(() => {
+        expect(result.current.pricing).toBeDefined()
+        expect(result.current.pending).toBe(false)
+      })
     })
   })
 
@@ -110,13 +125,18 @@ describe('usePricing', () => {
     beforeEach(() => {
       getBasketSlotId.mockReturnValue('test')
       getBasketRecipesCount.mockReturnValue(2)
-      useSWRMock.mockReturnValue({ error: true })
+      useAuthMock.mockReturnValue({
+        accessToken: 'test-accessToken',
+        authUserId: user.error,
+      })
     })
 
-    it('should not have any pricing information', () => {
-      const { result } = renderHook(() => usePricing())
-
+    it('should not have any pricing information', async () => {
+      const { result, waitForNextUpdate } = renderHook(() => usePricing())
+      await waitForNextUpdate()
       expect(result.current.pricing).toBe(null)
+      expect(result.current.pending).toBe(false)
+      expect(result.current.isValid).toBe(true)
     })
   })
 })

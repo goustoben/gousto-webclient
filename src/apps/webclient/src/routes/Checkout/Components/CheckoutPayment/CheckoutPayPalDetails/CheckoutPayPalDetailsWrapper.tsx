@@ -13,7 +13,12 @@ function useSetPayPalNonce() {
   }, [ dispatch, pricing ])
 }
 
-export function CheckoutPayPalDetailsWrapper(props: {}) {
+type CheckoutPayPalDetailsWrapperProps = {
+  hide: boolean
+  paypalScriptsReady: boolean
+}
+
+export function CheckoutPayPalDetailsWrapper(props: CheckoutPayPalDetailsWrapperProps) {
   const setPayPalNonce = useSetPayPalNonce()
 
   return <CheckoutPayPalDetailsContainer {...props} setPayPalNonce={setPayPalNonce} />

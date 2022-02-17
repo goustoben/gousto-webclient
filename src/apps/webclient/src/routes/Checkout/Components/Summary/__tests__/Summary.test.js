@@ -11,6 +11,12 @@ const prices = Immutable.Map({
   total: '39.99',
 })
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(() => true),
+  useSelector: jest.fn(),
+}))
+
 const basketRecipes = Immutable.Map({ 1234: '4' })
 
 describe('Summary Component', () => {

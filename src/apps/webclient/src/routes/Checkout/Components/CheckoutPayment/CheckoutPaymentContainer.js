@@ -11,9 +11,6 @@ import {
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
-import { formatOrderPrice } from 'utils/pricing'
-import { getPricingTotalAmount } from 'selectors/pricing'
-import { useSubmitOrder } from '../../useSubmitOrder'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
@@ -22,7 +19,6 @@ import { CheckoutPayment } from './CheckoutPayment'
 export const mapStateToProps = (state) => {
   const ribbonTriggerName = 'control_payment'
   const hotjarTriggerName = 'psd2_modal'
-  const totalPrice = getPricingTotalAmount(state)
 
   return {
     formErrors: {
@@ -36,7 +32,6 @@ export const mapStateToProps = (state) => {
     isPayPalReady: isPayPalReady(state),
     ribbonTriggerName,
     hotjarTriggerName,
-    isFreeBox: formatOrderPrice(totalPrice) === 'FREE',
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
 }

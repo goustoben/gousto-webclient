@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
+import { useDispatch, useSelector } from 'react-redux'
 import { PaymentMethod } from 'config/signup'
 import { SubmitButton } from 'routes/Checkout/Components/SubmitButton'
 import { Checkout3DSModal } from '../Checkout3DSModal'
@@ -9,6 +9,12 @@ import { CheckoutCardDetails } from '../CheckoutCardDetails'
 import { CheckoutPayPalDetailsWrapper } from '../CheckoutPayPalDetails'
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
 import { ErrorMessage } from '../../ErrorMessage'
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(),
+  useSelector: jest.fn(),
+}))
 
 describe('CheckoutPayment', () => {
   let wrapper
@@ -22,6 +28,8 @@ describe('CheckoutPayment', () => {
   const setCurrentPaymentMethod = jest.fn()
 
   beforeEach(() => {
+    useSelector.mockReturnValue(true)
+    useDispatch.mockReturnValue(() => {})
     wrapper = shallow(
       <CheckoutPayment
         trackingOrderPlaceAttempt={trackingOrderPlaceAttempt}
@@ -52,7 +60,6 @@ describe('CheckoutPayment', () => {
 
     test('should render CheckoutCardDetails', () => {
       expect(wrapper.find(CheckoutCardDetails)).toHaveLength(1)
-      expect(wrapper.find(CheckoutCardDetails).prop('prerender')).toBe(true)
     })
 
     test('should render the component as hidden', () => {
@@ -68,7 +75,6 @@ describe('CheckoutPayment', () => {
 
     test('should render CheckoutCardDetails', () => {
       expect(wrapper.find(CheckoutCardDetails)).toHaveLength(1)
-      expect(wrapper.find(CheckoutCardDetails).prop('prerender')).toBe(false)
     })
 
     test('should render an <ErrorMessage>', () => {
@@ -93,11 +99,11 @@ describe('CheckoutPayment', () => {
       })
 
       test('should set isSubmitCardEnabled prop to true', () => {
-        expect(wrapper.state().isSubmitCardEnabled).toBe(false)
+        expect(wrapper.find(CheckoutCardDetails).prop('isSubmitCardEnabled')).toBe(false)
 
         wrapper.find(SubmitButton).simulate('click')
 
-        expect(wrapper.state().isSubmitCardEnabled).toBe(true)
+        expect(wrapper.find(CheckoutCardDetails).prop('isSubmitCardEnabled')).toBe(true)
       })
 
       test('should call trackingOrderPlaceAttemptSucceeded prop', () => {
@@ -142,10 +148,10 @@ describe('CheckoutPayment', () => {
       beforeEach(() => {
         wrapper.setProps({
           currentPaymentMethod: PaymentMethod.PayPal,
+          isPayPalReady: true,
         })
-        wrapper.instance().handleClick()
+        wrapper.find(SubmitButton).simulate('click')
       })
-
       test('should call trackingOrderPlaceAttemptSucceeded prop', () => {
         expect(trackingOrderPlaceAttemptSucceeded).toHaveBeenCalled()
       })
@@ -163,14 +169,6 @@ describe('CheckoutPayment', () => {
       cardTokenReady()
 
       expect(submit).toHaveBeenCalled()
-    })
-  })
-
-  describe('when CheckoutCardDetails asks to disable card submission', () => {
-    test('then it should disable submission', () => {
-      wrapper.find(CheckoutCardDetails).prop('disableCardSubmission')()
-
-      expect(wrapper.state('isSubmitCardEnabled')).toBe(false)
     })
   })
 
@@ -209,47 +207,6 @@ describe('CheckoutPayment', () => {
     test('to PayPal: then it should be set as current', () => {
       wrapper.find(PaymentMethodSelector).prop('setCurrentPaymentMethod')(PaymentMethod.PayPal)
       expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.PayPal)
-    })
-  })
-
-  describe('when handleFramesValidationChanged is called', () => {
-    beforeEach(() => {
-      wrapper.instance().handleFramesValidationChanged(true)
-    })
-
-    test('then framesFieldsAreValid should be changed', () => {
-      expect(wrapper.state().framesFieldsAreValid).toBeTruthy()
-    })
-  })
-
-  describe('when handleRecaptchaChange is called', () => {
-    const processSignup = jest.fn()
-    const storeSignupRecaptchaToken = jest.fn()
-
-    describe('and value is null', () => {
-      beforeEach(() => {
-        wrapper.setProps({ storeSignupRecaptchaToken })
-        wrapper.instance().processSignup = processSignup
-        wrapper.instance().handleRecaptchaChange(null)
-      })
-
-      test('then processSignup should not be called', () => {
-        expect(storeSignupRecaptchaToken).toHaveBeenCalled()
-        expect(wrapper.instance().processSignup).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('and value is defined', () => {
-      beforeEach(() => {
-        wrapper.setProps({ storeSignupRecaptchaToken })
-        wrapper.instance().processSignup = processSignup
-        wrapper.instance().handleRecaptchaChange('value')
-      })
-
-      test('then storeSignupRecaptchaToken and processSignup are called', () => {
-        expect(storeSignupRecaptchaToken).toHaveBeenCalled()
-        expect(processSignup).toHaveBeenCalled()
-      })
     })
   })
 

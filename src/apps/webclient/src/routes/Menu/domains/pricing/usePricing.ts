@@ -51,8 +51,8 @@ const useGetPricing = (shouldFetch: boolean): { error: any; data: Pricing | null
           )
         )
       },
-      onSuccess: (response) => {
-        dispatch(pricingSuccess(transformOrderPricesV2ToOrderV1(response).data))
+      onSuccess: (successResp) => {
+        dispatch(pricingSuccess(transformOrderPricesV2ToOrderV1(successResp).data))
       },
     }
   )
@@ -61,7 +61,7 @@ const useGetPricing = (shouldFetch: boolean): { error: any; data: Pricing | null
     if (url && !response) {
       dispatch(pricingPending())
     }
-  }, [url, response, dispatch, pricingPending])
+  }, [url, response, dispatch])
 
   if (error && url) {
     return { error, data: null }
@@ -70,7 +70,11 @@ const useGetPricing = (shouldFetch: boolean): { error: any; data: Pricing | null
   return { error: null, data: response ? transformOrderPricesV2ToOrderV1(response).data : null }
 }
 
-export const usePricing = (): { pricing?: Pricing | null; pending: boolean } => {
+export const usePricing = (): {
+  pricing?: Pricing | null
+  pending: boolean
+  isValid: boolean
+} => {
   const dispatch = useDispatch()
   const deliverySlotId = useSelector(getBasketSlotId)
   const recipesCount = useSelector(getBasketRecipesCount)
@@ -81,10 +85,11 @@ export const usePricing = (): { pricing?: Pricing | null; pending: boolean } => 
     if (recipesCount < 2) {
       dispatch(pricingReset())
     }
-  }, [recipesCount])
+  }, [recipesCount, dispatch])
 
   return {
-    pending: !data && !error,
+    pending: !data && !error && shouldFetch,
+    isValid: shouldFetch,
     pricing: data,
   }
 }

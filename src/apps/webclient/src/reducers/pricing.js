@@ -23,7 +23,9 @@ export const pricingReducers = {
         .set('pending', false)
         .set('error', Immutable.Map({ message: action.message }))
     case actionTypes.PRICING_RESET:
-      return state.set('prices', Immutable.Map({}))
+      return state
+        .set('pending', false)
+        .set('prices', Immutable.Map({}))
     default:
       return state
     }
