@@ -2,7 +2,7 @@
  * @type {ServiceManifest} - type for describing the service manifest
  */
 export type ServiceManifest = {
-  [key: string]: ServiceVersion[]
+  [serviceName: string]: ServiceVersion[]
 }
 
 /*
