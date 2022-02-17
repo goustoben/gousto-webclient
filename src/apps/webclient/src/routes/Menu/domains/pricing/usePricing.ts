@@ -10,7 +10,7 @@ import { getBasketRecipesCount, getBasketSlotId } from 'selectors/basket'
 import { pricingFailure, pricingPending, pricingReset, pricingSuccess } from 'actions/pricing'
 import { useAuth } from '../auth'
 
-type Pricing = {
+export type Pricing = {
   amountOff: string | null
   deliveryTotal: string | null
   flatDiscountApplied: boolean

@@ -4,20 +4,19 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
 import { formatOrderPrice } from 'utils/pricing'
-
 import css from './Receipt.css'
 import { ReceiptLine } from './ReceiptLine'
 import { DeliveryDetails } from './DeliveryDetails'
 
 const propTypes = {
-  prices: PropTypes.instanceOf(Immutable.Map),
+  prices: PropTypes.instanceOf(Object),
   children: PropTypes.node,
   numRecipes: PropTypes.number,
   deliveryTotalPrice: PropTypes.string,
   shippingAddress: PropTypes.instanceOf(Immutable.Map),
   deliveryDate: PropTypes.string,
   deliverySlot: PropTypes.instanceOf(Immutable.Map),
-  surcharges: PropTypes.instanceOf(Immutable.List),
+  surcharges: PropTypes.instanceOf(Array),
   surchargeTotal: PropTypes.string,
   totalToPay: PropTypes.string,
   recipeTotalPrice: PropTypes.string,
@@ -31,14 +30,14 @@ const propTypes = {
 }
 
 const defaultProps = {
-  prices: Immutable.Map({}),
+  prices: {},
   children: null,
   numRecipes: 0,
   deliveryTotalPrice: '',
   shippingAddress: null,
   deliveryDate: null,
   deliverySlot: Immutable.Map(),
-  surcharges: Immutable.List([]),
+  surcharges: [],
   surchargeTotal: '',
   totalToPay: '',
   recipeTotalPrice: '',

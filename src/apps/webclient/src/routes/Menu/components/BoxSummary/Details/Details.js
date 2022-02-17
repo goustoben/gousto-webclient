@@ -8,6 +8,7 @@ import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
+import { Pricing } from 'routes/Menu/domains/pricing'
 import { Portions } from './Portions'
 import css from './Details.css'
 import { BoxProgressAlert } from './BoxProgressAlert'
@@ -17,10 +18,9 @@ import {
   HIDE_CHOOSE_RECIPES_CTA,
   HIDE_RECIPE_LIST,
   HIDE_PORTIONS,
-  HIDE_PROMO_CODE_TEXT
+  HIDE_PROMO_CODE_TEXT,
 } from './displayOptionsProps'
 import { DetailsCheckoutButton } from './DetailsCheckoutButton'
-
 class Details extends React.Component {
   getCtaText = (numRecipes) => {
     const { maxRecipesNum, minRecipesNum } = config.basket
@@ -36,7 +36,12 @@ class Details extends React.Component {
     return text
   }
 
-  renderPortions = ({ basketNumPortionChange, numPortions, orderId, portionSizeSelectedTracking }) => (
+  renderPortions = ({
+    basketNumPortionChange,
+    numPortions,
+    orderId,
+    portionSizeSelectedTracking,
+  }) => (
     <div className={css.row}>
       <Portions
         numPortions={numPortions}
@@ -73,10 +78,23 @@ class Details extends React.Component {
       slotId,
       shouldDisplayFullScreenBoxSummary,
     } = this.props
+
+    const {
+      deliveryTotal,
+      items,
+      surchargeTotal,
+      recipeTotal,
+      total,
+      recipeDiscount,
+      percentageOff,
+      productTotal,
+    } = prices || {}
+
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
-    const showSecondCta = (numRecipes > 1 && numRecipes < 4) && shouldDisplayFullScreenBoxSummary
-    const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText && !showSecondCta
+    const showSecondCta = numRecipes > 1 && numRecipes < 4 && shouldDisplayFullScreenBoxSummary
+    const displayCta =
+      !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText && !showSecondCta
     const { maxRecipesNum } = config.basket
     let btnClassName = css.ctaButton
     if (shouldDisplayFullScreenBoxSummary) {
@@ -86,7 +104,9 @@ class Details extends React.Component {
     return (
       <React.Fragment>
         <LayoutContentWrapper>
-          <Heading isCenter size="_legacy_large" type="h2">Box Summary</Heading>
+          <Heading isCenter size="_legacy_large" type="h2">
+            Box Summary
+          </Heading>
           <DateHeader
             orderId={orderId}
             date={date}
@@ -94,20 +114,16 @@ class Details extends React.Component {
             deliveryDays={deliveryDays}
             slotId={slotId}
           />
-          {
-            !displayOptions.contains(HIDE_PORTIONS) &&
-            this.renderPortions(this.props)
-          }
+          {!displayOptions.contains(HIDE_PORTIONS) && this.renderPortions(this.props)}
         </LayoutContentWrapper>
         <LayoutContentWrapper>
           <p className={css.titleSection}>Recipe Box</p>
-          {
-            numRecipes === 0 && (
-              <p>
-                Add up to {maxRecipesNum} recipes to create your Gousto box. The more you add, the lower the price per portion.
-              </p>
-            )
-          }
+          {numRecipes === 0 && (
+            <p>
+              Add up to {maxRecipesNum} recipes to create your Gousto box. The more you add, the
+              lower the price per portion.
+            </p>
+          )}
         </LayoutContentWrapper>
         {
           // eslint-disable-next-line react/jsx-props-no-spreading
@@ -118,43 +134,47 @@ class Details extends React.Component {
           {showSecondCta && (
             <Button
               color="secondary"
-              onClick={() => { boxSummaryVisibilityChange(false) }}
+              onClick={() => {
+                boxSummaryVisibilityChange(false)
+              }}
               width="full"
             >
               {ctaText}
             </Button>
           )}
-          {
-            (pricingPending)
-              ? <div className={css.spinner}><Spinner color="black" /></div>
-              : (
-                <div>
-                  <Receipt
-                    dashPricing={numRecipes < config.basket.minRecipesNum}
-                    numRecipes={numRecipes}
-                    numPortions={numPortions}
-                    prices={prices}
-                    deliveryTotalPrice={prices.get('deliveryTotal')}
-                    surcharges={getSurchargeItems(prices.get('items'))}
-                    surchargeTotal={prices.get('surchargeTotal')}
-                    recipeTotalPrice={prices.get('recipeTotal')}
-                    totalToPay={prices.get('total')}
-                    recipeDiscountAmount={prices.get('recipeDiscount')}
-                    recipeDiscountPercent={prices.get('percentageOff')}
-                    extrasTotalPrice={prices.get('productTotal')}
-                    showTitleSection
-                  />
-                  <UserCreditMessage />
-                </div>
-              )
-          }
+          {pricingPending ? (
+            <div className={css.spinner}>
+              <Spinner color="black" />
+            </div>
+          ) : (
+            <div>
+              <Receipt
+                dashPricing={numRecipes < config.basket.minRecipesNum}
+                numRecipes={numRecipes}
+                numPortions={numPortions}
+                prices={prices}
+                deliveryTotalPrice={deliveryTotal}
+                surcharges={getSurchargeItems(items)}
+                surchargeTotal={surchargeTotal}
+                recipeTotalPrice={recipeTotal}
+                totalToPay={total}
+                recipeDiscountAmount={recipeDiscount}
+                recipeDiscountPercent={percentageOff}
+                extrasTotalPrice={productTotal}
+                showTitleSection
+              />
+              <UserCreditMessage />
+            </div>
+          )}
           {this.renderPromoCodeMessage()}
           <DetailsCheckoutButton
             btnClassName={btnClassName}
             displayCta={displayCta}
             ctaText={ctaText}
             view={view}
-            onClick={() => { boxSummaryVisibilityChange(false) }}
+            onClick={() => {
+              boxSummaryVisibilityChange(false)
+            }}
           />
         </LayoutContentWrapper>
       </React.Fragment>
@@ -183,7 +203,7 @@ Details.propTypes = {
   menuFetchPending: PropTypes.bool.isRequired,
   orderSaveError: PropTypes.string,
   pricingPending: PropTypes.bool,
-  prices: PropTypes.instanceOf(Immutable.Map),
+  prices: Pricing,
   unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
   showRecipeDetailsOnClick: PropTypes.func,
   shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
@@ -193,9 +213,9 @@ Details.defaultProps = {
   view: 'desktop',
   accessToken: '',
   displayOptions: Immutable.List([]),
-  prices: Immutable.Map({}),
+  prices: {},
   pricingPending: false,
-  showRecipeDetailsOnClick: () => { },
+  showRecipeDetailsOnClick: () => {},
   promoCode: null,
   slotId: null,
   orderSaveError: null,
