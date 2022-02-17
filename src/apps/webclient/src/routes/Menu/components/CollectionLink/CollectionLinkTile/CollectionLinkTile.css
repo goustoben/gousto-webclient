@@ -43,6 +43,10 @@
 
 }
 
+.collectionLinkImage {
+    height: 100%;
+}
+
 .collectionLinkName {
     margin-left: 1rem;
     font-family: axiformaFontStack;
