@@ -145,13 +145,6 @@ class Checkout extends PureComponent {
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())
     }
-
-    return store.dispatch(actions.pricingRequest()).catch((err) => {
-      if (__SERVER__) {
-        logger.error({ message: 'Failed to fetch prices.', errors: [err] })
-        store.dispatch(actions.redirect(routesConfig.client.menu, true))
-      }
-    })
   }
 
   constructor(state, props) {

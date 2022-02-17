@@ -5,7 +5,6 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 import userActions from './user'
-import { pricingRequest } from './pricing'
 import { productsLoadProductsById } from './products'
 import { trackPromocodeChange } from './checkout'
 import { trackUTMAndPromoCode } from './tracking'
@@ -213,7 +212,6 @@ const promoApplyCheckoutCode = () => (
 
     try {
       dispatch(basketPromoCodeChange(promoCode))
-      dispatch(pricingRequest())
       dispatch(basketPromoCodeAppliedChange(true))
       dispatch(trackPromocodeChange(promoCode, true))
     } catch (e) {

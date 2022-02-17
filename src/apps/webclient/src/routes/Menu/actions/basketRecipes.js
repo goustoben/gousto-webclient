@@ -74,8 +74,6 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
       })
     }
 
-    dispatch(pricingActions.pricingRequest())
-
     const prevRecipes = basket.get('recipes')
     const slotId = newBasket.get('slotId')
     const recipes = newBasket.get('recipes')
@@ -164,8 +162,6 @@ export const basketRecipeRemove = (recipeId, view, position) => (
         },
       })
     }
-
-    dispatch(pricingActions.pricingRequest())
     dispatch(trackUserAddRemoveRecipe())
   }
 )

@@ -6,7 +6,6 @@ import * as trackingKeys from '../../../../actions/trackingKeys'
 import * as basketActions from '../basketRecipes'
 import * as menuCheckoutClickActions from '../menuCheckoutClick'
 import { safeJestMock, multiReturnMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
-import pricingActions from '../../../../actions/pricing'
 import * as menuSelectors from '../../selectors/menu'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
 import * as clientMetrics from '../../apis/clientMetrics'
@@ -16,13 +15,10 @@ jest.mock('actions/loggingmanager')
 describe('validBasketRecipeAdd when added at least 2 recipe', () => {
   let getStateSpy
   const dispatch = jest.fn()
-  const pricingRequestAction = Symbol('Pricing request')
-  let pricingRequestSpy
 
   beforeEach(() => {
     const limitReachSpy = safeJestMock(basketUtils, 'limitReached')
     limitReachSpy.mockReturnValue(false)
-    pricingRequestSpy = safeJestMock(pricingActions, 'pricingRequest')
     getStateSpy = jest.fn().mockReturnValueOnce({
       auth: Immutable.Map({
         id: ''
@@ -92,13 +88,12 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
         }
       }
     })
-    pricingRequestSpy.mockReturnValue(pricingRequestAction)
   })
 
   test('`BASKET_ELIGIBLE_TRACK` should be dispatched', () => {
     basketActions.validBasketRecipeAdd('234', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
 
-    expect(dispatch).toHaveBeenNthCalledWith(4, {
+    expect(dispatch).toHaveBeenNthCalledWith(3, {
       type: actionTypes.BASKET_ELIGIBLE_TRACK,
       trackingData: {
         actionType: trackingKeys.basketEligible,
@@ -216,8 +211,6 @@ describe('validBasketRecipeAdd', () => {
   })
 
   describe('given a non-full basket with recipes for 2 portions', () => {
-    const pricingRequestAction = Symbol('Pricing request')
-
     beforeEach(() => {
       limitReachSpy = safeJestMock(basketUtils, 'limitReached')
       limitReachSpy.mockReturnValue(false)
@@ -255,9 +248,6 @@ describe('validBasketRecipeAdd', () => {
           }
         }
       })
-      const pricingRequestSpy = safeJestMock(pricingActions, 'pricingRequest')
-
-      pricingRequestSpy.mockReturnValue(pricingRequestAction)
     })
 
     afterEach(() => {
@@ -273,8 +263,8 @@ describe('validBasketRecipeAdd', () => {
         expect(getStateSpy).toHaveBeenCalledTimes(2)
       })
 
-      test('then 3 actions should have been dispatched', () => {
-        expect(dispatch).toHaveBeenCalledTimes(3)
+      test('then 2 actions should have been dispatched', () => {
+        expect(dispatch).toHaveBeenCalledTimes(2)
       })
 
       test('then the `BASKET_RECIPE_ADD` action should have been dispatched first', () => {
@@ -300,10 +290,6 @@ describe('validBasketRecipeAdd', () => {
           stock: { 123: { 2: -1 } },
         })
       })
-
-      test('then pricing action should have been dispatched third', () => {
-        expect(dispatch).toHaveBeenNthCalledWith(3, pricingRequestAction)
-      })
     })
 
     describe('when call `validBasketRecipeAdd` with recipe that is out of stock', () => {
@@ -318,11 +304,9 @@ describe('validBasketRecipeAdd', () => {
   })
 
   describe('given a basket with one space for 4 portions', () => {
-    const pricingRequestAction = Symbol('Pricing request')
     beforeEach(() => {
       limitReachSpy = safeJestMock(basketUtils, 'limitReached')
-    })
-    beforeEach(() => {
+
       getStateSpy = jest.fn().mockReturnValue({
         auth: Immutable.Map({
           id: authId
@@ -360,8 +344,6 @@ describe('validBasketRecipeAdd', () => {
       })
 
       limitReachSpy.mockImplementation(multiReturnMock([false, true]))
-      const pricingRequestSpy = safeJestMock(pricingActions, 'pricingRequest')
-      pricingRequestSpy.mockReturnValue(pricingRequestAction)
     })
 
     afterEach(() => {
@@ -377,8 +359,8 @@ describe('validBasketRecipeAdd', () => {
         expect(getStateSpy).toHaveBeenCalledTimes(2)
       })
 
-      test('then 4 actions should have been dispatched', () => {
-        expect(dispatch).toHaveBeenCalledTimes(4)
+      test('then 3 actions should have been dispatched', () => {
+        expect(dispatch).toHaveBeenCalledTimes(3)
       })
 
       test('then the `BASKET_RECIPE_ADD` action should have been dispatched first', () => {
@@ -416,10 +398,6 @@ describe('validBasketRecipeAdd', () => {
             source: actionTypes.RECIPE_ADDED,
           }
         })
-      })
-
-      test('then pricing action should have been dispatched fourth', () => {
-        expect(dispatch).toHaveBeenNthCalledWith(4, pricingRequestAction)
       })
     })
   })
@@ -650,7 +628,7 @@ describe('basketRecipeRemove', () => {
 
     test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', () => {
       expect(getStateSpy.mock.calls).toHaveLength(3)
-      expect(dispatch.mock.calls).toHaveLength(5)
+      expect(dispatch.mock.calls).toHaveLength(4)
 
       expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_REMOVE,
@@ -687,21 +665,11 @@ describe('basketRecipeRemove', () => {
     })
   })
 
-  test('should dispatch a pricing pricingRequest action', () => {
-    const pricingRequestResponse = Symbol('Pricing request')
-    const pricingRequestSpy = safeJestMock(pricingActions, 'pricingRequest')
-    pricingRequestSpy.mockReturnValue(pricingRequestResponse)
-
-    basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
-
-    expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
-  })
-
   test('should map through the given view argument through to trackingData', () => {
     basketActions.basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
 
     expect(getStateSpy.mock.calls).toHaveLength(3)
-    expect(dispatch.mock.calls).toHaveLength(5)
+    expect(dispatch.mock.calls).toHaveLength(4)
 
     expect(dispatch.mock.calls[0]).toEqual([{
       type: actionTypes.BASKET_RECIPE_REMOVE,
@@ -762,7 +730,7 @@ describe('basketRecipeRemove', () => {
     basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
 
     expect(getStateSpy.mock.calls).toHaveLength(3)
-    expect(dispatch.mock.calls).toHaveLength(5)
+    expect(dispatch.mock.calls).toHaveLength(4)
 
     expect(dispatch.mock.calls[0]).toEqual([{
       type: actionTypes.BASKET_RECIPE_REMOVE,

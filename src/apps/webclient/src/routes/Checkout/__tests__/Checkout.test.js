@@ -17,7 +17,6 @@ import {
   basketStepsOrderReceive,
   basketProceedToCheckout,
   menuLoadBoxPrices,
-  pricingRequest,
   redirect,
   replace,
   checkoutStepIndexReached,
@@ -36,7 +35,6 @@ jest.mock('actions', () => ({
   replace: jest.fn().mockReturnValue(Promise.resolve()),
   redirect: jest.fn().mockReturnValue(Promise.resolve()),
   menuLoadDays: jest.fn().mockReturnValue(Promise.resolve()),
-  pricingRequest: jest.fn().mockReturnValue(Promise.resolve()),
   menuLoadBoxPrices: jest.fn().mockReturnValue(Promise.resolve()),
   basketStepsOrderReceive: jest.fn().mockReturnValue(Promise.resolve()),
   basketProceedToCheckout: jest.fn().mockReturnValue(Promise.resolve()),
@@ -165,7 +163,6 @@ describe('Given Checkout component', () => {
     redirect.mockClear()
     menuLoadDays.mockClear()
     menuLoadDays.mockReset()
-    pricingRequest.mockClear()
     menuLoadBoxPrices.mockClear()
     basketStepsOrderReceive.mockClear()
     basketProceedToCheckout.mockClear()
@@ -230,7 +227,7 @@ describe('Given Checkout component', () => {
       expect(replace).toHaveBeenCalledWith('/check-out/account')
     })
 
-    test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, pricingRequest', async () => {
+    test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive', async () => {
       await Checkout.fetchData({
         store: mockedStore,
         query: { steps: 'account,payment,delivery' },
@@ -241,7 +238,6 @@ describe('Given Checkout component', () => {
       expect(menuLoadDays).toHaveBeenCalledTimes(4)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
-      expect(pricingRequest).toHaveBeenCalledTimes(2)
     })
 
     test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive', async () => {
@@ -359,37 +355,6 @@ describe('Given Checkout component', () => {
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
       expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=undefined-error', true)
-    })
-
-    test('should redirect to /menu and log error when dispatch is rejected', async () => {
-      // eslint-disable-next-line no-underscore-dangle
-      global.__SERVER__ = true
-      store = {
-        basket: Immutable.Map({
-          stepsOrder: Immutable.List(),
-          previewOrderId: '1056',
-        }),
-        menuBoxPrices: Immutable.Map({ 2: {} }),
-        menuCutoffUntil: '2019-02-22T11:59:59+00:00',
-        error: Immutable.Map({
-          BASKET_PREVIEW_ORDER_CHANGE: false,
-        }),
-        boxSummaryDeliveryDays: {},
-      }
-      mockedStore.getState = jest.fn().mockReturnValue(store)
-      mockedStore.dispatch.mockImplementationOnce(() => Promise.resolve())
-      mockedStore.dispatch.mockImplementation(() =>
-        Promise.reject(new Error('something went wrong'))
-      )
-
-      await Checkout.fetchData({
-        store: mockedStore,
-        query: { steps: 'account,payment,delivery' },
-        params: { stepName: '' },
-      })
-
-      expect(logger.error).toHaveBeenCalled()
-      expect(redirect).toHaveBeenCalledWith('/menu', true)
     })
   })
 
