@@ -1,3 +1,16 @@
+import {
+  Box,
+  Text,
+  Color,
+  Display,
+  AlignItems,
+  JustifyContent,
+  FontWeight,
+  FontFamily,
+  Icon,
+  IconVariant,
+  Space,
+} from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
 import React, { PureComponent, Fragment } from 'react'
 import Immutable from 'immutable'
@@ -37,19 +50,39 @@ class Summary extends PureComponent {
     const numRecipes = basketSum(basketRecipes)
 
     return (
-      <div className={css.summaryContainerRedesign} data-testing="checkoutOrderSummary">
-        <SectionHeader title="Order total" />
+      <Box bg={Color.White} paddingH={6} paddingV={6}>
+        <Text size={4} fontFamily={FontFamily.SemiBold} fontWeight={FontWeight.Bold}>
+          Order total
+        </Text>
+        <Space size={4} direction="vertical" />
         {isLoading ? (
           <div className={css.loaderContainer}>
             <Loading className={css.loadingImage} />
           </div>
         ) : (
-          <Fragment>
-            <div className={css.pricePerServingBlock}>
-              <div className={css.discountIcon} />
+          <Box>
+            <Box
+              bg={Color.Success_50}
+              borderColor={Color.Success_200}
+              paddingV={2}
+              paddingH={3}
+              display={Display.Flex}
+              alignItems={AlignItems.Center}
+              justifyContent={JustifyContent.Center}
+              borderWidth={0.5}
+              borderStyle="solid"
+              borderRadius={1.5}
+            >
+              <Text color={Color.Success_900}>
+                <Space size={2} direction="vertical" />
+                <Icon name="offer_percentage" variant={IconVariant.Inherit} />
+              </Text>
+
+              <Space size={2} direction="horizontal" />
               <PricePerServingMessage isPriceInCheckout />
-            </div>
-            <div className={css.details}>
+            </Box>
+            <Space size={5} direction="vertical" />
+            <Box>
               <Receipt
                 numRecipes={numRecipes}
                 prices={prices}
@@ -65,10 +98,10 @@ class Summary extends PureComponent {
                 isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
               />
               {showPromocode && <PromoCode />}
-            </div>
-          </Fragment>
+            </Box>
+          </Box>
         )}
-      </div>
+      </Box>
     )
   }
 }
