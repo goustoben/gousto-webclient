@@ -72,12 +72,27 @@ const addAssertionsToTestCases = (assertions: Array<Assertion>) => {
   )
 }
 
+let win: typeof window
+
+const setWindow = (val?: unknown) => {
+  // @ts-expect-error need to be able to set window to undefined
+  global.window = val
+}
+
 describe('client config', () => {
+  beforeAll(() => {
+    win = global.window
+  })
+
   beforeEach(() => {
     jest.resetAllMocks()
 
     getWindowSpy = jest.spyOn(browserEnv, 'getWindow')
     canUseWindowSpy = jest.spyOn(browserEnv, 'canUseWindow')
+  })
+
+  afterAll(() => {
+    global.window = win
   })
 
   describe('canUseWindow', () => {
@@ -86,21 +101,19 @@ describe('client config', () => {
     })
 
     it('returns false if window is undefined', () => {
-      getWindowSpy.mockReturnValue(undefined)
+      setWindow(undefined)
 
       expect(browserEnv.canUseWindow()).toBeFalsy()
     })
 
     it('returns false if window.document is undefined', () => {
-      getWindowSpy.mockReturnValue({})
+      setWindow({})
 
       expect(browserEnv.canUseWindow()).toBeFalsy()
     })
 
     it('returns false if window.document.createElement is undefined', () => {
-      getWindowSpy.mockReturnValue({
-        document: {},
-      })
+      setWindow({ document: {} })
 
       expect(browserEnv.canUseWindow()).toBeFalsy()
     })
