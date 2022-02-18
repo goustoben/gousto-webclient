@@ -201,7 +201,6 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
       windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
     }
 
-    dispatch(pricingActions.pricingRequest())
     if (onCheckout) {
       if (orderId) {
         const isTasteProfileEnabled = isOptimizelyFeatureEnabledFactory('turnips_taste_profile_web_phased_rollout')
