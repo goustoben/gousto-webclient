@@ -2,7 +2,6 @@ import { push } from 'react-router-redux'
 
 import config from 'config'
 import basketActions from 'actions/basket'
-import pricingActions from 'actions/pricing'
 import * as trackingKeys from 'actions/trackingKeys'
 import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
@@ -83,8 +82,6 @@ export const basketNumPortionChange = (numPortions) => (
         limitReached: reachedLimit,
       },
     })
-
-    dispatch(pricingActions.pricingRequest())
 
     const {promoCode, UTM} = getUTMAndPromoCode(getState())
     dispatch({
@@ -340,8 +337,6 @@ export const basketRecipesInitialise = (recipes) => (dispatch, getState) => {
     type: actionTypes.BASKET_LIMIT_REACHED,
     limitReached: reachedLimit,
   })
-
-  dispatch(pricingActions.pricingRequest())
 }
 
 export const basketIdChange = orderId => ({
@@ -374,7 +369,6 @@ export const basketSlotChange = slotId => (
       const orderId = orderForDate.get('id')
       dispatch(basketIdChange(orderId))
     }
-    dispatch(pricingActions.pricingRequest())
 
     const slots = state.boxSummaryDeliveryDays.getIn([date, 'slots'], null)
     if (slots && slots.size > 0) {
@@ -446,8 +440,6 @@ export const basketRestorePreviousValues = () => (
         address: prevAddress,
       })
     }
-
-    dispatch(pricingActions.pricingRequest())
   }
 )
 

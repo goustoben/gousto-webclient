@@ -11,6 +11,7 @@ import {
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
+import { useSubmitOrder } from 'routes/Checkout/useSubmitOrder'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'

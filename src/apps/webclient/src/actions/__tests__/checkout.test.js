@@ -606,6 +606,12 @@ describe('checkout actions', () => {
   })
 
   describe('checkPaymentAuth', () => {
+    const pricing = {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+      total: '34.48',
+    }
+
     beforeEach(() => {
       getState.mockReturnValue(createState())
     })
@@ -614,7 +620,7 @@ describe('checkout actions', () => {
       const checkoutSuccessfulSessionId = 'success_session_id'
 
       beforeEach(async () => {
-        await checkPaymentAuth(checkoutSuccessfulSessionId)(dispatch, getState)
+        await checkPaymentAuth(checkoutSuccessfulSessionId, { pricing })(dispatch, getState)
       })
 
       test('should hide 3ds challenge modal', () => {
@@ -638,7 +644,7 @@ describe('checkout actions', () => {
       const checkoutFailedSessionId = 'failed_session_id'
 
       beforeEach(async () => {
-        await checkPaymentAuth(checkoutFailedSessionId)(dispatch, getState)
+        await checkPaymentAuth(checkoutFailedSessionId, { pricing })(dispatch, getState)
       })
 
       test('should hide 3ds challenge modal', () => {

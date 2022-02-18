@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import basket, { basketReset } from 'actions/basket'
-import pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
@@ -14,13 +13,6 @@ jest.mock('utils/basket')
 
 jest.mock('utils/logger', () => ({
   error: jest.fn()
-}))
-
-jest.mock('actions/pricing', () => ({
-  __esModule: true,
-  default: {
-    pricingRequest: jest.fn()
-  }
 }))
 
 jest.mock('actions/orderConfirmation', () => ({
@@ -135,15 +127,6 @@ describe('basket actions', () => {
       basket: Immutable.fromJS({
         promoCode: 'test-promo-code',
       }),
-    })
-
-    test('should dispatch a pricing pricingRequest action', async () => {
-      const pricingRequestResponse = Symbol('Pricing request')
-      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
-
-      await basketNumPortionChange(2)(dispatch, getStateSpy)
-
-      expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
     })
 
     test('should dispatch box size changed action', async () => {
@@ -331,7 +314,6 @@ describe('basket actions', () => {
   describe('basketRecipeInitialise', () => {
     describe('given a basket with recipes already contained', () => {
       let recipes
-      const pricingRequestAction = Symbol('Pricing request')
 
       beforeEach(() => {
         getStateSpy = jest.fn().mockReturnValue({
@@ -343,7 +325,6 @@ describe('basket actions', () => {
         })
 
         jest.spyOn(basketUtils, 'naiveLimitReached').mockReturnValue(true)
-        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
 
         recipes = { 123: 1, 234: 2 }
       })
@@ -358,7 +339,7 @@ describe('basket actions', () => {
         })
 
         test('then the dispatch method should have been 3 times', () => {
-          expect(dispatch).toHaveBeenCalledTimes(3)
+          expect(dispatch).toHaveBeenCalledTimes(2)
         })
 
         test('then the `BASKET_RECIPES_INITIALISE` action should have been dispatched first', () => {
@@ -374,16 +355,11 @@ describe('basket actions', () => {
             limitReached: true,
           })
         })
-
-        test('then pricing action should have been dispatched third', () => {
-          expect(dispatch).toHaveBeenNthCalledWith(3, pricingRequestAction)
-        })
       })
     })
   })
 
   describe('basketSlotChange', () => {
-    const pricingRequestAction = Symbol('Pricing request')
     describe('when slot contains default slot', () => {
       beforeEach(() => {
         getStateSpy = jest.fn().mockReturnValue({
@@ -418,7 +394,6 @@ describe('basket actions', () => {
             }
           })
         })
-        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
       })
       test('should dispatch BASKET_SLOT_CHANGE', () => {
         const slotId = 'slot-1-day-1'
@@ -436,13 +411,7 @@ describe('basket actions', () => {
         expect(dispatch).toHaveBeenNthCalledWith(1, expectedResult)
       })
 
-      test('should dispatch pricingRequestAction', () => {
-        const slotId = 'slot-1-day-1'
-        basketSlotChange(slotId)(dispatch, getStateSpy)
-        expect(dispatch).toHaveBeenNthCalledWith(3, pricingRequestAction)
-      })
-
-      test('should dispatch pricingRequestAction', () => {
+      test('should dispatch BASKET_ID_CHANGE', () => {
         const slotId = 'slot-1-day-1'
         basketSlotChange(slotId)(dispatch, getStateSpy)
         expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -454,7 +423,7 @@ describe('basket actions', () => {
       test('should dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
         const slotId = 'slot-1-day-1'
         basketSlotChange(slotId)(dispatch, getStateSpy)
-        expect(dispatch).toHaveBeenNthCalledWith(4, {
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
           trackingData: {
             actionType: trackingKeys.selectDeliverySlot,
@@ -495,7 +464,6 @@ describe('basket actions', () => {
             }
           })
         })
-        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
       })
 
       test('should not dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
