@@ -1,1 +1,0 @@
-export { DetailAttributeGridContainer } from './DetailAttributeGridContainer'

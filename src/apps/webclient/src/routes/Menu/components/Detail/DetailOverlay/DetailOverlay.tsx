@@ -63,7 +63,6 @@ const DetailOverlay = ({
   const view = isFineDineIn ? 'fineDineInDetail' : 'detail'
   const rangeImages = getRangeImages(detailRecipe)
   const images = isFineDineIn ? rangeImages : null
-  const isChefPrepared = detailRecipe.get('chefPrepared') === true
   const featuredImage = getFeaturedImage(detailRecipe, 'detail', browserType)
   const media = isFineDineIn ? images : featuredImage
 
@@ -82,7 +81,6 @@ const DetailOverlay = ({
           equipment={detailRecipe.get('equipment')}
           surcharge={surcharge}
           position={position}
-          isChefPrepared={isChefPrepared}
           isFineDineIn={isFineDineIn}
           isFromShowcaseMenu={isFromShowcaseMenu}
           onClose={isBackClosesModalEnabled ? browserBack : onClose}

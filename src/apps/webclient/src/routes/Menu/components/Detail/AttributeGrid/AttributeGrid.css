@@ -16,7 +16,3 @@
 		grid-template-columns: repeat(2, minmax(145px, 1fr));
 	}
 }
-
-.fineDineInStyleBorder {
-	border-top: 1px solid NewGrey;
-}

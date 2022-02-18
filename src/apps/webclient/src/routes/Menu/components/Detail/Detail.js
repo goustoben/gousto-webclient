@@ -14,11 +14,11 @@ import { RecipeDisclaimer } from './RecipeDisclaimer'
 import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
 import { DetailPerPortionContainer } from './DetailPerPortion'
-import { DetailAttributeGridContainer } from './DetailAttributeGrid'
 import { DetailAddRecipe } from './DetailAddRecipe'
 import css from './Detail.css'
 import titleCss from './DetailTitle.css'
 import { RecipeAlternativeOptions } from '../../Recipe/VariantRecipeList'
+import { AttributeGrid } from './AttributeGrid'
 
 export const Detail = (props) => {
   const {
@@ -35,7 +35,6 @@ export const Detail = (props) => {
     equipment,
     position,
     surcharge,
-    isChefPrepared,
     isFineDineIn,
     menuWithSides,
     isFromShowcaseMenu,
@@ -115,10 +114,7 @@ export const Detail = (props) => {
           </div>
           <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
           <p className={css.infoBoxText}>{description}</p>
-          <DetailAttributeGridContainer
-            recipeId={recipeLegalDetailId}
-            isChefPrepared={isChefPrepared}
-          />
+          <AttributeGrid />
           <RecipeDisclaimer recipeId={id} />
           {equipment && !!equipment.size && (
             <p className={css.additionalInfo}>
@@ -157,7 +153,6 @@ export const Detail = (props) => {
               view={view}
               surcharge={surcharge}
               position={position}
-              buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
             />
           </div>
         )}
@@ -179,7 +174,6 @@ Detail.propTypes = {
   equipment: PropTypes.instanceOf(Immutable.List).isRequired,
   onClose: PropTypes.func.isRequired,
   position: PropTypes.number,
-  isChefPrepared: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool,
   surcharge: PropTypes.number,
   menuWithSides: PropTypes.bool,

@@ -1,6 +1,8 @@
 export const CollectionSlug = {
   Recommendations: 'recommendations',
-  AllRecipes: 'all-recipes'
+  AllRecipes: 'all-recipes',
+  DairyFree: 'dairy-free',
+  GlutenFree: 'gluten-free',
 }
 
 export const CollectionId = {
