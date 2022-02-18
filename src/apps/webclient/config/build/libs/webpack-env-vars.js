@@ -13,7 +13,6 @@ const domain = nodeConfig.get('domain')
 const endpoints = nodeConfig.get('endpoints')
 const envName = nodeConfig.get('environment_name')
 const recaptchaReferralPrivateKey = nodeConfig.get('recaptcha_referral_private_key')
-const recaptchaReferralPublicKey = nodeConfig.get('recaptcha_referral_public_key')
 const runningEnv = nodeConfig.get('running_env')
 
 const publicPath = cloudfrontUrl
@@ -28,7 +27,6 @@ const webpackEnvVarsBase = {
   __DOMAIN__: JSON.stringify(domain),
   __ENDPOINTS__: JSON.stringify(endpoints),
   __ENV__: JSON.stringify(envName),
-  __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
@@ -81,6 +79,5 @@ module.exports = {
   envName,
   publicPath,
   recaptchaReferralPrivateKey,
-  recaptchaReferralPublicKey,
   runningEnv,
 }

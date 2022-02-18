@@ -21,11 +21,8 @@ type WindowLocation = {
  */
 export const getWindow = () => window
 
-export const canUseWindow = () => {
-  const _window = getWindow()
-
-  return !!(typeof _window !== 'undefined' && _window.document && _window.document.createElement)
-}
+export const canUseWindow = () =>
+  !!(typeof window !== 'undefined' && window.document && window.document.createElement)
 
 export const canUseWindowOrThrow = () => {
   if (!canUseWindow()) {
@@ -36,6 +33,7 @@ export const canUseWindowOrThrow = () => {
 export const getClientProtocol = () => {
   canUseWindowOrThrow()
 
+  // eslint-disable-next-line no-underscore-dangle
   const _window = getWindow()
 
   return (_window.location as WindowLocation).protocol
@@ -46,6 +44,7 @@ export const isHTTPS = () => getClientProtocol() === 'https:'
 export const getSubdomain = () => {
   canUseWindowOrThrow()
 
+  // eslint-disable-next-line no-underscore-dangle
   const _window = getWindow()
 
   const [subDomain] = _window.location.host.split('.') as Split<WindowLocation['host'], '.'>
@@ -54,8 +53,10 @@ export const getSubdomain = () => {
 }
 
 export const getRootDomain = () => {
+  // eslint-disable-next-line no-underscore-dangle
   const _window = getWindow()
 
+  // eslint-disable-next-line
   const [_subdomain, rootDomain] = _window.location.host.split('.') as Split<
     WindowLocation['host'],
     '.'
@@ -67,6 +68,7 @@ export const getRootDomain = () => {
 export const getTopLevelDomain = () => {
   canUseWindowOrThrow()
 
+  // eslint-disable-next-line no-underscore-dangle
   const _window = getWindow()
   const rootDomain = getRootDomain()
 
@@ -102,18 +104,18 @@ export const getClientEnvironment = () => {
   const topLevelDomain = getTopLevelDomain()
 
   switch (true) {
-    // Production -> https://www.gousto.co.uk OR https://production-webclient.gousto.co.uk OR https://production-frontend.gousto.co.uk
-    case isHTTPS() && (subdomain === 'www' || subdomain.includes('production')):
-      return 'production'
+  // Production -> https://www.gousto.co.uk OR https://production-webclient.gousto.co.uk OR https://production-frontend.gousto.co.uk
+  case isHTTPS() && (subdomain === 'www' || subdomain.includes('production')):
+    return 'production'
 
-    // Staging -> https://staging-www.gousto.info OR https://staging-webclient.gousto.info OR https://staging-frontend.gousto.info
-    // Lower environment -> https://fef-www.gousto.info OR https://fef-webclient.gousto.info OR https://fef-frontend.gousto.info
-    case isHTTPS() && topLevelDomain === '.info':
-      return getLowerEnvironmentName()
+  // Staging -> https://staging-www.gousto.info OR https://staging-webclient.gousto.info OR https://staging-frontend.gousto.info
+  // Lower environment -> https://fef-www.gousto.info OR https://fef-webclient.gousto.info OR https://fef-frontend.gousto.info
+  case isHTTPS() && topLevelDomain === '.info':
+    return getLowerEnvironmentName()
 
-    // Local -> http://frontend.gousto.local:8080 OR http://localhost:8080
-    default:
-      return 'local'
+  // Local -> http://frontend.gousto.local:8080 OR http://localhost:8080
+  default:
+    return 'local'
   }
 }
 
