@@ -50,7 +50,7 @@ class Summary extends PureComponent {
     const numRecipes = basketSum(basketRecipes)
 
     return (
-      <Box bg={Color.White} paddingH={6} paddingV={6}>
+      <Box bg={Color.White} paddingH={6} paddingV={6} data-testing="CheckoutOrderSummary">
         <Text size={4} fontFamily={FontFamily.SemiBold} fontWeight={FontWeight.Bold}>
           Order total
         </Text>
