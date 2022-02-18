@@ -5,7 +5,7 @@ import { ReactReduxContext } from 'react-redux'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
 import ModalPanel from 'Modal/ModalPanel'
-import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
+import Item from 'Item'
 import userActions from 'actions/user'
 import { menuLoadDays } from 'actions/menu'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
@@ -142,12 +142,14 @@ class AbandonBasketModal extends PureComponent {
           </div>
           <div className={css.modalContentRecipes}>
             {recipeDetails.map(recipeDetail => (
-              <RecipeItem
+              <Item
                 key={recipeDetail.get('title')}
-                title={recipeDetail.get('title')}
-                media={recipeDetail.get('media')}
-                numPortions={numPortions}
+                type="recipe"
                 available
+                media={recipeDetail.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
+                onImageClick={false}
+                quantity={numPortions}
+                title={recipeDetail.get('title')}
               />
             ))}
           </div>

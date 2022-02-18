@@ -12,9 +12,7 @@ jest.mock('../../Details/UnavailableMessage', () => ({
   UnavailableMessage: () => <div />
 }))
 
-jest.mock('routes/Menu/Recipe/RecipeItem', () => ({
-  RecipeItem: () => <div />
-}).default)
+jest.mock('Item', () => (<div />))
 
 jest.mock('utils/recipe', () => ({
   isAvailableRecipeList: jest.fn()

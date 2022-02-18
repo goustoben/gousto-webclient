@@ -4,8 +4,8 @@ import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import Receipt from 'Receipt'
 import Icon from 'Icon'
+import Item from 'Item'
 
-import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
 import { ProductItem } from 'Product/ProductItem'
 import SaveButton from 'OrderSummary/SaveButton'
 import classnames from 'classnames'
@@ -201,17 +201,35 @@ class OrderSummary extends PureComponent {
 
     return (
       <section className={css.container}>
-
         <div
           className={classnames(
             css.details,
-            { [css.slideUp]: (!orderSummaryOpen && orderSummaryCollapsed) },
+            { [css.slideUp]: !orderSummaryOpen && orderSummaryCollapsed },
             { [css.mobileHide]: !orderSummaryOpen && orderSummaryCollapsed }
           )}
         >
-          {this.getRecipes().map(recipe => <RecipeItem key={recipe.orderItemId} {...recipe} available />)}
-          {this.getProducts().map(product => <ProductItem key={product.orderItemId} {...product} available />)}
-          {this.getProductGifts().map(product => <ProductItem key={product.orderItemId} {...product} available />)}
+          {this.getRecipes().map((recipe) => (
+            <Item
+              key={recipe.orderItemId}
+              type="recipe"
+              fromBox={recipe.fromBox}
+              media={recipe.media.getIn(['images', 0, 'urls'], Immutable.List([]))}
+              onImageClick={false}
+              quantity={recipe.numPortions}
+              recipeId={recipe.recipeId}
+              title={recipe.title}
+              url={recipe.url}
+              available
+            />
+          ))}
+          {this.getProducts().map((product) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <ProductItem key={product.orderItemId} {...product} available />
+          ))}
+          {this.getProductGifts().map((product) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <ProductItem key={product.orderItemId} {...product} available />
+          ))}
 
           <div className={css.receipt}>
             <Receipt
@@ -242,7 +260,9 @@ class OrderSummary extends PureComponent {
             </Receipt>
           </div>
           <UserCreditMessage />
-          <div className={classnames({ [css.updateOrderButtonSummary]: onOrderConfirmationMobile })}>
+          <div
+            className={classnames({ [css.updateOrderButtonSummary]: onOrderConfirmationMobile })}
+          >
             <SaveButton
               saving={saving}
               saveRequired={saveRequired}
