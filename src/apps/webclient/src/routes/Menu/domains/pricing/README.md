@@ -2,12 +2,18 @@
 
 This is a hook-based API for interacting with pricing
 
-If you're using this, don't import from any file other than `index.js`.
+If you're using this, don't import from any file other than `index.ts`.
 
 ## Usage
 
 ```ts
 import { usePricing } from 'routes/Menu/domains/pricing'
+```
+
+You can also use the `Pricing` type.
+
+```ts
+import { Pricing } from 'routes/Menu/domains/pricing'
 ```
 
 ### Getting current Pricing and Pending state
@@ -23,10 +29,9 @@ Usage example:
 ```ts
 const { pricing, pending } = usePricing()
 
-return (
-  <>
-    {pending && <div> Loading... </div>}
-    <h2> ({pricing.recipeTotal}) </h2>
-  </>
-)
+if (pending) {
+  return <div> Loading... </div>
+}
+
+return <h2> ({pricing.recipeTotal}) </h2>
 ```
