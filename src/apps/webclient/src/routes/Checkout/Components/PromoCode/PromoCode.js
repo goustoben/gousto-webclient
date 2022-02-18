@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import logger from 'utils/logger'
 import { checkoutConfig } from 'config/checkout'
 import { InputField, Space, FormFieldStatus } from '@gousto-internal/citrus-react'
 
@@ -11,7 +10,6 @@ const propTypes = {
   basketPromoCodeAppliedChange: PropTypes.func.isRequired,
   trackPromocodeChange: PropTypes.func,
   promoCodeValid: PropTypes.bool,
-  sendRequestToUpdateOrderSummaryPrices: PropTypes.func,
 }
 
 const defaultProps = {
@@ -19,7 +17,6 @@ const defaultProps = {
   promoCodeApplied: false,
   trackPromocodeChange: () => {},
   promoCodeValid: false,
-  sendRequestToUpdateOrderSummaryPrices: () => {},
 }
 
 const DEBOUNCE_MS = 500
@@ -57,23 +54,16 @@ class PromoCode extends PureComponent {
   }
 
   handlePromoCodeVerification(currentPromoCode, previousPromoCode) {
-    const { sendRequestToUpdateOrderSummaryPrices, trackPromocodeChange } = this.props
+    const { trackPromocodeChange } = this.props
 
     const hasPromoCode = !!currentPromoCode
-    sendRequestToUpdateOrderSummaryPrices()
-      .then(() => {
-        this.setValidityState()
+    this.setValidityState()
 
-        if (hasPromoCode) {
-          trackPromocodeChange(currentPromoCode, true)
-        } else {
-          trackPromocodeChange(previousPromoCode, false)
-        }
-      })
-      .catch((err) => {
-        this.setError()
-        logger.error(err)
-      })
+    if (hasPromoCode) {
+      trackPromocodeChange(currentPromoCode, true)
+    } else {
+      trackPromocodeChange(previousPromoCode, false)
+    }
   }
 
   setValidityState = () => {

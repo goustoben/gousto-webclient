@@ -12,7 +12,6 @@ describe('PromoCode', () => {
   const basketPromoCodeChange = jest.fn()
   const basketPromoCodeAppliedChange = jest.fn()
   const trackPromocodeChange = jest.fn()
-  const sendRequestToUpdateOrderSummaryPrices = jest.fn(() => Promise.resolve())
   let wrapper
 
   beforeEach(() => {
@@ -24,7 +23,6 @@ describe('PromoCode', () => {
         basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
         trackPromocodeChange={trackPromocodeChange}
         promoCodeValid={false}
-        sendRequestToUpdateOrderSummaryPrices={sendRequestToUpdateOrderSummaryPrices}
       />
     )
     jest.clearAllMocks()
@@ -40,7 +38,6 @@ describe('PromoCode', () => {
           basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
           trackPromocodeChange={trackPromocodeChange}
           promoCodeValid
-          sendRequestToUpdateOrderSummaryPrices={sendRequestToUpdateOrderSummaryPrices}
         />
       )
     })
@@ -57,19 +54,14 @@ describe('PromoCode', () => {
       test('then it should schedule the update and verification', () => {
         expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(true)
         expect(basketPromoCodeChange).toHaveBeenCalledWith(newPromoCode)
-        expect(sendRequestToUpdateOrderSummaryPrices).toHaveBeenCalledWith()
         expect(trackPromocodeChange).toHaveBeenCalledWith(newPromoCode, true)
       })
     })
 
     describe('when verification request fails', () => {
       beforeEach(() => {
-        sendRequestToUpdateOrderSummaryPrices.mockImplementation(() => Promise.reject())
         wrapper.find('input').simulate('change', { target: { value: newPromoCode } })
         jest.runAllTimers()
-      })
-      afterEach(() => {
-        sendRequestToUpdateOrderSummaryPrices.mockImplementation(() => Promise.resolve())
       })
       test('then it should display error', () => {
         expect(wrapper.find('Field').text().includes('Error icon')).toBe(true)
@@ -98,7 +90,6 @@ describe('PromoCode', () => {
           basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
           trackPromocodeChange={trackPromocodeChange}
           promoCodeValid={false}
-          sendRequestToUpdateOrderSummaryPrices={sendRequestToUpdateOrderSummaryPrices}
         />
       )
     })

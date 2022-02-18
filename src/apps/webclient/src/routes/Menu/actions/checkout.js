@@ -8,7 +8,6 @@ import {
   basketPreviewOrderChange,
 } from 'actions/basket'
 import { redirect } from 'actions/redirect'
-import { pricingSuccess } from 'actions/pricing'
 import statusActions from 'actions/status'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
 import { getPreviewOrderId } from 'selectors/basket'

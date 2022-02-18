@@ -6,7 +6,7 @@ import endpoint from 'config/endpoint'
 import { postFetcher } from 'routes/Menu/apis/fetch'
 import { getOrderV2 } from 'routes/Menu/selectors/order'
 import { transformOrderPricesV2ToOrderV1 } from 'routes/Menu/transformers/orderPricesV2ToV1'
-import { getBasketRecipesCount, getBasketSlotId } from 'selectors/basket'
+import { getBasketRecipesCount, getBasketSlotId, getPromoCode } from 'selectors/basket'
 import { pricingFailure, pricingPending, pricingReset, pricingSuccess } from 'actions/pricing'
 import { useAuth } from '../auth'
 
@@ -78,6 +78,7 @@ export const usePricing = (): {
   const dispatch = useDispatch()
   const deliverySlotId = useSelector(getBasketSlotId)
   const recipesCount = useSelector(getBasketRecipesCount)
+  const promoCode = useSelector(getPromoCode)
   const shouldFetch = recipesCount > 1 && !!deliverySlotId
   const { error, data } = useGetPricing(shouldFetch)
 
@@ -85,7 +86,7 @@ export const usePricing = (): {
     if (recipesCount < 2) {
       dispatch(pricingReset())
     }
-  }, [recipesCount, dispatch])
+  }, [recipesCount, dispatch, promoCode])
 
   return {
     pending: !data && !error && shouldFetch,

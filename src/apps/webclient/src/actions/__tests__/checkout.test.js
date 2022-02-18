@@ -6,7 +6,6 @@ import { fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
 
 import { actionTypes } from 'actions/actionTypes'
-import pricingActions from 'actions/pricing'
 import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
 import {
   trackAffiliatePurchase,
@@ -1201,7 +1200,6 @@ describe('checkout actions', () => {
       expect(basketPromoCodeChange).toHaveBeenCalledWith('')
       expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(false)
       expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_ERROR_DUPLICATE, true)
-      expect(pricingActions.pricingRequest).toHaveBeenCalledWith()
     })
   })
 })

@@ -54,7 +54,6 @@ import {
 } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
-import { pricingRequest } from './pricing'
 import tempActions from './temp'
 import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
 export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
@@ -99,7 +98,6 @@ function resetDuplicateCheck() {
         dispatch(basketPromoCodeChange(''))
         dispatch(basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-        dispatch(pricingRequest())
       }
     }
   }
@@ -155,8 +153,6 @@ export const handlePromoCodeRemoved = async (dispatch) => {
   dispatch(basketPromoCodeChange(''))
   dispatch(basketPromoCodeAppliedChange(false))
   dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-
-  dispatch(pricingRequest())
 }
 
 export const handleCheckoutError = async (err, initiator, dispatch, getState) => {
@@ -613,8 +609,4 @@ export const checkoutStepIndexReached = (stepIndex) => dispatch => {
     type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
     stepIndex
   })
-}
-
-export const sendRequestToUpdateOrderSummaryPrices = () => async (dispatch) => {
-  await dispatch(pricingRequest())
 }

@@ -1,6 +1,6 @@
 export function getSurchargeItems(items = []) {
   return items
-    .filter((item) => (item.get('type') ? item.get('type') === 'Surcharge' : false))
+    .filter((item) => (item?.type ? item.type === 'Surcharge' : false))
 }
 
 export const formatOrderPrice = price => (
