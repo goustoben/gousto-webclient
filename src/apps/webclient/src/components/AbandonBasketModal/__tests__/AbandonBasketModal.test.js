@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import configureMockStore from 'redux-mock-store'
 import { Button } from 'goustouicomponents'
 import ModalPanel from 'Modal/ModalPanel'
-import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
+import Item from 'Item'
 import { menuLoadDays } from 'actions/menu'
 import * as boxSummaryActions from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
@@ -125,7 +125,7 @@ describe('Abandon Basket Modal', () => {
         />, { context: { store }}
       )
       wrapper.setState({ showModal: true })
-      expect(wrapper.find(RecipeItem).length).toEqual(basketRecipes.size)
+      expect(wrapper.find(Item).length).toEqual(basketRecipes.size)
     })
 
     test('should render two buttons', () => {

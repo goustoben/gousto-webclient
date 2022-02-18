@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
+import Item from 'Item'
 import { LayoutContentWrapper } from 'goustouicomponents'
-import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
 import { isAvailableRecipeList } from 'utils/recipe'
 import { UnavailableMessage } from '../UnavailableMessage'
 import css from '../Details.css'
@@ -39,14 +39,15 @@ class RecipeList extends React.PureComponent {
         <LayoutContentWrapper>
           <div className={css.recipeItems}>
             {okRecipeList.map(recipe => (
-              <RecipeItem
+              <Item
                 key={recipe.get('id')}
+                type="recipe"
                 available
                 fromBox
-                media={recipe.get('media')}
-                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
                 onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
                 onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
+                quantity={basketRecipes.get(recipe.get('id')) * numPortions}
                 recipeId={recipe.get('id')}
                 title={recipe.get('title')}
               />
@@ -61,13 +62,14 @@ class RecipeList extends React.PureComponent {
             />
 
             {unavailableRecipeList.map(recipe => (
-              <RecipeItem
+              <Item
                 key={recipe.get('id')}
+                type="recipe"
                 available={menuFetchPending}
-                media={recipe.get('media')}
-                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
                 onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
                 onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
+                quantity={basketRecipes.get(recipe.get('id')) * numPortions}
                 title={recipe.get('title')}
               />
             )).toArray()}
