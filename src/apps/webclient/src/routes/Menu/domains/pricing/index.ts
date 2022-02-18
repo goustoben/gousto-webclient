@@ -1,1 +1,1 @@
-export { usePricing } from './usePricing'
+export { usePricing, Pricing } from './usePricing'
