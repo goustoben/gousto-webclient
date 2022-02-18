@@ -8,7 +8,7 @@ import { DetailContainer } from '../DetailContainer'
 import { DetailIngredientsContainer } from '../DetailIngredients'
 import { DetailAllergenIngredientsContainer } from '../DetailAllergenIngredients'
 import { DetailPerPortionContainer } from '../DetailPerPortion'
-import { DetailAttributeGridContainer } from '../DetailAttributeGrid'
+import { AttributeGrid } from '../AttributeGrid'
 import { RecipeAlternativeOptions } from '../../../Recipe/VariantRecipeList/RecipeAlternativeOptions'
 
 jest.mock('react-redux', () => ({
@@ -181,9 +181,8 @@ describe('<Detail />', () => {
     expect(wrapper.find(DetailPerPortionContainer).prop('recipeId')).toEqual('123')
   })
 
-  test('should have an <DetailAttributeGridContainer /> with the correct id', () => {
-    expect(wrapper.find(DetailAttributeGridContainer)).toHaveLength(1)
-    expect(wrapper.find(DetailAttributeGridContainer).prop('recipeId')).toEqual('123')
+  test('should have an <DetailAttributeGridContainer />', () => {
+    expect(wrapper.find(AttributeGrid)).toHaveLength(1)
   })
 
   test('should have a <RecipeAlternativeOptions /> with correct props', () => {
@@ -193,22 +192,6 @@ describe('<Detail />', () => {
     expect(wrapper.find(RecipeAlternativeOptions).prop('isOnDetailScreen')).toEqual(true)
     expect(wrapper.find(RecipeAlternativeOptions).prop('isFromShowcaseMenu')).toEqual(false)
     expect(wrapper.find(RecipeAlternativeOptions).prop('categoryId')).toEqual('123')
-  })
-
-  describe('When isChefPrepared is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({isChefPrepared: true})
-    })
-
-    test('should pass to DetailAttributeGridContainer', () => {
-      expect(wrapper.find(DetailAttributeGridContainer).prop('isChefPrepared')).toEqual(true)
-    })
-
-    test('should send text Add meal to Add button', () => {
-      wrapper.find('AddButton').forEach(button =>
-        expect(button.prop('buttonText')).toEqual('Add meal')
-      )
-    })
   })
 
   describe('When isFineDineIn is true', () => {

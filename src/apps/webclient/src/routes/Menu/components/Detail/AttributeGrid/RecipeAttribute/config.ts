@@ -23,8 +23,13 @@ const descriptions = {
   numPortions: (numPortions: boolean) => `${numPortions} servings`,
 }
 
+/**
+ * Name of recipe attribute which is exposed on the details overlay.
+ */
+export type VisibleAttribute = keyof typeof descriptions
+
 export const getDescription = <
-  TName extends keyof typeof descriptions,
+  TName extends VisibleAttribute,
   TFunction extends funcString = funcString,
   TValue extends Parameters<TFunction>[0] = Parameters<TFunction>[0]
 >(

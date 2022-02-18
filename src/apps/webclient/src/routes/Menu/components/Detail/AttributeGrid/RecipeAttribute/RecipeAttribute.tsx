@@ -1,11 +1,11 @@
 import React from 'react'
 import Svg from 'Svg'
 import css from './RecipeAttribute.css'
-import { getDescription } from './config'
+import { getDescription, VisibleAttribute } from './config'
 
 type RecipeAttributeProps = {
   icon: string
-  name: Parameters<typeof getDescription>[0]
+  name: VisibleAttribute
   value: string | number | boolean
 }
 
