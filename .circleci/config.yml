@@ -172,10 +172,6 @@ jobs:
          name: Typecheck tests (apps/webclient)
          working_directory: src/apps/webclient
          command: yarn typecheck:tests
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - mnt/ramdisk/src/apps/webclient/coverage/coverage-summary.json
 
   eslint-generate-report:
     docker: *circleci_node_image
