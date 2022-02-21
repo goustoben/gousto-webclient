@@ -19,7 +19,6 @@ This file is used by node-config (see below for more info).
   "running_env": "local", //always local as you are not running on AWS
   "api_token": "inbound_frontend_access_key_goes_here",
   "auth_client_secret": "frontend_service_secret_goes_here",
-  "checkout_pk": "checkout_pk_test_token_goes_here",
   "client_dev_server_enabled": true, // enable this for webpack dev server configuration in the client build
 }
 ```

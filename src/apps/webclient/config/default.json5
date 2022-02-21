@@ -8,7 +8,6 @@
   "client_dev_server_enabled": false,
   "client_protocol": 'http',
   "cloudfront_url": "",
-  "checkout_pk": "",
   "recaptcha_referral_private_key": "",
   "running_env": "local",
   // These will get overwritten by the config/env.json

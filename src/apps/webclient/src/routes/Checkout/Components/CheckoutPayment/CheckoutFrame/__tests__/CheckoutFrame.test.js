@@ -6,8 +6,9 @@ import { actionTypes } from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
 import { CheckoutFrameContainer } from '../CheckoutFrameContainer'
 
-jest.mock('routes/Checkout/Components/CheckoutPayment/config', () => ({
-  publicKey: 'checkout-com-public-key',
+jest.mock('../../config', () => ({
+  ...jest.requireActual('../../config'),
+  getPublicKey: () => 'checkout-com-public-key',
 }))
 
 describe('CheckoutFrame', () => {

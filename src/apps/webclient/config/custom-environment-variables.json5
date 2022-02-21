@@ -8,7 +8,6 @@
   "domain": "npm_config_gousto_webclient_domain",
   "client_protocol": "npm_config_gousto_webclient_client_protocol",
   "cloudfront_url": "npm_config_gousto_webclient_cloudfront_url",
-  "checkout_pk": "npm_config_gousto_webclient_checkoutcom_pk",
   // These secrets are loaded into the environment via the ecs_start.sh
   // These secrets are read from the S3 file.
   "outbound_core_access_key": "outbound_core_access_key",
