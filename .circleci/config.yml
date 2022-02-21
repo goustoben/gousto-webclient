@@ -165,9 +165,9 @@ jobs:
           name: Unit test (feature modules)
           command: yarn workspaces foreach --include '@features/*' --verbose run test:unit
       - run:
-          name: Test & gather coverage (apps/webclient)
+          name: Test (apps/webclient)
           working_directory: src/apps/webclient
-          command: yarn test:jest:ci:coverage
+          command: yarn test:jest:ci
       - run:
          name: Typecheck tests (apps/webclient)
          working_directory: src/apps/webclient
