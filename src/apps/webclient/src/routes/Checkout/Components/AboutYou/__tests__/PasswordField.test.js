@@ -32,7 +32,7 @@ describe('Given PasswordField component', () => {
     describe('and isMobile is false', () => {
       beforeEach(() => {
         act(() => {
-          wrapper.find('.password').prop('onFocus')()
+          wrapper.find('input').prop('onFocus')()
         })
       })
 
@@ -54,7 +54,7 @@ describe('Given PasswordField component', () => {
         })
 
         act(() => {
-          wrapper.find('.password').prop('onFocus')()
+          wrapper.find('input').prop('onFocus')()
         })
       })
 
@@ -97,7 +97,7 @@ describe('Given PasswordField component', () => {
   describe('when password field is not in focus', () => {
     beforeEach(() => {
       act(() => {
-        wrapper.find('.password').prop('onBlur')()
+        wrapper.find('input').prop('onBlur')()
       })
     })
 
