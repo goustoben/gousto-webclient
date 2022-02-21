@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import logger from 'utils/logger'
-import classNames from 'classnames'
 import { checkoutConfig } from 'config/checkout'
-import css from './PromoCode.css'
-import checkoutCss from '../../Checkout.css'
+import { InputField, Space, FormFieldStatus } from '@gousto-internal/citrus-react'
 
 const propTypes = {
   promoCode: PropTypes.string,
@@ -102,31 +100,6 @@ class PromoCode extends PureComponent {
     })
   }
 
-  getDisplayOptions = () => {
-    const { promoCode } = this.props
-    const { hasError, hasValidPromoCode } = this.state
-
-    let result
-    if (promoCode && hasError) {
-      result = {
-        inputClassName: css.inputError,
-        iconClassName: css.inputIconError,
-      }
-    } else if (this.promoCodeAdded() && hasValidPromoCode) {
-      result = {
-        inputClassName: css.inputSuccess,
-        iconClassName: css.inputIconSuccess,
-      }
-    } else {
-      result = {
-        inputClassName: css.input,
-        iconClassName: null,
-      }
-    }
-
-    return result
-  }
-
   handleChange = (e) => {
     const { value } = e.target
 
@@ -161,42 +134,37 @@ class PromoCode extends PureComponent {
     this.handlePromoCodeVerification(newPromoCode, previousPromoCode)
   }
 
-  renderMessage = () => {
-    const { hasError } = this.state
+  getInputStatus = () => {
+    const { promoCode } = this.props
+    const { hasError, hasValidPromoCode } = this.state
 
-    if (hasError) {
-      return <p className={css.errorMsg}>{checkoutConfig.errorMessage.invalidPromocode}</p>
+    if (promoCode && hasError) {
+      return FormFieldStatus.Error
+    } else if (this.promoCodeAdded() && hasValidPromoCode) {
+      return FormFieldStatus.Success
     }
 
     return null
   }
 
   render() {
-    const { value } = this.state
-    const { inputClassName, iconClassName } = this.getDisplayOptions()
+    const { value, hasError } = this.state
+    const status = this.getInputStatus()
 
     return (
-      <div className={css.inputGroup}>
-        <div className={css.inputContainer}>
-          <div className={css.discountLabel}>Discount code</div>
-          <div className={css.inputWrapper}>
-            <input
-              type="text"
-              name="promoCode"
-              data-testing="promoCodeInput"
-              value={value}
-              onChange={this.handleChange}
-              className={classNames(inputClassName, checkoutCss.checkoutInput)}
-            />
-            <span
-              className={classNames(css.inputIcon, iconClassName, {
-                [css.isHidden]: !iconClassName,
-              })}
-            />
-          </div>
-        </div>
-        {this.renderMessage()}
-      </div>
+      <>
+        <InputField
+          label="Discount code"
+          type="text"
+          name="promoCode"
+          data-testing="promoCodeInput"
+          value={value}
+          onChange={this.handleChange}
+          status={status}
+          validationMessage={hasError && checkoutConfig.errorMessage.invalidPromocode}
+        />
+        <Space size={5} />
+      </>
     )
   }
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import css from '../Detail.css'
-import { Ingredients } from '../../../Recipe/Ingredients'
+import { Ingredients } from './Ingredients'
 
 const DetailIngredients = ({ ingredients }) => {
   if (!ingredients || !ingredients.size) {

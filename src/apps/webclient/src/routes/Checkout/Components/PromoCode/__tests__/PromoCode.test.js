@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import React from 'react'
 import { PromoCode } from 'routes/Checkout/Components/PromoCode/PromoCode'
 
@@ -16,7 +16,7 @@ describe('PromoCode', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(
+    wrapper = mount(
       <PromoCode
         promoCode={emptyPromoCode}
         promoCodeApplied={false}
@@ -27,21 +27,12 @@ describe('PromoCode', () => {
         sendRequestToUpdateOrderSummaryPrices={sendRequestToUpdateOrderSummaryPrices}
       />
     )
-
     jest.clearAllMocks()
-  })
-
-  describe('when rendered', () => {
-    test('should render a div with an input and a hidden icon', () => {
-      expect(wrapper.type()).toEqual('div')
-      expect(wrapper.find('input').exists()).toBe(true)
-      expect(wrapper.find('.inputIcon.isHidden').exists()).toBe(true)
-    })
   })
 
   describe('when promo code is non-empty and valid', () => {
     beforeEach(() => {
-      wrapper = shallow(
+      wrapper = mount(
         <PromoCode
           promoCode={validPromoCode}
           promoCodeApplied
@@ -55,21 +46,18 @@ describe('PromoCode', () => {
     })
 
     test('should display the success icon', () => {
-      expect(wrapper.find('.inputIcon.inputIconSuccess').exists()).toBe(true)
+      expect(wrapper.find('Field').text().includes('Success icon')).toBe(true)
     })
 
     describe('when edited', () => {
       beforeEach(() => {
         wrapper.find('input').simulate('change', { target: { value: newPromoCode } })
-
         jest.runAllTimers()
       })
-
       test('then it should schedule the update and verification', () => {
         expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(true)
         expect(basketPromoCodeChange).toHaveBeenCalledWith(newPromoCode)
         expect(sendRequestToUpdateOrderSummaryPrices).toHaveBeenCalledWith()
-
         expect(trackPromocodeChange).toHaveBeenCalledWith(newPromoCode, true)
       })
     })
@@ -77,29 +65,23 @@ describe('PromoCode', () => {
     describe('when verification request fails', () => {
       beforeEach(() => {
         sendRequestToUpdateOrderSummaryPrices.mockImplementation(() => Promise.reject())
-
         wrapper.find('input').simulate('change', { target: { value: newPromoCode } })
-
         jest.runAllTimers()
       })
-
       afterEach(() => {
         sendRequestToUpdateOrderSummaryPrices.mockImplementation(() => Promise.resolve())
       })
-
       test('then it should display error', () => {
-        expect(wrapper.find('.inputIcon.inputIconError').exists()).toBe(true)
-        expect(wrapper.find('.errorMsg').exists()).toBe(true)
+        expect(wrapper.find('Field').text().includes('Error icon')).toBe(true)
+        expect(wrapper.find('Field').text().includes('This discount code is not valid')).toBe(true)
       })
     })
 
     describe('when edited to an empty value (i.e. removed)', () => {
       beforeEach(() => {
         wrapper.find('input').simulate('change', { target: { value: emptyPromoCode } })
-
         jest.runAllTimers()
       })
-
       test('then it should track removal', () => {
         expect(trackPromocodeChange).toHaveBeenCalledWith(validPromoCode, false)
       })
@@ -108,7 +90,7 @@ describe('PromoCode', () => {
 
   describe('when the promo code is non-empty and invalid', () => {
     beforeEach(() => {
-      wrapper = shallow(
+      wrapper = mount(
         <PromoCode
           promoCode="ZZZ"
           promoCodeApplied
@@ -122,8 +104,8 @@ describe('PromoCode', () => {
     })
 
     test('should display the error icon and message', () => {
-      expect(wrapper.find('.inputIcon.inputIconError').exists()).toBe(true)
-      expect(wrapper.find('.errorMsg').exists()).toBe(true)
+      expect(wrapper.find('Field').text().includes('Error icon')).toBe(true)
+      expect(wrapper.find('Field').text().includes('This discount code is not valid')).toBe(true)
     })
   })
 })

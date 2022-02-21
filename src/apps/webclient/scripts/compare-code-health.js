@@ -46,9 +46,7 @@ const compareHealth = (status, path, benchmarkCodeHealth, newCodeHealth) => {
   }
 
   const sanitisedPath = sanitiseFilePath(path)
-  // todo FEF-288: Remove the pre-workspace-path matching once the new package structure is merged
-  const preWorkspacePath = sanitisedPath.replace(/src\/apps\/webclient/g, 'src')
-  const benchmark = benchmarkCodeHealth.files.find(f => f.path === sanitisedPath || f.path === preWorkspacePath)
+  const benchmark = benchmarkCodeHealth.files.find(f => f.path === sanitisedPath)
   const newHealth = newCodeHealth.files.find(f => f.path === sanitisedPath)
 
   if (!newHealth) {
@@ -96,15 +94,7 @@ const run = async (changedFiles) => {
   try {
     const benchmarkCodeHealth = await getCodeHealthBenchmark(process.env.CIRCLECI_ACCESS_TOKEN, argBranch, argCodeHealthFile)
 
-    if (!benchmarkCodeHealth.files) {
-      console.log('Benchmark is in old format, unable to compare health')
-      console.log('Exiting without failure')
-      process.exit(0)
-      return
-    }
-
     const newCodeHealth = getCodeHealth()
-
     const failures = []
 
     changedFiles

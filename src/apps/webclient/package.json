@@ -30,7 +30,7 @@
     "build:docker:dev": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production npm_config_gousto_webclient_environment_name=local npm_config_gousto_webclient_domain=gousto.local run-p build:server build:client",
     "generate-libphonenumber-metadata": "libphonenumber-metadata-generator src/utils/phoneNumber/phone-metadata.json --countries GB --extended",
     "test:jest": "jest",
-    "test:jest:ci": "jest --ci -w=4",
+    "test:jest:ci": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent",
     "test:jest:one": "jest",
     "test:jest:one:watch": "jest --watch",
     "test:jest:watch": "jest --watchAll",

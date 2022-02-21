@@ -27,11 +27,12 @@ module.exports = {
     '\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/jest/.fileTransformer.js'
   },
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.{js}',
-    '<rootDir>/server/**/*.{js}',
+    '<rootDir>/src/**/*.{js,ts,tsx}',
+    '<rootDir>/server/**/*.{js,ts,tsx}',
     '!<rootDir>/src/scripts/**/*',
     '!<rootDir>/src/**/config/*.{js}',
-    '!<rootDir>/src/_testing/**/*'
+    '!<rootDir>/src/_testing/**/*',
+    '!**/*.{d.ts}'
   ],
   moduleDirectories: [
     'node_modules',
