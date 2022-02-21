@@ -562,15 +562,16 @@ workflows:
             branches:
               only:
                 - develop
-      - publish-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-typecheck-and-report
-            - eslint-generate-report
-          filters:
-            branches:
-              only:
-                - develop
+      # Temporarily disabled - contact squad-fef for info
+      # - publish-code-health:
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - test-typecheck-and-report
+      #       - eslint-generate-report
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
