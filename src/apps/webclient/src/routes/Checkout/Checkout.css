@@ -66,12 +66,6 @@
   margin-bottom: 0.5rem;
 }
 
-.validPassword {
-  border: 1px solid DarkHaricot !important;
-  color: Blackberry;
-  background: DarkHaricot05 !important;
-}
-
 label {
   width: 100%;
   margin-bottom: 0;
@@ -80,14 +74,6 @@ label {
 .label {
   composes: fontStyleSubHead from 'design-language/typography.css';
   margin-bottom: 0.5rem;
-}
-
-.password {
-  padding-right: 2.5rem;
-  width: 100%;
-  border-radius: 3px;
-  border: 1px solid Mackerel;
-  outline: 0;
 }
 
 .disableInvalid {

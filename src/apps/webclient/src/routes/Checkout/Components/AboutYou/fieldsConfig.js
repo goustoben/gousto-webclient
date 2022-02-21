@@ -1,7 +1,7 @@
 import React from 'react'
-import classNames from 'classnames'
 import { client } from 'config/routes'
 import { emailValidator } from 'utils/forms'
+import { Icon, IconVariant, Box, Color } from '@gousto-internal/citrus-react'
 import css from './AboutYou.css'
 
 const passwordLabel = 'Password'
@@ -24,16 +24,18 @@ const checkboxLabel = (trackPrivacyPolicyClick) => (
 export const fieldsConfig = ({ loginCTA, sectionName, passState, trackPrivacyPolicyClick }) => {
   const { isPassVisible, togglePasswordVisibility } = passState
   const passwordSuffix = (
-    <span
-      role="button"
-      tabIndex={0}
-      className={classNames(css.eyeIcon, {
-        [css.showPassword]: !isPassVisible,
-        [css.hidePassword]: isPassVisible,
-      })}
-      onClick={togglePasswordVisibility}
-      onKeyPress={togglePasswordVisibility}
-    />
+    <Box color={Color.ColdGrey_400}>
+      <Icon
+        name={isPassVisible ? 'hide' : 'show'}
+        variant={IconVariant.Inherit}
+        role="button"
+        onClick={togglePasswordVisibility}
+        onKeyPress={togglePasswordVisibility}
+        style={{ display: 'block' }}
+      >
+        {isPassVisible ? 'hide password' : 'show password'}
+      </Icon>
+    </Box>
   )
 
   return [
