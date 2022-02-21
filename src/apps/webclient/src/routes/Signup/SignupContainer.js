@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { getIsTastePreferencesEnabled, getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { signupDismissDiscountAppliedBar, signupSetStep } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
@@ -19,7 +19,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     stepName: ownProps.params.stepName,
     steps: state.signup.getIn(['wizard', 'steps']),
-    isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
     orderDiscount: state.promoStore.getIn([
       state.promoCurrent,
       'details',

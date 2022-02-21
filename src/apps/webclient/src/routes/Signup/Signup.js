@@ -57,7 +57,6 @@ const propTypes = {
   params: PropTypes.shape({
     stepName: PropTypes.string,
   }),
-  isTastePreferencesEnabled: PropTypes.bool,
   orderDiscount: PropTypes.string,
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
@@ -89,7 +88,6 @@ const defaultProps = {
   promoBannerState: {
     canApplyPromo: false,
   },
-  isTastePreferencesEnabled: false,
   orderDiscount: '',
   trackDiscountVisibility: () => {},
   isDiscountAppliedBarDismissed: false,
@@ -288,15 +286,6 @@ class Signup extends PureComponent {
     )
   }
 
-  getStepSize = (stepsSize) => {
-    const { isTastePreferencesEnabled } = this.props
-    if (isTastePreferencesEnabled) {
-      return stepsSize + 2
-    }
-
-    return stepsSize
-  }
-
   render() {
     const {
       stepName,
@@ -357,7 +346,7 @@ class Signup extends PureComponent {
           isDiscountAppliedBarDismissed={isDiscountAppliedBarDismissed}
         />
         <div className={css.stepsContainer}>
-          <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />
+          <StepIndicator current={stepNumber + 1} size={steps.size} />
           {this.renderSteps(steps, stepNumber)}
         </div>
       </div>

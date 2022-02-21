@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import classNames from 'classnames'
-import { browserHistory } from 'react-router'
 import DropdownInput from 'Form/Dropdown'
 
 import {
@@ -11,7 +10,6 @@ import {
   generateNextDayDeliverySlots,
   getDateOffset,
 } from 'utils/deliverySlot'
-import { redirect } from 'utils/window'
 import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
 import { signupConfig } from 'config/signup'
@@ -125,7 +123,6 @@ const DeliveryStep = ({
   trackDeliverySlotEdited,
   disabledSlots,
   userHasAvailableSlots,
-  isTastePreferencesEnabled,
   trackSignupWizardAction,
   showcaseMenuSeen,
   district,
@@ -165,18 +162,12 @@ const DeliveryStep = ({
   }
 
   const onShowRecipe = () => {
-    let nextStep
-    if (isTastePreferencesEnabled) {
-      nextStep = () => redirect('/taste-preferences')
-    } else {
-      nextStep = next
-    }
     trackSignupWizardAction(completeWizardDeliveryDay)
     boxSummaryDeliverySlotChosen({
       date: tempDate,
       slotId: tempSlotId,
       displayMenuForFirstWeekOnly: false,
-    }).then(nextStep)
+    }).then(next)
   }
 
   const onTempSlotChange = (slotId) => {
@@ -322,7 +313,6 @@ DeliveryStep.propTypes = {
   next: PropTypes.func,
   disabledSlots: PropTypes.instanceOf(Immutable.List),
   userHasAvailableSlots: PropTypes.bool,
-  isTastePreferencesEnabled: PropTypes.bool,
   trackSignupWizardAction: PropTypes.func.isRequired,
   showcaseMenuSeen: PropTypes.bool,
   district: PropTypes.string,
@@ -348,7 +338,6 @@ DeliveryStep.defaultProps = {
   next: () => {},
   disabledSlots: [],
   userHasAvailableSlots: true,
-  isTastePreferencesEnabled: false,
   showcaseMenuSeen: false,
   district: null,
   amountOfCustomers: null,

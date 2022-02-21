@@ -403,19 +403,6 @@
             }
           }
         },
-        "tastepreferences": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://staging-api.gousto.info/tastepreferences/v1",
-              "local": "https://staging-api.gousto.info/tastepreferences/v1"
-            },
-            "serverSide": {
-              "live": "http://staging-tastepreferences.gousto.info",
-              "local": "https://staging-api.gousto.info/tastepreferences/v1"
-            }
-          }
-        },
         "userbucketing": {
           "1": {
             "versionString": "v1",
@@ -848,19 +835,6 @@
             "serverSide": {
               "live": "http://production-subscriptionquery.gousto.co.uk",
               "local": "https://production-api.gousto.co.uk/subscriptionquery/v1"
-            }
-          }
-        },
-        "tastepreferences": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://production-api.gousto.co.uk/tastepreferences/v1",
-              "local": "https://production-api.gousto.co.uk/tastepreferences/v1"
-            },
-            "serverSide": {
-              "live": "http://production-tastepreferences.gousto.co.uk",
-              "local": "https://production-api.gousto.co.uk/tastepreferences/v1"
             }
           }
         },

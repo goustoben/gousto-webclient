@@ -25,17 +25,5 @@ describe('Button', () => {
     test('then the text should be Confirm', () => {
       expect(wrapper.prop('children')).toBe('Confirm')
     })
-
-    describe('and when isTastePreferencesEnabled is on', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          isTastePreferencesEnabled: true,
-        })
-      })
-
-      test('then the text should correspond to the design', () => {
-        expect(wrapper.prop('children')).toBe('Show me recipes')
-      })
-    })
   })
 })

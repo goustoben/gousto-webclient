@@ -4,13 +4,9 @@ import classNames from 'classnames'
 import actual from 'actual'
 import css from './Button.css'
 
-const ctaText = (isLastStep, isTastePreferencesEnabled) => {
+const ctaText = (isLastStep) => {
   if (isLastStep) {
-    if (isTastePreferencesEnabled) {
-      return 'Show me recipes'
-    } else {
-      return 'Confirm'
-    }
+    return 'Confirm'
   }
   if (actual('width', 'px') <= 767) {
     return 'Next'
@@ -19,15 +15,8 @@ const ctaText = (isLastStep, isTastePreferencesEnabled) => {
   return 'Continue'
 }
 
-const Button = ({
-  children,
-  onClick,
-  isLastStep,
-  isTastePreferencesEnabled,
-  showcaseMenuSeen,
-  ...buttonProps
-}) => {
-  const buttonText = children || ctaText(isLastStep, isTastePreferencesEnabled)
+const Button = ({ children, onClick, isLastStep, showcaseMenuSeen, ...buttonProps }) => {
+  const buttonText = children || ctaText(isLastStep)
 
   const className = classNames(css.cta, {
     [css.isDisabled]: buttonProps.disabled,
@@ -52,14 +41,12 @@ Button.propTypes = {
   isLastStep: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   children: PropTypes.node,
-  isTastePreferencesEnabled: PropTypes.bool,
   showcaseMenuSeen: PropTypes.bool,
 }
 
 Button.defaultProps = {
   onClick: () => {},
   children: undefined,
-  isTastePreferencesEnabled: false,
   showcaseMenuSeen: false,
 }
 
