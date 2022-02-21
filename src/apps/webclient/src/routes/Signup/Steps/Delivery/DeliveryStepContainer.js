@@ -5,10 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getLandingDay } from 'utils/deliveries'
 import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
-import {
-  isNextDayDeliveryPaintedDoorFeatureEnabled,
-  getIsTastePreferencesEnabled,
-} from 'selectors/features'
+import { isNextDayDeliveryPaintedDoorFeatureEnabled } from 'selectors/features'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
 import { trackSignupWizardAction, trackSocialBelongingBannerAppearance } from 'actions/signup'
 import { DeliveryStep } from './DeliveryStep'
@@ -34,7 +31,6 @@ function mapStateToProps(state) {
     nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
     disabledSlots,
     userHasAvailableSlots: userHasAvailableSlots(state),
-    isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
     showcaseMenuSeen: state.signup.get('showcaseMenuSeen'),
     district: state.signup.getIn(['wizard', 'district']),
     amountOfCustomers: state.signup.getIn(['wizard', 'amountOfCustomers']),

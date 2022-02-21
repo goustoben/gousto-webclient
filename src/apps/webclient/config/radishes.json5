@@ -371,19 +371,6 @@
             }
           }
         },
-        "tastepreferences": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://radishes-api.gousto.info/tastepreferences/v1",
-              "local": "https://radishes-api.gousto.info/tastepreferences/v1"
-            },
-            "serverSide": {
-              "live": "http://radishes-tastepreferences.gousto.info",
-              "local": "https://radishes-api.gousto.info/tastepreferences/v1"
-            }
-          }
-        },
         "userbucketing": {
           "1": {
             "versionString": "v1",

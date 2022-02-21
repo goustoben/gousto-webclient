@@ -85,28 +85,8 @@ describe('Signup', () => {
       wrapper = shallow(<Signup {...props} />, { context })
     })
 
-    describe('when isTastePreferencesEnabled is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          isTastePreferencesEnabled: true,
-        })
-      })
-
-      test('should display step size 5', () => {
-        expect(wrapper.find(StepIndicator).prop('size')).toEqual(5)
-      })
-    })
-
-    describe('when isTastePreferencesEnabled is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          isTastePreferencesEnabled: false,
-        })
-      })
-
-      test('should display step size 3', () => {
-        expect(wrapper.find(StepIndicator).prop('size')).toEqual(3)
-      })
+    test('should display step size 3', () => {
+      expect(wrapper.find(StepIndicator).prop('size')).toEqual(3)
     })
   })
 

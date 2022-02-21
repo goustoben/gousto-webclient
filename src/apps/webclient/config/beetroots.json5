@@ -371,19 +371,6 @@
             }
           }
         },
-        "tastepreferences": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://beetroots-api.gousto.info/tastepreferences/v1",
-              "local": "https://beetroots-api.gousto.info/tastepreferences/v1"
-            },
-            "serverSide": {
-              "live": "http://beetroots-tastepreferences.gousto.info",
-              "local": "https://beetroots-api.gousto.info/tastepreferences/v1"
-            }
-          }
-        },
         "userbucketing": {
           "1": {
             "versionString": "v1",

@@ -371,19 +371,6 @@
             }
           }
         },
-        "tastepreferences": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://sprouts-api.gousto.info/tastepreferences/v1",
-              "local": "https://sprouts-api.gousto.info/tastepreferences/v1"
-            },
-            "serverSide": {
-              "live": "http://sprouts-tastepreferences.gousto.info",
-              "local": "https://sprouts-api.gousto.info/tastepreferences/v1"
-            }
-          }
-        },
         "userbucketing": {
           "1": {
             "versionString": "v1",

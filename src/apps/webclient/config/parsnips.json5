@@ -371,19 +371,6 @@
             }
           }
         },
-        "tastepreferences": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://parsnips-api.gousto.info/tastepreferences/v1",
-              "local": "https://parsnips-api.gousto.info/tastepreferences/v1"
-            },
-            "serverSide": {
-              "live": "http://parsnips-tastepreferences.gousto.info",
-              "local": "https://parsnips-api.gousto.info/tastepreferences/v1"
-            }
-          }
-        },
         "userbucketing": {
           "1": {
             "versionString": "v1",

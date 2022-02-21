@@ -371,19 +371,6 @@
             }
           }
         },
-        "tastepreferences": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://fef-api.gousto.info/tastepreferences/v1",
-              "local": "https://fef-api.gousto.info/tastepreferences/v1"
-            },
-            "serverSide": {
-              "live": "http://fef-tastepreferences.gousto.info",
-              "local": "https://fef-api.gousto.info/tastepreferences/v1"
-            }
-          }
-        },
         "userbucketing": {
           "1": {
             "versionString": "v1",

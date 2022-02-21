@@ -194,10 +194,6 @@ module.exports = {
     covid: 'https://cook.gousto.co.uk/coronavirus-3/',
   },
 
-  tastePreferences: {
-    profile: '/preferences/profile'
-  },
-
   user: {
     referAFriend: '/user/refer-a-friend'
   },

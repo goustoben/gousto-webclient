@@ -143,9 +143,6 @@
 /src/apps/webclient/src/reducers/subscription.js                        @Gousto/squad-rockets-frontend
 /src/apps/webclient/__tests__/reducers/subscription.test.js             @Gousto/squad-rockets-frontend
 /src/apps/webclient/src/apis/__tests__/subscription.test.js             @Gousto/squad-rockets-frontend
-/src/apps/webclient/src/actions/__tests__/tastePreferences.test.js      @Gousto/squad-rockets-frontend
-/src/apps/webclient/src/actions/tastePreferences.js                     @Gousto/squad-rockets-frontend
-/src/apps/webclient/src/apis/tastePreferences.js                        @Gousto/squad-rockets-frontend
 /src/apps/webclient/src/actions/welcome.js                              @Gousto/squad-rockets-frontend
 /src/apps/webclient/src/containers/welcome/                             @Gousto/squad-rockets-frontend
 /src/apps/webclient/src/apis/boxPrices.js                               @Gousto/squad-rockets-frontend

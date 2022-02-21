@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { productDetailVisibilityChange } from 'actions/products'
 import { userFetchReferralOffer } from 'actions/user'
 import { trackWelcomeAppPromoClick, fetchData } from 'actions/welcome'
-import { updateUserTasteProfile } from 'actions/tastePreferences'
 
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getHeaderDetails } from 'routes/OrderConfirmation/helper'
@@ -32,7 +31,6 @@ const WelcomeContainer = connect(mapStateToProps, {
   productDetailVisibilityChange,
   userFetchReferralOffer,
   trackWelcomeAppPromoClick,
-  updateUserTasteProfile,
   fetchData,
 })(Welcome)
 
