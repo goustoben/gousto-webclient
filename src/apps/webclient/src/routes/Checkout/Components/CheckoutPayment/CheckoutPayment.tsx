@@ -8,7 +8,7 @@ import { HotjarTrigger } from 'HotjarTrigger'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
 import Svg from 'Svg'
 import { formatOrderPrice } from 'utils/pricing'
-import { usePricing } from 'routes/Menu/domains/pricing'
+import { usePricing, Pricing } from 'routes/Menu/domains/pricing'
 import { SubmitButton } from '../SubmitButton'
 import { ErrorMessage } from '../ErrorMessage'
 import { Checkout3DSModal } from './Checkout3DSModal'
@@ -26,9 +26,9 @@ type Props = {
   receiveRef: () => void
   scrollToFirstMatchingRef: () => void
   asyncValidate: () => void
-  trackingOrderPlaceAttempt: () => void
+  trackingOrderPlaceAttempt: ({ pricing }: { pricing?: Pricing | null }) => void
   trackingOrderPlaceAttemptFailed: () => void
-  trackingOrderPlaceAttemptSucceeded: () => void
+  trackingOrderPlaceAttemptSucceeded: ({ pricing }: { pricing?: Pricing | null }) => void
   touch: (ev: string, element: any) => void
   formErrors: any
   sectionName: string
@@ -106,11 +106,11 @@ const CheckoutPayment = ({
   }
 
   const processSignup = () => {
-    trackingOrderPlaceAttempt()
+    trackingOrderPlaceAttempt({ pricing })
 
     if (currentPaymentMethod === PaymentMethod.Card) {
       if (isFormValid()) {
-        trackingOrderPlaceAttemptSucceeded()
+        trackingOrderPlaceAttemptSucceeded({ pricing })
         enableCardSubmission()
       } else {
         trackingOrderPlaceAttemptFailed()
@@ -118,7 +118,7 @@ const CheckoutPayment = ({
       }
     } else {
       // nothing to validate for PayPal
-      trackingOrderPlaceAttemptSucceeded()
+      trackingOrderPlaceAttemptSucceeded({ pricing })
       submitOrder()
     }
   }

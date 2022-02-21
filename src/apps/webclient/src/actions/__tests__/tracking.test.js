@@ -1022,6 +1022,11 @@ describe('tracking actions', () => {
   })
 
   describe('trackingOrderCheckout', () => {
+    let pricing = {
+      total: '24.00',
+      grossTotal: '24.00',
+      promoCode: false,
+    }
     const state = {
       basket: Immutable.fromJS({
         orderId: '178',
@@ -1038,23 +1043,17 @@ describe('tracking actions', () => {
           state: 'active',
         }
       }),
-      pricing: Immutable.fromJS({
-        prices: {
-          total: '24.00',
-          grossTotal: '24.00',
-          promoCode: false,
-        }
-      }),
       temp: Immutable.fromJS({
         originalGrossTotal: '24.99',
         originalNetTotal: '24.99'
       })
     }
     beforeEach(() => {
+      dispatch = jest.fn()
       getState = () => (state)
     })
     test('should dispatch Order Edited tracking action for subscription box', async () => {
-      await trackingOrderCheckout()(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1095,7 +1094,7 @@ describe('tracking actions', () => {
         }),
       })
 
-      await trackingOrderCheckout()(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1145,15 +1144,8 @@ describe('tracking actions', () => {
             state: 'active',
           }
         }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '24.00',
-            grossTotal: '24.00',
-            promoCode: false,
-          }
-        }),
       })
-      await trackingOrderCheckout()(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1198,15 +1190,13 @@ describe('tracking actions', () => {
             state: 'active',
           }
         }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '22.00',
-            grossTotal: '22.00',
-            promoCode: false,
-          }
-        }),
       })
-      await trackingOrderCheckout()(dispatch, getState)
+      pricing = {
+        total: '22.00',
+        grossTotal: '22.00',
+        promoCode: false,
+      }
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {

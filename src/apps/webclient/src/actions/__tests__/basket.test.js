@@ -169,6 +169,10 @@ describe('basket actions', () => {
   })
 
   describe('basketCheckedOut', () => {
+    const view = 'grid'
+    const pricing = {
+      total: 'test-total'
+    }
     let getState
     beforeEach(() => {
       getState = () => ({
@@ -186,7 +190,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch  BASKET_CHECKOUT tracking', async () => {
-      await basketCheckedOut('grid')(dispatch, getState)
+      await basketCheckedOut({ view, pricing })(dispatch, getState)
 
       expect(dispatch.mock.calls[2][0]).toEqual({
         type: 'BASKET_CHECKOUT',
@@ -199,9 +203,9 @@ describe('basket actions', () => {
     })
 
     test('should dispatch trackingOrderCheckout', async () => {
-      await basketCheckedOut('grid')(dispatch, getState)
+      await basketCheckedOut({ view, pricing })(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith(trackingOrderCheckout())
+      expect(dispatch).toHaveBeenCalledWith(trackingOrderCheckout({pricing}))
     })
   })
 

@@ -87,14 +87,12 @@ const errorCodes = {
   challengeFailed: '3ds-challenge-failed',
 }
 
-function resetDuplicateCheck() {
+function resetDuplicateCheck({ pricing }) {
   return (dispatch, getState) => {
     const state = getState()
     dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, null))
     if (getPromoCode(state)) {
-      const { pricing } = state
-
-      if (!isValidPromoCode(pricing.get('prices'))) {
+      if (!isValidPromoCode(pricing)) {
         dispatch(basketPromoCodeChange(''))
         dispatch(basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
@@ -185,7 +183,7 @@ export function checkoutSignup({ pricing }) {
 
     try {
       await dispatch(checkoutActions.fetchGoustoRef())
-      dispatch(checkoutActions.resetDuplicateCheck())
+      dispatch(checkoutActions.resetDuplicateCheck({ pricing }))
       await dispatch(userSubscribe())
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.error, `Signup failed: ${err.message}`))
@@ -430,19 +428,17 @@ export const trackCheckoutButtonPressed = (type, property) => {
   }
 }
 
-export function trackingOrderPlaceAttempt() {
+export function trackingOrderPlaceAttempt({ pricing }) {
   return (dispatch, getState) => {
     const state = getState()
-    const { pricing } = state
-    const prices = pricing.get('prices')
 
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT,
       trackingData: {
         actionType: trackingKeys.placeOrderAttempt,
         order_id: getPreviewOrderId(state),
-        order_total: prices.get('grossTotal'),
-        promo_code: prices.get('promoCode'),
+        order_total: pricing?.grossTotal,
+        promo_code: pricing?.promoCode,
         payment_provider: 'checkout'
       }
     })
@@ -463,11 +459,10 @@ export function trackingOrderPlaceAttemptFailed() {
   }
 }
 
-export function trackingOrderPlaceAttemptSucceeded() {
+export function trackingOrderPlaceAttemptSucceeded({ pricing }) {
   return (dispatch, getState) => {
     const state = getState()
-    const { pricing, form } = state
-    const prices = pricing.get('prices')
+    const { form } = state
     const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
     const intervalId = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
 
@@ -476,8 +471,8 @@ export function trackingOrderPlaceAttemptSucceeded() {
       trackingData: {
         actionType: trackingKeys.placeOrderAttemptComplete,
         order_id: getPreviewOrderId(state),
-        order_total: prices.get('grossTotal'),
-        promo_code: prices.get('promoCode'),
+        order_total: pricing?.grossTotal,
+        promo_code: pricing?.promoCode,
         interval_id: intervalId,
         payment_provider: 'checkout'
       }
@@ -591,7 +586,7 @@ export function setPayPalNonce(nonce, { pricing }) {
       nonce
     })
 
-    dispatch(checkoutActions.trackingOrderPlaceAttemptSucceeded())
+    dispatch(checkoutActions.trackingOrderPlaceAttemptSucceeded({ pricing }))
     dispatch(checkoutActions.checkoutSignup({ pricing }))
   }
 }

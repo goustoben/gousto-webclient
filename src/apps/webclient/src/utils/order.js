@@ -68,7 +68,7 @@ export function totalPrice(boxPrice, extrasPrice, slotPrice) {
 }
 
 export function isValidPromoCode(prices) {
-  return prices.get('promoCodeValid', false)
+  return prices?.promoCodeValid || false
 }
 
 export const getConfirmationPromoCode = (order, basket) => (

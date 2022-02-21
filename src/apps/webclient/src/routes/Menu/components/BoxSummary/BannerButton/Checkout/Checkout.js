@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
 import { useBasketRequiredFeatureEnabled } from '../../../../hooks/useBasketRequiredFeatureEnabled'
@@ -25,7 +26,7 @@ const Checkout = (props) => {
     toggleBasketView,
     isBoxSummaryOpened,
   } = props
-
+  const { pricing } = usePricing()
   const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
 
   return isBasketRequiredFeatureEnabled ? (
@@ -60,7 +61,7 @@ const Checkout = (props) => {
       }
       spinnerClassName={css.coSpinner}
       spinnerContainerClassName={css.coSpinnerContainer}
-      onClick={() => checkoutBasket(section, view)}
+      onClick={() => checkoutBasket({ section, view, pricing })}
     >
       Checkout
     </BaseBannerButton>

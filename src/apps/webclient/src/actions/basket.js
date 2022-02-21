@@ -486,7 +486,7 @@ export const basketCheckoutClicked = section => (
   }
 )
 
-export const basketCheckedOut = (view) => (dispatch, getState) => {
+export const basketCheckedOut = ({ view, pricing }) => (dispatch, getState) => {
   const state = getState()
   const isAuthenticated = getIsAuthenticated(state)
   const recipes = getBasketRecipes(state)
@@ -496,7 +496,7 @@ export const basketCheckedOut = (view) => (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
 
     if (isAuthenticated) {
-      dispatch(trackingOrderCheckout())
+      dispatch(trackingOrderCheckout({ pricing }))
     }
 
     dispatch({

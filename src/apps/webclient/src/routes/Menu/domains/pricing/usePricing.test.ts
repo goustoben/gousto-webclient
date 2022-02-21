@@ -24,6 +24,7 @@ jest.mock('../auth', () => ({
 
 safeJestMock(basketSelectors, 'getBasketSlotId')
 safeJestMock(basketSelectors, 'getBasketRecipesCount')
+safeJestMock(basketSelectors, 'getPromoCode')
 safeJestMock(orderSelectors, 'getOrderV2')
 
 const useDispatchMock = useDispatch as jest.MockedFunction<typeof useDispatch>
