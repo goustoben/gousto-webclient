@@ -1,6 +1,7 @@
-function endpoint(service, version = 1, { isCallFromServer = __SERVER__, apiEnvironmentToPointTo = __API_ENV__, appInstanceEnvironment = __RUNNING_ENV__ } = {}) {
+import { isServer } from 'utils/serverEnvironment'
+
+function endpoint(service, version = 1, { isCallFromServer = isServer(), apiEnvironmentToPointTo = __API_ENV__, appInstanceEnvironment = __RUNNING_ENV__ } = {}) {
   if(service === undefined) throw new Error("Please specify a valid service.")
-  if(isCallFromServer === undefined) throw new Error("Please specify whether this call is coming from the server or client browser for routing purposes.")
   if(apiEnvironmentToPointTo === undefined) throw new Error("Please specify which environment to point this call to.")
   if(appInstanceEnvironment === undefined) throw new Error("Please specify whether this app is hosted 'locally' or 'live' on AWS.")
 
