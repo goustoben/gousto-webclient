@@ -184,7 +184,7 @@ export function checkoutSignup({ pricing }) {
     try {
       await dispatch(checkoutActions.fetchGoustoRef())
       dispatch(checkoutActions.resetDuplicateCheck({ pricing }))
-      await dispatch(userSubscribe())
+      await dispatch(userSubscribe({ pricing }))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.error, `Signup failed: ${err.message}`))
       await handleCheckoutError(err, 'checkoutSignup', dispatch, getState)

@@ -85,11 +85,11 @@ describe('tracking actions', () => {
       }),
     }
 
-    const pricing = Immutable.fromJS({
+    const pricing = {
       total: '13.99',
       grossTotal: '15.99',
       promoCode: '10OFF',
-    })
+    }
 
     beforeEach(() => {
       jest.resetAllMocks()

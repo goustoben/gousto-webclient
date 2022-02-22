@@ -88,11 +88,6 @@ describe('usePricing', () => {
       expect(result.current.pricing).toBe(null)
       expect(result.current.pending).toBe(false)
     })
-
-    it('should reset the prices store', async () => {
-      renderHook(() => usePricing())
-      expect(dispatch).toHaveBeenCalledWith({ type: 'PRICING_RESET' })
-    })
   })
 
   describe('while SWR is fetching data', () => {
@@ -103,12 +98,6 @@ describe('usePricing', () => {
         accessToken: Math.random().toString(),
         authUserId: user.idle,
       })
-    })
-
-    it('should dispatch pending action', async () => {
-      const { waitForNextUpdate } = renderHook(() => usePricing())
-      await waitForNextUpdate()
-      expect(dispatch).toHaveBeenCalledWith({ type: 'PRICING_PENDING' })
     })
 
     it('should be in pending state until it has response', async () => {

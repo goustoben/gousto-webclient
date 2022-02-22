@@ -57,7 +57,6 @@ jest.mock('utils/deliveries')
 
 jest.mock('actions/login')
 jest.mock('actions/menu')
-jest.mock('actions/pricing')
 
 jest.mock('actions/user', () => ({
   userSubscribe: jest.fn()

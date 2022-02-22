@@ -21,8 +21,8 @@ export const trackFirstPurchase = (orderId, prices) => (
     const { user } = getState()
     const goustoReference = user.get('goustoReference')
     const order = getUserOrderById(orderId, user.get('orders'))
-    const orderTotal = prices && prices.get('total')
-    const grossTotal = prices && prices.get('grossTotal')
+    const orderTotal = prices?.total
+    const grossTotal = prices?.grossTotal
 
     if (!goustoReference) {
       logger.warning('Missing user data for first purchase tracking: no user found in store')
