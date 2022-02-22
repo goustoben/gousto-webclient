@@ -5,7 +5,6 @@ const apiToken = nodeConfig.get('api_token')
 const authClientId = nodeConfig.get('auth_client_id')
 const authClientSecret = nodeConfig.get('auth_client_secret')
 const build = nodeConfig.get('build')
-const checkout_pk = nodeConfig.get('checkout_pk')
 const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 const clientProtocol = nodeConfig.get('client_protocol')
 const cloudfrontUrl = nodeConfig.get('cloudfront_url')
@@ -21,7 +20,6 @@ const publicPath = cloudfrontUrl
 
 const webpackEnvVarsBase = {
   __API_ENV__: JSON.stringify(apiName),
-  __CHECKOUT_PK__: JSON.stringify(checkout_pk),
   __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
   __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
   __DOMAIN__: JSON.stringify(domain),
@@ -70,7 +68,6 @@ module.exports = {
   authClientId,
   authClientSecret,
   build,
-  checkout_pk,
   clientDevServerEnabled,
   clientProtocol,
   cloudfrontUrl,

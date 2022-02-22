@@ -43,9 +43,17 @@ type TestCaseWithAssertion = {
 /**
  * Adds assertions to each test case, to be used in it.each(table)
  */
-const addAssertionsToTestCases = (assertions: Array<Assertion>) => {
-  return testCasesWithPathAndQueryParams.reduce<Array<TestCaseWithAssertion>>(
+const addAssertionsToTestCases = (assertions: Array<Assertion>, casesToOmit?: string[]) =>
+  testCasesWithPathAndQueryParams.reduce<Array<TestCaseWithAssertion>>(
     (testCasesWithAssertions, testCase) => {
+      if (casesToOmit) {
+        const testCaseShouldBeOmitted = casesToOmit.some((caseToOmit) =>
+          testCase.name.includes(caseToOmit)
+        )
+
+        if (testCaseShouldBeOmitted) return testCasesWithAssertions
+      }
+
       const assertion = assertions.find(({ name }) => name === testCase.name)
 
       if (!assertion) return testCasesWithAssertions
@@ -70,7 +78,6 @@ const addAssertionsToTestCases = (assertions: Array<Assertion>) => {
     },
     []
   )
-}
 
 let win: typeof window
 
@@ -284,18 +291,14 @@ describe('client config', () => {
   describe('environment functions', () => {
     describe('getLowerEnvironmentName', () => {
       it.each(
-        addAssertionsToTestCases([
-          { name: 'production', expected: null },
-          { name: 'production webclient', expected: null },
-          { name: 'production frontend', expected: null },
-          { name: 'staging', expected: 'staging' },
-          { name: 'staging webclient', expected: 'staging' },
-          { name: 'staging frontend', expected: 'staging' },
-          { name: 'lower env', expected: 'fef' },
-          { name: 'lower env webclient', expected: 'fef' },
-          { name: 'lower env frontend', expected: 'fef' },
-          { name: 'local', expected: null },
-        ])
+        addAssertionsToTestCases(
+          [
+            { name: 'lower env', expected: 'fef' },
+            { name: 'lower env webclient', expected: 'fef' },
+            { name: 'lower env frontend', expected: 'fef' },
+          ],
+          ['production, staging, local']
+        )
       )('for $name url, returns $expected', ({ url, expected }) => {
         canUseWindowSpy.mockReturnValue(true)
         getWindowSpy.mockReturnValue({

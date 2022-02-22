@@ -91,7 +91,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "auth_client_id": "",
   "auth_client_secret": "",
   "build": "",
-  "checkout_pk": "",
   "client_dev_server_enabled": false,
   "client_protocol": "",
   "cloudfront_url": "",
@@ -154,17 +153,6 @@ build
     string: 'production' | 'development'
 ```
 Used to determine the type of build being targeted.
-
-checkout_pk
------------
-```
-    string: [Gousto checkout.com private key]
-```
-(aliased by `__CHECKOUT_PK__`, `checkoutPk`, `publicKey` in the code).
-
-The private key used to sign checkout.com requests.
-
-Used to make calls to 3rd party system Checkout.com in `src/src/routes/Checkout/Components/CheckoutPayment/CheckoutFrame/CheckoutFrame.js` through an import in of `src/src/routes/Checkout/Components/CheckoutPayment/config.js`
 
 client_dev_server_enabled
 -------------------------

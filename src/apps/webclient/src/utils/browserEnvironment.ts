@@ -92,9 +92,7 @@ export const getLowerEnvironmentName = () => {
   const splitSubdomain = subdomain.split('-') as Split<typeof subdomain, '-'>
   const lowerEnvironmentName = splitSubdomain[0] as FirstOfTuple<typeof splitSubdomain>
 
-  return ['www', 'frontend', 'production'].some((str) => lowerEnvironmentName.includes(str))
-    ? null
-    : lowerEnvironmentName
+  return lowerEnvironmentName
 }
 
 export const getClientEnvironment = () => {
