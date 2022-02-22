@@ -20,9 +20,11 @@ import { Pricing } from 'routes/Menu/domains/pricing'
 
 This will query the V2 API and cache the result using SWR, therefore it can be called as many time as needed without triggering unnecessary re-fetches.
 
-`pricing` is an object containing all pricing informations calculated based on the current items in the basket and discounts
+`pricing` is an object containing all pricing informations calculated based on the current items in the basket and discounts. Can also be undefined on null so you should always check for it's validity before reading data from it.
 
 `pending` is a boolean that will return the loading state of the fetch call.
+
+`isValid` is a boolean that is true when there's sufficient data to query the `/pricing` endpoint and therefore receive real data.
 
 Usage example:
 
@@ -33,5 +35,5 @@ if (pending) {
   return <div> Loading... </div>
 }
 
-return <h2> ({pricing.recipeTotal}) </h2>
+return <h2> ({pricing?.recipeTotal}) </h2>
 ```

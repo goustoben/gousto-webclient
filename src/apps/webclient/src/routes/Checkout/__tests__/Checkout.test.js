@@ -104,9 +104,6 @@ describe('Given Checkout component', () => {
         },
         errors: {},
       }),
-      pricing: Immutable.fromJS({
-        prices: {},
-      }),
       params: { stepName: 'account' },
       pending: Immutable.Map({}),
       payment: Immutable.Map({

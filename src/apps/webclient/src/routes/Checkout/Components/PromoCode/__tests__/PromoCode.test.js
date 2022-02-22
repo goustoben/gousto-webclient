@@ -58,17 +58,6 @@ describe('PromoCode', () => {
       })
     })
 
-    describe('when verification request fails', () => {
-      beforeEach(() => {
-        wrapper.find('input').simulate('change', { target: { value: newPromoCode } })
-        jest.runAllTimers()
-      })
-      test('then it should display error', () => {
-        expect(wrapper.find('Field').text().includes('Error icon')).toBe(true)
-        expect(wrapper.find('Field').text().includes('This discount code is not valid')).toBe(true)
-      })
-    })
-
     describe('when edited to an empty value (i.e. removed)', () => {
       beforeEach(() => {
         wrapper.find('input').simulate('change', { target: { value: emptyPromoCode } })

@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 import actions from 'actions'
-// todo: reduce dependence on Menu domain
 import { usePricing } from 'routes/Menu/domains/pricing'
 
 export function useSubmitOrder() {

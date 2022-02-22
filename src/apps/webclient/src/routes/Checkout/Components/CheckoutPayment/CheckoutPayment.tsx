@@ -198,7 +198,7 @@ const CheckoutPayment = ({
   const renderStartYourSubscriptionButton = () => {
     const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : false
 
-    return <SubmitButton onClick={handleClick} isDisabled={isDisabled} submitting={false} />
+    return <SubmitButton onClick={handleClick} isDisabled={isDisabled} />
   }
 
   const renderErrorMessage = () => (

@@ -60,7 +60,8 @@ const propTypes = {
   fetchPayPalClientToken: PropTypes.func,
   clearPayPalClientToken: PropTypes.func,
   trackCheckoutNavigationLinks: PropTypes.func,
-  prices: PropTypes.instanceOf(Immutable.Map),
+  // eslint-disable-next-line react/forbid-prop-types
+  prices: PropTypes.object,
 
   isLoginOpen: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
@@ -87,7 +88,7 @@ const defaultProps = {
   trackCheckoutNavigationLinks: () => {},
   trackSuccessfulCheckoutFlow: () => {},
   trackFailedCheckoutFlow: () => {},
-  prices: Immutable.Map({}),
+  prices: {},
 
   isLoginOpen: false,
   isAuthenticated: false,
@@ -293,7 +294,7 @@ class Checkout extends PureComponent {
 
     return (
       <Fragment>
-        <Summary isLoading={isCreatingPreviewOrder} showPromocode={!isGoustoOnDemandEnabled} />
+        <Summary isLoading={isCreatingPreviewOrder} showPromoCode={!isGoustoOnDemandEnabled} />
         <BoxDetailsContainer />
       </Fragment>
     )
@@ -427,10 +428,10 @@ class Checkout extends PureComponent {
             {stepName !== 'order-summary' && (
               <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
                 <ExpandableBoxSummary
-                  totalToPay={prices.get('total')}
-                  totalWithoutDiscount={prices.get('recipeTotal')}
+                  totalToPay={prices?.total}
+                  totalWithoutDiscount={prices?.recipeTotal}
                   trackUTMAndPromoCode={trackUTMAndPromoCode}
-                  promoCodeValid={prices.get('promoCodeValid')}
+                  promoCodeValid={prices?.promoCodeValid}
                 >
                   {this.renderSummaryAndYourBox()}
                 </ExpandableBoxSummary>

@@ -52,7 +52,7 @@ describe('Summary Component', () => {
   describe('PromoCode', () => {
     beforeEach(() => {
       wrapper.setProps({
-        showPromocode: true,
+        showPromoCode: true,
       })
     })
 
@@ -60,11 +60,11 @@ describe('Summary Component', () => {
       expect(wrapper.find(PromoCode)).toBeDefined()
     })
 
-    describe('given showPromocode flag', () => {
-      describe('when showPromocode flag is false', () => {
+    describe('given showPromoCode flag', () => {
+      describe('when showPromoCode flag is false', () => {
         beforeEach(() => {
           wrapper.setProps({
-            showPromocode: false,
+            showPromoCode: false,
           })
         })
 

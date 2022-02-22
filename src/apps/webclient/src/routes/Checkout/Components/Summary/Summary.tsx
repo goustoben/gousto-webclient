@@ -13,14 +13,14 @@ import css from './Summary.css'
 type Props = {
   basketRecipes: Immutable.Map<string, any>
   isLoading: boolean
-  showPromocode: boolean
+  showPromoCode: boolean
   isGoustoOnDemandEnabled: boolean
 }
 
 const Summary = ({
   basketRecipes = Immutable.Map({}),
   isLoading = false,
-  showPromocode = true,
+  showPromoCode = true,
   isGoustoOnDemandEnabled = false,
 }: Props) => {
   const numRecipes = basketSum(basketRecipes)
@@ -71,7 +71,7 @@ const Summary = ({
               isReceiptInCheckout
               isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
             />
-            {showPromocode && <PromoCode />}
+            {showPromoCode && <PromoCode />}
           </div>
         </Fragment>
       )}

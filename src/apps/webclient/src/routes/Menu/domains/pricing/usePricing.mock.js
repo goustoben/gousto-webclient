@@ -30,7 +30,7 @@ export const handlers = [
   }),
 ]
 
-const pricingMockedResponse = {
+ const pricingMockedResponse = {
   data: {
     id: 'order-prices-fake-id',
     type: 'order',

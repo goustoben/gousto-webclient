@@ -355,7 +355,7 @@ export const trackNewOrder = (orderId, userId) => (dispatch, getState) => {
 export const trackSubscriptionCreated = ({ pricing }) => (dispatch, getState) => {
   const state = getState()
   const { UTM } = getUTMAndPromoCode(state)
-  const { promoCode } = pricing
+  const promoCode = pricing?.promoCode
   const paymentMethod = getCurrentPaymentMethod(state)
   const orderId = getPreviewOrderId(state)
   const userId = state.user.get('id')

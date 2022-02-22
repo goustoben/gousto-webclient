@@ -8,7 +8,6 @@ import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
-import { Pricing } from 'routes/Menu/domains/pricing'
 import { Portions } from './Portions'
 import css from './Details.css'
 import { BoxProgressAlert } from './BoxProgressAlert'
@@ -203,7 +202,8 @@ Details.propTypes = {
   menuFetchPending: PropTypes.bool.isRequired,
   orderSaveError: PropTypes.string,
   pricingPending: PropTypes.bool,
-  prices: Pricing,
+  // eslint-disable-next-line react/forbid-prop-types
+  prices: PropTypes.object,
   unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
   showRecipeDetailsOnClick: PropTypes.func,
   shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,

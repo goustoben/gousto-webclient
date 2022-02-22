@@ -29,7 +29,7 @@ export type Pricing = {
   vatCharged: string | null
 }
 
-const useGetPricing = (shouldFetch: boolean): { error: any; data: Pricing | null } => {
+const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Pricing | null } => {
   const { accessToken, authUserId } = useAuth()
   const orderRequest = useSelector(getOrderV2)
   const url = `${endpoint('order', 2)}/prices`

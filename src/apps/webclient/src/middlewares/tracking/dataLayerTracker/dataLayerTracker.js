@@ -86,11 +86,7 @@ export const addRecipeToBasket = ({ recipeId, orderId }, state) => {
 export const signupPurchaseCompleted = (action, state) => {
   const { orderId, basketRecipes, pricing } = action
 
-  const {
-    recipeTotalDiscounted: totalPrice,
-    totalDiscount,
-    promoCode
-  } = pricing
+  const { recipeTotalDiscounted: totalPrice, totalDiscount, promoCode } = pricing || {}
 
   sendEcommerceEvent(
     'purchase_welcome',

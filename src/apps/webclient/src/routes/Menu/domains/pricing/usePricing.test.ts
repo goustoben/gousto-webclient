@@ -60,7 +60,26 @@ describe('usePricing', () => {
       expect(result.current.isValid).toBe(true)
       await waitForNextUpdate()
 
-      expect(result.current.pricing?.recipeTotal).toBe('29.99')
+      expect(result.current.pricing).toEqual({
+        amountOff: '0.00',
+        deliveryTotal: '0.00',
+        flatDiscountApplied: false,
+        grossTotal: '29.99',
+        items: [],
+        percentageOff: '60.00',
+        pricePerPortion: '5.00',
+        pricePerPortionDiscounted: '2.00',
+        productTotal: '0.00',
+        promoCode: 'DTI-SB-63',
+        promoCodeValid: true,
+        recipeDiscount: '17.99',
+        recipeTotal: '29.99',
+        recipeTotalDiscounted: '12.00',
+        surchargeTotal: '0.00',
+        total: '12.00',
+        totalDiscount: '17.99',
+        vatCharged: '0.00',
+      })
     })
   })
 
