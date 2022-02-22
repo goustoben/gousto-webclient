@@ -1,5 +1,6 @@
 import { getPreviewOrderErrorName } from 'utils/order'
 import logger from 'utils/logger'
+import { isServer } from 'utils/serverEnvironment'
 import routes from 'config/routes'
 import { createPreviewOrder } from 'apis/orders'
 
@@ -8,7 +9,6 @@ import {
   basketPreviewOrderChange,
 } from 'actions/basket'
 import { redirect } from 'actions/redirect'
-import { pricingSuccess } from 'actions/pricing'
 import statusActions from 'actions/status'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
 import { getPreviewOrderId } from 'selectors/basket'
@@ -60,7 +60,7 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
         deliverySlotId: orderDetails.deliverySlotId,
         recipeChoices: orderDetails.recipeChoices,
         path,
-        serverSide: __SERVER__ === true,
+        serverSide: isServer(),
       }
     })
 
@@ -84,7 +84,7 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
       extra: {
         orderDetails,
         path,
-        serverSide: __SERVER__ === true,
+        serverSide: isServer(),
       }
     })
     logger.error(e)
