@@ -10,20 +10,17 @@ const trackAction = () => ({
   type: actionTypes.TRACKING_CTA_TO_ALL_RECIPES_CLICKED,
   trackingData: {
     actionType: trackingKeys.clickAllRecipes,
-  }
+  },
 })
 
 const CTAToAllRecipes = () => {
   const dispatch = useDispatch()
-  const {
-    currentCollectionId,
-    changeCollectionById,
-  } = useCollections()
+  const { currentCollectionId, changeCollectionById } = useCollections()
 
   const onClick = React.useCallback(() => {
     changeCollectionById(CollectionId.AllRecipes)
     dispatch(trackAction())
-  }, [ changeCollectionById ])
+  }, [changeCollectionById])
 
   if (currentCollectionId === CollectionId.Recommendations) {
     return (
@@ -32,12 +29,7 @@ const CTAToAllRecipes = () => {
           <img src={spottyBorder} className={css.spottyBorder} alt="" />
           <div className={css.ctaInnerContainer}>
             <p className={css.ctaText}>Want to see more?</p>
-            <button
-              className={css.ctaButton}
-              type="button"
-              onClick={onClick}
-              onKeyPress={onClick}
-            >
+            <button className={css.ctaButton} type="button" onClick={onClick} onKeyPress={onClick}>
               View all recipes
             </button>
           </div>

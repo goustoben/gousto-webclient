@@ -6,7 +6,7 @@ import { useCollections } from '../../../domains/collections'
 import { MenuCollection } from '../../../types'
 import { findImageUrls } from '../../Recipe/Image/findImageUrls'
 import { getDefaultImage } from '../../Recipe/Image/useRecipeImage'
-import { useTracking } from "./tracking"
+import { useTracking } from './tracking'
 
 const extractImageFromRecipe = (recipe: Immutable.Map<string, string>): string => {
   const images = recipe.getIn(['media', 'images']) || Immutable.List()
@@ -28,7 +28,7 @@ const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
   const collectionName = collection.get('shortTitle')
 
   const recipes = getRecipesForCollectionId(collectionId).recipes
-  const recipe = (recipes.size) ? recipes.first().recipe : null
+  const recipe = recipes.size ? recipes.first().recipe : null
 
   const onClick = useCallback(() => {
     if (!recipe) {
