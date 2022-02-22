@@ -10,6 +10,7 @@ import { getIsAdmin, getIsAuthenticated, getAccessToken } from 'selectors/auth'
 import { getMenuAccessToken, getMenuFetchVariant } from 'selectors/menu'
 import { getUserMenuVariant } from 'selectors/features'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
+import { isServer } from 'utils/serverEnvironment'
 import { menuLoadComplete } from 'actions/menu'
 import { menuServiceDataReceived } from 'actions/menuService'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
@@ -91,7 +92,7 @@ const loadOrder = (orderId) => async (dispatch, getState) => {
     return
   }
 
-  if (__SERVER__) {
+  if (isServer()) {
     if (!isFacebookUserAgent(getState().request.get('userAgent'))) {
       logger.notice({ message: `Unauthenticated user trying to edit: ${orderId}` })
     }
