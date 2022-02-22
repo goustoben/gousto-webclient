@@ -2,12 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import Modal from 'react-modal'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { isServer } from 'utils/serverEnvironment'
 import css from './Overlay.css'
-
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-if (!__SERVER__) {
-  Modal.setAppElement('#react-root')
-}
 
 // We apply styling to the document using `ReactModal__Body--open` class
 // which is added to the `body` when a model is open.
@@ -52,9 +49,16 @@ const Overlay = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
     [])
 
+  React.useEffect(() => {
+    // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+    if (canUseWindow()) {
+      Modal.setAppElement('#react-root')
+    }
+  }, [])
+
   // We don't load `react-modal` on the server cause Portals
   // are not currently supported by the server renderer.
-  if (__SERVER__) return null
+  if (isServer()) return null
 
   return (
     <Modal
