@@ -33,11 +33,11 @@ const testCasesWithPathAndQueryParams = testCases.reduce<Array<{ name: string; u
   []
 )
 
-type Assertion = { name: string; expected: any }
+type Assertion = { name: string; expected: unknown }
 type TestCaseWithAssertion = {
   name: string
   url: string
-  expected: any
+  expected: unknown
 }
 
 /**
@@ -86,18 +86,9 @@ const setWindow = (val?: unknown) => {
   global.window = val
 }
 
-let win: typeof window
-
-const setWindow = (val?: unknown) => {
-  // @ts-expect-error need to be able to set window to undefined
-  global.window = val
-}
+const windowSpy = jest.spyOn(window, 'window', 'get')
 
 describe('client config', () => {
-  beforeAll(() => {
-    win = global.window
-  })
-
   beforeEach(() => {
     jest.resetAllMocks()
 
@@ -106,28 +97,41 @@ describe('client config', () => {
   })
 
   afterAll(() => {
-    global.window = win
+    jest.restoreAllMocks()
   })
 
   describe('canUseWindow', () => {
     it('returns true if window is available', () => {
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => {},
+        },
+      })
       expect(browserEnv.canUseWindow()).toBeTruthy()
     })
 
     it('returns false if window is undefined', () => {
-      setWindow(undefined)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
 
       expect(browserEnv.canUseWindow()).toBeFalsy()
     })
 
     it('returns false if window.document is undefined', () => {
-      setWindow({})
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue({})
 
       expect(browserEnv.canUseWindow()).toBeFalsy()
     })
 
     it('returns false if window.document.createElement is undefined', () => {
-      setWindow({ document: {} })
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue({ document: {} })
 
       expect(browserEnv.canUseWindow()).toBeFalsy()
     })
