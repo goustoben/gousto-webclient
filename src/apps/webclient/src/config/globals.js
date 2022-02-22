@@ -1,7 +1,6 @@
 const { canUseWindow } = require('utils/browserEnvironment')
 
 module.exports = {
-  server: __SERVER__,
   legacy: () => canUseWindow() && window.__LEGACY__, // eslint-disable-line no-underscore-dangle
   secure: __CLIENT_PROTOCOL__ === 'https',
   prod: __PROD__,
