@@ -15,3 +15,6 @@
 
 # [KAL-XXX] Restructure routes/Menu, remove unused code (#4647)
 847f29b7e22ff581ab8625de42db7d2577c29866
+
+# [TG-6077] [FE] reformat .eslintrc.js with prettier
+0d0698a185aeab6a998629e16d97ff5d17d5c45e
