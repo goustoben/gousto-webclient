@@ -11,6 +11,8 @@ import GoustoException from 'utils/GoustoException'
 import menuConfig from 'config/menu'
 import Cookies from 'utils/GoustoCookies'
 import { set, unset, get } from 'utils/cookieHelper2'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { isServer } from 'utils/serverEnvironment'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getPromoCode, getBasketOrderId, getBasketTariffId } from 'selectors/basket'
 import statusActions from './status'
@@ -160,17 +162,18 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
       })
-      if (!__SERVER__) {
+
+      if (canUseWindow()) {
         unset(Cookies, 'reload_invalid_delivery_date')
       }
     } else {
       dispatch(menuActions.menuReceiveMenuPending(false))
-      if (!__SERVER__ || !isFacebookUserAgent(state.request.get('userAgent'))) {
+      if (canUseWindow() || !isFacebookUserAgent(state.request.get('userAgent'))) {
         const error = new Error('Slot is not found in menuLoadMenu')
         logger.error({ message: error.message, extra: { error } })
       }
 
-      if (__SERVER__) {
+      if (isServer()) {
         dispatch(redirect('/menu', true))
 
         return

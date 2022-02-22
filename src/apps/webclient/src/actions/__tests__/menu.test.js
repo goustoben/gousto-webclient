@@ -3,6 +3,9 @@ import * as orders from 'apis/orders'
 import * as recipes from 'apis/recipes'
 import * as utilsBasket from 'utils/basket'
 import * as utilsDeliveries from 'utils/deliveries'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { isServer } from 'utils/serverEnvironment'
+import { unset } from 'utils/cookieHelper2'
 import * as MenuServiceLoadDaysActions from 'actions/menuServiceLoadDays'
 import * as MenuActionHelperActions from 'actions/menuActionHelper'
 import * as boxPrices from 'apis/boxPrices'
@@ -35,6 +38,11 @@ import menuActions, {
   menuLoadOrderDetails,
 } from '../menu'
 
+jest.mock('utils/browserEnvironment')
+jest.mock('utils/serverEnvironment')
+jest.mock('utils/cookieHelper2')
+jest.mock('utils/GoustoCookies', () => 'mock-gousto-cookies')
+
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
   const dispatch = jest.fn()
@@ -59,7 +67,10 @@ describe('menu actions', () => {
       menuService: {
         value: false
       }
-    })
+    }),
+    request: {
+      get: () => 'not-facebook-user-agent'
+    }
   }
   const getState = () => state
 
@@ -175,6 +186,35 @@ describe('menu actions', () => {
       await menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
 
       expect(mockLoadMenuCollectionsWithMenuService).toHaveBeenCalled()
+    })
+
+    describe('when window is available', () => {
+      beforeEach(() => {
+        canUseWindow.mockReturnValue(true)
+      })
+
+      test('it unsets reload_invalid_delivery_date cookie', async () => {
+        await menuLoadMenu(cutoffDateTime)(dispatch, getState)
+
+        expect(unset).toHaveBeenCalledWith('mock-gousto-cookies', 'reload_invalid_delivery_date')
+      })
+    })
+
+    describe('when on the server', () => {
+      beforeEach(() => {
+        canUseWindow.mockReturnValue(false)
+        isServer.mockReturnValue(true)
+      })
+
+      test('dispatches action to redirect to /menu', async () => {
+        await menuLoadMenu(null)(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          clearCookies: true,
+          type: 'SERVER_REDIRECT',
+          url: '/menu',
+        })
+      })
     })
   })
 
