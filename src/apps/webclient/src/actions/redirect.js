@@ -1,6 +1,7 @@
-import { server, legacy } from 'config/globals'
+import { legacy } from 'config/globals'
 import { push, replace } from 'react-router-redux'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { isServer } from 'utils/serverEnvironment'
 import * as windowUtils from 'utils/window'
 import { actionTypes } from './actionTypes'
 
@@ -13,7 +14,7 @@ export const redirect = (url, clearCookies) => {
 
   if (shouldUseReactRouter()) {
     action = push(url)
-  } else if (server) {
+  } else if (isServer()) {
     action = {
       type: actionTypes.SERVER_REDIRECT,
       url,
@@ -37,7 +38,7 @@ export default {
 
     if (shouldUseReactRouter()) {
       action = replace(url)
-    } else if (server) {
+    } else if (isServer()) {
       action = {
         type: actionTypes.SERVER_REPLACE,
         url,

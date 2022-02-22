@@ -3,11 +3,13 @@ import { push, replace } from 'react-router-redux'
 
 import * as windowUtils from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { isServer } from 'utils/serverEnvironment'
 import redirectUtils, { redirect } from '../redirect'
 import { actionTypes } from '../actionTypes'
 
 jest.mock('react-router-redux')
 jest.mock('utils/browserEnvironment')
+jest.mock('utils/serverEnvironment')
 jest.mock('config/globals')
 jest.mock('utils/window')
 
@@ -33,8 +35,8 @@ describe('redirect actions', () => {
 
     describe('when window is not available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(false)
-        globals.server = true
+        (canUseWindow as jest.Mock).mockReturnValue(false);
+        (isServer as jest.Mock).mockReturnValue(true)
       })
 
       test('does not push new route to react-router', () => {
@@ -68,8 +70,8 @@ describe('redirect actions', () => {
 
     describe('for legacy bundle', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(true)
-        globals.server = false
+        (canUseWindow as jest.Mock).mockReturnValue(true);
+        (isServer as jest.Mock).mockReturnValue(false)
         globals.legacy = () => true
       })
 
@@ -105,8 +107,8 @@ describe('redirect actions', () => {
 
     describe('when window is not available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(false)
-        globals.server = true
+        (canUseWindow as jest.Mock).mockReturnValue(false);
+        (isServer as jest.Mock).mockReturnValue(true)
       })
 
       test('does not invoke react-router method "replace"', () => {
@@ -127,8 +129,8 @@ describe('redirect actions', () => {
 
     describe('for legacy bundle', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(true)
-        globals.server = false
+        (canUseWindow as jest.Mock).mockReturnValue(true);
+        (isServer as jest.Mock).mockReturnValue(false)
         globals.legacy = () => true
       })
 
