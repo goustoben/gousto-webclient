@@ -27,6 +27,7 @@ import {
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
 import logger from 'utils/logger'
+import { isServer } from 'utils/serverEnvironment'
 import Overlay from 'Overlay'
 import { Login } from 'Login'
 
@@ -65,6 +66,8 @@ jest.mock('utils/logger', () => ({
   error: jest.fn(),
   warning: jest.fn(),
 }))
+
+jest.mock('utils/serverEnvironment')
 
 describe('Given Checkout component', () => {
   let wrapper
@@ -161,22 +164,7 @@ describe('Given Checkout component', () => {
   })
 
   afterEach(() => {
-    replace.mockClear()
-    redirect.mockClear()
-    menuLoadDays.mockClear()
-    menuLoadDays.mockReset()
-    pricingRequest.mockClear()
-    menuLoadBoxPrices.mockClear()
-    basketStepsOrderReceive.mockClear()
-    basketProceedToCheckout.mockClear()
-    boxSummaryDeliveryDaysLoad.mockClear()
-    checkoutCreatePreviewOrder.mockClear()
-    loadMenuServiceDataIfDeepLinked.mockClear()
-    fetchPayPalClientToken.mockClear()
-    trackSuccessfulCheckoutFlow.mockClear()
-    trackFailedCheckoutFlow.mockClear()
-    loadCheckoutScript.mockClear()
-    loadPayPalScripts.mockClear()
+    jest.clearAllMocks()
   })
 
   describe('when component is mounted', () => {
@@ -361,35 +349,60 @@ describe('Given Checkout component', () => {
       expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=undefined-error', true)
     })
 
-    test('should redirect to /menu and log error when dispatch is rejected', async () => {
-      // eslint-disable-next-line no-underscore-dangle
-      global.__SERVER__ = true
-      store = {
-        basket: Immutable.Map({
-          stepsOrder: Immutable.List(),
-          previewOrderId: '1056',
-        }),
-        menuBoxPrices: Immutable.Map({ 2: {} }),
-        menuCutoffUntil: '2019-02-22T11:59:59+00:00',
-        error: Immutable.Map({
-          BASKET_PREVIEW_ORDER_CHANGE: false,
-        }),
-        boxSummaryDeliveryDays: {},
-      }
-      mockedStore.getState = jest.fn().mockReturnValue(store)
-      mockedStore.dispatch.mockImplementationOnce(() => Promise.resolve())
-      mockedStore.dispatch.mockImplementation(() =>
-        Promise.reject(new Error('something went wrong'))
-      )
-
-      await Checkout.fetchData({
-        store: mockedStore,
-        query: { steps: 'account,payment,delivery' },
-        params: { stepName: '' },
+    describe('isomorphic behaviour', () => {
+      beforeEach(() => {
+        store = {
+          basket: Immutable.Map({
+            stepsOrder: Immutable.List(),
+            previewOrderId: '1056',
+          }),
+          menuBoxPrices: Immutable.Map({ 2: {} }),
+          menuCutoffUntil: '2019-02-22T11:59:59+00:00',
+          error: Immutable.Map({
+            BASKET_PREVIEW_ORDER_CHANGE: false,
+          }),
+          boxSummaryDeliveryDays: {},
+        }
+        mockedStore.getState = jest.fn().mockReturnValue(store)
+        mockedStore.dispatch.mockImplementationOnce(() => Promise.resolve())
+        mockedStore.dispatch.mockImplementation(() =>
+          Promise.reject(new Error('something went wrong'))
+        )
       })
 
-      expect(logger.error).toHaveBeenCalled()
-      expect(redirect).toHaveBeenCalledWith('/menu', true)
+      describe('when on server', () => {
+        beforeEach(() => {
+          isServer.mockReturnValue(true)
+        })
+
+        test('should redirect to /menu and log error when dispatch is rejected', async () => {
+          await Checkout.fetchData({
+            store: mockedStore,
+            query: { steps: 'account,payment,delivery' },
+            params: { stepName: '' },
+          })
+
+          expect(logger.error).toHaveBeenCalled()
+          expect(redirect).toHaveBeenCalledWith('/menu', true)
+        })
+      })
+
+      describe('when in browser', () => {
+        beforeEach(() => {
+          isServer.mockReturnValue(false)
+        })
+
+        test('should redirect to /menu and log error when dispatch is rejected', async () => {
+          await Checkout.fetchData({
+            store: mockedStore,
+            query: { steps: 'account,payment,delivery' },
+            params: { stepName: '' },
+          })
+
+          expect(logger.error).not.toHaveBeenCalled()
+          expect(redirect).not.toHaveBeenCalled()
+        })
+      })
     })
   })
 

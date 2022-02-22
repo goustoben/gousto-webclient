@@ -12,6 +12,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import { Login } from 'Login'
 import { Div } from 'Page/Elements'
 import { getPreviewOrderErrorName } from 'utils/order'
+import { isServer } from 'utils/serverEnvironment'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
 import { checkoutSteps } from './checkoutConfig'
@@ -149,7 +150,7 @@ class Checkout extends PureComponent {
     }
 
     return store.dispatch(actions.pricingRequest()).catch((err) => {
-      if (__SERVER__) {
+      if (isServer()) {
         logger.error({ message: 'Failed to fetch prices.', errors: [err] })
         store.dispatch(actions.redirect(routesConfig.client.menu, true))
       }
