@@ -13,6 +13,7 @@ import configRoutes from 'config/routes'
 import moment from 'moment'
 import logger from 'utils/logger'
 import { redirect, documentLocation } from 'utils/window'
+import { isServer } from 'utils/serverEnvironment'
 import { getGoToMyGousto, getGoToMyDeliveries } from 'selectors/features'
 import { trackUserLogin } from 'actions/loggingmanager'
 
@@ -109,7 +110,7 @@ const identify = (accessToken) => (
   async (dispatch) => {
     let data = {}
 
-    if (__SERVER__) {
+    if (isServer()) {
       data = await identifyUserUsingOAuth(accessToken)
     } else {
       data = await identifyUserViaServer()
