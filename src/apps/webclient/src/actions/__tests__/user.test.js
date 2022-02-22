@@ -103,7 +103,8 @@ jest.mock('../../routes/Account/apis/subscription', () => ({
 }))
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn()
+  error: jest.fn(),
+  critical: jest.fn(),
 }))
 
 jest.mock('utils/myDeliveries', () => ({
