@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import MockDate from 'mockdate'
 import PromiseTimeout from 'promise-timeout'
+import { isServer } from 'utils/serverEnvironment'
 
 const mockFetch = jest.fn()
 const mockGetState = jest.fn()
@@ -14,6 +15,12 @@ jest.mock('store', () => ({
   getStore: () => ({
     getState: mockGetState
   })
+}))
+
+jest.mock('utils/serverEnvironment')
+
+jest.mock('utils/env', () => ({
+  apiToken: 'mock-api-token'
 }))
 
 describe('fetch', () => {
@@ -424,6 +431,69 @@ describe('fetch', () => {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         method: 'PUT'
+      })
+    })
+  })
+
+  describe('in the browser', () => {
+    beforeEach(() => {
+      isServer.mockReturnValue(false)
+    })
+
+    test('does not set API-Token request header', async () => {
+      await fetch('token', 'test')
+
+      expect(mockFetch).toHaveBeenCalledWith(expect.anything(), {
+        cache: 'default',
+        headers: {
+          Authorization: 'Bearer token',
+        },
+        method: 'GET',
+      })
+    })
+  })
+
+  describe('when on server', () => {
+    beforeEach(() => {
+      isServer.mockReturnValue(true)
+    })
+
+    describe('in production', () => {
+      beforeEach(() => {
+        // eslint-disable-next-line
+        global.__PROD__ = true
+      })
+
+      test('sets API-Token request header', async () => {
+        await fetch('token', 'test')
+
+        expect(mockFetch).toHaveBeenCalledWith(
+          expect.anything(),
+          expect.objectContaining({
+            headers: expect.objectContaining({
+              'API-Token': 'mock-api-token'
+            })
+          })
+        )
+      })
+    })
+
+    describe('not in production', () => {
+      beforeEach(() => {
+        // eslint-disable-next-line
+        global.__PROD__ = false
+      })
+
+      test('does not set API-Token request header', async () => {
+        await fetch('token', 'test')
+
+        expect(mockFetch).toHaveBeenCalledWith(expect.anything(), {
+          cache: 'default',
+          headers: {
+            Authorization: 'Bearer token',
+          },
+          method: 'GET',
+        })
       })
     })
   })

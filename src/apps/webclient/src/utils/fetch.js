@@ -5,6 +5,7 @@ import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
 import { timeout as fetchWithTimeout } from 'promise-timeout'
+import { isServer } from './serverEnvironment'
 
 const DEFAULT_TIME_OUT = 50000
 const STATUS_CODES_WITH_NO_CONTENT = [204]
@@ -85,7 +86,7 @@ export function fetch(
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
 
-  if (__SERVER__ && __PROD__) {
+  if (isServer() && __PROD__) {
     if (env && env.apiToken) {
       requestHeaders['API-Token'] = env.apiToken
     } else {
@@ -119,7 +120,7 @@ export function fetch(
   }
 
   const startTime = new Date()
-  logger.notice({message: '[fetch start]', requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
+  logger.notice({ message: '[fetch start]', requestUrl, uuid, extra: { serverSide: isServer() } })
   let responseStatus
   let responseRedirected
   let responseUrl
@@ -145,7 +146,14 @@ export function fetch(
     }) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
-      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
+      logger.notice({
+        message: '[fetch end]',
+        status: responseStatus,
+        elapsedTime: `${new Date() - startTime}ms`,
+        requestUrl,
+        uuid,
+        extra: { serverSide: isServer() },
+      })
 
       if ( useMenuService ) {
         return { data: response.data, included: response.included, meta: response.meta }
@@ -168,7 +176,7 @@ export function fetch(
         requestUrl,
         errors: [e],
         uuid,
-        extra: { serverSide: __SERVER__ === true },
+        extra: { serverSide: isServer() },
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {
