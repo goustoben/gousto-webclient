@@ -1,18 +1,27 @@
 import { canUseWindow } from 'utils/browserEnvironment'
+import { isServer } from 'utils/serverEnvironment'
 
 import { encode, decode } from '../cookieHelper2'
 
 jest.mock('utils/browserEnvironment')
+jest.mock('utils/serverEnvironment')
 
 const mockObj = { foo: 'http://foo-bar' }
 const stringifiedMockObject = '{"foo":"http://foo-bar"}'
 const URIEncodedAndStringifiedMockObject = '%7B%22foo%22%3A%22http%3A%2F%2Ffoo-bar%22%7D'
 
+const mockCanUseWindow = canUseWindow as jest.Mock
+const mockIsServer = isServer as jest.Mock
+
 describe('cookieHelper2 utils', () => {
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
+
   describe('encode', () => {
     describe('when the window is available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(true)
+        mockCanUseWindow.mockReturnValue(true)
       })
 
       test('returns the stringified value', () => {
@@ -23,9 +32,8 @@ describe('cookieHelper2 utils', () => {
 
     describe('when the window is not available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(false);
-        // eslint-disable-next-line
-        (global as unknown as { __SERVER__: boolean }).__SERVER__ = true
+        mockCanUseWindow.mockReturnValue(false)
+        mockIsServer.mockReturnValue(true)
       })
 
       test('returns the URIencoded stringified value', () => {
@@ -38,9 +46,8 @@ describe('cookieHelper2 utils', () => {
   describe('decode', () => {
     describe('when the window is available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(true);
-        // eslint-disable-next-line
-        (global as unknown as { __SERVER__: boolean }).__SERVER__ = false
+        mockCanUseWindow.mockReturnValue(true)
+        mockIsServer.mockReturnValue(false)
       })
 
       test('returns the stringified value', () => {
@@ -51,9 +58,8 @@ describe('cookieHelper2 utils', () => {
 
     describe('when the window is not available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(false);
-        // eslint-disable-next-line
-        (global as unknown as { __SERVER__: boolean }).__SERVER__ = true
+        mockCanUseWindow.mockReturnValue(false)
+        mockIsServer.mockReturnValue(true)
       })
 
       test('returns the URIencoded stringified value', () => {
