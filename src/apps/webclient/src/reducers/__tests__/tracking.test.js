@@ -7,20 +7,25 @@ describe('tracking reducers', () => {
     asource: undefined,
     utmSource: undefined,
     awc: '',
+    tapjoy: '',
   })
 
   describe('tracking', () => {
     test('should handle initial state', () => {
       const state = undefined
       const action = {}
+
       const result = trackingReducers.tracking(state, action)
+
       expect(Immutable.is(initialState, result)).toEqual(true)
     })
 
     test('should handle unknown actions', () => {
       const state = undefined
       const action = { type: 'unknown' }
+
       const result = trackingReducers.tracking(state, action)
+
       expect(Immutable.is(initialState, result)).toEqual(true)
     })
 
@@ -34,8 +39,11 @@ describe('tracking reducers', () => {
         asource: 'something',
         utmSource: undefined,
         awc: '',
+        tapjoy: '',
       })
+
       const result = trackingReducers.tracking(state, action)
+
       expect(Immutable.is(expected, result)).toEqual(true)
     })
 
@@ -49,8 +57,11 @@ describe('tracking reducers', () => {
         asource: undefined,
         utmSource: 'google.com',
         awc: '',
+        tapjoy: '',
       })
+
       const result = trackingReducers.tracking(state, action)
+
       expect(Immutable.is(expected, result)).toEqual(true)
     })
 
@@ -64,8 +75,29 @@ describe('tracking reducers', () => {
         asource: undefined,
         utmSource: undefined,
         awc: '5070-awin-click-checksum',
+        tapjoy: '',
       })
+
       const result = trackingReducers.tracking(state, action)
+
+      expect(Immutable.is(expected, result)).toEqual(true)
+    })
+
+    test('should handle SET_TAPJOY_TRANSACTION_ID action types', () => {
+      const state = undefined
+      const action = {
+        type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
+        transactionId: 'fake_transaction_id',
+      }
+      const expected = Immutable.Map({
+        asource: undefined,
+        utmSource: undefined,
+        awc: '',
+        tapjoy: 'fake_transaction_id',
+      })
+
+      const result = trackingReducers.tracking(state, action)
+
       expect(Immutable.is(expected, result)).toEqual(true)
     })
   })

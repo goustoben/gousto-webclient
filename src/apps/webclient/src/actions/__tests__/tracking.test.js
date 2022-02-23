@@ -8,6 +8,8 @@ import {
   trackRecipeOrderDisplayed,
   trackUserAttributes,
   setUTMSource,
+  setTapjoyTransactionId,
+  clearTapjoy,
   trackGetStarted,
   trackSubmitOrderEvent,
   trackUTMAndPromoCode,
@@ -22,6 +24,7 @@ import {
   trackShowcaseMenuAction,
   trackUnexpectedSignup,
 } from 'actions/tracking'
+import { trackOrder } from 'apis/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import {
   clickGetStarted,
@@ -41,6 +44,10 @@ import logger from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
+}))
+
+jest.mock('apis/tracking', () => ({
+  trackOrder: jest.fn(),
 }))
 
 jest.mock('selectors/features', () => ({
@@ -92,6 +99,7 @@ describe('tracking actions', () => {
 
       expect(dispatchData.type).toBe(actionTypes.TRACKING)
     })
+
     test('should dispatch correct trackingData', () => {
       trackFirstPurchase('order-a', pricing)(dispatch, getState)
       const { trackingData } = dispatch.mock.calls[0][0]
@@ -129,6 +137,7 @@ describe('tracking actions', () => {
         'Missing user data for first purchase tracking: no user found in store',
       )
     })
+
     test('should log warning when specified order is not found', () => {
       logger.warning.mockClear()
 
@@ -327,37 +336,57 @@ describe('tracking actions', () => {
   })
 
   describe('trackAffiliatePurchase', () => {
+    let AWIN
+    const Sale = {
+      amount: '24.50',
+      channel: '',
+      orderRef: 9010321,
+      parts: 'FIRSTPURCHASE:24.50',
+      voucher: 'DTI-SB-P30M',
+      currency: 'GBP',
+      test: '0',
+    }
+
     beforeEach(() => {
+      globals.client = true
+      AWIN = {
+        enhancedTracking: true,
+        sProtocol: 'https://',
+        InputIdentifiers: ['email'],
+        Tracking: {
+          Sale: undefined,
+          run: jest.fn(),
+        },
+      }
+      global.AWIN = { ...AWIN }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue({
         tracking: Immutable.fromJS({
           asource: 'test-source',
-          awc: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3'
-        }),
-        user: Immutable.fromJS({
-          id: '123456',
-        }),
+          awc: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
+          tapjoy: 'fake_transaction_id',
+        })
       })
       jest.clearAllMocks()
     })
 
-    describe('if not on the client', () => {
-      const Sale = {
-        amount: '',
-        channel: '',
-        orderRef: 9010322,
-        parts: 'FIRSTPURCHASE:47.75',
-        voucher: 'TV',
-        currency: 'GBP',
-      }
+    describe('when attempting to track with empty orderId', () => {
+      test('then it should not do anything as this is a double-counted transaction', async () => {
+        await trackAffiliatePurchase({
+          orderId: '',
+          total: '34.99',
+          commissionGroup: 'FIRSTPURCHASE',
+          promoCode: '',
+        })(dispatch, getState)
 
+        expect(global.AWIN.Tracking.run).not.toHaveBeenCalled()
+        expect(trackOrder).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('if not on the client', () => {
       beforeEach(() => {
         globals.client = false
-        global.AWIN = {
-          Tracking: {
-            Sale,
-          }
-        }
       })
 
       test('should not modify AWIN', async () => {
@@ -368,51 +397,58 @@ describe('tracking actions', () => {
           promoCode: '',
         })(dispatch, getState)
 
-        expect(global.AWIN).toEqual({
-          Tracking: {
-            Sale,
-          }
-        })
+        expect(global.AWIN.Tracking.Sale).toBeUndefined()
       })
     })
 
-    describe('if on the client', () => {
+    describe('when global.AWIN is undefined', () => {
       beforeEach(() => {
-        globals.client = true
+        global.AWIN = undefined
       })
 
-      describe('when global.AWIN is undefined', () => {
-        beforeEach(() => {
-          global.AWIN = undefined
-        })
+      test('then it should don run AWIN as the tracking method is unavailable', async () => {
+        await trackAffiliatePurchase({
+          orderId: 9010320,
+          total: '34.99',
+          commissionGroup: 'EXISTING',
+          promoCode: '',
+        })(dispatch, getState)
 
-        test('then it should not do anything as the tracking method is unavailable', async () => {
-          await trackAffiliatePurchase({
-            orderId: 9010320,
-            total: '34.99',
-            commissionGroup: 'EXISTING',
-            promoCode: '',
-          })(dispatch, getState)
+        expect(global.AWIN).toBe(undefined)
+        expect(trackOrder).not.toHaveBeenCalled()
+      })
+    })
 
-          expect(global.AWIN).toBe(undefined)
-        })
+    describe('when global.AWIN is defined', () => {
+      test('then should save order as Tracking.Sale and invoke run', async () => {
+        await trackAffiliatePurchase({
+          orderId: 9010321,
+          total: '24.50',
+          commissionGroup: 'FIRSTPURCHASE',
+          promoCode: 'DTI-SB-P30M',
+        })(dispatch, getState)
+
+        expect(global.AWIN.Tracking.Sale).toEqual(Sale)
+        expect(global.AWIN.Tracking.run).toHaveBeenCalled()
       })
 
-      describe('when global.AWIN is defined', () => {
-        const AWIN = {
-          enhancedTracking: true,
-          sProtocol: 'https://',
-          InputIdentifiers: ['email'],
-          Tracking: {
-            run: jest.fn()
-          },
-        }
-
+      describe('and when on a non-production environment', () => {
+        let originalEnv
         beforeEach(() => {
-          global.AWIN = AWIN
+          originalEnv = globals.env
+          globals.env = 'development'
         })
 
-        test('then should save order as Tracking.Sale and invoke run', async () => {
+        afterEach(() => {
+          globals.env = originalEnv
+        })
+
+        test('then it should fill the "test" field correctly', async () => {
+          const expectedSale = {
+            ...Sale,
+            test: '1',
+          }
+
           await trackAffiliatePurchase({
             orderId: 9010321,
             total: '24.50',
@@ -420,65 +456,94 @@ describe('tracking actions', () => {
             promoCode: 'DTI-SB-P30M',
           })(dispatch, getState)
 
-          expect(global.AWIN.Tracking.Sale).toEqual({
-            amount: '24.50',
-            channel: '',
-            currency: 'GBP',
-            orderRef: 9010321,
-            parts: 'FIRSTPURCHASE:24.50',
-            voucher: 'DTI-SB-P30M',
-            test: '0',
-          })
-
-          expect(global.AWIN.Tracking.run).toHaveBeenCalled()
+          expect(global.AWIN.Tracking.Sale).toEqual(expectedSale)
         })
 
-        describe('and when on a non-production environment', () => {
-          let originalEnv
-          beforeEach(() => {
-            originalEnv = globals.env
-            globals.env = 'development'
-          })
+        test('then should send tracking data to server', async () => {
+          await trackAffiliatePurchase({
+            orderId: 9010321,
+            total: '24.50',
+            commissionGroup: 'FIRSTPURCHASE',
+            promoCode: 'DTI-SB-P30M',
+          })(dispatch, getState)
 
-          afterEach(() => {
-            globals.env = originalEnv
-          })
-
-          test('then it should fill the "test" field correctly', async () => {
-            await trackAffiliatePurchase({
-              orderId: 9010321,
-              total: '24.50',
-              commissionGroup: 'FIRSTPURCHASE',
-              promoCode: 'DTI-SB-P30M',
-            })(dispatch, getState)
-
-            expect(global.AWIN.Tracking.Sale).toEqual({
+          expect(trackOrder).toHaveBeenCalledWith(expect.objectContaining({
+            common: {
+              order_id: 9010321,
+            },
+            awin: {
+              merchant: '5070',
+              cr: 'GBR',
               amount: '24.50',
-              channel: '',
-              currency: 'GBP',
-              orderRef: 9010321,
               parts: 'FIRSTPURCHASE:24.50',
-              voucher: 'DTI-SB-P30M',
-              test: '1',
+              cks: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
+            }
+          }))
+        })
+      })
+
+      describe('when Tapjoy transaction id is not provided', () => {
+        beforeEach(() => {
+          getState = jest.fn().mockReturnValue({
+            tracking: Immutable.fromJS({
+              tapjoy: '',
             })
           })
         })
 
-        describe('and when attempting to track with empty orderId', () => {
-          beforeEach(() => {
-            global.AWIN = AWIN
-          })
+        test('then should not send tracking data to server', async () => {
+          await trackAffiliatePurchase({
+            orderId: 9010321,
+            total: '24.50',
+            commissionGroup: 'FIRSTPURCHASE',
+            promoCode: 'DTI-SB-P30M',
+            isSignup: true,
+          })(dispatch, getState)
 
-          test('then it should not do anything as this is a double-counted transaction', async () => {
-            await trackAffiliatePurchase({
-              orderId: '',
-              total: '34.99',
-              commissionGroup: 'FIRSTPURCHASE',
-              promoCode: '',
-            })(dispatch, getState)
+          expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+            tapjoy: {
+              transaction_id: expect.any(String)
+            }
+          }))
+        })
+      })
 
-            expect(global.AWIN.Tracking.run).not.toHaveBeenCalled()
-          })
+      describe('when this is not signup flow', () => {
+        test('then should not send Tapjoy tracking data to server', async () => {
+          await trackAffiliatePurchase({
+            orderId: 9010321,
+            total: '24.50',
+            commissionGroup: 'FIRSTPURCHASE',
+            promoCode: 'DTI-SB-P30M',
+            isSignup: false,
+          })(dispatch, getState)
+
+          expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+            tapjoy: {
+              transaction_id: expect.any(String)
+            }
+          }))
+        })
+      })
+
+      describe('when this is signup flow and Tapjoy transaction id in store', () => {
+        test('then should send Tapjoy tracking data to server', async () => {
+          await trackAffiliatePurchase({
+            orderId: 9010321,
+            total: '24.50',
+            commissionGroup: 'FIRSTPURCHASE',
+            promoCode: 'DTI-SB-P30M',
+            isSignup: true,
+          })(dispatch, getState)
+
+          expect(trackOrder).toHaveBeenCalledWith(expect.objectContaining({
+            common: {
+              order_id: 9010321,
+            },
+            tapjoy: {
+              transaction_id: 'fake_transaction_id',
+            },
+          }))
         })
       })
     })
@@ -554,6 +619,56 @@ describe('tracking actions', () => {
         setUTMSource()(dispatch, getState)
         expect(dispatch).not.toBeCalled()
       })
+    })
+  })
+
+  describe('setTapjoyTransactionId', () => {
+    beforeEach(() => {
+      const state = {
+        tracking: Immutable.fromJS({
+          tapjoy: ''
+        })
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    test('then should dispatch SET_TAPJOY_TRANSACTION_ID action', () => {
+      const expected = {
+        type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
+        transactionId: 'fake_transaction_id'
+      }
+
+      const result = setTapjoyTransactionId('fake_transaction_id')
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('clearTapjoy', () => {
+    beforeEach(() => {
+      const state = {
+        tracking: Immutable.fromJS({
+          tapjoy: ''
+        })
+      }
+      dispatch = jest.fn((fn) => {
+        if (fn && typeof fn === 'function') {
+          fn(dispatch, getState)
+        }
+      })
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    test('then should dispatch SET_TAPJOY_TRANSACTION_ID action with empty value', () => {
+      const expected = {
+        type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
+        transactionId: ''
+      }
+
+      const result = clearTapjoy()
+
+      expect(result).toEqual(expected)
     })
   })
 

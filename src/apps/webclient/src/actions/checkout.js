@@ -50,6 +50,7 @@ import {
   trackUTMAndPromoCode,
   trackCheckoutError,
   trackSubscriptionCreated,
+  clearTapjoy,
 } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
@@ -334,6 +335,7 @@ export const trackPurchase = ({ orderId }) => (
     const promoCode = getPromoCode(state)
     const prices = pricing.get('prices')
     const totalPrice = prices.get('grossTotal')
+    const total = prices.get('total', '')
     const shippingPrice = prices.get('deliveryTotal')
     const gaIDTracking = gaTrackingConfig[__ENV__]// eslint-disable-line no-underscore-dangle
 
@@ -351,10 +353,12 @@ export const trackPurchase = ({ orderId }) => (
 
     dispatch(trackAffiliatePurchase({
       orderId,
-      total: prices.get('total', ''),
+      total,
       commissionGroup: 'FIRSTPURCHASE',
       promoCode,
+      isSignup: true,
     }))
+    dispatch(clearTapjoy())
   }
 )
 

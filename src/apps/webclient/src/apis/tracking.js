@@ -6,10 +6,3 @@ export function trackOrder(reqData) {
     'Content-Type': 'application/json'
   })
 }
-
-export function trackAwinOrder(commonData, awinData) {
-  return trackOrder({
-    common: commonData,
-    awin: awinData,
-  })
-}

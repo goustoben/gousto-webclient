@@ -5,6 +5,7 @@ const initialState = Immutable.fromJS({
   asource: undefined,
   utmSource: undefined,
   awc: '',
+  tapjoy: '',
 })
 
 export const trackingReducers = {
@@ -20,6 +21,10 @@ export const trackingReducers = {
 
     case actionTypes.AWIN_CLICK_CHECKSUM_SET: {
       return state.set('awc', action.awc)
+    }
+
+    case actionTypes.SET_TAPJOY_TRANSACTION_ID: {
+      return state.set('tapjoy', action.transactionId)
     }
 
     default: {
