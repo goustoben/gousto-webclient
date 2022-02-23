@@ -8,7 +8,13 @@ import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis
 import { actionTypes } from 'actions/actionTypes'
 import pricingActions from 'actions/pricing'
 import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
-import { trackAffiliatePurchase, trackUTMAndPromoCode, trackCheckoutError, trackSubscriptionCreated } from 'actions/tracking'
+import {
+  trackAffiliatePurchase,
+  trackUTMAndPromoCode,
+  trackCheckoutError,
+  trackSubscriptionCreated,
+  clearTapjoy,
+} from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
 import statusActions from 'actions/status'
 import { userSubscribe } from 'actions/user'
@@ -70,6 +76,7 @@ jest.mock('actions/tracking', () => ({
   trackUTMAndPromoCode: jest.fn(() => ({ type: 'trackUTMAndPromoCode' })),
   trackCheckoutError: jest.fn(() => ({ type: 'trackCheckoutError' })),
   trackSubscriptionCreated: jest.fn(() => ({ type: 'trackSubscriptionCreated' })),
+  clearTapjoy: jest.fn(),
 }))
 jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
@@ -821,7 +828,6 @@ describe('checkout actions', () => {
       test('should call ga with order details', async () => {
         trackPurchase({ orderId })(dispatch, getState)
 
-        expect(ga).toHaveBeenCalled()
         expect(ga).toHaveBeenCalledWith('gousto.ec:setAction', 'purchase', {
           id: 'test-order-id',
           revenue: 28.00,
@@ -834,13 +840,19 @@ describe('checkout actions', () => {
     test('should call trackAffiliatePurchase with order details', () => {
       trackPurchase({ orderId })(dispatch, getState)
 
-      expect(trackAffiliatePurchase).toHaveBeenCalled()
       expect(trackAffiliatePurchase).toHaveBeenCalledWith({
         orderId: 'test-order-id',
         total: 31.99,
         commissionGroup: 'FIRSTPURCHASE',
         promoCode: 'TEST123',
+        isSignup: true,
       })
+    })
+
+    test('should call clearTapjoy', () => {
+      trackPurchase({ orderId })(dispatch, getState)
+
+      expect(clearTapjoy).toHaveBeenCalled()
     })
   })
 

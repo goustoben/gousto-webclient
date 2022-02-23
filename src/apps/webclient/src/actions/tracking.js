@@ -11,7 +11,7 @@ import { getPreviewOrderId } from 'selectors/basket'
 import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode, getTransactionType } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
-import { sendAwinData } from 'actions/awin'
+import { trackOrder } from 'apis/tracking'
 
 const collectionRecommendationSlug = 'recommendations'
 
@@ -81,19 +81,26 @@ export const setAwinClickChecksum = (awc) => (
   }
 )
 
-export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) =>
-  async (dispatch, getState) => {
-    if (!(globals.client && window.AWIN)) {
-      await dispatch(
-        feLoggingLogEvent(
-          logLevels.error,
-          'trackAffiliatePurchase: Awin not in execution context',
-          { orderId, total, commissionGroup, promoCode }
-        )
-      )
+export const setTapjoyTransactionId = (transactionId) => ({
+  type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
+  transactionId,
+})
 
-      return
-    }
+export const clearTapjoy = () => setTapjoyTransactionId('')
+
+export const trackAffiliatePurchase = ({
+  orderId,
+  total,
+  commissionGroup,
+  promoCode,
+  isSignup = false
+}) =>
+  async (dispatch, getState) => {
+    const awinEnabled = !!(globals.client && window.AWIN)
+    const { tracking } = getState()
+    const awc = tracking.get('awc')
+    const tapjoy = tracking.get('tapjoy')
+    let sendData = false
 
     if (!orderId) {
       await dispatch(
@@ -107,37 +114,77 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
       return
     }
 
-    const sale = {
-      amount: total,
-      channel: '',
-      orderRef: orderId,
-      parts: `${commissionGroup}:${total}`,
-      voucher: promoCode,
-      currency: 'GBP',
-      test: globals.env === 'production' ? '0' : '1',
+    if (!awinEnabled) {
+      await dispatch(
+        feLoggingLogEvent(
+          logLevels.error,
+          'trackAffiliatePurchase: Awin not in execution context',
+          { orderId, total, commissionGroup, promoCode }
+        )
+      )
     }
 
-    const state = getState()
-    const awc = state.tracking.get('awc', '')
+    if (awinEnabled) {
+      const sale = {
+        amount: total,
+        channel: '',
+        orderRef: orderId,
+        parts: `${commissionGroup}:${total}`,
+        voucher: promoCode,
+        currency: 'GBP',
+        test: globals.env === 'production' ? '0' : '1',
+      }
 
-    // Example #2 from
-    // https://wiki.awin.com/index.php/Advertiser_Tracking_Guide/Standard_Implementation#Conversion_Tag
-    window.AWIN.Tracking.Sale = sale
+      await dispatch(
+        feLoggingLogEvent(logLevels.info, 'trackAffiliatePurchase: sending awin request', { sale })
+      )
 
-    await dispatch(
-      feLoggingLogEvent(logLevels.info, 'trackAffiliatePurchase: sending awin request', { sale })
-    )
+      // Example #2 from
+      // https://wiki.awin.com/index.php/Advertiser_Tracking_Guide/Standard_Implementation#Conversion_Tag
+      window.AWIN.Tracking.Sale = sale
+      window.AWIN.Tracking.run()
+    }
 
-    window.AWIN.Tracking.run()
-    if (awc) {
-      dispatch(sendAwinData({
-        orderId,
+    const request = {
+      common: {
+        order_id: orderId
+      }
+    }
+
+    if (awinEnabled && awc) {
+      sendData = true
+      request.awin = {
         merchant: '5070',
         cr: 'GBR',
         amount: total,
         parts: `${commissionGroup}:${total}`,
         cks: awc,
-      }))
+      }
+    }
+
+    if (isSignup && tapjoy) {
+      sendData = true
+      request.tapjoy = {
+        transaction_id: tapjoy
+      }
+    }
+
+    if (sendData) {
+      try {
+        await trackOrder(request)
+      } catch (err) {
+        feLoggingLogEvent(
+          logLevels.error,
+          'trackAffiliatePurchase: failed to send order data',
+          request
+        )
+      }
+    } else {
+      feLoggingLogEvent(
+        logLevels.info,
+        'trackAffiliatePurchase: no marketing partners data',
+        request
+      )
     }
   }
 

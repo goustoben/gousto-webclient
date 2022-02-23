@@ -4,7 +4,7 @@ import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
-import { setAffiliateSource } from 'actions/tracking'
+import { setAffiliateSource, setTapjoyTransactionId } from 'actions/tracking'
 import axe from '@axe-core/react'
 
 jest.mock('actions/signup',() => ({
@@ -17,6 +17,7 @@ jest.mock('actions/basket',() => ({
 
 jest.mock('actions/tracking',() => ({
   setAffiliateSource: jest.fn(),
+  setTapjoyTransactionId: jest.fn(),
 }))
 
 jest.mock('actions/promos',() => ({
@@ -177,6 +178,20 @@ describe('Given processQuery util function', () => {
 
     test('then it should enable the Axe engine', () => {
       expect(axe).toHaveBeenCalled()
+    })
+  })
+
+  describe('when sid parameter is supplied', () => {
+    beforeEach(() => {
+      query = {
+        sid: 'tapjoy',
+        tapjoy_transaction_id: 'fake_transaction_id',
+      }
+      processQuery(query, mockStore, {})
+    })
+
+    test('then should dispatch setTapjoyTransactionId', () => {
+      expect(setTapjoyTransactionId).toHaveBeenCalledWith('fake_transaction_id')
     })
   })
 })
