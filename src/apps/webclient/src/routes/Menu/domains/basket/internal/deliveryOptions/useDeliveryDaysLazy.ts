@@ -12,11 +12,11 @@ type UseDeliveryDaysLazyArguments = {
   /**
    * DateTime encoded as ISO string.
    */
-  cutoffDatetimeFrom?: string;
+  cutoffDatetimeFrom?: string
   /**
    * DateTime encoded as ISO string.
    */
-  cutoffDatetimeUntil?: string;
+  cutoffDatetimeUntil?: string
 }
 
 /**
@@ -24,7 +24,10 @@ type UseDeliveryDaysLazyArguments = {
  *
  * Fetches all necessary data from Redux global store.
  */
-export const useDeliveryDaysLazy = ({cutoffDatetimeFrom, cutoffDatetimeUntil}: UseDeliveryDaysLazyArguments = {}) => {
+export const useDeliveryDaysLazy = ({
+  cutoffDatetimeFrom,
+  cutoffDatetimeUntil,
+}: UseDeliveryDaysLazyArguments = {}) => {
   const accessToken = useSelector<RootStateOrAny, string>(getAccessToken)
   const cutoffDatetimeFromFormatted = moment.utc(cutoffDatetimeFrom).startOf('day').toISOString()
   const menuCutoffUntil = useSelector<RootStateOrAny, string>(getMenuCutoffUntil)
@@ -32,12 +35,14 @@ export const useDeliveryDaysLazy = ({cutoffDatetimeFrom, cutoffDatetimeUntil}: U
     ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
     : menuCutoffUntil
 
-  const user = useSelector<RootStateOrAny, Immutable.Map<'user', unknown>>(({user: u}) => u)
+  const user = useSelector<RootStateOrAny, Immutable.Map<'user', unknown>>(({ user: u }) => u)
   const isNDDExperiment = useSelector<RootStateOrAny, boolean>(getNDDFeatureFlagVal)
   const deliveryTariffId: string = getDeliveryTariffId(user, isNDDExperiment)
   const postcode = useSelector<RootStateOrAny, string>(getBasketPostcode)
   const userId = useSelector<RootStateOrAny, string>(getUserId)
-  const usersOrdersDaySlotLeadTimeIds = useSelector<RootStateOrAny, string[]>(getUsersOrdersDaySlotLeadTimeIds)
+  const usersOrdersDaySlotLeadTimeIds = useSelector<RootStateOrAny, string[]>(
+    getUsersOrdersDaySlotLeadTimeIds
+  )
 
   return useDeliveryDays({
     cutoffFrom: cutoffDatetimeFromFormatted,

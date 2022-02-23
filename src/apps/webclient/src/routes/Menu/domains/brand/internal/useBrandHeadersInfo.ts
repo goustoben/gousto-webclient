@@ -15,18 +15,21 @@ export const useBrandHeadersInfo: () => {
   collectionsPerMenu?: MenuHeadersBrandData
   headers?: MenuHeadersIncludesData
 } = () => {
-  const { accessToken, authUserId} = useAuth()
+  const { accessToken, authUserId } = useAuth()
 
   const requestParameters = null
 
-  const { data: response, error } = useSWR<{data: MenuHeadersBrandData, included: MenuHeadersIncludesData}, Error>(
+  const { data: response, error } = useSWR<
+    { data: MenuHeadersBrandData; included: MenuHeadersIncludesData },
+    Error
+  >(
     [url, requestParameters, accessToken, authUserId],
     getFetcher,
     // The Brand Headers info is an immutable resource (does not chang within user's session)
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false
+      revalidateOnReconnect: false,
     }
   )
 

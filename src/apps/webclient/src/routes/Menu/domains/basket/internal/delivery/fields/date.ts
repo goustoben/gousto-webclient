@@ -9,10 +9,7 @@ const useCurrentSlotId = () => useSelector<RootStateOrAny, string>(getBasketSlot
 const useChangeFunctions = () => {
   const dispatch = useDispatch()
 
-  const changeDate = useMemo(
-    () => (date: string) => dispatch(basketDateChange(date)),
-    [dispatch]
-  )
+  const changeDate = useMemo(() => (date: string) => dispatch(basketDateChange(date)), [dispatch])
 
   const changeSlot = useMemo(
     () => (slotId: string) => dispatch(basketSlotChange(slotId)),

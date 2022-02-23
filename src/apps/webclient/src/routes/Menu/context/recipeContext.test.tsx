@@ -226,7 +226,7 @@ describe('recipeContext', () => {
           foodBrandColours: [],
           roundels: [],
           tags: [TAG_1, TAG_2],
-        }
+        },
       }))
 
       const mockStore = configureMockStore()

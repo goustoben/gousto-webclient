@@ -19,9 +19,7 @@ export const SoldOutOverlay: React.FC = () => {
 
   return (
     <div className={css.overlay}>
-      <span className={css.overlayText}>
-        This recipe is sold out for your delivery date
-      </span>
+      <span className={css.overlayText}>This recipe is sold out for your delivery date</span>
     </div>
   )
 }

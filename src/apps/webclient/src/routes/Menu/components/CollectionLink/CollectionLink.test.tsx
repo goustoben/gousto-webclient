@@ -39,22 +39,24 @@ describe('CollectionLink', () => {
 
     jest.spyOn(Collections, 'useCollections').mockImplementation(
       () =>
-      ({
-        changeCollectionById: (a: string) => { },
-      } as any)
+        ({
+          changeCollectionById: (a: string) => {},
+        } as any)
     )
     jest.spyOn(Menu, 'useMenu').mockImplementation(
       () =>
-      ({
-        getRecipesForCollectionId: (a: string) => ({
-          recipes: Immutable.List([{
-            recipe: Immutable.Map({
-              id: 'recipe-one'
-            }),
-            originalId: 'recipe-one',
-          }]),
-        }),
-      } as any)
+        ({
+          getRecipesForCollectionId: (a: string) => ({
+            recipes: Immutable.List([
+              {
+                recipe: Immutable.Map({
+                  id: 'recipe-one',
+                }),
+                originalId: 'recipe-one',
+              },
+            ]),
+          }),
+        } as any)
     )
   })
 
@@ -63,11 +65,12 @@ describe('CollectionLink', () => {
   })
 
   const store = createMockStore({})
-  const renderForTest = () => render(
-    <Provider store={store}>
-      <CollectionLink />
-    </Provider>
-  )
+  const renderForTest = () =>
+    render(
+      <Provider store={store}>
+        <CollectionLink />
+      </Provider>
+    )
 
   describe('rendering the CollectionLink', () => {
     describe('when there is at least one collection', () => {
@@ -97,7 +100,7 @@ describe('CollectionLink', () => {
       beforeEach(() => {
         jest
           .spyOn(UseDisplayedCollections, 'useDietaryCollections')
-          .mockImplementation((() => Immutable.OrderedMap<string, MenuCollection>({})))
+          .mockImplementation(() => Immutable.OrderedMap<string, MenuCollection>({}))
       })
 
       test('then the CollectionLinkTile should not be rendered', () => {

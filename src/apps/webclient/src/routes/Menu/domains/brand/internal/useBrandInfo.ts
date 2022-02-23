@@ -11,11 +11,11 @@ const url = `${endpoint('brand')}/theme`
  * @returns Brand data as coming from the server side
  */
 export const useBrandInfo: () => { error?: Error; brand?: BrandData } = () => {
-  const { accessToken, authUserId} = useAuth()
+  const { accessToken, authUserId } = useAuth()
 
   const requestParameters = null
 
-  const { data: response, error } = useSWR<{data: BrandData}, Error>(
+  const { data: response, error } = useSWR<{ data: BrandData }, Error>(
     [url, requestParameters, accessToken, authUserId],
     getFetcher,
     // Treat the Brand info as an immutable resource, which is not changed
@@ -23,7 +23,7 @@ export const useBrandInfo: () => { error?: Error; brand?: BrandData } = () => {
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false
+      revalidateOnReconnect: false,
     }
   )
 
