@@ -18,3 +18,6 @@
 
 # [TG-6077] [FE] reformat .eslintrc.js with prettier
 0d0698a185aeab6a998629e16d97ff5d17d5c45e
+
+# [TG-6040] reformat Menu ts&tsx files with Prettier
+d1d0d27704684dd3b1567af7bc4fa3c57fd6fb00
