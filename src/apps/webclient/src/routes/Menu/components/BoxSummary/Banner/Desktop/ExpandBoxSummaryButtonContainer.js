@@ -12,9 +12,9 @@ const mapStateToProps = (state) => ({
 })
 
 const ExpandBoxSummaryButtonPure = (props) => {
-  const { pending } = usePricing()
+  const { isPending } = usePricing()
 
-  return <ExpandBoxSummaryButton {...props} pricingPending={pending} />
+  return <ExpandBoxSummaryButton {...props} pricingPending={isPending} />
 }
 
 const ExpandBoxSummaryButtonContainer = connect(mapStateToProps)(ExpandBoxSummaryButtonPure)

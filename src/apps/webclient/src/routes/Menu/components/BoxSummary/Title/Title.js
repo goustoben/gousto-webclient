@@ -26,11 +26,11 @@ const defaultProps = {
 }
 
 function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassName }) {
-  const { pricing, pending } = usePricing()
+  const { pricing, isPending } = usePricing()
   const spinnerClassNames = {
     [css.spinnerContainer]: true,
     spinnerContainerClassName,
-    [css.spinnerShow]: pending,
+    [css.spinnerShow]: isPending,
   }
 
   return (
@@ -40,7 +40,7 @@ function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassNa
         {slotTime ? <span className={css.showDate}> {slotTime}</span> : null}
       </p>
       <div className={classNames(css[`title${view}`], css.price)}>
-        {pending ? (
+        {isPending ? (
           isMobile(view) && (
             <div className={classNames(spinnerClassNames)}>
               <span className={classNames(css.spinner, spinnerClassName)}>

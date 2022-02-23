@@ -23,7 +23,9 @@ describe('Summary Component', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} isLoading />)
+    wrapper = shallow(
+      <Summary prices={prices} basketRecipes={basketRecipes} showPromoCode isLoading />
+    )
   })
 
   describe('when isLoading is true', () => {

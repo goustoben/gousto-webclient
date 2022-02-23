@@ -5,9 +5,10 @@ import { formatOrderPrice } from 'utils/pricing'
 import css from './PricePerServingMessage.css'
 
 type Props = {
-  fullPrice: string | null
-  discountedPrice: string | null
-  isPriceInCheckout: boolean
+  /* eslint-disable react/require-default-props */
+  fullPrice?: string | null
+  discountedPrice?: string | null
+  isPriceInCheckout?: boolean
 }
 
 const PricePerServingMessage = ({

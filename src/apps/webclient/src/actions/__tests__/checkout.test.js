@@ -864,7 +864,7 @@ describe('checkout actions', () => {
     })
 
     test('should call clearTapjoy', () => {
-      trackPurchase({ orderId })(dispatch, getState)
+      trackPurchase({ orderId, pricing })(dispatch, getState)
 
       expect(clearTapjoy).toHaveBeenCalled()
     })

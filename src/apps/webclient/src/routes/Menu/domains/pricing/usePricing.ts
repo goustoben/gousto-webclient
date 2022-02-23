@@ -54,7 +54,7 @@ const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Prici
 /**
  * @typedef {Object} PricingHookResponse
  * @property {object} pricing - Can also be null or undefined, will return the pricing data if available
- * @property {boolean} pending - will return the loading state of the fetch call.
+ * @property {boolean} isPending - will return the loading state of the fetch call.
  * @property {boolean} isValid - is true when there's sufficient data to query the `/pricing` endpoint and therefore receive real data.
  */
 
@@ -65,7 +65,7 @@ const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Prici
  */
 export const usePricing = (): {
   pricing?: Pricing | null
-  pending: boolean
+  isPending: boolean
   isValid: boolean
 } => {
   const deliverySlotId = useSelector(getBasketSlotId)
@@ -74,7 +74,7 @@ export const usePricing = (): {
   const { error, data } = useGetPricing(shouldFetch)
 
   return {
-    pending: !data && !error && shouldFetch,
+    isPending: !data && !error && shouldFetch,
     isValid: shouldFetch,
     pricing: data,
   }

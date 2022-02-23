@@ -92,7 +92,7 @@ describe('usePricing', () => {
       const { result } = renderHook(() => usePricing())
       expect(result.current.isValid).toBe(false)
       expect(result.current.pricing).toBe(null)
-      expect(result.current.pending).toBe(false)
+      expect(result.current.isPending).toBe(false)
     })
   })
 
@@ -105,7 +105,7 @@ describe('usePricing', () => {
       const { result } = renderHook(() => usePricing())
       expect(result.current.isValid).toBe(false)
       expect(result.current.pricing).toBe(null)
-      expect(result.current.pending).toBe(false)
+      expect(result.current.isPending).toBe(false)
     })
   })
 
@@ -121,11 +121,11 @@ describe('usePricing', () => {
 
     it('should be in pending state until it has response', async () => {
       const { result, waitFor } = renderHook(() => usePricing())
-      expect(result.current.pending).toBe(true)
+      expect(result.current.isPending).toBe(true)
 
       await waitFor(() => {
         expect(result.current.pricing).toBeDefined()
-        expect(result.current.pending).toBe(false)
+        expect(result.current.isPending).toBe(false)
       })
     })
   })
@@ -144,7 +144,7 @@ describe('usePricing', () => {
       const { result, waitForNextUpdate } = renderHook(() => usePricing())
       await waitForNextUpdate()
       expect(result.current.pricing).toBe(null)
-      expect(result.current.pending).toBe(false)
+      expect(result.current.isPending).toBe(false)
       expect(result.current.isValid).toBe(true)
     })
   })

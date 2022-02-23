@@ -44,10 +44,10 @@ const mapStateToProps = (state) => ({
 })
 
 const BoxSummaryPure = (props) => {
-  const { pending } = usePricing()
+  const { isPending } = usePricing()
 
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <BoxSummaryDesktop {...props} pricingPending={pending} />
+  return <BoxSummaryDesktop {...props} pricingPending={isPending} />
 }
 
 const BoxSummaryDesktopContainer = connect(mapStateToProps, {

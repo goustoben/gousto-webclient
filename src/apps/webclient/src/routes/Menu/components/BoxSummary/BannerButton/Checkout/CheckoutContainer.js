@@ -22,9 +22,9 @@ const mapStateToProps = (state) => ({
 })
 
 const CheckoutPure = (props) => {
-  const { pending } = usePricing()
+  const { isPending } = usePricing()
 
-  return <Checkout {...props} pricingPending={pending} />
+  return <Checkout {...props} pricingPending={isPending} />
 }
 
 const CheckoutContainer = connect(mapStateToProps, {

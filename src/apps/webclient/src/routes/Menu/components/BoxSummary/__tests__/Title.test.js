@@ -27,7 +27,7 @@ describe('Title', () => {
 
   describe('when pending is false', () => {
     beforeEach(() => {
-      usePricing.mockReturnValue({ pending: false, pricing: {} })
+      usePricing.mockReturnValue({ isPending: false, pricing: {} })
     })
     test('should render a paragraph with date', () => {
       wrapper = shallow(<Title view="desktop" date="2016-06-26" />)
@@ -45,7 +45,7 @@ describe('Title', () => {
 
   describe('when pending is true', () => {
     beforeEach(() => {
-      usePricing.mockReturnValue({ pending: true })
+      usePricing.mockReturnValue({ isPending: true })
     })
 
     test('should not display a <Spinner /> or <Price /> if pending is true and view is not mobile', () => {

@@ -11,16 +11,17 @@ import { PromoCode } from '../PromoCode'
 import css from './Summary.css'
 
 type Props = {
-  basketRecipes: Immutable.Map<string, any>
   isLoading: boolean
   showPromoCode: boolean
-  isGoustoOnDemandEnabled: boolean
+  /* eslint-disable react/require-default-props */
+  basketRecipes?: Immutable.Map<string, any>
+  isGoustoOnDemandEnabled?: boolean
 }
 
 const Summary = ({
+  isLoading,
+  showPromoCode,
   basketRecipes = Immutable.Map({}),
-  isLoading = false,
-  showPromoCode = true,
   isGoustoOnDemandEnabled = false,
 }: Props) => {
   const numRecipes = basketSum(basketRecipes)

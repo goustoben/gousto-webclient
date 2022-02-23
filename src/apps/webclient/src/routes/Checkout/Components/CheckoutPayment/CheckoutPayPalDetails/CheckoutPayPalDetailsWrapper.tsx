@@ -19,7 +19,7 @@ type CheckoutPayPalDetailsWrapperProps = {
 }
 
 export function CheckoutPayPalDetailsWrapper(props: CheckoutPayPalDetailsWrapperProps) {
-  const setPayPalNonce = useSetPayPalNonce()
+  const setPayPalNonceCallback = useSetPayPalNonce()
 
-  return <CheckoutPayPalDetailsContainer {...props} setPayPalNonce={setPayPalNonce} />
+  return <CheckoutPayPalDetailsContainer {...props} setPayPalNonce={setPayPalNonceCallback} />
 }
