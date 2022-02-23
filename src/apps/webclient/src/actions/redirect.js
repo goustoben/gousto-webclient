@@ -1,10 +1,11 @@
-import { client, server, legacy } from 'config/globals'
+import { server, legacy } from 'config/globals'
 import { push, replace } from 'react-router-redux'
+import { canUseWindow } from 'utils/browserEnvironment'
 import * as windowUtils from 'utils/window'
 import { actionTypes } from './actionTypes'
 
 function shouldUseReactRouter() {
-  return client && !legacy()
+  return canUseWindow() && !legacy()
 }
 
 export const redirect = (url, clearCookies) => {

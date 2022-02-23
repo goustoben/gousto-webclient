@@ -6,6 +6,7 @@ import { isOneOfPage } from 'utils/routes'
 import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from 'utils/auth'
 import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
+import { canUseWindow } from 'utils/browserEnvironment'
 import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import { getUserId } from 'selectors/user'
@@ -73,7 +74,7 @@ const postLogoutSteps = () => (
   (dispatch) => {
     dispatch({ type: actionTypes.BASKET_RESET })
     dispatch({ type: actionTypes.USER_LOGGED_OUT }) // resets auth state
-    if (globals.client) {
+    if (canUseWindow()) {
       dispatch(logoutRedirect())
     }
   }
@@ -196,7 +197,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     }
 
     const windowObj = windowUtils.getWindow()
-    if (globals.client && windowObj && typeof windowObj.__authRefresh__ === 'function' && windowObj.__store__) { // eslint-disable-line no-underscore-dangle
+    if (canUseWindow() && typeof windowObj.__authRefresh__ === 'function' && windowObj.__store__) { // eslint-disable-line no-underscore-dangle
       windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
     }
 

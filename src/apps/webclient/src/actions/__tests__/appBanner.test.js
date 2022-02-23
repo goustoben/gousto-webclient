@@ -1,7 +1,10 @@
 import { actionTypes } from 'actions/actionTypes'
 import { appBannerDismiss, trackingAppPromoCTAClick, trackingAppPromoBannerView } from 'actions/appBanner'
 import * as cookieHelper from 'utils/cookieHelper2'
+import { canUseWindow } from 'utils/browserEnvironment'
 import * as trackingKeys from 'actions/trackingKeys'
+
+jest.mock('utils/browserEnvironment')
 
 describe('app banner actions', () => {
   describe('appBannerDismiss', () => {
@@ -9,6 +12,9 @@ describe('app banner actions', () => {
     let cookieSetSpy
 
     beforeEach(() => {
+      jest.clearAllMocks()
+
+      canUseWindow.mockReturnValue(true)
       dispatch = jest.fn()
       cookieSetSpy = jest.spyOn(cookieHelper, 'set')
     })
@@ -23,6 +29,14 @@ describe('app banner actions', () => {
 
       expect(cookieSetSpy).toHaveBeenCalled()
       expect(cookieSetSpy).toBeCalledWith(expect.any(Function), 'app_banner_dismissed', true, 1)
+    })
+
+    test('cookie is not set when not in the client', () => {
+      canUseWindow.mockReturnValue(false)
+
+      appBannerDismiss()(dispatch)
+
+      expect(cookieSetSpy).not.toHaveBeenCalled()
     })
   })
 

@@ -11,6 +11,7 @@ import fetchContentOnChange from 'routes/fetchContentOnChange'
 import { documentLocation } from 'utils/window'
 import { SetupOptimizelyOverride } from 'containers/OptimizelyRollouts'
 import { ThemeProvider } from '@gousto-internal/citrus-react'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
@@ -24,7 +25,7 @@ export const AppContainer = ({ history, routes, store }) => (
         <Router
           history={history}
           // eslint-disable-next-line
-          render={__CLIENT__ ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
+          render={canUseWindow() ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
           onUpdate={() => {
             trackPageChange(store)
             hashLinkScroll()

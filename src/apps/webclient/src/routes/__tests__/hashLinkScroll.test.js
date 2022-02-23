@@ -1,7 +1,10 @@
 import { hashLinkScroll } from 'routes/hashLinkScroll'
 import sinon from 'sinon'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 const windowUtils = require('utils/window')
+
+jest.mock('utils/browserEnvironment')
 
 describe('hashLinkScroll', () => {
   let sandbox
@@ -17,7 +20,9 @@ describe('hashLinkScroll', () => {
         return true
       },
     })
+    canUseWindow.mockReturnValue(true)
   })
+
   afterEach(() => {
     sandbox.restore()
   })
@@ -36,5 +41,11 @@ describe('hashLinkScroll', () => {
       .returns({ hash: '' })
     const hl = hashLinkScroll()
     expect(hl).toEqual(false)
+  })
+
+  test('should return false if window is not available', () => {
+    canUseWindow.mockReturnValue(false)
+
+    expect(hashLinkScroll()).toEqual(false)
   })
 })

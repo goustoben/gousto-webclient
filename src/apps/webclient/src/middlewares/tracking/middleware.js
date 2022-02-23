@@ -1,3 +1,5 @@
+import { canUseWindow, getWindow } from 'utils/browserEnvironment'
+
 export default (tracker, version) => ({ getState }) => (
   next => action => {
     // V2 tracker
@@ -13,8 +15,8 @@ export default (tracker, version) => ({ getState }) => (
         try {
           pathname = getState().routing.locationBeforeTransitions.pathname
         } catch (e) {
-          if (__CLIENT__ && window) {
-            pathname = window.location.pathname
+          if (canUseWindow()) {
+            pathname = getWindow().location.pathname
           }
         }
         tracker(action.trackingData, { pathname })

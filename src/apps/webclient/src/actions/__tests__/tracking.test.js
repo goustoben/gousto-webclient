@@ -41,6 +41,7 @@ import {
 import globals from 'config/globals'
 import { PaymentMethod } from 'config/signup'
 import logger from 'utils/logger'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
@@ -53,6 +54,8 @@ jest.mock('apis/tracking', () => ({
 jest.mock('selectors/features', () => ({
   getIsPromoCodeValidationEnabled: jest.fn(() => false),
 }))
+
+jest.mock('utils/browserEnvironment')
 
 describe('tracking actions', () => {
   let getState
@@ -89,6 +92,8 @@ describe('tracking actions', () => {
     })
 
     beforeEach(() => {
+      jest.resetAllMocks()
+
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
     })
@@ -348,7 +353,7 @@ describe('tracking actions', () => {
     }
 
     beforeEach(() => {
-      globals.client = true
+      canUseWindow.mockReturnValue(true)
       AWIN = {
         enhancedTracking: true,
         sProtocol: 'https://',
@@ -386,7 +391,7 @@ describe('tracking actions', () => {
 
     describe('if not on the client', () => {
       beforeEach(() => {
-        globals.client = false
+        canUseWindow.mockReturnValue(false)
       })
 
       test('should not modify AWIN', async () => {

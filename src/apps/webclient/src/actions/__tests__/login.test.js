@@ -6,10 +6,12 @@ import loginActions, { helpPreLoginVisibilityChange, loginRedirect } from 'actio
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { pricingRequest } from '../pricing'
 import statusActions from '../status'
 import authActions from '../auth'
 
+jest.mock('utils/browserEnvironment')
 jest.mock('config/globals')
 jest.mock('containers/OptimizelyRollouts/optimizelyUtils')
 
@@ -53,6 +55,10 @@ const HOST_STAGING = 'staging-frontend.gousto.info'
 const HOST_PRODUCTION = 'gousto.co.uk'
 
 describe('login actions', () => {
+  beforeEach(() => {
+    canUseWindow.mockReturnValue(false)
+  })
+
   describe('login', () => {
     redirect.mockReturnValue(true)
     const dispatch = jest.fn()

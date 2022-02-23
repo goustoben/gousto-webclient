@@ -20,9 +20,10 @@ import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
+import { canUseWindow } from 'utils/browserEnvironment'
 import * as trackingKeys from 'actions/trackingKeys'
 import { MobileMenu } from './MobileMenu'
-import { getDeepClonedMenuItems, showcaseMenuItem } from './menuItemsHelper'
+import { getDeepClonedMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
 class Header extends React.PureComponent {
@@ -385,7 +386,7 @@ class Header extends React.PureComponent {
     const homeElementMobile = mobileMenuItems.find(item => (item.name === 'Home'))
     const desktopMenuItems = this.getMenuItems('desktop', path)
     let hasUserStartedNewSession
-    if (__CLIENT__) {
+    if (canUseWindow()) {
       hasUserStartedNewSession = !!window.sessionStorage.getItem('isNotFirstLoadOfSession') !== true
     }
     const shouldShowAbandonBasketModal = abandonBasketFeature && hasUserStartedNewSession

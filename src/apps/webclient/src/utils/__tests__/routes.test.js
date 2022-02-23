@@ -1,10 +1,13 @@
 import Immutable from 'immutable'
 import authActions from 'actions/auth'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { checkValidSession, addTargetToRedirect, checkGuest } from '../routes'
 
 jest.mock('actions/auth', () => ({
   authValidate: jest.fn(),
 }))
+
+jest.mock('utils/browserEnvironment')
 
 describe('routes', () => {
   afterEach(() => {
@@ -117,7 +120,9 @@ describe('routes', () => {
     const buildRedirectUrl = (location) => {
       delete global.window.location
       global.window = Object.create(window)
-      global.window.location = {}
+      global.window.location = {
+        origin: 'https://www.gousto.co.uk'
+      }
 
       return addTargetToRedirect({target: true, location})
     }
@@ -129,24 +134,58 @@ describe('routes', () => {
         })
       })
 
-      test('then the returned url should contain the target correctly encoded', () => {
-        expect(url).toContain('?target=%2Fsomewhere')
-      })
-
-      test('then the returned url should contain the login hash', () => {
-        expect(url).toContain('#login')
-      })
-
-      describe('and when target has query parameters', () => {
+      describe('and the window is available', () => {
         beforeEach(() => {
+          canUseWindow.mockReturnValue(true)
+        })
+
+        test('then the returned url should contain the target correctly encoded', () => {
+          expect(url).toContain('?target=%2Fsomewhere')
+        })
+
+        test('then the returned url should contain the login hash', () => {
+          expect(url).toContain('#login')
+        })
+
+        describe('and when target has query parameters', () => {
+          beforeEach(() => {
+            url = buildRedirectUrl({
+              pathname: '/somewhere',
+              search: '?test=promo-code'
+            })
+          })
+
+          test('then the query parameters are added to the URL', () => {
+            // This is a bug that we're currently getting away with
+            expect(url).toEqual(`/?target=${encodeURIComponent('https://www.gousto.co.uk//somewhere?test=promo-code')}#login`)
+          })
+        })
+      })
+
+      describe('and the window object is not available', () => {
+        beforeEach(() => {
+          canUseWindow.mockReturnValue(false)
+
           url = buildRedirectUrl({
             pathname: '/somewhere',
-            search: '?test=promo-code'
           })
         })
 
-        test('then thequery parameters are added to the URL', () => {
-          expect(url).toEqual(`/?target=${encodeURIComponent('/somewhere?test=promo-code')}#login`)
+        test('should return the expected url with target and login hash', () => {
+          expect(url).toEqual('/?target=%2Fsomewhere#login')
+        })
+
+        describe('and when the target has query parameters', () => {
+          beforeEach(() => {
+            url = buildRedirectUrl({
+              pathname: '/somewhere',
+              search: '?test=promo-code'
+            })
+          })
+
+          test('then the query parameters are added to the URL', () => {
+            expect(url).toEqual('/?target=%2Fsomewhere%3Ftest%3Dpromo-code#login')
+          })
         })
       })
     })

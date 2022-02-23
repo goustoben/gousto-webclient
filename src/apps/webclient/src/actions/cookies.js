@@ -2,10 +2,11 @@ import { actionTypes } from 'actions/actionTypes'
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import config from 'config/cookies'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 function cookiePolicyAcceptanceChange(isAccepted) {
   return dispatch => {
-    if (__CLIENT__) {
+    if (canUseWindow()) {
       set(Cookies, 'cookie_policy_v2', { isAccepted }, config.cookiePolicyAcceptanceExpireTime)
     }
 

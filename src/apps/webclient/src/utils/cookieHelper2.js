@@ -2,6 +2,7 @@ import moment from 'moment'
 import goustoStore from 'store'
 import logger from './logger'
 import { cookieString } from './cookieString'
+import { canUseWindow } from './browserEnvironment'
 
 const versionPrefix = 'v1'
 
@@ -41,7 +42,7 @@ function updateCookie(cookies, key, cookieValue) {
 export function encode(val) {
   let ret
 
-  if (__CLIENT__) {
+  if (canUseWindow()) {
     ret = val ? JSON.stringify(val) : ''
   }
 
@@ -59,7 +60,7 @@ export function decode(val) {
     ret = val ? JSON.parse(decodeURIComponent(val)) : undefined
   }
 
-  if (__CLIENT__) {
+  if (canUseWindow()) {
     ret = val ? JSON.parse(val) : undefined
   }
 

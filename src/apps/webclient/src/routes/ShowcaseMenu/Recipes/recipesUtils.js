@@ -1,5 +1,7 @@
+import { canUseWindow } from 'utils/browserEnvironment'
+
 export const convertRemCssValueToPixels = (remString) => {
-  if (__CLIENT__) {
+  if (canUseWindow()) {
     const rem = Number.parseInt(remString, 10)
 
     return rem * parseFloat(window.getComputedStyle(document.documentElement).fontSize)

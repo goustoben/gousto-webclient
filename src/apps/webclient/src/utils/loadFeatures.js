@@ -1,6 +1,5 @@
 import { featuresSet } from 'actions/features'
-import globals from 'config/globals'
-import { getWindow } from 'utils/window'
+import { getWindow, canUseWindow } from './browserEnvironment'
 
 export function loadFeatures({ enable, disable, set = {}, features = {}} = {}, store) {
   const featuresArr = []
@@ -28,7 +27,7 @@ export function loadFeatures({ enable, disable, set = {}, features = {}} = {}, s
   const clientWindow = getWindow()
   const trackedExperiments = (clientWindow && clientWindow.__snowPlowTrackedExperiments) || {} // eslint-disable-line no-underscore-dangle
 
-  if (globals.client && typeof clientWindow.__snowPlowGetOptimizelyExperimentsData === 'function' && typeof clientWindow.snowplow === 'function') { // eslint-disable-line no-underscore-dangle
+  if (canUseWindow() && typeof clientWindow.__snowPlowGetOptimizelyExperimentsData === 'function' && typeof clientWindow.snowplow === 'function') { // eslint-disable-line no-underscore-dangle
     const experimentsData = clientWindow.__snowPlowGetOptimizelyExperimentsData() // eslint-disable-line no-underscore-dangle
     if (Array.isArray(experimentsData)) {
       experimentsData.forEach(experiment => {
