@@ -9,7 +9,7 @@ type HostNames = 'webclient' | 'frontend'
 type SubDomain = 'www' | `${string}-www` | `${string}-${HostNames}` | 'frontend'
 type RootDomain = 'gousto'
 type TopLevelDomain = `.local:${number}` | '.info' | '.co.uk'
-type Domain = `${RootDomain}${TopLevelDomain}`
+export type Domain = `${RootDomain}${TopLevelDomain}`
 
 type WindowLocation = {
   host: `${SubDomain}.${RootDomain}${TopLevelDomain}`

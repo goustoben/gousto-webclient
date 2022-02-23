@@ -12511,12 +12511,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"gousto-lumberjack-js@git@github.com:Gousto/lumberjack-js-package.git#v1.0.4":
-  version: 1.0.4
-  resolution: "gousto-lumberjack-js@git@github.com:Gousto/lumberjack-js-package.git#commit=154ef483033fa3fc3982b6471ea0fd06706c7ce6"
+"gousto-lumberjack-js@git@github.com:Gousto/lumberjack-js-package.git#v1.2.1":
+  version: 1.2.1
+  resolution: "gousto-lumberjack-js@git@github.com:Gousto/lumberjack-js-package.git#commit=2d70a1e7c7a96879d69dcec6876cda15d37b6f66"
   dependencies:
     winston: 3.1.0
-  checksum: 8cd84fad2ccafa67d2812f06f3485dad7028775d8ae62fa6e1199dc057dc190dd406ec957ee157081936a58685990e87dcdaaeede8976c9ce86b5df632b74e48
+  checksum: cabc2cfcc57c59b1cdc07c4c3963f531ded1183236a3cd53dd163ebe3e8090e57964151a2550007dd14fe6cecb55a59ce6d96412b60ca6d06a6de794cd9af8fa
   languageName: node
   linkType: hard
 
@@ -26257,7 +26257,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.1.2
     extract-text-webpack-plugin: 4.0.0-beta.0
     file-loader: 2.0.0
-    gousto-lumberjack-js: "git@github.com:Gousto/lumberjack-js-package.git#v1.0.4"
+    gousto-lumberjack-js: "git@github.com:Gousto/lumberjack-js-package.git#v1.2.1"
     identity-obj-proxy: 3.0.0
     ignore: ^5.1.8
     image-webpack-loader: 4.6.0

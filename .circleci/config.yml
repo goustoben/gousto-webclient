@@ -245,13 +245,17 @@ jobs:
   upload-source-maps-to-datadog:
     docker: *circleci_node_image
     working_directory: /mnt/ramdisk
+    parameters:
+      top_level_domain:
+        type: string
+        default: .co.uk
     steps:
       - attach_workspace:
           at: /
       - run:
           name: Upload sourcemaps to datadog
           working_directory: src/apps/webclient
-          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto.info/build/latest/" yarn datadog:upload-sourcemaps
+          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto<< parameters.top_level_domain >>/build/latest/" yarn datadog:upload-sourcemaps
 
   upload-assets-to-s3:
     docker: *gousto_platform_image
@@ -633,7 +637,7 @@ workflows:
               only:
                 - master
       - upload-source-maps-to-datadog:
-          context: gousto-beta-aws-app-circleci
+          context: gousto-prod-aws-app-circleci
           requires:
             - build-webclient
           filters:

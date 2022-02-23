@@ -58,7 +58,7 @@
     "cookies-js": "1.2.3",
     "dd-trace": "^1.5.1",
     "dompurify": "^2.0.8",
-    "gousto-lumberjack-js": "git@github.com:Gousto/lumberjack-js-package.git#v1.0.4",
+    "gousto-lumberjack-js": "git@github.com:Gousto/lumberjack-js-package.git#v1.2.1",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
     "jest-localstorage-mock": "^2.4.18",
