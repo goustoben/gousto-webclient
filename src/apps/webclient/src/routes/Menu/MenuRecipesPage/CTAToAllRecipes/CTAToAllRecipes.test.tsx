@@ -9,10 +9,13 @@ function renderForTest(currentCollectionId: string) {
   const store = createMockStore()
   const changeCollectionById = jest.fn()
 
-  jest.spyOn(CollectionHooks, 'useCollections').mockImplementation(() => ({
-    changeCollectionById,
-    currentCollectionId,
-  }) as any)
+  jest.spyOn(CollectionHooks, 'useCollections').mockImplementation(
+    () =>
+      ({
+        changeCollectionById,
+        currentCollectionId,
+      } as any)
+  )
 
   render(
     <Provider store={store}>

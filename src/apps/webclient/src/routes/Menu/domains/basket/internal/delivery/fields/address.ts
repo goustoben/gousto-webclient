@@ -4,12 +4,13 @@ import { basketChosenAddressChange } from 'actions/basket'
 import { ImmutableMap } from 'routes/Menu/types/immutableMap'
 
 export type Address = ImmutableMap<{
-  id: string;
-  name: string;
-  postcode: string;
-}>;
+  id: string
+  name: string
+  postcode: string
+}>
 
-const useStateAddress = () => useSelector<RootStateOrAny, Address>(state => state.basket.get('chosenAddress'))
+const useStateAddress = () =>
+  useSelector<RootStateOrAny, Address>((state) => state.basket.get('chosenAddress'))
 
 const useCurrentAddress = () => {
   const address = useStateAddress()
@@ -20,7 +21,7 @@ const useCurrentAddress = () => {
 
   return {
     id: address.get('id'),
-    postcode: address.get('postcode')
+    postcode: address.get('postcode'),
   }
 }
 

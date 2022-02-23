@@ -27,9 +27,7 @@ export const TileImage: React.FC<{
         <CookingTimeIcon />
       </div>
 
-      {showVariantHeader && (
-        <VariantHeader categoryId={categoryId} originalId={originalId} />
-      )}
+      {showVariantHeader && <VariantHeader categoryId={categoryId} originalId={originalId} />}
     </button>
   )
 }
