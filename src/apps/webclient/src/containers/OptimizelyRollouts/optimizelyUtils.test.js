@@ -1,19 +1,65 @@
 import { Map } from 'immutable'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
+import { canUseWindow } from 'utils/browserEnvironment'
 import {
+  getSnowplowDomainUserId,
   isOptimizelyFeatureEnabledFactory,
 } from './optimizelyUtils'
 import * as snowplow from './trackExperimentInSnowplow'
 import * as optimizelySdk from './optimizelySDK'
 import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 
-jest.mock('config/globals', () => ({
-  __esModule: true,
-  default: {
-    client: true,
-  }
-}))
+jest.mock('utils/browserEnvironment')
+
+let win
+
+describe('getSnowplowDomainUserId', () => {
+  beforeAll(() => {
+    win = global.window
+  })
+
+  afterAll(() => {
+    global.window = win
+  })
+
+  describe('when window is not available', () => {
+    beforeEach(() => {
+      canUseWindow.mockReturnValue(false)
+    })
+
+    test('resolves null', async () => {
+      expect(getSnowplowDomainUserId()).resolves.toEqual(null)
+    })
+  })
+
+  describe('when window.snowplow is not available', () => {
+    beforeEach(() => {
+      global.window = {}
+    })
+
+    test('resolves null', async () => {
+      const result = await getSnowplowDomainUserId()
+      expect(result).toEqual(null)
+    })
+  })
+
+  describe('when window and window.snowplow exist', () => {
+    beforeEach(() => {
+      global.window = {
+        snowplow: () => {}
+      }
+
+      canUseWindow.mockReturnValue(true)
+    })
+
+    // Validating that canUseWindow works as expected
+    // Domain owners should add tests to cover this behaviour
+    test('returns *something*', () => {
+      expect(getSnowplowDomainUserId()).resolves.toBeDefined()
+    })
+  })
+})
 
 describe('isOptimizelyFeatureEnabledFactory', () => {
   let cookieGetSpy
@@ -26,6 +72,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
   const isFeatureEnabled = jest.fn()
 
   beforeEach(() => {
+    canUseWindow.mockReturnValue(true)
     hasValidInstanceSpy = jest.spyOn(optimizelySdk, 'hasValidInstance')
     getOptimizelyInstanceSpy = jest.spyOn(optimizelySdk, 'getOptimizelyInstance').mockResolvedValue({ isFeatureEnabled })
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import * as globalsConfig from 'config/globals.js'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 /**
  * Controls browser "Back" button. If onBack callback provided, back button won't go to 
@@ -9,16 +9,23 @@ import * as globalsConfig from 'config/globals.js'
  * @returns - new callback to use instead onBack.
  */
 export const useBrowserBack = (onBack?: () => void) => {
-  const newCallback = useRef<() => void>(() => history.back())
+  const newCallback = useRef<() => void>(() => {
+    if (canUseWindow()) {
+      window.history.back()
+    }
+  })
+
   useEffect(() => {
-    if (onBack && globalsConfig.client) {
+    if (onBack && canUseWindow()) {
       // adding current URL as entry to browser's session history back so we can go "Back" to it
-      history.pushState(null, document.title, location.href)
+      window.history.pushState(null, document.title, window.location.href)
       window.addEventListener('popstate', onBack)
+
       return () => {
         window.removeEventListener('popstate', onBack)
       }
     }
   }, [onBack])
+
   return newCallback.current
 }

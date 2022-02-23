@@ -38,6 +38,7 @@ import {
 } from 'utils/myDeliveries'
 import { skipDates } from 'routes/Account/apis/subscription'
 import * as orderV2Apis from 'routes/Account/MyDeliveries/apis/orderV2'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 jest.mock('selectors/features')
 
@@ -122,6 +123,8 @@ jest.mock('@datadog/browser-rum', () => ({
   }
 }))
 
+jest.mock('utils/browserEnvironment')
+
 const formValues = {
   delivery: {
     values: {
@@ -171,6 +174,7 @@ const noOp = () => {}
 describe('user actions', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    canUseWindow.mockReturnValue(true)
   })
 
   const [dispatch, getState] = [jest.fn(), jest.fn()]
@@ -207,19 +211,13 @@ describe('user actions', () => {
 
     describe('if server-side rendered', () => {
       beforeEach(() => {
-        // eslint-disable-next-line
-        global.__CLIENT__ = false
+        canUseWindow.mockReturnValue(false)
 
         userActions.userLoadData()(noOp, () => ({
           auth: {
             get: () => 'mock-access-token'
           }
         }))
-      })
-
-      afterAll(() => {
-        // eslint-disable-next-line
-        global.__CLIENT__ = true
       })
 
       test('DD logger context is not modified', () => {

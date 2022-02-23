@@ -1,10 +1,13 @@
 import { actionTypes } from 'actions/actionTypes'
 import * as cookieHelper from 'utils/cookieHelper2'
+import { canUseWindow } from 'utils/browserEnvironment'
 import {
   cookiePolicyAcceptanceChange,
   trackCookiePolicyAccepted,
   trackCookiePolicyVisible,
 } from '../cookies'
+
+jest.mock('utils/browserEnvironment')
 
 describe('cookie actions', () => {
   describe('cookiePolicyAcceptanceChange', () => {
@@ -14,6 +17,7 @@ describe('cookie actions', () => {
     beforeEach(() => {
       dispatch = jest.fn()
       cookieHelperSpy = jest.spyOn(cookieHelper, 'set')
+      canUseWindow.mockReturnValue(true)
     })
 
     afterEach(() => {
@@ -38,13 +42,11 @@ describe('cookie actions', () => {
     })
 
     test('cookie is set to the value passed to the action when not in client', () => {
-      __CLIENT__ = false // eslint-disable-line no-global-assign
+      canUseWindow.mockReturnValue(false)
 
       cookiePolicyAcceptanceChange(true)(dispatch)
 
       expect(cookieHelperSpy).not.toHaveBeenCalled()
-
-      __CLIENT__ = true // eslint-disable-line no-global-assign
     })
   })
 

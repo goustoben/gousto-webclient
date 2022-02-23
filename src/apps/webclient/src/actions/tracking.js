@@ -12,6 +12,7 @@ import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode, getTransactionType } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { trackOrder } from 'apis/tracking'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 const collectionRecommendationSlug = 'recommendations'
 
@@ -96,7 +97,7 @@ export const trackAffiliatePurchase = ({
   isSignup = false
 }) =>
   async (dispatch, getState) => {
-    const awinEnabled = !!(globals.client && window.AWIN)
+    const awinEnabled = !!(canUseWindow() && window.AWIN)
     const { tracking } = getState()
     const awc = tracking.get('awc')
     const tapjoy = tracking.get('tapjoy')

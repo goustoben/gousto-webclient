@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { canUseWindow } from 'utils/browserEnvironment'
 import logger from 'utils/logger'
 
 export const Content = (props) => {
@@ -44,7 +45,7 @@ export const Content = (props) => {
     const contentKeyParts = props.contentKeys.split('.')
     const value = props.state.content.getIn(contentKeyParts)
     if (!value) {
-      if (__CLIENT__) {
+      if (canUseWindow()) {
         logger.warning({message: 'failContentReplacement', errors: [`No value found for key: ${props.contentKeys}`]})
       }
 

@@ -1,10 +1,9 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 import Immutable from 'immutable'
 
-import globals from 'config/globals'
-import { getWindow } from 'utils/window'
 import { actionTypes } from 'actions/actionTypes'
 import { getPathName } from 'middlewares/tracking/utils'
+import { canUseWindow, getWindow } from 'utils/browserEnvironment'
 
 export const pinterestTracking = {
   addRecipeToBasket,
@@ -108,7 +107,7 @@ function getCallbacks() {
  * @param prevState
  */
 export default function Tracker(action, state = {}, prevState) {
-  if (globals.client && getWindow().pintrk) {
+  if (canUseWindow() && getWindow().pintrk) {
     const callbacks = pinterestTracking.getCallbacks()
 
     if (action.type in callbacks) {

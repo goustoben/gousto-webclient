@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { get, set } from 'utils/cookieHelper2'
-
+import { canUseWindow } from 'utils/browserEnvironment'
 import { redirect } from 'utils/window'
 import { AppModal } from '../AppModal'
 
@@ -14,12 +14,13 @@ const mockProps = {
   isAppAwarenessEnabled: true,
   isAuthenticated: true,
   trackAppModalView: jest.fn(),
-  trackClickAppModalInstall: jest.fn()
+  trackClickAppModalInstall: jest.fn(),
 }
 
 jest.mock('utils/cookieHelper2')
 jest.mock('utils/GoustoCookies', () => 'mock-gousto-cookies')
 jest.mock('utils/window')
+jest.mock('utils/browserEnvironment')
 jest.useFakeTimers()
 
 let wrapper
@@ -31,11 +32,27 @@ const mountWithMockTimers = (props = {}) => {
 }
 
 describe('AppModal', () => {
+  beforeEach(() => {
+    canUseWindow.mockReturnValue(true)
+  })
+
+  afterAll(() => {
+    jest.restoreAllMocks()
+  })
+
   describe('view logic', () => {
     test('should not render immediately', () => {
       expect.assertions(1)
 
       wrapper = mount(<AppModal {...mockProps} />)
+
+      expect(wrapper.exists('[data-testing="app-promo-modal"]')).toEqual(false)
+    })
+
+    test('should not render if window is not available', () => {
+      canUseWindow.mockReturnValue(false)
+
+      mountWithMockTimers()
 
       expect(wrapper.exists('[data-testing="app-promo-modal"]')).toEqual(false)
     })
@@ -78,7 +95,7 @@ describe('AppModal', () => {
     test('should not render given Box Summary modal has not yet been dismissed', () => {
       expect.assertions(1)
 
-      mountWithMockTimers({ boxSummaryDismissed: false, isBoxSummaryVisible: true, })
+      mountWithMockTimers({ boxSummaryDismissed: false, isBoxSummaryVisible: true })
 
       expect(wrapper.exists('[data-testing="app-promo-modal"]')).toEqual(false)
     })
@@ -126,7 +143,13 @@ describe('AppModal', () => {
 
       wrapper.find('[data-testing="modal-close-button"]').simulate('click')
 
-      expect(set).toHaveBeenCalledWith('mock-gousto-cookies', 'cookie_app_promotion', 'dismissed', true, 21)
+      expect(set).toHaveBeenCalledWith(
+        'mock-gousto-cookies',
+        'cookie_app_promotion',
+        'dismissed',
+        true,
+        21
+      )
     })
 
     test('should redirect to app store as expected on CTA click', () => {

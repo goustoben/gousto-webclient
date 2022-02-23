@@ -1,8 +1,8 @@
 import { windowLocation, getDocumentElement } from 'utils/window'
-import globals from 'config/globals'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 export function hashLinkScroll() {
-  if (globals.client) {
+  if (canUseWindow()) {
     const {hash} = windowLocation()
     if (hash) {
       const id = hash.replace('#', '')

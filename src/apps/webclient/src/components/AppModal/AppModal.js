@@ -5,6 +5,7 @@ import { client } from 'config/routes'
 import { redirect } from 'utils/window'
 import { set, get } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 import { AppBannerDetails } from 'components/AppBanner'
 import { AnimatedImage } from './AnimatedImage/AnimatedImage'
@@ -59,7 +60,7 @@ class AppModal extends Component {
 
     let hasSeenModal = true
 
-    if (__CLIENT__) {
+    if (canUseWindow()) {
       hasSeenModal = get(Cookies, COOKIE_KEY)
     }
 
@@ -89,7 +90,7 @@ class AppModal extends Component {
   }
 
   setModalViewedCookie = () => {
-    if (__CLIENT__) {
+    if (canUseWindow()) {
       set(Cookies, COOKIE_KEY, COOKIE_VALUE, true, COOKIE_EXPIRY_DAYS)
     }
   }

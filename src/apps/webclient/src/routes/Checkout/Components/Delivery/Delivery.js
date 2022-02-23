@@ -8,9 +8,9 @@ import { Field, FormSection } from 'redux-form'
 import { ReduxFormInput } from 'Form/ReduxFormInput'
 import { HotjarTrigger } from 'HotjarTrigger'
 import * as deliveryUtils from 'routes/Checkout/utils/delivery'
-import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
 import { getSlotTimes } from 'utils/deliveries'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
@@ -58,7 +58,7 @@ export class Delivery extends React.PureComponent {
     const { formValues } = this.props
 
     if (
-      globals.client &&
+      canUseWindow() &&
       this.container &&
       deliveryUtils.isAddressConfirmed(prevProps.formValues) !==
         deliveryUtils.isAddressConfirmed(formValues)

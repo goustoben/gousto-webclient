@@ -2,10 +2,11 @@ import { actionTypes } from 'actions/actionTypes'
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import * as trackingKeys from 'actions/trackingKeys'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 export const appBannerDismiss = () => (
   dispatch => {
-    if (__CLIENT__) {
+    if (canUseWindow()) {
       set(Cookies, 'app_banner_dismissed', true, 1)
     }
 

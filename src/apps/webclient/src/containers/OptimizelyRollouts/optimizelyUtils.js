@@ -1,15 +1,12 @@
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { getAuthUserId } from 'selectors/auth'
-import globalsConfig from 'config/globals'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 import { getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
 
 export const getSnowplowDomainUserId = () => {
-  if (!globalsConfig.client) {
-    return Promise.resolve(null)
-  }
-  if (!window.snowplow) {
+  if (!canUseWindow() || !window.snowplow) {
     return Promise.resolve(null)
   }
 

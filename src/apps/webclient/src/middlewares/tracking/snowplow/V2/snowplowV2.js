@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
-import globals from 'config/globals'
 import { getWindow } from 'utils/window'
 import logger from 'utils/logger'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { loginAttempt, loginRememberMe, loginFailed, loginVisibility, logout } from '../global'
 import { basketTracking } from '../basket'
 import { pauseSubscriptionTracking } from '../pauseSubscription'
@@ -52,7 +52,7 @@ function trackingMap(cases) {
 }
 
 const Tracking = (action, state = {}, prevState = {}) => {
-  if (globals.client) {
+  if (canUseWindow()) {
     const pathname = getPathname(prevState)
 
     trackingMap({
