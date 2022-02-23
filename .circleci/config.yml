@@ -233,10 +233,14 @@ jobs:
           working_directory: src/apps/webclient
           # Use NPM for now to inject setup-common npm config vars; BODA should supercede this
           command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
+      - run:
+          name: Persist CIRCLE_BUILD_NUM for sourcemaps job
+          command: echo BUILD_JOB_BUILD_NUM=$CIRCLE_BUILD_NUM >> ~/.circlerc
       - persist_to_workspace:
           root: /
           paths:
             - mnt/ramdisk/src
+            - root/.circlerc
 
   upload-source-maps-to-datadog:
     docker: *circleci_node_image
@@ -247,7 +251,7 @@ jobs:
       - run:
           name: Upload sourcemaps to datadog
           working_directory: src/apps/webclient
-          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${CIRCLE_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto.info/build/latest/" yarn datadog:upload-sourcemaps
+          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}" ASSET_URL_PREFIX="https://${ENVIRONMENT}-assets.gousto.info/build/latest/" yarn datadog:upload-sourcemaps
 
   upload-assets-to-s3:
     docker: *gousto_platform_image
