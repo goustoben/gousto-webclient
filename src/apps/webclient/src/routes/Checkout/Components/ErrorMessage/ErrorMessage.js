@@ -1,9 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { checkoutConfig } from 'config/checkout'
-import { CTA } from 'goustouicomponents'
+import {
+  FontWeight,
+  Space,
+  Text,
+  Button,
+  ButtonColorVariant,
+  Box,
+} from '@gousto-internal/citrus-react'
 import { Alert } from '../Alert'
-import css from './ErrorMessage.css'
 
 export const ErrorMessage = ({ errorType, onLoginClick }) => {
   if (!errorType) {
@@ -20,19 +26,30 @@ export const ErrorMessage = ({ errorType, onLoginClick }) => {
   const { header, message, showLoginCTA } = messageObject
 
   return (
-    <div data-testing={`${errorType}`} className={css.container}>
-      <Alert>
-        {header && <div className={css.header}>{header}</div>}
-        <div className={css.messageContainer}>{message}</div>
-        {showLoginCTA && (
-          <div className={css.ctaContainer}>
-            <CTA size="small" variant="secondary" isFullWidth onClick={handleLoginClick}>
-              Log in
-            </CTA>
-          </div>
-        )}
-      </Alert>
-    </div>
+    <>
+      <Box data-testing={`${errorType}`}>
+        <Alert>
+          {header && <Text fontWeight={FontWeight.Bold}>{header}</Text>}
+          <Text>{message}</Text>
+          <Space size={4} />
+          {showLoginCTA && (
+            <Box style={{ marginLeft: '-2rem' }}>
+              <Button
+                colorVariant={ButtonColorVariant.Secondary}
+                onClick={handleLoginClick}
+                width="100%"
+                height="3rem"
+              >
+                <Text size={1} fontWeight={FontWeight.Bold}>
+                  Log in
+                </Text>
+              </Button>
+            </Box>
+          )}
+        </Alert>
+      </Box>
+      <Space size={6} />
+    </>
   )
 }
 
