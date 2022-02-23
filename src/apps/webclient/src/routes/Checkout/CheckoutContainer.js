@@ -33,6 +33,7 @@ function mapStateToProps(state, ownProps) {
 const CheckoutPure = (props) => {
   const { pricing } = usePricing()
 
+  /* eslint-disable react/jsx-props-no-spreading */
   return <Checkout {...props} prices={pricing} />
 }
 

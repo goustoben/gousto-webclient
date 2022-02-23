@@ -9,17 +9,17 @@ import { getBasketRecipesCount, getBasketSlotId } from 'selectors/basket'
 import { useAuth } from '../auth'
 
 export type Pricing = {
+  flatDiscountApplied: boolean
+  items: any[]
+  promoCodeValid: boolean
   amountOff: string | null
   deliveryTotal: string | null
-  flatDiscountApplied: boolean
   grossTotal: string | null
-  items: any[]
   percentageOff: string | null
   pricePerPortion: string | null
   pricePerPortionDiscounted: string | null
   productTotal: string | null
   promoCode: string | null
-  promoCodeValid: boolean
   recipeDiscount: string | null
   recipeTotal: string | null
   recipeTotalDiscounted: string | null
@@ -51,6 +51,18 @@ const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Prici
   return { error: null, data: response ? transformOrderPricesV2ToOrderV1(response).data : null }
 }
 
+/**
+ * @typedef {Object} PricingHookResponse
+ * @property {object} pricing - Can also be null or undefined, will return the pricing data if available
+ * @property {boolean} pending - will return the loading state of the fetch call.
+ * @property {boolean} isValid - is true when there's sufficient data to query the `/pricing` endpoint and therefore receive real data.
+ */
+
+/**
+ * Returns the current prices calculated on the base of the items in the basket and promocodes
+ * Using SWR will trigger an api call only once for each set of params
+ * @returns { PricingHookResponse }
+ */
 export const usePricing = (): {
   pricing?: Pricing | null
   pending: boolean

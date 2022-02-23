@@ -32,6 +32,7 @@ const mapStateToProps = (state) => ({
 const DetailsPure = (props) => {
   const { pending, pricing } = usePricing()
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <Details {...props} pricingPending={pending} prices={pricing} />
 }
 

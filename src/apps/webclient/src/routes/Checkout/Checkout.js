@@ -1,6 +1,5 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 import { ReactReduxContext } from 'react-redux'
 import logger from 'utils/logger'
 import routesConfig from 'config/routes'
@@ -146,6 +145,8 @@ class Checkout extends PureComponent {
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())
     }
+
+    return null
   }
 
   constructor(state, props) {

@@ -51,10 +51,10 @@ const ConnectedCheckoutPaymentContainer = connect(
   mapDispatchToProps
 )(CheckoutPayment)
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 const Plain = (props) => {
   const submitOrder = useSubmitOrder()
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <ConnectedCheckoutPaymentContainer {...props} submitOrder={submitOrder} />
 }
 
