@@ -19,7 +19,6 @@ import Receipt from 'Receipt'
 import Loading from 'Loading'
 import { getSurchargeItems } from 'utils/pricing'
 import { basketSum } from 'utils/basket'
-import { SectionHeader } from '../SectionHeader'
 import { PromoCode } from '../PromoCode'
 import css from './Summary.css'
 
