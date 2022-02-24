@@ -15,14 +15,13 @@ import {
   Color,
 } from '@gousto-internal/citrus-react'
 import { RecipeSummary } from '../RecipeSummary'
-import css from './BoxDetails.css'
 
 export const BoxDetails = ({ numPortions, date, deliveryDays, slotId }) => {
   const deliveryDate = moment(date).format('dddd Do MMMM')
   const deliveryTime = getSlotTimes({ date, deliveryDays, slotId })
 
   return (
-    <div className={css.container} data-testing="checkoutBoxDetailsSection">
+    <Box paddingH={6}>
       <Box display="flex" justifyContent={JustifyContent.SpaceBetween}>
         <Heading6>{`Your box (${numPortions} people)`}</Heading6>
         <Link size={1} href={routes.client.menu}>
@@ -35,11 +34,13 @@ export const BoxDetails = ({ numPortions, date, deliveryDays, slotId }) => {
 
       <Box height="1px" bg={Color.NeutralGrey_100} />
       <Space size={4} />
+
       <Heading6>Delivery date</Heading6>
       <Space size={5} />
       <Text fontWeight={FontWeight.SemiBold}>{deliveryDate}</Text>
       <Text uppercase>{deliveryTime}</Text>
-    </div>
+      <Space size={6} />
+    </Box>
   )
 }
 
