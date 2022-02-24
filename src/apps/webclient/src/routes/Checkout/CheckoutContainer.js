@@ -16,6 +16,7 @@ import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { Checkout } from './Checkout'
+import { useSubmitOrder } from './useSubmitOrder'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -32,9 +33,10 @@ function mapStateToProps(state, ownProps) {
 }
 const CheckoutPure = (props) => {
   const { pricing } = usePricing()
+  const submitOrder = useSubmitOrder()
 
   /* eslint-disable react/jsx-props-no-spreading */
-  return <Checkout {...props} prices={pricing} />
+  return <Checkout {...props} prices={pricing} submitOrder={submitOrder} />
 }
 
 const mapDispatchToProps = {

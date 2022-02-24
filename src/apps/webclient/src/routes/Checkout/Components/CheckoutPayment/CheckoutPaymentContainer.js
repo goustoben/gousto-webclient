@@ -11,6 +11,8 @@ import {
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
+import { formatOrderPrice } from 'utils/pricing'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import { useSubmitOrder } from 'routes/Checkout/useSubmitOrder'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
@@ -52,10 +54,19 @@ const ConnectedCheckoutPaymentContainer = connect(
 )(CheckoutPayment)
 
 const Plain = (props) => {
+  const { pricing } = usePricing()
+  const isFreeBox = formatOrderPrice(pricing?.total) === 'FREE'
   const submitOrder = useSubmitOrder()
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <ConnectedCheckoutPaymentContainer {...props} submitOrder={submitOrder} />
+  return (
+    <ConnectedCheckoutPaymentContainer
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      isFreeBox={isFreeBox}
+      pricing={pricing}
+      submitOrder={submitOrder}
+    />
+  )
 }
 
 export const CheckoutPaymentContainer = addInitialValues(

@@ -44,6 +44,7 @@ const propTypes = {
     stepName: PropTypes.string,
   }),
   redirect: PropTypes.func,
+  submitOrder: PropTypes.func,
   trackSignupStep: PropTypes.func,
   query: PropTypes.shape({
     // Not sure how to fix it, so suppressing for now to have clean output.
@@ -76,6 +77,7 @@ const defaultProps = {
   redirect: () => {},
   changeRecaptcha: () => {},
   fetchGoustoRef: () => {},
+  submitOrder: () => {},
   trackSignupStep: () => {},
   query: {
     steps: [],
@@ -87,7 +89,7 @@ const defaultProps = {
   trackCheckoutNavigationLinks: () => {},
   trackSuccessfulCheckoutFlow: () => {},
   trackFailedCheckoutFlow: () => {},
-  prices: {},
+  prices: null,
 
   isLoginOpen: false,
   isAuthenticated: false,
@@ -248,7 +250,7 @@ class Checkout extends PureComponent {
   }
 
   renderSteps = (steps, currentStep) => {
-    const { trackUTMAndPromoCode } = this.props
+    const { submitOrder, trackUTMAndPromoCode } = this.props
     const { checkoutScriptReady, paypalScriptsReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = currentStep === 'payment'
@@ -258,6 +260,7 @@ class Checkout extends PureComponent {
       isLastStep: this.isLastStep(steps, currentStep),
       reloadCheckoutScript: this.loadCheckoutScript,
       onLoginClick: this.handleLoginClick,
+      submitOrder,
       checkoutScriptReady,
       paypalScriptsReady,
       trackUTMAndPromoCode,
