@@ -5,8 +5,7 @@ import {
   Display,
   AlignItems,
   JustifyContent,
-  FontWeight,
-  FontFamily,
+  Heading1,
   Icon,
   IconVariant,
   Space,
@@ -50,16 +49,16 @@ class Summary extends PureComponent {
 
     return (
       <Box bg={Color.White} paddingH={6} paddingV={6} data-testing="CheckoutOrderSummary">
-        <Text size={4} fontFamily={FontFamily.SemiBold} fontWeight={FontWeight.Bold}>
-          Order total
-        </Text>
+        <header>
+          <Heading1 size={4}>Order total</Heading1>
+        </header>
         <Space size={4} direction="vertical" />
         {isLoading ? (
           <div className={css.loaderContainer}>
             <Loading className={css.loadingImage} />
           </div>
         ) : (
-          <Box>
+          <>
             <Box
               bg={Color.Success_50}
               borderColor={Color.Success_200}
@@ -98,7 +97,7 @@ class Summary extends PureComponent {
               />
               {showPromocode && <PromoCode />}
             </Box>
-          </Box>
+          </>
         )}
       </Box>
     )
