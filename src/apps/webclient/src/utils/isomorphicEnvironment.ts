@@ -1,4 +1,5 @@
-import { canUseWindow } from './browserEnvironment'
+import { canUseWindow, getClientEnvironment } from './browserEnvironment'
+import { getServerEnvironment } from '../../server/utils/serverEnvironment'
 
 type CreateIsomorphicConfig<T> = {
   testFn?: () => boolean
@@ -31,5 +32,12 @@ export const createIsomorphicConfig = <T>({
 }: CreateIsomorphicConfig<T>) => {
   const shouldUseBrowserFn = testFn || canUseWindow
 
-  return shouldUseBrowserFn() ? browserConfigFn : serverConfigFn
+  return () => (shouldUseBrowserFn() ? browserConfigFn() : serverConfigFn())
 }
+
+export const getEnvironment = createIsomorphicConfig({
+  browserConfigFn: getClientEnvironment,
+  serverConfigFn: getServerEnvironment,
+})
+
+export const isProd = () => getEnvironment() === 'production'
