@@ -97,6 +97,11 @@ jobs:
           command: |
             source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=$AWS_DEFAULT_REGION)
             echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
+      - run:
+          name: Set Domain
+          command: |
+            source ~/.circlerc && PLATFORM_DOMAIN=$(aws cloudformation describe-stacks --stack-name "cfn-$ENVIRONMENT-platform-defaults" --query "Stacks[].Outputs[?OutputKey=='Domain'][].OutputValue[]" | python -c "import sys, json; print(json.load(sys.stdin)[0])")
+            echo "export PLATFORM_DOMAIN=$PLATFORM_DOMAIN" >> ~/.circlerc
       - setup_remote_docker
       - run:
           name: Setup ECR
@@ -229,7 +234,6 @@ jobs:
           name: Setup environment and npm variables for build
           # The Gousto environment SSM parameters are in root/.circlerc
           command: source ~/.circlerc && source /root/.circlerc && setup/setup-common.sh
-      - run: echo $ENVIRONMENT
       - run:
           name: Build webclient
           working_directory: src/apps/webclient
@@ -425,12 +429,6 @@ jobs:
     steps:
       - attach_workspace:
           at: /
-      - run:
-          name: Test env
-          command: source /root/.circlerc | printenv | sed 's;=.*;;' | sort
-      - run:
-          name: Break it
-          command: asdfsdf
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
           command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
