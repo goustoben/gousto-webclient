@@ -6,8 +6,8 @@ then
 	export CLIENT_PROTOCOL="https"
 	export CHECKOUTCOM_PK=$CHECKOUTCOM_PK_PRODUCTION
 else
-	export DOMAIN=$(aws cloudformation describe-stacks --stack-name "cfn-$ENVIRONMENT-platform-defaults" --query "Stacks[].Outputs[?OutputKey=='Domain'][].OutputValue[]" | \
-python3 -c "import sys, json; print(json.load(sys.stdin)[0])")
+	# PLATFORM_DOMAIN is set in Circle step
+	export DOMAIN=$PLATFORM_DOMAIN
 	export CLIENT_PROTOCOL="https"
 
 	envNameUppercase=$(echo $ENVIRONMENT | tr [a-z] [A-Z])
