@@ -66,14 +66,14 @@ echo "Environment is currently: ${ENVIRONMENT}"
 
 if [[ "${ENVIRONMENT}" == "production" ]]; then
     S3_SRC="s3://s3-gousto-platform-prod/${ENVIRONMENT}/config/service/webclient.yml"
-elif [[ $ENVIRONMENT =~ ^bento ]]
+elif [[ "${ENVIRONMENT}" == "bentodevshopify" ]]
 then
     S3_SRC="s3://s3-gousto-platform-bentobeta/${ENVIRONMENT}/config/service/webclient.yml"
 else
     S3_SRC="s3://s3-gousto-platform-beta/${ENVIRONMENT}/config/service/webclient.yml"
 fi
 
-echo "Going to download: $S3_SRC"
+echo "Going to download: $S3_SRC "
 
 S3_DEST="./secrets.yml"
 
