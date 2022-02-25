@@ -276,11 +276,13 @@ class Checkout extends PureComponent {
   }
 
   renderStaticPayment = (steps, currentStep) => {
+    const { submitOrder } = this.props
     const onPaymentStep = currentStep === 'payment'
     const { checkoutScriptReady, paypalScriptsReady } = this.state
 
     return (
       <CheckoutPaymentContainer
+        submitOrder={submitOrder}
         checkoutScriptReady={checkoutScriptReady}
         paypalScriptsReady={paypalScriptsReady}
         prerender={!onPaymentStep}
