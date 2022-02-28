@@ -1,19 +1,18 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { InputRadio } from 'goustouicomponents'
-import { VariantRecipeListItem } from '../VariantRecipeListItem'
+import { AlternativeOptionItem } from './AlternativeOptionItem'
 
-describe('VariantRecipeListItem', () => {
+describe('AlternativeOptionItem', () => {
   describe('When the variant list is on the details screen', () => {
     describe('When the recipe is checked', () => {
-      const wrapper = mount(<VariantRecipeListItem
+      const wrapper = mount(<AlternativeOptionItem
         recipeId="1230"
         recipeName="Chicken curry"
         changeCheckedRecipe={() => { }}
         isChecked
         isOnDetailScreen
         isOutOfStock={false}
-        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render a radio button input in a highlighted blue box', () => {
         expect(wrapper.find('.listItem.listItemChecked')).toHaveLength(1)
@@ -21,14 +20,13 @@ describe('VariantRecipeListItem', () => {
     })
 
     describe('When the recipe is not checked', () => {
-      const wrapper = mount(<VariantRecipeListItem
+      const wrapper = mount(<AlternativeOptionItem
         recipeId="1230"
         recipeName="Chicken curry"
         changeCheckedRecipe={() => { }}
         isChecked={false}
         isOnDetailScreen
         isOutOfStock={false}
-        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render a radio button input in a grey box', () => {
         expect(wrapper.find('.listItem')).toHaveLength(1)
@@ -37,14 +35,13 @@ describe('VariantRecipeListItem', () => {
     })
 
     describe('When the recipe is sold out', () => {
-      const wrapper = mount(<VariantRecipeListItem
+      const wrapper = mount(<AlternativeOptionItem
         recipeId="1230"
         recipeName="Chicken curry"
         changeCheckedRecipe={() => { }}
         isChecked={false}
         isOnDetailScreen
         isOutOfStock
-        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render a sold out tag', () => {
         expect(wrapper.find('.soldOutText')).toHaveLength(1)
@@ -52,7 +49,7 @@ describe('VariantRecipeListItem', () => {
     })
 
     describe('When the recipe has a surcharge', () => {
-      const wrapper = mount(<VariantRecipeListItem
+      const wrapper = mount(<AlternativeOptionItem
         key="1230"
         recipeId="1230"
         recipeName="Chicken curry"
@@ -61,7 +58,6 @@ describe('VariantRecipeListItem', () => {
         isOnDetailScreen
         isOutOfStock={false}
         surcharge={0.75}
-        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render surcharge info', () => {
         expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
@@ -71,14 +67,13 @@ describe('VariantRecipeListItem', () => {
 
     describe('When the variant list is on the recipe grid', () => {
       describe('When the the recipe is checked', () => {
-        const wrapper = mount(<VariantRecipeListItem
+        const wrapper = mount(<AlternativeOptionItem
           recipeId="1230"
           recipeName="Chicken curry"
           changeCheckedRecipe={() => { }}
           isChecked
           isOnDetailScreen={false}
           isOutOfStock={false}
-          allergenInfo={{containsGlutenAndDairy: true}}
         />)
         test('then it should render a radio button input not in a box', () => {
           expect(wrapper.find('.listItem')).toHaveLength(1)
@@ -86,14 +81,13 @@ describe('VariantRecipeListItem', () => {
       })
 
       describe('When the recipe is not checked', () => {
-        const wrapper = mount(<VariantRecipeListItem
+        const wrapper = mount(<AlternativeOptionItem
           recipeId="1230"
           recipeName="Chicken curry"
           changeCheckedRecipe={() => { }}
           isChecked={false}
           isOnDetailScreen={false}
           isOutOfStock={false}
-          allergenInfo={{containsGlutenAndDairy: true}}
         />)
         test('then it should render a radio button input not in a box', () => {
           expect(wrapper.find('.listItem')).toHaveLength(1)
@@ -101,7 +95,7 @@ describe('VariantRecipeListItem', () => {
       })
 
       describe('When the recipe has a surcharge', () => {
-        const wrapper = mount(<VariantRecipeListItem
+        const wrapper = mount(<AlternativeOptionItem
           key="1230"
           recipeId="1230"
           recipeName="Chicken curry"
@@ -110,7 +104,6 @@ describe('VariantRecipeListItem', () => {
           isOnDetailScreen={false}
           surcharge={0.75}
           isOutOfStock={false}
-          allergenInfo={{containsGlutenAndDairy: true}}
         />)
         test('then it should render surcharge info', () => {
           expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
@@ -125,14 +118,13 @@ describe('VariantRecipeListItem', () => {
     const isOutOfStock = true
 
     const changeCheckedRecipe = jest.fn()
-    const wrapper = mount(<VariantRecipeListItem
+    const wrapper = mount(<AlternativeOptionItem
       recipeId={recipeId}
       recipeName="Chicken curry"
       changeCheckedRecipe={changeCheckedRecipe}
       isChecked={false}
       isOnDetailScreen={false}
       isOutOfStock={isOutOfStock}
-      allergenInfo={{containsGlutenAndDairy: true}}
     />)
 
     const changeRadio = wrapper.find(InputRadio).first().prop('onChange')

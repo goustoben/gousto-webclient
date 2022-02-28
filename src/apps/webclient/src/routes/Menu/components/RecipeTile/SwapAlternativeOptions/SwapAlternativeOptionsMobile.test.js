@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent, cleanup } from '@testing-library/react'
 import Modal from 'react-modal'
 import * as Menu from 'routes/Menu/domains/menu'
-import * as RecipeAlternativeOptionsTracker from 'routes/Menu/Recipe/VariantRecipeList/RecipeAlternativeOptions/useTracking'
+import * as RecipeAlternativeOptionsTracker from '../../RecipeAlternativeOptions/RecipeAlternativeOptions/useTracking'
 import * as Tracker from './useTracking'
 import { SwapAlternativeOptionsMobile } from './SwapAlternativeOptionsMobile'
 
@@ -15,9 +15,6 @@ const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => ([{
   isChecked: true,
   isOnDetailScreen: false,
   isOutOfStock: false,
-  allergenInfo: {
-    containsGlutenOrDairy: false,
-  },
 },{
   recipeId: '222',
   recipeName: 'Test Recipe Two',
@@ -25,9 +22,6 @@ const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => ([{
   isChecked: false,
   isOnDetailScreen: false,
   isOutOfStock: false,
-  allergenInfo: {
-    containsGlutenOrDairy: false,
-  },
 }]))
 
 describe('<SwapAlternativeOptionsMobile />', () => {

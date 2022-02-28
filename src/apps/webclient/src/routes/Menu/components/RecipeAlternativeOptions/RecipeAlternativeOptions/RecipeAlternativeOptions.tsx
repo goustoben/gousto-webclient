@@ -1,18 +1,29 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useMenu } from 'routes/Menu/domains/menu'
-import { VariantRecipeListItem } from '../VariantRecipeListItem/VariantRecipeListItem'
+import { AlternativeOptionItem } from '../AlternativeOptionItem'
 import css from './RecipeAlternativeOptions.css'
 import { useTrackVariantListDisplay } from './useTracking'
+
+type RecipeAlternativeOptionsProps = {
+  recipeId: string
+  originalId: string
+  categoryId?: string
+  closeOnSelection: boolean
+  isOnDetailScreen?: boolean
+  /**
+   * Optional Function to be called upon switching recipes.
+   */
+  onChangeCheckedRecipe: ((_: { previousRecipeId: string; nextRecipeId: string }) => void) | null
+}
 
 export const RecipeAlternativeOptions = ({
   recipeId: currentRecipeId,
   originalId,
   categoryId,
-  closeOnSelection,
+  closeOnSelection = false,
   isOnDetailScreen = false,
-  onChangeCheckedRecipe,
-}) => {
+  onChangeCheckedRecipe = null,
+}: RecipeAlternativeOptionsProps) => {
   const { getAlternativeOptionsForRecipe } = useMenu()
   const recipeWithAlternativeOptions = getAlternativeOptionsForRecipe({
     originalId,
@@ -26,26 +37,41 @@ export const RecipeAlternativeOptions = ({
   // alternative options include the recipe itself
   const ALTERNATIVE_OPTIONS_STARTING_LENGTH = 1
 
-  const hasAlternativeOptions = recipeWithAlternativeOptions.length > ALTERNATIVE_OPTIONS_STARTING_LENGTH
+  const hasAlternativeOptions =
+    recipeWithAlternativeOptions.length > ALTERNATIVE_OPTIONS_STARTING_LENGTH
 
   useTrackVariantListDisplay({
     hasAlternativeOptions,
     view: isOnDetailScreen ? 'details' : 'grid',
   })
 
-  const preventPropagation = (e) => e.stopPropagation()
+  const preventPropagation = (e: React.SyntheticEvent) => e.stopPropagation()
 
   if (!hasAlternativeOptions) {
     return null
   }
 
   return (
-    <>
-      <div className={css.recipeList} role="button" tabIndex={-1} onClick={preventPropagation} onKeyPress={preventPropagation}>
-        {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
-        <ul className={css.recipeListText}>
-          {recipeWithAlternativeOptions.map(({ recipeId, recipeName, changeCheckedRecipe, isChecked, isFromShowcaseMenu, isOutOfStock, surcharge, allergenInfo}) => (
-            <VariantRecipeListItem
+    <div
+      className={css.recipeList}
+      role="button"
+      tabIndex={-1}
+      onClick={preventPropagation}
+      onKeyPress={preventPropagation}
+    >
+      {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
+      <ul className={css.recipeListText}>
+        {recipeWithAlternativeOptions.map(
+          ({
+            recipeId,
+            recipeName,
+            changeCheckedRecipe,
+            isChecked,
+            isFromShowcaseMenu,
+            isOutOfStock,
+            surcharge,
+          }) => (
+            <AlternativeOptionItem
               key={recipeId}
               recipeId={recipeId}
               recipeName={recipeName}
@@ -63,32 +89,11 @@ export const RecipeAlternativeOptions = ({
               isOnDetailScreen={isOnDetailScreen}
               isFromShowcaseMenu={isFromShowcaseMenu}
               isOutOfStock={isOutOfStock}
-              surcharge={surcharge}
-              allergenInfo={allergenInfo}
+              surcharge={surcharge === undefined ? null : surcharge}
             />
           )
-          )}
-        </ul>
-      </div>
-    </>
+        )}
+      </ul>
+    </div>
   )
-}
-
-RecipeAlternativeOptions.propTypes = {
-  recipeId: PropTypes.string.isRequired,
-  originalId: PropTypes.string.isRequired,
-  categoryId: PropTypes.string,
-  closeOnSelection: PropTypes.bool,
-  isOnDetailScreen: PropTypes.bool,
-  /**
-  * Optional Function to be called upon switching recipes.
-  */
-  onChangeCheckedRecipe: PropTypes.func,
-}
-
-RecipeAlternativeOptions.defaultProps = {
-  categoryId: null,
-  closeOnSelection: false,
-  isOnDetailScreen: false,
-  onChangeCheckedRecipe: null,
 }
