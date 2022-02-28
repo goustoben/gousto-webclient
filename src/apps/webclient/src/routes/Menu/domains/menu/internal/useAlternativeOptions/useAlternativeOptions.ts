@@ -13,7 +13,6 @@ import { getRecipeTitle } from 'selectors/recipe'
 import { getRecipes } from 'selectors/root'
 import { Recipe, RecipeImmutable, CollectionImmutable } from './types'
 import { getChangeCheckedRecipeHandler } from './getChangeCheckedRecipeHandler'
-import { getRecipeAllergenInformation } from './getRecipeAllergenInformation'
 
 const compareCoreRecipeIds = (a: Recipe, b: Recipe) =>
   parseInt(a.coreRecipeId, 10) - parseInt(b.coreRecipeId, 10)
@@ -27,7 +26,7 @@ type GetAlternativeOptionsForRecipe<T extends Recipe = Recipe> = (args: {
   /**
    * ID of recipe (alternative option) that is already selected
    */
-  recipeId: string // {menuWithSides ? chosenSideRecipeId : id}
+  recipeId: string
   isOnDetailScreen: boolean
   isFromShowcaseMenu: boolean
 
@@ -43,9 +42,6 @@ type GetAlternativeOptionsForRecipe<T extends Recipe = Recipe> = (args: {
   isOnDetailScreen: boolean
   isOutOfStock: boolean
   surcharge?: number | null
-  allergenInfo: {
-    containsGlutenOrDairy: boolean
-  }
   isFromShowcaseMenu?: boolean
 }[]
 
@@ -135,7 +131,6 @@ export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } 
         isFromShowcaseMenu,
         isOutOfStock: !recipesInStockIds.has(coreRecipeId),
         surcharge,
-        allergenInfo: getRecipeAllergenInformation(coreRecipeId, recipes),
       }
     })
   }

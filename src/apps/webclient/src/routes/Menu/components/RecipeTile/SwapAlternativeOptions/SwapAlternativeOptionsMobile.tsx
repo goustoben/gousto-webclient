@@ -1,7 +1,7 @@
 import React, { useState, useRef, SyntheticEvent } from 'react'
 import PropTypes from 'prop-types'
-import { RecipeAlternativeOptions } from 'routes/Menu/Recipe/VariantRecipeList'
 import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
+import { RecipeAlternativeOptions } from '../../RecipeAlternativeOptions'
 import { useClickOutside } from './useClickOutside'
 import { useTracking } from './useTracking'
 

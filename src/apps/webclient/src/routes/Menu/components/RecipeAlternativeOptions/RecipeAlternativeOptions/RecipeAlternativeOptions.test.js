@@ -16,9 +16,6 @@ describe('RecipeAlternativeOptions', () => {
       isChecked: true,
       isOnDetailScreen: false,
       isOutOfStock: false,
-      allergenInfo: {
-        containsGlutenOrDairy: false,
-      },
     },{
       recipeId: '222',
       recipeName: 'Test Recipe Two',
@@ -26,9 +23,6 @@ describe('RecipeAlternativeOptions', () => {
       isChecked: false,
       isOnDetailScreen: false,
       isOutOfStock: false,
-      allergenInfo: {
-        containsGlutenOrDairy: false,
-      },
     }]))
 
     beforeEach(() => {
@@ -181,9 +175,6 @@ describe('RecipeAlternativeOptions', () => {
       isChecked: true,
       isOnDetailScreen: false,
       isOutOfStock: false,
-      allergenInfo: {
-        containsGlutenOrDairy: false,
-      },
     }]))
 
     beforeEach(() => {

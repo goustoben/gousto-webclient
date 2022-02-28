@@ -9,7 +9,7 @@ import { DetailIngredientsContainer } from '../DetailIngredients'
 import { DetailAllergenIngredientsContainer } from '../DetailAllergenIngredients'
 import { DetailPerPortionContainer } from '../DetailPerPortion'
 import { AttributeGrid } from '../AttributeGrid'
-import { RecipeAlternativeOptions } from '../../../Recipe/VariantRecipeList/RecipeAlternativeOptions'
+import { RecipeAlternativeOptions } from '../../RecipeAlternativeOptions'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -237,7 +237,7 @@ describe('DetailContainer', () => {
         store={store}
       />)
   })
-  test('should send menuWithSides as false', () => {
-    expect(wrapper.find('Detail').prop('menuWithSides')).toBe(false)
+  test('should render', () => {
+    expect(wrapper.find('Detail')).toBeTruthy()
   })
 })

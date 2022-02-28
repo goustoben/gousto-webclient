@@ -16,7 +16,6 @@ function mapStateToProps(state) {
   }
 
   return {
-    menuWithSides: false,
     cutoffDate,
   }
 }

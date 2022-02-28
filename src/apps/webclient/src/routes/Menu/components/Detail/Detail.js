@@ -17,7 +17,7 @@ import { DetailPerPortionContainer } from './DetailPerPortion'
 import { DetailAddRecipe } from './DetailAddRecipe'
 import css from './Detail.css'
 import titleCss from './DetailTitle.css'
-import { RecipeAlternativeOptions } from '../../Recipe/VariantRecipeList'
+import { RecipeAlternativeOptions } from '../RecipeAlternativeOptions'
 import { AttributeGrid } from './AttributeGrid'
 
 export const Detail = (props) => {
@@ -36,7 +36,6 @@ export const Detail = (props) => {
     position,
     surcharge,
     isFineDineIn,
-    menuWithSides,
     isFromShowcaseMenu,
   } = props
 
@@ -106,7 +105,7 @@ export const Detail = (props) => {
           <div className={css.variantsContainer}>
             <RecipeAlternativeOptions
               originalId={id}
-              recipeId={menuWithSides ? chosenSideRecipeId : id}
+              recipeId={id}
               isOnDetailScreen
               isFromShowcaseMenu={isFromShowcaseMenu}
               categoryId={currentCollectionId}
@@ -176,7 +175,6 @@ Detail.propTypes = {
   position: PropTypes.number,
   isFineDineIn: PropTypes.bool,
   surcharge: PropTypes.number,
-  menuWithSides: PropTypes.bool,
   isFromShowcaseMenu: PropTypes.bool,
 }
 
@@ -186,6 +184,5 @@ Detail.defaultProps = {
   average: 0,
   isFineDineIn: false,
   chosenSideRecipeId: null,
-  menuWithSides: false,
   isFromShowcaseMenu: false,
 }
