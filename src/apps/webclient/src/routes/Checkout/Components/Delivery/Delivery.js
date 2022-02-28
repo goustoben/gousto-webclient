@@ -1,3 +1,12 @@
+import {
+  Box,
+  Display,
+  Text,
+  Space,
+  FontWeight,
+  BorderStyle,
+} from '@gousto-internal/citrus-react'
+
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -106,11 +115,21 @@ export class Delivery extends React.PureComponent {
     const deliveryTime = getSlotTimes({ date, deliveryDays, slotId })
 
     return (
-      <div className={css.dateContainer}>
-        Your selected delivery day is &nbsp;
-        <div className={css.boldDeliveryDate}>{deliveryDate}</div>,&nbsp;
-        <div className={css.upperCase}>{deliveryTime}</div>
-      </div>
+      <>
+        <div className={css.dateContainer}>
+          Your selected delivery day is &nbsp;
+          <div className={css.boldDeliveryDate}>{deliveryDate}</div>,&nbsp;
+          <div className={css.upperCase}>{deliveryTime}</div>
+        </div>
+
+        <Box display={Display.Flex}>
+          <Text>
+            Your selected delivery day is &nbsp;
+            <Text fontWeight={FontWeight.Bold}>{deliveryDate}</Text>,&nbsp;
+            <div className={css.upperCase}>{deliveryTime}</div>
+          </Text>
+        </Box>
+      </>
     )
   }
 
@@ -159,6 +178,52 @@ export class Delivery extends React.PureComponent {
           </FormSection>
           <HotjarTrigger name="pbc_delivery_and_payment" shouldInvoke={false} />
         </div>
+
+        <Box
+          borderStyle={BorderStyle.Solid}
+          borderTopWidth={1}
+          borderBottomWidth={1}
+          borderColor={}
+          paddingH={3}
+          paddingV={4}
+          data-testing="checkoutDeliverySection"
+        >
+          <Space size={4} direction="vertical"/>
+          <SectionHeader title="Delivery details" />
+          <DeliveryCard iconName="icon-calendar" cardStyle="blue">
+            {this.renderDeliveryDay()}
+          </DeliveryCard>
+          <FormSection name={sectionName}>
+            <Box display={Display.Flex}>
+              <Box>
+                <Field
+                  name="firstName"
+                  component={ReduxFormInput}
+                  inputType="Input"
+                  autoComplete="given-name"
+                  type="text"
+                  label="First name"
+                  refId={`${sectionName}.firstName`}
+                  dataTesting="checkoutFirstNameInput"
+                />
+              </Box>
+              <Box>
+                <Field
+                  name="lastName"
+                  component={ReduxFormInput}
+                  inputType="Input"
+                  autoComplete="family-name"
+                  type="text"
+                  label="Last name"
+                  refId={`${sectionName}.lastName`}
+                  dataTesting="checkoutLastNameInput"
+                />
+              </Box>
+            </Box>
+            {this.renderAddress()}
+          </FormSection>
+          <HotjarTrigger name="pbc_delivery_and_payment" shouldInvoke={false} />
+        </Box>
       </div>
     )
   }
