@@ -8,7 +8,7 @@ gousto_platform_image: &gousto_platform_image
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 gousto_node_image: &gousto_node_image
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/node14:latest
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circlecinode-image/node14:latest
       aws_auth:
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
