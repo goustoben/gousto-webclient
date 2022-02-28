@@ -1,9 +1,9 @@
+import { Box, Display, Link, Text, FontFamily } from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import { Field, FormSection } from 'redux-form'
 import { ReduxFormInput } from 'Form/ReduxFormInput'
-import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { checkoutClickContinueToDelivery, checkoutClickPrivacyPolicy } from 'actions/trackingKeys'
 import { ErrorMessage } from '../ErrorMessage'
@@ -42,21 +42,29 @@ class AboutYou extends PureComponent {
     const { onLoginClick, isGoustoOnDemandEnabled } = this.props
 
     return (
-      <span className={css.emailLabelContainer}>
-        Email address
-        <span className={classNames(css.account, { [css.isHidden]: isGoustoOnDemandEnabled })}>
-          Have an account?&nbsp;
-          <span
-            className={css.link}
-            role="button"
-            tabIndex="0"
-            onClick={onLoginClick}
-            onKeyDown={onEnter(onLoginClick)}
-          >
-            Log in
-          </span>
-        </span>
-      </span>
+      <Box display={Display.Flex} alignItems="center" justifyContent="space-between">
+        <Text fontFamily={FontFamily.SemiBold}>Email address</Text>
+        <Box>
+          <Text size={1}>
+            {!isGoustoOnDemandEnabled && (
+              <>
+                Have an account?&nbsp;
+                {/* eslint-disable-next-line */}
+                <Link
+                  size={1}
+                  role="button"
+                  tabIndex="0"
+                  variant="Text"
+                  onClick={onLoginClick}
+                  onKeyDown={onEnter(onLoginClick)}
+                >
+                  Log in
+                </Link>
+              </>
+            )}
+          </Text>
+        </Box>
+      </Box>
     )
   }
 
