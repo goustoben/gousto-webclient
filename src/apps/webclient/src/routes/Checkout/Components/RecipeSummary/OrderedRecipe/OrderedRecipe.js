@@ -1,3 +1,4 @@
+import { Box, Text, Space, FontWeight, FontFamily, Color } from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
@@ -7,15 +8,26 @@ import { ButtonsContainer } from '../Buttons'
 import css from './OrderedRecipe.css'
 
 export const OrderedRecipes = ({ title, recipeId, stock, media, featureBtn, isFineDineIn }) => (
-  <div className={css.container}>
-    <GoustoImage media={media.getIn([1, 'src'])} title={title} className={css.image} />
-    <div className={css.recipeContainer}>
-      <div className={css.recipeName}>
-        <span className={css.recipeTitle}>{title}</span>
+  <>
+    <Box display="flex" paddingBottom={2}>
+      <GoustoImage media={media.getIn([1, 'src'])} title={title} className={css.image} />
+      <Space size={4} direction="horizontal" />
+      <Box>
+        <Text fontWeight={FontWeight.SemiBold} fontFamily={FontFamily.SemiBold} size={2}>
+          {title}
+        </Text>
         {isFineDineIn ? (
-          <span className={css.detailsRow}>
-            <span className={css.fineDineIn}>Fine Dine In</span>
-          </span>
+          <Box
+            bg={Color.Informative_50}
+            borderRadius={2.5}
+            display="inline-block"
+            paddingV={0.5}
+            paddingH={1}
+          >
+            <Text size={0} fontWeight={FontWeight.Normal}>
+              Fine Dine In
+            </Text>
+          </Box>
         ) : null}
         {featureBtn && (
           <ButtonsContainer
@@ -27,9 +39,9 @@ export const OrderedRecipes = ({ title, recipeId, stock, media, featureBtn, isFi
             showControl
           />
         )}
-      </div>
-    </div>
-  </div>
+      </Box>
+    </Box>
+  </>
 )
 
 OrderedRecipes.propTypes = {
