@@ -25,13 +25,13 @@ const DeliveryEducationBanner = () => (
       flexDirection="column"
     >
       <Box display="flex" AlignItems={AlignItems.Center}>
-        <Icon name="cool" variant={IconVariant.Informative_900} />
+        <Icon name="cool" variant={IconVariant.Informative} />
         <Space size={4} direction="horizontal" />
         <Text size={2}>Insulated packaging keeps your ingredients fresh for up to 12 hours.</Text>
       </Box>
       <Space size={2} />
       <Box display="flex" AlignItems={AlignItems.Center}>
-        <Icon name="delivery" variant={IconVariant.Informative_900} />
+        <Icon name="delivery" variant={IconVariant.Informative} />
         <Space size={4} direction="horizontal" />
         <Text size={2}>Delivery slot updates on the day via text and email.</Text>
       </Box>
