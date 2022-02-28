@@ -22,7 +22,7 @@ describe('Summary Component', () => {
 
   describe('when isLoading is true', () => {
     test('should be rendered correctly', () => {
-      expect(wrapper.find('SectionHeader').exists()).toBeTruthy()
+      expect(wrapper.find({ 'data-testing': 'CheckoutOrderSummary' }).exists()).toBeTruthy()
       expect(wrapper.find('Loading').exists()).toBeTruthy()
     })
   })
@@ -35,7 +35,7 @@ describe('Summary Component', () => {
     })
 
     test('should be rendered correctly', () => {
-      expect(wrapper.find('SectionHeader').exists()).toBeTruthy()
+      expect(wrapper.find({ 'data-testing': 'CheckoutOrderSummary' }).exists()).toBeTruthy()
       expect(wrapper.find(PricePerServingMessage).exists()).toBeTruthy()
       expect(wrapper.find('Receipt').exists()).toBeTruthy()
       expect(wrapper.find(PromoCode).exists()).toBeTruthy()

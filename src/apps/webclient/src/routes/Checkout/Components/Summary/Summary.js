@@ -1,12 +1,23 @@
+import {
+  Box,
+  Text,
+  Color,
+  Display,
+  AlignItems,
+  JustifyContent,
+  Heading1,
+  Icon,
+  IconVariant,
+  Space,
+} from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import { PricePerServingMessage } from 'PricePerServingMessage'
 import Receipt from 'Receipt'
 import Loading from 'Loading'
 import { getSurchargeItems } from 'utils/pricing'
 import { basketSum } from 'utils/basket'
-import { SectionHeader } from '../SectionHeader'
 import { PromoCode } from '../PromoCode'
 import css from './Summary.css'
 
@@ -37,19 +48,39 @@ class Summary extends PureComponent {
     const numRecipes = basketSum(basketRecipes)
 
     return (
-      <div className={css.summaryContainerRedesign} data-testing="checkoutOrderSummary">
-        <SectionHeader title="Order total" />
+      <Box bg={Color.White} paddingH={6} paddingV={6} data-testing="CheckoutOrderSummary">
+        <header>
+          <Heading1 size={4}>Order total</Heading1>
+        </header>
+        <Space size={4} direction="vertical" />
         {isLoading ? (
           <div className={css.loaderContainer}>
             <Loading className={css.loadingImage} />
           </div>
         ) : (
-          <Fragment>
-            <div className={css.pricePerServingBlock}>
-              <div className={css.discountIcon} />
+          <>
+            <Box
+              bg={Color.Success_50}
+              borderColor={Color.Success_200}
+              paddingV={2}
+              paddingH={3}
+              display={Display.Flex}
+              alignItems={AlignItems.Center}
+              justifyContent={JustifyContent.Center}
+              borderWidth={0.5}
+              borderStyle="solid"
+              borderRadius={1.5}
+            >
+              <Text color={Color.Success_900}>
+                <Space size={2} direction="vertical" />
+                <Icon name="offer_percentage" variant={IconVariant.Inherit} />
+              </Text>
+
+              <Space size={2} direction="horizontal" />
               <PricePerServingMessage isPriceInCheckout />
-            </div>
-            <div className={css.details}>
+            </Box>
+            <Space size={5} direction="vertical" />
+            <Box>
               <Receipt
                 numRecipes={numRecipes}
                 prices={prices}
@@ -65,10 +96,10 @@ class Summary extends PureComponent {
                 isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
               />
               {showPromocode && <PromoCode />}
-            </div>
-          </Fragment>
+            </Box>
+          </>
         )}
-      </div>
+      </Box>
     )
   }
 }
