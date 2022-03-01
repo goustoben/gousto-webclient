@@ -8,6 +8,7 @@ import { RECAPTCHA_PRIVATE_KEY } from '../../config/recaptcha'
 jest.mock('../../utils/logger', () => ({
   error: jest.fn(),
   notice: jest.fn(),
+  warning: jest.fn(),
 }))
 
 jest.mock('apis/fetchS3', () => ({
