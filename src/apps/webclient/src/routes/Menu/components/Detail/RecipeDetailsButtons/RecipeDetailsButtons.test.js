@@ -1,44 +1,42 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { mount, shallow } from 'enzyme'
-import Immutable from 'immutable'
-import Buttons from 'routes/Menu/Recipe/Buttons/Buttons'
-import ButtonsContainer from '.'
+import { shallow } from 'enzyme'
+import * as Redux from 'react-redux'
+import * as Basket from 'routes/Menu/domains/basket'
+import * as Menu from 'routes/Menu/domains/menu'
+import * as Auth from 'routes/Menu/domains/auth'
+import actions from 'actions'
+import * as UseSurchargePerPortion from './useSurchargePerPortion'
+import * as BasketActions from '../../../actions/basketRecipes'
+import { RecipeDetailsButtons } from './RecipeDetailsButtons'
 
-describe('the Buttons component', () => {
+describe('the RecipeDetailsButtons component', () => {
   let wrapper
 
   const buttonsProps = {
-    onAdd: jest.fn(),
-    onRemove: jest.fn(),
-    limitReached: false,
     recipeId: '12345',
     position: 10,
-    qty: 0,
-    numPortions: 2,
     view: 'grid',
     isOutOfStock: false,
-    disable: false,
-    stock: 1000,
-    menuBrowseCTAVisibilityChange: jest.fn(),
-    menuRecipeDetailVisibilityChange: jest.fn(),
-    surchargePerPortion: null,
-    score: null,
-    basketPostcode: 'W3',
   }
 
   afterEach(() => {
     jest.clearAllMocks()
   })
 
-  test('renders without crashing', () => {
-    const div = document.createElement('div')
-    ReactDOM.render(<Buttons {...buttonsProps} />, div)
+  describe('with most common props', () => {
+    beforeAll(() => mockUp())
+
+    test('renders without crashing', () => {
+      const div = document.createElement('div')
+      ReactDOM.render(<RecipeDetailsButtons {...buttonsProps} />, div)
+    })
   })
 
   describe('the appearance', () => {
     beforeEach(() => {
-      wrapper = shallow(<Buttons {...buttonsProps} />)
+      mockUp()
+      wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
     })
 
     test('renders a single Button', () => {
@@ -61,7 +59,8 @@ describe('the Buttons component', () => {
 
       describe('and the recipe has a surcharge', () => {
         beforeEach(() => {
-          wrapper.setProps({ surchargePerPortion: 2.99 })
+          mockUp({ surchargePerPortion: 2.99 })
+          wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
         })
 
         test('renders a Surcharge component', () => {
@@ -79,7 +78,7 @@ describe('the Buttons component', () => {
 
         describe('when viewing the recipe in detail', () => {
           beforeEach(() => {
-            wrapper.setProps({ view: 'detail'})
+            wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="detail" />)
           })
 
           test('does not have the classes for surcharge recipes in grid view', () => {
@@ -91,18 +90,12 @@ describe('the Buttons component', () => {
 
       describe('and the basket limit has been reached', () => {
         beforeEach(() => {
-          wrapper.setProps({ limitReached: true })
+          mockUp({ reachedLimit: true })
+          wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
         })
 
         test('the button is disabled', () => {
           expect(wrapper.find('Segment').prop('disabled')).toBe(true)
-        })
-
-        test('shows the correct tooltip', () => {
-          expect(wrapper.find('Tooltip').prop('message')).toBe('You\'ve run out of space in your box!')
-          wrapper.find('Tooltip').props().onVisibleChange(true)
-          wrapper.update()
-          expect(wrapper.find('Tooltip').prop('visible')).toBe(true)
         })
       })
     })
@@ -115,10 +108,8 @@ describe('the Buttons component', () => {
       const shortMessage = `${totalPortions} Added`
 
       beforeEach(() => {
-        wrapper.setProps({
-          qty: newQty,
-          numPortions
-        })
+        mockUp({ quantity: newQty, numPortions })
+        wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="detail" />)
       })
 
       test('renders 3 Segments', () => {
@@ -140,7 +131,8 @@ describe('the Buttons component', () => {
 
       describe('and the selected recipe has a surcharge', () => {
         beforeEach(() => {
-          wrapper.setProps({ surchargePerPortion: 2.99 })
+          mockUp({ quantity: newQty, numPortions, surchargePerPortion: 2.99 })
+          wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="grid" />)
         })
 
         test('renders a Surcharge component', () => {
@@ -158,7 +150,8 @@ describe('the Buttons component', () => {
 
         describe('when viewing the recipe in detail', () => {
           beforeEach(() => {
-            wrapper.setProps({ view: 'detail'})
+            mockUp({ quantity: newQty, numPortions, surchargePerPortion: 2.99 })
+            wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="detail" />)
           })
 
           test('does not have the classes for surcharge recipes in grid view', () => {
@@ -170,48 +163,30 @@ describe('the Buttons component', () => {
 
       describe('and the basket limit has been reached', () => {
         beforeEach(() => {
-          wrapper.setProps({ limitReached: true })
+          mockUp({ quantity: newQty, numPortions, reachedLimit: true })
+          wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="detail" />)
         })
 
         test('shows the add button as disabled', () => {
           expect(wrapper.find('Segment').at(2).prop('disabled')).toBe(true)
         })
-
-        test('shows the correct tooltip over the add button', () => {
-          expect(wrapper.find('Tooltip').prop('message')).toBe('You\'ve run out of space in your box!')
-          wrapper.find('Tooltip').props().onVisibleChange(true)
-          wrapper.update()
-          expect(wrapper.find('Tooltip').prop('visible')).toBe(true)
-        })
       })
 
       describe('and the recipe is out of stock', () => {
         beforeEach(() => {
-          wrapper.setProps({ isOutOfStock: true })
+          mockUp({ quantity: newQty, numPortions })
+          wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="detail" isOutOfStock />)
         })
 
         test('shows the add button as disabled', () => {
           expect(wrapper.find('Segment').last().prop('disabled')).toBe(true)
-        })
-
-        test('shows the correct tooltip over the add button', () => {
-          expect(wrapper.find('Tooltip').prop('message')).toBe('You got the last one')
-          wrapper.find('Tooltip').props().onVisibleChange(true)
-          wrapper.update()
-          expect(wrapper.find('Tooltip').prop('visible')).toBe(true)
         })
       })
     })
   })
 
   describe('the functionality', () => {
-    const { recipeId, view, position, score, onAdd, onRemove } = buttonsProps
-    const menuBrowseCTAVisibilityChangeSpy = jest.fn()
-    const newButtonProps = {
-      ...buttonsProps,
-      menuBrowseCTAVisibilityChange: menuBrowseCTAVisibilityChangeSpy,
-      basketPostcode: ''
-    }
+    const { recipeId, view, position, score } = buttonsProps
 
     describe('Given the recipe is not selected', () => {
       let buttonContent
@@ -219,11 +194,17 @@ describe('the Buttons component', () => {
       describe('when the stock is not null', () => {
         describe('when the disable prop is false', () => {
           describe('and clicking to adding a recipe', () => {
+            let basketRecipeAdd
+
+            beforeEach(() => {
+              ({basketRecipeAdd} = mockUp())
+              wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+            })
+
             test('then it adds the recipe', () => {
-              wrapper = mount(<Buttons {...buttonsProps} />)
-              buttonContent = wrapper.find('Tooltip').find('Segment')
+              buttonContent = wrapper.find('Segment').first()
               buttonContent.simulate('click')
-              expect(onAdd).toHaveBeenCalledWith(
+              expect(basketRecipeAdd).toHaveBeenCalledWith(
                 recipeId,
                 view,
                 { position, score }
@@ -231,36 +212,54 @@ describe('the Buttons component', () => {
             })
           })
         })
-
-        describe('When the disable prop is true', () => {
-          describe('and clicking to add a recipe', () => {
-            test('then the recipe is not added', () => {
-              wrapper = mount(<Buttons {...buttonsProps} disable />)
-              buttonContent = wrapper.find('Tooltip').find('Segment')
-              buttonContent.simulate('click')
-              expect(onAdd).not.toHaveBeenCalled()
-            })
-          })
-        })
       })
 
       describe('When the stock is null', () => {
         describe('and clicking to add a recipe', () => {
+          let basketRecipeAdd
+
+          beforeEach(() => {
+            ({basketRecipeAdd} = mockUp({stockLevel: null}))
+            wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+          })
+
           test('then the recipe is not added', () => {
-            wrapper = mount(<Buttons {...buttonsProps} stock={null} />)
-            buttonContent = wrapper.find('Tooltip').find('Segment')
+            buttonContent = wrapper.find('Segment').first()
             buttonContent.simulate('click')
-            expect(onAdd).not.toHaveBeenCalled()
+            expect(basketRecipeAdd).not.toHaveBeenCalled()
           })
         })
       })
 
       describe('When the postcode is empty', () => {
+        let menuBrowseCTAVisibilityChange
+
+        beforeEach(() => {
+          ({menuBrowseCTAVisibilityChange} = mockUp({stockLevel: null}))
+          wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+        })
+
         test('then it should call menuBrowseCTAVisibilityChange', () => {
-          wrapper = mount(<Buttons {...newButtonProps} />)
-          buttonContent = wrapper.find('Tooltip').find('Segment')
+          buttonContent = wrapper.find('Segment').first()
           buttonContent.simulate('click')
-          expect(menuBrowseCTAVisibilityChangeSpy).toHaveBeenCalled()
+          expect(menuBrowseCTAVisibilityChange).toHaveBeenCalled()
+        })
+      })
+
+      describe('when view is detail and no postcode', () => {
+        let menuBrowseCTAVisibilityChange
+
+        beforeEach(() => {
+          ({menuBrowseCTAVisibilityChange} = mockUp({stockLevel: null}))
+          jest.useFakeTimers()
+          wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="detail" />)
+        })
+
+        test('then it should call menuBrowseCTAVisibilityChange', () => {
+          buttonContent = wrapper.find('Segment').first()
+          buttonContent.simulate('click')
+          jest.advanceTimersByTime(3000)
+          expect(menuBrowseCTAVisibilityChange).toHaveBeenCalled()
         })
       })
     })
@@ -272,12 +271,18 @@ describe('the Buttons component', () => {
       describe('When the button is not disabled', () => {
         describe('When the stock is not null', () => {
           describe('and clicking to add a recipe', () => {
+            let basketRecipeAdd
+
+            beforeEach(() => {
+              ({basketRecipeAdd} = mockUp({quantity: 2}))
+              wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+            })
+
             test('then it should add the recipe', () => {
-              wrapper = mount(<Buttons {...buttonsProps} qty={2} />)
-              segmentRemove = wrapper.find('Segment').at(1)
-              segmentAdd = wrapper.find('Segment').at(3)
+              segmentRemove = wrapper.find('Segment').at(0)
+              segmentAdd = wrapper.find('Segment').at(2)
               segmentAdd.simulate('click')
-              expect(onAdd).toHaveBeenCalledWith(
+              expect(basketRecipeAdd).toHaveBeenCalledWith(
                 recipeId,
                 view,
                 { position, score }
@@ -286,15 +291,19 @@ describe('the Buttons component', () => {
           })
 
           describe('When clicking to remove a recipe', () => {
+            let basketRecipeRemove
+
+            beforeEach(() => {
+              ({ basketRecipeRemove } = mockUp({quantity: 2}))
+              wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+            })
             test('then it should remove the recipe', () => {
-              wrapper = mount(<Buttons {...buttonsProps} qty={2} />)
-              segmentRemove = wrapper.find('Segment').at(1)
+              segmentRemove = wrapper.find('Segment').at(0)
               segmentRemove.simulate('click')
-              expect(onRemove).toHaveBeenCalledWith(
+              expect(basketRecipeRemove).toHaveBeenCalledWith(
                 recipeId,
                 view,
                 position,
-                score
               )
             })
           })
@@ -302,98 +311,74 @@ describe('the Buttons component', () => {
 
         describe('When stock is null', () => {
           describe('and clicking to add a recipe', () => {
+            let basketRecipeAdd
+
+            beforeEach(() => {
+              ({basketRecipeAdd} = mockUp({quantity: 2, stockLevel: null}))
+              wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+            })
+
             test('then the recipe is not added', () => {
-              wrapper = mount(<Buttons {...newButtonProps} stock={null} qty={2} />)
-              segmentAdd = wrapper.find('Segment').at(3)
+              segmentAdd = wrapper.find('Segment').at(2)
               segmentAdd.simulate('click')
-              expect(onAdd).not.toHaveBeenCalled()
+              expect(basketRecipeAdd).not.toHaveBeenCalled()
             })
           })
 
           describe('When clicking to remove a recipe', () => {
+            let basketRecipeRemove
+
+            beforeEach(() => {
+              ({ basketRecipeRemove } = mockUp({quantity: 2, stockLevel: null}))
+              wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+            })
             test('then it should remove the recipe', () => {
-              wrapper = mount(<Buttons {...newButtonProps} stock={null} qty={2} />)
               segmentRemove.simulate('click')
-              expect(onRemove).toHaveBeenCalledWith(
+              expect(basketRecipeRemove).toHaveBeenCalledWith(
                 recipeId,
                 view,
                 position,
-                score
               )
             })
           })
         })
       })
-
-      describe('When the disable prop is true', () => {
-        describe('and clicking to add a recipe', () => {
-          test('then the recipe is not added', () => {
-            wrapper = mount(<Buttons {...buttonsProps} disable qty={2} />)
-            segmentAdd = wrapper.find('Segment').at(3)
-            segmentAdd.simulate('click')
-            expect(onAdd).not.toHaveBeenCalled()
-          })
-        })
-
-        describe('and clicking to remove a recipe', () => {
-          test('removes the recipe', () => {
-            wrapper = mount(<Buttons {...buttonsProps} disable qty={2} />)
-            segmentRemove = wrapper.find('Segment').at(1)
-            segmentRemove.simulate('click')
-            expect(onRemove).toHaveBeenCalledWith(
-              recipeId,
-              view,
-              position,
-              score
-            )
-          })
-        })
-      })
     })
   })
 })
 
-describe.skip('ButtonsContainer', () => {
-  let state
-  let wrapper
+  const mockUp = ({
+    numPortions = 2,
+    reachedLimit = false,
+    canAddRecipes = true,
+    quantity = 0,
+    stockLevel = 1000,
+    isAdmin = false,
+    surchargePerPortion = null,
+  } = {}) => {
+    const dispatch = jest.fn()
 
-  beforeEach(() => {
-    state = {
-      auth: Immutable.fromJS({
-        isAdmin: false
-      }),
-      basket: Immutable.fromJS({
-        numPortions: 2
-      }),
-      recipes: Immutable.fromJS({
-        1: {
-          meals: [{
-            numPortions: 2,
-            surcharge: null
-          }]
-        }
-      }),
-      menuRecipeStock: Immutable.fromJS({
-        1: {
-          2: 1000
-        }
-      }),
-      menuCollections: Immutable.fromJS({
-      }),
-    }
+    jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
+    jest.spyOn(Basket, 'useBasket').mockImplementation(() => ({
+      numPortions,
+      reachedLimit,
+      canAddRecipes,
+      getQuantitiesForRecipeId: () => quantity,
+    }))
+    jest.spyOn(Menu, 'useStock').mockImplementation(() => ({
+      getStockForRecipe: () => stockLevel,
+    }))
+    jest.spyOn(Auth, 'useAuth').mockImplementation(() => ({ isAdmin }))
+    jest.spyOn(UseSurchargePerPortion, 'useSurchargePerPortion').mockImplementation(() => surchargePerPortion)
 
-    wrapper = shallow(<ButtonsContainer recipeId="1" />, {
-      context: {
-        store: {
-          getState: () => state,
-          dispatch: () => {},
-          subscribe: () => {}
-        }
-      }
-    })
-  })
+    const basketRecipeAdd = jest.fn()
+    jest.spyOn(BasketActions, 'basketRecipeAdd').mockImplementation(basketRecipeAdd)
 
-  test('should render Buttons component', () => {
-    expect(wrapper.find('Buttons')).toHaveLength(1)
-  })
-})
+    const basketRecipeRemove = jest.fn()
+    jest.spyOn(BasketActions, 'basketRecipeRemove').mockImplementation(basketRecipeRemove)
+
+    const menuBrowseCTAVisibilityChange = jest.fn()
+    jest.spyOn(actions, 'menuBrowseCTAVisibilityChange').mockImplementation(menuBrowseCTAVisibilityChange)
+
+    return {dispatch, basketRecipeAdd, basketRecipeRemove, menuBrowseCTAVisibilityChange}
+  }

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { shallow } from 'enzyme'
 
-import Surcharge from 'routes/Menu/Recipe/Buttons/Surcharge'
+import { Surcharge } from './Surcharge'
 
 describe('<Surcharge />', () => {
   let wrapper
