@@ -25,24 +25,23 @@ export const SubscriptionTransparency = () => (
     </div>
 
     <Box
-      paddingH={[0, 2]}
+      paddingH={[0]}
       display="flex"
       justifyContent={JustifyContent.Center}
-      maxWidth={['25.6rem', 'auto']}
+      maxWidth={['25.6rem']}
       alignItems={AlignItems.Center}
     >
       <Box>
         <Icon name="tick" variant={IconVariant.Confirmation} />
-        <Space size={3} direction="horizontal" />
+        <Space size={1} direction="horizontal" />
       </Box>
 
       <Text size={2} textAlign="center">
-        <span style={{ fontWeight: FontFamily.Bold, color: Color.Informative_100 }}>
+        <Text fontWeight={FontFamily.Bold} color={Color.Success_600} display="inline-block">
           No commitment. No cancellation fees.
-        </span>{' '}
+        </Text>{' '}
         Skip a box or cancel your subscription online at anytime.
       </Text>
     </Box>
   </>
 )
-console.log(123, Color.Success_600)
