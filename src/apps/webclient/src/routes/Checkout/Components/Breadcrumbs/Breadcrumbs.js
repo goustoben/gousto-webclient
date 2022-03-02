@@ -9,32 +9,61 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReach
   const trackNavigation = (label) => () => trackCheckoutNavigationLinks(label)
 
   return (
-    <div className={css.breadcrumbsContainer}>
-      <ul className={css.breadcrumbsList}>
-        {items.map(({ id, label }, index) => (
-          <li key={id} className={css.listItem}>
-            {index > lastReachedStepIndex ? (
-              <span className={css.futureItem}>{label}</span>
-            ) : (
-              <Link
-                clientRouted
-                to={`/check-out/${id}`}
-                tracking={trackNavigation(label)}
-                className={classNames(css.linkItem, { [css.isActive]: id === currentId })}
-              >
-                {label}
-              </Link>
-            )}
-            <Svg
-              fileName="icon-chevron-small-right"
-              className={classNames(css.breadcrumbsSeparator, {
-                [css.hidden]: index === items.length - 1,
-              })}
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className={css.breadcrumbsContainer}>
+        <ul className={css.breadcrumbsList}>
+          {items.map(({ id, label }, index) => (
+            <li key={id} className={css.listItem}>
+              {index > lastReachedStepIndex ? (
+                <span className={css.futureItem}>{label}</span>
+              ) : (
+                <Link
+                  clientRouted
+                  to={`/check-out/${id}`}
+                  tracking={trackNavigation(label)}
+                  className={classNames(css.linkItem, { [css.isActive]: id === currentId })}
+                >
+                  {label}
+                </Link>
+              )}
+              <Svg
+                fileName="icon-chevron-small-right"
+                className={classNames(css.breadcrumbsSeparator, {
+                  [css.hidden]: index === items.length - 1,
+                })}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* <div className={css.breadcrumbsContainer}>
+        <ul className={css.breadcrumbsList}>
+          {items.map(({ id, label }, index) => (
+            <li key={id} className={css.listItem}>
+              {index > lastReachedStepIndex ? (
+                <span className={css.futureItem}>{label}</span>
+              ) : (
+                <Link
+                  clientRouted
+                  to={`/check-out/${id}`}
+                  tracking={trackNavigation(label)}
+                  className={classNames(css.linkItem, { [css.isActive]: id === currentId })}
+                >
+                  {label}
+                </Link>
+              )}
+              <Svg
+                fileName="icon-chevron-small-right"
+                className={classNames(css.breadcrumbsSeparator, {
+                  [css.hidden]: index === items.length - 1,
+                })}
+              />
+            </li>
+          ))}
+        </ul>
+      </div> */}
+    </>
   )
 }
 
