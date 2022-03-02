@@ -6,10 +6,8 @@ import {
   Text,
   FontFamily,
   Space,
-  AlignItems,
   JustifyContent,
-  TextAlign,
-  Display,
+  AlignItems,
 } from '@gousto-internal/citrus-react'
 
 import React from 'react'
@@ -29,19 +27,22 @@ export const SubscriptionTransparency = () => (
     <Box
       paddingH={[0, 2]}
       display="flex"
-      alignItems={AlignItems.Center}
       justifyContent={JustifyContent.Center}
+      maxWidth={['25.6rem', 'auto']}
+      alignItems={AlignItems.Center}
     >
       <Box>
         <Icon name="tick" variant={IconVariant.Confirmation} />
         <Space size={3} direction="horizontal" />
       </Box>
-      <Box TextAlign="center">
-        <Text color={Color.Success_600} size={2} fontFamily={FontFamily.Bold}>
-          No commitment. No cancellation fees. Skip a box or cancel your subscription online at
-          anytime.
-        </Text>
-      </Box>
+
+      <Text size={2} textAlign="center">
+        <span style={{ fontWeight: FontFamily.Bold, color: Color.Informative_100 }}>
+          No commitment. No cancellation fees.
+        </span>{' '}
+        Skip a box or cancel your subscription online at anytime.
+      </Text>
     </Box>
   </>
 )
+console.log(123, Color.Success_600)
