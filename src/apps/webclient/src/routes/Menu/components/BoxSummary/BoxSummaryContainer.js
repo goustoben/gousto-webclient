@@ -1,3 +1,4 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
@@ -7,9 +8,17 @@ import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { isMobile } from 'utils/view'
 import { getIsBoxSummaryShow } from 'selectors/boxSummary'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import BoxSummaryDesktop from './BoxSummary'
 import { getMenuBrowseCTAShow } from '../../../../selectors/root'
-import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes, shouldShowBoxSummary } from '../../../../selectors/basket'
+import {
+  getBasketSlotId,
+  getBasketDate,
+  getNumPortions,
+  getBasketOrderId,
+  getBasketRecipes,
+  shouldShowBoxSummary,
+} from '../../../../selectors/basket'
 
 const mapStateToProps = (state) => ({
   isMobile: isMobile(getBrowserType(state)),
@@ -29,16 +38,22 @@ const mapStateToProps = (state) => ({
   menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
   hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
-  pricingPending: state.pricing.get('pending'),
   shouldShowBoxSummary: shouldShowBoxSummary(state),
   shouldMenuBrowseCTAShow: getMenuBrowseCTAShow(state),
   isBoxSummaryOpened: getIsBoxSummaryShow(state),
 })
 
+const BoxSummaryPure = (props) => {
+  const { isPending } = usePricing()
+
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <BoxSummaryDesktop {...props} pricingPending={isPending} />
+}
+
 const BoxSummaryDesktopContainer = connect(mapStateToProps, {
   boxDetailsVisibilityChange: boxSummaryVisibilityChange,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   boxSummaryNext,
-})(BoxSummaryDesktop)
+})(BoxSummaryPure)
 
 export default BoxSummaryDesktopContainer

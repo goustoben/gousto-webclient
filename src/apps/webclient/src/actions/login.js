@@ -13,7 +13,6 @@ import { getUserId } from 'selectors/user'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
-import pricingActions from './pricing'
 import statusActions from './status'
 import authActions from './auth'
 import { actionTypes } from './actionTypes'
@@ -201,7 +200,6 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
       windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
     }
 
-    dispatch(pricingActions.pricingRequest())
     if (onCheckout) {
       if (orderId) {
         const isTasteProfileEnabled = isOptimizelyFeatureEnabledFactory('turnips_taste_profile_web_phased_rollout')

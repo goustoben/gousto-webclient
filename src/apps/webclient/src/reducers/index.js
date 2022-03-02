@@ -30,7 +30,6 @@ import { tutorial } from './tutorial'
 import user from './user'
 import { requestReducers } from './request'
 import collections from './collections'
-import { pricingReducers } from './pricing'
 import { cookiesReducers } from './cookies'
 import { onScreenRecoveryReducers } from './onScreenRecovery'
 import { getHelp } from './getHelp'
@@ -81,7 +80,6 @@ const reducers = {
   ...tutorial,
   ...user,
   ...requestReducers,
-  ...pricingReducers,
   payment,
   getHelp,
   ...experimentsReducer,

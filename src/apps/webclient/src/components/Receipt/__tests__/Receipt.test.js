@@ -24,7 +24,7 @@ describe('Receipt', () => {
           town: 'London',
           postcode: 'F4 K3',
         })}
-        surcharges={Immutable.fromJS([1])}
+        surcharges={[1]}
         surchargeTotal="4.99"
         prices={Immutable.fromJS({
           extrasTotalPrice: '2.00',
@@ -125,7 +125,7 @@ describe('Receipt', () => {
       describe('and surcharges array is empty', () => {
         beforeEach(() => {
           wrapper.setProps({
-            surcharges: Immutable.List([]),
+            surcharges: [],
           })
         })
 
@@ -143,11 +143,11 @@ describe('Receipt', () => {
       describe('and surcharges array is not empty', () => {
         beforeEach(() => {
           wrapper.setProps({
-            surcharges: Immutable.fromJS([1, 2, 3]),
+            surcharges: [1, 2, 3],
           })
         })
 
-        test('should NOT show surcharges', () => {
+        test('should show surcharges', () => {
           expect(
             wrapper.findWhere(
               element =>
@@ -169,7 +169,7 @@ describe('Receipt', () => {
       describe('and surcharges array is empty', () => {
         beforeEach(() => {
           wrapper.setProps({
-            surcharges: Immutable.List([]),
+            surcharges: [],
           })
         })
 
@@ -187,7 +187,7 @@ describe('Receipt', () => {
       describe('and surcharges array is not empty', () => {
         beforeEach(() => {
           wrapper.setProps({
-            surcharges: Immutable.fromJS([1, 2, 3]),
+            surcharges: [1, 2, 3],
           })
         })
 

@@ -18,312 +18,366 @@ import {
 // as we memories the optimizely instances onces created.
 // see: getOptimizelyInstance in src/containers/OptimizelyRollouts/optimizelySDK.js
 const isFeatureEnabled = jest.fn()
-
-describe('feature flags', () => {
-  const getState = jest.fn().mockReturnValue({ auth: Map({ id: 'user_id' }) })
-  const dispatch = jest.fn()
-
+describe('menuCheckoutClick', () => {
   beforeEach(() => {
-    jest.spyOn(optimizelySdk, 'createInstance')
+    jest
+      .spyOn(optimizelySdk, 'createInstance')
       .mockReturnValue({ onReady: () => ({ success: true }), isFeatureEnabled })
   })
-
   afterEach(() => {
     jest.clearAllMocks()
   })
+  describe('feature flags', () => {
+    const getState = jest.fn().mockReturnValue({ auth: Map({ id: 'user_id' }) })
+    const dispatch = jest.fn()
 
-  describe('isOrderApiCreateEnabled', () => {
-    test('it calls feature enabled with the correct flag', async () => {
-      isFeatureEnabled.mockResolvedValueOnce(true)
+    describe('isOrderApiCreateEnabled', () => {
+      test('it calls feature enabled with the correct flag', async () => {
+        isFeatureEnabled.mockResolvedValueOnce(true)
 
-      const isEnabled = await isOrderApiCreateEnabled(dispatch, getState)
+        const isEnabled = await isOrderApiCreateEnabled(dispatch, getState)
 
-      expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_create_web_enabled', 'user_id')
-      expect(isEnabled).toBe(true)
+        expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_create_web_enabled', 'user_id')
+        expect(isEnabled).toBe(true)
+      })
+    })
+
+    describe('isOrderApiUpdateEnabled', () => {
+      test('it calls feature enabled with the correct flag', async () => {
+        isFeatureEnabled.mockResolvedValueOnce(true)
+
+        const isEnabled = await isOrderApiUpdateEnabled(dispatch, getState)
+
+        expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
+        expect(isEnabled).toBe(true)
+      })
+    })
+
+    describe('getIsSidesEnabled', () => {
+      test('it calls feature enabled with the correct flag', async () => {
+        isFeatureEnabled.mockResolvedValueOnce(true)
+
+        const isEnabled = await getIsSidesEnabled(dispatch, getState)
+
+        expect(isFeatureEnabled).toBeCalledWith(
+          'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
+          'user_id'
+        )
+        expect(isEnabled).toBe(true)
+      })
     })
   })
 
-  describe('isOrderApiUpdateEnabled', () => {
-    test('it calls feature enabled with the correct flag', async () => {
-      isFeatureEnabled.mockResolvedValueOnce(true)
-
-      const isEnabled = await isOrderApiUpdateEnabled(dispatch, getState)
-
-      expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-      expect(isEnabled).toBe(true)
-    })
-  })
-
-  describe('getIsSidesEnabled', () => {
-    test('it calls feature enabled with the correct flag', async () => {
-      isFeatureEnabled.mockResolvedValueOnce(true)
-
-      const isEnabled = await getIsSidesEnabled(dispatch, getState)
-
-      expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
-      expect(isEnabled).toBe(true)
-    })
-  })
-})
-
-describe('checkoutBasket', () => {
-  let state
-  const dispatch = jest.fn()
-  const getState = jest.fn()
-  let basketCheckedOutSpy
-  let basketCheckoutClickedSpy
-  let basketProceedToCheckoutSpy
-  let boxSummaryVisibilityChangeSpy
-  let checkoutTransactionalOrderSpy
-  let validateMenuLimitsForBasketSpy
-
-  beforeEach(() => {
-    state = {
-      basket: Immutable.fromJS({
-        orderId: '',
-      }),
-      auth: Immutable.fromJS({
-        id: 'user_id',
-        isAuthenticated: true
-      }),
+  describe('checkoutBasket', () => {
+    let state
+    const dispatch = jest.fn()
+    const getState = jest.fn()
+    let basketCheckedOutSpy
+    let basketCheckoutClickedSpy
+    let basketProceedToCheckoutSpy
+    let boxSummaryVisibilityChangeSpy
+    let checkoutTransactionalOrderSpy
+    let validateMenuLimitsForBasketSpy
+    const section = 'menu'
+    const view = 'grid'
+    const pricing = {
+      total: 'test-total',
     }
-    getState.mockReturnValue(state)
 
-    basketCheckedOutSpy = jest.spyOn(basketActions, 'basketCheckedOut').mockImplementation()
-    basketCheckoutClickedSpy = jest.spyOn(basketActions, 'basketCheckoutClicked').mockImplementation()
-    basketProceedToCheckoutSpy = jest.spyOn(basketActions, 'basketProceedToCheckout').mockImplementation()
-    boxSummaryVisibilityChangeSpy = jest.spyOn(boxSummaryActions, 'boxSummaryVisibilityChange').mockImplementation()
-    checkoutTransactionalOrderSpy = jest.spyOn(menuCheckoutActions, 'checkoutTransactionalOrder').mockImplementation()
-    validateMenuLimitsForBasketSpy = jest.spyOn(menuSelectors, 'validateMenuLimitsForBasket').mockReturnValue([])
-  })
+    beforeEach(() => {
+      state = {
+        basket: Immutable.fromJS({
+          orderId: '',
+        }),
+        auth: Immutable.fromJS({
+          id: 'user_id',
+          isAuthenticated: true,
+        }),
+      }
+      getState.mockReturnValue(state)
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
+      basketCheckedOutSpy = jest.spyOn(basketActions, 'basketCheckedOut').mockImplementation()
+      basketCheckoutClickedSpy = jest
+        .spyOn(basketActions, 'basketCheckoutClicked')
+        .mockImplementation()
+      basketProceedToCheckoutSpy = jest
+        .spyOn(basketActions, 'basketProceedToCheckout')
+        .mockImplementation()
+      boxSummaryVisibilityChangeSpy = jest
+        .spyOn(boxSummaryActions, 'boxSummaryVisibilityChange')
+        .mockImplementation()
+      checkoutTransactionalOrderSpy = jest
+        .spyOn(menuCheckoutActions, 'checkoutTransactionalOrder')
+        .mockImplementation()
+      validateMenuLimitsForBasketSpy = jest
+        .spyOn(menuSelectors, 'validateMenuLimitsForBasket')
+        .mockReturnValue([])
+    })
 
-  afterAll(() => {
-    jest.restoreAllMocks()
-  })
+    afterAll(() => {
+      jest.restoreAllMocks()
+    })
 
-  test('should dispatch boxSummaryVisibilityChange with false', async () => {
-    const boxSummaryVisibilityChangeMock = jest.fn()
-    boxSummaryVisibilityChangeSpy.mockReturnValue(boxSummaryVisibilityChangeMock)
+    test('should dispatch boxSummaryVisibilityChange with false', async () => {
+      const boxSummaryVisibilityChangeMock = jest.fn()
+      boxSummaryVisibilityChangeSpy.mockReturnValue(boxSummaryVisibilityChangeMock)
 
-    await checkoutBasket('menu', 'view')(dispatch, getState)
+      await checkoutBasket({ section, view, pricing })(dispatch, getState)
 
-    expect(boxSummaryVisibilityChangeSpy).toHaveBeenCalledWith(false)
-    expect(dispatch).toHaveBeenCalledWith(boxSummaryVisibilityChangeMock)
-  })
+      expect(boxSummaryVisibilityChangeSpy).toHaveBeenCalledWith(false)
+      expect(dispatch).toHaveBeenCalledWith(boxSummaryVisibilityChangeMock)
+    })
 
-  test('should dispatch basketCheckedOut with the view', async () => {
-    const basketCheckedOutMock = jest.fn()
-    basketCheckedOutSpy.mockReturnValue(basketCheckedOutMock)
+    test('should dispatch basketCheckedOut with the view', async () => {
+      const basketCheckedOutMock = jest.fn()
+      basketCheckedOutSpy.mockReturnValue(basketCheckedOutMock)
 
-    await checkoutBasket('menu', 'view')(dispatch, getState)
+      await checkoutBasket({ section, view, pricing })(dispatch, getState)
 
-    expect(basketCheckedOutSpy).toHaveBeenCalledWith('view')
-    expect(dispatch).toHaveBeenCalledWith(basketCheckedOutMock)
-  })
+      expect(basketCheckedOutSpy).toHaveBeenCalledWith({ view, pricing })
+      expect(dispatch).toHaveBeenCalledWith(basketCheckedOutMock)
+    })
 
-  test('should dispatch basketCheckoutClicked with the section', async () => {
-    const basketCheckoutClickedMock = jest.fn()
-    basketCheckoutClickedSpy.mockReturnValue(basketCheckoutClickedMock)
+    test('should dispatch basketCheckoutClicked with the section', async () => {
+      const basketCheckoutClickedMock = jest.fn()
+      basketCheckoutClickedSpy.mockReturnValue(basketCheckoutClickedMock)
 
-    await checkoutBasket('menu', 'view')(dispatch, getState)
+      await checkoutBasket({ section, view, pricing })(dispatch, getState)
 
-    expect(basketCheckoutClickedSpy).toHaveBeenCalledWith('menu')
-    expect(dispatch).toHaveBeenCalledWith(basketCheckoutClickedMock)
-  })
+      expect(basketCheckoutClickedSpy).toHaveBeenCalledWith('menu')
+      expect(dispatch).toHaveBeenCalledWith(basketCheckoutClickedMock)
+    })
 
-  describe('when no basket rules are broken', () => {
-    describe('when orderId is available', () => {
-      describe('when user is authenticated', () => {
-        beforeEach(() => {
-          state = {
-            basket: Immutable.fromJS({
-              orderId: '1234567',
-            }),
-            auth: Immutable.fromJS({
-              id: 'user_id',
-              isAuthenticated: true
-            }),
-          }
+    describe('when no basket rules are broken', () => {
+      describe('when orderId is available', () => {
+        describe('when user is authenticated', () => {
+          beforeEach(() => {
+            state = {
+              basket: Immutable.fromJS({
+                orderId: '1234567',
+              }),
+              auth: Immutable.fromJS({
+                id: 'user_id',
+                isAuthenticated: true,
+              }),
+            }
 
-          jest.spyOn(optimizelySdk, 'createInstance')
-            .mockReturnValue({ onReady: () => ({ success: true }), isFeatureEnabled })
-
-          getState.mockReturnValue(state)
-        })
-
-        test('should dispatch orderUpdate', async () => {
-          isFeatureEnabled
-          // `radishes_order_api_create_web_enabled`
-            .mockResolvedValueOnce(false)
-          // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
-            .mockResolvedValueOnce(false)
-
-          const orderUpdateMock = jest.fn()
-          const orderUpdateSpy = jest.spyOn(orderActions, 'orderUpdate').mockReturnValue(orderUpdateMock)
-
-          await checkoutBasket('menu', 'orderUpdate')(dispatch, getState)
-
-          expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-          expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
-          expect(orderUpdateSpy).toBeCalledWith(false)
-          expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
-        })
-
-        describe('when update OrderAPI V1 feature flag returns true', () => {
-          test('should dispatch sendUpdateOrder', async () => {
-            isFeatureEnabled
-            // `radishes_order_api_create_web_enabled`
-              .mockResolvedValueOnce(true)
-            // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
-              .mockResolvedValueOnce(false)
-
-            const sendUpdateOrderMock = jest.fn()
-            const sendUpdateOrderSpy = jest.spyOn(menuActions, 'sendUpdateOrder').mockReturnValue(sendUpdateOrderMock)
-
-            await checkoutBasket('menu', 'sendUpdateOrder')(dispatch, getState)
-
-            expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-            expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
-            expect(sendUpdateOrderSpy).toBeCalledWith(false)
-            expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)
+            getState.mockReturnValue(state)
           })
-        })
 
-        describe('when Sides feature flag returns true', () => {
           test('should dispatch orderUpdate', async () => {
             isFeatureEnabled
               // `radishes_order_api_create_web_enabled`
               .mockResolvedValueOnce(false)
               // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
-              .mockResolvedValueOnce(true)
+              .mockResolvedValueOnce(false)
 
             const orderUpdateMock = jest.fn()
-            const orderUpdateSpy = jest.spyOn(orderActions, 'orderUpdate').mockReturnValue(orderUpdateMock)
+            const orderUpdateSpy = jest
+              .spyOn(orderActions, 'orderUpdate')
+              .mockReturnValue(orderUpdateMock)
 
-            await checkoutBasket('menu', 'orderUpdate')(dispatch, getState)
-
-            expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-            expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
-            expect(orderUpdateSpy).toBeCalledWith(true)
+            await checkoutBasket({ section, view: 'orderUpdate', pricing })(dispatch, getState)
+            expect(isFeatureEnabled).toBeCalledTimes(2)
+            expect(isFeatureEnabled).toBeCalledWith(
+              'radishes_order_api_update_web_enabled',
+              'user_id'
+            )
+            expect(isFeatureEnabled).toBeCalledWith(
+              'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
+              'user_id'
+            )
+            expect(orderUpdateSpy).toBeCalledWith(false)
             expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
           })
 
           describe('when update OrderAPI V1 feature flag returns true', () => {
             test('should dispatch sendUpdateOrder', async () => {
               isFeatureEnabled
-              // `radishes_order_api_create_web_enabled`
+                // `radishes_order_api_create_web_enabled`
                 .mockResolvedValueOnce(true)
-              // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
-                .mockResolvedValueOnce(true)
+                // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
+                .mockResolvedValueOnce(false)
 
               const sendUpdateOrderMock = jest.fn()
-              const sendUpdateOrderSpy = jest.spyOn(menuActions, 'sendUpdateOrder').mockReturnValue(sendUpdateOrderMock)
+              const sendUpdateOrderSpy = jest
+                .spyOn(menuActions, 'sendUpdateOrder')
+                .mockReturnValue(sendUpdateOrderMock)
 
-              await checkoutBasket('menu', 'sendUpdateOrder')(dispatch, getState)
+              await checkoutBasket({ section, view: 'sendUpdateOrder', pricing })(
+                dispatch,
+                getState
+              )
 
-              expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-              expect(isFeatureEnabled).toBeCalledWith('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled', 'user_id')
-              expect(sendUpdateOrderSpy).toBeCalledWith(true)
+              expect(isFeatureEnabled).toBeCalledWith(
+                'radishes_order_api_update_web_enabled',
+                'user_id'
+              )
+              expect(isFeatureEnabled).toBeCalledWith(
+                'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
+                'user_id'
+              )
+              expect(sendUpdateOrderSpy).toBeCalledWith(false)
               expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)
+            })
+          })
+
+          describe('when Sides feature flag returns true', () => {
+            test('should dispatch orderUpdate', async () => {
+              isFeatureEnabled
+                // `radishes_order_api_create_web_enabled`
+                .mockResolvedValueOnce(false)
+                // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
+                .mockResolvedValueOnce(true)
+
+              const orderUpdateMock = jest.fn()
+              const orderUpdateSpy = jest
+                .spyOn(orderActions, 'orderUpdate')
+                .mockReturnValue(orderUpdateMock)
+
+              await checkoutBasket({ section, view: 'orderUpdate', pricing })(dispatch, getState)
+
+              expect(isFeatureEnabled).toBeCalledWith(
+                'radishes_order_api_update_web_enabled',
+                'user_id'
+              )
+              expect(isFeatureEnabled).toBeCalledWith(
+                'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
+                'user_id'
+              )
+              expect(orderUpdateSpy).toBeCalledWith(true)
+              expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
+            })
+
+            describe('when update OrderAPI V1 feature flag returns true', () => {
+              test('should dispatch sendUpdateOrder', async () => {
+                isFeatureEnabled
+                  // `radishes_order_api_create_web_enabled`
+                  .mockResolvedValueOnce(true)
+                  // `radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled`
+                  .mockResolvedValueOnce(true)
+
+                const sendUpdateOrderMock = jest.fn()
+                const sendUpdateOrderSpy = jest
+                  .spyOn(menuActions, 'sendUpdateOrder')
+                  .mockReturnValue(sendUpdateOrderMock)
+
+                await checkoutBasket({ section, view: 'sendUpdateOrder', pricing })(
+                  dispatch,
+                  getState
+                )
+
+                expect(isFeatureEnabled).toBeCalledWith(
+                  'radishes_order_api_update_web_enabled',
+                  'user_id'
+                )
+                expect(isFeatureEnabled).toBeCalledWith(
+                  'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
+                  'user_id'
+                )
+                expect(sendUpdateOrderSpy).toBeCalledWith(true)
+                expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)
+              })
             })
           })
         })
       })
-    })
 
-    describe('when not orderId is available', () => {
-      describe('when user is not authenticated', () => {
+      describe('when not orderId is available', () => {
+        describe('when user is not authenticated', () => {
+          beforeEach(() => {
+            state = {
+              basket: Immutable.fromJS({
+                orderId: '',
+              }),
+              auth: Immutable.fromJS({
+                isAuthenticated: false,
+              }),
+            }
+
+            getState.mockReturnValue(state)
+          })
+
+          test('should dispatch basketProceedToCheckout', async () => {
+            const basketProceedToCheckoutMock = jest.fn()
+            basketProceedToCheckoutSpy.mockReturnValue(basketProceedToCheckoutMock)
+
+            await checkoutBasket({ section, view: '', pricing })(dispatch, getState)
+
+            expect(basketProceedToCheckoutSpy).toBeCalled()
+            expect(dispatch).toHaveBeenCalledWith(basketProceedToCheckoutMock)
+          })
+        })
+      })
+
+      describe('when is authenticated', () => {
         beforeEach(() => {
           state = {
             basket: Immutable.fromJS({
-              orderId: '',
+              slotId: 'slot-id-date-17',
             }),
             auth: Immutable.fromJS({
-              isAuthenticated: false
+              isAuthenticated: true,
             }),
           }
 
           getState.mockReturnValue(state)
         })
 
-        test('should dispatch basketProceedToCheckout', async () => {
-          const basketProceedToCheckoutMock = jest.fn()
-          basketProceedToCheckoutSpy.mockReturnValue(basketProceedToCheckoutMock)
+        test('should dispatch checkoutTransactionalOrder', async () => {
+          const checkoutTransactionalOrderMock = jest.fn()
+          checkoutTransactionalOrderSpy.mockReturnValue(checkoutTransactionalOrderMock)
 
-          await checkoutBasket('menu', '')(dispatch, getState)
+          await checkoutBasket({ section, view: '', pricing })(dispatch, getState)
 
-          expect(basketProceedToCheckoutSpy).toBeCalled()
-          expect(dispatch).toHaveBeenCalledWith(basketProceedToCheckoutMock)
+          expect(checkoutTransactionalOrderSpy).toBeCalledWith('create')
+          expect(dispatch).toHaveBeenCalledWith(checkoutTransactionalOrderMock)
         })
       })
     })
 
-    describe('when is authenticated', () => {
-      beforeEach(() => {
-        state = {
-          basket: Immutable.fromJS({
-            slotId: 'slot-id-date-17',
-          }),
-          auth: Immutable.fromJS({
-            isAuthenticated: true
-          }),
-        }
-
-        getState.mockReturnValue(state)
-      })
-
-      test('should dispatch checkoutTransactionalOrder', async () => {
-        const checkoutTransactionalOrderMock = jest.fn()
-        checkoutTransactionalOrderSpy.mockReturnValue(checkoutTransactionalOrderMock)
+    describe('when menu has broken rules', () => {
+      test('should dispatch BASKET_NOT_VALID with validation response', async () => {
+        validateMenuLimitsForBasketSpy.mockReturnValue([
+          {
+            items: ['123'],
+            message: 'Only 1 oven ready meal is available per order',
+            name: 'charlie-binghams-basket-limit',
+          },
+        ])
 
         await checkoutBasket('menu', '')(dispatch, getState)
 
-        expect(checkoutTransactionalOrderSpy).toBeCalledWith('create')
-        expect(dispatch).toHaveBeenCalledWith(checkoutTransactionalOrderMock)
+        expect(dispatch).toHaveBeenCalledWith({
+          key: 'BASKET_NOT_VALID',
+          type: 'ERROR',
+          value: {
+            errorTitle: 'Basket Not Valid',
+            recipeId: null,
+            rules: [
+              {
+                items: ['123'],
+                message: 'Only 1 oven ready meal is available per order',
+                name: 'charlie-binghams-basket-limit',
+              },
+            ],
+          },
+        })
       })
     })
   })
 
-  describe('when menu has broken rules', () => {
-    test('should dispatch BASKET_NOT_VALID with validation response', async () => {
-      validateMenuLimitsForBasketSpy.mockReturnValue([{
-        items: ['123'],
-        message: 'Only 1 oven ready meal is available per order',
-        name: 'charlie-binghams-basket-limit'
-      }])
+  describe('clearBasketNotValidError', () => {
+    test('should dispatch error BASKET_NOT_VALID with null', () => {
+      const dispatch = jest.fn()
 
-      await checkoutBasket('menu', '')(dispatch, getState)
+      clearBasketNotValidError()(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({
         key: 'BASKET_NOT_VALID',
         type: 'ERROR',
-        value: {
-          errorTitle: 'Basket Not Valid',
-          recipeId: null,
-          rules: [{
-            items: ['123'],
-            message: 'Only 1 oven ready meal is available per order',
-            name: 'charlie-binghams-basket-limit'
-          }]}
+        value: null,
       })
-    })
-  })
-})
-
-describe('clearBasketNotValidError', () => {
-  test('should dispatch error BASKET_NOT_VALID with null', () => {
-    const dispatch = jest.fn()
-
-    clearBasketNotValidError()(dispatch)
-
-    expect(dispatch).toHaveBeenCalledWith({
-      key: 'BASKET_NOT_VALID',
-      type: 'ERROR',
-      value: null
     })
   })
 })

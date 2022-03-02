@@ -311,7 +311,10 @@ describe('user actions', () => {
 
   describe('userSubscribe action', () => {
     let state
-
+    const pricing = {
+      total: '24.55',
+      promoCode: false
+    }
     beforeEach(() => {
       customerSignup.mockClear()
       state = {
@@ -320,12 +323,6 @@ describe('user actions', () => {
         }),
         checkout: Immutable.fromJS({
           goustoRef: '105979923',
-        }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '24.55',
-            promoCode: false
-          }
         }),
         tracking: Immutable.fromJS({
           asource: null
@@ -390,7 +387,7 @@ describe('user actions', () => {
           })
         })
 
-        await userSubscribe()(dispatch, getState)
+        await userSubscribe({ pricing })(dispatch, getState)
 
         expect(customerSignup).toHaveBeenCalledWith(null, expected)
       })
@@ -419,7 +416,7 @@ describe('user actions', () => {
 
         describe('When userSubscribe got dispatched', () => {
           test('Then new customer should be tracked', async () => {
-            await userSubscribe()(dispatch, getState)
+            await userSubscribe({ pricing })(dispatch, getState)
 
             expect(dispatch).toHaveBeenNthCalledWith(1, {
               type: actionTypes.ERROR,
@@ -451,7 +448,7 @@ describe('user actions', () => {
               }
             })
 
-            expect(trackFirstPurchase).toHaveBeenCalledWith('12345', state.pricing.get('prices'))
+            expect(trackFirstPurchase).toHaveBeenCalledWith('12345', pricing)
             expect(dispatch).toHaveBeenNthCalledWith(5, {
               action: 'track_first_purchase'
             })
@@ -566,7 +563,7 @@ describe('user actions', () => {
         test('should trim whitespace from before and after the user name', async () => {
           const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
 
-          await userSubscribe()(dispatch, getState)
+          await userSubscribe({ pricing })(dispatch, getState)
 
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
         })
@@ -596,7 +593,7 @@ describe('user actions', () => {
           expectedParam.customer.marketing_do_allow_email = 1
           const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
 
-          await userSubscribe()(dispatch, getState)
+          await userSubscribe({ pricing })(dispatch, getState)
 
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
         })
@@ -608,7 +605,7 @@ describe('user actions', () => {
 
       describe('When no signup feature flags active', () => {
         test('Signup payload has no ab_variant', async () => {
-          await userSubscribe()(dispatch, getState)
+          await userSubscribe({ pricing })(dispatch, getState)
 
           const payload = getSignupPayload()
           expect(payload.ab_variant).toBeUndefined()
@@ -628,7 +625,7 @@ describe('user actions', () => {
       })
 
       test('should track unexpected signup event', async () => {
-        await userSubscribe()(dispatch, getState)
+        await userSubscribe({ pricing })(dispatch, getState)
 
         expect(trackUnexpectedSignup).toHaveBeenCalled()
       })

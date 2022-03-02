@@ -9,7 +9,6 @@ import order from './order'
 import * as onScreenRecovery from './onScreenRecovery'
 import products from './products'
 import { promoActions } from './promos'
-import pricing from './pricing'
 import recipes from './recipes'
 import redirectActions from './redirect'
 import * as signup from './signup'
@@ -38,7 +37,6 @@ const actions = {
   ...onScreenRecovery,
   ...products,
   ...promoActions,
-  ...pricing,
   ...recipes,
   ...redirectActions,
   ...signup,

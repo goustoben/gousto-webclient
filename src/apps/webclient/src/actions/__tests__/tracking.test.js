@@ -85,11 +85,11 @@ describe('tracking actions', () => {
       }),
     }
 
-    const pricing = Immutable.fromJS({
+    const pricing = {
       total: '13.99',
       grossTotal: '15.99',
       promoCode: '10OFF',
-    })
+    }
 
     beforeEach(() => {
       jest.resetAllMocks()
@@ -937,11 +937,6 @@ describe('tracking actions', () => {
           payment: Immutable.fromJS({
             paymentMethod: PaymentMethod.Card,
           }),
-          pricing: Immutable.fromJS({
-            prices: {
-              promoCode: 'promo2',
-            }
-          }),
           user: Immutable.fromJS({
             id: 'user_234',
             subscription: {
@@ -952,6 +947,10 @@ describe('tracking actions', () => {
         dispatch = jest.fn()
         getState = jest.fn().mockReturnValue(state)
       })
+
+      const pricing = {
+        promoCode: 'promo2',
+      }
 
       describe('when fired', () => {
         const orderId = 'order_123'
@@ -972,7 +971,7 @@ describe('tracking actions', () => {
             }
           }
 
-          trackSubscriptionCreated()(dispatch, getState)
+          trackSubscriptionCreated({ pricing })(dispatch, getState)
 
           expect(dispatch).toHaveBeenCalledWith(expected)
         })
@@ -1023,6 +1022,11 @@ describe('tracking actions', () => {
   })
 
   describe('trackingOrderCheckout', () => {
+    let pricing = {
+      total: '24.00',
+      grossTotal: '24.00',
+      promoCode: false,
+    }
     const state = {
       basket: Immutable.fromJS({
         orderId: '178',
@@ -1039,23 +1043,17 @@ describe('tracking actions', () => {
           state: 'active',
         }
       }),
-      pricing: Immutable.fromJS({
-        prices: {
-          total: '24.00',
-          grossTotal: '24.00',
-          promoCode: false,
-        }
-      }),
       temp: Immutable.fromJS({
         originalGrossTotal: '24.99',
         originalNetTotal: '24.99'
       })
     }
     beforeEach(() => {
+      dispatch = jest.fn()
       getState = () => (state)
     })
     test('should dispatch Order Edited tracking action for subscription box', async () => {
-      await trackingOrderCheckout()(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1096,7 +1094,7 @@ describe('tracking actions', () => {
         }),
       })
 
-      await trackingOrderCheckout()(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1146,15 +1144,8 @@ describe('tracking actions', () => {
             state: 'active',
           }
         }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '24.00',
-            grossTotal: '24.00',
-            promoCode: false,
-          }
-        }),
       })
-      await trackingOrderCheckout()(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1199,15 +1190,13 @@ describe('tracking actions', () => {
             state: 'active',
           }
         }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '22.00',
-            grossTotal: '22.00',
-            promoCode: false,
-          }
-        }),
       })
-      await trackingOrderCheckout()(dispatch, getState)
+      pricing = {
+        total: '22.00',
+        grossTotal: '22.00',
+        promoCode: false,
+      }
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
