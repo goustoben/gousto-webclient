@@ -32,7 +32,10 @@ export type Pricing = {
 const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Pricing | null } => {
   const { accessToken, authUserId } = useAuth()
   const orderRequest = useSelector(getOrderV2)
-  const url = `${endpoint('order', 2)}/prices`
+  // eslint-disable-next-line no-unused-expressions
+  let url = `${endpoint('order', 2)}/prices`
+  const promo = (orderRequest as any)?.attributes?.prices?.promo_code
+  if (promo) url += `?promo=${promo}`
   const params = shouldFetch ? [url, { data: orderRequest }, accessToken, authUserId] : null
   const { data: response, error } = useSWR<{ data: any; included: any }, Error>(
     params,
