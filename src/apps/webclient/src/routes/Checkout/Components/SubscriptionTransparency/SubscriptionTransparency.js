@@ -37,11 +37,9 @@ export const SubscriptionTransparency = () => (
         <Space size={3} direction="horizontal" />
       </Box>
       <Box TextAlign="center">
-        <Text color={Color.Success_600} size={2} fontFamily={FontFamily.Bold} textAlign="center">
-          No commitment. No cancellation fees.
-        </Text>
-        <Text size={2} textAlign="center">
-          Skip a box or cancel your subscription online at anytime.
+        <Text color={Color.Success_600} size={2} fontFamily={FontFamily.Bold}>
+          No commitment. No cancellation fees. Skip a box or cancel your subscription online at
+          anytime.
         </Text>
       </Box>
     </Box>
