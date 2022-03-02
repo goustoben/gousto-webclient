@@ -40,8 +40,24 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       })
 
       it('Then the right errors should be displayed', () => {
-        cy.get('[data-testing="checkoutFirstNameInputError"]').should('be.visible')
-        cy.get('[data-testing="checkoutLastNameInputError"]').should('be.visible')
+        cy.get('[data-testing="checkoutFirstNameInput"]')
+          .invoke('attr', 'aria-invalid')
+          .should('eq', 'true')
+        cy.get('[data-testing="checkoutFirstNameInput"]')
+          .parent()
+          .parent()
+          .contains(
+            "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
+          )
+        cy.get('[data-testing="checkoutLastNameInput"]')
+          .invoke('attr', 'aria-invalid')
+          .should('eq', 'true')
+        cy.get('[data-testing="checkoutLastNameInput"]')
+          .parent()
+          .parent()
+          .contains(
+            "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
+          )
       })
     })
 
@@ -53,9 +69,13 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         })
       })
 
-      it('Then the right errors should be displayed', () => {
-        cy.get('[data-testing="checkoutFirstNameInputError"]').should('not.be.visible')
-        cy.get('[data-testing="checkoutLastNameInputError"]').should('not.be.visible')
+      it('Then errors should not be displayed', () => {
+        cy.get('[data-testing="checkoutFirstNameInput"]')
+          .invoke('attr', 'aria-invalid')
+          .should('eq', 'false')
+        cy.get('[data-testing="checkoutLastNameInput"]')
+          .invoke('attr', 'aria-invalid')
+          .should('eq', 'false')
       })
     })
 
@@ -65,7 +85,9 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       })
 
       it('Then search CTA is disabled and errors are not presented', () => {
-        cy.get('[data-testing="checkoutPostcodeError"]').should('not.be.visible')
+        cy.get('[data-testing="checkoutPostcode"]')
+          .invoke('attr', 'aria-invalid')
+          .should('eq', 'false')
         cy.get('[data-testing="checkoutFindAddressButton"]').should('be.disabled')
       })
     })
@@ -86,7 +108,13 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       })
 
       it('Then the right error should be displayed', () => {
-        cy.get('[data-testing="checkoutPhoneNumberInputError"]').should('be.visible')
+        cy.get('[data-testing="checkoutPhoneNumberInput"]')
+          .invoke('attr', 'aria-invalid')
+          .should('eq', 'true')
+        cy.get('[data-testing="checkoutPhoneNumberInput"]')
+          .parent()
+          .parent()
+          .contains('Enter a UK phone number')
       })
     })
 
@@ -95,8 +123,10 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         clearAndFillPhoneNumber(1234567890)
       })
 
-      it('Then the right error should be displayed', () => {
-        cy.get('[data-testing="checkoutPhoneNumberInputError"]').should('not.be.visible')
+      it('Then an error should not be displayed', () => {
+        cy.get('[data-testing="checkoutPhoneNumberInput"]')
+          .invoke('attr', 'aria-invalid')
+          .should('eq', 'false')
       })
     })
 
@@ -106,7 +136,10 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       })
 
       it('Then the right error should be displayed', () => {
-        cy.get('[data-testing="checkoutDeliveryDetailsInstructionError"]').should('be.visible')
+        cy.get('[data-testing="checkoutDeliveryDetailsInstruction"]')
+          .parent()
+          .parent()
+          .contains('Delivery instruction is required')
       })
     })
 
@@ -115,8 +148,11 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         selectDeliveryOption(1)
       })
 
-      it('Then the right error should be displayed', () => {
-        cy.get('[data-testing="checkoutDeliveryDetailsInstructionError"]').should('not.be.visible')
+      it('Then an error should not be displayed', () => {
+        cy.get('[data-testing="checkoutDeliveryDetailsInstruction"]')
+          .parent()
+          .parent()
+          .should('not.contain', 'Delivery instruction is required')
       })
     })
 

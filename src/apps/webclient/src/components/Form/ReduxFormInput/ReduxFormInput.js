@@ -2,12 +2,15 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { touch } from 'redux-form'
 
-import Input from 'Form/Input'
+// import Input from 'Form/Input'
 import DropdownInput from 'Form/Dropdown'
 import CheckBox from 'Form/CheckBox'
 
 import InputError from 'Form/InputError'
 import { Label } from 'Form/Label'
+import {
+  Text, Input, InputField, FontWeight, Space, Color, Select, SelectField, Checkbox
+} from '@gousto-internal/citrus-react'
 import css from './ReduxFormInput.css'
 
 const propTypes = {
@@ -44,6 +47,22 @@ export class ReduxFormInput extends React.PureComponent {
     input.onChange(value)
   }
 
+  getInputLabel() {
+    const { label, subLabel } = this.props
+
+    return (
+      <>
+        <Text fontWeight={FontWeight.Bold}>{label}</Text>
+        {subLabel && (
+          <>
+            <Space size={3} />
+            <Text size={1} color={Color.ColdGrey_600}>{subLabel}</Text>
+          </>
+        )}
+      </>
+    )
+  }
+
   debounceTouch(dispatch, formName, field) {
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout)
@@ -76,6 +95,58 @@ export class ReduxFormInput extends React.PureComponent {
 
     const error = Boolean(meta && meta.touched && meta.error)
 
+    if (inputType === 'Input') {
+      let InputComponent
+      if (label) {
+        InputComponent = <InputField label={this.getInputLabel()} />
+      } else {
+        InputComponent = <Input />
+      }
+
+      return React.cloneElement(InputComponent, { ...inputProps,
+        ...input,
+        onChange: (e) => this.onChange(e.target.value),
+        validationMessage: error && meta.error,
+        status: error && 'Error',
+        leftAccessory: inputPrefix,
+        rightAccessory: inputSuffix,
+        'data-testing': dataTesting,
+      })
+    }
+
+    if (inputType === 'DropDown') {
+      let SelectComponent
+      if (label) {
+        SelectComponent = <SelectField label={this.getInputLabel()} />
+      } else {
+        SelectComponent = <Select />
+      }
+
+      const selectOptions = inputProps.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)
+
+      return React.cloneElement(SelectComponent, { ...inputProps,
+        ...input,
+        fullWdith: true,
+        onChange: (e) => this.onChange(e.target.value),
+        validationMessage: error && meta.error,
+        status: error && 'Error',
+        'data-testing': dataTesting,
+      }, selectOptions)
+    }
+
+    // if (inputType === 'CheckBox') {
+    //   return (
+    //     <Checkbox
+    //       onChange={(e) => this.onChange(e.target.checked)}
+    //       data-testing={dataTesting}
+    //       checked={!!input.value}
+    //       status={error && 'Error'}
+    //     >
+    //       {inputProps.childLabel}
+    //     </Checkbox>
+    //   )
+    // }
+
     const inputEl = React.createElement(Component, {
       ...inputProps,
       ...input,
@@ -90,20 +161,22 @@ export class ReduxFormInput extends React.PureComponent {
     })
 
     return (
-      <div>
-        {label && <Label label={label} subLabel={subLabel} />}
-        <div className={css.flexRow}>
-          {inputEl && (
+      <>
+        <div>
+          {label && <Label label={label} subLabel={subLabel} />}
+          <div className={css.flexRow}>
+            {inputEl && (
             <div className={css.flexItem}>
               {inputEl}
             </div>
-          )}
-          {React.isValidElement(inputSuffix) && inputSuffix}
+            )}
+            {React.isValidElement(inputSuffix) && inputSuffix}
+          </div>
+          <div data-testing={`${dataTesting}Error`}>
+            {error && <InputError>{meta.error}</InputError>}
+          </div>
         </div>
-        <div data-testing={`${dataTesting}Error`}>
-          {error && <InputError>{meta.error}</InputError>}
-        </div>
-      </div>
+      </>
     )
   }
 }

@@ -11,12 +11,9 @@ export const clearAndFillPhoneNumber = (phoneNumber) => {
 
 export const selectAddress = () => {
   if (PLATFORM === 'WEB') {
-    cy.get('[data-testing="checkoutAddressDropdown"]')
-      .find('.Select')
-      .click()
-      .get('.Select-menu-outer .Select-menu .Select-option')
+    cy.get('select[data-testing="houseNo"] > option')
       .eq(1)
-      .click()
+      .then((element) => cy.get('select[data-testing="houseNo"]').select(element.val()))
   } else {
     cy.get('select[data-testing="houseNo"]').select('"25953315"')
   }
@@ -24,12 +21,11 @@ export const selectAddress = () => {
 
 export const selectDeliveryOption = (option) => {
   if (PLATFORM === 'WEB') {
-    cy.get('[data-testing="checkoutDeliveryDetailsInstruction"]')
-      .find('.Select')
-      .click()
-      .get('.Select-menu-outer .Select-menu .Select-option')
+    cy.get('select[data-testing="checkoutDeliveryDetailsInstruction"] > option')
       .eq(option)
-      .click()
+      .then((element) =>
+        cy.get('select[data-testing="checkoutDeliveryDetailsInstruction"]').select(element.val())
+      )
   } else {
     const optionToSelect = ['Please select an option', 'Back Porch', '', '', '', '', '', 'Other']
     cy.get('[data-testing="checkoutDeliveryDetailsInstruction"]')
