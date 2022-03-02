@@ -25,27 +25,26 @@ export const ErrorMessage = ({ errorType, onLoginClick }) => {
   const messageObject = errorMessage[errorType] || errorMessage.generic
   const { header, message, showLoginCTA } = messageObject
 
+  const getCtaButton = () => (
+    <Button
+      colorVariant={ButtonColorVariant.Secondary}
+      onClick={handleLoginClick}
+      width="100%"
+      height="3rem"
+    >
+      <Text size={1} fontWeight={FontWeight.Bold}>
+        Log in
+      </Text>
+    </Button>
+  )
+
   return (
     <>
       <Box data-testing={`${errorType}`}>
-        <Alert>
+        <Alert ctaButton={showLoginCTA && getCtaButton()}>
           {header && <Text fontWeight={FontWeight.Bold}>{header}</Text>}
           <Text>{message}</Text>
           <Space size={4} />
-          {showLoginCTA && (
-            <Box style={{ marginLeft: '-2rem' }}>
-              <Button
-                colorVariant={ButtonColorVariant.Secondary}
-                onClick={handleLoginClick}
-                width="100%"
-                height="3rem"
-              >
-                <Text size={1} fontWeight={FontWeight.Bold}>
-                  Log in
-                </Text>
-              </Button>
-            </Box>
-          )}
         </Alert>
       </Box>
       <Space size={6} />

@@ -10,7 +10,7 @@ import {
   Space,
 } from '@gousto-internal/citrus-react'
 
-export const Alert = ({ children }) => (
+export const Alert = ({ ctaButton, children }) => (
   <Box
     bg={Color.Error_50}
     borderRadius={2}
@@ -18,16 +18,25 @@ export const Alert = ({ children }) => (
     borderStyle={BorderStyle.Solid}
     borderColor={Color.Error_800}
     display="flex"
-    flexDirection={FlexDirection.Row}
+    flexDirection={FlexDirection.Column}
     paddingV={4}
     paddingH={4}
   >
-    <Icon name="error" variant={IconVariant.Error} />
-    <Space size={2} direction="horizontal" />
-    <Box>{children}</Box>
+    <Box display="flex" flexDirection={FlexDirection.Row}>
+      <Icon name="error" variant={IconVariant.Error} />
+      <Space size={2} direction="horizontal" />
+      <Box>{children}</Box>
+    </Box>
+
+    {ctaButton}
   </Box>
 )
 
 Alert.propTypes = {
   children: PropTypes.node.isRequired,
+  ctaButton: PropTypes.node,
+}
+
+Alert.defaultProps = {
+  ctaButton: null,
 }
