@@ -30,6 +30,7 @@ export const SubscriptionTransparency = () => (
       justifyContent={JustifyContent.Center}
       maxWidth={['25.6rem']}
       alignItems={AlignItems.Center}
+      textAlign="center"
     >
       <Box>
         <Icon name="tick" variant={IconVariant.Confirmation} />
