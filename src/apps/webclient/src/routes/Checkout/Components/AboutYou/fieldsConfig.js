@@ -1,24 +1,24 @@
 import React from 'react'
 import { client } from 'config/routes'
 import { emailValidator } from 'utils/forms'
-import { Icon, IconVariant, Box, Color } from '@gousto-internal/citrus-react'
+import { Icon, IconVariant, Box, Color, Text, Link } from '@gousto-internal/citrus-react'
 import css from './AboutYou.css'
 
 const passwordLabel = 'Password'
 const checkboxLabel = (trackPrivacyPolicyClick) => (
-  <span>
-    I’d like to receive news and offers from Gousto in line with the&nbsp;
-    <a
+  <Text size={1}>
+    I’d like to receive news and offers from Gousto in line with the{' '}
+    <Link
+      size={1}
       href={client.privacyPolicy}
-      className={css.privacyPolicyLink}
       target="_blank"
       rel="noopener noreferrer"
       onClick={trackPrivacyPolicyClick}
     >
       Privacy Policy
-    </a>
+    </Link>
     . I can unsubscribe anytime.
-  </span>
+  </Text>
 )
 
 export const fieldsConfig = ({ loginCTA, sectionName, passState, trackPrivacyPolicyClick }) => {
