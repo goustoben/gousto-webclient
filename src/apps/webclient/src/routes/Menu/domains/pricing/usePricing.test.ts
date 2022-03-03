@@ -42,6 +42,7 @@ describe('usePricing', () => {
     useDispatchMock.mockReturnValue(dispatch)
     getOrderV2.mockReturnValue({ testdata: 'test' })
     useAuthMock.mockReturnValue({
+      isAdmin: false,
       accessToken: Math.random().toString(), // controls SWR cache
       authUserId: user.valid,
     })
@@ -114,6 +115,7 @@ describe('usePricing', () => {
       getBasketSlotId.mockReturnValue('test')
       getBasketRecipesCount.mockReturnValue(2)
       useAuthMock.mockReturnValue({
+        isAdmin: false,
         accessToken: Math.random().toString(),
         authUserId: user.idle,
       })
@@ -135,6 +137,7 @@ describe('usePricing', () => {
       getBasketSlotId.mockReturnValue('test')
       getBasketRecipesCount.mockReturnValue(2)
       useAuthMock.mockReturnValue({
+        isAdmin: false,
         accessToken: 'test-accessToken',
         authUserId: user.error,
       })
