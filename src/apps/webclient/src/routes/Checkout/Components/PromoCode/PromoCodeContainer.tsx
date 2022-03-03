@@ -1,29 +1,31 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { sendRequestToUpdateOrderSummaryPrices } from 'actions/checkout'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import { PromoCode } from './PromoCode'
 
-function mapStateToProps(state) {
-  const prices = state.pricing.get('prices')
-  const promoCodeValid = prices.get('promoCodeValid', false)
-
+function mapStateToProps(state: any) {
   return {
     promoCode: state.basket.get('promoCode'),
     promoCodeApplied: state.basket.get('promoCodeApplied'),
     previewOrderId: state.basket.get('previewOrderId'),
     numPortions: state.basket.get('numPortions'),
     recipes: state.basket.get('recipes'),
-    promoCodeValid,
   }
+}
+
+const PromoCodePure = (props: any) => {
+  const { pricing } = usePricing()
+
+  return <PromoCode {...props} promoCodeValid={pricing?.promoCodeValid} />
 }
 
 const mapDispatchToProps = {
   basketPromoCodeChange: actions.basketPromoCodeChange,
   basketPromoCodeAppliedChange: actions.basketPromoCodeAppliedChange,
   trackPromocodeChange: actions.trackPromocodeChange,
-  sendRequestToUpdateOrderSummaryPrices,
 }
 
-const PromoCodeContainer = connect(mapStateToProps, mapDispatchToProps)(PromoCode)
+const PromoCodeContainer = connect(mapStateToProps, mapDispatchToProps)(PromoCodePure)
 
 export { PromoCodeContainer }

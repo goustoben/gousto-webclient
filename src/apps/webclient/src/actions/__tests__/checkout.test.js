@@ -6,7 +6,6 @@ import { fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
 
 import { actionTypes } from 'actions/actionTypes'
-import pricingActions from 'actions/pricing'
 import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
 import {
   trackAffiliatePurchase,
@@ -58,7 +57,6 @@ jest.mock('utils/deliveries')
 
 jest.mock('actions/login')
 jest.mock('actions/menu')
-jest.mock('actions/pricing')
 
 jest.mock('actions/user', () => ({
   userSubscribe: jest.fn()
@@ -302,13 +300,6 @@ const createState = (stateOverrides) => ({
   request: Immutable.fromJS({
     browser: 'desktop',
   }),
-  pricing: Immutable.fromJS({
-    prices: {
-      grossTotal: 28.00,
-      deliveryTotal: 2.99,
-      total: '34.48',
-    }
-  }),
   features: Immutable.fromJS({
     ndd: {
       value: deliveryTariffTypes.NON_NDD
@@ -368,7 +359,7 @@ describe('checkout actions', () => {
           shippingAddressId: '84350206',
           billingAddressId: '84350207',
           deliveryTariffId: '9037a447-e11a-4960-ae69-d89a029569af',
-          salutation: {id: 1, label: 'Miss.', slug: 'miss'}
+          salutation: { id: 1, label: 'Miss.', slug: 'miss' }
         },
         addresses: {
           billingAddress: {
@@ -407,9 +398,9 @@ describe('checkout actions', () => {
         subscription: {
           id: '36613038',
           stateReason: null,
-          interval: {id: '1', slug: 'weekly', title: 'Weekly', description: 'Our most popular option!'},
-          status: {id: 1, slug: 'active'},
-          box: {id: '18', portions: 2, recipes: 4},
+          interval: { id: '1', slug: 'weekly', title: 'Weekly', description: 'Our most popular option!' },
+          status: { id: 1, slug: 'active' },
+          box: { id: '18', portions: 2, recipes: 4 },
           slot: null
         }
       }
@@ -479,6 +470,12 @@ describe('checkout actions', () => {
   })
 
   describe('checkoutSignup', () => {
+    const pricing = {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+      total: '34.48',
+    }
+
     beforeEach(() => {
       jest.spyOn(checkoutActions, 'trackSignupPageChange')
       jest.spyOn(checkoutActions, 'fetchGoustoRef')
@@ -493,43 +490,43 @@ describe('checkout actions', () => {
     })
 
     test('should send "Submit" tracking event', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
+      await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
       expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
     })
 
     test('should fetch gousto reference', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
+      await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
       expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
     })
 
     test('should reset duplicate check state', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
+      await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
       expect(checkoutActions.resetDuplicateCheck).toHaveBeenCalled()
     })
 
     test('should init subscribe user', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
+      await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
       expect(userSubscribe).toHaveBeenCalled()
     })
 
     test('should init checkout payment signup flow', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
+      await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
       expect(checkoutActions.checkoutCardAuthorisation).toHaveBeenCalled()
     })
 
     test('should init card authorisation', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
+      await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
       expect(checkoutActions.checkoutCardAuthorisation).toHaveBeenCalled()
     })
 
     test('should not init payment', async () => {
-      await checkoutActions.checkoutSignup()(dispatch, getState)
+      await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
       expect(checkoutActions.checkoutSignupPayment).not.toHaveBeenCalled()
     })
@@ -544,13 +541,13 @@ describe('checkout actions', () => {
       })
 
       test('should not init card authorisation', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
+        await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
         expect(checkoutActions.checkoutCardAuthorisation).not.toHaveBeenCalled()
       })
 
       test('should init payment', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
+        await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
         expect(checkoutActions.checkoutSignupPayment).toHaveBeenCalled()
       })
@@ -607,6 +604,12 @@ describe('checkout actions', () => {
   })
 
   describe('checkPaymentAuth', () => {
+    const pricing = {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+      total: '34.48',
+    }
+
     beforeEach(() => {
       getState.mockReturnValue(createState())
     })
@@ -615,7 +618,7 @@ describe('checkout actions', () => {
       const checkoutSuccessfulSessionId = 'success_session_id'
 
       beforeEach(async () => {
-        await checkPaymentAuth(checkoutSuccessfulSessionId, sessionId)(dispatch, getState)
+        await checkPaymentAuth(checkoutSuccessfulSessionId, { pricing })(dispatch, getState)
       })
 
       test('should hide 3ds challenge modal', () => {
@@ -639,7 +642,7 @@ describe('checkout actions', () => {
       const checkoutFailedSessionId = 'failed_session_id'
 
       beforeEach(async () => {
-        await checkPaymentAuth(checkoutFailedSessionId, sessionId)(dispatch, getState)
+        await checkPaymentAuth(checkoutFailedSessionId, { pricing })(dispatch, getState)
       })
 
       test('should hide 3ds challenge modal', () => {
@@ -673,6 +676,12 @@ describe('checkout actions', () => {
   })
 
   describe('checkoutCardAuthorisation', () => {
+    const pricing = {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+      total: '34.48',
+    }
+
     const checkoutState = createState()
       .checkout.set('goustoRef', '105979923')
 
@@ -700,13 +709,13 @@ describe('checkout actions', () => {
         decoupled: true,
       }
 
-      await checkoutCardAuthorisation()(dispatch, getState)
+      await checkoutCardAuthorisation({ pricing })(dispatch, getState)
 
       expect(authPayment).toHaveBeenCalledWith(expected, sessionId)
     })
 
     test('should show 3ds challenge modal', async () => {
-      await checkoutCardAuthorisation()(dispatch, getState)
+      await checkoutCardAuthorisation({ pricing })(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.PAYMENT_SHOW_MODAL,
@@ -715,13 +724,13 @@ describe('checkout actions', () => {
     })
 
     test('should trigger 3dsmodal_display event', async () => {
-      await checkoutCardAuthorisation()(dispatch, getState)
+      await checkoutCardAuthorisation({ pricing })(dispatch, getState)
 
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
     })
 
     test('should not clear gousto reference', async () => {
-      await checkoutCardAuthorisation()(dispatch, getState)
+      await checkoutCardAuthorisation({ pricing })(dispatch, getState)
 
       expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
     })
@@ -732,7 +741,7 @@ describe('checkout actions', () => {
       })
 
       test('should clear gousto reference', async () => {
-        await checkoutCardAuthorisation()(dispatch, getState)
+        await checkoutCardAuthorisation({ pricing })(dispatch, getState)
 
         expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
       })
@@ -740,6 +749,12 @@ describe('checkout actions', () => {
   })
 
   describe('checkoutSignupPayment', () => {
+    const pricing = {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+      total: '34.48',
+    }
+
     beforeEach(() => {
       jest.spyOn(checkoutActions, 'checkoutPostSignup')
 
@@ -762,25 +777,25 @@ describe('checkout actions', () => {
         '3ds': true,
       }
 
-      await checkoutSignupPayment()(dispatch, getState)
+      await checkoutSignupPayment(null, { pricing })(dispatch, getState)
 
       expect(signupPayment).toHaveBeenCalledWith(expected, 'checkout', sessionId)
     })
 
     test('should trigger checkoutPostSignup', async () => {
-      await checkoutSignupPayment()(dispatch, getState)
+      await checkoutSignupPayment(null, { pricing })(dispatch, getState)
 
       expect(checkoutActions.checkoutPostSignup).toHaveBeenCalled()
     })
 
     test('should clear gousto reference', async () => {
-      await checkoutSignupPayment()(dispatch, getState)
+      await checkoutSignupPayment(null, { pricing })(dispatch, getState)
 
       expect(checkoutActions.clearGoustoRef).toHaveBeenCalled()
     })
 
     test('should reset CHECKOUT_SIGNUP state', async () => {
-      await checkoutSignupPayment()(dispatch, getState)
+      await checkoutSignupPayment(null, { pricing })(dispatch, getState)
 
       expect(statusActions.pending).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, false)
     })
@@ -789,17 +804,16 @@ describe('checkout actions', () => {
   describe('trackPurchase', () => {
     const orderId = 'test-order-id'
 
+    const pricing = {
+      total: 31.99,
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+    }
+
     beforeEach(() => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
           promoCode: 'TEST123'
-        }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: 31.99,
-            grossTotal: 28.00,
-            deliveryTotal: 2.99,
-          }
         }),
       })
     })
@@ -814,7 +828,7 @@ describe('checkout actions', () => {
       })
 
       test('should not call ga with order details', async () => {
-        trackPurchase({ orderId })(dispatch, getState)
+        trackPurchase({ orderId, pricing })(dispatch, getState)
 
         expect(ga).not.toHaveBeenCalled()
       })
@@ -826,7 +840,7 @@ describe('checkout actions', () => {
       })
 
       test('should call ga with order details', async () => {
-        trackPurchase({ orderId })(dispatch, getState)
+        trackPurchase({ orderId, pricing })(dispatch, getState)
 
         expect(ga).toHaveBeenCalledWith('gousto.ec:setAction', 'purchase', {
           id: 'test-order-id',
@@ -838,7 +852,7 @@ describe('checkout actions', () => {
     })
 
     test('should call trackAffiliatePurchase with order details', () => {
-      trackPurchase({ orderId })(dispatch, getState)
+      trackPurchase({ orderId, pricing })(dispatch, getState)
 
       expect(trackAffiliatePurchase).toHaveBeenCalledWith({
         orderId: 'test-order-id',
@@ -850,13 +864,19 @@ describe('checkout actions', () => {
     })
 
     test('should call clearTapjoy', () => {
-      trackPurchase({ orderId })(dispatch, getState)
+      trackPurchase({ orderId, pricing })(dispatch, getState)
 
       expect(clearTapjoy).toHaveBeenCalled()
     })
   })
 
   describe('checkoutPostSignup', () => {
+    const pricing = {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+      total: '34.48',
+    }
+
     beforeEach(() => {
       getState.mockReturnValue(createState())
     })
@@ -866,13 +886,13 @@ describe('checkout actions', () => {
     })
 
     test('should track subscription created', async () => {
-      await checkoutPostSignup()(dispatch, getState)
+      await checkoutPostSignup({ pricing })(dispatch, getState)
 
       expect(trackSubscriptionCreated).toHaveBeenCalled()
     })
 
     test('should call post signup', async () => {
-      await checkoutPostSignup()(dispatch, getState)
+      await checkoutPostSignup({ pricing })(dispatch, getState)
 
       expect(basketResetPersistent).toHaveBeenCalledTimes(1)
     })
@@ -880,13 +900,13 @@ describe('checkout actions', () => {
     test('should dispatch a call to trackPurchase', async () => {
       global.ga = ga
 
-      await checkoutPostSignup()(dispatch, getState)
+      await checkoutPostSignup({ pricing })(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledTimes(12)
     })
 
     test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {
-      await checkoutPostSignup()(dispatch, getState)
+      await checkoutPostSignup({ pricing })(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.CHECKOUT_SIGNUP_SUCCESS,
@@ -895,6 +915,7 @@ describe('checkout actions', () => {
           'recipe-id-1': 1,
           'recipe-id-2': 2,
         }),
+        pricing,
       })
     })
   })
@@ -1027,11 +1048,11 @@ describe('checkout actions', () => {
 
     describe('when payment method is PayPal, but it was failed to init', () => {
       test('PayPal failed attempt should be reported', () => {
-        getState.mockReturnValue(createState( {checkout: Immutable.fromJS( {paypalErrors: {Error: true}} ) }))
+        getState.mockReturnValue(createState({ checkout: Immutable.fromJS({ paypalErrors: { Error: true } }) }))
 
         setCurrentPaymentMethod(PaymentMethod.PayPal)(dispatch, getState)
 
-        expect(dispatch).toBeCalledWith({ type: actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED})
+        expect(dispatch).toBeCalledWith({ type: actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED })
       })
     })
   })
@@ -1039,7 +1060,7 @@ describe('checkout actions', () => {
   describe('given setPayPalDeviceData action', () => {
     describe('when called', () => {
       test('should dispatch PAYMENT_SET_PAYPAL_DEVICE_DATA', () => {
-        const deviceData = JSON.stringify({ correlationId: 'dfasdfa'})
+        const deviceData = JSON.stringify({ correlationId: 'dfasdfa' })
 
         setPayPalDeviceData(deviceData)(dispatch)
 
@@ -1052,6 +1073,12 @@ describe('checkout actions', () => {
   })
 
   describe('given setPayPalNonce action', () => {
+    const pricing = {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+      total: '34.48',
+    }
+
     describe('when called', () => {
       const nonce = 'fake-nonce'
 
@@ -1065,7 +1092,7 @@ describe('checkout actions', () => {
       })
 
       test('should dispatch PAYMENT_SET_PAYPAL_NONCE', () => {
-        setPayPalNonce(nonce)(dispatch)
+        setPayPalNonce(nonce, { pricing })(dispatch)
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
@@ -1074,13 +1101,13 @@ describe('checkout actions', () => {
       })
 
       test('should dispatch trackingOrderPlaceAttemptSucceeded action', () => {
-        setPayPalNonce(nonce)(dispatch)
+        setPayPalNonce(nonce, { pricing })(dispatch)
 
         expect(checkoutActions.trackingOrderPlaceAttemptSucceeded).toHaveBeenCalled()
       })
 
       test('should dispatch checkoutSignup action', () => {
-        setPayPalNonce(nonce)(dispatch)
+        setPayPalNonce(nonce, { pricing })(dispatch)
 
         expect(checkoutActions.checkoutSignup).toHaveBeenCalled()
       })
@@ -1172,7 +1199,6 @@ describe('checkout actions', () => {
       expect(basketPromoCodeChange).toHaveBeenCalledWith('')
       expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(false)
       expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_ERROR_DUPLICATE, true)
-      expect(pricingActions.pricingRequest).toHaveBeenCalledWith()
     })
   })
 })

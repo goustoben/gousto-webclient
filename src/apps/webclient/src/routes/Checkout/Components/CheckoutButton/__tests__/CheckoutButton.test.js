@@ -2,6 +2,12 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { CheckoutButton } from '../CheckoutButton'
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(() => true),
+  useSelector: jest.fn(),
+}))
+
 describe('CheckoutButton', () => {
   let wrapper
   const onClick = jest.fn()

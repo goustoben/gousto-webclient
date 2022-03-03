@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Segment } from 'goustouicomponents'
-import { TitleContainer } from '../../Title'
+import { Title } from '../../Title'
 import { Description } from '../../Description'
 
 import css from './ExpandBoxSummaryButton.css'
@@ -13,7 +13,7 @@ const ExpandBoxSummaryButton = ({ showDetails, pricingPending, numPortions, numR
       <Segment fill={showDetails} onClick={onClick} className={css.summaryDesktopSegment} color="secondary">
         <div>
           {numRecipes > 0 ? <span className={css.badge}>{numRecipes}</span> : ''}
-          <TitleContainer view="desktop" date={date} finalisedSlot={slotId !== ''} />
+          <Title view="desktop" date={date} finalisedSlot={slotId !== ''} />
           <Description
             numPortions={numPortions}
             numRecipes={numRecipes}

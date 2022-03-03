@@ -1,6 +1,5 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 import { ReactReduxContext } from 'react-redux'
 import logger from 'utils/logger'
 import routesConfig from 'config/routes'
@@ -61,7 +60,8 @@ const propTypes = {
   fetchPayPalClientToken: PropTypes.func,
   clearPayPalClientToken: PropTypes.func,
   trackCheckoutNavigationLinks: PropTypes.func,
-  prices: PropTypes.instanceOf(Immutable.Map),
+  // eslint-disable-next-line react/forbid-prop-types
+  prices: PropTypes.object,
 
   isLoginOpen: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
@@ -89,7 +89,7 @@ const defaultProps = {
   trackCheckoutNavigationLinks: () => {},
   trackSuccessfulCheckoutFlow: () => {},
   trackFailedCheckoutFlow: () => {},
-  prices: Immutable.Map({}),
+  prices: null,
 
   isLoginOpen: false,
   isAuthenticated: false,
@@ -148,12 +148,7 @@ class Checkout extends PureComponent {
       await store.dispatch(actions.menuLoadDays())
     }
 
-    return store.dispatch(actions.pricingRequest()).catch((err) => {
-      if (__SERVER__) {
-        logger.error({ message: 'Failed to fetch prices.', errors: [err] })
-        store.dispatch(actions.redirect(routesConfig.client.menu, true))
-      }
-    })
+    return null
   }
 
   constructor(state, props) {
@@ -281,13 +276,12 @@ class Checkout extends PureComponent {
   }
 
   renderStaticPayment = (steps, currentStep) => {
-    const { submitOrder } = this.props
     const onPaymentStep = currentStep === 'payment'
     const { checkoutScriptReady, paypalScriptsReady } = this.state
+    const { submitOrder } = this.props
 
     return (
       <CheckoutPaymentContainer
-        submitOrder={submitOrder}
         checkoutScriptReady={checkoutScriptReady}
         paypalScriptsReady={paypalScriptsReady}
         prerender={!onPaymentStep}
@@ -295,6 +289,7 @@ class Checkout extends PureComponent {
         onStepChange={this.onStepChange(steps, currentStep)}
         nextStepName={this.getNextStepName(steps, currentStep)}
         onLoginClick={this.handleLoginClick}
+        submitOrder={submitOrder}
       />
     )
   }
@@ -305,7 +300,7 @@ class Checkout extends PureComponent {
 
     return (
       <Fragment>
-        <Summary isLoading={isCreatingPreviewOrder} showPromocode={!isGoustoOnDemandEnabled} />
+        <Summary isLoading={isCreatingPreviewOrder} showPromoCode={!isGoustoOnDemandEnabled} />
         <BoxDetailsContainer />
       </Fragment>
     )
@@ -439,10 +434,10 @@ class Checkout extends PureComponent {
             {stepName !== 'order-summary' && (
               <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
                 <ExpandableBoxSummary
-                  totalToPay={prices.get('total')}
-                  totalWithoutDiscount={prices.get('recipeTotal')}
+                  totalToPay={prices?.total}
+                  totalWithoutDiscount={prices?.recipeTotal}
                   trackUTMAndPromoCode={trackUTMAndPromoCode}
-                  promoCodeValid={prices.get('promoCodeValid')}
+                  promoCodeValid={prices?.promoCodeValid}
                 >
                   {this.renderSummaryAndYourBox()}
                 </ExpandableBoxSummary>

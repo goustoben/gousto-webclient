@@ -7,6 +7,12 @@ import { useBasketRequiredFeatureEnabled } from '../../../../../hooks/useBasketR
 
 jest.mock('../../../../../hooks/useBasketRequiredFeatureEnabled')
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(() => true),
+  useSelector: jest.fn(),
+}))
+
 describe('CheckoutButton', () => {
   let wrapper
   let propsToPass

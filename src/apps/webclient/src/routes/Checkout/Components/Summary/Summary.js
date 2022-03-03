@@ -22,7 +22,8 @@ import { PromoCode } from '../PromoCode'
 import css from './Summary.css'
 
 const propTypes = {
-  prices: PropTypes.instanceOf(Immutable.Map),
+  // eslint-disable-next-line react/forbid-prop-types
+  prices: PropTypes.object,
   // eslint-disable-next-line react/forbid-prop-types
   basketRecipes: PropTypes.object,
   // eslint-disable-next-line react/forbid-prop-types
@@ -33,7 +34,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  prices: Immutable.Map({}),
+  prices: {},
   basketRecipes: Immutable.Map({}),
   isLoading: false,
   showPromocode: true,
@@ -77,21 +78,25 @@ class Summary extends PureComponent {
               </Text>
 
               <Space size={2} direction="horizontal" />
-              <PricePerServingMessage isPriceInCheckout />
+              <PricePerServingMessage
+                isPriceInCheckout
+                fullPrice={prices?.pricePerPortion}
+                discountedPrice={prices?.pricePerPortionDiscounted}
+              />
             </Box>
             <Space size={5} direction="vertical" />
             <Box>
               <Receipt
                 numRecipes={numRecipes}
                 prices={prices}
-                deliveryTotalPrice={prices.get('deliveryTotal')}
-                surcharges={getSurchargeItems(prices.get('items'))}
-                surchargeTotal={prices.get('surchargeTotal')}
-                recipeTotalPrice={prices.get('recipeTotal')}
-                totalToPay={totalToPay}
-                recipeDiscountAmount={prices.get('recipeDiscount')}
-                recipeDiscountPercent={prices.get('percentageOff')}
-                extrasTotalPrice={prices.get('productTotal')}
+                deliveryTotalPrice={prices?.deliveryTotal}
+                surcharges={getSurchargeItems(prices?.items)}
+                surchargeTotal={prices?.surchargeTotal}
+                recipeTotalPrice={prices?.recipeTotal}
+                totalToPay={prices?.total || ''}
+                recipeDiscountAmount={prices?.recipeDiscount}
+                recipeDiscountPercent={prices?.percentageOff}
+                extrasTotalPrice={prices?.productTotal}
                 isReceiptInCheckout
                 isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
               />

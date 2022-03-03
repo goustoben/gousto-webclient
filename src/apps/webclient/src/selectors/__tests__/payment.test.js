@@ -258,6 +258,7 @@ describe('payment selectors', () => {
   describe('given getPaymentAuthData method', () => {
     describe('when called', () => {
       test('then should payment auth request data', () => {
+        const pricing = { total: 24.99 }
         const expected = {
           order_id: 'fake-order-id',
           gousto_ref: 'fake-gousto-ref',
@@ -269,7 +270,7 @@ describe('payment selectors', () => {
           decoupled: true
         }
 
-        const result = getPaymentAuthData(state)
+        const result = getPaymentAuthData(state, { pricing })
 
         expect(result).toEqual(expected)
       })

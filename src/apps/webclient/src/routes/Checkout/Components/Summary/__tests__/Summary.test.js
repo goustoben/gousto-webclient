@@ -11,13 +11,21 @@ const prices = Immutable.Map({
   total: '39.99',
 })
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(() => true),
+  useSelector: jest.fn(),
+}))
+
 const basketRecipes = Immutable.Map({ 1234: '4' })
 
 describe('Summary Component', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} isLoading />)
+    wrapper = shallow(
+      <Summary prices={prices} basketRecipes={basketRecipes} showPromoCode isLoading />
+    )
   })
 
   describe('when isLoading is true', () => {
@@ -46,7 +54,7 @@ describe('Summary Component', () => {
   describe('PromoCode', () => {
     beforeEach(() => {
       wrapper.setProps({
-        showPromocode: true,
+        showPromoCode: true,
       })
     })
 
@@ -54,11 +62,11 @@ describe('Summary Component', () => {
       expect(wrapper.find(PromoCode)).toBeDefined()
     })
 
-    describe('given showPromocode flag', () => {
-      describe('when showPromocode flag is false', () => {
+    describe('given showPromoCode flag', () => {
+      describe('when showPromoCode flag is false', () => {
         beforeEach(() => {
           wrapper.setProps({
-            showPromocode: false,
+            showPromoCode: false,
           })
         })
 

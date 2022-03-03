@@ -18,7 +18,7 @@ export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory('radish
 
 export const isOrderApiUpdateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_update_web_enabled')
 
-export const checkoutBasket = (section, view) => async (dispatch, getState) => {
+export const checkoutBasket = ({ section, view, pricing }) => async (dispatch, getState) => {
   const state = getState()
   const isAuthenticated = getIsAuthenticated(state)
   const isTransactionalOrder = isBasketTransactionalOrder(state)
@@ -26,7 +26,7 @@ export const checkoutBasket = (section, view) => async (dispatch, getState) => {
   const transactionalOrderForNonLoggedInUser = isTransactionalOrder && !isAuthenticated
 
   dispatch(boxSummaryVisibilityChange(false))
-  dispatch(basketCheckedOut(view))
+  dispatch(basketCheckedOut({ view, pricing }))
   dispatch(basketCheckoutClicked(section))
 
   if (rules.length !== 0) {

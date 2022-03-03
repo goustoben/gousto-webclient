@@ -4,20 +4,19 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
 import { formatOrderPrice } from 'utils/pricing'
-
 import css from './Receipt.css'
 import { ReceiptLine } from './ReceiptLine'
 import { DeliveryDetails } from './DeliveryDetails'
 
 const propTypes = {
-  prices: PropTypes.instanceOf(Immutable.Map),
+  prices: PropTypes.instanceOf(Object),
   children: PropTypes.node,
   numRecipes: PropTypes.number,
   deliveryTotalPrice: PropTypes.string,
   shippingAddress: PropTypes.instanceOf(Immutable.Map),
   deliveryDate: PropTypes.string,
   deliverySlot: PropTypes.instanceOf(Immutable.Map),
-  surcharges: PropTypes.instanceOf(Immutable.List),
+  surcharges: PropTypes.instanceOf(Array),
   surchargeTotal: PropTypes.string,
   totalToPay: PropTypes.string,
   recipeTotalPrice: PropTypes.string,
@@ -31,14 +30,14 @@ const propTypes = {
 }
 
 const defaultProps = {
-  prices: Immutable.Map({}),
+  prices: {},
   children: null,
   numRecipes: 0,
   deliveryTotalPrice: '',
   shippingAddress: null,
   deliveryDate: null,
   deliverySlot: Immutable.Map(),
-  surcharges: Immutable.List([]),
+  surcharges: [],
   surchargeTotal: '',
   totalToPay: '',
   recipeTotalPrice: '',
@@ -78,7 +77,7 @@ class Receipt extends React.Component {
     const showRecipeDiscount = parseFloat(recipeDiscountAmount) > 0 ? true : null
     const showExtrasTotalPrice = parseFloat(extrasTotalPrice) > 0 ? true : null
     const showFreeDelivery = parseFloat(deliveryTotalPrice) === 0 ? true : null
-    const showSurchargeTotalPrice = surcharges.size > 0 && surchargeTotal !== '0.00'
+    const showSurchargeTotalPrice = surcharges.length > 0 && surchargeTotal !== '0.00'
     const deliveryLineStyleForCheckout = showFreeDelivery ? 'checkoutPrimary' : 'checkoutNormal'
     const deliveryLineStyleDefault = showFreeDelivery ? 'primary' : 'normal'
     const deliveryLineStyle = isReceiptInCheckout ? deliveryLineStyleForCheckout : deliveryLineStyleDefault
@@ -109,7 +108,7 @@ class Receipt extends React.Component {
         )}
         {showSurchargeTotalPrice && (
           <ReceiptLine
-            label={formatLabelPlural('Recipe surcharge', surcharges.size)}
+            label={formatLabelPlural('Recipe surcharge', surcharges.length)}
             showLineAbove
             lineStyle={isReceiptInCheckout ? 'checkoutNormal' : 'normal'}
             isReceiptInCheckout={isReceiptInCheckout}

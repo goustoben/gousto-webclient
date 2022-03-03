@@ -12,7 +12,8 @@ import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
 import { formatOrderPrice } from 'utils/pricing'
-import { getPricingTotalAmount } from 'selectors/pricing'
+import { usePricing } from 'routes/Menu/domains/pricing'
+import { useSubmitOrder } from 'routes/Checkout/useSubmitOrder'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
@@ -21,7 +22,6 @@ import { CheckoutPayment } from './CheckoutPayment'
 export const mapStateToProps = (state) => {
   const ribbonTriggerName = 'control_payment'
   const hotjarTriggerName = 'psd2_modal'
-  const totalPrice = getPricingTotalAmount(state)
 
   return {
     formErrors: {
@@ -35,7 +35,6 @@ export const mapStateToProps = (state) => {
     isPayPalReady: isPayPalReady(state),
     ribbonTriggerName,
     hotjarTriggerName,
-    isFreeBox: formatOrderPrice(totalPrice) === 'FREE',
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
 }
@@ -54,8 +53,21 @@ const ConnectedCheckoutPaymentContainer = connect(
   mapDispatchToProps
 )(CheckoutPayment)
 
-// eslint-disable-next-line react/jsx-props-no-spreading
-const Plain = (props) => <ConnectedCheckoutPaymentContainer {...props} />
+const Plain = (props) => {
+  const { pricing } = usePricing()
+  const isFreeBox = formatOrderPrice(pricing?.total) === 'FREE'
+  const submitOrder = useSubmitOrder()
+
+  return (
+    <ConnectedCheckoutPaymentContainer
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      isFreeBox={isFreeBox}
+      pricing={pricing}
+      submitOrder={submitOrder}
+    />
+  )
+}
 
 export const CheckoutPaymentContainer = addInitialValues(
   formContainer(Plain, getValidationRules(sectionName), sectionName),

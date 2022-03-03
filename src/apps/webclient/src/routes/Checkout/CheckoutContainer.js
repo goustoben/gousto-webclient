@@ -1,5 +1,5 @@
+import React from 'react'
 import { connect } from 'react-redux'
-
 import actions from 'actions'
 import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
@@ -14,7 +14,9 @@ import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/lo
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import { Checkout } from './Checkout'
+import { useSubmitOrder } from './useSubmitOrder'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -22,7 +24,6 @@ function mapStateToProps(state, ownProps) {
     params: ownProps.params,
     stepsOrder: state.basket.get('stepsOrder'),
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
-    prices: state.pricing.get('prices'),
     isLoginOpen: state.loginVisibility.get('login'),
     isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     isMobile: state.request.get('browser') === 'mobile',
@@ -30,11 +31,17 @@ function mapStateToProps(state, ownProps) {
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
 }
+const CheckoutPure = (props) => {
+  const { pricing } = usePricing()
+  const submitOrder = useSubmitOrder()
+
+  /* eslint-disable react/jsx-props-no-spreading */
+  return <Checkout {...props} prices={pricing} submitOrder={submitOrder} />
+}
 
 const mapDispatchToProps = {
   menuLoadDays: actions.menuLoadDays,
   redirect: actions.redirect,
-  submitOrder: actions.checkoutSignup,
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
   trackSignupStep: actions.trackSignupPageChange,
   loginVisibilityChange: actions.loginVisibilityChange,
@@ -51,4 +58,4 @@ const mapDispatchToProps = {
   fetchGoustoRef,
 }
 
-export const CheckoutContainer = connect(mapStateToProps, mapDispatchToProps)(Checkout)
+export const CheckoutContainer = connect(mapStateToProps, mapDispatchToProps)(CheckoutPure)

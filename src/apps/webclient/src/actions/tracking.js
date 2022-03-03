@@ -21,8 +21,8 @@ export const trackFirstPurchase = (orderId, prices) => (
     const { user } = getState()
     const goustoReference = user.get('goustoReference')
     const order = getUserOrderById(orderId, user.get('orders'))
-    const orderTotal = prices && prices.get('total')
-    const grossTotal = prices && prices.get('grossTotal')
+    const orderTotal = prices?.total
+    const grossTotal = prices?.grossTotal
 
     if (!goustoReference) {
       logger.warning('Missing user data for first purchase tracking: no user found in store')
@@ -352,10 +352,10 @@ export const trackNewOrder = (orderId, userId) => (dispatch, getState) => {
   })
 }
 
-export const trackSubscriptionCreated = () => (dispatch, getState) => {
+export const trackSubscriptionCreated = ({ pricing }) => (dispatch, getState) => {
   const state = getState()
   const { UTM } = getUTMAndPromoCode(state)
-  const promoCode = state.pricing.get('prices').get('promoCode')
+  const promoCode = pricing?.promoCode
   const paymentMethod = getCurrentPaymentMethod(state)
   const orderId = getPreviewOrderId(state)
   const userId = state.user.get('id')
@@ -376,21 +376,20 @@ export const trackSubscriptionCreated = () => (dispatch, getState) => {
   })
 }
 
-export const trackingOrderCheckout = () => (dispatch, getState) => {
-  const { basket, user, pricing, temp } = getState()
+export const trackingOrderCheckout = ({ pricing }) => (dispatch, getState) => {
+  const { basket, user, temp } = getState()
   const basketOrderId = basket.get('orderId')
   const editingBox = basket.get('editBox')
   const orders = user.get('orders')
   const subscription = user.get('subscription')
   const isActiveSubsc = subscription && (subscription.get('state') === 'active')
-  const prices = pricing.get('prices')
   const originalGrossTotal = temp.get('originalGrossTotal')
   const originalNetTotal = temp.get('originalNetTotal')
-  const orderTotal = prices && prices.get('total')
-  const grossTotal = prices && prices.get('grossTotal')
+  const orderTotal = pricing?.total
+  const grossTotal = pricing?.grossTotal
   const editedGrossTotal = originalGrossTotal && grossTotal ? (grossTotal - originalGrossTotal).toFixed(2) : ''
   const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
-  const promoCode = prices && prices.get('promoCode')
+  const promoCode = pricing?.promoCode
 
   if (orders.get(basketOrderId)) {
     const orderItems = orders.get(basketOrderId).get('recipeItems')

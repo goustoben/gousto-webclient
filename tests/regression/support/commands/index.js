@@ -45,14 +45,15 @@ Cypress.Commands.add('loginV2', () => {
 
 Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   const pricesFixtureFile = withDiscount
-    ? 'prices/2person2portionDiscount'
-    : 'prices/2person2portionNoDiscount'
+    ? 'order/v2/2x2withDiscount'
+    : 'order/v2/2x2noDiscount'
 
   cy.server()
   cy.clearCookies()
-  cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
+  cy.route('GET', /boxPrices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
-  cy.route('GET', /promo_code=DTI-SB-63/, 'fixture:prices/2person2portionDiscount.json').as('pricesDiscount')
+  cy.route('POST', 'order/v2/prices?promo=DTI-SB-63', `fixture:order/v2/2x2withDiscount.json` ).as('pricesDiscount')
+  cy.route('POST', 'order/v2/prices', `fixture:order/v2/2x2noDiscount.json` ).as('pricesDiscount')
 
   cy.route(
     'GET',

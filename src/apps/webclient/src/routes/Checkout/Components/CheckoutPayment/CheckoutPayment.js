@@ -13,7 +13,7 @@ import { ErrorMessage } from '../ErrorMessage'
 import { Checkout3DSModal } from './Checkout3DSModal'
 import { PaymentMethodSelector } from './PaymentMethodSelector'
 import { CheckoutCardDetails } from './CheckoutCardDetails'
-import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
+import { CheckoutPayPalDetailsWrapper } from './CheckoutPayPalDetails'
 
 import { SectionHeader } from '../SectionHeader'
 import { PaymentFooter } from './PaymentFooter'
@@ -79,13 +79,14 @@ class CheckoutPayment extends React.Component {
       trackingOrderPlaceAttemptSucceeded,
       currentPaymentMethod,
       submitOrder,
+      pricing,
     } = this.props
 
-    trackingOrderPlaceAttempt()
+    trackingOrderPlaceAttempt({ pricing })
 
     if (currentPaymentMethod === PaymentMethod.Card) {
       if (this.isFormValid()) {
-        trackingOrderPlaceAttemptSucceeded()
+        trackingOrderPlaceAttemptSucceeded({ pricing })
         this.enableCardSubmission()
       } else {
         trackingOrderPlaceAttemptFailed()
@@ -93,7 +94,7 @@ class CheckoutPayment extends React.Component {
       }
     } else {
       // nothing to validate for PayPal
-      trackingOrderPlaceAttemptSucceeded()
+      trackingOrderPlaceAttemptSucceeded({ pricing })
       submitOrder()
     }
   }
@@ -219,7 +220,7 @@ class CheckoutPayment extends React.Component {
     const { paypalScriptsReady, currentPaymentMethod } = this.props
 
     return (
-      <CheckoutPayPalDetails
+      <CheckoutPayPalDetailsWrapper
         hide={currentPaymentMethod !== PaymentMethod.PayPal}
         paypalScriptsReady={paypalScriptsReady}
       />
@@ -313,6 +314,7 @@ CheckoutPayment.propTypes = {
   hotjarTriggerName: PropTypes.string,
   isGoustoOnDemandEnabled: PropTypes.bool,
   isFreeBox: PropTypes.bool,
+  pricing: PropTypes.object,
 }
 
 CheckoutPayment.defaultProps = {
@@ -340,6 +342,7 @@ CheckoutPayment.defaultProps = {
   hotjarTriggerName: '',
   isGoustoOnDemandEnabled: false,
   isFreeBox: false,
+  pricing: {},
 }
 
 export { CheckoutPayment }
