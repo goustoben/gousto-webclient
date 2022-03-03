@@ -2,16 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { touch } from 'redux-form'
 
-// import Input from 'Form/Input'
-import DropdownInput from 'Form/Dropdown'
-import CheckBox from 'Form/CheckBox'
-
-import InputError from 'Form/InputError'
-import { Label } from 'Form/Label'
 import {
-  Text, Input, InputField, FontWeight, Space, Color, Select, SelectField, Checkbox
+  Text, Input, InputField, FontWeight, Space, Color, Select, SelectField, Checkbox, FlexDirection, Box, Icon, IconVariant, AlignItems
 } from '@gousto-internal/citrus-react'
-import css from './ReduxFormInput.css'
 
 const propTypes = {
   input: PropTypes.object,
@@ -47,7 +40,7 @@ export class ReduxFormInput extends React.PureComponent {
     input.onChange(value)
   }
 
-  getInputLabel() {
+  getFormattedLabel() {
     const { label, subLabel } = this.props
 
     return (
@@ -72,39 +65,68 @@ export class ReduxFormInput extends React.PureComponent {
   }
 
   render() {
-    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, onFocus, dataTesting, ...inputProps } = this.props
-
-    let Component
-    switch (inputType) {
-    case 'Input': {
-      Component = Input
-      break
-    }
-    case 'DropDown': {
-      Component = DropdownInput
-      break
-    }
-    case 'CheckBox': {
-      Component = CheckBox
-      break
-    }
-    default: {
-      Component = Input
-    }
-    }
+    const { inputPrefix, input, inputType, inputSuffix, label, meta, dataTesting, onFocus, ...inputProps } = this.props
 
     const error = Boolean(meta && meta.touched && meta.error)
 
-    if (inputType === 'Input') {
+    if (inputType === 'DropDown') {
+      let SelectComponent
+      if (label) {
+        SelectComponent = <SelectField label={this.getFormattedLabel()} />
+      } else {
+        SelectComponent = <Select />
+      }
+
+      const selectOptions = inputProps.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)
+
+      const SelectComponentWithProps = React.cloneElement(SelectComponent, { ...inputProps,
+        ...input,
+        onFocus,
+        fullWdith: true,
+        onChange: (e) => this.onChange(e.target.value),
+        validationMessage: error && meta.error,
+        status: error && 'Error',
+        'data-testing': dataTesting,
+      }, selectOptions)
+
+      return (
+        <>
+          {SelectComponentWithProps}
+          {!label && error && (
+            <>
+              <Space size={2} />
+              <Box display="flex" flexDirection={FlexDirection.Row} alignItems={AlignItems.FlexEnd}>
+                <Icon name="error" variant={IconVariant.Error} />
+                <Space size={1} direction="horizontal" />
+                <Text size={1} color={Color.Error_900} vaiant={}>{meta.error}</Text>
+              </Box>
+            </>
+          )}
+        </>
+      )
+    } else if (inputType === 'CheckBox') {
+      return (
+        <Checkbox
+          onChange={(e) => this.onChange(e.target.checked)}
+          onFocus={onFocus}
+          data-testing={dataTesting}
+          checked={!!input.value}
+          status={error && 'Error'}
+        >
+          {inputProps.childLabel}
+        </Checkbox>
+      )
+    } else {
       let InputComponent
       if (label) {
-        InputComponent = <InputField label={this.getInputLabel()} />
+        InputComponent = <InputField label={this.getFormattedLabel()} />
       } else {
         InputComponent = <Input />
       }
 
-      return React.cloneElement(InputComponent, { ...inputProps,
+      const InputComponentWithProps = React.cloneElement(InputComponent, { ...inputProps,
         ...input,
+        onFocus,
         onChange: (e) => this.onChange(e.target.value),
         validationMessage: error && meta.error,
         status: error && 'Error',
@@ -112,72 +134,19 @@ export class ReduxFormInput extends React.PureComponent {
         rightAccessory: inputSuffix,
         'data-testing': dataTesting,
       })
+
+      return (
+        <>
+          {InputComponentWithProps}
+          {!label && error && (
+            <>
+              <Space size={2} />
+              <Text size={1} color={Color.Error_900}>{meta.error}</Text>
+            </>
+          )}
+        </>
+      )
     }
-
-    if (inputType === 'DropDown') {
-      let SelectComponent
-      if (label) {
-        SelectComponent = <SelectField label={this.getInputLabel()} />
-      } else {
-        SelectComponent = <Select />
-      }
-
-      const selectOptions = inputProps.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)
-
-      return React.cloneElement(SelectComponent, { ...inputProps,
-        ...input,
-        fullWdith: true,
-        onChange: (e) => this.onChange(e.target.value),
-        validationMessage: error && meta.error,
-        status: error && 'Error',
-        'data-testing': dataTesting,
-      }, selectOptions)
-    }
-
-    // if (inputType === 'CheckBox') {
-    //   return (
-    //     <Checkbox
-    //       onChange={(e) => this.onChange(e.target.checked)}
-    //       data-testing={dataTesting}
-    //       checked={!!input.value}
-    //       status={error && 'Error'}
-    //     >
-    //       {inputProps.childLabel}
-    //     </Checkbox>
-    //   )
-    // }
-
-    const inputEl = React.createElement(Component, {
-      ...inputProps,
-      ...input,
-      error,
-      inputType,
-      'data-testing': dataTesting,
-      dataTesting,
-      onChange: this.onChange,
-      isInCheckout: true,
-      inputPrefix,
-      [input.onFocus]: onFocus,
-    })
-
-    return (
-      <>
-        <div>
-          {label && <Label label={label} subLabel={subLabel} />}
-          <div className={css.flexRow}>
-            {inputEl && (
-            <div className={css.flexItem}>
-              {inputEl}
-            </div>
-            )}
-            {React.isValidElement(inputSuffix) && inputSuffix}
-          </div>
-          <div data-testing={`${dataTesting}Error`}>
-            {error && <InputError>{meta.error}</InputError>}
-          </div>
-        </div>
-      </>
-    )
   }
 }
 

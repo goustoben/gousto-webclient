@@ -171,7 +171,10 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         })
 
         it('Then proper error message should be displayed', () => {
-          cy.get('[data-testing="checkoutDeliveryDetailsExtraInfoError"]').should('be.visible')
+          cy.get('[data-testing="checkoutDeliveryDetailsExtraInfo"]')
+            .parent()
+            .parent()
+            .contains('delivery instruction must be at least 5 characters')
         })
       })
 
@@ -180,8 +183,11 @@ describe('Given I’m a gousto logged-out website visitor', () => {
           cy.get('[data-testing="checkoutDeliveryDetailsExtraInfo"]').clear().type('leave box here')
         })
 
-        it('Then proper error message should be displayed', () => {
-          cy.get('[data-testing="checkoutDeliveryDetailsExtraInfoError"]').should('not.be.visible')
+        it('Then an error should not be displayed', () => {
+          cy.get('[data-testing="checkoutDeliveryDetailsExtraInfo"]')
+            .parent()
+            .parent()
+            .should('not.contain', 'delivery instruction must be at least 5 characters')
         })
       })
     })
