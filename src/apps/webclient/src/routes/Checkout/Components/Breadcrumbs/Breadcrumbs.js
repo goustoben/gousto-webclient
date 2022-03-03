@@ -1,8 +1,6 @@
+import { Box, Space, Icon, Link, Color, Text, FontFamily } from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Link from 'Link'
-import classNames from 'classnames'
-import Svg from 'Svg'
 import css from './Breadcrumbs.css'
 
 const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReachedStepIndex }) => {
@@ -10,7 +8,8 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReach
 
   return (
     <>
-      <div className={css.breadcrumbsContainer}>
+      <Space size={0.5} direction="vertical" />
+      <Box paddingH={[4, 8]}>
         <ul className={css.breadcrumbsList}>
           {items.map(({ id, label }, index) => (
             <li key={id} className={css.listItem}>
@@ -18,51 +17,29 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReach
                 <span className={css.futureItem}>{label}</span>
               ) : (
                 <Link
-                  clientRouted
-                  to={`/check-out/${id}`}
+                  href={`/check-out/${id}`}
                   tracking={trackNavigation(label)}
-                  className={classNames(css.linkItem, { [css.isActive]: id === currentId })}
+                  color={Color.Secondary_400}
+                  padding="0.25rem"
                 >
-                  {label}
+                  <Text size={1} fontFamily={id === currentId ? FontFamily.Bold : FontFamily.UI}>
+                    {label}
+                  </Text>
                 </Link>
               )}
-              <Svg
-                fileName="icon-chevron-small-right"
-                className={classNames(css.breadcrumbsSeparator, {
-                  [css.hidden]: index === items.length - 1,
-                })}
+              <Space size={1} direction="horizontal" />
+              <Icon
+                name="chevron_right"
+                display={index === items.length - 1 ? 'none' : 'inline-block'}
+                width="1.5rem"
+                height="1.5rem"
               />
+              <Space size={1} direction="horizontal" />
             </li>
           ))}
         </ul>
-      </div>
-
-      {/* <div className={css.breadcrumbsContainer}>
-        <ul className={css.breadcrumbsList}>
-          {items.map(({ id, label }, index) => (
-            <li key={id} className={css.listItem}>
-              {index > lastReachedStepIndex ? (
-                <span className={css.futureItem}>{label}</span>
-              ) : (
-                <Link
-                  clientRouted
-                  to={`/check-out/${id}`}
-                  tracking={trackNavigation(label)}
-                  className={classNames(css.linkItem, { [css.isActive]: id === currentId })}
-                >
-                  {label}
-                </Link>
-              )}
-              <Svg
-                fileName="icon-chevron-small-right"
-                className={classNames(css.breadcrumbsSeparator, {
-                  [css.hidden]: index === items.length - 1,
-                })}
-              />
-            </li>
-          ))}
-        </ul>
-      </div> */}
+      </Box>
+      <Space size={6} direction="vertical" />
     </>
   )
 }
