@@ -5,6 +5,7 @@ import moment from 'moment'
 import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { Spinner } from 'goustouicomponents'
+import { getNumPortions } from 'selectors/basket'
 import { isMobile } from 'utils/view'
 import { useDiscountTip } from 'routes/Menu/components/BoxSummary/utilHooks'
 import { useSelector } from 'react-redux'
@@ -30,7 +31,7 @@ const defaultProps = {
   slotTime: '',
 }
 
-function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassName }) {
+export function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassName }) {
   const { pricing, isPending } = usePricing()
   const spinnerClassNames = {
     [css.spinnerContainer]: true,
@@ -39,6 +40,7 @@ function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassNa
   }
   const discountTip = useDiscountTip()
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+  const numRecipes = useSelector(getNumPortions)
   const titleContent =
     numRecipes < minRecipesToCheckout ? (
       <div className={css.discountTip}>{discountTip || deliveryTip}</div>
@@ -80,15 +82,5 @@ function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassNa
   ))
 }
 
-Title.defaultProps = {
-  date: '',
-  view: '',
-  spinnerClassName: '',
-  spinnerContainerClassName: '',
-  slotTime: '',
-  pending: false,
-  recipeTotal: 0,
-  recipeDiscount: 0,
-  recipeTotalDiscounted: 0,
-  numRecipes: 0,
-}
+Title.defaultProps = defaultProps
+Title.propTypes = propTypes

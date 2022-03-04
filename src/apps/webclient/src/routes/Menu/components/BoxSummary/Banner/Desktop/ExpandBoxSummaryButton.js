@@ -18,7 +18,12 @@ const Contents = ({ numPortions, numRecipes, date, slotId, warning }) => {
     <div className={classNames({ [css.buttonTextWrapper]: isSimplifyBasketBarEnabled })}>
       {isSimplifyBasketBarEnabled ? (
         <>
-          <Title view="desktop" numRecipes={numRecipes} />
+          <Title
+           view="desktop"
+           numRecipes={numRecipes}
+           date={date}
+           finalisedSlot={slotId !== ''}
+          />
           <Description
             view="desktop"
             numPortions={numPortions}
