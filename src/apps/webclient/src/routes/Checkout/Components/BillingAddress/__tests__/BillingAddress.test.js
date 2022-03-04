@@ -163,7 +163,7 @@ describe('Billing Address', () => {
 
     describe('when checkbox is unchecked', () => {
       beforeEach(() => {
-        wrapper.find({ 'data-testing': 'checkoutBillingAddressToggle' }).prop('onChange')(false)
+        wrapper.find({ dataTesting: 'checkoutBillingAddressToggle' }).prop('onChange')(false)
       })
 
       test('should call the redux-form change() function to set isBillingAddressDifferent', () => {
