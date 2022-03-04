@@ -2,9 +2,6 @@ import { Box, Text, Space, FontFamily, Checkbox, Color } from '@gousto-internal/
 import React from 'react'
 import PropTypes from 'prop-types'
 import { BillingAddressContainer } from './AddressContainer'
-import css from './BillingAddress.css'
-import checkoutCss from '../../Checkout.css'
-import { clocksOrigin } from '@datadog/browser-core'
 
 export class BillingAddress extends React.PureComponent {
   toggleDeliveryAddress = () => {
