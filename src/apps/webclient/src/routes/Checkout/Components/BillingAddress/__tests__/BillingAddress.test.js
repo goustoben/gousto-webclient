@@ -1,7 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
-import CheckBox from 'Form/CheckBox'
 import { BillingAddress } from '../BillingAddress'
 import { BillingAddressContainer } from '../AddressContainer'
 
