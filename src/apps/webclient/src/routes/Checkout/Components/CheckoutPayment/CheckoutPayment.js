@@ -1,3 +1,4 @@
+import { Box, Text, Icon, Space, Display } from '@gousto-internal/citrus-react'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -7,7 +8,6 @@ import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
 import { HotjarTrigger } from 'HotjarTrigger'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
-import Svg from 'Svg'
 import { SubmitButton } from '../SubmitButton'
 import { ErrorMessage } from '../ErrorMessage'
 import { Checkout3DSModal } from './Checkout3DSModal'
@@ -170,17 +170,17 @@ class CheckoutPayment extends React.Component {
     const isCard = currentPaymentMethod === PaymentMethod.Card
 
     return (
-      <div
-        className={classNames({
-          [css.hide]: isCard || isPayPalReady,
-          [css.paypalSetupBox]: !isCard && !isPayPalReady,
-        })}
-      >
-        <Svg fileName="icon-checkout-lock" className={css.padlockIcon} />
-        <div className={css.paypalSetupInfo}>
-          You will be prompted by PayPal for payment details to securely set up your subscription.
-        </div>
-      </div>
+      <>
+        <Box display={isCard || isPayPalReady ? Display.None : Display.Flex}>
+          <Icon name="secure" minWidth="1.5rem" minHeight="1.5rem" />
+          <Space size={2} direction="horizontal" />
+
+          <Text size={2}>
+            You will be prompted by PayPal for payment details to securely set up your subscription.
+          </Text>
+        </Box>
+        <Space size={[3, 5]} direction="vertical" />
+      </>
     )
   }
 
