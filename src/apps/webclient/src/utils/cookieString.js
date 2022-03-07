@@ -1,9 +1,9 @@
-import globals from 'config/globals'
 import { canUseWindow } from './browserEnvironment'
+import { isServer } from './serverEnvironment'
 
 export function cookieString(reqCookies) {
   let cookies
-  if (globals.server && reqCookies.request && reqCookies.request.headers && reqCookies.request.headers.cookie) {
+  if (isServer() && reqCookies.request && reqCookies.request.headers && reqCookies.request.headers.cookie) {
     cookies = reqCookies.request.headers.cookie.split(';')
   }
   if (canUseWindow()) {
