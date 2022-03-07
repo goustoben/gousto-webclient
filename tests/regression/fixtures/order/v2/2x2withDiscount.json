@@ -1,0 +1,36 @@
+{
+  "status": "ok",
+  "meta": {
+      "offset": 0,
+      "limit": 1,
+      "count": 1,
+      "total": 1
+  },
+  "data": {
+    "id": "order-prices-fake-id",
+    "type": "order",
+    "attributes": {
+      "prices": {
+        "price_per_portion": "6.25",
+        "price_per_portion_discounted": "3.13",
+        "product_total": "0.00",
+        "recipe_total": "24.99",
+        "surcharge_total": "0.00",
+        "recipe_total_discounted": "12.50",
+        "recipe_discount": "12.49",
+        "flat_discount_applied": false,
+        "amount_off": null,
+        "percentage_off": "50.00",
+        "promo_code": "DTI-SB-63",
+        "promo_code_valid": true,
+        "delivery_total": "0.00",
+        "gross_total": "24.99",
+        "vat_charged": "0.00",
+        "total": "12.50",
+        "total_discount": "12.49"
+      }
+    },
+    "relationships": {}
+  },
+  "included": []
+}

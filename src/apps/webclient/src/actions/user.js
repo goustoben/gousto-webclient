@@ -310,7 +310,7 @@ function userLoadData() {
       try {
         datadogLogs.addLoggerGlobalContext('userID', user.id)
         datadogRum.addRumGlobalContext('userID', user.id)
-      } catch(err) {
+      } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Error setting DD context:', err)
       }
@@ -694,7 +694,7 @@ function buildSignupRequestData(state) {
   }
 }
 
-export function userSubscribe() {
+export function userSubscribe({ pricing }) {
   return async (dispatch, getState) => {
     const state = getState()
     if (!state.basket.get('boxId')) {
@@ -705,7 +705,6 @@ export function userSubscribe() {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
 
-    const prices = state.pricing.get('prices')
     const signupTestName = getSignupE2ETestName(state)
     try {
       const reqData = buildSignupRequestData(state)
@@ -728,7 +727,7 @@ export function userSubscribe() {
           trackingData: {
             actionType: placeOrder,
             order_id: orderId,
-            order_total: prices.get('total'),
+            order_total: pricing?.total,
             promo_code: getPromoCode(state),
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
@@ -736,7 +735,7 @@ export function userSubscribe() {
           }
         })
 
-        dispatch(trackFirstPurchase(orderId, prices))
+        dispatch(trackFirstPurchase(orderId, pricing))
         dispatch(trackNewOrder(orderId, customerId))
         dispatch(basketPreviewOrderChange(orderId, state.basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })

@@ -1,1 +1,1 @@
-export { Checkout3DSModalContainer as Checkout3DSModal } from './Checkout3DSModalContainer'
+export { Checkout3DSModalWrapper as Checkout3DSModal } from './Checkout3DSModalWrapper'

@@ -1,0 +1,1 @@
+export { CheckoutPayPalDetailsWrapper } from './CheckoutPayPalDetailsWrapper'

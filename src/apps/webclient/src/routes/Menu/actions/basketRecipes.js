@@ -3,7 +3,6 @@ import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
 import status from '../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
 import { actionTypes } from '../../../actions/actionTypes'
-import pricingActions from '../../../actions/pricing'
 import * as trackingKeys from '../../../actions/trackingKeys'
 import { getUTMAndPromoCode } from '../../../selectors/tracking'
 import { getBasketNotValidError } from '../../../selectors/status'
@@ -73,8 +72,6 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
         },
       })
     }
-
-    dispatch(pricingActions.pricingRequest())
 
     const prevRecipes = basket.get('recipes')
     const slotId = newBasket.get('slotId')
@@ -164,8 +161,6 @@ export const basketRecipeRemove = (recipeId, view, position) => (
         },
       })
     }
-
-    dispatch(pricingActions.pricingRequest())
     dispatch(trackUserAddRemoveRecipe())
   }
 )

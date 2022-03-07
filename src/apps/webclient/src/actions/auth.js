@@ -1,3 +1,5 @@
+import { datadogLogs } from '@datadog/browser-logs'
+
 import {
   serverAuthenticate,
   serverLogout,
@@ -95,7 +97,12 @@ const refresh = () => (
       } = refreshResponse.data
       const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
       dispatch(userAuthenticated(accessToken, refreshToken, expiresAt))
+      datadogLogs.logger.info('src/actions/auth.js:refresh successfully exchanged refresh token')
     } catch (err) {
+      datadogLogs.logger.warn('src/actions/auth.js:refresh failed to exchange refresh token', {
+        err: (err || {}).message
+      })
+
       switch (err.status) {
       default:
         err.message = config.DEFAULT_ERROR

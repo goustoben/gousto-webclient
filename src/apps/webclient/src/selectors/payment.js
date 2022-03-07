@@ -41,10 +41,10 @@ export const getPayPalPaymentDetails = state => ({
   device_data: state.payment.get('paypalDeviceData'),
 })
 
-export const getPaymentAuthData = state => {
+export const getPaymentAuthData = (state, { pricing }) => {
   const { success, failure } = routes.client.payment
-  const prices = state.pricing.get('prices')
-  const amountInPence = Math.round(prices.get('total', 0) * 100)
+  const total = pricing.total || 0
+  const amountInPence = Math.round(total * 100)
 
   return {
     order_id: state.basket.get('previewOrderId'),

@@ -1,3 +1,4 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
@@ -8,6 +9,7 @@ import {
   getOkRecipeIds,
   getUnavailableRecipeIds,
 } from 'routes/Menu/selectors/basket'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { basketRecipeRemove } from '../../../actions/basketRecipes'
 import { Details } from './Details'
@@ -23,11 +25,16 @@ const mapStateToProps = (state) => ({
   slotId: getBasketSlotId(state),
   menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
-  pricingPending: state.pricing.get('pending'),
-  prices: state.pricing.get('prices'),
   unavailableRecipeIds: getUnavailableRecipeIds(state),
   shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
 })
+
+const DetailsPure = (props) => {
+  const { isPending, pricing } = usePricing()
+
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <Details {...props} pricingPending={isPending} prices={pricing} />
+}
 
 const DetailsContainer = connect(mapStateToProps, {
   basketNumPortionChange: actions.basketNumPortionChange,
@@ -40,6 +47,6 @@ const DetailsContainer = connect(mapStateToProps, {
   boxSummaryVisibilityChange,
   trackingUnavailableRecipeList,
   checkoutBasket
-})(Details)
+})(DetailsPure)
 
 export { DetailsContainer }

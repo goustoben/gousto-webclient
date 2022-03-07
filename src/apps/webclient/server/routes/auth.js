@@ -84,6 +84,15 @@ export async function refresh(ctx) {
       throw new Error('Refresh token not present')
     }
   } catch (error) {
+    logger.warning({
+      message: 'server/routes/auth.js:refresh could not refresh oauth token',
+      extra: {
+        error: {
+          message: (error || {}).message,
+          status: (error || {}).status
+        }
+      }
+    })
     ctx.response.status = 401
     ctx.response.body = {
       error,

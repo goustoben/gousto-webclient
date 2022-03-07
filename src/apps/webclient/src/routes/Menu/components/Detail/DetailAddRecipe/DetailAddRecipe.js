@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { useRecipeField } from '../../../context/recipeContext'
 import { useStock } from '../../../domains/menu'
-import Button from '../../../Recipe/Buttons'
+import { RecipeDetailsButtons } from '../RecipeDetailsButtons'
 
 import css from './DetailAddRecipe.css'
 
@@ -18,7 +18,7 @@ const DetailAddRecipe = ({ id, view, position }) => {
 
   return (
     <div className={css.addRecipeWrapper}>
-      <Button
+      <RecipeDetailsButtons
         position={position}
         recipeId={id}
         view={view}

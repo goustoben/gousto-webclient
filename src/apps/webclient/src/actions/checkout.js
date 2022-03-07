@@ -54,7 +54,6 @@ import {
 } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
-import { pricingRequest } from './pricing'
 import tempActions from './temp'
 import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
 export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
@@ -88,18 +87,15 @@ const errorCodes = {
   challengeFailed: '3ds-challenge-failed',
 }
 
-function resetDuplicateCheck() {
+function resetDuplicateCheck({ pricing }) {
   return (dispatch, getState) => {
     const state = getState()
     dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, null))
     if (getPromoCode(state)) {
-      const { pricing } = state
-
-      if (!isValidPromoCode(pricing.get('prices'))) {
+      if (!isValidPromoCode(pricing)) {
         dispatch(basketPromoCodeChange(''))
         dispatch(basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-        dispatch(pricingRequest())
       }
     }
   }
@@ -151,12 +147,10 @@ export const fireCheckoutError = (errorName, errorValue = true) => dispatch => {
 
 // Note: this is a helper method, not an action.  It should be called directly
 // instead of dispatched.
-export const handlePromoCodeRemoved = async (dispatch, getState) => {
+export const handlePromoCodeRemoved = async (dispatch) => {
   dispatch(basketPromoCodeChange(''))
   dispatch(basketPromoCodeAppliedChange(false))
   dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-
-  dispatch(pricingRequest())
 }
 
 export const handleCheckoutError = async (err, initiator, dispatch, getState) => {
@@ -179,7 +173,7 @@ export const handleCheckoutError = async (err, initiator, dispatch, getState) =>
   }
 }
 
-export function checkoutSignup() {
+export function checkoutSignup({ pricing }) {
   return async (dispatch, getState) => {
     dispatch(feLoggingLogEvent(logLevels.info, 'signup started'))
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
@@ -189,8 +183,8 @@ export function checkoutSignup() {
 
     try {
       await dispatch(checkoutActions.fetchGoustoRef())
-      dispatch(checkoutActions.resetDuplicateCheck())
-      await dispatch(userSubscribe())
+      dispatch(checkoutActions.resetDuplicateCheck({ pricing }))
+      await dispatch(userSubscribe({ pricing }))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.error, `Signup failed: ${err.message}`))
       await handleCheckoutError(err, 'checkoutSignup', dispatch, getState)
@@ -203,17 +197,18 @@ export function checkoutSignup() {
     }
 
     if (isCardPayment(getState())) {
-      await dispatch(checkoutActions.checkoutCardAuthorisation())
+      await dispatch(checkoutActions.checkoutCardAuthorisation({ pricing }))
     } else {
-      await dispatch(checkoutActions.checkoutSignupPayment())
+      const sourceId = null
+      await dispatch(checkoutActions.checkoutSignupPayment(sourceId, { pricing }))
     }
   }
 }
 
-export function checkoutCardAuthorisation() {
+export function checkoutCardAuthorisation({ pricing }) {
   return async (dispatch, getState) => {
     try {
-      const reqData = getPaymentAuthData(getState())
+      const reqData = getPaymentAuthData(getState(), { pricing })
       if (reqData.order_id) {
         const { data } = await authPayment(reqData, getSessionId())
         dispatch({
@@ -233,7 +228,7 @@ export function checkoutCardAuthorisation() {
   }
 }
 
-export function checkoutSignupPayment(sourceId = null) {
+export function checkoutSignupPayment(sourceId, { pricing }) {
   return async (dispatch, getState) => {
     try {
       const state = getState()
@@ -246,7 +241,7 @@ export function checkoutSignupPayment(sourceId = null) {
       }
 
       await signupPayment(reqData, provider, sessionId)
-      await dispatch(checkoutActions.checkoutPostSignup())
+      await dispatch(checkoutActions.checkoutPostSignup({ pricing }))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.error, `Signup payment failed: ${err.message}`))
       await handleCheckoutError(err, 'checkoutSignupPayment', dispatch, getState)
@@ -257,7 +252,7 @@ export function checkoutSignupPayment(sourceId = null) {
   }
 }
 
-export const checkPaymentAuth = (checkoutSessionId) => (
+export const checkPaymentAuth = (checkoutSessionId, { pricing }) => (
   async (dispatch, getState) => {
     dispatch({ type: actionTypes.PAYMENT_HIDE_MODAL })
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
@@ -268,7 +263,7 @@ export const checkPaymentAuth = (checkoutSessionId) => (
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeSuccessful))
 
         dispatch(feLoggingLogEvent(logLevels.info, 'signup 3ds challenge success'))
-        await dispatch(checkoutActions.checkoutSignupPayment(data.sourceId))
+        await dispatch(checkoutActions.checkoutSignupPayment(data.sourceId, { pricing }))
       } else {
         dispatch(feLoggingLogEvent(logLevels.info, 'signup 3ds challenge failed'))
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
@@ -287,32 +282,29 @@ export const checkPaymentAuth = (checkoutSessionId) => (
   }
 )
 
-export function checkoutPostSignup() {
+export function checkoutPostSignup({ pricing }) {
   return async (dispatch, getState) => {
     dispatch(feLoggingLogEvent(logLevels.info, 'signup successful'))
-    dispatch(trackSubscriptionCreated())
+    dispatch(trackSubscriptionCreated({ pricing }))
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     const state = getState()
     const signupTestName = getSignupE2ETestName(state)
     const signupTestData = signupTestName ? { testName: signupTestName } : undefined
     try {
-      const { form, pricing } = state
+      const { form } = state
       const recaptchaToken = getSignupRecaptchaToken(state)
       const accountValues = Immutable.fromJS(form[accountFormName].values)
       const account = accountValues.get('account')
       const email = account.get('email')
       const password = getPasswordValue(state)
       const orderId = getPreviewOrderId(state)
-      const prices = pricing.get('prices')
-      const grossTotal = prices && prices.get('grossTotal')
-      const netTotal = prices && prices.get('total')
       const basketRecipes = getBasketRecipes(state)
       await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }, orderId))
-      dispatch(tempActions.temp('originalGrossTotal', grossTotal))
-      dispatch(tempActions.temp('originalNetTotal', netTotal))
-      dispatch(trackPurchase({ orderId }))
-      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes }) // used for data layer tracking
+      dispatch(tempActions.temp('originalGrossTotal', pricing.grossTotal))
+      dispatch(tempActions.temp('originalNetTotal', pricing.netTotal))
+      dispatch(trackPurchase({ orderId, pricing }))
+      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes, pricing }) // used for data layer tracking
       dispatch(feLoggingLogEvent(logLevels.info, 'signup login success', signupTestData))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.info, `signup login failed: ${err.message}`, signupTestData))
@@ -328,15 +320,16 @@ export function checkoutPostSignup() {
   }
 }
 
-export const trackPurchase = ({ orderId }) => (
+export const trackPurchase = ({ orderId, pricing }) => (
   (dispatch, getState) => {
     const state = getState()
-    const { pricing } = state
     const promoCode = getPromoCode(state)
-    const prices = pricing.get('prices')
-    const totalPrice = prices.get('grossTotal')
-    const total = prices.get('total', '')
-    const shippingPrice = prices.get('deliveryTotal')
+    const {
+      grossTotal: totalPrice,
+      deliveryTotal: shippingPrice,
+      total
+    } = pricing
+
     const gaIDTracking = gaTrackingConfig[__ENV__]// eslint-disable-line no-underscore-dangle
 
     if (typeof ga !== 'undefined') {
@@ -353,7 +346,7 @@ export const trackPurchase = ({ orderId }) => (
 
     dispatch(trackAffiliatePurchase({
       orderId,
-      total,
+      total: total || '',
       commissionGroup: 'FIRSTPURCHASE',
       promoCode,
       isSignup: true,
@@ -435,19 +428,17 @@ export const trackCheckoutButtonPressed = (type, property) => {
   }
 }
 
-export function trackingOrderPlaceAttempt() {
+export function trackingOrderPlaceAttempt({ pricing }) {
   return (dispatch, getState) => {
     const state = getState()
-    const { pricing } = state
-    const prices = pricing.get('prices')
 
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT,
       trackingData: {
         actionType: trackingKeys.placeOrderAttempt,
         order_id: getPreviewOrderId(state),
-        order_total: prices.get('grossTotal'),
-        promo_code: prices.get('promoCode'),
+        order_total: pricing?.grossTotal,
+        promo_code: pricing?.promoCode,
         payment_provider: 'checkout'
       }
     })
@@ -468,11 +459,10 @@ export function trackingOrderPlaceAttemptFailed() {
   }
 }
 
-export function trackingOrderPlaceAttemptSucceeded() {
+export function trackingOrderPlaceAttemptSucceeded({ pricing }) {
   return (dispatch, getState) => {
     const state = getState()
-    const { pricing, form } = state
-    const prices = pricing.get('prices')
+    const { form } = state
     const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
     const intervalId = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
 
@@ -481,8 +471,8 @@ export function trackingOrderPlaceAttemptSucceeded() {
       trackingData: {
         actionType: trackingKeys.placeOrderAttemptComplete,
         order_id: getPreviewOrderId(state),
-        order_total: prices.get('grossTotal'),
-        promo_code: prices.get('promoCode'),
+        order_total: pricing?.grossTotal,
+        promo_code: pricing?.promoCode,
         interval_id: intervalId,
         payment_provider: 'checkout'
       }
@@ -589,15 +579,15 @@ export function setPayPalDeviceData(deviceData) {
   }
 }
 
-export function setPayPalNonce(nonce) {
+export function setPayPalNonce(nonce, { pricing }) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
       nonce
     })
 
-    dispatch(checkoutActions.trackingOrderPlaceAttemptSucceeded())
-    dispatch(checkoutActions.checkoutSignup())
+    dispatch(checkoutActions.trackingOrderPlaceAttemptSucceeded({ pricing }))
+    dispatch(checkoutActions.checkoutSignup({ pricing }))
   }
 }
 
@@ -614,8 +604,4 @@ export const checkoutStepIndexReached = (stepIndex) => dispatch => {
     type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
     stepIndex
   })
-}
-
-export const sendRequestToUpdateOrderSummaryPrices = () => async (dispatch, getState) => {
-  await dispatch(pricingRequest())
 }

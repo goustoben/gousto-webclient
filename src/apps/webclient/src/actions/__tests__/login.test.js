@@ -7,7 +7,6 @@ import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { pricingRequest } from '../pricing'
 import statusActions from '../status'
 import authActions from '../auth'
 
@@ -19,10 +18,6 @@ jest.mock('actions/user')
 
 jest.mock('react-router-redux', () => ({
   push: (param) => `${JSON.stringify(param)} pushed`
-}))
-
-jest.mock('../pricing', () => ({
-  pricingRequest: jest.fn()
 }))
 
 jest.mock('../status', () => ({
@@ -103,7 +98,6 @@ describe('login actions', () => {
       })
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -125,7 +119,6 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -140,7 +133,6 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -161,7 +153,6 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -268,7 +259,6 @@ describe('login actions', () => {
         expect(statusActions.error).toHaveBeenCalledTimes(1)
         expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
         expect(authActions.authIdentify).toHaveBeenCalled()
-        expect(pricingRequest).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(redirect).toHaveBeenCalledWith(`/taste-profile/${orderId}`)
@@ -296,7 +286,6 @@ describe('login actions', () => {
         expect(statusActions.error).toHaveBeenCalledTimes(1)
         expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
         expect(authActions.authIdentify).toHaveBeenCalled()
-        expect(pricingRequest).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(dispatch).toHaveBeenCalledWith('"/welcome-to-gousto/order-1" pushed')

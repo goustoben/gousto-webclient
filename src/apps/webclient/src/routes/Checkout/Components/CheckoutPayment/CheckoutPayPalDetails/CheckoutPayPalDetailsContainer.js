@@ -1,10 +1,5 @@
 import { connect } from 'react-redux'
-import {
-  firePayPalError,
-  clearPayPalErrors,
-  setPayPalDeviceData,
-  setPayPalNonce,
-} from 'actions/checkout'
+import { firePayPalError, clearPayPalErrors, setPayPalDeviceData } from 'actions/checkout'
 import { trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getPayPalClientToken, isPayPalReady } from 'selectors/payment'
@@ -18,7 +13,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setPayPalDeviceData,
-  setPayPalNonce,
   trackEvent: trackUTMAndPromoCode,
   firePayPalError,
   clearPayPalErrors,

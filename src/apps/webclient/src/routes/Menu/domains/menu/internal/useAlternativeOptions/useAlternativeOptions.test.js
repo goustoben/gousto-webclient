@@ -93,27 +93,6 @@ describe('getAlternativeOptionsForRecipe', () => {
     })
   })
 
-  describe('when alternative has a allergen information', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore(createMockState())
-
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
-
-    test('it is exposed in the options', () => {
-      const options = result.current.getAlternativeOptionsForRecipe({
-        recipeId: RECIPE_ID_1,
-        originalId: RECIPE_ID_1,
-        isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
-        categoryId: COLLECTION_ID,
-      })
-
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).allergenInfo).toEqual({ containsGlutenOrDairy: true })
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).allergenInfo).toEqual({ containsGlutenOrDairy: false })
-    })
-  })
-
   describe('when isOnDetailScreen and isFromShowcaseMenu flags are passed', () => {
     const mockStore = configureMockStore()
     const store = mockStore(createMockState())
