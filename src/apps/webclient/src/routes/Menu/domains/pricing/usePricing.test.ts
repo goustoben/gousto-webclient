@@ -45,6 +45,7 @@ describe('usePricing', () => {
       isAdmin: false,
       accessToken: Math.random().toString(), // controls SWR cache
       authUserId: user.valid,
+      isAdmin: false,
     })
   })
 
@@ -118,6 +119,7 @@ describe('usePricing', () => {
         isAdmin: false,
         accessToken: Math.random().toString(),
         authUserId: user.idle,
+        isAdmin: false,
       })
     })
 
@@ -140,6 +142,7 @@ describe('usePricing', () => {
         isAdmin: false,
         accessToken: 'test-accessToken',
         authUserId: user.error,
+        isAdmin: false,
       })
     })
 

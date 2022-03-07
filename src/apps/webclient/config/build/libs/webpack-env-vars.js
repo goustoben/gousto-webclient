@@ -33,14 +33,12 @@ const webpackEnvVarsDev = {
   ...webpackEnvVarsBase,
   __DOMAIN__: JSON.stringify(domain),
   __PROD__: false,
-  __SERVER__: false,
   'process.env.NODE_ENV': JSON.stringify('development'),
 }
 
 const webpackEnvVarsClient = {
   ...webpackEnvVarsBase,
   __PROD__: build === 'production',
-  __SERVER__: false,
   'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
 }
 
@@ -52,7 +50,6 @@ const webpackEnvVarsServer = {
   __DEV__: build === 'development',
   __PROD__: build === 'production',
   __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
-  __SERVER__: true,
   'process.env.NODE_ENV': JSON.stringify(build),
 }
 

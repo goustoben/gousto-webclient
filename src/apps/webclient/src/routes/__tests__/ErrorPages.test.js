@@ -1,15 +1,19 @@
 /* eslint-disable no-underscore-dangle */
 import { Helmet } from 'react-helmet'
+import { isServer } from 'utils/serverEnvironment'
 const { processRequest } = require('../../../server/processRequest')
 
+jest.mock('utils/serverEnvironment')
+
+// This test renders the entire route as a string
+// and is extremely slow to run
 describe('router', () => {
   beforeEach(() => {
-    global.__SERVER__ = true
+    isServer.mockReturnValue(true)
     Helmet.canUseDOM = false
   })
 
   afterEach(() => {
-    global.__SERVER__ = false
     Helmet.canUseDOM = true
   })
 

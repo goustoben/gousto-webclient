@@ -2,7 +2,6 @@ import endpoint from 'config/endpoint'
 
 describe('endpoint finder', () => {
   beforeEach(() => {
-    global.__SERVER__ = false
     global.__RUNNING_ENV__ = 'local'
     global.__API_ENV__ = 'production'
   })
@@ -22,11 +21,6 @@ describe('endpoint finder', () => {
 
     it('should throw an error if a non existent service is requested', () => {
       expect(() => endpoint()).toThrow("Please specify a valid service.")
-    })
-
-    it("should throw an error if the requested endpoint isn't specified as either server or client", () => {
-      global.__SERVER__ = undefined;
-      expect(() => endpoint('auth', 1)).toThrow("Please specify whether this call is coming from the server or client browser for routing purposes.")
     })
 
     it("should throw an error if the requested endpoint target API environment is missing", () => {

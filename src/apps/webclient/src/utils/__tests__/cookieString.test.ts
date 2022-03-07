@@ -1,17 +1,21 @@
 import { canUseWindow } from 'utils/browserEnvironment'
-import globals from 'config/globals'
+import { isServer } from 'utils/serverEnvironment'
 
 import { cookieString } from '../cookieString'
 
 jest.mock('utils/browserEnvironment')
+jest.mock('utils/serverEnvironment')
 jest.mock('config/globals')
+
+const mockCanUseWindow = canUseWindow as jest.Mock
+const mockIsServer = isServer as jest.Mock
 
 const mockReqCookies = {
   request: {
     headers: {
-      cookie: 'server=cookie'
-    }
-  }
+      cookie: 'server=cookie',
+    },
+  },
 }
 
 let doc: typeof document
@@ -25,10 +29,14 @@ describe('cookieString util', () => {
     document = doc
   })
 
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
+
   describe('when window is available', () => {
     beforeEach(() => {
-      globals.server = false;
-      (canUseWindow as jest.Mock).mockReturnValue(true)
+      mockIsServer.mockReturnValue(false)
+      mockCanUseWindow.mockReturnValue(true)
 
       document.cookie = 'document=cookie'
     })
@@ -38,10 +46,9 @@ describe('cookieString util', () => {
     })
   })
 
-  describe('when window is not available', () => {
+  describe('when on the server', () => {
     beforeEach(() => {
-      globals.server = true;
-      (canUseWindow as jest.Mock).mockReturnValue(false)
+      mockIsServer.mockReturnValue(true)
     })
 
     test('returns cookies from request headers', () => {

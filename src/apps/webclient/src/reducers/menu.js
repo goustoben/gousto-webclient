@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
+import { isServer } from 'utils/serverEnvironment'
 import moment from 'moment'
 import { getMenuLimits, getMenuVariants, switchSelectedVariants } from '../utils/menu'
 
@@ -67,7 +68,7 @@ const menu = {
     }
 
     case '@@router/LOCATION_CHANGE': {
-      if (__SERVER__) {
+      if (isServer()) {
         return state
       }
 

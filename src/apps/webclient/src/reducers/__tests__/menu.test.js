@@ -1,6 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
+import { isServer } from 'utils/serverEnvironment'
 import {
   clearSelectedRecipeVariants,
   menuLoadingError
@@ -9,7 +10,13 @@ import { selectRecipeVariantAction, initSelectedRecipeVariantAction } from '../.
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 
+jest.mock('utils/serverEnvironment')
+
 describe('menu reducer', () => {
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
+
   describe('menu', () => {
     test('initial state', () => {
       expect(menu.menu(undefined, {})).toEqual(menuInitialState)
@@ -243,56 +250,76 @@ describe('menu reducer', () => {
         result = menuInitialState
       })
 
-      describe('when landing on the menu first', () => {
+      describe('when in the browser', () => {
         beforeEach(() => {
-          result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
+          isServer.mockReturnValue(false)
         })
-        // trigger first reducer action
-        describe('and not going elsewhere', () => {
-          test('should set to false', () => {
-            expect(result.get('hasVisitedNonMenuPage')).toBeFalsy()
-          })
-        })
-        describe('and user goes to a non menu page', () => {
-          beforeEach(() => {
-            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'PUSH' } })
-          })
 
-          test('should set to true', () => {
-            expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
-          })
-        })
-        describe('and user goes to the menu', () => {
+        describe('when landing on the menu first', () => {
           beforeEach(() => {
             result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
           })
+          // trigger first reducer action
+          describe('and not going elsewhere', () => {
+            test('should set to false', () => {
+              expect(result.get('hasVisitedNonMenuPage')).toBeFalsy()
+            })
+          })
+          describe('and user goes to a non menu page', () => {
+            beforeEach(() => {
+              result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'PUSH' } })
+            })
 
-          // trigger secod reducer action
-          test('should set to false', () => {
-            expect(result.get('hasVisitedNonMenuPage')).toBeFalsy()
+            test('should set to true', () => {
+              expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
+            })
+          })
+          describe('and user goes to the menu', () => {
+            beforeEach(() => {
+              result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
+            })
+
+            // trigger secod reducer action
+            test('should set to false', () => {
+              expect(result.get('hasVisitedNonMenuPage')).toBeFalsy()
+            })
+          })
+        })
+
+        describe('when landing on the home page first', () => {
+          beforeEach(() => {
+            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'POP' } })
+          })
+          // trigger first reducer action
+          describe('and not going elsewhere', () => {
+            test('should set to true', () => {
+              expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
+            })
+          })
+          describe('and go to the menu', () => {
+            beforeEach(() => {
+              result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'PUSH' } })
+            })
+
+            // trigger secod reducer action
+            test('should set to true', () => {
+              expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
+            })
           })
         })
       })
 
-      describe('when landing on the home page first', () => {
+      describe('when on the server', () => {
         beforeEach(() => {
-          result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'POP' } })
-        })
-        // trigger first reducer action
-        describe('and not going elsewhere', () => {
-          test('should set to true', () => {
-            expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
+          isServer.mockReturnValue(true)
+          result = menu.menu(result, {
+            type: '@@router/LOCATION_CHANGE',
+            payload: { pathname: '/menu', action: 'POP' },
           })
         })
-        describe('and go to the menu', () => {
-          beforeEach(() => {
-            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'PUSH' } })
-          })
 
-          // trigger secod reducer action
-          test('should set to true', () => {
-            expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
-          })
+        test('then initial state is returned', () => {
+          expect(result).toEqual(menuInitialState)
         })
       })
     })
