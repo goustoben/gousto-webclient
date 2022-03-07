@@ -3,6 +3,7 @@ import goustoStore from 'store'
 import logger from './logger'
 import { cookieString } from './cookieString'
 import { canUseWindow } from './browserEnvironment'
+import { isServer } from './serverEnvironment'
 
 const versionPrefix = 'v1'
 
@@ -46,7 +47,7 @@ export function encode(val) {
     ret = val ? JSON.stringify(val) : ''
   }
 
-  if (__SERVER__) {
+  if (isServer()) {
     ret = val ? encodeURIComponent(JSON.stringify(val)) : ''
   }
 
@@ -56,7 +57,7 @@ export function encode(val) {
 export function decode(val) {
   let ret
 
-  if (__SERVER__) {
+  if (isServer()) {
     ret = val ? JSON.parse(decodeURIComponent(val)) : undefined
   }
 

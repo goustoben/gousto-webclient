@@ -1,10 +1,11 @@
 import actions, { changeRecaptcha } from 'actions/auth'
-import { resetUserPassword, identifyUserUsingOAuth } from 'apis/auth'
+import { resetUserPassword, identifyUserUsingOAuth, identifyUserViaServer } from 'apis/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
 import logger from 'utils/logger'
 import { trackUserLogin } from 'actions/loggingmanager'
+import { isServer } from 'utils/serverEnvironment'
 
 jest.mock('apis/auth')
 
@@ -31,6 +32,8 @@ jest.mock('moment', () => {
 jest.mock('actions/loggingmanager', () => ({
   trackUserLogin: jest.fn()
 }))
+
+jest.mock('utils/serverEnvironment')
 
 describe('redirectLoggedInUser', () => {
   let getState
@@ -270,23 +273,52 @@ describe('authIdentify', () => {
 
     beforeEach(() => {
       dispatch = jest.fn()
-      // eslint-disable-next-line no-global-assign
-      __SERVER__ = true
-      identifyUserUsingOAuth.mockResolvedValue({ data: { roles: ['user'] }})
-      actions.authIdentify('test-access-token')(dispatch)
+
+      jest.clearAllMocks()
     })
 
-    test('userIdentified, trackUserLogin and userLoggedIn actions are dispatched', () => {
-      expect(dispatch).toHaveBeenCalledWith({type: 'USER_LOGGED_IN'})
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'USER_IDENTIFIED',
-        user: {
-          roles: [
-            'user',
-          ],
-        },
+    describe('on the server', () => {
+      beforeEach(() => {
+        isServer.mockReturnValue(true)
+        identifyUserUsingOAuth.mockResolvedValue({ data: { roles: ['user', 'from-oauth'] }})
+        actions.authIdentify('test-access-token')(dispatch)
       })
-      expect(trackUserLogin).toHaveBeenCalledTimes(1)
+
+      test('userIdentified, trackUserLogin and userLoggedIn actions are dispatched', () => {
+        expect(dispatch).toHaveBeenCalledWith({type: 'USER_LOGGED_IN'})
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'USER_IDENTIFIED',
+          user: {
+            roles: [
+              'user',
+              'from-oauth'
+            ],
+          },
+        })
+        expect(trackUserLogin).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('in the browser', () => {
+      beforeEach(() => {
+        isServer.mockReturnValue(false)
+        identifyUserViaServer.mockResolvedValue({ data: { roles: ['user', 'from-server'] }})
+        actions.authIdentify('test-access-token')(dispatch)
+      })
+
+      test('userIdentified, trackUserLogin and userLoggedIn actions are dispatched', () => {
+        expect(dispatch).toHaveBeenCalledWith({type: 'USER_LOGGED_IN'})
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'USER_IDENTIFIED',
+          user: {
+            roles: [
+              'user',
+              'from-server'
+            ],
+          },
+        })
+        expect(trackUserLogin).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })

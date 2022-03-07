@@ -241,7 +241,6 @@ module.exports = {
     window: true,
     __DEV__: false,
     __PROD__: false,
-    __SERVER__: false,
     __ENV__: false,
     __DOMAIN__: false,
     __CLIENT_PROTOCOL__: false,

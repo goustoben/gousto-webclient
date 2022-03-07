@@ -1,3 +1,4 @@
+import { isServer } from 'utils/serverEnvironment'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 
@@ -134,7 +135,7 @@ app.use(async (ctx, next) => {
         </Page>
       </Provider>
     )
-    const helmetHead = __SERVER__ ? Helmet.renderStatic() : Helmet.peek
+    const helmetHead = isServer() ? Helmet.renderStatic() : Helmet.peek
     ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), ctx.req.headers['user-agent'], scripts, helmetHead)
   }
 })

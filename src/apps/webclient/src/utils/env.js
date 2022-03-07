@@ -1,7 +1,8 @@
 import logger from 'utils/logger'
+import { isServer } from './serverEnvironment'
 let env // eslint-disable-line import/no-mutable-exports
 
-if (__SERVER__) {
+if (isServer()) {
   try {
     const { readFileSync } = require('jsonfile') // eslint-disable-line global-require
     const envPath = `${process.cwd()}/config/env.json`

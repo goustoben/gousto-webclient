@@ -14,8 +14,6 @@ import { CheckoutPaymentContainer } from 'routes/Checkout/Components/CheckoutPay
 import {
   menuLoadDays,
   checkoutCreatePreviewOrder,
-  basketStepsOrderReceive,
-  basketProceedToCheckout,
   menuLoadBoxPrices,
   redirect,
   replace,
@@ -63,6 +61,8 @@ jest.mock('utils/logger', () => ({
   error: jest.fn(),
   warning: jest.fn(),
 }))
+
+jest.mock('utils/serverEnvironment')
 
 describe('Given Checkout component', () => {
   let wrapper
@@ -156,21 +156,7 @@ describe('Given Checkout component', () => {
   })
 
   afterEach(() => {
-    replace.mockClear()
-    redirect.mockClear()
-    menuLoadDays.mockClear()
-    menuLoadDays.mockReset()
-    menuLoadBoxPrices.mockClear()
-    basketStepsOrderReceive.mockClear()
-    basketProceedToCheckout.mockClear()
-    boxSummaryDeliveryDaysLoad.mockClear()
-    checkoutCreatePreviewOrder.mockClear()
-    loadMenuServiceDataIfDeepLinked.mockClear()
-    fetchPayPalClientToken.mockClear()
-    trackSuccessfulCheckoutFlow.mockClear()
-    trackFailedCheckoutFlow.mockClear()
-    loadCheckoutScript.mockClear()
-    loadPayPalScripts.mockClear()
+    jest.clearAllMocks()
   })
 
   describe('when component is mounted', () => {

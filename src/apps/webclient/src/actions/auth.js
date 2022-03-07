@@ -15,9 +15,11 @@ import configRoutes from 'config/routes'
 import moment from 'moment'
 import logger from 'utils/logger'
 import { redirect, documentLocation } from 'utils/window'
+import { isServer } from 'utils/serverEnvironment'
 import { getGoToMyGousto, getGoToMyDeliveries } from 'selectors/features'
 import { trackUserLogin } from 'actions/loggingmanager'
 
+import { canUseWindow } from '../utils/browserEnvironment'
 import statusActions from './status'
 import loginActions from './login'
 import { fetchFeatures } from '../apis/fetchS3'
@@ -97,11 +99,27 @@ const refresh = () => (
       } = refreshResponse.data
       const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
       dispatch(userAuthenticated(accessToken, refreshToken, expiresAt))
-      datadogLogs.logger.info('src/actions/auth.js:refresh successfully exchanged refresh token')
+
+      if (canUseWindow()) {
+        datadogLogs.logger.info('src/actions/auth.js:refresh successfully exchanged refresh token')
+      } else {
+        logger.info({
+          message: 'src/actions/auth.js:refresh successfully exchanged refresh token'
+        })
+      }
     } catch (err) {
-      datadogLogs.logger.warn('src/actions/auth.js:refresh failed to exchange refresh token', {
-        err: (err || {}).message
-      })
+      if (canUseWindow()) {
+        datadogLogs.logger.warn('src/actions/auth.js:refresh failed to exchange refresh token', {
+          err: (err || {}).message
+        })
+      } else {
+        logger.warning({
+          message: 'src/actions/auth.js:refresh failed to exchange refresh token',
+          extra: {
+            err: (err || {}).message
+          }
+        })
+      }
 
       switch (err.status) {
       default:
@@ -116,7 +134,7 @@ const identify = (accessToken) => (
   async (dispatch) => {
     let data = {}
 
-    if (__SERVER__) {
+    if (isServer()) {
       data = await identifyUserUsingOAuth(accessToken)
     } else {
       data = await identifyUserViaServer()
