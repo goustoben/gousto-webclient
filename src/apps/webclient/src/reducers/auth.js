@@ -4,7 +4,7 @@ import { isAdmin } from 'utils/auth'
 
 export const initialState = () => Immutable.fromJS({
   accessToken: '',
-  refreshToken: '',
+  hasRefreshCookie: false,
   isAuthenticated: false,
   isAdmin: false,
   rememberMe: false,
@@ -37,14 +37,18 @@ const auth = {
       return newState
     }
 
-    case actionTypes.USER_AUTHENTICATED: {
-      let newState = state.set('accessToken', action.accessToken).set('expiresAt', action.expiresAt)
-      if (action.refreshToken) {
-        newState = newState.set('refreshToken', action.refreshToken)
-      }
+    case actionTypes.USER_AUTHENTICATED:
+      return state.merge({
+        accessToken: action.accessToken,
+        expiresAt: action.expiresAt,
+        hasRefreshCookie: action.hasRefreshCookie,
+      })
 
-      return newState
-    }
+    case actionTypes.USER_AUTH_FAILED:
+      return state.merge({
+        accessToken: '',
+        expiresAt: '',
+      })
 
     case actionTypes.USER_REMEMBER_ME: {
       return state.set('rememberMe', action.rememberMe)
@@ -54,9 +58,8 @@ const auth = {
       return state.set('isAuthenticated', true)
     }
 
-    case actionTypes.USER_LOGGED_OUT: {
+    case actionTypes.USER_LOGGED_OUT:
       return initialState()
-    }
 
     case actionTypes.CHANGE_RECAPTCHA: {
       return state.set('isRecaptchaEnabled', action.isRecaptchaEnabled)

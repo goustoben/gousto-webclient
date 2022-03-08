@@ -4,13 +4,13 @@ import authActions from 'actions/auth'
 export async function authorise(store) {
   try {
     const accessToken = store.getState().auth.get('accessToken')
-    const refreshToken = store.getState().auth.get('refreshToken')
+    const hasRefreshCookie = store.getState().auth.get('hasRefreshCookie')
     const expiresAt = store.getState().auth.get('expiresAt')
 
-    if (accessToken || refreshToken) {
-      await store.dispatch(authActions.authValidate(accessToken, refreshToken, expiresAt))
+    if (accessToken || hasRefreshCookie) {
+      await store.dispatch(authActions.authValidate(accessToken, hasRefreshCookie, expiresAt))
     }
   } catch (err) {
-    store.dispatch(authActions.userAuthenticated('', '', ''))
+    store.dispatch(authActions.userAuthFailed())
   }
 }

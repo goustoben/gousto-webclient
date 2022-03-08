@@ -9,17 +9,17 @@ export async function clientAuthorise(store) {
 }
 
 async function refreshClient(store) {
-  const refreshToken = store.getState().auth.get('refreshToken')
+  const hasRefreshCookie = store.getState().auth.get('hasRefreshCookie')
 
   try {
-    if (refreshToken) {
+    if (hasRefreshCookie) {
       await clientAuthorise(store)
     }
   } catch (err) {
     // refresh failed
   }
 
-  if (refreshToken) {
+  if (hasRefreshCookie) {
     refresh(store) // eslint-disable-line no-use-before-define
   }
 }

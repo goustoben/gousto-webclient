@@ -322,3 +322,71 @@ describe('authIdentify', () => {
     })
   })
 })
+
+describe('userAuthenticatedViaAPI', () => {
+  const authResponse = {
+    data: {
+      accessToken: 'access-token',
+      refreshToken: 'refresh-token',
+      expiresIn: 9999,
+    }
+  }
+
+  const missingRefresh = {
+    data: {
+      ...authResponse.data,
+      refreshToken: undefined
+    }
+  }
+
+  const malformedRefresh = {
+    data: {
+      ...authResponse.data,
+      refreshToken: ''
+    }
+  }
+
+  test('returns redux action of type USER_AUTHENTICATED', () => {
+    const { type } = actions.userAuthenticatedViaAPI(authResponse)
+    expect(type).toBe('USER_AUTHENTICATED')
+  })
+
+  test('payload has accessToken, expiresAt', () => {
+    const { accessToken, expiresAt } = actions.userAuthenticatedViaAPI(authResponse)
+    expect(accessToken).toBe('access-token')
+    expect(typeof expiresAt).toBe('string')
+  })
+
+  test('payload has hasRefreshCookie', () => {
+    const { hasRefreshCookie: valueWithRefresh } = actions.userAuthenticatedViaAPI(authResponse)
+    const { hasRefreshCookie: valueWithoutRefresh } = actions.userAuthenticatedViaAPI(missingRefresh)
+    const { hasRefreshCookie: valueWithBadRefresh } = actions.userAuthenticatedViaAPI(malformedRefresh)
+
+    expect(valueWithRefresh).toBe(true)
+    expect(valueWithoutRefresh).toBe(false)
+    expect(valueWithBadRefresh).toBe(false)
+  })
+})
+
+describe('userAuthenticatedViaCookies', () => {
+  test('returns redux action of type USER_AUTHENTICATED', () => {
+    const { type } = actions.userAuthenticatedViaCookies('', '', '')
+    expect(type).toBe('USER_AUTHENTICATED')
+  })
+
+  test('payload has accessToken, expiresAt', () => {
+    const { accessToken, expiresAt } = actions.userAuthenticatedViaCookies('accessToken', '', 'expiresAt')
+    expect(accessToken).toBe('accessToken')
+    expect(expiresAt).toBe('expiresAt')
+  })
+
+  test('payload has hasRefreshCookie', () => {
+    const { hasRefreshCookie: valueWithRefresh } = actions.userAuthenticatedViaCookies('', 'refreshToken', '')
+    const { hasRefreshCookie: valueWithoutRefresh } = actions.userAuthenticatedViaCookies('', undefined, '')
+    const { hasRefreshCookie: valueWithBadRefresh } = actions.userAuthenticatedViaCookies('', '', '')
+
+    expect(valueWithRefresh).toBe(true)
+    expect(valueWithoutRefresh).toBe(false)
+    expect(valueWithBadRefresh).toBe(false)
+  })
+})

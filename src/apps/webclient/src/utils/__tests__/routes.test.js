@@ -50,7 +50,7 @@ describe('routes', () => {
             auth: Immutable.Map({
               isAuthenticated: false,
               accessToken: '',
-              refreshToken: '',
+              hasRefreshCookie: false,
               expiresAt: ''
             })
           })
@@ -67,7 +67,7 @@ describe('routes', () => {
                 auth: Immutable.Map({
                   isAuthenticated: false,
                   accessToken: 'accessToken',
-                  refreshToken: '',
+                  hasRefreshCookie: false,
                   expiresAt: ''
                 })
               })
@@ -77,7 +77,7 @@ describe('routes', () => {
           })
 
           test('then auth validate should be called with correct parameters', () => {
-            expect(authActions.authValidate).toHaveBeenCalledWith('accessToken', '', '')
+            expect(authActions.authValidate).toHaveBeenCalledWith('accessToken', false, '')
           })
 
           test('then next should be called', () => {
@@ -92,7 +92,7 @@ describe('routes', () => {
                 auth: Immutable.Map({
                   isAuthenticated: false,
                   accessToken: 'accessToken',
-                  refreshToken: '',
+                  hasRefreshCookie: false,
                   expiresAt: ''
                 })
               })
@@ -104,7 +104,7 @@ describe('routes', () => {
           })
 
           test('then auth validate should be called with correct parameters', () => {
-            expect(authActions.authValidate).toHaveBeenCalledWith('accessToken', '', '')
+            expect(authActions.authValidate).toHaveBeenCalledWith('accessToken', false, '')
           })
 
           test('then replace should be called', () => {
