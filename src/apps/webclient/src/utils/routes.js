@@ -1,6 +1,6 @@
 import config from 'config/routes'
 import authActions from 'actions/auth'
-import { getIsAuthenticated, getAccessToken, getRefreshToken, getExpiresAt } from 'selectors/auth'
+import { getIsAuthenticated, getAccessToken, getHasRefreshCookie, getExpiresAt } from 'selectors/auth'
 import { canUseWindow } from './browserEnvironment'
 
 /**
@@ -46,15 +46,15 @@ export function checkValidSession(store, redirectUrl, target) {
     const isAuthenticated = getIsAuthenticated(state)
     if (!isAuthenticated) {
       const accessToken = getAccessToken(state)
-      const refreshToken = getRefreshToken(state)
+      const hasRefreshCookie = getHasRefreshCookie(state)
       const expiresAt = getExpiresAt(state)
 
-      if (!accessToken && !refreshToken) {
+      if (!accessToken && !hasRefreshCookie) {
         replace(addTargetToRedirect({target, location, redirectUrl}))
       }
 
       try {
-        store.dispatch(authActions.authValidate(accessToken, refreshToken, expiresAt))
+        store.dispatch(authActions.authValidate(accessToken, hasRefreshCookie, expiresAt))
       } catch (e) {
         replace(addTargetToRedirect({target, location, redirectUrl}))
       }

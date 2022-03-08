@@ -25,12 +25,46 @@ import loginActions from './login'
 import { fetchFeatures } from '../apis/fetchS3'
 import { actionTypes } from './actionTypes'
 
-/* action creators */
-const userAuthenticated = (accessToken, refreshToken, expiresAt) => ({
-  type: actionTypes.USER_AUTHENTICATED,
-  accessToken,
-  refreshToken,
-  expiresAt,
+/**
+ * @param authResponse - API response from /login or /refresh
+ * @returns object - a Redux action
+ */
+function userAuthenticatedViaAPI(authResponse) {
+  const {
+    accessToken,
+    refreshToken,
+    expiresIn,
+  } = authResponse.data
+
+  const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
+
+  // FEF-363: Refresh tokens are immediately flattened to 'hasRefreshCookie' to avoid exposing on `window.__store__`.
+  // The actual refresh token exchange is handled via HTTP-only cookies.
+  const hasRefreshCookie = typeof refreshToken === 'string' && refreshToken.length > 0
+
+  return {
+    type: actionTypes.USER_AUTHENTICATED,
+    accessToken,
+    hasRefreshCookie,
+    expiresAt
+  }
+}
+
+function userAuthenticatedViaCookies(accessToken, refreshToken, expiresAt) {
+  // FEF-363: Refresh tokens are immediately flattened to 'hasRefreshCookie' to avoid exposing on `window.__store__`.
+  // The actual refresh token exchange is handled via HTTP-only cookies.
+  const hasRefreshCookie = typeof refreshToken === 'string' && refreshToken.length > 0
+
+  return {
+    type: actionTypes.USER_AUTHENTICATED,
+    accessToken,
+    hasRefreshCookie,
+    expiresAt
+  }
+}
+
+const userAuthFailed = () => ({
+  type: actionTypes.USER_AUTH_FAILED
 })
 
 const userIdentified = user => ({
@@ -66,18 +100,10 @@ const authenticate = (email, password, rememberMe, recaptchaToken) => (
   async (dispatch) => {
     try {
       const { data: authResponse } = await serverAuthenticate(email, password, rememberMe, recaptchaToken)
-      const {
-        accessToken,
-        refreshToken,
-        expiresIn,
-      } = authResponse.data
-      const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
-      dispatch(userAuthenticated(accessToken, refreshToken, expiresAt))
+      dispatch(userAuthenticatedViaAPI(authResponse))
     } catch (err) {
       if (err.status === 401) {
         err.message = config.FAILED_LOGIN_TEXT
-      } else if (err.status >= 500) {
-        err.message = config.DEFAULT_ERROR
       } else {
         err.message = config.DEFAULT_ERROR
       }
@@ -92,32 +118,15 @@ const refresh = () => (
     const rememberMe = getState().auth.get('rememberMe', false)
     try {
       const { data: refreshResponse = {} } = await serverRefresh(rememberMe)
-      const {
-        accessToken,
-        refreshToken,
-        expiresIn,
-      } = refreshResponse.data
-      const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
-      dispatch(userAuthenticated(accessToken, refreshToken, expiresAt))
+      dispatch(userAuthenticatedViaAPI(refreshResponse))
 
       if (canUseWindow()) {
         datadogLogs.logger.info('src/actions/auth.js:refresh successfully exchanged refresh token')
-      } else {
-        logger.info({
-          message: 'src/actions/auth.js:refresh successfully exchanged refresh token'
-        })
       }
     } catch (err) {
       if (canUseWindow()) {
         datadogLogs.logger.warn('src/actions/auth.js:refresh failed to exchange refresh token', {
           err: (err || {}).message
-        })
-      } else {
-        logger.warning({
-          message: 'src/actions/auth.js:refresh failed to exchange refresh token',
-          extra: {
-            err: (err || {}).message
-          }
         })
       }
 
@@ -159,7 +168,7 @@ const clear = () => (
   }
 )
 
-const validate = (accessToken, refreshToken, expiresAt) => (
+const validate = (accessToken, hasRefreshCookie, expiresAt) => (
   async (dispatch, getState) => {
     try {
       if (expiresAt && moment(expiresAt).isBefore(moment())) {
@@ -167,8 +176,8 @@ const validate = (accessToken, refreshToken, expiresAt) => (
       }
       await dispatch(identify(accessToken))
     } catch (err) {
-      if (refreshToken) {
-        await dispatch(refresh(refreshToken))
+      if (hasRefreshCookie && canUseWindow()) {
+        await dispatch(refresh())
         const newAccessToken = getState().auth.get('accessToken')
         await dispatch(identify(newAccessToken))
       } else {
@@ -223,10 +232,12 @@ const authActions = {
   authClear: clear,
   authValidate: validate,
   authResetPassword,
+  redirectLoggedInUser,
   storeSignupRecaptchaToken,
   userRememberMe,
-  userAuthenticated,
-  redirectLoggedInUser,
+  userAuthenticatedViaAPI,
+  userAuthenticatedViaCookies,
+  userAuthFailed,
 }
 
 export default authActions

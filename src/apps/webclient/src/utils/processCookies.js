@@ -57,7 +57,7 @@ const processCookies = (cookies, store) => {
     }
 
     if (accessToken || refreshToken) {
-      store.dispatch(authActions.userAuthenticated(accessToken, refreshToken, expiresAt))
+      store.dispatch(authActions.userAuthenticatedViaCookies(accessToken, refreshToken, expiresAt))
     }
   } catch (err) {
     logger.warning(err)

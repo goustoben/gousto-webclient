@@ -70,11 +70,10 @@ export function logout(ctx) {
 * @param {*} ctx
 */
 export async function refresh(ctx) {
-  let refreshToken
   try {
     const { rememberMe } = ctx.request.body
     const { authClientId, authClientSecret } = env
-    refreshToken = getCookieValue(ctx, 'oauth_refresh', 'refresh_token')
+    const refreshToken = getCookieValue(ctx, 'oauth_refresh', 'refresh_token')
 
     if (refreshToken) {
       const refreshReponse = await refreshUserToken(refreshToken, authClientId, authClientSecret)

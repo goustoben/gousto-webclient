@@ -2,27 +2,28 @@ import auth from 'reducers/auth'
 import Immutable from 'immutable'
 
 describe('auth reducer', () => {
+  const initialState = {
+    accessToken: '',
+    hasRefreshCookie: false,
+    isAuthenticated: false,
+    isAdmin: false,
+    rememberMe: false,
+    email: '',
+    id: '',
+    name: '',
+    roles: [],
+    expiresAt: '',
+    isRecaptchaEnabled: false,
+    recaptcha: {
+      signupToken: null,
+    },
+  }
+
   test('should handle initial state', () => {
     const state = undefined
     const action = {}
     const result = auth.auth(state, action)
-    const expected = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-      isRecaptchaEnabled: false,
-      recaptcha: {
-        signupToken: null,
-      },
-    })
-
+    const expected = Immutable.fromJS(initialState)
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
@@ -30,39 +31,13 @@ describe('auth reducer', () => {
     const state = undefined
     const action = { type: 'something wrong' }
     const result = auth.auth(state, action)
-    const expected = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-      isRecaptchaEnabled: false,
-      recaptcha: {
-        signupToken: null,
-      },
-    })
+    const expected = Immutable.fromJS(initialState)
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
   describe('USER_IDENTIFIED action type', () => {
     test('should put the user details into the state', () => {
-      const state = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
-        isAdmin: false,
-        rememberMe: false,
-        email: '',
-        id: '',
-        name: '',
-        roles: [],
-        expiresAt: '',
-      })
+      const state = Immutable.fromJS(initialState)
       const action = {
         type: 'USER_IDENTIFIED',
         user: {
@@ -74,32 +49,17 @@ describe('auth reducer', () => {
       }
       const result = auth.auth(state, action)
       const expected = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
+        ...initialState,
         isAdmin: false,
-        rememberMe: false,
         email: 'someone@gmail.com',
         id: '123-123-123-uuid',
         name: 'someone random',
         roles: ['user'],
-        expiresAt: '',
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
     test('should set isAdmin to true if the admin role is in the user', () => {
-      const state = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
-        isAdmin: false,
-        rememberMe: false,
-        email: '',
-        id: '',
-        name: '',
-        roles: [],
-        expiresAt: '',
-      })
+      const state = Immutable.fromJS(initialState)
       const action = {
         type: 'USER_IDENTIFIED',
         user: {
@@ -111,32 +71,17 @@ describe('auth reducer', () => {
       }
       const result = auth.auth(state, action)
       const expected = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
+        ...initialState,
         isAdmin: true,
-        rememberMe: false,
         email: 'someone@gousto.com',
         id: '123-123-123-uuid',
         name: 'gousto employee',
         roles: ['admin'],
-        expiresAt: '',
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
     test('should set isAdmin to true if the * role is in the user', () => {
-      const state = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
-        isAdmin: false,
-        rememberMe: false,
-        email: '',
-        id: '',
-        name: '',
-        roles: [],
-        expiresAt: '',
-      })
+      const state = Immutable.fromJS(initialState)
       const action = {
         type: 'USER_IDENTIFIED',
         user: {
@@ -148,161 +93,87 @@ describe('auth reducer', () => {
       }
       const result = auth.auth(state, action)
       const expected = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
+        ...initialState,
         isAdmin: true,
-        rememberMe: false,
         email: 'timo@gousto.com',
         id: '123-123-123-uuid',
         name: 'gousto employee',
         roles: ['*'],
-        expiresAt: '',
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
   })
 
   describe('USER_AUTHENTICATED action', () => {
-    test('should set the access token', () => {
-      const state = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
-        isAdmin: false,
-        rememberMe: false,
-        email: '',
-        id: '',
-        name: '',
-        roles: [],
-        expiresAt: '',
-      })
+    test('sets access token, expiresAt', () => {
+      const state = Immutable.fromJS(initialState)
       const action = {
         type: 'USER_AUTHENTICATED',
         accessToken: 'access token',
         expiresAt: '2017-01-01',
+        hasRefreshCookie: false,
       }
       const result = auth.auth(state, action)
       const expected = Immutable.fromJS({
+        ...initialState,
         accessToken: 'access token',
-        refreshToken: '',
-        isAuthenticated: false,
-        isAdmin: false,
-        rememberMe: false,
-        email: '',
-        id: '',
-        name: '',
-        roles: [],
         expiresAt: '2017-01-01',
+        hasRefreshCookie: false,
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
 
-    test('should set the refresh token too if present', () => {
-      const state = Immutable.fromJS({
-        accessToken: '',
-        refreshToken: '',
-        isAuthenticated: false,
-        isAdmin: false,
-        rememberMe: false,
-        email: '',
-        id: '',
-        name: '',
-        roles: [],
-        expiresAt: '',
-      })
+    test('can set hasRefreshCookie', () => {
+      const state = Immutable.fromJS(initialState)
       const action = {
         type: 'USER_AUTHENTICATED',
         accessToken: 'access token',
-        refreshToken: 'refresh token',
+        hasRefreshCookie: true,
         expiresAt: '2017-01-01',
       }
       const result = auth.auth(state, action)
       const expected = Immutable.fromJS({
+        ...initialState,
         accessToken: 'access token',
-        refreshToken: 'refresh token',
-        isAuthenticated: false,
-        isAdmin: false,
-        rememberMe: false,
-        email: '',
-        id: '',
-        name: '',
-        roles: [],
         expiresAt: '2017-01-01',
+        hasRefreshCookie: true,
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
   })
 
   test('should handle the USER_REMEMBER_ME action', () => {
-    const state = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-    })
+    const state = Immutable.fromJS(initialState)
     const action = {
       type: 'USER_REMEMBER_ME',
       rememberMe: true,
     }
     const result = auth.auth(state, action)
     const expected = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
+      ...initialState,
       rememberMe: true,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
   test('should handle the USER_LOGGED_IN action', () => {
-    const state = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-    })
+    const state = Immutable.fromJS(initialState)
     const action = {
       type: 'USER_LOGGED_IN',
     }
     const result = auth.auth(state, action)
     const expected = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
+      ...initialState,
       isAuthenticated: true,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
   test('should reset with the USER_LOGGED_OUT action', () => {
     const state = Immutable.fromJS({
+      ...initialState,
       accessToken: 'access',
-      refreshToken: 'refresh',
+      hasRefreshCookie: true,
       isAuthenticated: true,
       isAdmin: true,
       rememberMe: true,
@@ -310,104 +181,56 @@ describe('auth reducer', () => {
       id: '123-123-123-uuid',
       name: 'gousto employee',
       roles: ['admin'],
-      expiresAt: '',
-      isRecaptchaEnabled: false,
-      recaptcha: {
-        signupToken: null,
-      },
     })
     const action = {
       type: 'USER_LOGGED_OUT',
     }
     const result = auth.auth(state, action)
+    const expected = Immutable.fromJS(initialState)
+    expect(Immutable.is(result, expected)).toEqual(true)
+  })
+
+  test('should reset auth values with the USER_AUTH_FAILED action', () => {
+    const state = Immutable.fromJS({
+      ...initialState,
+      accessToken: 'access',
+      expiresAt: 'some-iso-date',
+    })
+    const action = {
+      type: 'USER_AUTH_FAILED',
+    }
+    const result = auth.auth(state, action)
     const expected = Immutable.fromJS({
+      ...initialState,
       accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-      isRecaptchaEnabled: false,
-      recaptcha: {
-        signupToken: null,
-      },
+      expiresAt: ''
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
   test('should handle CHANGE_RECAPTCHA action', () => {
-    const state = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-      isRecaptchaEnabled: false,
-    })
+    const state = Immutable.fromJS(initialState)
     const action = {
       type: 'CHANGE_RECAPTCHA',
       isRecaptchaEnabled: true
     }
     const result = auth.auth(state, action)
     const expected = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
+      ...initialState,
       isRecaptchaEnabled: true,
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
   test('should handle STORE_SIGNUP_RECAPTCHA_TOKEN action', () => {
-    const state = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-      isRecaptchaEnabled: false,
-      recaptcha: {
-        signupToken: '',
-      },
-    })
+    const state = Immutable.fromJS(initialState)
     const action = {
       type: 'STORE_SIGNUP_RECAPTCHA_TOKEN',
       token: 'token-sign-up-recaptcha'
     }
     const result = auth.auth(state, action)
     const expected = Immutable.fromJS({
-      accessToken: '',
-      refreshToken: '',
-      isAuthenticated: false,
-      isAdmin: false,
-      rememberMe: false,
-      email: '',
-      id: '',
-      name: '',
-      roles: [],
-      expiresAt: '',
-      isRecaptchaEnabled: false,
+      ...initialState,
       recaptcha: {
         signupToken: 'token-sign-up-recaptcha',
       }
