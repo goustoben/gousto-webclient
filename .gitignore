@@ -18,7 +18,6 @@ tests/load/__pycache__
 yarn-error.log
 
 # VSCode
-.vscode
 .vs
 .idea
 src/apps/webclient/config/env.json
@@ -35,4 +34,3 @@ lib
 !.yarn/sdks
 !.yarn/versions
 package-lock.json
-.vscode/settings.json
