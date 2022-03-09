@@ -37,6 +37,20 @@ const getPercentageOrAmountOff = (
 }
 
 /**
+ * Returns discount amount number and if flat discount enabled; e.g. [discountAmount, isDiscountFlat]
+ */
+export const createExtractDiscountFromStore =
+  (promoCode?: string | null) =>
+  (state: any): [number, boolean] => {
+    const promocodeDetails = state.promoStore?.getIn([promoCode, 'details'])
+    const flatDiscount = promocodeDetails?.get('discount-whole-order-amount')
+    const percentageDiscount = promocodeDetails?.get('discount-whole-order-percent')
+    const isDiscountFlat = !!flatDiscount && !percentageDiscount
+
+    return [isDiscountFlat ? flatDiscount : percentageDiscount, isDiscountFlat]
+  }
+
+/**
  * Returns gross & total prices and discount percentage or amount for current order.
  */
 export const useCheckoutPrices = (): CheckoutPrices => {
@@ -54,33 +68,21 @@ export const useCheckoutPrices = (): CheckoutPrices => {
     existingUsersDiscountAmount !== null && existingUsersDiscountAmount !== undefined
 
   // for new users promocode discount is extracted from store.promocode slice
-  const promocodeName = pricing?.promoCode
-  /**
-   * Returns discount amount number and if flat discount enabled; e.g. [discountAmount, isDiscountFlat]
-   */
-  const extractDiscountFromStore = useCallback(
-    (state: any): [number, boolean] => {
-      const promocodeDetails = state.promoStore?.getIn([promocodeName, 'details'])
-      const flatDiscount = promocodeDetails?.get('discount-whole-order-amount')
-      const percentageDiscount = promocodeDetails?.get('discount-whole-order-percent')
-      const isDiscountFlat = flatDiscount && !percentageDiscount
-
-      return [isDiscountFlat ? flatDiscount : percentageDiscount, isDiscountFlat]
-    },
-    [promocodeName]
-  )
+  const promoCode = pricing?.promoCode
   const [newUsersDiscountAmount, isDiscountFlat] = useSelector<any, [number, boolean]>(
-    extractDiscountFromStore
+    createExtractDiscountFromStore(promoCode)
   )
   const isDiscountEnabled = !!newUsersDiscountAmount
 
-  return {
+  const result = {
     grossPrice,
     totalPrice,
     isDiscountEnabled: isAuthenticated ? isPricingDiscountEnabled : isDiscountEnabled,
     isDiscountFlat: isAuthenticated ? isPricingDiscountFlat : isDiscountFlat,
     discountAmount: Number(isAuthenticated ? existingUsersDiscountAmount : newUsersDiscountAmount),
   }
+
+  return result
 }
 
 /**
@@ -104,7 +106,7 @@ export const useCheckoutCounterAnimation = (counterValue: number): [boolean, () 
 /**
  * Returns discount tip for display.
  */
-export const useDiscountTip = (): ReactNode => {
+export const useDiscountTip = (): string | null => {
   const { isDiscountEnabled, isDiscountFlat, discountAmount } = useCheckoutPrices()
   if (!isDiscountEnabled) {
     return null
@@ -113,5 +115,5 @@ export const useDiscountTip = (): ReactNode => {
     ? `£${discountAmount} off your box`
     : `${discountAmount}% off your box`
 
-  return <>{discountTip}</>
+  return discountTip
 }
