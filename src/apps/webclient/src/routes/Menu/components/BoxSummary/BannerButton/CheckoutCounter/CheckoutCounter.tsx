@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useCallback, useLayoutEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { usePrevious } from 'react-use'
 import basketConfig from 'config/basket'
 import css from './CheckoutCounter.css'
-import { useCheckoutCounterAnimation } from '../../utilHooks'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const classNames = require('classnames')
@@ -22,7 +22,15 @@ export interface CheckoutCounterProps {
  */
 export const CheckoutCounter = ({ isDisabled = false, isButtonHovered }: CheckoutCounterProps) => {
   const recipesAmount = useSelector((state: any) => state.basket.get('recipes').size)
-  const [shouldPlayAnimation, onAnimationEnd] = useCheckoutCounterAnimation(recipesAmount)
+
+  const [shouldPlayAnimation, setShouldPlayAnimation] = useState<boolean>(false)
+  const oldCounterValue = usePrevious(recipesAmount)
+  const onAnimationEnd = useCallback(() => setShouldPlayAnimation(false), [])
+  useLayoutEffect(() => {
+    if (oldCounterValue !== recipesAmount) {
+      setShouldPlayAnimation(true)
+    }
+  }, [oldCounterValue, recipesAmount])
 
   return (
     <div

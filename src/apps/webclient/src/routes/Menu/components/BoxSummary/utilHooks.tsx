@@ -1,6 +1,4 @@
-import React, { ReactNode, useCallback, useLayoutEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { usePrevious } from 'react-use'
 import { getIsAuthenticated } from 'selectors/auth'
 import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
 
@@ -83,24 +81,6 @@ export const useCheckoutPrices = (): CheckoutPrices => {
   }
 
   return result
-}
-
-/**
- * Returns true if checkout button counter animation needs to be played; returns false otherwise.
- * @param {number} counterValue - current counter value
- * @returns - flag is animation should be played and 'onanimationend' callback
- */
-export const useCheckoutCounterAnimation = (counterValue: number): [boolean, () => void] => {
-  const [shouldPlayAnimation, setShouldPlayAnimation] = useState<boolean>(false)
-  const oldCounterValue = usePrevious(counterValue)
-  const onAnimationEnd = useCallback(() => setShouldPlayAnimation(false), [])
-  useLayoutEffect(() => {
-    if (oldCounterValue !== counterValue) {
-      setShouldPlayAnimation(true)
-    }
-  }, [oldCounterValue, counterValue])
-
-  return [shouldPlayAnimation, onAnimationEnd]
 }
 
 /**
