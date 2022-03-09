@@ -22,8 +22,18 @@ const ruleDefinitions = {
   'array-bracket-spacing': 0,
   'array-callback-return': 1,
   'arrow-parens': 0,
-  camelcase: 1,
-  'class-methods-use-this': 1,
+  camelcase: [
+    'warn',
+    {
+      properties: 'never',
+      allow: [
+        'unstable_renderSubtreeIntoContainer',
+        'UNSAFE_componentWillMount',
+        'UNSAFE_componentWillReceiveProps',
+      ],
+    },
+  ],
+  'class-methods-use-this': 0,
   'comma-dangle': 0,
   'comma-spacing': 0,
   'comma-style': 1,
@@ -130,7 +140,6 @@ const ruleDefinitions = {
   'object-shorthand': 1,
   'one-var': 1,
   'one-var-declaration-per-line': 1,
-  'operator-linebreak': 1,
   'padded-blocks': 2,
   'prefer-arrow-callback': 1,
   'prefer-const': 1,
@@ -155,7 +164,6 @@ const ruleDefinitions = {
   'react/jsx-indent-props': 0,
   'react/jsx-key': 1,
   'react/jsx-no-target-blank': [1, { enforceDynamicLinks: 'always' }],
-  'react/jsx-one-expression-per-line': 1,
   'react/jsx-props-no-multi-spaces': 1,
   'react/jsx-props-no-spreading': 1,
   'react/jsx-wrap-multilines': 1,
@@ -185,6 +193,20 @@ const ruleDefinitions = {
   'switch-colon-spacing': 1,
   'symbol-description': 1,
   'vars-on-top': 1,
+  'no-promise-executor-return': 0,
+  'react/function-component-definition': 0,
+  'react/no-arrow-function-lifecycle': 0,
+  'no-restricted-exports': 0,
+  'default-param-last': 0,
+  'prefer-regex-literals': 0,
+  'react/jsx-no-useless-fragment': 0,
+  'react/jsx-one-expression-per-line': 0, // TODO 1
+  'operator-linebreak': 0, // TODO 1
+  'import/no-import-module-exports': 0, // TODO remove after `module.exports` are removed
+  'react/no-unused-class-component-methods': 'warn',
+  'no-dupe-else-if': 'warn',
+  'react/jsx-no-constructed-context-values': 'warn',
+  'react/no-unstable-nested-components': 'warn',
 }
 
 module.exports = {
@@ -225,7 +247,7 @@ module.exports = {
           ...srcFileAliases,
           ...componentFileAliases,
         ],
-        extensions: ['.js', '.ts', '.tsx', '.css'],
+        extensions: ['.js', '.ts', '.tsx', '.css', '.d.ts'],
       },
     },
   },
@@ -278,29 +300,53 @@ module.exports = {
         ecmaFeatures: { jsx: true },
         ecmaVersion: 2018,
         sourceType: 'module',
-        project: './tsconfig.json',
+        project: './tsconfig.eslint.json',
       },
       plugins: ['@typescript-eslint', 'prettier', 'react'],
       rules: {
         ...ruleDefinitions,
         ...{
           '@typescript-eslint/ban-ts-comment': 'warn',
-          '@typescript-eslint/no-empty-function': 1,
           '@typescript-eslint/no-loss-of-precision': 'off', // Disabled until we upgrade to ESLint v7
           '@typescript-eslint/no-var-requires': 1,
           '@typescript-eslint/no-use-before-define': ['warn'],
           '@typescript-eslint/explicit-module-boundary-types': 'off',
+          'no-unused-vars': 'off',
+          '@typescript-eslint/no-unused-vars': [
+            'error',
+            {
+              argsIgnorePattern: '^_',
+              varsIgnorePattern: '^_',
+            },
+          ],
+          'no-underscore-dangle': 'off',
+          // we're not at a point where this brings us any value yet.
+          '@typescript-eslint/no-explicit-any': 'off',
+          '@typescript-eslint/no-empty-function': 'off',
+          '@typescript-eslint/no-empty-interface': 'off',
+
+          // these will be handled by prettier: disable for the moment because
+          // some ts files at the moment fail them, but it's not a good time to
+          // fix them - TG-6082.
+          indent: 'off',
+          semi: 'off',
+          'no-extra-semi': 'off',
+          '@typescript-eslint/no-extra-semi': 'off',
+          'function-call-argument-newline': 'off',
+          quotes: 'off',
+          'no-multiple-empty-lines': 'off',
         },
       },
     },
     {
-      files: ['**/*.test.js'],
+      files: ['**/*.test.js', '**/*.test.ts', '**/*.test.tsx', './jest/**/*'],
       env: {
         jest: true,
       },
       rules: {
         'react/display-name': 0,
         'react/jsx-props-no-spreading': 0,
+        'import/no-extraneous-dependencies': 0,
       },
     },
     {
@@ -322,7 +368,6 @@ module.exports = {
         'src/middlewares/tracking/dataLayerTracker/*.js',
         'src/routes/BoxPrices/**/*.js',
         'src/performanceTracker/**/*.js',
-        'src/routes/Menu/**/*.js',
         'src/routes/Menu/**/*.ts',
         'src/routes/Menu/**/*.tsx',
       ],
@@ -339,6 +384,7 @@ module.exports = {
           },
         ],
         indent: 0,
+        quotes: 0,
         'newline-per-chained-call': 0,
         'no-confusing-arrow': 0,
         'react/jsx-indent': 0,

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
+import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
 
 import { Image, CookingTimeIcon } from '../../Recipe'
 import { VariantHeader } from '../VariantHeader'

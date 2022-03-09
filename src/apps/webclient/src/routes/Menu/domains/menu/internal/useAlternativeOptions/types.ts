@@ -21,7 +21,6 @@ export type RecipeVariants = {
 export type Collection = {
   id: string
   requirements: {
-    // eslint-disable-next-line camelcase
     dietary_claims: string[]
   }
 }

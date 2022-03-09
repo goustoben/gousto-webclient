@@ -1,9 +1,7 @@
 /* eslint-disable */
 const fs = require('fs')
 const path = require('path')
-
-const eslintStylishFormatter = require('eslint/lib/cli-engine/formatters/stylish')
-
+const { ESLint } = require('eslint')
 const resultsPath = path.resolve(__dirname, '../', 'eslint-results.json')
 
 if (fs.existsSync(resultsPath) === false) {
@@ -14,4 +12,13 @@ if (fs.existsSync(resultsPath) === false) {
 
 const results = require(resultsPath)
 
-process.stdout.write(eslintStylishFormatter(results))
+async function displayFormattedResults() {
+  const api = new ESLint()
+
+  const formatter = await api.loadFormatter()
+  const formattedResults = (formatter.format(results))
+
+  process.stdout.write(formattedResults)
+}
+
+displayFormattedResults()

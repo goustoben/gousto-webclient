@@ -7,14 +7,14 @@ describe('string type utils', () => {
       const Input = 'foo.bar.baz'
       type Output = Split<typeof Input, '.'>
 
-      const typeCheck: TypesEqual<Output, ['foo', 'bar', 'baz']> = true
+      const _typeCheck: TypesEqual<Output, ['foo', 'bar', 'baz']> = true
     })
 
     it('Unsuccessful split: string "foobar", separator "." -> ["foobar"]', () => {
       const Input = 'foobar'
       type Output = Split<typeof Input, '.'>
 
-      const typeCheck: TypesEqual<Output, ['foobar']> = true
+      const _typeCheck: TypesEqual<Output, ['foobar']> = true
     })
   })
 })

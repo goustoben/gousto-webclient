@@ -7,6 +7,10 @@
 **/*.gql
 **/*.scss
 **/*.md
+**/*.ts
+**/*.tsx
+
+!.eslintrc.js
 
 !src/routes/Checkout/**/*
 !src/routes/Home/**/*
@@ -16,3 +20,6 @@
 !src/middlewares/tracking/dataLayerTracker/**/*
 !src/routes/BoxPrices/**/*
 !src/performanceTracker/**/*
+# two-stage migration in Menu: first ts, then js&css
+!src/routes/Menu/**/*.ts
+!src/routes/Menu/**/*.tsx

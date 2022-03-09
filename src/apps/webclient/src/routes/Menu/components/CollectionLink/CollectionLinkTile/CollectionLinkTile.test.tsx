@@ -134,13 +134,13 @@ describe('CollectionLinkTile', () => {
         jest.spyOn(Collections, 'useCollections').mockImplementation(
           () =>
             ({
-              changeCollectionById: (a: string) => {},
+              changeCollectionById: (_a: string) => {},
             } as any)
         )
         jest.spyOn(Menu, 'useMenu').mockImplementation(
           () =>
             ({
-              getRecipesForCollectionId: (a: string) => ({ recipes: Immutable.List() }),
+              getRecipesForCollectionId: (_a: string) => ({ recipes: Immutable.List() }),
             } as any)
         )
       })

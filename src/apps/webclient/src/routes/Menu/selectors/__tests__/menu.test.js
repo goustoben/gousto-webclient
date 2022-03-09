@@ -572,10 +572,10 @@ describe('isMenuLoading', () => {
     ${false}       | ${false}          | ${false}    | ${false}            | ${false}  | ${false} | ${'menu is not loading'}
 
   `('Given $description', ({ boxSummaryShow, menuBrowseCTAShow, menuLoading, isOptimizelyLoading, forceLoad, expected }) => {
-  it(`returns ${expected}`, () => {
-    expect(isMenuLoading.resultFunc(boxSummaryShow, menuBrowseCTAShow, menuLoading, isOptimizelyLoading, forceLoad)).toBe(expected)
+    it(`returns ${expected}`, () => {
+      expect(isMenuLoading.resultFunc(boxSummaryShow, menuBrowseCTAShow, menuLoading, isOptimizelyLoading, forceLoad)).toBe(expected)
+    })
   })
-})
 })
 
 describe('getCategoryIdForVariants', () => {
