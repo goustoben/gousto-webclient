@@ -11,7 +11,7 @@ jest.mock('react-helmet', () => ({
   },
 }))
 jest.mock('react-router', () => ({
-  ...(jest.requireActual('react-router') as {}),
+  ...(jest.requireActual('react-router') as Record<string, unknown>),
   RouterContext: () => 'mock-router-context',
 }))
 jest.mock('../template')

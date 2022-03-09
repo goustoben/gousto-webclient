@@ -32,6 +32,7 @@ const getPreloadFontsSection = () => fontDescriptors.map(([fontFileName, typeAtt
   `<link ref="preload" href="${newAssetPath(fontFileName)}" as="font" type="${typeAttr}" crossorigin>`
 )).join('\n')
 
+// eslint-disable-next-line default-param-last
 const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts, helmetHead) => (
   `<!doctype html>
    <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>

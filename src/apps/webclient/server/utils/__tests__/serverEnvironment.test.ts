@@ -1,5 +1,5 @@
 import { envConfig } from '../../config/env'
-import { getServerEnvironment } from '../../utils/serverEnvironment'
+import { getServerEnvironment } from '../serverEnvironment'
 
 jest.mock('../../config/env')
 

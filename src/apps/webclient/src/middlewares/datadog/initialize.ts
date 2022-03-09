@@ -1,8 +1,8 @@
 import { datadogLogs, LogsInitConfiguration } from '@datadog/browser-logs'
 import { datadogRum, RumInitConfiguration } from '@datadog/browser-rum'
 
-import { Nullable } from '../../types'
 import { getClientEnvironment } from 'utils/browserEnvironment'
+import { Nullable } from '../../types'
 import { browserLogsConfig, RUMSDKConfig, DATADOG_ENABLED_ENVS } from './config'
 
 export const getIsDatadogEnabled = () => {
@@ -11,7 +11,9 @@ export const getIsDatadogEnabled = () => {
   try {
     // Need to narrow this type so it doesn't potentially return null for lower environment
     environment = getClientEnvironment()
-  } catch (e) {}
+  } catch (e) {
+    // eslint-ignore-line no-empty
+  }
 
   return DATADOG_ENABLED_ENVS.some((enabledEnv) => environment === enabledEnv)
 }

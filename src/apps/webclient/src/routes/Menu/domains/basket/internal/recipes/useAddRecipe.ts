@@ -117,7 +117,6 @@ type menuLimitsForBasketType = {
     description: string
   }
   items: {
-    // eslint-disable-next-line camelcase
     core_recipe_id: string
   }[]
 }[]

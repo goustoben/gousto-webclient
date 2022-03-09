@@ -1,6 +1,7 @@
 import * as browserLogsSDK from '@datadog/browser-logs'
 import * as RUMSDK from '@datadog/browser-rum'
 
+import { getClientEnvironment } from 'utils/browserEnvironment'
 import { initializeDatadog } from '../initialize'
 import {
   DATADOG_ENABLED_ENVS,
@@ -9,7 +10,6 @@ import {
   RUM_SDK_CLIENT_TOKEN,
   DATADOG_CLIENT_SAMPLE_RATE,
 } from '../config'
-import { getClientEnvironment } from 'utils/browserEnvironment'
 
 jest.mock('@datadog/browser-logs', () => ({
   datadogLogs: {

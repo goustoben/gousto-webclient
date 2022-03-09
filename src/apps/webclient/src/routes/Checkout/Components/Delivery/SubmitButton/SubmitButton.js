@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import PropTypes from 'prop-types'
 
 import React from 'react'

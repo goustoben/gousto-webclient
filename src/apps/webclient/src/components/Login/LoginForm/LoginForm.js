@@ -24,7 +24,6 @@ class LoginForm extends React.PureComponent {
     }
   }
 
-  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { rememberMeDefault } = this.props
 
@@ -36,7 +35,6 @@ class LoginForm extends React.PureComponent {
     await changeRecaptcha()
   }
 
-  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.statusText) {
       this.setState({

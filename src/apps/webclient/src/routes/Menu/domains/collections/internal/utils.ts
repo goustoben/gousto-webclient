@@ -1,6 +1,6 @@
 import { createMenuCollection } from 'routes/Menu/types'
 
-export const createCollectionFromDefaultValues = (collection: {}) => {
+export const createCollectionFromDefaultValues = (collection: Record<string, unknown>) => {
   const defaultValues = {
     id: '101',
     published: true,

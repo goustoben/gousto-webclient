@@ -7,7 +7,7 @@ describe('array type utils', () => {
       type Input = [string, boolean, number]
       type Output = LastOfTuple<Input>
 
-      const typeCheck: TypesEqual<Output, number> = true
+      const _typeCheck: TypesEqual<Output, number> = true
     })
 
     it('Tuple with nested type ["foo", NestedType] -> NestedType', () => {
@@ -15,22 +15,21 @@ describe('array type utils', () => {
       type Input = ['foo', NestedType]
       type Output = LastOfTuple<Input>
 
-      const typecheck: TypesEqual<Output, NestedType> = true
+      const _typeCheck: TypesEqual<Output, NestedType> = true
     })
 
     it('Tuple with single item ["foo"] -> "foo"', () => {
-      type NestedType = (a: string) => boolean
       type Input = ['foo']
       type Output = LastOfTuple<Input>
 
-      const typecheck: TypesEqual<Output, 'foo'> = true
+      const _typeCheck: TypesEqual<Output, 'foo'> = true
     })
 
     it('Simple array type string[] -> string', () => {
       type Input = string[]
       type Output = LastOfTuple<Input>
 
-      const typeCheck: TypesEqual<Output, string> = true
+      const _typeCheck: TypesEqual<Output, string> = true
     })
   })
 
@@ -39,7 +38,7 @@ describe('array type utils', () => {
       type Input = [string, boolean, number]
       type Output = FirstOfTuple<Input>
 
-      const typeCheck: TypesEqual<Output, string> = true
+      const _typeCheck: TypesEqual<Output, string> = true
     })
 
     it('Tuple with nested type ["foo", NestedType] -> NestedType', () => {
@@ -47,22 +46,21 @@ describe('array type utils', () => {
       type Input = [NestedType, 'foo']
       type Output = FirstOfTuple<Input>
 
-      const typecheck: TypesEqual<Output, NestedType> = true
+      const _typeCheck: TypesEqual<Output, NestedType> = true
     })
 
     it('Tuple with single item ["foo"] -> "foo"', () => {
-      type NestedType = (a: string) => boolean
       type Input = ['foo']
       type Output = FirstOfTuple<Input>
 
-      const typecheck: TypesEqual<Output, 'foo'> = true
+      const _typeCheck: TypesEqual<Output, 'foo'> = true
     })
 
     it('Simple array type string[] -> string', () => {
       type Input = string[]
       type Output = FirstOfTuple<Input>
 
-      const typeCheck: TypesEqual<Output, string> = true
+      const _typeCheck: TypesEqual<Output, string> = true
     })
   })
 })

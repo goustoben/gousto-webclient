@@ -17,7 +17,7 @@ describe('RecipeDisclaimer', () => {
 
   describe('when the recipe contains a disclaimer', () => {
     beforeEach(() => {
-     jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => claim)
+      jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => claim)
 
       wrapper = shallow(
         <RecipeDisclaimer />
