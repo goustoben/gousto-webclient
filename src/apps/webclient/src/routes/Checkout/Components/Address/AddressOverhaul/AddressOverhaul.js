@@ -1,11 +1,11 @@
+import { Text, Link, Space, Box, FlexDirection } from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
 import { onEnter } from 'utils/accessibility'
-import { Text, Link, Space, Box, FlexDirection } from '@gousto-internal/citrus-react'
 import { Postcode } from '../Postcode'
 import { AddressInputs } from '../AddressInputs'
 import { DeliveryCard } from '../../Delivery/DeliveryCard'
-import css from '../Address.css'
+
 export class AddressOverhaul extends PureComponent {
   handleEditAddressManually = () => {
     const { onEnterAddressManuallyClick } = this.props
@@ -67,18 +67,22 @@ export class AddressOverhaul extends PureComponent {
         {isEditingManually && <AddressInputs receiveRef={receiveRef} sectionName={sectionName} />}
 
         {!(isEditingManually || isAddressSelected) && (
-          <div className={css.enterAddressManually}>
-            <span
-              role="button"
-              tabIndex="0"
-              onClick={this.handleEditAddressManually}
-              onKeyDown={onEnter(this.handleEditAddressManually)}
-              className={css.editAddressLink}
-              data-testing="checkoutEnterAddressManually"
-            >
-              Enter address manually
-            </span>
-          </div>
+          <>
+            <Box>
+              {/* eslint-disable-next-line */}
+              <Link
+                data-testing="checkoutEnterAddressManually"
+                role="button"
+                tabIndex="0"
+                size={1}
+                onClick={this.handleEditAddressManually}
+                onKeyDown={onEnter(this.handleEditAddressManually)}
+              >
+                Enter address manually
+              </Link>
+            </Box>
+            <Space size={[4, 6]} />
+          </>
         )}
       </Fragment>
     )

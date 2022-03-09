@@ -72,18 +72,3 @@
   text-transform: capitalize;
   margin-bottom: 0.5rem;
 }
-
-.editAddressLink {
-  color: Bluecheese;
-  border-bottom: 1px solid Oyster;
-  composes: fontStyleS from 'design-language/typography.module.css';
-  composes: fontBold from 'design-language/typography.css';
-}
-
-.enterAddressManually {
-  margin-bottom: 1rem;
-
-  @media BreakpointFromMedium {
-    margin-bottom: 1.5rem;
-  }
-}

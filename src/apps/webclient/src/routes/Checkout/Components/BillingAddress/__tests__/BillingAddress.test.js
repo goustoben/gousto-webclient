@@ -1,7 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
-import CheckBox from 'Form/CheckBox'
 import { BillingAddress } from '../BillingAddress'
 import { BillingAddressContainer } from '../AddressContainer'
 
@@ -61,8 +59,8 @@ describe('Billing Address', () => {
   })
 
   describe('rendering the component', () => {
-    test('should render a <Div>', () => {
-      expect(wrapper.type()).toEqual('div')
+    test('should render a container', () => {
+      expect(wrapper.find({ 'data-testing': 'checkoutBillingAddressContainer' })).toHaveLength(1)
     })
 
     describe('when "isBillingAddressDifferent" is true', () => {
@@ -154,19 +152,16 @@ describe('Billing Address', () => {
       })
     })
 
-    test('then it should render correctly', () => {
-      expect(wrapper.find('.fieldHeader').exists()).toBeTruthy()
-      expect(wrapper.find('.fieldHeader').prop('children')).toBe('Billing address')
-
-      const checkbox = wrapper.find(CheckBox)
-      expect(checkbox.exists()).toBeTruthy()
-      expect(checkbox.prop('label')).toBe('My billing address is the same as my delivery address')
-      expect(checkbox.prop('checked')).toBeTruthy()
+    test('should renders properly', () => {
+      expect(wrapper.text().includes('Billing address')).toBe(true)
+      expect(wrapper.text().includes('My billing address is the same as my delivery address')).toBe(
+        true
+      )
     })
 
     describe('when checkbox is unchecked', () => {
       beforeEach(() => {
-        wrapper.find(CheckBox).prop('onChange')(false)
+        wrapper.find({ dataTesting: 'checkoutBillingAddressToggle' }).prop('onChange')(false)
       })
 
       test('should call the redux-form change() function to set isBillingAddressDifferent', () => {
