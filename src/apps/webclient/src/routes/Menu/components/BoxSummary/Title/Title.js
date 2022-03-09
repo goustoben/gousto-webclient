@@ -5,7 +5,6 @@ import moment from 'moment'
 import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { Spinner } from 'goustouicomponents'
-import { getNumPortions } from 'selectors/basket'
 import { isMobile } from 'utils/view'
 import { useDiscountTip } from 'routes/Menu/components/BoxSummary/utilHooks'
 import { useSelector } from 'react-redux'
@@ -20,6 +19,7 @@ const propTypes = {
   spinnerClassName: PropTypes.string,
   spinnerContainerClassName: PropTypes.string,
   slotTime: PropTypes.string,
+  numRecipes: PropTypes.number,
 }
 
 const deliveryTip = <b>Free UK delivery,</b>
@@ -29,9 +29,10 @@ const defaultProps = {
   spinnerClassName: '',
   spinnerContainerClassName: '',
   slotTime: '',
+  numRecipes: 0,
 }
 
-export function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassName }) {
+export function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassName, numRecipes }) {
   const { pricing, isPending } = usePricing()
   const spinnerClassNames = {
     [css.spinnerContainer]: true,
@@ -40,7 +41,6 @@ export function Title({ slotTime, date, view, spinnerClassName, spinnerContainer
   }
   const discountTip = useDiscountTip()
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
-  const numRecipes = useSelector(getNumPortions)
   const titleContent =
     numRecipes < minRecipesToCheckout ? (
       <div className={css.discountTip}>{discountTip || deliveryTip}</div>
@@ -52,10 +52,9 @@ export function Title({ slotTime, date, view, spinnerClassName, spinnerContainer
       />
     )
 
-  return (
-    isSimplifyBasketBarEnabled ? (
-      <div className={classNames(css.titleWrapperVariant)}>{titleContent}</div>
-    ) : (
+  return isSimplifyBasketBarEnabled ? (
+    <div className={classNames(css.titleWrapperVariant)}>{titleContent}</div>
+  ) : (
     <div className={css.titleWrapper}>
       <p className={css[`title${view}`]}>
         {date ? <span className={css.showDate}>{moment(date).format('ddd D MMM')}</span> : null}
@@ -79,7 +78,7 @@ export function Title({ slotTime, date, view, spinnerClassName, spinnerContainer
         )}
       </div>
     </div>
-  ))
+  )
 }
 
 Title.defaultProps = defaultProps
