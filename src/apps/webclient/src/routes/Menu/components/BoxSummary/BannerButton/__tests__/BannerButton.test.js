@@ -1,5 +1,5 @@
-import { mount } from 'enzyme'
 import React from 'react'
+import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
@@ -89,6 +89,33 @@ describe('BannerButton', () => {
       )
       expect(wrapper.find(CheckoutContainer)).toHaveLength(1)
       expect(wrapper.find(CheckoutContainer).prop('view')).toEqual('desktop')
+    })
+  })
+
+  describe('when hovered', () => {
+    let wrapper
+    beforeEach(() => {
+      wrapper = mount(
+        <Provider store={mockedStore}>
+          <BannerButton {...props} boxSummaryCurrentView={boxSummaryViews.DETAILS} open={openSpy} />
+        </Provider>
+      )
+
+      wrapper.simulate('mouseEnter')
+    })
+
+    test('should pass the information down', () => {
+      expect(wrapper.find('CheckoutContainer').prop('isButtonHovered')).toBe(true)
+    })
+
+    describe('and when unhovered', () => {
+      beforeEach(() => {
+        wrapper.simulate('mouseLeave')
+      })
+
+      test('should pass the information down', () => {
+        expect(wrapper.find('CheckoutContainer').prop('isButtonHovered')).toBe(false)
+      })
     })
   })
 })

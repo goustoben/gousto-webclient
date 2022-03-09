@@ -20,7 +20,7 @@ const BannerButton = ({ view, fullWidth, toggleBasketView }) => {
 
   // CheckoutCounter should change background color when the button is hovered.
   // While a css-only solution is possible in theory (`.button:hover
-  // .counter`), we cannot refer to class names defined in sparate css module
+  // .counter`), we cannot refer to class names defined in other css module
   // files.
   const [isButtonHovered, setIsButtonHovered] = useState(false)
 
