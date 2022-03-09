@@ -11,48 +11,44 @@ import { Description } from '../../Description'
 
 import css from './ExpandBoxSummaryButton.css'
 
-const Contents = ({ numPortions, numRecipes, date, slotId, warning }) => {
-  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
-
-  return (
-    <div className={classNames({ [css.buttonTextWrapper]: isSimplifyBasketBarEnabled })}>
-      {isSimplifyBasketBarEnabled ? (
-        <>
-          <Title
-           view="desktop"
-           numRecipes={numRecipes}
-           date={date}
-           finalisedSlot={slotId !== ''}
-          />
-          <Description
-            view="desktop"
-            numPortions={numPortions}
-            numRecipes={numRecipes}
-            deliveryOptions={slotId === ''}
-            warning={warning}
-          />
-        </>
-      ) : (
-        <>
-          {numRecipes > 0 ? <span className={css.badge}>{numRecipes}</span> : ''}
-          <Title
-            view="desktop"
-            date={date}
-            finalisedSlot={slotId !== ''}
-            numRecipes={numRecipes}
-          />
-          <Description
-            numPortions={numPortions}
-            numRecipes={numRecipes}
-            view="desktop"
-            deliveryOptions={slotId === ''}
-            warning={warning}
-          />
-        </>
-      )}
-    </div>
-  )
-}
+export const Contents = ({ numPortions, numRecipes, date, slotId, warning, isSimplifyBasketBarEnabled }) => (
+  <div className={classNames({ [css.buttonTextWrapper]: isSimplifyBasketBarEnabled })}>
+    {isSimplifyBasketBarEnabled ? (
+      <>
+        <Title
+          view="desktop"
+          numRecipes={numRecipes}
+          date={date}
+          finalisedSlot={slotId !== ''}
+        />
+        <Description
+          view="desktop"
+          numPortions={numPortions}
+          numRecipes={numRecipes}
+          deliveryOptions={slotId === ''}
+          warning={warning}
+        />
+      </>
+    ) : (
+      <>
+        {numRecipes > 0 ? <span className={css.badge}>{numRecipes}</span> : ''}
+        <Title
+          view="desktop"
+          date={date}
+          finalisedSlot={slotId !== ''}
+          numRecipes={numRecipes}
+        />
+        <Description
+          numPortions={numPortions}
+          numRecipes={numRecipes}
+          view="desktop"
+          deliveryOptions={slotId === ''}
+          warning={warning}
+        />
+      </>
+    )}
+  </div>
+)
 
 Contents.propTypes = {
   numPortions: PropTypes.number.isRequired,
@@ -60,6 +56,7 @@ Contents.propTypes = {
   date: PropTypes.string.isRequired,
   slotId: PropTypes.string.isRequired,
   warning: PropTypes.bool.isRequired,
+  isSimplifyBasketBarEnabled: PropTypes.bool.isRequired,
 }
 
 const ExpandBoxSummaryButton = ({
@@ -82,6 +79,7 @@ const ExpandBoxSummaryButton = ({
       date={date}
       slotId={slotId}
       warning={warning}
+      isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled}
     />
   ) : (
     <div className={css.bsButton}>
@@ -112,6 +110,7 @@ const ExpandBoxSummaryButton = ({
             warning={warning}
             onClick={onClick}
             view={view}
+            isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled}
           />
           <span
             className={classNames(css.iconDesktop, {
