@@ -1,8 +1,18 @@
+import {
+  Box,
+  Space,
+  Text,
+  Display,
+  BorderStyle,
+  Color,
+  FontFamily,
+} from '@gousto-internal/citrus-react'
+
+/* eslint-disable camelcase */
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import Immutable from 'immutable'
-import classNames from 'classnames'
 import { Field, FormSection } from 'redux-form'
 import { ReduxFormInput } from 'Form/ReduxFormInput'
 import { HotjarTrigger } from 'HotjarTrigger'
@@ -14,9 +24,6 @@ import { canUseWindow } from 'utils/browserEnvironment'
 import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
 import { SectionHeader } from '../SectionHeader'
-
-import checkoutCss from '../../Checkout.css'
-import css from './Delivery.css'
 
 const propTypes = {
   formValues: PropTypes.objectOf(PropTypes.object),
@@ -105,11 +112,11 @@ export class Delivery extends React.PureComponent {
     const deliveryTime = getSlotTimes({ date, deliveryDays, slotId })
 
     return (
-      <div className={css.dateContainer}>
-        Your selected delivery day is &nbsp;
-        <div className={css.boldDeliveryDate}>{deliveryDate}</div>,&nbsp;
-        <div className={css.upperCase}>{deliveryTime}</div>
-      </div>
+      <Box display={Display.InlineFlex}>
+        <Text size={2}>Your selected delivery day is &nbsp;</Text>
+        <Text fontFamily={FontFamily.Bold}>{deliveryDate}</Text>
+        <Text size={2}>, {deliveryTime}</Text>
+      </Box>
     )
   }
 
@@ -122,14 +129,22 @@ export class Delivery extends React.PureComponent {
           this.container = el
         }}
       >
-        <div className={checkoutCss.sectionContainer} data-testing="checkoutDeliverySection">
+        <Box
+          borderStyle={BorderStyle.Solid}
+          borderWidth={0.5}
+          borderColor={Color.ColdGrey_100}
+          bg={Color.White}
+          paddingH={[3, 6]}
+          paddingV={[6, 8]}
+          data-testing="checkoutDeliverySection"
+        >
           <SectionHeader title="Delivery details" />
           <DeliveryCard iconName="icon-calendar" cardStyle="blue">
             {this.renderDeliveryDay()}
           </DeliveryCard>
           <FormSection name={sectionName}>
-            <div className={css.namesContainer}>
-              <div className={classNames(checkoutCss.inputContainer, css.nameInput)}>
+            <Box display={Display.Flex}>
+              <Box width="100%" borderRadius={3}>
                 <Field
                   name="firstName"
                   component={ReduxFormInput}
@@ -140,8 +155,9 @@ export class Delivery extends React.PureComponent {
                   refId={`${sectionName}.firstName`}
                   dataTesting="checkoutFirstNameInput"
                 />
-              </div>
-              <div className={classNames(checkoutCss.inputContainer, css.nameInput)}>
+              </Box>
+              <Space size={[4]} direction="horizontal" />
+              <Box width="100%" borderRadius={3}>
                 <Field
                   name="lastName"
                   component={ReduxFormInput}
@@ -152,12 +168,13 @@ export class Delivery extends React.PureComponent {
                   refId={`${sectionName}.lastName`}
                   dataTesting="checkoutLastNameInput"
                 />
-              </div>
-            </div>
+              </Box>
+            </Box>
+            <Space size={6} direction="vertical" />
             {this.renderAddress()}
           </FormSection>
           <HotjarTrigger name="pbc_delivery_and_payment" shouldInvoke={false} />
-        </div>
+        </Box>
       </div>
     )
   }

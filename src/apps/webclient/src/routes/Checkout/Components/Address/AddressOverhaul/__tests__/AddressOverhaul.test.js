@@ -19,7 +19,7 @@ describe('Given AddressOverhaul', () => {
     test('Then should be rendered correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.find('Postcode').exists()).toBeTruthy()
-      expect(wrapper.find('.enterAddressManually').exists()).toBeTruthy()
+      expect(wrapper.find({ 'data-testing': 'checkoutEnterAddressManually' }).exists()).toBeTruthy()
       expect(wrapper.find('AddressInputs').exists()).toBeFalsy()
     })
   })
@@ -38,7 +38,7 @@ describe('Given AddressOverhaul', () => {
 
   describe('When "edit address" is clicked', () => {
     beforeEach(() => {
-      wrapper.find('.editAddressLink').simulate('click')
+      wrapper.find({ 'data-testing': 'checkoutEnterAddressManually' }).simulate('click')
     })
 
     test('Then should not render DeliveryCard component', () => {
@@ -58,7 +58,7 @@ describe('Given AddressOverhaul', () => {
     })
 
     test('Then should render div with enterAddressManually class', () => {
-      expect(wrapper.find('.enterAddressManually').exists()).toBeTruthy()
+      expect(wrapper.find({ 'data-testing': 'checkoutEnterAddressManually' }).exists()).toBeTruthy()
     })
 
     describe('And user clicks on "Enter address manually"', () => {
@@ -66,7 +66,7 @@ describe('Given AddressOverhaul', () => {
         wrapper.setProps({
           onEnterAddressManuallyClick,
         })
-        wrapper.find('.editAddressLink').simulate('click')
+        wrapper.find({ 'data-testing': 'checkoutEnterAddressManually' }).simulate('click')
       })
 
       test('Then onEnterAddressManuallyClick should be called', () => {
