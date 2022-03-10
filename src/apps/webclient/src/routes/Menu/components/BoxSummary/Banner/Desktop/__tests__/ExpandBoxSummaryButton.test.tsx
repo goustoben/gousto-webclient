@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, ShallowWrapper } from 'enzyme'
 import { useSelector } from 'react-redux'
 import { MOBILE_VIEW, DESKTOP_VIEW } from 'utils/view'
 import { ExpandBoxSummaryButton, Contents } from '../ExpandBoxSummaryButton'
@@ -9,6 +9,8 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }))
+
+const mockedUseSelector = useSelector as jest.MockedFunction<typeof useSelector>
 
 const render = () =>
   shallow(
@@ -26,11 +28,11 @@ const render = () =>
   )
 
 describe('given ExpandBoxSummaryButton is rendered', () => {
-  let wrapper
+  let wrapper: ShallowWrapper<any, any>
 
   describe('when isSimplifyBasketBarEnabled is off', () => {
     beforeEach(() => {
-      useSelector.mockReturnValue(false)
+      mockedUseSelector.mockReturnValue(false)
       wrapper = render()
     })
 
@@ -42,7 +44,7 @@ describe('given ExpandBoxSummaryButton is rendered', () => {
 
   describe('when isSimplifyBasketBarEnabled is on', () => {
     beforeEach(() => {
-      useSelector.mockReturnValue(true)
+      mockedUseSelector.mockReturnValue(true)
       wrapper = render()
     })
 
@@ -67,7 +69,7 @@ describe('given ExpandBoxSummaryButton is rendered', () => {
 })
 
 describe('given ExpandBoxSummaryButton Contents is rendered', () => {
-  let wrapper
+  let wrapper: ShallowWrapper<any, any>
 
   beforeEach(() => {
     wrapper = shallow(

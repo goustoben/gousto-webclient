@@ -1,13 +1,15 @@
 import React from 'react'
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
 import { CheckoutCounter } from '../CheckoutCounter'
 
 describe('CheckoutCounter', () => {
   describe('when rendered', () => {
-    let rendered
+    let rendered: RenderResult
 
     beforeEach(() => {
-      rendered = render(<CheckoutCounter numRecipes={2} />)
+      rendered = render(
+        <CheckoutCounter isDisabled={false} isButtonHovered={false} numRecipes={2} />
+      )
     })
 
     test('then it renders correctly', () => {

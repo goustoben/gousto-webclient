@@ -1,8 +1,13 @@
 import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
-import { useSelector } from 'react-redux'
+import { useSelector, RootStateOrAny } from 'react-redux'
 import { getIsAuthenticated } from 'selectors/auth'
-import { useCheckoutPrices, useDiscountTip, createExtractDiscountFromStore } from '../utilHooks'
+import {
+  useCheckoutPrices,
+  useDiscountTip,
+  createExtractDiscountFromStore,
+  DiscountTuple,
+} from '../utilHooks'
 
 jest.mock('routes/Menu/domains/pricing', () => ({
   usePricing: jest.fn().mockReturnValue({
@@ -23,10 +28,12 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }))
 
+const mockedUseSelector = useSelector as jest.MockedFunction<typeof useSelector>
+
 describe('BoxSummary utilHooks', () => {
   describe('given createExtractDiscountFromStore is called', () => {
-    let selector
-    let state
+    let selector: (state: RootStateOrAny) => DiscountTuple
+    let state: RootStateOrAny
 
     beforeEach(() => {
       selector = createExtractDiscountFromStore('DTI-SB-6030')
@@ -71,7 +78,7 @@ describe('BoxSummary utilHooks', () => {
 
   describe('given useCheckoutPrices is invoked by a component', () => {
     beforeEach(() => {
-      useSelector.mockImplementation((selectorFn) => {
+      mockedUseSelector.mockImplementation((selectorFn) => {
         if (selectorFn === getIsAuthenticated) {
           return false
         } else {
@@ -95,7 +102,7 @@ describe('BoxSummary utilHooks', () => {
 
   describe('given useDiscountTip is invoked by a component', () => {
     beforeEach(() => {
-      useSelector.mockImplementation((selectorFn) => {
+      mockedUseSelector.mockImplementation((selectorFn) => {
         if (selectorFn === getIsAuthenticated) {
           return false
         } else {
@@ -112,7 +119,7 @@ describe('BoxSummary utilHooks', () => {
 
     describe('when the discount is flat', () => {
       beforeEach(() => {
-        useSelector.mockImplementation((selectorFn) => {
+        mockedUseSelector.mockImplementation((selectorFn) => {
           if (selectorFn === getIsAuthenticated) {
             return false
           } else {
@@ -130,7 +137,7 @@ describe('BoxSummary utilHooks', () => {
 
     describe('when there is no discount', () => {
       beforeEach(() => {
-        useSelector.mockImplementation((selectorFn) => {
+        mockedUseSelector.mockImplementation((selectorFn) => {
           if (selectorFn === getIsAuthenticated) {
             return false
           } else {

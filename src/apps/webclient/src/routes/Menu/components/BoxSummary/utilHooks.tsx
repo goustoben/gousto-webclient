@@ -34,12 +34,13 @@ const getPercentageOrAmountOff = (
   return pricing?.[flatDiscountApplied ? 'amountOff' : 'percentageOff']
 }
 
+export type DiscountTuple = [number, boolean]
 /**
  * Returns discount amount number and if flat discount enabled; e.g. [discountAmount, isDiscountFlat]
  */
 export const createExtractDiscountFromStore =
   (promoCode?: string | null) =>
-  (state: any): [number, boolean] => {
+  (state: any): DiscountTuple => {
     const promocodeDetails = state.promoStore?.getIn([promoCode, 'details'])
     const flatDiscount = promocodeDetails?.get('discount-whole-order-amount')
     const percentageDiscount = promocodeDetails?.get('discount-whole-order-percent')
