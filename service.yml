@@ -56,6 +56,7 @@ ecs:
 
 environments:
   - name: env-default
+    enableAlarms: true
     datadog: false
     ecs:
       memory: 512
