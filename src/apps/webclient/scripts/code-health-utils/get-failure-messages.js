@@ -1,5 +1,22 @@
-/* eslint-disable */
-const REGRESSION_THRESHOLD = 5;
+/**
+ * Coverage works like this:
+ * - new files start at 85% line coverage target
+ * - old files with bad coverage can't get any worse
+ * - old files with OK coverage can regress up to 5%, but only down to 50%
+ */
+function getTargetCoverage(previousCoverage) {
+  const startingTarget = 85
+  const lowerBound = 50
+  const acceptedRegression = 5
+
+  if (!previousCoverage) {
+    return startingTarget
+  } else if (previousCoverage < lowerBound) {
+    return previousCoverage
+  } else {
+    return Math.max(previousCoverage - acceptedRegression, lowerBound)
+  }
+}
 
 const getLintErrorFailureMessage = (benchmark, compare) => {
   // file not linted, skip
@@ -24,8 +41,8 @@ const getLintWarningFailureMessage = (benchmark, compare) => {
   // set threshold at 0 if we can't get an appropriate benchmark
   const threshold =
     (!benchmark || benchmark.warningCount === null)
-    ? 0
-    : benchmark.warningCount
+      ? 0
+      : benchmark.warningCount
 
   if (
     compare.warningCount === 0
@@ -49,31 +66,20 @@ const getCoverageFailureMessage = (benchmark, compare, filePath) => {
     return null
   }
 
-  const currentCoverage = (!benchmark || benchmark.coveragePercent === null) ? 0: benchmark.coveragePercent
+  const previousCoverage = (!benchmark || benchmark.coveragePercent === null) ? 0 : benchmark.coveragePercent
+  const targetThreshold = getTargetCoverage(previousCoverage)
 
-  // set threshold at 100 if we can't get an appropriate benchmark
-  const targetThreshold = (currentCoverage === 0) 
-    ? 100 
-    : (currentCoverage > REGRESSION_THRESHOLD) 
-      ? currentCoverage - REGRESSION_THRESHOLD 
-      : 0
-
-  if (
-    compare.coveragePercent === 100
-    || compare.coveragePercent >= targetThreshold
-  ) {
+  if (compare.coveragePercent >= targetThreshold) {
     return null
   }
- 
-  return `[test coverage] ${compare.coveragePercent.toFixed(2)}% covered (min ${targetThreshold.toFixed(2)}%, current ${currentCoverage.toFixed(2)}%)`
+
+  return `[test coverage] ${compare.coveragePercent.toFixed(2)}% covered (min ${targetThreshold.toFixed(2)}%, current ${previousCoverage.toFixed(2)}%)`
 }
 
-const getFailureMessages = (benchmark, compare, filePath) => {
-  return [
-    getLintErrorFailureMessage(benchmark, compare),
-    getLintWarningFailureMessage(benchmark, compare),
-    getCoverageFailureMessage(benchmark, compare, filePath)
-  ].filter(failure => failure !== null)
-}
+const getFailureMessages = (benchmark, compare, filePath) => [
+  getLintErrorFailureMessage(benchmark, compare),
+  getLintWarningFailureMessage(benchmark, compare),
+  getCoverageFailureMessage(benchmark, compare, filePath)
+].filter(failure => failure !== null)
 
 module.exports = getFailureMessages
