@@ -2,7 +2,7 @@
 @value S-600 #412DEE;
 @value S-400 #615CFF;
 
-.CheckoutCounter {
+.checkoutCounter {
   position: relative;
   height: 2rem;
   width: 2rem;
@@ -20,7 +20,7 @@
   }
 }
 
-.CheckoutCounterBackground {
+.checkoutCounterBackground {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -39,20 +39,20 @@
   opacity: 0.5;
 }
 
-.ScaleAndWiggleAnimation {
+.scaleAndWiggleAnimation {
   animation: counterScaleAndWiggle 1000ms ease-in-out;
 }
 
-.WiggleAnimation {
+.wiggleAnimation {
   animation: counterWiggle 1000ms ease-in-out;
 }
 
-.CheckoutCounterValue {
+.checkoutCounterValue {
   display: inline-block;
   position: relative;
 }
 
-.CheckoutCounter.Disabled .CheckoutCounterBackground {
+.checkoutCounter.isDisabled .checkoutCounterBackground {
   background: #AEB7C0;
 }
 

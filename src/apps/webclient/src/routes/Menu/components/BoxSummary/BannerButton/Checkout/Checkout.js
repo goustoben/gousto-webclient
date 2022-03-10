@@ -41,9 +41,10 @@ const Checkout = (props) => {
     orderSavePending ||
     loadingOrderPending ||
     menuFetchData
+  const numRecipes = basketSum(okRecipes(recipes, menuRecipes, stock, numPortions))
   const isDisabled =
     checkoutPending ||
-    basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum
+    numRecipes < config.minRecipesNum
 
   const handleClick = useCallback((e) => {
     e.stopPropagation()
@@ -77,7 +78,7 @@ const Checkout = (props) => {
         <>
           <div className={css.checkoutLabel}>Checkout</div>
           {shouldRenderCounter && (
-            <CheckoutCounter isDisabled={isDisabled} isButtonHovered={isButtonHovered} />
+            <CheckoutCounter isDisabled={isDisabled} isButtonHovered={isButtonHovered} numRecipes={numRecipes} />
           )}
         </>
       ) : (

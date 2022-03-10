@@ -1,5 +1,4 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { usePrevious } from 'react-use'
 import basketConfig from 'config/basket'
 import css from './CheckoutCounter.css'
@@ -15,45 +14,52 @@ export interface CheckoutCounterProps {
    */
   isDisabled?: boolean
   isButtonHovered: boolean
+  numRecipes?: number
 }
 
 /**
  * Displays animated square with active orders amount out of max orders (e.g. "3 / 4")
  */
-export const CheckoutCounter = ({ isDisabled = false, isButtonHovered }: CheckoutCounterProps) => {
-  const recipesAmount = useSelector((state: any) => state.basket.get('recipes').size)
-
+export const CheckoutCounter = ({
+  isDisabled = false,
+  isButtonHovered,
+  numRecipes,
+}: CheckoutCounterProps) => {
   const [shouldPlayAnimation, setShouldPlayAnimation] = useState<boolean>(false)
-  const oldCounterValue = usePrevious(recipesAmount)
-  const onAnimationEnd = useCallback(() => setShouldPlayAnimation(false), [])
+  const oldCounterValue = usePrevious(numRecipes)
+  const onAnimationEnd = useCallback(() => {
+    setShouldPlayAnimation(false)
+  }, [])
   useLayoutEffect(() => {
-    if (oldCounterValue !== recipesAmount) {
+    if (oldCounterValue !== numRecipes) {
       setShouldPlayAnimation(true)
     }
-  }, [oldCounterValue, recipesAmount])
+  }, [oldCounterValue, numRecipes])
 
   return (
     <div
-      className={classNames(css.CheckoutCounter, {
-        [css.Disabled]: isDisabled,
+      className={classNames(css.checkoutCounter, {
+        [css.isDisabled]: isDisabled,
       })}
     >
       <span
-        className={classNames(css.CheckoutCounterBackground, {
+        data-testid="CheckoutCounter_background"
+        className={classNames(css.checkoutCounterBackground, {
           [css.isButtonHovered]: isButtonHovered,
-          [css.ScaleAndWiggleAnimation]: shouldPlayAnimation,
+          [css.scaleAndWiggleAnimation]: shouldPlayAnimation,
         })}
         onAnimationEnd={onAnimationEnd}
       />
       <span
+        data-testid="CheckoutCounter_content"
         className={classNames({
-          [css.CheckoutCounterValue]: true,
-          [css.WiggleAnimation]: shouldPlayAnimation,
+          [css.checkoutCounterValue]: true,
+          [css.wiggleAnimation]: shouldPlayAnimation,
         })}
       >
-        {recipesAmount}
+        <span data-testid="CheckoutCounter_numRecipes">{numRecipes}</span>
         <span className={css.slash}>/</span>
-        {maxRecipes}
+        <span data-testid="CheckoutCounter_maxRecipes">{maxRecipes}</span>
       </span>
     </div>
   )

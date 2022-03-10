@@ -1,8 +1,6 @@
-import React from 'react'
 import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
 import { useSelector } from 'react-redux'
-import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
 import { getIsAuthenticated } from 'selectors/auth'
 import { useCheckoutPrices, useDiscountTip, createExtractDiscountFromStore } from '../utilHooks'
 

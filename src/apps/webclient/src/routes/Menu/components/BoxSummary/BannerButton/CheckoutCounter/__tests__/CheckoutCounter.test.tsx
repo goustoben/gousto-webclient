@@ -1,23 +1,36 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { useSelector } from 'react-redux'
+import { render, fireEvent, screen } from '@testing-library/react'
 import { CheckoutCounter } from '../CheckoutCounter'
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}))
-
 describe('CheckoutCounter', () => {
-  let wrapper
+  describe('when rendered', () => {
+    let rendered
 
-  beforeEach(() => {
-    useSelector.mockReturnValue(2)
-    wrapper = shallow(<CheckoutCounter />)
-  })
+    beforeEach(() => {
+      rendered = render(<CheckoutCounter numRecipes={2} />)
+    })
 
-  test('renders correctly', () => {
-    expect(wrapper.text()).toBe('2/4')
+    test('then it renders correctly', () => {
+      const { getByText } = rendered
+      expect(getByText('2')).toBeInTheDocument()
+      expect(getByText('/')).toBeInTheDocument()
+      expect(getByText('4')).toBeInTheDocument()
+    })
+
+    describe('when animation starts and ends', () => {
+      test('then it should assign and clear animation classes properly', () => {
+        expect(screen.getByTestId('CheckoutCounter_background')).toHaveClass(
+          'scaleAndWiggleAnimation'
+        )
+        expect(screen.getByTestId('CheckoutCounter_content')).toHaveClass('wiggleAnimation')
+
+        fireEvent.animationEnd(screen.getByTestId('CheckoutCounter_background'))
+
+        expect(screen.getByTestId('CheckoutCounter_background')).not.toHaveClass(
+          'scaleAndWiggleAnimation'
+        )
+        expect(screen.getByTestId('CheckoutCounter_content')).not.toHaveClass('wiggleAnimation')
+      })
+    })
   })
 })
