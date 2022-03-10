@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { TermsAndConditions } from 'routes/Checkout/Components/TermsAndConditions'
-import { Link } from '@gousto-internal/citrus-react'
+import Link from 'Link'
 
 describe('TermsAndConditions', () => {
   describe('rendering', () => {
@@ -11,8 +11,8 @@ describe('TermsAndConditions', () => {
       wrapper = shallow(<TermsAndConditions />)
     })
 
-    test('should render the terms and conditions message', () => {
-      expect(wrapper.text().includes('Terms and Conditions')).toBe(true)
+    test('should return <div> by default', () => {
+      expect(wrapper.type()).toEqual('div')
     })
 
     test('should contain 1 <Link> components(s)', () => {

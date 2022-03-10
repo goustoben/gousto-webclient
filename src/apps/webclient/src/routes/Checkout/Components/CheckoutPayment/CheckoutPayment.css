@@ -45,6 +45,25 @@
   composes: sectionContainer from '../../Checkout.css';
 }
 
+.paypalSetupBox {
+  display: flex;
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.25rem;
+  }
+}
+
+.paypalSetupInfo {
+}
+
+.padlockIcon {
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
 .bold {
   composes: fontBold from 'design-language/typography.css';
 }

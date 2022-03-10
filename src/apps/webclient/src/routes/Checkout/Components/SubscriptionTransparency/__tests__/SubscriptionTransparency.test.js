@@ -10,11 +10,8 @@ describe('SubscriptionTransparency', () => {
   })
 
   test('should be rendered properly', () => {
-    expect(
-      wrapper.text().includes('Skip a box or cancel your subscription online at anytime.')
-    ).toBe(true)
-
-    expect(wrapper.find({ 'data-testing': 'highlighted' }).exists()).toBeTruthy()
-    expect(wrapper.find({ 'data-testing': 'container' }).exists()).toBeTruthy()
+    expect(wrapper.find('.container').exists()).toBeTruthy()
+    expect(wrapper.find('.highlighted').exists()).toBeTruthy()
+    expect(wrapper.find('Svg').exists()).toBeTruthy()
   })
 })
