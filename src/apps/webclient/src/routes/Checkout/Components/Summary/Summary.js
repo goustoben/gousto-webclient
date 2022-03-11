@@ -5,7 +5,8 @@ import {
   Display,
   AlignItems,
   JustifyContent,
-  Heading1,
+  FontWeight,
+  FontFamily,
   Icon,
   IconVariant,
   Space,
@@ -49,17 +50,17 @@ class Summary extends PureComponent {
     const numRecipes = basketSum(basketRecipes)
 
     return (
-      <Box bg={Color.White} paddingH={6} paddingV={6} data-testing="checkoutOrderSummary">
-        <header>
-          <Heading1 size={4}>Order total</Heading1>
-        </header>
+      <Box bg={Color.White} paddingH={6} paddingV={6}>
+        <Text size={4} fontFamily={FontFamily.SemiBold} fontWeight={FontWeight.Bold}>
+          Order total
+        </Text>
         <Space size={4} direction="vertical" />
         {isLoading ? (
           <div className={css.loaderContainer}>
             <Loading className={css.loadingImage} />
           </div>
         ) : (
-          <>
+          <Box>
             <Box
               bg={Color.Success_50}
               borderColor={Color.Success_200}
@@ -78,11 +79,7 @@ class Summary extends PureComponent {
               </Text>
 
               <Space size={2} direction="horizontal" />
-              <PricePerServingMessage
-                isPriceInCheckout
-                fullPrice={prices?.pricePerPortion}
-                discountedPrice={prices?.pricePerPortionDiscounted}
-              />
+              <PricePerServingMessage isPriceInCheckout />
             </Box>
             <Space size={5} direction="vertical" />
             <Box>
@@ -102,7 +99,7 @@ class Summary extends PureComponent {
               />
               {showPromocode && <PromoCode />}
             </Box>
-          </>
+          </Box>
         )}
       </Box>
     )
