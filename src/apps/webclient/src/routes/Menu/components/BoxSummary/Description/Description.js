@@ -7,39 +7,40 @@ import basketConfig from 'config/basket'
 import { useCheckoutPrices, useDiscountTip } from 'routes/Menu/components/BoxSummary/utilHooks'
 import css from './Description.css'
 
-const freeDeliveryTip = '+ Free UK delivery'
-const sevenDaysAWeek = '7 days a week'
-const minRecipesToCheckout = basketConfig.minRecipesNum
-
-const Description = ({ numPortions, numRecipes, view, deliveryOptions, warning }) => {
-  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+const useSimplifyBasketBarContent = (canCheckout) => {
   const discountTip = useDiscountTip()
   const { isDiscountEnabled } = useCheckoutPrices()
 
-  if (isSimplifyBasketBarEnabled) {
-    const canCheckout = numRecipes >= minRecipesToCheckout
-
-    let content
-
-    if (canCheckout) {
-      if (isDiscountEnabled) {
-        content = discountTip
-      } else {
-        content = 'Free UK delivery'
-      }
-    } else if (isDiscountEnabled) {
-      content = freeDeliveryTip
+  let content
+  if (canCheckout) {
+    if (isDiscountEnabled) {
+      content = discountTip
     } else {
-      content = sevenDaysAWeek
+      content = 'Free UK delivery'
     }
+  } else {
+    if (isDiscountEnabled) {
+      content = '+ Free UK delivery'
+    } else {
+      content = '7 days a week'
+    }
+  }
+  return content
+}
 
+const Description = ({ numPortions, numRecipes, view, deliveryOptions, warning }) => {
+  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+  const canCheckout = numRecipes >= basketConfig.minRecipesNum
+  const simplifyBasketBarContent = useSimplifyBasketBarContent(canCheckout)
+
+  if (isSimplifyBasketBarEnabled) {
     return (
       <p
         className={classNames(css[`description${view}`], css.isSimplifyBasketBarEnabled, {
           [css.canCheckout]: canCheckout,
         })}
       >
-        {content}
+        {simplifyBasketBarContent}
       </p>
     )
   }
