@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { actionTypes } from 'actions/actionTypes'
+import { promoGet } from 'actions/promos'
 import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getPromoCode } from 'selectors/basket'
 import { HotjarTrigger } from 'components/HotjarTrigger'
 import { boxSummaryBannerPropTypes } from './propTypes'
 import { BoxSummaryDesktopBanner } from './Desktop/BoxSummaryDesktopBanner'
 import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
+
+import { createSelector } from 'reselect'
 
 const BoxSummaryBanner = ({
   date,
@@ -24,6 +29,14 @@ const BoxSummaryBanner = ({
   isBoxSummaryOpened,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+  const dispatch = useDispatch()
+  const promoCode = useSelector(getPromoCode)
+
+  useEffect(() => {
+    if (promoCode && isSimplifyBasketBarEnabled) {
+      dispatch(promoGet(promoCode))
+    }
+  }, [promoCode, isSimplifyBasketBarEnabled, dispatch])
 
   return (
     <section>

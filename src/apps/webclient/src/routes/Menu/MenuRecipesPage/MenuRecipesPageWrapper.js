@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import actions from 'actions'
 import { getUserId } from 'selectors/user'
 import { loadOptimizelySDK } from 'actions/optimizely'
-import { promoGet } from 'actions/promos'
-import { actionTypes } from 'actions/actionTypes'
-import { getBasketOrderId, getNumPortions, getPromoCode } from 'selectors/basket'
+import { getBasketOrderId, getNumPortions } from 'selectors/basket'
 import { useCurrentCollectionId } from '../domains/collections'
 
 import { checkQueryParams } from '../actions/menuRecipeDetails'
@@ -33,16 +31,12 @@ const MenuRecipesPageWrapper = (ownProps) => {
   const userId = useSelector(getUserId)
   const showCapacityInfo = useSelector(shouldShowCapacityInfo)
   const menuLoadingErrorMessage = useSelector(getMenuLoadingErrorMessage)
-  const promoCode = useSelector(getPromoCode)
-  const promoCodeFromPromoStore = useSelector(state => state.promoStore.get([promoCode]))
-  const promoGetPending = useSelector(state => state.pending.get(actionTypes.PROMO_GET))
   const actionDispatchers = bindActionCreators({
     checkQueryParams,
     basketOrderLoaded: actions.basketOrderLoaded,
     portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
     loadOptimizelySDK,
     fetchMenuData: fetchData,
-    promoGet,
   }, dispatch)
 
   return (
@@ -67,10 +61,6 @@ const MenuRecipesPageWrapper = (ownProps) => {
       portionSizeSelectedTracking={actionDispatchers.portionSizeSelectedTracking}
       loadOptimizelySDK={actionDispatchers.loadOptimizelySDK}
       fetchMenuData={actionDispatchers.fetchMenuData}
-      promoGet={actionDispatchers.promoGet}
-      promoCode={promoCode}
-      promoCodeFromPromoStore={promoCodeFromPromoStore}
-      promoGetPending={promoGetPending}
     />
   )
 }
