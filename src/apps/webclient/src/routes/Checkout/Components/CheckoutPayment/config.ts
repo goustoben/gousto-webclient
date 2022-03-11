@@ -1,4 +1,4 @@
-import { createClientConfig } from 'utils/clientConfig'
+import { createConfigMap } from 'utils/configMap'
 
 /**
  * These are PUBLIC keys which will be removed
@@ -26,4 +26,4 @@ export const formName = 'payment'
 export const sectionName = 'payment'
 export const deliveryAddressSectionName = 'delivery'
 
-export const getPublicKey = createClientConfig(checkoutPublicKeyMap, { defaultKey: 'staging' })
+export const getPublicKey = createConfigMap(checkoutPublicKeyMap, { defaultKey: 'staging' })

@@ -1,4 +1,5 @@
 import { isServer } from 'utils/serverEnvironment'
+import { getEnvConfig } from 'utils/processEnv'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 
@@ -64,6 +65,9 @@ function enableHmr() {
     app.use(middleware)
   })
 }
+
+// Warns if environment variables not set
+getEnvConfig((err) => logger.critical({ message: err }))
 
 app.use(sessionMiddleware())
 

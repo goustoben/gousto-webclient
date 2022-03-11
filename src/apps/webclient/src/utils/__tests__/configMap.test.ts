@@ -1,10 +1,10 @@
-import * as browserEnv from 'utils/browserEnvironment'
-import { createClientConfig } from '../clientConfig'
+import * as env from 'utils/isomorphicEnvironment'
+import { createConfigMap } from '../configMap'
 
-const getClientEnvironmentSpy = jest.spyOn(browserEnv, 'getClientEnvironment')
+const getClientEnvironmentSpy = jest.spyOn(env, 'getEnvironment')
 
 const createGetMockConfig = () =>
-  createClientConfig(
+  createConfigMap(
     {
       staging: 'staging-value',
       production: 'production-value',
@@ -13,14 +13,14 @@ const createGetMockConfig = () =>
     { defaultKey: 'default' }
   )
 
-let getMockConfig: ReturnType<typeof createClientConfig>
+let getMockConfig: ReturnType<typeof createConfigMap>
 
-describe('clientConfig utils', () => {
+describe('configMap utils', () => {
   beforeEach(() => {
     jest.resetAllMocks()
   })
 
-  describe('createClientConfig', () => {
+  describe('createConfigMap', () => {
     beforeEach(() => {
       getMockConfig = createGetMockConfig()
     })

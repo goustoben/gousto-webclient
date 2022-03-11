@@ -1,7 +1,7 @@
-import { envConfig } from '../../config/env'
+import { getEnvConfig } from '../../../src/utils/processEnv'
 import { getServerEnvironment } from '../serverEnvironment'
 
-jest.mock('../../config/env')
+jest.mock('../../../src/utils/processEnv')
 
 describe('serverEnvironment', () => {
   beforeEach(() => {
@@ -9,8 +9,8 @@ describe('serverEnvironment', () => {
   })
 
   describe('getServerEnvironment', () => {
-    test('returns ENVIRONMENT from envConfig', () => {
-      envConfig.ENVIRONMENT = 'test-environment'
+    test('returns ENVIRONMENT from getEnvConfig', () => {
+      (getEnvConfig as jest.Mock).mockReturnValue({ ENVIRONMENT: 'test-environment' })
 
       expect(getServerEnvironment()).toEqual('test-environment')
     })

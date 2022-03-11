@@ -1,20 +1,6 @@
 import type { FirstOfTuple, LastOfTuple } from './types/array'
 import type { Split } from './types/string'
-
-export type Protocol = 'http:' | 'https:'
-/**
- * Caters for the edge-case of directly accessing webclient/frontend via the ALB
- */
-type HostNames = 'webclient' | 'frontend'
-type SubDomain = 'www' | `${string}-www` | `${string}-${HostNames}` | 'frontend'
-type RootDomain = 'gousto'
-type TopLevelDomain = `.local:${number}` | '.info' | '.co.uk'
-export type Domain = `${RootDomain}${TopLevelDomain}`
-
-type WindowLocation = {
-  host: `${SubDomain}.${RootDomain}${TopLevelDomain}`
-  protocol: Protocol
-}
+import { Domain, WindowLocation } from './types/windowLocation'
 
 /**
  * Utility to enable easier testing of these utilities

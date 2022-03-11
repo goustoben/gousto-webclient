@@ -41,3 +41,4 @@ export const getEnvironment = createIsomorphicConfig({
 })
 
 export const isProd = () => getEnvironment() === 'production'
+export const isDev = () => getEnvironment() === 'local'

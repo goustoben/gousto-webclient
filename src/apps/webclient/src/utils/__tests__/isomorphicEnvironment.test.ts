@@ -1,4 +1,4 @@
-import { createIsomorphicConfig, getEnvironment, isProd } from 'utils/isomorphicEnvironment'
+import { createIsomorphicConfig, getEnvironment, isProd, isDev } from 'utils/isomorphicEnvironment'
 import { canUseWindow, getClientEnvironment } from 'utils/browserEnvironment'
 import { getServerEnvironment } from '../../../server/utils/serverEnvironment'
 
@@ -117,6 +117,44 @@ describe('isomorphicEnvironment utils', () => {
         mockGetServerEnvironment.mockReturnValue('not production')
 
         expect(isProd()).toEqual(false)
+      })
+    })
+  })
+
+  describe('isDev', () => {
+    describe('in the browser', () => {
+      beforeEach(() => {
+        mockCanUseWindow.mockReturnValue(true)
+      })
+
+      test('returns true if environment is local', () => {
+        mockGetClientEnvironment.mockReturnValue('local')
+
+        expect(isDev()).toEqual(true)
+      })
+
+      test('returns false if environment is not production', () => {
+        mockGetClientEnvironment.mockReturnValue('not local')
+
+        expect(isDev()).toEqual(false)
+      })
+    })
+
+    describe('in the server', () => {
+      beforeEach(() => {
+        mockCanUseWindow.mockReturnValue(false)
+      })
+
+      test('returns true if environment is production', () => {
+        mockGetServerEnvironment.mockReturnValue('local')
+
+        expect(isDev()).toEqual(true)
+      })
+
+      test('returns false if environment is not production', () => {
+        mockGetServerEnvironment.mockReturnValue('not local')
+
+        expect(isDev()).toEqual(false)
       })
     })
   })
