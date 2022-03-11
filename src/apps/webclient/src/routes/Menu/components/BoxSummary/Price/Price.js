@@ -9,7 +9,7 @@ import css from './Price.css'
 const Price = ({ recipeTotal, recipeDiscount, recipeTotalDiscounted }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
 
-  if (!(recipeTotal > 0)) {
+  if (recipeTotal === 0) {
     return (
       <div>
         £<span className={css.dash}>-</span>
