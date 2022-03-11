@@ -1,12 +1,4 @@
-import {
-  Box,
-  Space,
-  Text,
-  Display,
-  BorderStyle,
-  Color,
-  FontFamily,
-} from '@gousto-internal/citrus-react'
+import { Box, Space, Text, Display, BorderStyle, Color } from '@gousto-internal/citrus-react'
 
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
@@ -113,9 +105,10 @@ export class Delivery extends React.PureComponent {
 
     return (
       <Box display={Display.InlineFlex}>
-        <Text size={2}>Your selected delivery day is &nbsp;</Text>
-        <Text fontFamily={FontFamily.Bold}>{deliveryDate}</Text>
-        <Text size={2}>, {deliveryTime}</Text>
+        <Text size={2}>
+          Your selected delivery day is <span style={{ fontWeight: 'bold' }}>{deliveryDate}, </span>
+          <span style={{ textTransform: 'uppercase' }}>{deliveryTime}</span>
+        </Text>
       </Box>
     )
   }
