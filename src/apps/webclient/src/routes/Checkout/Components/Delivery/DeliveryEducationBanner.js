@@ -21,7 +21,6 @@ const DeliveryEducationBanner = () => (
       borderWidth={0.5}
       borderRadius={2}
       display="flex"
-      // AlignItems={AlignItems.Center}
       flexDirection="column"
     >
       <Box display="flex" AlignItems={AlignItems.Center}>

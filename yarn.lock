@@ -2156,9 +2156,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gousto-internal/citrus-react@npm:^0.14.0":
-  version: 0.14.1
-  resolution: "@gousto-internal/citrus-react@npm:0.14.1::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.14.1.tgz"
+"@gousto-internal/citrus-react@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "@gousto-internal/citrus-react@npm:0.16.0::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.16.0.tgz"
   dependencies:
     classnames: ^2.3.1
     focus-visible: ^5.2.0
@@ -2166,7 +2166,7 @@ __metadata:
     "@emotion/react": ^11.7.0
     react: ">=16"
     react-modal: ^3.14.3
-  checksum: 5e839cdb0fb7e83c06f5a1e8aab874bc9b2fa487f0f9b9f4a64859a7067f166373c44ea91aae50b98dfd617f021341b90acdf3eb9fbea0ad285861f1ebfcd244
+  checksum: 3cfb39ae6ac498f253219829709597e5a82e3027c92d92162186c72c52997f1bae7f9feabe1566c3a495877953392210e12ba79a8e9467e56e6dc5554ec037c0
   languageName: node
   linkType: hard
 
@@ -26253,7 +26253,7 @@ __metadata:
     "@datadog/browser-rum": ^3.8.0
     "@datadog/datadog-ci": ^0.17.12
     "@emotion/react": ^11.7.0
-    "@gousto-internal/citrus-react": ^0.14.0
+    "@gousto-internal/citrus-react": ^0.16.0
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@sheerun/mutationobserver-shim": ^0.3.3
