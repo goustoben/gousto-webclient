@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { getSlotTimes } from 'utils/deliveries'
 import { MOBILE_VIEW } from 'utils/view'
 
-import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { Tooltip } from 'goustouicomponents'
 import { RecipeListContainer } from '../../RecipeList'
 import { BannerButtonContainer } from '../../BannerButton'

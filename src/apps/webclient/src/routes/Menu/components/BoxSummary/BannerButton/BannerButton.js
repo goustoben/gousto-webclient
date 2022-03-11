@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import * as trackingKeys from 'actions/trackingKeys'
 import { isMobile } from 'utils/view'
-import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { CheckoutContainer } from './Checkout'
 import css from './BannerButton.css'
 

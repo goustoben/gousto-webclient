@@ -8,7 +8,7 @@ import { Spinner } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
 import { useDiscountTip } from 'routes/Menu/components/BoxSummary/utilHooks'
 import { useSelector } from 'react-redux'
-import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { Price } from '../Price'
 import css from './Title.css'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
-import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { DetailsCTAGroup } from '../../Details/DetailsCTAGroup/DetailsCTAGroup'
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
 import css from './BoxSummaryOverlayDesktop.css'

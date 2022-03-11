@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import basketConfig from 'config/basket'
 import { useCheckoutPrices, useDiscountTip } from 'routes/Menu/components/BoxSummary/utilHooks'
 import css from './Description.css'
@@ -18,13 +18,12 @@ const useSimplifyBasketBarContent = (canCheckout) => {
     } else {
       content = 'Free UK delivery'
     }
+  } else if (isDiscountEnabled) {
+    content = '+ Free UK delivery'
   } else {
-    if (isDiscountEnabled) {
-      content = '+ Free UK delivery'
-    } else {
-      content = '7 days a week'
-    }
+    content = '7 days a week'
   }
+
   return content
 }
 

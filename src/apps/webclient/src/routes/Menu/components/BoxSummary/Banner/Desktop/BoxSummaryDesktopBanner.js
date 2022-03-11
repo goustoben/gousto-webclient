@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Tooltip } from 'goustouicomponents'
 import { useSelector } from 'react-redux'
-import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { RecipeListContainer } from '../../RecipeList'
 import { BannerButtonContainer } from '../../BannerButton'
 import { BrowseCTAContainer } from '../../BrowseCTA'

@@ -138,8 +138,3 @@ export const getIsBackClosesModalEnabled = createSelector(
   getFeatures,
   features => features.getIn(['isBackClosesModalEnabled', 'value'], false)
 )
-
-export const getIsSimplifyBasketBarEnabled = createSelector(
-  getFeatures,
-  features => features.getIn(['isSimplifyBasketBarEnabled', 'value'], false)
-)

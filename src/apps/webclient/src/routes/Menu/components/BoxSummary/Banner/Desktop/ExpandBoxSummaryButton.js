@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import { MOBILE_VIEW } from 'utils/view'
-import { getIsSimplifyBasketBarEnabled } from 'selectors/features'
+import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 
 import { Button, Segment } from 'goustouicomponents'
 import { Title } from '../../Title'
