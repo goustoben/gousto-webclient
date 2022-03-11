@@ -1,4 +1,4 @@
-import { getClientEnvironment } from './browserEnvironment'
+import { getEnvironment } from './isomorphicEnvironment'
 
 type ClientConfigOptions<T> = {
   // eslint-disable-next-line no-unused-vars
@@ -18,7 +18,7 @@ type ClientConfigOptions<T> = {
  * @param configMap - config object, keyed by environment. i.e. `{ staging: 'my-value' }`
  * @param options.defaultKey - optional default config key
  */
-export const createClientConfig = <T extends Record<string, unknown>>(
+export const createConfigMap = <T extends Record<string, unknown>>(
   configMap: T,
   options: ClientConfigOptions<T> = {}
 ) => {
@@ -36,7 +36,7 @@ export const createClientConfig = <T extends Record<string, unknown>>(
       return memo
     }
 
-    const currentEnv = getClientEnvironment()
+    const currentEnv = getEnvironment()
     const configVal = currentEnv in configMap ? configMap[currentEnv as keyof T] : defaultVal
 
     memo = configVal

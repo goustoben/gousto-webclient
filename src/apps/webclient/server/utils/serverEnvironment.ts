@@ -1,4 +1,4 @@
-import { envConfig } from '../config/env'
+import { getEnvConfig } from '../../src/utils/processEnv'
 
 /**
  * Environment config getter for SERVER side environment
@@ -13,4 +13,8 @@ import { envConfig } from '../config/env'
  * })
  * ```
  */
-export const getServerEnvironment = () => envConfig.ENVIRONMENT
+export const getServerEnvironment = () => {
+  const { ENVIRONMENT } = getEnvConfig()
+
+  return ENVIRONMENT
+}

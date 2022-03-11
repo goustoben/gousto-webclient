@@ -1,19 +1,21 @@
 import { datadogLogs, LogsInitConfiguration } from '@datadog/browser-logs'
 import { datadogRum, RumInitConfiguration } from '@datadog/browser-rum'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 
-import { getClientEnvironment } from 'utils/browserEnvironment'
 import { Nullable } from '../../types'
 import { browserLogsConfig, RUMSDKConfig, DATADOG_ENABLED_ENVS } from './config'
 
 export const getIsDatadogEnabled = () => {
   let environment: Nullable<string>
 
+  if (!canUseWindow()) return false
+
   try {
     // Need to narrow this type so it doesn't potentially return null for lower environment
-    environment = getClientEnvironment()
-  } catch (e) {
-    // eslint-ignore-line no-empty
-  }
+    environment = getEnvironment()
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
 
   return DATADOG_ENABLED_ENVS.some((enabledEnv) => environment === enabledEnv)
 }
