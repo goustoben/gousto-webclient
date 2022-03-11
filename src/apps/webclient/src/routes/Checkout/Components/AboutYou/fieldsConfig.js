@@ -7,7 +7,7 @@ import css from './AboutYou.css'
 const passwordLabel = 'Password'
 const checkboxLabel = (trackPrivacyPolicyClick) => (
   <span>
-    I’d like to receive news and offers from Gousto in line with the&nbsp;
+    I’d like to receive news and offers in line with the&nbsp;
     <a
       href={client.privacyPolicy}
       className={css.privacyPolicyLink}

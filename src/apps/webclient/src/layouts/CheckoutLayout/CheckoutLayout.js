@@ -23,7 +23,7 @@ export class CheckoutLayout extends React.PureComponent {
 
         <div className={css.layoutContainer}>
           <div className={css.pageContainer}>
-            <Header simple />
+            {/* <Header simple /> */}
             {children}
           </div>
         </div>

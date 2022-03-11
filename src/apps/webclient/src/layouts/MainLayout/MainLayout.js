@@ -33,7 +33,15 @@ const defaultProps = {
 
 export class MainLayout extends React.Component {
   componentDidMount() {
-    const { disabled, isAuthenticated, orders, shippingAddresses, userClearData, userFetchShippingAddresses, userLoadOrders } = this.props
+    const {
+      disabled,
+      isAuthenticated,
+      orders,
+      shippingAddresses,
+      userClearData,
+      userFetchShippingAddresses,
+      userLoadOrders,
+    } = this.props
 
     if (!disabled) {
       if (isAuthenticated) {
@@ -50,7 +58,15 @@ export class MainLayout extends React.Component {
   }
 
   componentWillReceiveProps(nextProp) {
-    const { disabled, isAuthenticated, menuLoadBoxPrices, shippingAddresses, userClearData, userFetchShippingAddresses, userLoadOrders } = this.props
+    const {
+      disabled,
+      isAuthenticated,
+      menuLoadBoxPrices,
+      shippingAddresses,
+      userClearData,
+      userFetchShippingAddresses,
+      userLoadOrders,
+    } = this.props
 
     if (!nextProp.disabled && !disabled) {
       if (!isAuthenticated && nextProp.isAuthenticated) {
@@ -78,13 +94,15 @@ export class MainLayout extends React.Component {
     })
 
     return (
-      <Div className={footerBaseClass} backgroundColor="Coconut">
-        <MenuHeader />
+      <>
+        {/* <Div className={footerBaseClass} backgroundColor="Coconut">
+        <MenuHeader /> */}
         {children}
-        <Div className={classNames({ [css.pullUp]: route.withRecipeBar })}>
+        {/* <Div className={classNames({ [css.pullUp]: route.withRecipeBar })}>
           <Footer type={route.footerType} />
         </Div>
-      </Div>
+      </Div> */}
+      </>
     )
   }
 }

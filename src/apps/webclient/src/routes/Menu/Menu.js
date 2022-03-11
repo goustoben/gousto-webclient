@@ -40,7 +40,7 @@ class Menu extends React.PureComponent {
       menuLoadBoxPrices,
       menuCalculateTimeToUsable,
       fetchData,
-      applyPromoCodeAndShowModal
+      applyPromoCodeAndShowModal,
     } = this.props
 
     const forceDataLoad = Boolean(query.reload)
@@ -73,7 +73,16 @@ class Menu extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { menuLoadBoxPrices, tariffId, params, query, isAuthenticated, fetchData, disabled, menuLoadingBoxPrices } = this.props
+    const {
+      menuLoadBoxPrices,
+      tariffId,
+      params,
+      query,
+      isAuthenticated,
+      fetchData,
+      disabled,
+      menuLoadingBoxPrices,
+    } = this.props
     const isAdminQuery = !!(query && query['preview[auth_user_id]'])
 
     if (!disabled && !menuLoadingBoxPrices && prevProps.tariffId !== tariffId) {
@@ -113,7 +122,7 @@ class Menu extends React.PureComponent {
           <DetailRecipeMetaContainer query={query} />
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
-            <p className={css.legal}>{menu.legal}</p>
+            {/* <p className={css.legal}>{menu.legal}</p> */}
             <div
               className={showOverlay ? css.greyOverlayShow : css.greyOverlay}
               onClick={onOverlayClick}
