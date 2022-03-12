@@ -6,6 +6,7 @@ import config from 'config/recipes'
 import actions from 'actions'
 import { useBasket } from 'routes/Menu/domains/basket'
 import { useStock } from 'routes/Menu/domains/menu'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { Surcharge } from './Surcharge'
@@ -31,22 +32,31 @@ export const RecipeDetailsButtons = ({
   const { numPortions, reachedLimit, getQuantitiesForRecipeId, canAddRecipes } = useBasket()
   const { getStockForRecipe } = useStock()
   const surchargePerPortion = useSurchargePerPortion({ recipeId, numPortions })
-
+  const isCloseModalOnAddRecipeEnabled = useIsOptimizelyFeatureEnabled(
+    'beetroots_is_close_modal_on_add_recipe_enabled'
+  )
   const stock = getStockForRecipe(recipeId)
   const qty = getQuantitiesForRecipeId(recipeId)
 
-  const handleAdd = useCallback(() => {
-    if (stock !== null && canAddRecipes) {
-      dispatch(basketRecipeAdd(recipeId, view, { position }))
-    } else if (config.recipeDetailViews.includes(view)) {
-      dispatch(menuRecipeDetailVisibilityChange())
-      setTimeout(() => {
+  const handleAdd = useCallback(
+    (isFirstInBatchOfSameRecipes: boolean) => {
+      if (stock !== null && canAddRecipes) {
+        dispatch(basketRecipeAdd(recipeId, view, { position }))
+
+        if (isCloseModalOnAddRecipeEnabled && isFirstInBatchOfSameRecipes) {
+          dispatch(menuRecipeDetailVisibilityChange())
+        }
+      } else if (config.recipeDetailViews.includes(view)) {
+        dispatch(menuRecipeDetailVisibilityChange())
+        setTimeout(() => {
+          dispatch(actions.menuBrowseCTAVisibilityChange(true))
+        }, 500)
+      } else {
         dispatch(actions.menuBrowseCTAVisibilityChange(true))
-      }, 500)
-    } else {
-      dispatch(actions.menuBrowseCTAVisibilityChange(true))
-    }
-  }, [dispatch, stock, canAddRecipes, recipeId, view, position])
+      }
+    },
+    [dispatch, stock, canAddRecipes, recipeId, view, position, isCloseModalOnAddRecipeEnabled]
+  )
 
   const handleRemove = useCallback(() => {
     dispatch(basketRecipeRemove(recipeId, view, position))
@@ -75,7 +85,7 @@ export const RecipeDetailsButtons = ({
         </Segment>,
         <Segment
           key={2}
-          onClick={handleAdd}
+          onClick={() => handleAdd(false)}
           size="small"
           disabled={disabled}
           className={segmentSelectedClass}
@@ -88,7 +98,9 @@ export const RecipeDetailsButtons = ({
 
     return (
       <Segment
-        onClick={handleAdd}
+        onClick={() => {
+          handleAdd(true)
+        }}
         disabled={disabled}
         fill
         className={getSurchargeGridClass('segment', 'sentenceCaseSegment')}
