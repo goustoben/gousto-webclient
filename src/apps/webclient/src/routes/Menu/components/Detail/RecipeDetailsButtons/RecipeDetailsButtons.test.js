@@ -6,9 +6,52 @@ import * as Basket from 'routes/Menu/domains/basket'
 import * as Menu from 'routes/Menu/domains/menu'
 import * as Auth from 'routes/Menu/domains/auth'
 import actions from 'actions'
+import * as OptimizelyRollouts from 'containers/OptimizelyRollouts'
 import * as UseSurchargePerPortion from './useSurchargePerPortion'
 import * as BasketActions from '../../../actions/basketRecipes'
+import * as MenuRecipeDetailsActions from '../../../actions/menuRecipeDetails'
 import { RecipeDetailsButtons } from './RecipeDetailsButtons'
+
+const mockUp = ({
+  numPortions = 2,
+  reachedLimit = false,
+  canAddRecipes = true,
+  quantity = 0,
+  stockLevel = 1000,
+  isAdmin = false,
+  surchargePerPortion = null,
+  isCloseModalOnAddRecipeEnabled = false,
+} = {}) => {
+  const dispatch = jest.fn()
+
+  jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
+  jest.spyOn(Basket, 'useBasket').mockImplementation(() => ({
+    numPortions,
+    reachedLimit,
+    canAddRecipes,
+    getQuantitiesForRecipeId: () => quantity,
+  }))
+  jest.spyOn(Menu, 'useStock').mockImplementation(() => ({
+    getStockForRecipe: () => stockLevel,
+  }))
+  jest.spyOn(Auth, 'useAuth').mockImplementation(() => ({ isAdmin }))
+  jest.spyOn(UseSurchargePerPortion, 'useSurchargePerPortion').mockImplementation(() => surchargePerPortion)
+
+  const basketRecipeAdd = jest.fn()
+  jest.spyOn(BasketActions, 'basketRecipeAdd').mockImplementation(basketRecipeAdd)
+
+  const basketRecipeRemove = jest.fn()
+  jest.spyOn(BasketActions, 'basketRecipeRemove').mockImplementation(basketRecipeRemove)
+
+  const menuBrowseCTAVisibilityChange = jest.fn()
+  jest.spyOn(actions, 'menuBrowseCTAVisibilityChange').mockImplementation(menuBrowseCTAVisibilityChange)
+
+  jest.spyOn(OptimizelyRollouts, 'useIsOptimizelyFeatureEnabled').mockReturnValue(isCloseModalOnAddRecipeEnabled)
+
+  jest.spyOn(MenuRecipeDetailsActions, 'menuRecipeDetailVisibilityChange')
+
+  return {dispatch, basketRecipeAdd, basketRecipeRemove, menuBrowseCTAVisibilityChange}
+}
 
 describe('the RecipeDetailsButtons component', () => {
   let wrapper
@@ -211,6 +254,26 @@ describe('the RecipeDetailsButtons component', () => {
               )
             })
           })
+
+          describe('when beetroots_is_close_modal_on_add_recipe_enabled is on', () => {
+            let basketRecipeAdd
+
+            beforeEach(() => {
+              ({basketRecipeAdd} = mockUp({ isCloseModalOnAddRecipeEnabled: true }))
+              wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
+            })
+
+            test('then it adds the recipe and closes the recipe details modal', () => {
+              buttonContent = wrapper.find('Segment').first()
+              buttonContent.simulate('click')
+              expect(basketRecipeAdd).toHaveBeenCalledWith(
+                recipeId,
+                view,
+                { position, score }
+              )
+              expect(MenuRecipeDetailsActions.menuRecipeDetailVisibilityChange).toHaveBeenCalled()
+            })
+          })
         })
       })
 
@@ -346,39 +409,3 @@ describe('the RecipeDetailsButtons component', () => {
     })
   })
 })
-
-const mockUp = ({
-  numPortions = 2,
-  reachedLimit = false,
-  canAddRecipes = true,
-  quantity = 0,
-  stockLevel = 1000,
-  isAdmin = false,
-  surchargePerPortion = null,
-} = {}) => {
-  const dispatch = jest.fn()
-
-  jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
-  jest.spyOn(Basket, 'useBasket').mockImplementation(() => ({
-    numPortions,
-    reachedLimit,
-    canAddRecipes,
-    getQuantitiesForRecipeId: () => quantity,
-  }))
-  jest.spyOn(Menu, 'useStock').mockImplementation(() => ({
-    getStockForRecipe: () => stockLevel,
-  }))
-  jest.spyOn(Auth, 'useAuth').mockImplementation(() => ({ isAdmin }))
-  jest.spyOn(UseSurchargePerPortion, 'useSurchargePerPortion').mockImplementation(() => surchargePerPortion)
-
-  const basketRecipeAdd = jest.fn()
-  jest.spyOn(BasketActions, 'basketRecipeAdd').mockImplementation(basketRecipeAdd)
-
-  const basketRecipeRemove = jest.fn()
-  jest.spyOn(BasketActions, 'basketRecipeRemove').mockImplementation(basketRecipeRemove)
-
-  const menuBrowseCTAVisibilityChange = jest.fn()
-  jest.spyOn(actions, 'menuBrowseCTAVisibilityChange').mockImplementation(menuBrowseCTAVisibilityChange)
-
-  return {dispatch, basketRecipeAdd, basketRecipeRemove, menuBrowseCTAVisibilityChange}
-}
