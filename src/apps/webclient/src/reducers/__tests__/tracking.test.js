@@ -7,7 +7,8 @@ describe('tracking reducers', () => {
     asource: undefined,
     utmSource: undefined,
     awc: '',
-    tapjoy: '',
+    tapjoyTransactionId: '',
+    tapjoyPublisherId: '',
   })
 
   describe('tracking', () => {
@@ -39,7 +40,8 @@ describe('tracking reducers', () => {
         asource: 'something',
         utmSource: undefined,
         awc: '',
-        tapjoy: '',
+        tapjoyTransactionId: '',
+        tapjoyPublisherId: '',
       })
 
       const result = trackingReducers.tracking(state, action)
@@ -57,7 +59,8 @@ describe('tracking reducers', () => {
         asource: undefined,
         utmSource: 'google.com',
         awc: '',
-        tapjoy: '',
+        tapjoyTransactionId: '',
+        tapjoyPublisherId: '',
       })
 
       const result = trackingReducers.tracking(state, action)
@@ -75,7 +78,8 @@ describe('tracking reducers', () => {
         asource: undefined,
         utmSource: undefined,
         awc: '5070-awin-click-checksum',
-        tapjoy: '',
+        tapjoyTransactionId: '',
+        tapjoyPublisherId: '',
       })
 
       const result = trackingReducers.tracking(state, action)
@@ -83,17 +87,19 @@ describe('tracking reducers', () => {
       expect(Immutable.is(expected, result)).toEqual(true)
     })
 
-    test('should handle SET_TAPJOY_TRANSACTION_ID action types', () => {
+    test('should handle SET_TAPJOY_DATA action types', () => {
       const state = undefined
       const action = {
-        type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
+        type: actionTypes.SET_TAPJOY_DATA,
         transactionId: 'fake_transaction_id',
+        publisherId: 'fake_publisher_id',
       }
       const expected = Immutable.Map({
         asource: undefined,
         utmSource: undefined,
         awc: '',
-        tapjoy: 'fake_transaction_id',
+        tapjoyTransactionId: 'fake_transaction_id',
+        tapjoyPublisherId: 'fake_publisher_id',
       })
 
       const result = trackingReducers.tracking(state, action)

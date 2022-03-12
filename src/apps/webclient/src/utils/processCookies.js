@@ -7,7 +7,7 @@ import { featuresSet } from 'actions/features'
 import { promoAgeVerify } from 'actions/promos'
 import authActions from 'actions/auth'
 import { cookiePolicyAcceptanceChange } from 'actions/cookies'
-import { setAffiliateSource, setAwinClickChecksum, setTapjoyTransactionId } from 'actions/tracking'
+import { setAffiliateSource, setAwinClickChecksum, setTapjoyData } from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
 import { initSelectedRecipeVariantAction } from 'routes/Menu/actions/menuRecipeDetails'
@@ -27,6 +27,7 @@ const processCookies = (cookies, store) => {
   let affiliateSource = cookies.get('asource')
   let awc = cookies.get('awc')
   let tapjoyTransactionId = ''
+  let tapjoyPublisherId = ''
 
   try {
     const refreshCookie = get(cookies, 'oauth_refresh')
@@ -77,7 +78,7 @@ const processCookies = (cookies, store) => {
   const boxId = getCookieStoreValue(cookies, 'basket_boxId')
   const numPortions = getCookieStoreValue(cookies, 'basket_numPortions')
   const numRecipes = getCookieStoreValue(cookies, 'basket_numRecipes')
-  let recipes = getCookieStoreValue(cookies, 'basket_recipes')
+  const recipes = getCookieStoreValue(cookies, 'basket_recipes')
   const stepsOrder = getCookieStoreValue(cookies, 'basket_stepsOrder')
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
   const subscriptionOption = getCookieStoreValue(cookies, 'basket_subscriptionOption')
@@ -137,7 +138,8 @@ const processCookies = (cookies, store) => {
       tracking = JSON.parse(tracking)
       affiliateSource = tracking.asource || affiliateSource
       awc = tracking.awc || awc
-      tapjoyTransactionId = tracking.tapjoy || tapjoyTransactionId
+      tapjoyTransactionId = tracking.tapjoyTransactionId || tapjoyTransactionId
+      tapjoyPublisherId = tracking.tapjoyPublisherId || tapjoyPublisherId
     } catch (err) {
       logger.error({ message: 'error parsing tracking cookie value', errors: [err] })
     }
@@ -151,8 +153,8 @@ const processCookies = (cookies, store) => {
     store.dispatch(setAwinClickChecksum(awc))
   }
 
-  if (tapjoyTransactionId) {
-    store.dispatch(setTapjoyTransactionId(tapjoyTransactionId))
+  if (tapjoyTransactionId && tapjoyPublisherId) {
+    store.dispatch(setTapjoyData(tapjoyTransactionId, tapjoyPublisherId))
   }
 
   if (promoCodeUrl) {
@@ -196,12 +198,14 @@ const processCookies = (cookies, store) => {
     if (numPortions) {
       store.dispatch(basketNumPortionChange(numPortions))
     }
+
     if (numRecipes) {
       store.dispatch(basketSetNumRecipes(numRecipes))
     }
 
-    recipes = recipes ? JSON.parse(recipes) : {}
-    store.dispatch(basketRecipesInitialise(recipes))
+    if (recipes) {
+      store.dispatch(basketRecipesInitialise(JSON.parse(recipes)))
+    }
   }
 
   if (features) {

@@ -12,7 +12,7 @@ import {
   trackUTMAndPromoCode,
   trackCheckoutError,
   trackSubscriptionCreated,
-  clearTapjoy,
+  clearTapjoyData,
 } from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
 import statusActions from 'actions/status'
@@ -74,7 +74,7 @@ jest.mock('actions/tracking', () => ({
   trackUTMAndPromoCode: jest.fn(() => ({ type: 'trackUTMAndPromoCode' })),
   trackCheckoutError: jest.fn(() => ({ type: 'trackCheckoutError' })),
   trackSubscriptionCreated: jest.fn(() => ({ type: 'trackSubscriptionCreated' })),
-  clearTapjoy: jest.fn(),
+  clearTapjoyData: jest.fn(),
 }))
 jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
@@ -863,10 +863,10 @@ describe('checkout actions', () => {
       })
     })
 
-    test('should call clearTapjoy', () => {
+    test('should call clearTapjoyData', () => {
       trackPurchase({ orderId, pricing })(dispatch, getState)
 
-      expect(clearTapjoy).toHaveBeenCalled()
+      expect(clearTapjoyData).toHaveBeenCalled()
     })
   })
 

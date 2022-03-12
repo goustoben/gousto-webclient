@@ -82,12 +82,13 @@ export const setAwinClickChecksum = (awc) => (
   }
 )
 
-export const setTapjoyTransactionId = (transactionId) => ({
-  type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
+export const setTapjoyData = (transactionId, publisherId) => ({
+  type: actionTypes.SET_TAPJOY_DATA,
   transactionId,
+  publisherId,
 })
 
-export const clearTapjoy = () => setTapjoyTransactionId('')
+export const clearTapjoyData = () => setTapjoyData('', '')
 
 export const trackAffiliatePurchase = ({
   orderId,
@@ -100,7 +101,8 @@ export const trackAffiliatePurchase = ({
     const awinEnabled = !!(canUseWindow() && window.AWIN)
     const { tracking } = getState()
     const awc = tracking.get('awc')
-    const tapjoy = tracking.get('tapjoy')
+    const tapjoyTransactionId = tracking.get('tapjoyTransactionId')
+    const tapjoyPublisherId = tracking.get('tapjoyPublisherId')
     let sendData = false
 
     if (!orderId) {
@@ -163,10 +165,11 @@ export const trackAffiliatePurchase = ({
       }
     }
 
-    if (isSignup && tapjoy) {
+    if (isSignup && tapjoyTransactionId && tapjoyPublisherId) {
       sendData = true
       request.tapjoy = {
-        transaction_id: tapjoy
+        transaction_id: tapjoyTransactionId,
+        publisher_id: tapjoyPublisherId,
       }
     }
 
