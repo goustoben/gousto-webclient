@@ -43,7 +43,7 @@ export const getPayPalPaymentDetails = state => ({
 
 export const getPaymentAuthData = (state, { pricing }) => {
   const { success, failure } = routes.client.payment
-  const total = pricing.total || 0
+  const total = (pricing && pricing.total) || 0
   const amountInPence = Math.round(total * 100)
 
   return {
