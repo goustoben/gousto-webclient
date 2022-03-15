@@ -12,7 +12,9 @@ module.exports = {
     orderANewBox(browser)
 
     browser.end()
-  }
+  },
+
+  tags: ['criticalUserJourney'],
 }
 
 function continueSignUpWithACreditCard(browser) {

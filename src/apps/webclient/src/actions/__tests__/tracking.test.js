@@ -8,8 +8,8 @@ import {
   trackRecipeOrderDisplayed,
   trackUserAttributes,
   setUTMSource,
-  setTapjoyTransactionId,
-  clearTapjoy,
+  setTapjoyData,
+  clearTapjoyData,
   trackGetStarted,
   trackSubmitOrderEvent,
   trackUTMAndPromoCode,
@@ -366,10 +366,11 @@ describe('tracking actions', () => {
       global.AWIN = { ...AWIN }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue({
-        tracking: Immutable.fromJS({
+        tracking: Immutable.Map({
           asource: 'test-source',
           awc: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
-          tapjoy: 'fake_transaction_id',
+          tapjoyTransactionId: 'fake_transaction_id',
+          tapjoyPublisherId: 'fake_publisher_id',
         })
       })
       jest.clearAllMocks()
@@ -490,8 +491,9 @@ describe('tracking actions', () => {
       describe('when Tapjoy transaction id is not provided', () => {
         beforeEach(() => {
           getState = jest.fn().mockReturnValue({
-            tracking: Immutable.fromJS({
-              tapjoy: '',
+            tracking: Immutable.Map({
+              tapjoyTransactionId: '',
+              tapjoyPublisherId: '',
             })
           })
         })
@@ -507,7 +509,8 @@ describe('tracking actions', () => {
 
           expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
             tapjoy: {
-              transaction_id: expect.any(String)
+              transaction_id: expect.any(String),
+              publisher_id: expect.any(String),
             }
           }))
         })
@@ -525,7 +528,8 @@ describe('tracking actions', () => {
 
           expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
             tapjoy: {
-              transaction_id: expect.any(String)
+              transaction_id: expect.any(String),
+              publisher_id: expect.any(String),
             }
           }))
         })
@@ -547,6 +551,7 @@ describe('tracking actions', () => {
             },
             tapjoy: {
               transaction_id: 'fake_transaction_id',
+              publisher_id: 'fake_publisher_id',
             },
           }))
         })
@@ -627,34 +632,37 @@ describe('tracking actions', () => {
     })
   })
 
-  describe('setTapjoyTransactionId', () => {
+  describe('setTapjoyData', () => {
     beforeEach(() => {
       const state = {
-        tracking: Immutable.fromJS({
-          tapjoy: ''
+        tracking: Immutable.Map({
+          tapjoyTransactionId: '',
+          tapjoyPublisherId: '',
         })
       }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
     })
 
-    test('then should dispatch SET_TAPJOY_TRANSACTION_ID action', () => {
+    test('then should dispatch SET_TAPJOY_DATA action', () => {
       const expected = {
-        type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
-        transactionId: 'fake_transaction_id'
+        type: actionTypes.SET_TAPJOY_DATA,
+        transactionId: 'fake_transaction_id',
+        publisherId: 'fake_publisher_id',
       }
 
-      const result = setTapjoyTransactionId('fake_transaction_id')
+      const result = setTapjoyData('fake_transaction_id', 'fake_publisher_id')
 
       expect(result).toEqual(expected)
     })
   })
 
-  describe('clearTapjoy', () => {
+  describe('clearTapjoyData', () => {
     beforeEach(() => {
       const state = {
-        tracking: Immutable.fromJS({
-          tapjoy: ''
+        tracking: Immutable.Map({
+          tapjoyTransactionId: '',
+          tapjoyPublisherId: '',
         })
       }
       dispatch = jest.fn((fn) => {
@@ -665,13 +673,14 @@ describe('tracking actions', () => {
       getState = jest.fn().mockReturnValue(state)
     })
 
-    test('then should dispatch SET_TAPJOY_TRANSACTION_ID action with empty value', () => {
+    test('then should dispatch SET_TAPJOY_DATA action with empty value', () => {
       const expected = {
-        type: actionTypes.SET_TAPJOY_TRANSACTION_ID,
-        transactionId: ''
+        type: actionTypes.SET_TAPJOY_DATA,
+        transactionId: '',
+        publisherId: '',
       }
 
-      const result = clearTapjoy()
+      const result = clearTapjoyData()
 
       expect(result).toEqual(expected)
     })

@@ -50,7 +50,7 @@ import {
   trackUTMAndPromoCode,
   trackCheckoutError,
   trackSubscriptionCreated,
-  clearTapjoy,
+  clearTapjoyData,
 } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
@@ -351,7 +351,7 @@ export const trackPurchase = ({ orderId, pricing }) => (
       promoCode,
       isSignup: true,
     }))
-    dispatch(clearTapjoy())
+    dispatch(clearTapjoyData())
   }
 )
 

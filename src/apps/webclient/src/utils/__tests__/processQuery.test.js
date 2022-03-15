@@ -4,7 +4,7 @@ import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
-import { setAffiliateSource, setTapjoyTransactionId } from 'actions/tracking'
+import { setAffiliateSource, setTapjoyData } from 'actions/tracking'
 import axe from '@axe-core/react'
 
 jest.mock('actions/signup',() => ({
@@ -17,7 +17,7 @@ jest.mock('actions/basket',() => ({
 
 jest.mock('actions/tracking',() => ({
   setAffiliateSource: jest.fn(),
-  setTapjoyTransactionId: jest.fn(),
+  setTapjoyData: jest.fn(),
 }))
 
 jest.mock('actions/promos',() => ({
@@ -184,14 +184,16 @@ describe('Given processQuery util function', () => {
   describe('when sid parameter is supplied', () => {
     beforeEach(() => {
       query = {
-        sid: 'tapjoy',
+        sid: 'Tapjoy',
         tapjoy_transaction_id: 'fake_transaction_id',
+        tapjoy_publisher_id: 'fake_publisher_id',
       }
+
       processQuery(query, mockStore, {})
     })
 
-    test('then should dispatch setTapjoyTransactionId', () => {
-      expect(setTapjoyTransactionId).toHaveBeenCalledWith('fake_transaction_id')
+    test('then should dispatch setTapjoyData', () => {
+      expect(setTapjoyData).toHaveBeenCalledWith('fake_transaction_id', 'fake_publisher_id')
     })
   })
 })

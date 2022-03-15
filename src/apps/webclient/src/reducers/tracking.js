@@ -1,11 +1,12 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 
-const initialState = Immutable.fromJS({
+const initialState = Immutable.Map({
   asource: undefined,
   utmSource: undefined,
   awc: '',
-  tapjoy: '',
+  tapjoyTransactionId: '',
+  tapjoyPublisherId: '',
 })
 
 export const trackingReducers = {
@@ -23,8 +24,11 @@ export const trackingReducers = {
       return state.set('awc', action.awc)
     }
 
-    case actionTypes.SET_TAPJOY_TRANSACTION_ID: {
-      return state.set('tapjoy', action.transactionId)
+    case actionTypes.SET_TAPJOY_DATA: {
+      return state.merge({
+        tapjoyTransactionId: action.transactionId,
+        tapjoyPublisherId: action.publisherId,
+      })
     }
 
     default: {

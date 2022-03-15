@@ -275,6 +275,25 @@ describe('payment selectors', () => {
         expect(result).toEqual(expected)
       })
     })
+    describe('when price is null', () => {
+      test('then should set price as 0', () => {
+        const pricing = null
+        const expected = {
+          order_id: 'fake-order-id',
+          gousto_ref: 'fake-gousto-ref',
+          card_token: 'test-token',
+          amount: 0,
+          '3ds': true,
+          success_url: `http://localhost${routes.client.payment.success}`,
+          failure_url: `http://localhost${routes.client.payment.failure}`,
+          decoupled: true
+        }
+
+        const result = getPaymentAuthData(state, { pricing })
+
+        expect(result).toEqual(expected)
+      })
+    })
   })
 
   describe('given getPaymentData method', () => {
