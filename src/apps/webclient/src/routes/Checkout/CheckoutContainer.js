@@ -31,6 +31,7 @@ function mapStateToProps(state, ownProps) {
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
 }
+
 const CheckoutPure = (props) => {
   const { pricing } = usePricing()
   const submitOrder = useSubmitOrder()

@@ -79,8 +79,10 @@ class CheckoutPayment extends React.Component {
       trackingOrderPlaceAttemptSucceeded,
       currentPaymentMethod,
       submitOrder,
-      pricing,
+      pricingHookResponse,
     } = this.props
+
+    const { pricing } = pricingHookResponse
 
     trackingOrderPlaceAttempt({ pricing })
 
@@ -185,8 +187,11 @@ class CheckoutPayment extends React.Component {
   }
 
   renderStartYourSubscriptionButton = () => {
-    const { isPayPalReady, currentPaymentMethod } = this.props
-    const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : false
+    const { pricingHookResponse, isPayPalReady, currentPaymentMethod } = this.props
+
+    const { isPending } = pricingHookResponse
+
+    const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : isPending
 
     return <SubmitButton onClick={this.handleClick} isDisabled={isDisabled} />
   }
@@ -314,7 +319,7 @@ CheckoutPayment.propTypes = {
   hotjarTriggerName: PropTypes.string,
   isGoustoOnDemandEnabled: PropTypes.bool,
   isFreeBox: PropTypes.bool,
-  pricing: PropTypes.object,
+  pricingHookResponse: PropTypes.object,
 }
 
 CheckoutPayment.defaultProps = {
@@ -342,7 +347,8 @@ CheckoutPayment.defaultProps = {
   hotjarTriggerName: '',
   isGoustoOnDemandEnabled: false,
   isFreeBox: false,
-  pricing: {},
+  // eslint-disable-next-line react/forbid-prop-types
+  pricingHookResponse: {},
 }
 
 export { CheckoutPayment }
