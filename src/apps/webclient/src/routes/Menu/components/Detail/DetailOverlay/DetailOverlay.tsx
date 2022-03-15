@@ -8,7 +8,6 @@ import Modal from 'Modal'
 import { getMenuRecipeIdForDetails } from '../../../selectors/menuRecipeDetails'
 import { getBrowserType } from '../../../../../selectors/browser'
 import { getRecipePosition } from '../../../../../selectors/collections'
-import { getIsBackClosesModalEnabled } from '../../../../../selectors/features'
 import { getNumPortions } from '../../../../../selectors/basket'
 import { getRecipes } from '../../../../../selectors/root'
 
@@ -31,7 +30,6 @@ const DetailOverlay = ({
   const menuRecipeDetailShow = recipeId || ''
   const position = useSelector((state) => getRecipePosition(state, recipeId)) || null
   const browserType = useSelector(getBrowserType)
-  const isBackClosesModalEnabled = useSelector(getIsBackClosesModalEnabled)
   const recipesStore = useSelector(getRecipes)
   const numPortions = useSelector(getNumPortions)
   const detailRecipe = recipesStore.get(menuRecipeDetailShow)
@@ -67,7 +65,7 @@ const DetailOverlay = ({
   const media = isFineDineIn ? images : featuredImage
 
   return (
-    <Modal isOpen={showOverlay} onBackCallback={isBackClosesModalEnabled ? onClose : null}>
+    <Modal isOpen={showOverlay} onBackCallback={onClose}>
       <RecipeContextProvider value={detailRecipe}>
         <DetailContainer
           id={detailRecipe.get('id')}
@@ -83,7 +81,7 @@ const DetailOverlay = ({
           position={position}
           isFineDineIn={isFineDineIn}
           isFromShowcaseMenu={isFromShowcaseMenu}
-          onClose={isBackClosesModalEnabled ? browserBack : onClose}
+          onClose={browserBack}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           availability={detailRecipe.get('availability')}
