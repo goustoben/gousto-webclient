@@ -1,10 +1,6 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
-
-export function checkoutOrder(accessToken, reqData) {
-  return fetch(accessToken, `${routes.client.checkout}`, reqData, 'POST')
-}
 
 export function fetchOrder(accessToken, orderId, reqData = {}) {
   return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'GET', undefined, {

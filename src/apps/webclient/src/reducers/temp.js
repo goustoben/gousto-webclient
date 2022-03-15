@@ -5,7 +5,7 @@ export const tempReducers = {
   temp: (state = Immutable.Map({}), action) => {
     switch (action.type) {
     case actionTypes.TEMP:
-      if (action.hasOwnProperty('key') && action.hasOwnProperty('value')) {
+      if (Object.prototype.hasOwnProperty.call(action, 'key') && Object.prototype.hasOwnProperty.call(action, 'value')) {
         return state.set(action.key, action.value)
       }
 

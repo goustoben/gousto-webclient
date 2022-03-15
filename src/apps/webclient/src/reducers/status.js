@@ -5,7 +5,7 @@ const status = {
   pending: (state = Immutable.Map({}), action) => {
     switch (action.type) {
     case actionTypes.PENDING:
-      if (action.hasOwnProperty('key') && action.hasOwnProperty('value')) {
+      if (Object.prototype.hasOwnProperty.call(action, 'key') && Object.prototype.hasOwnProperty.call(action, 'value')) {
         return state.set(action.key, action.value)
       }
 
@@ -17,7 +17,7 @@ const status = {
   error: (state = Immutable.Map({}), action) => {
     switch (action.type) {
     case actionTypes.ERROR:
-      if (action.hasOwnProperty('key') && action.hasOwnProperty('value')) {
+      if (Object.prototype.hasOwnProperty.call(action, 'key') && Object.prototype.hasOwnProperty.call(action, 'value')) {
         let { value } = action
         if (value instanceof Error) {
           value = value.message

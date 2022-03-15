@@ -147,7 +147,6 @@ class BurgerMobileMenu extends React.PureComponent {
     return (
       <div
         className={classNames(css.defaultState, { [css.show]: show })}
-        ref={ref => { this.domNode = ref }}
       >
         <ul className={css.list}>
           {(!hideNav) ? this.renderMenuItems() : ''}
@@ -162,7 +161,12 @@ BurgerMobileMenu.propTypes = {
   helpPreLoginVisibilityChange: PropTypes.func.isRequired,
   hideNav: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool,
-  menuItems: PropTypes.array.isRequired,
+  menuItems: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    url: PropTypes.string,
+    clientRouted: PropTypes.bool,
+    disabled: PropTypes.bool,
+  })).isRequired,
   onLoginClick: PropTypes.func.isRequired,
   onLogoutClick: PropTypes.func.isRequired,
   promoCodeUrl: PropTypes.string,

@@ -6,13 +6,13 @@ export const getDocumentHeight = () => {
     body.offsetHeight,
     documentElement.clientHeight,
     documentElement.scrollHeight,
-    documentElement.offsetHeight,
+    documentElement.offsetHeight
   )
 }
 
 export const getEllipse = ({ originX, originY, radius, accuracy = 1 }) => {
   const n = 360 * accuracy
-  const baseAngle = 2 * Math.PI / n
+  const baseAngle = (2 * Math.PI) / n
 
   let steps = ''
 
@@ -21,7 +21,7 @@ export const getEllipse = ({ originX, originY, radius, accuracy = 1 }) => {
     const x = Math.cos(angle).toFixed(3)
     const y = Math.sin(angle).toFixed(3)
 
-    steps += `${(originX + radius * x)}px ${(originY - radius * y)}px, `
+    steps += `${originX + radius * x}px ${originY - radius * y}px, `
   }
 
   return steps

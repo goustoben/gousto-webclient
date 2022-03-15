@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import config from 'config/products'
 import routes from 'config/routes'

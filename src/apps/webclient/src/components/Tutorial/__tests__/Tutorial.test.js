@@ -26,11 +26,12 @@ jest.mock('Tutorial/helpers', () => ({
 
 const generateSteps = (length) =>
   [...Array(length)].map((val, index) => (
+    // eslint-disable-next-line react/no-array-index-key
     <Step key={`test-step-${index}`} selector=".test">{`Step number ${index}`}</Step>
   ))
 
-let mockOnClose = jest.fn()
-let mockTrackStepViewed = jest.fn()
+const mockOnClose = jest.fn()
+const mockTrackStepViewed = jest.fn()
 
 function renderTutorial(props = {}, mockSteps = generateSteps(3)) {
   render(

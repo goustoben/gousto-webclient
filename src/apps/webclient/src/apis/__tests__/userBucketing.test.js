@@ -1,7 +1,9 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import { getUserExperiments, updateUserExperiment } from '../userBucketing'
 
-jest.mock('utils/fetch')
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn(),
+}))
 
 describe('userBucketing', () => {
   beforeEach(() => {

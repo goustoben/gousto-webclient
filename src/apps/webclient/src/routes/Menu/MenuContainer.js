@@ -36,7 +36,6 @@ const mapDispatchToProps = {
   menuLoadDays: actions.menuLoadDays,
   loginVisibilityChange: actions.loginVisibilityChange,
   basketNumPortionChange: actions.basketNumPortionChange,
-  orderCheckoutAction: actions.orderCheckout,
   onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,
   menuCalculateTimeToUsable,

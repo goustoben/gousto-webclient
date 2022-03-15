@@ -250,6 +250,8 @@ describe('login actions', () => {
           if (feature === 'turnips_taste_profile_web_phased_rollout') {
             return mockIsTasteProfileEnabled
           }
+
+          return false
         })
         mockIsTasteProfileEnabled.mockResolvedValue(true)
 
@@ -277,6 +279,8 @@ describe('login actions', () => {
           if (feature === 'turnips_taste_profile_web_phased_rollout') {
             return mockIsTasteProfileEnabled
           }
+
+          return false
         })
         mockIsTasteProfileEnabled.mockResolvedValue(false)
 

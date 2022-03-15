@@ -69,6 +69,8 @@ const logToConsole = (args, level, consoleEnabled) => {
 
   if (consoleEnabled) {
     console.log(logs) /* eslint-disable-line no-console */
+
+    return null
   } else {
     return logs
   }

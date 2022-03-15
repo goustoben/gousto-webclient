@@ -95,10 +95,6 @@ class BillingForm extends React.PureComponent {
     }
   }
 
-  isValid() {
-    return BillingForm.validateFormSubmit(this.state)
-  }
-
   render() {
     const { isPosting, submitCardDetails } = this.props
     const {

@@ -34,8 +34,8 @@ export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   sortedOrders.forEach(order => {
     if (recipeIds.size < number) {
       order.get('recipeItems').forEach(recipe => {
-        if (recipeIds.size < number) {
-          recipe.get('itemableType') === 'Recipe' && recipeIds.add(recipe.get('recipeId'))
+        if (recipeIds.size < number && recipe.get('itemableType') === 'Recipe') {
+          recipeIds.add(recipe.get('recipeId'))
         }
       })
     }

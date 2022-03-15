@@ -25,7 +25,7 @@ export const Facebook = ({ admins, appID, domainVerification }) => {
 }
 
 Facebook.propTypes = {
-  admins: PropTypes.array.isRequired,
+  admins: PropTypes.arrayOf(PropTypes.string).isRequired,
   appID: PropTypes.string.isRequired,
   domainVerification: PropTypes.string.isRequired,
 }

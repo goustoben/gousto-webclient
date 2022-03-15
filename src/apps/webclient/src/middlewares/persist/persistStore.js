@@ -31,7 +31,7 @@ export function serialiseStore(whitelist, state) {
       serialised = {}
       Object.keys(whitelist).forEach(key => {
         if (key) {
-          if (whitelist.hasOwnProperty(key) && typeof whitelist[key] === 'boolean') {
+          if (Object.prototype.hasOwnProperty.call(whitelist, key) && typeof whitelist[key] === 'boolean') {
             if (!isEmpty(nativeObjStore[key])) {
               if (whitelist[key]) {
                 // stop and leave raw value

@@ -31,6 +31,21 @@ type SnakeToCamelCaseRecord<Input extends Record<any, any>> = {
 
 
 /**
+ * Internals
+ * ============================================================================
+ */
+
+/**
+ * Transform a single snake_case string to camelCase
+ */
+function snakeToCamelCase<S extends string>(str: S) {
+  return str.replace(
+    /([_][a-zA-Z\d])/g,
+    (group) => group.toUpperCase().replace('_', '')
+  ) as SnakeToCamelCase<S>
+}
+
+/**
  * Module
  * ============================================================================
  */
@@ -65,20 +80,4 @@ export function parseObjectKeysToCamelCase<T>(obj: T): CamelCasedValue<T> {
       [snakeToCamelCase(currentKey)]: parsedValue
     }
   }, {} as SnakeToCamelCaseRecord<T>) as CamelCasedValue<T>
-}
-
-
-/**
- * Internals
- * ============================================================================
- */
-
-/**
- * Transform a single snake_case string to camelCase
- */
-function snakeToCamelCase<S extends string>(str: S) {
-  return str.replace(
-    /([_][a-zA-Z\d])/g,
-    (group) => group.toUpperCase().replace('_', '')
-  ) as SnakeToCamelCase<S>
 }

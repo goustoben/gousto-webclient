@@ -1,9 +1,8 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 
 import {
   saveOrder,
   fetchOrder,
-  checkoutOrder,
   updateOrderItems,
   createPreviewOrder,
   updateOrderAddress,
@@ -12,13 +11,14 @@ import {
 
 const expectedHeaders = { 'Content-Type': 'application/json'}
 const mockFetchResult = { data: [1, 2, 3] }
-jest.mock('utils/fetch', () =>
-  jest.fn().mockImplementation(() => {
+
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockImplementation(() => {
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
   })
-)
+}))
 
 jest.mock('config/endpoint', () =>
   jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
@@ -37,20 +37,6 @@ jest.mock('config/routes', () => ({
 describe('orders api', () => {
   beforeEach(() => {
     fetch.mockClear()
-  })
-
-  describe('checkoutOrder', () => {
-    test('should fetch the correct url', async () => {
-      const reqData = { a: 1, b: 2 }
-      await checkoutOrder('token', reqData)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', '/checkout', reqData, 'POST')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await checkoutOrder('token', {})
-      expect(result).toEqual(mockFetchResult)
-    })
   })
 
   describe('fetchOrder', () => {

@@ -7,7 +7,7 @@ import Icon from 'Icon'
 import Item from 'Item'
 
 import { ProductItem } from 'Product/ProductItem'
-import SaveButton from 'OrderSummary/SaveButton'
+import { SaveButton } from 'OrderSummary/SaveButton'
 import classnames from 'classnames'
 import { isNotAGift } from 'utils/products'
 import { UserCreditMessage } from 'components/UserCreditMessage'

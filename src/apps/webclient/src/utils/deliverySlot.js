@@ -40,7 +40,7 @@ export const formatNextDayDeliveryDayLabel = dayOffSet => moment().add(dayOffSet
 
 export const generateNextDayDeliverySlots = nextDayDeliveryDays => {
   const slots = {}
-  nextDayDeliveryDays.map(day => {
+  nextDayDeliveryDays.forEach(day => {
     slots[day.date] = [{ label: '8AM - 7PM', subLabel: '', value: 'NULL', coreSlotId: 'NULL' }]
   })
 

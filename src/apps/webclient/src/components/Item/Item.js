@@ -24,6 +24,8 @@ const quantityMessage = (gift, quantity, disclaimerKey, type) => {
       </p>
     )
   }
+
+  return null
 }
 
 const Item = ({
