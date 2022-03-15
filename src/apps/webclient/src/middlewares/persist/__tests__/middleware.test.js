@@ -18,11 +18,13 @@ describe('persistence middleware', () => {
 
     // need to ensure that the result of `next` is what's returned,
     // so use a symbol
-    const nextResult = Symbol()
+    const nextResult = Symbol('nextResult')
     const next = (actionArg) => {
       if (actionArg === action) {
         return nextResult
       }
+
+      return undefined
     }
 
     const result = middleware(store)(next)(action)

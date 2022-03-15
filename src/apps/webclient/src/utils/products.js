@@ -47,24 +47,27 @@ export function getCategoriesFromProducts(products) {
 
   categories['all-products'].count = numberOfProducts
 
-  return products.reduce((categoriesAcc, product) => {
+  const categoriesAcc = categories
+  products.forEach((product) => {
     const productCategories = product.get('categories')
     productCategories.forEach(category => {
       if (!category.get('hidden')) {
         const categoryId = category.get('id')
 
-        categoriesAcc[categoryId]
-          ? categoriesAcc[categoryId].count += 1
-          : categoriesAcc[categoryId] = {
+        if (categoriesAcc[categoryId]) {
+          categoriesAcc[categoryId].count += 1
+        } else {
+          categoriesAcc[categoryId] = {
             id: categoryId,
             label: category.get('title'),
             count: 1,
           }
+        }
       }
     })
+  })
 
-    return categoriesAcc
-  }, categories)
+  return categoriesAcc
 }
 
 /**

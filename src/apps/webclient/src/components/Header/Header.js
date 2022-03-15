@@ -37,7 +37,7 @@ class Header extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { isAuthenticated } = this.props
     if (isAuthenticated !== nextProps.isAuthenticated) {
       if (nextProps.isAuthenticated) {

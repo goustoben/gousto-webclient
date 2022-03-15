@@ -90,9 +90,11 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       try {
         const { data: productsFromApi } = await fetchProducts(accessToken, cutoffDate, reqData, authUserId, menuId)
         const productsToDisplay = productsFromApi.reduce((productsForSaleAccumulator, product) => {
-          product.stock = productsStock.get(product.id)
           if (product.isForSale) {
-            productsForSaleAccumulator.push(product)
+            productsForSaleAccumulator.push({
+              ...product,
+              stock: productsStock.get(product.id),
+            })
           }
 
           return productsForSaleAccumulator

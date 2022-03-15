@@ -30,7 +30,7 @@ class Page extends React.PureComponent {
     trackUserAttributes()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.isSignupReductionEnabled) {
       redirect(Page.COVID_19_LINK)
     }

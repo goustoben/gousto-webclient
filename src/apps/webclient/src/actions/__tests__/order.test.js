@@ -6,7 +6,6 @@ import { fetchDeliveryDays } from 'apis/deliveries'
 import {
   saveOrder,
   fetchOrder,
-  checkoutOrder,
   updateOrderAddress,
 } from 'apis/orders'
 import actionStatus from 'actions/status'
@@ -18,7 +17,6 @@ import { osrOrdersSkipped } from 'actions/trackingKeys'
 import {
   trackOrder,
   orderUpdate,
-  orderCheckout,
   orderGetDeliveryDays,
   orderUpdateDayAndSlot,
   clearUpdateDateErrorAndPending,
@@ -35,7 +33,6 @@ import { safeJestMock } from '../../_testing/mocks'
 import * as SidesActions from '../../routes/Menu/actions/sides'
 
 import { flushPromises } from '../../_testing/utils'
-import { mockWindowLocationAssign } from '../../../jest/mockWindowLocationAssign'
 
 jest.mock('../../routes/Account/apis/subscription')
 jest.mock('apis/user')
@@ -349,146 +346,6 @@ describe('order actions', () => {
       await orderUpdate()(dispatch, getState)
 
       expect(sendClientMetricMock).toHaveBeenCalledWith('menu-edit-complete', 1, 'Count')
-    })
-  })
-
-  describe('orderCheckout', () => {
-    const checkoutOrderApiParams = {
-      addressId: 'address-id',
-      postcode: 'N1',
-      numPortions: 3,
-      promoCode: '',
-      orderId: '',
-      deliveryDayId: 'delivery-id',
-      slotId: 'slot-id',
-      orderAction: 'order-action',
-      disallowRedirectToSummary: true,
-      recipes: ['recipe-id-1', 'recipe-id-2'],
-    }
-    let mockAssign
-    const { location } = window
-
-    beforeEach(() => {
-      mockAssign = mockWindowLocationAssign()
-    })
-    afterEach(() => {
-      window.location = location
-    })
-
-    test('api is being called correctly', async () => {
-      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
-
-      expect(checkoutOrder).toHaveBeenCalledWith('access-token', {
-        address_id: 'address-id',
-        deliverypostcode: 'N1',
-        num_portions: 3,
-        promocode: '',
-        order_id: '',
-        delivery_day_id: 'delivery-id',
-        delivery_slot_id: 'slot-id',
-        order_action: 'order-action',
-        disallow_redirect_to_summary: true,
-        recipes: ['recipe-id-1', 'recipe-id-2']
-      })
-
-      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', false)
-      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', null)
-    })
-
-    test('status is set to pending and no error', async () => {
-      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
-
-      expect(pending).toHaveBeenCalledTimes(2)
-      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', true)
-      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', null)
-    })
-
-    test('returns an order ID and url', async () => {
-      checkoutOrder.mockResolvedValueOnce({
-        data: {
-          orderId: '123',
-          url: 'summary-url',
-        }
-      })
-
-      const result = await orderCheckout(
-        checkoutOrderApiParams
-      )(dispatch, getState)
-
-      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', null)
-
-      expect(result).toEqual({
-        orderId: '123',
-        url: 'summary-url',
-      })
-    })
-
-    test('api throws an error', async () => {
-      checkoutOrder.mockRejectedValueOnce({
-        status: 'error',
-        message: 'error api',
-      })
-
-      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
-
-      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', 'error api')
-      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', false)
-    })
-
-    test('throw an error when orderId is not present in the response', async () => {
-      checkoutOrder.mockResolvedValueOnce({
-        data: {
-          orderId: '',
-          url: 'summary-url',
-        }
-      })
-
-      await orderCheckout(
-        checkoutOrderApiParams
-      )(dispatch, getState)
-
-      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', 'Error when saving the order')
-    })
-
-    test('throw an error when url is not present in the response', async () => {
-      checkoutOrder.mockResolvedValueOnce({
-        data: {
-          orderId: 'order-id',
-          url: '',
-        }
-      })
-
-      await orderCheckout(
-        checkoutOrderApiParams
-      )(dispatch, getState)
-
-      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', 'Error when saving the order')
-    })
-
-    test('redirect is called when redirected parameter is set to true', async () => {
-      checkoutOrder.mockRejectedValueOnce({
-        status: 'error',
-        message: 'error api',
-        url: 'redirect-url',
-        redirected: true,
-      })
-
-      await orderCheckout(
-        checkoutOrderApiParams
-      )(dispatch, getState)
-
-      expect(window.location.assign).toHaveBeenCalledWith('redirect-url')
-    })
-
-    test('redirect is not called when redirected parameter is not set', async () => {
-      checkoutOrder.mockRejectedValueOnce({
-        status: 'error',
-        message: 'error api',
-      })
-
-      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
-
-      expect(mockAssign).toHaveBeenCalledTimes(0)
     })
   })
 

@@ -25,6 +25,7 @@ export const DeliveryDetails = (props) => {
       className={css.content}
       data-hj-masked
     >
+      {/* eslint-disable-next-line react/no-array-index-key */}
       {shippingDetails.map((shippingDetail, key) => <span key={key} className={css.shippingDetail}>{shippingDetail}</span>)}
     </span>
   )

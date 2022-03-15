@@ -5,7 +5,7 @@ import { client } from 'config/routes'
 import { isOneOfPage } from 'utils/routes'
 import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from 'utils/auth'
 import { push } from 'react-router-redux'
-import windowUtils from 'utils/window'
+import { redirect, documentLocation, getWindow } from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
 import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
@@ -20,7 +20,6 @@ import { isMobile } from '../utils/view'
 import { getBrowserType } from '../selectors/browser'
 
 const { pending, error } = statusActions
-const { redirect, documentLocation } = windowUtils
 
 const authorise = roles => {
   let err
@@ -195,7 +194,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
       }
     }
 
-    const windowObj = windowUtils.getWindow()
+    const windowObj = getWindow()
     if (canUseWindow() && typeof windowObj.__authRefresh__ === 'function' && windowObj.__store__) { // eslint-disable-line no-underscore-dangle
       windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
     }

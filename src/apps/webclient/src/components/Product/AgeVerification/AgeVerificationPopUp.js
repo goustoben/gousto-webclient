@@ -24,7 +24,11 @@ class AgeVerificationPopUp extends PureComponent {
     const { onAgeConfirmation, onClose } = this.props
 
     onAgeConfirmation(isOver18)
-    isOver18 ? onClose() : this.setHasSelectedUnder18()
+    if (isOver18) {
+      onClose()
+    } else {
+      this.setHasSelectedUnder18()
+    }
   }
 
   renderFooter = () => {

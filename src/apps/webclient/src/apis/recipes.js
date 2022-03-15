@@ -1,5 +1,5 @@
 import qs from 'qs'
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
@@ -23,4 +23,3 @@ export function fetchRecipeStock(accessToken, deliveryDayId) {
 export function fetchRecipesStockByDate(reqData) {
   return fetch(null, `${endpoint('orders')}${routes.orders.recipesStock}`, reqData, 'GET')
 }
-

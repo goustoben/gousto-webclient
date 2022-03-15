@@ -45,6 +45,8 @@ export const getDeliveryDayRescheduledReason = (unavailableReason) => {
       return 'Choose recipes now.'
     }
   }
+
+  return undefined
 }
 
 export const transformPendingOrders = (orders) => {

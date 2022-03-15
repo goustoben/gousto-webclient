@@ -7,4 +7,6 @@ export const dateTransformer = (response) => {
 
     return response.data[0].attributes.ends_at
   }
+
+  return undefined
 }

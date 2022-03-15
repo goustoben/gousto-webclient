@@ -4,7 +4,6 @@ import moment from 'moment'
 import logger from 'utils/logger'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
-import { redirect } from 'utils/window'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getUserId } from 'selectors/user'
 import { orderTrackingActions } from 'config/order'
@@ -19,7 +18,6 @@ import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
 import { anyUnset } from '../utils/object'
 import {
   saveOrder,
-  checkoutOrder,
   updateOrderAddress,
 } from '../apis/orders'
 
@@ -181,58 +179,6 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
       dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, false))
     }
   })
-
-export const orderCheckout = ({
-  addressId,
-  postcode,
-  numPortions,
-  promoCode,
-  orderId,
-  deliveryDayId,
-  slotId,
-  orderAction,
-  disallowRedirectToSummary,
-  recipes }) => (
-  async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.ORDER_CHECKOUT, true))
-    dispatch(statusActions.error(actionTypes.ORDER_CHECKOUT, null))
-    const accessToken = getState().auth.get('accessToken')
-
-    try {
-      const { data } = await checkoutOrder(accessToken,
-        {
-          address_id: addressId,
-          deliverypostcode: postcode,
-          num_portions: numPortions,
-          promocode: promoCode,
-          order_id: orderId,
-          delivery_day_id: deliveryDayId,
-          delivery_slot_id: slotId,
-          order_action: orderAction,
-          disallow_redirect_to_summary: disallowRedirectToSummary,
-          recipes,
-        }
-      )
-
-      if (data.orderId && data.url) {
-        return {
-          orderId: data.orderId,
-          url: data.url,
-        }
-      } else {
-        throw { message: 'Error when saving the order' }
-      }
-    } catch (err) {
-      if (err && err.redirected && err.url) {
-        return redirect(err.url)
-      }
-
-      dispatch(statusActions.error(actionTypes.ORDER_CHECKOUT, err.message))
-    } finally {
-      dispatch(statusActions.pending(actionTypes.ORDER_CHECKOUT, false))
-    }
-  }
-)
 
 export const orderCheckPossibleDuplicate = (orderId) => (
   async (dispatch, getState) => {
@@ -567,7 +513,6 @@ export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispat
 
 export default {
   orderCancel,
-  orderCheckout,
   orderUpdate,
   orderUpdateDayAndSlot,
   orderCheckPossibleDuplicate,

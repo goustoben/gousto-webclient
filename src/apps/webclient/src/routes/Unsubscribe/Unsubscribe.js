@@ -41,7 +41,10 @@ const defaultProps = {
 }
 
 export class Unsubscribe extends React.PureComponent {
-  state = {}
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
 
   unsubscribeHander = () => {
     const { location, userUnsubscribeAction } = this.props

@@ -44,15 +44,6 @@ export class Image extends React.PureComponent {
       ''
     )
 
-  getSizes = srcs =>
-    srcs.reduce(
-      (str, src) =>
-        `${str} (max-width: ${config.imageScale[src.get('width')]}px) ${src.get(
-          'width'
-        )}px,`,
-      ''
-    )
-
   getDefaultImage = (srcs, maxImageSize) => {
     let image = Immutable.Map({})
     if (srcs.size > 0) {
