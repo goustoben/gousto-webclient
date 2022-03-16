@@ -1,17 +1,68 @@
 @value Bluecheese, Blackberry, Oyster from 'styles/colors.module.css';
 @value BreakpointFromMedium, BreakpointFromLarge, BreakpointToMedium from 'design-language/breakpoints.css';
 
+.breadcrumbsContainer {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  margin: 0 0.75rem 1rem;
+
+  @media BreakpointFromMedium {
+    margin: 0 0 1.5rem;
+  }
+
+  @media BreakpointFromLarge {
+    margin: 0 2rem 1.5rem;
+  }
+}
+
 .breadcrumbsList {
   display: flex;
   list-style: none;
-  padding-left: 0;
+  padding: 0;
   margin: 0;
 }
 
 .listItem {
   display: flex;
   align-items: center;
-  font-size: 14px;
+}
+
+.breadcrumbsSeparator {
+  display: inline-block;
+  margin: 0 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+
+  @media BreakpointToMedium {
+    &.removeMargin {
+      margin: 0;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.linkItem {
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  text-decoration: none;
+  padding-top: 0.25rem;
+  composes: fontStyleSmall from 'design-language/typography.css';
+}
+
+a.linkItem:hover,
+a.linkItem:focus {
+  text-decoration: none;
+}
+
+.isActive {
+  composes: fontBold from 'design-language/typography.css';
+  /* Hack: AxiformaBook and AxiformaBold have mismatching baselines, which looks
+     off when they're layed out in a line.  This aligns them visually. */
+  padding-bottom: 1px;
+  position: relative;
+  top: -0.5px;
 }
 
 .futureItem {
