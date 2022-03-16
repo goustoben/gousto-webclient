@@ -3,15 +3,8 @@
 if [[ $ENVIRONMENT = "production" ]]
 then
 	export DOMAIN="gousto.co.uk"
-	export CLIENT_PROTOCOL="https"
-	export CHECKOUTCOM_PK=$CHECKOUTCOM_PK_PRODUCTION
 else
 	export DOMAIN="gousto.info"
-	export CLIENT_PROTOCOL="https"
-
-	envNameUppercase=$(echo $ENVIRONMENT | tr [a-z] [A-Z])
-	checkoutComEnvName="CHECKOUTCOM_PK_$envNameUppercase"
-	export CHECKOUTCOM_PK=${!checkoutComEnvName}
 fi
 export SETUP_FAILURE=false
 
@@ -20,7 +13,7 @@ cd src
 # isomorphic: variables
 npm config set gousto_webclient_environment_name "${ENVIRONMENT}"
 npm config set gousto_webclient_domain "${DOMAIN}"
-npm config set gousto_webclient_client_protocol "${CLIENT_PROTOCOL}"
+npm config set gousto_webclient_client_protocol "https"
 npm config set gousto_webclient_cloudfront_url "${CLOUDFRONT_URL}"
 
 
