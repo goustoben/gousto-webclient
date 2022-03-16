@@ -152,6 +152,7 @@ export class MenuRecipesPage extends PureComponent {
     )
   }
 }
+
 MenuRecipesPage.propTypes = {
   showLoading: PropTypes.bool.isRequired,
   stateRecipeCount: PropTypes.number.isRequired,
@@ -175,6 +176,7 @@ MenuRecipesPage.propTypes = {
   menuLoadingErrorMessage: PropTypes.string,
   fetchMenuData: PropTypes.func.isRequired,
 }
+
 MenuRecipesPage.defaultProps = {
   orderId: null,
   isLoading: false,

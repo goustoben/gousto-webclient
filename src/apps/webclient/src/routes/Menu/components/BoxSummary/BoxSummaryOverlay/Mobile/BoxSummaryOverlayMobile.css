@@ -2,6 +2,7 @@
 @value sizeLG, sizeXS, bodyFontStackBold from 'styles/typography.css';
 
 @value barMobileHeight 90px;
+@value barHeightIsSimplifyBasketBarEnabled from '../../Banner/Desktop/BoxSummaryDesktopBanner.css';
 
 .detailContainer {
   composes: borderXS from 'styles/borders.css';
@@ -30,8 +31,13 @@
 }
 
 .mobileOverlay {
-  height: calc( 100% - barMobileHeight );
-  min-height: calc( 100% - barMobileHeight );
+  height: calc(100% - barMobileHeight);
+  min-height: calc(100% - barMobileHeight);
+}
+
+.mobileOverlayIsSimplifyBasketBarEnabled {
+  height: calc(100% - barHeightIsSimplifyBasketBarEnabled);
+  min-height: calc(100% - barHeightIsSimplifyBasketBarEnabled);
 }
 
 .fullScreen {

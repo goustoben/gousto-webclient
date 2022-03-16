@@ -24,6 +24,7 @@ const mapStateToProps = (state) => ({
 const CheckoutPure = (props) => {
   const { isPending } = usePricing()
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <Checkout {...props} pricingPending={isPending} />
 }
 

@@ -1,0 +1,81 @@
+@value W-0 #FFFFFF;
+@value S-600 #412DEE;
+@value S-400 #615CFF;
+
+.checkoutCounter {
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+  display: inline-block;
+  color: W-0;
+  overflow: visible;
+  composes: fontStyleS from 'design-language/typography.css';
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: S-400;
+  }
+}
+
+.checkoutCounterBackground {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  background: S-600;
+  border-radius: 3px;
+
+  transition: 100ms;
+}
+
+.isButtonHovered {
+  background: S-400;
+}
+
+.slash {
+  opacity: 0.5;
+}
+
+.scaleAndWiggleAnimation {
+  animation: counterScaleAndWiggle 1000ms ease-in-out;
+}
+
+.wiggleAnimation {
+  animation: counterWiggle 1000ms ease-in-out;
+}
+
+.checkoutCounterValue {
+  display: inline-block;
+  position: relative;
+}
+
+.checkoutCounter.isDisabled .checkoutCounterBackground {
+  background: #AEB7C0;
+}
+
+@keyframes counterScaleAndWiggle {
+  35% {
+    transform: rotate(-3deg) scale(1.25);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.25);
+  }
+  65% {
+    transform: rotate(-3deg) scale(1.25);
+  }
+}
+
+@keyframes counterWiggle {
+  35% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+  65% {
+    transform: rotate(-3deg);
+  }
+}

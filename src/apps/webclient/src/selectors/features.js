@@ -1,3 +1,5 @@
+export const getFeatures = (state) => state.features
+
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
   features
     ? features.getIn(['nextDayDeliveryPaintedDoor', 'value'])
