@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import { getBasketDate, getNumPortions, getBasketRecipes } from 'selectors/basket'
-import { getFullScreenBoxSummary, getIsBackClosesModalEnabled } from 'selectors/features'
+import { getFullScreenBoxSummary } from 'selectors/features'
 import { BoxSummaryOverlay } from './BoxSummaryOverlay'
 
 const mapStateToProps = (state) => ({
@@ -10,7 +10,6 @@ const mapStateToProps = (state) => ({
   recipes: getBasketRecipes(state),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
   shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
-  isBackClosesModalEnabled: getIsBackClosesModalEnabled(state)
 })
 
 const BoxSummaryOverlayContainer = connect(mapStateToProps)(BoxSummaryOverlay)
