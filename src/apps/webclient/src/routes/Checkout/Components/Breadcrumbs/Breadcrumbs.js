@@ -18,7 +18,7 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReach
               ) : (
                 /* eslint-disable-next-line */
                 <Link
-                  onClick={`/check-out/${id}`}
+                  onClick={() => `/check-out/${id}`}
                   tracking={trackNavigation(label)}
                   color={Color.Secondary_400}
                   padding="0.25rem"
