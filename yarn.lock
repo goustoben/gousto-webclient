@@ -3830,7 +3830,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testim/chrome-version@npm:^1.0.7":
+"@testim/chrome-version@npm:^1.1.2":
   version: 1.1.2
   resolution: "@testim/chrome-version@npm:1.1.2"
   checksum: dcc470c190117adfade3013f9bb7b3642f3b020a770017c222114ac30fcb79defe098f6e2c7b74118199d39f749ef5cd9fab8878e3216339d9b5f4e541ec5fd9
@@ -5984,15 +5984,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.2":
-  version: 0.21.4
-  resolution: "axios@npm:0.21.4"
-  dependencies:
-    follow-redirects: ^1.14.0
-  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
-  languageName: node
-  linkType: hard
-
 "axios@npm:^0.23.0":
   version: 0.23.0
   resolution: "axios@npm:0.23.0"
@@ -7408,12 +7399,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^96.0.0":
-  version: 96.0.0
-  resolution: "chromedriver@npm:96.0.0"
+"chromedriver@npm:^99.0.0":
+  version: 99.0.0
+  resolution: "chromedriver@npm:99.0.0"
   dependencies:
-    "@testim/chrome-version": ^1.0.7
-    axios: ^0.21.2
+    "@testim/chrome-version": ^1.1.2
+    axios: ^0.24.0
     del: ^6.0.0
     extract-zip: ^2.0.1
     https-proxy-agent: ^5.0.0
@@ -7421,7 +7412,7 @@ __metadata:
     tcp-port-used: ^1.0.1
   bin:
     chromedriver: bin/chromedriver
-  checksum: d2b34e1304146f16100aa3d336e944af0b1cbbeabddc4eb136f4691cc987683770e46bdaca442ba678020fb2bf0c254e868d018f52dff56c75f41880829566e4
+  checksum: 902ed95343a8c5109ba7116b1b9a268c7d31975713d1035e13aea5947858e646b3eb5a9b12ac4e3779aca4e161628e4b1bd729d8aafd1a0f61e4e2e1e835ddc2
   languageName: node
   linkType: hard
 
@@ -12599,7 +12590,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gousto-e2e@workspace:tests/e2e"
   dependencies:
-    chromedriver: ^96.0.0
+    chromedriver: ^99.0.0
     cucumber: ^3.1.0
     cucumber-pretty: 0.0.5
     deepmerge: ^2.2.1
