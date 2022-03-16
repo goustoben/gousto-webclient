@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { useSelector, useDispatch } from 'react-redux'
-import { promoGet } from 'actions/promos'
-import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
-import { getPromoCode } from 'selectors/basket'
-import { HotjarTrigger } from 'components/HotjarTrigger'
 import { boxSummaryBannerPropTypes } from './propTypes'
 import { BoxSummaryDesktopBanner } from './Desktop/BoxSummaryDesktopBanner'
 import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
@@ -24,48 +19,33 @@ const BoxSummaryBanner = ({
   errorText,
   openDetails,
   isBoxSummaryOpened,
-}) => {
-  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
-  const dispatch = useDispatch()
-  const promoCode = useSelector(getPromoCode)
-
-  useEffect(() => {
-    if (promoCode && isSimplifyBasketBarEnabled) {
-      dispatch(promoGet(promoCode))
-    }
-  }, [promoCode, isSimplifyBasketBarEnabled, dispatch])
-
-  return (
-    <section>
-      <BoxSummaryMobileBanner
-        date={date}
-        deliveryDays={deliveryDays}
-        slotId={slotId}
-        showBrowseCTA={showBrowseCTA}
-        maxRecipesNum={maxRecipesNum}
-        menuRecipesStore={menuRecipesStore}
-        recipes={recipes}
-        errorText={errorText}
-        openDetails={openDetails}
-        isBoxSummaryOpened={isBoxSummaryOpened}
-        onExpandClick={onExpandClick}
-        expandWarning={expandWarning}
-        numRecipes={numRecipes}
-      />
-      <BoxSummaryDesktopBanner
-        numRecipes={numRecipes}
-        expandWarning={expandWarning}
-        showBrowseCTA={showBrowseCTA}
-        maxRecipesNum={maxRecipesNum}
-        menuRecipesStore={menuRecipesStore}
-        recipes={recipes}
-        errorText={errorText}
-        onExpandClick={onExpandClick}
-      />
-      <HotjarTrigger name="simplify-basket-bar" shouldInvoke={isSimplifyBasketBarEnabled} />
-    </section>
-  )
-}
+}) => (
+  <section>
+    <BoxSummaryMobileBanner
+      date={date}
+      deliveryDays={deliveryDays}
+      slotId={slotId}
+      showBrowseCTA={showBrowseCTA}
+      maxRecipesNum={maxRecipesNum}
+      menuRecipesStore={menuRecipesStore}
+      recipes={recipes}
+      errorText={errorText}
+      openDetails={openDetails}
+      isBoxSummaryOpened={isBoxSummaryOpened}
+      onExpandClick={onExpandClick}
+    />
+    <BoxSummaryDesktopBanner
+      numRecipes={numRecipes}
+      expandWarning={expandWarning}
+      showBrowseCTA={showBrowseCTA}
+      maxRecipesNum={maxRecipesNum}
+      menuRecipesStore={menuRecipesStore}
+      recipes={recipes}
+      errorText={errorText}
+      onExpandClick={onExpandClick}
+    />
+  </section>
+)
 
 BoxSummaryBanner.propTypes = {
   date: PropTypes.string,
@@ -76,7 +56,7 @@ BoxSummaryBanner.propTypes = {
   numRecipes: PropTypes.number.isRequired,
   isBoxSummaryOpened: PropTypes.bool,
 
-  ...boxSummaryBannerPropTypes,
+  ...boxSummaryBannerPropTypes
 }
 
 BoxSummaryBanner.defaultProps = {

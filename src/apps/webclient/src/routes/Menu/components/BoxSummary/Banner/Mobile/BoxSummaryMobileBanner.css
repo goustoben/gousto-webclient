@@ -5,31 +5,24 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 @value barMobileHeight 90px;
-@value barHeightIsSimplifyBasketBarEnabled from '../Desktop/BoxSummaryDesktopBanner.css';
+/* for .mobileOverlay */
 
 .container {
-  z-index: 500;
+	z-index: 500;
 }
 
 .barmobile {
-  composes: container;
-  composes: fixed from 'styles/position.css';
+	composes: container;
+	composes: fixed from 'styles/position.css';
 
-  left: 0;
-  bottom: 0;
-  background-color: Blackberry;
-  width: 100%;
-  height: barMobileHeight;
-  @media BreakpointFromMedium {
-    display: none;
-  }
-}
-
-.isSimplifyBasketBarEnabled {
-  height: barHeightIsSimplifyBasketBarEnabled;
-  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.16);
-  background-color: rgba(51, 61, 71, 0.95);
-  backdrop-filter: blur(4px);
+	left: 0;
+	bottom: 0;
+	background-color: Blackberry;
+	width: 100%;
+	height: barMobileHeight;
+	@media BreakpointFromMedium {
+		display: none;
+	}
 }
 
 .hideBanner {
@@ -37,101 +30,101 @@
 }
 
 .mobileText {
-  composes: noMargin from 'sass-loader!styles/spacing.scss';
-  color: White;
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	color: White;
 }
 
 .summaryMobile {
-  composes: flex spaceAround from 'styles/flex.css';
-  composes: marginXXSTop from 'sass-loader!styles/spacing.scss';
-}
-
-.buttonsContainerIsSimplifyBasketEnabled {
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  height: 100%;
-  align-items: center;
-
-  padding: 0 0.75rem;
+	composes: flex spaceAround from 'styles/flex.css';
+	composes: marginXXSTop from 'sass-loader!styles/spacing.scss';
 }
 
 .circle {
-  composes: absolute from 'styles/position.css';
-  right: 0.25rem;
-  min-width: 3.5rem;
-  height: 2.5rem;
-  background-color: Blackberry;
-  border-radius: 1.25rem 1.25rem 0 0;
+	composes: absolute from 'styles/position.css';
+	right: 0.25rem;
+	min-width: 3.5rem;
+	height: 2.5rem;
+	background-color: Blackberry;
+	border-radius: 1.25rem 1.25rem 0 0;
 }
 
 .arrowDown {
-  composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
 }
 
 .arrowUp {
-  composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
 }
 
 .hide {
-  composes: none from 'styles/display.css';
+	composes: none from 'styles/display.css';
 }
 
 .detailContainer {
-  composes: borderXS from 'styles/borders.css';
-  composes: paddingMD from 'sass-loader!styles/spacing.scss';
-  background-color: White;
+	composes: borderXS from 'styles/borders.css';
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	background-color: White;
 }
 
 .detailContainermobile {
-  composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
-  composes: detailContainer;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: auto;
-  overflow-x: auto;
-  padding: 0;
+	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: detailContainer;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	overflow-x: auto;
+	padding: 0;
 }
 
 .supercontainermobile {
-  height: 100%;
+	height: 100%;
+}
+
+.mobileOverlay {
+	height: calc( 100% - barMobileHeight );
+	min-height: calc( 100% - barMobileHeight );
+}
+
+.mobileModalContent {
+	height: 100%;
+	min-height: 100%;
 }
 
 .closeBtn {
-  composes: fa-basic-class  fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
-  composes: absolute from 'styles/position.css';
+	composes: fa-basic-class  fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
+	composes: absolute from 'styles/position.css';
 
-  right: SpacingXXS;
-  top: SpacingSM;
+	right: SpacingXXS;
+	top: SpacingSM;
 
-  padding: 0.5rem;
-  width: auto;
+	padding: 0.5rem;
+	width: auto;
 
-  font-size: sizeLG;
-  cursor: pointer;
+	font-size: sizeLG;
+	cursor: pointer;
 }
 
 .errorTooltipMobile {
-  position: fixed;
-  @media ScreenSMMin {
-    display: none;
-  }
+	position: fixed;
+	@media ScreenSMMin {
+		display: none;
+	}
 }
 .errorTooltipDesktop {
-  display: none;
-  position: fixed;
-  @media ScreenSMMin {
-    display: inherit;
-  }
+	display: none;
+	position: fixed;
+	@media ScreenSMMin {
+		display: inherit;
+	}
 }
 
 .errorMessage {
-  composes: textRegular from 'styles/typography.css';
-  color: DarkRadish;
-  box-shadow: 0px 2px 5px Radish;
+	composes: textRegular from 'styles/typography.css';
+	color: DarkRadish;
+	box-shadow: 0px 2px 5px Radish;
 }
 
 .hide {
-  composes: none from 'styles/display.css';
+	composes: none from 'styles/display.css';
 }

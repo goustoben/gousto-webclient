@@ -21,7 +21,7 @@ const DetailsCheckoutButton = (props) => {
               {ctaText}
             </Button>
           )
-            : <CheckoutContainer view={view} section={trackingKeys.boxSummary} hideCounter />
+            : <CheckoutContainer view={view} section={trackingKeys.boxSummary} />
         }
       </div>
     )
