@@ -3,11 +3,11 @@ import { bindActionCreators } from 'redux'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from 'actions'
 import { getUserId } from 'selectors/user'
+import { loadOptimizelySDK } from 'actions/optimizely'
 import { getBasketOrderId, getNumPortions } from 'selectors/basket'
 import { useCurrentCollectionId } from '../domains/collections'
-import { checkQueryParams } from '../actions/menuRecipeDetails'
-import { loadOptimizelySDK } from '../../../actions/optimizely'
 
+import { checkQueryParams } from '../actions/menuRecipeDetails'
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { isMenuLoading, getMenuLoadingErrorMessage, getRecipeCount } from '../selectors/menu'
 import fetchData from '../fetchData'
@@ -31,13 +31,12 @@ const MenuRecipesPageWrapper = (ownProps) => {
   const userId = useSelector(getUserId)
   const showCapacityInfo = useSelector(shouldShowCapacityInfo)
   const menuLoadingErrorMessage = useSelector(getMenuLoadingErrorMessage)
-
   const actionDispatchers = bindActionCreators({
     checkQueryParams,
     basketOrderLoaded: actions.basketOrderLoaded,
     portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
     loadOptimizelySDK,
-    fetchMenuData: fetchData
+    fetchMenuData: fetchData,
   }, dispatch)
 
   return (

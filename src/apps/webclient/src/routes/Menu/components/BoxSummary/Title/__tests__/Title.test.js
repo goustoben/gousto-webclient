@@ -5,8 +5,9 @@ import { usePricing } from 'routes/Menu/domains/pricing'
 
 import { Spinner } from 'goustouicomponents'
 import { MOBILE_VIEW } from 'utils/view'
-import { Title } from '../Title/Title'
-import { Price } from '../Price'
+
+import { Title } from '../Title'
+import { Price } from '../../Price'
 
 jest.mock('routes/Menu/domains/pricing', () => ({
   usePricing: jest.fn(),
@@ -18,10 +19,13 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }))
 
+jest.mock('routes/Menu/components/BoxSummary/utilHooks', () => ({
+  useDiscountTip: jest.fn().mockReturnValue(null),
+}))
+
 describe('Title', () => {
   let wrapper
   beforeEach(() => {
-    useSelector.mockReturnValue(true)
     useDispatch.mockReturnValue(() => {})
   })
 
@@ -60,6 +64,31 @@ describe('Title', () => {
 
       expect(wrapper.find(Spinner).length).toEqual(1)
       expect(wrapper.find(Price).length).toEqual(0)
+    })
+  })
+
+  describe('when isSimplifyBasketBarEnabled is on', () => {
+    beforeEach(() => {
+      useSelector.mockReturnValue(true)
+      usePricing.mockReturnValue({ isPending: false, pricing: {} })
+
+      wrapper = shallow(<Title view={MOBILE_VIEW} />)
+    })
+
+    describe('and when there are not enough recipes to checkout', () => {
+      test('should display the delivery tip', () => {
+        expect(wrapper.text()).toBe('Free UK delivery,')
+      })
+    })
+
+    describe('and when there are enough recipes to checkout', () => {
+      beforeEach(() => {
+        wrapper.setProps({ numRecipes: 2 })
+      })
+
+      test('then it should display price information', () => {
+        expect(wrapper.find(Price)).toHaveLength(1)
+      })
     })
   })
 })

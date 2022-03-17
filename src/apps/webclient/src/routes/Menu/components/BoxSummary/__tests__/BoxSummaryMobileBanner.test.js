@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme'
 import React from 'react'
+import * as Redux from 'react-redux'
 import { useBasketRequiredFeatureEnabled } from '../../../hooks/useBasketRequiredFeatureEnabled'
 
 import { BoxSummaryMobileBanner } from '../Banner/Mobile/BoxSummaryMobileBanner'
@@ -29,6 +30,7 @@ describe('BoxSummaryMobileBanner', () => {
 
     describe('when isBoxSummaryOpened', () => {
       test('BoxSummaryMobileBanner is hidden', () => {
+        jest.spyOn(Redux, 'useSelector').mockReturnValue(true) // getIsSimplifyBasketBarEnabled
         wrapper = shallow(
           <BoxSummaryMobileBanner
             {...defaultProps}
@@ -40,6 +42,7 @@ describe('BoxSummaryMobileBanner', () => {
       })
     })
     test('OpenBoxButton is not rendered', () => {
+      jest.spyOn(Redux, 'useSelector').mockReturnValue(true) // getIsSimplifyBasketBarEnabled
       wrapper = shallow(<BoxSummaryMobileBanner {...defaultProps} />)
       expect(wrapper.find(OpenBoxButton).length).toEqual(0)
     })
