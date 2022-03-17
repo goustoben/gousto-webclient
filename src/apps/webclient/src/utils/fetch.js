@@ -6,7 +6,6 @@ import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 import { isServer } from './serverEnvironment'
-import { isProd } from './isomorphicEnvironment'
 
 const DEFAULT_TIME_OUT = 50000
 const STATUS_CODES_WITH_NO_CONTENT = [204]
@@ -87,7 +86,7 @@ export function fetch(
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
 
-  if (isServer() && isProd()) {
+  if (isServer() && __PROD__) {
     if (env && env.apiToken) {
       requestHeaders['API-Token'] = env.apiToken
     } else {

@@ -46,6 +46,7 @@ module.exports = {
   ],
   globals: {
     __DEV__: false,
+    __PROD__: true,
     __CLOUDFRONT_URL__: 'test.com',
     __CLIENT_PROTOCOL__: 'https',
     __CHECKOUT_PK__: '',
