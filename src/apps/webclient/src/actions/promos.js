@@ -25,18 +25,9 @@ const promoReceive = promo => ({
 
 export const promoGet = code => (
   async (dispatch, getState) => {
-    const state = getState()
-
-    if (state.pending.get(actionTypes.PROMO_GET)) {
-      return
-    }
-    if (state.promoStore.get(code, null)) {
-      return
-    }
-
     dispatch(pending(actionTypes.PROMO_GET, true))
     dispatch(error(actionTypes.PROMO_GET, null))
-    const accessToken = state.auth.get('accessToken')
+    const accessToken = getState().auth.get('accessToken')
     let promo
     let errored
 
@@ -61,7 +52,7 @@ export const promoGet = code => (
       promo.hasAgeRestricted = false
       promo.justApplied = false
     }
-    const isAuthenticated = state.auth.get('isAuthenticated')
+    const isAuthenticated = getState().auth.get('isAuthenticated')
 
     if (promo && promo.addGiftOrderRules) {
       const productIds = promo.addGiftOrderRules
@@ -69,6 +60,7 @@ export const promoGet = code => (
         .map(rule => rule.id)
       await dispatch(productsLoadProductsById(productIds))
 
+      const state = getState()
       const ageRestricted = productIds
         .map(id => state.products.get(id))
         .filter(product => product.get('ageRestricted'))
@@ -85,7 +77,7 @@ export const promoGet = code => (
 
     if (isAuthenticated) {
       if (promo.hasAgeRestricted) {
-        if (state.user.get('ageVerified', false)) {
+        if (getState().user.get('ageVerified', false)) {
           try {
             await dispatch(userActions.userPromoApplyCode(code))
             promo.justApplied = true
@@ -214,7 +206,7 @@ export const promoApply = () => (
   }
 )
 
-export const promoApplyCheckoutCode = () => (
+const promoApplyCheckoutCode = () => (
   async (dispatch) => {
     const promoCode = 'DTI-CHECKOUT30'
 
