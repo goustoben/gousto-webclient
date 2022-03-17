@@ -1,32 +1,100 @@
 @value ScreenXSMax from 'styles/screenSizes.module.css';
+@value BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value NG-200 #C4C7C9;
 
-.coButtonSegment {
-	padding-bottom: 44px;
-	padding-top: 4px;
-}
+/*
+BannerButton - Container styles
+`- includes Checkout/Checkout (which has its own css)
+   `- includes BaseBannerButton
+      `- renders ui-components/Button - Button styles
+         `- renders ui-components/Segment - Segment styles
 
-.submitButton {
-	padding-top: 5px;
-	min-height: 52px;
-	font-family: AxiformaSemiBold;
-	font-size: 15px;
-}
+For Simplify Basket Bar productionization, the whole structure should be redone
+using something like
+
+routes/Checkout/Components/CheckoutButton/CheckoutButton
+
+or even a Button from citrus, because Button and Segment are two generations
+deprecated.
+*/
+
+/* Container styles */
 
 .buttoncontainer {
-	width: 30%;
+  width: 30%;
 }
 
 .buttoncontainerFull {
-	width: 100%;
+  width: 100%;
 }
 
 .coButton {
-	min-width: 140px;
-	composes: marginMDLeftRight from 'sass-loader!styles/spacing.scss';
-	font-family: AxiformaSemiBold;
-	font-size: 15px;
+  min-width: 140px;
+  composes: marginMDLeftRight from 'sass-loader!styles/spacing.scss';
+  font-family: AxiformaSemiBold;
+  font-size: 15px;
 
-	@media ScreenXSMax {
-		min-width: 127px;
-	}
+  @media ScreenXSMax {
+    min-width: 127px;
+  }
+}
+
+.containerIsSimplifyBasketBarEnabled {
+  height: 3rem;
+  min-width: 10.25rem;
+  margin-left: 1rem;
+  margin-right: 0;
+  width: unset;
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    margin-right: 0.75rem;
+  }
+
+  @media BreakpointFromLarge {
+    margin-right: 2rem;
+  }
+}
+
+/* Button styles */
+
+.buttonIsSimplifyBasketBarEnabled {
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+  /* Override Button.module.css.  Using `!important` for expediency because that
+   file contains lots of highly-specific selectors and doesn't allow for
+   overriding it in a sane way.  See productionization notice above for the
+   proper approach. */
+  border-width: 0 !important;
+}
+
+/* Segment styles */
+
+.submitButton {
+  padding-top: 5px;
+  min-height: 52px;
+  font-family: AxiformaSemiBold;
+  font-size: 15px;
+}
+
+.coButtonSegment {
+  padding-bottom: 44px;
+  padding-top: 4px;
+}
+
+.segmentIsSimplifyBasketBarEnabled {
+  padding-bottom: 0;
+  padding-top: 0;
+  max-height: unset;
+  height: 3rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+
+  /* Three classes needed to override ui-components/src/components/Segment/Segment.module.css:156 */
+  &.isDisabled.isDisabled {
+    background-color: NG-200;
+  }
 }

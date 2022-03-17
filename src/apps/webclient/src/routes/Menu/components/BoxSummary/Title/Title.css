@@ -1,86 +1,118 @@
 @value ScreenMLMax, Screen3XSMax from 'styles/screenSizes.css';
-@value BreakpointToMedium from 'design-language/breakpoints.css';
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.css';
 @value sizeXS from 'styles/typography.css';
+@value FS-800 #008610;
+@value FS-200 #9CDC9E;
 
 .desktopText {
-	composes: noMargin from 'sass-loader!styles/spacing.scss';
-	font-size: 15px;
+  composes: noMargin from 'sass-loader!styles/spacing.scss';
+  font-size: 15px;
 }
 
 .mobileText {
-	composes: noMargin from 'sass-loader!styles/spacing.scss';
-	color: White;
+  composes: noMargin from 'sass-loader!styles/spacing.scss';
+  color: White;
 }
 
 .title {
-	composes: headerMD textUpper textBold from 'styles/typography.css';	
+  composes: headerMD textUpper textBold from 'styles/typography.css';
 }
 
 .titledesktop {
-	composes: title desktopText;
-	color: inherit;
+  composes: title desktopText;
+  color: inherit;
 }
 
 .titlemobile {
-	composes: title mobileText;
-	composes: textCenter from 'styles/typography.css';
-	composes: paddingSMTop paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
-	composes: relative from 'styles/position.css';
-	z-index: 1000;
+  composes: title mobileText;
+  composes: textCenter from 'styles/typography.css';
+  composes: paddingSMTop paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+  composes: relative from 'styles/position.css';
+  z-index: 1000;
 }
+
 .titleWrapper {
-	composes: flex verticalCenter from 'styles/flex.css';
+  composes: flex verticalCenter from 'styles/flex.css';
+}
+
+.titleWrapperVariant {
+  composes: fontStyleXS from 'design-language/typography.css';
+  composes: fontSemiBold from 'design-language/typography.css';
+}
+
+.discountTip {
+  color: FS-200;
+
+  @media BreakpointFromMedium {
+    color: FS-800;
+  }
+}
+
+.titleWrapperVariant .titledesktop {
+  text-transform: none;
 }
 
 .showDate {
-	visibility: visible;
-	min-width: 85px;
-	@media Screen3XSMax {
-		font-size: sizeXS;
-	}
+  visibility: visible;
+  min-width: 85px;
+  @media Screen3XSMax {
+    font-size: sizeXS;
+  }
 }
 
 .hideDate {
-	visibility: hidden;
+  visibility: hidden;
 }
 
 .price {
-	composes: paddingSMLeft from 'sass-loader!styles/spacing.scss';
-	margin-left: auto;
-	text-align: right;
-	display: inline-block;
-	min-width: auto;
-	
-	@media BreakpointToMedium {
-		display: flex;
-		flex-direction: row;
-	}
+  composes: paddingSMLeft from 'sass-loader!styles/spacing.scss';
+  margin-left: auto;
+  text-align: right;
+  display: inline-block;
+  min-width: auto;
+
+  @media BreakpointToMedium {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.priceVariant {
+  margin-left: auto;
+  text-align: right;
+  display: inline-block;
+  min-width: auto;
+
+  @media BreakpointToMedium {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .spinnerContainer {
-	display: none;
-	padding: 0;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	bottom: 0;
-	top: 0;
-	border-color: transparent;
+  display: none;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  bottom: 0;
+  top: 0;
+  border-color: transparent;
 }
 
 .spinner {
-	display: block;
-	width: 36px;
-	height: 100%;
-	position: relative;
-	transform: translateY(-50%);
-	margin-left: auto;
-	margin-right: 24%;
+  display: block;
+  width: 36px;
+  height: 100%;
+  position: relative;
+  transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: 24%;
 }
 
 .spinnerShow {
-	opacity: 0.8;
-	z-index: 99;
-	display: block;
+  opacity: 0.8;
+  z-index: 99;
+  display: block;
 }
