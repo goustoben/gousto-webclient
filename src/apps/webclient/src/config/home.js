@@ -38,6 +38,8 @@ export const promo = {
   defaultPromoCode: 'DTI-SB-63',
   defaultBannerText: 'Get 60% off your first box and 30% off your first month',
   boxPricesCTAText: 'Get started with 60% off',
+  twoMonthPromoCode: 'DTI-SB-602525',
+  twoMonthBannerText: 'Get 60% off your first box and 25% off your first two months',
 }
 
 export const emailForm = {

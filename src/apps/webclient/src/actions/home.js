@@ -12,9 +12,13 @@ import routesConfig from 'config/routes'
 
 const getIsTestAllocationFactoryEnabled = isOptimizelyFeatureEnabledFactory('beetroots_test_allocation_factory_web')
 
+const getIsTwoMonthPromoCodeEnabled = isOptimizelyFeatureEnabledFactory('beetroots_two_month_promo_code_web_enabled')
+
 export const applyPromoCodeAndShowModal = () => async (dispatch, getState) => {
   const state = getState()
-  const { promoCode, canApplyPromo } = getPromoBannerState(state)
+  const isTwoMonthPromoCodeEnabled = await getIsTwoMonthPromoCodeEnabled(dispatch, getState)
+
+  const { promoCode, canApplyPromo } = getPromoBannerState(state, isTwoMonthPromoCodeEnabled)
 
   if (!canApplyPromo) {
     return

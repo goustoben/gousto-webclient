@@ -39,17 +39,19 @@ export class PromoBanner extends Component {
   }
 
   render() {
-    const { canApplyPromo, text } = this.props
+    const { isLoading, canApplyPromo, text } = this.props
     const { isSticky } = this.state
 
     return (
       <div ref={this.stickyBarRef}>
-        <DiscountBar
-          applyDiscount={this.applyDiscount}
-          isHidden={!canApplyPromo}
-          isSticky={isSticky}
-          text={text}
-        />
+        {isLoading ? null : (
+          <DiscountBar
+            applyDiscount={this.applyDiscount}
+            isHidden={!canApplyPromo}
+            isSticky={isSticky}
+            text={text}
+          />
+        )}
       </div>
     )
   }
@@ -61,6 +63,7 @@ PromoBanner.propTypes = {
   trackUTMAndPromoCode: PropTypes.func,
   applyPromoCodeAndShowModal: PropTypes.func,
   redirect: PropTypes.func,
+  isLoading: PropTypes.bool,
 }
 
 PromoBanner.defaultProps = {
@@ -69,4 +72,5 @@ PromoBanner.defaultProps = {
   trackUTMAndPromoCode: () => {},
   applyPromoCodeAndShowModal: () => {},
   redirect: () => {},
+  isLoading: false,
 }

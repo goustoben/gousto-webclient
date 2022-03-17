@@ -6,12 +6,15 @@ import {
 import { promo } from 'config/home'
 import { actionTypes } from 'actions/actionTypes'
 
-export const getPromoBannerState = (state) => {
+export const getPromoBannerState = (state, isTwoMonthPromoCodeEnabled = false) => {
   const isSignupReductionEnabled = getIsSignupReductionEnabled(state)
   const currentPromo = state.promoCurrent || ''
   const basketPromo = getPromoCode(state) || ''
   const isAuthenticated = state.auth.get('isAuthenticated')
-  const promoCode = getPromoBannerCode(state) || promo.defaultPromoCode
+
+  const promoCode =
+    getPromoBannerCode(state) ||
+    (isTwoMonthPromoCodeEnabled ? promo.twoMonthPromoCode : promo.defaultPromoCode)
 
   const hasBasketPromo = basketPromo.length > 0
   const hasCurrentPromo = currentPromo.length > 0
