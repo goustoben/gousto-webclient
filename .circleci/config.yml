@@ -430,6 +430,32 @@ jobs:
 workflows:
   version: 2
 
+  regression-test-manual:
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - TG-5769/manual-regression-test
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+          filters:
+            branches:
+              only:
+                - TG-5769/manual-regression-test
+      - test-regression:
+          name: test-regression-web
+          platform: web
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - TG-5769/manual-regression-test
   e2e-manual:
     jobs:
       - setup-ci-variables-scripts:
