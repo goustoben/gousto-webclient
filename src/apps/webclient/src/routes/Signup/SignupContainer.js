@@ -25,6 +25,8 @@ const mapStateToProps = (state, ownProps) => {
       'discount-whole-order-percent',
     ]),
     promoModalVisible: state.promoModalVisible,
+    // Note: Signup.js doesn't use promoCode, therefore we don't pass
+    // isTwoMonthPromoCodeEnabled.
     promoBannerState: getPromoBannerState(state),
     isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),

@@ -15,6 +15,8 @@ import { getIsAuthenticated } from 'selectors/auth'
 export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getState) => {
   const state = getState()
   const postcode = getBasketPostcode(state)
+  // Note: the actual promo code doesn't matter here, so we don't pass
+  // isTwoMonthPromoCodeEnabled
   const { canApplyPromo } = getPromoBannerState(state)
   const destination = postcode ? 'menu' : 'wizard'
 

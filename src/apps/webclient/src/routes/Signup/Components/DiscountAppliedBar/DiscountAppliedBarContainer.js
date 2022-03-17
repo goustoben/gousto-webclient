@@ -5,6 +5,8 @@ import { signupDismissDiscountAppliedBar } from 'actions/signup'
 import { DiscountAppliedBar } from './DiscountAppliedBar'
 
 const mapStateToProps = (state) => {
+  // Note: we don't use promoCode here, so we don't have to pass
+  // isTwoMonthPromoCodeEnabled.
   const promoBannerState = getPromoBannerState(state)
 
   return {

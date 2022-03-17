@@ -1,18 +1,15 @@
 import React from 'react'
 import Immutable from 'immutable'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
+import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import { getPromoBannerState } from 'utils/home'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { promo } from 'config/home'
 import { PromoBannerContainer } from '../PromoBannerContainer'
 
-jest.mock('config/home', () => ({
-  promo: {
-    defaultBannerText: 'promo banner text',
-  },
-}))
-
-jest.mock('utils/home', () => ({
-  getPromoBannerState: jest.fn(),
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockReturnValue(() => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
 }))
 
 describe('PromoBannerContainer', () => {
@@ -24,22 +21,51 @@ describe('PromoBannerContainer', () => {
         value: '',
       }),
     }),
+    basket: Immutable.fromJS({
+      promoCode: '',
+    }),
+    error: Immutable.fromJS({}),
+    auth: Immutable.fromJS({
+      id: null,
+    }),
   })
 
-  beforeEach(() => {
-    getPromoBannerState.mockReturnValue({
-      canApplyPromo: true,
-      promoCode: '',
+  describe('when beetroots_two_month_promo_code_web_enabled is off', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Provider store={store}>
+          <PromoBannerContainer store={store} />
+        </Provider>
+      )
     })
-    wrapper = shallow(<PromoBannerContainer store={store} />)
+
+    test('then it should pass default promo code and text', () => {
+      const expected = {
+        text: promo.defaultBannerText,
+        promoCode: promo.defaultPromoCode,
+        canApplyPromo: true,
+      }
+      expect(wrapper.find('PromoBanner').props()).toEqual(expect.objectContaining(expected))
+    })
   })
 
-  test('should be rendered properly', () => {
-    const expected = {
-      text: 'promo banner text',
-      promoCode: '',
-      canApplyPromo: true,
-    }
-    expect(wrapper.find('PromoBanner').props()).toEqual(expect.objectContaining(expected))
+  describe('when beetroots_two_month_promo_code_web_enabled is on', () => {
+    beforeEach(() => {
+      useIsOptimizelyFeatureEnabled.mockReturnValue(true)
+      wrapper = mount(
+        <Provider store={store}>
+          <PromoBannerContainer store={store} />
+        </Provider>
+      )
+    })
+
+    test('then it should pass the alternate promo code and text', () => {
+      const expected = {
+        text: promo.twoMonthBannerText,
+        promoCode: promo.twoMonthPromoCode,
+        canApplyPromo: true,
+      }
+      expect(wrapper.find('PromoBanner').props()).toEqual(expect.objectContaining(expected))
+    })
   })
 })
