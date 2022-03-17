@@ -32,13 +32,11 @@ const webpackEnvVarsBase = {
 const webpackEnvVarsDev = {
   ...webpackEnvVarsBase,
   __DOMAIN__: JSON.stringify(domain),
-  __PROD__: false,
   'process.env.NODE_ENV': JSON.stringify('development'),
 }
 
 const webpackEnvVarsClient = {
   ...webpackEnvVarsBase,
-  __PROD__: build === 'production',
   'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
 }
 
@@ -48,7 +46,6 @@ const webpackEnvVarsServer = {
   __AUTH_CLIENT_ID__: JSON.stringify(authClientId),
   __AUTH_CLIENT_SECRET__: JSON.stringify(authClientSecret),
   __DEV__: build === 'development',
-  __PROD__: build === 'production',
   __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
   'process.env.NODE_ENV': JSON.stringify(build),
 }
