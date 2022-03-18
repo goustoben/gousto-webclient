@@ -5,6 +5,7 @@ manifest.json
 
 # Config
 config/*-local.json5
+.env
 
 # Bower
 libs/goustouicomponents
