@@ -8,5 +8,5 @@ test('Recipe tile exists', () => {
     <RecipeTile bool />
   )
 
-  expect(getByTestId(/recipe-tile/i).textContent).toBe('Recipe tile')
+  expect(getByTestId(/recipe-tile/i).textContent).toBe('Recipe tile ()')
 })

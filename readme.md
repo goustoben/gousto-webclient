@@ -8,6 +8,7 @@ Webclient is the Node/React app that serves www.gousto.co.uk. It's owned by [gui
 - [Detailed setup](#detailed-setup)
 - [Code analysis](#code-analysis)
 - [Project history](#project-history)
+- [Configuration](#configuration)
 
 Further documentation
 
@@ -245,3 +246,11 @@ It should launch the tool in the browser at `http://localhost:6006/`
 
 Gousto-Webclient was originally ported from Gousto2-Frontend. You can view the Git history of the JS code at:
 https://github.com/Gousto/Gousto2-FrontEnd/blob/750691d7/src/nodeserver/src
+
+## Configuration
+
+### Checkout.com
+
+When setting up a new squad environment please add the relevant public key to [this](https://github.com/Gousto/gousto-webclient/blob/c4f64d816ed09c7a1218f8206e52fc504ff1a168/src/apps/webclient/src/routes/Checkout/Components/CheckoutPayment/config.ts) file.
+
+You will also need to add it to the Circle CI Beta & Production contexts so it can be injected into Gousto2-Frontend.
