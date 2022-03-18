@@ -370,7 +370,7 @@ jobs:
       - run:
           name: Start local application
           working_directory: src/apps/webclient
-          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn server
+          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn start:with-static
           background: true
       - run:
           name: Wait for application to be ready

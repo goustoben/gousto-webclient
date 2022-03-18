@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import MockDate from 'mockdate'
 import PromiseTimeout from 'promise-timeout'
 import { isServer } from 'utils/serverEnvironment'
+import { isProd } from 'utils/isomorphicEnvironment'
 
 const mockFetch = jest.fn()
 const mockGetState = jest.fn()
@@ -18,6 +19,8 @@ jest.mock('store', () => ({
 }))
 
 jest.mock('utils/serverEnvironment')
+
+jest.mock('utils/isomorphicEnvironment')
 
 jest.mock('utils/env', () => ({
   apiToken: 'mock-api-token'
@@ -460,8 +463,7 @@ describe('fetch', () => {
 
     describe('in production', () => {
       beforeEach(() => {
-        // eslint-disable-next-line
-        global.__PROD__ = true
+        isProd.mockReturnValue(true)
       })
 
       test('sets API-Token request header', async () => {
@@ -480,8 +482,7 @@ describe('fetch', () => {
 
     describe('not in production', () => {
       beforeEach(() => {
-        // eslint-disable-next-line
-        global.__PROD__ = false
+        isProd.mockReturnValue(false)
       })
 
       test('does not set API-Token request header', async () => {
