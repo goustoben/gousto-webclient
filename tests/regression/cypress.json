@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://frontend.gousto.local:8080/",
   "integrationFolder": "../..",
-  "testFiles": ["src/apps/webclient/**/__regression__/*.spec.*"],
+  "testFiles": ["src/apps/webclient/**/__regression__/*.spec.{js,ts}"],
   "screenshotsFolder": "screenshots",
   "videosFolder": "videos",
   "fixturesFolder": "fixtures",
