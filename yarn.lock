@@ -2142,7 +2142,8 @@ __metadata:
   dependencies:
     "@library/import-types": "workspace:*"
     "@testing-library/react": 12.1.2
-    jest-css-modules: 2.1.0
+    "@testing-library/react-hooks": ^3.4.2
+    react-test-renderer: 16.13.1
   peerDependencies:
     react: 17.0.2
     react-dom: 17.0.2
@@ -14956,15 +14957,6 @@ __metadata:
     ts-node:
       optional: true
   checksum: ce0002b9797d9b0895c66cb0daf8d8b5d679029c8086a296e610ac6bb9b6048809ebdfe3684546c590c00fcdf8115b8ef0b0ec8cf120518c4959d546710dc01a
-  languageName: node
-  linkType: hard
-
-"jest-css-modules@npm:2.1.0":
-  version: 2.1.0
-  resolution: "jest-css-modules@npm:2.1.0"
-  dependencies:
-    identity-obj-proxy: 3.0.0
-  checksum: ddf01a327379f0186fc506b0c2a6cecad59acf3a7c947113f75530d1ea87e4f09aa98c9894283c0ead29688ef9fbc3c91ce1b158756034872fa097e491ee9f8c
   languageName: node
   linkType: hard
 

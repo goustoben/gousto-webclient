@@ -1,8 +1,5 @@
 import React from 'react'
 
-// Feature modules can load CSS modules
-import css from './test.scss'
-
 export type Props = {
   bool: boolean
 }
@@ -11,8 +8,7 @@ export type Props = {
 // const webclientMediaImage = require('media/images/box-prices/best-value.png')
 
 export function RecipeTile(props: Props) {
-  console.log(props.bool)
   return (
-    <p data-testid="recipe-tile" className={css.testModule}>Recipe tile</p>
+    <p data-testid="recipe-tile">Recipe tile ({props.bool})</p>
   )
 }
