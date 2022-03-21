@@ -6,7 +6,7 @@ export const getHeroDetails = () => ({
 })
 
 export const cta = 'Build My Box'
-export const ctaRedesign = 'Get started'
+export const ctaRedesign = 'Build my box'
 
 // Note: the existing (pre-TG-4359) page's design is not flexible to support 5
 // recipes, so when moving to 5 recipes, this page should be revisited.
