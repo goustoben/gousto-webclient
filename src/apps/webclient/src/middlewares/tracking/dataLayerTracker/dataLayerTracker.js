@@ -1,6 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import logger from 'utils/logger'
 import { getBasketRecipes } from 'selectors/basket'
+import { getCurrentPaymentMethod } from 'selectors/payment'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import { checkoutSteps } from 'routes/Checkout/checkoutConfig'
 import { canUseWindow } from 'utils/browserEnvironment'
@@ -99,6 +100,7 @@ export const signupPurchaseCompleted = (action, state) => {
           revenue: totalPrice,
           coupon: promoCode,
           coupon_value: totalDiscount,
+          payment_type: getCurrentPaymentMethod(state),
         },
         products: getProductsValueForMultipleRecipes(basketRecipes, state),
       },

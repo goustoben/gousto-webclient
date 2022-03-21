@@ -4,7 +4,7 @@ import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
-import { setAffiliateSource, setTapjoyData } from 'actions/tracking'
+import { setAffiliateSource, setTapjoyData, setRoktData } from 'actions/tracking'
 import axe from '@axe-core/react'
 
 jest.mock('actions/signup',() => ({
@@ -18,6 +18,7 @@ jest.mock('actions/basket',() => ({
 jest.mock('actions/tracking',() => ({
   setAffiliateSource: jest.fn(),
   setTapjoyData: jest.fn(),
+  setRoktData: jest.fn(),
 }))
 
 jest.mock('actions/promos',() => ({
@@ -194,6 +195,21 @@ describe('Given processQuery util function', () => {
 
     test('then should dispatch setTapjoyData', () => {
       expect(setTapjoyData).toHaveBeenCalledWith('fake_transaction_id', 'fake_publisher_id')
+    })
+  })
+
+  describe('when utm_source is rokt and rokt_tracking_id parameter is supplied', () => {
+    beforeEach(() => {
+      query = {
+        utm_source: 'Rokt',
+        rokt_tracking_id: 'fake_rokt_id',
+      }
+
+      processQuery(query, mockStore, {})
+    })
+
+    test('then should dispatch setRoktData', () => {
+      expect(setRoktData).toHaveBeenCalledWith('fake_rokt_id')
     })
   })
 })

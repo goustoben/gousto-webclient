@@ -7,6 +7,7 @@ const initialState = Immutable.Map({
   awc: '',
   tapjoyTransactionId: '',
   tapjoyPublisherId: '',
+  roktTrackingId: '',
 })
 
 export const trackingReducers = {
@@ -28,6 +29,12 @@ export const trackingReducers = {
       return state.merge({
         tapjoyTransactionId: action.transactionId,
         tapjoyPublisherId: action.publisherId,
+      })
+    }
+
+    case actionTypes.SET_ROKT_DATA: {
+      return state.merge({
+        roktTrackingId: action.roktTrackingId,
       })
     }
 

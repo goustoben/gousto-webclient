@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
-import { setAffiliateSource, setAwinClickChecksum, setTapjoyData } from 'actions/tracking'
+import { setAffiliateSource, setAwinClickChecksum, setTapjoyData, setRoktData } from 'actions/tracking'
 import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
 import { getIsAuthenticated } from 'selectors/auth'
 
@@ -57,6 +57,10 @@ export async function processQuery(query, store, { hashTag = '', }) {
     && query.tapjoy_transaction_id
     && query.tapjoy_publisher_id) {
     store.dispatch(setTapjoyData(query.tapjoy_transaction_id, query.tapjoy_publisher_id))
+  }
+
+  if ((query.utm_source || '').toLowerCase() === 'rokt' && query.rokt_tracking_id) {
+    store.dispatch(setRoktData(query.rokt_tracking_id))
   }
 
   if (query.axe) {

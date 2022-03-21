@@ -7,7 +7,7 @@ import { featuresSet } from 'actions/features'
 import { promoAgeVerify } from 'actions/promos'
 import authActions from 'actions/auth'
 import { cookiePolicyAcceptanceChange } from 'actions/cookies'
-import { setAffiliateSource, setAwinClickChecksum, setTapjoyData } from 'actions/tracking'
+import { setAffiliateSource, setAwinClickChecksum, setTapjoyData, setRoktData } from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
 import { initSelectedRecipeVariantAction } from 'routes/Menu/actions/menuRecipeDetails'
@@ -28,6 +28,7 @@ const processCookies = (cookies, store) => {
   let awc = cookies.get('awc')
   let tapjoyTransactionId = ''
   let tapjoyPublisherId = ''
+  let roktTrackingId = ''
 
   try {
     const refreshCookie = get(cookies, 'oauth_refresh')
@@ -140,6 +141,7 @@ const processCookies = (cookies, store) => {
       awc = tracking.awc || awc
       tapjoyTransactionId = tracking.tapjoyTransactionId || tapjoyTransactionId
       tapjoyPublisherId = tracking.tapjoyPublisherId || tapjoyPublisherId
+      roktTrackingId = tracking.roktTrackingId || roktTrackingId
     } catch (err) {
       logger.error({ message: 'error parsing tracking cookie value', errors: [err] })
     }
@@ -155,6 +157,10 @@ const processCookies = (cookies, store) => {
 
   if (tapjoyTransactionId && tapjoyPublisherId) {
     store.dispatch(setTapjoyData(tapjoyTransactionId, tapjoyPublisherId))
+  }
+
+  if (roktTrackingId) {
+    store.dispatch(setRoktData(roktTrackingId))
   }
 
   if (promoCodeUrl) {

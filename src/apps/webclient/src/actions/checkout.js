@@ -51,6 +51,7 @@ import {
   trackCheckoutError,
   trackSubscriptionCreated,
   clearTapjoyData,
+  clearRoktData,
 } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
@@ -300,11 +301,11 @@ export function checkoutPostSignup({ pricing }) {
       const password = getPasswordValue(state)
       const orderId = getPreviewOrderId(state)
       const basketRecipes = getBasketRecipes(state)
+      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes, pricing }) // used for data layer tracking
       await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }, orderId))
       dispatch(tempActions.temp('originalGrossTotal', pricing.grossTotal))
       dispatch(tempActions.temp('originalNetTotal', pricing.netTotal))
       dispatch(trackPurchase({ orderId, pricing }))
-      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes, pricing }) // used for data layer tracking
       dispatch(feLoggingLogEvent(logLevels.info, 'signup login success', signupTestData))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.info, `signup login failed: ${err.message}`, signupTestData))
@@ -352,6 +353,7 @@ export const trackPurchase = ({ orderId, pricing }) => (
       isSignup: true,
     }))
     dispatch(clearTapjoyData())
+    dispatch(clearRoktData())
   }
 )
 
