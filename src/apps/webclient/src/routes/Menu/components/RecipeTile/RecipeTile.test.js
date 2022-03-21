@@ -7,7 +7,6 @@ import { TileImage } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { Title, BrandTag } from '../Recipe'
-import * as MenuRecipeDetails from '../../actions/menuRecipeDetails'
 import * as RecipeContext from '../../context/recipeContext'
 
 jest.mock('react-redux', () => ({
@@ -18,21 +17,20 @@ jest.mock('react-redux', () => ({
 
 jest.mock('../../domains/collections', () => ({
   ...jest.requireActual('../../domains/collections'),
-  useCurrentCollectionId: jest.fn().mockImplementation(() => 'foo' )
+  useCurrentCollectionId: jest.fn().mockImplementation(() => 'foo'),
 }))
 
 jest.mock('routes/Menu/domains/menu/internal/useAlternativeOptions', () => ({
   useAlternativeOptions: () => ({
-    getAlternativeOptionsForRecipe: () => ([]),
+    getAlternativeOptionsForRecipe: () => [],
   }),
 }))
 
 describe('RecipeTile', () => {
-  const mockShowDetailRecipe = jest.fn()
-  jest.spyOn(MenuRecipeDetails, 'showDetailRecipe').mockImplementation(mockShowDetailRecipe)
+  const onClick = jest.fn()
   jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag').mockImplementation(() => true)
   jest.spyOn(RecipeContext, 'useRecipeIsFineDineIn').mockImplementation(() => false)
-  jest.spyOn(MenuHooks, 'useStock').mockImplementation(() => ({isRecipeOutOfStock: jest.fn()}))
+  jest.spyOn(MenuHooks, 'useStock').mockImplementation(() => ({ isRecipeOutOfStock: jest.fn() }))
 
   let wrapper
   let defaultProps
@@ -43,15 +41,14 @@ describe('RecipeTile', () => {
       recipeId,
       originalId: 'original ID',
       fdiStyling: true,
+      onClick,
     }
   })
 
   global.innerWidth = 1200
 
   beforeEach(() => {
-    wrapper = shallow(<RecipeTile
-      {...defaultProps}
-    />)
+    wrapper = shallow(<RecipeTile {...defaultProps} />)
   })
 
   test('should contain a Title', () => {
@@ -81,10 +78,7 @@ describe('RecipeTile', () => {
 
   describe('when a recipe is not in stock', () => {
     beforeEach(() => {
-      wrapper = shallow(<RecipeTile
-        {...defaultProps}
-        isOutOfStock
-      />)
+      wrapper = shallow(<RecipeTile {...defaultProps} isOutOfStock />)
     })
 
     test('should contain one TileImage component', () => {
@@ -96,21 +90,19 @@ describe('RecipeTile', () => {
     beforeEach(() => {
       jest.clearAllMocks()
     })
-    test('should call showDetailRecipe function', () => {
+    test('should call onClick function which will showDetailRecipe', () => {
       wrapper.simulate('click', {
-        stopPropagation: () => { }
+        stopPropagation: () => {},
       })
 
-      expect(mockShowDetailRecipe).toHaveBeenCalled()
+      expect(onClick).toHaveBeenCalled()
     })
   })
 
   describe('when isFineDineIn is true', () => {
     beforeEach(() => {
       jest.spyOn(RecipeContext, 'useRecipeIsFineDineIn').mockImplementation(() => true)
-      wrapper = shallow(<RecipeTile
-        {...defaultProps}
-      />)
+      wrapper = shallow(<RecipeTile {...defaultProps} />)
     })
 
     test('should have class of recipeTileIsFineDineIn', () => {

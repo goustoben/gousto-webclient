@@ -29,18 +29,22 @@ class RecipeList extends React.PureComponent {
   }
 
   render() {
-    const { recipes, currentCollectionId, isDietaryCollectionLinksEnabled } = this.props
+    const { recipes, currentCollectionId, isDietaryCollectionLinksEnabled, showDetailRecipe } = this.props
 
     return (
       <div className={css.emeRecipeList}>
         {recipes.map((value, index) => (
           <React.Fragment key={value.recipe.get('id')}>
-            {isDietaryCollectionLinksEnabled && showDietaryCollectionLinks({collectionId: currentCollectionId, atIndex: index}) && <CollectionLink />}
+            {isDietaryCollectionLinksEnabled &&
+              showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
+                <CollectionLink />
+            )}
             <RecipeContextProvider value={value.recipe}>
               <RecipeTile
                 recipeId={value.recipe.get('id')}
                 originalId={value.originalId}
-                categoryId={currentCollectionId}
+                currentCollectionId={currentCollectionId}
+                onClick={showDetailRecipe}
               />
             </RecipeContextProvider>
           </React.Fragment>
@@ -56,6 +60,7 @@ RecipeList.propTypes = {
   currentCollectionId: PropTypes.string.isRequired,
   trackRecipeOrderDisplayed: PropTypes.func.isRequired,
   isDietaryCollectionLinksEnabled: PropTypes.bool,
+  showDetailRecipe: PropTypes.func.isRequired,
 }
 
 RecipeList.defaultProps = {

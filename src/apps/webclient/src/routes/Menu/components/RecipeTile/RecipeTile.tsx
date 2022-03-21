@@ -1,11 +1,8 @@
 import React, { SyntheticEvent } from 'react'
-import { useDispatch } from 'react-redux'
 import classnames from 'classnames'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
-import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
-import { useCurrentCollectionId } from '../../domains/collections'
 import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
 import { VariantHeader } from './VariantHeader'
@@ -16,17 +13,17 @@ import css from './RecipeTile.css'
 type RecipeTileProps = {
   recipeId: string
   originalId: string
-  categoryId?: string
+  currentCollectionId: string
+  onClick: (recipeId: string, currentCollectionId: string) => void
 }
 
 const RecipeTile: React.FC<RecipeTileProps> = ({
   recipeId,
   originalId,
-  categoryId: collectionIdOverride,
+  currentCollectionId: categoryId,
+  onClick,
 }) => {
-  const dispatch = useDispatch()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
-  const currentCollectionId = useCurrentCollectionId()
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)
 
@@ -35,11 +32,9 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   const deviceType = useDeviceType()
 
   // should never happen but caters for loading state
-  if (currentCollectionId === null) {
+  if (categoryId === null) {
     return null
   }
-
-  const categoryId = collectionIdOverride || currentCollectionId
 
   const alternatives = getAlternativeOptionsForRecipe({
     originalId,
@@ -48,9 +43,9 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
     isOnDetailScreen: false,
   })
 
-  const onClick = (e: SyntheticEvent) => {
+  const handleOnClick = (e: SyntheticEvent) => {
     e.stopPropagation()
-    dispatch(showDetailRecipe(recipeId, categoryId))
+    onClick(recipeId, categoryId)
   }
 
   // alternative options include the recipe itself
@@ -67,8 +62,8 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
       className={css.recipeTile}
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
       data-testing-id={recipeId}
-      onClick={onClick}
-      onKeyPress={onClick}
+      onClick={handleOnClick}
+      onKeyPress={handleOnClick}
     >
       {
         // mobile banner needs to sit outside of TileImage
