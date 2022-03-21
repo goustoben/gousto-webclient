@@ -13,6 +13,7 @@ import {
   trackCheckoutError,
   trackSubscriptionCreated,
   clearTapjoyData,
+  clearRoktData,
 } from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
 import statusActions from 'actions/status'
@@ -75,6 +76,7 @@ jest.mock('actions/tracking', () => ({
   trackCheckoutError: jest.fn(() => ({ type: 'trackCheckoutError' })),
   trackSubscriptionCreated: jest.fn(() => ({ type: 'trackSubscriptionCreated' })),
   clearTapjoyData: jest.fn(),
+  clearRoktData: jest.fn(),
 }))
 jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
@@ -867,6 +869,12 @@ describe('checkout actions', () => {
       trackPurchase({ orderId, pricing })(dispatch, getState)
 
       expect(clearTapjoyData).toHaveBeenCalled()
+    })
+
+    test('should call clearRoktData', () => {
+      trackPurchase({ orderId, pricing })(dispatch, getState)
+
+      expect(clearRoktData).toHaveBeenCalled()
     })
   })
 

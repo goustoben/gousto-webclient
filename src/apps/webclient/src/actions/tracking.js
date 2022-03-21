@@ -90,6 +90,13 @@ export const setTapjoyData = (transactionId, publisherId) => ({
 
 export const clearTapjoyData = () => setTapjoyData('', '')
 
+export const setRoktData = (roktTrackingId) => ({
+  type: actionTypes.SET_ROKT_DATA,
+  roktTrackingId,
+})
+
+export const clearRoktData = () => setRoktData('')
+
 export const trackAffiliatePurchase = ({
   orderId,
   total,
@@ -98,11 +105,13 @@ export const trackAffiliatePurchase = ({
   isSignup = false
 }) =>
   async (dispatch, getState) => {
-    const awinEnabled = !!(canUseWindow() && window.AWIN)
     const { tracking } = getState()
+    const awinEnabled = !!(canUseWindow() && window.AWIN)
     const awc = tracking.get('awc')
     const tapjoyTransactionId = tracking.get('tapjoyTransactionId')
     const tapjoyPublisherId = tracking.get('tapjoyPublisherId')
+    const roktTrackingId = tracking.get('roktTrackingId')
+    const paymentType = getCurrentPaymentMethod(getState()).toLowerCase()
     let sendData = false
 
     if (!orderId) {
@@ -158,10 +167,20 @@ export const trackAffiliatePurchase = ({
       sendData = true
       request.awin = {
         merchant: '5070',
-        cr: 'GBR',
+        cr: 'GBP',
         amount: total,
         parts: `${commissionGroup}:${total}`,
         cks: awc,
+      }
+    }
+
+    if (roktTrackingId) {
+      sendData = true
+      request.rokt = {
+        passbackconversiontrackingid: roktTrackingId,
+        amount: total,
+        currency: 'GBP',
+        paymenttype: paymentType,
       }
     }
 

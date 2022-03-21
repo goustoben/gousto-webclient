@@ -42,6 +42,9 @@ describe('given dataLayerTracker middleware is invoked', () => {
         739: 1,
       },
     }),
+    payment: Immutable.fromJS({
+      paymentMethod: 'Card',
+    }),
   }
 
   describe('when not on the client', () => {
@@ -311,6 +314,7 @@ describe('given dataLayerTracker middleware is invoked', () => {
                 currency_code: 'GBP',
                 order_id: '333',
                 revenue: '20.00',
+                payment_type: 'Card',
               },
               products: [
                 {

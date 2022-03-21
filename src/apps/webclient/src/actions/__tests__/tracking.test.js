@@ -10,6 +10,8 @@ import {
   setUTMSource,
   setTapjoyData,
   clearTapjoyData,
+  setRoktData,
+  clearRoktData,
   trackGetStarted,
   trackSubmitOrderEvent,
   trackUTMAndPromoCode,
@@ -371,9 +373,17 @@ describe('tracking actions', () => {
           awc: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
           tapjoyTransactionId: 'fake_transaction_id',
           tapjoyPublisherId: 'fake_publisher_id',
-        })
+          roktTrackingId: 'fake_rokt_id',
+        }),
+        payment: Immutable.Map({
+          paymentMethod: PaymentMethod.Card,
+        }),
       })
       jest.clearAllMocks()
+    })
+
+    afterEach(() => {
+      delete global.AWIN
     })
 
     describe('when attempting to track with empty orderId', () => {
@@ -421,7 +431,13 @@ describe('tracking actions', () => {
         })(dispatch, getState)
 
         expect(global.AWIN).toBe(undefined)
-        expect(trackOrder).not.toHaveBeenCalled()
+        expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+          merchant: '5070',
+          cr: 'GBP',
+          amount: '34.99',
+          parts: 'FIRSTPURCHASE:34.99',
+          cks: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
+        }))
       })
     })
 
@@ -479,7 +495,7 @@ describe('tracking actions', () => {
             },
             awin: {
               merchant: '5070',
-              cr: 'GBR',
+              cr: 'GBP',
               amount: '24.50',
               parts: 'FIRSTPURCHASE:24.50',
               cks: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
@@ -494,7 +510,10 @@ describe('tracking actions', () => {
             tracking: Immutable.Map({
               tapjoyTransactionId: '',
               tapjoyPublisherId: '',
-            })
+            }),
+            payment: Immutable.Map({
+              paymentMethod: PaymentMethod.Card,
+            }),
           })
         })
 
@@ -555,6 +574,59 @@ describe('tracking actions', () => {
             },
           }))
         })
+      })
+    })
+
+    describe('when Rokt Id is provided', () => {
+      test('then should send tracking data to server', async () => {
+        await trackAffiliatePurchase({
+          orderId: 9010321,
+          total: '24.50',
+          commissionGroup: 'FIRSTPURCHASE',
+          promoCode: 'DTI-SB-P30M',
+          isSignup: true,
+        })(dispatch, getState)
+
+        expect(trackOrder).toHaveBeenCalledWith(expect.objectContaining({
+          rokt: {
+            passbackconversiontrackingid: 'fake_rokt_id',
+            amount: '24.50',
+            currency: 'GBP',
+            paymenttype: 'card',
+          }
+        }))
+      })
+    })
+
+    describe('when Rokt Id is not provided', () => {
+      beforeEach(() => {
+        getState = jest.fn().mockReturnValue({
+          tracking: Immutable.Map({
+            roktTrackingId: '',
+          }),
+          payment: Immutable.Map({
+            paymentMethod: PaymentMethod.Card,
+          }),
+        })
+      })
+
+      test('then should not send tracking data to server', async () => {
+        await trackAffiliatePurchase({
+          orderId: 9010321,
+          total: '24.50',
+          commissionGroup: 'FIRSTPURCHASE',
+          promoCode: 'DTI-SB-P30M',
+          isSignup: true,
+        })(dispatch, getState)
+
+        expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+          rokt: {
+            passbackconversiontrackingid: expect.any(String),
+            amount: expect.any(String),
+            currency: expect.any(String),
+            paymenttype: expect.any(String),
+          }
+        }))
       })
     })
   })
@@ -681,6 +753,56 @@ describe('tracking actions', () => {
       }
 
       const result = clearTapjoyData()
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('setRoktData', () => {
+    beforeEach(() => {
+      const state = {
+        tracking: Immutable.Map({
+          roktTrackingId: '',
+        })
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    test('then should dispatch SET_ROKT_DATA action', () => {
+      const expected = {
+        type: actionTypes.SET_ROKT_DATA,
+        roktTrackingId: 'fake_rokt_id',
+      }
+
+      const result = setRoktData('fake_rokt_id')
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('clearRoktData', () => {
+    beforeEach(() => {
+      const state = {
+        tracking: Immutable.Map({
+          roktTrackingId: '',
+        })
+      }
+      dispatch = jest.fn((fn) => {
+        if (fn && typeof fn === 'function') {
+          fn(dispatch, getState)
+        }
+      })
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    test('then should dispatch SET_ROKT_DATA action with empty value', () => {
+      const expected = {
+        type: actionTypes.SET_ROKT_DATA,
+        roktTrackingId: '',
+      }
+
+      const result = clearRoktData()
 
       expect(result).toEqual(expected)
     })
