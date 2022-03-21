@@ -1,9 +1,9 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { useDispatch } from 'react-redux'
-import { trackRecipeOrderDisplayed } from 'actions/tracking'
-
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { trackRecipeOrderDisplayed } from 'actions/tracking'
+import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { RecipeList } from './RecipeList'
 import { useCurrentCollectionId } from '../../domains/collections'
 import { useMenu } from '../../domains/menu'
@@ -22,6 +22,7 @@ const RecipeListWrapper = (ownProps) => {
   const actionDispatchers = bindActionCreators(
     {
       trackRecipeOrderDisplayed,
+      showDetailRecipe,
     },
     dispatch
   )
@@ -33,6 +34,7 @@ const RecipeListWrapper = (ownProps) => {
       currentCollectionId={currentCollectionId}
       recipes={recipes}
       trackRecipeOrderDisplayed={actionDispatchers.trackRecipeOrderDisplayed}
+      showDetailRecipe={actionDispatchers.showDetailRecipe}
       isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
     />
   )

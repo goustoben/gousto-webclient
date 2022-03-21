@@ -6,36 +6,34 @@ import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
 import { doesRecipeHaveSurcharges } from '../selectors/menuService'
 
-export const menuRecipeDetailVisibilityChange = (recipeId, categoryId) =>
-  (dispatch, getState) => {
-    const { recipes } = getState()
-    if (recipeId && !recipes.get(recipeId, null)) {
-      return
-    }
-
-    // If the recipe is a side, then get the base recipe id associated with it and display that instead.
-    const baseRecipeId = replaceSideRecipeIdWithBaseRecipeId(getState(), { recipeId })
-
-    dispatch({
-      type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
-      recipeId: baseRecipeId,
-      categoryId,
-      trackingData: {
-        actionType: trackingKeys.changeMenuRecipeDetailVisibility,
-        recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
-        show: Boolean(baseRecipeId),
-      },
-    })
+export const menuRecipeDetailVisibilityChange = (recipeId, categoryId) => (dispatch, getState) => {
+  const { recipes } = getState()
+  if (recipeId && !recipes.get(recipeId, null)) {
+    return
   }
 
-export const showDetailRecipe = (recipeId, categoryIds) =>
-  (dispatch, getState) => {
-    const { boxSummaryShow } = getState()
+  // If the recipe is a side, then get the base recipe id associated with it and display that instead.
+  const baseRecipeId = replaceSideRecipeIdWithBaseRecipeId(getState(), { recipeId })
 
-    if (!boxSummaryShow.get('show')) {
-      menuRecipeDetailVisibilityChange(recipeId, categoryIds)(dispatch, getState)
-    }
+  dispatch({
+    type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+    recipeId: baseRecipeId,
+    categoryId,
+    trackingData: {
+      actionType: trackingKeys.changeMenuRecipeDetailVisibility,
+      recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
+      show: Boolean(baseRecipeId),
+    },
+  })
+}
+
+export const showDetailRecipe = (recipeId, categoryIds) => (dispatch, getState) => {
+  const { boxSummaryShow } = getState()
+
+  if (!boxSummaryShow.get('show')) {
+    menuRecipeDetailVisibilityChange(recipeId, categoryIds)(dispatch, getState)
   }
+}
 
 export const checkQueryParams = () => (dispatch, getState) => {
   const prevLoc = locationBeforeTransitions(getState())
@@ -54,13 +52,21 @@ export const initSelectedRecipeVariantAction = (selectedRecipeVariants) => ({
   payload: { selectedRecipeVariants },
 })
 
-export const selectRecipeVariantAction = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true, hasSurcharge) => ({
+export const selectRecipeVariantAction = (
+  originalRecipeId,
+  variantId,
+  collectionId,
+  variantOutOfStock,
+  view = 'grid',
+  close = true,
+  hasSurcharge
+) => ({
   type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
   payload: {
     collectionId,
     originalRecipeId,
     variantId,
-    close
+    close,
   },
   trackingData: {
     actionType: trackingKeys.selectRecipeVariant,
@@ -70,23 +76,23 @@ export const selectRecipeVariantAction = (originalRecipeId, variantId, collectio
     variant_out_of_stock: variantOutOfStock,
     view,
     has_surcharge: hasSurcharge,
-  }
+  },
 })
 
-export const selectRecipeVariant = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true) =>
-  async (dispatch, getState) => {
-    const hasSurcharges = doesRecipeHaveSurcharges(getState(), variantId)
+export const selectRecipeVariant =
+  (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true) =>
+    async (dispatch, getState) => {
+      const hasSurcharges = doesRecipeHaveSurcharges(getState(), variantId)
 
-    dispatch(
-      selectRecipeVariantAction(
-        originalRecipeId,
-        variantId,
-        collectionId,
-        variantOutOfStock,
-        view,
-        close,
-        hasSurcharges
+      dispatch(
+        selectRecipeVariantAction(
+          originalRecipeId,
+          variantId,
+          collectionId,
+          variantOutOfStock,
+          view,
+          close,
+          hasSurcharges
+        )
       )
-    )
-  }
-
+    }
