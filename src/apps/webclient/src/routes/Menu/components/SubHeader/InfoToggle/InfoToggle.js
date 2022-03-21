@@ -4,7 +4,7 @@ import { Tooltip } from 'goustouicomponents'
 import css from './InfoToggle.css'
 
 const propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node),
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
 }
 
 class InfoToggle extends React.Component {

@@ -3,6 +3,7 @@ import React from 'react'
 import { Button, Segment } from 'goustouicomponents'
 import classnames from 'classnames'
 
+import { slotsPropType } from '../deliverySlotPropTypes'
 import css from './SlotPicker.css'
 
 const SlotPicker = ({ slots, date, slotId, onClick }) => {
@@ -14,7 +15,11 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => {
         <Segment
           key={slot.value}
           fill={slot.value === slotId && !slot.disabled}
-          onClick={() => { slot.disabled ? null : onClick(slot.value) }}
+          onClick={() => {
+            if (!slot.disabled) {
+              onClick(slot.value)
+            }
+          }}
           className={classnames(
             {[css.disabled]: slot.disabled },
             {[css.enabled]: !slot.disabled },
@@ -44,7 +49,7 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => {
 }
 
 SlotPicker.propTypes = {
-  slots: PropTypes.object.isRequired,
+  slots: slotsPropType.isRequired,
   date: PropTypes.string.isRequired,
   slotId: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,

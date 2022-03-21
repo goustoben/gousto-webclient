@@ -334,6 +334,9 @@ module.exports = {
           'function-call-argument-newline': 'off',
           quotes: 'off',
           'no-multiple-empty-lines': 'off',
+
+          // This check doesn't pick up default initializers in destructuring props.
+          'react/require-default-props': 'off',
         },
       },
     },
@@ -354,6 +357,9 @@ module.exports = {
         Cypress: 'readonly',
         cy: 'readonly',
         before: 'readonly',
+      },
+      rules: {
+        'no-underscore-dangle': ['warn', { allow: ['__store__'] }],
       },
     },
     {

@@ -15,6 +15,8 @@ export const getScrollOffset = (threshold, animationThreshold, scrolledPastPoint
       scrollJumped: (window.pageYOffset - threshold) > animationThreshold,
     })
   }
+
+  return null
 }
 
 export const getMenuLimits = (data) => {

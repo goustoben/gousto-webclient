@@ -1,7 +1,6 @@
 import { push } from 'react-router-redux'
 
 import config from 'config'
-import basketActions from 'actions/basket'
 import * as trackingKeys from 'actions/trackingKeys'
 import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
@@ -129,62 +128,17 @@ export const basketSetNumRecipes = (numRecipes) => ({
   numRecipes,
 })
 
-export const basketOrderLoad = (orderId, order = null) => (
-  (dispatch, getState) => {
-    if (getState().basket.get('orderId') !== orderId) {
-      dispatch(basketActions.basketReset())
-      dispatch(basketActions.basketIdChange(orderId))
-      dispatch(basketActions.basketOrderItemsLoad(orderId, order))
-      logger.info(`Basket loaded order: ${orderId}`)
-    } else {
-      logger.info(`Order already loaded into current basket: ${orderId}`)
-    }
-    dispatch(basketActions.basketOrderLoaded(orderId))
+export const basketReset = (chosenAddress = null) => ({
+  type: actionTypes.BASKET_RESET,
+  payload: {
+    chosenAddress
   }
-)
+})
 
-export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 'recipe', 'gift'], view = null) => (
-  (dispatch, getState) => {
-    const userOrder = order || getUserOrderById(orderId, getState().user.get('orders'))
-
-    types.forEach((type) => {
-      userOrder.get(`${type}Items`, []).forEach((item) => {
-        const itemableId = item.get('itemableId')
-        const qty = parseInt(item.get('quantity', 0), 10)
-        switch (type) {
-        case 'product': {
-          for (let i = 0; i < qty; i++) {
-            dispatch(basketActions.basketProductAdd(itemableId, view, orderId))
-          }
-          break
-        }
-        case 'recipe': {
-          const adjustedQty = Math.round(qty / parseInt(userOrder.getIn(['box', 'numPortions']), 10))
-
-          for (let i = 0; i < adjustedQty; i++) {
-            // fall back to the defaults for these 2 params
-            const recipeInfo = undefined
-            const maxRecipesNum = undefined
-
-            dispatch(basketRecipeAdd(itemableId, view, recipeInfo, maxRecipesNum, orderId))
-          }
-          break
-        }
-        case 'gift': {
-          const itemableType = item.get('itemableType')
-
-          for (let i = 0; i < qty; i++) {
-            dispatch(basketActions.basketGiftAdd(itemableId, itemableType))
-          }
-          break
-        }
-        default:
-          logger.error({ message: `Cannot add ${type} items to basket` })
-        }
-      })
-    })
-  }
-)
+export const basketIdChange = orderId => ({
+  type: actionTypes.BASKET_ID_CHANGE,
+  orderId,
+})
 
 export const basketProductAdd = (productId, view = null, force = false) => (
   (dispatch, getState) => {
@@ -216,6 +170,63 @@ export const basketProductAdd = (productId, view = null, force = false) => (
     } else {
       logger.error({ message: `Cannot add product to basket since ${productId} not found in product store` })
     }
+  }
+)
+
+export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 'recipe', 'gift'], view = null) => (
+  (dispatch, getState) => {
+    const userOrder = order || getUserOrderById(orderId, getState().user.get('orders'))
+
+    types.forEach((type) => {
+      userOrder.get(`${type}Items`, []).forEach((item) => {
+        const itemableId = item.get('itemableId')
+        const qty = parseInt(item.get('quantity', 0), 10)
+        switch (type) {
+        case 'product': {
+          for (let i = 0; i < qty; i++) {
+            dispatch(basketProductAdd(itemableId, view, orderId))
+          }
+          break
+        }
+        case 'recipe': {
+          const adjustedQty = Math.round(qty / parseInt(userOrder.getIn(['box', 'numPortions']), 10))
+
+          for (let i = 0; i < adjustedQty; i++) {
+            // fall back to the defaults for these 2 params
+            const recipeInfo = undefined
+            const maxRecipesNum = undefined
+
+            dispatch(basketRecipeAdd(itemableId, view, recipeInfo, maxRecipesNum, orderId))
+          }
+          break
+        }
+        case 'gift': {
+          const itemableType = item.get('itemableType')
+
+          for (let i = 0; i < qty; i++) {
+            dispatch(basketGiftAdd(itemableId, itemableType))
+          }
+          break
+        }
+        default:
+          logger.error({ message: `Cannot add ${type} items to basket` })
+        }
+      })
+    })
+  }
+)
+
+export const basketOrderLoad = (orderId, order = null) => (
+  (dispatch, getState) => {
+    if (getState().basket.get('orderId') !== orderId) {
+      dispatch(basketReset())
+      dispatch(basketIdChange(orderId))
+      dispatch(basketOrderItemsLoad(orderId, order))
+      logger.info(`Basket loaded order: ${orderId}`)
+    } else {
+      logger.info(`Order already loaded into current basket: ${orderId}`)
+    }
+    dispatch(basketOrderLoaded(orderId))
   }
 )
 
@@ -338,11 +349,6 @@ export const basketRecipesInitialise = (recipes) => (dispatch, getState) => {
     limitReached: reachedLimit,
   })
 }
-
-export const basketIdChange = orderId => ({
-  type: actionTypes.BASKET_ID_CHANGE,
-  orderId,
-})
 
 export const basketSlotChange = slotId => (
   (dispatch, getState) => {
@@ -540,13 +546,6 @@ export const basketProceedToCheckout = () => (
     }
   }
 )
-
-export const basketReset = (chosenAddress = null) => ({
-  type: actionTypes.BASKET_RESET,
-  payload: {
-    chosenAddress
-  }
-})
 
 export const basketSignupCollectionReceive = collection => ({
   type: actionTypes.BASKET_SIGNUP_COLLECTION_RECEIVE,

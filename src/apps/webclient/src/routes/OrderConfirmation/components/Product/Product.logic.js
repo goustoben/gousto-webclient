@@ -8,7 +8,7 @@ import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
 
 const propTypes = {
-  basket: PropTypes.instanceOf(Immutable.Map),
+  basket: PropTypes.instanceOf(Immutable.Map).isRequired,
   product: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
@@ -24,19 +24,24 @@ const propTypes = {
       value: PropTypes.string,
       type: PropTypes.string,
     })
-  ]),
+  ]).isRequired,
   ageVerified: PropTypes.bool,
-  ageVerificationPendingId: PropTypes.string,
-  ageVerificationPending: PropTypes.bool,
-  basketProductAdd: PropTypes.func,
-  basketProductRemove: PropTypes.func,
+  ageVerificationPending: PropTypes.bool.isRequired,
+  basketProductAdd: PropTypes.func.isRequired,
+  basketProductRemove: PropTypes.func.isRequired,
   numberOfColumnClass: PropTypes.string,
-  temp: PropTypes.func,
-  orderConfirmationProductTracking: PropTypes.func,
-  isSelectedProduct: PropTypes.bool,
-  addProduct: PropTypes.bool,
-  toggleAgeVerificationPopUp: PropTypes.func,
+  temp: PropTypes.func.isRequired,
+  orderConfirmationProductTracking: PropTypes.func.isRequired,
+  isSelectedProduct: PropTypes.bool.isRequired,
+  addProduct: PropTypes.bool.isRequired,
+  toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   productId: PropTypes.string,
+}
+
+const defaultProps = {
+  ageVerified: false,
+  productId: null,
+  numberOfColumnClass: '',
 }
 
 class Product extends PureComponent {
@@ -172,5 +177,7 @@ class Product extends PureComponent {
 }
 
 Product.propTypes = propTypes
+
+Product.defaultProps = defaultProps
 
 export { Product }

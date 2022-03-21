@@ -21,6 +21,17 @@ type ButtonsProps = {
   view: string
 }
 
+const generateGetSurchargeGridClass =
+  (surchargePerPortion: number | null, view: string) =>
+  (className: string, ...otherClasses: string[]) => {
+    const viewsToExclude = config.recipeDetailViews
+
+    const shouldApplyClass = Boolean(surchargePerPortion && !viewsToExclude.includes(view))
+    const otherClassNames = otherClasses.map((name) => css[name])
+
+    return classnames({ [css[className]]: shouldApplyClass }, ...otherClassNames)
+  }
+
 export const RecipeDetailsButtons = ({
   buttonText = 'Add recipe',
   isOutOfStock = false,
@@ -129,14 +140,3 @@ export const RecipeDetailsButtons = ({
     </Button>
   )
 }
-
-const generateGetSurchargeGridClass =
-  (surchargePerPortion: number | null, view: string) =>
-  (className: string, ...otherClasses: string[]) => {
-    const viewsToExclude = config.recipeDetailViews
-
-    const shouldApplyClass = Boolean(surchargePerPortion && !viewsToExclude.includes(view))
-    const otherClassNames = otherClasses.map((name) => css[name])
-
-    return classnames({ [css[className]]: shouldApplyClass }, ...otherClassNames)
-  }

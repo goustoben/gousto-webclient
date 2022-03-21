@@ -1,5 +1,21 @@
 import Immutable from 'immutable'
-import basket, { basketReset } from 'actions/basket'
+import * as basket from 'actions/basket'
+import {
+  basketReset,
+  portionSizeSelectedTracking,
+  basketCheckedOut,
+  basketCheckoutClicked,
+  basketOrderItemsLoad,
+  basketProceedToCheckout,
+  basketRecipesInitialise,
+  basketPostcodeChange,
+  basketNumPortionChange,
+  basketSlotChange,
+  basketOrderLoaded,
+  basketRestorePreviousValues,
+  basketRestorePreviousDate,
+  basketDateChange,
+} from 'actions/basket'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
@@ -31,12 +47,6 @@ returnArgumentsFromMock(trackingOrderCheckout, 'trackingOrderCheckout')
 describe('basket actions', () => {
   let dispatch = jest.fn()
   let getStateSpy = jest.fn()
-  const {
-    portionSizeSelectedTracking,
-    basketCheckedOut, basketCheckoutClicked, basketOrderItemsLoad,
-    basketProceedToCheckout, basketRecipesInitialise,
-    basketPostcodeChange,
-    basketNumPortionChange, basketSlotChange, basketOrderLoaded } = basket
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -532,7 +542,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_SLOT_CHANGE', () => {
-      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
+      basketRestorePreviousValues()(dispatch, getStateSpy)
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: 'BASKET_SLOT_CHANGE',
         slotId: '1ab-3esd',
@@ -540,7 +550,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_POSTCODE_CHANGE', () => {
-      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
+      basketRestorePreviousValues()(dispatch, getStateSpy)
       expect(dispatch.mock.calls[1][0]).toEqual({
         type: 'BASKET_POSTCODE_CHANGE',
         postcode: 'W140EE',
@@ -548,7 +558,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_ADDRESS_CHANGE', () => {
-      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
+      basketRestorePreviousValues()(dispatch, getStateSpy)
       expect(dispatch.mock.calls[2][0]).toEqual({
         type: 'BASKET_ADDRESS_CHANGE',
         address: Immutable.Map({ id: '12345' }),
@@ -588,7 +598,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_DATE_CHANGE', () => {
-      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
+      basketRestorePreviousDate()(dispatch, getStateSpy)
       expect( dispatch.mock.calls[0][0]).toEqual({
         type: actionTypes.BASKET_DATE_CHANGE,
         date: '2020-03-30',
@@ -596,7 +606,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch BASKET_SLOT_CHANGE', () => {
-      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
+      basketRestorePreviousDate()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_SLOT_CHANGE,
         slotId: 'slot-124',
@@ -604,7 +614,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE', () => {
-      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
+      basketRestorePreviousDate()(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE,
         trackingData: {
@@ -625,7 +635,7 @@ describe('basket actions', () => {
 
     test('should dispatch BASKET_DATE_CHANGE with right date', () => {
       const date = '2020-05-02 00:00:00'
-      const result = basket.basketDateChange(date)
+      const result = basketDateChange(date)
       expect(result).toEqual({
         date: '2020-05-02 00:00:00',
         type: 'BASKET_DATE_CHANGE'

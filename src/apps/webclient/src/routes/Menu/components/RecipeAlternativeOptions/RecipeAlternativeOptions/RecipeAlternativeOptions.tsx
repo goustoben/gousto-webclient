@@ -8,7 +8,7 @@ type RecipeAlternativeOptionsProps = {
   recipeId: string
   originalId: string
   categoryId?: string
-  closeOnSelection: boolean
+  closeOnSelection?: boolean
   isOnDetailScreen?: boolean
   /**
    * Optional Function to be called upon switching recipes.
@@ -19,7 +19,7 @@ type RecipeAlternativeOptionsProps = {
 export const RecipeAlternativeOptions = ({
   recipeId: currentRecipeId,
   originalId,
-  categoryId,
+  categoryId = undefined,
   closeOnSelection = false,
   isOnDetailScreen = false,
   onChangeCheckedRecipe = null,
@@ -29,7 +29,6 @@ export const RecipeAlternativeOptions = ({
     originalId,
     recipeId: currentRecipeId,
     isOnDetailScreen,
-    isFromShowcaseMenu: false,
     categoryId,
     closeOnSelection,
   })
@@ -62,15 +61,7 @@ export const RecipeAlternativeOptions = ({
       {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
       <ul className={css.recipeListText}>
         {recipeWithAlternativeOptions.map(
-          ({
-            recipeId,
-            recipeName,
-            changeCheckedRecipe,
-            isChecked,
-            isFromShowcaseMenu,
-            isOutOfStock,
-            surcharge,
-          }) => (
+          ({ recipeId, recipeName, changeCheckedRecipe, isChecked, isOutOfStock, surcharge }) => (
             <AlternativeOptionItem
               key={recipeId}
               recipeId={recipeId}
@@ -87,7 +78,6 @@ export const RecipeAlternativeOptions = ({
               }}
               isChecked={isChecked}
               isOnDetailScreen={isOnDetailScreen}
-              isFromShowcaseMenu={isFromShowcaseMenu}
               isOutOfStock={isOutOfStock}
               surcharge={surcharge === undefined ? null : surcharge}
             />

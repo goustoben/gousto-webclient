@@ -35,7 +35,7 @@ export class SubHeader extends React.PureComponent {
           </H3>
         </div>
         <p className={css.tooltipText}>
-          Our insulated box and ice packs help keep your food cool. And if you're not home, we can leave your box in your chosen safe place.
+          Our insulated box and ice packs help keep your food cool. And if you’re not home, we can leave your box in your chosen safe place.
         </p>
       </div>
     </InfoToggle>
@@ -56,6 +56,7 @@ export class SubHeader extends React.PureComponent {
           <div className={css.infoBannerMessage}>
             {info.line1}
             <ul className={info.line2.length < 2 ? css.noBullet : ''}>
+              {/* eslint-disable-next-line react/no-array-index-key */}
               {Object.keys(info.line2).map((line, i) => <li key={i}>{info.line2[line]}</li>)}
             </ul>
           </div>

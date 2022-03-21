@@ -12,7 +12,6 @@ type AlternativeOptionItemProps = {
   isOnDetailScreen: boolean
   isOutOfStock: boolean
   surcharge: number | null
-  isFromShowcaseMenu?: boolean
 }
 
 export const AlternativeOptionItem = ({
@@ -23,7 +22,6 @@ export const AlternativeOptionItem = ({
   isOnDetailScreen,
   isOutOfStock,
   surcharge,
-  isFromShowcaseMenu,
 }: AlternativeOptionItemProps) => (
   <li className={classnames(css.listItem, { [css.listItemChecked]: isChecked })}>
     <InputRadio
@@ -38,7 +36,6 @@ export const AlternativeOptionItem = ({
         isOnDetailScreen={isOnDetailScreen}
         isOutOfStock={isOutOfStock}
         surcharge={surcharge}
-        isFromShowcaseMenu={isFromShowcaseMenu}
       />
     </InputRadio>
   </li>

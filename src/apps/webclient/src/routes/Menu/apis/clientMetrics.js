@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import logger from 'utils/logger'
 import endpoint from 'config/endpoint'
 import { useUserIdForOptimizely } from 'containers/OptimizelyRollouts/useOptimizely.hook'

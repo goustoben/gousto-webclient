@@ -37,7 +37,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -63,7 +62,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -84,7 +82,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -93,26 +90,23 @@ describe('getAlternativeOptionsForRecipe', () => {
     })
   })
 
-  describe('when isOnDetailScreen and isFromShowcaseMenu flags are passed', () => {
+  describe('when isOnDetailScreen flag is passed', () => {
     const mockStore = configureMockStore()
     const store = mockStore(createMockState())
 
     const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
-    test('they are exposed in the options', () => {
+    test('then it is exposed in the options', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: true,
-        isFromShowcaseMenu: true,
         categoryId: COLLECTION_ID,
       })
 
       expect(options.find(o => o.recipeId === RECIPE_ID_1).isOnDetailScreen).toEqual(true)
       expect(options.find(o => o.recipeId === RECIPE_ID_2).isOnDetailScreen).toEqual(true)
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).isFromShowcaseMenu).toEqual(true)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).isFromShowcaseMenu).toEqual(true)
     })
   })
 
@@ -128,7 +122,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -149,7 +142,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_2,
         originalId: RECIPE_ID_2,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -170,7 +162,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -200,7 +191,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -236,7 +226,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: true,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 
@@ -271,7 +260,6 @@ describe('getAlternativeOptionsForRecipe', () => {
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
         isOnDetailScreen: false,
-        isFromShowcaseMenu: false,
         categoryId: COLLECTION_ID,
       })
 

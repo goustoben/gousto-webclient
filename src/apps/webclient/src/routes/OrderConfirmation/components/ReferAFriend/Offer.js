@@ -4,9 +4,13 @@ import { config } from './config'
 import css from './ReferAFriend.css'
 
 const propTypes = {
-  isYourOffer: PropTypes.bool,
-  offer: PropTypes.string,
+  isYourOffer: PropTypes.bool.isRequired,
+  offer: PropTypes.string.isRequired,
   theirMonthOffer: PropTypes.string,
+}
+
+const defaultProps = {
+  theirMonthOffer: '',
 }
 
 const Offer = ({ isYourOffer, offer, theirMonthOffer }) => {
@@ -24,5 +28,7 @@ const Offer = ({ isYourOffer, offer, theirMonthOffer }) => {
 }
 
 Offer.propTypes = propTypes
+
+Offer.defaultProps = defaultProps
 
 export { Offer }

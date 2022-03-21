@@ -13,12 +13,12 @@ export const IngredientsList = ({ ingredients, allergens, inset }) => (
     {(ingredients.size > 0) ? (
       <div className={(inset) ? css.insetSection : css.section}>
         <div className={css.heading}>Ingredients contain</div>
-        {ingredients.toArray().map((ingredient, index) => {
+        {ingredients.toArray().map((ingredient) => {
           const subIngredients = ingredient.get('subIngredients')
 
-          if (!subIngredients) return <span key={index} />
-
           const name = ingredient.get('name')
+
+          if (!subIngredients) return <span key={name} />
 
           return (
             <dl key={name}>

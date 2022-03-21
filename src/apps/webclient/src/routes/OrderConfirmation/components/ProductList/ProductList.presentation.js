@@ -8,9 +8,15 @@ const propTypes = {
     id: PropTypes.string,
   }),
   ageVerified: PropTypes.bool,
-  isLimitReached: PropTypes.func,
-  toggleAgeVerificationPopUp: PropTypes.func,
+  isLimitReached: PropTypes.func.isRequired,
+  toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   numberOfColumnClass: PropTypes.string,
+}
+
+const defaultProps = {
+  products: null,
+  numberOfColumnClass: '',
+  ageVerified: false,
 }
 
 const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggleAgeVerificationPopUp, numberOfColumnClass }) => (
@@ -36,5 +42,7 @@ const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggle
 )
 
 ProductListPresentation.propTypes = propTypes
+
+ProductListPresentation.defaultProps = defaultProps
 
 export { ProductListPresentation }

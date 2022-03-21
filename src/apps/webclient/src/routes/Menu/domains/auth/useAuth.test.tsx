@@ -5,6 +5,24 @@ import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
 import { useAuth } from './useAuth'
 
+const hookRenderer = ({
+  authUserId,
+  accessToken,
+}: { authUserId?: string; accessToken?: string } = {}) => {
+  const mockStore = configureMockStore()
+
+  const store = mockStore({
+    auth: Immutable.Map({
+      ...(authUserId && { id: authUserId }),
+      ...(accessToken && { accessToken }),
+    }),
+  })
+
+  const wrapper: React.FC = ({ children }) => <Provider store={store}>{children}</Provider>
+
+  return renderHook(() => useAuth(), { wrapper })
+}
+
 describe('useAuth', () => {
   describe('when there access token', () => {
     it('should return the token', () => {
@@ -42,21 +60,3 @@ describe('useAuth', () => {
     })
   })
 })
-
-const hookRenderer = ({
-  authUserId,
-  accessToken,
-}: { authUserId?: string; accessToken?: string } = {}) => {
-  const mockStore = configureMockStore()
-
-  const store = mockStore({
-    auth: Immutable.Map({
-      ...(authUserId && { id: authUserId }),
-      ...(accessToken && { accessToken }),
-    }),
-  })
-
-  const wrapper: React.FC = ({ children }) => <Provider store={store}>{children}</Provider>
-
-  return renderHook(() => useAuth(), { wrapper })
-}

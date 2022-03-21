@@ -5,26 +5,26 @@ import classnames from 'classnames'
 import css from './Product.css'
 
 const propTypes = {
-  id: PropTypes.string,
-  title: PropTypes.string,
-  listPrice: PropTypes.string,
-  imgSource: PropTypes.string,
-  lowStock: PropTypes.bool,
-  outOfStock: PropTypes.bool,
-  isAgeVerificationRequired: PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  listPrice: PropTypes.string.isRequired,
+  imgSource: PropTypes.string.isRequired,
+  lowStock: PropTypes.bool.isRequired,
+  outOfStock: PropTypes.bool.isRequired,
+  isAgeVerificationRequired: PropTypes.bool.isRequired,
   limitReached: PropTypes.oneOfType([
     PropTypes.shape({
       type: PropTypes.string,
       value: PropTypes.number,
     }),
     PropTypes.bool,
-  ]),
-  qty: PropTypes.number,
-  ageVerificationPending: PropTypes.bool,
-  inProgress: PropTypes.bool,
-  onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
-  openDetailsScreen: PropTypes.func,
+  ]).isRequired,
+  qty: PropTypes.number.isRequired,
+  ageVerificationPending: PropTypes.bool.isRequired,
+  inProgress: PropTypes.bool.isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  openDetailsScreen: PropTypes.func.isRequired,
 }
 
 const ProductPresentation = ({

@@ -5,6 +5,7 @@ import DropdownInput from 'Form/Dropdown'
 import { Calendar } from '../Calendar'
 import { SlotPicker } from '../SlotPicker'
 
+import { slotsPropType } from '../deliverySlotPropTypes'
 import css from '../DeliverySlot.css'
 
 const DatePicker = (props) => {
@@ -61,12 +62,7 @@ const DatePicker = (props) => {
 }
 
 DatePicker.propTypes = {
-  slots: PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-    coreSlotId: PropTypes.string,
-    disabled: PropTypes.bool
-  }).isRequired,
+  slots: slotsPropType.isRequired,
   slotId: PropTypes.string.isRequired,
   deliveryDays: PropTypes.arrayOf(PropTypes.shape({
     date: PropTypes.string,

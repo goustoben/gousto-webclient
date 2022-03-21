@@ -190,7 +190,6 @@ describe('<Detail />', () => {
     expect(wrapper.find(RecipeAlternativeOptions).prop('originalId')).toEqual('123')
     expect(wrapper.find(RecipeAlternativeOptions).prop('recipeId')).toEqual('123')
     expect(wrapper.find(RecipeAlternativeOptions).prop('isOnDetailScreen')).toEqual(true)
-    expect(wrapper.find(RecipeAlternativeOptions).prop('isFromShowcaseMenu')).toEqual(false)
     expect(wrapper.find(RecipeAlternativeOptions).prop('categoryId')).toEqual('123')
   })
 

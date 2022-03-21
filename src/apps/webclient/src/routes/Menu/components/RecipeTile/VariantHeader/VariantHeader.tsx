@@ -61,7 +61,6 @@ export const VariantHeader: React.FC<{
     originalId,
     categoryId,
     isOnDetailScreen: false,
-    isFromShowcaseMenu: false,
   })
 
   // alternatives includes recipe itself, hence checking against `1`

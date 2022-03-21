@@ -28,7 +28,6 @@ type GetAlternativeOptionsForRecipe<T extends Recipe = Recipe> = (args: {
    */
   recipeId: string
   isOnDetailScreen: boolean
-  isFromShowcaseMenu: boolean
 
   categoryId?: string
   closeOnSelection?: boolean
@@ -42,7 +41,6 @@ type GetAlternativeOptionsForRecipe<T extends Recipe = Recipe> = (args: {
   isOnDetailScreen: boolean
   isOutOfStock: boolean
   surcharge?: number | null
-  isFromShowcaseMenu?: boolean
 }[]
 
 // eslint-disable-next-line no-unused-vars
@@ -72,7 +70,6 @@ export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } 
     originalId,
     categoryId,
     isOnDetailScreen,
-    isFromShowcaseMenu,
     closeOnSelection,
   }) => {
     const collectionId = categoryId || collectionIdFromDetails
@@ -128,7 +125,6 @@ export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } 
         changeCheckedRecipe,
         isChecked: String(recipeId) === String(coreRecipeId),
         isOnDetailScreen,
-        isFromShowcaseMenu,
         isOutOfStock: !recipesInStockIds.has(coreRecipeId),
         surcharge,
       }

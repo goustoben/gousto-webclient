@@ -9,12 +9,10 @@ import {
   getBasketSlotId,
   getChosenAddressId,
   getNumPortions,
-  getNumRecipes,
   getPromoCode
 } from 'selectors/basket'
 import { getNDDFeatureValue } from 'selectors/features'
 import { createSelector } from 'reselect'
-import { getIsAuthenticated } from 'selectors/auth'
 import { getBoxSummaryDeliveryDays } from 'selectors/root'
 import { getUserOrders } from 'selectors/user'
 import { ResourceType } from '../constants/resources'

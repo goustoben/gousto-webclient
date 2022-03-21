@@ -16,7 +16,7 @@ describe('orderApi', () => {
   let fetchSpy
 
   beforeEach(() => {
-    fetchSpy = jest.spyOn(fetch, 'default').mockImplementation(jest.fn)
+    fetchSpy = jest.spyOn(fetch, 'fetch').mockImplementation(jest.fn)
     jest.spyOn(menuFetch, 'post').mockResolvedValue(mockFetchResponse({}))
   })
 

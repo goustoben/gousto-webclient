@@ -19,6 +19,8 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
         className={classnames(selected ? css.currentDay : css.day, className, css.square)}
         onClick={() => { if (!disabled) { onClick(date, orderId) } }}
         data-testing="dateSlot"
+        role="button"
+        tabIndex={0}
       >
         <div className={css.content}>
           {icon ? <span className={css[`icon-${icon}`]} data-testing={`icon-${icon}`} /> : null}
@@ -40,14 +42,20 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
 
 Day.propTypes = {
   date: PropTypes.string,
-  weekNo: PropTypes.string,
-  dayNo: PropTypes.string,
-  selected: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
+  weekNo: PropTypes.string.isRequired,
+  dayNo: PropTypes.string.isRequired,
+  selected: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
   icon: PropTypes.string,
   orderId: PropTypes.string,
-  className: PropTypes.string,
+  className: PropTypes.string.isRequired,
+}
+
+Day.defaultProps = {
+  date: null,
+  icon: null,
+  orderId: null,
 }
 
 export { Day }
