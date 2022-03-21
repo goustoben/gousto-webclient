@@ -8,6 +8,8 @@ const cookieHelper2GetSpy = jest.spyOn(cookieHelper2, 'get').mockImplementation(
   if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
     return 'session-id'
   }
+
+  return null
 })
 
 const setMockFetchResult = (data, status = 200) => (

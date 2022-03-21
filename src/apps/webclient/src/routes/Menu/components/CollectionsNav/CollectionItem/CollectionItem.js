@@ -35,10 +35,6 @@ CollectionItem.propTypes = {
   slug: PropTypes.string.isRequired,
 }
 
-CollectionItem.defaultProps = {
-  count: 0,
-}
-
 export {
   CollectionItem
 }

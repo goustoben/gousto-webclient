@@ -46,7 +46,6 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
     recipeId,
     categoryId,
     isOnDetailScreen: false,
-    isFromShowcaseMenu: false,
   })
 
   const onClick = (e: SyntheticEvent) => {

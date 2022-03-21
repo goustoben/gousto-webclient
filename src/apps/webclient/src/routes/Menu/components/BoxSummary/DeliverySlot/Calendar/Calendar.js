@@ -5,6 +5,7 @@ import css from './Calendar.css'
 import { Title } from './Title'
 import { Day } from './Day'
 import { getCalendarDates } from './utils/getCalendarDates'
+import { datesPropType } from '../deliverySlotPropTypes'
 
 const dayNoToDayName = dayNo => (
   moment(dayNo, 'E').format('ddd')
@@ -92,12 +93,7 @@ const Calendar = ({ dates, selected, onClick }) => {
 }
 
 Calendar.propTypes = {
-  dates: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.string.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    icon: PropTypes.string.isRequired,
-    orderId: PropTypes.string.isRequired
-  })).isRequired,
+  dates: datesPropType.isRequired,
   selected: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 }

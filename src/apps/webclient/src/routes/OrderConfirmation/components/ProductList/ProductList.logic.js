@@ -11,18 +11,20 @@ const availableNumberOfColumn = {
 }
 
 const propTypes = {
-  basket: PropTypes.instanceOf(Immutable.Map),
-  productsCategories: PropTypes.instanceOf(Immutable.Map),
+  basket: PropTypes.instanceOf(Immutable.Map).isRequired,
+  productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
   products: PropTypes.shape({
     id: PropTypes.string,
   }),
   ageVerified: PropTypes.bool,
-  toggleAgeVerificationPopUp: PropTypes.func,
+  toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   numberOfColumn: PropTypes.oneOf(Object.keys(availableNumberOfColumn))
 }
 
 const defaultProps = {
-  numberOfColumn: '2'
+  products: null,
+  numberOfColumn: '2',
+  ageVerified: false,
 }
 
 const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, numberOfColumn }) => {

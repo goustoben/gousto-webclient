@@ -42,7 +42,6 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
     originalId,
     categoryId,
     isOnDetailScreen: false,
-    isFromShowcaseMenu: false,
   })
 
   // alternative options include the recipe itself

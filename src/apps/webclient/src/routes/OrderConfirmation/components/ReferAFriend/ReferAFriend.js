@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -21,6 +22,10 @@ const propTypes = {
   trackingReferFriend: PropTypes.func.isRequired,
   trackingReferFriendSocialSharing: PropTypes.func.isRequired,
   trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
+}
+
+const defaultProps = {
+  rafOffer: Immutable.Map(),
 }
 
 const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingReferFriend, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare }) => {
@@ -70,5 +75,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
 }
 
 ReferAFriend.propTypes = propTypes
+
+ReferAFriend.defaultProps = defaultProps
 
 export { ReferAFriend }

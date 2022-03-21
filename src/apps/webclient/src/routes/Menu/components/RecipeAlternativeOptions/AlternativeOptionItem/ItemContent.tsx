@@ -7,7 +7,6 @@ type ItemContentProps = {
   isOnDetailScreen: boolean
   isOutOfStock: boolean
   surcharge: number | null
-  isFromShowcaseMenu?: boolean
 }
 
 export const ItemContent = ({
@@ -15,13 +14,12 @@ export const ItemContent = ({
   isOutOfStock,
   isOnDetailScreen,
   surcharge = null,
-  isFromShowcaseMenu = false,
 }: ItemContentProps) => (
   <div className={css.labelContainer}>
     <div className={css.titleContainer}>
       <span className={css.titleText}>{recipeName}</span>
     </div>
-    {surcharge && !isOutOfStock && !isFromShowcaseMenu && (
+    {surcharge && !isOutOfStock && (
       <div className={classnames(css.extraInformation, { [css.negativeMargin]: isOnDetailScreen })}>
         <span className={css.surchargeAmountText}>{`+£${surcharge.toFixed(2)}`}</span>
         <span className={css.perServingText}>per serving</span>

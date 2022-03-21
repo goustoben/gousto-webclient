@@ -27,7 +27,7 @@ const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
   const collectionId = collection.get('id')
   const collectionName = collection.get('shortTitle')
 
-  const recipes = getRecipesForCollectionId(collectionId).recipes
+  const { recipes } = getRecipesForCollectionId(collectionId)
   const recipe = recipes.size ? recipes.first().recipe : null
 
   const onClick = useCallback(() => {
@@ -41,7 +41,7 @@ const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
       targetCollectionId: collectionId,
       recipeId: recipe.get('id'),
     })
-  }, [collectionId, recipe])
+  }, [collectionId, recipe, changeCollectionById, track])
 
   if (!recipe) {
     return null

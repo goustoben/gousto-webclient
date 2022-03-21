@@ -18,13 +18,9 @@ import { closeRecipeDetails } from '../../../actions/closeRecipeDetails'
 
 interface DetailOverlayProps {
   showOverlay?: boolean
-  isFromShowcaseMenu?: boolean
 }
 
-const DetailOverlay = ({
-  showOverlay: showOverlayProp,
-  isFromShowcaseMenu,
-}: DetailOverlayProps) => {
+const DetailOverlay = ({ showOverlay: showOverlayProp }: DetailOverlayProps) => {
   const showOverlay = Boolean(useSelector(getMenuRecipeIdForDetails)) && showOverlayProp
   const recipeId = useSelector(getMenuRecipeIdForDetails)
   const menuRecipeDetailShow = recipeId || ''
@@ -80,7 +76,6 @@ const DetailOverlay = ({
           surcharge={surcharge}
           position={position}
           isFineDineIn={isFineDineIn}
-          isFromShowcaseMenu={isFromShowcaseMenu}
           onClose={browserBack}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -93,12 +88,10 @@ const DetailOverlay = ({
 
 DetailOverlay.propTypes = {
   showOverlay: PropTypes.bool,
-  isFromShowcaseMenu: PropTypes.bool,
 }
 
 DetailOverlay.defaultProps = {
   showOverlay: false,
-  isFromShowcaseMenu: false,
 }
 
 export { DetailOverlay }

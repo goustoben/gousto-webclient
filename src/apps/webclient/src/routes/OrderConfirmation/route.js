@@ -6,13 +6,15 @@ import { orderDetails } from 'actions/orderConfirmation'
 
 import OrderConfirmation from './OrderConfirmationContainer'
 
-export default (store) => {
+const OrderConfirmationRoute = (store) => {
   const onEnterHandler = (routes, replace, next) => {
     const redirectTo = config.client.orderConfirmation
-    const path = store.getState().routing.locationBeforeTransitions.pathname
+    const { getState, dispatch } = store
+
+    const path = getState().routing.locationBeforeTransitions.pathname
     const orderId = path.split('/order-confirmation/')[1]
-    if (typeof parseInt(orderId) === 'number') {
-      store.dispatch(orderDetails(orderId))
+    if (typeof parseInt(orderId, 10) === 'number') {
+      dispatch(orderDetails(orderId))
     }
 
     checkValidSession(store, redirectTo)(routes, replace, next)
@@ -22,3 +24,5 @@ export default (store) => {
     <Route path={config.client.orderConfirmation} component={OrderConfirmation} onEnter={onEnterHandler} />
   )
 }
+
+export default OrderConfirmationRoute

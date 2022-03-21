@@ -54,7 +54,7 @@ export const ShowcaseMenu = ({
         <InformationBox />
         <CTASection onClick={proceed} />
         <PriceExplanationSection />
-        <DetailOverlay showOverlay isFromShowcaseMenu />
+        <DetailOverlay showOverlay />
       </div>
     </SignupLayout>
   )

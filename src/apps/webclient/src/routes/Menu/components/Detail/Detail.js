@@ -36,7 +36,6 @@ export const Detail = (props) => {
     position,
     surcharge,
     isFineDineIn,
-    isFromShowcaseMenu,
   } = props
 
   const allCollections = useAllCollections()
@@ -107,7 +106,6 @@ export const Detail = (props) => {
               originalId={id}
               recipeId={id}
               isOnDetailScreen
-              isFromShowcaseMenu={isFromShowcaseMenu}
               categoryId={currentCollectionId}
             />
           </div>
@@ -145,16 +143,14 @@ export const Detail = (props) => {
         <div className={css.row}>
           <DetailAllergenIngredientsContainer recipeId={recipeLegalDetailId} />
         </div>
-        {isFromShowcaseMenu ? null : (
-          <div className={css.stickyContainer}>
-            <DetailAddRecipe
-              id={id}
-              view={view}
-              surcharge={surcharge}
-              position={position}
-            />
-          </div>
-        )}
+        <div className={css.stickyContainer}>
+          <DetailAddRecipe
+            id={id}
+            view={view}
+            surcharge={surcharge}
+            position={position}
+          />
+        </div>
       </div>
     </div>
   )
@@ -175,7 +171,6 @@ Detail.propTypes = {
   position: PropTypes.number,
   isFineDineIn: PropTypes.bool,
   surcharge: PropTypes.number,
-  isFromShowcaseMenu: PropTypes.bool,
 }
 
 Detail.defaultProps = {
@@ -184,5 +179,4 @@ Detail.defaultProps = {
   average: 0,
   isFineDineIn: false,
   chosenSideRecipeId: null,
-  isFromShowcaseMenu: false,
 }

@@ -31,9 +31,9 @@ const propTypes = {
   ]),
   rafOffer: PropTypes.instanceOf(Immutable.Map).isRequired,
   showHeader: PropTypes.bool.isRequired,
-  userFetchReferralOffer: PropTypes.func,
+  userFetchReferralOffer: PropTypes.func.isRequired,
   userVerifyAge: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.bool.isRequired,
 }
 
 const defaultProps = {

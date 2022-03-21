@@ -114,6 +114,11 @@ class Menu extends React.PureComponent {
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
             <p className={css.legal}>{menu.legal}</p>
+            {
+              // overlay cannot be focused with keyboard, so it makes no sense
+              // to add keyboard handling for it
+            }
+            {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div
               className={showOverlay ? css.greyOverlayShow : css.greyOverlay}
               onClick={onOverlayClick}

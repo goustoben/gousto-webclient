@@ -1,14 +1,14 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { safeJestMock } from '_testing/mocks'
-import fetch from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 import logger from 'utils/logger'
 import MockDate from 'mockdate'
 import * as useOptimizely from 'containers/OptimizelyRollouts/useOptimizely.hook'
 import { sendClientMetric, useSendClientMetric } from '../clientMetrics'
 
-jest.mock('utils/fetch', () =>
-  jest.fn().mockResolvedValue({ data: [1, 2, 3] })
-)
+jest.mock('utils/fetch', () => ({
+  fetch: jest.fn().mockResolvedValue({ data: [1, 2, 3] })
+}))
 
 jest.mock('config/routes', () => ({
   version: {

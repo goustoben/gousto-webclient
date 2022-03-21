@@ -20,7 +20,7 @@ const CTAToAllRecipes = () => {
   const onClick = React.useCallback(() => {
     changeCollectionById(CollectionId.AllRecipes)
     dispatch(trackAction())
-  }, [changeCollectionById])
+  }, [changeCollectionById, dispatch])
 
   if (currentCollectionId === CollectionId.Recommendations) {
     return (

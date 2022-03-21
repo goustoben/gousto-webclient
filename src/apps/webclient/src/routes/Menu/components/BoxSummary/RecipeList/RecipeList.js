@@ -26,7 +26,9 @@ const RecipeList = ({
   const isDesktop = view === 'desktop'
   const onClick = (recipeIds = null) => {
     if (browser === 'mobile') {
-      !boxSummaryVisible && !isBasketRequiredFeatureEnabled && boxDetailsVisibilityChange(true)
+      if (!boxSummaryVisible && !isBasketRequiredFeatureEnabled) {
+        boxDetailsVisibilityChange(true)
+      }
     } else {
       detailVisibilityChange(menuRecipesStore.getIn([recipeIds, 'id']))
     }
@@ -56,6 +58,9 @@ const RecipeList = ({
       {
         recipeIds
           .map((recipeId, index) => (
+            // Since id-s in the recipeIds array can repeat, there's no better
+            // key than the index.
+            /* eslint-disable react/no-array-index-key */
             <RecipeHolder
               recipe={menuRecipesStore.get(recipeId)}
               onClick={() => onClick(recipeId)}
@@ -63,11 +68,13 @@ const RecipeList = ({
               key={index}
               browserType={browser}
             />
+            /* eslint-enable react/no-array-index-key */
           ))
       }
 
       {
         Array.from({ length: emptySlots }).map((_, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <RecipeHolder data-testing="empty" view={view} key={index} browserType={browser} />
         ))
       }
