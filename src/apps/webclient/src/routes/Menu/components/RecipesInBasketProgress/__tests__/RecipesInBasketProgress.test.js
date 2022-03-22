@@ -5,15 +5,16 @@ import { RecipesInBasketProgressPresentation } from '../RecipesInBasketProgress.
 
 describe('RecipesInBasketProgressPresentation Component', () => {
   let wrapper
+  const onClose = jest.fn()
+
   const PROPS = {
     isAuthenticated: false,
     selectedRecipesCount: 0,
+    onClose,
   }
 
   beforeEach(() => {
-    wrapper = mount(
-      <RecipesInBasketProgressPresentation {...PROPS} />
-    )
+    wrapper = mount(<RecipesInBasketProgressPresentation {...PROPS} />)
   })
 
   test('renders without crashing', () => {
@@ -42,8 +43,7 @@ describe('RecipesInBasketProgressPresentation Component', () => {
       })
 
       test('the FloatCard close icon only shows in mobile', () => {
-        expect(wrapper.find('FloatCard').prop('closeIcon'))
-          .toBe('small-screens-only')
+        expect(wrapper.find('FloatCard').prop('closeIcon')).toBe('small-screens-only')
       })
 
       test('the FloatCard has the right offset', () => {
@@ -51,8 +51,17 @@ describe('RecipesInBasketProgressPresentation Component', () => {
       })
 
       test('it renders a RecipesInBasketProgressContent inside the FloatCard', () => {
-        expect(wrapper.find('FloatCard').find('RecipesInBasketProgressContent'))
-          .toHaveLength(1)
+        expect(wrapper.find('FloatCard').find('RecipesInBasketProgressContent')).toHaveLength(1)
+      })
+
+      describe('and when the FloatCard is closed', () => {
+        beforeEach(() => {
+          wrapper.find('FloatCard').prop('onCloseIconClick')()
+        })
+
+        test('then it should call onClose with correct parameters', () => {
+          expect(onClose).toHaveBeenCalledWith(4, 25)
+        })
       })
     })
 
@@ -84,7 +93,9 @@ describe('RecipesInBasketProgressPresentation Component', () => {
       })
 
       test('renders the RecipesInBasketProgressContent component inside ExtraInfoMain', () => {
-        expect(wrapper.find('ExtraInfoMain').find('RecipesInBasketProgressContent').exists()).toBe(true)
+        expect(wrapper.find('ExtraInfoMain').find('RecipesInBasketProgressContent').exists()).toBe(
+          true
+        )
       })
 
       test('does not render the RecipesInBasketProgressContent outside ExtraInfo', () => {

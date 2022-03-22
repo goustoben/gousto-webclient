@@ -1,0 +1,49 @@
+@value CG-200, FI-900, FS-900 from '../actionBarConstants.module.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value transitionDuration 0.3s;
+
+.circularProgressIndicator {
+  position: relative;
+  flex: 0 0 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  composes: fontStyleXS from 'design-language/typography.css';
+  composes: fontSemiBold from 'design-language/typography.css';
+}
+
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.backingCircle {
+  stroke-width: 1px;
+  stroke: CG-200;
+  fill: none;
+}
+
+.arc {
+  stroke: FI-900;
+  fill: none;
+  transform: rotate(-90deg);
+  transform-origin: center;
+
+  @media BreakpointFromMedium {
+    transition: stroke-dasharray transitionDuration;
+  }
+}
+
+.arcCanCheckout {
+  stroke: FS-900;
+}
+
+.slash {
+  color: CG-200;
+}

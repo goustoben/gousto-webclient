@@ -1,0 +1,24 @@
+@value FI-900, FS-900 from '../actionBarConstants.module.css';
+@value XSmall, FontFamilyAxiformaBook from 'design-language/typography.css';
+
+.text {
+  composes: fontStyleS from 'design-language/typography.css';
+  flex: 1;
+  max-width: 14rem;
+
+  &.isInEmbeddedActionBar {
+    font: XSmall FontFamilyAxiformaBook !important;
+  }
+}
+
+.bold {
+  composes: fontSemiBold from 'design-language/typography.css';
+}
+
+.success {
+  color: FS-900;
+}
+
+.info {
+  color: FI-900;
+}

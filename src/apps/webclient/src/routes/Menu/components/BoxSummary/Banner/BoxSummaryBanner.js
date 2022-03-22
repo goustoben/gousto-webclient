@@ -11,6 +11,8 @@ import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryBannerPropTypes } from './propTypes'
 import { BoxSummaryDesktopBanner } from './Desktop/BoxSummaryDesktopBanner'
 import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
+import { ActionBar } from '../../ActionBar/ActionBar'
+import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
 
 // Note: the following selectors should be in proper files; as part of
 // productionizing isSimplifyBasketBarEnabled they should be moved there.
@@ -43,6 +45,7 @@ const BoxSummaryBanner = ({
   isBoxSummaryOpened,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+
   const dispatch = useDispatch()
   const promoCode = useSelector(getPromoCode)
   const isPromoGetPending = useSelector(createGetActionTypeIsPending(actionTypes.PROMO_GET))
@@ -66,6 +69,8 @@ const BoxSummaryBanner = ({
     isPromoGetPending,
     dispatch,
   ])
+
+  const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
   return (
     <section>
@@ -95,6 +100,7 @@ const BoxSummaryBanner = ({
         onExpandClick={onExpandClick}
       />
       <HotjarTrigger name="simplify-basket-bar" shouldInvoke={isSimplifyBasketBarEnabled} />
+      {isActionBarRedesignEnabled && <ActionBar variant="separate" />}
     </section>
   )
 }

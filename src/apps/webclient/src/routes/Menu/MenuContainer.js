@@ -5,6 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { applyPromoCodeAndShowModal } from 'actions/home'
 
+import { withIsActionBarRedesignEnabled } from 'routes/Menu/components/withIsActionBarRedesignEnabled'
 import Menu from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
 import fetchData from './fetchData'
@@ -43,6 +44,6 @@ const mapDispatchToProps = {
   applyPromoCodeAndShowModal
 }
 
-const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
+const MenuContainer = withIsActionBarRedesignEnabled(connect(mapStateToProps, mapDispatchToProps)(Menu))
 
 export { MenuContainer }

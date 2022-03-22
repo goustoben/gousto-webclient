@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import config from 'config'
 import {
   Layout2Cells,
   LayoutContentWrapper,
@@ -12,11 +11,11 @@ import { BoxProgressMessage } from '../../BoxProgressMessage'
 
 const propTypes = {
   selectedRecipesCount: PropTypes.number.isRequired,
+  percentage: PropTypes.number.isRequired,
 }
 
-const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
-  const { maxRecipesNum } = config.basket
-  const isBasketFull = selectedRecipesCount >= maxRecipesNum
+const RecipesInBasketProgressContent = ({ selectedRecipesCount, percentage }) => {
+  const isBasketFull = percentage === 100
 
   const cardClasses = classnames(
     css.cardContentWrapper,
@@ -25,8 +24,6 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
       [css.cardContentWrapperFull]: isBasketFull,
     }
   )
-
-  const percentage = Math.round((selectedRecipesCount / maxRecipesNum) * 100)
 
   return (
     <div className={cardClasses}>
