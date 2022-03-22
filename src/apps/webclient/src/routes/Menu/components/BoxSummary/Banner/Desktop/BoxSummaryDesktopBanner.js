@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { Tooltip } from 'goustouicomponents'
 import { useSelector } from 'react-redux'
 import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
+import { useIsActionBarRedesignEnabled } from 'routes/Menu/hooks/useIsActionBarRedesignEnabled'
+import { ActionBar } from 'routes/Menu/components/ActionBar'
 import { RecipeListContainer } from '../../RecipeList'
 import { BannerButtonContainer } from '../../BannerButton'
 import { BrowseCTAContainer } from '../../BrowseCTA'
@@ -25,6 +27,7 @@ const BoxSummaryDesktopBanner = ({
   onExpandClick,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+  const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
   return (
     <div className={isSimplifyBasketBarEnabled ? css.bardesktopVariant : css.bardesktop}>
@@ -36,6 +39,10 @@ const BoxSummaryDesktopBanner = ({
           maxRecipesNum={maxRecipesNum}
         />
       )}
+
+      {isSimplifyBasketBarEnabled && isActionBarRedesignEnabled ? (
+        <ActionBar variant="embedded" />
+      ) : null}
       <div
         className={isSimplifyBasketBarEnabled ? css.buttonsContainerVariant : css.buttonsContainer}
       >

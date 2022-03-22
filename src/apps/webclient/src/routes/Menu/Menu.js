@@ -97,6 +97,7 @@ class Menu extends React.PureComponent {
       isAuthenticated,
       query,
       children,
+      isActionBarRedesignEnabled,
     } = this.props
 
     const { isChrome } = this.state
@@ -125,7 +126,9 @@ class Menu extends React.PureComponent {
             />
           </div>
           <BoxSummaryContainer />
-          <RecipesInBasketProgress isAuthenticated={isAuthenticated} />
+          {isActionBarRedesignEnabled ? null : (
+            <RecipesInBasketProgress isAuthenticated={isAuthenticated} />
+          )}
         </div>
       </MainLayout>
     )

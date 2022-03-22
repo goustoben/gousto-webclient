@@ -133,5 +133,5 @@ export const boxPricesClickRecipeNumber = 'box_prices_click_recipe_number'
 export const clickBackRecipePopup = 'click_back_recipe_popup'
 export const clickBackBasketPopup = 'click_back_basket_popup'
 export const hotjarSkipWizard = 'skip_wizard_variant'
-
 export const kales_clickDietaryCollectionLink = 'kales_click_dietary_collection_link'
+export const dismissRecipesInBasketProgress = 'click_close_action_bar'

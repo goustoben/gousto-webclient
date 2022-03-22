@@ -14,6 +14,7 @@ describe('RecipesInBasketProgressContent', () => {
   let wrapper
   const props = {
     selectedRecipesCount: 0,
+    percentage: 0,
   }
 
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe('RecipesInBasketProgressContent', () => {
 
   describe('when 1 recipe is selected', () => {
     beforeEach(() => {
-      wrapper.setProps({ selectedRecipesCount: 1 })
+      wrapper.setProps({ selectedRecipesCount: 1, percentage: 25 })
     })
 
     describe('inside the LayoutContentWrapper', () => {
@@ -73,7 +74,7 @@ describe('RecipesInBasketProgressContent', () => {
 
   describe('when 2 recipes are selected', () => {
     beforeEach(() => {
-      wrapper.setProps({ selectedRecipesCount: 2 })
+      wrapper.setProps({ selectedRecipesCount: 2, percentage: 50 })
     })
 
     describe('inside the LayoutContentWrapper', () => {
@@ -116,7 +117,7 @@ describe('RecipesInBasketProgressContent', () => {
 
   describe('when 3 recipes are selected', () => {
     beforeEach(() => {
-      wrapper.setProps({ selectedRecipesCount: 3 })
+      wrapper.setProps({ selectedRecipesCount: 3, percentage: 75 })
     })
 
     describe('inside the LayoutContentWrapper', () => {
@@ -159,7 +160,7 @@ describe('RecipesInBasketProgressContent', () => {
 
   describe('when 4 recipes are selected', () => {
     beforeEach(() => {
-      wrapper.setProps({ selectedRecipesCount: 4 })
+      wrapper.setProps({ selectedRecipesCount: 4, percentage: 100 })
     })
 
     describe('inside the LayoutContentWrapper', () => {

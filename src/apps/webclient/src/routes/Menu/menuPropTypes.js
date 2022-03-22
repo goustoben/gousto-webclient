@@ -15,6 +15,7 @@ export const menuPropTypes = {
   params: PropTypes.object,
   query: PropTypes.object,
   tariffId: PropTypes.number,
+  isActionBarRedesignEnabled: PropTypes.bool,
 }
 
 export const defaultMenuPropTypes = {
@@ -27,4 +28,5 @@ export const defaultMenuPropTypes = {
   params: {},
   query: {},
   tariffId: null,
+  isActionBarRedesignEnabled: false,
 }
