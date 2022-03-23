@@ -200,34 +200,10 @@ These are the files, and the order of execution:
 See [`node-config`](https://github.com/lorenwest/node-config) for more information.
 
 ## Adding a new API endpoint
-API endpoints are now statically defined in config for each environment, that are loaded by node-config as detailed above.
-
-Modify the environments block in these files `config/default.json5` (`staging` and `production` sections) and each of the team envs e.g. (`config/rockets.json5`)
-This block is structured in the following way:
-```json5
-{
-  "endpoints": {
-    "<apiEnvironmentToPointTo>": {
-      "services": {
-        "<serviceName>": {
-          "<versionAsInteger>": {
-            clientSide: { //These are the urls used by a browser, they are identical as the browser is always accessing from outside of AWS
-              "live": "https://<apiEnvironmentToPointTo>-api.<domainName>/<serviceName>/<versionString>",
-              "local": "https://<apiEnvironmentToPointTo>-api.<domainName>/<serviceName>/<versionString>",
-            },
-            serverSide: { //These are the urls used by the server side call
-              "live": "http://<apiEnvironmentToPointTo>-<serviceName>.<domainName>", //Used by a server deployed in AWS
-              "local": "https://<apiEnvironmentToPointTo>-api.<domainName>/<serviceName>/<versionString>" //Used by a server running locally
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
+API endpoints are specified in the Service manifest which can be found here: `src/apps/webclient/src/config/service-environment/service-manifest.ts`
 
 Unless you specifically know that the new endpoint is an exception to the rule, such as `core`, `loggingmanager` and `webclient`, please use the above format / follow the structure of other APIs in the block.
+Overrides can be provided in the `src/apps/webclient/src/config/service-environment/service-url.ts` file.
 
 ## Deployment
 ### Deployment without a new route

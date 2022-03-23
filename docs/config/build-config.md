@@ -98,10 +98,7 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "environment_name": "",
   "recaptcha_referral_private_key": "",
   "recaptcha_referral_public_key": "",
-  "running_env": "",
-  "endpoints": {
-    //...
-  }
+  "running_env": ""
 }
 ```
 
@@ -240,23 +237,5 @@ running_env
 ```
 (Aliased by `__RUNNING_ENV__`, `runningEnv` in the code).
 
-A key for the `endpoints` config.
-
-Referenced in: `src/src/config/endpoints.js`
-
-endpoints
----------
-```
-    object: {
-        [endpoint_name]: {
-            [endpoint_key]: [endpoint_value]
-        }
-    }
-```
-(Aliased by `__ENDPOINTS__`, `endpoints` in the code).
-
-A collection of endpoints used throughout the application but referenced in `src/src/config/endpoints.js` (and `jest/.setupEndpoints.js`).
-
-See `src/src/config/endpoints.js` for more details.
 
 See the ADR on [Configuration](./decisions/0001-configuration.md)
