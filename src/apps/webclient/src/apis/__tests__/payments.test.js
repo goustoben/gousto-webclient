@@ -1,5 +1,8 @@
 import { fetch } from 'utils/fetch'
 import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
+import {
   authPayment,
   checkPayment,
   fetchPayPalToken,
@@ -83,6 +86,9 @@ jest.mock('utils/fetch', () => ({
 describe('Payments API', () => {
   const expectedHeaders = { 'Content-Type': 'application/json'}
   const sessionId = 'session_id'
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   afterEach(() => {
     fetch.mockClear()

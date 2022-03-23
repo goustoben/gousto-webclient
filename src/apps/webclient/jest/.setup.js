@@ -1,9 +1,7 @@
 // setup file
 import React from 'react'
 import MutationObserver from '@sheerun/mutationobserver-shim'
-// Endpoints need to be setup before MSW
-import './.setupEndpoints.js'
-import { server } from "./.msw"
+import { server } from './.msw'
 import Modal from 'react-modal'
 
 const Enzyme = require('enzyme');
@@ -55,6 +53,7 @@ function configureEmulatedBrowserEnvironment() {
 // Establish API mocking before all tests.
   beforeAll(() => {
     server.listen()
+    // global.environmentMocks = mockEnvironmentAndDomain('production', 'gousto.co.uk')
   })
 
 // Reset any request handlers that we may add during the tests,
@@ -66,5 +65,8 @@ function configureEmulatedBrowserEnvironment() {
   })
 
 // Clean up after the tests are finished.
-  afterAll(() => server.close())
+  afterAll(() => {
+    // restoreEnvironmentMocks(global.environmentMocks)
+    server.close()
+  })
 }

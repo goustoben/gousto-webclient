@@ -1,5 +1,8 @@
 import * as fetch from 'utils/fetch'
 import * as cookieHelper2 from 'utils/cookieHelper2'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { updateOrder, createOrder, getOrderPrice, getOrder, getUserOrders } from '../orderV2'
 import * as menuFetch from '../fetch'
 import { mockFetchResponse } from '../fetch.mock'
@@ -13,6 +16,9 @@ jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPr
 })
 
 describe('orderApi', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   let fetchSpy
 
   beforeEach(() => {

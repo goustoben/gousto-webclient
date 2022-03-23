@@ -44,9 +44,14 @@ import globals from 'config/globals'
 import { PaymentMethod } from 'config/signup'
 import logger from 'utils/logger'
 import { canUseWindow } from 'utils/browserEnvironment'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 
 jest.mock('utils/logger', () => ({
+  ...jest.requireActual('utils/logger'),
   warning: jest.fn(),
+  critical: jest.fn(),
 }))
 
 jest.mock('apis/tracking', () => ({
@@ -66,6 +71,9 @@ describe('tracking actions', () => {
   afterEach(() => {
     jest.resetAllMocks()
   })
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   describe('trackFirstPurchase', () => {
     const state = {

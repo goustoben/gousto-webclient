@@ -86,7 +86,6 @@ export const getClientEnvironment = () => {
 
   const subdomain = getSubdomain()
   const topLevelDomain = getTopLevelDomain()
-
   switch (true) {
   // Production -> https://www.gousto.co.uk OR https://production-webclient.gousto.co.uk OR https://production-frontend.gousto.co.uk
   case isHTTPS() && (subdomain === 'www' || subdomain.includes('production')):

@@ -1,5 +1,8 @@
 import { fetch } from 'utils/fetch'
 import * as cookieHelper2 from 'utils/cookieHelper2'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { deleteOrder } from './orderV2'
 
 const mockFetchResult = { data: [1, 2, 3] }
@@ -21,6 +24,9 @@ jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPr
 })
 
 describe('rockets order api', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   beforeEach(() => {
     fetch.mockClear()
   })

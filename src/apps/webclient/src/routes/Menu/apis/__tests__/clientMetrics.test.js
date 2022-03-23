@@ -4,6 +4,9 @@ import { fetch } from 'utils/fetch'
 import logger from 'utils/logger'
 import MockDate from 'mockdate'
 import * as useOptimizely from 'containers/OptimizelyRollouts/useOptimizely.hook'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { sendClientMetric, useSendClientMetric } from '../clientMetrics'
 
 jest.mock('utils/fetch', () => ({
@@ -18,6 +21,9 @@ jest.mock('config/routes', () => ({
 
 describe('clientMetrics', () => {
   const mockLoggerWarning = safeJestMock(logger, 'warning')
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   beforeEach(() => {
     const timestamp = 974851200000

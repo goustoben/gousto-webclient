@@ -1,4 +1,7 @@
 import { renderHook, cleanup } from '@testing-library/react-hooks'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { user } from './sides.hook.mock'
 import { useSides } from './sides.hook'
 
@@ -7,6 +10,9 @@ describe('useSides', () => {
   const order = { some: 'thing' }
 
   afterEach(cleanup)
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   describe('when request fails', () => {
     test('the error key should be populated', async () => {

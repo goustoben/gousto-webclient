@@ -1,5 +1,6 @@
 import isomorphicFetch from 'isomorphic-fetch'
 import { renderHook } from '@testing-library/react-hooks'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { useDeliveryDays } from '.'
 
 jest.mock('isomorphic-fetch', () => jest.fn())
@@ -10,6 +11,9 @@ describe('useDeliveryDays', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   describe('when passed all necessary arguments', () => {
     mockedIsomorphicFetch.mockResolvedValueOnce({

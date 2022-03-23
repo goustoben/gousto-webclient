@@ -1,5 +1,8 @@
 import { fetch } from 'utils/fetch'
 import config from 'config/products'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { fetchProduct, fetchProductCategories, fetchProducts, fetchRandomProducts, fetchProductStock } from '../products'
 
 const mockFetchResult = { data: [1, 2, 3] }
@@ -28,6 +31,9 @@ const mockReqData = {
 }
 
 describe('products api', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   beforeEach(() => {
     fetch.mockClear()
   })

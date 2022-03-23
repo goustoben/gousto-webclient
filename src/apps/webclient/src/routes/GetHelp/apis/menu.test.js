@@ -1,4 +1,7 @@
 import { fetch } from 'utils/fetch'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { fetchRecipesWithIngredients } from './menu'
 
 const MOCK_FETCH_RESULT = { data: [1, 2, 3] }
@@ -9,6 +12,9 @@ jest.mock('utils/fetch', () => ({
 }))
 
 describe('fetchRecipesWithIngredients', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   beforeEach(() => {
     fetch.mockClear()
   })

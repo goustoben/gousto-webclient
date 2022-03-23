@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { rest } from 'msw'
-import endpoint from 'config/endpoint'
 import sideFixture from 'fixtures/menu/v1/sides/POST.json'
 import emptySideFixture from 'fixtures/menu/v1/sides/POST_empty.json'
 import errorSideFixture from 'fixtures/menu/v1/sides/POST_500.json'
@@ -14,7 +13,7 @@ export const user = {
 const getUserId = (req) => req.headers.get('x-gousto-user-id')
 
 export const handlers = [
-  rest.post(`${endpoint('menu', 1)}/sides`, (req, res, ctx) => {
+  rest.post('https://production-api.gousto.co.uk/menu/v1/sides', (req, res, ctx) => {
     const userId = getUserId(req)
 
     if (userId === user.withError) {

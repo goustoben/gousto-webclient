@@ -4,8 +4,6 @@ import { getFetcher } from 'routes/Menu/apis/fetch'
 import { useAuth } from '../../auth'
 import { MenuHeadersBrandData, MenuHeadersIncludesData } from '../types'
 
-const url = `${endpoint('brand')}/menu-headers`
-
 /**
  * Get the Brand Headers data from BrandAPI
  * @returns Brand data as coming from the server side
@@ -15,6 +13,7 @@ export const useBrandHeadersInfo: () => {
   collectionsPerMenu?: MenuHeadersBrandData
   headers?: MenuHeadersIncludesData
 } = () => {
+  const url = `${endpoint('brand')}/menu-headers`
   const { accessToken, authUserId } = useAuth()
 
   const requestParameters = null

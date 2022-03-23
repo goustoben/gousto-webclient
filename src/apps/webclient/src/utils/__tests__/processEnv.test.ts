@@ -20,8 +20,6 @@ describe('env.ts', () => {
     })
 
     test.each([
-      ['PROTOCOL', 'http', { PROTOCOL: 'http' }],
-      ['DOMAIN', 'gousto.co.uk', { DOMAIN: 'gousto.co.uk' }],
       ['ENVIRONMENT', 'local', { ENVIRONMENT: 'local' }],
     ])('getEnvConfig contains the correct values', (key, value, expected) => {
       process.env[key] = value

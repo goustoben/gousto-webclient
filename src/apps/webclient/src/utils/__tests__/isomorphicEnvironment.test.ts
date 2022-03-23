@@ -1,12 +1,19 @@
-import { createIsomorphicConfig, getEnvironment, isProd, isDev } from 'utils/isomorphicEnvironment'
-import { canUseWindow, getClientEnvironment } from 'utils/browserEnvironment'
-import { getServerEnvironment } from '../../../server/utils/serverEnvironment'
+import { createIsomorphicConfig, getEnvironment, getDomain } from 'utils/isomorphicEnvironment'
+import { getServerEnvironment, getServerDomain } from '../../../server/utils/serverEnvironment'
+import { getClientEnvironment, getDomain as getClientDomain} from '../browserEnvironment'
 
-jest.mock('utils/browserEnvironment')
-jest.mock('../../../server/utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment',
+  // () => ({
+  //   ...jest.requireActual('../browserEnvironment'),
+  //   getServerDomain: jest.fn()
+  // })
+)
+jest.mock('../browserEnvironment', () => ({
+  ...jest.requireActual('../browserEnvironment'),
+  getClientEnvironment: jest.fn(),
+  getDomain: jest.fn(),
+}))
 
-const mockCanUseWindow = canUseWindow as jest.Mock
-const mockGetClientEnvironment = getClientEnvironment as jest.Mock
 const mockGetServerEnvironment = getServerEnvironment as jest.Mock
 
 const mockBrowserGetter = () => 'browser'
@@ -22,22 +29,37 @@ const createGetConfig = ({ testFn }: { testFn?: () => boolean } = {}) => {
   })
 }
 
+const windowSpy = jest.spyOn(window, 'window', 'get')
+
 describe('isomorphicEnvironment utils', () => {
   beforeEach(() => {
     jest.resetAllMocks()
   })
 
+  afterAll(() => {
+    jest.restoreAllMocks()
+  })
+
   describe('createIsomorphicConfig', () => {
     describe('with default environment test fn', () => {
       test('returns expected fn if in browser environment', () => {
-        mockCanUseWindow.mockReturnValue(true)
+        windowSpy.mockReturnValue({
+          document: {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            createElement: () => null,
+          },
+        })
+
         createGetConfig()
 
         expect(getConfig()).toEqual('browser')
       })
 
       test('returns expected fn if in server environment', () => {
-        mockCanUseWindow.mockReturnValue(false)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        windowSpy.mockReturnValue(undefined)
         createGetConfig()
 
         expect(getConfig()).toEqual('server')
@@ -67,8 +89,15 @@ describe('isomorphicEnvironment utils', () => {
     test('returns expected fn if in browser', () => {
       const mockBrowserEnvironment = 'mock browser environment'
 
-      mockCanUseWindow.mockReturnValue(true)
-      mockGetClientEnvironment.mockReturnValue(mockBrowserEnvironment)
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => null,
+        },
+      });
+
+      (getClientEnvironment as jest.Mock).mockReturnValue(mockBrowserEnvironment)
 
       expect(getEnvironment()).toEqual(mockBrowserEnvironment)
     })
@@ -76,86 +105,40 @@ describe('isomorphicEnvironment utils', () => {
     test('returns expected fn if on server', () => {
       const mockServerEnvironment = 'mock server environment'
 
-      mockCanUseWindow.mockReturnValue(false)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
       mockGetServerEnvironment.mockReturnValue(mockServerEnvironment)
 
       expect(getEnvironment()).toEqual(mockServerEnvironment)
     })
   })
 
-  describe('isProd', () => {
-    describe('in the browser', () => {
-      beforeEach(() => {
-        mockCanUseWindow.mockReturnValue(true)
+  describe('getDomain', () => {
+    it('should call the getClientDomain when running on the client', () => {
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => null,
+        },
       })
 
-      test('returns true if environment is production', () => {
-        mockGetClientEnvironment.mockReturnValue('production')
+      const stubDomainResponse = 'mockclientdomain.com';
+      (getClientDomain as jest.Mock).mockReturnValue(stubDomainResponse)
 
-        expect(isProd()).toEqual(true)
-      })
-
-      test('returns false if environment is not production', () => {
-        mockGetClientEnvironment.mockReturnValue('not production')
-
-        expect(isProd()).toEqual(false)
-      })
+      expect(getDomain()).toEqual(stubDomainResponse)
     })
 
-    describe('in the server', () => {
-      beforeEach(() => {
-        mockCanUseWindow.mockReturnValue(false)
-      })
+    it('should call the getServerDomain when running on the server', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
 
-      test('returns true if environment is production', () => {
-        mockGetServerEnvironment.mockReturnValue('production')
+      const stubDomainResponse = 'mockserverdomain.com';
+      (getServerDomain as jest.Mock).mockReturnValue(stubDomainResponse)
 
-        expect(isProd()).toEqual(true)
-      })
-
-      test('returns false if environment is not production', () => {
-        mockGetServerEnvironment.mockReturnValue('not production')
-
-        expect(isProd()).toEqual(false)
-      })
-    })
-  })
-
-  describe('isDev', () => {
-    describe('in the browser', () => {
-      beforeEach(() => {
-        mockCanUseWindow.mockReturnValue(true)
-      })
-
-      test('returns true if environment is local', () => {
-        mockGetClientEnvironment.mockReturnValue('local')
-
-        expect(isDev()).toEqual(true)
-      })
-
-      test('returns false if environment is not production', () => {
-        mockGetClientEnvironment.mockReturnValue('not local')
-
-        expect(isDev()).toEqual(false)
-      })
-    })
-
-    describe('in the server', () => {
-      beforeEach(() => {
-        mockCanUseWindow.mockReturnValue(false)
-      })
-
-      test('returns true if environment is production', () => {
-        mockGetServerEnvironment.mockReturnValue('local')
-
-        expect(isDev()).toEqual(true)
-      })
-
-      test('returns false if environment is not production', () => {
-        mockGetServerEnvironment.mockReturnValue('not local')
-
-        expect(isDev()).toEqual(false)
-      })
+      expect(getDomain()).toEqual(stubDomainResponse)
     })
   })
 })

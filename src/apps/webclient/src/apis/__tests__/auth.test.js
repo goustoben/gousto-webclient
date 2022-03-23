@@ -1,6 +1,9 @@
 import fetch from 'utils/fetch'
 import isomorphicFetch from 'isomorphic-fetch'
 import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
+import {
   getUserToken,
   identifyUserUsingOAuth,
   refreshUserToken,
@@ -46,6 +49,9 @@ jest.mock('config/routes', () => ({
 }))
 
 describe('auth api', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   beforeEach(() => {
     fetch.mockClear()
   })

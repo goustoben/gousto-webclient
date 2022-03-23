@@ -3,6 +3,9 @@ import { render, screen, within, fireEvent, waitFor, cleanup } from '@testing-li
 import * as OrderAPI from 'apis/orders'
 import { user } from 'routes/Menu/apis/sides.hook.mock'
 import Modal from 'react-modal'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { SidesModal } from './SidesModal'
 
 jest.setTimeout(10000)
@@ -117,6 +120,9 @@ describe('<SideModal />', () => {
 
   afterEach(jest.clearAllMocks)
   afterEach(cleanup)
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   const SideModalWithMockedProps = ({
     // eslint-disable-next-line react/prop-types

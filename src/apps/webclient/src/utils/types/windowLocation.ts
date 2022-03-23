@@ -9,7 +9,7 @@ export type SubDomain = 'www' | `${string}-www` | `${string}-${HostNames}` | 'fr
 
 export type RootDomain = 'gousto'
 
-export type TopLevelDomain = `.local:${number}` | '.info' | '.co.uk'
+export type TopLevelDomain = `.local:${number}` | `.local` | '.info' | '.co.uk'
 
 export type Domain = `${RootDomain}${TopLevelDomain}`
 

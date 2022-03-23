@@ -1,5 +1,12 @@
-import { canUseWindow, getClientEnvironment } from './browserEnvironment'
-import { getServerEnvironment } from '../../server/utils/serverEnvironment'
+import {
+  canUseWindow,
+  getClientEnvironment,
+  getDomain as getClientDomain,
+} from './browserEnvironment'
+import {
+  getServerEnvironment,
+  getServerDomain,
+} from '../../server/utils/serverEnvironment'
 
 type CreateIsomorphicConfig<T> = {
   testFn?: () => boolean
@@ -38,6 +45,11 @@ export const createIsomorphicConfig = <T>({
 export const getEnvironment = createIsomorphicConfig({
   browserConfigFn: getClientEnvironment,
   serverConfigFn: getServerEnvironment,
+})
+
+export const getDomain = createIsomorphicConfig({
+  browserConfigFn: getClientDomain,
+  serverConfigFn: getServerDomain,
 })
 
 export const isProd = () => getEnvironment() === 'production'

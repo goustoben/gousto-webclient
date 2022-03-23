@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { safeJestMock } from '_testing/mocks'
 import * as basketSelectors from 'selectors/basket'
 import * as orderSelectors from 'routes/Menu/selectors/order'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { useAuth } from '../auth'
 import { usePricing } from './usePricing'
 import { user } from './usePricing.mock'
@@ -38,6 +39,9 @@ const getBasketRecipesCount = basketSelectors.getBasketRecipesCount as jest.Mock
 const getOrderV2 = orderSelectors.getOrderV2 as jest.MockedFunction<any>
 
 describe('usePricing', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   beforeEach(() => {
     useDispatchMock.mockReturnValue(dispatch)
     getOrderV2.mockReturnValue({ testdata: 'test' })
