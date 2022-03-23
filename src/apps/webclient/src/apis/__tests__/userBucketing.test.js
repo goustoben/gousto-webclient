@@ -1,4 +1,7 @@
 import { fetch } from 'utils/fetch'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { getUserExperiments, updateUserExperiment } from '../userBucketing'
 
 jest.mock('utils/fetch', () => ({
@@ -6,6 +9,9 @@ jest.mock('utils/fetch', () => ({
 }))
 
 describe('userBucketing', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   beforeEach(() => {
     jest.clearAllMocks()
   })

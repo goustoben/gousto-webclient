@@ -1,4 +1,7 @@
 import { fetch } from 'utils/fetch'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { getUserFeedbackCount } from '../feedback'
 
 jest.mock('utils/fetch')
@@ -9,6 +12,9 @@ describe('feedback', () => {
   })
 
   describe('getUserFeedbackCount', () => {
+    // mock the environment and domain config used by these tests to generate endpoints
+    withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
     beforeEach(() => {
       fetch.mockResolvedValue({ data: [{ mock: 'feedback' }] })
     })

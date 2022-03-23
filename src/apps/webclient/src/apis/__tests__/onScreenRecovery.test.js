@@ -1,4 +1,7 @@
 import { fetch } from 'utils/fetch'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../onScreenRecovery'
 
 const mockFetchResult = { data: [1, 2, 3] }
@@ -12,6 +15,9 @@ jest.mock('utils/fetch', () => ({
 }))
 
 describe('onScreenRecovery api', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   beforeEach(() => {
     fetch.mockClear()
   })

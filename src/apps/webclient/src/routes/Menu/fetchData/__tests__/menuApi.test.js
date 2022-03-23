@@ -1,6 +1,9 @@
 import * as fetchModule from 'utils/fetch'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
 
 const mockFetchResult = { data: [1, 2, 3] }
@@ -17,6 +20,9 @@ jest.mock('config/routes', () => ({
 describe('menus', () => {
   let fetchRawSpy
   let cookieGetSpy
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   beforeEach(() => {
     fetchRawSpy = jest.spyOn(fetchModule, 'fetchRaw').mockImplementation(() => {

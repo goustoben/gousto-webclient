@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { useBrandInfo } from './useBrandInfo'
 
 jest.mock('isomorphic-fetch', () => jest.fn())
@@ -11,6 +12,9 @@ jest.mock('isomorphic-fetch', () => jest.fn())
 const mockedIsomorphicFetch = isomorphicFetch as jest.MockedFunction<any>
 
 describe('useBrandInfo', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   afterEach(() => {
     jest.clearAllMocks()
   })

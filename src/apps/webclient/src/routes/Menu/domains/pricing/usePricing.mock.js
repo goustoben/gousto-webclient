@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { rest } from 'msw'
-import endpoint from 'config/endpoint'
 import errorSideFixture from 'fixtures/menu/v1/sides/POST_500.json'
 
 export const user = {
@@ -10,7 +9,7 @@ export const user = {
 }
 
 const getUserId = (req) => req.headers.get('x-gousto-user-id')
-const url = `${endpoint('order', 2)}/prices`
+const url = 'https://production-api.gousto.co.uk/order/v2/prices'
 
 export const handlers = [
   rest.post(url, (req, res, ctx) => {

@@ -22,8 +22,6 @@ export const getEnvConfig = (cb = (msg: string) => console.warn(msg)) => {
   const processEnv = process.env as Env
 
   return {
-    DOMAIN: envOrCallback(cb)(processEnv, 'DOMAIN'),
-    PROTOCOL: envOrCallback(cb)(processEnv, 'PROTOCOL'),
-    ENVIRONMENT: envOrCallback(cb)(processEnv, 'ENVIRONMENT'),
+    ENVIRONMENT: envOrCallback(cb)(processEnv, 'ENVIRONMENT')
   }
 }

@@ -1,5 +1,8 @@
 import fetch, { fetchRaw } from 'utils/fetch'
 import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
+import {
   applyDeliveryCompensation,
   shouldShowEntryPointTooltip,
   requestRecipeCardsWithIssueReasons,
@@ -18,6 +21,9 @@ jest.mock('utils/fetch')
 fetch.mockResolvedValue(MOCK_RESPONSE)
 
 describe('getHelp API', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   let response
   beforeEach(() => {
     jest.clearAllMocks()
