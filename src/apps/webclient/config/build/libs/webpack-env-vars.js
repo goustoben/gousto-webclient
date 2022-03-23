@@ -9,7 +9,6 @@ const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 const clientProtocol = nodeConfig.get('client_protocol')
 const cloudfrontUrl = nodeConfig.get('cloudfront_url')
 const domain = nodeConfig.get('domain')
-const endpoints = nodeConfig.get('endpoints')
 const envName = nodeConfig.get('environment_name')
 const recaptchaReferralPrivateKey = nodeConfig.get('recaptcha_referral_private_key')
 const runningEnv = nodeConfig.get('running_env')
@@ -23,7 +22,6 @@ const webpackEnvVarsBase = {
   __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
   __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
   __DOMAIN__: JSON.stringify(domain),
-  __ENDPOINTS__: JSON.stringify(endpoints),
   __ENV__: JSON.stringify(envName),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
@@ -63,7 +61,6 @@ module.exports = {
   clientProtocol,
   cloudfrontUrl,
   domain,
-  endpoints,
   envName,
   publicPath,
   recaptchaReferralPrivateKey,

@@ -56,7 +56,6 @@ module.exports = {
     __RUNNING_ENV__: 'live',
     __DOMAIN__: 'gousto.local',
     'process.env.NODE_ENV': 'production',
-    __ENDPOINTS__: {},
     __CIRCLE_BUILD_NUM__: 'MOCK_CIRCLE_BUILD_NUM',
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.tests.json',
