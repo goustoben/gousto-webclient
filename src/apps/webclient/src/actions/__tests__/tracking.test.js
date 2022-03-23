@@ -593,6 +593,7 @@ describe('tracking actions', () => {
             amount: '24.50',
             currency: 'GBP',
             paymenttype: 'card',
+            conversiontype: 'conversion',
           }
         }))
       })
@@ -625,6 +626,7 @@ describe('tracking actions', () => {
             amount: expect.any(String),
             currency: expect.any(String),
             paymenttype: expect.any(String),
+            conversiontype: expect.any(String),
           }
         }))
       })
