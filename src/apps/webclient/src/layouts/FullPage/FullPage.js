@@ -9,7 +9,7 @@ export const FullPage = ({ children, route }) => (
   <div className={css.container}>
     <Header />
     {children}
-    <Footer type={route.footerType || 'medium'} copyright />
+    <Footer type={route.footerType || 'medium'} copyright isOnLandingPage={route.footerIsOnLandingPage} />
   </div>
 )
 

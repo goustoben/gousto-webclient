@@ -6,6 +6,7 @@ import * as trackingKeys from 'actions/trackingKeys'
 import { client as clientRoutes, giftCardsURL } from 'config/routes'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import Link from 'Link'
 import css from './Footer.css'
 
@@ -65,7 +66,12 @@ export const Footer = ({
   trackNavigationClick,
   isGiftCardsLinkVisible,
   isCorporateEnquiriesLinkVisible,
+  isOnLandingPage,
 }) => {
+  const isNewHeroLabelAndFooterEnabled = useIsOptimizelyFeatureEnabled(
+    'beetroots_is_new_hero_label_and_footer_enabled'
+  )
+
   const renderTermsLink = () => (
     <li className={css.menuItem}>
       Terms
@@ -225,6 +231,18 @@ export const Footer = ({
     </div>
   )
 
+  const renderNo1Notice = () => (
+    <div id="number-one-notice" className={css.numberOneNotice}>
+      <p>
+        <span>* Our ‘No.1 Recipe Box for Choice’ claim is based on Gousto having more recipes available on the weekly menu than other UK recipe boxes from 1st September 2021 to 6th January 2022. The full details of this comparison can be verified at</span>
+        {' '}
+        <a href="https://cook.gousto.co.uk/choice/">
+          cook.gousto.co.uk/choice
+        </a>
+      </p>
+    </div>
+  )
+
   const renderSimpleFooter = () => (
     <div>
       {renderSimpleList()}
@@ -237,6 +255,7 @@ export const Footer = ({
       {renderSocial()}
       {renderFullList()}
       {copyright && renderCopyright()}
+      {isNewHeroLabelAndFooterEnabled && isOnLandingPage && renderNo1Notice()}
     </div>
   )
 
@@ -289,6 +308,7 @@ Footer.propTypes = {
   trackNavigationClick: PropTypes.func.isRequired,
   isGiftCardsLinkVisible: PropTypes.bool,
   isCorporateEnquiriesLinkVisible: PropTypes.bool,
+  isOnLandingPage: PropTypes.bool,
 }
 
 Footer.defaultProps = {
@@ -298,4 +318,5 @@ Footer.defaultProps = {
   type: 'medium',
   isGiftCardsLinkVisible: true,
   isCorporateEnquiriesLinkVisible: true,
+  isOnLandingPage: false,
 }
