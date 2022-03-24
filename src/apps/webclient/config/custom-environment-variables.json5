@@ -15,7 +15,6 @@
   "segment_api_key": "segment_api_key",
   "recaptcha_referral_private_key": "recaptcha_referral_private_key",
   // These secrets are loaded into the env.js files and overwritten
-  "api_token": "api_token",
   "auth_client_id": "auth_client_id",
   "auth_client_secret": "auth_client_secret",
 }

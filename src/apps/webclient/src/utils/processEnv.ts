@@ -1,12 +1,10 @@
-import { Protocol, Domain } from './types/windowLocation'
-
 export type Env = {
-  DOMAIN: Domain
-  PROTOCOL: Protocol
   ENVIRONMENT: string
+  API_TOKEN: string
 }
 
-export const envOrCallback = (cb: (_msg: string) => void) =>
+export const envOrCallback =
+  (cb: (_msg: string) => void) =>
   <T, K extends keyof T>(env: T, key: K): T[K] => {
     const lookup = env[key]
 
@@ -22,6 +20,7 @@ export const getEnvConfig = (cb = (msg: string) => console.warn(msg)) => {
   const processEnv = process.env as Env
 
   return {
-    ENVIRONMENT: envOrCallback(cb)(processEnv, 'ENVIRONMENT')
+    ENVIRONMENT: envOrCallback(cb)(processEnv, 'ENVIRONMENT'),
+    API_TOKEN: envOrCallback(cb)(processEnv, 'API_TOKEN'),
   }
 }

@@ -1,7 +1,6 @@
 const nodeConfig = require('node-config')
 
 const apiName = nodeConfig.get('api_name')
-const apiToken = nodeConfig.get('api_token')
 const authClientId = nodeConfig.get('auth_client_id')
 const authClientSecret = nodeConfig.get('auth_client_secret')
 const build = nodeConfig.get('build')
@@ -40,7 +39,6 @@ const webpackEnvVarsClient = {
 
 const webpackEnvVarsServer = {
   ...webpackEnvVarsBase,
-  __API_TOKEN__: JSON.stringify(apiToken),
   __AUTH_CLIENT_ID__: JSON.stringify(authClientId),
   __AUTH_CLIENT_SECRET__: JSON.stringify(authClientSecret),
   __DEV__: build === 'development',
@@ -53,7 +51,6 @@ module.exports = {
   webpackEnvVarsClient,
   webpackEnvVarsServer,
   apiName,
-  apiToken,
   authClientId,
   authClientSecret,
   build,

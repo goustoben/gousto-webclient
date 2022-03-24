@@ -22,11 +22,18 @@ jest.mock('utils/serverEnvironment')
 
 jest.mock('utils/isomorphicEnvironment')
 
-jest.mock('utils/env', () => ({
-  apiToken: 'mock-api-token'
-}))
+let processEnv
 
 describe('fetch', () => {
+  beforeAll(() => {
+    processEnv = process.env
+
+    process.env.API_TOKEN = 'mock-api-token'
+  })
+
+  afterAll(() => {
+    process.env = processEnv
+  })
   // this require here is needed, rather than an import
   // so that the jest.mocks are set up in time
   const {

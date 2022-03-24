@@ -87,7 +87,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
 ```JSON5
 {
   "api_name": "",
-  "api_token": "",
   "auth_client_id": "",
   "auth_client_secret": "",
   "build": "",
@@ -110,17 +109,6 @@ api_name
 (aliased by `__API_ENV__`, `apiName` in the code).
 
 Used to target the domain / address of the APIs - see `src/src/config/endpoint.js`
-
-api_token
----------
-```
-    string: [Gousto api token]
-```
-(aliased by `__API_TOKEN__`, `apiToken` in the code).
-
-Gousto API token.
-
-Used in `src/src/utils/env.js` which is in turn imported in `src/src/utils/fetch.js` and is used to determine how the application gets access / makes downstream XHR API calls.
 
 auth_client_id
 --------------

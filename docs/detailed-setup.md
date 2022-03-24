@@ -17,7 +17,6 @@ This file is used by node-config (see below for more info).
   "api_name": "staging", //could be production if you wanted to point to production apis
   "domain": "gousto.local", //this is used in only one place currently, the help centre links
   "running_env": "local", //always local as you are not running on AWS
-  "api_token": "inbound_frontend_access_key_goes_here",
   "auth_client_secret": "frontend_service_secret_goes_here",
   "client_dev_server_enabled": true, // enable this for webpack dev server configuration in the client build
 }
@@ -31,15 +30,7 @@ Create a file named `.env` in `src/apps/webclient/server`.
 
 Your `.env` file should be in the format `KEY=value`.
 
-Your config should be in the following shape:
-
-```.env
-DOMAIN=gousto.info  # or gousto.co.uk, gousto.local
-PROTOCOL=https      # or http
-ENVIRONMENT=staging # or [squad environment], production
-```
-
-_See `src/apps/webclient/server/.env.example` for a template_
+Your config should be in the shape of `src/apps/webclient/server/.env.example`
 
 _Note: this file is gitignored as in the future it may contain secrets_
 
