@@ -3,11 +3,11 @@ import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'
-import { fetchUserOrders } from 'apis/user'
 import * as getHelpApi from 'apis/getHelp'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import * as menuApi from '../../apis/menu'
 import { trackingKeys } from '../actionTypes'
 import * as getHelpActionsUtils from '../utils'
@@ -53,8 +53,9 @@ jest.mock('utils/logger', () => ({
 }))
 jest.mock('apis/deliveries')
 jest.mock('apis/orders')
-jest.mock('apis/user')
 jest.mock('../transformers/recipeTransform')
+jest.mock('routes/Menu/apis/orderV2')
+
 const applyDeliveryCompensation = safeJestMock(getHelpApi, 'applyDeliveryCompensation')
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
 const fetchRecipesWithIngredients = safeJestMock(menuApi, 'fetchRecipesWithIngredients')
@@ -141,7 +142,7 @@ describe('GetHelp action generators and thunks', () => {
       }
 
       beforeEach(() => {
-        fetchUserOrders.mockResolvedValueOnce({
+        orderV2.fetchUserOrders.mockResolvedValueOnce({
           data: [
             userOrdersData,
           ]
@@ -160,7 +161,7 @@ describe('GetHelp action generators and thunks', () => {
 
     describe('when it fails', () => {
       beforeEach(() => {
-        fetchUserOrders.mockRejectedValueOnce('error')
+        orderV2.fetchUserOrders.mockRejectedValueOnce('error')
         getUserOrders()(dispatch, getState)
       })
 

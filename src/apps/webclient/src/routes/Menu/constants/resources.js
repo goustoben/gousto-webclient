@@ -6,6 +6,7 @@ export const ResourceType = {
   DeliveryTariff: 'delivery-tariff',
   Ingredient: 'ingredient',
   Order: 'order',
+  Period: 'period',
   Product: 'product',
   Recipe: 'recipe',
   ShippingAddress: 'shipping-address',
