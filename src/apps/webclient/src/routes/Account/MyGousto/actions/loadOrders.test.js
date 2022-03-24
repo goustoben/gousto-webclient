@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
-import { fetchUserOrders } from 'apis/user'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { loadOrders } from './loadOrders'
 
-jest.mock('apis/user')
+jest.mock('routes/Menu/apis/orderV2')
 
 const ACCESS_TOKEN = 'access-token'
 const STATE = {
@@ -24,7 +24,7 @@ const getState = jest.fn().mockReturnValue(STATE)
 
 describe('Given loadOrders action is called', () => {
   beforeEach(async () => {
-    fetchUserOrders.mockResolvedValueOnce({ data: ORDERS })
+    orderV2.fetchUserOrders.mockResolvedValueOnce({ data: ORDERS })
     await loadOrders()(dispatch, getState)
   })
 

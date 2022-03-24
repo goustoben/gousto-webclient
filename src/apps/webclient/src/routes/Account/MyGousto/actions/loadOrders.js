@@ -1,18 +1,15 @@
-import { getAccessToken } from 'selectors/auth'
-import { fetchUserOrders } from 'apis/user'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { asyncAndDispatch } from '../../../GetHelp/actions/utils'
 import { actionTypes } from './actionTypes'
 
 export const loadOrders = () => async (dispatch, getState) => {
-  const state = getState()
-  const accessToken = getAccessToken(state)
-
   const getPayload = async () => {
-    const { data: orders } = await fetchUserOrders(accessToken, {
+    const payload = {
       limit: 10,
       sort_order: 'desc',
       state: 'pending',
-    })
+    }
+    const { data: orders } = await orderV2.fetchUserOrders(dispatch, getState, payload)
 
     return { orders }
   }

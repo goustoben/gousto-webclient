@@ -1,3 +1,4 @@
+import isomorphicFetch from 'isomorphic-fetch'
 import {
   fetch,
   cacheDefault,
@@ -6,6 +7,11 @@ import {
   useMenuServiceDefault,
 } from 'utils/fetch'
 import endpoint from 'config/endpoint'
+import * as userApiV1 from 'apis/user'
+import { getUserId } from 'selectors/user'
+import { getAccessToken } from 'selectors/auth'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
+import { transformOrderV2ToOrderV1 } from './ordersV2toV1'
 import { post } from './fetch'
 import { getRequestHeaders } from './_utils'
 
@@ -54,15 +60,33 @@ export const getOrder = (accessToken, orderId, userId, include) => {
   return fetch(accessToken, `${endpoint('order', 2)}/orders/${orderId}`, reqData, 'GET', cacheDefault, headers)
 }
 
-export const getUserOrders = (accessToken, userId, phases, include, limit = 15, sort = 'deliveryDate') => {
+export async function fetchUserOrders(dispatch, getState, reqData) {
+  const state = getState()
+  const userId = getUserId(state)
   const headers = getRequestHeaders(userId)
+  const params = new URLSearchParams(reqData).toString()
+  const accessToken = getAccessToken(state)
+  const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_v2_userorders_web_enabled')(dispatch, getState)
 
-  const reqData = {
-    'filter[phase]': phases,
-    include,
-    'page[limit]': limit,
-    sort,
+  // Temporary feature flag until we complete the migration
+  if (!useOrderApiV2) {
+    // eslint-disable-next-line import/no-named-as-default-member
+    return userApiV1.fetchUserOrders(accessToken, reqData)
   }
 
-  return fetch(accessToken, `${endpoint('order', 2)}/users/${userId}/orders`, reqData, 'GET', cacheDefault, headers)
+  let url = `${endpoint('order', 2)}/users/${userId}/orders`
+  if (params) {
+    url = `${url}?${params}`
+  }
+
+  return new Promise((resolve, reject) => isomorphicFetch(url, { method: 'GET',
+    headers: {...headers, Authorization: `Bearer ${accessToken}`},
+  }).then((response) => response.json() )
+    .then((jsonResponse) => {
+      const fromV2 = jsonResponse?.data.map(d => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
+      resolve({ ...jsonResponse, data: fromV2.reverse() })
+    })
+    .catch((error) => {
+      reject(error)
+    }))
 }

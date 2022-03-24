@@ -31,6 +31,9 @@ ecs:
         datadog_api_key:
           type: secret
           description: API key for datadog agent sidecar
+        API_TOKEN:
+          type: secret
+          description: API token for server request header
 
   taskRolePolicies:
     - effect: Allow

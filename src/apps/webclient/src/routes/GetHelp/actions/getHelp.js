@@ -3,11 +3,11 @@ import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'
-import * as userApi from 'apis/user'
 import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { getAccessToken } from 'selectors/auth'
+import { fetchUserOrders } from 'routes/Menu/apis/orderV2'
 import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getIsMultiComplaintLimitReachedLastFourWeeks, getIsBoxDailyComplaintLimitReached } from '../selectors/orderSelectors'
 import { getIsAutoAccept, getOrder, getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
@@ -45,15 +45,14 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
   async (dispatch, getState) => {
     dispatch(webClientStatusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS, true))
     dispatch(webClientStatusActions.error(actionTypes.GET_HELP_LOAD_ORDERS, null))
-
     try {
-      const accessToken = getState().auth.get('accessToken')
-      const { data: orders } = await userApi.fetchUserOrders(accessToken, {
+      const payload = {
         limit: number,
         sort_order: 'desc',
         state: orderType,
         includes: ['shipping_address']
-      })
+      }
+      const { data: orders } = await fetchUserOrders(dispatch, getState, payload)
 
       dispatch({
         type: actionTypes.GET_HELP_LOAD_ORDERS,

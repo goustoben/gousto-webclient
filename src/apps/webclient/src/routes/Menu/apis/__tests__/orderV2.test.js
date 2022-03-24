@@ -1,11 +1,25 @@
-import * as fetch from 'utils/fetch'
+import isomorphicFetch from 'isomorphic-fetch'
+import { fetch } from 'utils/fetch'
 import * as cookieHelper2 from 'utils/cookieHelper2'
 import {
   withMockEnvironmentAndDomain
 } from '_testing/isomorphic-environment-test-utils'
-import { updateOrder, createOrder, getOrderPrice, getOrder, getUserOrders } from '../orderV2'
+import { safeJestMock } from '_testing/mocks'
+import * as optimizelyRollouts from 'containers/OptimizelyRollouts'
+import * as userSelectors from 'selectors/user'
+import * as authSelectors from 'selectors/auth'
+import { updateOrder, createOrder, getOrderPrice, getOrder, fetchUserOrders } from '../orderV2'
 import * as menuFetch from '../fetch'
 import { mockFetchResponse } from '../fetch.mock'
+import { OrdersMockV2 } from '../mock/ordersV2.mock'
+
+jest.mock('utils/fetch')
+jest.mock('isomorphic-fetch')
+const isOptimizelyFeatureEnabledFactory = safeJestMock(optimizelyRollouts, 'isOptimizelyFeatureEnabledFactory')
+const getUserId = safeJestMock(userSelectors, 'getUserId')
+const getAccessToken = safeJestMock(authSelectors, 'getAccessToken')
+const dispatch = jest.fn()
+const getState = jest.fn()
 
 jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPrefix, shouldDecode) => {
   if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
@@ -19,11 +33,11 @@ describe('orderApi', () => {
   // mock the environment and domain config used by these tests to generate endpoints
   withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
-  let fetchSpy
-
   beforeEach(() => {
-    fetchSpy = jest.spyOn(fetch, 'fetch').mockImplementation(jest.fn)
     jest.spyOn(menuFetch, 'post').mockResolvedValue(mockFetchResponse({}))
+    isomorphicFetch.mockImplementation(() => Promise.resolve({
+      json: () => Promise.resolve(OrdersMockV2),
+    }))
   })
 
   afterEach(() => {
@@ -53,14 +67,14 @@ describe('orderApi', () => {
     }
 
     beforeEach(() => {
-      fetchSpy.mockReturnValue(fetchResponse)
+      fetch.mockReturnValue(fetchResponse)
     })
 
     test('should fetch the correct url', async () => {
       await createOrder('token', { order: 'body' }, 'user-id')
 
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(
         'token',
         'https://production-api.gousto.co.uk/order/v2/orders',
         { data: { order: 'body' } },
@@ -85,8 +99,8 @@ describe('orderApi', () => {
     test('should fetch the correct url', async () => {
       await updateOrder('token', 'order-id', { order: 'body' }, 'user-id')
 
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(
         'token',
         'https://production-api.gousto.co.uk/order/v2/orders/order-id',
         { data: { order: 'body' } },
@@ -106,7 +120,7 @@ describe('orderApi', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const apiResponse = { data: [1, 2, 3] }
-      fetchSpy.mockResolvedValue(apiResponse)
+      fetch.mockResolvedValue(apiResponse)
 
       const result = await updateOrder('token', 'order-id', { order: 'body' }, 'user-id')
 
@@ -152,8 +166,8 @@ describe('orderApi', () => {
       const include = ['data']
 
       await getOrder('token', orderId, userId, include)
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(
         'token',
         `https://production-api.gousto.co.uk/order/v2/orders/${orderId}`,
         expectedReqData,
@@ -165,7 +179,7 @@ describe('orderApi', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const apiResponse = { data: [1, 2, 3] }
-      fetchSpy.mockResolvedValue(apiResponse)
+      fetch.mockResolvedValue(apiResponse)
 
       const result = await getOrder('token', '123', userId, {})
 
@@ -181,8 +195,8 @@ describe('orderApi', () => {
         }
         const orderId = '123'
         await getOrder('token', orderId, userId)
-        expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(
           'token',
           `https://production-api.gousto.co.uk/order/v2/orders/${orderId}`,
           {},
@@ -193,70 +207,86 @@ describe('orderApi', () => {
     })
   })
 
-  describe('getUserOrders', () => {
-    test('should fetch the correct url', async () => {
-      const expectedReqData = {
-        'filter[phase]': 'delivery',
-        include: ['data'],
-        'page[limit]': 15,
-        sort: 'deliveryDate'
-      }
-
-      const userId = '1234'
-      const expectedHeaders = {
-        'Content-Type': 'application/json',
-        'x-gousto-device-id': 'session-id',
-        'x-gousto-user-id': userId
-      }
-
-      await getUserOrders('token', userId, 'delivery', ['data'])
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(
-        'token',
-        `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
-        expectedReqData,
-        'GET',
-        'default',
-        expectedHeaders
-      )
+  describe('fetchUserOrders', () => {
+    beforeEach(() => {
+      getUserId.mockReturnValue('test-user-id')
+      getAccessToken.mockReturnValue('token')
     })
 
-    test('should return the results of the fetch unchanged', async () => {
-      const apiResponse = { data: [1, 2, 3] }
-      fetchSpy.mockResolvedValue(apiResponse)
+    describe('when using the V2 implementation', () => {
+      beforeEach(() => {
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => true)
+      })
 
-      const result = await getUserOrders('token', 'user-id', {})
-
-      expect(result).toEqual(apiResponse)
-    })
-
-    describe('when reqData is not proviced', () => {
       test('should fetch the correct url', async () => {
         const expectedReqData = {
-          'filter[phase]': undefined,
-          include: undefined,
+          'filter[phase]': 'delivery',
+          include: ['data'],
           'page[limit]': 15,
           sort: 'deliveryDate'
         }
 
-        const userId = '1234'
-        const expectedHeaders = {
-          'Content-Type': 'application/json',
-          'x-gousto-device-id': 'session-id',
-          'x-gousto-user-id': userId
+        await fetchUserOrders(dispatch, getState, expectedReqData )
+        expect(isomorphicFetch).toHaveBeenCalledTimes(1)
+        expect(isomorphicFetch).toHaveBeenCalledWith(
+          'https://production-api.gousto.co.uk/order/v2/users/test-user-id/orders?filter%5Bphase%5D=delivery&include=data&page%5Blimit%5D=15&sort=deliveryDate',
+          {
+            headers: {Authorization: 'Bearer token', 'Content-Type': 'application/json', 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'test-user-id'},
+            method: 'GET'
+          }
+        )
+      })
+
+      describe('when reqData is not proviced', () => {
+        test('should fetch the correct url', async () => {
+          await fetchUserOrders(dispatch, getState)
+
+          expect(isomorphicFetch).toHaveBeenCalledTimes(1)
+          expect(isomorphicFetch).toHaveBeenCalledWith(
+            'https://production-api.gousto.co.uk/order/v2/users/test-user-id/orders',
+            {
+              headers: {Authorization: 'Bearer token', 'Content-Type': 'application/json', 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'test-user-id'},
+              method: 'GET'
+            }
+
+          )
+        })
+      })
+    })
+    describe('when using the V1 implementation', () => {
+      beforeEach(() => {
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => false)
+      })
+      test('should fetch the correct url', async () => {
+        const expectedReqData = {
+          'filter[phase]': 'delivery',
+          include: ['data'],
+          'page[limit]': 15,
+          sort: 'deliveryDate'
         }
 
-        await getUserOrders('token', userId)
-
-        expect(fetchSpy).toHaveBeenCalledTimes(1)
-        expect(fetchSpy).toHaveBeenCalledWith(
+        await fetchUserOrders(dispatch, getState, expectedReqData )
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(
           'token',
-          `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
-          expectedReqData,
-          'GET',
-          'default',
-          expectedHeaders
+          'https://production-api.gousto.co.uk/user/current/orders',
+          {'filter[phase]': 'delivery', include: ['data'], 'page[limit]': 15, sort: 'deliveryDate'},
+          'GET'
         )
+      })
+
+      describe('when reqData is not proviced', () => {
+        test('should fetch the correct url', async () => {
+          await fetchUserOrders(dispatch, getState)
+
+          expect(fetch).toHaveBeenCalledTimes(1)
+          expect(fetch).toHaveBeenCalledWith(
+            'token',
+            'https://production-api.gousto.co.uk/user/current/orders',
+            undefined,
+            'GET'
+          )
+        })
       })
     })
   })

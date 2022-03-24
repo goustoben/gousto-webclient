@@ -1,8 +1,8 @@
 import qs from 'qs'
 import logger from 'utils/logger'
 import isomorphicFetch from 'isomorphic-fetch'
-import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
+import { getEnvConfig } from 'utils/processEnv'
 import { getStore } from 'store'
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 import { isServer } from './serverEnvironment'
@@ -88,11 +88,7 @@ export function fetch(
   }
 
   if (isServer() && isProd()) {
-    if (env && env.apiToken) {
-      requestHeaders['API-Token'] = env.apiToken
-    } else {
-      logger.error({message: 'Missing env.apiToken', uuid })
-    }
+    requestHeaders['API-Token'] = getEnvConfig().API_TOKEN
   }
 
   const requestDetails = {

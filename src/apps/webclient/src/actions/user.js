@@ -38,6 +38,7 @@ import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscri
 import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 import { canUseWindow } from 'utils/browserEnvironment'
 
+import { fetchUserOrders } from 'routes/Menu/apis/orderV2'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -102,17 +103,16 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
     try {
       if (forceRefresh || !getState().user.get('orders').size) {
-        const accessToken = getState().auth.get('accessToken')
-        const { data: orders } = await userApi.fetchUserOrders(accessToken, {
+        const payload = {
           limit: number,
           sort_order: 'desc',
           state: orderType,
           includes: ['shipping_address']
-        })
-
+        }
+        const { data: orders } = await fetchUserOrders(dispatch, getState, payload)
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
-          orders
+          orders: orders || []
         })
       }
     } catch (err) {
