@@ -1,12 +1,7 @@
 import { OrdersMockV2 } from '../mock/ordersV2.mock'
 import { transformOrderV2ToOrderV1 } from '../ordersV2toV1'
 
-jest.doMock('moment', () => {
-  // this is to make moment.format work correctly with timezones in tests
-  Date.now = jest.fn(() => new Date('2021-01-01T12:00:00Z'))
-
-  return jest.requireActual('moment')
-})
+jest.mock('moment', () => jest.requireActual('moment').utc)
 
 describe('transformOrderV2ToOrderV1', () => {
   const result = transformOrderV2ToOrderV1(OrdersMockV2.data[0], OrdersMockV2.included)
