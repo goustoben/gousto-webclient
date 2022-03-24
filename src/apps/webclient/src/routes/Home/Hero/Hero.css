@@ -1,4 +1,5 @@
 @value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value FontFamilyAxiformaBook from 'design-language/typography.css';
 @value White from 'styles/colors.css';
 
 .container {
@@ -82,6 +83,12 @@
   @media BreakpointFromLarge {
     max-width: 32rem;
   }
+}
+
+.titleStar {
+  vertical-align: super;
+  font-family: FontFamilyAxiformaBook !important;
+  font-size: 32px; /* 5XLarge */
 }
 
 .subTitle {

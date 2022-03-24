@@ -2,6 +2,8 @@
 @value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value Blackberry, White from 'styles/colors.css';
 @value MaxBreakPointXS, ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMLMin, ScreenLGMin from 'styles/screenSizes.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
 
 .superContainer {
 	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
@@ -205,4 +207,14 @@
 	@media ScreenXSMax {
 		display: none;
 	}
+}
+
+.numberOneNotice {
+  padding: 0 0.75rem 1rem;
+  margin: auto;
+
+  @media BreakpointFromMedium {
+    padding: 0 2rem 1rem;
+    max-width: 60rem;
+  }
 }
