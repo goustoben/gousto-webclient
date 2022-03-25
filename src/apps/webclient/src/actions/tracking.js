@@ -181,7 +181,7 @@ export const trackAffiliatePurchase = ({
         amount: total,
         currency: 'GBP',
         paymenttype: paymentType,
-        conversiontype: 'conversion',
+        conversiontype: 'signup',
       }
     }
 

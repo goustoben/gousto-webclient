@@ -601,7 +601,7 @@ describe('tracking actions', () => {
             amount: '24.50',
             currency: 'GBP',
             paymenttype: 'card',
-            conversiontype: 'conversion',
+            conversiontype: 'signup',
           }
         }))
       })
