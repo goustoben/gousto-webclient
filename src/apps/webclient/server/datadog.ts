@@ -6,7 +6,7 @@ import { getEnvironment } from '../src/utils/isomorphicEnvironment'
 export const getIsDatadogEnabled = () => {
   const currentEnv = getEnvironment()
 
-  return DATADOG_ENABLED_ENVS.some((enabledEnv) => (currentEnv === enabledEnv))
+  return DATADOG_ENABLED_ENVS.some((enabledEnv) => currentEnv === enabledEnv)
 }
 
 export const configureDDTracer = (): void => {

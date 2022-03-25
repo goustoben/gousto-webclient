@@ -15,7 +15,7 @@ import { Domain } from 'utils/types/windowLocation'
  * environment state.
  *
  * Example:
-  * ```
+ * ```
  * let environmentMocks
  *
  * beforeAll(() => {
@@ -42,7 +42,10 @@ export const mockDomain = (domain: Domain): jest.SpyInstance<string, []> =>
 export const mockEnvironment = (environment: string): jest.SpyInstance<string, []> =>
   jest.spyOn(isoMorph, 'getEnvironment').mockReturnValue(environment)
 
-export function mockEnvironmentAndDomain(environment: string, domain: Domain): EnvironmentSpyCollection {
+export function mockEnvironmentAndDomain(
+  environment: string,
+  domain: Domain
+): EnvironmentSpyCollection {
   const getDomainSpy = mockDomain(domain)
   const getEnvironmentSpy = mockEnvironment(environment)
 
@@ -64,7 +67,10 @@ export function withMockEnvironmentAndDomain(environment: string, domain: Domain
   })
 }
 
-export const restoreEnvironmentMocks = ({ getDomainSpy, getEnvironmentSpy }: EnvironmentSpyCollection) => {
+export const restoreEnvironmentMocks = ({
+  getDomainSpy,
+  getEnvironmentSpy,
+}: EnvironmentSpyCollection) => {
   getDomainSpy.mockRestore()
   getEnvironmentSpy.mockRestore()
 }

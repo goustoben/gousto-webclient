@@ -7,8 +7,8 @@
 **/*.gql
 **/*.scss
 **/*.md
-**/*.ts
-**/*.tsx
+
+# note: all ts and tsx files are checked: no special "ignore" declaration
 
 !.eslintrc.js
 
@@ -20,6 +20,3 @@
 !src/middlewares/tracking/dataLayerTracker/**/*
 !src/routes/BoxPrices/**/*
 !src/performanceTracker/**/*
-# two-stage migration in Menu: first ts, then js&css
-!src/routes/Menu/**/*.ts
-!src/routes/Menu/**/*.tsx
