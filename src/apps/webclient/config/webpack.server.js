@@ -8,8 +8,7 @@ const ExitCodePlugin = require('./exitCode')
 const { fontRules, imageRules } = require('./build/libs/rules')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
-const { webpackEnvVarsServer, cloudfrontUrl, build, clientProtocol } = require('./build/libs/webpack-env-vars.js')
-const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
+const { webpackEnvVarsServer, build, publicPath } = require('./build/libs/webpack-env-vars.js')
 const debug = false
 const devMode = process.env.NODE_ENV !== 'production'
 const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
@@ -29,7 +28,7 @@ const config = {
   output: {
     path: path.resolve('./dist'),
     filename: 'server.js',
-    publicPath
+    publicPath,
   },
   module: {
     rules: [
