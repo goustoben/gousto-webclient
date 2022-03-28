@@ -1,16 +1,17 @@
 const globals = require('config/globals')
 const { newAssetPath, getAssetRootUrl } = require('utils/media')
+const { getServerEnvironment } = require('./utils/serverEnvironment')
 const head = require('./head').default
 const encodeState = require('./encodeState')
 
-const { apiName, domain } = globals
+const { domain } = globals
 
 const preconnectDomains = [
   'https://fonts.googleapis.com/',
   'https://snplw.gousto.co.uk/',
   'https://static.zdassets.com/',
   getAssetRootUrl(),
-  `https://${apiName}-api.${domain}/`,
+  `https://${getServerEnvironment()}-api.${domain}/`,
 ]
 
 const getPreconnectSection = () => preconnectDomains.map(value => (

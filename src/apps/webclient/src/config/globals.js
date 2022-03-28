@@ -6,6 +6,5 @@ module.exports = {
   env: __ENV__,
   domain: __DOMAIN__,
   protocol: __CLIENT_PROTOCOL__,
-  apiName: __API_ENV__,
   service: 'webclient',
 }

@@ -51,7 +51,6 @@ module.exports = {
     __RECAPTCHA_RAF_PUBK__: '',
     __RECAPTCHA_RAF_PVTK__: '',
     __ENV__: 'production',
-    __API_ENV__: 'production',
     __RUNNING_ENV__: 'live',
     __DOMAIN__: 'gousto.local',
     'process.env.NODE_ENV': 'production',
