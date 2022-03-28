@@ -1,6 +1,6 @@
 import { isServer } from 'utils/serverEnvironment'
-import { getEnvConfig } from 'utils/processEnv'
 import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
+import { validateProcessEnv } from 'utils/processEnv'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 
@@ -66,9 +66,6 @@ function enableHmr() {
     app.use(middleware)
   })
 }
-
-// Warns if environment variables not set
-getEnvConfig((err) => logger.critical({ message: err }))
 
 app.use(sessionMiddleware())
 
@@ -203,6 +200,13 @@ if (__DEV__) {
   enableHmr()
 }
 
-app.listen(port, () => {
-  logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
-})
+function checkEnvAndStartServer() {
+  validateProcessEnv()
+
+  app.listen(port, () => {
+    logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
+  })
+}
+
+checkEnvAndStartServer()
+

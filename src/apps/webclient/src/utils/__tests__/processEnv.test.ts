@@ -1,6 +1,4 @@
-import { Env, envOrCallback } from '../processEnv'
-
-const mockCallback = jest.fn()
+import { getFromProcessEnv, parseStringToNumber, ProcessEnv } from '../processEnv'
 
 describe('processEnv', () => {
   describe('getEnvConfig', () => {
@@ -19,26 +17,73 @@ describe('processEnv', () => {
       process.env = originalProcessEnv
     })
 
-    test.each([
-      ['ENVIRONMENT', 'local', { ENVIRONMENT: 'local' }],
-      ['API_TOKEN', 'mock-api-token', { API_TOKEN: 'mock-api-token' }],
-    ])('getEnvConfig contains the correct values', (key, value, expected) => {
-      process.env[key] = value
+    describe('getEnvConfig', () => {
+      test('returns expected environment config object', () => {
+        process.env = {
+          ENVIRONMENT: 'local',
+          API_TOKEN: 'mock-api-token',
+        }
 
-      // eslint-disable-next-line
-      const { getEnvConfig } = require('../processEnv')
+        // eslint-disable-next-line
+        const { getEnvConfig } = require('../processEnv')
 
-      expect(getEnvConfig(mockCallback)).toEqual(expected)
+        expect(getEnvConfig()).toEqual({
+          ENVIRONMENT: 'local',
+          API_TOKEN: 'mock-api-token',
+        })
+      })
     })
 
-    test('callback is invoked as expected when property is undefined', () => {
-      envOrCallback(mockCallback)({} as Env, 'ENVIRONMENT')
-      expect(mockCallback).toHaveBeenCalledWith('No environment variable with key ENVIRONMENT')
+    describe('getFromProcessEnv', () => {
+      test('retrieves value from process.env', () => {
+        const mockProcessEnv = {
+          ENVIRONMENT: 'local',
+        }
+
+        const result = getFromProcessEnv(mockProcessEnv as ProcessEnv)('ENVIRONMENT')
+
+        expect(result).toEqual(mockProcessEnv.ENVIRONMENT)
+      })
+
+      test('transforms value if transform fn is passed', () => {
+        const mockProcessEnv = {
+          MOCK_KEY: '10',
+        }
+
+        // eslint-disable-next-line
+        // @ts-expect-error
+        const result = getFromProcessEnv(mockProcessEnv)('MOCK_KEY', parseStringToNumber)
+
+        expect(result).toEqual(10)
+      })
     })
 
-    test('logger is NOT called when property is defined', () => {
-      envOrCallback(mockCallback)({ ENVIRONMENT: 'local' }, 'ENVIRONMENT')
-      expect(mockCallback).not.toHaveBeenCalled()
+    describe('validateProcessEnv', () => {
+      test('throws if key is missing from process.env', () => {
+        const expectedError = new Error('No environment variable with key API_TOKEN')
+
+        process.env = {
+          ENVIRONMENT: 'local',
+          // Missing: API_TOKEN
+        }
+
+        // eslint-disable-next-line
+        const { validateProcessEnv } = require('../processEnv')
+
+        expect(() => validateProcessEnv()).toThrow(expectedError)
+      })
+
+      test('does not throw if process.env contains required keys', () => {
+        process.env = {
+          ENVIRONMENT: 'local',
+          API_TOKEN: 'mock-api-token',
+        }
+
+        // eslint-disable-next-line
+        const { validateProcessEnv } = require('../processEnv')
+
+        expect(() => validateProcessEnv()).not.toThrow()
+      })
     })
   })
 })

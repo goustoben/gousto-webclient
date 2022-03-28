@@ -29,6 +29,7 @@ describe('fetch', () => {
     processEnv = process.env
 
     process.env.API_TOKEN = 'mock-api-token'
+    process.env.ENVIRONMENT = 'local'
   })
 
   afterAll(() => {
