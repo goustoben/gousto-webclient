@@ -100,15 +100,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
 }
 ```
 
-api_name
---------
-```
-    string: production | staging | [environment name]
-```
-(aliased by `__API_ENV__`, `apiName` in the code).
-
-Used to target the domain / address of the APIs - see `src/src/config/endpoint.js`
-
 auth_client_id
 --------------
 ```
