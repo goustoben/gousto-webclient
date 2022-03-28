@@ -20,7 +20,9 @@ export const createOrder = async (accessToken, order, userId) => {
 
   const response = await fetch(accessToken, `${endpoint('order', 2)}/orders`, { data: order }, 'POST', cacheDefault, headers)
 
-  const { data: { data: orderResponse } } = response
+  const {
+    data: { data: orderResponse },
+  } = response
 
   return orderResponse
 }
@@ -52,7 +54,7 @@ export const updateOrder = (accessToken, orderId, order, userId) => {
 
 export const getOrder = (accessToken, orderId, userId, include) => {
   const reqData = {
-    include
+    include,
   }
 
   const headers = getRequestHeaders(userId)
@@ -60,33 +62,44 @@ export const getOrder = (accessToken, orderId, userId, include) => {
   return fetch(accessToken, `${endpoint('order', 2)}/orders/${orderId}`, reqData, 'GET', cacheDefault, headers)
 }
 
+const wait = (ms = 1) => new Promise((r) => setTimeout(r, ms))
+
+const getServiceReady = async (dispatch, getState, optimizelyFlag) => {
+  let userId
+  let isEnabled
+  while (userId === '' || userId === undefined) {
+    userId = await getUserId(getState())
+    isEnabled = await isOptimizelyFeatureEnabledFactory(optimizelyFlag)(dispatch, getState)
+    await wait(1000)
+  }
+  return { userId, isEnabled }
+}
+
 export async function fetchUserOrders(dispatch, getState, reqData) {
+  const  { userId } = await getServiceReady(dispatch, getState, 'radishes_order_api_v2_userorders_web_enabled')
   const state = getState()
-  const userId = getUserId(state)
   const headers = getRequestHeaders(userId)
   const params = new URLSearchParams(reqData).toString()
   const accessToken = getAccessToken(state)
-  const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_v2_userorders_web_enabled')(dispatch, getState)
-
-  // Temporary feature flag until we complete the migration
-  if (!useOrderApiV2) {
-    // eslint-disable-next-line import/no-named-as-default-member
-    return userApiV1.fetchUserOrders(accessToken, reqData)
-  }
 
   let url = `${endpoint('order', 2)}/users/${userId}/orders`
   if (params) {
     url = `${url}?${params}`
   }
 
-  return new Promise((resolve, reject) => isomorphicFetch(url, { method: 'GET',
-    headers: {...headers, Authorization: `Bearer ${accessToken}`},
-  }).then((response) => response.json() )
+  return new Promise((resolve, reject) =>
+      isomorphicFetch(url, {
+      method: 'GET',
+      headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+    })
+    .then((response) => response.json())
     .then((jsonResponse) => {
-      const fromV2 = jsonResponse?.data.map(d => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
+      const fromV2 =
+        jsonResponse?.data.map((d) => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
       resolve({ ...jsonResponse, data: fromV2.reverse() })
     })
     .catch((error) => {
       reject(error)
-    }))
+    })
+  )
 }
