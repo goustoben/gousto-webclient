@@ -356,6 +356,9 @@ jobs:
           name: Create minimal config file
           command: 'echo "{\"running_env\": \"local\"}" > src/apps/webclient/config/development-local.json5'
       - run:
+          name: Set env file
+          command: mv src/apps/webclient/server/.env.regression src/apps/webclient/server/.env
+      - run:
           name: Build local application
           working_directory: src/apps/webclient
           command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build
