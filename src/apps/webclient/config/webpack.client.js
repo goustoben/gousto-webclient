@@ -3,7 +3,7 @@ const path = require('path')
 const { getClientPlugins } = require('./build/libs/plugins')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
-const { build, clientDevServerEnabled, publicPath } = require('./build/libs/webpack-env-vars.js')
+const { build, publicPath, clientDevServerEnabled } = require('./build/libs/webpack-env-vars.js')
 const { logBuildInfo } = require('./build/libs/logs')
 const { getClientRules, getClientDevtool, getClientOptimization } = require('./build/libs/rules')
 

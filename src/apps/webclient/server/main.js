@@ -1,6 +1,5 @@
 import { isServer } from 'utils/serverEnvironment'
 import { getEnvConfig } from 'utils/processEnv'
-import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 
@@ -76,7 +75,7 @@ app.use(sessionMiddleware())
 app.use(async (ctx, next) => {
   const startTime = new Date()
   const { header, request: { path: requestUrl }} = ctx
-  const writeLog = (requestUrl.indexOf('/ping') === -1) && (requestUrl.indexOf(ASSET_PATH) === -1 )
+  const writeLog = (requestUrl.indexOf('/ping') === -1) && (requestUrl.indexOf('/nsassets') === -1 )
 
   if (writeLog) {
     const uuid = uuidv1()
@@ -172,27 +171,15 @@ app.use(async (ctx, next) => {
   }
 })
 
-if (__DEV__) {
-  logger.info(`Serving static files in ${ASSET_PATH} from /public`)
-  app.use(convert(koaMount(ASSET_PATH, koaStatic('public'))))
+if (__DEV__ || withStatic) { // required for local DEV build
+  logger.info('Serving static files in /nsassets from /public')
+  app.use(convert(koaMount('/nsassets/', koaStatic('public'))))
 
   // Emulate CloudFront -> S3 behaviour for non-existent assets
-  app.use(convert(koaMount(ASSET_PATH, (ctx) => {
+  app.use(convert(koaMount('/nsassets/', (ctx) => {
     ctx.status = 403
   })))
-} else {
-  logger.info(`Serving static files in ${ASSET_PATH} from S3`)
 
-  app.use(async (ctx, next) => {
-    try {
-      await proxyAssetRequest({ ctx, next })
-    } catch (error) {
-      logger.error({ message: 'Error in proxyAssetRequest', errors: [error] })
-    }
-  })
-}
-
-if (withStatic) {
   // Serving public assets from / is only currently used for regression tests
   app.use(convert(koaMount('/', koaStatic('public'))))
 }

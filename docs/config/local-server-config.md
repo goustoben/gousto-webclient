@@ -37,8 +37,6 @@ _Note: accessing server environment variables is best done using the `getEnvConf
 
 This is done by using the [preload](https://github.com/motdotla/dotenv) method in our local development scripts
 
-_Note: ENVIRONMENT must be set to local in this file when developing to allow for correct asset path construction._
-
 ```json
 # package.json
 {

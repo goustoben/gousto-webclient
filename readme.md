@@ -243,10 +243,3 @@ https://github.com/Gousto/Gousto2-FrontEnd/blob/750691d7/src/nodeserver/src
 When setting up a new squad environment please add the relevant public key to [this](https://github.com/Gousto/gousto-webclient/blob/c4f64d816ed09c7a1218f8206e52fc504ff1a168/src/apps/webclient/src/routes/Checkout/Components/CheckoutPayment/config.ts) file.
 
 You will also need to add it to the Circle CI Beta & Production contexts so it can be injected into Gousto2-Frontend.
-
-### Assets
-
-All assets are configured to be served by the Node application on `/build/latest` when running locally. When running on production, staging or a lower env assets will be linked to via a direct S3 URL if on the server, for example the `[S3_URL]main.bundle.js` inserted into the HTML template. Or, if on the client the requests will be proxied to S3 via the node application using the `/build/latest` path.
-
-For more clarification on why this was done please reach out to FEF (#squad-frontend-foundations)
-

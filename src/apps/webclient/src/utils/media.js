@@ -2,10 +2,6 @@
 import jsonfile from 'jsonfile'
 import logger from 'utils/logger'
 import path from 'path'
-import isomorphicFetch from 'isomorphic-fetch'
-import { getServerEnvironment, getServerDomain } from '../../server/utils/serverEnvironment'
-
-export const ASSET_PATH = '/build/latest'
 
 let localManifest
 if (!__DEV__) {
@@ -27,17 +23,14 @@ function getLocalManifest() {
 }
 
 export function getAssetRootUrl() {
-  const serverEnvironment = getServerEnvironment()
-  const serverDomain = getServerDomain()
-
-  if (serverEnvironment === 'local') {
-    return ASSET_PATH
-  } else if (serverEnvironment === 'production' || serverEnvironment === 'staging') {
-    return `${__CLIENT_PROTOCOL__}://${serverEnvironment}-assets.${serverDomain}${ASSET_PATH}`
+  let s3 = '/nsassets'
+  if (typeof __CLOUDFRONT_URL__ !== 'undefined' && __CLOUDFRONT_URL__ !== '') {
+    s3 = `${__CLIENT_PROTOCOL__}://${__CLOUDFRONT_URL__}/build/latest`
+  } else if (typeof window !== 'undefined' && window.imageBaseURL) {
+    s3 = window.imageBaseURL
   }
 
-  // Return squad env assets
-  return `${__CLIENT_PROTOCOL__}://s3-gousto-${serverEnvironment}-assets.s3.amazonaws.com${ASSET_PATH}`
+  return s3
 }
 
 export function newAssetPath(filename) {
@@ -45,17 +38,4 @@ export function newAssetPath(filename) {
   const localFileName = manifest && manifest[filename] ? manifest[filename] : filename
 
   return `${getAssetRootUrl()}/${localFileName}`
-}
-
-export async function proxyAssetRequest({ ctx, next }) {
-  const { request: { path: assetRequestPath } } = ctx
-
-  if (assetRequestPath.indexOf(ASSET_PATH) !== -1) {
-    const file = await isomorphicFetch(newAssetPath(assetRequestPath.replace(`${ASSET_PATH}/`, '')))
-    const ext = assetRequestPath.split('.').pop()
-    ctx.type = ext
-    ctx.body = file.body
-  } else {
-    await next()
-  }
 }
