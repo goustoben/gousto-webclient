@@ -101,7 +101,6 @@ jobs:
           paths:
             - root/.circlerc
             - mnt/ramdisk/.yarn
-            - mnt/ramdisk/ansible
             - mnt/ramdisk/ci_scripts
             - mnt/ramdisk/cloudformation
             - mnt/ramdisk/images

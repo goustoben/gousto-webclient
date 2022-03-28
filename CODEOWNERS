@@ -13,7 +13,6 @@
 /.dockerignore                                          @Gousto/frontend-foundations
 /service.yml                                            @Gousto/frontend-foundations
 /Dockerfile                                             @Gousto/frontend-foundations
-/ansible/                                               @Gousto/frontend-foundations
 /cloudformation/                                        @Gousto/frontend-foundations
 /images/                                                @Gousto/frontend-foundations
 /scripts/                                               @Gousto/frontend-foundations
