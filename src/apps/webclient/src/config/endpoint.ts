@@ -37,9 +37,20 @@ function getServiceUrl(serviceName: ServiceName, version: number, serviceEnviron
 }
 
 function endpointAdapter(getServiceEnvironment: () => ServiceEnvironment) {
+  const cache = new Map<string, string>()
+
   // signature as per previous implementation
   return function endpoint(serviceName: ServiceName, version = 1) {
-    return getServiceUrl(serviceName, version, getServiceEnvironment())
+    const serviceEnvironment = getServiceEnvironment()
+    const serviceKey = `${serviceEnvironment.protocol}//${serviceEnvironment.environmentName}.${serviceEnvironment.serviceDomain}/${serviceName}/${version}`
+
+    if(cache.has(serviceKey)) {
+      return cache.get(serviceKey)
+    }
+
+    cache.set(serviceKey, getServiceUrl(serviceName, version, serviceEnvironment))
+
+    return cache.get(serviceKey)
   }
 }
 
