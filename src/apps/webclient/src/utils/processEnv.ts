@@ -1,26 +1,65 @@
-export type Env = {
+/**
+ * process.env as set by service.yml and parameter store
+ */
+export type ProcessEnv = {
   ENVIRONMENT: string
   API_TOKEN: string
 }
 
-export const envOrCallback =
-  (cb: (_msg: string) => void) =>
-  <T, K extends keyof T>(env: T, key: K): T[K] => {
-    const lookup = env[key]
+/**
+ * Transformed process.env - this is needed
+ * as parameter store only supports string values
+ */
+export type ParsedProcessEnv = {
+  ENVIRONMENT: string
+  API_TOKEN: string
+}
 
-    if (lookup === undefined) {
-      cb(`No environment variable with key ${key}`)
-    }
+export const envOrThrow = (obj: Record<string, unknown>, key: keyof ProcessEnv) => {
+  const val = obj[key]
 
-    return lookup as T[K]
+  if (val === undefined) {
+    throw new Error(`No environment variable with key ${key}`)
   }
 
-// eslint-disable-next-line no-console
-export const getEnvConfig = (cb = (msg: string) => console.warn(msg)) => {
-  const processEnv = process.env as Env
+  return val
+}
+
+export const parseStringToNumber = (val: ProcessEnv[keyof ProcessEnv]) => parseInt(val, 10)
+
+export const validateProcessEnv = () => {
+  ;['ENVIRONMENT', 'API_TOKEN'].forEach((key) => envOrThrow(process.env, key as keyof ProcessEnv))
+}
+
+/**
+ * Only for use by getEnvConfig, which also provides transformation
+ */
+export const getFromProcessEnv = (env: ProcessEnv) => {
+  const memo = new Map<string, string | number>()
+
+  return <K extends keyof ProcessEnv>(
+    key: K,
+    transformFn?: (val: ProcessEnv[K]) => ParsedProcessEnv[K]
+  ) => {
+    const valueFromMemo = memo.get(key)
+
+    if (valueFromMemo) {
+      return valueFromMemo as ParsedProcessEnv[K]
+    }
+
+    const value = transformFn ? transformFn(env[key]) : env[key]
+
+    memo.set(key, value)
+
+    return value as ParsedProcessEnv[K]
+  }
+}
+
+export const getEnvConfig = (): ParsedProcessEnv => {
+  const processEnv = process.env as ProcessEnv
 
   return {
-    ENVIRONMENT: envOrCallback(cb)(processEnv, 'ENVIRONMENT'),
-    API_TOKEN: envOrCallback(cb)(processEnv, 'API_TOKEN'),
+    ENVIRONMENT: getFromProcessEnv(processEnv)('ENVIRONMENT'),
+    API_TOKEN: getFromProcessEnv(processEnv)('API_TOKEN'),
   }
 }
