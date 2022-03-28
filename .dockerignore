@@ -1,7 +1,6 @@
 .circleci/
 .githooks/
 .git/
-ansible/
 cloudformation/
 scripts/
 setup/

@@ -1,6 +1,0 @@
----
-- pause:
-    minutes: 1
-
-- name: Configuring service
-  command: pm2 startup
