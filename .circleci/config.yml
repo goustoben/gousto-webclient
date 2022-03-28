@@ -91,11 +91,6 @@ jobs:
       - run:
           name: Download platform deploy scripts and set the ENVIRONMENT variable from the branch name
           command: /gousto/platform-setup.sh
-      - run:
-          name: Set S3 Cloudfront URL
-          command: |
-            source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=$AWS_DEFAULT_REGION)
-            echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
       - setup_remote_docker
       - run:
           name: Setup ECR

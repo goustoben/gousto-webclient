@@ -92,7 +92,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "build": "",
   "client_dev_server_enabled": false,
   "client_protocol": "",
-  "cloudfront_url": "",
   "domain": "",
   "environment_name": "",
   "recaptcha_referral_private_key": "",
@@ -156,15 +155,6 @@ client_protocol
 HTTP protocol used when building urls, for calls out to the internet.
 
 Referenced in `src/src/utils/media.js`, `src/src/routes/Menu/fetchData/fetchData.js`, `src/src/actions/login.js`
-
-cloudfront_url
---------------
-```
-    string: [cloudfront url]
-```
-Assets location (via Cloudfront). Used as a variable in the server code via either: `src/server/template.js` or `src/server/processRequest.js`.
-
-See `newAssetPath` & `getAssetRootUrl` in `src/src/utils/media.js`.
 
 domain
 ------
