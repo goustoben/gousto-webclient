@@ -24,13 +24,12 @@ const webpackEnvVarsBase = {
 
 const webpackEnvVarsDev = {
   ...webpackEnvVarsBase,
-  __DOMAIN__: JSON.stringify(domain),
-  'process.env.NODE_ENV': JSON.stringify('development'),
+  __DOMAIN__: JSON.stringify(domain)
 }
 
+// will refactor this out in subsequent BODA work
 const webpackEnvVarsClient = {
-  ...webpackEnvVarsBase,
-  'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
+  ...webpackEnvVarsBase
 }
 
 const webpackEnvVarsServer = {
@@ -39,7 +38,6 @@ const webpackEnvVarsServer = {
   __AUTH_CLIENT_SECRET__: JSON.stringify(authClientSecret),
   __DEV__: build === 'development',
   __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
-  'process.env.NODE_ENV': JSON.stringify(build),
 }
 
 module.exports = {
