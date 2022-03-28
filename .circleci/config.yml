@@ -91,11 +91,6 @@ jobs:
       - run:
           name: Download platform deploy scripts and set the ENVIRONMENT variable from the branch name
           command: /gousto/platform-setup.sh
-      - run:
-          name: Set S3 Cloudfront URL
-          command: |
-            source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=$AWS_DEFAULT_REGION)
-            echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
       - setup_remote_docker
       - run:
           name: Setup ECR
@@ -360,6 +355,9 @@ jobs:
       - run:
           name: Create minimal config file
           command: 'echo "{\"running_env\": \"local\"}" > src/apps/webclient/config/development-local.json5'
+      - run:
+          name: Set env file
+          command: mv src/apps/webclient/server/.env.regression src/apps/webclient/server/.env
       - run:
           name: Build local application
           working_directory: src/apps/webclient

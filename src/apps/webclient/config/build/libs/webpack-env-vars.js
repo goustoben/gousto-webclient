@@ -6,20 +6,16 @@ const authClientSecret = nodeConfig.get('auth_client_secret')
 const build = nodeConfig.get('build')
 const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 const clientProtocol = nodeConfig.get('client_protocol')
-const cloudfrontUrl = nodeConfig.get('cloudfront_url')
 const domain = nodeConfig.get('domain')
 const envName = nodeConfig.get('environment_name')
 const recaptchaReferralPrivateKey = nodeConfig.get('recaptcha_referral_private_key')
 const runningEnv = nodeConfig.get('running_env')
 
-const publicPath = cloudfrontUrl
-  ? `${clientProtocol}://${cloudfrontUrl}/build/latest/`
-  : '/nsassets/'
+const publicPath = '/build/latest/'
 
 const webpackEnvVarsBase = {
   __API_ENV__: JSON.stringify(apiName),
   __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
-  __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
   __DOMAIN__: JSON.stringify(domain),
   __ENV__: JSON.stringify(envName),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
@@ -28,13 +24,12 @@ const webpackEnvVarsBase = {
 
 const webpackEnvVarsDev = {
   ...webpackEnvVarsBase,
-  __DOMAIN__: JSON.stringify(domain),
-  'process.env.NODE_ENV': JSON.stringify('development'),
+  __DOMAIN__: JSON.stringify(domain)
 }
 
+// will refactor this out in subsequent BODA work
 const webpackEnvVarsClient = {
-  ...webpackEnvVarsBase,
-  'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
+  ...webpackEnvVarsBase
 }
 
 const webpackEnvVarsServer = {
@@ -43,7 +38,6 @@ const webpackEnvVarsServer = {
   __AUTH_CLIENT_SECRET__: JSON.stringify(authClientSecret),
   __DEV__: build === 'development',
   __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
-  'process.env.NODE_ENV': JSON.stringify(build),
 }
 
 module.exports = {
@@ -56,10 +50,9 @@ module.exports = {
   build,
   clientDevServerEnabled,
   clientProtocol,
-  cloudfrontUrl,
   domain,
   envName,
-  publicPath,
   recaptchaReferralPrivateKey,
   runningEnv,
+  publicPath,
 }

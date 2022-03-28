@@ -46,7 +46,6 @@ module.exports = {
   ],
   globals: {
     __DEV__: false,
-    __CLOUDFRONT_URL__: 'test.com',
     __CLIENT_PROTOCOL__: 'https',
     __CHECKOUT_PK__: '',
     __RECAPTCHA_RAF_PUBK__: '',
