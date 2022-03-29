@@ -18,8 +18,9 @@ describe('loadFeatures util', () => {
   })
 
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(getWindow as jest.Mock).mockReturnValue({
+    jest.clearAllMocks();
+
+    (getWindow as jest.Mock).mockReturnValue({
       __snowPlowGetOptimizelyExperimentsData: () => [
         { data: { experiment_id: 'mock-experiment-id' } },
       ],
@@ -33,7 +34,7 @@ describe('loadFeatures util', () => {
 
   describe('when window is available', () => {
     beforeEach(() => {
-      ;(canUseWindow as jest.Mock).mockReturnValue(true)
+      (canUseWindow as jest.Mock).mockReturnValue(true)
 
       loadFeatures(
         // This data structure just enables the fn to run without error,
@@ -55,7 +56,7 @@ describe('loadFeatures util', () => {
 
   describe('when window is not available', () => {
     beforeEach(() => {
-      ;(canUseWindow as jest.Mock).mockReturnValue(false)
+      (canUseWindow as jest.Mock).mockReturnValue(false)
 
       loadFeatures(
         // This data structure just enables the fn to run without error,

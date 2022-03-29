@@ -2,8 +2,8 @@ import {
   PROTOCOL_PREFIX,
   ServiceEnvironment,
   ServiceName,
-  ServiceUrlProperties,
-} from 'config/service-environment/service-environment.types'
+  ServiceUrlProperties
+} from "config/service-environment/service-environment.types";
 import { serviceUrl } from 'config/service-environment/service-url'
 import { getServiceManifest } from 'config/service-environment/service-manifest'
 import { findServiceVersion } from 'config/service-environment/find-service-version'
@@ -14,19 +14,15 @@ export const buildServiceUrlProperties = (
   serviceName: ServiceName,
   majorVersion: number,
   serviceEnvironment: ServiceEnvironment,
-  basePath?: string
+  basePath?: string ,
 ): ServiceUrlProperties => ({
   ...serviceEnvironment,
   serviceName,
   majorVersion,
-  basePath,
+  basePath
 })
 
-function getServiceUrl(
-  serviceName: ServiceName,
-  version: number,
-  serviceEnvironment: ServiceEnvironment
-) {
+function getServiceUrl(serviceName: ServiceName, version: number, serviceEnvironment: ServiceEnvironment) {
   const { basePath } = findServiceVersion(serviceName, version, getServiceManifest())
   const isPublic = canUseWindow() || isDev()
 
@@ -61,7 +57,7 @@ function endpointAdapter(getServiceEnvironment: () => ServiceEnvironment) {
 const getServiceEnvironment = (): ServiceEnvironment => ({
   environmentName: getEnvironment(),
   protocol: canUseWindow() ? PROTOCOL_PREFIX.HTTPS : PROTOCOL_PREFIX.HTTP,
-  serviceDomain: getDomain(),
+  serviceDomain: getDomain()
 })
 
 const endpoint = endpointAdapter(getServiceEnvironment)

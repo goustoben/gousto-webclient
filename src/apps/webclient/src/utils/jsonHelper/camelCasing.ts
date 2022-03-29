@@ -7,11 +7,12 @@
  * Maps any snake_case string literal to its camelCased equivalent via recursive transformation
  * Template literal types were introduced in TypeScript 4.1
  */
-export type SnakeToCamelCase<Input extends string> = Input extends `${infer Head}_${infer Tail}`
-  ? Tail extends ''
-    ? `${Head}_` // For an input like 'suffixed_'
-    : `${Head}${Capitalize<SnakeToCamelCase<Tail>>}` // 'head_tail' -> 'headTail'
-  : Input
+export type SnakeToCamelCase<Input extends string> =
+  Input extends `${infer Head}_${infer Tail}`
+    ? Tail extends ''
+      ? `${Head}_` // For an input like 'suffixed_'
+      : `${Head}${Capitalize<SnakeToCamelCase<Tail>>}` // 'head_tail' -> 'headTail'
+    : Input
 
 type CamelCaseIfString<Input> = Input extends string ? SnakeToCamelCase<Input> : Input
 
@@ -19,15 +20,15 @@ type CamelCaseIfString<Input> = Input extends string ? SnakeToCamelCase<Input> :
  * For mapping object properties, e.g. { snake_case: type } => { camelCase: type }, or arrays thereof
  */
 
-export type CamelCasedValue<T> = T extends Record<string, unknown>
-  ? SnakeToCamelCaseRecord<T>
-  : T extends Array<infer U>
-  ? Array<CamelCasedValue<U>>
-  : T
+export type CamelCasedValue<T> =
+  T extends Record<string, unknown> ? SnakeToCamelCaseRecord<T> :
+    T extends Array<infer U> ? Array<CamelCasedValue<U>> :
+      T
 
 type SnakeToCamelCaseRecord<Input extends Record<any, any>> = {
   [Property in keyof Input as CamelCaseIfString<Property>]: CamelCasedValue<Input[Property]>
 }
+
 
 /**
  * Internals
@@ -38,8 +39,9 @@ type SnakeToCamelCaseRecord<Input extends Record<any, any>> = {
  * Transform a single snake_case string to camelCase
  */
 function snakeToCamelCase<S extends string>(str: S) {
-  return str.replace(/([_][a-zA-Z\d])/g, (group) =>
-    group.toUpperCase().replace('_', '')
+  return str.replace(
+    /([_][a-zA-Z\d])/g,
+    (group) => group.toUpperCase().replace('_', '')
   ) as SnakeToCamelCase<S>
 }
 
@@ -75,7 +77,7 @@ export function parseObjectKeysToCamelCase<T>(obj: T): CamelCasedValue<T> {
 
     return {
       ...camelCaseObject,
-      [snakeToCamelCase(currentKey)]: parsedValue,
+      [snakeToCamelCase(currentKey)]: parsedValue
     }
   }, {} as SnakeToCamelCaseRecord<T>) as CamelCasedValue<T>
 }

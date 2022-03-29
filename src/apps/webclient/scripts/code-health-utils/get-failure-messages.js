@@ -66,10 +66,6 @@ const getCoverageFailureMessage = (benchmark, compare, filePath) => {
     return null
   }
 
-  if (filePath.match(/\.d\.ts$/)) {
-    return null
-  }
-
   const previousCoverage = (!benchmark || benchmark.coveragePercent === null) ? 0 : benchmark.coveragePercent
   const targetThreshold = getTargetCoverage(previousCoverage)
 

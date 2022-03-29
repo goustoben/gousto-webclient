@@ -1,8 +1,5 @@
 import * as browserEnv from 'utils/browserEnvironment'
-import {
-  GeneratedEndpointTestCase,
-  generateEndpointTestCases,
-} from '_testing/generate-endpoint-test-cases'
+import { GeneratedEndpointTestCase, generateEndpointTestCases } from '_testing/generate-endpoint-test-cases'
 import { ServiceName } from 'config/service-environment/service-environment.types'
 import { getEnvConfig } from 'utils/processEnv'
 import * as serviceUtils from '../service-environment/service-manifest'
@@ -25,45 +22,45 @@ describe('endpoint()', () => {
       {
         version: 'v1.0.0',
         majorVersion: 1,
-        basePath: '/auth/v1.0.0',
+        basePath: '/auth/v1.0.0'
       },
       {
         version: 'v2',
         majorVersion: 2,
-        basePath: '/auth/v2',
-      },
+        basePath: '/auth/v2'
+      }
     ],
     customers: [
       {
         version: 'v1',
         majorVersion: 1,
-        basePath: '/customers/v1',
+        basePath: '/customers/v1'
       },
       {
         version: 'v2',
         majorVersion: 2,
-        basePath: '/customers/v2',
-      },
+        basePath: '/customers/v2'
+      }
     ],
     orders: [
       {
         version: 'v1',
         majorVersion: 1,
-        basePath: '/orders/v1',
+        basePath: '/orders/v1'
       },
       {
         version: 'v2',
         majorVersion: 2,
-        basePath: '/orders/v2',
-      },
+        basePath: '/orders/v2'
+      }
     ],
     webclient: [
       {
         version: 'v1',
         majorVersion: 1,
-        basePath: null,
-      },
-    ],
+        basePath: null
+      }
+    ]
   }
 
   beforeAll(() => {
@@ -84,80 +81,40 @@ describe('endpoint()', () => {
 
     it.each([
       ['https://www.gousto.co.uk/', 'auth', 1, 'https://production-api.gousto.co.uk/auth/v1.0.0'],
-      [
-        'https://www.gousto.co.uk/',
-        'customers',
-        1,
-        'https://production-api.gousto.co.uk/customers/v1',
-      ],
-      [
-        'https://www.gousto.co.uk/',
-        'customers',
-        2,
-        'https://production-api.gousto.co.uk/customers/v2',
-      ],
+      ['https://www.gousto.co.uk/', 'customers', 1, 'https://production-api.gousto.co.uk/customers/v1'],
+      ['https://www.gousto.co.uk/', 'customers', 2, 'https://production-api.gousto.co.uk/customers/v2'],
       ['https://www.gousto.co.uk/', 'webclient', 1, 'https://www.gousto.co.uk'],
       /* lower environments */
       ['https://staging.gousto.info/', 'auth', 1, 'https://staging-api.gousto.info/auth/v1.0.0'],
-      [
-        'https://staging.gousto.info/',
-        'customers',
-        1,
-        'https://staging-api.gousto.info/customers/v1',
-      ],
-      [
-        'https://staging.gousto.info/',
-        'customers',
-        2,
-        'https://staging-api.gousto.info/customers/v2',
-      ],
+      ['https://staging.gousto.info/', 'customers', 1, 'https://staging-api.gousto.info/customers/v1'],
+      ['https://staging.gousto.info/', 'customers', 2, 'https://staging-api.gousto.info/customers/v2'],
       ['https://staging.gousto.info/', 'webclient', 1, 'https://staging-api.gousto.info'],
       ['https://fef-www.gousto.info/', 'auth', 1, 'https://fef-api.gousto.info/auth/v1.0.0'],
       ['https://fef-www.gousto.info/', 'customers', 1, 'https://fef-api.gousto.info/customers/v1'],
       ['https://fef-www.gousto.info/', 'customers', 2, 'https://fef-api.gousto.info/customers/v2'],
       /* local development */
-      [
-        'http://frontend.gousto.local:8080/menu',
-        'auth',
-        1,
-        'https://staging-api.gousto.info/auth/v1.0.0',
-      ],
-      [
-        'http://frontend.gousto.local:8080/food-boxes',
-        'customers',
-        1,
-        'https://staging-api.gousto.info/customers/v1',
-      ],
-      [
-        'http://frontend.gousto.local:8080',
-        'customers',
-        2,
-        'https://staging-api.gousto.info/customers/v2',
-      ],
-    ])(
-      'should return the correct endpoint for the client, %s, %s, %i = %s',
-      (location: string, serviceName: string, version, expectation) => {
+      ['http://frontend.gousto.local:8080/menu', 'auth', 1, 'https://staging-api.gousto.info/auth/v1.0.0'],
+      ['http://frontend.gousto.local:8080/food-boxes', 'customers', 1, 'https://staging-api.gousto.info/customers/v1'],
+      ['http://frontend.gousto.local:8080', 'customers', 2, 'https://staging-api.gousto.info/customers/v2']
+    ])('should return the correct endpoint for the client, %s, %s, %i = %s',
+      (location: string, serviceName : string , version, expectation) => {
         getWindowSpy.mockReturnValue({
-          location: new URL(location),
+          location: new URL(location)
         })
         expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
-      }
-    )
+      })
 
     it('should throw if it cannot find the service', () => {
       expect(() => endpoint('foo' as ServiceName)).toThrow("Service 'foo' not found in manifest.")
     })
 
     it('should throw if it cannot find the service majorVersion', () => {
-      expect(() => endpoint('auth', 999)).toThrow(
-        "Service version 999 for service 'auth' not found in manifest"
-      )
+      expect(() => endpoint('auth', 999)).toThrow("Service version 999 for service 'auth' not found in manifest")
     })
 
-    const clientTestCases = () => endpointTestCases.filter((v) => v[3] === 'live' && !v[4])
+    const clientTestCases = () => endpointTestCases.filter(v => v[3] === 'live' && !v[4])
     it.each(clientTestCases())(
-      'should respond the same as the old implementation for %s %s %i %s',
-      (
+      'should respond the same as the old implementation for %s %s %i %s', (
         environment: string,
         service: string,
         majorVersion: number,
@@ -167,18 +124,11 @@ describe('endpoint()', () => {
       ) => {
         serviceManifestSpy.mockRestore()
         getWindowSpy.mockReturnValue({
-          location: new URL(
-            environment === 'production'
-              ? 'https://www.gousto.co.uk/'
-              : 'https://staging-www.gousto.info/'
-          ),
+          location: new URL(environment === 'production' ? 'https://www.gousto.co.uk/' : 'https://staging-www.gousto.info/')
         })
 
-        expect(endpoint(service as ServiceName, majorVersion)).toEqual(
-          resultOfOldEndpointInvocation
-        )
-      }
-    )
+        expect(endpoint(service as ServiceName, majorVersion)).toEqual(resultOfOldEndpointInvocation)
+      })
   })
 
   describe('running on the server', () => {
@@ -195,10 +145,10 @@ describe('endpoint()', () => {
       const domain = 'gousto.co.uk'
       const serviceName = 'auth'
       const version = 1
-      const expectation = 'http://production-auth.gousto.co.uk'
-      ;(getEnvConfig as jest.Mock).mockReturnValue({
+      const expectation = 'http://production-auth.gousto.co.uk';
+(getEnvConfig as jest.Mock).mockReturnValue({
         ENVIRONMENT: environment,
-        DOMAIN: domain,
+        DOMAIN: domain
       })
 
       expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
@@ -219,41 +169,34 @@ describe('endpoint()', () => {
       ['jalapenos', 'gousto.info', 'orders', 1, 'http://jalapenos-orders.gousto.info'],
       /* local development */
       ['local', 'gousto.local', 'auth', 1, 'https://staging-api.gousto.info/auth/v1.0.0'],
-    ])(
-      'should return the correct endpoint for %s, %s, %s, %i = %s',
-      (environment, serviceDomain, serviceName, version, expectation) => {
-        ;(getEnvConfig as jest.Mock).mockReturnValue({
-          ENVIRONMENT: environment,
-          DOMAIN: serviceDomain,
-        })
+    ])('should return the correct endpoint for %s, %s, %s, %i = %s', (environment, serviceDomain, serviceName, version, expectation) => {
+      ;(getEnvConfig as jest.Mock).mockReturnValue({
+        ENVIRONMENT: environment,
+        DOMAIN: serviceDomain
+      })
 
-        expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
-      }
-    )
+      expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
+    })
 
     it('should throw if it cannot find the service', () => {
       ;(getEnvConfig as jest.Mock).mockReturnValue({
         ENVIRONMENT: 'staging',
-        DOMAIN: 'gousto.info',
+        DOMAIN: 'gousto.info'
       })
 
-      expect(() => endpoint('foo' as ServiceName)).toThrow("Service 'foo' not found in manifest.")
+      expect(() => endpoint('foo' as ServiceName)).toThrow('Service \'foo\' not found in manifest.')
     })
 
     it('should throw if it cannot find the service majorVersion', () => {
       ;(getEnvConfig as jest.Mock).mockReturnValue({
         ENVIRONMENT: 'staging',
       })
-      expect(() => endpoint('auth', 999)).toThrow(
-        "Service version 999 for service 'auth' not found in manifest"
-      )
+      expect(() => endpoint('auth', 999)).toThrow('Service version 999 for service \'auth\' not found in manifest')
     })
 
-    const serverTestCases = () =>
-      endpointTestCases.filter((testCaseArray) => testCaseArray[3] === 'live' && testCaseArray[4])
+    const serverTestCases = () => endpointTestCases.filter(testCaseArray => testCaseArray[3] === 'live' && testCaseArray[4])
     it.each(serverTestCases())(
-      'should respond the same as the old implementation for %s %s %i %s',
-      (
+      'should respond the same as the old implementation for %s %s %i %s', (
         environment: string,
         service: string,
         version: number,
@@ -261,14 +204,13 @@ describe('endpoint()', () => {
         isServerCall: boolean,
         resultOfOldEndpointInvocation: string
       ) => {
-        const domain = environment === 'production' ? 'gousto.co.uk' : 'gousto.info'
-        ;(getEnvConfig as jest.Mock).mockReturnValue({
+        const domain = environment === 'production' ? 'gousto.co.uk' : 'gousto.info';
+(getEnvConfig as jest.Mock).mockReturnValue({
           ENVIRONMENT: environment,
-          DOMAIN: domain,
+          DOMAIN: domain
         })
 
         expect(endpoint(service as ServiceName, version)).toEqual(resultOfOldEndpointInvocation)
-      }
-    )
+      })
   })
 })

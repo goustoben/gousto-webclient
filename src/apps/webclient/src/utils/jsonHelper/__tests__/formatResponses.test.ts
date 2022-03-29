@@ -5,7 +5,7 @@ import {
   isRWithDataIncluded,
   isRWithResult,
   isRWithResultData,
-  SuccessResponse,
+  SuccessResponse
 } from '../formatResponses'
 
 const testData = {}
@@ -13,30 +13,30 @@ const testMeta = {}
 
 const responseWithResult = {
   status: 'ok',
-  result: testData,
+  result: testData
 } as const
 
 const responseWithResultData = {
   status: 'ok',
   result: {
-    data: testData,
-  },
+    data: testData
+  }
 } as const
 
 const responseWithDataIncluded = {
   ...testData,
   status: 'ok',
-  included: true,
+  included: true
 } as const
 
 const responseWithData = {
   status: 'ok',
-  data: testData,
+  data: testData
 } as const
 
 const responseAsData = {
   ...testData,
-  status: 'ok',
+  status: 'ok'
 }
 
 describe('formatResponses module', () => {
@@ -46,9 +46,11 @@ describe('formatResponses module', () => {
       ['responseWithResultData', false, responseWithResultData],
       ['responseWithDataIncluded', false, responseWithDataIncluded],
       ['responseWithData', false, responseWithData],
-      ['responseAsData', false, responseAsData],
+      ['responseAsData', false, responseAsData]
     ])('Type assertion function isRWithResult given %s returns %b', (name, expected, data) => {
-      expect(isRWithResult(data as SuccessResponse<never>)).toBe(expected)
+      expect(
+        isRWithResult(data as SuccessResponse<never>)
+      ).toBe(expected)
     })
 
     test.each([
@@ -56,9 +58,11 @@ describe('formatResponses module', () => {
       ['responseWithResultData', true, responseWithResultData],
       ['responseWithDataIncluded', false, responseWithDataIncluded],
       ['responseWithData', false, responseWithData],
-      ['responseAsData', false, responseAsData],
+      ['responseAsData', false, responseAsData]
     ])('Type assertion function isRWithResultData given %s returns %b', (name, expected, data) => {
-      expect(isRWithResultData(data as SuccessResponse<never>)).toBe(expected)
+      expect(
+        isRWithResultData(data as SuccessResponse<never>)
+      ).toBe(expected)
     })
 
     test.each([
@@ -66,22 +70,23 @@ describe('formatResponses module', () => {
       ['responseWithResultData', false, responseWithResultData],
       ['responseWithDataIncluded', true, responseWithDataIncluded],
       ['responseWithData', false, responseWithData],
-      ['responseAsData', false, responseAsData],
-    ])(
-      'Type assertion function isRWithDataIncluded given %s returns %b',
-      (name, expected, data) => {
-        expect(isRWithDataIncluded(data as SuccessResponse<never>)).toBe(expected)
-      }
-    )
+      ['responseAsData', false, responseAsData]
+    ])('Type assertion function isRWithDataIncluded given %s returns %b', (name, expected, data) => {
+      expect(
+        isRWithDataIncluded(data as SuccessResponse<never>)
+      ).toBe(expected)
+    })
 
     test.each([
       ['responseWithResult', false, responseWithResult],
       ['responseWithResultData', false, responseWithResultData],
       ['responseWithDataIncluded', false, responseWithDataIncluded],
       ['responseWithData', true, responseWithData],
-      ['responseAsData', false, responseAsData],
+      ['responseAsData', false, responseAsData]
     ])('Type assertion function isRWithData given %s returns %b', (name, expected, data) => {
-      expect(isRWithData(data as SuccessResponse<never>)).toBe(expected)
+      expect(
+        isRWithData(data as SuccessResponse<never>)
+      ).toBe(expected)
     })
   })
 

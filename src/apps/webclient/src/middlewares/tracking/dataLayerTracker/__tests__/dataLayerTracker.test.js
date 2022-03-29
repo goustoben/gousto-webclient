@@ -297,7 +297,7 @@ describe('given dataLayerTracker middleware is invoked', () => {
             recipeTotalDiscounted: '20.00',
             promoCode: 'JOEWICKSGOUSTO',
             totalDiscount: '19.99',
-          },
+          }
         }
 
         dataLayerTracker(action, state)

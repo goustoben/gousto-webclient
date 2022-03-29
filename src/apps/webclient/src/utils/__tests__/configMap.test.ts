@@ -26,20 +26,20 @@ describe('configMap utils', () => {
     })
 
     test('returns a getter fn that returns correct val from config map based on current env', () => {
-      ;(getClientEnvironmentSpy as jest.SpyInstance).mockReturnValue('production')
+      (getClientEnvironmentSpy as jest.SpyInstance).mockReturnValue('production')
 
       expect(getMockConfig()).toEqual('production-value')
     })
 
     test('returns a getter fn that returns default val from config map if current env does not exist in map', () => {
-      ;(getClientEnvironmentSpy as jest.SpyInstance).mockReturnValue('fef')
+      (getClientEnvironmentSpy as jest.SpyInstance).mockReturnValue('fef')
 
       expect(getMockConfig()).toEqual('default-value')
     })
 
     test('memoizes value correctly', () => {
-      expect.assertions(2)
-      ;(getClientEnvironmentSpy as jest.SpyInstance).mockReturnValue('production')
+      expect.assertions(2);
+      (getClientEnvironmentSpy as jest.SpyInstance).mockReturnValue('production')
 
       // Populates memo
       getMockConfig()

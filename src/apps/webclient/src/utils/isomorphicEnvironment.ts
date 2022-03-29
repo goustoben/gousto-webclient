@@ -3,7 +3,10 @@ import {
   getClientEnvironment,
   getDomain as getClientDomain,
 } from './browserEnvironment'
-import { getServerEnvironment, getServerDomain } from '../../server/utils/serverEnvironment'
+import {
+  getServerEnvironment,
+  getServerDomain,
+} from '../../server/utils/serverEnvironment'
 
 type CreateIsomorphicConfig<T> = {
   testFn?: () => boolean

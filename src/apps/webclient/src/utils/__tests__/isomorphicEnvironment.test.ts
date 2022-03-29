@@ -1,9 +1,8 @@
 import { createIsomorphicConfig, getEnvironment, getDomain } from 'utils/isomorphicEnvironment'
 import { getServerEnvironment, getServerDomain } from '../../../server/utils/serverEnvironment'
-import { getClientEnvironment, getDomain as getClientDomain } from '../browserEnvironment'
+import { getClientEnvironment, getDomain as getClientDomain} from '../browserEnvironment'
 
-jest.mock(
-  '../../../server/utils/serverEnvironment'
+jest.mock('../../../server/utils/serverEnvironment',
   // () => ({
   //   ...jest.requireActual('../browserEnvironment'),
   //   getServerDomain: jest.fn()
@@ -96,8 +95,9 @@ describe('isomorphicEnvironment utils', () => {
           // @ts-expect-error
           createElement: () => null,
         },
-      })
-      ;(getClientEnvironment as jest.Mock).mockReturnValue(mockBrowserEnvironment)
+      });
+
+      (getClientEnvironment as jest.Mock).mockReturnValue(mockBrowserEnvironment)
 
       expect(getEnvironment()).toEqual(mockBrowserEnvironment)
     })
@@ -124,8 +124,8 @@ describe('isomorphicEnvironment utils', () => {
         },
       })
 
-      const stubDomainResponse = 'mockclientdomain.com'
-      ;(getClientDomain as jest.Mock).mockReturnValue(stubDomainResponse)
+      const stubDomainResponse = 'mockclientdomain.com';
+      (getClientDomain as jest.Mock).mockReturnValue(stubDomainResponse)
 
       expect(getDomain()).toEqual(stubDomainResponse)
     })
@@ -135,8 +135,8 @@ describe('isomorphicEnvironment utils', () => {
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
 
-      const stubDomainResponse = 'mockserverdomain.com'
-      ;(getServerDomain as jest.Mock).mockReturnValue(stubDomainResponse)
+      const stubDomainResponse = 'mockserverdomain.com';
+      (getServerDomain as jest.Mock).mockReturnValue(stubDomainResponse)
 
       expect(getDomain()).toEqual(stubDomainResponse)
     })

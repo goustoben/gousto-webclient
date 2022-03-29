@@ -20,7 +20,7 @@ declare module 'goustouicomponents' {
   export const CTATilesItem: typeof GoustoUIComponents.CTATilesItem
   export const Cuisine: typeof GoustoUIComponents.Cuisine
   export const LegacyDropdown: typeof GoustoUIComponents.LegacyDropdown
-  export const ExtraInfo: typeof GoustoUIComponents.ExtraInfo
+  export const ExtraInfo: typeof GoustoUIComponents.ExtraInfo 
   export const ExtraInfoMain: typeof GoustoUIComponents.ExtraInfoMain
   export const ExtraInfoSecondary: typeof GoustoUIComponents.ExtraInfoSecondary
   export const ExpandableSection: typeof GoustoUIComponents.ExpandableSection

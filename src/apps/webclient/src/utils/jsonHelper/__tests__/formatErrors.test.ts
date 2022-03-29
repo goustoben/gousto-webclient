@@ -1,4 +1,8 @@
-import { formatBadStatus, formatMalformed, formatUnmatched } from '../formatErrors'
+import {
+  formatBadStatus,
+  formatMalformed,
+  formatUnmatched
+} from '../formatErrors'
 
 describe('jsonHelper formatErrors utils', () => {
   describe('formatBadStatus', () => {
@@ -8,7 +12,7 @@ describe('jsonHelper formatErrors utils', () => {
       const result = formatBadStatus(response, meta)
       expect(result).toEqual({
         response,
-        meta,
+        meta
       })
     })
   })

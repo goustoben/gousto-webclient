@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { canUseWindow } from 'utils/browserEnvironment'
 
 /**
- * Controls browser "Back" button. If onBack callback provided, back button won't go to
+ * Controls browser "Back" button. If onBack callback provided, back button won't go to 
  * prev page in window.history and callback would be called.
  * Note: due to browser history injection, once Back is clicked, then duplicate enrty for "Forward" button would occur.
  * @param onBack - callback to call instead of history navigation

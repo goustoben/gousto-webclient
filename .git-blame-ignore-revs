@@ -21,6 +21,3 @@
 
 # [TG-6040] reformat Menu ts&tsx files with Prettier
 d1d0d27704684dd3b1567af7bc4fa3c57fd6fb00
-
-# [TG-6082] reformat all ts and tsx files with prettier; enable eslint guards
-d3dbcea573704b6dcf3cbea70f4cca460d5fe47c

@@ -17,12 +17,15 @@ const PricePerServingMessage = ({
   isPriceInCheckout = false,
 }: Props) => {
   if (discountedPrice) {
-    const oldPrice =
-      fullPrice !== discountedPrice ? (
-        <span className={classNames(css.oldPrice, { [css.oldPriceInCheckout]: isPriceInCheckout })}>
-          <s>£{fullPrice}</s>{' '}
-        </span>
-      ) : null
+    const oldPrice = fullPrice !== discountedPrice ? (
+      <span className={classNames(css.oldPrice, { [css.oldPriceInCheckout]: isPriceInCheckout })}>
+        <s>
+          £
+          {fullPrice}
+        </s>
+        {' '}
+      </span>
+    ) : null
 
     return (
       <p
@@ -30,7 +33,9 @@ const PricePerServingMessage = ({
           [css.priceMessageInCheckout]: isPriceInCheckout,
         })}
       >
-        Price per serving: {oldPrice}
+        Price per serving:
+        {' '}
+        {oldPrice}
         {isPriceInCheckout ? (
           <span className={css.newPriceInCheckout}>{formatOrderPrice(discountedPrice)}</span>
         ) : (

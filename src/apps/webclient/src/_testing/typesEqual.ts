@@ -1,7 +1,7 @@
 /**
  * This util allows you to test more complex TypeScript types. It derives a
  * true/false type to say whether two types are equivalent.
- *
+ * 
  * You use it like this:
  *
  * const typeCheck: TypesEqual<TypeA, TypeB> = true

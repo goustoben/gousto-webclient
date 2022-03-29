@@ -6,8 +6,8 @@ import { filterExists, last } from 'utils/array'
  */
 
 type ResponseError = {
-  error?: number
-  message?: string
+  error?: number,
+  message?: string,
 }
 
 /**
@@ -20,13 +20,13 @@ export function formatBadStatus<R, M>(response: R, meta: M) {
 }
 
 export function formatErrorsWithCode(errors: ResponseError[]) {
-  const errorCodes = errors.map((error) => error.error).filter(filterExists)
-  const errorMessages = errors.map((error) => `${error.error} - ${error.message}`)
+  const errorCodes = errors.map(error => error.error).filter(filterExists)
+  const errorMessages = errors.map(error => `${error.error} - ${error.message}`)
 
   return {
     code: last(errorCodes) || 500,
     errors,
-    message: `, ${errorMessages.join(', ')}`, // Replicates original behaviour of ported code
+    message: `, ${errorMessages.join(', ')}` // Replicates original behaviour of ported code
   }
 }
 
@@ -41,3 +41,4 @@ export function formatMalformed() {
 export function formatUnmatched(response: Record<string | number, unknown>) {
   return response
 }
+

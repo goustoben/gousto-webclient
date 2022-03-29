@@ -10,5 +10,5 @@ export function useSubmitOrder() {
 
   return useCallback(() => {
     dispatch(actions.checkoutSignup({ pricing }))
-  }, [dispatch, pricing])
+  }, [ dispatch, pricing ])
 }

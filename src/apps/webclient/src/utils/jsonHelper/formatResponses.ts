@@ -13,16 +13,16 @@ export type SuccessResponse<T> =
 type APIMeta = Record<string, unknown> | null
 
 type ResponseWithResult<T> = {
-  status: 'ok'
-  meta?: APIMeta
+  status: 'ok',
+  meta?: APIMeta,
   result: T
 }
 
 type ResponseWithResultData<T> = {
-  status: 'ok'
-  meta?: APIMeta
+  status: 'ok',
+  meta?: APIMeta,
   result: {
-    data: T
+    data: T,
     meta?: APIMeta
   }
 }
@@ -30,14 +30,14 @@ type ResponseWithResultData<T> = {
 type ResponseWithDataIncluded<T> = T & {
   // Ideally, we should make this type reflect the API response more accurately by using "data: T" and not "& T".
   // However, this will require upstream changes
-  status: 'ok'
-  meta?: APIMeta
+  status: 'ok',
+  meta?: APIMeta,
   included: true
 }
 
 type ResponseWithData<T> = {
-  status: 'ok'
-  meta?: APIMeta
+  status: 'ok',
+  meta?: APIMeta,
   data: T
 }
 
@@ -51,26 +51,22 @@ type ResponseAsData<T> = T & {
  * ============================================================================
  */
 
-type FormattedSuccess<T> =
-  | {
-      meta: APIMeta | null
-      response: T
-    }
-  | {
-      // If response.included === true, the whole response is to be treated as the data
-      response: T & {
-        included: true
-      }
-    }
+type FormattedSuccess<T> = {
+  meta: APIMeta | null,
+  response: T
+} | {
+  // If response.included === true, the whole response is to be treated as the data
+  response: T & {
+    included: true
+  }
+}
 
 /**
  * Module
  * ============================================================================
  */
 
-export function isRWithDataIncluded<T>(
-  response: SuccessResponse<T>
-): response is ResponseWithDataIncluded<T> {
+export function isRWithDataIncluded<T>(response: SuccessResponse<T>): response is ResponseWithDataIncluded<T> {
   return 'included' in response && response.included
 }
 
@@ -78,9 +74,7 @@ export function isRWithData<T>(response: SuccessResponse<T>): response is Respon
   return 'data' in response && !isRWithDataIncluded(response)
 }
 
-export function isRWithResultData<T>(
-  response: SuccessResponse<T>
-): response is ResponseWithResultData<T> {
+export function isRWithResultData<T>(response: SuccessResponse<T>): response is ResponseWithResultData<T> {
   return 'result' in response && 'data' in response.result
 }
 
@@ -103,16 +97,13 @@ export function extractData<T>(response: SuccessResponse<T>): T {
   }
 }
 
-export function formatSuccessResponse<T>(
-  response: SuccessResponse<T>,
-  meta: APIMeta | null
-): FormattedSuccess<T> {
+export function formatSuccessResponse<T>(response: SuccessResponse<T>, meta: APIMeta | null): FormattedSuccess<T> {
   if (isRWithDataIncluded(response)) {
     return { response }
   } else {
     return {
       response: extractData(response),
-      meta,
+      meta
     }
   }
 }

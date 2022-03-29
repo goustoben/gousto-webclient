@@ -25,8 +25,8 @@ describe('pinterest middleware', () => {
 
   describe('Tracker', () => {
     beforeEach(() => {
-      ;(getWindow as jest.Mock).mockReturnValue({ pintrk: {} })
-      ;(getPathName as jest.Mock).mockReturnValue(mockPathname)
+      (getWindow as jest.Mock).mockReturnValue({ pintrk: {} });
+      (getPathName as jest.Mock).mockReturnValue(mockPathname)
 
       pinterestTracking.getCallbacks = () => ({
         [mockActionType]: mockCallback,
@@ -35,7 +35,7 @@ describe('pinterest middleware', () => {
 
     describe('when window is available', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(true)
+        (canUseWindow as jest.Mock).mockReturnValue(true)
       })
 
       test('invokes callback for action type', () => {
@@ -52,7 +52,7 @@ describe('pinterest middleware', () => {
 
     describe('when window is not available', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(false)
+        (canUseWindow as jest.Mock).mockReturnValue(false)
       })
 
       test('does not invoke callback', () => {

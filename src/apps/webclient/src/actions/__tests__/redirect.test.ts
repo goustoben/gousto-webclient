@@ -23,7 +23,7 @@ describe('redirect actions', () => {
   describe('redirect', () => {
     describe('when window is available', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(true)
+        (canUseWindow as jest.Mock).mockReturnValue(true)
       })
 
       test('invokes react-router method "push"', () => {
@@ -35,8 +35,8 @@ describe('redirect actions', () => {
 
     describe('when window is not available', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(false)
-        ;(isServer as jest.Mock).mockReturnValue(true)
+        (canUseWindow as jest.Mock).mockReturnValue(false);
+        (isServer as jest.Mock).mockReturnValue(true)
       })
 
       test('does not push new route to react-router', () => {
@@ -52,7 +52,7 @@ describe('redirect actions', () => {
         expect(action).toEqual({
           type: actionTypes.SERVER_REDIRECT,
           url: mockUrl,
-          clearCookies: clearCookiesVal,
+          clearCookies: clearCookiesVal
         })
       })
 
@@ -63,15 +63,15 @@ describe('redirect actions', () => {
         expect(action).toEqual({
           type: actionTypes.SERVER_REDIRECT,
           url: mockUrl,
-          clearCookies: clearCookiesVal,
+          clearCookies: clearCookiesVal
         })
       })
     })
 
     describe('for legacy bundle', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(true)
-        ;(isServer as jest.Mock).mockReturnValue(false)
+        (canUseWindow as jest.Mock).mockReturnValue(true);
+        (isServer as jest.Mock).mockReturnValue(false)
         globals.legacy = () => true
       })
 
@@ -85,7 +85,7 @@ describe('redirect actions', () => {
         const action = redirect(mockUrl)
 
         expect(action).toEqual({
-          type: actionTypes.VOID,
+          type: actionTypes.VOID
         })
       })
     })
@@ -94,7 +94,7 @@ describe('redirect actions', () => {
   describe('replace', () => {
     describe('when window is available', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(true)
+        (canUseWindow as jest.Mock).mockReturnValue(true)
         globals.legacy = () => false
       })
 
@@ -107,8 +107,8 @@ describe('redirect actions', () => {
 
     describe('when window is not available', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(false)
-        ;(isServer as jest.Mock).mockReturnValue(true)
+        (canUseWindow as jest.Mock).mockReturnValue(false);
+        (isServer as jest.Mock).mockReturnValue(true)
       })
 
       test('does not invoke react-router method "replace"', () => {
@@ -122,15 +122,15 @@ describe('redirect actions', () => {
 
         expect(action).toEqual({
           type: actionTypes.SERVER_REPLACE,
-          url: mockUrl,
+          url: mockUrl
         })
       })
     })
 
     describe('for legacy bundle', () => {
       beforeEach(() => {
-        ;(canUseWindow as jest.Mock).mockReturnValue(true)
-        ;(isServer as jest.Mock).mockReturnValue(false)
+        (canUseWindow as jest.Mock).mockReturnValue(true);
+        (isServer as jest.Mock).mockReturnValue(false)
         globals.legacy = () => true
       })
 
@@ -144,7 +144,7 @@ describe('redirect actions', () => {
         const action = redirectUtils.replace(mockUrl)
 
         expect(action).toEqual({
-          type: actionTypes.VOID,
+          type: actionTypes.VOID
         })
       })
     })
