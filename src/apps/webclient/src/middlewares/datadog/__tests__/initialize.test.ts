@@ -44,21 +44,21 @@ describe('datadog', () => {
 
   describe('getIsDatadogEnabled', () => {
     test('returns false if window is not available', () => {
-      (canUseWindow as jest.Mock).mockReturnValue(false)
+      ;(canUseWindow as jest.Mock).mockReturnValue(false)
 
       expect(dd.getIsDatadogEnabled()).toEqual(false)
     })
 
     test('returns false if dd is not enabled in current environment', () => {
-      (canUseWindow as jest.Mock).mockReturnValue(true);
-      (getEnvironment as jest.Mock).mockReturnValue('some-other-environment')
+      ;(canUseWindow as jest.Mock).mockReturnValue(true)
+      ;(getEnvironment as jest.Mock).mockReturnValue('some-other-environment')
 
       expect(dd.getIsDatadogEnabled()).toEqual(false)
     })
 
     test('returns true if dd is enabled in current environment', () => {
-      (canUseWindow as jest.Mock).mockReturnValue(true);
-      (getEnvironment as jest.Mock).mockReturnValue(DATADOG_ENABLED_ENVS[0])
+      ;(canUseWindow as jest.Mock).mockReturnValue(true)
+      ;(getEnvironment as jest.Mock).mockReturnValue(DATADOG_ENABLED_ENVS[0])
 
       expect(dd.getIsDatadogEnabled()).toEqual(true)
     })

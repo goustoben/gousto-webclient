@@ -1,5 +1,8 @@
-import { getEnvConfig } from "utils/processEnv";
-import { ENVIRONMENT_NAMES, SERVICE_DOMAINS } from "config/service-environment/service-environment.types";
+import { getEnvConfig } from 'utils/processEnv'
+import {
+  ENVIRONMENT_NAMES,
+  SERVICE_DOMAINS,
+} from 'config/service-environment/service-environment.types'
 
 /**
  * Environment config getter for SERVER side environment
@@ -20,8 +23,7 @@ export const getServerEnvironment = () => {
   return ENVIRONMENT
 }
 
-export const getServerDomain = (
-) => {
+export const getServerDomain = () => {
   const environment = getServerEnvironment()
 
   switch (true) {

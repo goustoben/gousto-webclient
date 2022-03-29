@@ -11,7 +11,7 @@ const stubServiceManifest = {
       version: 'v2.0.0',
       majorVersion: 2,
       basePath: '/box-prices/v2.0.0',
-    }
+    },
   ],
   orders: [
     {
@@ -23,7 +23,7 @@ const stubServiceManifest = {
       version: 'v2.0.0',
       majorVersion: 2,
       basePath: '/orders/v2.0.0',
-    }
+    },
   ],
 }
 
@@ -34,7 +34,7 @@ describe('serviceVersionLocator', () => {
     expect(findServiceVersion('box-prices', 1, stubServiceManifest)).toEqual({
       version: 'v1',
       majorVersion: 1,
-      basePath: '/box-prices/v1'
+      basePath: '/box-prices/v1',
     })
   })
 
@@ -44,21 +44,23 @@ describe('serviceVersionLocator', () => {
     expect(findServiceVersion('orders', 2, stubServiceManifest)).toEqual({
       version: 'v2.0.0',
       majorVersion: 2,
-      basePath: '/orders/v2.0.0'
+      basePath: '/orders/v2.0.0',
     })
   })
 
   it('should throw when a service cannot be found', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore ignoring the type error because we are testing the implementation
-    expect(() => findServiceVersion('foobar', 3, stubServiceManifest))
-      .toThrow('Service \'foobar\' not found in manifest.')
+    expect(() => findServiceVersion('foobar', 3, stubServiceManifest)).toThrow(
+      "Service 'foobar' not found in manifest."
+    )
   })
 
   it('should throw when a majorVersion of a service cannot be found', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore ignoring the type error because we are testing the implementation
-    expect(() => findServiceVersion('box-prices', 3, stubServiceManifest))
-      .toThrow('Service version 3 for service \'box-prices\' not found in manifest')
+    expect(() => findServiceVersion('box-prices', 3, stubServiceManifest)).toThrow(
+      "Service version 3 for service 'box-prices' not found in manifest"
+    )
   })
 })

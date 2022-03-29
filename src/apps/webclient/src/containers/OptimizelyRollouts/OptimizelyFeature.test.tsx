@@ -1,5 +1,5 @@
 // This is to pass the type check for jest-dom extending expect
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom'
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { safeJestMock } from '_testing/mocks'
@@ -17,7 +17,11 @@ describe('OptimizelyFeature', () => {
     it('should not render the children', () => {
       mockedGetOptimizelyInstance.mockReturnValue(null)
 
-      render(<OptimizelyFeature name="feature" enabled>hello</OptimizelyFeature>)
+      render(
+        <OptimizelyFeature name="feature" enabled>
+          hello
+        </OptimizelyFeature>
+      )
 
       expect(screen.queryByText('hello')).not.toBeInTheDocument()
     })
@@ -31,7 +35,11 @@ describe('OptimizelyFeature', () => {
 
       describe('When the OptimizelyFeature has `enabled` set to true', () => {
         it('should render the children', () => {
-          render(<OptimizelyFeature name="feature" enabled>hello</OptimizelyFeature>)
+          render(
+            <OptimizelyFeature name="feature" enabled>
+              hello
+            </OptimizelyFeature>
+          )
 
           expect(screen.queryByText('hello')).toBeInTheDocument()
         })
@@ -39,7 +47,11 @@ describe('OptimizelyFeature', () => {
 
       describe('When the OptimizelyFeature has `enabled` set to false', () => {
         it('should not render the children', () => {
-          render(<OptimizelyFeature name="feature" enabled={false}>hello</OptimizelyFeature>)
+          render(
+            <OptimizelyFeature name="feature" enabled={false}>
+              hello
+            </OptimizelyFeature>
+          )
 
           expect(screen.queryByText('hello')).not.toBeInTheDocument()
         })
@@ -53,7 +65,11 @@ describe('OptimizelyFeature', () => {
 
       describe('When the OptimizelyFeature has `enabled` set to true', () => {
         it('should not render the children', () => {
-          render(<OptimizelyFeature name="feature" enabled>hello</OptimizelyFeature>)
+          render(
+            <OptimizelyFeature name="feature" enabled>
+              hello
+            </OptimizelyFeature>
+          )
 
           expect(screen.queryByText('hello')).not.toBeInTheDocument()
         })
@@ -61,7 +77,11 @@ describe('OptimizelyFeature', () => {
 
       describe('When the OptimizelyFeature has `enabled` set to false', () => {
         it('should render the children', () => {
-          render(<OptimizelyFeature name="feature" enabled={false}>hello</OptimizelyFeature>)
+          render(
+            <OptimizelyFeature name="feature" enabled={false}>
+              hello
+            </OptimizelyFeature>
+          )
 
           expect(screen.queryByText('hello')).toBeInTheDocument()
         })

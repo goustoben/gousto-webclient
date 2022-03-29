@@ -4,7 +4,7 @@ import { Domain } from 'utils/types/windowLocation'
 import { Nullable } from '../../types'
 
 export type ServiceVersion = {
-  version: string,
+  version: string
   majorVersion: number
   basePath: string
 }
@@ -22,39 +22,39 @@ export enum OVERRIDDEN_SERVICE_PATTERNS {
 }
 
 export type ServiceName =
-  'auth' |
-  'brand' |
-  'clientmetrics' |
-  'collections' |
-  'complaints' |
-  'content' |
-  'core' |
-  'customers' |
-  'deliveries' |
-  'felogging' |
-  'loggingmanager' |
-  'menu' |
-  'order' |
-  'orders' |
-  'orderskiprecovery' |
-  'payments' |
-  'products' |
-  'recipes' |
-  'ssr' |
-  'ssrdeliveries' |
-  'ssrrecipecards' |
-  'subpauseosr' |
-  'subscriptioncommand' |
-  'subscriptionquery' |
-  'tastepreferences' |
-  'userbucketing' |
-  'userfeedback' |
-  'webclient' |
-  'workable';
+  | 'auth'
+  | 'brand'
+  | 'clientmetrics'
+  | 'collections'
+  | 'complaints'
+  | 'content'
+  | 'core'
+  | 'customers'
+  | 'deliveries'
+  | 'felogging'
+  | 'loggingmanager'
+  | 'menu'
+  | 'order'
+  | 'orders'
+  | 'orderskiprecovery'
+  | 'payments'
+  | 'products'
+  | 'recipes'
+  | 'ssr'
+  | 'ssrdeliveries'
+  | 'ssrrecipecards'
+  | 'subpauseosr'
+  | 'subscriptioncommand'
+  | 'subscriptionquery'
+  | 'tastepreferences'
+  | 'userbucketing'
+  | 'userfeedback'
+  | 'webclient'
+  | 'workable'
 
 export type ServiceManifest = {
-  [key in ServiceName]: ServiceVersion[];
-};
+  [key in ServiceName]: ServiceVersion[]
+}
 
 export enum ENVIRONMENT_NAMES {
   production = 'production',
@@ -69,17 +69,17 @@ export enum SERVICE_DOMAINS {
 }
 
 export type ServiceUrlProperties = {
-  basePath?: Nullable<string>,
-  majorVersion?: number,
-  environmentName: string,
-  port?: number;
-  protocol: PROTOCOL_PREFIX;
-  serviceName: ServiceName;
-  serviceDomain: Domain;
+  basePath?: Nullable<string>
+  majorVersion?: number
+  environmentName: string
+  port?: number
+  protocol: PROTOCOL_PREFIX
+  serviceName: ServiceName
+  serviceDomain: Domain
 }
 
 export type ServiceEnvironment = {
-  environmentName: string,
-  protocol: PROTOCOL_PREFIX,
+  environmentName: string
+  protocol: PROTOCOL_PREFIX
   serviceDomain: Domain
 }

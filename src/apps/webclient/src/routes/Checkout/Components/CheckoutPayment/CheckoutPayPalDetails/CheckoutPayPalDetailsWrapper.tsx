@@ -8,9 +8,12 @@ function useSetPayPalNonce() {
   const dispatch = useDispatch()
   const { pricing } = usePricing()
 
-  return useCallback((nonce: string) => {
-    dispatch(setPayPalNonce(nonce, { pricing }))
-  }, [ dispatch, pricing ])
+  return useCallback(
+    (nonce: string) => {
+      dispatch(setPayPalNonce(nonce, { pricing }))
+    },
+    [dispatch, pricing]
+  )
 }
 
 type CheckoutPayPalDetailsWrapperProps = {

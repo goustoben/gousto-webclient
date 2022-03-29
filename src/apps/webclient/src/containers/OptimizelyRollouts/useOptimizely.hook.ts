@@ -84,7 +84,7 @@ export const useUserIdForOptimizely = () => {
   const userId = useSelector(getAuthUserId)
   const [userIdForOptimizely, setUserIdForOptimizely] = useState<null | string>(null)
   useEffect(() => {
-    getUserIdForOptimizely(userId).then(result => {
+    getUserIdForOptimizely(userId).then((result) => {
       setUserIdForOptimizely(result)
     })
   }, [userId])
@@ -92,7 +92,7 @@ export const useUserIdForOptimizely = () => {
   return userIdForOptimizely
 }
 
-const overrideTracking: {[key: string]: boolean} = {}
+const overrideTracking: { [key: string]: boolean } = {}
 
 export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
   const dispatch = useDispatch()
@@ -118,11 +118,13 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
     if (hasOverride) {
       if (!overrideTracking[name]) {
         overrideTracking[name] = true
-        dispatch(feLoggingLogEvent(logLevels.info, 'optimizelyFeatureEnabled-override', {
-          userId,
-          sessionId,
-          featureName: name
-        }))
+        dispatch(
+          feLoggingLogEvent(logLevels.info, 'optimizelyFeatureEnabled-override', {
+            userId,
+            sessionId,
+            featureName: name,
+          })
+        )
       }
 
       return
