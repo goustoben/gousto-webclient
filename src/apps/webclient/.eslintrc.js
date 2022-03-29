@@ -268,8 +268,6 @@ module.exports = {
     __CHECKOUT_PK__: false,
     __RECAPTCHA_RAF_PUBK__: false,
     __RECAPTCHA_RAF_PVTK__: false,
-    __AUTH_CLIENT_SECRET__: false,
-    __AUTH_CLIENT_ID__: false,
     ga: false,
     hj: true,
     after: true,

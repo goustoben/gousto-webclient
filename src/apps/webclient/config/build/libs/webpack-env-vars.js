@@ -1,7 +1,5 @@
 const nodeConfig = require('node-config')
 
-const authClientId = nodeConfig.get('auth_client_id')
-const authClientSecret = nodeConfig.get('auth_client_secret')
 const build = nodeConfig.get('build')
 const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 const clientProtocol = nodeConfig.get('client_protocol')
@@ -22,18 +20,16 @@ const webpackEnvVarsBase = {
 
 const webpackEnvVarsDev = {
   ...webpackEnvVarsBase,
-  __DOMAIN__: JSON.stringify(domain)
+  __DOMAIN__: JSON.stringify(domain),
 }
 
 // will refactor this out in subsequent BODA work
 const webpackEnvVarsClient = {
-  ...webpackEnvVarsBase
+  ...webpackEnvVarsBase,
 }
 
 const webpackEnvVarsServer = {
   ...webpackEnvVarsBase,
-  __AUTH_CLIENT_ID__: JSON.stringify(authClientId),
-  __AUTH_CLIENT_SECRET__: JSON.stringify(authClientSecret),
   __DEV__: build === 'development',
   __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
 }
@@ -42,8 +38,6 @@ module.exports = {
   webpackEnvVarsDev,
   webpackEnvVarsClient,
   webpackEnvVarsServer,
-  authClientId,
-  authClientSecret,
   build,
   clientDevServerEnabled,
   clientProtocol,

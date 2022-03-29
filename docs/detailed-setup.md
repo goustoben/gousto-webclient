@@ -17,7 +17,6 @@ This file is used by node-config (see below for more info).
   "api_name": "staging", //could be production if you wanted to point to production apis
   "domain": "gousto.local", //this is used in only one place currently, the help centre links
   "running_env": "local", //always local as you are not running on AWS
-  "auth_client_secret": "frontend_service_secret_goes_here",
   "client_dev_server_enabled": true, // enable this for webpack dev server configuration in the client build
 }
 ```

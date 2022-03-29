@@ -4,6 +4,8 @@
 export type ProcessEnv = {
   ENVIRONMENT: string
   API_TOKEN: string
+  AUTH_CLIENT_ID: string
+  AUTH_CLIENT_SECRET: string
 }
 
 /**
@@ -13,6 +15,8 @@ export type ProcessEnv = {
 export type ParsedProcessEnv = {
   ENVIRONMENT: string
   API_TOKEN: string
+  AUTH_CLIENT_ID: number
+  AUTH_CLIENT_SECRET: string
 }
 
 export const envOrThrow = (obj: Record<string, unknown>, key: keyof ProcessEnv) => {
@@ -61,5 +65,7 @@ export const getEnvConfig = (): ParsedProcessEnv => {
   return {
     ENVIRONMENT: getFromProcessEnv(processEnv)('ENVIRONMENT'),
     API_TOKEN: getFromProcessEnv(processEnv)('API_TOKEN'),
+    AUTH_CLIENT_ID: getFromProcessEnv(processEnv)('AUTH_CLIENT_ID', parseStringToNumber),
+    AUTH_CLIENT_SECRET: getFromProcessEnv(processEnv)('AUTH_CLIENT_SECRET'),
   }
 }

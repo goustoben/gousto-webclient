@@ -9,8 +9,6 @@ if (isServer()) {
     const configEnvFromFile = readFileSync(envPath)
 
     env = {
-      authClientId: configEnvFromFile.authClientId || __AUTH_CLIENT_ID__,
-      authClientSecret: configEnvFromFile.authClientSecret || __AUTH_CLIENT_SECRET__,
       recaptchaReferralPrivateKey: configEnvFromFile.recaptchaReferralPrivateKey || __RECAPTCHA_RAF_PVTK__,
     }
   } catch (err) {

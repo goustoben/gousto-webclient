@@ -12,8 +12,5 @@
   "outbound_core_access_key": "outbound_core_access_key",
   "outbound_productservice_access_key": "outbound_productservice_access_key",
   "segment_api_key": "segment_api_key",
-  "recaptcha_referral_private_key": "recaptcha_referral_private_key",
-  // These secrets are loaded into the env.js files and overwritten
-  "auth_client_id": "auth_client_id",
-  "auth_client_secret": "auth_client_secret",
+  "recaptcha_referral_private_key": "recaptcha_referral_private_key"
 }
