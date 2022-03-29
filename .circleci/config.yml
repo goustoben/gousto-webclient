@@ -427,6 +427,15 @@ jobs:
 workflows:
   version: 2
 
+  # vpn-test:
+  #   jobs:
+  #     - setup-ci-variables-scripts:
+  #         context: gousto-beta-aws-app-circleci
+  #         filters:
+  #           branches:
+  #             only:
+  #               - test-circle-vpn
+
   e2e-manual:
     jobs:
       - setup-ci-variables-scripts:
