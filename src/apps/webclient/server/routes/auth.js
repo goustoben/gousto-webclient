@@ -7,7 +7,7 @@ import {
   validateRecaptchaUserToken,
   validateUserPassword,
 } from 'apis/auth'
-import env from 'utils/env'
+import { getEnvConfig } from 'utils/processEnv'
 import routes from 'config/routes'
 import logger from '../utils/logger'
 import {
@@ -27,9 +27,10 @@ const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 export async function login(ctx) { /* eslint-disable no-param-reassign */
   try {
     const { username, password, rememberMe, recaptchaToken } = ctx.request.body
-    const { authClientId, authClientSecret } = env
     const { data } = await fetchFeatures()
     const { isRecaptchaEnabled } = data
+
+    const { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } = getEnvConfig()
 
     if (isRecaptchaEnabled && username !== PINGDOM_USER) {
       const validateRecaptchaResponse = await validateRecaptchaUserToken(
@@ -41,7 +42,14 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
         throw validateRecaptchaResponse
       }
     }
-    const authResponse = await getUserToken({ email: username, password, clientId: authClientId, clientSecret: authClientSecret, headers: ctx.request.headers })
+
+    const authResponse = await getUserToken({
+      email: username,
+      password,
+      clientId: AUTH_CLIENT_ID,
+      clientSecret: AUTH_CLIENT_SECRET,
+      headers: ctx.request.headers,
+    })
 
     addSessionCookies(ctx, authResponse, rememberMe)
     ctx.response.body = authResponse
@@ -72,11 +80,12 @@ export function logout(ctx) {
 export async function refresh(ctx) {
   try {
     const { rememberMe } = ctx.request.body
-    const { authClientId, authClientSecret } = env
+    const { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } = getEnvConfig()
+
     const refreshToken = getCookieValue(ctx, 'oauth_refresh', 'refresh_token')
 
     if (refreshToken) {
-      const refreshReponse = await refreshUserToken(refreshToken, authClientId, authClientSecret)
+      const refreshReponse = await refreshUserToken(refreshToken, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET)
       addSessionCookies(ctx, refreshReponse, rememberMe)
       ctx.response.body = refreshReponse
     } else {

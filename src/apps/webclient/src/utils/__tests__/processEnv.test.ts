@@ -22,6 +22,8 @@ describe('processEnv', () => {
         process.env = {
           ENVIRONMENT: 'local',
           API_TOKEN: 'mock-api-token',
+          AUTH_CLIENT_ID: '10',
+          AUTH_CLIENT_SECRET: 'mock-auth-client-secret'
         }
 
         // eslint-disable-next-line
@@ -30,6 +32,8 @@ describe('processEnv', () => {
         expect(getEnvConfig()).toEqual({
           ENVIRONMENT: 'local',
           API_TOKEN: 'mock-api-token',
+          AUTH_CLIENT_ID: 10,
+          AUTH_CLIENT_SECRET: 'mock-auth-client-secret'
         })
       })
     })
@@ -77,6 +81,8 @@ describe('processEnv', () => {
         process.env = {
           ENVIRONMENT: 'local',
           API_TOKEN: 'mock-api-token',
+          AUTH_CLIENT_ID: '10',
+          AUTH_CLIENT_SECRET: 'mock-auth-client-secret'
         }
 
         // eslint-disable-next-line

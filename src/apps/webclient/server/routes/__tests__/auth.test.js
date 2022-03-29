@@ -31,8 +31,6 @@ jest.mock('server/routes/utils', () => ({
 }))
 
 jest.mock('utils/env', () => ({
-  authClientId: 'authClientId',
-  authClientSecret: 'authClientSecret',
   recaptchaPrivateKey: '',
 }))
 
@@ -40,6 +38,13 @@ jest.mock('apis/fetchS3', () => ({
   fetchFeatures: jest.fn().mockReturnValue(
     new Promise((resolve) => resolve({ data: { isRecaptchaEnabled: false }}))
   )
+}))
+
+jest.mock('utils/processEnv', () => ({
+  getEnvConfig: () => ({
+    AUTH_CLIENT_ID: 10,
+    AUTH_CLIENT_SECRET: 'authClientSecret',
+  })
 }))
 
 const getCtx = () => ({
@@ -112,7 +117,7 @@ describe('auth', () => {
         expect(getUserToken).toHaveBeenCalledWith({
           email: username,
           password,
-          clientId: 'authClientId',
+          clientId: 10,
           clientSecret: 'authClientSecret',
           headers: {
             'user-agent': 'test',
@@ -167,7 +172,7 @@ describe('auth', () => {
         expect(getUserToken).toHaveBeenCalledWith({
           email: username,
           password,
-          clientId: 'authClientId',
+          clientId: 10,
           clientSecret: 'authClientSecret',
           headers: {
             'x-forwarded-for': '192.192.192',
@@ -196,7 +201,7 @@ describe('auth', () => {
         expect(getUserToken).toHaveBeenCalledWith({
           email: username,
           password,
-          clientId: 'authClientId',
+          clientId: 10,
           clientSecret: 'authClientSecret',
           headers: {
             'x-forwarded-for': '192.192.192',
@@ -225,7 +230,7 @@ describe('auth', () => {
         expect(getUserToken).toHaveBeenCalledWith({
           email: username,
           password,
-          clientId: 'authClientId',
+          clientId: 10,
           clientSecret: 'authClientSecret',
           headers: {
             'x-forwarded-for': '192.192.192',
@@ -335,7 +340,7 @@ describe('auth', () => {
         expect(getCookieValue).toHaveBeenCalled()
         expect(refreshUserToken).toHaveBeenCalledWith(
           refreshToken,
-          'authClientId',
+          10,
           'authClientSecret',
         )
       })

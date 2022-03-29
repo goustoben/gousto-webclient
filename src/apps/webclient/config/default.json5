@@ -8,10 +8,5 @@
   "client_dev_server_enabled": false,
   "client_protocol": "http",
   "recaptcha_referral_private_key": "",
-  "running_env": "local",
-  // These will get overwritten by the config/env.json
-  // file when used in src/utils/env.js. config/env.json
-  // variable are set by ecs_start.sh.
-  "auth_client_id": "6",
-  "auth_client_secret": "frontend_service_secret"
+  "running_env": "local"
 }

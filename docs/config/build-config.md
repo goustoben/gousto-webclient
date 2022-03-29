@@ -87,8 +87,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
 ```JSON5
 {
   "api_name": "",
-  "auth_client_id": "",
-  "auth_client_secret": "",
   "build": "",
   "client_dev_server_enabled": false,
   "client_protocol": "",
@@ -99,28 +97,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "running_env": ""
 }
 ```
-
-auth_client_id
---------------
-```
-    string: [Gousto auth client id]
-```
-(aliased by `__AUTH_CLIENT_ID__`, `authClientId` in the code).
-
-Client ID, used to identify the client making calls to the Gousto API.
-
-Used in `src/src/utils/env.js` which is in turn imported in `src/src/utils/fetch.js` and is used to determine how the application gets access / makes XHR API calls.
-
-auth_client_secret
-------------------
-```
-    string: [Gousto auth client secret]
-```
-(aliased by `__AUTH_CLIENT_SECRET__`, `authClientSecret` in the code).
-
-Client Secret, used to securely authorise the client making calls to the Gousto API.
-
-Used in `src/src/utils/env.js` which is in turn imported in `src/src/utils/fetch.js` and is used to determine how the application gets access / makes downstream XHR API calls.
 
 build
 -----

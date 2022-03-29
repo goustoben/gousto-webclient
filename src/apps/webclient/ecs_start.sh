@@ -89,8 +89,6 @@ rm ${S3_DEST}
 # OSX bash version doesn't support associative arrays, so we use a special pattern that will be split later
 # PATTERN= variable_name::default_value
 ENV_VAR_LIST=(
-    'auth_client_id::6'
-    'auth_client_secret::frontend_service_secret'
     'recaptcha_referral_private_key::private_key_goes_here'
 )
 

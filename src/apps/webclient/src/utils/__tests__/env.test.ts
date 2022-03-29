@@ -1,6 +1,4 @@
 const mockConfig = {
-  authClientId: 'mock-auth-client-id',
-  authClientSecret: 'mock-auth-client-secret',
   recaptchaReferralPrivateKey: 'mock-recaptcha-referral-private-key',
 }
 

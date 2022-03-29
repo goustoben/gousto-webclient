@@ -34,6 +34,12 @@ ecs:
         API_TOKEN:
           type: secret
           description: API token for server request header
+        AUTH_CLIENT_ID:
+          type: secret
+          description: Auth client ID for auth service
+        AUTH_CLIENT_SECRET:
+          type: secret
+          description: Auth client secret for auth service
 
   taskRolePolicies:
     - effect: Allow
