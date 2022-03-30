@@ -319,6 +319,9 @@ jobs:
           name: Run E2E tests
           working_directory: tests/e2e
           command: chromedriver start & yarn test:staging
+      - run:
+          name: Upload reports to DataDog
+          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" yarn datadog:upload-report:e2e
       - store_test_results:
           path: tests/e2e/reports
       - store_artifacts:
