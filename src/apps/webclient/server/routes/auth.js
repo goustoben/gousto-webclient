@@ -16,7 +16,6 @@ import {
   removeSessionCookies,
   getCookieValue,
 } from './utils'
-import { RECAPTCHA_PRIVATE_KEY } from '../config/recaptcha'
 
 const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 
@@ -30,12 +29,12 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
     const { data } = await fetchFeatures()
     const { isRecaptchaEnabled } = data
 
-    const { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } = getEnvConfig()
+    const { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET, RECAPTCHA_PVTK } = getEnvConfig()
 
     if (isRecaptchaEnabled && username !== PINGDOM_USER) {
       const validateRecaptchaResponse = await validateRecaptchaUserToken(
         recaptchaToken,
-        RECAPTCHA_PRIVATE_KEY
+        RECAPTCHA_PVTK
       )
 
       if (!validateRecaptchaResponse.success) {

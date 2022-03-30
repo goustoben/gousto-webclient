@@ -43,6 +43,9 @@ ecs:
         RECAPTCHA_RAF_PVTK:
           type: secret
           description: Recaptcha PRIVATE key for RAF
+        RECAPTCHA_PVTK:
+          type: secret
+          description: Private key for login Recaptcha
 
   taskRolePolicies:
     - effect: Allow

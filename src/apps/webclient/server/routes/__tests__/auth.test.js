@@ -3,7 +3,6 @@ import { login, logout, refresh, identify, forget, validate } from 'server/route
 import { getUserToken, refreshUserToken, validateUserPassword, identifyUserUsingOAuth, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
 import logger from '../../utils/logger'
-import { RECAPTCHA_PRIVATE_KEY } from '../../config/recaptcha'
 
 jest.mock('../../utils/logger', () => ({
   error: jest.fn(),
@@ -40,6 +39,7 @@ jest.mock('utils/processEnv', () => ({
   getEnvConfig: () => ({
     AUTH_CLIENT_ID: 10,
     AUTH_CLIENT_SECRET: 'authClientSecret',
+    RECAPTCHA_PVTK: 'mock-recaptcha-private-key'
   })
 }))
 
@@ -48,7 +48,7 @@ const getCtx = () => ({
   response: {},
 })
 
-const RECAPTCHA_SECRET = RECAPTCHA_PRIVATE_KEY
+const RECAPTCHA_SECRET = 'mock-recaptcha-private-key'
 const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 
 describe('auth', () => {
