@@ -7,6 +7,7 @@ import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { getDomain } from 'utils/isomorphicEnvironment'
 import statusActions from '../status'
 import authActions from '../auth'
 
@@ -372,7 +373,7 @@ describe('login actions', () => {
 
         test('the query parameter target is set to the Help Centre URL', () => {
           const { helpCentre } = client
-          const helpCentreURL = `${__CLIENT_PROTOCOL__}://${__DOMAIN__}${helpCentre}`
+          const helpCentreURL = `${__CLIENT_PROTOCOL__}://${getDomain()}${helpCentre}`
           const search = `?target=${encodeURIComponent(helpCentreURL)}`
           const serialisedQueryStringObject = JSON.stringify({ search })
           expect(dispatch).toHaveBeenCalledWith(`${serialisedQueryStringObject} pushed`)

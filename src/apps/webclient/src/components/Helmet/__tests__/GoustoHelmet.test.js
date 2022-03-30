@@ -11,18 +11,19 @@ import { SiteVerification } from 'Helmet/SiteVerification'
 
 import templateConfig from 'config/template'
 import globals from 'config/globals'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 
 describe('Helmet GoustoHelmet', () => {
-  let domain
   let protocol
+
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('local', '<domain>')
 
   beforeEach(() => {
     protocol = sinon.stub(globals, 'protocol').get(() => '<protocol>')
-    domain = sinon.stub(globals, 'domain').get(() => '<domain>')
   })
 
   afterEach(() => {
-    domain.restore()
     protocol.restore()
   })
 

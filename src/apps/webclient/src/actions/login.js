@@ -12,6 +12,7 @@ import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import { getUserId } from 'selectors/user'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
+import { getDomain } from 'utils/isomorphicEnvironment'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import statusActions from './status'
 import authActions from './auth'
@@ -50,7 +51,7 @@ const loginVisibilityChange = visibility => ({
 export const helpPreLoginVisibilityChange = visibility => (
   (dispatch) => {
     if (visibility === true) {
-      const helpCentreUrl = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${client.helpCentre}`)}`
+      const helpCentreUrl = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${getDomain()}${client.helpCentre}`)}`
       dispatch(push({ search: helpCentreUrl }))
     }
     dispatch({

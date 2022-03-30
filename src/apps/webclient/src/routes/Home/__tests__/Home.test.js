@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import Helmet from 'react-helmet'
 import menuFetchData from 'routes/Menu/fetchData'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { Home } from '../Home'
 
 jest.mock('routes/Menu/fetchData')
@@ -103,6 +104,9 @@ describe('Home', () => {
           variant: 'alt',
         })
       })
+
+      // mock the environment and domain config used by these tests to generate endpoints
+      withMockEnvironmentAndDomain('local', 'gousto.local')
 
       test('should put a canonical tag in the url', () => {
         expect(wrapper.find(Helmet).first().prop('link')).toEqual([
