@@ -11,7 +11,6 @@ const publicPath = '/build/latest/'
 
 const webpackEnvVarsBase = {
   __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
-  __DOMAIN__: JSON.stringify(domain),
   __ENV__: JSON.stringify(envName),
   __RUNNING_ENV__: JSON.stringify(runningEnv),
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
@@ -19,7 +18,6 @@ const webpackEnvVarsBase = {
 
 const webpackEnvVarsDev = {
   ...webpackEnvVarsBase,
-  __DOMAIN__: JSON.stringify(domain),
 }
 
 // will refactor this out in subsequent BODA work

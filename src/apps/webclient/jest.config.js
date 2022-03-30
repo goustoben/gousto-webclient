@@ -50,7 +50,6 @@ module.exports = {
     __CHECKOUT_PK__: '',
     __ENV__: 'production',
     __RUNNING_ENV__: 'live',
-    __DOMAIN__: 'gousto.local',
     'process.env.NODE_ENV': 'production',
     __CIRCLE_BUILD_NUM__: 'MOCK_CIRCLE_BUILD_NUM',
     'ts-jest': {

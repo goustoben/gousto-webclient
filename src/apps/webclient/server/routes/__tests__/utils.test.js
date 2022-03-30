@@ -1,6 +1,7 @@
 import { get, set } from 'utils/cookieHelper2'
 
 import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from '../utils'
+import { withMockEnvironmentAndDomain } from '../../../src/_testing/isomorphic-environment-test-utils'
 
 jest.mock('utils/cookieHelper2', () => ({
   set: jest.fn(),
@@ -23,6 +24,9 @@ const getRoutingCtx = ({ path, method }) => ({
 })
 
 describe('utils', () => {
+  // mock the environment and domain config used by these tests to generate endpoints
+  withMockEnvironmentAndDomain('local', 'gousto.local')
+
   let ctx
 
   afterEach(() => {

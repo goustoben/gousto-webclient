@@ -16,7 +16,7 @@ tests/regression/videos
 tests/load/__pycache__
 **/eslint-results.json
 yarn-error.log
-
+**/.eslintcache
 # VSCode
 .vs
 .idea
@@ -34,3 +34,4 @@ lib
 !.yarn/sdks
 !.yarn/versions
 package-lock.json
+
