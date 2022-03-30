@@ -1,12 +1,9 @@
+type ProcessEnvKeys = ['ENVIRONMENT', 'API_TOKEN', 'AUTH_CLIENT_ID', 'AUTH_CLIENT_SECRET']
+
 /**
  * process.env as set by service.yml and parameter store
  */
-export type ProcessEnv = {
-  ENVIRONMENT: string
-  API_TOKEN: string
-  AUTH_CLIENT_ID: string
-  AUTH_CLIENT_SECRET: string
-}
+export type ProcessEnv = Record<ProcessEnvKeys[number], string>
 
 /**
  * Transformed process.env - this is needed
@@ -18,6 +15,13 @@ export type ParsedProcessEnv = {
   AUTH_CLIENT_ID: number
   AUTH_CLIENT_SECRET: string
 }
+
+const REQUIRED_KEYS: ProcessEnvKeys = [
+  'ENVIRONMENT',
+  'API_TOKEN',
+  'AUTH_CLIENT_ID',
+  'AUTH_CLIENT_SECRET',
+]
 
 export const envOrThrow = (obj: Record<string, unknown>, key: keyof ProcessEnv) => {
   const val = obj[key]
@@ -32,7 +36,7 @@ export const envOrThrow = (obj: Record<string, unknown>, key: keyof ProcessEnv) 
 export const parseStringToNumber = (val: ProcessEnv[keyof ProcessEnv]) => parseInt(val, 10)
 
 export const validateProcessEnv = () => {
-  ;['ENVIRONMENT', 'API_TOKEN'].forEach((key) => envOrThrow(process.env, key as keyof ProcessEnv))
+  REQUIRED_KEYS.forEach((key) => envOrThrow(process.env, key as keyof ProcessEnv))
 }
 
 /**
@@ -41,7 +45,7 @@ export const validateProcessEnv = () => {
 export const getFromProcessEnv = (env: ProcessEnv) => {
   const memo = new Map<string, string | number>()
 
-  return <K extends keyof ProcessEnv>(
+  return <K extends ProcessEnvKeys[number]>(
     key: K,
     transformFn?: (val: ProcessEnv[K]) => ParsedProcessEnv[K]
   ) => {
