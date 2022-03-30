@@ -5,7 +5,6 @@ const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 const clientProtocol = nodeConfig.get('client_protocol')
 const domain = nodeConfig.get('domain')
 const envName = nodeConfig.get('environment_name')
-const recaptchaReferralPrivateKey = nodeConfig.get('recaptcha_referral_private_key')
 const runningEnv = nodeConfig.get('running_env')
 
 const publicPath = '/build/latest/'
@@ -31,7 +30,6 @@ const webpackEnvVarsClient = {
 const webpackEnvVarsServer = {
   ...webpackEnvVarsBase,
   __DEV__: build === 'development',
-  __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
 }
 
 module.exports = {
@@ -43,7 +41,6 @@ module.exports = {
   clientProtocol,
   domain,
   envName,
-  recaptchaReferralPrivateKey,
   runningEnv,
   publicPath,
 }

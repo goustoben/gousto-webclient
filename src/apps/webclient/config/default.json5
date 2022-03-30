@@ -7,6 +7,5 @@
   "domain": "gousto.local",
   "client_dev_server_enabled": false,
   "client_protocol": "http",
-  "recaptcha_referral_private_key": "",
   "running_env": "local"
 }

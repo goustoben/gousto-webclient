@@ -48,8 +48,6 @@ module.exports = {
     __DEV__: false,
     __CLIENT_PROTOCOL__: 'https',
     __CHECKOUT_PK__: '',
-    __RECAPTCHA_RAF_PUBK__: '',
-    __RECAPTCHA_RAF_PVTK__: '',
     __ENV__: 'production',
     __RUNNING_ENV__: 'live',
     __DOMAIN__: 'gousto.local',

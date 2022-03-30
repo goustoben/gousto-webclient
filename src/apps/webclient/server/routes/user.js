@@ -2,7 +2,7 @@ import { fetchFeatures } from 'apis/fetchS3'
 import { validateRecaptchaUserToken } from 'apis/auth'
 import { referAFriend as sendReferalToCore } from 'apis/user'
 import routes from 'config/routes'
-import env from 'utils/env'
+import { getEnvConfig } from 'utils/processEnv'
 import logger from '../utils/logger'
 import { routeMatches, getCookieValue } from './utils'
 
@@ -23,7 +23,7 @@ export async function referAFriend(ctx) {
       if (isRecaptchaEnabled) {
         const validateRecaptchaResponse = await validateRecaptchaUserToken(
           recaptchaToken,
-          env.recaptchaReferralPrivateKey
+          getEnvConfig().RECAPTCHA_RAF_PVTK
         )
         if (!validateRecaptchaResponse.success) {
           throw validateRecaptchaResponse

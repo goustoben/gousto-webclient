@@ -30,10 +30,6 @@ jest.mock('server/routes/utils', () => ({
   getCookieValue: jest.fn(),
 }))
 
-jest.mock('utils/env', () => ({
-  recaptchaPrivateKey: '',
-}))
-
 jest.mock('apis/fetchS3', () => ({
   fetchFeatures: jest.fn().mockReturnValue(
     new Promise((resolve) => resolve({ data: { isRecaptchaEnabled: false }}))

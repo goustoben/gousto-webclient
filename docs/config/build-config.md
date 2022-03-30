@@ -92,7 +92,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "client_protocol": "",
   "domain": "",
   "environment_name": "",
-  "recaptcha_referral_private_key": "",
   "recaptcha_referral_public_key": "",
   "running_env": ""
 }
@@ -147,33 +146,6 @@ Used as a key (`list['local] vs list['production']`) for optimizely configuratio
 More often used as a value to drive conditional logic, i.e. for logging.
 
 Referenced ~20 files.
-
-recaptcha_referral_private_key
-------------------------------
-```
-    string: [Google recaptcha referral private key]
-```
-(Aliased by `__RECAPTCHA_RAF_PVTK__`, `recaptchaReferralPrivateKey` in the code).
-
-Private key for accessing Google's recaptcha service.
-
-Refernced in `src/src/utils/env.js` and used in `src/server/routes/user.js` (Refer a friend service only?)
-
-recaptcha_referral_public_key
------------------------------
-```
-    string: [Google recaptcha referral public key]
-```
-(Aliased by `__RECAPTCHA_RAF_PUBK__`, `recaptchaReferralPublicKey`  and `RECAPTCHA_PUBLIC_KEY` in the code).
-
-Public key for accessing Google's recaptcha service.
-
-Public key for Google's Recaptcha service and referenced in multiple files, used in four areas alongside the Recaptcha service:
-
-1. Login
-2. Refer a friend
-3. Reset password
-4. Checkout payment
 
 running_env
 -----------
