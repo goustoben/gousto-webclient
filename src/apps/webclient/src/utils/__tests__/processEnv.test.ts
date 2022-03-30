@@ -1,5 +1,12 @@
 import { getFromProcessEnv, parseStringToNumber, ProcessEnv } from '../processEnv'
 
+const validProcessEnv: ProcessEnv = {
+  ENVIRONMENT: 'local',
+  API_TOKEN: 'mock-api-token',
+  AUTH_CLIENT_ID: '10',
+  AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
+}
+
 describe('processEnv', () => {
   describe('getEnvConfig', () => {
     const originalProcessEnv = process.env
@@ -19,12 +26,7 @@ describe('processEnv', () => {
 
     describe('getEnvConfig', () => {
       test('returns expected environment config object', () => {
-        process.env = {
-          ENVIRONMENT: 'local',
-          API_TOKEN: 'mock-api-token',
-          AUTH_CLIENT_ID: '10',
-          AUTH_CLIENT_SECRET: 'mock-auth-client-secret'
-        }
+        process.env = validProcessEnv
 
         // eslint-disable-next-line
         const { getEnvConfig } = require('../processEnv')
@@ -33,7 +35,7 @@ describe('processEnv', () => {
           ENVIRONMENT: 'local',
           API_TOKEN: 'mock-api-token',
           AUTH_CLIENT_ID: 10,
-          AUTH_CLIENT_SECRET: 'mock-auth-client-secret'
+          AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
         })
       })
     })
@@ -63,13 +65,17 @@ describe('processEnv', () => {
     })
 
     describe('validateProcessEnv', () => {
-      test('throws if key is missing from process.env', () => {
-        const expectedError = new Error('No environment variable with key API_TOKEN')
+      test.each(
+        // Generate test case where each key is missing from process.env
+        Object.keys(validProcessEnv).map((envKey) => {
+          const duplicateProcessEnv = { ...validProcessEnv }
+          delete duplicateProcessEnv[envKey as keyof typeof duplicateProcessEnv]
 
-        process.env = {
-          ENVIRONMENT: 'local',
-          // Missing: API_TOKEN
-        }
+          return [envKey, duplicateProcessEnv]
+        })
+      )('throws if %s is missing from process.env', (missingKey, malformedProcessEnv) => {
+        const expectedError = new Error(`No environment variable with key ${missingKey}`)
+        process.env = malformedProcessEnv as ProcessEnv
 
         // eslint-disable-next-line
         const { validateProcessEnv } = require('../processEnv')
@@ -82,7 +88,7 @@ describe('processEnv', () => {
           ENVIRONMENT: 'local',
           API_TOKEN: 'mock-api-token',
           AUTH_CLIENT_ID: '10',
-          AUTH_CLIENT_SECRET: 'mock-auth-client-secret'
+          AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
         }
 
         // eslint-disable-next-line
