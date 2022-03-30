@@ -5,6 +5,7 @@ const validProcessEnv: ProcessEnv = {
   API_TOKEN: 'mock-api-token',
   AUTH_CLIENT_ID: '10',
   AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
+  RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
 }
 
 describe('processEnv', () => {
@@ -36,6 +37,7 @@ describe('processEnv', () => {
           API_TOKEN: 'mock-api-token',
           AUTH_CLIENT_ID: 10,
           AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
+          RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
         })
       })
     })
@@ -89,6 +91,7 @@ describe('processEnv', () => {
           API_TOKEN: 'mock-api-token',
           AUTH_CLIENT_ID: '10',
           AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
+          RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
         }
 
         // eslint-disable-next-line

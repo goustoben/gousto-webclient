@@ -83,35 +83,4 @@ register_env_variables ${S3_DEST} ""
 echo "About to remove: ${S3_DEST}"
 rm ${S3_DEST}
 
-### This script will replace the values in env.json based on the available environment variable and then start pm2.
-### If a variable is not defined, then it will be reverted to the default value.
-
-# OSX bash version doesn't support associative arrays, so we use a special pattern that will be split later
-# PATTERN= variable_name::default_value
-ENV_VAR_LIST=(
-    'recaptcha_referral_private_key::private_key_goes_here'
-)
-
-SEDCMD="sed -r -i -e"
-if [[ $(uname) == 'Darwin' ]]; then
-    SEDCMD="sed -E -i '' -e"
-fi
-
-REGEX="[[:print:]]*" ## [:print:] is a POSIX character class: https://en.wikipedia.org/wiki/Regular_expression
-
-# Make substitutions on env.json file
-for INDEX in "${ENV_VAR_LIST[@]}" ; do
-    VAR="${INDEX%%::*}"
-    ## env.json contains camelCase version of secrets ##
-    CAMELCASE_VAR=$(echo ${VAR} | perl -pe 's/_(\w)/\U\1/g')
-    DEFAULT_VALUE="${INDEX##*::}"
-    if [[ -z "${!VAR}" ]]; then
-        SEDPATTERN='s'${SEDSEPARATOR}'("'${CAMELCASE_VAR}'": ")('${REGEX}')(")'${SEDSEPARATOR}'\1'${DEFAULT_VALUE}'\3'${SEDSEPARATOR}'g'
-    else
-        SEDPATTERN='s'${SEDSEPARATOR}'("'${CAMELCASE_VAR}'": ")('${REGEX}')(")'${SEDSEPARATOR}'\1'${!VAR}'\3'${SEDSEPARATOR}'g'
-    fi
-
-    eval "${SEDCMD} '${SEDPATTERN}' ./config/env.json"
-done
-
 exec "$@"

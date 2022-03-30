@@ -9,27 +9,21 @@ jest.mock('utils/logger', () => ({
   notice: jest.fn(),
 }))
 
-jest.mock('apis/user', () => ({
-  referAFriend: jest.fn(() => ({ status: 'ok' })),
-}))
+jest.mock('apis/user')
 
-jest.mock('apis/auth', () => ({
-  validateRecaptchaUserToken: jest.fn(() => ({ success: false })),
-}))
+jest.mock('apis/auth')
 
 jest.mock('server/routes/utils', () => ({
   getCookieValue: jest.fn().mockName('getCookieValue'),
   routeMatches: jest.fn(),
 }))
 
-jest.mock('apis/fetchS3', () => ({
-  fetchFeatures: jest
-    .fn()
-    .mockReturnValue(new Promise((resolve) => resolve({ data: { isRecaptchaEnabled: false } }))),
-}))
+jest.mock('apis/fetchS3')
 
-jest.mock('utils/env', () => ({
-  recaptchaReferralPrivateKey: '',
+jest.mock('utils/processEnv', () => ({
+  getEnvConfig: () => ({
+    RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-pvtk',
+  }),
 }))
 
 const app = {
@@ -84,9 +78,14 @@ describe('user', () => {
   })
 
   describe('referAFriend', () => {
-    afterEach(() => {
-      getCookieValue.mockReset()
-      sendReferalToCore.mockReset()
+    beforeEach(() => {
+      jest.resetAllMocks()
+
+      fetchFeatures.mockResolvedValue({
+        data: {
+          isRecaptchaEnabled: true,
+        },
+      })
     })
 
     const getReferalCtx = () =>
@@ -94,19 +93,25 @@ describe('user', () => {
         request: {
           body: {
             email: 'test@mail.net',
+            recaptchaToken: 'test-recaptcha-token'
           },
         },
       })
 
     test('should call removeSessionCookies and return ok response', async () => {
+      expect.assertions(5)
+
       accessToken = 'eed4b4f4a3ed0091cb4b7af9c581350bdf9ea806'
-      getCookieValue.mockReturnValueOnce(accessToken)
+      getCookieValue.mockReturnValue(accessToken)
+      validateRecaptchaUserToken.mockResolvedValue({ success: true })
+      sendReferalToCore.mockResolvedValue({ status: 'ok'})
 
       ctx = getReferalCtx()
       await handleReferalRequest(ctx)
 
       expect(fetchFeatures).toHaveBeenCalled()
       expect(getCookieValue).toHaveBeenCalledWith(ctx, 'oauth_token', 'access_token')
+      expect(validateRecaptchaUserToken).toHaveBeenCalledWith('test-recaptcha-token', 'mock-recaptcha-raf-pvtk')
       expect(sendReferalToCore).toHaveBeenCalledWith(accessToken, 'test@mail.net')
       expect(ctx.response).toEqual({
         status: 200,
@@ -117,6 +122,8 @@ describe('user', () => {
     })
 
     test('should throw error if no auth token present', async () => {
+      expect.assertions(3)
+
       ctx = getReferalCtx()
       await handleReferalRequest(ctx)
 

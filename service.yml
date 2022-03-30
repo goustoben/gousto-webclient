@@ -40,6 +40,9 @@ ecs:
         AUTH_CLIENT_SECRET:
           type: secret
           description: Auth client secret for auth service
+        RECAPTCHA_RAF_PVTK:
+          type: secret
+          description: Recaptcha PRIVATE key for RAF
 
   taskRolePolicies:
     - effect: Allow

@@ -11,6 +11,5 @@
   // These secrets are read from the S3 file.
   "outbound_core_access_key": "outbound_core_access_key",
   "outbound_productservice_access_key": "outbound_productservice_access_key",
-  "segment_api_key": "segment_api_key",
-  "recaptcha_referral_private_key": "recaptcha_referral_private_key"
+  "segment_api_key": "segment_api_key"
 }
