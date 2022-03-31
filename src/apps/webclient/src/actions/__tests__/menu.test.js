@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
-import * as orders from 'apis/orders'
 import * as recipes from 'apis/recipes'
 import * as utilsBasket from 'utils/basket'
 import * as utilsDeliveries from 'utils/deliveries'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { isServer } from 'utils/serverEnvironment'
 import { unset } from 'utils/cookieHelper2'
+import * as orders from 'routes/Menu/apis/orderV2'
 import * as MenuServiceLoadDaysActions from 'actions/menuServiceLoadDays'
 import * as MenuActionHelperActions from 'actions/menuActionHelper'
 import * as boxPrices from 'apis/boxPrices'
@@ -37,7 +37,6 @@ import menuActions, {
   trackCloseSidesAllergens,
   menuLoadOrderDetails,
 } from '../menu'
-
 jest.mock('utils/browserEnvironment')
 jest.mock('utils/serverEnvironment')
 jest.mock('utils/cookieHelper2')
@@ -609,7 +608,7 @@ describe('menu actions', () => {
 
         await menuLoadOrderDetails('order_id')(dispatch, getState)
 
-        expect(fetchOrderSpy).toHaveBeenNthCalledWith(1, 'test', 'order_id', { 'includes[]': 'shipping_address' })
+        expect(fetchOrderSpy).toHaveBeenNthCalledWith(1, dispatch, getState, 'order_id', 'shipping_address')
         expect(statusActionsPendingSpy).toHaveBeenNthCalledWith(1, 'LOADING_ORDER', true)
         expect(basketResetSpy).toBeCalledTimes(1)
         expect(basketDateChangeSpy).toHaveBeenNthCalledWith(1, 'delivery_date')

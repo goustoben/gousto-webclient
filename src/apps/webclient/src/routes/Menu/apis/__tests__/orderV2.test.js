@@ -8,10 +8,10 @@ import { safeJestMock } from '_testing/mocks'
 import * as optimizelyRollouts from 'containers/OptimizelyRollouts'
 import * as userSelectors from 'selectors/user'
 import * as authSelectors from 'selectors/auth'
-import { updateOrder, createOrder, getOrderPrice, getOrder, fetchUserOrders } from '../orderV2'
+import { updateOrder, createOrder, getOrderPrice, fetchUserOrders, fetchOrder } from '../orderV2'
 import * as menuFetch from '../fetch'
 import { mockFetchResponse } from '../fetch.mock'
-import { OrdersMockV2 } from '../mock/ordersV2.mock'
+import { UserOrdersMockV2, OrderMockV2 } from '../mock/ordersV2.mock'
 
 jest.mock('utils/fetch')
 jest.mock('isomorphic-fetch')
@@ -35,9 +35,6 @@ describe('orderApi', () => {
 
   beforeEach(() => {
     jest.spyOn(menuFetch, 'post').mockResolvedValue(mockFetchResponse({}))
-    isomorphicFetch.mockImplementation(() => Promise.resolve({
-      json: () => Promise.resolve(OrdersMockV2),
-    }))
   })
 
   afterEach(() => {
@@ -149,60 +146,89 @@ describe('orderApi', () => {
     })
   })
 
-  describe('getOrder', () => {
-    const userId = 'my-cool-user'
-
-    test('should fetch the correct url', async () => {
-      const expectedHeaders = {
-        'Content-Type': 'application/json',
-        'x-gousto-device-id': 'session-id',
-        'x-gousto-user-id': userId
-      }
-
-      const expectedReqData = {
-        include: ['data']
-      }
-      const orderId = 123
-      const include = ['data']
-
-      await getOrder('token', orderId, userId, include)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(
-        'token',
-        `https://production-api.gousto.co.uk/order/v2/orders/${orderId}`,
-        expectedReqData,
-        'GET',
-        'default',
-        expectedHeaders
-      )
+  describe('fetchOrder', () => {
+    const userId = 'test-user-id'
+    beforeEach(() => {
+      getUserId.mockReturnValue(userId)
+      getAccessToken.mockReturnValue('token')
     })
 
-    test('should return the results of the fetch unchanged', async () => {
-      const apiResponse = { data: [1, 2, 3] }
-      fetch.mockResolvedValue(apiResponse)
+    describe('when using the V1 implementation', () => {
+      beforeEach(() => {
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => false)
+      })
 
-      const result = await getOrder('token', '123', userId, {})
-
-      expect(result).toEqual(apiResponse)
-    })
-
-    describe('when reqData not provided', () => {
       test('should fetch the correct url', async () => {
         const expectedHeaders = {
-          'Content-Type': 'application/json',
-          'x-gousto-device-id': 'session-id',
-          'x-gousto-user-id': userId
+          'Content-Type': 'application/json'
         }
-        const orderId = '123'
-        await getOrder('token', orderId, userId)
+
+        const expectedReqData = {
+          include: 'data'
+        }
+        const orderId = 123
+        const include = 'data'
+
+        await fetchOrder(dispatch, getState, orderId, include)
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith(
           'token',
-          `https://production-api.gousto.co.uk/order/v2/orders/${orderId}`,
-          {},
+          'https://production-api.gousto.co.uk/order/123',
+          expectedReqData,
           'GET',
-          'default',
-          expectedHeaders)
+          undefined,
+          expectedHeaders
+        )
+      })
+
+      test('should return the results of the fetch unchanged', async () => {
+        const apiResponse = { data: [1, 2, 3] }
+        fetch.mockResolvedValue(apiResponse)
+
+        const result = await fetchOrder(dispatch, getState, '123')
+
+        expect(result).toEqual(apiResponse)
+      })
+
+      describe('when reqData not provided', () => {
+        test('should fetch the correct url', async () => {
+          const expectedHeaders = {
+            'Content-Type': 'application/json'
+          }
+          const orderId = '123'
+          await fetchOrder(dispatch, getState, orderId)
+          expect(fetch).toHaveBeenCalledTimes(1)
+          expect(fetch).toHaveBeenCalledWith(
+            'token',
+            'https://production-api.gousto.co.uk/order/123',
+            {},
+            'GET',
+            undefined,
+            expectedHeaders)
+        })
+      })
+    })
+
+    describe('when using the V2 implementation', () => {
+      beforeEach(() => {
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => true)
+        isomorphicFetch.mockImplementation(() => Promise.resolve({
+          json: () => Promise.resolve(OrderMockV2),
+        }))
+      })
+
+      test('should fetch the correct url', async () => {
+        const orderId = 123
+
+        await fetchOrder(dispatch, getState, orderId)
+        expect(isomorphicFetch).toHaveBeenCalledTimes(1)
+        expect(isomorphicFetch).toHaveBeenCalledWith(
+          'https://production-api.gousto.co.uk/order/v2/orders/123?include[]=shipping_address',
+          {
+            headers: {Authorization: 'Bearer token', 'Content-Type': 'application/json', 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'test-user-id'},
+            method: 'GET'
+          }
+        )
       })
     })
   })
@@ -216,6 +242,9 @@ describe('orderApi', () => {
     describe('when using the V2 implementation', () => {
       beforeEach(() => {
         isOptimizelyFeatureEnabledFactory.mockReturnValue(() => true)
+        isomorphicFetch.mockImplementation(() => Promise.resolve({
+          json: () => Promise.resolve(UserOrdersMockV2),
+        }))
       })
 
       test('should fetch the correct url', async () => {
@@ -237,7 +266,7 @@ describe('orderApi', () => {
         )
       })
 
-      describe('when reqData is not proviced', () => {
+      describe('when reqData is not provided', () => {
         test('should fetch the correct url', async () => {
           await fetchUserOrders(dispatch, getState)
 
@@ -275,7 +304,7 @@ describe('orderApi', () => {
         )
       })
 
-      describe('when reqData is not proviced', () => {
+      describe('when reqData is not provided', () => {
         test('should fetch the correct url', async () => {
           await fetchUserOrders(dispatch, getState)
 

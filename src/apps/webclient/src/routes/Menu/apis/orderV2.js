@@ -8,6 +8,7 @@ import {
 } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import * as userApiV1 from 'apis/user'
+import * as orderApiV1 from 'apis/orders'
 import { getUserId } from 'selectors/user'
 import { getAccessToken } from 'selectors/auth'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
@@ -50,14 +51,34 @@ export const updateOrder = (accessToken, orderId, order, userId) => {
   )
 }
 
-export const getOrder = (accessToken, orderId, userId, include) => {
-  const reqData = {
-    include
+export async function fetchOrder(dispatch, getState, orderId, include) {
+  const state = getState()
+  const userId = getUserId(state)
+  const accessToken = getAccessToken(state)
+  const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_v2_getorder_web_enabled')(dispatch, getState)
+
+  // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
+  if (!useOrderApiV2) {
+    return orderApiV1.fetchOrder(accessToken, orderId, { include })
   }
 
   const headers = getRequestHeaders(userId)
+  const url = `${endpoint('order', 2)}/orders/${orderId}?include[]=shipping_address`
 
-  return fetch(accessToken, `${endpoint('order', 2)}/orders/${orderId}`, reqData, 'GET', cacheDefault, headers)
+  return new Promise((resolve, reject) =>
+    isomorphicFetch(url, {
+      method: 'GET',
+      headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+    })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        const transformedOrder = transformOrderV2ToOrderV1(jsonResponse.data, jsonResponse.included)
+        resolve({ ...jsonResponse, data: transformedOrder })
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  )
 }
 
 export async function fetchUserOrders(dispatch, getState, reqData) {
@@ -68,7 +89,7 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
   const accessToken = getAccessToken(state)
   const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_v2_userorders_web_enabled')(dispatch, getState)
 
-  // Temporary feature flag until we complete the migration
+  // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
   if (!useOrderApiV2) {
     // eslint-disable-next-line import/no-named-as-default-member
     return userApiV1.fetchUserOrders(accessToken, reqData)
@@ -83,8 +104,8 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
     headers: {...headers, Authorization: `Bearer ${accessToken}`},
   }).then((response) => response.json() )
     .then((jsonResponse) => {
-      const fromV2 = jsonResponse?.data.map(d => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
-      resolve({ ...jsonResponse, data: fromV2.reverse() })
+      const transformedOrder = jsonResponse?.data.map(d => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
+      resolve({ ...jsonResponse, data: transformedOrder.reverse() })
     })
     .catch((error) => {
       reject(error)

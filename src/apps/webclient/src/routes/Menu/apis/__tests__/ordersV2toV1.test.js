@@ -1,10 +1,10 @@
-import { OrdersMockV2 } from '../mock/ordersV2.mock'
+import { UserOrdersMockV2 } from '../mock/ordersV2.mock'
 import { transformOrderV2ToOrderV1 } from '../ordersV2toV1'
 
 jest.mock('moment', () => jest.requireActual('moment').utc)
 
 describe('transformOrderV2ToOrderV1', () => {
-  const result = transformOrderV2ToOrderV1(OrdersMockV2.data[0], OrdersMockV2.included)
+  const result = transformOrderV2ToOrderV1(UserOrdersMockV2.data[0], UserOrdersMockV2.included)
 
   test('should transform id correctly', () => {
     expect(result.id).toEqual('1234')
@@ -312,13 +312,13 @@ describe('transformOrderV2ToOrderV1', () => {
 
   describe('when there are no prices', () => {
     const newOrder = {
-      ...OrdersMockV2.data[0],
+      ...UserOrdersMockV2.data[0],
       attributes: {
-        ...OrdersMockV2.data[0].attributes,
+        ...UserOrdersMockV2.data[0].attributes,
         prices: undefined
       }
     }
-    const newResult = transformOrderV2ToOrderV1(newOrder, OrdersMockV2.included)
+    const newResult = transformOrderV2ToOrderV1(newOrder, UserOrdersMockV2.included)
 
     test('should transform prices correctly', () => {
       expect(newResult.prices).toEqual({
@@ -344,16 +344,16 @@ describe('transformOrderV2ToOrderV1', () => {
 
   describe('when there is an original delivery day', () => {
     const newOrder = {
-      ...OrdersMockV2.data[0],
+      ...UserOrdersMockV2.data[0],
       attributes: {
-        ...OrdersMockV2.data[0].attributes,
+        ...UserOrdersMockV2.data[0].attributes,
         original_delivery_day: {
           date: '2021-04-15T00:00:00Z',
           rescheduledReason: 'run out of sellotape'
         }
       }
     }
-    const newResult = transformOrderV2ToOrderV1(newOrder, OrdersMockV2.included)
+    const newResult = transformOrderV2ToOrderV1(newOrder, UserOrdersMockV2.included)
 
     test('should transform originalDeliveryDay correctly', () => {
       expect(newResult.originalDeliveryDay).toEqual({

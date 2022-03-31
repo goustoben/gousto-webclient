@@ -2,10 +2,10 @@ import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 
 import config from 'config/routes'
-import { fetchOrder } from 'apis/orders'
 import logger from 'utils/logger'
 import { getUserOrderRecipeUuIds } from 'utils/user'
 import { basketOrderLoad } from 'actions/basket'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import { orderCheckPossibleDuplicate } from './order'
 import { getAuthUserId, getAccessToken } from '../selectors/auth'
@@ -29,7 +29,7 @@ export const orderDetails = (orderId) => (
     try {
       dispatch(productsLoadCategories())
       dispatch(productsLoadStock())
-      const { data: order } = await fetchOrder(accessToken, orderId)
+      const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId)
       const { data: menus } = await fetchSimpleMenu(accessToken, userId)
       const immutableOrderDetails = Immutable.fromJS(order)
       const orderRecipeIds = getUserOrderRecipeUuIds(immutableOrderDetails)
