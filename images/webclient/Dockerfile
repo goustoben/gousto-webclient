@@ -1,12 +1,7 @@
 FROM node:fermium-buster-slim
 
-# AWS CLI to download secrets and libcap for port 80 permission
-RUN apt-get update && apt-get install -y \
-    python2.7 \
-    python-pip \
-    libcap2-bin \
-    && rm -rf /var/lib/apt/lists/* \
-    && pip install awscli --upgrade
+# Install libcap for port 80 permission
+RUN apt-get update && apt-get install -y libcap2-bin
 
 # ALLOW KOA TO RUN ON PORT 80
 RUN setcap cap_net_bind_service=+ep /usr/local/bin/node
@@ -29,12 +24,10 @@ COPY --chown=docker:docker src/apps/webclient/config/ /home/docker/app/config/
 COPY --chown=docker:docker src/apps/webclient/public/ /home/docker/app/public/
 COPY --chown=docker:docker src/apps/webclient/process-docker.json /home/docker/app/process-docker.json
 COPY --chown=docker:docker src/apps/webclient/manifest.json /home/docker/app/manifest.json
-COPY --chown=docker:docker src/apps/webclient/ecs_start.sh /home/docker/app/ecs_start.sh
 
 USER docker
 EXPOSE 80
 WORKDIR /home/docker/app
 
 # START APPLICATION
-ENTRYPOINT ["./ecs_start.sh"]
 CMD ["pm2-runtime", "start", "process-docker.json"]
