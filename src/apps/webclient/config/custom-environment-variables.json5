@@ -6,10 +6,5 @@
   "environment_name": "npm_config_gousto_webclient_environment_name",
   "api_name": "npm_config_gousto_webclient_environment_name",
   "domain": "npm_config_gousto_webclient_domain",
-  "client_protocol": "npm_config_gousto_webclient_client_protocol",
-  // These secrets are loaded into the environment via the ecs_start.sh
-  // These secrets are read from the S3 file.
-  "outbound_core_access_key": "outbound_core_access_key",
-  "outbound_productservice_access_key": "outbound_productservice_access_key",
-  "segment_api_key": "segment_api_key"
+  "client_protocol": "npm_config_gousto_webclient_client_protocol"
 }
