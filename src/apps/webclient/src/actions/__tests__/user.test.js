@@ -125,6 +125,7 @@ jest.mock('@datadog/browser-rum', () => ({
 }))
 
 jest.mock('utils/browserEnvironment')
+jest.mock('routes/Menu/apis/orderV2')
 
 const formValues = {
   delivery: {

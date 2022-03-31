@@ -6,7 +6,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { fetchOrder } from 'apis/orders'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { get3DSCompliantToken } from 'apis/payments'
 import * as prospectApi from 'apis/prospect'
 
@@ -38,7 +38,6 @@ import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscri
 import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 import { canUseWindow } from 'utils/browserEnvironment'
 
-import { fetchUserOrders } from 'routes/Menu/apis/orderV2'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -109,7 +108,7 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
           state: orderType,
           includes: ['shipping_address']
         }
-        const { data: orders } = await fetchUserOrders(dispatch, getState, payload)
+        const { data: orders } = await orderV2.fetchUserOrders(dispatch, getState, payload)
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
           orders: orders || []
@@ -360,8 +359,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
     dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, null))
     try {
       if (forceRefresh || getState().user.get('orders').find(order => order.get('id') === orderId) === undefined) {
-        const accessToken = getState().auth.get('accessToken')
-        const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
+        const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId, 'shipping_address' )
 
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,

@@ -128,8 +128,8 @@ const getPeriod = (included: Included[]) => {
    * Example: https://staging-api.gousto.info/deliveries/v1.0/days?filters%5Bcutoff_datetime_from%5D=2021-03-30T12%3A00%3A00%2B01%3A00&filters%5Bcutoff_datetime_until%5D=2021-04-06T11%3A59%3A59%2B01%3A00&ndd=false&delivery_tariff_id=9037a447-e11a-4960-ae69-d89a029569af&sort=date&direction=asc&postcode=n11
    */
   return {
-    whenStart: period.attributes.starts_at,
-    whenCutoff: period.attributes.ends_at,
+    whenStart: period?.attributes?.starts_at,
+    whenCutoff: period?.attributes?.ends_at,
   }
 }
 

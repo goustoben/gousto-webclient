@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 
 import * as boxPricesApi from 'apis/boxPrices'
-import { fetchOrder } from 'apis/orders'
 import { fetchRecipeStock } from 'apis/recipes'
 import { getCutoffDateTime } from 'utils/deliveries'
 import { limitReached } from 'utils/basket'
@@ -13,6 +12,7 @@ import Cookies from 'utils/GoustoCookies'
 import { set, unset, get } from 'utils/cookieHelper2'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { isServer } from 'utils/serverEnvironment'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getPromoCode, getBasketOrderId, getBasketTariffId } from 'selectors/basket'
 import statusActions from './status'
@@ -231,8 +231,7 @@ export function menuLoadOrderDetails(orderId) {
     try {
       await dispatch(statusActions.pending(actionTypes.LOADING_ORDER, true))
 
-      const accessToken = getState().auth.get('accessToken')
-      const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
+      const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId, 'shipping_address')
       dispatch(basketReset())
       dispatch(menuActions.menuCutoffUntilReceive(order.shouldCutoffAt))
 

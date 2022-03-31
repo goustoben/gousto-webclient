@@ -4,7 +4,7 @@ import { safeJestMock } from '_testing/mocks'
 
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'utils/window'
-import { fetchOrder } from 'apis/orders'
+import { fetchOrder } from 'routes/Menu/apis/orderV2'
 
 import { basketOrderLoad } from 'actions/basket'
 import recipes from 'actions/recipes'
@@ -44,6 +44,8 @@ jest.mock('actions/products', () => ({
 jest.mock('actions/order', () => ({
   orderCheckPossibleDuplicate: jest.fn(),
 }))
+
+jest.mock('routes/Menu/apis/orderV2')
 
 describe('orderConfirmation actions', () => {
   const dispatch = jest.fn()

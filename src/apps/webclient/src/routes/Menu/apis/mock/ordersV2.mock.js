@@ -321,6 +321,10 @@ const included = [
   }
 ]
 
-export const OrdersMockV2 = {
+export const UserOrdersMockV2 = {
   data, included
+}
+
+export const OrderMockV2 = {
+  data: data[0], included
 }

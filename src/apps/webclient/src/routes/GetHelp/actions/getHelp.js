@@ -2,12 +2,11 @@ import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { fetchOrder } from 'apis/orders'
 import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { getAccessToken } from 'selectors/auth'
-import { fetchUserOrders } from 'routes/Menu/apis/orderV2'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { fetchRecipesWithIngredients } from '../apis/menu'
 import { getIsMultiComplaintLimitReachedLastFourWeeks, getIsBoxDailyComplaintLimitReached } from '../selectors/orderSelectors'
 import { getIsAutoAccept, getOrder, getNumOrdersChecked, getNumOrdersCompensated } from '../selectors/selectors'
@@ -52,7 +51,7 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
         state: orderType,
         includes: ['shipping_address']
       }
-      const { data: orders } = await fetchUserOrders(dispatch, getState, payload)
+      const { data: orders } = await orderV2.fetchUserOrders(dispatch, getState, payload)
 
       dispatch({
         type: actionTypes.GET_HELP_LOAD_ORDERS,
@@ -66,12 +65,9 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
   }
 )
 
-export const loadOrderById = ({ accessToken, orderId }) => async (dispatch) => {
+export const loadOrderById = ({ orderId }) => async (dispatch, getState) => {
   const getPayload = async () => {
-    const { data: order } = await fetchOrder(
-      accessToken,
-      orderId
-    )
+    const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId)
 
     return { order }
   }
@@ -92,7 +88,6 @@ export const loadOrderById = ({ accessToken, orderId }) => async (dispatch) => {
 export const loadOrderAndRecipesByIds = (orderId) => (
   async (dispatch, getState) => {
     const state = getState()
-    const accessToken = getAccessToken(state)
 
     const getPayload = async () => {
       let order = getOrder(state)
@@ -101,7 +96,7 @@ export const loadOrderAndRecipesByIds = (orderId) => (
       let { recipeItems: recipeIds, recipeUuids } = order
 
       if (recipeIds.length === 0) {
-        const response = await fetchOrder(accessToken, orderId, { include: 'shipping_address' })
+        const response = await orderV2.fetchOrder(dispatch, getState, orderId, 'shipping_address')
         // copying the object so we do not mutate test's mocked response
         order = {...response.data}
         recipeIds = order.recipeItems.map(item => item.recipeId)

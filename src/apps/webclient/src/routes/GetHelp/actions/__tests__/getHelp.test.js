@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { fetchOrder } from 'apis/orders'
 import * as getHelpApi from 'apis/getHelp'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { client as clientRoutes } from 'config/routes'
@@ -236,7 +235,7 @@ describe('GetHelp action generators and thunks', () => {
             ingredients: [],
           })
         })
-        fetchOrder.mockResolvedValueOnce(FETCH_ORDER_RESPONSE)
+        orderV2.fetchOrder.mockResolvedValueOnce(FETCH_ORDER_RESPONSE)
         fetchRecipesWithIngredients.mockResolvedValueOnce(FETCH_RECIPES_RESPONSE)
 
         await loadOrderAndRecipesByIds(ORDER_ID)(dispatch, getState)
@@ -247,7 +246,7 @@ describe('GetHelp action generators and thunks', () => {
       })
 
       test('fetchOrder is called', () => {
-        expect(fetchOrder).toHaveBeenCalled()
+        expect(orderV2.fetchOrder).toHaveBeenCalled()
       })
 
       test('fetchRecipesWithIngredients is called', () => {
@@ -295,7 +294,7 @@ describe('GetHelp action generators and thunks', () => {
       })
 
       test('fetchOrder is not called ', () => {
-        expect(fetchOrder).not.toHaveBeenCalled()
+        expect(orderV2.fetchOrder).not.toHaveBeenCalled()
       })
 
       test('fetchRecipesWithIngredients is not called', () => {
@@ -343,7 +342,7 @@ describe('GetHelp action generators and thunks', () => {
     }
 
     beforeEach(() => {
-      fetchOrder.mockResolvedValueOnce(FETCH_ORDER_RESPONSE)
+      orderV2.fetchOrder.mockResolvedValueOnce(FETCH_ORDER_RESPONSE)
       loadOrderById(PARAMS)(dispatch, getState)
     })
 
@@ -377,7 +376,7 @@ describe('GetHelp action generators and thunks', () => {
     }
 
     beforeEach(() => {
-      fetchOrder.mockRejectedValueOnce(FETCH_ORDER_ERROR)
+      orderV2.fetchOrder.mockRejectedValueOnce(FETCH_ORDER_ERROR)
     })
 
     test('returns an expected error object', async () => {
