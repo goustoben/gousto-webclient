@@ -1,4 +1,4 @@
-const { build, envName, domain, clientProtocol, runningEnv } = require('./webpack-env-vars.js')
+const { build, envName, clientProtocol, runningEnv } = require('./webpack-env-vars.js')
 
 const logBuildInfo = (isDevelopmentBuild) => console.log(`
 

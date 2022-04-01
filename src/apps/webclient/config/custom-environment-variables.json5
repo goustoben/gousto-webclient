@@ -5,6 +5,5 @@
   // These are pushed in via Docker as environment variables
   "environment_name": "npm_config_gousto_webclient_environment_name",
   "api_name": "npm_config_gousto_webclient_environment_name",
-  "domain": "npm_config_gousto_webclient_domain",
   "client_protocol": "npm_config_gousto_webclient_client_protocol"
 }

@@ -7,7 +7,6 @@ import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from
 import { push } from 'react-router-redux'
 import { redirect, documentLocation, getWindow } from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
-import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import { getUserId } from 'selectors/user'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
@@ -146,7 +145,7 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 
         const checkHostIsGousto = (path) => (path.split('.').some((host) => host === 'gousto'))
 
-        if (checkHostIsGousto(url.host) && checkHostIsGousto(globals.domain)) {
+        if (checkHostIsGousto(url.host) && checkHostIsGousto(getDomain())) {
           destination = `${url.pathname}${url.search ? url.search : ''}`
         }
       } catch (err) {

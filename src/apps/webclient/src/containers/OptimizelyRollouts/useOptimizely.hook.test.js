@@ -21,12 +21,6 @@ jest.mock('react-redux', () => ({
 }))
 jest.mock('utils/cookieHelper2')
 jest.mock('./trackExperimentInSnowplow')
-jest.mock('config/globals', () => ({
-  __esModule: true,
-  default: {
-    client: true,
-  },
-}))
 
 describe('useOptimizely', () => {
   let state = {}

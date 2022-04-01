@@ -4,7 +4,6 @@
   "build": "development",
   "environment_name": "local",
   "api_name": "local",
-  "domain": "gousto.local",
   "client_dev_server_enabled": false,
   "client_protocol": "http",
   "running_env": "local"

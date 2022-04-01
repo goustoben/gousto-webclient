@@ -5,7 +5,6 @@ import { cookieString } from '../cookieString'
 
 jest.mock('utils/browserEnvironment')
 jest.mock('utils/serverEnvironment')
-jest.mock('config/globals')
 
 const mockCanUseWindow = canUseWindow as jest.Mock
 const mockIsServer = isServer as jest.Mock
