@@ -1,6 +1,10 @@
 # @library/babel
 
-This module exists to support importing base configuration and addons for Babel into standalone modules. This is so we can run any dev scripts that require transpilation in isolation from the rest of the application. Dev scripts may include starting Storybook or running module-specific Jest tests.
+This module exists to support importing base configuration and addons for Babel into standalone modules. This is so we
+can run any dev scripts that require transpilation in isolation from the rest of the application, such as
+
+- Storybook
+- module-specific Jest tests
 
 ## Usage
 
@@ -37,7 +41,5 @@ module.exports = {
 
 ## Updating
 
-This shared Babel module is owned by Front-End Foundations. Please raise any changes through our squads slack channel: #squad-frontend-foundations
-
-
-
+This shared Babel module is owned by Front-End Foundations. Please raise any changes through our squad's Slack
+channel: #squad-frontend-foundations

@@ -5,6 +5,6 @@
   ],
   // "files" overrides top-level excludes
   "files": [
-    "./node_modules/@library/import-types/index.d.ts"
+    "./node_modules/@library/nonjs-imports/index.d.ts"
   ]
 }
