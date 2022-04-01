@@ -20,7 +20,6 @@ import { Title } from '../../Title'
 import css from './BoxSummaryMobileBanner.css'
 import { ExpandBoxSummaryButtonContainer } from '../Desktop/ExpandBoxSummaryButtonContainer'
 import { boxSummaryBannerPropTypes } from '../propTypes'
-import { useBasketRequiredFeatureEnabled } from '../../../../hooks/useBasketRequiredFeatureEnabled'
 
 const BoxSummaryMobileBanner = ({
   showBrowseCTA,
@@ -32,33 +31,25 @@ const BoxSummaryMobileBanner = ({
   date,
   deliveryDays,
   slotId,
-  isBoxSummaryOpened,
   onExpandClick,
   expandWarning,
   numRecipes,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
-
-  const handleMobileClick = () => {
-    openDetails()
-  }
-
   const slotTime = getSlotTimes({ date, deliveryDays, slotId })
-
-  const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
 
   return (
     <div
       className={classNames(css.barmobile, {
-        [css.hideBanner]: isBoxSummaryOpened && isBasketRequiredFeatureEnabled,
         [css.isSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled,
       })}
-      onClick={isBasketRequiredFeatureEnabled ? null : handleMobileClick}
+      onClick={openDetails}
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
+      role="button"
     >
       <div>
-        {!isBasketRequiredFeatureEnabled && <OpenBoxButton isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled} />}
+        <OpenBoxButton isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled} />
         {!isSimplifyBasketBarEnabled && (
           <Title
             view={MOBILE_VIEW}

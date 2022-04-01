@@ -5,11 +5,9 @@ import { useSelector } from 'react-redux'
 import Overlay from 'Overlay'
 import { MOBILE_VIEW } from 'utils/view'
 import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
-import { DetailsCTAGroup } from '../../Details/DetailsCTAGroup/DetailsCTAGroup'
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
 import css from './BoxSummaryOverlayMobile.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
-import { useBasketRequiredFeatureEnabled } from '../../../../hooks/useBasketRequiredFeatureEnabled'
 
 const BoxSummaryOverlayMobile = ({
   onCloseClick,
@@ -20,10 +18,9 @@ const BoxSummaryOverlayMobile = ({
   numPortions,
   shouldDisplayFullScreenBoxSummary,
 }) => {
-  const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
 
-  const classNameToApply = shouldDisplayFullScreenBoxSummary || isBasketRequiredFeatureEnabled
+  const classNameToApply = shouldDisplayFullScreenBoxSummary
     ? css.fullScreen
     : classNames(css.mobileOverlay, {[css.mobileOverlayIsSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled})
 
@@ -52,10 +49,6 @@ const BoxSummaryOverlayMobile = ({
             numPortions={numPortions}
           />
         </div>
-        <DetailsCTAGroup
-          boxDetailsVisibilityChange={onToggleVisibility}
-          isBasketRequiredFeatureEnabled={isBasketRequiredFeatureEnabled}
-        />
       </div>
     </Overlay>
   )
