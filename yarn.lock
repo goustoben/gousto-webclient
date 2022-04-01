@@ -2140,7 +2140,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@features/recipe-tile@workspace:src/modules/features/recipe-tile"
   dependencies:
-    "@library/import-types": "workspace:*"
+    "@library/nonjs-imports": "workspace:*"
     "@testing-library/react": 12.1.2
     "@testing-library/react-hooks": ^3.4.2
     react-test-renderer: 16.13.1
@@ -2666,9 +2666,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@library/import-types@workspace:*, @library/import-types@workspace:src/modules/library/import-types":
+"@library/nonjs-imports@workspace:*, @library/nonjs-imports@workspace:src/modules/library/nonjs-imports":
   version: 0.0.0-use.local
-  resolution: "@library/import-types@workspace:src/modules/library/import-types"
+  resolution: "@library/nonjs-imports@workspace:src/modules/library/nonjs-imports"
   languageName: unknown
   linkType: soft
 
