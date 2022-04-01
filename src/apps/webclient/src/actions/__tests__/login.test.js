@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import globals from 'config/globals'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import loginActions, { helpPreLoginVisibilityChange, loginRedirect } from 'actions/login'
@@ -12,7 +11,7 @@ import statusActions from '../status'
 import authActions from '../auth'
 
 jest.mock('utils/browserEnvironment')
-jest.mock('config/globals')
+jest.mock('utils/isomorphicEnvironment')
 jest.mock('containers/OptimizelyRollouts/optimizelyUtils')
 
 jest.mock('actions/user')
@@ -71,7 +70,6 @@ describe('login actions', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      globals.domain = HOST_PRODUCTION
       authActions.authAuthenticate.mockReturnValue(null)
       authActions.authIdentify.mockReturnValue(null)
       getState.mockReturnValue({
@@ -80,6 +78,7 @@ describe('login actions', () => {
         request: requestState
       })
       isActive.mockReturnValue(true)
+      getDomain.mockReturnValue('gousto.co.uk')
     })
 
     it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /menu, no redirect', async () => {
@@ -169,8 +168,6 @@ describe('login actions', () => {
             search: `?target=http://${HOST_LOCAL}/my-gousto`,
             slashes: true,
           })
-
-          globals.domain = HOST_LOCAL
         })
 
         it('should redirect user to the targeted URL', async () => {
@@ -187,8 +184,6 @@ describe('login actions', () => {
             search: `?target=http://${HOST_STAGING}/my-gousto`,
             slashes: true,
           })
-
-          globals.domain = HOST_STAGING
         })
 
         it('should redirect user to the targeted URL', async () => {
@@ -199,10 +194,6 @@ describe('login actions', () => {
     })
 
     describe('and redirect url does not match with global __DOMAIN__', () => {
-      beforeEach(() => {
-        globals.domain = HOST_PRODUCTION
-      })
-
       describe('user is under /menu', () => {
         beforeEach(() => {
           documentLocation.mockReturnValueOnce({

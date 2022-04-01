@@ -23,13 +23,12 @@ describe('media.js', () => {
     })
 
     test.each([
-      ['production', 'gousto.co.uk', `https://production-assets.gousto.co.uk${ASSET_PATH}`],
-      ['staging', 'gousto.info', `https://staging-assets.gousto.info${ASSET_PATH}`],
-      ['fef', undefined, `https://s3-gousto-fef-assets.s3.amazonaws.com${ASSET_PATH}`],
-      ['local', undefined, ASSET_PATH],
-    ])('getEnvConfig contains the correct values', (serverEnvironment, domain, expected) => {
+      ['production', `https://production-assets.gousto.co.uk${ASSET_PATH}`],
+      ['staging', `https://staging-assets.gousto.info${ASSET_PATH}`],
+      ['fef', `https://s3-gousto-fef-assets.s3.amazonaws.com${ASSET_PATH}`],
+      ['local', ASSET_PATH],
+    ])('getAssetRootUrl contains the correct values', (serverEnvironment, expected) => {
       process.env = {
-        DOMAIN: domain,
         ENVIRONMENT: serverEnvironment,
       }
 

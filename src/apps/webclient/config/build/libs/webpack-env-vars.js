@@ -3,7 +3,6 @@ const nodeConfig = require('node-config')
 const build = nodeConfig.get('build')
 const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 const clientProtocol = nodeConfig.get('client_protocol')
-const domain = nodeConfig.get('domain')
 const envName = nodeConfig.get('environment_name')
 const runningEnv = nodeConfig.get('running_env')
 
@@ -37,7 +36,6 @@ module.exports = {
   build,
   clientDevServerEnabled,
   clientProtocol,
-  domain,
   envName,
   runningEnv,
   publicPath,
