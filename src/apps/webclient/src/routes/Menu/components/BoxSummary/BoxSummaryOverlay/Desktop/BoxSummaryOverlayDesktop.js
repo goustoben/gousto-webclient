@@ -2,11 +2,9 @@ import React from 'react'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
-import { DetailsCTAGroup } from '../../Details/DetailsCTAGroup/DetailsCTAGroup'
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
 import css from './BoxSummaryOverlayDesktop.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
-import { useBasketRequiredFeatureEnabled } from '../../../../hooks/useBasketRequiredFeatureEnabled'
 
 const BoxSummaryOverlayDesktop = ({
   onCloseClick,
@@ -17,7 +15,6 @@ const BoxSummaryOverlayDesktop = ({
   numPortions,
   orderSaveError,
 }) => {
-  const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
 
   return (
@@ -26,7 +23,6 @@ const BoxSummaryOverlayDesktop = ({
         className={classNames(css.detailContainerDesktop, {
           [css.detailContainerDesktopVariant]: isSimplifyBasketBarEnabled,
           [css.detailContainerDesktopShow]: showDetails,
-          [css.isBasketRequiredFeatureEnabled]: isBasketRequiredFeatureEnabled,
         })}
         data-testing="boxSummaryDesktop"
       >
@@ -48,10 +44,6 @@ const BoxSummaryOverlayDesktop = ({
             view="desktop"
           />
         </div>
-        <DetailsCTAGroup
-          boxDetailsVisibilityChange={onToggleVisibility}
-          isBasketRequiredFeatureEnabled={isBasketRequiredFeatureEnabled}
-        />
       </div>
     </div>
   )

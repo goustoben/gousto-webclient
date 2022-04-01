@@ -3,14 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import { RecipeList } from './RecipeList'
-import { useBasketRequiredFeatureEnabled } from '../../../hooks/useBasketRequiredFeatureEnabled'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }))
-jest.mock('../../../hooks/useBasketRequiredFeatureEnabled')
 
 describe('<RecipeList />', () => {
   let wrapper
@@ -32,7 +30,6 @@ describe('<RecipeList />', () => {
   beforeEach(() => {
     useSelector.mockReturnValue(true)
     useDispatch.mockReturnValue(() => {})
-    useBasketRequiredFeatureEnabled.mockReturnValue(false)
   })
 
   describe('RecipeList renders with 3 recipes already selected', () => {

@@ -4,11 +4,11 @@ import Immutable from 'immutable'
 
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
+import { EscapeKeyPressed } from 'utils/DOMEvents'
 
 import css from './BoxSummary.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
-import { EscapeKeyPressed } from '../../../../utils/DOMEvents'
 
 class BoxSummary extends React.PureComponent {
   // eslint-disable-next-line react/static-property-placement
@@ -98,9 +98,9 @@ class BoxSummary extends React.PureComponent {
     }
   }
 
-  open = (isBasketRequiredFeatureEnabled) => {
+  open = () => {
     const { boxDetailsVisibilityChange } = this.props
-    boxDetailsVisibilityChange(true, isBasketRequiredFeatureEnabled)
+    boxDetailsVisibilityChange(true)
   }
 
   close = () => {
@@ -109,12 +109,12 @@ class BoxSummary extends React.PureComponent {
     basketRestorePreviousValues()
   }
 
-  toggle = (isBasketRequiredFeatureEnabled) => {
+  toggle = () => {
     const { showDetails, pricingPending } = this.props
     const show = !showDetails && !pricingPending
 
     if (show) {
-      this.open(isBasketRequiredFeatureEnabled)
+      this.open()
     } else {
       this.close()
     }

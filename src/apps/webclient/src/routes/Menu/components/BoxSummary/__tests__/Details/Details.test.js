@@ -4,9 +4,6 @@ import Immutable from 'immutable'
 import { LayoutContentWrapper } from 'goustouicomponents'
 import { Details } from '../../Details/Details'
 import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
-import {useBasketRequiredFeatureEnabled} from '../../../../hooks/useBasketRequiredFeatureEnabled'
-
-jest.mock('../../../../hooks/useBasketRequiredFeatureEnabled')
 jest.mock('../../BannerButton/Checkout', () => ({
   CheckoutContainer: 'CheckoutContainer'
 }))
@@ -73,7 +70,6 @@ describe('Details', () => {
       onRemove: () => {},
       view: 'mobile',
       checkoutBasket: () => {},
-      isBasketRequiredFeatureEnabled: false
     }
 
     const getCheckoutButtonWrapper = () => (
@@ -83,7 +79,6 @@ describe('Details', () => {
 
     beforeEach(() => {
       wrapper = shallow(<Details {...props} />)
-      useBasketRequiredFeatureEnabled.mockReturnValue(false)
     })
 
     test('should render BoxProgressAlert', () => {

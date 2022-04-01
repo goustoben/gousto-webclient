@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import { useSelector } from 'react-redux'
 import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
-import { useBasketRequiredFeatureEnabled } from 'routes/Menu/hooks/useBasketRequiredFeatureEnabled'
 import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import css from './Checkout.css'
@@ -26,13 +25,10 @@ const Checkout = (props) => {
     checkoutBasket,
     loadingOrderPending,
     menuFetchData,
-    toggleBasketView,
-    isBoxSummaryOpened,
     isButtonHovered,
     shouldRenderCounter,
   } = props
   const { pricing } = usePricing()
-  const isBasketRequiredFeatureEnabled = useBasketRequiredFeatureEnabled()
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
   const isPending =
     checkoutPending ||
@@ -51,17 +47,7 @@ const Checkout = (props) => {
     checkoutBasket({ section, view, pricing })
   }, [checkoutBasket, section, view, pricing])
 
-  return isBasketRequiredFeatureEnabled ? (
-    <BaseBannerButton
-      view={view}
-      dataTesting="viewBasketCTA"
-      onClick={() => toggleBasketView(true)}
-      pending={isPending}
-      color={isBoxSummaryOpened ? 'secondary' : 'primary'}
-    >
-      {isBoxSummaryOpened ? 'Close basket' : 'View basket'}
-    </BaseBannerButton>
-  ) : (
+  return (
     <BaseBannerButton
       view={view}
       dataTesting="boxSummaryButton"
@@ -78,7 +64,7 @@ const Checkout = (props) => {
         <>
           <div className={css.checkoutLabel}>Checkout</div>
           {shouldRenderCounter && (
-            <CheckoutCounter isDisabled={isDisabled} isButtonHovered={isButtonHovered} numRecipes={numRecipes} />
+          <CheckoutCounter isDisabled={isDisabled} isButtonHovered={isButtonHovered} numRecipes={numRecipes} />
           )}
         </>
       ) : (
@@ -102,8 +88,6 @@ Checkout.propTypes = {
   pricingPending: PropTypes.bool,
   orderSavePending: PropTypes.bool,
   basketPreviewOrderChangePending: PropTypes.bool,
-  toggleBasketView: PropTypes.func,
-  isBoxSummaryOpened: PropTypes.bool,
   isButtonHovered: PropTypes.bool,
   shouldRenderCounter: PropTypes.bool,
 }
@@ -116,8 +100,6 @@ Checkout.defaultProps = {
   orderSavePending: false,
   recipes: Immutable.Map({}),
   basketPreviewOrderChangePending: false,
-  toggleBasketView: () => {},
-  isBoxSummaryOpened: false,
   isButtonHovered: false,
   shouldRenderCounter: false,
 }
