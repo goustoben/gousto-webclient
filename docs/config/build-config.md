@@ -86,13 +86,7 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
 
 ```JSON5
 {
-  "api_name": "",
-  "build": "",
-  "client_dev_server_enabled": false,
-  "domain": "",
-  "environment_name": "",
-  "recaptcha_referral_public_key": "",
-  "running_env": ""
+  "environment_name": ""
 }
 ```
 
@@ -134,13 +128,5 @@ Used as a key (`list['local] vs list['production']`) for optimizely configuratio
 More often used as a value to drive conditional logic, i.e. for logging.
 
 Referenced ~20 files.
-
-running_env
------------
-```
-    string: live | local
-```
-(Aliased by `__RUNNING_ENV__`, `runningEnv` in the code).
-
 
 See the ADR on [Configuration](./decisions/0001-configuration.md)

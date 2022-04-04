@@ -4,13 +4,11 @@ const build = nodeConfig.get('build')
 const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
 
 const envName = nodeConfig.get('environment_name')
-const runningEnv = nodeConfig.get('running_env')
 
 const publicPath = '/build/latest/'
 
 const webpackEnvVarsBase = {
   __ENV__: JSON.stringify(envName),
-  __RUNNING_ENV__: JSON.stringify(runningEnv),
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
 
@@ -35,6 +33,5 @@ module.exports = {
   build,
   clientDevServerEnabled,
   envName,
-  runningEnv,
   publicPath,
 }

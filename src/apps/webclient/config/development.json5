@@ -1,4 +1,3 @@
 {
-  "api_name": "staging",
-  "running_env": "live",
+  "api_name": "staging"
 }

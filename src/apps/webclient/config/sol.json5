@@ -1,4 +1,3 @@
 {
-  api_name: 'sol',
-  running_env: 'live'
+  api_name: 'sol'
 }
