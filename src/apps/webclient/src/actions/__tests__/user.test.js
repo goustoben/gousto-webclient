@@ -420,24 +420,24 @@ describe('user actions', () => {
           test('Then new customer should be tracked', async () => {
             await userSubscribe({ pricing })(dispatch, getState)
 
-            expect(dispatch).toHaveBeenNthCalledWith(2, {
+            expect(dispatch).toHaveBeenNthCalledWith(1, {
               type: actionTypes.ERROR,
               key: actionTypes.USER_SUBSCRIBE,
               value: null
             })
 
-            expect(dispatch).toHaveBeenNthCalledWith(3, {
+            expect(dispatch).toHaveBeenNthCalledWith(2, {
               type: actionTypes.PENDING,
               key: actionTypes.USER_SUBSCRIBE,
               value: true
             })
 
             expect(trackNewUser).toHaveBeenCalledWith('22')
-            expect(dispatch).toHaveBeenNthCalledWith(4, {
+            expect(dispatch).toHaveBeenNthCalledWith(3, {
               action: 'track_new_user'
             })
 
-            expect(dispatch).toHaveBeenNthCalledWith(5, {
+            expect(dispatch).toHaveBeenNthCalledWith(4, {
               type: actionTypes.CHECKOUT_ORDER_PLACED,
               trackingData: {
                 actionType: placeOrder,
@@ -451,12 +451,12 @@ describe('user actions', () => {
             })
 
             expect(trackFirstPurchase).toHaveBeenCalledWith('12345', pricing)
-            expect(dispatch).toHaveBeenNthCalledWith(6, {
+            expect(dispatch).toHaveBeenNthCalledWith(5, {
               action: 'track_first_purchase'
             })
 
             expect(trackNewOrder).toHaveBeenCalledWith('12345', '22')
-            expect(dispatch).toHaveBeenNthCalledWith(7, {
+            expect(dispatch).toHaveBeenNthCalledWith(6, {
               action: 'track_new_order'
             })
           })
