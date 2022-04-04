@@ -1,17 +1,13 @@
-import { createIsomorphicConfig, getEnvironment, getDomain } from 'utils/isomorphicEnvironment'
-import { getServerEnvironment, getServerDomain } from '../../../server/utils/serverEnvironment'
-import { getClientEnvironment, getDomain as getClientDomain} from '../browserEnvironment'
+import { createIsomorphicConfig, getEnvironment, getDomain, getProtocol } from 'utils/isomorphicEnvironment'
+import { getServerEnvironment, getServerDomain, getServerProtocol } from '../../../server/utils/serverEnvironment'
+import { getClientEnvironment, getDomain as getClientDomain, getClientProtocol} from '../browserEnvironment'
 
-jest.mock('../../../server/utils/serverEnvironment',
-  // () => ({
-  //   ...jest.requireActual('../browserEnvironment'),
-  //   getServerDomain: jest.fn()
-  // })
-)
+jest.mock('../../../server/utils/serverEnvironment')
 jest.mock('../browserEnvironment', () => ({
   ...jest.requireActual('../browserEnvironment'),
   getClientEnvironment: jest.fn(),
   getDomain: jest.fn(),
+  getClientProtocol: jest.fn()
 }))
 
 const mockGetServerEnvironment = getServerEnvironment as jest.Mock
@@ -139,6 +135,34 @@ describe('isomorphicEnvironment utils', () => {
       (getServerDomain as jest.Mock).mockReturnValue(stubDomainResponse)
 
       expect(getDomain()).toEqual(stubDomainResponse)
+    })
+  })
+
+  describe('getProtocol', () => {
+    it('should call the getClientProtocol when running on the client', () => {
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => null,
+        },
+      })
+
+      const stubProtocolValue = 'stubProtocolValue:http';
+      (getClientProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+
+      expect(getProtocol()).toEqual(stubProtocolValue)
+    })
+
+    it('should call the getServerProtocol when running on the server', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
+
+      const stubProtocolValue = 'stubProtocolValue:https';
+      (getServerProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+
+      expect(getProtocol()).toEqual(stubProtocolValue)
     })
   })
 })

@@ -89,7 +89,6 @@ The build overrides the default configuration by using the `NODE_ENV` (NODE_CONF
   "api_name": "",
   "build": "",
   "client_dev_server_enabled": false,
-  "client_protocol": "",
   "domain": "",
   "environment_name": "",
   "recaptcha_referral_public_key": "",
@@ -110,17 +109,6 @@ client_dev_server_enabled
     boolean: true | false
 ```
 Not used in the code. (Can be removed)
-
-client_protocol
----------------
-```
-    string: http | https
-```
-(Aliased by `__CLIENT_PROTOCOL__`, `clientProtocol` in the code).
-
-HTTP protocol used when building urls, for calls out to the internet.
-
-Referenced in `src/src/utils/media.js`, `src/src/routes/Menu/fetchData/fetchData.js`, `src/src/actions/login.js`
 
 domain
 ------

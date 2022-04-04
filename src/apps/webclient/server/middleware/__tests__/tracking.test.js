@@ -1,6 +1,9 @@
+import { getProtocol } from 'utils/isomorphicEnvironment'
 jest.mock('uuid', () => ({
   v4: () => 'generated-uuid'
 }))
+
+jest.mock('utils/isomorphicEnvironment')
 
 const { sessionMiddleware } = require('../tracking')
 
@@ -14,6 +17,8 @@ describe('tracking', () => {
         get: jest.fn(),
         set: jest.fn(),
       }
+
+      getProtocol.mockReturnValue('https:')
 
       next = jest.fn()
     })

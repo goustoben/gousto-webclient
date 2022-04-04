@@ -8,23 +8,22 @@ import { Facebook } from 'Helmet/Facebook'
 import { OpenGraph } from 'Helmet/OpenGraph'
 import { Twitter } from 'Helmet/Twitter'
 import { SiteVerification } from 'Helmet/SiteVerification'
-
+import { getProtocol } from 'utils/isomorphicEnvironment'
 import templateConfig from 'config/template'
-import globals from 'config/globals'
 import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 
-describe('Helmet GoustoHelmet', () => {
-  let protocol
+jest.mock('utils/isomorphicEnvironment')
 
+describe('Helmet GoustoHelmet', () => {
   // mock the environment and domain config used by these tests to generate endpoints
   withMockEnvironmentAndDomain('local', '<domain>')
 
   beforeEach(() => {
-    protocol = sinon.stub(globals, 'protocol').get(() => '<protocol>')
+    getProtocol.mockReturnValue('<protocol>:')
   })
 
   afterEach(() => {
-    protocol.restore()
+    getProtocol.mockRestore()
   })
 
   test('should return 1 span by default', () => {
@@ -86,7 +85,7 @@ describe('Helmet GoustoHelmet', () => {
         fbAdmins: ['admin1id', 'admin2id'],
         domainVerification: '1111',
       }))
-      wrapper = shallow(<GoustoHelmet />)
+      wrapper = shallow(<GoustoHelmet requestUrl="/test/url" />)
     })
 
     afterEach(() => {

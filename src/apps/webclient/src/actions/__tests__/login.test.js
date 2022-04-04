@@ -6,12 +6,11 @@ import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { getDomain } from 'utils/isomorphicEnvironment'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import statusActions from '../status'
 import authActions from '../auth'
 
 jest.mock('utils/browserEnvironment')
-jest.mock('utils/isomorphicEnvironment')
 jest.mock('containers/OptimizelyRollouts/optimizelyUtils')
 
 jest.mock('actions/user')
@@ -50,6 +49,8 @@ const HOST_STAGING = 'staging-frontend.gousto.info'
 const HOST_PRODUCTION = 'gousto.co.uk'
 
 describe('login actions', () => {
+  withMockEnvironmentAndDomain('staging', 'gousto.info')
+
   beforeEach(() => {
     canUseWindow.mockReturnValue(false)
   })
@@ -78,7 +79,6 @@ describe('login actions', () => {
         request: requestState
       })
       isActive.mockReturnValue(true)
-      getDomain.mockReturnValue('gousto.co.uk')
     })
 
     it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /menu, no redirect', async () => {
@@ -357,6 +357,10 @@ describe('login actions', () => {
         dispatch = jest.fn()
       })
 
+      afterEach(() => {
+        dispatch.mockRestore()
+      })
+
       describe('Given the action is called with visibility true', () => {
         beforeEach(() => {
           helpPreLoginVisibilityChange(true)(dispatch)
@@ -364,7 +368,7 @@ describe('login actions', () => {
 
         test('the query parameter target is set to the Help Centre URL', () => {
           const { helpCentre } = client
-          const helpCentreURL = `${__CLIENT_PROTOCOL__}://${getDomain()}${helpCentre}`
+          const helpCentreURL = `https://gousto.info${helpCentre}`
           const search = `?target=${encodeURIComponent(helpCentreURL)}`
           const serialisedQueryStringObject = JSON.stringify({ search })
           expect(dispatch).toHaveBeenCalledWith(`${serialisedQueryStringObject} pushed`)

@@ -1,7 +1,8 @@
-import sinon from 'sinon'
-
-import globals from 'config/globals'
+import { getProtocol } from 'utils/isomorphicEnvironment'
 import Cookies from 'cookies-js'
+
+jest.mock('utils/isomorphicEnvironment')
+
 Cookies.defaults = {
   ...Cookies.defaults,
   somethingElse: 'set',
@@ -9,25 +10,19 @@ Cookies.defaults = {
 
 describe('GoustoCookies', () => {
   let GoustoCookies
-  let globalsStub
 
   beforeEach(() => {
-    globalsStub = sinon.stub(globals, 'secure').get(() => true)
-
+    getProtocol.mockReturnValue(true)
     // eslint-disable-next-line global-require
     GoustoCookies = require('utils/GoustoCookies').default
   })
 
   afterEach(() => {
-    globalsStub.reset()
+    getProtocol.mockReset()
   })
 
   test('should return Cookies', () => {
     expect(GoustoCookies).toEqual(Cookies)
-  })
-
-  test('should set defaults.secure to correct value from config', () => {
-    expect(GoustoCookies.defaults.secure).toEqual(true)
   })
 
   test('should set defaults.path to "/"', () => {

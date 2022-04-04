@@ -1,5 +1,9 @@
 import { getEnvConfig } from "utils/processEnv";
-import { ENVIRONMENT_NAMES, SERVICE_DOMAINS } from "config/service-environment/service-environment.types";
+import {
+  ENVIRONMENT_NAMES,
+  PROTOCOL_PREFIX,
+  SERVICE_DOMAINS
+} from "config/service-environment/service-environment.types";
 
 /**
  * Environment config getter for SERVER side environment
@@ -36,4 +40,7 @@ export const getServerDomain = (
   }
 }
 
-export const isDevServer = () => getServerEnvironment() === ENVIRONMENT_NAMES.local
+const isLocalEnvironment = () => getServerEnvironment() === ENVIRONMENT_NAMES.local
+
+export const getServerProtocol = () => (isLocalEnvironment() ? PROTOCOL_PREFIX.HTTP : PROTOCOL_PREFIX.HTTPS)
+

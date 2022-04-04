@@ -1,5 +1,5 @@
 import { getEnvConfig } from '../../../src/utils/processEnv'
-import { getServerEnvironment, getServerDomain } from '../serverEnvironment'
+import { getServerEnvironment, getServerDomain, getServerProtocol } from "../serverEnvironment";
 
 jest.mock('../../../src/utils/processEnv')
 
@@ -44,6 +44,29 @@ describe('serverEnvironment', () => {
       expect(getServerDomain()).toEqual('gousto.info');
       (getEnvConfig as jest.Mock).mockReturnValue({ ENVIRONMENT: 'fef' })
       expect(getServerDomain()).toEqual('gousto.info')
+    })
+  })
+
+  describe('getServerProtocol', () => {
+    it('should use ENVIRONMENT to infer the specified protocol for local', () => {
+      (getEnvConfig as jest.Mock).mockReturnValue({ ENVIRONMENT: 'local' })
+
+      expect(getServerProtocol()).toEqual('http:')
+    })
+
+    it('should use ENVIRONMENT to infer the specified protocol for production', () => {
+      (getEnvConfig as jest.Mock).mockReturnValue({ ENVIRONMENT: 'production' })
+      expect(getServerProtocol()).toEqual('https:')
+    })
+
+    it('should use ENVIRONMENT to infer the specified protocol for staging', () => {
+      (getEnvConfig as jest.Mock).mockReturnValue({ ENVIRONMENT: 'staging' })
+      expect(getServerProtocol()).toEqual('https:')
+    })
+
+    it('should use ENVIRONMENT to infer the specified protocol for lower environments', () => {
+      (getEnvConfig as jest.Mock).mockReturnValue({ ENVIRONMENT: 'jalapenos' })
+      expect(getServerProtocol()).toEqual('https:')
     })
   })
 })

@@ -3,6 +3,8 @@ import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 import { validateProcessEnv } from 'utils/processEnv'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
+import { getProtocol } from '../src/utils/isomorphicEnvironment'
+import { PROTOCOL_PREFIX } from '../src/config/service-environment/service-environment.types'
 
 configureDDTracer()
 
@@ -20,7 +22,6 @@ const path = require('path')
 const koaWebpack = require('koa-webpack')
 const app = new Koa()
 
-const globals = require('config/globals')
 const MainLayout = require('layouts/MainLayout').default
 const ErrorPage = require('components/ErrorPage').default
 const Page = require('containers/Page').default
@@ -97,7 +98,7 @@ app.use(async (ctx, next) => {
   }
   try {
     // Make cookies secure
-    ctx.cookies.secure = globals.secure
+    ctx.cookies.secure = (getProtocol() === PROTOCOL_PREFIX.HTTPS)
     ctx.cookies.path = '/'
 
     await next()

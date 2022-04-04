@@ -263,7 +263,6 @@ module.exports = {
     window: true,
     __DEV__: false,
     __ENV__: false,
-    __CLIENT_PROTOCOL__: false,
     ga: false,
     hj: true,
     after: true,
