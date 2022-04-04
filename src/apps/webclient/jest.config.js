@@ -46,7 +46,6 @@ module.exports = {
   ],
   globals: {
     __DEV__: false,
-    __CLIENT_PROTOCOL__: 'https',
     __CHECKOUT_PK__: '',
     __ENV__: 'production',
     __RUNNING_ENV__: 'live',

@@ -111,7 +111,7 @@ describe('Home', () => {
       test('should put a canonical tag in the url', () => {
         expect(wrapper.find(Helmet).first().prop('link')).toEqual([
           {
-            href: 'https://www.gousto.local/',
+            href: 'http://www.gousto.local/',
             rel: 'canonical',
           },
         ])

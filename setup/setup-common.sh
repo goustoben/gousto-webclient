@@ -6,4 +6,4 @@ cd src
 
 # isomorphic: variables
 npm config set gousto_webclient_environment_name "${ENVIRONMENT}"
-npm config set gousto_webclient_client_protocol "https"
+

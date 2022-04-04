@@ -1,10 +1,11 @@
 import Cookies from 'cookies-js'
-import globals from 'config/globals'
+import { getProtocol } from 'utils/isomorphicEnvironment'
+import { PROTOCOL_PREFIX } from 'config/service-environment/service-environment.types'
 
 Cookies.defaults = {
   ...Cookies.defaults,
   path: '/',
-  secure: globals.secure,
+  secure: (getProtocol() === PROTOCOL_PREFIX.HTTPS),
 }
 
 export default Cookies

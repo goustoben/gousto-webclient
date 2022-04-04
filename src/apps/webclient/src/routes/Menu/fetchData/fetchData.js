@@ -2,7 +2,7 @@ import moment from 'moment'
 import now from 'performance-now'
 import actions from 'actions'
 import logger from 'utils/logger'
-import { getDomain, isDev } from 'utils/isomorphicEnvironment'
+import { getProtocol, isDev, getDomain } from 'utils/isomorphicEnvironment'
 import { actionTypes } from 'actions/actionTypes'
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'
@@ -97,7 +97,7 @@ const loadOrder = (orderId) => async (dispatch, getState) => {
       logger.notice({ message: `Unauthenticated user trying to edit: ${orderId}` })
     }
 
-    await dispatch(actions.redirect(`/menu?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${getDomain()}/menu/${orderId}`)}#login`, true))
+    await dispatch(actions.redirect(`/menu?target=${encodeURIComponent(`${getProtocol()}//${getDomain()}/menu/${orderId}`)}#login`, true))
   }
 }
 

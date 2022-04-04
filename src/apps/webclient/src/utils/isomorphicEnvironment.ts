@@ -1,11 +1,13 @@
 import {
   canUseWindow,
   getClientEnvironment,
-  getDomain as getClientDomain,
+  getClientProtocol,
+  getDomain as getClientDomain
 } from './browserEnvironment'
 import {
   getServerEnvironment,
   getServerDomain,
+  getServerProtocol
 } from '../../server/utils/serverEnvironment'
 
 type CreateIsomorphicConfig<T> = {
@@ -50,6 +52,11 @@ export const getEnvironment = createIsomorphicConfig({
 export const getDomain = createIsomorphicConfig({
   browserConfigFn: getClientDomain,
   serverConfigFn: getServerDomain,
+})
+
+export const getProtocol = createIsomorphicConfig({
+  browserConfigFn: getClientProtocol,
+  serverConfigFn: getServerProtocol,
 })
 
 export const isProd = () => getEnvironment() === 'production'
