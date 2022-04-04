@@ -3,7 +3,5 @@
 {
   "build": "development",
   "environment_name": "local",
-  "api_name": "local",
-  "client_dev_server_enabled": false,
-  "running_env": "local"
+  "api_name": "local"
 }

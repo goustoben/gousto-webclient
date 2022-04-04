@@ -356,9 +356,6 @@ jobs:
       - attach_workspace:
           at: /
       - run:
-          name: Create minimal config file
-          command: 'echo "{\"running_env\": \"local\"}" > src/apps/webclient/config/development-local.json5'
-      - run:
           name: Set env file
           command: mv src/apps/webclient/server/.env.regression src/apps/webclient/server/.env
       - run:

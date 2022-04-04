@@ -1,4 +1,3 @@
 {
-  "api_name": "production",
-  "running_env": "live"
+  "api_name": "production"
 }
