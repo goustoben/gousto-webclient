@@ -25,12 +25,16 @@ const handleClick = (orderId, recipeId, userId, trackRecipeCardClick) => {
 function RecipeLinks({ orderId, recipes, trackRecipeCardClick, userId }) {
   const recipeList = recipes.map(recipe => (
     <div key={recipe.id} className={css.recipeRow} data-testing="getHelpRecipe">
-      <img alt={recipe.title} src={recipe.imageUrl} className={css.recipeImage} />
-      <Item
-        label={recipe.title}
-        isLinkStyled={false}
-        onClick={() => handleClick(orderId, recipe.id, userId, trackRecipeCardClick)}
-      />
+      <div>
+        <img alt={recipe.title} src={recipe.imageUrl} className={css.recipeImage} />
+      </div>
+      <div className={css.recipeItem}>
+        <Item
+          label={recipe.title}
+          isLinkStyled={false}
+          onClick={() => handleClick(orderId, recipe.id, userId, trackRecipeCardClick)}
+        />
+      </div>
     </div>
   ))
 
