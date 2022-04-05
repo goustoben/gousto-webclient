@@ -176,7 +176,7 @@ export const handleCheckoutError = async (err, initiator, dispatch, getState) =>
 
 export function checkoutSignup({ pricing }) {
   return async (dispatch, getState) => {
-    dispatch(feLoggingLogEvent(logLevels.info, 'signup started'))
+    dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignup started'))
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
 
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
@@ -187,7 +187,7 @@ export function checkoutSignup({ pricing }) {
       dispatch(checkoutActions.resetDuplicateCheck({ pricing }))
       await dispatch(userSubscribe({ pricing }))
     } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.error, `Signup failed: ${err.message}`))
+      dispatch(feLoggingLogEvent(logLevels.error, `checkoutSignup: Signup failed: ${err.message}`))
       await handleCheckoutError(err, 'checkoutSignup', dispatch, getState)
       if (err.code !== errorCodes.duplicateDetails) {
         dispatch(checkoutActions.clearGoustoRef())
@@ -198,8 +198,10 @@ export function checkoutSignup({ pricing }) {
     }
 
     if (isCardPayment(getState())) {
+      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignup: userSubscribe finished, proceed to checkoutCardAuthorisation'))
       await dispatch(checkoutActions.checkoutCardAuthorisation({ pricing }))
     } else {
+      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignup: userSubscribe finished, proceed to checkoutSignupPayment'))
       const sourceId = null
       await dispatch(checkoutActions.checkoutSignupPayment(sourceId, { pricing }))
     }
@@ -231,6 +233,7 @@ export function checkoutCardAuthorisation({ pricing }) {
 
 export function checkoutSignupPayment(sourceId, { pricing }) {
   return async (dispatch, getState) => {
+    dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignupPayment started'))
     try {
       const state = getState()
       const sessionId = getSessionId()
@@ -242,13 +245,15 @@ export function checkoutSignupPayment(sourceId, { pricing }) {
       }
 
       await signupPayment(reqData, provider, sessionId)
+      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignupPayment: signupPayment succeeded, proceed to checkoutPostSIgnup'))
       await dispatch(checkoutActions.checkoutPostSignup({ pricing }))
     } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.error, `Signup payment failed: ${err.message}`))
+      dispatch(feLoggingLogEvent(logLevels.error, `checkoutSignupPayment: Signup payment failed: ${err.message}`))
       await handleCheckoutError(err, 'checkoutSignupPayment', dispatch, getState)
     } finally {
       dispatch(checkoutActions.clearGoustoRef())
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      dispatch(feLoggingLogEvent(logLevels.error, 'checkoutSignupPayment: in finally'))
     }
   }
 }
@@ -285,7 +290,7 @@ export const checkPaymentAuth = (checkoutSessionId, { pricing }) => (
 
 export function checkoutPostSignup({ pricing }) {
   return async (dispatch, getState) => {
-    dispatch(feLoggingLogEvent(logLevels.info, 'signup successful'))
+    dispatch(feLoggingLogEvent(logLevels.info, 'checkoutPostSignup started'))
     dispatch(trackSubscriptionCreated({ pricing }))
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
@@ -306,9 +311,9 @@ export function checkoutPostSignup({ pricing }) {
       dispatch(tempActions.temp('originalGrossTotal', pricing.grossTotal))
       dispatch(tempActions.temp('originalNetTotal', pricing.netTotal))
       dispatch(trackPurchase({ orderId, pricing }))
-      dispatch(feLoggingLogEvent(logLevels.info, 'signup login success', signupTestData))
+      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutPostSignup: signup login success', signupTestData))
     } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.info, `signup login failed: ${err.message}`, signupTestData))
+      dispatch(feLoggingLogEvent(logLevels.info, `checkoutPostSignup: signup login failed: ${err.message}`, signupTestData))
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
       dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, err.code, 'checkoutPostSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
@@ -588,6 +593,7 @@ export function setPayPalNonce(nonce, { pricing }) {
       nonce
     })
 
+    dispatch(feLoggingLogEvent(logLevels.info, 'in setPayPalNonce: proceed to checkoutSignup'))
     dispatch(checkoutActions.trackingOrderPlaceAttemptSucceeded({ pricing }))
     dispatch(checkoutActions.checkoutSignup({ pricing }))
   }
