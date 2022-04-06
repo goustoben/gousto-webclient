@@ -8,6 +8,7 @@ import {
   getCheckoutComPublicKey,
 } from 'utils/isomorphicEnvironment'
 import {
+  getClientEnvironment,
   getClientCheckoutComPublicKey,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
@@ -21,7 +22,6 @@ import {
   getServerRecaptchaRAFPublicKey,
 } from '../../../server/utils/serverEnvironment'
 import {
-  getClientEnvironment,
   getDomain as getClientDomain,
   getClientProtocol,
 } from '../browserEnvironment'
@@ -29,7 +29,6 @@ import {
 jest.mock('../../../server/utils/serverEnvironment')
 jest.mock('../browserEnvironment', () => ({
   ...jest.requireActual('../browserEnvironment'),
-  getClientEnvironment: jest.fn(),
   getDomain: jest.fn(),
   getClientProtocol: jest.fn(),
 }))
