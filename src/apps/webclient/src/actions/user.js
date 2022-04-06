@@ -695,11 +695,14 @@ function buildSignupRequestData(state) {
 export function userSubscribe({ pricing }) {
   return async (dispatch, getState) => {
     const state = getState()
-    if (!state.basket.get('boxId')) {
+    const boxId = state.basket.get('boxId')
+    if (!boxId) {
+      dispatch(feLoggingLogEvent(logLevels.error, 'userSubscribe called with missing boxId: unexpected signup'))
       dispatch(trackUnexpectedSignup())
 
       return
     }
+    dispatch(feLoggingLogEvent(logLevels.error, 'userSubscribe started', { boxId }))
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
 
@@ -737,9 +740,7 @@ export function userSubscribe({ pricing }) {
         dispatch(trackNewOrder(orderId, customerId))
         dispatch(basketPreviewOrderChange(orderId, state.basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
-        if (signupTestName) {
-          dispatch(trackSuccessfulCheckoutFlow('Signup succeeded', { testName: signupTestName, data }))
-        }
+        dispatch(trackSuccessfulCheckoutFlow('userSubscribe: customerSignup successful', { testName: signupTestName, data }))
       } else {
         throw new GoustoException(actionTypes.USER_SUBSCRIBE)
       }
@@ -761,9 +762,7 @@ export function userSubscribe({ pricing }) {
       })
       dispatch(trackNewOrder(previewOrderId))
       logger.error({ message: err.message, errors: [err] })
-      if (signupTestName) {
-        dispatch(trackFailedCheckoutFlow('Signup failed', err, { testName: signupTestName }))
-      }
+      dispatch(trackFailedCheckoutFlow('userSubscribe: customerSignup failed', err, { testName: signupTestName }))
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))
