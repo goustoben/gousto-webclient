@@ -2,7 +2,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import OrderDelivery from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDelivery'
-import { OrderDeliveryAddress } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryAddress'
 
 describe('OrderDelivery',() => {
   let wrapper
@@ -90,28 +89,6 @@ describe('OrderDelivery',() => {
 
     test('should render "Delivery details"',() => {
       expect(wrapper.text()).toContain('Delivery details')
-    })
-
-    test('should render a loading spinner if addressLoading = true', () => {
-      wrapper = shallow(<OrderDelivery
-        addressLoading
-        orderGetDeliveryDays={orderGetDeliveryDays}
-        recipesLoadStockByDate={recipesLoadStockByDate}
-        userTrackToggleEditDateSection={userTrackToggleEditDateSection}
-        userToggleEditDateSection={userToggleEditDateSection}
-      />)
-
-      expect(wrapper.find('Loading').length).toEqual(1)
-      expect(wrapper.find('OrderDeliveryDate').length).toEqual(0)
-      expect(wrapper.find(OrderDeliveryAddress).length).toEqual(0)
-    })
-
-    test('should render <OrderDeliveryDate/> if addressLoading = false ', () => {
-      expect(wrapper.find('OrderDeliveryDate').length).toEqual(1)
-    })
-
-    test('should render <OrderDeliveryAddress/> if addressLoading = false ', () => {
-      expect(wrapper.find(OrderDeliveryAddress).length).toEqual(1)
     })
 
     describe('onClickFunction', () => {

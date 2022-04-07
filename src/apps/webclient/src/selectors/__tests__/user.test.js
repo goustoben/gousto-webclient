@@ -9,6 +9,7 @@ import {
   getUserOpenOrders,
   getUserNewOrdersForMultiSkip,
   getUserSortedNewOrders,
+  getUserShippingAddressFromCustomerService,
   getMultiSkipState,
   getNextDelivery,
   getNextDeliveryDate,
@@ -17,8 +18,10 @@ import {
   getIsMultiSkipSuccess,
   getIsMultiSkipError,
   createMultiSkipSelector,
-  getHasBoxesToSkip
+  getHasBoxesToSkip,
+  isFetchingUserAddresses,
 } from '../user'
+import { buildUserAddresses } from '../../routes/Account/__testUtils__'
 
 describe('user selectors', () => {
   describe('multiSkip', () => {
@@ -499,5 +502,33 @@ describe('when getUserOpenOrders is called', () => {
         Immutable.fromJS({})
       )
     })
+  })
+})
+
+describe('when getUserShippingAddressFromCustomerService is called', () => {
+  test('return shipping address from adddresses payload', () => {
+    const { state, getShippingAddress } = buildUserAddresses({ hasShipping: true })
+
+    expect(getUserShippingAddressFromCustomerService(state)).toEqual(
+      Immutable.fromJS(getShippingAddress)
+    )
+  })
+
+  test('return empty map when no shipping address found', () => {
+    const { state } = buildUserAddresses({ hasShipping: false })
+
+    expect(getUserShippingAddressFromCustomerService(state)).toEqual(Immutable.Map({}))
+  })
+})
+
+describe('when isFetchingUserAddresses is called', () => {
+  test('returns user status from the store', () => {
+    const state = {
+      pending: Immutable.Map({
+        USER_LOAD_ADDRESSES: true,
+      })
+    }
+
+    expect(isFetchingUserAddresses(state)).toBe(true)
   })
 })

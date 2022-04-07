@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Loading from 'Loading'
 import { OrderDeliveryAddress } from './OrderDeliveryAddress'
 import { OrderDeliveryDate } from './OrderDeliveryDate'
 
@@ -62,7 +61,6 @@ class OrderDelivery extends React.PureComponent {
       availableTo,
       hasUpdateDeliveryDayError,
       shippingAddressId,
-      addressLoading
     } = this.props
     const editDateHasError = recipesPeriodStockFetchError != null
       || orderDeliveryDaysFetchError != null
@@ -73,37 +71,31 @@ class OrderDelivery extends React.PureComponent {
     return (
       <div data-testing="recipesDeliverySection">
         <div className={`${css.header} ${css.bold}`}>Delivery details</div>
-        {addressLoading ? (
-          <div className={css.spinnerContainer}>
-            <Loading className={css.spinner} />
+        <div className={css.deliveryDetailsWrapper}>
+          <div className={css.subSection}>
+            <OrderDeliveryDate
+              editDeliveryMode={editDeliveryMode}
+              date={date}
+              timeStart={timeStart}
+              timeEnd={timeEnd}
+              orderState={orderState}
+              hasError={hasUpdateDeliveryDayError || editDateHasError}
+              errorText={errorText}
+              onClickFunction={this.onClickFunction}
+              fetchSuccess={fetchSuccess}
+              orderId={orderId}
+              availableFrom={availableFrom}
+              availableTo={availableTo}
+            />
           </div>
-        ) : (
-          <div className={css.deliveryDetailsWrapper}>
-            <div className={css.subSection}>
-              <OrderDeliveryDate
-                editDeliveryMode={editDeliveryMode}
-                date={date}
-                timeStart={timeStart}
-                timeEnd={timeEnd}
-                orderState={orderState}
-                hasError={hasUpdateDeliveryDayError || editDateHasError}
-                errorText={errorText}
-                onClickFunction={this.onClickFunction}
-                fetchSuccess={fetchSuccess}
-                orderId={orderId}
-                availableFrom={availableFrom}
-                availableTo={availableTo}
-              />
-            </div>
-            <div className={css.subSection}>
-              <OrderDeliveryAddress
-                orderId={orderId}
-                orderState={orderState}
-                shippingAddressId={shippingAddressId}
-              />
-            </div>
+          <div className={css.subSection}>
+            <OrderDeliveryAddress
+              orderId={orderId}
+              orderState={orderState}
+              shippingAddressId={shippingAddressId}
+            />
           </div>
-        )}
+        </div>
       </div>
     )
   }
@@ -124,7 +116,6 @@ OrderDelivery.propTypes = {
   orderDeliveryDaysFetchError: PropTypes.object,
   hasUpdateDeliveryDayError: PropTypes.bool,
   clearUpdateDateErrorAndPending: PropTypes.func,
-  addressLoading: PropTypes.bool,
   orderGetDeliveryDays: PropTypes.func.isRequired,
   recipesLoadStockByDate: PropTypes.func.isRequired,
   userTrackToggleEditDateSection: PropTypes.func.isRequired,
@@ -146,7 +137,6 @@ OrderDelivery.defaultProps = {
   orderDeliveryDaysFetchError: undefined,
   hasUpdateDeliveryDayError: false,
   clearUpdateDateErrorAndPending: undefined,
-  addressLoading: false,
 }
 
 export default OrderDelivery
