@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReCAPTCHA from 'components/Recaptcha'
-import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
+import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
 import { isSecretPingdomEmail } from 'utils/recaptcha'
 import { CTA, InputField } from 'goustouicomponents'
 import CheckBox from 'Form/CheckBox'
@@ -201,7 +201,7 @@ class LoginForm extends React.PureComponent {
               <div>
                 <ReCAPTCHA
                   ref={this.setCaptchaRef}
-                  sitekey={RECAPTCHA_PUBLIC_KEY}
+                  sitekey={getRecaptchaPublicKey()}
                   size="invisible"
                   onChange={this.captchaChanges}
                 />

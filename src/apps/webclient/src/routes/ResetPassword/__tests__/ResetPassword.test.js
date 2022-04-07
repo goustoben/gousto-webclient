@@ -6,6 +6,10 @@ import { PageContent } from 'Page'
 import Input from 'Form/Input'
 import InputError from 'Form/InputError'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getRecaptchaPublicKey: () => 'mock-recaptcha-token'
+}))
+
 const IS_RECAPTCHA_ENABLED = false
 const TOKEN = 'ASDF1234'
 const LOCATION = { query: { token: TOKEN } }

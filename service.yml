@@ -40,12 +40,21 @@ ecs:
         AUTH_CLIENT_SECRET:
           type: secret
           description: Auth client secret for auth service
+        RECAPTCHA_RAF_PUBK:
+          type: secret
+          description: Recaptcha PUBLIC key for RAF
         RECAPTCHA_RAF_PVTK:
           type: secret
           description: Recaptcha PRIVATE key for RAF
+        RECAPTCHA_PUBK:
+          type: secret
+          description: PUBLIC key for login Recaptcha
         RECAPTCHA_PVTK:
           type: secret
           description: Private key for login Recaptcha
+        CHECKOUT_COM_PUBK:
+          type: secret
+          description: PUBLIC key for checkout.com
 
   taskRolePolicies:
     - effect: Allow

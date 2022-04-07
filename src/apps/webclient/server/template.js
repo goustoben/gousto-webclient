@@ -1,4 +1,5 @@
 const { newAssetPath, getAssetRootUrl } = require('utils/media')
+const { createWindowEnvConfig } = require('./utils/envConfigForClient')
 const { getServerEnvironment, getServerDomain } = require('./utils/serverEnvironment')
 const head = require('./head').default
 const encodeState = require('./encodeState')
@@ -50,6 +51,9 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
       ${scripts.optimizely ? head.optimizely(initialState.features) : ''}
       ${getPreconnectSection()}
       ${getPreloadFontsSection()}
+      <script>
+        window.__config__ = ${createWindowEnvConfig()}
+      </script>
       <script src="${newAssetPath('performanceTracker.js')}"></script>
       <script src="${newAssetPath('vendors.js')}" defer></script>
       <script src="${newAssetPath('main.js')}" defer></script>

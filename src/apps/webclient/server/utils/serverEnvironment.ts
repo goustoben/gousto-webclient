@@ -44,3 +44,7 @@ const isLocalEnvironment = () => getServerEnvironment() === ENVIRONMENT_NAMES.lo
 
 export const getServerProtocol = () => (isLocalEnvironment() ? PROTOCOL_PREFIX.HTTP : PROTOCOL_PREFIX.HTTPS)
 
+export const getServerRecaptchaPublicKey = () => getEnvConfig().RECAPTCHA_PUBK
+export const getServerRecaptchaRAFPublicKey = () => getEnvConfig().RECAPTCHA_RAF_PUBK
+export const getServerCheckoutComPublicKey = () => getEnvConfig().CHECKOUT_COM_PUBK
+
