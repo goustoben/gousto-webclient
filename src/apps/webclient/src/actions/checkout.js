@@ -37,6 +37,7 @@ import {
   logLevels,
 } from 'actions/log'
 
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
 import {
@@ -336,7 +337,7 @@ export const trackPurchase = ({ orderId, pricing }) => (
       total
     } = pricing
 
-    const gaIDTracking = gaTrackingConfig[__ENV__]// eslint-disable-line no-underscore-dangle
+    const gaIDTracking = gaTrackingConfig[getEnvironment()]
 
     if (typeof ga !== 'undefined') {
       ga('create', gaIDTracking, 'auto', 'gousto')

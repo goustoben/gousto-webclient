@@ -1,6 +1,9 @@
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import logger from '../logger'
 
 describe('browser logger', () => {
+  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
   test('Info logs log_level, service and message', () => {
     const logs = logger.info('Plain info log')
     expect(logs).toEqual('{"log_level":"INFO","service":"webclient","message":"Plain info log"}')

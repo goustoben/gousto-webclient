@@ -115,18 +115,3 @@ The domain name of the deployed application. i.e. `gousto.co.uk`
 
 Referenced in : `src/src/config/globals.js`, `src/src/actions/login.js`, `src/src/routes/Menu/fetchData/fetchData.js`
 
-environment_name
-----------------
-```
-    string: production | local
-```
-(Aliased by `__ENV__`, `envName` in the code).
-Used throughout the application to differentiate between local and deployed ('production') builds.
-
-Used as a key (`list['local] vs list['production']`) for optimizely configuration see: `src/server/head/optimizely.js`
-
-More often used as a value to drive conditional logic, i.e. for logging.
-
-Referenced ~20 files.
-
-See the ADR on [Configuration](./decisions/0001-configuration.md)

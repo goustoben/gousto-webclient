@@ -1,4 +1,5 @@
 import optimizelySdk, { enums } from '@optimizely/optimizely-sdk'
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 import optimizelyRollouts from '../../config/head/optimizelyRollouts'
 
 export const timeout = 5000
@@ -11,11 +12,13 @@ class OptimizelySDK {
   loading = false
 
   async getOptimizelyInstance() {
+    const currentEnvironment = getEnvironment()
+
     if (!this.hasInstance()) {
       this.loading = true
       this.optimizelyRolloutsInstance = optimizelySdk.createInstance({
-        sdkKey: optimizelyRollouts[__ENV__] || optimizelyRollouts.staging, //eslint-disable-line
-        logLevel: __ENV__ === 'local' ? enums.LOG_LEVEL.INFO : enums.LOG_LEVEL.ERROR,
+        sdkKey: optimizelyRollouts[currentEnvironment] || optimizelyRollouts.staging,
+        logLevel: currentEnvironment === 'local' ? enums.LOG_LEVEL.INFO : enums.LOG_LEVEL.ERROR,
         eventBatchSize: 10,
         eventFlushInterval: 1000,
       })

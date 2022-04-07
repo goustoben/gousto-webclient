@@ -45,7 +45,7 @@ class Order extends React.PureComponent {
       collapsed, orderId, userId, deliveryDayId, orderState, restorable, recipes, products,
       humanDeliveryDay, originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
       orderShouldCutoffAt, orderWhenMenuOpen, priceBreakdown, editDeliveryMode, portionsCount, isProjected,
-      cancellable, deliveryDay, shippingAddressId, addresses, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
+      cancellable, deliveryDay, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
       phase,
     } = this.props
     const isOrderInteractive = orderState !== 'cancelled' && phase !== 'pre_menu'
@@ -154,8 +154,6 @@ class Order extends React.PureComponent {
                 whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'dayAndMonth')}
                 cancellable={cancellable}
                 restorable={restorable}
-                shippingAddressId={shippingAddressId}
-                addresses={addresses}
                 orderDeliveryDaysFetchError={orderDeliveryDaysFetchError}
                 recipesPeriodStockFetchError={recipesPeriodStockFetchError}
                 deliveryDay={deliveryDay}
@@ -193,8 +191,6 @@ Order.propTypes = {
   cancellable: PropTypes.bool,
   restorable: PropTypes.bool,
   isProjected: PropTypes.bool,
-  shippingAddressId: PropTypes.string,
-  addresses: PropTypes.instanceOf(Immutable.Map),
   orderDeliveryDaysFetchError: PropTypes.string,
   recipesPeriodStockFetchError: PropTypes.string,
   deliveryDay: PropTypes.string,
@@ -227,8 +223,6 @@ Order.defaultProps = {
   restorable: false,
   isProjected: false,
   collapsed: true,
-  shippingAddressId: '',
-  addresses: Immutable.Map({}),
   orderDeliveryDaysFetchError: null,
   recipesPeriodStockFetchError: null,
   deliveryDay: '',

@@ -4,7 +4,7 @@ import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvironment } from 'utils/isomorphicEnvironment'
 
 import { Nullable } from '../../types'
-import { browserLogsConfig, RUMSDKConfig, DATADOG_ENABLED_ENVS } from './config'
+import { getBrowserLogsConfig, getRUMSDKConfig, DATADOG_ENABLED_ENVS } from './config'
 
 export const getIsDatadogEnabled = () => {
   let environment: Nullable<string>
@@ -30,7 +30,7 @@ const initializeDatadogRUMSDK = (config: RumInitConfiguration): void => {
 
 export const initializeDatadog = (): void => {
   if (getIsDatadogEnabled()) {
-    initializeDatadogLoggingSDK(browserLogsConfig)
-    initializeDatadogRUMSDK(RUMSDKConfig)
+    initializeDatadogLoggingSDK(getBrowserLogsConfig())
+    initializeDatadogRUMSDK(getRUMSDKConfig())
   }
 }

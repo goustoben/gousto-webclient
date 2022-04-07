@@ -1,8 +1,11 @@
 import config from 'config/head/optimizely'
+import { getEnvironment } from '../../src/utils/isomorphicEnvironment'
 
 export default function optimizely(features) {
   let script = ''
-  if (config[__ENV__]) { // eslint-disable-line no-underscore-dangle
+  const optimizelyScriptName = config[getEnvironment()]
+
+  if (optimizelyScriptName) {
     const featuresSerialised = JSON.stringify(features.toJS())
     script = `
       <script>
@@ -59,7 +62,7 @@ export default function optimizely(features) {
         }
 
       </script>
-      <script src="//cdn.optimizely.com/js/${config[__ENV__]}.js" defer></script>` // eslint-disable-line no-underscore-dangle
+      <script src="//cdn.optimizely.com/js/${optimizelyScriptName}.js" defer></script>`
   }
 
   return script

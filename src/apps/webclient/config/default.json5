@@ -2,7 +2,5 @@
 // See https://github.com/Gousto/gousto-webclient/blob/develop/detailed-setup.md#quick-guide-to-node-config
 {
   "build": "development",
-  "environment_name": "local",
-  "api_name": "local",
   "client_dev_server_enabled": false
 }

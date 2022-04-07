@@ -1,12 +1,20 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import moment from 'moment'
+import { actionTypes } from 'actions/actionTypes'
 
+export const didErrorFetchingAddresses = state => state.error.get(actionTypes.USER_LOAD_ADDRESSES, null)
+export const didErrorFetchingPendingOrders = state => state.error.get(actionTypes.USER_LOAD_ORDERS, null)
+export const didErrorFetchingProjectedOrders = state => state.error.get(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, null)
 export const getUserFirstName = state => state.user.get('nameFirst')
 export const getUserLastName = state => state.user.get('nameLast')
 export const getUserId = state => state.user.get('id', null)
 export const getUserEmail = state => state.user.get('email')
 export const getUserShippingAddress = state => state.user.get('shippingAddress')
+export const getUserShippingAddressFromCustomerService = state => state.user.get(
+  'addresses',
+  Immutable.Map({})
+).filter((address) => address.get('type') === 'shipping')
 export const getUserPhoneNumber = state => state.user.get('phone')
 export const getReferralOffer = state => state.user.get('referralOffer')
 export const getUserStatus = state => state.user.get('status')
@@ -147,3 +155,8 @@ export const getIsMultiSkipPending = createMultiSkipSelector('isPending')
 export const getIsMultiSkipError = createMultiSkipSelector('isError')
 
 export const getIsMultiSkipSuccess = createMultiSkipSelector('isSuccess')
+
+export const isFetchingUserAddresses = state => state.pending.get(
+  actionTypes.USER_LOAD_ADDRESSES,
+  false
+)

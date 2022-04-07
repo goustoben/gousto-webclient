@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import { Alert, Button } from 'goustouicomponents'
 import config from 'config'
 import Link from 'Link'
+import Loading from 'Loading'
 import { LinkButton } from '../LinkButton'
 import { Address } from './Address'
 
@@ -55,8 +56,16 @@ class OrderDeliveryAddress extends React.PureComponent {
   }
 
   renderedAddresses() {
-    const { addresses, orderId } = this.props
+    const { addresses, didErrorFetchingAddresses, orderId } = this.props
     const { selectedAddressId } = this.state
+
+    if (didErrorFetchingAddresses) {
+      return (
+        <Alert type="danger">
+          Whoops, there was a problem and we cannot display your shipping addresses at the moment, please try again later.
+        </Alert>
+      )
+    }
 
     return addresses.map(address => {
       const addressId = address.get('id')
@@ -77,11 +86,17 @@ class OrderDeliveryAddress extends React.PureComponent {
   }
 
   render() {
-    const { addresses, orderState, shippingAddressId, isPendingUpdateAddress, hasError, shippingAddress: orderShippingAddress, } = this.props
+    const {
+      addresses,
+      isFetchingUserAddresses,
+      isPendingUpdateAddress,
+      orderState,
+      shippingAddressId,
+      shippingAddress: orderShippingAddress,
+    } = this.props
     const { editAddressOpen, selectedAddressId } = this.state
     const submitDisabled = selectedAddressId === shippingAddressId
     const shippingAddress = orderShippingAddress || addresses.find(address => address.get('id') === shippingAddressId)
-    const formattedShippingAddress = this.formatAddress(shippingAddress)
     const { client } = config.routes
 
     return (
@@ -95,34 +110,47 @@ class OrderDeliveryAddress extends React.PureComponent {
             />
           ) : null}
         </div>
-        <div className={css.currentAddress} data-testing="orderDeliveryAddress">
-          <p className={css.header}>{shippingAddress.get('name')}</p>
-          <p>{formattedShippingAddress}</p>
-        </div>
-        {editAddressOpen && (
-          <div>
-            {this.renderedAddresses()}
-            <Link className={css.newAddressLink} to={client.myDetails} clientRouted={false}>
-              Add new address to your account&nbsp;
-              <span className={css.arrowRight} />
-            </Link>
-            <Button
-              onClick={this.handleSubmit}
-              color="secondary"
-              width="full"
-              noDecoration
-              pending={isPendingUpdateAddress}
-              disabled={submitDisabled}
-            >
-              Set Address
-            </Button>
-          </div>
-        )}
-        {hasError && (
-          <Alert type="danger">
-            There was a problem updating your order address. Please contact customer care.
-          </Alert>
-        )}
+        {(!shippingAddress)
+          ? (
+            <Alert type="danger">
+              Whoops, there was a problem when loading your addresses, please try again.
+            </Alert>
+          )
+          : (
+            <>
+              <div className={css.currentAddress} data-testing="orderDeliveryAddress">
+                <p className={css.header}>{shippingAddress.get('name')}</p>
+                <p>{this.formatAddress(shippingAddress)}</p>
+              </div>
+              {editAddressOpen && (
+                <div>
+                  {isFetchingUserAddresses
+                    ? (
+                      <div className={css.spinnerContainer}>
+                        <Loading className={css.spinner} />
+                      </div>
+                    )
+                    : (
+                      this.renderedAddresses()
+                    )}
+                  <Link className={css.newAddressLink} to={client.myDetails} clientRouted={false}>
+                    Add new address to your account&nbsp;
+                    <span className={css.arrowRight} />
+                  </Link>
+                  <Button
+                    onClick={this.handleSubmit}
+                    color="secondary"
+                    width="full"
+                    noDecoration
+                    pending={isPendingUpdateAddress}
+                    disabled={submitDisabled}
+                  >
+                    Set Address
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
       </div>
     )
   }
@@ -130,11 +158,12 @@ class OrderDeliveryAddress extends React.PureComponent {
 
 OrderDeliveryAddress.propTypes = {
   addresses: PropTypes.instanceOf(Immutable.Map),
+  didErrorFetchingAddresses: PropTypes.bool,
+  isFetchingUserAddresses: PropTypes.bool.isRequired,
   orderAddressChange: PropTypes.func,
   orderId: PropTypes.string,
   orderState: PropTypes.string,
   shippingAddressId: PropTypes.string,
-  hasError: PropTypes.bool,
   isPendingUpdateAddress: PropTypes.bool,
   userTrackToggleEditAddressSection: PropTypes.func,
   userTrackAddressSelected: PropTypes.func,
@@ -143,11 +172,11 @@ OrderDeliveryAddress.propTypes = {
 
 OrderDeliveryAddress.defaultProps = {
   addresses: Immutable.Map({}),
+  didErrorFetchingAddresses: null,
   orderAddressChange: () => null,
   orderId: '',
   orderState: '',
   shippingAddressId: '',
-  hasError: false,
   isPendingUpdateAddress: false,
   userTrackToggleEditAddressSection: () => null,
   userTrackAddressSelected: () => null,

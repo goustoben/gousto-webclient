@@ -60,7 +60,6 @@ describe('MyDeliveries', () => {
         isFetchingAddresses: false,
         didErrorFetchingPendingOrders: null,
         didErrorFetchingProjectedOrders: null,
-        didErrorFetchingAddresses: null,
       })
     })
 
@@ -105,24 +104,6 @@ describe('MyDeliveries', () => {
       const errorMessage = 'We\'re not able to display your future deliveries right now. Please try again later.'
       wrapper.setProps({
         didErrorFetchingProjectedOrders: 'error'
-      })
-      expectAlertAndRetryButton(wrapper, errorMessage)
-    })
-
-    test('should render a specific error Alert and retry button when fetching addresses fails', () => {
-      const errorMessage = 'We\'re not able to display your deliveries right now due to an issue retrieving your address. Please try again later.'
-      wrapper.setProps({
-        didErrorFetchingAddresses: 'error'
-      })
-      expectAlertAndRetryButton(wrapper, errorMessage)
-    })
-
-    test('should render a generic error Alert and retry button when fetching addresses and orders fails', () => {
-      const errorMessage = 'We\'re not able to display your deliveries right now. Please try again later.'
-      wrapper.setProps({
-        didErrorFetchingAddresses: 'error',
-        didErrorFetchingProjectedOrders: 'error',
-        didErrorFetchingPendingOrders: 'error'
       })
       expectAlertAndRetryButton(wrapper, errorMessage)
     })

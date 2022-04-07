@@ -17,7 +17,7 @@ import affiliateWindow from 'middlewares/tracking/affiliateWindow'
 import { dataLayerTracker } from 'middlewares/tracking/dataLayerTracker'
 import persistenceConfig from 'config/storePersistence'
 import { canUseWindow, isDev } from 'utils/browserEnvironment'
-import globals from 'config/globals'
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 
 class GoustoStore {
   constructor() {
@@ -64,7 +64,7 @@ class GoustoStore {
       middleware.push(persistenceMiddleware(persistenceConfig, cookies))
     }
 
-    const composeEnhancers = globals.env !== 'production' && reduxDevtoolsInstalled
+    const composeEnhancers = getEnvironment() !== 'production' && reduxDevtoolsInstalled
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ // eslint-disable-line no-underscore-dangle
         trace: true,
         // This is has to be greater than the default limit of 10

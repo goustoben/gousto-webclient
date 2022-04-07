@@ -1,6 +1,8 @@
+// TODO: move this isServer to  `../src/utils/serEnvironment`
 import { isServer } from 'utils/serverEnvironment'
 import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 import { validateProcessEnv } from 'utils/processEnv'
+import { getServerEnvironment } from './utils/serverEnvironment'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 import { getProtocol } from '../src/utils/isomorphicEnvironment'
@@ -195,7 +197,7 @@ if (__DEV__ || withStatic) {
 
 app.use(processRequest)
 
-const port = __ENV__ === 'local' ? 8080 : 80
+const port = getServerEnvironment() === 'local' ? 8080 : 80
 
 if (__DEV__) {
   enableHmr()

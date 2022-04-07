@@ -1,6 +1,7 @@
 import lumberjack from 'gousto-lumberjack-js'
+import { getEnvironment } from '../../src/utils/isomorphicEnvironment'
 
-const consoleEnabled = __ENV__ === 'local'
+const consoleEnabled = getEnvironment() === 'local'
 
 const logger = lumberjack({ service: 'webclient', consoleEnabled })
 

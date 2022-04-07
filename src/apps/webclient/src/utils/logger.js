@@ -1,3 +1,5 @@
+import { getEnvironment } from 'utils/isomorphicEnvironment'
+
 const formatJSError = (error) => ({
   message: error.message || error.code || 'Error',
   code: error.code,
@@ -55,7 +57,7 @@ const formatLogs = (args) => {
     request_type: requestType,
     actor,
     involves,
-    timestamp: __ENV__ !== 'production' && new Date(),
+    timestamp: getEnvironment() !== 'production' && new Date(),
   }
 
   Object.keys(log).forEach(key => !log[key] && delete log[key])
@@ -76,14 +78,14 @@ const logToConsole = (args, level, consoleEnabled) => {
   }
 }
 
-const getBrowserLogger = (consoleEnabled) => (
+const getBrowserLogger = (isConsoleEnabled) => (
   ['debug', 'info', 'notice', 'warning', 'error', 'critical', 'log'].reduce(
     (reduced, level) => ({
       ...reduced,
-      [level]: args => logToConsole(args, level, consoleEnabled)
+      [level]: args => logToConsole(args, level, isConsoleEnabled())
     }), {}
   )
 )
-
+const isLogginEnabledForEnvironment = () => getEnvironment() === 'local'
 /* eslint-disable-next-line */
-export default getBrowserLogger(__ENV__ === 'local')
+export default getBrowserLogger(isLogginEnabledForEnvironment)

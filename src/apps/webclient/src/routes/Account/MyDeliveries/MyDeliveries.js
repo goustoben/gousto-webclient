@@ -25,27 +25,21 @@ class MyDeliveries extends React.PureComponent {
     const {
       didErrorFetchingPendingOrders,
       didErrorFetchingProjectedOrders,
-      didErrorFetchingAddresses,
     } = this.props
 
     const errorMessages = {
       pendingOrderError: 'We\'re not able to display your upcoming orders right now. Please try again later.',
       projectedOrderError: 'We\'re not able to display your future deliveries right now. Please try again later.',
-      addressError: 'We\'re not able to display your deliveries right now due to an issue retrieving your address. Please try again later.',
       genericError: 'We\'re not able to display your deliveries right now. Please try again later.'
     }
 
-    if (didErrorFetchingAddresses !== null
-      && (didErrorFetchingProjectedOrders !== null
-      || didErrorFetchingPendingOrders !== null)) {
+    if (didErrorFetchingProjectedOrders !== null) {
+      return errorMessages.projectedOrderError
+    } else if (didErrorFetchingPendingOrders !== null) {
+      return errorMessages.pendingOrderError
+    } else {
       return errorMessages.genericError
     }
-
-    if (didErrorFetchingAddresses !== null) {
-      return errorMessages.addressError
-    }
-
-    return didErrorFetchingPendingOrders !== null ? errorMessages.pendingOrderError : errorMessages.projectedOrderError
   }
 
   fetchOrdersAndAddresses = async () => {
@@ -90,7 +84,6 @@ class MyDeliveries extends React.PureComponent {
     const {
       didErrorFetchingPendingOrders,
       didErrorFetchingProjectedOrders,
-      didErrorFetchingAddresses,
       isFetchingOrders,
       userId
     } = this.props
@@ -98,7 +91,7 @@ class MyDeliveries extends React.PureComponent {
       return MyDeliveries.renderLoading
     }
 
-    if (didErrorFetchingPendingOrders !== null || didErrorFetchingProjectedOrders !== null || didErrorFetchingAddresses !== null) {
+    if (didErrorFetchingPendingOrders !== null || didErrorFetchingProjectedOrders !== null) {
       const errorMessage = this.getErrorMessage()
 
       return MyDeliveries.renderFetchError(this.retryFetch, errorMessage)
@@ -154,7 +147,6 @@ MyDeliveries.propTypes = {
   isFetchingOrders: PropTypes.bool,
   didErrorFetchingPendingOrders: PropTypes.string,
   didErrorFetchingProjectedOrders: PropTypes.string,
-  didErrorFetchingAddresses: PropTypes.string,
   userLoadAddresses: PropTypes.func.isRequired,
   userLoadData: PropTypes.func.isRequired,
   userLoadNewOrders: PropTypes.func.isRequired,
@@ -167,7 +159,6 @@ MyDeliveries.defaultProps = {
   isFetchingOrders: false,
   didErrorFetchingPendingOrders: null,
   didErrorFetchingProjectedOrders: null,
-  didErrorFetchingAddresses: null,
   isGoustoOnDemandEnabled: false,
   signupSetGoustoOnDemandEnabled: () => {},
 }

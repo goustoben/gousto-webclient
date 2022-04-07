@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import templateConfig from 'config/template'
-import globals from 'config/globals'
-import { getDomain, getProtocol } from 'utils/isomorphicEnvironment'
+import { getDomain, getProtocol, getEnvironment } from 'utils/isomorphicEnvironment'
 import { CanonicalLink } from './CanonicalLink'
 import { Facebook } from './Facebook'
 import { OpenGraph } from './OpenGraph'
@@ -10,7 +9,8 @@ import { SiteVerification } from './SiteVerification'
 import { Twitter } from './Twitter'
 
 export const generateHref = url => {
-  const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-frontend.`}${getDomain()}`
+  const currentEnv = getEnvironment()
+  const hostname = `${currentEnv === 'production' ? 'www.' : `${currentEnv}-frontend.`}${getDomain()}`
 
   return `${getProtocol()}//${hostname}${url || '/'}`
 }
