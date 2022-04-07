@@ -17,16 +17,16 @@ export const generateWebpackFinal = (
       use: ['style-loader', 'css-loader', 'sass-loader'],
       include: path
     })
-  
-    return config;  
-  } 
+
+    return config;
+  }
 }
 
 export const base: StorybookConfig = {
   stories: [
     `../src/modules/features/**/*.stories.*`,
   ],
-  addons: [],
+  addons: ['@storybook/addon-essentials'],
   framework: '@storybook/react',
   features: {
     storyStoreV7: true,

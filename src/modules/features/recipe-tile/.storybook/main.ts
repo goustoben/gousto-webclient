@@ -5,6 +5,7 @@ const path = require('path')
 
 const config: StorybookConfig = {
   ...base,
+  addons: ['@storybook/addon-essentials', '@storybook/addon-controls'],
   stories: [
     `../src/**/*.stories.*`,
   ],
