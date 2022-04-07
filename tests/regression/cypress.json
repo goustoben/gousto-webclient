@@ -7,7 +7,7 @@
   "fixturesFolder": "fixtures",
   "supportFile": "support/index.js",
   "pluginsFile": false,
-  "video": true,
+  "video": false,
   "chromeWebSecurity": false,
   "experimentalFetchPolyfill": true,
   "env": {

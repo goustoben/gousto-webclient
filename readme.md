@@ -141,8 +141,9 @@ $ yarn run test:unit
 
 ### Cypress (regression) tests
 
-```bash
+See also the [Regression test docs](tests/regression/README.md)
 
+```bash
 # 1. Build and run the webapp (server and client)
 $ cd src/apps/webclient
 $ yarn dev
