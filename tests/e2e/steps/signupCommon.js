@@ -88,5 +88,89 @@ module.exports = {
         browser.pause(1000)
         done()
       })
+  },
+
+  /**
+   * Create new order from the Menu page and leave it at the Payment phase.
+   */
+  beginCreatingOrderWithoutSubscriptionButStopAtPayment: function (accountCredentials = {
+    email: faker.internet.email(),
+    password: 'ValidPassword1!'
+  }, browser) {
+    const menu = browser.page.menu()
+    const shared = browser.page.shared()
+    const promoModal = shared.section.body
+    const checkout = browser.page.checkoutV2()
+    const cookiePolicy = browser.page.cookiePolicy()
+
+    browser
+      .logJourneyStep('Begin creating order without subscription (transactional order) but stop at payment')
+      .url(menu.url())
+      .trackDatadog()
+      .perform(done => {
+        promoModal.submitPromo()
+        done()
+      })
+      .perform(done => {
+        cookiePolicy.section.cookiePolicyBanner.dismissCookieBannerIfPresent()
+        done()
+      })
+      .perform(done => {
+        menu.section.recipes.checkIfRecipesVisible()
+        done()
+      })
+      .perform(done => {
+        menu.section.menuContainer.clickNextButton()
+        done()
+      })
+      .perform(done => {
+        menu.section.boxSummaryDesktop.setPostcode('w3 7un')
+        done()
+      })
+      .perform(done => {
+        menu.section.menuContainer.clickContinueAfterPostcodeWasEntered()
+        done()
+      })
+      .perform(done => {
+        menu.section.menuContainer.clickContinueButton()
+        done()
+      })
+      .perform(done => {
+        menu.section.recipes.checkIfRecipesVisible()
+        done()
+      })
+      .perform(async done => {
+        await menu.section.recipes.addRecipes()
+        browser.pause(8000)
+        done()
+      })
+      .perform(done => {
+        menu.section.bottomBar.checkIfCheckoutButtonClickable()
+        done()
+      })
+      .perform(done => {
+        menu.section.menuContainer.goFromMenuToCheckout()
+        done()
+      })
+      .perform(done => {
+        checkout.section.checkoutContainer.ensureCheckoutLoaded()
+        done()
+      })
+      .perform(done => {
+        checkout.section.checkoutContainer.submitAccountSection(accountCredentials)
+        done()
+      })
+      .perform(done => {
+        checkout.section.checkoutContainer.goToNextStep()
+        done()
+      })
+      .perform(done => {
+        checkout.section.checkoutContainer.submitDeliverySection()
+        done()
+      })
+      .perform(done => {
+        checkout.section.checkoutContainer.goToNextStep()
+        done()
+      })
   }
 }

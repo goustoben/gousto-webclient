@@ -25,6 +25,7 @@ module.exports = {
           },
           clickContinueButton: function () {
             this
+              .waitForElementVisible('[data-testing="boxSummaryContinueButton"]')
               .executeAndThrowOnFailure(function () {
                 const continueButton = document.querySelector('[data-testing="boxSummaryContinueButton"]')
                 continueButton.click()
@@ -46,6 +47,14 @@ module.exports = {
               let firstAvailableDate = dates.find(date => !date.querySelector("*[data-testing='icon-full-box']"))
               firstAvailableDate.click()
             })
+          },
+          clickContinueAfterPostcodeWasEntered: function () {
+            this
+              .waitForElementVisible('[data-testing="menuSubmitPostcode"]')
+              .executeAndThrowOnFailure(function () {
+                const continueButton = document.querySelector('[data-testing="menuSubmitPostcode"]')
+                continueButton.click()
+              })
           },
         }
       ]
