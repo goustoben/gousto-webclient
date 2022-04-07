@@ -3,9 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
+import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
 import { HotjarTrigger } from 'HotjarTrigger'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { SubmitButton } from '../SubmitButton'
@@ -272,7 +272,7 @@ class CheckoutPayment extends React.Component {
             <div className={css.recaptchaContainer}>
               <ReCAPTCHA
                 ref={this.setRecaptchaElement}
-                sitekey={RECAPTCHA_PUBLIC_KEY}
+                sitekey={getRecaptchaPublicKey()}
                 onChange={this.handleRecaptchaChange}
                 size="invisible"
               />

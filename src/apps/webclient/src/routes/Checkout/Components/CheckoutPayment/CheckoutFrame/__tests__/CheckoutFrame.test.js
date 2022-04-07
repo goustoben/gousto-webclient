@@ -6,9 +6,9 @@ import { actionTypes } from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
 import { CheckoutFrameContainer } from '../CheckoutFrameContainer'
 
-jest.mock('../../config', () => ({
-  ...jest.requireActual('../../config'),
-  getPublicKey: () => 'checkout-com-public-key',
+jest.mock('utils/isomorphicEnvironment', () => ({
+  ...jest.requireActual('utils/isomorphicEnvironment'),
+  getCheckoutComPublicKey: () => 'checkout-com-public-key',
 }))
 
 describe('CheckoutFrame', () => {

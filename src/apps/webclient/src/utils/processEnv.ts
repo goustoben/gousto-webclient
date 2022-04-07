@@ -3,8 +3,11 @@ type ProcessEnvKeys = [
   'API_TOKEN',
   'AUTH_CLIENT_ID',
   'AUTH_CLIENT_SECRET',
+  'RECAPTCHA_RAF_PUBK',
   'RECAPTCHA_RAF_PVTK',
-  'RECAPTCHA_PVTK'
+  'RECAPTCHA_PUBK',
+  'RECAPTCHA_PVTK',
+  'CHECKOUT_COM_PUBK'
 ]
 
 /**
@@ -21,8 +24,11 @@ export type ParsedProcessEnv = {
   API_TOKEN: string
   AUTH_CLIENT_ID: number
   AUTH_CLIENT_SECRET: string
+  RECAPTCHA_RAF_PUBK: string
   RECAPTCHA_RAF_PVTK: string
+  RECAPTCHA_PUBK: string
   RECAPTCHA_PVTK: string
+  CHECKOUT_COM_PUBK: string
 }
 
 const REQUIRED_KEYS: ProcessEnvKeys = [
@@ -30,8 +36,11 @@ const REQUIRED_KEYS: ProcessEnvKeys = [
   'API_TOKEN',
   'AUTH_CLIENT_ID',
   'AUTH_CLIENT_SECRET',
+  'RECAPTCHA_RAF_PUBK',
   'RECAPTCHA_RAF_PVTK',
+  'RECAPTCHA_PUBK',
   'RECAPTCHA_PVTK',
+  'CHECKOUT_COM_PUBK',
 ]
 
 export const envOrThrow = (obj: Record<string, unknown>, key: keyof ProcessEnv) => {
@@ -82,7 +91,10 @@ export const getEnvConfig = (): ParsedProcessEnv => {
     API_TOKEN: getFromProcessEnv(processEnv)('API_TOKEN'),
     AUTH_CLIENT_ID: getFromProcessEnv(processEnv)('AUTH_CLIENT_ID', parseStringToNumber),
     AUTH_CLIENT_SECRET: getFromProcessEnv(processEnv)('AUTH_CLIENT_SECRET'),
+    RECAPTCHA_RAF_PUBK: getFromProcessEnv(processEnv)('RECAPTCHA_RAF_PUBK'),
     RECAPTCHA_RAF_PVTK: getFromProcessEnv(processEnv)('RECAPTCHA_RAF_PVTK'),
+    RECAPTCHA_PUBK: getFromProcessEnv(processEnv)('RECAPTCHA_PUBK'),
     RECAPTCHA_PVTK: getFromProcessEnv(processEnv)('RECAPTCHA_PVTK'),
+    CHECKOUT_COM_PUBK: getFromProcessEnv(processEnv)('CHECKOUT_COM_PUBK'),
   }
 }

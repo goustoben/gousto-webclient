@@ -5,7 +5,7 @@ import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
 import InputError from 'Form/InputError'
 import ReCAPTCHA from 'components/Recaptcha'
-import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha-my-referral'
+import { getRecaptchaRAFPublicKey } from 'utils/isomorphicEnvironment'
 import css from './ReferAFriend.css'
 
 const propTypes = {
@@ -55,7 +55,7 @@ const ReferAFriendPresentation = ({
                   <div>
                     <ReCAPTCHA
                       ref={refCaptcha}
-                      sitekey={RECAPTCHA_PUBLIC_KEY}
+                      sitekey={getRecaptchaRAFPublicKey()}
                       size="invisible"
                       onChange={captchaChanges}
                     />

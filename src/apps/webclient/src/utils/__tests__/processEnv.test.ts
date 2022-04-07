@@ -5,8 +5,11 @@ const validProcessEnv: ProcessEnv = {
   API_TOKEN: 'mock-api-token',
   AUTH_CLIENT_ID: '10',
   AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
+  RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
   RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
+  RECAPTCHA_PUBK: 'mock-recaptcha-public-key',
   RECAPTCHA_PVTK: 'mock-recaptcha-private-key',
+  CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
 }
 
 describe('processEnv', () => {
@@ -38,8 +41,11 @@ describe('processEnv', () => {
           API_TOKEN: 'mock-api-token',
           AUTH_CLIENT_ID: 10,
           AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
+          RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
           RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
+          RECAPTCHA_PUBK: 'mock-recaptcha-public-key',
           RECAPTCHA_PVTK: 'mock-recaptcha-private-key',
+          CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
         })
       })
     })
@@ -88,14 +94,7 @@ describe('processEnv', () => {
       })
 
       test('does not throw if process.env contains required keys', () => {
-        process.env = {
-          ENVIRONMENT: 'local',
-          API_TOKEN: 'mock-api-token',
-          AUTH_CLIENT_ID: '10',
-          AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
-          RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
-          RECAPTCHA_PVTK: 'mock-recaptcha-private-key',
-        }
+        process.env = validProcessEnv
 
         // eslint-disable-next-line
         const { validateProcessEnv } = require('../processEnv')

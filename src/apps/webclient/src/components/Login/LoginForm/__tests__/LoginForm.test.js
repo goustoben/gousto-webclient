@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
-
 import { LoginForm } from '../LoginForm'
+
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getRecaptchaPublicKey: () => 'mock-recaptcha-token'
+}))
 
 describe('LoginForm', () => {
   test('renders without crashing', () => {

@@ -1,8 +1,10 @@
-export type Nullable<T> = T | null;
+import type { WindowEnvConfig } from 'server/utils/windowEnvironmentConfig'
+
+export type Nullable<T> = T | null
 
 declare global {
-    interface Window {
-        // eslint-disable-next-line no-unused-vars
-        hj?: (action: string, name: string) => void
-    }
+  interface Window {
+    hj?: (action: string, name: string) => void
+    __config__: WindowEnvConfig
+  }
 }

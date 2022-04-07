@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import logger from 'utils/logger'
 import { hasPropUpdated } from 'utils/react'
 import { actionTypes } from 'actions/actionTypes'
+import { getCheckoutComPublicKey } from 'utils/isomorphicEnvironment'
 
-import { getPublicKey } from '../config'
 import { getErrorType } from './utils'
 import { checkoutStyles } from './checkoutStyles'
 import { CheckoutName } from '../CheckoutName'
@@ -202,7 +202,7 @@ class CheckoutFrame extends React.Component {
 
   initFrames() {
     Frames.init({
-      publicKey: getPublicKey(),
+      publicKey: getCheckoutComPublicKey(),
       style: checkoutStyles,
       cardNumber: {
         frameSelector: '[data-frames="cardNumber"]',

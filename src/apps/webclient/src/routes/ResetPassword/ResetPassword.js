@@ -3,7 +3,7 @@ import React from 'react'
 
 import { CTA } from 'goustouicomponents'
 import ReCAPTCHA from 'components/Recaptcha'
-import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
+import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
 import Input from 'Form/Input'
 import configAuth from 'config/auth'
 import Content from 'containers/Content'
@@ -139,7 +139,7 @@ export class ResetPassword extends React.PureComponent {
             && (
               <ReCAPTCHA
                 ref={el => { this.recaptchaElement = el }}
-                sitekey={RECAPTCHA_PUBLIC_KEY}
+                sitekey={getRecaptchaPublicKey()}
                 size="invisible"
                 onChange={this.captchaChanges}
               />

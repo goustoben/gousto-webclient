@@ -2,13 +2,21 @@ import {
   canUseWindow,
   getClientEnvironment,
   getClientProtocol,
-  getDomain as getClientDomain
+  getDomain as getClientDomain,
 } from './browserEnvironment'
 import {
   getServerEnvironment,
   getServerDomain,
-  getServerProtocol
+  getServerProtocol,
+  getServerCheckoutComPublicKey,
+  getServerRecaptchaPublicKey,
+  getServerRecaptchaRAFPublicKey,
 } from '../../server/utils/serverEnvironment'
+import {
+  getClientCheckoutComPublicKey,
+  getClientRecaptchaPublicKey,
+  getClientRecaptchaRAFPublicKey,
+} from './configFromWindow'
 
 type CreateIsomorphicConfig<T> = {
   testFn?: () => boolean
@@ -61,3 +69,18 @@ export const getProtocol = createIsomorphicConfig({
 
 export const isProd = () => getEnvironment() === 'production'
 export const isDev = () => getEnvironment() === 'local'
+
+export const getRecaptchaPublicKey = createIsomorphicConfig({
+  browserConfigFn: getClientRecaptchaPublicKey,
+  serverConfigFn: getServerRecaptchaPublicKey,
+})
+
+export const getRecaptchaRAFPublicKey = createIsomorphicConfig({
+  browserConfigFn: getClientRecaptchaRAFPublicKey,
+  serverConfigFn: getServerRecaptchaRAFPublicKey,
+})
+
+export const getCheckoutComPublicKey = createIsomorphicConfig({
+  browserConfigFn: getClientCheckoutComPublicKey,
+  serverConfigFn: getServerCheckoutComPublicKey,
+})
