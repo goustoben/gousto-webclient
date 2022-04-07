@@ -80,20 +80,4 @@ describe('Given AboutYou component', () => {
       })
     })
   })
-
-  describe('when form is submitted', () => {
-    const preventDefault = jest.fn()
-    const event = {
-      preventDefault,
-    }
-
-    beforeEach(() => {
-      wrapper.find('#create-account').simulate('submit', event)
-    })
-
-    test('then proper actions should be called', () => {
-      expect(preventDefault).toHaveBeenCalled()
-      expect(submit).toHaveBeenCalled()
-    })
-  })
 })
