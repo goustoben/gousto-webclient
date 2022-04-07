@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet'
 import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
+import { getServerEnvironment, isServer } from 'utils/serverEnvironment'
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
 const React = require('react')
@@ -163,7 +163,7 @@ async function processRequest(ctx, next) {
 
   let headers = ctx.request.headers || {}
 
-  if (ctx.request.query && ctx.request.query.headers && __ENV__ !== 'production') {
+  if (ctx.request.query && ctx.request.query.headers && getServerEnvironment() !== 'production') {
     // for staging CDN headers: menu?headers=cloudfront-is-desktop-viewer=true&headers=cloudfront-is-tablet-viewer=true
     let queryHeaders = ctx.request.query.headers
     if (!Array.isArray(ctx.request.query.headers)) {

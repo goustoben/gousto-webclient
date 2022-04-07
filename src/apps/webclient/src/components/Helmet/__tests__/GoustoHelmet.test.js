@@ -16,7 +16,7 @@ jest.mock('utils/isomorphicEnvironment')
 
 describe('Helmet GoustoHelmet', () => {
   // mock the environment and domain config used by these tests to generate endpoints
-  withMockEnvironmentAndDomain('local', '<domain>')
+  withMockEnvironmentAndDomain('production', '<domain>')
 
   beforeEach(() => {
     getProtocol.mockReturnValue('<protocol>:')

@@ -67,8 +67,8 @@ describe('datadog', () => {
   describe('initializeDataDog', () => {
     describe('Given datadog is enabled', () => {
       beforeEach(() => {
-        getIsDatadogEnabledSpy.mockReturnValue(true)
-
+        (getEnvironment as jest.Mock).mockReturnValue('production')
+        getIsDatadogEnabledSpy.mockReturnValue(true);
         dd.initializeDatadog()
       })
 

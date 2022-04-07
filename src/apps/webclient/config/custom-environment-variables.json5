@@ -1,8 +1,5 @@
 // config/custom-environment-variables.json
 // Custom environment variables can override all files
 {
-  "build": 'NODE_ENV',
-  // These are pushed in via Docker as environment variables
-  "environment_name": "npm_config_gousto_webclient_environment_name",
-  "api_name": "npm_config_gousto_webclient_environment_name",
+  "build": 'NODE_ENV'
 }

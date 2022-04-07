@@ -40,7 +40,6 @@ import {
   checkoutClickContinueToPayment,
   clickCheckoutSecurely,
 } from 'actions/trackingKeys'
-import globals from 'config/globals'
 import { PaymentMethod } from 'config/signup'
 import logger from 'utils/logger'
 import { canUseWindow } from 'utils/browserEnvironment'
@@ -450,6 +449,8 @@ describe('tracking actions', () => {
     })
 
     describe('when global.AWIN is defined', () => {
+      withMockEnvironmentAndDomain('production', 'gousto.co.uk')
+
       test('then should save order as Tracking.Sale and invoke run', async () => {
         await trackAffiliatePurchase({
           orderId: 9010321,
@@ -463,15 +464,7 @@ describe('tracking actions', () => {
       })
 
       describe('and when on a non-production environment', () => {
-        let originalEnv
-        beforeEach(() => {
-          originalEnv = globals.env
-          globals.env = 'development'
-        })
-
-        afterEach(() => {
-          globals.env = originalEnv
-        })
+        withMockEnvironmentAndDomain('development', 'gousto.local')
 
         test('then it should fill the "test" field correctly', async () => {
           const expectedSale = {

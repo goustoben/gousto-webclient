@@ -262,7 +262,6 @@ module.exports = {
     require: false,
     window: true,
     __DEV__: false,
-    __ENV__: false,
     ga: false,
     hj: true,
     after: true,

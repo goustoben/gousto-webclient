@@ -2,7 +2,6 @@
 import moment from 'moment'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
-import globals from 'config/globals'
 import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
 import logger from 'utils/logger'
 import { getUserOrderById } from 'utils/user'
@@ -13,6 +12,7 @@ import { getUTMAndPromoCode, getTransactionType } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { trackOrder } from 'apis/tracking'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 
 const collectionRecommendationSlug = 'recommendations'
 
@@ -144,7 +144,7 @@ export const trackAffiliatePurchase = ({
         parts: `${commissionGroup}:${total}`,
         voucher: promoCode,
         currency: 'GBP',
-        test: globals.env === 'production' ? '0' : '1',
+        test: getEnvironment() === 'production' ? '0' : '1',
       }
 
       await dispatch(

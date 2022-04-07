@@ -1,5 +1,12 @@
 import fetch from 'utils/fetch'
-const envName = __ENV__ === 'local' ? 'staging' : __ENV__
-const S3FILE = `https://s3-gousto-${envName}-media.s3-eu-west-1.amazonaws.com/features.json`
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 
-export const fetchFeatures = async () => fetch(null, S3FILE, { }, 'GET', 'no-cache')
+const getS3Url = () => {
+  const environmentName = getEnvironment()
+  const S3FileForLocal = 'https://s3-gousto-staging-media.s3-eu-west-1.amazonaws.com/features.json'
+  const S3FILE = `https://s3-gousto-${environmentName}-media.s3-eu-west-1.amazonaws.com/features.json`
+
+  return environmentName === 'local' ? S3FileForLocal : S3FILE
+}
+
+export const fetchFeatures = async () => fetch(null, getS3Url(), { }, 'GET', 'no-cache')

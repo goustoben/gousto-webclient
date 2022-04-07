@@ -218,9 +218,6 @@ jobs:
     steps:
       - attach_workspace:
           at: /
-      - run:
-          name: Setup environment and npm variables for build
-          command: source ~/.circlerc && setup/setup-common.sh
       - run: echo $ENVIRONMENT
       - run:
           name: Build webclient

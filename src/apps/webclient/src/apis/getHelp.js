@@ -1,8 +1,6 @@
 import fetch, { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 
-const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1'
-
 const fetchRefundAmount = (accessToken, body) => {
   const url = `${endpoint('ssr',2)}/value`
 
@@ -28,9 +26,7 @@ const validateIngredients = (accessToken, body) => {
 }
 
 const validateOrder = (accessToken, body) => {
-  const url = (__ENV__ === 'local')
-    ? `${SSR_URL_LOCAL}/ssr/validate`
-    : `${endpoint('ssr')}/ssr/validate`
+  const url = `${endpoint('ssr')}/ssr/validate`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
@@ -38,9 +34,7 @@ const validateOrder = (accessToken, body) => {
 }
 
 const fetchOrderIssues = (accessToken) => {
-  const url = (__ENV__ === 'local')
-    ? `${SSR_URL_LOCAL}/ssr/categories`
-    : `${endpoint('ssr')}/ssr/categories`
+  const url = `${endpoint('ssr')}/ssr/categories`
 
   return fetch(accessToken, url, null, 'GET')
 }

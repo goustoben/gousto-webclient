@@ -106,12 +106,12 @@ describe('Home', () => {
       })
 
       // mock the environment and domain config used by these tests to generate endpoints
-      withMockEnvironmentAndDomain('local', 'gousto.local')
+      withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
       test('should put a canonical tag in the url', () => {
         expect(wrapper.find(Helmet).first().prop('link')).toEqual([
           {
-            href: 'http://www.gousto.local/',
+            href: 'http://www.gousto.co.uk/',
             rel: 'canonical',
           },
         ])

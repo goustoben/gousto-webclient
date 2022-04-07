@@ -1,5 +1,8 @@
 import { configureDDTracer } from '../datadog'
 import { DATADOG_ENABLED_ENVS } from '../../src/middlewares/datadog/config'
+import { getEnvironment } from '../../src/utils/isomorphicEnvironment'
+
+jest.mock('../../src/utils/isomorphicEnvironment')
 
 const mockUse = jest.fn()
 const mockInit = jest.fn(() => ({
@@ -19,7 +22,7 @@ describe('datadog', () => {
 
     describe('when datadog is enabled', () => {
       beforeEach(() => {
-        global.__ENV__ = DATADOG_ENABLED_ENVS[0]
+        (getEnvironment as jest.Mock).mockReturnValue(DATADOG_ENABLED_ENVS[0])
         configureDDTracer()
       })
 
@@ -41,7 +44,7 @@ describe('datadog', () => {
 
     describe('when datadog is not enabled', () => {
       beforeEach(() => {
-        global.__ENV__ = 'local'
+        (getEnvironment as jest.Mock).mockReturnValue('local')
         configureDDTracer()
       })
 

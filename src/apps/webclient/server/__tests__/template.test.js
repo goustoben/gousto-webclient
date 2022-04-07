@@ -86,8 +86,9 @@ describe('htmlTemplate', () => {
   })
 
   describe('optimizely', () => {
-    // eslint-disable-next-line no-underscore-dangle
-    const CDN_OPTIMIZELY = `<script src="//cdn.optimizely.com/js/${config[__ENV__]}.js" defer></script>`
+    // eslint-disable-next-line dot-notation
+    const TEST_ENVIRONMENT = config['local']
+    const CDN_OPTIMIZELY = `<script src="//cdn.optimizely.com/js/${TEST_ENVIRONMENT}.js" defer></script>`
     beforeEach(() => {
       helmetHead = {}
       output = ''
