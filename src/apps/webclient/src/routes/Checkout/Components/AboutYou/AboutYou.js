@@ -166,13 +166,6 @@ class AboutYou extends PureComponent {
     })
   }
 
-  submitForm = (e) => {
-    if (e) {
-      e.preventDefault()
-    }
-    this.handleSubmit()
-  }
-
   render() {
     const {
       sectionName,
@@ -189,22 +182,20 @@ class AboutYou extends PureComponent {
       : ''
 
     return (
-      <form id="create-account" onSubmit={this.submitForm} autoComplete="on">
-        <FormSection name={sectionName}>
-          <div className={checkoutCss.sectionContainer} data-testing="checkoutAboutYouSection">
-            <SectionHeader title="Create account" subtitle={sectionSubtitle} />
-            {this.renderFields()}
-            <CheckoutButton
-              onClick={this.handleSubmit}
-              submitting={submitting}
-              isDisabled={disableCTA}
-            >
-              Continue to Delivery
-            </CheckoutButton>
-          </div>
-          <ErrorMessage />
-        </FormSection>
-      </form>
+      <FormSection name={sectionName}>
+        <div className={checkoutCss.sectionContainer} data-testing="checkoutAboutYouSection">
+          <SectionHeader title="Create account" subtitle={sectionSubtitle} />
+          {this.renderFields()}
+          <CheckoutButton
+            onClick={this.handleSubmit}
+            submitting={submitting}
+            isDisabled={disableCTA}
+          >
+            Continue to Delivery
+          </CheckoutButton>
+        </div>
+        <ErrorMessage />
+      </FormSection>
     )
   }
 }
