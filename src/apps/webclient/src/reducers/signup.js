@@ -11,7 +11,6 @@ const initialState = Immutable.fromJS({
     district: null,
   },
   isDiscountAppliedBarDismissed: false,
-  showcaseMenuSeen: false,
   isInWizardFunnel: false,
 })
 
@@ -31,10 +30,6 @@ const signup = {
 
     case actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR: {
       return state.set('isDiscountAppliedBarDismissed', true)
-    }
-
-    case actionTypes.SHOWCASE_MENU_SEEN: {
-      return state.set('showcaseMenuSeen', true)
     }
 
     case actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS: {

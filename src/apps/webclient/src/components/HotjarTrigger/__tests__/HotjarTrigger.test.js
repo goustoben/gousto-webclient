@@ -11,7 +11,7 @@ describe('HotjarTrigger', () => {
       jest.clearAllMocks()
       global.hj = hj
 
-      wrapper = mount(<HotjarTrigger name="showcase_menu" />)
+      wrapper = mount(<HotjarTrigger name="test_trigger" />)
     })
 
     test('then it should not actually render anything', () => {
@@ -19,7 +19,7 @@ describe('HotjarTrigger', () => {
     })
 
     test('then it should invoke the hotjar trigger', () => {
-      expect(hj).toHaveBeenCalledWith('trigger', 'showcase_menu')
+      expect(hj).toHaveBeenCalledWith('trigger', 'test_trigger')
     })
   })
 
@@ -28,7 +28,7 @@ describe('HotjarTrigger', () => {
       jest.clearAllMocks()
       global.hj = hj
 
-      wrapper = mount(<HotjarTrigger name="showcase_menu" shouldInvoke={false} />)
+      wrapper = mount(<HotjarTrigger name="test_trigger" shouldInvoke={false} />)
     })
 
     test('then it should not invoke the trigger', () => {
@@ -41,7 +41,7 @@ describe('HotjarTrigger', () => {
       jest.clearAllMocks()
       delete global.hj
 
-      wrapper = mount(<HotjarTrigger name="showcase_menu" />)
+      wrapper = mount(<HotjarTrigger name="test_trigger" />)
     })
 
     test('then it should not invoke the trigger', () => {

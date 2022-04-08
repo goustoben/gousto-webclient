@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
 import { appBannerDismiss } from 'actions/appBanner'
-import { basketAddressChange, basketChosenAddressChange, basketDateChange, basketNumPortionChange, basketPostcodeChangePure, basketPreviewOrderChange, basketPromoCodeChange, basketPromoCodeUrlChange, basketRecipesInitialise, basketSetNumRecipes, basketSetSubscriptionOption, basketSignupCollectionReceive, basketSlotChange, basketStepsOrderReceive } from 'actions/basket'
+import { basketAddressChange, basketChosenAddressChange, basketDateChange, basketNumPortionChange, basketPostcodeChangePure, basketPreviewOrderChange, basketPromoCodeChange, basketPromoCodeUrlChange, basketRecipesInitialise, basketSetSubscriptionOption, basketSignupCollectionReceive, basketSlotChange, basketStepsOrderReceive } from 'actions/basket'
 import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
 import { promoAgeVerify } from 'actions/promos'
@@ -78,7 +78,6 @@ const processCookies = (cookies, store) => {
   const previewOrderId = getCookieStoreValue(cookies, 'basket_previewOrderId')
   const boxId = getCookieStoreValue(cookies, 'basket_boxId')
   const numPortions = getCookieStoreValue(cookies, 'basket_numPortions')
-  const numRecipes = getCookieStoreValue(cookies, 'basket_numRecipes')
   const recipes = getCookieStoreValue(cookies, 'basket_recipes')
   const stepsOrder = getCookieStoreValue(cookies, 'basket_stepsOrder')
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
@@ -203,10 +202,6 @@ const processCookies = (cookies, store) => {
 
     if (numPortions) {
       store.dispatch(basketNumPortionChange(numPortions))
-    }
-
-    if (numRecipes) {
-      store.dispatch(basketSetNumRecipes(numRecipes))
     }
 
     if (recipes) {

@@ -19,7 +19,6 @@ import { sectionName } from './config'
 import { CheckoutPayment } from './CheckoutPayment'
 
 export const mapStateToProps = (state) => {
-  const ribbonTriggerName = 'control_payment'
   const hotjarTriggerName = 'psd2_modal'
 
   return {
@@ -32,7 +31,6 @@ export const mapStateToProps = (state) => {
     sectionName,
     currentPaymentMethod: getCurrentPaymentMethod(state),
     isPayPalReady: isPayPalReady(state),
-    ribbonTriggerName,
     hotjarTriggerName,
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }

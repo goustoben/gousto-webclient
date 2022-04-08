@@ -1,1 +1,0 @@
-export { ScrollCarousel } from './ScrollCarousel'

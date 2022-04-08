@@ -9,10 +9,6 @@
   flex-direction: column;
 }
 
-.hasWhiteBackground {
-  background: White;
-}
-
 .headerContainer {
   width: 100%;
   display: block;

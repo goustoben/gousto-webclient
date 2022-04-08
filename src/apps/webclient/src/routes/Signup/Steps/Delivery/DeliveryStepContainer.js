@@ -31,7 +31,6 @@ function mapStateToProps(state) {
     nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
     disabledSlots,
     userHasAvailableSlots: userHasAvailableSlots(state),
-    showcaseMenuSeen: state.signup.get('showcaseMenuSeen'),
     district: state.signup.getIn(['wizard', 'district']),
     amountOfCustomers: state.signup.getIn(['wizard', 'amountOfCustomers']),
   }

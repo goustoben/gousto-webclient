@@ -7,7 +7,6 @@ export const signupConfig = {
   defaultSteps: ['boxSize', 'postcode', 'delivery'],
   steps: [
     { name: 'boxSize', slug: 'box-size' },
-    { name: 'recipesPerBox', slug: 'recipes-per-box' },
     { name: 'postcode', slug: 'postcode' },
     { name: 'delivery', slug: 'delivery-options' },
   ],
@@ -48,10 +47,6 @@ export const signupConfig = {
         value: 4,
       },
     ],
-  },
-  recipesPerBoxStep: {
-    title: 'How many recipes do you want per box?',
-    recipesPerBoxPossibleValues: [2, 3, 4],
   },
   postCodeStep: {
     title: 'Where would you like your boxes delivered?',

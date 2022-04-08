@@ -1,19 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { Header } from 'Header'
 import css from './SignupLayout.css'
 
 export class SignupLayout extends React.PureComponent {
   render() {
-    const { hasWhiteBackground, children, showLoginCTA } = this.props
+    const { children } = this.props
 
     return (
       <div
-        className={classNames(css.pageContainer, { [css.hasWhiteBackground]: hasWhiteBackground })}
+        className={css.pageContainer}
       >
         <div className={css.headerContainer}>
-          <Header simple hasLoginModal showLoginCTA={showLoginCTA} />
+          <Header simple hasLoginModal />
         </div>
         {children}
       </div>
@@ -22,12 +21,5 @@ export class SignupLayout extends React.PureComponent {
 }
 
 SignupLayout.propTypes = {
-  hasWhiteBackground: PropTypes.bool,
-  showLoginCTA: PropTypes.bool,
   children: PropTypes.node.isRequired,
-}
-
-SignupLayout.defaultProps = {
-  hasWhiteBackground: false,
-  showLoginCTA: false,
 }
