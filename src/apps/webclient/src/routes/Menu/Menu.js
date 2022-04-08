@@ -7,6 +7,7 @@ import menu from 'config/menu'
 import browserHelper from 'utils/browserHelper'
 
 import MainLayout from 'layouts/MainLayout'
+import ErrorPage from 'components/ErrorPage'
 import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
 import { BoxSummaryContainer } from './components/BoxSummary'
 import { DetailRecipeMetaContainer } from './components/RecipeMeta'
@@ -66,7 +67,10 @@ class Menu extends React.PureComponent {
       promises.push(menuLoadBoxPrices())
     }
 
-    promises.push(applyPromoCodeAndShowModal())
+    const { orderId } = params
+    if (!orderId) {
+      promises.push(applyPromoCodeAndShowModal())
+    }
 
     await Promise.all(promises)
     menuCalculateTimeToUsable()
@@ -98,10 +102,21 @@ class Menu extends React.PureComponent {
       query,
       children,
       isActionBarRedesignEnabled,
+      params,
     } = this.props
 
     const { isChrome } = this.state
     const overlayShowCSS = (showOverlay && isChrome) ? css.blur : null
+
+    const { orderId } = params
+
+    if (!isAuthenticated && orderId) {
+      return (
+        <MainLayout>
+          <ErrorPage />
+        </MainLayout>
+      )
+    }
 
     return (
       <MainLayout route={{ withRecipeBar: true }}>
