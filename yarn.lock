@@ -2173,10 +2173,18 @@ __metadata:
     "@storybook/addon-essentials": ^6.4.19
     "@testing-library/react": 12.1.2
     "@testing-library/react-hooks": ^3.4.2
-    react-test-renderer: 16.13.1
-  peerDependencies:
+    immutable: 3.8.2
     react: 17.0.2
     react-dom: 17.0.2
+    react-redux: 7.2.4
+    react-test-renderer: 16.13.1
+    swr: ^1.1.2
+  peerDependencies:
+    immutable: 3.8.2
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-redux: 7.2.4
+    swr: ^1.1.2
   languageName: unknown
   linkType: soft
 

@@ -27,8 +27,7 @@ function getStockAvailability(getState, recipeStock) {
   const { recipes } = getState()
   const query = locationQuery(getState())
   const isAdminLink = query && query['preview[menu_id]']
-  const includedData = recipes
-  const storedRecipes = Object.values(includedData.toJS())
+  const storedRecipes = Object.values(recipes.toJS())
   const recipeStockList = Object.values(recipeStock)
 
   if (isAdminLink) {
@@ -45,10 +44,11 @@ function getStockAvailability(getState, recipeStock) {
 
   return recipeStockList.reduce((acc, stockEntry) => {
     const committed = stockEntry.committed === '1'
-    const foundMatchingRecipeFromStock = storedRecipes.find((obj) => obj.id === stockEntry.recipeId.toString())
 
-    if (foundMatchingRecipeFromStock) {
-      acc[foundMatchingRecipeFromStock.id] = {
+    const recipe = storedRecipes.find((obj) => obj.id === stockEntry.recipeId.toString())
+
+    if (recipe) {
+      acc[recipe.id] = {
         2: committed ? parseInt(stockEntry.number, 10) : 1000,
         4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,
         committed,
