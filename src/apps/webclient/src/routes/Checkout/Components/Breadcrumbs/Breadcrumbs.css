@@ -31,12 +31,6 @@
   margin: 0 0.25rem;
   width: 1.5rem;
   height: 1.5rem;
-
-  @media BreakpointToMedium {
-    &.removeMargin {
-      margin: 0;
-    }
-  }
 }
 
 .hidden {

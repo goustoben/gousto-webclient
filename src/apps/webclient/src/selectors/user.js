@@ -63,12 +63,6 @@ export const getUserPhoneWithoutLeadingZero = createSelector(
   }
 )
 
-export const getUserOrderIdFromProps = (_, props) => props.orderId
-export const getUserOrderDetailsById = createSelector(
-  [getUserOrders, getUserOrderIdFromProps],
-  (orders, orderId) => orders.find(order => order.get('id') === orderId, null, new Immutable.Map({}))
-)
-
 export const getUsersOrdersDaySlotLeadTimeIds = createSelector(
   getUserOrders,
   orders => orders.map(order => order.get('daySlotLeadTimeId')).toArray()

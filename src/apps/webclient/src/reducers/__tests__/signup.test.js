@@ -20,23 +20,6 @@ describe('signup reducer', () => {
     })
   })
 
-  describe('given SHOWCASE_MENU_SEEN is dispatched', () => {
-    const action = {
-      type: actionTypes.SHOWCASE_MENU_SEEN,
-    }
-    let initialState
-
-    beforeEach(() => {
-      initialState = Immutable.fromJS({})
-    })
-
-    test('should update showcaseMenuSeen properly', () => {
-      const result = signup.signup(initialState, action)
-
-      expect(result.get('showcaseMenuSeen')).toBe(true)
-    })
-  })
-
   describe('given SIGNUP_SET_SOCIAL_BELONGING_OPTIONS is dispatched', () => {
     const action = {
       type: actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS,

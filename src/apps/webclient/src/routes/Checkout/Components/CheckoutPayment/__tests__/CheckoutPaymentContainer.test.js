@@ -48,7 +48,6 @@ describe('CheckoutPaymentContainer', () => {
         isRecaptchaEnabled: true,
         recaptchaValue: 'token',
         hotjarTriggerName: 'psd2_modal',
-        ribbonTriggerName: 'control_payment',
         sectionName: 'payment',
         isPayPalReady: false,
         formErrors: {},

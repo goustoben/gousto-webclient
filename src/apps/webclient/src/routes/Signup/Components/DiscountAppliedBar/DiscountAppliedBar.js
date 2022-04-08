@@ -39,14 +39,12 @@ class DiscountAppliedBar extends Component {
   }
 
   render() {
-    const { page } = this.props
     const { isHidden } = this.state
 
     return (
       <div
         className={classNames(css.container, {
           [css.isHidden]: isHidden,
-          [css.containerOnShowcaseMenu]: page === 'showcaseMenu',
         })}
       >
         <div className={css.successIcon} />
@@ -71,13 +69,11 @@ DiscountAppliedBar.propTypes = {
   isPromoBarHidden: PropTypes.bool.isRequired,
   trackDiscountVisibility: PropTypes.func.isRequired,
   wizardStep: PropTypes.string.isRequired,
-  page: PropTypes.string,
   isDiscountAppliedBarDismissed: PropTypes.bool,
   signupDismissDiscountAppliedBar: PropTypes.func,
 }
 
 DiscountAppliedBar.defaultProps = {
-  page: 'signup',
   isDiscountAppliedBarDismissed: false,
   signupDismissDiscountAppliedBar: () => {},
 }

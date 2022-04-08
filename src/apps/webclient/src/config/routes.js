@@ -23,7 +23,6 @@ module.exports = {
     boxPrices: '/box-prices',
     checkout: '/checkout',
     'check-out': '/check-out',
-    checkoutWelcome: '/check-out/welcome-to-gousto',
     cookbook: '/cookbook',
     cookbookRecipeById: '/cookbook/recipe-by-id',
 

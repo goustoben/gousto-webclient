@@ -123,11 +123,6 @@ export const basketNumPeopleChange = peopleObj => (
   }
 )
 
-export const basketSetNumRecipes = (numRecipes) => ({
-  type: actionTypes.BASKET_SET_NUM_RECIPES,
-  numRecipes,
-})
-
 export const basketReset = (chosenAddress = null) => ({
   type: actionTypes.BASKET_RESET,
   payload: {

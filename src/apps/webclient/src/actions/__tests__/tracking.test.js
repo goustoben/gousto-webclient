@@ -23,7 +23,6 @@ import {
   trackDiscountVisibilityBannerAppearance,
   trackCheckoutNavigationLinks,
   trackCheckoutError,
-  trackShowcaseMenuAction,
   trackUnexpectedSignup,
 } from 'actions/tracking'
 import { trackOrder } from 'apis/tracking'
@@ -1467,42 +1466,6 @@ describe('tracking actions', () => {
         initiator: 'testInitiator',
         messageCode: 'user-promo-invalid',
         promoCode: 'DTI-20M',
-      })
-    })
-  })
-
-  describe('trackShowcaseMenuAction', () => {
-    beforeEach(() => {
-      const state = {
-        basket: Immutable.fromJS({
-          promoCode: 'promo1',
-        }),
-        tracking: Immutable.Map({
-          utmSource: {
-            referral: '123',
-          },
-        }),
-      }
-      dispatch = jest.fn()
-      getState = jest.fn().mockReturnValue(state)
-    })
-
-    test('it should track utm, promo code, and additional data', () => {
-      const type = 'showcase_menu_click_category_filter'
-
-      trackShowcaseMenuAction(type, { category: 'Fish' })(
-        dispatch,
-        getState
-      )
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type,
-        trackingData: expect.objectContaining({
-          actionType: type,
-          category: 'Fish',
-          promoCode: 'promo1',
-          referral: '123',
-        }),
       })
     })
   })

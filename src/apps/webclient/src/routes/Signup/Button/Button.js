@@ -15,7 +15,7 @@ const ctaText = (isLastStep) => {
   return 'Continue'
 }
 
-const Button = ({ children, onClick, isLastStep, showcaseMenuSeen, ...buttonProps }) => {
+const Button = ({ children, onClick, isLastStep, ...buttonProps }) => {
   const buttonText = children || ctaText(isLastStep)
 
   const className = classNames(css.cta, {
@@ -41,13 +41,11 @@ Button.propTypes = {
   isLastStep: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   children: PropTypes.node,
-  showcaseMenuSeen: PropTypes.bool,
 }
 
 Button.defaultProps = {
   onClick: () => {},
   children: undefined,
-  showcaseMenuSeen: false,
 }
 
 export { Button }

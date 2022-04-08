@@ -7,7 +7,6 @@ import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
 import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
 import { HotjarTrigger } from 'HotjarTrigger'
-import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { SubmitButton } from '../SubmitButton'
 import { ErrorMessage } from '../ErrorMessage'
 import { Checkout3DSModal } from './Checkout3DSModal'
@@ -239,7 +238,6 @@ class CheckoutPayment extends React.Component {
       currentPaymentMethod,
       setCurrentPaymentMethod,
       isRecaptchaEnabled,
-      ribbonTriggerName,
       hotjarTriggerName,
       isGoustoOnDemandEnabled,
       isFreeBox,
@@ -283,7 +281,6 @@ class CheckoutPayment extends React.Component {
         {this.renderOuterContent()}
         <PaymentFooter isGoustoOnDemandEnabled={isGoustoOnDemandEnabled} />
         <Checkout3DSModal />
-        <RibbonTriggerContainer name={ribbonTriggerName} probabilityPercentage={50} />
         {!prerender && <HotjarTrigger name={hotjarTriggerName} shouldInvoke />}
       </div>
     )
@@ -315,7 +312,6 @@ CheckoutPayment.propTypes = {
   currentPaymentMethod: PropTypes.string.isRequired,
   setCurrentPaymentMethod: PropTypes.func,
   onLoginClick: PropTypes.func,
-  ribbonTriggerName: PropTypes.string,
   hotjarTriggerName: PropTypes.string,
   isGoustoOnDemandEnabled: PropTypes.bool,
   isFreeBox: PropTypes.bool,
@@ -343,7 +339,6 @@ CheckoutPayment.defaultProps = {
   storeSignupRecaptchaToken: () => {},
   setCurrentPaymentMethod: () => {},
   onLoginClick: () => {},
-  ribbonTriggerName: '',
   hotjarTriggerName: '',
   isGoustoOnDemandEnabled: false,
   isFreeBox: false,

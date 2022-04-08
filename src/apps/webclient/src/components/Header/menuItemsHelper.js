@@ -21,12 +21,6 @@ export const defaultMenuItems = {
   sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
 }
 
-export const showcaseMenuItem = {
-  name: 'This week’s menu',
-  url: clientRoutes.menu,
-  tracking: trackingKeys.clickRecipeNavigation
-}
-
 export const newSubscription = {
   name: 'Subscription Settings',
   url: clientRoutes.mySubscription,

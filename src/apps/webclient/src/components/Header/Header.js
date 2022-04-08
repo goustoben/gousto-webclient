@@ -374,7 +374,6 @@ class Header extends React.PureComponent {
       abandonBasketFeature,
       routing,
       isAppAwarenessEnabled,
-      showLoginCTA,
       hasLoginModal,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
@@ -399,22 +398,9 @@ class Header extends React.PureComponent {
             className={mobileMenuOpen ? css.overlayOpen : css.overlay}
             homeUrl={mobileMenuItems[0].url}
             title={title}
-            showLoginCTA={showLoginCTA}
-            onLoginClick={this.onLoginClick}
           />
-          {(showLoginCTA || hasLoginModal) && this.renderLoginModal()}
+          {hasLoginModal && this.renderLoginModal()}
         </Fragment>
-      )
-    }
-
-    if (pathName && pathName.includes(client.checkoutWelcome)) {
-      return (
-        <SimpleHeader
-          serverError={serverError}
-          className={mobileMenuOpen ? css.overlayOpen : css.overlay}
-          homeUrl={mobileMenuItems[0].url}
-          title={title}
-        />
       )
     }
 
@@ -505,7 +491,6 @@ Header.propTypes = {
   trackNavigationClick: PropTypes.func,
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
-  showLoginCTA: PropTypes.bool,
   hasLoginModal: PropTypes.bool,
 }
 
@@ -526,7 +511,6 @@ Header.defaultProps = {
   trackNavigationClick: () => { },
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
-  showLoginCTA: false,
   hasLoginModal: false,
 }
 

@@ -26,7 +26,6 @@ import { invokeHotjarEvent } from 'utils/hotjarUtils'
 import css from './Signup.css'
 
 import { BoxSizeStep } from './Steps/BoxSize'
-import { RecipesPerBoxStepContainer } from './Steps/RecipesPerBox'
 import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
@@ -36,7 +35,6 @@ import { ApplyVoucherPageContainer } from './Components/ApplyVoucherPage'
 
 const components = {
   boxSize: BoxSizeStep,
-  recipesPerBox: RecipesPerBoxStepContainer,
   postcode: PostcodeStep,
   delivery: DeliveryStep,
 }
