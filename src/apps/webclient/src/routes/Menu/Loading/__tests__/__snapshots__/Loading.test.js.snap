@@ -8,8 +8,8 @@ exports[`Menu Loading Initial Rendering should match snapshot 1`] = `
     className="loading"
   >
     <img
-      alt="animation"
-      className="gif undefined contain"
+      alt=""
+      className="gif contain"
       onClick={[Function]}
       src="Loading-Icon.gif"
     />

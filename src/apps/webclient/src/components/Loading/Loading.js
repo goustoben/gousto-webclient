@@ -1,5 +1,6 @@
 import React from 'react'
-import PropType from 'prop-types'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { Div } from 'Page/Elements'
 import Image from 'Image'
 
@@ -31,11 +32,15 @@ export const LoadingOverlay = () => (
 )
 
 const Loading = ({ className }) => (
-  <Image media={getImage('Loading-Icon.gif')} title="animation" className={`${css.gif} ${className}`} />
+  <Image media={getImage('Loading-Icon.gif')} className={classNames(css.gif, className)} />
 )
 
 Loading.propTypes = {
-  className: PropType.string,
+  className: PropTypes.string,
+}
+
+Loading.defaultProps = {
+  className: null,
 }
 
 export default Loading
