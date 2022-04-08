@@ -12,7 +12,7 @@ describe('serverError reducer', () => {
   describe('serverError', () => {
     describe('when window is available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(true)
+        ;(canUseWindow as jest.Mock).mockReturnValue(true)
       })
 
       test('returns 404', () => {
@@ -24,7 +24,7 @@ describe('serverError reducer', () => {
 
     describe('when window is not available', () => {
       beforeEach(() => {
-        (canUseWindow as jest.Mock).mockReturnValue(false)
+        ;(canUseWindow as jest.Mock).mockReturnValue(false)
       })
 
       test('returns initial state', () => {

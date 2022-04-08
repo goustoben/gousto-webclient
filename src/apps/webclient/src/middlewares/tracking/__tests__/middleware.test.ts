@@ -39,15 +39,17 @@ describe('middleware', () => {
 
   describe('when the window is available', () => {
     beforeEach(() => {
-      (canUseWindow as jest.Mock).mockReturnValue(true);
-      (getWindow as jest.Mock).mockReturnValue({
+      ;(canUseWindow as jest.Mock).mockReturnValue(true)
+      ;(getWindow as jest.Mock).mockReturnValue({
         location: {
           pathname: 'pathname-from-window',
         },
       })
       mockStore = {
         // Store must throw in order to retrieve pathname from window
-        getState: () => { throw new Error('some error') }
+        getState: () => {
+          throw new Error('some error')
+        },
       }
 
       invokeMiddleware()
@@ -62,7 +64,7 @@ describe('middleware', () => {
 
   describe('when the window is not available', () => {
     beforeEach(() => {
-      (canUseWindow as jest.Mock).mockReturnValue(false);
+      ;(canUseWindow as jest.Mock).mockReturnValue(false)
       mockStore = {
         getState: () => ({
           routing: {

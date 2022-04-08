@@ -24,7 +24,7 @@ describe('snowplowV2', () => {
 
   describe('when window is available', () => {
     beforeEach(() => {
-      (canUseWindow as jest.Mock).mockReturnValue(true)
+      ;(canUseWindow as jest.Mock).mockReturnValue(true)
     })
 
     test('invokes tracking fns', () => {
@@ -36,7 +36,7 @@ describe('snowplowV2', () => {
 
   describe('when window is not available', () => {
     beforeEach(() => {
-      (canUseWindow as jest.Mock).mockReturnValue(false)
+      ;(canUseWindow as jest.Mock).mockReturnValue(false)
     })
 
     test('does not invoke tracking fns', () => {

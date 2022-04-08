@@ -327,6 +327,7 @@ module.exports = {
 
           // This check doesn't pick up default initializers in destructuring props.
           'react/require-default-props': 'off',
+          'semi-style': 'off',
         },
       },
     },
@@ -363,8 +364,10 @@ module.exports = {
         'src/middlewares/tracking/dataLayerTracker/*.js',
         'src/routes/BoxPrices/**/*.js',
         'src/performanceTracker/**/*.js',
-        'src/routes/Menu/**/*.ts',
-        'src/routes/Menu/**/*.tsx',
+        'src/**/*.ts',
+        'src/**/*.tsx',
+        'server/**/*.ts',
+        'server/**/*.tsx',
       ],
       rules: {
         'prettier/prettier': 'error',
