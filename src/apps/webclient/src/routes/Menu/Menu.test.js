@@ -123,6 +123,25 @@ describe('Menu', () => {
         })
       })
     })
+
+    describe('when requested with orderId by a non-authenticated user', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Menu
+            {...requiredProps}
+            isLoading={false}
+            boxSummaryDeliveryDays={Immutable.Map()}
+            disabled={false}
+            params={{ orderId: '123456'}}
+          />,
+          mountOptions
+        )
+      })
+
+      test('then it should show an ErorPage', () => {
+        expect(wrapper.find('Connect(ErrorPage)')).toHaveLength(1)
+      })
+    })
   })
 
   describe('componentWillUnmount', () => {

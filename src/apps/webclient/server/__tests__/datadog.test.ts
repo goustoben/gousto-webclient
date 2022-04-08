@@ -22,7 +22,7 @@ describe('datadog', () => {
 
     describe('when datadog is enabled', () => {
       beforeEach(() => {
-        (getEnvironment as jest.Mock).mockReturnValue(DATADOG_ENABLED_ENVS[0])
+        ;(getEnvironment as jest.Mock).mockReturnValue(DATADOG_ENABLED_ENVS[0])
         configureDDTracer()
       })
 
@@ -44,7 +44,7 @@ describe('datadog', () => {
 
     describe('when datadog is not enabled', () => {
       beforeEach(() => {
-        (getEnvironment as jest.Mock).mockReturnValue('local')
+        ;(getEnvironment as jest.Mock).mockReturnValue('local')
         configureDDTracer()
       })
 

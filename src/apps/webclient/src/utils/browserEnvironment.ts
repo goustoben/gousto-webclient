@@ -87,18 +87,18 @@ export const getClientEnvironment = () => {
   const subdomain = getSubdomain()
   const topLevelDomain = getTopLevelDomain()
   switch (true) {
-  // Production -> https://www.gousto.co.uk OR https://production-webclient.gousto.co.uk OR https://production-frontend.gousto.co.uk
-  case isHTTPS() && (subdomain === 'www' || subdomain.includes('production')):
-    return 'production'
+    // Production -> https://www.gousto.co.uk OR https://production-webclient.gousto.co.uk OR https://production-frontend.gousto.co.uk
+    case isHTTPS() && (subdomain === 'www' || subdomain.includes('production')):
+      return 'production'
 
-  // Staging -> https://staging-www.gousto.info OR https://staging-webclient.gousto.info OR https://staging-frontend.gousto.info
-  // Lower environment -> https://fef-www.gousto.info OR https://fef-webclient.gousto.info OR https://fef-frontend.gousto.info
-  case isHTTPS() && topLevelDomain === '.info':
-    return getLowerEnvironmentName()
+    // Staging -> https://staging-www.gousto.info OR https://staging-webclient.gousto.info OR https://staging-frontend.gousto.info
+    // Lower environment -> https://fef-www.gousto.info OR https://fef-webclient.gousto.info OR https://fef-frontend.gousto.info
+    case isHTTPS() && topLevelDomain === '.info':
+      return getLowerEnvironmentName()
 
-  // Local -> http://frontend.gousto.local:8080 OR http://localhost:8080
-  default:
-    return 'local'
+    // Local -> http://frontend.gousto.local:8080 OR http://localhost:8080
+    default:
+      return 'local'
   }
 }
 

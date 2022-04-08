@@ -15,9 +15,9 @@ describe('media.js', () => {
       ['fef', undefined, `https://s3-gousto-fef-assets.s3.amazonaws.com${ASSET_PATH}`],
       ['local', undefined, ASSET_PATH],
     ])('getAssetRootUrl contains the correct values', (serverEnvironment, domain, expected) => {
-      (getProtocol as jest.Mock).mockReturnValue('https:');
-      (getDomain as jest.Mock).mockReturnValue(domain);
-      (getEnvironment as jest.Mock).mockReturnValue(serverEnvironment);
+      ;(getProtocol as jest.Mock).mockReturnValue('https:')
+      ;(getDomain as jest.Mock).mockReturnValue(domain)
+      ;(getEnvironment as jest.Mock).mockReturnValue(serverEnvironment)
 
       // eslint-disable-next-line
       const { getAssetRootUrl } = require('../media')
@@ -35,7 +35,7 @@ describe('media.js', () => {
       const ctx = {
         request: {
           path: `${ASSET_PATH}/mock-image.jpg`,
-        }
+        },
       }
 
       await proxyAssetRequest({ ctx, next: () => {} })
@@ -54,7 +54,7 @@ describe('media.js', () => {
     const ctx = {
       request: {
         path: '/users/current',
-      }
+      },
     }
 
     const mockedNext = jest.fn()

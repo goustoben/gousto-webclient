@@ -1,9 +1,9 @@
-import { getEnvConfig } from "utils/processEnv";
+import { getEnvConfig } from 'utils/processEnv'
 import {
   ENVIRONMENT_NAMES,
   PROTOCOL_PREFIX,
-  SERVICE_DOMAINS
-} from "config/service-environment/service-environment.types";
+  SERVICE_DOMAINS,
+} from 'config/service-environment/service-environment.types'
 
 /**
  * Environment config getter for SERVER side environment
@@ -24,8 +24,7 @@ export const getServerEnvironment = () => {
   return ENVIRONMENT
 }
 
-export const getServerDomain = (
-) => {
+export const getServerDomain = () => {
   const environment = getServerEnvironment()
 
   switch (true) {
@@ -42,9 +41,9 @@ export const getServerDomain = (
 
 const isLocalEnvironment = () => getServerEnvironment() === ENVIRONMENT_NAMES.local
 
-export const getServerProtocol = () => (isLocalEnvironment() ? PROTOCOL_PREFIX.HTTP : PROTOCOL_PREFIX.HTTPS)
+export const getServerProtocol = () =>
+  isLocalEnvironment() ? PROTOCOL_PREFIX.HTTP : PROTOCOL_PREFIX.HTTPS
 
 export const getServerRecaptchaPublicKey = () => getEnvConfig().RECAPTCHA_PUBK
 export const getServerRecaptchaRAFPublicKey = () => getEnvConfig().RECAPTCHA_RAF_PUBK
 export const getServerCheckoutComPublicKey = () => getEnvConfig().CHECKOUT_COM_PUBK
-

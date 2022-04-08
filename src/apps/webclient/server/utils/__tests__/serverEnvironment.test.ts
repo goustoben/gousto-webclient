@@ -1,5 +1,12 @@
 import { getEnvConfig } from '../../../src/utils/processEnv'
-import { getServerEnvironment, getServerDomain, getServerProtocol, getServerRecaptchaPublicKey, getServerRecaptchaRAFPublicKey, getServerCheckoutComPublicKey } from "../serverEnvironment";
+import {
+  getServerEnvironment,
+  getServerDomain,
+  getServerProtocol,
+  getServerRecaptchaPublicKey,
+  getServerRecaptchaRAFPublicKey,
+  getServerCheckoutComPublicKey,
+} from '../serverEnvironment'
 
 jest.mock('../../../src/utils/processEnv')
 
@@ -43,7 +50,7 @@ describe('serverEnvironment', () => {
 
     it('should use ENVIRONMENT to infer the specified domain for lower envoironments', () => {
       mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'jalapenos' })
-      expect(getServerDomain()).toEqual('gousto.info');
+      expect(getServerDomain()).toEqual('gousto.info')
       mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'fef' })
       expect(getServerDomain()).toEqual('gousto.info')
     })
@@ -77,7 +84,7 @@ describe('serverEnvironment', () => {
       const mockRecaptchaPublicKey = 'mock-recaptcha-public-key'
 
       mockGetEnvConfig.mockReturnValue({
-        RECAPTCHA_PUBK: mockRecaptchaPublicKey
+        RECAPTCHA_PUBK: mockRecaptchaPublicKey,
       })
 
       expect(getServerRecaptchaPublicKey()).toEqual(mockRecaptchaPublicKey)
@@ -89,7 +96,7 @@ describe('serverEnvironment', () => {
       const mockRecaptchaRAFPublicKey = 'mock-recaptcha-raf-public-key'
 
       mockGetEnvConfig.mockReturnValue({
-        RECAPTCHA_RAF_PUBK: mockRecaptchaRAFPublicKey
+        RECAPTCHA_RAF_PUBK: mockRecaptchaRAFPublicKey,
       })
 
       expect(getServerRecaptchaRAFPublicKey()).toEqual(mockRecaptchaRAFPublicKey)
@@ -101,7 +108,7 @@ describe('serverEnvironment', () => {
       const mockCheckoutComPublicKey = 'mock-checkout-com-public-key'
 
       mockGetEnvConfig.mockReturnValue({
-        CHECKOUT_COM_PUBK: mockCheckoutComPublicKey
+        CHECKOUT_COM_PUBK: mockCheckoutComPublicKey,
       })
 
       expect(getServerCheckoutComPublicKey()).toEqual(mockCheckoutComPublicKey)

@@ -116,8 +116,8 @@ describe('isomorphicEnvironment utils', () => {
           // @ts-expect-error
           createElement: () => null,
         },
-      });
-      (getClientEnvironment as jest.Mock).mockReturnValue(mockBrowserEnvironment)
+      })
+      ;(getClientEnvironment as jest.Mock).mockReturnValue(mockBrowserEnvironment)
 
       expect(getEnvironment()).toEqual(mockBrowserEnvironment)
     })
@@ -144,8 +144,8 @@ describe('isomorphicEnvironment utils', () => {
         },
       })
 
-      const stubDomainResponse = 'mockclientdomain.com';
-      (getClientDomain as jest.Mock).mockReturnValue(stubDomainResponse)
+      const stubDomainResponse = 'mockclientdomain.com'
+      ;(getClientDomain as jest.Mock).mockReturnValue(stubDomainResponse)
 
       expect(getDomain()).toEqual(stubDomainResponse)
     })
@@ -155,8 +155,8 @@ describe('isomorphicEnvironment utils', () => {
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
 
-      const stubDomainResponse = 'mockserverdomain.com';
-      (getServerDomain as jest.Mock).mockReturnValue(stubDomainResponse)
+      const stubDomainResponse = 'mockserverdomain.com'
+      ;(getServerDomain as jest.Mock).mockReturnValue(stubDomainResponse)
 
       expect(getDomain()).toEqual(stubDomainResponse)
     })
@@ -172,8 +172,8 @@ describe('isomorphicEnvironment utils', () => {
         },
       })
 
-      const stubProtocolValue = 'stubProtocolValue:http';
-      (getClientProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+      const stubProtocolValue = 'stubProtocolValue:http'
+      ;(getClientProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
 
       expect(getProtocol()).toEqual(stubProtocolValue)
     })
@@ -183,8 +183,8 @@ describe('isomorphicEnvironment utils', () => {
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
 
-      const stubProtocolValue = 'stubProtocolValue:https';
-      (getServerProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+      const stubProtocolValue = 'stubProtocolValue:https'
+      ;(getServerProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
 
       expect(getProtocol()).toEqual(stubProtocolValue)
     })
@@ -200,8 +200,8 @@ describe('isomorphicEnvironment utils', () => {
           // @ts-expect-error
           createElement: () => null,
         },
-      });
-      (getClientRecaptchaPublicKey as jest.Mock).mockReturnValue(expected)
+      })
+      ;(getClientRecaptchaPublicKey as jest.Mock).mockReturnValue(expected)
 
       expect(getRecaptchaPublicKey()).toEqual(expected)
     })
@@ -211,8 +211,8 @@ describe('isomorphicEnvironment utils', () => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      windowSpy.mockReturnValue(undefined);
-      (getServerRecaptchaPublicKey as jest.Mock).mockReturnValue(expected)
+      windowSpy.mockReturnValue(undefined)
+      ;(getServerRecaptchaPublicKey as jest.Mock).mockReturnValue(expected)
 
       expect(getRecaptchaPublicKey()).toEqual(expected)
     })
@@ -228,8 +228,8 @@ describe('isomorphicEnvironment utils', () => {
           // @ts-expect-error
           createElement: () => null,
         },
-      });
-      (getClientRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
+      })
+      ;(getClientRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
 
       expect(getRecaptchaRAFPublicKey()).toEqual(expected)
     })
@@ -239,8 +239,8 @@ describe('isomorphicEnvironment utils', () => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      windowSpy.mockReturnValue(undefined);
-      (getServerRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
+      windowSpy.mockReturnValue(undefined)
+      ;(getServerRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
 
       expect(getRecaptchaRAFPublicKey()).toEqual(expected)
     })
@@ -256,8 +256,8 @@ describe('isomorphicEnvironment utils', () => {
           // @ts-expect-error
           createElement: () => null,
         },
-      });
-      (getClientCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
+      })
+      ;(getClientCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
 
       expect(getCheckoutComPublicKey()).toEqual(expected)
     })
@@ -267,8 +267,8 @@ describe('isomorphicEnvironment utils', () => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      windowSpy.mockReturnValue(undefined);
-      (getServerCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
+      windowSpy.mockReturnValue(undefined)
+      ;(getServerCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
 
       expect(getCheckoutComPublicKey()).toEqual(expected)
     })

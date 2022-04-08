@@ -3,7 +3,7 @@ import {
   PROTOCOL_PREFIX,
   SERVICE_DOMAINS,
   OVERRIDDEN_SERVICE_PATTERNS,
-  ServiceUrlProperties
+  ServiceUrlProperties,
 } from 'config/service-environment/service-environment.types'
 
 const DEFAULT_API_SUFFIX = 'api'
@@ -16,42 +16,41 @@ const LOCAL_SERVICE_HOSTNAME = 'staging-api.gousto.info'
 const isWebclientProductionService = ({
   serviceName,
   environmentName,
-  protocol
-}: ServiceUrlProperties) => (serviceName === OVERRIDDEN_SERVICE_PATTERNS.webclient
-  && environmentName === ENVIRONMENT_NAMES.production
-  && protocol === PROTOCOL_PREFIX.HTTPS)
+  protocol,
+}: ServiceUrlProperties) =>
+  serviceName === OVERRIDDEN_SERVICE_PATTERNS.webclient &&
+  environmentName === ENVIRONMENT_NAMES.production &&
+  protocol === PROTOCOL_PREFIX.HTTPS
 
 const isLoggingManagerService = ({ serviceName }: ServiceUrlProperties) =>
-  (serviceName === OVERRIDDEN_SERVICE_PATTERNS.loggingmanager)
+  serviceName === OVERRIDDEN_SERVICE_PATTERNS.loggingmanager
 
-const isDev = ({ serviceDomain }: ServiceUrlProperties) => (serviceDomain.startsWith(SERVICE_DOMAINS.local))
+const isDev = ({ serviceDomain }: ServiceUrlProperties) =>
+  serviceDomain.startsWith(SERVICE_DOMAINS.local)
 
 const webClientHost = ({ environmentName, serviceDomain }: ServiceUrlProperties) =>
-  (environmentName === ENVIRONMENT_NAMES.production
+  environmentName === ENVIRONMENT_NAMES.production
     ? PRODUCTION_URL
-    : `${PROTOCOL_PREFIX.HTTPS}//${environmentName}-webclient.${serviceDomain}`)
+    : `${PROTOCOL_PREFIX.HTTPS}//${environmentName}-webclient.${serviceDomain}`
 
-const overrideForLoggingManager = ({
-  environmentName,
-  serviceDomain,
-}: ServiceUrlProperties) => `${PROTOCOL_PREFIX.HTTPS}//${environmentName}-${DEFAULT_API_SUFFIX}.${serviceDomain}/${OVERRIDDEN_SERVICE_PATTERNS.loggingmanager}`
+const overrideForLoggingManager = ({ environmentName, serviceDomain }: ServiceUrlProperties) =>
+  `${PROTOCOL_PREFIX.HTTPS}//${environmentName}-${DEFAULT_API_SUFFIX}.${serviceDomain}/${OVERRIDDEN_SERVICE_PATTERNS.loggingmanager}`
 
-const overrideForLocalDev = ({
-  basePath,
-}: ServiceUrlProperties) => `${PROTOCOL_PREFIX.HTTPS}//${LOCAL_SERVICE_HOSTNAME}${basePath}`
+const overrideForLocalDev = ({ basePath }: ServiceUrlProperties) =>
+  `${PROTOCOL_PREFIX.HTTPS}//${LOCAL_SERVICE_HOSTNAME}${basePath}`
 
 export function serviceOverrides(serviceUrlProperties: ServiceUrlProperties): string | undefined {
   switch (true) {
-  case isWebclientProductionService(serviceUrlProperties):
-    return webClientHost(serviceUrlProperties)
+    case isWebclientProductionService(serviceUrlProperties):
+      return webClientHost(serviceUrlProperties)
 
-  case isLoggingManagerService(serviceUrlProperties):
-    return overrideForLoggingManager(serviceUrlProperties)
+    case isLoggingManagerService(serviceUrlProperties):
+      return overrideForLoggingManager(serviceUrlProperties)
 
-  case isDev(serviceUrlProperties):
-    return overrideForLocalDev(serviceUrlProperties)
-  default:
-    return undefined
+    case isDev(serviceUrlProperties):
+      return overrideForLocalDev(serviceUrlProperties)
+    default:
+      return undefined
   }
 }
 
@@ -78,16 +77,12 @@ export function serviceOverrides(serviceUrlProperties: ServiceUrlProperties): st
 export function serviceUrl(
   serviceUrlProperties: ServiceUrlProperties,
   // eslint-disable-next-line no-shadow,no-unused-vars
-  getOverriddenUrl: (serviceUrlProperties: ServiceUrlProperties) => string | undefined = serviceOverrides
+  getOverriddenUrl: (
+    serviceUrlProperties: ServiceUrlProperties
+  ) => string | undefined = serviceOverrides
 ) {
-  const {
-    protocol,
-    environmentName,
-    serviceName,
-    serviceDomain,
-    basePath,
-    port
-  } = serviceUrlProperties
+  const { protocol, environmentName, serviceName, serviceDomain, basePath, port } =
+    serviceUrlProperties
 
   if (protocol === PROTOCOL_PREFIX.HTTPS && basePath === undefined) {
     throw new Error('basePath must be defined for HTTPS services')
