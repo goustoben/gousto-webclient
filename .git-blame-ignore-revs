@@ -24,3 +24,6 @@ d1d0d27704684dd3b1567af7bc4fa3c57fd6fb00
 
 # [TG-6082] reformat all ts and tsx files with prettier; enable eslint guards
 2f0eaab75315cdd0e65332224457aa612b29c4ab
+
+# [FEF-392] Apply formatting to circle config
+8af80b1243ba6e7cd801e700c09b0be44012da67
