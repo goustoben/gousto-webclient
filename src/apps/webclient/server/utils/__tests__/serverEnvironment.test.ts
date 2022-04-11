@@ -1,5 +1,6 @@
 import { getEnvConfig } from '../../../src/utils/processEnv'
 import {
+  isLocalEnvironment,
   getServerEnvironment,
   getServerDomain,
   getServerProtocol,
@@ -112,6 +113,20 @@ describe('serverEnvironment', () => {
       })
 
       expect(getServerCheckoutComPublicKey()).toEqual(mockCheckoutComPublicKey)
+    })
+  })
+
+  describe('isLocalEnvironment', () => {
+    it('should return true when ENVIRONMENT is local', () => {
+      mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'local' })
+
+      expect(isLocalEnvironment()).toEqual(true)
+    })
+
+    it('should return false when ENVIRONMENT is not local', () => {
+      mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'production' })
+
+      expect(isLocalEnvironment()).toEqual(false)
     })
   })
 })

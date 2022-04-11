@@ -45,7 +45,6 @@ module.exports = {
     '<rootDir>/jest/.setup.js'
   ],
   globals: {
-    __DEV__: false,
     __CHECKOUT_PK__: '',
     'process.env.NODE_ENV': 'production',
     __CIRCLE_BUILD_NUM__: 'MOCK_CIRCLE_BUILD_NUM',

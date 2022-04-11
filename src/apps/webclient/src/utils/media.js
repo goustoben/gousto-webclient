@@ -4,12 +4,13 @@ import logger from 'utils/logger'
 import path from 'path'
 import isomorphicFetch from 'isomorphic-fetch'
 import { getEnvironment, getProtocol, getDomain } from 'utils/isomorphicEnvironment'
+import { isLocalEnvironment } from '../../server/utils/serverEnvironment'
 
 const BUILD_NUMBER = __CIRCLE_BUILD_NUM__ || 'local'
 export const ASSET_PATH = `/build/${BUILD_NUMBER}`
 
 let localManifest
-if (!__DEV__) {
+if (!isLocalEnvironment()) {
   try {
     const loc = path.resolve(process.cwd(), 'manifest.json')
     localManifest = jsonfile.readFileSync(loc)
@@ -19,7 +20,7 @@ if (!__DEV__) {
 }
 
 function getLocalManifest() {
-  if (__DEV__) {
+  if (isLocalEnvironment()) {
     const loc = path.resolve(process.cwd(), 'manifest.json')
     localManifest = jsonfile.readFileSync(loc)
   }

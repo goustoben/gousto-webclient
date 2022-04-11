@@ -1,6 +1,6 @@
 const { newAssetPath, getAssetRootUrl } = require('utils/media')
 const { createWindowEnvConfig } = require('./utils/envConfigForClient')
-const { getServerEnvironment, getServerDomain } = require('./utils/serverEnvironment')
+const { getServerEnvironment, getServerDomain, isLocalEnvironment } = require('./utils/serverEnvironment')
 const head = require('./head').default
 const encodeState = require('./encodeState')
 
@@ -62,7 +62,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
         window.__initialState__ = ${encodeState(initialState)}
       </script>
 
-      ${(__DEV__) ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
+      ${(isLocalEnvironment()) ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
       ${(helmetHead && helmetHead.link) ? helmetHead.link.toString() : ''}
       ${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
       ${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}

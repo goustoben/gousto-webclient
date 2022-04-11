@@ -1,5 +1,5 @@
 // TODO: move this isServer to  `../src/utils/serEnvironment`
-import { isServer } from 'utils/serverEnvironment'
+import { isLocalEnvironment, isServer } from 'utils/serverEnvironment'
 import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 import { validateProcessEnv } from 'utils/processEnv'
 import { getServerEnvironment } from './utils/serverEnvironment'
@@ -172,7 +172,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-if (__DEV__ || withStatic) {
+if (isLocalEnvironment() || withStatic) {
   logger.info(`Serving static files in ${ASSET_PATH} from /public`)
   app.use(convert(koaMount(ASSET_PATH, koaStatic('public'))))
 
@@ -199,7 +199,7 @@ app.use(processRequest)
 
 const port = getServerEnvironment() === 'local' ? 8080 : 80
 
-if (__DEV__) {
+if (isLocalEnvironment()) {
   enableHmr()
 }
 
