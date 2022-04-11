@@ -644,6 +644,8 @@ workflows:
       - deploy-infrastructure-and-webclient-image:
           name: deploy-infrastructure-and-webclient-image-to-production
           context: gousto-prod-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
           filters:
             branches:
               only:
