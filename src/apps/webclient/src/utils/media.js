@@ -5,7 +5,8 @@ import path from 'path'
 import isomorphicFetch from 'isomorphic-fetch'
 import { getEnvironment, getProtocol, getDomain } from 'utils/isomorphicEnvironment'
 
-export const ASSET_PATH = '/build/latest'
+const BUILD_NUMBER = __CIRCLE_BUILD_NUM__ || 'local'
+export const ASSET_PATH = `/build/${BUILD_NUMBER}`
 
 let localManifest
 if (!__DEV__) {
