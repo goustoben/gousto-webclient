@@ -17,7 +17,7 @@ There is a parent build script that runs the server and client build scripts.
 
 ```
 "build": "rm -rf dist/* && rm -rf public/* && NODE_CONFIG_ENV=\"${NODE_CONFIG_ENV:=production}\" /
-    NODE_APP_INSTANCE=\"${NODE_APP_INSTANCE:=live}\" NODE_ENV=production run-p -l build:server build:client",
+    NODE_ENV=production run-p -l build:server build:client",
 ```
 
 Developer desktop and deployed builds are built and executed as follows:
@@ -27,7 +27,7 @@ Developer desktop
 
 Running a development instance of Webclient on a developer machine is a two-step process kicked off by running the command `npm run dev`.
 ```
-"dev": "NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build:server && npm run start",
+"dev": "NODE_CONFIG_ENV=development npm run build:server && npm run start",
 ```
 
 First, the server build is executed. Once it's completed, successfully, the server is started and then the client build is invoked via a KOA plugin from the server application code in: `src/server/main.js` which imports `src/src/config/globals.js` (which includes a lot of the injected environment variables).
@@ -45,7 +45,7 @@ Instances of Webclient that are built and deployed via CircleCI (see `.circleci/
           name: Setup environment and npm variables for build
           command: source ~/.circlerc && setup/setup-common.sh
 ...
-      command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
+      command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
 ...
 ```
 

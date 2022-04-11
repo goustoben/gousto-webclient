@@ -165,7 +165,7 @@ Because of a migration to prettier, there were several bulk formatting changes. 
 We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack.
 `node-config` is a file based, and looks at files inside our `src/apps/webclient/config` folder.
 
-We have two variables we can set for `node-config` to pick up specific files. The first being  `NODE_CONFIG_ENV` which we set to match the environment (e.g. `development`, `radishes`, `staging`, `production`) and the second is `NODE_APP_INSTANCE` which we set to the where the app is running (`local`, `live`).
+We have one variable we can set for `node-config` to pick up specific files. `NODE_CONFIG_ENV` is set to match the environment (e.g. `development`, `radishes`, `staging`, `production`)
 
 `node-config` will load each file, and if the keys match the later file to be loaded will overwrite the variable.
 
