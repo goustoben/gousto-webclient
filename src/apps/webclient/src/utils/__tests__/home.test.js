@@ -2,6 +2,10 @@ import Immutable from 'immutable'
 import { promo } from 'config/home'
 import { getPromoBannerState } from '../home'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 describe('getPromoBannerState', () => {
   const state = {
     features: Immutable.fromJS({

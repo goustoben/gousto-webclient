@@ -2,6 +2,10 @@ import { safeJestMock } from '_testing/mocks'
 import optimizelySdk from '@optimizely/optimizely-sdk'
 import { instance as optimizelySDKModule, hasInstance, hasValidInstance, getOptimizelyInstance, isLoading } from './optimizelySDK'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 describe('getOptimizelyInstance', () => {
   let optimizelySDK
   beforeEach(() => {

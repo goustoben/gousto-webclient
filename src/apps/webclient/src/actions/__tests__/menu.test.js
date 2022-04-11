@@ -41,6 +41,9 @@ jest.mock('utils/browserEnvironment')
 jest.mock('utils/serverEnvironment')
 jest.mock('utils/cookieHelper2')
 jest.mock('utils/GoustoCookies', () => 'mock-gousto-cookies')
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local'
+}))
 
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'

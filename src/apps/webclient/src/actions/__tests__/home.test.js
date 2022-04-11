@@ -22,6 +22,11 @@ jest.mock('utils/home', () => ({
   getPromoBannerState: jest.fn(),
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'https:'
+}))
+
 const defaultState = {
   auth: Immutable.fromJS({}),
 }

@@ -32,6 +32,9 @@ jest.mock('selectors/features')
 jest.mock('actions/menu')
 jest.mock('../menuApi')
 jest.mock('../../actions/basketRecipes')
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
 
 describe('menu fetchData', () => {
   let state = {

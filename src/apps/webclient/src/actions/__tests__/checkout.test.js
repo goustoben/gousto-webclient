@@ -51,6 +51,11 @@ import {
   fetchGoustoRef, checkoutCardAuthorisation
 } from 'actions/checkout'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'http:'
+}))
+
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
 }))

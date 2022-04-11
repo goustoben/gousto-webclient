@@ -76,6 +76,11 @@ const dispatch = jest.fn()
 const getState = jest.fn()
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'http:'
+}))
+
 describe('loadRefundAmount', () => {
   afterEach(() => {
     jest.clearAllMocks()

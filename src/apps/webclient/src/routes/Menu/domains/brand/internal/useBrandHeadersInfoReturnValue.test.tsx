@@ -6,6 +6,9 @@ import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import { useBrandHeadersInfo } from './useBrandHeadersInfo'
 
 jest.mock('swr', () => jest.fn())
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
 
 const mockedUseSWR = useSWR as jest.MockedFunction<any>
 

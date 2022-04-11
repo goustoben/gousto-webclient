@@ -1,6 +1,10 @@
 import Immutable from 'immutable'
 import { trackCheckoutUrgencyAction } from '../checkoutActions'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 describe('checkoutActions', () => {
   describe('given trackCheckoutUrgencyAction is called', () => {
     const state = {

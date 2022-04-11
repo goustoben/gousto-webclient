@@ -41,7 +41,7 @@ import {
 import { PaymentMethod } from 'config/signup'
 import logger from 'utils/logger'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+import { getEnvironment, getProtocol } from 'utils/isomorphicEnvironment'
 
 jest.mock('utils/logger', () => ({
   ...jest.requireActual('utils/logger'),
@@ -59,16 +59,20 @@ jest.mock('selectors/features', () => ({
 
 jest.mock('utils/browserEnvironment')
 
+jest.mock('utils/isomorphicEnvironment')
+
 describe('tracking actions', () => {
   let getState
   let dispatch
 
+  beforeEach(() => {
+    getEnvironment.mockReturnValue('production')
+    getProtocol.mockReturnValue('https:')
+  })
+
   afterEach(() => {
     jest.resetAllMocks()
   })
-
-  // mock the environment and domain config used by these tests to generate endpoints
-  withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   describe('trackFirstPurchase', () => {
     const state = {
@@ -287,8 +291,6 @@ describe('tracking actions', () => {
     })
 
     describe('when global.AWIN is defined', () => {
-      withMockEnvironmentAndDomain('production', 'gousto.co.uk')
-
       test('then should save order as Tracking.Sale and invoke run', async () => {
         await trackAffiliatePurchase({
           orderId: 9010321,
@@ -302,7 +304,9 @@ describe('tracking actions', () => {
       })
 
       describe('and when on a non-production environment', () => {
-        withMockEnvironmentAndDomain('development', 'gousto.local')
+        beforeEach(() => {
+          getEnvironment.mockReturnValue('staging')
+        })
 
         test('then it should fill the "test" field correctly', async () => {
           const expectedSale = {

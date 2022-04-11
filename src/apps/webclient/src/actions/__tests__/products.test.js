@@ -10,6 +10,10 @@ jest.mock('apis/products', () => ({
   fetchRandomProducts: jest.fn(),
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 describe('productsLoadCategories', () => {
   let dispatchSpy
   let getStateSpy

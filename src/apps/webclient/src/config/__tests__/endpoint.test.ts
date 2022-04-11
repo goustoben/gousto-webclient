@@ -5,6 +5,7 @@ import {
 } from '_testing/generate-endpoint-test-cases'
 import { ServiceName } from 'config/service-environment/service-environment.types'
 import { getEnvConfig } from 'utils/processEnv'
+import { getClientEnvironment } from 'utils/configFromWindow'
 import * as serviceUtils from '../service-environment/service-manifest'
 import endpoint from '../endpoint'
 
@@ -12,6 +13,8 @@ jest.mock('utils/processEnv', () => ({
   ...jest.requireActual('utils/processEnv'),
   getEnvConfig: jest.fn(),
 }))
+
+jest.mock('utils/configFromWindow')
 
 const endpointTestCases: GeneratedEndpointTestCase[] = generateEndpointTestCases()
 
@@ -83,52 +86,89 @@ describe('endpoint()', () => {
     })
 
     it.each([
-      ['https://www.gousto.co.uk/', 'auth', 1, 'https://production-api.gousto.co.uk/auth/v1.0.0'],
       [
+        'production',
+        'https://www.gousto.co.uk/',
+        'auth',
+        1,
+        'https://production-api.gousto.co.uk/auth/v1.0.0',
+      ],
+      [
+        'production',
         'https://www.gousto.co.uk/',
         'customers',
         1,
         'https://production-api.gousto.co.uk/customers/v1',
       ],
       [
+        'production',
         'https://www.gousto.co.uk/',
         'customers',
         2,
         'https://production-api.gousto.co.uk/customers/v2',
       ],
-      ['https://www.gousto.co.uk/', 'webclient', 1, 'https://www.gousto.co.uk'],
+      ['production', 'https://www.gousto.co.uk/', 'webclient', 1, 'https://www.gousto.co.uk'],
       /* lower environments */
-      ['https://staging.gousto.info/', 'auth', 1, 'https://staging-api.gousto.info/auth/v1.0.0'],
       [
+        'staging',
+        'https://staging.gousto.info/',
+        'auth',
+        1,
+        'https://staging-api.gousto.info/auth/v1.0.0',
+      ],
+      [
+        'staging',
         'https://staging.gousto.info/',
         'customers',
         1,
         'https://staging-api.gousto.info/customers/v1',
       ],
       [
+        'staging',
         'https://staging.gousto.info/',
         'customers',
         2,
         'https://staging-api.gousto.info/customers/v2',
       ],
-      ['https://staging.gousto.info/', 'webclient', 1, 'https://staging-api.gousto.info'],
-      ['https://fef-www.gousto.info/', 'auth', 1, 'https://fef-api.gousto.info/auth/v1.0.0'],
-      ['https://fef-www.gousto.info/', 'customers', 1, 'https://fef-api.gousto.info/customers/v1'],
-      ['https://fef-www.gousto.info/', 'customers', 2, 'https://fef-api.gousto.info/customers/v2'],
+      [
+        'staging',
+        'https://staging.gousto.info/',
+        'webclient',
+        1,
+        'https://staging-api.gousto.info',
+      ],
+      ['fef', 'https://fef-www.gousto.info/', 'auth', 1, 'https://fef-api.gousto.info/auth/v1.0.0'],
+      [
+        'fef',
+        'https://fef-www.gousto.info/',
+        'customers',
+        1,
+        'https://fef-api.gousto.info/customers/v1',
+      ],
+      [
+        'fef',
+        'https://fef-www.gousto.info/',
+        'customers',
+        2,
+        'https://fef-api.gousto.info/customers/v2',
+      ],
       /* local development */
       [
+        'local',
         'http://frontend.gousto.local:8080/menu',
         'auth',
         1,
         'https://staging-api.gousto.info/auth/v1.0.0',
       ],
       [
+        'local',
         'http://frontend.gousto.local:8080/food-boxes',
         'customers',
         1,
         'https://staging-api.gousto.info/customers/v1',
       ],
       [
+        'local',
         'http://frontend.gousto.local:8080',
         'customers',
         2,
@@ -136,7 +176,8 @@ describe('endpoint()', () => {
       ],
     ])(
       'should return the correct endpoint for the client, %s, %s, %i = %s',
-      (location: string, serviceName: string, version, expectation) => {
+      (env: string, location: string, serviceName: string, version, expectation) => {
+        ;(getClientEnvironment as jest.Mock).mockReturnValue(env)
         getWindowSpy.mockReturnValue({
           location: new URL(location),
         })
@@ -165,6 +206,7 @@ describe('endpoint()', () => {
         isServerCall: boolean,
         resultOfOldEndpointInvocation: string
       ) => {
+        ;(getClientEnvironment as jest.Mock).mockReturnValue(environment)
         serviceManifestSpy.mockRestore()
         getWindowSpy.mockReturnValue({
           location: new URL(
