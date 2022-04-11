@@ -419,6 +419,7 @@ jobs:
     resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
+      - checkout # Required for BODA
       - attach_workspace:
           at: /
       - run:
