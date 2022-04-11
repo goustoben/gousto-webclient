@@ -1,8 +1,8 @@
 // TODO: move this isServer to  `../src/utils/serEnvironment`
-// eslint-disable-next-line
-import { isLocalEnvironment, getServerEnvironment, isServer} from '../server/utils/serverEnvironment'
+import { isServer } from 'utils/serverEnvironment'
 import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 import { validateProcessEnv } from 'utils/processEnv'
+import { getServerEnvironment } from './utils/serverEnvironment'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 import { getProtocol } from '../src/utils/isomorphicEnvironment'
@@ -172,7 +172,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-if (isLocalEnvironment() || withStatic) {
+if (__DEV__ || withStatic) {
   logger.info(`Serving static files in ${ASSET_PATH} from /public`)
   app.use(convert(koaMount(ASSET_PATH, koaStatic('public'))))
 
@@ -199,7 +199,7 @@ app.use(processRequest)
 
 const port = getServerEnvironment() === 'local' ? 8080 : 80
 
-if (isLocalEnvironment()) {
+if (__DEV__) {
   enableHmr()
 }
 

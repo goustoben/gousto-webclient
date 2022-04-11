@@ -22,6 +22,7 @@ const webpackEnvVarsClient = {
 
 const webpackEnvVarsServer = {
   ...webpackEnvVarsBase,
+  __DEV__: build === 'development',
 }
 
 module.exports = {

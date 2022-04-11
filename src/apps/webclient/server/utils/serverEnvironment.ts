@@ -39,7 +39,7 @@ export const getServerDomain = () => {
   }
 }
 
-export const isLocalEnvironment = () => getServerEnvironment() === ENVIRONMENT_NAMES.local
+const isLocalEnvironment = () => getServerEnvironment() === ENVIRONMENT_NAMES.local
 
 export const getServerProtocol = () =>
   isLocalEnvironment() ? PROTOCOL_PREFIX.HTTP : PROTOCOL_PREFIX.HTTPS

@@ -261,6 +261,7 @@ module.exports = {
     navigator: true,
     require: false,
     window: true,
+    __DEV__: false,
     ga: false,
     hj: true,
     after: true,
