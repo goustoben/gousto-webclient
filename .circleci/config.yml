@@ -221,7 +221,6 @@ jobs:
       - run:
           name: Build webclient
           working_directory: src/apps/webclient
-          # Use NPM for now to inject setup-common npm config vars; BODA should supercede this
           command: source ~/.circlerc && CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
       - run:
           name: Persist CIRCLE_BUILD_NUM for s3 upload and sourcemaps jobs
