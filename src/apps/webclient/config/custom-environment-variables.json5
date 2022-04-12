@@ -1,5 +1,0 @@
-// config/custom-environment-variables.json
-// Custom environment variables can override all files
-{
-  "build": 'NODE_ENV'
-}

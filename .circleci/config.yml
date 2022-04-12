@@ -361,14 +361,14 @@ jobs:
       - run:
           name: Build local application
           working_directory: src/apps/webclient
-          command: NODE_CONFIG_ENV=development npm run build
+          command: npm run build
       - run:
           name: Update local DNS configuration
           command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
       - run:
           name: Start local application
           working_directory: src/apps/webclient
-          command: NODE_CONFIG_ENV=development yarn start:with-static
+          command: yarn start:with-static
           background: true
       - run:
           name: Wait for application to be ready

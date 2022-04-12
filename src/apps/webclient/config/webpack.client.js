@@ -3,13 +3,11 @@ const path = require('path')
 const { getClientPlugins } = require('./build/libs/plugins')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
-const { build, clientDevServerEnabled, publicPath } = require('./build/libs/webpack-env-vars.js')
+const { isDevelopmentBuild, clientDevServerEnabled, publicPath } = require('./build/libs/build-time-config.js')
 const { logBuildInfo } = require('./build/libs/logs')
 const { getClientRules, getClientDevtool, getClientOptimization } = require('./build/libs/rules')
 
-const isDevelopmentBuild = build === 'development'
-
-logBuildInfo(isDevelopmentBuild)
+logBuildInfo()
 
 const baseConfig = {
   context: path.resolve(__dirname, '..'),

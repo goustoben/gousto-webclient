@@ -9,7 +9,7 @@ const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const { webpackEnvVarsClient, webpackEnvVarsDev } = require('./webpack-env-vars')
+const { webpackEnvVarsClient, webpackEnvVarsDev } = require('./build-time-config')
 
 const getDefaultPlugins = (webpackEnvVars) => [
   new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),

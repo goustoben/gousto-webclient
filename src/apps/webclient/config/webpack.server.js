@@ -8,14 +8,13 @@ const ExitCodePlugin = require('./exitCode')
 const { fontRules, imageRules } = require('./build/libs/rules')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
-const { webpackEnvVarsServer, build, publicPath } = require('./build/libs/webpack-env-vars.js')
+const { webpackEnvVarsServer, build, publicPath } = require('./build/libs/build-time-config.js')
 const debug = false
 const devMode = process.env.NODE_ENV !== 'production'
 const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
 const { logBuildInfo } = require('./build/libs/logs')
 
-const isDevelopmentBuild = build === 'development'
-logBuildInfo(isDevelopmentBuild)
+logBuildInfo()
 
 const config = {
   name: 'server',

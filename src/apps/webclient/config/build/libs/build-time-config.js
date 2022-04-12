@@ -1,10 +1,7 @@
-const nodeConfig = require('node-config')
-
-const build = nodeConfig.get('build')
-const clientDevServerEnabled = nodeConfig.get('client_dev_server_enabled')
+const build = process.env.NODE_ENV
+const isDevelopmentBuild = build === 'development'
 
 const BUILD_NUMBER = process.env.CIRCLE_BUILD_NUM || 'local'
-
 const publicPath = `/build/${BUILD_NUMBER}/`
 
 const webpackEnvVarsBase = {
@@ -22,7 +19,7 @@ const webpackEnvVarsClient = {
 
 const webpackEnvVarsServer = {
   ...webpackEnvVarsBase,
-  __DEV__: build === 'development',
+  __DEV__: isDevelopmentBuild,
 }
 
 module.exports = {
@@ -30,6 +27,7 @@ module.exports = {
   webpackEnvVarsClient,
   webpackEnvVarsServer,
   build,
-  clientDevServerEnabled,
+  clientDevServerEnabled: false,
   publicPath,
+  isDevelopmentBuild
 }
