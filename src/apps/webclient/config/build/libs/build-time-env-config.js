@@ -8,7 +8,7 @@ const buildTimeEnvConfigBase = {
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
 
-// This will be removed after FEF-421
+// TODO - This will be removed after FEF-421
 const buildTimeEnvConfigServer = {
   ...buildTimeEnvConfigBase,
   __DEV__: isDevelopmentBuild,
@@ -18,8 +18,8 @@ module.exports = {
   build,
   buildTimeEnvConfigBase,
   buildTimeEnvConfigServer,
-  // No longer set by node-config - will remove after FEF-380
+  // TODO - No longer set by node-config - will remove after FEF-380
   clientDevServerEnabled: false,
   publicPath,
-  isDevelopmentBuild
+  isDevelopmentBuild,
 }

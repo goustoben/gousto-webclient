@@ -1,4 +1,4 @@
-# Configuration
+# 0001-Configuration
 
 01 2022
 
@@ -12,7 +12,8 @@ Accepted
 
 ## Context / Problem Statement
 
-Our configuration is extremely complex. We have a lot of different ways of introducing configuration into our application currently.
+Our configuration is extremely complex. We have a lot of different ways of introducing configuration into our application currently, and these also vary depending on which environment (local/staging etc.) the app is running in.
+
 We are using a combination of build time, deploy time and runtime configuration.
 
 Because of the complexity of how we configure the app it is:
@@ -24,9 +25,9 @@ Because of the complexity of how we configure the app it is:
 
 ## Options
 
-1. ECS container build
-    * Values injected via environment variables using service.yml
-    * Baked into the environment
+1. ECS build-time configuration
+    * Values injected into the CloudFormation templates, via Parameter Store and CloudFormation stack outputs
+    * Baked into the deployment
     * Secure
     * Change only with new deployment
 3. ECS container run / Server Start
@@ -51,7 +52,13 @@ Because of the complexity of how we configure the app it is:
 
 ## Decision
 
-A combination of 'ECS container build' alongside 'server runtime' is likely the best option to provide a combination of flexibility, security and extensibility.
+A combination of:
+
+- ECS build-time configuration - retrieve config from Parameter Store at deploy-time for the server
+- Client runtime
+    - Infer as much as possible about the operating environment from `window.location` to remove unnecessary config
+    - Pass **public** configuration from server to client
+- Build-time - there is a single acceptable exception for build-time configuration - app version. We need to build this into the app in order to configure the app's `publicPath`, for our source-maps and observability configuration.
 
 ## Measure of success
 
