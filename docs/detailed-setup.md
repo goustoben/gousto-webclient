@@ -22,15 +22,15 @@ This file is used by node-config (see below for more info).
 
 You can get these secrets from S3 for [`staging` from here](https://s3.console.aws.amazon.com/s3/object/s3-gousto-platform-beta?region=eu-west-1&prefix=staging/config/service/webclient.yml) (if you need another environment you can change `staging` in the url to the environment you need).
 
-### Step 2: [Create a .env file for run-time server configuration](./config/runtime-server-config.md)
+### Step 2: [Create a .env file for run-time server configuration](./config/local-server-config.md#dotenv)
 
-Create a file named `.env` in `src/apps/webclient/server`.
+- Create a file named `.env` in `src/apps/webclient/server`
+- Use `src/apps/webclient/server/.env.example` as a template
+- Key/value pairs in the format `KEY=value`
+- Get the values by asking someone with BabyPotato permissions to get the AWS SSM secrets for the backend environment
+  you want to run against (typically staging)
 
-Your `.env` file should be in the format `KEY=value`.
-
-Your config should be in the shape of `src/apps/webclient/server/.env.example`
-
-_Note: this file is gitignored as in the future it may contain secrets_
+_Note: this file is gitignored as it may contain secrets_
 
 ### [Step 3: Add an entry to](#hosts-file) [your local host file](https://support.acquia.com/hc/en-us/articles/360004175973-Using-an-etc-hosts-file-for-custom-domains-during-development)
 
