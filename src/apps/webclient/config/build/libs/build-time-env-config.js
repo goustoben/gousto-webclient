@@ -4,29 +4,21 @@ const isDevelopmentBuild = build === 'development'
 const BUILD_NUMBER = process.env.CIRCLE_BUILD_NUM || 'local'
 const publicPath = `/build/${BUILD_NUMBER}/`
 
-const webpackEnvVarsBase = {
+const buildTimeEnvConfigBase = {
   __CIRCLE_BUILD_NUM__: JSON.stringify(process.env.CIRCLE_BUILD_NUM),
 }
 
-const webpackEnvVarsDev = {
-  ...webpackEnvVarsBase,
-}
-
-// will refactor this out in subsequent BODA work
-const webpackEnvVarsClient = {
-  ...webpackEnvVarsBase,
-}
-
-const webpackEnvVarsServer = {
-  ...webpackEnvVarsBase,
+// This will be removed after FEF-421
+const buildTimeEnvConfigServer = {
+  ...buildTimeEnvConfigBase,
   __DEV__: isDevelopmentBuild,
 }
 
 module.exports = {
-  webpackEnvVarsDev,
-  webpackEnvVarsClient,
-  webpackEnvVarsServer,
   build,
+  buildTimeEnvConfigBase,
+  buildTimeEnvConfigServer,
+  // No longer set by node-config - will remove after FEF-380
   clientDevServerEnabled: false,
   publicPath,
   isDevelopmentBuild

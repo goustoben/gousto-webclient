@@ -1,13 +1,17 @@
-const { build, isDevelopmentBuild } = require('./build-time-config.js')
+const { build, isDevelopmentBuild } = require('./build-time-env-config.js')
 
-const logBuildInfo = () =>
+const logBuildInfo = (buildType) =>
   console.log(`
+
+Build info for ${buildType}:
 
 ================
 isDevelopmentBuild: ${isDevelopmentBuild}
 BUILD: ${build},
 NODE_ENV: ${process.env.NODE_ENV}
-================`)
+================
+
+`)
 
 module.exports = {
   logBuildInfo,
