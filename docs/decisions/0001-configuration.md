@@ -1,19 +1,26 @@
-# TITLE
+# Configuration
 
 01 2022
 
 ## Summary
 
-How we configure Webclient (both client and server applications).
+Addressing how we configure Webclient (both client and server applications).
 
 # Status
 
-Experimental
+Accepted
 
 ## Context / Problem Statement
 
-Our configuration is a bit complex. We have a lot of different ways of introducing configuration into our application currently.
+Our configuration is extremely complex. We have a lot of different ways of introducing configuration into our application currently.
 We are using a combination of build time, deploy time and runtime configuration.
+
+Because of the complexity of how we configure the app it is:
+
+- Difficult to accurately configure the app as it is on a different environment
+- Difficult to onboard
+- Difficult to simplify
+- Necessary to re-build the app for each deployed environment
 
 ## Options
 
