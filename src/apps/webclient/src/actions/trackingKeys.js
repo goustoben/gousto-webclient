@@ -1,4 +1,5 @@
 export const viewRecipeList = 'view_recipe_list'
+export const recipesShown = 'recipes_shown'
 export const selectRecipeCollection = 'select_recipe_collection'
 export const removeRecipe = 'remove_recipe'
 export const addRecipe = 'add_recipe'
