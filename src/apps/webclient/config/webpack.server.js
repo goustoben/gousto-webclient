@@ -8,9 +8,16 @@ const ExitCodePlugin = require('./exitCode')
 const { fontRules, imageRules } = require('./build/libs/rules')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
-const { buildTimeEnvConfigServer, build, publicPath } = require('./build/libs/build-time-env-config.js')
-const devMode = process.env.NODE_ENV !== 'production'
-const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
+const {
+  isDevelopmentBuild,
+  buildTimeEnvConfigServer,
+  build,
+  publicPath,
+} = require('./build/libs/build-time-env-config.js')
+
+const cssHashPattern = isDevelopmentBuild
+  ? '[name]__[local]___[hash:base64:5]'
+  : 'G[sha1:hash:hex:6]'
 const { logBuildInfo } = require('./build/libs/logs')
 
 logBuildInfo('server')
@@ -113,7 +120,7 @@ const config = {
   },
 }
 
-if (build === 'development') {
+if (isDevelopmentBuild) {
   config.devtool = 'source-map'
   config.plugins.push(
     new SimpleProgressWebpackPlugin({ // Default options
