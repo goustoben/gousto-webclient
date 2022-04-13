@@ -13,7 +13,7 @@ export function useTracking() {
   const boxSummaryDeliveryDays = useSelector(getBoxSummaryDeliveryDays)
   const transactionType = useSelector(getTransactionType)
   const severedVariantExperimentBucket = useSelector(({ menuService }) => (
-    menuService.data[0].meta.swapsExperimentUserAllocationGroup
+    menuService.data[0]?.meta?.swapsExperimentUserAllocationGroup
   ))
   const menuCollections = useSelector(getMenuCollections)
   const currentMenuId = useSelector(getBasketMenuId)
