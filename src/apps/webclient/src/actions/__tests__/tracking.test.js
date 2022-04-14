@@ -5,6 +5,7 @@ import {
   trackFirstPurchase,
   setAffiliateSource,
   trackAffiliatePurchase,
+  trackRecipeOrderDisplayed,
   trackUserAttributes,
   setUTMSource,
   setTapjoyData,
@@ -41,7 +42,9 @@ import {
 import { PaymentMethod } from 'config/signup'
 import logger from 'utils/logger'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+import {
+  withMockEnvironmentAndDomain
+} from '_testing/isomorphic-environment-test-utils'
 
 jest.mock('utils/logger', () => ({
   ...jest.requireActual('utils/logger'),
@@ -144,7 +147,7 @@ describe('tracking actions', () => {
       }))
 
       expect(logger.warning.mock.calls[0][0]).toBe(
-        'Missing user data for first purchase tracking: no user found in store'
+        'Missing user data for first purchase tracking: no user found in store',
       )
     })
 
@@ -160,7 +163,7 @@ describe('tracking actions', () => {
       }))
 
       expect(logger.warning.mock.calls[0][0]).toBe(
-        'Missing order data for first purchase tracking: no user order "order-a" found in store'
+        'Missing order data for first purchase tracking: no user order "order-a" found in store',
       )
     })
   })
@@ -182,6 +185,166 @@ describe('tracking actions', () => {
       const dispatchData = dispatch.mock.calls[0][0]
 
       expect(dispatchData.asource).toBe('example-source')
+    })
+  })
+
+  describe('trackRecipeOrderDisplayed', () => {
+    const displayedOrder = ['6', '3', '2']
+    let state = {
+      basket: Immutable.Map({
+        orderId: '1234567',
+        date: '2018-05-04',
+      }),
+      menuBrowseCtaShow: false,
+      recipes: Immutable.Map({
+        a: Immutable.Map({ isRecommended: true }),
+        b: Immutable.Map({ isRecommended: false }),
+      }),
+      boxSummaryDeliveryDays: Immutable.Map({
+        '2018-05-04': Immutable.Map({ id: 'test-day-id' }),
+      }),
+      menu: Immutable.Map({
+      }),
+      filters: Immutable.Map({
+        currentCollectionId: '678',
+      }),
+      menuService: {
+        meta: {
+          recommendations: {
+            version: '1'
+          }
+        }
+      }
+    }
+
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getState = jest.fn()
+    })
+
+    test('should dispatch RECIPES_DISPLAYED_ORDER_TRACKING action', () => {
+      getState.mockReturnValue(state)
+      trackRecipeOrderDisplayed()(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(dispatch.mock.calls[0][0].type).toBe(
+        actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING,
+      )
+    })
+
+    test('should dispatch correct arguments', () => {
+      getState.mockReturnValue(state)
+
+      trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
+
+      const dispatchCall = dispatch.mock.calls[0][0]
+
+      expect(dispatchCall).toEqual({
+        type: 'RECIPES_DISPLAYED_ORDER_TRACKING',
+        displayedOrder: ['6', '3', '2'],
+        collectionId: '678',
+        recommended: true,
+        browseMode: false,
+        deliveryDayId: 'test-day-id',
+        orderId: '1234567',
+        recommenderVersion: '1',
+        isRecommendationsShown: false,
+        currentMenuId: undefined,
+        transactionType: 'not set',
+      })
+    })
+
+    describe('should dispatch recommended state', () => {
+      test('when Gousto Recommends collection is present', () => {
+        state = {
+          ...state,
+          menuService: {
+            ...state.menuService,
+            collection: {
+              '5f730d3c-aab1-4f84-b561-305540390885': {
+                attributes: {
+                  short_title: 'Gousto Recommends',
+                  slug: 'recommendations'
+                },
+                id: '5f730d3c-aab1-4f84-b561-305540390885',
+                type: 'collection'
+              }
+            }
+          }
+        }
+
+        getState.mockReturnValue(state)
+
+        trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
+
+        expect(dispatch.mock.calls[0][0].isRecommendationsShown).toBe(true)
+      })
+
+      test('when no recipes are recommended', () => {
+        state = {
+          basket: Immutable.Map({
+            date: '2018-01-01',
+          }),
+          menuBrowseCtaShow: false,
+          recipes: Immutable.Map({
+            a: Immutable.Map({ isRecommended: false }),
+            b: Immutable.Map({ isRecommended: false }),
+          }),
+          boxSummaryDeliveryDays: Immutable.Map({
+            '2018-01-01': Immutable.Map({ id: 'test-day-id' }),
+          }),
+          menu: Immutable.Map({
+          }),
+          filters: Immutable.Map({
+            currentCollectionId: '910',
+          }),
+          menuService: {
+            meta: {
+              recommendations: {
+                version: '1'
+              }
+            }
+          }
+        }
+        getState.mockReturnValue(state)
+
+        trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
+
+        expect(dispatch.mock.calls[0][0].recommended).toBeFalsy()
+      })
+
+      test('when one or more recipes are recommended', () => {
+        state = {
+          basket: Immutable.Map({
+            date: '2018-04-04',
+          }),
+          menuBrowseCtaShow: false,
+          recipes: Immutable.Map({
+            a: Immutable.Map({ isRecommended: true }),
+            b: Immutable.Map({ isRecommended: false }),
+          }),
+          boxSummaryDeliveryDays: Immutable.Map({
+            '2018-04-04': Immutable.Map({ id: 'test-day-id' }),
+          }),
+          menu: Immutable.Map({
+          }),
+          filters: Immutable.Map({
+            currentCollectionId: '112',
+          }),
+          menuService: {
+            meta: {
+              recommendations: {
+                version: '1'
+              }
+            }
+          }
+        }
+        getState.mockReturnValue(state)
+
+        trackRecipeOrderDisplayed(displayedOrder)(dispatch, getState)
+
+        expect(dispatch.mock.calls[0][0].recommended).toBeTruthy()
+      })
     })
   })
 
@@ -274,15 +437,13 @@ describe('tracking actions', () => {
         })(dispatch, getState)
 
         expect(global.AWIN).toBe(undefined)
-        expect(trackOrder).not.toHaveBeenCalledWith(
-          expect.objectContaining({
-            merchant: '5070',
-            cr: 'GBP',
-            amount: '34.99',
-            parts: 'FIRSTPURCHASE:34.99',
-            cks: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
-          })
-        )
+        expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+          merchant: '5070',
+          cr: 'GBP',
+          amount: '34.99',
+          parts: 'FIRSTPURCHASE:34.99',
+          cks: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
+        }))
       })
     })
 
@@ -328,20 +489,18 @@ describe('tracking actions', () => {
             promoCode: 'DTI-SB-P30M',
           })(dispatch, getState)
 
-          expect(trackOrder).toHaveBeenCalledWith(
-            expect.objectContaining({
-              common: {
-                order_id: 9010321,
-              },
-              awin: {
-                merchant: '5070',
-                cr: 'GBP',
-                amount: '24.50',
-                parts: 'FIRSTPURCHASE:24.50',
-                cks: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
-              },
-            })
-          )
+          expect(trackOrder).toHaveBeenCalledWith(expect.objectContaining({
+            common: {
+              order_id: 9010321,
+            },
+            awin: {
+              merchant: '5070',
+              cr: 'GBP',
+              amount: '24.50',
+              parts: 'FIRSTPURCHASE:24.50',
+              cks: '5070_1532523479_c84435fcd1d056ea5d62d9f93e1398e3',
+            }
+          }))
         })
       })
 
@@ -367,14 +526,12 @@ describe('tracking actions', () => {
             isSignup: true,
           })(dispatch, getState)
 
-          expect(trackOrder).not.toHaveBeenCalledWith(
-            expect.objectContaining({
-              tapjoy: {
-                transaction_id: expect.any(String),
-                publisher_id: expect.any(String),
-              },
-            })
-          )
+          expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+            tapjoy: {
+              transaction_id: expect.any(String),
+              publisher_id: expect.any(String),
+            }
+          }))
         })
       })
 
@@ -388,14 +545,12 @@ describe('tracking actions', () => {
             isSignup: false,
           })(dispatch, getState)
 
-          expect(trackOrder).not.toHaveBeenCalledWith(
-            expect.objectContaining({
-              tapjoy: {
-                transaction_id: expect.any(String),
-                publisher_id: expect.any(String),
-              },
-            })
-          )
+          expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+            tapjoy: {
+              transaction_id: expect.any(String),
+              publisher_id: expect.any(String),
+            }
+          }))
         })
       })
 
@@ -409,17 +564,15 @@ describe('tracking actions', () => {
             isSignup: true,
           })(dispatch, getState)
 
-          expect(trackOrder).toHaveBeenCalledWith(
-            expect.objectContaining({
-              common: {
-                order_id: 9010321,
-              },
-              tapjoy: {
-                transaction_id: 'fake_transaction_id',
-                publisher_id: 'fake_publisher_id',
-              },
-            })
-          )
+          expect(trackOrder).toHaveBeenCalledWith(expect.objectContaining({
+            common: {
+              order_id: 9010321,
+            },
+            tapjoy: {
+              transaction_id: 'fake_transaction_id',
+              publisher_id: 'fake_publisher_id',
+            },
+          }))
         })
       })
     })
@@ -434,17 +587,15 @@ describe('tracking actions', () => {
           isSignup: true,
         })(dispatch, getState)
 
-        expect(trackOrder).toHaveBeenCalledWith(
-          expect.objectContaining({
-            rokt: {
-              passbackconversiontrackingid: 'fake_rokt_id',
-              amount: '24.50',
-              currency: 'GBP',
-              paymenttype: 'card',
-              conversiontype: 'signup',
-            },
-          })
-        )
+        expect(trackOrder).toHaveBeenCalledWith(expect.objectContaining({
+          rokt: {
+            passbackconversiontrackingid: 'fake_rokt_id',
+            amount: '24.50',
+            currency: 'GBP',
+            paymenttype: 'card',
+            conversiontype: 'signup',
+          }
+        }))
       })
     })
 
@@ -469,17 +620,15 @@ describe('tracking actions', () => {
           isSignup: true,
         })(dispatch, getState)
 
-        expect(trackOrder).not.toHaveBeenCalledWith(
-          expect.objectContaining({
-            rokt: {
-              passbackconversiontrackingid: expect.any(String),
-              amount: expect.any(String),
-              currency: expect.any(String),
-              paymenttype: expect.any(String),
-              conversiontype: expect.any(String),
-            },
-          })
-        )
+        expect(trackOrder).not.toHaveBeenCalledWith(expect.objectContaining({
+          rokt: {
+            passbackconversiontrackingid: expect.any(String),
+            amount: expect.any(String),
+            currency: expect.any(String),
+            paymenttype: expect.any(String),
+            conversiontype: expect.any(String),
+          }
+        }))
       })
     })
   })
@@ -488,10 +637,11 @@ describe('tracking actions', () => {
     let isSignupInLast30Days
     const state = {
       user: Immutable.fromJS({
-        subscription: Immutable.fromJS({
-          createdAt: '2019-08-21 12:53:33',
-        }),
-      }),
+        subscription:
+          Immutable.fromJS({
+            createdAt: '2019-08-21 12:53:33'
+          })
+      })
     }
 
     beforeEach(() => {
@@ -510,8 +660,8 @@ describe('tracking actions', () => {
           eventName: 'user_subscription_start',
           attributes: {
             isSignupInLast30Days,
-          },
-        },
+          }
+        }
       })
     })
   })
@@ -521,8 +671,8 @@ describe('tracking actions', () => {
       beforeEach(() => {
         const state = {
           tracking: Immutable.fromJS({
-            utmSource: undefined,
-          }),
+            utmSource: undefined
+          })
         }
         dispatch = jest.fn()
         getState = jest.fn().mockReturnValue(state)
@@ -532,7 +682,7 @@ describe('tracking actions', () => {
         setUTMSource()(dispatch, getState)
         const expected = {
           type: actionTypes.SET_UTM_SOURCE,
-          payload: { referral: '' },
+          payload: { referral: '' }
         }
         expect(dispatch).toHaveBeenCalledWith(expected)
       })
@@ -542,8 +692,8 @@ describe('tracking actions', () => {
       beforeEach(() => {
         const state = {
           tracking: Immutable.fromJS({
-            utmSource: {},
-          }),
+            utmSource: {}
+          })
         }
         dispatch = jest.fn()
         getState = jest.fn().mockReturnValue(state)
@@ -562,7 +712,7 @@ describe('tracking actions', () => {
         tracking: Immutable.Map({
           tapjoyTransactionId: '',
           tapjoyPublisherId: '',
-        }),
+        })
       }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -587,7 +737,7 @@ describe('tracking actions', () => {
         tracking: Immutable.Map({
           tapjoyTransactionId: '',
           tapjoyPublisherId: '',
-        }),
+        })
       }
       dispatch = jest.fn((fn) => {
         if (fn && typeof fn === 'function') {
@@ -615,7 +765,7 @@ describe('tracking actions', () => {
       const state = {
         tracking: Immutable.Map({
           roktTrackingId: '',
-        }),
+        })
       }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -638,7 +788,7 @@ describe('tracking actions', () => {
       const state = {
         tracking: Immutable.Map({
           roktTrackingId: '',
-        }),
+        })
       }
       dispatch = jest.fn((fn) => {
         if (fn && typeof fn === 'function') {
@@ -667,11 +817,11 @@ describe('tracking actions', () => {
       beforeEach(() => {
         const state = {
           basket: Immutable.fromJS({
-            promoCode: '123',
+            promoCode: '123'
           }),
           tracking: Immutable.fromJS({
-            utmSource: undefined,
-          }),
+            utmSource: undefined
+          })
         }
         dispatch = jest.fn()
         getState = jest.fn().mockReturnValue(state)
@@ -692,12 +842,12 @@ describe('tracking actions', () => {
     beforeEach(() => {
       const state = {
         basket: Immutable.fromJS({
-          promoCode: 'promo1',
+          promoCode: 'promo1'
         }),
         tracking: Immutable.Map({
           utmSource: {
             referral: '123',
-          },
+          }
         }),
         payment: Immutable.fromJS({
           paymentMethod: PaymentMethod.Card,
@@ -716,7 +866,7 @@ describe('tracking actions', () => {
             referral: '123',
             promoCode: 'promo1',
             paymentMethod: PaymentMethod.Card,
-          },
+          }
         }
 
         trackSubmitOrderEvent()(dispatch, getState)
@@ -730,11 +880,11 @@ describe('tracking actions', () => {
     beforeEach(() => {
       const state = {
         basket: Immutable.fromJS({
-          promoCode: 'promo1',
+          promoCode: 'promo1'
         }),
         tracking: Immutable.fromJS({
-          utmSource: {},
-        }),
+          utmSource: {}
+        })
       }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -773,8 +923,8 @@ describe('tracking actions', () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: keyType,
           trackingData: expect.objectContaining({
-            actionType: keyType,
-          }),
+            actionType: keyType
+          })
         })
       })
     })
@@ -786,10 +936,10 @@ describe('tracking actions', () => {
         beforeEach(() => {
           const state = {
             basket: Immutable.fromJS({
-              promoCode: 'abc123',
+              promoCode: 'abc123'
             }),
             tracking: Immutable.fromJS({
-              utmSource: undefined,
+              utmSource: undefined
             }),
             payment: Immutable.fromJS({
               paymentMethod: PaymentMethod.Card,
@@ -813,7 +963,7 @@ describe('tracking actions', () => {
                 promoCode: 'abc123',
                 status: 'failed',
                 paymentMethod: PaymentMethod.Card,
-              },
+              }
             }
 
             expect(dispatch).toHaveBeenCalledWith(expected)
@@ -829,10 +979,10 @@ describe('tracking actions', () => {
           beforeEach(() => {
             const state = {
               basket: Immutable.fromJS({
-                promoCode: 'abc123',
+                promoCode: 'abc123'
               }),
               tracking: Immutable.fromJS({
-                utmSource: undefined,
+                utmSource: undefined
               }),
               payment: Immutable.fromJS({
                 paymentMethod: PaymentMethod.Card,
@@ -853,7 +1003,7 @@ describe('tracking actions', () => {
                 status: 'success',
                 userId,
                 paymentMethod: PaymentMethod.Card,
-              },
+              }
             }
             expect(dispatch).toHaveBeenCalledWith(expected)
           })
@@ -869,10 +1019,10 @@ describe('tracking actions', () => {
           beforeEach(() => {
             const state = {
               basket: Immutable.fromJS({
-                promoCode: 'abc123',
+                promoCode: 'abc123'
               }),
               tracking: Immutable.fromJS({
-                utmSource: undefined,
+                utmSource: undefined
               }),
               payment: Immutable.fromJS({
                 paymentMethod: PaymentMethod.Card,
@@ -895,7 +1045,7 @@ describe('tracking actions', () => {
                 orderId,
                 userId,
                 paymentMethod: PaymentMethod.Card,
-              },
+              }
             }
 
             trackNewOrder(orderId, userId)(dispatch, getState)
@@ -915,7 +1065,7 @@ describe('tracking actions', () => {
           tracking: Immutable.Map({
             utmSource: {
               referral: '123',
-            },
+            }
           }),
           payment: Immutable.fromJS({
             paymentMethod: PaymentMethod.Card,
@@ -923,9 +1073,9 @@ describe('tracking actions', () => {
           user: Immutable.fromJS({
             id: 'user_234',
             subscription: {
-              id: 'subscription_345',
-            },
-          }),
+              id: 'subscription_345'
+            }
+          })
         }
         dispatch = jest.fn()
         getState = jest.fn().mockReturnValue(state)
@@ -951,7 +1101,7 @@ describe('tracking actions', () => {
               userId,
               orderId,
               subscriptionId,
-            },
+            }
           }
 
           trackSubscriptionCreated({ pricing })(dispatch, getState)
@@ -967,10 +1117,10 @@ describe('tracking actions', () => {
           beforeEach(() => {
             const state = {
               basket: Immutable.fromJS({
-                promoCode: 'abc123',
+                promoCode: 'abc123'
               }),
               tracking: Immutable.fromJS({
-                utmSource: undefined,
+                utmSource: undefined
               }),
               payment: Immutable.fromJS({
                 paymentMethod: PaymentMethod.Card,
@@ -993,7 +1143,7 @@ describe('tracking actions', () => {
                 orderId,
                 userId,
                 paymentMethod: PaymentMethod.Card,
-              },
+              }
             }
 
             trackNewOrder(orderId, userId)(dispatch, getState)
@@ -1017,24 +1167,26 @@ describe('tracking actions', () => {
       user: Immutable.fromJS({
         orders: {
           178: {
-            recipeItems: ['1234'],
+            recipeItems: [
+              '1234'
+            ]
           },
         },
         subscription: {
           state: 'active',
-        },
+        }
       }),
       temp: Immutable.fromJS({
         originalGrossTotal: '24.99',
-        originalNetTotal: '24.99',
-      }),
+        originalNetTotal: '24.99'
+      })
     }
     beforeEach(() => {
       dispatch = jest.fn()
-      getState = () => state
+      getState = () => (state)
     })
     test('should dispatch Order Edited tracking action for subscription box', async () => {
-      await trackingOrderCheckout({ pricing })(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1049,9 +1201,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_edited_gross',
           tags: {
-            revenue: '-0.99',
-          },
-        },
+            revenue: '-0.99'
+          }
+        }
       })
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -1060,9 +1212,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_edited_net',
           tags: {
-            revenue: '-0.99',
-          },
-        },
+            revenue: '-0.99'
+          }
+        }
       })
     })
 
@@ -1075,7 +1227,7 @@ describe('tracking actions', () => {
         }),
       })
 
-      await trackingOrderCheckout({ pricing })(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1090,9 +1242,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_edited_gross',
           tags: {
-            revenue: '-0.99',
-          },
-        },
+            revenue: '-0.99'
+          }
+        }
       })
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -1101,9 +1253,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_edited_net',
           tags: {
-            revenue: '-0.99',
-          },
-        },
+            revenue: '-0.99'
+          }
+        }
       })
     })
 
@@ -1116,15 +1268,17 @@ describe('tracking actions', () => {
         user: Immutable.fromJS({
           orders: {
             178: {
-              recipeItems: ['1234'],
+              recipeItems: [
+                '1234'
+              ]
             },
           },
           subscription: {
             state: 'active',
-          },
+          }
         }),
       })
-      await trackingOrderCheckout({ pricing })(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1139,9 +1293,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_placed_gross',
           tags: {
-            revenue: '24.00',
-          },
-        },
+            revenue: '24.00'
+          }
+        }
       })
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -1150,9 +1304,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_placed_net',
           tags: {
-            revenue: '24.00',
-          },
-        },
+            revenue: '24.00'
+          }
+        }
       })
     })
 
@@ -1162,12 +1316,12 @@ describe('tracking actions', () => {
         user: Immutable.fromJS({
           orders: {
             178: {
-              recipeItems: [],
+              recipeItems: []
             },
           },
           subscription: {
             state: 'active',
-          },
+          }
         }),
       })
       pricing = {
@@ -1175,7 +1329,7 @@ describe('tracking actions', () => {
         grossTotal: '22.00',
         promoCode: false,
       }
-      await trackingOrderCheckout({ pricing })(dispatch, getState)
+      await trackingOrderCheckout({pricing})(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
@@ -1190,9 +1344,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_placed_gross',
           tags: {
-            revenue: '22.00',
-          },
-        },
+            revenue: '22.00'
+          }
+        }
       })
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -1201,9 +1355,9 @@ describe('tracking actions', () => {
           type: 'event',
           eventName: 'order_placed_net',
           tags: {
-            revenue: '22.00',
-          },
-        },
+            revenue: '22.00'
+          }
+        }
       })
     })
   })
@@ -1212,11 +1366,11 @@ describe('tracking actions', () => {
     beforeEach(() => {
       const state = {
         basket: Immutable.fromJS({
-          promoCode: 'promo1',
+          promoCode: 'promo1'
         }),
         tracking: Immutable.fromJS({
-          utmSource: {},
-        }),
+          utmSource: {}
+        })
       }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -1242,11 +1396,11 @@ describe('tracking actions', () => {
     beforeEach(() => {
       const state = {
         tracking: Immutable.fromJS({
-          utmSource: {},
+          utmSource: {}
         }),
         basket: Immutable.fromJS({
-          promoCode: '',
-        }),
+          promoCode: ''
+        })
       }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -1265,11 +1419,11 @@ describe('tracking actions', () => {
     beforeEach(() => {
       const state = {
         tracking: Immutable.fromJS({
-          utmSource: {},
+          utmSource: {}
         }),
         basket: Immutable.fromJS({
-          promoCode: 'DTI-20M',
-        }),
+          promoCode: 'DTI-20M'
+        })
       }
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -1321,10 +1475,10 @@ describe('tracking actions', () => {
       const state = {
         basket: Immutable.fromJS({
           promoCode: 'promo1',
-          previewOrderId: 1231231,
+          previewOrderId: 1231231
         }),
         user: Immutable.fromJS({
-          id: 4564,
+          id: 4564
         }),
         tracking: Immutable.Map({
           utmSource: {

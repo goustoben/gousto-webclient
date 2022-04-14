@@ -8,11 +8,13 @@ import { getUserOrderById } from 'utils/user'
 import { getUTM } from 'utils/utm'
 import { getPreviewOrderId } from 'selectors/basket'
 import { getCurrentPaymentMethod } from 'selectors/payment'
-import { getUTMAndPromoCode } from 'selectors/tracking'
+import { getUTMAndPromoCode, getTransactionType } from 'selectors/tracking'
 import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { trackOrder } from 'apis/tracking'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvironment } from 'utils/isomorphicEnvironment'
+
+const collectionRecommendationSlug = 'recommendations'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -209,6 +211,36 @@ export const trackAffiliatePurchase = ({
       )
     }
   }
+
+export const trackRecipeOrderDisplayed = (displayedOrder) => (
+  (dispatch, getState) => {
+    const state = getState()
+    const date = state.basket.get('date')
+    const currentMenuId = state.basket.get('currentMenuId')
+    const transactionType = getTransactionType(state)
+    const deliveryDayId = state.boxSummaryDeliveryDays.getIn([date, 'id'])
+    const orderId = state.basket.get('orderId')
+    const browseMode = state.menuBrowseCtaShow
+    const recommended = state.recipes.some(recipe => recipe.get('isRecommended', false))
+    const collectionId = state.filters.get('currentCollectionId')
+    const recommenderVersion = state.menuService.meta.recommendations && state.menuService.meta.recommendations.version
+    const isRecommendationsShown = Boolean(state.menuService.collection && Object.values(state.menuService.collection).find(collection => collection.attributes.slug === collectionRecommendationSlug))
+
+    dispatch({
+      type: actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING,
+      displayedOrder,
+      collectionId,
+      deliveryDayId,
+      orderId,
+      recommended,
+      browseMode,
+      recommenderVersion,
+      isRecommendationsShown,
+      currentMenuId,
+      transactionType
+    })
+  }
+)
 
 export const trackNavigationClick = (trackingData) => (
   (dispatch) => {

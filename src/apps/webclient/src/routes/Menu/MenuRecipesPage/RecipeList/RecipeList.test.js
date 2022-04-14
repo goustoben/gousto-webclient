@@ -5,33 +5,102 @@ import Immutable from 'immutable'
 import { CollectionId } from '../../domains/collections'
 import { CollectionLink } from '../../components/CollectionLink'
 import { RecipeTile } from '../../components/RecipeTile'
-import { buildTracker, RecipeList } from './RecipeList'
+import { RecipeList } from './RecipeList'
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: jest.fn(() => true),
-  useSelector: jest.fn(),
+jest.mock('actions/tracking', () => ({
+  trackRecipeOrderDisplayed: jest.fn()
+    .mockReturnValue('trackRecipeOrderDisplayed return value'),
 }))
-
 describe('RecipeList', () => {
+  let trackRecipeOrderDisplayed
   let wrapper
   let recipes
-  let showDetailRecipe
-
   beforeEach(() => {
-    showDetailRecipe = jest.fn()
-    showDetailRecipe.mockClear()
+    trackRecipeOrderDisplayed = jest.fn()
+    trackRecipeOrderDisplayed.mockClear()
   })
 
+  describe('trackRecipeOrderDisplayed', () => {
+    recipes = Immutable.List([
+      {
+        originalId: '3',
+        recipe: Immutable.Map({
+          id: '3',
+          availability: [],
+          title: 'recipe3',
+          boxType: 'vegetarian',
+          dietType: 'Vegetarian',
+          isRecommended: false,
+        })
+      },
+      {
+        originalId: '1',
+        recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
+      }
+    ])
+    describe('when the recipe list is initially rendered', () => {
+      test('should call trackRecipeOrderDisplayed once', () => {
+        shallow(
+          <RecipeList
+            recipes={recipes}
+            trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
+            currentCollectionId="123"
+            browserType="desktop"
+          />,
+        )
+
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(1)
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(['3', '1'])
+      })
+    })
+
+    describe('when the recipe collection selection is changed', () => {
+      test('should call trackRecipeOrderDisplayed an additional time', () => {
+        wrapper = shallow(
+          <RecipeList
+            recipes={recipes}
+            currentCollectionId="123"
+            trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
+            browserType="desktop"
+          />,
+        )
+        wrapper.setProps({
+          currentCollectionId: '321',
+        })
+
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(2)
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(['3', '1'])
+      })
+    })
+
+    describe('when the recipe collection remains the same', () => {
+      test('should not call trackRecipeOrderDisplayed after initial render', () => {
+        wrapper = shallow(
+          <RecipeList
+            recipes={recipes}
+            currentCollectionId="123"
+            trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
+            browserType="desktop"
+          />,
+        )
+        wrapper.setProps({
+          currentCollectionId: '123',
+        })
+
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(1)
+        expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(['3', '1'])
+      })
+    })
+  })
   describe('when there are no recipes', () => {
     test('then it should render nothing', () => {
       wrapper = shallow(
         <RecipeList
           recipes={Immutable.List([])}
+          trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
           currentCollectionId="123"
           browserType="desktop"
-          showDetailRecipe={showDetailRecipe}
-        />
+        />,
       )
       expect(wrapper.find(RecipeTile).exists()).toBe(false)
     })
@@ -41,15 +110,14 @@ describe('RecipeList', () => {
     describe('when the isDietaryCollectionLinksEnabled feature is enabled', () => {
       it('should render Links to Dietary collections', () => {
         recipes = Immutable.List([1, 2, 3, 4].map(i => ({ recipe: Immutable.Map({ id: `${i}`})})))
-
         wrapper = shallow(
           <RecipeList
             recipes={recipes}
             currentCollectionId={CollectionId.AllRecipes}
+            trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
             browserType="desktop"
             isDietaryCollectionLinksEnabled
-            showDetailRecipe={showDetailRecipe}
-          />
+          />,
         )
 
         expect(wrapper.find(CollectionLink).exists()).toBe(true)
@@ -62,10 +130,10 @@ describe('RecipeList', () => {
           <RecipeList
             recipes={recipes}
             currentCollectionId={CollectionId.AllRecipes}
+            trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
             browserType="desktop"
             isDietaryCollectionLinksEnabled={false}
-            showDetailRecipe={showDetailRecipe}
-          />
+          />,
         )
 
         expect(wrapper.find(CollectionLink).exists()).toBe(false)
@@ -80,10 +148,10 @@ describe('RecipeList', () => {
         <RecipeList
           recipes={recipes}
           currentCollectionId="Some Collection"
+          trackRecipeOrderDisplayed={trackRecipeOrderDisplayed}
           browserType="desktop"
           isDietaryCollectionLinksEnabled
-          showDetailRecipe={showDetailRecipe}
-        />
+        />,
       )
 
       expect(wrapper.find(CollectionLink).exists()).toBe(false)
@@ -107,20 +175,4 @@ describe('RecipeList', () => {
       recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
     }
   ])
-})
-
-describe('buildTracker', () => {
-  it('builds a function that passes the collection and recipes IDs to the tracker', () => {
-    const dummyTracker = jest.fn()
-
-    const tracker = buildTracker({
-      recipes: Immutable.List([1, 2, 3, 4].map(i => ({ recipe: Immutable.Map({ id: `${i}`})}))),
-      currentCollectionId: 'some_collection_id',
-      track: dummyTracker,
-    })
-
-    tracker()
-
-    expect(dummyTracker).toBeCalledWith('some_collection_id', ['1', '2', '3', '4'])
-  })
 })

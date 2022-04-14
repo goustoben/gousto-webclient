@@ -1,0 +1,1 @@
+export { recipeListViewed } from './recipes'

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { CollectionLink } from '../../components/CollectionLink'
@@ -7,49 +7,58 @@ import { RecipeContextProvider } from '../../context/recipeContext'
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
 import css from './RecipeList.css'
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
-import { useTracking } from './useTracking'
 
-export const buildTracker = ({recipes, currentCollectionId, track}) => () => {
-  const recipeIds = recipes.map(({ recipe }) => recipe.get('id'))
-  track(currentCollectionId, recipeIds.toJS())
-}
+class RecipeList extends React.PureComponent {
+  componentDidMount() {
+    this.trackRecipeOrderDisplayed()
+  }
 
-export const RecipeList = ({
-  recipes,
-  currentCollectionId,
-  isDietaryCollectionLinksEnabled,
-  showDetailRecipe,
-}) => {
-  const track = useTracking()
+  componentDidUpdate(prevProps) {
+    const { currentCollectionId } = this.props
+    if (currentCollectionId !== prevProps.currentCollectionId) {
+      this.trackRecipeOrderDisplayed()
+    }
+  }
 
-  useEffect(() => buildTracker({recipes, currentCollectionId, track})(), [recipes, currentCollectionId, track])
+  trackRecipeOrderDisplayed() {
+    const { recipes, trackRecipeOrderDisplayed } = this.props
 
-  return (
-    <div className={css.emeRecipeList}>
-      {recipes.map((value, index) => (
-        <React.Fragment key={value.recipe.get('id')}>
-          {isDietaryCollectionLinksEnabled &&
-            showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
-              <CollectionLink />
-          )}
-          <RecipeContextProvider value={value.recipe}>
-            <RecipeTile
-              recipeId={value.recipe.get('id')}
-              originalId={value.originalId}
-              currentCollectionId={currentCollectionId}
-              onClick={showDetailRecipe}
-            />
-          </RecipeContextProvider>
-        </React.Fragment>
-      ))}
-      <CTAToAllRecipes />
-    </div>
-  )
+    const recipeIds = recipes.map(({ recipe }) => recipe.get('id'))
+
+    trackRecipeOrderDisplayed(recipeIds.toJS())
+  }
+
+  render() {
+    const { recipes, currentCollectionId, isDietaryCollectionLinksEnabled, showDetailRecipe } = this.props
+
+    return (
+      <div className={css.emeRecipeList}>
+        {recipes.map((value, index) => (
+          <React.Fragment key={value.recipe.get('id')}>
+            {isDietaryCollectionLinksEnabled &&
+              showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
+                <CollectionLink />
+            )}
+            <RecipeContextProvider value={value.recipe}>
+              <RecipeTile
+                recipeId={value.recipe.get('id')}
+                originalId={value.originalId}
+                currentCollectionId={currentCollectionId}
+                onClick={showDetailRecipe}
+              />
+            </RecipeContextProvider>
+          </React.Fragment>
+        ))}
+        <CTAToAllRecipes />
+      </div>
+    )
+  }
 }
 
 RecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   currentCollectionId: PropTypes.string.isRequired,
+  trackRecipeOrderDisplayed: PropTypes.func.isRequired,
   isDietaryCollectionLinksEnabled: PropTypes.bool,
   showDetailRecipe: PropTypes.func.isRequired,
 }
@@ -57,3 +66,5 @@ RecipeList.propTypes = {
 RecipeList.defaultProps = {
   isDietaryCollectionLinksEnabled: false,
 }
+
+export { RecipeList }

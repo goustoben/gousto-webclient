@@ -5,6 +5,7 @@ import { canUseWindow } from 'utils/browserEnvironment'
 import { loginAttempt, loginRememberMe, loginFailed, loginVisibility, logout } from '../global'
 import { basketTracking } from '../basket'
 import { pauseSubscriptionTracking } from '../pauseSubscription'
+import { recipeListViewed } from '../recipes'
 import * as menuTracking from '../menu'
 import { getHelpTracking } from '../getHelp'
 import { trackEventWithData, getPathname } from '../utils'
@@ -75,6 +76,7 @@ const Tracking = (action, state = {}, prevState = {}) => {
       [actionTypes.PS_SUBSCRIPTION_KEPT_ACTIVE]: trackEventWithData(pauseSubscriptionTracking.subscriptionKeptActive),
       [actionTypes.PS_SUBSCRIPTION_PAUSED]: trackEventWithData(pauseSubscriptionTracking.subscriptionPaused),
       [actionTypes.PS_END_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.endModalViewed),
+      [actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING]: trackEventWithData(recipeListViewed),
       [actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND]: trackEventWithData(getHelpTracking.acceptIngredientRefund),
       [actionTypes.GET_HELP_CONTACT_CHANNEL_SELECT]: trackEventWithData(getHelpTracking.selectContactChannel),
       [actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS]: trackEventWithData(getHelpTracking.selectIngredients),
