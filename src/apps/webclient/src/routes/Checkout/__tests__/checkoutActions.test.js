@@ -73,10 +73,6 @@ jest.mock('utils/isomorphicEnvironment', () => ({
   getProtocol: () => 'https:',
 }))
 
-jest.mock('utils/isomorphicEnvironment', () => ({
-  getEnvironment: () => 'local',
-}))
-
 describe('checkoutActions', () => {
   describe('given trackCheckoutUrgencyAction is called', () => {
     const state = {

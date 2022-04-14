@@ -8,6 +8,7 @@ jest.mock('../sections/OrderABox', () => ({
 }))
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
+  getClientDomain: () => 'gousto.local',
 }))
 
 describe('PausedSubscription', () => {

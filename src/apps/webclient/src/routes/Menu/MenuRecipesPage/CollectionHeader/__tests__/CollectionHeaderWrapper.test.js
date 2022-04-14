@@ -6,6 +6,7 @@ import { WaveLinkHeaderContainer } from '../LinkHeaderContainer'
 
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
+  getClientDomain: () => 'gousto.local',
 }))
 
 describe('CollectionHeaderWrapper', () => {

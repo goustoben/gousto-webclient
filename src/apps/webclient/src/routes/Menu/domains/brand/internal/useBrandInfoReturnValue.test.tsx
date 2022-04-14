@@ -8,6 +8,7 @@ import { useBrandInfo } from './useBrandInfo'
 
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
+  getClientDomain: () => 'gousto.local',
 }))
 jest.mock('swr', () => jest.fn())
 

@@ -1,6 +1,9 @@
 import Immutable from 'immutable'
 import loginActions, { helpPreLoginVisibilityChange } from 'actions/login'
 import { loginReducers, initialState } from 'reducers/login'
+import { getClientDomain } from 'utils/configFromWindow'
+
+jest.mock('utils/configFromWindow')
 
 describe('login reducer', () => {
   const STATE = initialState()
@@ -8,6 +11,11 @@ describe('login reducer', () => {
     [true, true],
     [false, false],
   ]
+
+  beforeEach(() => {
+    jest.resetAllMocks()
+    getClientDomain.mockReturnValue('gousto.local')
+  })
 
   describe('given the reducer is called with the initial state and loginVisibilityChange action generator', () => {
     test.each(cases)('when the visibility is %s the new state.login is %s', (visibility, expectedStateValue) => {
