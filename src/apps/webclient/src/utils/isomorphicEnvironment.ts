@@ -1,4 +1,4 @@
-import { canUseWindow, getClientProtocol, getDomain as getClientDomain } from './browserEnvironment'
+import { canUseWindow, getClientProtocol } from './browserEnvironment'
 import {
   getServerEnvironment,
   getServerDomain,
@@ -9,6 +9,7 @@ import {
 } from '../../server/utils/serverEnvironment'
 import {
   getClientEnvironment,
+  getClientDomain,
   getClientCheckoutComPublicKey,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
@@ -53,6 +54,7 @@ export const getEnvironment = createIsomorphicConfig({
   serverConfigFn: getServerEnvironment,
 })
 
+// TODO - narrow type for both fns here
 export const getDomain = createIsomorphicConfig({
   browserConfigFn: getClientDomain,
   serverConfigFn: getServerDomain,
