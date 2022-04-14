@@ -27,6 +27,7 @@ ecs:
       logName: application
       environment:
         ENVIRONMENT: '{{ ENVIRONMENT }}'
+        DOMAIN: '{{ stacks.defaults.output.domain }}'
       configuration:
         datadog_api_key:
           type: secret
