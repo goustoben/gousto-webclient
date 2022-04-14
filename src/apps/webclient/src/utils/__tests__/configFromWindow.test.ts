@@ -8,6 +8,7 @@ const mockWindowEnvConfig: WindowEnvConfig = {
   RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
   CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
   ENVIRONMENT: 'local',
+  DOMAIN: 'gousto.local',
 }
 
 describe('windowEnvConfig', () => {

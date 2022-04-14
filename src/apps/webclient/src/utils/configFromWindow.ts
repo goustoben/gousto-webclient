@@ -39,3 +39,4 @@ export const getClientRecaptchaPublicKey = () => getConfigFromWindow('RECAPTCHA_
 export const getClientRecaptchaRAFPublicKey = () => getConfigFromWindow('RECAPTCHA_RAF_PUBK')
 export const getClientCheckoutComPublicKey = () => getConfigFromWindow('CHECKOUT_COM_PUBK')
 export const getClientEnvironment = () => getConfigFromWindow('ENVIRONMENT')
+export const getClientDomain = () => getConfigFromWindow('DOMAIN')
