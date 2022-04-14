@@ -5,7 +5,7 @@ import {
 } from '_testing/generate-endpoint-test-cases'
 import { ServiceName } from 'config/service-environment/service-environment.types'
 import { getEnvConfig } from 'utils/processEnv'
-import { getClientEnvironment } from 'utils/configFromWindow'
+import { getClientEnvironment, getClientDomain } from 'utils/configFromWindow'
 import * as serviceUtils from '../service-environment/service-manifest'
 import endpoint from '../endpoint'
 
@@ -86,101 +86,46 @@ describe('endpoint()', () => {
     })
 
     it.each([
+      ['production', 'gousto.co.uk', 'auth', 1, 'https://production-api.gousto.co.uk/auth/v1.0.0'],
       [
         'production',
-        'https://www.gousto.co.uk/',
-        'auth',
-        1,
-        'https://production-api.gousto.co.uk/auth/v1.0.0',
-      ],
-      [
-        'production',
-        'https://www.gousto.co.uk/',
+        'gousto.co.uk',
         'customers',
         1,
         'https://production-api.gousto.co.uk/customers/v1',
       ],
       [
         'production',
-        'https://www.gousto.co.uk/',
+        'gousto.co.uk',
         'customers',
         2,
         'https://production-api.gousto.co.uk/customers/v2',
       ],
-      ['production', 'https://www.gousto.co.uk/', 'webclient', 1, 'https://www.gousto.co.uk'],
+      ['production', 'gousto.co.uk', 'webclient', 1, 'https://www.gousto.co.uk'],
       /* lower environments */
+      ['staging', 'gousto.info', 'auth', 1, 'https://staging-api.gousto.info/auth/v1.0.0'],
+      ['staging', 'gousto.info', 'customers', 1, 'https://staging-api.gousto.info/customers/v1'],
+      ['staging', 'gousto.info', 'customers', 2, 'https://staging-api.gousto.info/customers/v2'],
+      ['staging', 'gousto.info', 'webclient', 1, 'https://staging-api.gousto.info'],
+      ['fef', 'gousto.info', 'auth', 1, 'https://fef-api.gousto.info/auth/v1.0.0'],
+      ['fef', 'gousto.info', 'customers', 1, 'https://fef-api.gousto.info/customers/v1'],
+      ['fef', 'gousto.info', 'customers', 2, 'https://fef-api.gousto.info/customers/v2'],
       [
-        'staging',
-        'https://staging.gousto.info/',
-        'auth',
-        1,
-        'https://staging-api.gousto.info/auth/v1.0.0',
-      ],
-      [
-        'staging',
-        'https://staging.gousto.info/',
-        'customers',
-        1,
-        'https://staging-api.gousto.info/customers/v1',
-      ],
-      [
-        'staging',
-        'https://staging.gousto.info/',
+        'marketplace',
+        'squadmarketplace.gousto.info',
         'customers',
         2,
-        'https://staging-api.gousto.info/customers/v2',
-      ],
-      [
-        'staging',
-        'https://staging.gousto.info/',
-        'webclient',
-        1,
-        'https://staging-api.gousto.info',
-      ],
-      ['fef', 'https://fef-www.gousto.info/', 'auth', 1, 'https://fef-api.gousto.info/auth/v1.0.0'],
-      [
-        'fef',
-        'https://fef-www.gousto.info/',
-        'customers',
-        1,
-        'https://fef-api.gousto.info/customers/v1',
-      ],
-      [
-        'fef',
-        'https://fef-www.gousto.info/',
-        'customers',
-        2,
-        'https://fef-api.gousto.info/customers/v2',
+        'https://marketplace-api.squadmarketplace.gousto.info/customers/v2',
       ],
       /* local development */
-      [
-        'local',
-        'http://frontend.gousto.local:8080/menu',
-        'auth',
-        1,
-        'https://staging-api.gousto.info/auth/v1.0.0',
-      ],
-      [
-        'local',
-        'http://frontend.gousto.local:8080/food-boxes',
-        'customers',
-        1,
-        'https://staging-api.gousto.info/customers/v1',
-      ],
-      [
-        'local',
-        'http://frontend.gousto.local:8080',
-        'customers',
-        2,
-        'https://staging-api.gousto.info/customers/v2',
-      ],
+      ['local', 'gousto.local', 'auth', 1, 'https://staging-api.gousto.info/auth/v1.0.0'],
+      ['local', 'gousto.local', 'customers', 1, 'https://staging-api.gousto.info/customers/v1'],
+      ['local', 'gousto.local', 'customers', 2, 'https://staging-api.gousto.info/customers/v2'],
     ])(
-      'should return the correct endpoint for the client, %s, %s, %i = %s',
-      (env: string, location: string, serviceName: string, version, expectation) => {
+      'should return the correct endpoint for the client, %s, %s, %s, %i = %s',
+      (env, domain, serviceName, version, expectation) => {
         ;(getClientEnvironment as jest.Mock).mockReturnValue(env)
-        getWindowSpy.mockReturnValue({
-          location: new URL(location),
-        })
+        ;(getClientDomain as jest.Mock).mockReturnValue(domain)
         expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
       }
     )
@@ -206,15 +151,10 @@ describe('endpoint()', () => {
         isServerCall: boolean,
         resultOfOldEndpointInvocation: string
       ) => {
+        const domain = environment === 'production' ? 'gousto.co.uk' : 'gousto.info'
         ;(getClientEnvironment as jest.Mock).mockReturnValue(environment)
+        ;(getClientDomain as jest.Mock).mockReturnValue(domain)
         serviceManifestSpy.mockRestore()
-        getWindowSpy.mockReturnValue({
-          location: new URL(
-            environment === 'production'
-              ? 'https://www.gousto.co.uk/'
-              : 'https://staging-www.gousto.info/'
-          ),
-        })
 
         expect(endpoint(service as ServiceName, majorVersion)).toEqual(
           resultOfOldEndpointInvocation
@@ -259,6 +199,13 @@ describe('endpoint()', () => {
       /* lower environments */
       ['fef', 'gousto.info', 'auth', 1, 'http://fef-auth.gousto.info'],
       ['jalapenos', 'gousto.info', 'orders', 1, 'http://jalapenos-orders.gousto.info'],
+      [
+        'marketplace',
+        'squadmarketplace.gousto.info',
+        'orders',
+        1,
+        'http://marketplace-orders.squadmarketplace.gousto.info',
+      ],
       /* local development */
       ['local', 'gousto.local', 'auth', 1, 'https://staging-api.gousto.info/auth/v1.0.0'],
     ])(
