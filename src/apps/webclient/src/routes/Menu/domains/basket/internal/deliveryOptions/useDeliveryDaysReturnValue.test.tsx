@@ -5,6 +5,7 @@ import { useDeliveryDays } from '.'
 jest.mock('swr', () => jest.fn())
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
+  getClientDomain: () => 'gousto.local',
 }))
 
 const mockedUseSWR = useSWR as jest.MockedFunction<any>

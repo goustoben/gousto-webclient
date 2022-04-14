@@ -5,6 +5,7 @@ import { RecipeDisclaimer } from './RecipeDisclaimer'
 
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
+  getClientDomain: () => 'gousto.local',
 }))
 
 describe('RecipeDisclaimer', () => {
