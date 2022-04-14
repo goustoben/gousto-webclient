@@ -8,6 +8,7 @@ import { serviceUrl } from 'config/service-environment/service-url'
 import { getServiceManifest } from 'config/service-environment/service-manifest'
 import { findServiceVersion } from 'config/service-environment/find-service-version'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { Domain } from 'utils/types/windowLocation'
 import { getEnvironment, getDomain, isDev } from 'utils/isomorphicEnvironment'
 
 export const buildServiceUrlProperties = (
@@ -61,7 +62,7 @@ function endpointAdapter(getServiceEnvironment: () => ServiceEnvironment) {
 const getServiceEnvironment = (): ServiceEnvironment => ({
   environmentName: getEnvironment(),
   protocol: canUseWindow() ? PROTOCOL_PREFIX.HTTPS : PROTOCOL_PREFIX.HTTP,
-  serviceDomain: getDomain(),
+  serviceDomain: getDomain() as Domain,
 })
 
 const endpoint = endpointAdapter(getServiceEnvironment)

@@ -78,6 +78,13 @@ describe('serviceUrl', () => {
       expectedUrl: 'http://jalapenos-orders.gousto.info',
     },
     {
+      environmentName: 'marketplace',
+      protocol: PROTOCOL_PREFIX.HTTP,
+      serviceName: 'orders',
+      serviceDomain: `squadmarketplace.${SERVICE_DOMAINS.default}`,
+      expectedUrl: 'http://marketplace-orders.squadmarketplace.gousto.info',
+    },
+    {
       environmentName: 'staging',
       protocol: PROTOCOL_PREFIX.HTTPS,
       serviceName: 'orders',
