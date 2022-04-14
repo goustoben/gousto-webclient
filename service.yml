@@ -56,14 +56,6 @@ ecs:
           type: secret
           description: PUBLIC key for checkout.com
 
-  taskRolePolicies:
-    - effect: Allow
-      actions:
-        - s3:GetObject
-        - s3:GetObjectVersion
-      resources:
-        - arn:aws:s3:::{{ stacks.defaults.output.configbucket }}/{{ ENVIRONMENT }}/config/service/{{ serviceName }}.yml
-
   logs:
     - name: application
 
