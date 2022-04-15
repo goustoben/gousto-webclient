@@ -5,39 +5,6 @@ import { useGetAlternativeOptionsForRecipeLight, useStock } from '../../../domai
 import { useRecipeId } from '../../../context/recipeContext'
 import css from './VariantHeader.css'
 
-const LEAN_BEEF_OVERRIDES = [
-  '390',
-  '527',
-  '941',
-  '953',
-  '1020',
-  '1237',
-  '1239',
-  '1255',
-  '1476',
-  '1493',
-  '1511',
-  '1938',
-  '2026',
-  '2046',
-  '2048',
-  '2154',
-  '2171',
-  '2443',
-  '2532',
-  '2676',
-  '2809',
-  '3204',
-]
-
-const getTextOverride = (recipeId: string) => {
-  if (LEAN_BEEF_OVERRIDES.includes(recipeId)) {
-    return 'Swap for Lean Beef'
-  }
-
-  return null
-}
-
 export const VariantHeader: React.FC<{
   categoryId: string
   originalId: string
@@ -68,9 +35,8 @@ export const VariantHeader: React.FC<{
     return null
   }
 
-  const textOverride = getTextOverride(recipeId)
   const alternativeCount = alternatives.length
-  const text = textOverride || `${alternativeCount} options available`
+  const text = `${alternativeCount} options available`
 
   return (
     <div className={classnames(css.variantHeader, css.themeBlue, css.positionTop, css.textLeft)}>

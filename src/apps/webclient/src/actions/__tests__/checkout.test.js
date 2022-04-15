@@ -17,7 +17,7 @@ import {
 } from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
 import statusActions from 'actions/status'
-import { userSubscribe } from 'actions/user'
+import { userSubscribe } from 'routes/Checkout/checkoutActions'
 
 import routes from 'config/routes'
 import { PaymentMethod } from 'config/signup'
@@ -59,7 +59,7 @@ jest.mock('utils/deliveries')
 jest.mock('actions/login')
 jest.mock('actions/menu')
 
-jest.mock('actions/user', () => ({
+jest.mock('routes/Checkout/checkoutActions', () => ({
   userSubscribe: jest.fn()
 }))
 jest.mock('actions/basket')

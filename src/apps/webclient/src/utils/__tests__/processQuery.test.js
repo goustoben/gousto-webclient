@@ -40,6 +40,11 @@ describe('Given processQuery util function', () => {
   beforeEach(() => {
     mockStore = {
       dispatch: jest.fn(),
+      getState: () => ({
+        auth: Immutable.fromJS({
+          isAuthenticated: false,
+        })
+      })
     }
   })
 
@@ -139,14 +144,6 @@ describe('Given processQuery util function', () => {
         query = {
           promo_code: 'DTI-PROMO-CODE',
         }
-        mockStore = {
-          ...mockStore,
-          getState: () => ({
-            auth: Immutable.fromJS({
-              isAuthenticated: false,
-            })
-          })
-        }
         processQuery(query, mockStore, { hashTag: 'login' })
       })
 
@@ -199,17 +196,30 @@ describe('Given processQuery util function', () => {
   })
 
   describe('when utm_source is rokt and rokt_tracking_id parameter is supplied', () => {
-    beforeEach(() => {
-      query = {
-        utm_source: 'Rokt',
-        rokt_tracking_id: 'fake_rokt_id',
-      }
+    describe('when utm_source is a string', () => {
+      test('then should dispatch setRoktData', () => {
+        query = {
+          utm_source: 'Rokt',
+          rokt_tracking_id: 'fake_rokt_id',
+        }
 
-      processQuery(query, mockStore, {})
+        processQuery(query, mockStore, {})
+
+        expect(setRoktData).toHaveBeenCalledWith('fake_rokt_id')
+      })
     })
 
-    test('then should dispatch setRoktData', () => {
-      expect(setRoktData).toHaveBeenCalledWith('fake_rokt_id')
+    describe('when utm_source is an array', () => {
+      test('then should dispatch setRoktData', () => {
+        query = {
+          utm_source: ['Rokt', 'Bing'],
+          rokt_tracking_id: 'fake_rokt_id',
+        }
+
+        processQuery(query, mockStore, {})
+
+        expect(setRoktData).toHaveBeenCalledWith('fake_rokt_id')
+      })
     })
   })
 })

@@ -69,27 +69,6 @@ describe('VariantHeader', () => {
         test('then it should render the correct number of recipe variants on the header', () => {
           expect(wrapper.find('.variantHeader').text()).toEqual('3 options available')
         })
-
-        describe('when textOverride is provided', () => {
-          const override = 'Swap for Lean Beef'
-
-          beforeEach(() => {
-            mockHooks({
-              useGetAlternativeOptionsForRecipeLight: [
-                { id: '1200-1200', coreRecipeId: '1200', displayName: 'Recipe' },
-                { id: '1230-1230', coreRecipeId: '1230', displayName: 'Alternative One' },
-                { id: '1234-1234', coreRecipeId: '1234', displayName: 'Alternative Two' }
-              ],
-              isRecipeOutOfStock: false,
-              recipeId: '527',
-            })
-            wrapper = mount(<VariantHeader />)
-          })
-
-          test('then it should render the text', () => {
-            expect(wrapper.find('.variantHeader').text()).toEqual(override)
-          })
-        })
       })
 
       describe('When there are 5 recipe alternatives', () => {

@@ -36,6 +36,7 @@ import {
   feLoggingLogEvent,
   logLevels,
 } from 'actions/log'
+import { userSubscribe } from 'routes/Checkout/checkoutActions'
 
 import { getEnvironment } from 'utils/isomorphicEnvironment'
 import { actionTypes } from './actionTypes'
@@ -45,7 +46,6 @@ import {
   basketPromoCodeAppliedChange,
   basketReset
 } from './basket'
-import { userSubscribe } from './user'
 import {
   trackAffiliatePurchase,
   trackUTMAndPromoCode,
@@ -246,7 +246,7 @@ export function checkoutSignupPayment(sourceId, { pricing }) {
       }
 
       await signupPayment(reqData, provider, sessionId)
-      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignupPayment: signupPayment succeeded, proceed to checkoutPostSIgnup'))
+      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignupPayment: signupPayment succeeded, proceed to checkoutPostSignup'))
       await dispatch(checkoutActions.checkoutPostSignup({ pricing }))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.error, `checkoutSignupPayment: Signup payment failed: ${err.message}`))
@@ -254,7 +254,7 @@ export function checkoutSignupPayment(sourceId, { pricing }) {
     } finally {
       dispatch(checkoutActions.clearGoustoRef())
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
-      dispatch(feLoggingLogEvent(logLevels.error, 'checkoutSignupPayment: in finally'))
+      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutSignupPayment: in finally'))
     }
   }
 }

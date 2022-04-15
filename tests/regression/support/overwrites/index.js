@@ -19,7 +19,7 @@ Cypress.Commands.overwrite('server', (originalFn, options={}) => {
       const defaultCypressWhitelist = xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
       const checkoutCom = xhr.url.match(/(checkout.com)/)
       const content = xhr.url.match(/(content)|(s3)/)
-      const tracking = xhr.url.match(/(snowplow)|(pinterest)|(optimizely)|(hotjar)|(pingdom)|(s.yimg)/)
+      const tracking = xhr.url.match(/(snowplow)|(optimizely)|(hotjar)|(pingdom)|(s.yimg)/)
       const recaptcha = xhr.url.match(/(recaptcha\/api2\/userverify)/)
 
       return defaultCypressWhitelist || content || tracking || checkoutCom || recaptcha || (options.ignore && options.ignore(xhr))

@@ -5,7 +5,7 @@
   composes: hideScroll from 'components/PromoModal/PromoModal.css';
 }
 
-.modalOverrides [data-testing="modal-close-button"] {
+.modalOverrides [data-testing='modal-close-button'] {
   padding: 5px;
 
   top: 1rem;
