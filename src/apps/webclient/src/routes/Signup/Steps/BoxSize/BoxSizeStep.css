@@ -50,7 +50,7 @@
     padding: 1.5rem;
 
     &:first-child {
-     margin-right: 0;
+      margin-right: 0;
     }
   }
 }

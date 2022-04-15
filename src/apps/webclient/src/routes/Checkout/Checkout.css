@@ -39,7 +39,7 @@
   height: 3rem;
 
   &:hover {
-   border: 1px solid Bluecheese !important;
+    border: 1px solid Bluecheese !important;
   }
 
   &:focus {
