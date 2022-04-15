@@ -8,7 +8,6 @@ import { reducer as reduxFormReducer } from 'redux-form'
 import { createLogger } from 'redux-logger'
 import trackingMiddleware from 'middlewares/tracking/middleware'
 import persistenceMiddleware from 'middlewares/persist/middleware'
-import pinterestPixel from 'middlewares/tracking/pinterest'
 import snowplow from 'middlewares/tracking/snowplow'
 import snowplowV2 from 'middlewares/tracking/snowplow/V2'
 import { optimizelyTracker } from 'middlewares/tracking/optimizely'
@@ -32,7 +31,6 @@ class GoustoStore {
       routerMiddleware(history),
       trackingMiddleware(snowplow),
       trackingMiddleware(affiliateWindow),
-      trackingMiddleware(pinterestPixel, 'v2'),
       trackingMiddleware(snowplowV2, 'v2'),
       trackingMiddleware(gtmMiddleware, 'v2'),
       trackingMiddleware(dataLayerTracker, 'v2'),
