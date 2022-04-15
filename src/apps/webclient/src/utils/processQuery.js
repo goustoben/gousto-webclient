@@ -59,7 +59,7 @@ export async function processQuery(query, store, { hashTag = '', }) {
     store.dispatch(setTapjoyData(query.tapjoy_transaction_id, query.tapjoy_publisher_id))
   }
 
-  if ((query.utm_source || '').toLowerCase() === 'rokt' && query.rokt_tracking_id) {
+  if (isUtmSource(query.utm_source, 'rokt') && query.rokt_tracking_id) {
     store.dispatch(setRoktData(query.rokt_tracking_id))
   }
 
@@ -68,4 +68,13 @@ export async function processQuery(query, store, { hashTag = '', }) {
     const axe = require('@axe-core/react')
     axe(React, ReactDOM, 1000)
   }
+}
+
+const isUtmSource = (source, value) => {
+  // sometime query could have several utm_source params, then it's parsed as an array
+  if (Array.isArray(source)) {
+    return source.map((x) => (x || '').toLowerCase()).indexOf(value) !== -1
+  }
+
+  return (source || '').toLowerCase() === value
 }
