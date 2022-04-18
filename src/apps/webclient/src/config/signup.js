@@ -58,6 +58,7 @@ export const signupConfig = {
   deliveryOptionsStep: {
     title: 'Which delivery day would you like?',
     goustoOnDemandTitle: 'When do you want your box delivered?',
+    wizardCalendarExperimentTitle: 'When would you like your first box delivered?',
   },
   discountAppliedText: 'View this when you reach the checkout.',
   sellThePropositionPagePath: 'about',

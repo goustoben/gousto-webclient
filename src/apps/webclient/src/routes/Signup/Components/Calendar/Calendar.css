@@ -1,0 +1,30 @@
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value BreakpointToSmall (max-width: 375px);
+@value BreakpointFromSmall (min-width: 375px);
+@value S-50 #EAE9FF;
+@value CG-100 #CED4D9;
+
+.calendarTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.calendarTableHead {
+  background-color: S-50;
+  border: 1px solid CG-100;
+}
+
+.headerCell {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  composes: fontSemiBold from 'design-language/typography.module.css';
+  text-align: center;
+  width: calc(100% / 7);
+  @media BreakpointToSmall {
+    height: 1rem;
+  }
+
+  @media BreakpointFromSmall {
+    height: 1.5rem;
+  }
+}

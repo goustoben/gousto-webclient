@@ -1,4 +1,4 @@
-@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
 @value CG-200 #AEB7C0;
 
 .container {
@@ -9,6 +9,17 @@
   @media BreakpointFromMedium {
     flex-direction: row;
     justify-content: space-between;
+  }
+}
+
+.wizardCalendarExperimentContainer {
+  margin: auto auto 1rem;
+  @media BreakpointToMedium {
+    max-width: 22rem;
+  }
+
+  @media BreakpointFromMedium {
+    max-width: 25rem;
   }
 }
 
@@ -60,4 +71,18 @@
 
 .negativeMargin {
   margin: 0 -0.75rem;
+}
+
+.marginBottom {
+  margin-bottom: 1rem;
+}
+
+.confirmButton {
+  @media BreakpointToMedium {
+    max-width: 22rem;
+  }
+
+  @media BreakpointFromMedium {
+    max-width: 25rem;
+  }
 }
