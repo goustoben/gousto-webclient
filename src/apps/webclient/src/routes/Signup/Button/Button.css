@@ -2,7 +2,10 @@
 
 .cta {
   composes: fontStyleButtonL from 'design-language/typography.css';
-  height: 3rem;
+  /**
+   * min-height instead of height so when text breaks in 2 lines, then button would not lose it's paddings.
+   */
+  min-height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;

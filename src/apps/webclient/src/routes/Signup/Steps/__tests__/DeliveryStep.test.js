@@ -1,13 +1,24 @@
 import React from 'react'
 import Immutable from 'immutable'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
+import configureMockStore from 'redux-mock-store'
+import { Provider } from 'react-redux'
+import * as Redux from 'react-redux'
 import DropdownInput from 'Form/Dropdown'
 import { unbounce as unbounceRoutes } from 'config/routes'
 import { DeliveryStep } from '../Delivery/DeliveryStep'
 
+const mockStore = configureMockStore()
+const mockedStore = mockStore({
+  features: Immutable.Map(),
+  signup: Immutable.Map(),
+})
+const dispatch = jest.fn()
+jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
+jest.spyOn(Redux, 'useSelector').mockImplementation(() => false)
+
 describe('Delivery Step', () => {
   let wrapper
-
   const boxSummaryDeliveryDays = Immutable.fromJS({
     '2020-02-14': {
       date: '2020-02-14',
@@ -63,13 +74,15 @@ describe('Delivery Step', () => {
   const trackSignupWizardAction = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(
-      <DeliveryStep
-        boxSummaryDeliveryDays={boxSummaryDeliveryDays}
-        tempDate="2020-02-14"
-        tempSlotId="1"
-        trackSignupWizardAction={trackSignupWizardAction}
-      />
+    wrapper = mount(
+      <Provider store={mockedStore}>
+        <DeliveryStep
+          boxSummaryDeliveryDays={boxSummaryDeliveryDays}
+          tempDate="2020-02-14"
+          tempSlotId="1"
+          trackSignupWizardAction={trackSignupWizardAction}
+        />
+      </Provider>
     )
   })
 
@@ -81,10 +94,18 @@ describe('Delivery Step', () => {
   describe('Capacity Message', () => {
     describe('When all slots are disabled', () => {
       beforeEach(() => {
-        wrapper.setProps({
-          disabledSlots: ['2020-02-14_08-12', '2020-02-14_08-19'],
-          userHasAvailableSlots: false,
-        })
+        wrapper = mount(
+          <Provider store={mockedStore}>
+            <DeliveryStep
+              boxSummaryDeliveryDays={boxSummaryDeliveryDays}
+              tempDate="2020-02-14"
+              tempSlotId="1"
+              trackSignupWizardAction={trackSignupWizardAction}
+              disabledSlots={['2020-02-14_08-12', '2020-02-14_08-19']}
+              userHasAvailableSlots={false}
+            />
+          </Provider>
+        )
       })
 
       test('should display the capacity alert', () => {
@@ -94,10 +115,18 @@ describe('Delivery Step', () => {
 
     describe('When slots are available', () => {
       beforeEach(() => {
-        wrapper.setProps({
-          disabledSlots: ['2020-02-14_08-12', '2020-02-14_08-19'],
-          userHasAvailableSlots: true,
-        })
+        wrapper = mount(
+          <Provider store={mockedStore}>
+            <DeliveryStep
+              boxSummaryDeliveryDays={boxSummaryDeliveryDays}
+              tempDate="2020-02-14"
+              tempSlotId="1"
+              trackSignupWizardAction={trackSignupWizardAction}
+              disabledSlots={['2020-02-14_08-12', '2020-02-14_08-19']}
+              userHasAvailableSlots
+            />
+          </Provider>
+        )
       })
 
       test('should not display the capacity alert', () => {
@@ -137,7 +166,17 @@ describe('Delivery Step', () => {
 
     describe('when all slots for a given day are disabled', () => {
       beforeEach(() => {
-        wrapper.setProps({ disabledSlots: ['2020-02-14_08-12', '2020-02-14_08-19'] })
+        wrapper = mount(
+          <Provider store={mockedStore}>
+            <DeliveryStep
+              boxSummaryDeliveryDays={boxSummaryDeliveryDays}
+              tempDate="2020-02-14"
+              tempSlotId="1"
+              trackSignupWizardAction={trackSignupWizardAction}
+              disabledSlots={['2020-02-14_08-12', '2020-02-14_08-19']}
+            />
+          </Provider>
+        )
         deliveryDayDropdown = wrapper.find(DropdownInput).at(0)
       })
 
@@ -194,7 +233,17 @@ describe('Delivery Step', () => {
 
     describe('when slots is  disabled', () => {
       beforeEach(() => {
-        wrapper.setProps({ disabledSlots: ['2020-02-14_08-12'] })
+        wrapper = mount(
+          <Provider store={mockedStore}>
+            <DeliveryStep
+              boxSummaryDeliveryDays={boxSummaryDeliveryDays}
+              tempDate="2020-02-14"
+              tempSlotId="1"
+              trackSignupWizardAction={trackSignupWizardAction}
+              disabledSlots={['2020-02-14_08-12']}
+            />
+          </Provider>
+        )
         deliverySlotDropdown = wrapper.find(DropdownInput).at(1)
       })
 

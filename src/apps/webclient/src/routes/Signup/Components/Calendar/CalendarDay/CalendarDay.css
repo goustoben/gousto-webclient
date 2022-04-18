@@ -1,0 +1,62 @@
+@value CG-100 #CED4D9;
+@value CG-200 #AEB7C0;
+@value W-0 #FFFFFF;
+@value S-400 #615CFF;
+@value currentDayCircleColor #EEF0F2;
+
+.tableCell {
+  border: 1px solid CG-100;
+  padding: 0;
+}
+
+.squareContainer {
+  position: relative;
+  padding-top: 100%; /* 1:1 ratio; square */
+}
+
+.day {
+  composes: fontStyleButtonS from 'design-language/typography.module.css';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: W-0;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+
+  /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+  &:focus {
+    outline: none;
+  }
+}
+
+.selectedDay {
+  background: S-400;
+  color: W-0;
+}
+
+.dayBeforeToday {
+  display: none;
+}
+
+.todayDay::before {
+  content: '';
+  background-color: currentDayCircleColor;
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  border-radius: 100%;
+  top: 10%;
+  left: 10%;
+}
+
+.dayNumber {
+  position: relative;
+}
+
+.disabled {
+  text-decoration: line-through;
+  color: CG-200;
+}

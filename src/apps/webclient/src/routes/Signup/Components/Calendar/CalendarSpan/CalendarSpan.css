@@ -1,0 +1,16 @@
+@value FontFamilyAxiformaSemiBold from 'design-language/typography.module.css';
+
+.calendarSpan {
+  text-align: left;
+  font-size: 1rem;
+  font-family: FontFamilyAxiformaSemiBold; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+  margin-bottom: 1rem;
+}
+
+.calendarIcon {
+  height: 1.5rem;
+  width: 1.5rem;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 0.75rem;
+}
