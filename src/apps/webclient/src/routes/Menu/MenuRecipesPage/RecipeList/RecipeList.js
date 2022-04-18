@@ -5,8 +5,8 @@ import { CollectionLink } from '../../components/CollectionLink'
 import { RecipeTile } from '../../components/RecipeTile'
 import { RecipeContextProvider } from '../../context/recipeContext'
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
-import css from './RecipeList.css'
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
+import css from './RecipeList.css'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -15,6 +15,7 @@ class RecipeList extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const { currentCollectionId } = this.props
+
     if (currentCollectionId !== prevProps.currentCollectionId) {
       this.trackRecipeOrderDisplayed()
     }

@@ -11,13 +11,14 @@ jest.mock('actions/tracking', () => ({
   trackRecipeOrderDisplayed: jest.fn()
     .mockReturnValue('trackRecipeOrderDisplayed return value'),
 }))
+
 describe('RecipeList', () => {
   let trackRecipeOrderDisplayed
   let wrapper
   let recipes
+
   beforeEach(() => {
     trackRecipeOrderDisplayed = jest.fn()
-    trackRecipeOrderDisplayed.mockClear()
   })
 
   describe('trackRecipeOrderDisplayed', () => {
@@ -38,6 +39,7 @@ describe('RecipeList', () => {
         recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
       }
     ])
+
     describe('when the recipe list is initially rendered', () => {
       test('should call trackRecipeOrderDisplayed once', () => {
         shallow(
@@ -92,6 +94,7 @@ describe('RecipeList', () => {
       })
     })
   })
+
   describe('when there are no recipes', () => {
     test('then it should render nothing', () => {
       wrapper = shallow(
@@ -157,22 +160,4 @@ describe('RecipeList', () => {
       expect(wrapper.find(CollectionLink).exists()).toBe(false)
     })
   })
-
-  recipes = Immutable.List([
-    {
-      originalId: '3',
-      recipe: Immutable.Map({
-        id: '3',
-        availability: [],
-        title: 'recipe3',
-        boxType: 'vegetarian',
-        dietType: 'Vegetarian',
-        isRecommended: false,
-      })
-    },
-    {
-      originalId: '1',
-      recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
-    }
-  ])
 })

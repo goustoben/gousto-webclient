@@ -15,6 +15,6 @@ export const recipeListViewed = (action) => ({
     recommended: action.recommended,
     browse_mode: action.browseMode,
     recommender_version: action.recommenderVersion,
-    is_recommendations_shown: action.isRecommendationsShown
+    is_recommendations_shown: action.isRecommendationsShown,
   },
 })

@@ -1,4 +1,4 @@
-import { recipeListViewed } from '../recipes/recipes'
+import { recipeListViewed } from '../recipes'
 
 describe('snowplow recipe tracking events', () => {
   describe('view_recipe_list', () => {
@@ -15,7 +15,8 @@ describe('snowplow recipe tracking events', () => {
       recommenderVersion: '1',
       isRecommendationsShown: true,
       currentMenuId: 'test-menu-id',
-      transactionType: 'test-transaction-type'
+      transactionType: 'test-transaction-type',
+      soldOutRecipes: ['3'],
     }
 
     test('should return an object with type view_recipe_list', () => {
@@ -37,7 +38,7 @@ describe('snowplow recipe tracking events', () => {
           recommender_version: '1',
           is_recommendations_shown: true,
           menu_id: 'test-menu-id',
-          transaction_type: 'test-transaction-type'
+          transaction_type: 'test-transaction-type',
         },
       })
     })
