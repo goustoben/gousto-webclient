@@ -237,7 +237,7 @@ export const trackRecipeOrderDisplayed = (displayedOrder) => (
       recommenderVersion,
       isRecommendationsShown,
       currentMenuId,
-      transactionType
+      transactionType,
     })
   }
 )
