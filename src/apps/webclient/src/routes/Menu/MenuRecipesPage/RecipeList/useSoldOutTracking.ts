@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 
-export const useTracking = () => {
+export const useSoldOutTracking = () => {
   const dispatch = useDispatch()
 
   const trackSoldOutRecipes = useCallback(
