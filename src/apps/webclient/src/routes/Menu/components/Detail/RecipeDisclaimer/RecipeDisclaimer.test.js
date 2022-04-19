@@ -3,6 +3,10 @@ import * as reactRedux from 'react-redux'
 import { shallow } from 'enzyme'
 import { RecipeDisclaimer } from './RecipeDisclaimer'
 
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
+
 describe('RecipeDisclaimer', () => {
   let wrapper
   const claim = {

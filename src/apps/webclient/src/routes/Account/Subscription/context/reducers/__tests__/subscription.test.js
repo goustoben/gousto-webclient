@@ -13,6 +13,10 @@ const reduceDeliveriesDataSpy = jest.spyOn(deliveryReducers, 'reduceDeliveriesDa
 const reduceUpdatedDeliveriesDataSpy = jest.spyOn(deliveryReducers, 'reduceUpdatedDeliveriesData')
 const reduceBoxDataSpy = jest.spyOn(boxReducers, 'reduceBoxData')
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 let result
 
 const mockState = {}

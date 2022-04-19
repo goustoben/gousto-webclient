@@ -14,6 +14,11 @@ import {
   getIsSidesEnabled,
 } from '../menuCheckoutClick'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'http:'
+}))
+
 // The first spec to create optimizely instance will point to this function.
 // as we memories the optimizely instances onces created.
 // see: getOptimizelyInstance in src/containers/OptimizelyRollouts/optimizelySDK.js

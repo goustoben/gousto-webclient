@@ -6,6 +6,9 @@ const sections = ['resubscribe', 'order-a-box']
 jest.mock('../sections/OrderABox', () => ({
   OrderABox: () => <div />
 }))
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
 
 describe('PausedSubscription', () => {
   let wrapper

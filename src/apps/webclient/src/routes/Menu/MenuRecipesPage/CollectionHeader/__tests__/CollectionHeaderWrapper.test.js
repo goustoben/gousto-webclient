@@ -4,6 +4,10 @@ import * as reactRedux from 'react-redux'
 import { CollectionHeaderWrapper } from '../CollectionHeaderWrapper'
 import { WaveLinkHeaderContainer } from '../LinkHeaderContainer'
 
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
+
 describe('CollectionHeaderWrapper', () => {
   let wrapper
   describe('when collectionsHeaders is null', () => {

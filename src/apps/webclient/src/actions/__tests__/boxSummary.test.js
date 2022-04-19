@@ -6,31 +6,25 @@ import { menuLoadMenu } from 'actions/menu'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
 
-jest.mock('apis/deliveries', () => ({
-  fetchDeliveryDays: jest.fn().mockReturnValue({
-    data: [{ id: 1 }]
-  })
-}))
+jest.mock('apis/deliveries')
 
-jest.mock('react-router-redux', () => ({
-  push: jest.fn()
-}))
+jest.mock('react-router-redux')
 
-jest.mock('actions/basket', () => ({
-  basketAddressChange: jest.fn(),
-  basketPostcodeChange: jest.fn(),
-  portionSizeSelectedTracking: jest.fn(),
-  basketDateChange: jest.fn(),
-  basketSlotChange: jest.fn()
-}))
+jest.mock('actions/basket')
 
-jest.mock('actions/menu', () => ({
-  menuLoadMenu: jest.fn(),
-  menuLoadStock: jest.fn()
+jest.mock('actions/menu')
+
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'http:'
 }))
 
 describe('boxSummary actions', () => {
   beforeEach(() => {
+    jest.resetAllMocks()
+    fetchDeliveryDays.mockReturnValue({
+      data: [{ id: 1 }]
+    })
     jest.spyOn(deliveriesUtils, 'transformDaySlotLeadTimesToMockSlots')
   })
 

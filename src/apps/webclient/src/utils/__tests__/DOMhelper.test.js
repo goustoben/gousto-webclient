@@ -5,6 +5,10 @@ jest.mock('react-dom',() => ({
   findDOMNode: jest.fn()
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 describe('DOMhelper', () => {
   describe('getBoundingClientRect',() => {
     test('should return an empty object when ref is falsy', () => {

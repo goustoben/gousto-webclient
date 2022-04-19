@@ -1,9 +1,16 @@
 import Immutable from 'immutable'
 import config from 'config/head/optimizely'
+import { canUseWindow } from 'utils/browserEnvironment'
 const htmlTemplate = require('../template')
 
 // mock transit in encodeState
 jest.mock('transit-immutable-js')
+jest.mock('utils/browserEnvironment')
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getDomain: () => 'gousto.local',
+  getProtocol: () => 'http:',
+}))
 
 describe('htmlTemplate', () => {
   let initialState
@@ -12,6 +19,8 @@ describe('htmlTemplate', () => {
   let output
 
   beforeEach(() => {
+    jest.resetAllMocks()
+    canUseWindow.mockReturnValue(false)
     helmetHead = {}
     scripts = {}
     // mock [auth] to prevent mocking the the entire './head'

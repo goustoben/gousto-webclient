@@ -7,6 +7,7 @@ const mockWindowEnvConfig: WindowEnvConfig = {
   RECAPTCHA_PUBK: 'mock-recaptcha-public-key',
   RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
   CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
+  ENVIRONMENT: 'local',
 }
 
 describe('windowEnvConfig', () => {

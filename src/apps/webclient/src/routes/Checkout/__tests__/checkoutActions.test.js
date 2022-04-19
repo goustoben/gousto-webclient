@@ -68,6 +68,11 @@ jest.mock('apis/customers', () => ({
   customerSignup: jest.fn(),
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'https:',
+}))
+
 describe('checkoutActions', () => {
   describe('given trackCheckoutUrgencyAction is called', () => {
     const state = {

@@ -24,6 +24,10 @@ jest.mock('actions/status', () => ({
   error: jest.fn()
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local'
+}))
+
 const dispatchSpy = jest.fn()
 const getStateSpy = jest.fn()
 

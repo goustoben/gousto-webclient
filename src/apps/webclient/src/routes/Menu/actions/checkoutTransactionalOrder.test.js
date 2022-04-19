@@ -6,6 +6,11 @@ import { createState as createOrderState } from 'routes/Menu/selectors/__mocks__
 import * as orderV2Api from '../apis/orderV2'
 import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'https:'
+}))
+
 const createState = (partialOverwrite = {}) => createOrderState({
   ...partialOverwrite,
   auth: {
