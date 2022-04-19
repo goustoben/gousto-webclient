@@ -70,6 +70,7 @@ jest.mock('apis/customers', () => ({
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
+  getProtocol: () => 'https:',
 }))
 
 describe('checkoutActions', () => {
