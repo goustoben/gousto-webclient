@@ -2,6 +2,7 @@ import { getFromProcessEnv, parseStringToNumber, ProcessEnv } from '../processEn
 
 const validProcessEnv: ProcessEnv = {
   ENVIRONMENT: 'local',
+  DOMAIN: 'gousto.local',
   API_TOKEN: 'mock-api-token',
   AUTH_CLIENT_ID: '10',
   AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
@@ -38,6 +39,7 @@ describe('processEnv', () => {
 
         expect(getEnvConfig()).toEqual({
           ENVIRONMENT: 'local',
+          DOMAIN: 'gousto.local',
           API_TOKEN: 'mock-api-token',
           AUTH_CLIENT_ID: 10,
           AUTH_CLIENT_SECRET: 'mock-auth-client-secret',

@@ -16,6 +16,8 @@ describe('windowEnvConfig', () => {
         RECAPTCHA_PUBK: 'mock-recaptcha-public-key',
         RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
         CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
+        ENVIRONMENT: 'mock-environment',
+        DOMAIN: 'mock-domain',
       }
 
       const expected = JSON.stringify(mockConfig)

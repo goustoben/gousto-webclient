@@ -37,22 +37,10 @@ describe('serverEnvironment', () => {
   })
 
   describe('getServerDomain', () => {
-    it('should use ENVIRONMENT to infer the specified domain for local', () => {
-      mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'local' })
+    it('returns DOMAIN from getEnvConfig', () => {
+      mockGetEnvConfig.mockReturnValue({ DOMAIN: 'gousto.local' })
 
       expect(getServerDomain()).toEqual('gousto.local')
-    })
-
-    it('should use ENVIRONMENT to infer the specified domain for production', () => {
-      mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'production' })
-      expect(getServerDomain()).toEqual('gousto.co.uk')
-    })
-
-    it('should use ENVIRONMENT to infer the specified domain for lower envoironments', () => {
-      mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'jalapenos' })
-      expect(getServerDomain()).toEqual('gousto.info')
-      mockGetEnvConfig.mockReturnValue({ ENVIRONMENT: 'fef' })
-      expect(getServerDomain()).toEqual('gousto.info')
     })
   })
 

@@ -13,6 +13,7 @@ jest.mock('react-redux', () => ({
 
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
+  getClientDomain: () => 'gousto.local',
 }))
 
 describe('CheckoutButton', () => {

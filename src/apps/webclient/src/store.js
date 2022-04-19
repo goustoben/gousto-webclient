@@ -15,8 +15,8 @@ import { gtmMiddleware } from 'middlewares/tracking/gtm'
 import affiliateWindow from 'middlewares/tracking/affiliateWindow'
 import { dataLayerTracker } from 'middlewares/tracking/dataLayerTracker'
 import persistenceConfig from 'config/storePersistence'
-import { canUseWindow, isDev } from 'utils/browserEnvironment'
-import { getEnvironment } from 'utils/isomorphicEnvironment'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { getEnvironment, isDev } from 'utils/isomorphicEnvironment'
 
 class GoustoStore {
   constructor() {
