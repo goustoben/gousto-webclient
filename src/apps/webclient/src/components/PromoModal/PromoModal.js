@@ -10,6 +10,7 @@ import {
 } from 'actions/trackingKeys'
 import { CTA, Modal } from 'goustouicomponents'
 import headerImage from 'media/images/discount-modal-header.jpg'
+import { signupConfig } from 'config/signup'
 import { EnterPromoCodeManuallyButton } from './EnterPromoCodeManuallyButton'
 import { AgeVerifyContainer } from './AgeVerify'
 import css from './PromoModal.css'
@@ -61,7 +62,8 @@ class PromoModal extends React.Component {
   }
 
   handleEnterPromoCodeManuallyClick = () => {
-    console.log('TODO')
+    console.log('TODO event')
+    browserHistory.push(`/signup/${signupConfig.enterPromoCodeManuallyPageSlug}`)
   }
 
   render() {
@@ -74,6 +76,7 @@ class PromoModal extends React.Component {
       isAgeVerified,
       pending,
       isGoustoOnDemandError,
+      isGoustoOnDemandEnabled,
     } = this.props
 
     return (

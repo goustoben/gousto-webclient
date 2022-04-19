@@ -64,4 +64,5 @@ export const signupConfig = {
   sellThePropositionPagePath: 'about',
   checkAccountPageSlug: 'start',
   applyVoucherPageSlug: 'apply-voucher',
+  enterPromoCodeManuallyPageSlug: 'enter-discount-code',
 }
