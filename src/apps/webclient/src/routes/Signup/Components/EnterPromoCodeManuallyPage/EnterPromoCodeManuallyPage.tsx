@@ -7,6 +7,7 @@ export const EnterPromoCodeManuallyPage = () => {
     <InformationalPageTemplate
       testingSelector="enterPromoCodeManuallyPage"
       headerText="Enter your discount code!"
+      headerSize="fontStyle2XL"
     >
       TODO
     </InformationalPageTemplate>
