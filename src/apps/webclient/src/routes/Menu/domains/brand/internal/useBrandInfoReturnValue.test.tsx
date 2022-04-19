@@ -6,6 +6,9 @@ import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
 import { useBrandInfo } from './useBrandInfo'
 
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
 jest.mock('swr', () => jest.fn())
 
 const mockedUseSWR = useSWR as jest.MockedFunction<any>

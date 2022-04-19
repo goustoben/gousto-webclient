@@ -11,6 +11,10 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }))
 
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
+
 describe('CheckoutButton', () => {
   let wrapper
   let propsToPass

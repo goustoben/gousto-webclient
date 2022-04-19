@@ -17,6 +17,10 @@ jest.mock('selectors/checkout', () => ({
   })),
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local'
+}))
+
 describe('log actions', () => {
   const getState = () => {}
   const dispatch = (action) => {

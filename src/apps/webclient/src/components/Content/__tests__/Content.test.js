@@ -4,6 +4,10 @@ import { Content } from 'Content'
 import Immutable from 'immutable'
 import { SectionHeader } from 'SectionHeader'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 describe('Content', () => {
   let state
   let invalidState

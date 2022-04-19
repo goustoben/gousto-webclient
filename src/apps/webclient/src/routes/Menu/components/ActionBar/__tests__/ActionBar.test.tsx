@@ -4,7 +4,7 @@ import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import { useMedia } from 'react-use'
-
+import { canUseWindow } from 'utils/browserEnvironment'
 import { ActionBar } from '../ActionBar'
 
 jest.useFakeTimers()
@@ -13,6 +13,8 @@ jest.mock('react-use', () => ({
   ...jest.requireActual('react-use'),
   useMedia: jest.fn().mockReturnValue(true),
 }))
+
+jest.mock('utils/browserEnvironment')
 
 describe('ActionBar', () => {
   let rendered: RenderResult
@@ -34,6 +36,8 @@ describe('ActionBar', () => {
   const mockedStore = mockStore(state)
 
   beforeEach(() => {
+    ;(canUseWindow as jest.Mock).mockReturnValue(false)
+
     rendered = render(
       <Provider store={mockedStore}>
         <ActionBar variant="separate" />

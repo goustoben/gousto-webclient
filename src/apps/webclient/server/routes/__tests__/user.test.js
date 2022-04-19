@@ -26,6 +26,10 @@ jest.mock('utils/processEnv', () => ({
   }),
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 const app = {
   use: jest.fn(),
 }
@@ -38,6 +42,10 @@ const getCtx = () => ({
 describe('user', () => {
   let ctx
   let accessToken
+
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
 
   describe('user controller', () => {
     const getMiddlewareCtx = (path) =>

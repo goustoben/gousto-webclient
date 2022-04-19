@@ -1,9 +1,4 @@
-import {
-  canUseWindow,
-  getClientEnvironment,
-  getClientProtocol,
-  getDomain as getClientDomain,
-} from './browserEnvironment'
+import { canUseWindow, getClientProtocol, getDomain as getClientDomain } from './browserEnvironment'
 import {
   getServerEnvironment,
   getServerDomain,
@@ -13,6 +8,7 @@ import {
   getServerRecaptchaRAFPublicKey,
 } from '../../server/utils/serverEnvironment'
 import {
+  getClientEnvironment,
   getClientCheckoutComPublicKey,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,

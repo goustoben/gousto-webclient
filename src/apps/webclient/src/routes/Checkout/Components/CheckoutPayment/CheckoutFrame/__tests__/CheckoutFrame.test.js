@@ -8,6 +8,7 @@ import { CheckoutFrameContainer } from '../CheckoutFrameContainer'
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   ...jest.requireActual('utils/isomorphicEnvironment'),
+  getEnvironment: () => 'local',
   getCheckoutComPublicKey: () => 'checkout-com-public-key',
 }))
 

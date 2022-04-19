@@ -10,6 +10,10 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }))
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local'
+}))
+
 describe('RecipeList', () => {
   let menuRecipesStore
   let recipes

@@ -47,6 +47,11 @@ jest.mock('actions/order', () => ({
 
 jest.mock('routes/Menu/apis/orderV2')
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+  getProtocol: () => 'http:'
+}))
+
 describe('orderConfirmation actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()

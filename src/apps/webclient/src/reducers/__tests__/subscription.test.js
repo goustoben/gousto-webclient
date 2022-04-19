@@ -1,6 +1,10 @@
 import Immutable from 'immutable'
 import subReducer from 'reducers/subscription'
 
+jest.mock('utils/isomorphicEnvironment', () => ({
+  getEnvironment: () => 'local',
+}))
+
 describe('USER_IDENTIFIED action type', () => {
   test('should put the user details into the state', () => {
     const state = Immutable.fromJS({

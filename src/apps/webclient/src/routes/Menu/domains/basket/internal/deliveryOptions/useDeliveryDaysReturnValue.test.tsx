@@ -3,6 +3,9 @@ import useSWR from 'swr'
 import { useDeliveryDays } from '.'
 
 jest.mock('swr', () => jest.fn())
+jest.mock('utils/configFromWindow', () => ({
+  getClientEnvironment: () => 'local',
+}))
 
 const mockedUseSWR = useSWR as jest.MockedFunction<any>
 

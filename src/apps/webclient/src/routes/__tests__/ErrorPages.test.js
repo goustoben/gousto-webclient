@@ -1,8 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { Helmet } from 'react-helmet'
 import { isServer } from 'utils/serverEnvironment'
+import { canUseWindow } from 'utils/browserEnvironment'
 const { processRequest } = require('../../../server/processRequest')
 
+jest.mock('utils/browserEnvironment')
 jest.mock('utils/serverEnvironment')
 
 // This test renders the entire route as a string
@@ -10,6 +12,7 @@ jest.mock('utils/serverEnvironment')
 describe('router', () => {
   beforeEach(() => {
     isServer.mockReturnValue(true)
+    canUseWindow.mockReturnValue(false)
     Helmet.canUseDOM = false
   })
 
