@@ -430,29 +430,21 @@ workflows:
   version: 2
 
   e2e-manual:
+    when:
+      equal: [e2e-manual, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - e2e-manual
+
       - install-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - e2e-manual
+
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-          filters:
-            branches:
-              only:
-                - e2e-manual
 
   lower-environment:
     jobs:
@@ -507,147 +499,99 @@ workflows:
                 - /^env-.*/
 
   staging-environment:
+    when:
+      equal: [develop, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - develop
+
       - install-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - develop
+
       - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-          filters:
-            branches:
-              only:
-                - develop
+
       - upload-source-maps-to-datadog:
           env: production
           context: gousto-prod-aws-app-circleci
           requires:
             - build-webclient
-          filters:
-            branches:
-              only:
-                - develop
+
       - upload-assets-to-s3:
           name: Upload static assets to staging S3 /build/BUILD_NUMBER
           env: staging
           context: gousto-beta-aws-app-circleci
           requires:
             - build-webclient
-          filters:
-            branches:
-              only:
-                - develop
+
       - upload-assets-to-s3:
           name: Upload static assets to production S3 /build/BUILD_NUMBER
           env: production
           context: gousto-prod-aws-app-circleci
           requires:
             - build-webclient
-          filters:
-            branches:
-              only:
-                - develop
+
       - test-typecheck-and-report:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-          filters:
-            branches:
-              only:
-                - develop
+
       - eslint-generate-report:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-          filters:
-            branches:
-              only:
-                - develop
+
       - test-regression:
           name: test-regression-web
           platform: web
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-          filters:
-            branches:
-              only:
-                - develop
+
       - test-regression:
           name: test-regression-mobile
           platform: mobile
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-          filters:
-            branches:
-              only:
-                - develop
+
       - publish-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
             - test-typecheck-and-report
             - eslint-generate-report
-          filters:
-            branches:
-              only:
-                - develop
+
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-webclient
-          filters:
-            branches:
-              only:
-                - develop
+
       - deploy-infrastructure-and-webclient-image:
           name: deploy-infrastructure-and-webclient-image-to-staging
           context: gousto-beta-aws-app-circleci
           requires:
-            - test-regression-web
-            - test-regression-mobile
             - create-and-upload-webclient-docker-image-to-ecr
             - "Upload static assets to staging S3 /build/BUILD_NUMBER"
             - "Upload static assets to production S3 /build/BUILD_NUMBER"
-          filters:
-            branches:
-              only:
-                - develop
+
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
             - deploy-infrastructure-and-webclient-image-to-staging
-          filters:
-            branches:
-              only:
-                - develop
 
   production-environment:
+    when:
+      equal: [master, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-prod-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - master
+
       - deploy-infrastructure-and-webclient-image:
           name: deploy-infrastructure-and-webclient-image-to-production
           context: gousto-prod-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - master
