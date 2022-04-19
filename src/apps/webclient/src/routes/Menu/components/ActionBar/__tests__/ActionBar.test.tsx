@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import { useMedia } from 'react-use'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { getDomain } from 'utils/isomorphicEnvironment'
 import { ActionBar } from '../ActionBar'
 
 jest.useFakeTimers()
@@ -15,6 +16,7 @@ jest.mock('react-use', () => ({
 }))
 
 jest.mock('utils/browserEnvironment')
+jest.mock('utils/isomorphicEnvironment')
 
 describe('ActionBar', () => {
   let rendered: RenderResult
@@ -37,6 +39,7 @@ describe('ActionBar', () => {
 
   beforeEach(() => {
     ;(canUseWindow as jest.Mock).mockReturnValue(false)
+    ;(getDomain as jest.Mock).mockReturnValue('gousto.local')
 
     rendered = render(
       <Provider store={mockedStore}>
