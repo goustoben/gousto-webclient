@@ -35,22 +35,7 @@ const baseConfig = {
     publicPath,
   },
   optimization: getClientOptimization(isDevelopmentBuild),
-  plugins: [
-    ...getClientPlugins(isDevelopmentBuild),
-    {
-      apply(compiler) {
-        compiler.hooks.beforeRun.tapAsync('LogEntireWebpackConfig', function (compiler, callback) {
-          console.log(`
-          +++++++++++++++++++++
-          CLIENT WEBPACK CONFIG:
-          +++++++++++++++++++++
-          `)
-          console.log(JSON.stringify(compiler.options, null, 4))
-          callback()
-        })
-      },
-    },
-  ],
+  plugins: getClientPlugins(isDevelopmentBuild),
   resolve: {
     alias: {
       ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', false),

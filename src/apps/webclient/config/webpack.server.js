@@ -71,19 +71,6 @@ const config = {
   plugins: [
     ExitCodePlugin,
     new webpack.DefinePlugin(webpackEnvVarsServer),
-    {
-      apply(compiler) {
-        compiler.hooks.beforeRun.tapAsync('LogEntireWebpackConfig', function (compiler, callback) {
-          console.log(`
-          +++++++++++++++++++++
-          SERVER WEBPACK CONFIG:
-          +++++++++++++++++++++
-          `)
-          console.log(JSON.stringify(compiler.options, null, 4))
-          callback()
-        })
-      },
-    },
   ],
   resolve: {
     alias: {
