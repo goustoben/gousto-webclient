@@ -4,6 +4,11 @@ import { shallow } from 'enzyme'
 import { BoxPricesRedesign } from 'routes/BoxPrices/BoxPricesRedesign'
 import numPersonsToBoxDescriptors from './__mocks__/numPersonsToBoxDescriptors.json'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('BoxPricesRedesign', () => {
   let wrapper
 

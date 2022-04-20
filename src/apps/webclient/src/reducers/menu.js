@@ -95,6 +95,7 @@ const menu = {
       if (action.categoryId) {
         return state.set('recipeId', action.recipeId)
           .set('categoryId', action.categoryId)
+          .set('recipeReference', action.recipeReference)
       }
 
       return state.set('recipeId', action.recipeId)

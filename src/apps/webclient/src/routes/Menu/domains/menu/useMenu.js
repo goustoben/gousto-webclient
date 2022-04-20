@@ -2,6 +2,8 @@ import { useAllCollections } from '../collections'
 import { useAlternativeOptions } from './internal/useAlternativeOptions'
 import { useGetRecipesForCollectionId } from './internal/useGetRecipesForCollectionId'
 
+export { recipeReferencePrefix } from './internal/getRecipeReferenceInjector'
+
 export const useMenu = () => {
   const allCollections = useAllCollections()
 

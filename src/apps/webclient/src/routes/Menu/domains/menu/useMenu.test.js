@@ -90,8 +90,8 @@ describe('menu domain / useMenu', () => {
     const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_B.get('id'))
 
     expect(recipes).toEqual(Immutable.List([
-      {recipe: RECIPE_3, originalId: RECIPE_3.get('id')},
-      {recipe: RECIPE_4, originalId: RECIPE_4.get('id')},
+      {recipe: RECIPE_3, originalId: RECIPE_3.get('id'), reference: `recipe_family_reference_${RECIPE_3.get('id')}__1`},
+      {recipe: RECIPE_4, originalId: RECIPE_4.get('id'), reference: `recipe_family_reference_${RECIPE_4.get('id')}__1`},
     ]))
   })
 
@@ -102,8 +102,8 @@ describe('menu domain / useMenu', () => {
       const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
 
       expect(recipes).toEqual(Immutable.List([
-        {recipe: RECIPE_2, originalId: RECIPE_2.get('id')},
-        {recipe: RECIPE_1, originalId: RECIPE_1.get('id')},
+        {recipe: RECIPE_2, originalId: RECIPE_2.get('id'), reference: `recipe_family_reference_${RECIPE_2.get('id')}__1`},
+        {recipe: RECIPE_1, originalId: RECIPE_1.get('id'), reference: `recipe_family_reference_${RECIPE_1.get('id')}__1`},
       ]))
     })
   })
@@ -153,9 +153,9 @@ describe('getRecipesForCollectionId', () => {
       const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
 
       expect(recipes).toEqual(Immutable.List([
-        {recipe: RECIPE_3, originalId: RECIPE_3.get('id')},
-        {recipe: RECIPE_2, originalId: RECIPE_2.get('id')},
-        {recipe: RECIPE_4, originalId: RECIPE_4.get('id')},
+        {recipe: RECIPE_3, originalId: RECIPE_3.get('id'), reference: `recipe_family_reference_${RECIPE_3.get('id')}__1`},
+        {recipe: RECIPE_2, originalId: RECIPE_2.get('id'), reference: `recipe_family_reference_${RECIPE_2.get('id')}__1`},
+        {recipe: RECIPE_4, originalId: RECIPE_4.get('id'), reference: `recipe_family_reference_${RECIPE_4.get('id')}__1`},
       ]))
     })
   })

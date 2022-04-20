@@ -2,6 +2,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { HomeSections } from 'routes/Home/HomeSections'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('HomeSections', () => {
   let wrapper
 

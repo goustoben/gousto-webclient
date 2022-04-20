@@ -6,7 +6,6 @@ import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { tutorialViewedExpireTime } from 'config/cookies'
-import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 
 import {
   setTutorialViewed,
@@ -25,7 +24,10 @@ jest.mock('config/cookies', () => ({
   tutorialViewedExpireTime: 60,
 }))
 
-jest.mock('containers/OptimizelyRollouts')
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
 
 jest.mock('utils/browserEnvironment')
 
@@ -34,7 +36,6 @@ describe('tutorial actions', () => {
   const getState = jest.fn()
 
   beforeEach(() => {
-    isOptimizelyFeatureEnabledFactory.mockImplementation(() => async () => false)
     canUseWindow.mockReturnValue(true)
   })
 

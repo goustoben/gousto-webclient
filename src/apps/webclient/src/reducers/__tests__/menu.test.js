@@ -394,14 +394,17 @@ describe('menu reducer', () => {
       test('should set menuRecipeDetails recipeId and categoryId', () => {
         const recipeId = '123'
         const categoryId = 'category1'
+        const recipeReference = 'reference_to_123'
         const result = menu.menuRecipeDetails(Immutable.Map({}), {
           type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
           recipeId,
-          categoryId
+          categoryId,
+          recipeReference,
         })
         expect(result).toEqual(Immutable.Map({
           recipeId,
-          categoryId
+          categoryId,
+          recipeReference,
         }))
       })
     })

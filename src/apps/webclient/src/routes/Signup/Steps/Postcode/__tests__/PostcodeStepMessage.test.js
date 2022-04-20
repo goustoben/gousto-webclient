@@ -2,6 +2,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { PostcodeStepMessage } from '../PostcodeStepMessage'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('PostcodeStepMessage', () => {
   let wrapper
 

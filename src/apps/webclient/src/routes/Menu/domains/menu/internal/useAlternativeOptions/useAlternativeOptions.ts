@@ -11,6 +11,7 @@ import { getCurrentMenuVariants } from 'routes/Menu/selectors/variants'
 import { getNumPortions } from 'selectors/basket'
 import { getRecipeTitle } from 'selectors/recipe'
 import { getRecipes } from 'selectors/root'
+import { useRecipeReference } from 'routes/Menu/context/recipeReferenceContext'
 import { Recipe, RecipeImmutable, CollectionImmutable } from './types'
 import { getChangeCheckedRecipeHandler } from './getChangeCheckedRecipeHandler'
 
@@ -64,6 +65,7 @@ export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } 
   )
   const numPortions = useSelector(getNumPortions)
   const dispatch = useDispatch()
+  const recipeReference = useRecipeReference()
 
   const getAlternativeOptionsForRecipe: GetAlternativeOptionsForRecipe = ({
     recipeId,
@@ -117,6 +119,7 @@ export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } 
         originalId,
         collectionId,
         closeOnSelection,
+        recipeReference,
       })
 
       return {

@@ -12,6 +12,8 @@ const PRODUCTION_URL = 'https://www.gousto.co.uk'
 // TODO: this is potentially a security risk / leaking information.
 // Ideally we would not want this to be exposed in the public bundle.
 const LOCAL_SERVICE_HOSTNAME = 'staging-api.gousto.info'
+// const LOCAL_SERVICE_HOSTNAME = 'radishes-api.gousto.info'
+// const LOCAL_SERVICE_HOSTNAME = 'production-api.gousto.co.uk'
 
 const isWebclientProductionService = ({
   serviceName,

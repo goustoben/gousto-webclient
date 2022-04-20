@@ -30,7 +30,7 @@ describe('selectRecipeVariant', () => {
     const dispatch = jest.fn()
     const getState = () => wellformedMenuService({ recipes: [wellformedRecipe({ id: variantId })] })
 
-    await selectRecipeVariant(originalRecipeId, variantId, collectionId, variantOutOfStock, view)(dispatch, getState)
+    await selectRecipeVariant({originalRecipeId, variantId, collectionId, variantOutOfStock, view})(dispatch, getState)
 
     expect(dispatch).toHaveBeenCalledWith({
       type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,

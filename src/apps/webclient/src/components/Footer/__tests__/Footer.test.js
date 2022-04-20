@@ -9,6 +9,11 @@ import configureMockStore from 'redux-mock-store'
 
 jest.mock('actions/login')
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('<Footer />', () => {
   const trackNavigationClick = jest.fn()
   const helpPreLoginVisibilityChange = jest.fn()

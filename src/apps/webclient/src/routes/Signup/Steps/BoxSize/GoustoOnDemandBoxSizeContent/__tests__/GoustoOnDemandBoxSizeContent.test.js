@@ -3,6 +3,11 @@ import { shallow } from 'enzyme'
 import numPersonsToBoxDescriptors from 'routes/BoxPrices/__tests__/__mocks__/numPersonsToBoxDescriptors.json'
 import { GoustoOnDemandBoxSizeContent } from '../GoustoOnDemandBoxSizeContent'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('GoustoOnDemandBoxSizeContent', () => {
   let wrapper
 

@@ -8,11 +8,11 @@ export const getOutOfStockRecipeReplacer = ({
 }) => {
   const recipesInStockIds = new Set(recipesInStock.map(r => r.get('id')))
 
-  const wrapRecipe = recipe => ({recipe, originalId: recipe.get('id')})
+  const wrapRecipe = (recipe, reference) => ({recipe, originalId: recipe.get('id'), reference})
 
-  return ({recipe}) => {
+  return ({recipe, reference}) => {
     if (recipesInStockIds.has(recipe.get('id'))) {
-      return wrapRecipe(recipe)
+      return wrapRecipe(recipe, reference)
     }
 
     const recipesAlternatives = getVariantsForRecipeForCurrentCollection(
@@ -23,7 +23,7 @@ export const getOutOfStockRecipeReplacer = ({
     )
 
     if (!recipesAlternatives || recipesAlternatives.type !== 'alternatives') {
-      return wrapRecipe(recipe)
+      return wrapRecipe(recipe, reference)
     }
 
     const recipeAlternativeWhichIsInStock = recipesAlternatives
@@ -33,9 +33,9 @@ export const getOutOfStockRecipeReplacer = ({
     if (recipeAlternativeWhichIsInStock) {
       const alternative = recipes.find(r => r.get('id') === recipeAlternativeWhichIsInStock.get('coreRecipeId'))
 
-      return wrapRecipe(alternative)
+      return wrapRecipe(alternative, reference)
     }
 
-    return wrapRecipe(recipe)
+    return wrapRecipe(recipe, reference)
   }
 }

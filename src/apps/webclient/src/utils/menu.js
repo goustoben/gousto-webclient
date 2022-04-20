@@ -1,5 +1,8 @@
+import { recipeReferencePrefix } from 'routes/Menu/domains/menu'
+
 export const isRecipeInBasket = (recipe, basketRecipes) => basketRecipes.has(recipe.get('id'))
 
+// eslint-disable-next-line import/no-dynamic-require
 export const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
 export const getScrollOffset = (threshold, animationThreshold, scrolledPastPoint) => {
@@ -189,7 +192,15 @@ export const switchSelectedVariants = (originalVariants, payload) => {
     ...originalVariants,
     [payload.collectionId]: {
       ...filteredCollectionVariants,
-      [payload.originalRecipeId]: payload.variantId
+      [payload.originalRecipeId]: payload.variantId,
+
+      // Copy existing recipe reference based key
+      ...Object.keys(currentCollectionVariants || {})
+        .filter( k => k.startsWith(recipeReferencePrefix))
+        .reduce((acc, it) => ({...acc, [it]: currentCollectionVariants[it]}), {}),
+
+      // Add newly provided mapping for reference based key (if payload has it)
+      ...(payload.recipeReference && {[payload.recipeReference]: payload.variantId}),
     }
   }
 

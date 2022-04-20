@@ -51,6 +51,8 @@ export function fetchMenus(accessToken, query) {
     requestQueryParams.tasteProfileId = tasteProfileId
   }
 
+  // requestQueryParams.forceSwapsExperimentUserAllocationGroup = 'variant-b'
+
   return fetchRaw(`${endpoint('menu')}/menus`, requestQueryParams, fetchOptions)
 }
 

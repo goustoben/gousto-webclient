@@ -10,6 +10,7 @@ type GetChangeCheckedRecipeHandlerArgs = {
   originalId: string
   collectionId: string
   closeOnSelection?: boolean
+  recipeReference?: string | null
 }
 
 /**
@@ -22,20 +23,22 @@ export const getChangeCheckedRecipeHandler =
     originalId,
     collectionId,
     closeOnSelection,
+    recipeReference,
   }: GetChangeCheckedRecipeHandlerArgs) =>
   (checkedRecipeId: string, isOutOfStock: boolean): void => {
     const view = isOnDetailScreen ? 'details' : 'grid'
 
     dispatch(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      selectRecipeVariant(
-        originalId,
-        checkedRecipeId,
+      selectRecipeVariant({
+        originalRecipeId: originalId,
+        variantId: checkedRecipeId,
         collectionId,
-        isOutOfStock,
+        variantOutOfStock: isOutOfStock,
         view,
-        closeOnSelection
-      ) as any
+        close: closeOnSelection,
+        recipeReference,
+      }) as any
     )
 
     if (isOnDetailScreen) {

@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import loginActions, { helpPreLoginVisibilityChange, loginRedirect } from 'actions/login'
-import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
@@ -11,7 +11,10 @@ import statusActions from '../status'
 import authActions from '../auth'
 
 jest.mock('utils/browserEnvironment')
-jest.mock('containers/OptimizelyRollouts/optimizelyUtils')
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
 
 jest.mock('actions/user')
 

@@ -11,7 +11,8 @@ jest.mock('react-redux', () => ({
 }))
 
 jest.mock('utils/isomorphicEnvironment', () => ({
-  getEnvironment: () => 'local'
+  getEnvironment: () => 'local',
+  getProtocol: () => 'http',
 }))
 
 describe('RecipeList', () => {

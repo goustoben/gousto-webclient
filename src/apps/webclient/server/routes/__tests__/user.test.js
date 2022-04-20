@@ -28,6 +28,7 @@ jest.mock('utils/processEnv', () => ({
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
+  getProtocol: () => 'http',
 }))
 
 const app = {

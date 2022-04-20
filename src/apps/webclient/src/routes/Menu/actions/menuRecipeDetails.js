@@ -6,7 +6,7 @@ import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
 import { doesRecipeHaveSurcharges } from '../selectors/menuService'
 
-export const menuRecipeDetailVisibilityChange = (recipeId, categoryId) => (dispatch, getState) => {
+export const menuRecipeDetailVisibilityChange = (recipeId, categoryId, recipeReference) => (dispatch, getState) => {
   const { recipes } = getState()
   if (recipeId && !recipes.get(recipeId, null)) {
     return
@@ -19,6 +19,7 @@ export const menuRecipeDetailVisibilityChange = (recipeId, categoryId) => (dispa
     type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
     recipeId: baseRecipeId,
     categoryId,
+    recipeReference,
     trackingData: {
       actionType: trackingKeys.changeMenuRecipeDetailVisibility,
       recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
@@ -27,11 +28,11 @@ export const menuRecipeDetailVisibilityChange = (recipeId, categoryId) => (dispa
   })
 }
 
-export const showDetailRecipe = (recipeId, categoryIds) => (dispatch, getState) => {
+export const showDetailRecipe = (recipeId, categoryIds, recipeReference) => (dispatch, getState) => {
   const { boxSummaryShow } = getState()
 
   if (!boxSummaryShow.get('show')) {
-    menuRecipeDetailVisibilityChange(recipeId, categoryIds)(dispatch, getState)
+    menuRecipeDetailVisibilityChange(recipeId, categoryIds, recipeReference)(dispatch, getState)
   }
 }
 
@@ -59,7 +60,8 @@ export const selectRecipeVariantAction = (
   variantOutOfStock,
   view = 'grid',
   close = true,
-  hasSurcharge
+  hasSurcharge,
+  recipeReference,
 ) => ({
   type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
   payload: {
@@ -67,6 +69,7 @@ export const selectRecipeVariantAction = (
     originalRecipeId,
     variantId,
     close,
+    recipeReference,
   },
   trackingData: {
     actionType: trackingKeys.selectRecipeVariant,
@@ -80,7 +83,7 @@ export const selectRecipeVariantAction = (
 })
 
 export const selectRecipeVariant =
-  (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true) =>
+  ({originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true, recipeReference}) =>
     async (dispatch, getState) => {
       const hasSurcharges = doesRecipeHaveSurcharges(getState(), variantId)
 
@@ -92,7 +95,8 @@ export const selectRecipeVariant =
           variantOutOfStock,
           view,
           close,
-          hasSurcharges
+          hasSurcharges,
+          recipeReference,
         )
       )
     }
