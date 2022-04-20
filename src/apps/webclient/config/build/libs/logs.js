@@ -1,17 +1,18 @@
-const { build, envName } = require('./webpack-env-vars.js')
+const { build, isDevelopmentBuild } = require('./build-time-env-config.js')
 
-const logBuildInfo = (isDevelopmentBuild) => console.log(`
+const logBuildInfo = (buildType) =>
+  console.log(`
+
+Build info for ${buildType}:
 
 ================
-isDevelopmentBuild = ${isDevelopmentBuild}
-HMR ENABLED: ${isDevelopmentBuild}
-CLIENT BUILD: ${build},
-ENVIRONMENT: ${envName},
-NODE_APP_INSTANCE=${process.env.NODE_APP_INSTANCE},
-NODE_CONFIG_ENV=${process.env.NODE_CONFIG_ENV}
-NODE_ENV=${process.env.NODE_ENV}
-================`)
+isDevelopmentBuild: ${isDevelopmentBuild}
+BUILD: ${build},
+NODE_ENV: ${process.env.NODE_ENV}
+================
+
+`)
 
 module.exports = {
-    logBuildInfo
+  logBuildInfo,
 }

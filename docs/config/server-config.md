@@ -1,11 +1,4 @@
 # Local server config (run-time)
-
-As part of FEF's BODA epic, the way we configure webclient locally is being re-evaluated.
-
-**Links**
-[FEF BODA Epic](https://gousto.atlassian.net/browse/FEF-264)
-[Potatoes BODA docs](https://gousto.atlassian.net/wiki/spaces/TECHPOTATOES/pages/3682730007/BODA+Build+Once+Deploy+Anywhere)
-
 ## Intent
 
 - Configuration of server and client is configured by the same mechanisms as the deployed application
@@ -15,9 +8,10 @@ The goals above intend to make configuring this application simpler, easier and 
 
 ## Server config - deployed
 
-With regards to config, the end-state that we'd like to achieve with webclient's server component is:
+With regards to config, the current state of webclient's server component is:
 
-- no build-time config - _enables us to re-use Docker images across environments_
+- no build-time config* - _enables us to re-use Docker images across environments_.
+  - *the single exception is versioning the app at build-time
 - ['deploy-time' config for secrets via SSM Parameter Store](https://github.com/Gousto/gousto-platform-deploy/blob/9c25143ac1c0e7fecc5b6e4188ec2630319c0938/cloudformation/common/README.md#L36-L46)
 - ['deploy-time' config (not secrets)](https://github.com/Gousto/gousto-platform-deploy/blob/9c25143ac1c0e7fecc5b6e4188ec2630319c0938/cloudformation/common/README.md#L21-L34)
 
@@ -49,11 +43,3 @@ _Note: ENVIRONMENT must be set to local in this file when developing to allow fo
 ```
 
 _Note: dotenv config is currently only applied to the `dev` and `server` scripts - this will be expanded in the near future_
-
-### Node-config
-
-We're currently also using [node-config](https://github.com/node-config/node-config) for the majority of our **build-time** configuration (the `.json5` files)
-
-**This is something that FEF is actively working towards removing, in favor of the Dotenv solution above**
-
-Whilst we complete the remaining BODA work there unfortunately will be a period where both config methods will coexist, but we expect that to be short-lived.

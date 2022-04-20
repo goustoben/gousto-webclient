@@ -34,7 +34,7 @@ Information on modules can be found [here](docs/modules.md).
 # 1. clone this repo
 $ git clone git@github.com:Gousto/gousto-webclient.git
 
-# 2. Add a development-local.json5 config file and setup your hosts file
+# 2. Set up your hosts file
 # See Pre-requisites below
 
 # 3. Retrieve a CodeArtifact token to enable installation of private Gousto packages
@@ -54,7 +54,7 @@ $ yarn dev
 ## Pre-requisites
 
 * You'll need to have Yarn installed - if you install Yarn 1 (`npm install yarn -g`), it will bootstrap Yarn 3 from `.yarn/releases/yarn-3.1.1.cjs`
-* You'll need to have a `development-local.json5` config file for everything to run correctly [Follow this guide](./docs/detailed-setup.md#step-1-add-a-secrets-file-to-point-to-the-staging-environment)
+* You'll need to create a `.env` file for local development - see [detailed setup](./docs/detailed-setup.md#step-1)
 * You will have to run the site on `frontend.gousto.local` you can do this by [Setting up your local hosts file to run webclient](./docs/detailed-setup.md#step-2-add-an-entry-to-your-local-host-file)
 * You'll need to have [nvm](https://github.com/nvm-sh/nvm) installed. See  [Node version management](./docs/detailed-setup.md#node-version-management) for further details.
   * Note: Apple M1 owners - you'll need to set node to version `14` in `.nvmrc`. Be careful not to commit this change.
@@ -241,13 +241,13 @@ https://github.com/Gousto/Gousto2-FrontEnd/blob/750691d7/src/nodeserver/src
 
 ### Checkout.com
 
-When setting up a new squad environment please add the relevant public key to [this](https://github.com/Gousto/gousto-webclient/blob/c4f64d816ed09c7a1218f8206e52fc504ff1a168/src/apps/webclient/src/routes/Checkout/Components/CheckoutPayment/config.ts) file.
+When setting up a new squad environment please add the relevant public key to the [Circle CI Beta context](https://app.circleci.com/settings/organization/github/Gousto/contexts/9979ba28-02ef-438f-bcae-b336fd8f2d4a?return-to=https%3A%2F%2Fapp.circleci.com%2Fprojects%2Fproject-dashboard%2Fgithub%2FGousto%2F) so it can be injected into Gousto2-Frontend.
 
-You will also need to add it to the Circle CI Beta & Production contexts so it can be injected into Gousto2-Frontend.
+The environment variable should be named: `CHECKOUTCOM_PK_[UPPER CASE ENVIRONMENT NAME]` i.e. `CHECKOUTCOM_PK_FEF`
 
 ### Assets
 
-All assets are configured to be served by the Node application on `/build/latest` when running locally. When running on production, staging or a lower env assets will be linked to via a direct S3 URL if on the server, for example the `[S3_URL]main.bundle.js` inserted into the HTML template. Or, if on the client the requests will be proxied to S3 via the node application using the `/build/latest` path.
+All assets are configured to be served by the Node application on `/build/local` when running locally. When running on production, staging or a lower env assets will be linked to via a direct S3 URL if on the server, for example the `[S3_URL]main.bundle.js` inserted into the HTML template. Or, if on the client the requests will be proxied to S3 via the node application using the `/build/latest` path.
 
 For more clarification on why this was done please reach out to FEF (#squad-frontend-foundations)
 

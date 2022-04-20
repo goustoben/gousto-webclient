@@ -8,14 +8,19 @@ const ExitCodePlugin = require('./exitCode')
 const { fontRules, imageRules } = require('./build/libs/rules')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
-const { webpackEnvVarsServer, build, publicPath } = require('./build/libs/webpack-env-vars.js')
-const debug = false
-const devMode = process.env.NODE_ENV !== 'production'
-const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
+const {
+  isDevelopmentBuild,
+  buildTimeEnvConfigServer,
+  build,
+  publicPath,
+} = require('./build/libs/build-time-env-config.js')
+
+const cssHashPattern = isDevelopmentBuild
+  ? '[name]__[local]___[hash:base64:5]'
+  : 'G[sha1:hash:hex:6]'
 const { logBuildInfo } = require('./build/libs/logs')
 
-const isDevelopmentBuild = build === 'development'
-logBuildInfo(isDevelopmentBuild)
+logBuildInfo('server')
 
 const config = {
   name: 'server',
@@ -70,7 +75,7 @@ const config = {
   },
   plugins: [
     ExitCodePlugin,
-    new webpack.DefinePlugin(webpackEnvVarsServer),
+    new webpack.DefinePlugin(buildTimeEnvConfigServer),
   ],
   resolve: {
     alias: {
@@ -98,21 +103,7 @@ const config = {
       /^@features\/.+/
     ]
   })],
-  stats: debug ? {
-    hash: true,
-    version: true,
-    timings: true,
-    assets: true,
-    chunks: true,
-    modules: true,
-    reasons: true,
-    children: true,
-    source: true,
-    errors: true,
-    errorDetails: true,
-    warnings: true,
-    publicPath: true,
-  } : {
+  stats: {
     hash: false,
     version: false,
     timings: false,
@@ -129,7 +120,7 @@ const config = {
   },
 }
 
-if (build === 'development') {
+if (isDevelopmentBuild) {
   config.devtool = 'source-map'
   config.plugins.push(
     new SimpleProgressWebpackPlugin({ // Default options

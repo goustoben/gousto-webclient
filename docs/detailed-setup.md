@@ -5,24 +5,9 @@
 
 ### Run application for development
 
-### Step 1: [Add a secrets file to point to the staging environment](#config-files)
+**Note: local development will consume staging services by default**
 
-**Note:** VPN is required to connect to staging before running dev-box and web-client.
-
-Add a file called `development-local.json5` in `/src/config` and add the JSON below changing the values for the correct staging keys. This file will not be tracked as it is listed in our `.gitignore`.
-This file is used by node-config (see below for more info).
-
-```json5
-{
-  "api_name": "staging", //could be production if you wanted to point to production apis
-  "domain": "gousto.local", //this is used in only one place currently, the help centre links
-  "client_dev_server_enabled": true, // enable this for webpack dev server configuration in the client build
-}
-```
-
-You can get these secrets from S3 for [`staging` from here](https://s3.console.aws.amazon.com/s3/object/s3-gousto-platform-beta?region=eu-west-1&prefix=staging/config/service/webclient.yml) (if you need another environment you can change `staging` in the url to the environment you need).
-
-### Step 2: [Create a .env file for run-time server configuration](./config/local-server-config.md#dotenv)
+### Step 1: [Create a .env file for run-time server configuration](./config/server-config.md)
 
 - Create a file named `.env` in `src/apps/webclient/server`
 - Use `src/apps/webclient/server/.env.example` as a template
@@ -32,14 +17,14 @@ You can get these secrets from S3 for [`staging` from here](https://s3.console.a
 
 _Note: this file is gitignored as it may contain secrets_
 
-### [Step 3: Add an entry to](#hosts-file) [your local host file](https://support.acquia.com/hc/en-us/articles/360004175973-Using-an-etc-hosts-file-for-custom-domains-during-development)
+### [Step 2: Add an entry to](#hosts-file) [your local host file](https://support.acquia.com/hc/en-us/articles/360004175973-Using-an-etc-hosts-file-for-custom-domains-during-development)
 
 Append the following entry to your local host file if you don't already have it, you can open this file using `sudo code /etc/hosts` (VSCode), `sudo vim /etc/hosts` ([VIM](https://dev.to/jeremy/how-to-exit-vim-11dm)) or the editor of your choice.
 ```
 127.0.0.1 frontend.gousto.local
 ```
 
-### Step 4: Run development environment
+### Step 3: Run development environment
 
 **Note:** VPN is required to connect to staging before running web-client.
 
@@ -159,34 +144,6 @@ Copy and paste the output of `fnm env --use-on-cd` into `~/.config/fish/conf.d/f
 Because of a migration to prettier, there were several bulk formatting changes.  In order to make them not show up in your `git blame` invocations, you might want to invoke this command inside the repo, once only after cloning:
 
 `git config blame.ignoreRevsFile .git-blame-ignore-revs`
-
-## Quick guide to `node-config`
-
-We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack.
-`node-config` is a file based, and looks at files inside our `src/apps/webclient/config` folder.
-
-We have two variables we can set for `node-config` to pick up specific files. The first being  `NODE_CONFIG_ENV` which we set to match the environment (e.g. `development`, `radishes`, `staging`, `production`) and the second is `NODE_APP_INSTANCE` which we set to the where the app is running (`local`, `live`).
-
-`node-config` will load each file, and if the keys match the later file to be loaded will overwrite the variable.
-
-These are the files, and the order of execution:
-
-1. Node-config starts with the `default` file. We keep all keys in here, so it's a singular place we can see all our variables. **Will always be loaded**.
-   * `config/default.json5`
-
-2. If there's an env var `NODE_CONFIG_ENV`, Node-config loads `config/${NODE_CONFIG_ENV}.json5`
-   * e.g. `config/staging.json5`
-
-3. If there's an env var `NODE_APP_INSTANCE`, Node-config loads `config/${NODE_APP_INSTANCE}.json5`
-   * e.g. `config/local.json5`
-
-4. If both vars exist, Node-config loads `config/{NODE_CONFIG_ENV}-{NODE_APP_INSTANCE}.json5`
-   * e.g. `config/staging-local.json5`
-
-5. Finally, Node-config looks for a file called `custom-environment-variables.json5`. It always loads this last, giving it highest priority. **Will always be loaded**.
-  * `config/custom-environment-variables.json5`
-
-See [`node-config`](https://github.com/lorenwest/node-config) for more information.
 
 ## Adding a new API endpoint
 API endpoints are specified in the Service manifest which can be found here: `src/apps/webclient/src/config/service-environment/service-manifest.ts`
