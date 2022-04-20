@@ -1,5 +1,4 @@
 const { newAssetPath, getAssetRootUrl } = require('utils/media')
-const { isDev } = require('utils/isomorphicEnvironment')
 const { createWindowEnvConfig } = require('./utils/envConfigForClient')
 const { getServerEnvironment, getServerDomain } = require('./utils/serverEnvironment')
 const head = require('./head').default
@@ -63,7 +62,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
         window.__initialState__ = ${encodeState(initialState)}
       </script>
 
-      ${(isDev()) ? `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">` : ''}
+      <link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">
       ${(helmetHead && helmetHead.link) ? helmetHead.link.toString() : ''}
       ${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
       ${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}
