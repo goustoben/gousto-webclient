@@ -45,9 +45,11 @@ function logOutAndLogIn(accountCredentials, browser) {
 function editAnExistingOrder(browser) {
   const menu = browser.page.menu()
   const orderConfirmation = browser.page.orderConfirmation()
+  const checkout = browser.page.checkoutV2()
 
   browser
     .logJourneyStep('Edit an existing order')
+    .logJourneyStep('Recipes are visible')
     .perform(done => {
       menu.section.recipes.checkIfRecipesVisible()
       done()
@@ -56,6 +58,7 @@ function editAnExistingOrder(browser) {
       menu.section.menuContainer.clickNextButton()
       done()
     })
+    .logJourneyStep('Clicking dates of existing order')
     .perform(done => {
       menu.section.menuContainer.clickDateOfExistingOrder()
       done()
@@ -65,16 +68,20 @@ function editAnExistingOrder(browser) {
       menu.section.menuContainer.clickContinueButton()
       done()
     })
+    .logJourneyStep('Ensure Checkout button is clickable')
     .perform(done => {
       menu.section.bottomBar.checkIfCheckoutButtonClickable()
       done()
     })
+    .logJourneyStep('Go to checkout')
     .perform(done => {
       menu.section.menuContainer.goFromMenuToCheckout()
       done()
     })
+    .logJourneyStep('Checking confirmation page is visible')
     .perform(done => {
-      browser.pause(1000)
-      orderConfirmation.section.orderConfirmationContainer.asyncCheckIfOrderConfirmationPageVisible(browser, done)
+      orderConfirmation.section.orderConfirmationContainer.ensureOrderConfirmationLoaded()
+      done()
     })
+    .logJourneyStep('Done!')
 }
