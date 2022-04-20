@@ -25,6 +25,12 @@ module.exports = {
 
           pollCondition(checkFn, onPollDone)
         },
+
+        ensureOrderConfirmationLoaded: function() {
+          this.waitForElementPresent('*[data-testing="orderConfirmationContainer"]', 60000)
+
+          return this
+        },
       }],
     },
   }
