@@ -29,8 +29,41 @@ jest.mock('../../domains/menu', () => ({
 
 describe('RecipeListWrapper', () => {
   let wrapper
+  const recipeId = 'recipe one'
   const mockStore = configureMockStore()
-  const store = mockStore({})
+  const store = mockStore({
+    basket: Immutable.fromJS({ numPortions: 2 }),
+    menuRecipeStock: Immutable.fromJS({
+      [recipeId]: {
+        2: 100,
+        4: 200,
+        8: 0,
+      },
+    }),
+    menuService: {
+      data: [{
+        meta: {
+          swapsExperimentUserAllocationGroup: 'control',
+        },
+      }],
+      meta: {
+        recommendations: {
+          version: 'v1',
+        },
+      },
+    },
+    menuCollections: Immutable.Map({
+      mockCollectionId: Immutable.Map({
+        id: 'mockCollectionId',
+        slug: 'dairy-free',
+        published: true,
+        recipesInCollection: ['111'],
+      }),
+    }),
+    boxSummaryDeliveryDays: Immutable.Map({
+      '2018-05-04': Immutable.Map({ id: 'mockDeliveryDayId' }),
+    }),
+  })
 
   describe('when rendered', () => {
     beforeEach(() => {

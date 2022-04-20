@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { useTracking } from './useTracking'
+import { useSoldOutTracking } from './useSoldOutTracking'
 
 const dispatch = jest.fn()
 
@@ -13,7 +13,7 @@ describe('useTracking for RecipeListWrapper', () => {
     let trackSoldOutRecipes: (soldOutRecipes: string[] | null) => void
 
     beforeEach(() => {
-      const hook = renderHook(() => useTracking())
+      const hook = renderHook(() => useSoldOutTracking())
       trackSoldOutRecipes = hook.result.current.trackSoldOutRecipes
     })
 
