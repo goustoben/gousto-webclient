@@ -221,8 +221,7 @@ jobs:
       - run:
           name: Build webclient
           working_directory: src/apps/webclient
-          # Use NPM for now to inject setup-common npm config vars; BODA should supercede this
-          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
+          command: source ~/.circlerc && CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
       - run:
           name: Persist CIRCLE_BUILD_NUM for s3 upload and sourcemaps jobs
           command: echo BUILD_JOB_BUILD_NUM=$CIRCLE_BUILD_NUM >> ~/.circlerc
@@ -361,14 +360,14 @@ jobs:
       - run:
           name: Build local application
           working_directory: src/apps/webclient
-          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local npm run build
+          command: npm run build
       - run:
           name: Update local DNS configuration
           command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
       - run:
           name: Start local application
           working_directory: src/apps/webclient
-          command: NODE_CONFIG_ENV=development NODE_APP_INSTANCE=local yarn start:with-static
+          command: yarn start:with-static
           background: true
       - run:
           name: Wait for application to be ready
