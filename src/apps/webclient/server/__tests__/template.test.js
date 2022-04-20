@@ -10,6 +10,7 @@ jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
   getDomain: () => 'gousto.local',
   getProtocol: () => 'http:',
+  isDev: () => false
 }))
 
 describe('htmlTemplate', () => {
