@@ -428,6 +428,26 @@ jobs:
 workflows:
   version: 2
 
+  max-test:
+    when:
+      equal: [fef-421-regression-check, << pipeline.git.branch >>]
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+
+      - test-regression:
+          name: test-regression-web
+          platform: web
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
+
   e2e-manual:
     when:
       equal: [e2e-manual, << pipeline.git.branch >>]
