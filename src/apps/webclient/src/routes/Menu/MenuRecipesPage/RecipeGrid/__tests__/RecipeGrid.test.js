@@ -4,6 +4,11 @@ import { RecipeGrid } from '../RecipeGrid'
 import { RecipeListWrapper } from '../../RecipeList'
 import { DetailOverlay } from '../../../components/Detail/DetailOverlay'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('RecipeGrid', () => {
   const wrapper = shallow(
     <RecipeGrid

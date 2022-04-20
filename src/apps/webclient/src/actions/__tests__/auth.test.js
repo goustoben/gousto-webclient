@@ -35,6 +35,11 @@ jest.mock('actions/loggingmanager', () => ({
 
 jest.mock('utils/serverEnvironment')
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('redirectLoggedInUser', () => {
   let getState
 

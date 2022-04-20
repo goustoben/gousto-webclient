@@ -10,6 +10,10 @@ jest.mock('routes/Menu/components/SubHeader')
 jest.mock('routes/Menu/components/CollectionsNav', () => ({ CollectionsNavWrapper: 'CollectionsNav' }))
 jest.mock('routes/Menu/components/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 jest.mock('../BasketValidationErrorModal', () => ({ BasketValidationErrorModalContainer: 'BasketValidationErrorModalContainer'}))
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
 
 describe('initial render', () => {
   let wrapper

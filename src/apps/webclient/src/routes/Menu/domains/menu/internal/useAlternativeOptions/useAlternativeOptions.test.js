@@ -3,14 +3,9 @@ import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import { renderHook } from '@testing-library/react-hooks'
-import { menuRecipeDetailVisibilityChange, selectRecipeVariant } from 'routes/Menu/actions/menuRecipeDetails'
+import * as MenuRecipeDetails from 'routes/Menu/actions/menuRecipeDetails'
+import { RecipeReferenceProvider } from 'routes/Menu/context/recipeReferenceContext'
 import { useAlternativeOptions } from '.'
-
-jest.mock('routes/Menu/actions/menuRecipeDetails', () => ({
-  ...jest.requireActual('routes/Menu/actions/menuRecipeDetails'),
-  selectRecipeVariant: jest.fn(),
-  menuRecipeDetailVisibilityChange: jest.fn(),
-}))
 
 const RECIPE_ID_1 = 'aaa'
 const RECIPE_ID_2 = 'bbb'
@@ -174,14 +169,23 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('When isOnDetailScreen is FALSE', () => {
-    describe('When changeCheckedRecipe is called', () => {
-      selectRecipeVariant.mockReturnValue({type: 'foo'})
-      menuRecipeDetailVisibilityChange.mockReturnValue({type: 'bar'})
+    const selectRecipeVariant = jest.fn().mockReturnValue({type: 'foo'})
+    const menuRecipeDetailVisibilityChange = jest.fn().mockReturnValue({type: 'bar'})
 
+    beforeEach(() => {
+      jest.clearAllMocks()
+      jest.spyOn(MenuRecipeDetails, 'selectRecipeVariant').mockImplementation(selectRecipeVariant)
+      jest.spyOn(MenuRecipeDetails, 'menuRecipeDetailVisibilityChange').mockImplementation(menuRecipeDetailVisibilityChange)
+    })
+    describe('When changeCheckedRecipe is called', () => {
       const mockStore = configureMockStore()
       const store = mockStore(createMockState())
 
-      const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+      const wrapper = ({ children }) => (
+        <RecipeReferenceProvider value="123">
+          <Provider store={store}>{children}</Provider>
+        </RecipeReferenceProvider>
+      )
       const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
       const [
@@ -198,25 +202,52 @@ describe('getAlternativeOptionsForRecipe', () => {
         expect(selectRecipeVariant).not.toHaveBeenCalled()
 
         changeCheckedRecipeForRecipeOne(RECIPE_ID_1, false)
-        expect(selectRecipeVariant).toHaveBeenLastCalledWith(RECIPE_ID_1, RECIPE_ID_1, COLLECTION_ID, false, 'grid', undefined)
+        expect(selectRecipeVariant).toHaveBeenLastCalledWith({
+          originalRecipeId: RECIPE_ID_1,
+          variantId: RECIPE_ID_1,
+          collectionId: COLLECTION_ID,
+          variantOutOfStock: false,
+          view: 'grid',
+          close: undefined,
+          recipeReference: '123',
+        })
         expect(menuRecipeDetailVisibilityChange).not.toHaveBeenCalled()
 
         changeCheckedRecipeForRecipeTwo(RECIPE_ID_2, false)
-        expect(selectRecipeVariant).toHaveBeenLastCalledWith(RECIPE_ID_1, RECIPE_ID_2, COLLECTION_ID, false, 'grid', undefined)
+        expect(selectRecipeVariant).toHaveBeenLastCalledWith({
+          originalRecipeId: RECIPE_ID_1,
+          variantId: RECIPE_ID_2,
+          collectionId: COLLECTION_ID,
+          variantOutOfStock: false,
+          view: 'grid',
+          close: undefined,
+          recipeReference: '123',
+        })
         expect(menuRecipeDetailVisibilityChange).not.toHaveBeenCalled()
       })
     })
   })
 
   describe('When isOnDetailScreen is TRUE', () => {
-    describe('When changeCheckedRecipe is called', () => {
-      selectRecipeVariant.mockReturnValue({type: 'foo'})
-      menuRecipeDetailVisibilityChange.mockReturnValue({type: 'bar'})
+    const selectRecipeVariant = jest.fn().mockReturnValue({type: 'foo'})
+    const menuRecipeDetailVisibilityChange = jest.fn().mockReturnValue({type: 'foo'})
 
+    beforeEach(() => {
+      jest.clearAllMocks()
+      jest.spyOn(MenuRecipeDetails, 'selectRecipeVariant').mockImplementation(selectRecipeVariant)
+      jest.spyOn(MenuRecipeDetails, 'menuRecipeDetailVisibilityChange').mockImplementation(menuRecipeDetailVisibilityChange)
+    })
+
+    describe('When changeCheckedRecipe is called', () => {
       const mockStore = configureMockStore()
       const store = mockStore(createMockState())
 
-      const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+      const wrapper = ({ children }) => (
+        <RecipeReferenceProvider value="123">
+          <Provider store={store}>{children}</Provider>
+        </RecipeReferenceProvider>
+      )
+
       const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
       const [
@@ -233,11 +264,27 @@ describe('getAlternativeOptionsForRecipe', () => {
         expect(selectRecipeVariant).not.toHaveBeenCalled()
 
         changeCheckedRecipeForRecipeOne(RECIPE_ID_1, false)
-        expect(selectRecipeVariant).toHaveBeenLastCalledWith(RECIPE_ID_1, RECIPE_ID_1, COLLECTION_ID, false, 'details', undefined)
+        expect(selectRecipeVariant).toHaveBeenLastCalledWith({
+          originalRecipeId: RECIPE_ID_1,
+          variantId: RECIPE_ID_1,
+          collectionId: COLLECTION_ID,
+          variantOutOfStock: false,
+          view: 'details',
+          close: undefined,
+          recipeReference: '123',
+        })
         expect(menuRecipeDetailVisibilityChange).toHaveBeenLastCalledWith(RECIPE_ID_1)
 
         changeCheckedRecipeForRecipeTwo(RECIPE_ID_2, false)
-        expect(selectRecipeVariant).toHaveBeenLastCalledWith(RECIPE_ID_1, RECIPE_ID_2, COLLECTION_ID, false, 'details', undefined)
+        expect(selectRecipeVariant).toHaveBeenLastCalledWith({
+          originalRecipeId: RECIPE_ID_1,
+          variantId: RECIPE_ID_2,
+          collectionId: COLLECTION_ID,
+          variantOutOfStock: false,
+          view: 'details',
+          close: undefined,
+          recipeReference: '123',
+        })
         expect(menuRecipeDetailVisibilityChange).toHaveBeenLastCalledWith(RECIPE_ID_2)
       })
     })

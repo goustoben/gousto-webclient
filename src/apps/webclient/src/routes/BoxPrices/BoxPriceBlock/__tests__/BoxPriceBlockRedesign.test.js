@@ -5,6 +5,12 @@ import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 import { BoxPriceBlock } from '../BoxPriceBlockRedesign'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+  OptimizelyFeature: () => null,
+}))
+
 describe('Given BoxPriceBlockRedesign', () => {
   let wrapper
   const boxPricesBoxSizeSelected = jest.fn()

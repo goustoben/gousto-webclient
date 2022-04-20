@@ -2,6 +2,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { BoxSizeStep } from '../BoxSize/BoxSizeStep'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('given the user is at the Box Size Step', () => {
   let wrapper
   const numPortionChange = jest.fn()

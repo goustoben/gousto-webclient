@@ -5,7 +5,10 @@ import { getSurcharge } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 import Modal from 'Modal'
 
-import { getMenuRecipeIdForDetails } from '../../../selectors/menuRecipeDetails'
+import {
+  getMenuRecipeIdForDetails,
+  getMenuRecipeReferenceForDetails,
+} from '../../../selectors/menuRecipeDetails'
 import { getBrowserType } from '../../../../../selectors/browser'
 import { getRecipePosition } from '../../../../../selectors/collections'
 import { getNumPortions } from '../../../../../selectors/basket'
@@ -14,6 +17,7 @@ import { getRecipes } from '../../../../../selectors/root'
 import { DetailContainer } from '../DetailContainer'
 import { EscapeKeyPressed } from '../../../../../utils/DOMEvents'
 import { RecipeContextProvider } from '../../../context/recipeContext'
+import { RecipeReferenceProvider } from '../../../context/recipeReferenceContext'
 import { closeRecipeDetails } from '../../../actions/closeRecipeDetails'
 
 interface DetailOverlayProps {
@@ -23,6 +27,7 @@ interface DetailOverlayProps {
 const DetailOverlay = ({ showOverlay: showOverlayProp }: DetailOverlayProps) => {
   const showOverlay = Boolean(useSelector(getMenuRecipeIdForDetails)) && showOverlayProp
   const recipeId = useSelector(getMenuRecipeIdForDetails)
+  const recipeReference = useSelector(getMenuRecipeReferenceForDetails)
   const menuRecipeDetailShow = recipeId || ''
   const position = useSelector((state) => getRecipePosition(state, recipeId)) || null
   const browserType = useSelector(getBrowserType)
@@ -62,26 +67,28 @@ const DetailOverlay = ({ showOverlay: showOverlayProp }: DetailOverlayProps) => 
 
   return (
     <Modal isOpen={showOverlay} onBackCallback={onClose}>
-      <RecipeContextProvider value={detailRecipe}>
-        <DetailContainer
-          id={detailRecipe.get('id')}
-          view={view}
-          media={media}
-          title={detailRecipe.get('title', '')}
-          count={detailRecipe.getIn(['rating', 'count'], 0)}
-          average={detailRecipe.getIn(['rating', 'average'], 0)}
-          description={detailRecipe.get('description')}
-          youWillNeed={detailRecipe.get('basics')}
-          equipment={detailRecipe.get('equipment')}
-          surcharge={surcharge}
-          position={position}
-          isFineDineIn={isFineDineIn}
-          onClose={browserBack}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          availability={detailRecipe.get('availability')}
-        />
-      </RecipeContextProvider>
+      <RecipeReferenceProvider value={recipeReference}>
+        <RecipeContextProvider value={detailRecipe}>
+          <DetailContainer
+            id={detailRecipe.get('id')}
+            view={view}
+            media={media}
+            title={detailRecipe.get('title', '')}
+            count={detailRecipe.getIn(['rating', 'count'], 0)}
+            average={detailRecipe.getIn(['rating', 'average'], 0)}
+            description={detailRecipe.get('description')}
+            youWillNeed={detailRecipe.get('basics')}
+            equipment={detailRecipe.get('equipment')}
+            surcharge={surcharge}
+            position={position}
+            isFineDineIn={isFineDineIn}
+            onClose={browserBack}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            availability={detailRecipe.get('availability')}
+          />
+        </RecipeContextProvider>
+      </RecipeReferenceProvider>
     </Modal>
   )
 }

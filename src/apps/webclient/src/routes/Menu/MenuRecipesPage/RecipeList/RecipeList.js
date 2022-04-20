@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import { CollectionLink } from '../../components/CollectionLink'
 import { RecipeTile } from '../../components/RecipeTile'
 import { RecipeContextProvider } from '../../context/recipeContext'
+import { RecipeReferenceProvider } from '../../context/recipeReferenceContext'
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
 import css from './RecipeList.css'
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
@@ -27,19 +28,21 @@ export const RecipeList = ({
   return (
     <div className={css.emeRecipeList}>
       {recipes.map((value, index) => (
-        <React.Fragment key={value.recipe.get('id')}>
+        <React.Fragment key={value.reference}>
           {isDietaryCollectionLinksEnabled &&
             showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
               <CollectionLink />
           )}
-          <RecipeContextProvider value={value.recipe}>
-            <RecipeTile
-              recipeId={value.recipe.get('id')}
-              originalId={value.originalId}
-              currentCollectionId={currentCollectionId}
-              onClick={showDetailRecipe}
-            />
-          </RecipeContextProvider>
+          <RecipeReferenceProvider value={value.reference}>
+            <RecipeContextProvider value={value.recipe}>
+              <RecipeTile
+                recipeId={value.recipe.get('id')}
+                originalId={value.originalId}
+                currentCollectionId={currentCollectionId}
+                onClick={showDetailRecipe}
+              />
+            </RecipeContextProvider>
+          </RecipeReferenceProvider>
         </React.Fragment>
       ))}
       <CTAToAllRecipes />

@@ -16,6 +16,10 @@ const mockedStore = mockStore({
 const dispatch = jest.fn()
 jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
 jest.spyOn(Redux, 'useSelector').mockImplementation(() => false)
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
 
 describe('Delivery Step', () => {
   let wrapper

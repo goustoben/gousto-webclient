@@ -54,13 +54,14 @@ export const SwapAlternativeOptions: React.FC<{
             originalId={originalId}
             categoryId={categoryId}
             closeOnSelection
-            onChangeCheckedRecipe={({ previousRecipeId, nextRecipeId }) =>
+            onChangeCheckedRecipe={({ previousRecipeId, nextRecipeId }) => {
               trackRecipeAlternativeOptionsMenuSwapRecipes({
                 collectionId,
                 previousRecipeId,
                 nextRecipeId,
               })
-            }
+              setShowDrop(false)
+            }}
           />
         </div>
       )}

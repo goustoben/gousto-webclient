@@ -8,6 +8,7 @@ import { getCurrentMenuVariants, getSelectedRecipeVariants } from 'routes/Menu/s
 import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
 import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
 import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
+import { getRecipeReferenceInjector } from './getRecipeReferenceInjector'
 
 const getDietaryClaimsInCollection = (menuCollections, collectionId) => menuCollections.getIn(
   [collectionId, 'requirements', 'dietary_claims'],
@@ -45,13 +46,18 @@ export const useGetRecipesForCollectionId = (collections) => {
       dietaryClaims,
     })
 
+    const recipeReferenceInjector = getRecipeReferenceInjector({recipesVariants})
+
     // The order of mappers below matters:
+    //  * ensure the recipes are wrapped in an envelop with additional meta data: originalId and reference
     //  * ensure we prefer to show variants customer explicitly picked
     //  * ensure any out of stock recipes are replaced by in stock alternatives
     //  * ensure any remaining out of stock recipes are moved to the end of the list
+
     const originalRecipes = recipeIdsInCollection
       .map(id => recipes.find(other => other.get('id') === id))
       .filter(recipe => Boolean(recipe))
+      .map(recipeReferenceInjector)
       .map(selectedVariantReplacer)
       .map(outOfStockRecipeReplacer)
 

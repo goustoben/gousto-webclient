@@ -5,6 +5,11 @@ import { trackGetStarted } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
 import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
 jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),
 }))

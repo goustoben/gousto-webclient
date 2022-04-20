@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
+import { useRecipeReference } from '../../context/recipeReferenceContext'
 import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
 import { VariantHeader } from './VariantHeader'
@@ -14,7 +15,7 @@ type RecipeTileProps = {
   recipeId: string
   originalId: string
   currentCollectionId: string
-  onClick: (recipeId: string, currentCollectionId: string) => void
+  onClick: (recipeId: string, currentCollectionId: string, recipeReference?: string | null) => void
 }
 
 const RecipeTile: React.FC<RecipeTileProps> = ({
@@ -30,6 +31,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   const isFineDineIn = useRecipeIsFineDineIn()
 
   const deviceType = useDeviceType()
+  const recipeReference = useRecipeReference()
 
   // should never happen but caters for loading state
   if (categoryId === null) {
@@ -45,7 +47,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
 
   const handleOnClick = (e: SyntheticEvent) => {
     e.stopPropagation()
-    onClick(recipeId, categoryId)
+    onClick(recipeId, categoryId, recipeReference)
   }
 
   // alternative options include the recipe itself
