@@ -209,7 +209,7 @@
 	}
 }
 
-.numberOneNotice {
+.numberOneNotice, .verificationOfValueNotice {
   padding: 0 0.75rem 1rem;
   margin: auto;
 
