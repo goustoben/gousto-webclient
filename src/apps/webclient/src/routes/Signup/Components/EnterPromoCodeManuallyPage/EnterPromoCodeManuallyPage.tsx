@@ -47,7 +47,8 @@ const checkPromoCode = (
   isPending: any,
   dispatch: any,
   promoStoreEntry: any,
-  setStatus: (status: Status) => void
+  setStatus: (status: Status) => void,
+  setCampaignTextHtml: (campaignTextHtml: string) => void
 ) => {
   console.log('checkPromoCode starts', value, isPending, promoStoreEntry)
   if (!value) {
@@ -57,12 +58,18 @@ const checkPromoCode = (
   if (isPending) {
     return
   }
-  if (promoStoreEntry) {
-    const hasError = !!promoStoreEntry.get('errorText')
-    setStatus(hasError ? 'error' : 'success')
-  } else {
+
+  if (!promoStoreEntry) {
     dispatch(promoGet(value))
+    return
   }
+
+  const hasError = !!promoStoreEntry.get('errorText')
+  if (!hasError) {
+    const campaignTextHtml = getPromoCodeCampaignTextHtml(promoStoreEntry)
+    setCampaignTextHtml(campaignTextHtml)
+  }
+  setStatus(hasError ? 'error' : 'success')
 }
 
 export const SuccessSection = ({ promoCodeCampaignTextHtml }: any) => {
@@ -150,16 +157,19 @@ export const getPromoCodeCampaignTextHtml = (promoStoreEntry: any) => {
 }
 
 export const EnterPromoCodeManuallyPage = () => {
-  const [value, setValue] = useState('')
+  const [valueUnderInput, setValueUnderInput] = useState('')
+  const [checkedValue, setCheckedValue] = useState('')
   const [status, setStatus] = useState<Status>('empty')
+  const [campaignTextHtml, setCampaignTextHtml] = useState<any>('')
 
   const dispatch = useDispatch()
 
-  const promoStoreEntry = useSelector(createSelectPromoStoreEntryByPromoCode(value))
+  const promoStoreEntry = useSelector(createSelectPromoStoreEntryByPromoCode(checkedValue))
 
   const isPending = useSelector(createSelectIsPendingByActionType(actionTypes.PROMO_GET))
 
   const previousIsPending = usePrevious(isPending)
+  const previousCheckedValue = usePrevious(checkedValue)
 
   const handleContinueClick = () => {
     console.log('todo cont')
@@ -171,25 +181,38 @@ export const EnterPromoCodeManuallyPage = () => {
 
   const [_isReady, cancel] = useDebounce(
     () => {
-      checkPromoCode(value, isPending, dispatch, promoStoreEntry, setStatus)
+      setCheckedValue(valueUnderInput)
     },
     DEBOUNCE_MS,
-    [value]
+    [valueUnderInput]
   )
 
   useEffect(() => {
-    if (previousIsPending !== isPending) {
-      checkPromoCode(value, isPending, dispatch, promoStoreEntry, setStatus)
+    if (previousIsPending !== isPending || previousCheckedValue !== checkedValue) {
+      checkPromoCode(
+        checkedValue,
+        isPending,
+        dispatch,
+        promoStoreEntry,
+        setStatus,
+        setCampaignTextHtml
+      )
     }
-  }, [previousIsPending, isPending, value, dispatch, promoStoreEntry, setStatus])
+  }, [
+    previousIsPending,
+    isPending,
+    previousCheckedValue,
+    checkedValue,
+    dispatch,
+    promoStoreEntry,
+    setStatus,
+  ])
 
   useEffect(() => {
     return () => {
       cancel()
     }
   }, [cancel])
-
-  const promoCodeCampaignTextHtml = getPromoCodeCampaignTextHtml(promoStoreEntry)
 
   return (
     <InformationalPageTemplate
@@ -214,17 +237,17 @@ export const EnterPromoCodeManuallyPage = () => {
               : FormFieldStatus.Error
           }
           validationMessage={status === 'error' ? 'This discount code is not valid.' : undefined}
-          value={value}
+          value={valueUnderInput}
           onChange={(event) => {
-            const inputValue = event.target.value
-            setValue(inputValue.toUpperCase())
+            const eventValue = event.target.value
+            setValueUnderInput(eventValue.toUpperCase())
           }}
         />
       </div>
       <Space size={4} />
       {status === 'success' ? (
         <SuccessSection
-          promoCodeCampaignTextHtml={promoCodeCampaignTextHtml}
+          promoCodeCampaignTextHtml={campaignTextHtml}
           onContinueClick={handleContinueClick}
         />
       ) : null}
