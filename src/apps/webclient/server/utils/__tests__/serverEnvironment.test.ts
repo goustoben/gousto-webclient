@@ -6,6 +6,7 @@ import {
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
   getServerCheckoutComPublicKey,
+  isServer,
 } from '../serverEnvironment'
 
 jest.mock('../../../src/utils/processEnv')
@@ -100,6 +101,30 @@ describe('serverEnvironment', () => {
       })
 
       expect(getServerCheckoutComPublicKey()).toEqual(mockCheckoutComPublicKey)
+    })
+  })
+
+  describe('isServer', () => {
+    const windowSpy = jest.spyOn(window, 'window', 'get')
+
+    test('returns true when window is not available', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
+
+      expect(isServer()).toEqual(true)
+    })
+
+    test('returns false when window is available', () => {
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: true,
+        },
+      })
+
+      expect(isServer()).toEqual(false)
     })
   })
 })

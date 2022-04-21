@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
-import { isServer } from 'utils/serverEnvironment'
 import moment from 'moment'
+import { isServer } from '../../server/utils/serverEnvironment'
 import { getMenuLimits, getMenuVariants, switchSelectedVariants } from '../utils/menu'
 
 export const menuInitialState = Immutable.Map({

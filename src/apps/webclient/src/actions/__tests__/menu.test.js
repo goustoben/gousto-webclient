@@ -3,12 +3,12 @@ import * as recipes from 'apis/recipes'
 import * as utilsBasket from 'utils/basket'
 import * as utilsDeliveries from 'utils/deliveries'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
 import { unset } from 'utils/cookieHelper2'
 import * as orders from 'routes/Menu/apis/orderV2'
 import * as MenuServiceLoadDaysActions from 'actions/menuServiceLoadDays'
 import * as MenuActionHelperActions from 'actions/menuActionHelper'
 import * as boxPrices from 'apis/boxPrices'
+import { isServer } from '../../../server/utils/serverEnvironment'
 import { actionTypes } from '../actionTypes'
 import * as trackingKeys from '../trackingKeys'
 import statusActions from '../status'
@@ -38,7 +38,7 @@ import menuActions, {
   menuLoadOrderDetails,
 } from '../menu'
 jest.mock('utils/browserEnvironment')
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 jest.mock('utils/cookieHelper2')
 jest.mock('utils/GoustoCookies', () => 'mock-gousto-cookies')
 jest.mock('utils/isomorphicEnvironment', () => ({

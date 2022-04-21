@@ -1,6 +1,5 @@
 import { getPreviewOrderErrorName } from 'utils/order'
 import logger from 'utils/logger'
-import { isServer } from 'utils/serverEnvironment'
 import routes from 'config/routes'
 import { createPreviewOrder } from 'apis/orders'
 
@@ -15,6 +14,7 @@ import { getPreviewOrderId } from 'selectors/basket'
 import { getUserStatus } from 'selectors/user'
 import { checkoutUrgencySetCurrentStatus } from 'routes/Checkout/checkoutActions'
 import { checkoutUrgencyStatuses } from 'routes/Checkout/checkoutUrgencyConfig'
+import { isServer } from '../../../../server/utils/serverEnvironment'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getCouldBasketBeExpired,

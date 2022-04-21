@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
 import logger from 'utils/logger'
 import { trackUserLogin } from 'actions/loggingmanager'
-import { isServer } from 'utils/serverEnvironment'
+import { isServer } from '../../../server/utils/serverEnvironment'
 
 jest.mock('apis/auth')
 
@@ -33,7 +33,7 @@ jest.mock('actions/loggingmanager', () => ({
   trackUserLogin: jest.fn()
 }))
 
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),

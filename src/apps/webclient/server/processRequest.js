@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet'
 import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { getServerEnvironment, isServer } from 'utils/serverEnvironment'
+import { getServerEnvironment, isServer } from './utils/serverEnvironment'
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
 const React = require('react')

@@ -2,12 +2,12 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Modal from 'react-modal'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
+import { isServer } from '../../../../server/utils/serverEnvironment'
 
 import Overlay from '../Overlay'
 
 jest.mock('utils/browserEnvironment')
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../../server/utils/serverEnvironment')
 
 const setAppElementSpy = jest.spyOn(Modal, 'setAppElement')
 

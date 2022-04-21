@@ -1,8 +1,8 @@
 import { renderHTML } from '../processRequest'
-import { isServer } from '../../src/utils/serverEnvironment'
+import { isServer } from '../utils/serverEnvironment'
 import htmlTemplate from '../template'
 
-jest.mock('../../src/utils/serverEnvironment')
+jest.mock('../utils/serverEnvironment')
 jest.mock('../../src/utils/browserEnvironment')
 jest.mock('react-helmet', () => ({
   Helmet: {

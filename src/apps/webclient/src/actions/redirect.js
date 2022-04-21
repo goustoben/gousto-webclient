@@ -1,8 +1,8 @@
 import { legacy } from 'config/globals'
 import { push, replace } from 'react-router-redux'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
 import * as windowUtils from 'utils/window'
+import { isServer } from '../../server/utils/serverEnvironment'
 import { actionTypes } from './actionTypes'
 
 function shouldUseReactRouter() {

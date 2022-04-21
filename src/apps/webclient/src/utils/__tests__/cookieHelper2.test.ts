@@ -1,10 +1,9 @@
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
-
+import { isServer } from '../../../server/utils/serverEnvironment'
 import { encode, decode } from '../cookieHelper2'
 
 jest.mock('utils/browserEnvironment')
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 
 const mockObj = { foo: 'http://foo-bar' }
 const stringifiedMockObject = '{"foo":"http://foo-bar"}'

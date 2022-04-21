@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
-import { isServer } from 'utils/serverEnvironment'
+import { isServer } from '../../../server/utils/serverEnvironment'
 import {
   clearSelectedRecipeVariants,
   menuLoadingError
@@ -10,7 +10,7 @@ import { selectRecipeVariantAction, initSelectedRecipeVariantAction } from '../.
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 
 describe('menu reducer', () => {
   beforeEach(() => {
