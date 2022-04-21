@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { createSelector } from 'reselect'
 import { useDebounce, usePrevious } from 'react-use'
 import {
-  Box,
-  Display,
-  Link,
-  LinkVariant,
-  useTheme,
-  Color,
-  AlignItems,
-  JustifyContent,
   Button,
   InputField,
   FormFieldStatus,
@@ -26,62 +16,25 @@ import { trackUTMAndPromoCode } from 'actions/tracking'
 import { clickClaimDiscountPopup, clickEnterPromoCodeManuallyContinue } from 'actions/trackingKeys'
 import { basketPromoCodeChange } from 'actions/basket'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
-import { promoGet, promoChange } from 'actions/promos'
+import { promoChange } from 'actions/promos'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { getPromoStore } from 'routes/Signup/signupSelectors'
+import { getPromoStore, createSelectIsPendingByActionType } from 'routes/Signup/signupSelectors'
 import { promo } from 'config/home'
+import { Status, checkPromoCode } from './enterPromoCodeManuallyUtils'
 import css from './EnterPromoCodeManuallyPage.css'
 
 const DEBOUNCE_MS = 500
 
-export const selectPendingSlice = (state: any) => state.pending
-
-export const createSelectIsPendingByActionType = (actionType: string) =>
-  createSelector(selectPendingSlice, (pendingSlice) => pendingSlice.get(actionType))
-
-export type Status = 'empty' | 'success' | 'error'
-
-const checkPromoCode = (
-  value: any,
-  isPending: any,
-  dispatch: any,
-  promoStore: any,
-  setStatus: (status: Status) => void,
-  setCampaignTextHtml: (campaignTextHtml: string) => void
-) => {
-  if (!value) {
-    setStatus('empty')
-    return
-  }
-  if (isPending) {
-    return
-  }
-
-  const promoStoreEntry = promoStore.get(value, null)
-  if (!promoStoreEntry) {
-    dispatch(promoGet(value))
-    return
-  }
-
-  const hasError = !!promoStoreEntry.get('errorText')
-  if (!hasError) {
-    const campaignTextHtml = getPromoCodeCampaignTextHtml(promoStoreEntry)
-    setCampaignTextHtml(campaignTextHtml)
-  }
-  setStatus(hasError ? 'error' : 'success')
-}
-
-export const SuccessSection = ({ promoCodeCampaignTextHtml }: any) => {
-  return (
-    <>
-      <Heading5>You got a discount!</Heading5>
-      <div
-        className={css.promoCodeCampaignText}
-        dangerouslySetInnerHTML={{ __html: promoCodeCampaignTextHtml }}
-      />
-    </>
-  )
-}
+/* eslint-disable react/no-danger */
+export const SuccessSection = ({ promoCodeCampaignTextHtml }: any) => (
+  <>
+    <Heading5>You got a discount!</Heading5>
+    <div
+      dangerouslySetInnerHTML={{ __html: promoCodeCampaignTextHtml }}
+      className={css.promoCodeCampaignText}
+    />
+  </>
+)
 
 export const FailureSection = () => {
   const isTwoMonthPromoCodeEnabled = useIsOptimizelyFeatureEnabled(
@@ -108,13 +61,12 @@ export const FailureSection = () => {
       <Heading5>Claim our welcome discount instead!</Heading5>
       <Space size={2} />
       <Join with={<Space size={4} />}>
-        {lines.map((line, index) => {
-          return (
-            <Paragraph key={index} size={2}>
-              {line}
-            </Paragraph>
-          )
-        })}
+        {lines.map((line, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Paragraph key={index} size={2}>
+            {line}
+          </Paragraph>
+        ))}
       </Join>
 
       <Space size={4} />
@@ -125,53 +77,22 @@ export const FailureSection = () => {
   )
 }
 
-/**
- *
- * Given the promoStore entry, return the human-readable campaign description as html.
- *
- * The legacy promo code entering process (in gousto-admin) inserts the style
- * attributes in the html.  The styles declared in these attributes do not
- * match the current design practices.
- *
- * Sample input:
- * `
- * <p class="lead" style="box-sizing: border-box; margin: 0px 0px 20px; font-size: 16.2px; line-height: 1.4; font-family: Lato, Helvetica, sans-serif; font-variant-ligatures: normal; orphans: 2; widows: 2; color: #373a3c;">You have a voucher for&nbsp;<strong style="font-size: 16.2px;">60% off</strong><span style="font-size: 16.2px;">&nbsp;your first box,&nbsp;</span><strong style="font-size: 16.2px;">PLUS 30% off</strong><span style="font-size: 16.2px;">&nbsp;all other boxes you order in your first month.</span></p>
- *
- * <p class="lead" style="box-sizing: border-box; margin: 0px 0px 20px; font-size: 16.2px; line-height: 1.4; font-family: Lato, Helvetica, sans-serif; font-variant-ligatures: normal; orphans: 2; widows: 2; color: #373a3c;">Click 'Claim Discount' below and your voucher will be automatically applied at checkout.</p>
- *
- * <p class="lead" style="box-sizing: border-box; margin: 0px 0px 20px; font-size: 16.2px; line-height: 1.4; font-family: Lato, Helvetica, sans-serif; font-variant-ligatures: normal; orphans: 2; widows: 2; color: #373a3c;">Happy cooking!</p>
- * `
- *
- * We'd like to support promo codes entered at any time, but use the modern
- * styling. So the style attributes are removed.
- *
- * @param promoStoreEntry: an Immutable.JS representation of the response of
- * the `/promocode/<code>` endpoint
- *
- * @return html of the campaign text
- *
- */
-export const getPromoCodeCampaignTextHtml = (promoStoreEntry: any) => {
-  const rawHtml = promoStoreEntry?.getIn(['codeData', 'campaign', 'modalText'])
-
-  if (!rawHtml) {
-    return null
+const getFormStatus = (status: Status) => {
+  switch (status) {
+    case 'empty':
+      return undefined
+    case 'success':
+      return FormFieldStatus.Success
+    default:
+      return FormFieldStatus.Error
   }
-
-  // It is safe to use this regexp, as `style="<...>"` is not a text that would
-  // occur naturally in any promo code description; and the promo entering
-  // process is stable enough that we can expect the pattern to hold for any
-  // promo code.
-  const html = rawHtml.replaceAll(/style=".*?"/g, '')
-
-  return html
 }
 
 export const EnterPromoCodeManuallyPage = () => {
   const [valueUnderInput, setValueUnderInput] = useState('')
   const [checkedValue, setCheckedValue] = useState('')
   const [status, setStatus] = useState<Status>('empty')
-  const [campaignTextHtml, setCampaignTextHtml] = useState<any>('')
+  const [campaignTextHtml, setCampaignTextHtml] = useState<string | null>(null)
 
   const dispatch = useDispatch()
 
@@ -218,11 +139,12 @@ export const EnterPromoCodeManuallyPage = () => {
     setStatus,
   ])
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       cancel()
-    }
-  }, [cancel])
+    },
+    [cancel]
+  )
 
   return (
     <InformationalPageTemplate
@@ -239,13 +161,7 @@ export const EnterPromoCodeManuallyPage = () => {
           id="enterPromoCodeManuallyInputField"
           label=""
           placeholder="45-56-69"
-          status={
-            status === 'empty'
-              ? undefined
-              : status === 'success'
-              ? FormFieldStatus.Success
-              : FormFieldStatus.Error
-          }
+          status={getFormStatus(status)}
           validationMessage={status === 'error' ? 'This discount code is not valid.' : undefined}
           value={valueUnderInput}
           onChange={(event) => {
