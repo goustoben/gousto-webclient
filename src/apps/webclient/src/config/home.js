@@ -38,9 +38,18 @@ export const CTA = {
 export const promo = {
   defaultPromoCode: 'DTI-SB-63',
   defaultBannerText: 'Get 60% off your first box and 30% off your first month',
+  defaultDescriptionLines: [
+    `Get 60% off your first box!`,
+    `Then 30% off all other boxes you order in your first month.`,
+  ],
+
   boxPricesCTAText: 'Get started with 60% off',
   twoMonthPromoCode: 'DTI-SB-602525',
   twoMonthBannerText: 'Get 60% off your first box and 25% off your first two months',
+  twoMonthDescriptionLines: [
+    `Get 60% off your first box!`,
+    `Then 25% off all other boxes you order in your first two months.`,
+  ],
 }
 
 export const emailForm = {

@@ -125,3 +125,7 @@
 .fontStyle3XL {
   composes: fontStyle3XL from 'design-language/typography.css';
 }
+
+.hasSmallerMarginBelowHeader {
+  margin-bottom: 1rem;
+}

@@ -8,6 +8,7 @@ export const InformationalPageTemplate = ({
   testingSelector,
   headerText,
   headerSize,
+  hasSmallerMarginBelowHeader,
   children,
 }) => (
   <div className={css.container} data-testing={testingSelector}>
@@ -30,10 +31,15 @@ export const InformationalPageTemplate = ({
     </div>
     <div className={css.partition}>
       <div className={css.content}>
-        <h1 className={classNames(css.heading, {
-          [css.fontStyle2XL]: headerSize === 'fontStyle2XL',
-          [css.fontStyle3XL]: headerSize === 'fontStyle3XL',
-        })}>{headerText}</h1>
+        <h1
+          className={classNames(css.heading, {
+            [css.fontStyle2XL]: headerSize === 'fontStyle2XL',
+            [css.fontStyle3XL]: headerSize === 'fontStyle3XL',
+            [css.hasSmallerMarginBelowHeader]: hasSmallerMarginBelowHeader,
+          })}
+        >
+          {headerText}
+        </h1>
         {children}
       </div>
     </div>
@@ -52,11 +58,13 @@ InformationalPageTemplate.propTypes = {
   testingSelector: PropTypes.string,
   children: PropTypes.node.isRequired,
   headerText: PropTypes.string.isRequired,
-  headerSize: PropTypes.oneOf(['fontStyle2XL', 'fontStyle3XL',]),
+  headerSize: PropTypes.oneOf(['fontStyle2XL', 'fontStyle3XL']),
+  hasSmallerMarginBelowHeader: PropTypes.boolean,
 }
 
 InformationalPageTemplate.defaultProps = {
   isGoustoOnDemandEnabled: false,
   testingSelector: null,
   headerSize: 'fontStyle3XL',
+  hasSmallerMarginBelowHeader: false,
 }

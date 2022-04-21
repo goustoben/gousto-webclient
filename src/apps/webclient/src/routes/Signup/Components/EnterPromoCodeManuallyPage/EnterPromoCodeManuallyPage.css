@@ -1,0 +1,3 @@
+.promoCodeCampaignText {
+  composes: fontStyleBody from 'design-language/typography.css';
+}
