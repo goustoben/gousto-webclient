@@ -1,10 +1,10 @@
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
+import { isServer } from '../../../server/utils/serverEnvironment'
 
 import { cookieString } from '../cookieString'
 
 jest.mock('utils/browserEnvironment')
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 
 const mockCanUseWindow = canUseWindow as jest.Mock
 const mockIsServer = isServer as jest.Mock

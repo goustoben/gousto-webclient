@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 import MockDate from 'mockdate'
 import PromiseTimeout from 'promise-timeout'
-import { isServer } from 'utils/serverEnvironment'
 import { isProd } from 'utils/isomorphicEnvironment'
+import { isServer } from '../../../server/utils/serverEnvironment'
 
 const mockFetch = jest.fn()
 const mockGetState = jest.fn()
@@ -18,7 +18,7 @@ jest.mock('store', () => ({
   })
 }))
 
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 
 jest.mock('utils/isomorphicEnvironment')
 

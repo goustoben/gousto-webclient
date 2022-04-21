@@ -5,7 +5,7 @@ import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getEnvConfig } from 'utils/processEnv'
 import { getStore } from 'store'
 import { timeout as fetchWithTimeout } from 'promise-timeout'
-import { isServer } from './serverEnvironment'
+import { isServer } from '../../server/utils/serverEnvironment'
 import { isProd } from './isomorphicEnvironment'
 
 const DEFAULT_TIME_OUT = 50000

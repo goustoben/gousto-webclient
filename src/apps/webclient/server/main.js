@@ -1,8 +1,6 @@
-// TODO: move this isServer to  `../src/utils/serEnvironment`
-import { isServer } from 'utils/serverEnvironment'
 import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 import { validateProcessEnv } from 'utils/processEnv'
-import { getServerEnvironment } from './utils/serverEnvironment'
+import { getServerEnvironment, isServer } from './utils/serverEnvironment'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 import { getProtocol, isDev } from '../src/utils/isomorphicEnvironment'

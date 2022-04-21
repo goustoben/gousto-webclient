@@ -3,13 +3,13 @@ import { push, replace } from 'react-router-redux'
 
 import * as windowUtils from 'utils/window'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
+import { isServer } from '../../../server/utils/serverEnvironment'
 import redirectUtils, { redirect } from '../redirect'
 import { actionTypes } from '../actionTypes'
 
 jest.mock('react-router-redux')
 jest.mock('utils/browserEnvironment')
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 jest.mock('config/globals')
 jest.mock('utils/window')
 

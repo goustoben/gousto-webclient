@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import Modal from 'react-modal'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from 'utils/serverEnvironment'
+import { isServer } from '../../../server/utils/serverEnvironment'
 import css from './Overlay.css'
 
 // We apply styling to the document using `ReactModal__Body--open` class

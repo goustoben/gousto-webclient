@@ -1,4 +1,5 @@
 import { getEnvConfig } from 'utils/processEnv'
+import { canUseWindow } from 'utils/browserEnvironment'
 import {
   ENVIRONMENT_NAMES,
   PROTOCOL_PREFIX,
@@ -35,3 +36,5 @@ export const getServerProtocol = () =>
 export const getServerRecaptchaPublicKey = () => getEnvConfig().RECAPTCHA_PUBK
 export const getServerRecaptchaRAFPublicKey = () => getEnvConfig().RECAPTCHA_RAF_PUBK
 export const getServerCheckoutComPublicKey = () => getEnvConfig().CHECKOUT_COM_PUBK
+
+export const isServer = () => !canUseWindow()

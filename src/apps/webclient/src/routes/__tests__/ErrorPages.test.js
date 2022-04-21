@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { Helmet } from 'react-helmet'
-import { isServer } from 'utils/serverEnvironment'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { isServer } from '../../../server/utils/serverEnvironment'
 const { processRequest } = require('../../../server/processRequest')
 
 jest.mock('utils/browserEnvironment')
-jest.mock('utils/serverEnvironment')
+jest.mock('../../../server/utils/serverEnvironment')
 
 // This test renders the entire route as a string
 // and is extremely slow to run

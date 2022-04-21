@@ -1,5 +1,5 @@
 import { canUseWindow } from './browserEnvironment'
-import { isServer } from './serverEnvironment'
+import { isServer } from '../../server/utils/serverEnvironment'
 
 export function cookieString(reqCookies) {
   let cookies

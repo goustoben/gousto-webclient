@@ -62,8 +62,6 @@ jest.mock('utils/logger', () => ({
   warning: jest.fn(),
 }))
 
-jest.mock('utils/serverEnvironment')
-
 describe('Given Checkout component', () => {
   let wrapper
   let mockedStore

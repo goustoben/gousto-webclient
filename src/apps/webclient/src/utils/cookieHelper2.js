@@ -3,7 +3,7 @@ import goustoStore from 'store'
 import logger from './logger'
 import { cookieString } from './cookieString'
 import { canUseWindow } from './browserEnvironment'
-import { isServer } from './serverEnvironment'
+import { isServer } from '../../server/utils/serverEnvironment'
 
 const versionPrefix = 'v1'
 
