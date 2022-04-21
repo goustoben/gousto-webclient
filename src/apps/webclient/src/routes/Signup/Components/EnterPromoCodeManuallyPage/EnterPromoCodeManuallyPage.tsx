@@ -24,6 +24,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { clickClaimDiscountPopup, clickEnterPromoCodeManuallyContinue } from 'actions/trackingKeys'
+import { basketPromoCodeChange } from 'actions/basket'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 import { promoGet, promoChange } from 'actions/promos'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
@@ -101,6 +102,7 @@ export const FailureSection = () => {
 
     dispatch(trackUTMAndPromoCode(clickClaimDiscountPopup))
     dispatch(promoChange(promoCode))
+    dispatch(basketPromoCodeChange(promoCode))
     dispatch(redirect('/signup'))
   }
 
@@ -185,13 +187,16 @@ export const EnterPromoCodeManuallyPage = () => {
   const previousCheckedValue = usePrevious(checkedValue)
 
   const handleContinueClick = () => {
+    const promoCode = checkedValue
+
     dispatch(
       trackUTMAndPromoCode(clickEnterPromoCodeManuallyContinue, {
         accepted: true,
-        promoCode: checkedValue,
+        promoCode,
       })
     )
-    dispatch(promoChange(checkedValue))
+    dispatch(promoChange(promoCode))
+    dispatch(basketPromoCodeChange(promoCode))
     dispatch(redirect('/signup'))
   }
 
