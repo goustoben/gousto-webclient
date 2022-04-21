@@ -45,7 +45,7 @@ const config = {
           configFile: path.resolve(__dirname, '../server/tsconfig.json'),
           logLevel: "error",
           onlyCompileBundledFiles: true,
-          /*transpile Javascript but don't typecheck at build time */
+          // transpile Javascript but don't typecheck at build time
           transpileOnly: true
         }
       },

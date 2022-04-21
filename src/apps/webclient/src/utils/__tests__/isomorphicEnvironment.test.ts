@@ -6,13 +6,19 @@ import {
   getRecaptchaPublicKey,
   getRecaptchaRAFPublicKey,
   getCheckoutComPublicKey,
+  getDatadogRumSdkAppID,
+  getDatadogRumSdkClientToken,
+  getDatadogBrowserLogsClientToken,
 } from 'utils/isomorphicEnvironment'
 import {
   getClientDomain,
   getClientEnvironment,
   getClientCheckoutComPublicKey,
+  getClientDatadogRumSdkAppID,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
+  getClientDatadogRumSdkClientToken,
+  getClientDatadogBrowserLogsClientToken,
 } from 'utils/configFromWindow'
 import {
   getServerEnvironment,
@@ -21,6 +27,9 @@ import {
   getServerCheckoutComPublicKey,
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
+  getServerDatadogRumSdkAppID,
+  getServerDatadogRumSdkClientToken,
+  getServerDatadogBrowserLogsClientToken,
 } from '../../../server/utils/serverEnvironment'
 import { getClientProtocol } from '../browserEnvironment'
 
@@ -105,6 +114,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getEnvironment', () => {
     test('returns expected fn if in browser', () => {
+      const mockGetClientEnvironment = getClientEnvironment as jest.Mock
       const mockBrowserEnvironment = 'mock browser environment'
 
       windowSpy.mockReturnValue({
@@ -114,7 +124,7 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientEnvironment as jest.Mock).mockReturnValue(mockBrowserEnvironment)
+      mockGetClientEnvironment.mockReturnValue(mockBrowserEnvironment)
 
       expect(getEnvironment()).toEqual(mockBrowserEnvironment)
     })
@@ -133,6 +143,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getDomain', () => {
     it('should call the getClientDomain when running on the client', () => {
+      const mockGetClientDomain = getClientDomain as jest.Mock
       windowSpy.mockReturnValue({
         document: {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -142,7 +153,7 @@ describe('isomorphicEnvironment utils', () => {
       })
 
       const stubDomainResponse = 'mockclientdomain.com'
-      ;(getClientDomain as jest.Mock).mockReturnValue(stubDomainResponse)
+      mockGetClientDomain.mockReturnValue(stubDomainResponse)
 
       expect(getDomain()).toEqual(stubDomainResponse)
     })
@@ -161,6 +172,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getProtocol', () => {
     it('should call the getClientProtocol when running on the client', () => {
+      const mockGetClientProtocol = getClientProtocol as jest.Mock
       windowSpy.mockReturnValue({
         document: {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -170,18 +182,19 @@ describe('isomorphicEnvironment utils', () => {
       })
 
       const stubProtocolValue = 'stubProtocolValue:http'
-      ;(getClientProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+      mockGetClientProtocol.mockReturnValue(stubProtocolValue)
 
       expect(getProtocol()).toEqual(stubProtocolValue)
     })
 
     it('should call the getServerProtocol when running on the server', () => {
+      const mockGetServerProtocol = getServerProtocol as jest.Mock
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
 
       const stubProtocolValue = 'stubProtocolValue:https'
-      ;(getServerProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+      mockGetServerProtocol.mockReturnValue(stubProtocolValue)
 
       expect(getProtocol()).toEqual(stubProtocolValue)
     })
@@ -189,6 +202,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getRecaptchaPublicKey', () => {
     it('should call getClientRecaptchaPublicKey when running in client', () => {
+      const mockGetClientRecaptchaPublicKey = getClientRecaptchaPublicKey as jest.Mock
       const expected = 'client-recaptcha-public-key'
 
       windowSpy.mockReturnValue({
@@ -198,7 +212,7 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientRecaptchaPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetClientRecaptchaPublicKey.mockReturnValue(expected)
 
       expect(getRecaptchaPublicKey()).toEqual(expected)
     })
@@ -217,6 +231,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getRecaptchaRAFPublicKey', () => {
     it('should call getClientRecaptchaRAFPublicKey when running in client', () => {
+      const mockGetClientRecaptchaRAFPublicKey = getClientRecaptchaRAFPublicKey as jest.Mock
       const expected = 'client-recaptcha-raf-public-key'
 
       windowSpy.mockReturnValue({
@@ -226,18 +241,19 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetClientRecaptchaRAFPublicKey.mockReturnValue(expected)
 
       expect(getRecaptchaRAFPublicKey()).toEqual(expected)
     })
 
     it('should call getServerRecaptchaRAFPublicKey when running in server', () => {
+      const mockGetServerRecaptchaRAFPublicKey = getServerRecaptchaRAFPublicKey as jest.Mock
       const expected = 'server-recaptcha-raf-public-key'
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
-      ;(getServerRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetServerRecaptchaRAFPublicKey.mockReturnValue(expected)
 
       expect(getRecaptchaRAFPublicKey()).toEqual(expected)
     })
@@ -245,6 +261,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getCheckoutComPublicKey', () => {
     it('should call getClientCheckoutComPublicKey when running in client', () => {
+      const mockGetClientCheckoutComPublicKey = getClientCheckoutComPublicKey as jest.Mock
       const expected = 'client-checkout-com-public-key'
 
       windowSpy.mockReturnValue({
@@ -254,20 +271,113 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetClientCheckoutComPublicKey.mockReturnValue(expected)
 
       expect(getCheckoutComPublicKey()).toEqual(expected)
     })
 
     it('should call getServerCheckoutComPublicKey when running in server', () => {
+      const mockGetServerCheckoutComPublicKey = getServerCheckoutComPublicKey as jest.Mock
       const expected = 'server-checkout-com-public-key'
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
-      ;(getServerCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetServerCheckoutComPublicKey.mockReturnValue(expected)
 
       expect(getCheckoutComPublicKey()).toEqual(expected)
+    })
+  })
+
+  describe('getDatadogRumSdkAppID', () => {
+    it('should call getClientDatadogRumSdkAppID when running in client', () => {
+      const mockGetClientDatadogRumSdkAppID = getClientDatadogRumSdkAppID as jest.Mock
+      const expected = 'client-datadog-rum-sdk-app-id'
+
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => null,
+        },
+      })
+      mockGetClientDatadogRumSdkAppID.mockReturnValue(expected)
+
+      expect(getDatadogRumSdkAppID()).toEqual(expected)
+    })
+
+    it('should call getServerDatadogRumSdkAppID when running in server', () => {
+      const mockGetServerDatadogRumSdkAppID = getServerDatadogRumSdkAppID as jest.Mock
+      const expected = 'server-datadog-rum-sdk-app-id'
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
+      mockGetServerDatadogRumSdkAppID.mockReturnValue(expected)
+
+      expect(getDatadogRumSdkAppID()).toEqual(expected)
+    })
+  })
+
+  describe('getDatadogRumSdkClientToken', () => {
+    it('should call getClientDatadogRumSdkClientToken when running in client', () => {
+      const mockGetClientDatadogRumSdkClientToken = getClientDatadogRumSdkClientToken as jest.Mock
+      const expected = 'client-datadog-rum-sdk-client-token'
+
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => null,
+        },
+      })
+      mockGetClientDatadogRumSdkClientToken.mockReturnValue(expected)
+
+      expect(getDatadogRumSdkClientToken()).toEqual(expected)
+    })
+
+    it('should call getServerDatadogRumSdkClientToken when running in server', () => {
+      const mockGetServerDatadogRumSdkClientToken = getServerDatadogRumSdkClientToken as jest.Mock
+      const expected = 'server-datadog-rum-sdk-client-token'
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
+      mockGetServerDatadogRumSdkClientToken.mockReturnValue(expected)
+
+      expect(getDatadogRumSdkClientToken()).toEqual(expected)
+    })
+  })
+
+  describe('getDatadogBrowserLogsClientToken', () => {
+    it('should call getClientDatadogBrowserLogsClientToken when running in client', () => {
+      const mockGetClientDatadogBrowserLogsClientToken =
+        getClientDatadogBrowserLogsClientToken as jest.Mock
+      const expected = 'client-datadog-browser-logs-client-token'
+
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => null,
+        },
+      })
+      mockGetClientDatadogBrowserLogsClientToken.mockReturnValue(expected)
+
+      expect(getDatadogBrowserLogsClientToken()).toEqual(expected)
+    })
+
+    it('should call getServerDatadogBrowserLogsClientToken when running in server', () => {
+      const mockGetServerDatadogBrowserLogsClientToken =
+        getServerDatadogBrowserLogsClientToken as jest.Mock
+      const expected = 'server-datadog-browser-logs-client-token'
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
+      mockGetServerDatadogBrowserLogsClientToken.mockReturnValue(expected)
+
+      expect(getDatadogBrowserLogsClientToken()).toEqual(expected)
     })
   })
 })

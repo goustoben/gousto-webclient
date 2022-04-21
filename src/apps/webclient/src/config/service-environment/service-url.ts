@@ -80,6 +80,7 @@ export function serviceUrl(
   serviceUrlProperties: ServiceUrlProperties,
   // eslint-disable-next-line no-shadow,no-unused-vars
   getOverriddenUrl: (
+    // eslint-disable-next-line no-shadow
     serviceUrlProperties: ServiceUrlProperties
   ) => string | undefined = serviceOverrides
 ) {

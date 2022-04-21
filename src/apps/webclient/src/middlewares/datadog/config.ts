@@ -1,10 +1,11 @@
 import { LogsInitConfiguration } from '@datadog/browser-logs'
 import { RumInitConfiguration } from '@datadog/browser-rum'
-import { getEnvironment } from 'utils/isomorphicEnvironment'
-
-export const BROWSER_LOGS_CLIENT_TOKEN = 'pub317260bf93610224cda1575e5bb24f2a'
-export const RUM_SDK_CLIENT_TOKEN = 'pub5434f4d0f23379cbe71d4b5693ae81a5'
-export const RUM_SDK_APP_ID = '3fc47a59-383f-4906-a976-581959ba13b1'
+import {
+  getEnvironment,
+  getDatadogRumSdkAppID,
+  getDatadogRumSdkClientToken,
+  getDatadogBrowserLogsClientToken,
+} from 'utils/isomorphicEnvironment'
 
 export const DATADOG_ENABLED_ENVS = ['production']
 export const DATADOG_CLIENT_SAMPLE_RATE = 25
@@ -19,14 +20,14 @@ export const getCommonConfig: () => Partial<LogsInitConfiguration & RumInitConfi
 
 export const getBrowserLogsConfig: () => LogsInitConfiguration = () => ({
   ...getCommonConfig(),
-  clientToken: BROWSER_LOGS_CLIENT_TOKEN,
+  clientToken: getDatadogBrowserLogsClientToken(),
   forwardErrorsToLogs: true,
 })
 
 export const getRUMSDKConfig: () => RumInitConfiguration = () => ({
   ...getCommonConfig(),
-  applicationId: RUM_SDK_APP_ID,
-  clientToken: RUM_SDK_CLIENT_TOKEN,
+  applicationId: getDatadogRumSdkAppID(),
+  clientToken: getDatadogRumSdkClientToken(),
   trackInteractions: false,
   defaultPrivacyLevel: 'mask-user-input',
 })

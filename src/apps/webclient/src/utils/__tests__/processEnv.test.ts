@@ -6,11 +6,14 @@ const validProcessEnv: ProcessEnv = {
   API_TOKEN: 'mock-api-token',
   AUTH_CLIENT_ID: '10',
   AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
-  RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
-  RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
+  CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
+  DATADOG_BROWSER_LOGS_CLIENT_TOKEN: 'mock-datadog_browser_logs_client_token',
+  DATADOG_RUM_SDK_APP_ID: 'mock-datadog_rum_sdk_app_id',
+  DATADOG_RUM_SDK_CLIENT_TOKEN: 'mock-datadog_rum_sdk_client_token',
   RECAPTCHA_PUBK: 'mock-recaptcha-public-key',
   RECAPTCHA_PVTK: 'mock-recaptcha-private-key',
-  CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
+  RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
+  RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
 }
 
 describe('processEnv', () => {
@@ -43,11 +46,14 @@ describe('processEnv', () => {
           API_TOKEN: 'mock-api-token',
           AUTH_CLIENT_ID: 10,
           AUTH_CLIENT_SECRET: 'mock-auth-client-secret',
-          RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
-          RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
+          CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
+          DATADOG_BROWSER_LOGS_CLIENT_TOKEN: 'mock-datadog_browser_logs_client_token',
+          DATADOG_RUM_SDK_APP_ID: 'mock-datadog_rum_sdk_app_id',
+          DATADOG_RUM_SDK_CLIENT_TOKEN: 'mock-datadog_rum_sdk_client_token',
           RECAPTCHA_PUBK: 'mock-recaptcha-public-key',
           RECAPTCHA_PVTK: 'mock-recaptcha-private-key',
-          CHECKOUT_COM_PUBK: 'mock-checkout-com-public-key',
+          RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
+          RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
         })
       })
     })
