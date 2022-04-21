@@ -34,11 +34,6 @@ import css from './EnterPromoCodeManuallyPage.css'
 
 const DEBOUNCE_MS = 500
 
-export const createSelectPromoStoreEntryByPromoCode = (promoCode: string) =>
-  createSelector(getPromoStore, (promoStore) => {
-    return promoStore.get(promoCode, null)
-  })
-
 export const selectPendingSlice = (state: any) => state.pending
 
 export const createSelectIsPendingByActionType = (actionType: string) =>
@@ -50,7 +45,7 @@ const checkPromoCode = (
   value: any,
   isPending: any,
   dispatch: any,
-  promoStoreEntry: any,
+  promoStore: any,
   setStatus: (status: Status) => void,
   setCampaignTextHtml: (campaignTextHtml: string) => void
 ) => {
@@ -62,6 +57,7 @@ const checkPromoCode = (
     return
   }
 
+  const promoStoreEntry = promoStore.get(value, null)
   if (!promoStoreEntry) {
     dispatch(promoGet(value))
     return
@@ -179,7 +175,7 @@ export const EnterPromoCodeManuallyPage = () => {
 
   const dispatch = useDispatch()
 
-  const promoStoreEntry = useSelector(createSelectPromoStoreEntryByPromoCode(checkedValue))
+  const promoStore = useSelector(getPromoStore)
 
   const isPending = useSelector(createSelectIsPendingByActionType(actionTypes.PROMO_GET))
 
@@ -210,14 +206,7 @@ export const EnterPromoCodeManuallyPage = () => {
 
   useEffect(() => {
     if (previousIsPending !== isPending || previousCheckedValue !== checkedValue) {
-      checkPromoCode(
-        checkedValue,
-        isPending,
-        dispatch,
-        promoStoreEntry,
-        setStatus,
-        setCampaignTextHtml
-      )
+      checkPromoCode(checkedValue, isPending, dispatch, promoStore, setStatus, setCampaignTextHtml)
     }
   }, [
     previousIsPending,
@@ -225,7 +214,7 @@ export const EnterPromoCodeManuallyPage = () => {
     previousCheckedValue,
     checkedValue,
     dispatch,
-    promoStoreEntry,
+    promoStore,
     setStatus,
   ])
 
