@@ -7,6 +7,7 @@ import {
   clickCloseDiscountFailurePopup,
   clickGodClaimDiscountPopup,
   clickCloseGodDiscountPopup,
+  clickEnterPromoCodeManuallyButton,
 } from 'actions/trackingKeys'
 import { CTA, Modal } from 'goustouicomponents'
 import headerImage from 'media/images/discount-modal-header.jpg'
@@ -62,7 +63,9 @@ class PromoModal extends React.Component {
   }
 
   handleEnterPromoCodeManuallyClick = () => {
-    console.log('TODO event')
+    const { trackUTMAndPromoCode, closeModal } = this.props
+    trackUTMAndPromoCode(clickEnterPromoCodeManuallyButton)
+    closeModal()
     browserHistory.push(`/signup/${signupConfig.enterPromoCodeManuallyPageSlug}`)
   }
 

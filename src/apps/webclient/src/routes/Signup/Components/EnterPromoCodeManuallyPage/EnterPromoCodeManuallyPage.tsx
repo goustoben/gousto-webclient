@@ -22,6 +22,8 @@ import {
 } from '@gousto-internal/citrus-react'
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
+import { trackUTMAndPromoCode } from 'actions/tracking'
+import { clickClaimDiscountPopup, clickEnterPromoCodeManuallyContinue } from 'actions/trackingKeys'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 import { promoGet, promoChange } from 'actions/promos'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
@@ -96,6 +98,8 @@ export const FailureSection = () => {
 
   const handleClick = () => {
     const promoCode = isTwoMonthPromoCodeEnabled ? promo.twoMonthPromoCode : promo.defaultPromoCode
+
+    dispatch(trackUTMAndPromoCode(clickClaimDiscountPopup))
     dispatch(promoChange(promoCode))
     dispatch(redirect('/signup'))
   }
@@ -181,6 +185,12 @@ export const EnterPromoCodeManuallyPage = () => {
   const previousCheckedValue = usePrevious(checkedValue)
 
   const handleContinueClick = () => {
+    dispatch(
+      trackUTMAndPromoCode(clickEnterPromoCodeManuallyContinue, {
+        accepted: true,
+        promoCode: checkedValue,
+      })
+    )
     dispatch(promoChange(checkedValue))
     dispatch(redirect('/signup'))
   }
