@@ -6,9 +6,6 @@ import {
   getServerCheckoutComPublicKey,
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
-  getServerDatadogRumSdkAppID,
-  getServerDatadogRumSdkClientToken,
-  getServerDatadogBrowserLogsClientToken,
 } from '../../server/utils/serverEnvironment'
 import {
   getClientEnvironment,
@@ -16,9 +13,6 @@ import {
   getClientCheckoutComPublicKey,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
-  getClientDatadogRumSdkAppID,
-  getClientDatadogRumSdkClientToken,
-  getClientDatadogBrowserLogsClientToken,
 } from './configFromWindow'
 
 type CreateIsomorphicConfig<T> = {
@@ -87,19 +81,4 @@ export const getRecaptchaRAFPublicKey = createIsomorphicConfig({
 export const getCheckoutComPublicKey = createIsomorphicConfig({
   browserConfigFn: getClientCheckoutComPublicKey,
   serverConfigFn: getServerCheckoutComPublicKey,
-})
-
-export const getDatadogRumSdkAppID = createIsomorphicConfig({
-  browserConfigFn: getClientDatadogRumSdkAppID,
-  serverConfigFn: getServerDatadogRumSdkAppID,
-})
-
-export const getDatadogRumSdkClientToken = createIsomorphicConfig({
-  browserConfigFn: getClientDatadogRumSdkClientToken,
-  serverConfigFn: getServerDatadogRumSdkClientToken,
-})
-
-export const getDatadogBrowserLogsClientToken = createIsomorphicConfig({
-  browserConfigFn: getClientDatadogBrowserLogsClientToken,
-  serverConfigFn: getServerDatadogBrowserLogsClientToken,
 })

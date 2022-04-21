@@ -40,9 +40,3 @@ export const getClientRecaptchaRAFPublicKey = () => getConfigFromWindow('RECAPTC
 export const getClientCheckoutComPublicKey = () => getConfigFromWindow('CHECKOUT_COM_PUBK')
 export const getClientEnvironment = () => getConfigFromWindow('ENVIRONMENT')
 export const getClientDomain = () => getConfigFromWindow('DOMAIN')
-
-export const getClientDatadogRumSdkAppID = () => getConfigFromWindow('DATADOG_RUM_SDK_APP_ID')
-export const getClientDatadogRumSdkClientToken = () =>
-  getConfigFromWindow('DATADOG_RUM_SDK_CLIENT_TOKEN')
-export const getClientDatadogBrowserLogsClientToken = () =>
-  getConfigFromWindow('DATADOG_BROWSER_LOGS_CLIENT_TOKEN')

@@ -56,15 +56,6 @@ ecs:
         CHECKOUT_COM_PUBK:
           type: secret
           description: PUBLIC key for checkout.com
-        DATADOG_BROWSER_LOGS_CLIENT_TOKEN:
-          type: secret
-          description: PUBLIC token for datadog browser logs
-        DATADOG_RUM_SDK_CLIENT_TOKEN:
-          type: secret
-          description: PUBLIC token for datadog rum sdk
-        DATADOG_RUM_SDK_APP_ID:
-          type: secret
-          description: PUBLIC App ID for datadog rum sdk
 
   logs:
     - name: application

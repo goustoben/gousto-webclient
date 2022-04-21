@@ -37,7 +37,3 @@ export const getServerProtocol = () =>
 export const getServerRecaptchaPublicKey = () => getEnvConfig().RECAPTCHA_PUBK
 export const getServerRecaptchaRAFPublicKey = () => getEnvConfig().RECAPTCHA_RAF_PUBK
 export const getServerCheckoutComPublicKey = () => getEnvConfig().CHECKOUT_COM_PUBK
-export const getServerDatadogRumSdkAppID = () => getEnvConfig().DATADOG_RUM_SDK_APP_ID
-export const getServerDatadogRumSdkClientToken = () => getEnvConfig().DATADOG_RUM_SDK_CLIENT_TOKEN
-export const getServerDatadogBrowserLogsClientToken = () =>
-  getEnvConfig().DATADOG_BROWSER_LOGS_CLIENT_TOKEN

@@ -6,9 +6,6 @@ import {
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
   getServerCheckoutComPublicKey,
-  getServerDatadogRumSdkAppID,
-  getServerDatadogRumSdkClientToken,
-  getServerDatadogBrowserLogsClientToken,
 } from '../serverEnvironment'
 
 jest.mock('../../../src/utils/processEnv')
@@ -103,42 +100,6 @@ describe('serverEnvironment', () => {
       })
 
       expect(getServerCheckoutComPublicKey()).toEqual(mockCheckoutComPublicKey)
-    })
-  })
-
-  describe('getServerDatadogRumSdkAppID', () => {
-    it('returns the expected value from process.env', () => {
-      const mockDatadogRumSdkAppID = 'mock-datadog-rum-sdk-app-id'
-
-      mockGetEnvConfig.mockReturnValue({
-        DATADOG_RUM_SDK_APP_ID: mockDatadogRumSdkAppID,
-      })
-
-      expect(getServerDatadogRumSdkAppID()).toEqual(mockDatadogRumSdkAppID)
-    })
-  })
-
-  describe('getServerDatadogRumSdkClientToken', () => {
-    it('returns the expected value from process.env', () => {
-      const mockDatadogRumSdkClientToken = 'mock-datadog-rum-sdk-client-token'
-
-      mockGetEnvConfig.mockReturnValue({
-        DATADOG_RUM_SDK_CLIENT_TOKEN: mockDatadogRumSdkClientToken,
-      })
-
-      expect(getServerDatadogRumSdkClientToken()).toEqual(mockDatadogRumSdkClientToken)
-    })
-  })
-
-  describe('getServerDatadogBrowserLogsClientToken', () => {
-    it('returns the expected value from process.env', () => {
-      const mockDatadogBrowserLogsClientToken = 'mock-datadog-browser-logs-client-token'
-
-      mockGetEnvConfig.mockReturnValue({
-        DATADOG_BROWSER_LOGS_CLIENT_TOKEN: mockDatadogBrowserLogsClientToken,
-      })
-
-      expect(getServerDatadogBrowserLogsClientToken()).toEqual(mockDatadogBrowserLogsClientToken)
     })
   })
 })

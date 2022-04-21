@@ -8,10 +8,7 @@ type ProcessEnvKeys = [
   'RECAPTCHA_RAF_PVTK',
   'RECAPTCHA_PUBK',
   'RECAPTCHA_PVTK',
-  'CHECKOUT_COM_PUBK',
-  'DATADOG_BROWSER_LOGS_CLIENT_TOKEN',
-  'DATADOG_RUM_SDK_CLIENT_TOKEN',
-  'DATADOG_RUM_SDK_APP_ID'
+  'CHECKOUT_COM_PUBK'
 ]
 
 /**
@@ -34,9 +31,6 @@ export type ParsedProcessEnv = {
   RECAPTCHA_PUBK: string
   RECAPTCHA_PVTK: string
   CHECKOUT_COM_PUBK: string
-  DATADOG_BROWSER_LOGS_CLIENT_TOKEN: string
-  DATADOG_RUM_SDK_CLIENT_TOKEN: string
-  DATADOG_RUM_SDK_APP_ID: string
 }
 
 const REQUIRED_KEYS: ProcessEnvKeys = [
@@ -50,9 +44,6 @@ const REQUIRED_KEYS: ProcessEnvKeys = [
   'RECAPTCHA_PUBK',
   'RECAPTCHA_PVTK',
   'CHECKOUT_COM_PUBK',
-  'DATADOG_BROWSER_LOGS_CLIENT_TOKEN',
-  'DATADOG_RUM_SDK_CLIENT_TOKEN',
-  'DATADOG_RUM_SDK_APP_ID',
 ]
 
 export const envOrThrow = (obj: Record<string, unknown>, key: keyof ProcessEnv) => {
@@ -109,10 +100,5 @@ export const getEnvConfig = (): ParsedProcessEnv => {
     RECAPTCHA_PUBK: getFromProcessEnv(processEnv)('RECAPTCHA_PUBK'),
     RECAPTCHA_PVTK: getFromProcessEnv(processEnv)('RECAPTCHA_PVTK'),
     CHECKOUT_COM_PUBK: getFromProcessEnv(processEnv)('CHECKOUT_COM_PUBK'),
-    DATADOG_BROWSER_LOGS_CLIENT_TOKEN: getFromProcessEnv(processEnv)(
-      'DATADOG_BROWSER_LOGS_CLIENT_TOKEN'
-    ),
-    DATADOG_RUM_SDK_CLIENT_TOKEN: getFromProcessEnv(processEnv)('DATADOG_RUM_SDK_CLIENT_TOKEN'),
-    DATADOG_RUM_SDK_APP_ID: getFromProcessEnv(processEnv)('DATADOG_RUM_SDK_APP_ID'),
   }
 }

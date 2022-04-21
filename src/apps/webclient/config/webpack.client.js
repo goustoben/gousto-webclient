@@ -1,7 +1,7 @@
 const path = require('path')
 
-const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const { getClientPlugins } = require('./build/libs/plugins')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 const { isDevelopmentBuild, clientDevServerEnabled, publicPath } = require('./build/libs/build-time-env-config.js')
 const { logBuildInfo } = require('./build/libs/logs')

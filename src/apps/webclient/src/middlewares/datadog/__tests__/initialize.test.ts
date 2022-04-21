@@ -2,15 +2,16 @@ import * as browserLogsSDK from '@datadog/browser-logs'
 import * as RUMSDK from '@datadog/browser-rum'
 
 import { canUseWindow } from 'utils/browserEnvironment'
-import {
-  getEnvironment,
-  getDatadogRumSdkAppID,
-  getDatadogRumSdkClientToken,
-  getDatadogBrowserLogsClientToken,
-} from 'utils/isomorphicEnvironment'
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 
 import * as dd from '../initialize'
-import { DATADOG_ENABLED_ENVS, DATADOG_CLIENT_SAMPLE_RATE } from '../config'
+import {
+  DATADOG_ENABLED_ENVS,
+  BROWSER_LOGS_CLIENT_TOKEN,
+  RUM_SDK_APP_ID,
+  RUM_SDK_CLIENT_TOKEN,
+  DATADOG_CLIENT_SAMPLE_RATE,
+} from '../config'
 
 jest.mock('@datadog/browser-logs', () => ({
   datadogLogs: {
@@ -26,9 +27,6 @@ jest.mock('@datadog/browser-rum', () => ({
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: jest.fn(),
-  getDatadogRumSdkAppID: jest.fn(),
-  getDatadogRumSdkClientToken: jest.fn(),
-  getDatadogBrowserLogsClientToken: jest.fn(),
 }))
 
 jest.mock('utils/browserEnvironment')
@@ -68,28 +66,15 @@ describe('datadog', () => {
 
   describe('initializeDataDog', () => {
     describe('Given datadog is enabled', () => {
-      const mockClientBrowserLogsToken = 'some-browser-logs-client-token'
-      const mockRumSdkClientToken = 'some-rum-client-token'
-      const mockAppID = 'some-app-id'
-
       beforeEach(() => {
-        const mockGetBrowserLogsClientToken = getDatadogBrowserLogsClientToken as jest.Mock
-        const mockGetRumSdkClientToken = getDatadogRumSdkClientToken as jest.Mock
-        const mockGetRumSdkAppID = getDatadogRumSdkAppID as jest.Mock
-        const mockGetEnvironment = getEnvironment as jest.Mock
-
-        mockGetBrowserLogsClientToken.mockReturnValue(mockClientBrowserLogsToken)
-        mockGetRumSdkClientToken.mockReturnValue(mockRumSdkClientToken)
-        mockGetRumSdkAppID.mockReturnValue(mockAppID)
-
-        mockGetEnvironment.mockReturnValue('production')
+        ;(getEnvironment as jest.Mock).mockReturnValue('production')
         getIsDatadogEnabledSpy.mockReturnValue(true)
         dd.initializeDatadog()
       })
 
       test('Then it should initialize datadogLogs SDK with the expected config', () => {
         expect(browserLogsSDK.datadogLogs.init).toHaveBeenCalledWith({
-          clientToken: mockClientBrowserLogsToken,
+          clientToken: BROWSER_LOGS_CLIENT_TOKEN,
           env: 'production',
           forwardErrorsToLogs: true,
           sampleRate: DATADOG_CLIENT_SAMPLE_RATE,
@@ -101,8 +86,8 @@ describe('datadog', () => {
 
       test('Then it should initialize datadogRum SDK with the expected config', () => {
         expect(RUMSDK.datadogRum.init).toHaveBeenCalledWith({
-          applicationId: mockAppID,
-          clientToken: mockRumSdkClientToken,
+          applicationId: RUM_SDK_APP_ID,
+          clientToken: RUM_SDK_CLIENT_TOKEN,
           defaultPrivacyLevel: 'mask-user-input',
           env: 'production',
           sampleRate: DATADOG_CLIENT_SAMPLE_RATE,
