@@ -21,6 +21,7 @@ import {
   Join,
 } from '@gousto-internal/citrus-react'
 import { actionTypes } from 'actions/actionTypes'
+import { redirect } from 'actions/redirect'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 import { promoGet, promoChange } from 'actions/promos'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
@@ -50,7 +51,6 @@ const checkPromoCode = (
   setStatus: (status: Status) => void,
   setCampaignTextHtml: (campaignTextHtml: string) => void
 ) => {
-  console.log('checkPromoCode starts', value, isPending, promoStoreEntry)
   if (!value) {
     setStatus('empty')
     return
@@ -84,13 +84,22 @@ export const SuccessSection = ({ promoCodeCampaignTextHtml }: any) => {
   )
 }
 
-export const FailureSection = ({ onClaimWelcomePromoCodeClick }: any) => {
+export const FailureSection = () => {
   const isTwoMonthPromoCodeEnabled = useIsOptimizelyFeatureEnabled(
     'beetroots_two_month_promo_code_web_enabled'
   )
   const lines = isTwoMonthPromoCodeEnabled
     ? promo.twoMonthDescriptionLines
     : promo.defaultDescriptionLines
+
+  const dispatch = useDispatch()
+
+  const handleClick = () => {
+    const promoCode = isTwoMonthPromoCodeEnabled ? promo.twoMonthPromoCode : promo.defaultPromoCode
+    dispatch(promoChange(promoCode))
+    dispatch(redirect('/signup'))
+  }
+
   return (
     <>
       <Space size={6} />
@@ -107,7 +116,7 @@ export const FailureSection = ({ onClaimWelcomePromoCodeClick }: any) => {
       </Join>
 
       <Space size={4} />
-      <Button height={48} width="100%" onClick={onClaimWelcomePromoCodeClick}>
+      <Button height={48} width="100%" onClick={handleClick}>
         Claim welcome discount
       </Button>
     </>
@@ -172,11 +181,8 @@ export const EnterPromoCodeManuallyPage = () => {
   const previousCheckedValue = usePrevious(checkedValue)
 
   const handleContinueClick = () => {
-    console.log('todo cont')
-  }
-
-  const handleClaimWelcomePromoCodeClick = () => {
-    console.log('todo welcome')
+    dispatch(promoChange(checkedValue))
+    dispatch(redirect('/signup'))
   }
 
   const [_isReady, cancel] = useDebounce(
@@ -246,17 +252,17 @@ export const EnterPromoCodeManuallyPage = () => {
       </div>
       <Space size={4} />
       {status === 'success' ? (
-        <SuccessSection
-          promoCodeCampaignTextHtml={campaignTextHtml}
-          onContinueClick={handleContinueClick}
-        />
+        <SuccessSection promoCodeCampaignTextHtml={campaignTextHtml} />
       ) : null}
-      <Button height={48} width="100%" disabled={status !== 'success'}>
+      <Button
+        height={48}
+        width="100%"
+        disabled={status !== 'success'}
+        onClick={handleContinueClick}
+      >
         Continue
       </Button>
-      {status === 'error' ? (
-        <FailureSection onClaimWelcomePromoCodeClick={handleClaimWelcomePromoCodeClick} />
-      ) : null}
+      {status === 'error' ? <FailureSection /> : null}
     </InformationalPageTemplate>
   )
 }
