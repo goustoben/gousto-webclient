@@ -29,10 +29,8 @@ export const getServerDomain = () => {
   return DOMAIN
 }
 
-const isLocalEnvironment = () => getServerEnvironment() === ENVIRONMENT_NAMES.local
-
 export const getServerProtocol = () =>
-  isLocalEnvironment() ? PROTOCOL_PREFIX.HTTP : PROTOCOL_PREFIX.HTTPS
+  getServerEnvironment() === ENVIRONMENT_NAMES.local ? PROTOCOL_PREFIX.HTTP : PROTOCOL_PREFIX.HTTPS
 
 export const getServerRecaptchaPublicKey = () => getEnvConfig().RECAPTCHA_PUBK
 export const getServerRecaptchaRAFPublicKey = () => getEnvConfig().RECAPTCHA_RAF_PUBK

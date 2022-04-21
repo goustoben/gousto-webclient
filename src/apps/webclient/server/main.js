@@ -5,7 +5,7 @@ import { validateProcessEnv } from 'utils/processEnv'
 import { getServerEnvironment } from './utils/serverEnvironment'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
-import { getProtocol } from '../src/utils/isomorphicEnvironment'
+import { getProtocol, isDev } from '../src/utils/isomorphicEnvironment'
 import { PROTOCOL_PREFIX } from '../src/config/service-environment/service-environment.types'
 
 configureDDTracer()
@@ -172,7 +172,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-if (__DEV__ || withStatic) {
+if (isDev() || withStatic) {
   logger.info(`Serving static files in ${ASSET_PATH} from /public`)
   app.use(convert(koaMount(ASSET_PATH, koaStatic('public'))))
 
@@ -199,7 +199,7 @@ app.use(processRequest)
 
 const port = getServerEnvironment() === 'local' ? 8080 : 80
 
-if (__DEV__) {
+if (isDev() && !withStatic) {
   enableHmr()
 }
 

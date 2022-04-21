@@ -10,8 +10,7 @@ const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias
 
 const {
   isDevelopmentBuild,
-  buildTimeEnvConfigServer,
-  build,
+  buildTimeEnvConfig,
   publicPath,
 } = require('./build/libs/build-time-env-config.js')
 
@@ -24,7 +23,7 @@ logBuildInfo('server')
 
 const config = {
   name: 'server',
-  mode: build,
+  mode: process.env.NODE_ENV,
   context: path.resolve(__dirname, '..'),
   target: 'node',
   entry: [
@@ -75,7 +74,7 @@ const config = {
   },
   plugins: [
     ExitCodePlugin,
-    new webpack.DefinePlugin(buildTimeEnvConfigServer),
+    new webpack.DefinePlugin(buildTimeEnvConfig),
   ],
   resolve: {
     alias: {

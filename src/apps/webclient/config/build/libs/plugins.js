@@ -9,7 +9,7 @@ const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const { buildTimeEnvConfigBase } = require('./build-time-env-config')
+const { buildTimeEnvConfig } = require('./build-time-env-config')
 
 const getDefaultPlugins = (buildTimeEnvConfig) => [
   new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
@@ -69,7 +69,7 @@ const getClientPlugins = (isDevelopmentBuild = false) => {
     ? getDevelopmentClientPlugins()
     : getProductionClientPlugins()
 
-  return [...getDefaultPlugins(buildTimeEnvConfigBase), ...buildSpecificPlugins]
+  return [...getDefaultPlugins(buildTimeEnvConfig), ...buildSpecificPlugins]
 }
 
 module.exports = {
