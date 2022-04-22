@@ -1,10 +1,13 @@
 import Immutable from 'immutable'
-import { promoGet } from 'actions/promos'
+import { Dispatch } from 'redux'
+import { basketPromoCodeChange } from 'actions/basket'
+import { promoGet, promoChange } from 'actions/promos'
+import { trackUTMAndPromoCode } from 'actions/tracking'
+import { redirect } from 'actions/redirect'
 
 export type Status = 'empty' | 'success' | 'error'
 
 /**
- *
  * Given the promoStore entry, return the human-readable campaign description as html.
  *
  * The legacy promo code entering process (in gousto-admin) inserts the style
@@ -80,4 +83,20 @@ export const checkPromoCode = (
     setCampaignTextHtml(campaignTextHtml)
   }
   setStatus(hasError ? 'error' : 'success')
+}
+
+/**
+ * Apply the given promo code, send a snowplow event, and leave to the next
+ * page in the flow.
+ */
+export const proceedWithPromoCode = (
+  dispatch: Dispatch<any>,
+  promoCode: string,
+  eventType: string,
+  eventAdditionalData = {}
+) => {
+  dispatch(trackUTMAndPromoCode(eventType, eventAdditionalData))
+  dispatch(promoChange(promoCode))
+  dispatch(basketPromoCodeChange(promoCode))
+  dispatch(redirect('/signup'))
 }

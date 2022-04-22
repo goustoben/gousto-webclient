@@ -11,16 +11,12 @@ import {
   Join,
 } from '@gousto-internal/citrus-react'
 import { actionTypes } from 'actions/actionTypes'
-import { redirect } from 'actions/redirect'
-import { trackUTMAndPromoCode } from 'actions/tracking'
 import { clickClaimDiscountPopup, clickEnterPromoCodeManuallyContinue } from 'actions/trackingKeys'
-import { basketPromoCodeChange } from 'actions/basket'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
-import { promoChange } from 'actions/promos'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { getPromoStore, createSelectIsPendingByActionType } from 'routes/Signup/signupSelectors'
 import { promo } from 'config/home'
-import { Status, checkPromoCode } from './enterPromoCodeManuallyUtils'
+import { Status, checkPromoCode, proceedWithPromoCode } from './enterPromoCodeManuallyUtils'
 import css from './EnterPromoCodeManuallyPage.css'
 
 const DEBOUNCE_MS = 500
@@ -49,10 +45,7 @@ export const FailureSection = () => {
   const handleClick = () => {
     const promoCode = isTwoMonthPromoCodeEnabled ? promo.twoMonthPromoCode : promo.defaultPromoCode
 
-    dispatch(trackUTMAndPromoCode(clickClaimDiscountPopup))
-    dispatch(promoChange(promoCode))
-    dispatch(basketPromoCodeChange(promoCode))
-    dispatch(redirect('/signup'))
+    proceedWithPromoCode(dispatch, promoCode, clickClaimDiscountPopup)
   }
 
   return (
@@ -105,16 +98,10 @@ export const EnterPromoCodeManuallyPage = () => {
 
   const handleContinueClick = () => {
     const promoCode = checkedValue
-
-    dispatch(
-      trackUTMAndPromoCode(clickEnterPromoCodeManuallyContinue, {
-        accepted: true,
-        promoCode,
-      })
-    )
-    dispatch(promoChange(promoCode))
-    dispatch(basketPromoCodeChange(promoCode))
-    dispatch(redirect('/signup'))
+    proceedWithPromoCode(dispatch, promoCode, clickEnterPromoCodeManuallyContinue, {
+      accepted: true,
+      promoCode,
+    })
   }
 
   const [_isReady, cancel] = useDebounce(
