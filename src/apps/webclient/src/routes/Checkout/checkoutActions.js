@@ -123,8 +123,8 @@ export function userSubscribe({ pricing }) {
       dispatch(
         feLoggingLogEvent(
           logLevels.error,
-          'userSubscribe called with missing boxId: unexpected signup'
-        )
+          'userSubscribe called with missing boxId: unexpected signup',
+        ),
       )
       dispatch(trackUnexpectedSignup())
 
@@ -178,7 +178,7 @@ export function userSubscribe({ pricing }) {
           trackSuccessfulCheckoutFlow('userSubscribe: customerSignup successful', {
             testName: signupTestName,
             data,
-          })
+          }),
         )
       } else {
         throw new GoustoException(actionTypes.USER_SUBSCRIBE)
@@ -204,7 +204,7 @@ export function userSubscribe({ pricing }) {
       dispatch(
         trackFailedCheckoutFlow('userSubscribe: customerSignup failed', err, {
           testName: signupTestName,
-        })
+        }),
       )
       throw err
     } finally {

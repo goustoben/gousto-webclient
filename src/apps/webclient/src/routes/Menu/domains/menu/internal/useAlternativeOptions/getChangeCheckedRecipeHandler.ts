@@ -38,13 +38,13 @@ export const getChangeCheckedRecipeHandler =
         view,
         close: closeOnSelection,
         recipeReference,
-      }) as any
+      }) as any,
     )
 
     if (isOnDetailScreen) {
       dispatch(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        menuRecipeDetailVisibilityChange(checkedRecipeId) as any
+        menuRecipeDetailVisibilityChange(checkedRecipeId) as any,
       )
     }
   }

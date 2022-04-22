@@ -29,7 +29,7 @@ describe('<Buttons />', () => {
         qty={qty}
         recipeId={recipeId}
         showControl
-      />
+      />,
     )
   })
   afterEach((done) => {
@@ -59,7 +59,7 @@ describe('<Buttons />', () => {
           qty={2}
           recipeId={recipeId}
           showControl={false}
-        />
+        />,
       )
 
       expect(wrapper.find('Segment').length).toEqual(1)
@@ -75,7 +75,7 @@ describe('<Buttons />', () => {
           qty={2}
           recipeId={recipeId}
           showControl
-        />
+        />,
       )
 
       expect(wrapper.find('Segment').length).toEqual(3)
@@ -93,7 +93,7 @@ describe('<Buttons />', () => {
           qty={2}
           recipeId={recipeId}
           showControl
-        />
+        />,
       )
 
       expect(onAdd.called).not.toBe(true)
@@ -110,7 +110,7 @@ describe('<Buttons />', () => {
           qty={2}
           recipeId={recipeId}
           showControl
-        />
+        />,
       )
       wrapper.find('Button').forEach((node) => {
         node.simulate('click')
@@ -129,7 +129,7 @@ describe('<Buttons />', () => {
           qty={2}
           recipeId={recipeId}
           showControl
-        />
+        />,
       )
       wrapper.find('div').forEach((node) => {
         node.simulate('click')
@@ -148,7 +148,7 @@ describe('<Buttons />', () => {
           qty={1}
           recipeId={recipeId}
           showControl
-        />
+        />,
       )
       wrapper.find('Button').forEach((node) => {
         node.simulate('click')

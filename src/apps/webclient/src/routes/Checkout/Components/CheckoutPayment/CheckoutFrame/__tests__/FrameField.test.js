@@ -13,7 +13,7 @@ describe('given FrameField', () => {
         errorDataTesting="errorSelector"
         errorMessage="error message"
         showError={false}
-      />
+      />,
     )
   })
 

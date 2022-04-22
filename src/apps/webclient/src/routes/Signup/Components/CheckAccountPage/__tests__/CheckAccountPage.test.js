@@ -16,7 +16,7 @@ describe('CheckAccountPage', () => {
         signupCheckAccountLogin={signupCheckAccountLogin}
         redirect={redirect}
         isAuthenticated={false}
-      />
+      />,
     )
   })
 
@@ -24,7 +24,7 @@ describe('CheckAccountPage', () => {
     expect(wrapper.find('CheckoutButton')).toHaveLength(2)
     expect(wrapper.find('CheckoutButton').at(0).prop('children')).toBe('Yes, I’m a new customer')
     expect(wrapper.find('CheckoutButton').at(1).prop('children')).toBe(
-      'No, I already have an account'
+      'No, I already have an account',
     )
   })
 
@@ -56,7 +56,7 @@ describe('CheckAccountPage', () => {
           signupCheckAccountLogin={signupCheckAccountLogin}
           redirect={redirect}
           isAuthenticated
-        />
+        />,
       )
     })
 

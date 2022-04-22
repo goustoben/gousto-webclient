@@ -13,7 +13,7 @@ describe('Given ApplyVoucherPage', () => {
       <ApplyVoucherPage
         signupApplyVoucherGoToDeliveries={signupApplyVoucherGoToDeliveries}
         trackUTMAndPromoCode={trackUTMAndPromoCode}
-      />
+      />,
     )
   })
 

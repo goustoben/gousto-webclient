@@ -33,7 +33,7 @@ describe('Address', () => {
         selectedAddress={selectedAddresses}
         registerField={jest.fn()}
         isNDDExperiment={false}
-      />
+      />,
     )
   })
 
@@ -50,7 +50,7 @@ describe('Address', () => {
           registerField={jest.fn()}
           isNDDExperiment={false}
           isDelivery
-        />
+        />,
       )
       wrapper.setState({ addressSaved: false })
     })
@@ -77,7 +77,7 @@ describe('Address', () => {
           deliveryDate="2019-09-01"
           isDelivery
           deliveryTariffId="some-uuid"
-        />
+        />,
       )
     })
 
@@ -109,7 +109,7 @@ describe('Address', () => {
         cutOfUntil,
         ndd,
         deliveryTariffId,
-        postcode
+        postcode,
       )
       expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
       expect(getAvailableDeliveryDays).toHaveBeenCalledWith([

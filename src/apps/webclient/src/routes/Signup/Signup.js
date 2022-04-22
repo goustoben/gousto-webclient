@@ -163,9 +163,9 @@ class Signup extends PureComponent {
         actions.redirect(
           `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
             promoCode,
-            '?'
-          )}`
-        )
+            '?',
+          )}`,
+        ),
       )
     }
 
@@ -177,9 +177,9 @@ class Signup extends PureComponent {
       return store.dispatch(
         actions.redirect(
           `${routes.client.signup}/${step.get('slug')}?steps=${futureSteps}${getPromocodeQueryParam(
-            promoCode
-          )}`
-        )
+            promoCode,
+          )}`,
+        ),
       )
     }
 
@@ -199,9 +199,9 @@ class Signup extends PureComponent {
         actions.redirect(
           `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
             promoCode,
-            '?'
-          )}`
-        )
+            '?',
+          )}`,
+        ),
       )
     }
 

@@ -30,7 +30,7 @@ describe('splitDaysIntoWeeks util', () => {
       new Array(daysAmount).fill({
         ...sampleDay,
         isDeliveryDay: false,
-      })
+      }),
     )
     expect(actualWeeks.length).toEqual(weeksAmount - 1)
     // tail length verification

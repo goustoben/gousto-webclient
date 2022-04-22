@@ -44,7 +44,7 @@ const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Prici
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   )
 
   if (error && url) {

@@ -45,7 +45,7 @@ SubmitButton.propTypes = {
   formValues: PropTypes.objectOf(
     PropTypes.shape({
       confirmed: PropTypes.bool,
-    })
+    }),
   ),
 }
 

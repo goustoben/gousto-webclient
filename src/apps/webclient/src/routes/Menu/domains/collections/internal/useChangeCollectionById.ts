@@ -13,7 +13,7 @@ export const useChangeCollectionById = () => {
     const query = { ...prevLoc.query }
 
     const matchingCollection = collections.find(
-      (collection) => collection?.get('id') === collectionId
+      (collection) => collection?.get('id') === collectionId,
     )
 
     if (!matchingCollection) {

@@ -25,7 +25,7 @@ describe('CheckoutUrgencyController', () => {
         <CheckoutUrgencyContext.Consumer>
           {(value) => <div id="remainingSeconds">{`${value}`}</div>}
         </CheckoutUrgencyContext.Consumer>
-      </CheckoutUrgencyController>
+      </CheckoutUrgencyController>,
     )
   }
 
@@ -108,7 +108,7 @@ describe('CheckoutUrgencyController', () => {
 
     test('then it should open the modal and track it', () => {
       expect(checkoutUrgencySetCurrentStatus).toHaveBeenCalledWith(
-        checkoutUrgencyStatuses.runningAndModalOpen
+        checkoutUrgencyStatuses.runningAndModalOpen,
       )
       expect(trackCheckoutUrgencyAction).toHaveBeenCalledWith('checkout_urgency_modal_displayed', {
         time_remaining: 1,
@@ -127,10 +127,10 @@ describe('CheckoutUrgencyController', () => {
 
     test('then it should change state to finishedAndModalOpen and track it', () => {
       expect(checkoutUrgencySetCurrentStatus).toHaveBeenCalledWith(
-        checkoutUrgencyStatuses.finishedAndModalOpen
+        checkoutUrgencyStatuses.finishedAndModalOpen,
       )
       expect(trackCheckoutUrgencyAction).toHaveBeenCalledWith(
-        'checkout_session_expired_modal_displayed'
+        'checkout_session_expired_modal_displayed',
       )
     })
   })

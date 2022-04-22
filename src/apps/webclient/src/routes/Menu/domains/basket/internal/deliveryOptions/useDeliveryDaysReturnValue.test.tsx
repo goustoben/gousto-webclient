@@ -71,7 +71,7 @@ describe('useDeliveryDays', () => {
           userId: 'user one',
           usersOrdersDaySlotLeadTimeIds: [],
           postcode: 'RH19 1AA',
-        })
+        }),
       )
 
       expect(current).toEqual({

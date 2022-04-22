@@ -54,7 +54,7 @@ export const PasswordField = ({
       validatePassword(value)
     },
     300,
-    [validatePassword, value]
+    [validatePassword, value],
   )
 
   const handleChange = (e) => {

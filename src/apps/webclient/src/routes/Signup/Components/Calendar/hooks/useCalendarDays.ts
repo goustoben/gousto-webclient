@@ -16,7 +16,7 @@ const DELIVERY_DAY_FORMAT = 'YYYY-MM-DD'
 export const useCalendarDays = (
   weeksInCalendar: number,
   deliveryDays: DeliveryDay[],
-  selectedDate: DeliveryDay['date']
+  selectedDate: DeliveryDay['date'],
 ): Array<CalendarDayInfo> => {
   const deliveryDaysMap = useDeliveryDaysMap(deliveryDays)
   const [calendarDays, setCalendarDays] = useState([] as Array<CalendarDayInfo>)
@@ -26,7 +26,7 @@ export const useCalendarDays = (
       createCalendarDays(weeksInCalendar).map((day) => {
         const calendarDay = { ...day }
         const associatedDeliveryDay = deliveryDaysMap.get(
-          calendarDay.date.format(DELIVERY_DAY_FORMAT)
+          calendarDay.date.format(DELIVERY_DAY_FORMAT),
         )
         if (associatedDeliveryDay) {
           calendarDay.isSelected = calendarDay.date.diff(selectedDay, 'days') === 0
@@ -34,7 +34,7 @@ export const useCalendarDays = (
         } // else do nothing; day would be disabled for delivery by default
 
         return calendarDay
-      })
+      }),
     )
   }, [weeksInCalendar, deliveryDaysMap, selectedDate])
 

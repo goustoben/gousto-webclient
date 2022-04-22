@@ -25,7 +25,7 @@ describe('CheckoutUrgencyModal', () => {
       {
         wrappingComponent: CheckoutUrgencyContext.Provider,
         wrappingComponentProps: { value: remainingSeconds },
-      }
+      },
     )
   }
 
@@ -46,7 +46,7 @@ describe('CheckoutUrgencyModal', () => {
         isCritical: false,
       })
       expect(wrapper.find('.explanation').text()).toBe(
-        'Continue with checkout to avoid losing your recipes'
+        'Continue with checkout to avoid losing your recipes',
       )
       expect(wrapper.find('CTA .content').text()).toBe('Continue with checkout')
     })
@@ -75,7 +75,7 @@ describe('CheckoutUrgencyModal', () => {
         isCritical: true,
       })
       expect(wrapper.find('.explanation').text()).toBe(
-        'Go back to the menu to check your recipes are still in stock'
+        'Go back to the menu to check your recipes are still in stock',
       )
       expect(wrapper.find('CTA .content').text()).toBe('Back to the menu')
     })

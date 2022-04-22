@@ -5,10 +5,10 @@ import { DeliveryDay } from 'routes/Signup/Components/Calendar/models/DeliveryDa
  * Returns map of delivery day dates mapped to delivery day itself.
  */
 export const useDeliveryDaysMap = (
-  deliveryDays: Array<DeliveryDay>
+  deliveryDays: Array<DeliveryDay>,
 ): Map<DeliveryDay['date'], DeliveryDay> => {
   const [deliveryDaysMap, setDeliveryDaysMap] = useState(
-    new Map<DeliveryDay['date'], DeliveryDay>()
+    new Map<DeliveryDay['date'], DeliveryDay>(),
   )
   useEffect(() => {
     const map = new Map()

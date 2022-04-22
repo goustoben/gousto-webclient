@@ -18,7 +18,7 @@ describe('useCreateTrackEvent', () => {
           event: 'recipe-alternative-options-menu-open',
           collectionId: 'collection_1',
           recipeId: 'recipe_1',
-        })
+        }),
       )
 
       result.current()

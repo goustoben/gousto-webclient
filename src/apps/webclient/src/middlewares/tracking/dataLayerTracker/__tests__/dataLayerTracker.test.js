@@ -7,7 +7,7 @@ import { dataLayerTracker } from '../dataLayerTracker'
 jest.mock('utils/browserEnvironment')
 
 jest.mock('utils/isomorphicEnvironment', () => ({
-  getEnvironment: () => 'local'
+  getEnvironment: () => 'local',
 }))
 
 describe('given dataLayerTracker middleware is invoked', () => {

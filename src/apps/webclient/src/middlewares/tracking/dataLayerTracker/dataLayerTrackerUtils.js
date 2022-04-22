@@ -60,7 +60,7 @@ export const getProductsValueFromRecipeIdToQuantity = (recipeIdToQuantity, state
   const { collectionSlug } = options
 
   return Object.entries(recipeIdToQuantity).map(([recipeId, quantity]) =>
-    getProductDetailsFields(recipeId, state, { quantity, collectionSlug })
+    getProductDetailsFields(recipeId, state, { quantity, collectionSlug }),
   )
 }
 

@@ -54,7 +54,7 @@ describe('useAttributes', () => {
       () =>
         ({
           numPortions: 2,
-        } as any)
+        } as any),
     )
   })
 
@@ -111,7 +111,7 @@ describe('useAttributes', () => {
         test('should be on the list', () => {
           const { result } = renderHook(() => useAttributes())
           expect(
-            result.current?.map(({ name }: any) => name).indexOf('cookingTime') as any
+            result.current?.map(({ name }: any) => name).indexOf('cookingTime') as any,
           ).toBeGreaterThan(-1)
           expect(result.current?.[0]).toEqual({
             name: 'cookingTime',
@@ -165,7 +165,7 @@ describe('useAttributes', () => {
               slug: CollectionSlug.GlutenFree,
             },
           ],
-        })
+        }),
       )
       test('should be on the list', () => {
         const { result } = renderHook(() => useAttributes())
@@ -198,7 +198,7 @@ describe('useAttributes', () => {
               slug: CollectionSlug.DairyFree,
             },
           ],
-        })
+        }),
       )
       test('should be on the list', () => {
         const { result } = renderHook(() => useAttributes())
@@ -287,7 +287,7 @@ describe('useAttributes', () => {
               energyKcal: 120,
             },
           },
-        })
+        }),
       )
       test('should be on the list', () => {
         const { result } = renderHook(() => useAttributes())

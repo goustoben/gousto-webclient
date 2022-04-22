@@ -9,7 +9,7 @@ export const useSurchargePerPortion = ({
   numPortions: number
 }) => {
   const meals = useSelector<RootStateOrAny, any>((state) =>
-    state.recipes.getIn([recipeId, 'meals'])
+    state.recipes.getIn([recipeId, 'meals']),
   )
   const overallSurcharge = getSurcharge(meals, numPortions)
   const surchargePerPortion = overallSurcharge

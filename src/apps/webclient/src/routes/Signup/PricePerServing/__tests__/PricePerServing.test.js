@@ -16,7 +16,7 @@ describe('PricePerServing', () => {
           priceDiscounted: '2.04',
         }}
         portion={2}
-      />
+      />,
     )
   })
 

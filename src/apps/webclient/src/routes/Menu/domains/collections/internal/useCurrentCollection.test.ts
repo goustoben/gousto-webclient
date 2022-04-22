@@ -57,7 +57,7 @@ describe('useCurrentCollection', () => {
         b: normalCollectionTwo,
         c: recommendationsCollection,
         d: defaultCollection,
-      })
+      }),
     )
   })
 
@@ -87,7 +87,7 @@ describe('useCurrentCollection', () => {
             a: normalCollection,
             b: normalCollectionTwo,
             c: recommendationsCollection,
-          })
+          }),
         )
       })
 
@@ -100,7 +100,7 @@ describe('useCurrentCollection', () => {
       describe('when there is no recommendations collection', () => {
         beforeEach(() => {
           mockedUseDisplayedCollections.mockReturnValue(
-            Immutable.OrderedMap({ a: normalCollection, b: normalCollectionTwo })
+            Immutable.OrderedMap({ a: normalCollection, b: normalCollectionTwo }),
           )
         })
 

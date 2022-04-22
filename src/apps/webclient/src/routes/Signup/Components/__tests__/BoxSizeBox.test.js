@@ -19,7 +19,7 @@ describe('given we are rendering BoxSizeBox', () => {
         numPortionChangeTracking={numPortionChangeTracking}
         next={next}
         numPersons={numPersons}
-      />
+      />,
     )
   })
 
@@ -27,7 +27,7 @@ describe('given we are rendering BoxSizeBox', () => {
     test('then it renders a loader instead of prices', () => {
       expect(wrapper.find('.title').text()).toMatch(new RegExp(`${numPersons}\\s+people`))
       expect(wrapper.find('.subtitle').text()).toBe(
-        signupConfig.boxSizeStep.boxSize[numPersons].description
+        signupConfig.boxSizeStep.boxSize[numPersons].description,
       )
 
       expect(wrapper.find('Loader')).toHaveLength(1)
@@ -52,7 +52,7 @@ describe('given we are rendering BoxSizeBox', () => {
     test('then it renders correctly', () => {
       expect(wrapper.find('.title').text()).toMatch(new RegExp(`${numPersons}\\s+people`))
       expect(wrapper.find('.subtitle').text()).toBe(
-        signupConfig.boxSizeStep.boxSize[numPersons].description
+        signupConfig.boxSizeStep.boxSize[numPersons].description,
       )
 
       expect(wrapper.find('Loader')).toHaveLength(0)

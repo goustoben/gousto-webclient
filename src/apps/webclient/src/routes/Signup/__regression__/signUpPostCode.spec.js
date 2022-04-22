@@ -15,7 +15,7 @@ describe('Given I land on postcode slide of the wizard', () => {
     cy.route(
       'GET',
       '/userbucketing/v1/user/experiments',
-      'fixture:userbucketing/userbucketing.json'
+      'fixture:userbucketing/userbucketing.json',
     ).as('getExperiments')
     cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
     cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
@@ -23,12 +23,12 @@ describe('Given I land on postcode slide of the wizard', () => {
     cy.route(
       'GET',
       'customers/customers/district/count-by-postcode',
-      'fixture:signup/countByPostcode.json'
+      'fixture:signup/countByPostcode.json',
     )
     cy.route(
       'GET',
       /^(?=.*\bdeliveries\/v1.0\/days\b)(?!.*\bpostcode\b).*$/,
-      'fixture:deliveries/deliveryDays.json'
+      'fixture:deliveries/deliveryDays.json',
     )
     cy.visit(PAGE_URL)
     cy.mockDate()
@@ -58,7 +58,7 @@ describe('Given I land on postcode slide of the wizard', () => {
       cy.route(
         'GET',
         /^(?=.*\bdeliveries\/v1.0\/days\b)(?=.*\bpostcode\b).*$/,
-        'fixture:deliveries/postcode/invalid.json'
+        'fixture:deliveries/postcode/invalid.json',
       )
       cy.get('[data-testing="signupPostcodeInput"]').clear().type(POSTCODE_5_CHARS)
     })
@@ -77,7 +77,7 @@ describe('Given I land on postcode slide of the wizard', () => {
       cy.route(
         'GET',
         /^(?=.*\bdeliveries\/v1.0\/days\b)(?=.*\bpostcode\b).*$/,
-        'fixture:deliveries/postcode/invalid.json'
+        'fixture:deliveries/postcode/invalid.json',
       )
       cy.get('[data-testing="signupPostcodeInput"]').clear().type(POSTCODE_8_CHARS)
     })

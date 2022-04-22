@@ -72,7 +72,7 @@ describe('AddRecipeButton', () => {
       render(
         <Provider store={store}>
           <AddRecipeButton recipeId={recipeId} />
-        </Provider>
+        </Provider>,
       )
 
       const button = screen.getByRole('button' as any)
@@ -106,7 +106,7 @@ describe('AddRecipeButton', () => {
         render(
           <Provider store={store}>
             <AddRecipeButton recipeId={recipeId} />
-          </Provider>
+          </Provider>,
         )
 
         const button = screen.getByRole('button' as any)

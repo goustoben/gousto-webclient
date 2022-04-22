@@ -31,10 +31,10 @@ export type VisibleAttribute = keyof typeof descriptions
 export const getDescription = <
   TName extends VisibleAttribute,
   TFunction extends funcString = funcString,
-  TValue extends Parameters<TFunction>[0] = Parameters<TFunction>[0]
+  TValue extends Parameters<TFunction>[0] = Parameters<TFunction>[0],
 >(
   name: TName,
-  value: TValue
+  value: TValue,
 ) => {
   const f = descriptions[name] as TFunction
 

@@ -27,7 +27,7 @@ const useBasketRecipes = () => {
 
   const getQuantitiesForRecipeId = useCallback(
     (recipeId: string) => recipeQuantities.get(recipeId, 0),
-    [recipeQuantities]
+    [recipeQuantities],
   )
 
   const addRecipe = useAddRecipe()

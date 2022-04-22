@@ -23,7 +23,7 @@ export const RecipeTag: React.FC<{ type?: string }> = ({ type = defaultType }) =
   return React.createElement(
     type,
     { className: classnames(css.recipeTag), style: getTagStyle(theme) },
-    text
+    text,
   )
 }
 

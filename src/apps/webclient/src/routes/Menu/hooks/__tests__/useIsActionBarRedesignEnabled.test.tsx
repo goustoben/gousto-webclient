@@ -40,6 +40,6 @@ describe('useIsActionBarRedesignEnabled', () => {
         })
         expect(result.current).toBe(expected)
       })
-    }
+    },
   )
 })

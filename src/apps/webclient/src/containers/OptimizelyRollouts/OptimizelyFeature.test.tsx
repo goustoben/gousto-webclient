@@ -20,7 +20,7 @@ describe('OptimizelyFeature', () => {
       render(
         <OptimizelyFeature name="feature" enabled>
           hello
-        </OptimizelyFeature>
+        </OptimizelyFeature>,
       )
 
       expect(screen.queryByText('hello')).not.toBeInTheDocument()
@@ -38,7 +38,7 @@ describe('OptimizelyFeature', () => {
           render(
             <OptimizelyFeature name="feature" enabled>
               hello
-            </OptimizelyFeature>
+            </OptimizelyFeature>,
           )
 
           expect(screen.queryByText('hello')).toBeInTheDocument()
@@ -50,7 +50,7 @@ describe('OptimizelyFeature', () => {
           render(
             <OptimizelyFeature name="feature" enabled={false}>
               hello
-            </OptimizelyFeature>
+            </OptimizelyFeature>,
           )
 
           expect(screen.queryByText('hello')).not.toBeInTheDocument()
@@ -68,7 +68,7 @@ describe('OptimizelyFeature', () => {
           render(
             <OptimizelyFeature name="feature" enabled>
               hello
-            </OptimizelyFeature>
+            </OptimizelyFeature>,
           )
 
           expect(screen.queryByText('hello')).not.toBeInTheDocument()
@@ -80,7 +80,7 @@ describe('OptimizelyFeature', () => {
           render(
             <OptimizelyFeature name="feature" enabled={false}>
               hello
-            </OptimizelyFeature>
+            </OptimizelyFeature>,
           )
 
           expect(screen.queryByText('hello')).toBeInTheDocument()

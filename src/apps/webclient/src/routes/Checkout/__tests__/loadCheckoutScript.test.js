@@ -23,7 +23,7 @@ describe('loadCheckoutScript', () => {
         loadCheckoutScript(document)
 
         expect(document.getElementById('checkout-com-frames').getAttribute('src')).toEqual(
-          CDN_CHECKOUT_COM
+          CDN_CHECKOUT_COM,
         )
       })
 

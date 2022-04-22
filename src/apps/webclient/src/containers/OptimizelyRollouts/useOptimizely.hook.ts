@@ -36,7 +36,7 @@ export const useSetupOptimizelyOverride = () => {
   const { [KEY_FOR_FEATURES_OVERRIDES]: features = null } = query || {}
   const [localStorageFeatures, setLocalStorageFeatures] = useLocalStorage(
     KEY_FOR_FEATURES_OVERRIDES,
-    ''
+    '',
   )
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
             userId,
             sessionId,
             featureName: name,
-          })
+          }),
         )
       }
 
@@ -166,7 +166,7 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
         const featureValue = optimizelyInstance.isFeatureEnabled(name, userIdForOptimizely)
 
         dispatch(
-          trackExperimentInSnowplow(name, featureValue, userId, sessionId, userIdForOptimizely)
+          trackExperimentInSnowplow(name, featureValue, userId, sessionId, userIdForOptimizely),
         )
         setEnabled(featureValue)
       })

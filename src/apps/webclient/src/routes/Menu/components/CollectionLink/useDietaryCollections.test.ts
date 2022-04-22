@@ -34,13 +34,13 @@ describe('useDietaryCollections', () => {
           a: vegetarianCollection,
           b: veganCollection,
           c: collectionThree,
-        })
+        }),
       )
     })
     test('should return two dietary collections', () => {
       const { result } = renderHook(() => useDietaryCollections())
       expect(result.current).toEqual(
-        Immutable.OrderedMap({ a: vegetarianCollection, b: veganCollection })
+        Immutable.OrderedMap({ a: vegetarianCollection, b: veganCollection }),
       )
     })
   })

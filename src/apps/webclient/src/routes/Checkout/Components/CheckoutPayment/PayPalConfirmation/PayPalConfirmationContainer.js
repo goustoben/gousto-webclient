@@ -14,5 +14,5 @@ const mapDispatchToProps = {
 
 export const PayPalConfirmationContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(PayPalConfirmation)

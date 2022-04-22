@@ -112,13 +112,13 @@ describe('ErrorMessageContainer', () => {
               store={store}
               router={router}
               showPayPalErrors={showPayPalErrors}
-            />
+            />,
           )
 
           expectErrorType(wrapper, expectedErrorType)
         })
       })
-    }
+    },
   )
 
   describe('when showPayPalErrors is on and there is non-paypal error', () => {

@@ -14,7 +14,7 @@ describe('Given BoxPriceList component', () => {
       <BoxPricesList
         numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
         boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
-      />
+      />,
     )
   })
 

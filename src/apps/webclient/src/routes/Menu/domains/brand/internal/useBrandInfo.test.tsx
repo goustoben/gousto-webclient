@@ -49,7 +49,7 @@ describe('useBrandInfo', () => {
             'x-gousto-user-id': 'user one',
           },
           method: 'GET',
-        }
+        },
       )
     })
   })

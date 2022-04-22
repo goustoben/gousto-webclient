@@ -26,7 +26,7 @@ type MenuCollectionProperties = {
 }
 
 export function createMenuCollection(
-  o: MenuCollectionProperties
+  o: MenuCollectionProperties,
 ): ImmutableMap<MenuCollectionProperties> {
   return fromJS(o)
 }

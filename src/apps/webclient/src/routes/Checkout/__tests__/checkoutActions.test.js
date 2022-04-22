@@ -161,7 +161,7 @@ describe('checkoutActions', () => {
               orderId: '12345',
             },
           })
-        })
+        }),
       )
     })
 
@@ -448,7 +448,7 @@ describe('checkoutActions', () => {
             6,
             expect.objectContaining({
               type: actionTypes.CHECKOUT_ORDER_FAILED,
-            })
+            }),
           )
           expect(error).toMatchObject(new Error('endpoint error'))
         }

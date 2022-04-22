@@ -50,7 +50,7 @@ describe('Given BoxPriceBlockRedesign', () => {
           boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
           trackUTMAndPromoCode={trackUTMAndPromoCode}
         />
-      </Provider>
+      </Provider>,
     )
   })
 

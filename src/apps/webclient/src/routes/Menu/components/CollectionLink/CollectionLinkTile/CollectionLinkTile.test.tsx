@@ -27,7 +27,7 @@ describe('CollectionLinkTile', () => {
       () =>
         ({
           changeCollectionById,
-        } as any)
+        } as any),
     )
 
     jest.spyOn(Tracking, 'useTracking').mockImplementation(() => track as any)
@@ -59,7 +59,7 @@ describe('CollectionLinkTile', () => {
               'recipe2',
             ]),
           }),
-        } as any)
+        } as any),
     )
   })
 
@@ -72,7 +72,7 @@ describe('CollectionLinkTile', () => {
     render(
       <Provider store={store}>
         <CollectionLinkTile collection={defaultCollection} />
-      </Provider>
+      </Provider>,
     )
 
   describe('rendering the CollectionLinkTile', () => {
@@ -90,7 +90,7 @@ describe('CollectionLinkTile', () => {
       const image = screen.getByRole('img')
       expect(image).toBeTruthy()
       expect(image).toContainHTML(
-        'https://production-media.gousto.co.uk/cms/mood-image/1457-Butternut-Squash--Coconut-Dal-x700.jpg'
+        'https://production-media.gousto.co.uk/cms/mood-image/1457-Butternut-Squash--Coconut-Dal-x700.jpg',
       )
     })
 
@@ -135,13 +135,13 @@ describe('CollectionLinkTile', () => {
           () =>
             ({
               changeCollectionById: (_a: string) => {},
-            } as any)
+            } as any),
         )
         jest.spyOn(Menu, 'useMenu').mockImplementation(
           () =>
             ({
               getRecipesForCollectionId: (_a: string) => ({ recipes: Immutable.List() }),
-            } as any)
+            } as any),
         )
       })
 

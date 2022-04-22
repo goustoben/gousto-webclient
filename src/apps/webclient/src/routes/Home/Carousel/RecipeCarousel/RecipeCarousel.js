@@ -41,7 +41,7 @@ const RecipeCarousel = ({ homeCarouselRecipes }) => (
                 title={formatRecipeTitle(
                   recipe.get('title'),
                   recipe.get('boxType', ''),
-                  recipe.get('dietType', '')
+                  recipe.get('dietType', ''),
                 )}
                 media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
                 averageRating={recipe.getIn(['rating', 'average']) || 0}

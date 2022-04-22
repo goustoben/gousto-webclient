@@ -13,7 +13,7 @@ function useOnChallengeDone() {
     (checkoutSessionId) => {
       dispatch(checkPaymentAuth(checkoutSessionId, { pricing }))
     },
-    [dispatch, pricing]
+    [dispatch, pricing],
   )
 }
 

@@ -18,7 +18,7 @@ describe('BoxPricesRedesign', () => {
         numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
         loading={false}
         trackUTMAndPromoCode={jest.fn()}
-      />
+      />,
     )
   })
 

@@ -24,7 +24,7 @@ export const useBrandInfo: () => { error?: Error; brand?: BrandData } = () => {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   )
 
   if (!response?.data) {

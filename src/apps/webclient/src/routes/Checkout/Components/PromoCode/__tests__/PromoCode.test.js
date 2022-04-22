@@ -23,7 +23,7 @@ describe('PromoCode', () => {
         basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
         trackPromocodeChange={trackPromocodeChange}
         promoCodeValid={false}
-      />
+      />,
     )
     jest.clearAllMocks()
   })
@@ -38,7 +38,7 @@ describe('PromoCode', () => {
           basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
           trackPromocodeChange={trackPromocodeChange}
           promoCodeValid
-        />
+        />,
       )
     })
 
@@ -79,7 +79,7 @@ describe('PromoCode', () => {
           basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
           trackPromocodeChange={trackPromocodeChange}
           promoCodeValid={false}
-        />
+        />,
       )
     })
 

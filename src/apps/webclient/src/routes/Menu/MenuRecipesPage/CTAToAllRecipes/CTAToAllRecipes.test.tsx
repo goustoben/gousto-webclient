@@ -14,13 +14,13 @@ function renderForTest(currentCollectionId: string) {
       ({
         changeCollectionById,
         currentCollectionId,
-      } as any)
+      } as any),
   )
 
   render(
     <Provider store={store}>
       <CTAToAllRecipes />
-    </Provider>
+    </Provider>,
   )
 
   return { changeCollectionById }

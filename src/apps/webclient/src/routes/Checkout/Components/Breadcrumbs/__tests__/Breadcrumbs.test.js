@@ -23,7 +23,7 @@ describe('Breadcrumbs', () => {
         currentId={currentId}
         trackCheckoutNavigationLinks={trackCheckoutNavigationLinks}
         items={items}
-      />
+      />,
     )
   })
 

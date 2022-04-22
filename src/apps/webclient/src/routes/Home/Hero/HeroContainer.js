@@ -4,7 +4,7 @@ import { Hero } from './Hero'
 
 export const HeroContainer = (props) => {
   const isNewHeroLabelAndFooterEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_is_new_hero_label_and_footer_enabled'
+    'beetroots_is_new_hero_label_and_footer_enabled',
   )
 
   // eslint-disable-next-line react/jsx-props-no-spreading

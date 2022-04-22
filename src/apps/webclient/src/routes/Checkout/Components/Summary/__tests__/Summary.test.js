@@ -24,7 +24,7 @@ describe('Summary Component', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <Summary prices={prices} basketRecipes={basketRecipes} showPromoCode isLoading />
+      <Summary prices={prices} basketRecipes={basketRecipes} showPromoCode isLoading />,
     )
   })
 

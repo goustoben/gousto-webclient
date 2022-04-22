@@ -7,6 +7,6 @@ export const useIsRecipeInBasket = () => {
 
   return useCallback(
     (recipeId: string) => recipeQuantities !== undefined && recipeQuantities?.get(recipeId, 0) > 0,
-    [recipeQuantities]
+    [recipeQuantities],
   )
 }

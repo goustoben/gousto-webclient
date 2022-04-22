@@ -71,7 +71,7 @@ describe('formatResponses module', () => {
       'Type assertion function isRWithDataIncluded given %s returns %b',
       (name, expected, data) => {
         expect(isRWithDataIncluded(data as SuccessResponse<never>)).toBe(expected)
-      }
+      },
     )
 
     test.each([

@@ -86,7 +86,7 @@ describe('Delivery Step', () => {
           tempSlotId="1"
           trackSignupWizardAction={trackSignupWizardAction}
         />
-      </Provider>
+      </Provider>,
     )
   })
 
@@ -108,7 +108,7 @@ describe('Delivery Step', () => {
               disabledSlots={['2020-02-14_08-12', '2020-02-14_08-19']}
               userHasAvailableSlots={false}
             />
-          </Provider>
+          </Provider>,
         )
       })
 
@@ -129,7 +129,7 @@ describe('Delivery Step', () => {
               disabledSlots={['2020-02-14_08-12', '2020-02-14_08-19']}
               userHasAvailableSlots
             />
-          </Provider>
+          </Provider>,
         )
       })
 
@@ -179,7 +179,7 @@ describe('Delivery Step', () => {
               trackSignupWizardAction={trackSignupWizardAction}
               disabledSlots={['2020-02-14_08-12', '2020-02-14_08-19']}
             />
-          </Provider>
+          </Provider>,
         )
         deliveryDayDropdown = wrapper.find(DropdownInput).at(0)
       })
@@ -246,7 +246,7 @@ describe('Delivery Step', () => {
               trackSignupWizardAction={trackSignupWizardAction}
               disabledSlots={['2020-02-14_08-12']}
             />
-          </Provider>
+          </Provider>,
         )
         deliverySlotDropdown = wrapper.find(DropdownInput).at(1)
       })

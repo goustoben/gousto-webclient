@@ -21,7 +21,7 @@ describe('GoustoOnDemandBoxSizeContent', () => {
         goustoOnDemandCustomText={goustoOnDemandCustomText}
         onPrimaryButtonClick={onPrimaryButtonClick}
         numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
-      />
+      />,
     )
   })
 
@@ -33,10 +33,10 @@ describe('GoustoOnDemandBoxSizeContent', () => {
     expect(items).toHaveLength(2)
 
     expect(items.at(0).find('PricePerNRecipesTable').prop('boxDescriptors')).toEqual(
-      numPersonsToBoxDescriptors[2]
+      numPersonsToBoxDescriptors[2],
     )
     expect(items.at(1).find('PricePerNRecipesTable').prop('boxDescriptors')).toEqual(
-      numPersonsToBoxDescriptors[4]
+      numPersonsToBoxDescriptors[4],
     )
   })
 })

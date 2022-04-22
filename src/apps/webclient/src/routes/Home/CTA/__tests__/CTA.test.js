@@ -12,7 +12,7 @@ describe('CTA', () => {
     wrapper = shallow(
       <CTA ctaUri={ctaUri} homeGetStarted={homeGetStarted}>
         {children}
-      </CTA>
+      </CTA>,
     )
   })
 

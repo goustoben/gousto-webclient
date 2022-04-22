@@ -6,7 +6,7 @@ export type GeneratedEndpointTestCase = [
   majorVersion: number,
   appInstanceEnvironment: string,
   isServerCall: boolean,
-  resultOfOldEndpointInvocation: string
+  resultOfOldEndpointInvocation: string,
 ]
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,7 +28,7 @@ const listVersionsForServices =
   (cfg: OldEndpointConfig.Endpoints) => (environmentServicesList: [string, string][]) =>
     environmentServicesList
       .map(([env, serviceName]) =>
-        Object.keys(cfg[env].services[serviceName]).map((ver) => [env, serviceName, Number(ver)])
+        Object.keys(cfg[env].services[serviceName]).map((ver) => [env, serviceName, Number(ver)]),
       )
       .flat()
 
@@ -38,7 +38,7 @@ const forLocalAndLive = (environmentServicesVersionList: [string, string, number
     .flat()
 
 const forIsServerTrueAndFalse = (
-  environmentServicesVersionListApi: [string, string, number, string][]
+  environmentServicesVersionListApi: [string, string, number, string][],
 ) => environmentServicesVersionListApi.map((arr) => [true, false].map((b) => [...arr, b])).flat()
 
 /**
@@ -66,12 +66,12 @@ function oldEndpoint(
     isCallFromServer: false,
     apiEnvironmentToPointTo: 'none',
     appInstanceEnvironment: 'live',
-  }
+  },
 ) {
   if (service === undefined) throw new Error('Please specify a valid service.')
   if (isCallFromServer === undefined) {
     throw new Error(
-      'Please specify whether this call is coming from the server or client browser for routing purposes.'
+      'Please specify whether this call is coming from the server or client browser for routing purposes.',
     )
   }
   if (apiEnvironmentToPointTo === undefined) {
@@ -101,7 +101,7 @@ function oldEndpoint(
 }
 
 const getExpectationFromEndpoint = (
-  testCases: [string, string, number, 'live' | 'local', boolean][]
+  testCases: [string, string, number, 'live' | 'local', boolean][],
 ) =>
   testCases.map((ps: [string, string, number, 'live' | 'local', boolean]) => {
     const [
@@ -129,5 +129,5 @@ export const generateEndpointTestCases = () =>
     listVersionsForServices(oldEndpointConfig()),
     forLocalAndLive,
     forIsServerTrueAndFalse,
-    getExpectationFromEndpoint
+    getExpectationFromEndpoint,
   )(oldEndpointConfig())

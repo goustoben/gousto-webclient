@@ -15,7 +15,7 @@ describe('ActionBarText', () => {
           nextTierPricePerPortion={null}
           isLoading={false}
           isInEmbeddedActionBar={false}
-        />
+        />,
       )
     })
 
@@ -36,7 +36,7 @@ describe('ActionBarText', () => {
           nextTierPricePerPortion={null}
           isLoading={false}
           isInEmbeddedActionBar={false}
-        />
+        />,
       )
     })
 
@@ -57,7 +57,7 @@ describe('ActionBarText', () => {
           nextTierPricePerPortion="1.43"
           isLoading={false}
           isInEmbeddedActionBar={false}
-        />
+        />,
       )
     })
 
@@ -79,7 +79,7 @@ describe('ActionBarText', () => {
           nextTierPricePerPortion={null}
           isLoading={false}
           isInEmbeddedActionBar={false}
-        />
+        />,
       )
     })
 

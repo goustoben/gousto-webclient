@@ -24,7 +24,7 @@ const render = () =>
       warning={false}
       onClick={jest.fn()}
       view={MOBILE_VIEW}
-    />
+    />,
   )
 
 describe('given ExpandBoxSummaryButton is rendered', () => {
@@ -80,7 +80,7 @@ describe('given ExpandBoxSummaryButton Contents is rendered', () => {
         slotId="test-slot-id"
         warning={false}
         isSimplifyBasketBarEnabled={false}
-      />
+      />,
     )
   })
 

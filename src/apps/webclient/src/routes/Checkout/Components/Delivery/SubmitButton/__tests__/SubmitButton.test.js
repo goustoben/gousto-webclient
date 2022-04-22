@@ -21,7 +21,7 @@ describe('SubmitButton', () => {
         onStepChange={onStepChange}
         manualSubmit={manualSubmit}
         formValues={formValues}
-      />
+      />,
     )
 
     jest.clearAllMocks()

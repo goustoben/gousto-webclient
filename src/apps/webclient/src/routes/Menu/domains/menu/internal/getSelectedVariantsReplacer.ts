@@ -31,7 +31,7 @@ export const getSelectedVariantsReplacer: GetSelectedVariantsReplacer =
 
     if (replacementMap[recipeReference]) {
       const replacementRecipe = recipes.find(
-        (r1) => r1.get('id') === replacementMap[recipeReference]
+        (r1) => r1.get('id') === replacementMap[recipeReference],
       )
 
       if (replacementRecipe) {

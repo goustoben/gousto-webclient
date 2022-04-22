@@ -36,7 +36,7 @@ const useAddValidRecipeToBasket = () => {
       position: string
     },
     maxRecipesNum?: number,
-    orderId?: string
+    orderId?: string,
   ) => {
     let reachedLimit = limitReached(menuRecipes)
     const outOfStock = isRecipeOutOfStock(recipeId)
@@ -176,7 +176,7 @@ export const useAddRecipe = () => {
       position: string
     },
     maxRecipesNum?: number,
-    orderId?: string
+    orderId?: string,
   ) => {
     const basketBreakingRules = {
       errorTitle: 'Oven Ready meals',

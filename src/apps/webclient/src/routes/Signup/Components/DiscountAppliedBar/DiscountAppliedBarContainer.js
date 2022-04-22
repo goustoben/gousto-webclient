@@ -23,5 +23,5 @@ const mapDispatchToProps = {
 
 export const DiscountAppliedBarContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(DiscountAppliedBar)

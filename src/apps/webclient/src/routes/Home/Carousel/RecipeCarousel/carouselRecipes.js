@@ -32,9 +32,9 @@ const getRecipesFromAllRecipesCollection = createSelector(
 
     return recipesOrderedByCollectionIds.reduce(
       (reducerState, recipe) => reducerState.set(recipe.get('id'), recipe),
-      Immutable.OrderedMap({})
+      Immutable.OrderedMap({}),
     )
-  }
+  },
 )
 
 export { getRecipesFromAllRecipesCollection }

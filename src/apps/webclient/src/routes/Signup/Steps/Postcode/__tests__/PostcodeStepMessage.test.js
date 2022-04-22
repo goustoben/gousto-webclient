@@ -39,7 +39,7 @@ describe('PostcodeStepMessage', () => {
 
     test('then a different error message should be rendered', () => {
       expect(wrapper.find('.errorText').text()).toBe(
-        'Sorry, it looks like we don’t currently deliver to your area.'
+        'Sorry, it looks like we don’t currently deliver to your area.',
       )
     })
   })

@@ -41,7 +41,7 @@ export const useDeliveryDaysLazy = ({
   const postcode = useSelector<RootStateOrAny, string>(getBasketPostcode)
   const userId = useSelector<RootStateOrAny, string>(getUserId)
   const usersOrdersDaySlotLeadTimeIds = useSelector<RootStateOrAny, string[]>(
-    getUsersOrdersDaySlotLeadTimeIds
+    getUsersOrdersDaySlotLeadTimeIds,
   )
 
   return useDeliveryDays({

@@ -25,7 +25,7 @@ export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody }) => {
   const benefits = allBenefits.filter((benefit) => benefit.id === byId)
 
   const isTestAllocationHookEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_test_allocation_hook_web'
+    'beetroots_test_allocation_hook_web',
   )
 
   return (

@@ -149,7 +149,7 @@ describe('Given Checkout component', () => {
         fetchGoustoRef={fetchGoustoRef}
         store={mockedStore}
       />,
-      { context: { store: mockedStore } }
+      { context: { store: mockedStore } },
     )
   })
 
@@ -307,7 +307,7 @@ describe('Given Checkout component', () => {
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
       expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=basket-expired', true)
       expect(logger.warning).toHaveBeenCalledWith(
-        'Preview order id failed to create, persistent basket might be expired, error: basket-expired'
+        'Preview order id failed to create, persistent basket might be expired, error: basket-expired',
       )
     })
 
