@@ -2,7 +2,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { PromoModal } from 'components/PromoModal/PromoModal'
-import { clickClaimDiscountPopup, clickCloseDiscountFailurePopup } from 'actions/trackingKeys'
+import {
+  clickClaimDiscountPopup,
+  clickCloseDiscountFailurePopup,
+  clickEnterPromoCodeManuallyButton,
+} from 'actions/trackingKeys'
 
 describe('Given PromoModal component', () => {
   let wrapper
@@ -21,6 +25,7 @@ describe('Given PromoModal component', () => {
   }
 
   beforeEach(() => {
+    jest.clearAllMocks()
     wrapper = shallow(<PromoModal {...props} />)
   })
 
@@ -28,7 +33,8 @@ describe('Given PromoModal component', () => {
     expect(wrapper.find('Modal').exists()).toBeTruthy()
     expect(wrapper.find('img').exists()).toBeTruthy()
     expect(wrapper.find('.errorSubHeader').exists()).toBeFalsy()
-    expect(wrapper.find('CTA').exists()).toBeTruthy()
+    expect(wrapper.find('CTA')).toHaveLength(1)
+    expect(wrapper.find('EnterPromoCodeManuallyButton')).toHaveLength(1)
   })
 
   describe('when CTA is clicked', () => {
@@ -42,10 +48,23 @@ describe('Given PromoModal component', () => {
     })
   })
 
+  describe('when the enter-manually button is clicked', () => {
+    beforeEach(() => {
+      browserHistory.push = jest.fn()
+      wrapper.find('EnterPromoCodeManuallyButton').simulate('click')
+    })
+
+    test('then proper actions should be called', () => {
+      expect(trackUTMAndPromoCode).toBeCalledWith(clickEnterPromoCodeManuallyButton)
+      expect(closeModal).toHaveBeenCalled()
+      expect(browserHistory.push).toHaveBeenCalledWith('/signup/enter-discount-code')
+    })
+  })
+
   describe('when error prop is defined', () => {
     beforeEach(() => {
       wrapper.setProps({
-        error: 'error'
+        error: 'error',
       })
     })
 

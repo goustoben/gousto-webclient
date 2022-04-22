@@ -59,7 +59,7 @@ InformationalPageTemplate.propTypes = {
   children: PropTypes.node.isRequired,
   headerText: PropTypes.string.isRequired,
   headerSize: PropTypes.oneOf(['fontStyle2XL', 'fontStyle3XL']),
-  hasSmallerMarginBelowHeader: PropTypes.boolean,
+  hasSmallerMarginBelowHeader: PropTypes.bool,
 }
 
 InformationalPageTemplate.defaultProps = {

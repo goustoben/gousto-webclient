@@ -32,7 +32,9 @@ export type Status = 'empty' | 'success' | 'error'
  * @return html of the campaign text
  *
  */
-export const getPromoCodeCampaignTextHtml = (promoStoreEntry: Immutable.Map<string, any>) => {
+export const getPromoCodeCampaignTextHtml = (
+  promoStoreEntry?: Immutable.Map<string, any> | null,
+) => {
   const rawHtml = promoStoreEntry?.getIn(['codeData', 'campaign', 'modalText'])
 
   if (!rawHtml) {
@@ -43,7 +45,7 @@ export const getPromoCodeCampaignTextHtml = (promoStoreEntry: Immutable.Map<stri
   // occur naturally in any promo code description; and the promo entering
   // process is stable enough that we can expect the pattern to hold for any
   // promo code.
-  const html = rawHtml.replaceAll(/style=".*?"/g, '')
+  const html = rawHtml.replace(/style=".*?"/g, '')
 
   return html
 }
@@ -59,7 +61,7 @@ export const checkPromoCode = (
   dispatch: any,
   promoStore: Immutable.Map<string, any>,
   setStatus: (status: Status) => void,
-  setCampaignTextHtml: (campaignTextHtml: string) => void
+  setCampaignTextHtml: (campaignTextHtml: string) => void,
 ) => {
   if (!promoCode) {
     setStatus('empty')
@@ -93,7 +95,7 @@ export const proceedWithPromoCode = (
   dispatch: Dispatch<any>,
   promoCode: string,
   eventType: string,
-  eventAdditionalData = {}
+  eventAdditionalData = {},
 ) => {
   dispatch(promoChange(promoCode))
   dispatch(basketPromoCodeChange(promoCode))

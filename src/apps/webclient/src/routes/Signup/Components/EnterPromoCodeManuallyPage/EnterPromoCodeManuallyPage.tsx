@@ -21,8 +21,12 @@ import css from './EnterPromoCodeManuallyPage.css'
 
 const DEBOUNCE_MS = 500
 
+type SuccessSectionProps = {
+  promoCodeCampaignTextHtml: string
+}
+
 /* eslint-disable react/no-danger */
-export const SuccessSection = ({ promoCodeCampaignTextHtml }: any) => (
+export const SuccessSection = ({ promoCodeCampaignTextHtml }: SuccessSectionProps) => (
   <>
     <Heading5>You got a discount!</Heading5>
     <div
@@ -34,7 +38,7 @@ export const SuccessSection = ({ promoCodeCampaignTextHtml }: any) => (
 
 export const FailureSection = () => {
   const isTwoMonthPromoCodeEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_two_month_promo_code_web_enabled'
+    'beetroots_two_month_promo_code_web_enabled',
   )
   const lines = isTwoMonthPromoCodeEnabled
     ? promo.twoMonthDescriptionLines
@@ -108,7 +112,7 @@ export const EnterPromoCodeManuallyPage = () => {
       setCheckedValue(valueUnderInput)
     },
     DEBOUNCE_MS,
-    [valueUnderInput]
+    [valueUnderInput],
   )
 
   useEffect(() => {
@@ -129,7 +133,7 @@ export const EnterPromoCodeManuallyPage = () => {
     () => () => {
       cancel()
     },
-    [cancel]
+    [cancel],
   )
 
   return (
@@ -145,6 +149,7 @@ export const EnterPromoCodeManuallyPage = () => {
       <div style={{ marginTop: -32 }}>
         <InputField
           id="enterPromoCodeManuallyInputField"
+          data-testid="enterPromoCodeManuallyInputField"
           label=""
           placeholder="45-56-69"
           status={getFormStatus(status)}
