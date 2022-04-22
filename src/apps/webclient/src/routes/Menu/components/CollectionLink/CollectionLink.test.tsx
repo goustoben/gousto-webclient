@@ -34,14 +34,14 @@ describe('CollectionLink', () => {
     jest
       .spyOn(UseDisplayedCollections, 'useDietaryCollections')
       .mockImplementation(() =>
-        Immutable.OrderedMap({ a: defaultCollection, b: collectionTwo, c: collectionThree })
+        Immutable.OrderedMap({ a: defaultCollection, b: collectionTwo, c: collectionThree }),
       )
 
     jest.spyOn(Collections, 'useCollections').mockImplementation(
       () =>
         ({
           changeCollectionById: (_a: string) => {},
-        } as any)
+        } as any),
     )
     jest.spyOn(Menu, 'useMenu').mockImplementation(
       () =>
@@ -56,7 +56,7 @@ describe('CollectionLink', () => {
               },
             ]),
           }),
-        } as any)
+        } as any),
     )
   })
 
@@ -69,7 +69,7 @@ describe('CollectionLink', () => {
     render(
       <Provider store={store}>
         <CollectionLink />
-      </Provider>
+      </Provider>,
     )
 
   describe('rendering the CollectionLink', () => {

@@ -18,7 +18,7 @@ describe('CTAHomepageContainer', () => {
     wrapper = shallow(
       <CTAHomepageContainer store={store} ctaUri={ctaUri} homeGetStarted={homeGetStarted}>
         {ctaText}
-      </CTAHomepageContainer>
+      </CTAHomepageContainer>,
     )
   })
 

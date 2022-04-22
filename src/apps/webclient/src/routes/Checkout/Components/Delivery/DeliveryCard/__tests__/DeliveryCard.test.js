@@ -9,7 +9,7 @@ describe('DeliveryCard', () => {
     wrapper = mount(
       <DeliveryCard iconName="icon-calendar">
         <div>children here</div>
-      </DeliveryCard>
+      </DeliveryCard>,
     )
   })
 

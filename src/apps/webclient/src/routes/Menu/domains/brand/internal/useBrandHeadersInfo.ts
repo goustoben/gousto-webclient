@@ -29,7 +29,7 @@ export const useBrandHeadersInfo: () => {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   )
 
   if (!response?.data && !response?.included) {

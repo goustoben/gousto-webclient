@@ -13,7 +13,7 @@ jest.mock('apis/customers', () => ({
   newsletterSubscribe: jest.fn().mockReturnValue(
     new Promise((resolve) => {
       resolve()
-    })
+    }),
   ),
 }))
 
@@ -41,7 +41,7 @@ describe('EmailForm', () => {
   test('should display successful message for newsletter subscription', () => {
     wrapper.setState({ emailSubmitted: true })
     expect(wrapper.find(P).first().find('span').text()).toEqual(
-      'Hooray! We’ll let you know as soon as you can place your order.'
+      'Hooray! We’ll let you know as soon as you can place your order.',
     )
   })
 
@@ -56,7 +56,7 @@ describe('EmailForm', () => {
 
   test('should display login anchor', () => {
     expect(wrapper.find(P).last().find('span').text()).toEqual(
-      'Already a Gousto subscriber?  Log in'
+      'Already a Gousto subscriber?  Log in',
     )
   })
 
@@ -69,7 +69,7 @@ describe('EmailForm', () => {
       // eslint-disable-next-line prefer-promise-reject-errors
       Promise.reject({
         code: 'validation.unique.email',
-      })
+      }),
     )
     wrapper.find(TextInput).simulate('change', emailAddress)
     wrapper.find(CTA).simulate('click', { preventDefault: (e) => e })

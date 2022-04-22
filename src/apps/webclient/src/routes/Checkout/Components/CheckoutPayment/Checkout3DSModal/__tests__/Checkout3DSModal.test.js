@@ -16,7 +16,7 @@ describe('Checkout3DSModal', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <Checkout3DSModal isOpen challengeURL={challengeURL} onChallengeDone={onChallengeDone} />
+      <Checkout3DSModal isOpen challengeURL={challengeURL} onChallengeDone={onChallengeDone} />,
     )
     instance = wrapper.instance()
   })
@@ -32,7 +32,7 @@ describe('Checkout3DSModal', () => {
           isOpen={false}
           challengeURL={challengeURL}
           onChallengeDone={onChallengeDone}
-        />
+        />,
       )
     })
 
@@ -120,7 +120,7 @@ describe('Checkout3DSModal', () => {
       Object.defineProperty(loadEvent.target.contentWindow.location, 'href', {
         get: () => {
           throw Error(
-            'Blocked a frame with origin "https://frontend.gousto.local" from accessing a cross-origin frame.'
+            'Blocked a frame with origin "https://frontend.gousto.local" from accessing a cross-origin frame.',
           )
         },
       })

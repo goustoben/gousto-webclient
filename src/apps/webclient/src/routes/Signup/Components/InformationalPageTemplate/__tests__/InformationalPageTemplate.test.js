@@ -9,7 +9,7 @@ describe('InformationalPageTemplate', () => {
     wrapper = shallow(
       <InformationalPageTemplate headerText="test header">
         <div className="test">test children</div>
-      </InformationalPageTemplate>
+      </InformationalPageTemplate>,
     )
   })
 

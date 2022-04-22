@@ -14,7 +14,7 @@ export const InformationalPageTemplate = ({
       <div
         className={classNames(
           css.image,
-          isGoustoOnDemandEnabled ? css.topImageGoustoOnDemand : css.topImage
+          isGoustoOnDemandEnabled ? css.topImageGoustoOnDemand : css.topImage,
         )}
         role="img"
         aria-label="Sample dishes offered by Gousto"

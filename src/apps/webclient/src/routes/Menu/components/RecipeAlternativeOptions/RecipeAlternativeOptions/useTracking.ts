@@ -21,7 +21,7 @@ export const useTracking = () => {
 const useEffectConditional = (
   condition: boolean,
   callback: () => void,
-  dependencies: any[] = []
+  dependencies: any[] = [],
 ) => {
   useEffect(() => {
     if (condition) {

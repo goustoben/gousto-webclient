@@ -81,7 +81,7 @@ export const RecipeAlternativeOptions = ({
               isOutOfStock={isOutOfStock}
               surcharge={surcharge === undefined ? null : surcharge}
             />
-          )
+          ),
         )}
       </ul>
     </div>

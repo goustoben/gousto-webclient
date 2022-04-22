@@ -34,13 +34,13 @@ const formatTime = (deliveryStartTime, deliveryEndTime, tempDate, isGoustoOnDema
   if (isGoustoOnDemandEnabled) {
     return `${formatPointInTime(tempDate, deliveryStartTime)} to ${formatPointInTime(
       tempDate,
-      deliveryEndTime
+      deliveryEndTime,
     )}`
   }
 
   return `${formatPointInTime(tempDate, deliveryStartTime)} - ${formatPointInTime(
     tempDate,
-    deliveryEndTime
+    deliveryEndTime,
   )}`
 }
 
@@ -57,7 +57,7 @@ const getDeliveryDaysAndSlots = (
   tempDate,
   disabledSlots,
   userHasAvailableSlots,
-  options = {}
+  options = {},
 ) => {
   const slots = {}
   const deliveryDays = boxSummaryDeliveryDays
@@ -82,7 +82,7 @@ const getDeliveryDaysAndSlots = (
               slot.get('deliveryStartTime'),
               slot.get('deliveryEndTime'),
               tempDate,
-              options.isGoustoOnDemandEnabled
+              options.isGoustoOnDemandEnabled,
             ),
             subLabel: sublabel,
             value: slot.get('id'),
@@ -137,7 +137,7 @@ const DeliveryStep = ({
     tempDate,
     disabledSlots,
     userHasAvailableSlots,
-    { isGoustoOnDemandEnabled }
+    { isGoustoOnDemandEnabled },
   )
   const showSocialBelongingBanner = district && amountOfCustomers > 50
 
@@ -148,7 +148,7 @@ const DeliveryStep = ({
   }
 
   const isWizardCalendarViewEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_wizard_calendar_view_enabled'
+    'beetroots_wizard_calendar_view_enabled',
   )
   const dateLabel = deliveryDays.find((day) => day.date === tempDate)?.label
 

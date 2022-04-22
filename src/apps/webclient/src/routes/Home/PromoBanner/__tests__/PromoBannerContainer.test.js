@@ -35,7 +35,7 @@ describe('PromoBannerContainer', () => {
       wrapper = mount(
         <Provider store={store}>
           <PromoBannerContainer store={store} />
-        </Provider>
+        </Provider>,
       )
     })
 
@@ -55,7 +55,7 @@ describe('PromoBannerContainer', () => {
       wrapper = mount(
         <Provider store={store}>
           <PromoBannerContainer store={store} />
-        </Provider>
+        </Provider>,
       )
     })
 

@@ -46,7 +46,7 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
               cy.window().then(getPaymentSyncErrors).should('deep.equal', CARDNAME_ERROR)
 
               cy.get('[data-testing="checkoutCardNameInputError"] p', { timeout: 12000 }).should(
-                'be.visible'
+                'be.visible',
               )
             })
         })

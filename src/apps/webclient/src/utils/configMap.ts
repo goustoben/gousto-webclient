@@ -20,7 +20,7 @@ type ClientConfigOptions<T> = {
  */
 export const createConfigMap = <T extends Record<string, unknown>>(
   configMap: T,
-  options: ClientConfigOptions<T> = {}
+  options: ClientConfigOptions<T> = {},
 ) => {
   const { defaultKey } = options
 

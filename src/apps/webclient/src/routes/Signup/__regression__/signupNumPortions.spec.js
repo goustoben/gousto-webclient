@@ -12,13 +12,13 @@ describe('Given I am a logged out user', () => {
       cy.clearCookies()
       cy.clearLocalStorage()
       cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as(
-        'getPrices'
+        'getPrices',
       )
       cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
       cy.route(
         'GET',
         '/userbucketing/v1/user/experiments',
-        'fixture:userbucketing/userbucketing.json'
+        'fixture:userbucketing/userbucketing.json',
       ).as('getExperiments')
       cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
       cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')

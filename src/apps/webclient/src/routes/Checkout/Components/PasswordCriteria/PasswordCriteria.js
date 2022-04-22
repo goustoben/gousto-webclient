@@ -19,7 +19,7 @@ const min = 'validation.min.string.password'
 export const PasswordCriteria = ({ password, passwordErrors, showFailedCriteria }) => {
   const maxValue = passwordErrors.length > 0 && passwordErrors.includes(max)
   const requirements = passwordCriteria.filter((item) =>
-    maxValue ? item.rule !== min : item.rule !== max
+    maxValue ? item.rule !== min : item.rule !== max,
   )
 
   const getCriteriaStyle = (rule) => {

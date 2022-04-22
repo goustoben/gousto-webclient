@@ -21,7 +21,7 @@ describe('Benefits', () => {
     wrapper = mount(
       <Provider store={mockedStore}>
         <Benefits byId="noLockIn" />
-      </Provider>
+      </Provider>,
     )
   })
 

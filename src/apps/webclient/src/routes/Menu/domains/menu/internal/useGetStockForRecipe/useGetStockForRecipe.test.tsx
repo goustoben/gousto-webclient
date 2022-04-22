@@ -55,7 +55,7 @@ describe('useGetStockForRecipe', () => {
             },
           },
           numPortions,
-        })
+        }),
       )
 
       expect(result.current(recipeId)).toEqual(null)
@@ -74,7 +74,7 @@ describe('useGetStockForRecipe', () => {
             },
           }),
           numPortions,
-        })
+        }),
       )
 
       expect(result.current(recipeId)).toEqual(0)
@@ -87,7 +87,7 @@ describe('useGetStockForRecipe', () => {
         useGetStockForRecipe({
           menuRecipeStock: Immutable.fromJS({}),
           numPortions,
-        })
+        }),
       )
 
       expect(result.current(recipeId)).toEqual(null)

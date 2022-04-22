@@ -10,7 +10,7 @@ const createGetMockConfig = () =>
       production: 'production-value',
       default: 'default-value',
     },
-    { defaultKey: 'default' }
+    { defaultKey: 'default' },
   )
 
 let getMockConfig: ReturnType<typeof createConfigMap>

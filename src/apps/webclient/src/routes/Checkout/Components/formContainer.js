@@ -10,7 +10,7 @@ export const formContainer = (
   messages = {},
   opts = {},
   asyncValidate = async () => {},
-  asyncBlurFields = []
+  asyncBlurFields = [],
 ) =>
   scrollToRefsWrapper(
     reduxForm({
@@ -57,5 +57,5 @@ export const formContainer = (
         props.scrollToFirstMatchingRef([dottify(errors)])
       },
       ...opts,
-    })(Component)
+    })(Component),
   )

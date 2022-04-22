@@ -19,5 +19,5 @@ const mapDispatchToProps = {
 
 export const CheckAccountPageContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(CheckAccountPage)

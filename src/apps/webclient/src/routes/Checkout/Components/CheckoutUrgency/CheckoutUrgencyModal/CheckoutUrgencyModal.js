@@ -51,7 +51,7 @@ export const CheckoutUrgencyModal = ({
       trackCheckoutUrgencyAction(
         mode === 'dismissed'
           ? checkoutUrgencyExpiredModalDismissed
-          : checkoutUrgencyExpiredModalPrimaryButtonClicked
+          : checkoutUrgencyExpiredModalPrimaryButtonClicked,
       )
       redirectToMenu()
       checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.inactive)
@@ -59,7 +59,7 @@ export const CheckoutUrgencyModal = ({
       trackCheckoutUrgencyAction(
         mode === 'dismissed'
           ? checkoutUrgencyInitialModalDismissed
-          : checkoutUrgencyInitialModalPrimaryButtonClicked
+          : checkoutUrgencyInitialModalPrimaryButtonClicked,
       )
       checkoutCreatePreviewOrder()
     }

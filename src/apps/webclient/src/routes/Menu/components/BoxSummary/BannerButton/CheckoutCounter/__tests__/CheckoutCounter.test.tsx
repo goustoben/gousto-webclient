@@ -8,7 +8,7 @@ describe('CheckoutCounter', () => {
 
     beforeEach(() => {
       rendered = render(
-        <CheckoutCounter isDisabled={false} isButtonHovered={false} numRecipes={2} />
+        <CheckoutCounter isDisabled={false} isButtonHovered={false} numRecipes={2} />,
       )
     })
 
@@ -22,14 +22,14 @@ describe('CheckoutCounter', () => {
     describe('when animation starts and ends', () => {
       test('then it should assign and clear animation classes properly', () => {
         expect(screen.getByTestId('CheckoutCounter_background')).toHaveClass(
-          'scaleAndWiggleAnimation'
+          'scaleAndWiggleAnimation',
         )
         expect(screen.getByTestId('CheckoutCounter_content')).toHaveClass('wiggleAnimation')
 
         fireEvent.animationEnd(screen.getByTestId('CheckoutCounter_background'))
 
         expect(screen.getByTestId('CheckoutCounter_background')).not.toHaveClass(
-          'scaleAndWiggleAnimation'
+          'scaleAndWiggleAnimation',
         )
         expect(screen.getByTestId('CheckoutCounter_content')).not.toHaveClass('wiggleAnimation')
       })

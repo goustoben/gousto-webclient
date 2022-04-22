@@ -30,7 +30,7 @@ const useChangeAddress = () => {
 
   return useMemo(
     () => (address: Address) => dispatch(basketChosenAddressChange(address)),
-    [dispatch]
+    [dispatch],
   )
 }
 

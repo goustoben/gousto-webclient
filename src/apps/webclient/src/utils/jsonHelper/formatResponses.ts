@@ -69,7 +69,7 @@ type FormattedSuccess<T> =
  */
 
 export function isRWithDataIncluded<T>(
-  response: SuccessResponse<T>
+  response: SuccessResponse<T>,
 ): response is ResponseWithDataIncluded<T> {
   return 'included' in response && response.included
 }
@@ -79,7 +79,7 @@ export function isRWithData<T>(response: SuccessResponse<T>): response is Respon
 }
 
 export function isRWithResultData<T>(
-  response: SuccessResponse<T>
+  response: SuccessResponse<T>,
 ): response is ResponseWithResultData<T> {
   return 'result' in response && 'data' in response.result
 }
@@ -105,7 +105,7 @@ export function extractData<T>(response: SuccessResponse<T>): T {
 
 export function formatSuccessResponse<T>(
   response: SuccessResponse<T>,
-  meta: APIMeta | null
+  meta: APIMeta | null,
 ): FormattedSuccess<T> {
   if (isRWithDataIncluded(response)) {
     return { response }

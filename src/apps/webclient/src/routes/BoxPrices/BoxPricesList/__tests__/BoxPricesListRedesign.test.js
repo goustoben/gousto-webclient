@@ -33,7 +33,7 @@ describe('Given BoxPriceList component', () => {
           selectedBox={2}
           trackUTMAndPromoCode={trackUTMAndPromoCode}
         />
-      </Provider>
+      </Provider>,
     )
   })
 

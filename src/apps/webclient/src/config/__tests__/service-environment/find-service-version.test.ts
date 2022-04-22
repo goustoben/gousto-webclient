@@ -52,7 +52,7 @@ describe('serviceVersionLocator', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore ignoring the type error because we are testing the implementation
     expect(() => findServiceVersion('foobar', 3, stubServiceManifest)).toThrow(
-      "Service 'foobar' not found in manifest."
+      "Service 'foobar' not found in manifest.",
     )
   })
 
@@ -60,7 +60,7 @@ describe('serviceVersionLocator', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore ignoring the type error because we are testing the implementation
     expect(() => findServiceVersion('box-prices', 3, stubServiceManifest)).toThrow(
-      "Service version 3 for service 'box-prices' not found in manifest"
+      "Service version 3 for service 'box-prices' not found in manifest",
     )
   })
 })

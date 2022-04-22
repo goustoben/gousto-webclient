@@ -25,7 +25,7 @@ export const useStock = () => {
 
       return stockLevelForRecipe <= menuConfig.stockThreshold && !isRecipeInBasket(recipeId)
     },
-    [getStockForRecipe, isRecipeInBasket]
+    [getStockForRecipe, isRecipeInBasket],
   )
 
   const getOutOfStockRecipeIds = useCallback(
@@ -36,7 +36,7 @@ export const useStock = () => {
 
       return recipeIds.filter(isRecipeOutOfStock)
     },
-    [getStockForRecipe, isRecipeOutOfStock]
+    [getStockForRecipe, isRecipeOutOfStock],
   )
 
   return {

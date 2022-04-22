@@ -25,5 +25,5 @@ const mapDispatchToProps = {
 
 export const CheckoutUrgencyControllerContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(CheckoutUrgencyController)

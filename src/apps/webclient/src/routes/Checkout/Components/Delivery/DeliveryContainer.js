@@ -80,6 +80,6 @@ export function addInitialValues(Component, { sectionName }) {
         },
       }
     },
-    { trackUTMAndPromoCode }
+    { trackUTMAndPromoCode },
   )(Component)
 }

@@ -45,7 +45,7 @@ describe('given ErrorMessage', () => {
       expect(
         wrapper
           .find('.header')
-          .contains(checkoutConfig.errorMessage['422-insufficient-funds'].header)
+          .contains(checkoutConfig.errorMessage['422-insufficient-funds'].header),
       ).toBe(true)
     })
   })

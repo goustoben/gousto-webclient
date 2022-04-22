@@ -54,7 +54,7 @@ describe('Billing Address', () => {
         sectionName={sectionName}
         formValues={store.form.payment.values}
       />,
-      { context }
+      { context },
     )
   })
 
@@ -80,7 +80,7 @@ describe('Billing Address', () => {
             scrollToFirstMatchingRef={jest.fn()}
             change={change}
           />,
-          { context }
+          { context },
         )
       })
 
@@ -106,7 +106,7 @@ describe('Billing Address', () => {
             scrollToFirstMatchingRef={jest.fn()}
             change={change}
           />,
-          { context }
+          { context },
         )
       })
 
@@ -133,7 +133,7 @@ describe('Billing Address', () => {
           receiveRef={jest.fn()}
           scrollToFirstMatchingRef={jest.fn()}
         />,
-        { context }
+        { context },
       )
     })
 
@@ -155,7 +155,7 @@ describe('Billing Address', () => {
     test('should renders properly', () => {
       expect(wrapper.text().includes('Billing address')).toBe(true)
       expect(wrapper.text().includes('My billing address is the same as my delivery address')).toBe(
-        true
+        true,
       )
     })
 

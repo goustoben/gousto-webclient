@@ -20,7 +20,7 @@ export const useSoldOutTracking = () => {
         },
       })
     },
-    [dispatch]
+    [dispatch],
   )
 
   return {

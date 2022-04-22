@@ -44,7 +44,7 @@ describe('ActionBar', () => {
     rendered = render(
       <Provider store={mockedStore}>
         <ActionBar variant="separate" />
-      </Provider>
+      </Provider>,
     )
   })
 
@@ -68,7 +68,7 @@ describe('ActionBar', () => {
         rerender(
           <Provider store={newStore}>
             <ActionBar variant="separate" />
-          </Provider>
+          </Provider>,
         )
 
         expect(getByTestId('actionBar')).toHaveClass('shouldAnimate')
@@ -101,7 +101,7 @@ describe('ActionBar', () => {
         rerender(
           <Provider store={newStore}>
             <ActionBar variant="separate" />
-          </Provider>
+          </Provider>,
         )
 
         expect(getByTestId('actionBar')).not.toHaveClass('shouldAnimate')

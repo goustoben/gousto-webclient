@@ -45,7 +45,7 @@ const orderRecipes = (recipesMap) => {
 
   return orderedRecipes.reduce(
     (reducerState, recipe) => reducerState.set(recipe.get('id'), recipe),
-    Immutable.OrderedMap({})
+    Immutable.OrderedMap({}),
   )
 }
 

@@ -24,7 +24,7 @@ class RecipeSummary extends React.PureComponent {
     const { recipes, menuRecipesStore, menuRecipeStock, numPortions, menuBoxPrices } = this.props
     const prices = menuBoxPrices.getIn(
       [numPortions.toString(), basketSum(recipes).toString(), 'gourmet'],
-      Immutable.Map({})
+      Immutable.Map({}),
     )
 
     return (
@@ -39,7 +39,7 @@ class RecipeSummary extends React.PureComponent {
               stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
               media={menuRecipesStore.getIn(
                 [recipeId, 'media', 'images', 0, 'urls'],
-                Immutable.List([])
+                Immutable.List([]),
               )}
               isFineDineIn={menuRecipesStore.getIn([recipeId, 'isFineDineIn'], false)}
               pricePerServing={Number(prices.get('pricePerPortion', 0))}

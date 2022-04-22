@@ -13,7 +13,7 @@ describe('BoxPricesTabs', () => {
         labels={['Regular box', 'Large box']}
         activeIndex={0}
         setActiveIndex={setActiveIndex}
-      />
+      />,
     )
   })
 

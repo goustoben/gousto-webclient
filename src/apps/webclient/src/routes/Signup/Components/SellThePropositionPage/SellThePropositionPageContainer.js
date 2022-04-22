@@ -13,5 +13,5 @@ const mapDispatchToProps = {
 
 export const SellThePropositionPageContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(SellThePropositionPage)

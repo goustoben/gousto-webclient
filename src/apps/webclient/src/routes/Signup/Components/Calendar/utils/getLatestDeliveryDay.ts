@@ -11,5 +11,5 @@ export const getLatestDeliveryDay = (calendarDays: CalendarDayInfo[]): CalendarD
       currentDay.isDeliveryDay && currentDay.date.diff(latestDay.date, 'days') > 0
         ? currentDay
         : latestDay,
-    calendarDays[0]
+    calendarDays[0],
   )

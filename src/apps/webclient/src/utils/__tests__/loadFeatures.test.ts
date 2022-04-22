@@ -44,7 +44,7 @@ describe('loadFeatures util', () => {
           set: { setSomething: 123 },
           features: { someFeatures: 456 },
         },
-        mockStore
+        mockStore,
       )
     })
 
@@ -66,7 +66,7 @@ describe('loadFeatures util', () => {
           set: { setSomething: 123 },
           features: { someFeatures: 456 },
         },
-        mockStore
+        mockStore,
       )
     })
 

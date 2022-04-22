@@ -5,7 +5,7 @@ import { getIsAuthenticated } from 'selectors/auth'
 export const useIsActionBarRedesignEnabled = (): boolean | null => {
   const isAuthenticated = useSelector(getIsAuthenticated)
   const featureValue = useIsOptimizelyFeatureEnabled(
-    'beetroots_action_bar_redesign_prospects_web_enabled'
+    'beetroots_action_bar_redesign_prospects_web_enabled',
   )
 
   if (isAuthenticated) {

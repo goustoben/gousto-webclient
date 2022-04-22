@@ -15,5 +15,5 @@ const mapDispatchToProps = {
 
 export const ApplyVoucherPageContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(ApplyVoucherPage)

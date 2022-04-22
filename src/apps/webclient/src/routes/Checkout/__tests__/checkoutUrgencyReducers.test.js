@@ -10,7 +10,7 @@ describe('checkoutUrgencyReducers', () => {
   describe('when forming initial state', () => {
     test('then it should initialize current status to inactive', () => {
       expect(getCheckoutUrgencyCurrentStatus({ checkoutUrgency })).toBe(
-        checkoutUrgencyStatuses.inactive
+        checkoutUrgencyStatuses.inactive,
       )
     })
   })
@@ -19,13 +19,13 @@ describe('checkoutUrgencyReducers', () => {
     beforeEach(() => {
       checkoutUrgency = reducer(
         checkoutUrgency,
-        checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.running)
+        checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.running),
       )
     })
 
     test('then it should set current status', () => {
       expect(getCheckoutUrgencyCurrentStatus({ checkoutUrgency })).toBe(
-        checkoutUrgencyStatuses.running
+        checkoutUrgencyStatuses.running,
       )
     })
   })

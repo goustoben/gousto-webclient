@@ -53,7 +53,7 @@ describe('DetailOverlay component', () => {
       wrapper = mount(
         <Provider store={mockedStore}>
           <DetailOverlay showOverlay={false} />
-        </Provider>
+        </Provider>,
       )
     })
 
@@ -83,7 +83,7 @@ describe('DetailOverlay component', () => {
       wrapper = mount(
         <Provider store={mockedStore}>
           <DetailOverlay showOverlay />
-        </Provider>
+        </Provider>,
       )
     })
 
@@ -110,7 +110,7 @@ describe('DetailOverlay component', () => {
       wrapper = mount(
         <Provider store={mockedStore}>
           <DetailOverlay showOverlay />
-        </Provider>
+        </Provider>,
       )
     })
 
@@ -135,7 +135,7 @@ describe('DetailOverlay component', () => {
       wrapper = mount(
         <Provider store={mockedStore}>
           <DetailOverlay showOverlay={false} />
-        </Provider>
+        </Provider>,
       )
     })
   })

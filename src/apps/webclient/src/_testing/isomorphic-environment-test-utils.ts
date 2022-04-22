@@ -44,7 +44,7 @@ export const mockEnvironment = (environment: string): jest.SpyInstance<string, [
 
 export function mockEnvironmentAndDomain(
   environment: string,
-  domain: Domain
+  domain: Domain,
 ): EnvironmentSpyCollection {
   const getDomainSpy = mockDomain(domain)
   const getEnvironmentSpy = mockEnvironment(environment)

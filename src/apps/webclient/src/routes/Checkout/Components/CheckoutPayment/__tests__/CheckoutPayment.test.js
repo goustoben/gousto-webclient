@@ -40,7 +40,7 @@ describe('CheckoutPayment', () => {
         currentPaymentMethod={PaymentMethod.Card}
         setCurrentPaymentMethod={setCurrentPaymentMethod}
         submitOrder={submitOrder}
-      />
+      />,
     )
   })
 

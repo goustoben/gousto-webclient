@@ -51,7 +51,7 @@ describe('useBrandHeadersInfo', () => {
             'x-gousto-user-id': 'user one',
           },
           method: 'GET',
-        }
+        },
       )
     })
   })

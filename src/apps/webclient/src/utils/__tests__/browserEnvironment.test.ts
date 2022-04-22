@@ -30,7 +30,7 @@ const testCasesWithPathAndQueryParams = testCases.reduce<Array<{ name: string; u
     { name, url },
     { name: `${name} + path + query param`, url: `${url}/foo?bar=baz` },
   ],
-  []
+  [],
 )
 
 type Assertion = { name: string; expected: unknown }
@@ -48,7 +48,7 @@ const addAssertionsToTestCases = (assertions: Array<Assertion>, casesToOmit?: st
     (testCasesWithAssertions, testCase) => {
       if (casesToOmit) {
         const testCaseShouldBeOmitted = casesToOmit.some((caseToOmit) =>
-          testCase.name.includes(caseToOmit)
+          testCase.name.includes(caseToOmit),
         )
 
         if (testCaseShouldBeOmitted) return testCasesWithAssertions
@@ -59,7 +59,7 @@ const addAssertionsToTestCases = (assertions: Array<Assertion>, casesToOmit?: st
       if (!assertion) return testCasesWithAssertions
 
       const testCaseWithPathAndQueryParams = testCasesWithPathAndQueryParams.find(
-        ({ name }) => name === `${assertion.name} + path + query param`
+        ({ name }) => name === `${assertion.name} + path + query param`,
       ) as TestCase
 
       const { expected } = assertion
@@ -76,7 +76,7 @@ const addAssertionsToTestCases = (assertions: Array<Assertion>, casesToOmit?: st
         },
       ]
     },
-    []
+    [],
   )
 
 const windowSpy = jest.spyOn(window, 'window', 'get')
@@ -164,7 +164,7 @@ describe('client config', () => {
           { name: 'lower env webclient', expected: 'https:' },
           { name: 'lower env frontend', expected: 'https:' },
           { name: 'local', expected: 'http:' },
-        ])
+        ]),
       )('for $name url, returns "$expected"', ({ url, expected }) => {
         canUseWindowSpy.mockReturnValue(true)
         getWindowSpy.mockReturnValue({

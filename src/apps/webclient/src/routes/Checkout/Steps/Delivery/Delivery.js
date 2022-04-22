@@ -31,7 +31,7 @@ const DeliveryYouForm = formContainer(
   DeliveryStep,
   deliveryValidations(sectionName),
   sectionName,
-  validationMessages(sectionName)
+  validationMessages(sectionName),
 ) // eslint-disable-line import/no-mutable-exports
 
 const Delivery = addInitialValues(DeliveryYouForm, { sectionName })

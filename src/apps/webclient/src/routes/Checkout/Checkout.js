@@ -136,11 +136,11 @@ class Checkout extends PureComponent {
 
     if (previewOrderError || !store.getState().basket.get('previewOrderId')) {
       logger.warning(
-        `Preview order id failed to create, persistent basket might be expired, error: ${errorName}`
+        `Preview order id failed to create, persistent basket might be expired, error: ${errorName}`,
       )
 
       return store.dispatch(
-        actions.redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true)
+        actions.redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true),
       )
     }
 

@@ -22,5 +22,5 @@ const mapDispatchToProps = {
 
 export const CheckoutPayPalDetailsContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(CheckoutPayPalDetails)

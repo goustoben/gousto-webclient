@@ -11,7 +11,7 @@ describe('given BoxPriceButton is rendered', () => {
     wrapper = shallow(
       <BoxPriceButton numPersons={2} boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}>
         test button text
-      </BoxPriceButton>
+      </BoxPriceButton>,
     )
   })
 

@@ -8,7 +8,8 @@ class BoxIcon extends React.PureComponent {
   render() {
     const { numPersons, numPortions } = this.props
     const icon = icons.find(
-      (configIcon) => configIcon.numPersons === numPersons && configIcon.numPortions === numPortions
+      (configIcon) =>
+        configIcon.numPersons === numPersons && configIcon.numPortions === numPortions,
     )
 
     return icon && icon.image ? (

@@ -51,6 +51,6 @@ export const useRemoveRecipe = () => {
 
       dispatch(trackUserAddRemoveRecipe())
     },
-    [menuRecipes, numPortions, collection, reachedLimit, dispatch]
+    [menuRecipes, numPortions, collection, reachedLimit, dispatch],
   )
 }

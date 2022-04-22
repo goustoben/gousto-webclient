@@ -19,7 +19,7 @@ describe('Postcode Step', () => {
         tempPostcode="temp_postcode"
         nextStepName="next_step"
         signupGetCountByPostcode={signupGetCountByPostcode}
-      />
+      />,
     )
   })
 

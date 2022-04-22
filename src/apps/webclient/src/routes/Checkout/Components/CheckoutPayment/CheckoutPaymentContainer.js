@@ -47,7 +47,7 @@ const mapDispatchToProps = {
 
 const ConnectedCheckoutPaymentContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(CheckoutPayment)
 
 const Plain = (props) => {
@@ -67,5 +67,5 @@ const Plain = (props) => {
 
 export const CheckoutPaymentContainer = addInitialValues(
   formContainer(Plain, getValidationRules(sectionName), sectionName),
-  { sectionName }
+  { sectionName },
 )

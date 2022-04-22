@@ -19,7 +19,7 @@ describe('windowEnvConfig', () => {
   describe('$getConfigFromWindow', () => {
     it('throws expected error if there is a problem retrieving value', () => {
       const expectedError = new Error(
-        "Error getting client config from window: TypeError: Cannot read property 'CHECKOUT_COM_PUBK' of undefined"
+        "Error getting client config from window: TypeError: Cannot read property 'CHECKOUT_COM_PUBK' of undefined",
       )
       // eslint-disable-next-line
       // @ts-expect-error
@@ -32,7 +32,7 @@ describe('windowEnvConfig', () => {
 
     it('throws expected error if value is undefined', () => {
       const expectedError = new Error(
-        'Error getting client config from window: Error: config with key CHECKOUT_COM_PUBK is not defined'
+        'Error getting client config from window: Error: config with key CHECKOUT_COM_PUBK is not defined',
       )
       // eslint-disable-next-line
       // @ts-expect-error
@@ -59,7 +59,7 @@ describe('windowEnvConfig', () => {
       'returns expected value when passed parameter %s',
       (key, val) => {
         expect(getConfigFromWindow(key as keyof WindowEnvConfig)).toEqual(val)
-      }
+      },
     )
   })
 })

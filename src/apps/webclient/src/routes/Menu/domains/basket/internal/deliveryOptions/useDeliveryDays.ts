@@ -61,14 +61,22 @@ export const useDeliveryDays = ({
         postcode: postcode.length >= 5 ? getFirstPartPostcode(postcode) : postcode,
       }),
     }),
-    [cutoffFrom, cutoffUntil, isNDDExperiment, deliveryTariffId, postcode, sortField, sortDirection]
+    [
+      cutoffFrom,
+      cutoffUntil,
+      isNDDExperiment,
+      deliveryTariffId,
+      postcode,
+      sortField,
+      sortDirection,
+    ],
   )
 
   const url = getDeliveryOptionServiceUrl()
 
   const { data: response, error } = useSWR<DeliveryOptionsResponse, Error>(
     [url, requestParameters, accessToken, userId],
-    getFetcher
+    getFetcher,
   )
 
   if (!response) {
@@ -80,7 +88,7 @@ export const useDeliveryDays = ({
   const days = getAvailableDeliveryDays(
     isNDDExperiment ? transformDaySlotLeadTimesToMockSlots(rawDays) : rawDays,
     cutoffFrom,
-    usersOrdersDaySlotLeadTimeIds
+    usersOrdersDaySlotLeadTimeIds,
   )
 
   return { days }
@@ -119,7 +127,7 @@ type DeliveryOptionInResponse = {
       active_for_subscribers_one_off: boolean
       active_for_non_subscribers_one_off: boolean
       active_for_signups: boolean
-    }
+    },
   ]
 }
 

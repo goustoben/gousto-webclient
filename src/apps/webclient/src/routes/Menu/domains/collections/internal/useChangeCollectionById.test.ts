@@ -87,7 +87,7 @@ describe('useChangeCollectionById', () => {
             actionType: actionTypes.RECIPE_COLLECTION_SELECTED,
             collectionId,
           },
-        })
+        }),
       )
     })
 
@@ -109,9 +109,9 @@ describe('useChangeCollectionById', () => {
                 query: {
                   collection: defaultCollection.get('slug'),
                 },
-              })
-            )
-          )
+              }),
+            ),
+          ),
         )
       })
     })

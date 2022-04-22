@@ -12,7 +12,7 @@ export const Arrow = ({ side, ...props }) => {
         ..._htmlProps,
         ...(!carouselPropKeys.includes(key) && { [key]: val }),
       }),
-      {}
+      {},
     )
   }
 

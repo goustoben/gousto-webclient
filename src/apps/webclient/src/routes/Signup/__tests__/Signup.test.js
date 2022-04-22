@@ -99,7 +99,7 @@ describe('Signup', () => {
           <Signup {...props} promoModalVisible={false} promoBannerState={{ basketPromo: '' }} />,
           {
             context,
-          }
+          },
         )
       })
 
@@ -119,7 +119,7 @@ describe('Signup', () => {
           <Signup {...props} promoModalVisible promoBannerState={{ basketPromo: 'DTI-promo' }} />,
           {
             context,
-          }
+          },
         )
       })
 

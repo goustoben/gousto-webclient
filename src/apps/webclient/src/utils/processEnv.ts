@@ -8,7 +8,7 @@ type ProcessEnvKeys = [
   'RECAPTCHA_RAF_PVTK',
   'RECAPTCHA_PUBK',
   'RECAPTCHA_PVTK',
-  'CHECKOUT_COM_PUBK'
+  'CHECKOUT_COM_PUBK',
 ]
 
 /**
@@ -70,7 +70,7 @@ export const getFromProcessEnv = (env: ProcessEnv) => {
 
   return <K extends ProcessEnvKeys[number]>(
     key: K,
-    transformFn?: (val: ProcessEnv[K]) => ParsedProcessEnv[K]
+    transformFn?: (val: ProcessEnv[K]) => ParsedProcessEnv[K],
   ) => {
     const valueFromMemo = memo.get(key)
 
