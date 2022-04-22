@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { CTA, Modal } from 'goustouicomponents'
+import { CTA } from 'goustouicomponents'
 import css from './EnterPromoCodeManuallyButton.module.css'
 
 type Props = {

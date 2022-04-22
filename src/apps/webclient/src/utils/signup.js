@@ -64,9 +64,11 @@ export function getPromocodeQueryParam(promocode, operator = '&') {
  * @return if true, then this step or a step-like page can be landed upon
  */
 export const canLandOnStepWithoutRedirecting = (stepSlug) => {
-  return (
-    stepSlug === signupConfig.checkAccountPageSlug ||
-    stepSlug === signupConfig.applyVoucherPageSlug ||
-    stepSlug === signupConfig.enterPromoCodeManuallyPageSlug
-  )
+  const allowedSlugs = [
+    signupConfig.checkAccountPageSlug,
+    signupConfig.applyVoucherPageSlug,
+    signupConfig.enterPromoCodeManuallyPageSlug,
+  ]
+
+  return allowedSlugs.includes(stepSlug)
 }
