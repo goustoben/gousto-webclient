@@ -95,8 +95,8 @@ export const proceedWithPromoCode = (
   eventType: string,
   eventAdditionalData = {}
 ) => {
-  dispatch(trackUTMAndPromoCode(eventType, eventAdditionalData))
   dispatch(promoChange(promoCode))
   dispatch(basketPromoCodeChange(promoCode))
+  dispatch(trackUTMAndPromoCode(eventType, eventAdditionalData))
   dispatch(redirect('/signup'))
 }

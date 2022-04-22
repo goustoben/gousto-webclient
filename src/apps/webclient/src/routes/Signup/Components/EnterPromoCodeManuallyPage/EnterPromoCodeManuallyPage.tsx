@@ -100,7 +100,6 @@ export const EnterPromoCodeManuallyPage = () => {
     const promoCode = checkedValue
     proceedWithPromoCode(dispatch, promoCode, clickEnterPromoCodeManuallyContinue, {
       accepted: true,
-      promoCode,
     })
   }
 
