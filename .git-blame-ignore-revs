@@ -27,3 +27,6 @@ d1d0d27704684dd3b1567af7bc4fa3c57fd6fb00
 
 # [FEF-392] Apply formatting to circle config
 8af80b1243ba6e7cd801e700c09b0be44012da67
+
+# [TG-6241] Modify trailingComma rule to "all"
+c57dfd00365277e8daf72f539d677de976846f3a
