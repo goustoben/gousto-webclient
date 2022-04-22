@@ -27,7 +27,7 @@ describe('BoxDetails', () => {
       },
     })
     wrapper = render(
-      <BoxDetails numPortions={2} date="2016-06-26" deliveryDays={deliveryDays} slotId="slot1" />
+      <BoxDetails numPortions={2} date="2016-06-26" deliveryDays={deliveryDays} slotId="slot1" />,
     )
   })
 
