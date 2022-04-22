@@ -10,16 +10,16 @@ describe('utils/validation', () => {
       expect(validateBasicTextLength('')).toBe(false)
       expect(
         validateBasicTextLength(
-          'Integer rhoncus porta mauris a tristique. Curabitur pulvinar velit in hendrerit aliquam. Vivamus scelerisque consequat leo et scelerisque. Sed nibh ante, suscipit eu justo a, tincidunt ornare eros. Nunc ac viverra est. Mauris eu ornare mi, et interdum leo. Proin porttitor interdum magna in egestas. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer maximus nulla lorem, vitae tempus sem auctor efficitur. Cras maximus libero consequat magna rutrum, at finibus orci consectetur. Maecenas fringilla ac nibh eu consectetur. Maecenas porttitor, nulla in fringilla laoreet, nunc augue pretium metus, et sollicitudin tortor eros ut dui. Suspendisse potenti.'
-        )
+          'Integer rhoncus porta mauris a tristique. Curabitur pulvinar velit in hendrerit aliquam. Vivamus scelerisque consequat leo et scelerisque. Sed nibh ante, suscipit eu justo a, tincidunt ornare eros. Nunc ac viverra est. Mauris eu ornare mi, et interdum leo. Proin porttitor interdum magna in egestas. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer maximus nulla lorem, vitae tempus sem auctor efficitur. Cras maximus libero consequat magna rutrum, at finibus orci consectetur. Maecenas fringilla ac nibh eu consectetur. Maecenas porttitor, nulla in fringilla laoreet, nunc augue pretium metus, et sollicitudin tortor eros ut dui. Suspendisse potenti.',
+        ),
       ).toBe(false)
     })
     test('should return true', () => {
       expect(validateBasicTextLength('5')).toBe(true)
       expect(
         validateBasicTextLength(
-          'Vivamus scelerisque consequat leo et scelerisque. Sed nibh ante, suscipit eu justo a, tincidunt ornare eros. Nunc ac viverra est.'
-        )
+          'Vivamus scelerisque consequat leo et scelerisque. Sed nibh ante, suscipit eu justo a, tincidunt ornare eros. Nunc ac viverra est.',
+        ),
       ).toBe(true)
     })
   })
@@ -30,7 +30,7 @@ describe('utils/validation', () => {
       expect(validatePhoneFormat('dsfsdf dfsdfsdfsdf')).toBe(false)
       expect(validatePhoneFormat('sdfsd 324234234')).toBe(false)
       expect(
-        validatePhoneFormat('354657687987665463565476879675645577887877887787877887fsdfw')
+        validatePhoneFormat('354657687987665463565476879675645577887877887787877887fsdfw'),
       ).toBe(false)
     })
     test('should return true', () => {

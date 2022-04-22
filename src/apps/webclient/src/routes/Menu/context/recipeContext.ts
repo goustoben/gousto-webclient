@@ -21,7 +21,7 @@ export const RecipeContextProvider = RecipeContext.Provider
 export const useRecipe = (): Recipe => useContext(RecipeContext)
 export const useRecipeField = <TField = unknown>(
   fieldSelector: string | string[],
-  notSetValue?: unknown
+  notSetValue?: unknown,
 ): TField => {
   const recipe = useRecipe()
 

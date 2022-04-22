@@ -57,7 +57,7 @@ describe('serviceUrl', () => {
     }
 
     expect(() => serviceUrl(serviceDefinition)).toThrow(
-      'basePath must be defined for HTTPS services'
+      'basePath must be defined for HTTPS services',
     )
   })
 
@@ -120,8 +120,8 @@ describe('serviceUrl', () => {
           serviceDomain: SERVICE_DOMAINS.default,
           basePath: '/boxprices/v2.0.0',
         },
-        overrides
-      )
+        overrides,
+      ),
     ).toEqual('foobar')
   })
 
@@ -136,8 +136,8 @@ describe('serviceUrl', () => {
           serviceDomain: SERVICE_DOMAINS.default,
           basePath: '/orders/v2.0.0',
         },
-        overrides
-      )
+        overrides,
+      ),
     ).toEqual('http://jalapenos-api.gousto.info/orders/v2.0.0')
   })
 

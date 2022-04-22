@@ -25,7 +25,7 @@ describe('given PaymentMethodToggle', () => {
       <PaymentMethodToggle
         methodDescriptor={methodDescriptor}
         setCurrentPaymentMethod={setCurrentPaymentMethod}
-      />
+      />,
     )
   })
 

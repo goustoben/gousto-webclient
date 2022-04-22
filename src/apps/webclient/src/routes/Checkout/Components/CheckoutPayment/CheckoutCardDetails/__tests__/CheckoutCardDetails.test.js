@@ -13,7 +13,7 @@ describe('given CheckoutCardDetails is rendered', () => {
         isSubmitCardEnabled={false}
         cardTokenReady={jest.fn()}
         disableCardSubmission={jest.fn()}
-      />
+      />,
     )
   })
 

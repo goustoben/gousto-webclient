@@ -39,7 +39,7 @@ type SnakeToCamelCaseRecord<Input extends Record<any, any>> = {
  */
 function snakeToCamelCase<S extends string>(str: S) {
   return str.replace(/([_][a-zA-Z\d])/g, (group) =>
-    group.toUpperCase().replace('_', '')
+    group.toUpperCase().replace('_', ''),
   ) as SnakeToCamelCase<S>
 }
 

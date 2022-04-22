@@ -25,7 +25,7 @@ describe('Home', () => {
     menuFetchData.mockImplementation(
       jest.fn(() => ({
         type: 'action',
-      }))
+      })),
     )
 
     const mockStore = configureMockStore()
@@ -94,7 +94,7 @@ describe('Home', () => {
   describe('helmet', () => {
     test('should contain correct title', () => {
       expect(wrapper.find(Helmet).prop('title')).toBe(
-        'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto'
+        'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',
       )
     })
 

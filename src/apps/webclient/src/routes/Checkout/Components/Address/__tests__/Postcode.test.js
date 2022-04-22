@@ -41,7 +41,7 @@ describe('Postcode', () => {
             { id: 1, labels: [] },
             { id: 2, labels: [] },
           ])}
-        />
+        />,
       )
       expect(wrapper.find(Field).at(0).prop('mask')).toEqual(true)
     })

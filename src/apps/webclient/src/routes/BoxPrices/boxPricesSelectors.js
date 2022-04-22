@@ -37,7 +37,7 @@ export const getNumPersonsToBoxDescriptors = createSelector(getMenuBoxPrices, (m
           ...numPersonsToBoxDescriptors,
           [numPersons]: boxDescriptors,
         }),
-      {}
+      {},
     )
 
   return result

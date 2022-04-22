@@ -391,7 +391,7 @@ describe('CheckoutFrame', () => {
             cardTokenReady={cardTokenReady}
             trackingCardTokenizationSuccessfully={trackingCardTokenizationSuccessfully}
             fireCheckoutPendingEvent={fireCheckoutPendingEvent}
-          />
+          />,
         )
 
         const mockEvent = {
@@ -403,14 +403,14 @@ describe('CheckoutFrame', () => {
       test('should call Frames.addCardToken', () => {
         expect(Frames.addCardToken).toHaveBeenCalledWith(
           wrapper.instance().paymentForm,
-          'test-token'
+          'test-token',
         )
       })
 
       test('should call fireCheckoutPendingEvent', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
-          false
+          false,
         )
       })
 
@@ -436,7 +436,7 @@ describe('CheckoutFrame', () => {
           trackingCardTokenizationFailed={trackingCardTokenizationFailed}
           trackFailedCheckoutFlow={trackFailedCheckoutFlow}
           fireCheckoutPendingEvent={fireCheckoutPendingEvent}
-        />
+        />,
       )
     })
 
@@ -459,7 +459,7 @@ describe('CheckoutFrame', () => {
       test('should call fireCheckoutPendingEvent', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
-          false
+          false,
         )
       })
 
@@ -487,7 +487,7 @@ describe('CheckoutFrame', () => {
       test('should call fireCheckoutPendingEvent', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
-          false
+          false,
         )
       })
 
@@ -508,7 +508,7 @@ describe('CheckoutFrame', () => {
           disableCardSubmission={disableCardSubmission}
           fireCheckoutError={fireCheckoutError}
           fireCheckoutPendingEvent={fireCheckoutPendingEvent}
-        />
+        />,
       )
     })
 
@@ -528,7 +528,7 @@ describe('CheckoutFrame', () => {
       test('should call fireCheckoutPendingEvent once', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
-          true
+          true,
         )
       })
 
@@ -556,11 +556,11 @@ describe('CheckoutFrame', () => {
       test('should call fireCheckoutPendingEvent twice', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
-          true
+          true,
         )
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
-          false
+          false,
         )
       })
 
@@ -626,7 +626,7 @@ describe('CheckoutFrame', () => {
           showExpiryDateError: true,
           showCVVError: true,
           isStartSubscriptionSubmitted: true,
-        })
+        }),
       )
     })
   })

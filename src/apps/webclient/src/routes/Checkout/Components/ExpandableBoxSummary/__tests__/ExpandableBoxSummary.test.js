@@ -10,7 +10,7 @@ describe('ExpandableBoxSummary', () => {
     wrapper = mount(
       <ExpandableBoxSummary trackUTMAndPromoCode={trackUTMAndPromoCode}>
         <div>children</div>
-      </ExpandableBoxSummary>
+      </ExpandableBoxSummary>,
     )
   })
 

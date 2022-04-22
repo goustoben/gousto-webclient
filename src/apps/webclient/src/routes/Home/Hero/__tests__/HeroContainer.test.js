@@ -25,7 +25,7 @@ describe('<HeroContainer />', () => {
     wrapper = mount(
       <Provider store={mockedStore}>
         <HeroContainer dataTesting="hero-test-id" ctaUri="ctaUri" ctaText="ctaText" />
-      </Provider>
+      </Provider>,
     )
   })
 

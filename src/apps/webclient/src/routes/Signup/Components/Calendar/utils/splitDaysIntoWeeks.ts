@@ -5,7 +5,7 @@ import { CalendarDayInfo } from 'routes/Signup/Components/Calendar/models/Calend
  */
 export const splitDaysIntoWeeks = (
   weeksAmount: number,
-  calendarDays: CalendarDayInfo[]
+  calendarDays: CalendarDayInfo[],
 ): CalendarDayInfo[][] => {
   const weeks = new Array(weeksAmount).fill(null).map(() => [] as CalendarDayInfo[])
   calendarDays.forEach((day, index) => weeks[Math.trunc(index / 7)]?.push(day))

@@ -84,7 +84,7 @@ describe('processEnv', () => {
           delete duplicateProcessEnv[envKey as keyof typeof duplicateProcessEnv]
 
           return [envKey, duplicateProcessEnv]
-        })
+        }),
       )('throws if %s is missing from process.env', (missingKey, malformedProcessEnv) => {
         const expectedError = new Error(`No environment variable with key ${missingKey}`)
         process.env = malformedProcessEnv as ProcessEnv

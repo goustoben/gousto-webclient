@@ -12,7 +12,7 @@ function useSetPayPalNonce() {
     (nonce: string) => {
       dispatch(setPayPalNonce(nonce, { pricing }))
     },
-    [dispatch, pricing]
+    [dispatch, pricing],
   )
 }
 

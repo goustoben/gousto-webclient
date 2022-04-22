@@ -35,7 +35,7 @@ describe('CreateAccount', () => {
     const wrapper = mount(
       <Provider store={store}>
         <CreateAccount {...props} />
-      </Provider>
+      </Provider>,
     )
 
     expect(wrapper).toBeDefined()

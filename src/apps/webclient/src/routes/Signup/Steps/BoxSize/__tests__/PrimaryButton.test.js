@@ -13,7 +13,7 @@ describe('PrimaryButton', () => {
         value={2}
         ctaText="Choose regular box"
         onPrimaryButtonClick={onPrimaryButtonClick}
-      />
+      />,
     )
   })
 

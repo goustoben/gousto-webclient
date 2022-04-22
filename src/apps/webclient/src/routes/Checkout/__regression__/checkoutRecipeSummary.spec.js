@@ -15,7 +15,7 @@ describe('Given I’m a gousto logged-out website visitor', () => {
     it('Then the recipe summary should be visible', () => {
       cy.get('[data-testing="checkoutRecipeSummary"]').should(
         'contain',
-        'Creamy Chicken Potato-Topped Pie'
+        'Creamy Chicken Potato-Topped Pie',
       )
     })
   })

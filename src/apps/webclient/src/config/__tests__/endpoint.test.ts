@@ -127,7 +127,7 @@ describe('endpoint()', () => {
         ;(getClientEnvironment as jest.Mock).mockReturnValue(env)
         ;(getClientDomain as jest.Mock).mockReturnValue(domain)
         expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
-      }
+      },
     )
 
     it('should throw if it cannot find the service', () => {
@@ -136,7 +136,7 @@ describe('endpoint()', () => {
 
     it('should throw if it cannot find the service majorVersion', () => {
       expect(() => endpoint('auth', 999)).toThrow(
-        "Service version 999 for service 'auth' not found in manifest"
+        "Service version 999 for service 'auth' not found in manifest",
       )
     })
 
@@ -149,7 +149,7 @@ describe('endpoint()', () => {
         majorVersion: number,
         appInstanceEnvironment: string,
         isServerCall: boolean,
-        resultOfOldEndpointInvocation: string
+        resultOfOldEndpointInvocation: string,
       ) => {
         const domain = environment === 'production' ? 'gousto.co.uk' : 'gousto.info'
         ;(getClientEnvironment as jest.Mock).mockReturnValue(environment)
@@ -157,9 +157,9 @@ describe('endpoint()', () => {
         serviceManifestSpy.mockRestore()
 
         expect(endpoint(service as ServiceName, majorVersion)).toEqual(
-          resultOfOldEndpointInvocation
+          resultOfOldEndpointInvocation,
         )
-      }
+      },
     )
   })
 
@@ -217,7 +217,7 @@ describe('endpoint()', () => {
         })
 
         expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
-      }
+      },
     )
 
     it('should throw if it cannot find the service', () => {
@@ -234,7 +234,7 @@ describe('endpoint()', () => {
         ENVIRONMENT: 'staging',
       })
       expect(() => endpoint('auth', 999)).toThrow(
-        "Service version 999 for service 'auth' not found in manifest"
+        "Service version 999 for service 'auth' not found in manifest",
       )
     })
 
@@ -248,7 +248,7 @@ describe('endpoint()', () => {
         version: number,
         appInstanceEnvironment: string,
         isServerCall: boolean,
-        resultOfOldEndpointInvocation: string
+        resultOfOldEndpointInvocation: string,
       ) => {
         const domain = environment === 'production' ? 'gousto.co.uk' : 'gousto.info'
         ;(getEnvConfig as jest.Mock).mockReturnValue({
@@ -257,7 +257,7 @@ describe('endpoint()', () => {
         })
 
         expect(endpoint(service as ServiceName, version)).toEqual(resultOfOldEndpointInvocation)
-      }
+      },
     )
   })
 })

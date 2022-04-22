@@ -154,7 +154,7 @@ export class Address extends React.PureComponent {
           cutOfUntil,
           isNDDExperiment,
           deliveryTariffId,
-          postcode
+          postcode,
         )
 
         if (isNDDExperiment) {
@@ -238,7 +238,7 @@ export class Address extends React.PureComponent {
       const addressData = !this.state ? addresses : this.state.addressData
       const { deliveryPoints, town, county, postcode } = addressData
       const matchingDeliveryPoint = deliveryPoints.find(
-        (deliveryPoint) => deliveryPoint.udprn === addressId
+        (deliveryPoint) => deliveryPoint.udprn === addressId,
       )
 
       addressDetails = {

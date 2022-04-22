@@ -37,7 +37,7 @@ export const DetailImage = ({
       { [css.detail]: view === 'detail' },
       { [css.fineDineInDetail]: view === 'fineDineInDetail' },
       { [css.simple]: view === 'simple' },
-      css.placeholder
+      css.placeholder,
     )}
     onMouseEnter={mouseEnter}
     onMouseLeave={mouseLeave}

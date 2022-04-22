@@ -8,7 +8,7 @@ const sendPerformanceMetric = (store, metricName, value, pathname) => {
       metricName,
       value,
       page: pathname,
-    })
+    }),
   )
 }
 

@@ -44,7 +44,7 @@ describe('<Calendar /> component', () => {
   describe('when 3 weeks of delivery days provided', () => {
     test('should render 3 rows of calendar', () => {
       const wrapper = mount(
-        <Calendar {...defaultProps} deliveryDays={defaultProps.deliveryDays.slice(0, 2)} />
+        <Calendar {...defaultProps} deliveryDays={defaultProps.deliveryDays.slice(0, 2)} />,
       )
       const rowsNumber = wrapper.find('tr').hostNodes().length
       expect(rowsNumber).toBe(4) // 1 header row + 3 calendar rows

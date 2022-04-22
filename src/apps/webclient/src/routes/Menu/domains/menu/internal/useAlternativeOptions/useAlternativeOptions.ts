@@ -52,16 +52,16 @@ type AllCollections = Immutable.Map<string, CollectionImmutable>
 
 export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } = {}) => {
   const collectionIdFromDetails = useSelector<RootStateOrAny, string | undefined>(
-    getMenuCategoryIdForDetails
+    getMenuCategoryIdForDetails,
   )
   const recipesVariants = useSelector<RootStateOrAny, { [k: Recipe['id']]: Recipe }>(
-    getCurrentMenuVariants
+    getCurrentMenuVariants,
   )
   const recipes = useSelector<RootStateOrAny, RecipeImmutable[]>(getCurrentMenuRecipes)
   const allRecipesAsMap = useSelector(getRecipes)
   const recipesInStock = useSelector(getInStockRecipes)
   const recipesInStockIds = new Set(
-    recipesInStock.map((r: Immutable.Map<string, string>) => r.get('id'))
+    recipesInStock.map((r: Immutable.Map<string, string>) => r.get('id')),
   )
   const numPortions = useSelector(getNumPortions)
   const dispatch = useDispatch()
@@ -78,7 +78,7 @@ export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } 
 
     if (!collectionId) {
       throw new Error(
-        `Failed to obtain collectionId while determining Alternative Options for ${recipeId} recipe`
+        `Failed to obtain collectionId while determining Alternative Options for ${recipeId} recipe`,
       )
     }
 
@@ -90,7 +90,7 @@ export const useAlternativeOptions: UseAlternativeOptions = ({ allCollections } 
       recipesVariants,
       recipeId,
       recipes,
-      dietaryClaims
+      dietaryClaims,
     )
     const recipeVariantsArray = recipeAlternativeOptions
       ? recipeAlternativeOptions.variantsList.toJS()

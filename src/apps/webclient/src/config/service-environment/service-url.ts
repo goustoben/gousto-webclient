@@ -80,8 +80,8 @@ export function serviceUrl(
   serviceUrlProperties: ServiceUrlProperties,
   // eslint-disable-next-line no-shadow,no-unused-vars
   getOverriddenUrl: (
-    serviceUrlProperties: ServiceUrlProperties
-  ) => string | undefined = serviceOverrides
+    serviceUrlProperties: ServiceUrlProperties,
+  ) => string | undefined = serviceOverrides,
 ) {
   const { protocol, environmentName, serviceName, serviceDomain, basePath, port } =
     serviceUrlProperties

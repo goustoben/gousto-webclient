@@ -32,7 +32,7 @@ describe('Promo Code', () => {
           cy.route(
             'POST',
             /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/,
-            '@succeedInApply'
+            '@succeedInApply',
           ).as('succeedInApply')
         })
 
@@ -48,7 +48,7 @@ describe('Promo Code', () => {
           cy.route(
             'POST',
             /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/,
-            '@failToApply'
+            '@failToApply',
           ).as('failToApply')
         })
 

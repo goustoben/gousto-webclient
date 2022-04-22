@@ -62,7 +62,7 @@ export const viewRecipe = ({ recipeId }, state) => {
         products: getProductsValueForSingleRecipeById(recipeId, state),
       },
     },
-    state
+    state,
   )
 }
 
@@ -80,7 +80,7 @@ export const addRecipeToBasket = ({ recipeId, orderId }, state) => {
         products: getProductsValueForSingleRecipeById(recipeId, state),
       },
     },
-    state
+    state,
   )
 }
 
@@ -105,7 +105,7 @@ export const signupPurchaseCompleted = (action, state) => {
         products: getProductsValueForMultipleRecipes(basketRecipes, state),
       },
     },
-    state
+    state,
   )
 }
 
@@ -125,7 +125,7 @@ export const customerPurchaseCompleted = ({ order }, state) => {
         products: getProductsValueForRecipeIds(recipeIds, state),
       },
     },
-    state
+    state,
   )
 }
 
@@ -173,7 +173,7 @@ export const locationChange = ({ payload }, state) => {
         products: getProductsValueForMultipleRecipes(basketRecipes, state),
       },
     },
-    state
+    state,
   )
 }
 

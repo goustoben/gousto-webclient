@@ -14,7 +14,7 @@ describe('given SocialBelongingBanner component', () => {
         amountOfCustomers={amountOfCustomers}
         district={district}
         trackBannerAppearance={trackBannerAppearance}
-      />
+      />,
     )
   })
 

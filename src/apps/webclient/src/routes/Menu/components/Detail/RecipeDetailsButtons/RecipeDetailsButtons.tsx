@@ -44,7 +44,7 @@ export const RecipeDetailsButtons = ({
   const { getStockForRecipe } = useStock()
   const surchargePerPortion = useSurchargePerPortion({ recipeId, numPortions })
   const isCloseModalOnAddRecipeEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_is_close_modal_on_add_recipe_enabled'
+    'beetroots_is_close_modal_on_add_recipe_enabled',
   )
   const stock = getStockForRecipe(recipeId)
   const qty = getQuantitiesForRecipeId(recipeId)
@@ -66,7 +66,7 @@ export const RecipeDetailsButtons = ({
         dispatch(actions.menuBrowseCTAVisibilityChange(true))
       }
     },
-    [dispatch, stock, canAddRecipes, recipeId, view, position, isCloseModalOnAddRecipeEnabled]
+    [dispatch, stock, canAddRecipes, recipeId, view, position, isCloseModalOnAddRecipeEnabled],
   )
 
   const handleRemove = useCallback(() => {

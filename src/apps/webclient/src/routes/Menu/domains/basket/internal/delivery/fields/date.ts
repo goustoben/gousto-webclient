@@ -13,7 +13,7 @@ const useChangeFunctions = () => {
 
   const changeSlot = useMemo(
     () => (slotId: string) => dispatch(basketSlotChange(slotId)),
-    [dispatch]
+    [dispatch],
   )
 
   return { changeDate, changeSlot }

@@ -57,7 +57,7 @@ describe('processRequest', () => {
           mockStore.getState(),
           mockUserAgent,
           mockScripts,
-          'mock helmet render static'
+          'mock helmet render static',
         )
       })
     })
@@ -75,7 +75,7 @@ describe('processRequest', () => {
           mockStore.getState(),
           mockUserAgent,
           mockScripts,
-          'mock helmet peek'
+          'mock helmet peek',
         )
       })
     })

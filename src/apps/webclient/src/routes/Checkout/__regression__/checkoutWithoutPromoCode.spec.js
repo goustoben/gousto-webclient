@@ -42,7 +42,7 @@ describe('Promo Code', () => {
           cy.proceedToCheckout({ platform: 'WEB' })
 
           checkPricesOnCheckout()
-        }
+        },
       )
 
       withPlatformTags(MOBILE).it(
@@ -52,7 +52,7 @@ describe('Promo Code', () => {
           showOrderSummary()
 
           checkPricesOnCheckout()
-        }
+        },
       )
     })
   })

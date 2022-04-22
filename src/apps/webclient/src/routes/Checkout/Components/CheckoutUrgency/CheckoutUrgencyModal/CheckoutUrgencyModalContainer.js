@@ -31,5 +31,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CheckoutUrgencyModalContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(CheckoutUrgencyModal)

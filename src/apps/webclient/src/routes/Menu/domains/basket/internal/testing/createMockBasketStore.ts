@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store'
 import { initialState as basketInitialState } from 'reducers/basket'
 
 export const createMockBasketStore = (
-  valueOverrides: Partial<ReturnType<typeof basketInitialState>>
+  valueOverrides: Partial<ReturnType<typeof basketInitialState>>,
 ) => {
   const initialState = {
     basket: valueOverrides ? basketInitialState().merge(valueOverrides) : basketInitialState(),

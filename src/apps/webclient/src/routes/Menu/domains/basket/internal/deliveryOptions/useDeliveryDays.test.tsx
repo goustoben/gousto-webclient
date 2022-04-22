@@ -32,7 +32,7 @@ describe('useDeliveryDays', () => {
           userId: 'user one',
           usersOrdersDaySlotLeadTimeIds: [],
           postcode: 'RH19 1AA',
-        })
+        }),
       )
 
       await waitForNextUpdate()
@@ -46,7 +46,7 @@ describe('useDeliveryDays', () => {
             'x-gousto-user-id': 'user one',
           },
           method: 'GET',
-        }
+        },
       )
     })
   })

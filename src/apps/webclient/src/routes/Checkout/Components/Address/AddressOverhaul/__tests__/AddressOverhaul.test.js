@@ -11,7 +11,7 @@ describe('Given AddressOverhaul', () => {
       <AddressOverhaul
         isEditingManually={false}
         onEnterAddressManuallyClick={onEnterAddressManuallyClick}
-      />
+      />,
     )
   })
 

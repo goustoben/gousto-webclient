@@ -31,7 +31,7 @@ export const useGetStockForRecipe = ({
 
       return menuRecipeStock.getIn([recipeId, String(numPortions)], 0)
     },
-    [numPortions, menuRecipeStock]
+    [numPortions, menuRecipeStock],
   )
 
   return getStockForRecipe

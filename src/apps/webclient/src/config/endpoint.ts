@@ -15,7 +15,7 @@ export const buildServiceUrlProperties = (
   serviceName: ServiceName,
   majorVersion: number,
   serviceEnvironment: ServiceEnvironment,
-  basePath?: string
+  basePath?: string,
 ): ServiceUrlProperties => ({
   ...serviceEnvironment,
   serviceName,
@@ -26,7 +26,7 @@ export const buildServiceUrlProperties = (
 function getServiceUrl(
   serviceName: ServiceName,
   version: number,
-  serviceEnvironment: ServiceEnvironment
+  serviceEnvironment: ServiceEnvironment,
 ) {
   const { basePath } = findServiceVersion(serviceName, version, getServiceManifest())
   const isPublic = canUseWindow() || isDev()
@@ -36,8 +36,8 @@ function getServiceUrl(
       serviceName,
       version,
       serviceEnvironment,
-      isPublic ? basePath : undefined
-    )
+      isPublic ? basePath : undefined,
+    ),
   )
 }
 

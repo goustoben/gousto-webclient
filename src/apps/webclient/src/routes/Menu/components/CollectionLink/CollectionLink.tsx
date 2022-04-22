@@ -26,7 +26,7 @@ const CollectionLink = () => {
               (collection) =>
                 !!collection && (
                   <CollectionLinkTile key={collection.get('id')} collection={collection} />
-                )
+                ),
             )}
         </div>
       </div>

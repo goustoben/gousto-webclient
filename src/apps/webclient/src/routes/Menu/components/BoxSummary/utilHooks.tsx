@@ -27,7 +27,7 @@ export interface CheckoutPrices {
  * @returns {number} - discount amount
  */
 const getPercentageOrAmountOff = (
-  pricing?: Pricing | null
+  pricing?: Pricing | null,
 ): Pricing['amountOff'] | Pricing['percentageOff'] | undefined => {
   const flatDiscountApplied = pricing?.flatDiscountApplied
 
@@ -69,7 +69,7 @@ export const useCheckoutPrices = (): CheckoutPrices => {
   // for new users promocode discount is extracted from store.promocode slice
   const promoCode = pricing?.promoCode
   const [newUsersDiscountAmount, isDiscountFlat] = useSelector<any, [number, boolean]>(
-    createExtractDiscountFromStore(promoCode)
+    createExtractDiscountFromStore(promoCode),
   )
   const isDiscountEnabled = !!newUsersDiscountAmount
 

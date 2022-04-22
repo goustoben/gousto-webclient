@@ -37,7 +37,7 @@ const PromoBannerConnected = connect(mapStateToProps, mapDispatchToProps)(PromoB
 
 export const PromoBannerContainer = () => {
   const isTwoMonthPromoCodeEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_two_month_promo_code_web_enabled'
+    'beetroots_two_month_promo_code_web_enabled',
   )
 
   return <PromoBannerConnected isTwoMonthPromoCodeEnabled={isTwoMonthPromoCodeEnabled} />

@@ -11,7 +11,7 @@ describe('SubscriptionTransparency', () => {
 
   test('should be rendered properly', () => {
     expect(
-      wrapper.text().includes('Skip a box or cancel your subscription online at anytime.')
+      wrapper.text().includes('Skip a box or cancel your subscription online at anytime.'),
     ).toBe(true)
 
     expect(wrapper.find({ 'data-testing': 'highlighted' }).exists()).toBeTruthy()

@@ -21,7 +21,7 @@ describe('given the user is at the Box Size Step', () => {
         numPortionChangeTracking={numPortionChangeTracking}
         next={next}
         trackSignupWizardAction={trackSignupWizardAction}
-      />
+      />,
     )
   })
 

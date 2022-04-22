@@ -135,7 +135,7 @@ class Buttons extends React.Component {
               css.tooltipWidth,
               outOfstock || limitReached,
               qty === 1,
-              segment
+              segment,
             )
           : segment}
       </Button>

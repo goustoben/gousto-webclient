@@ -14,7 +14,7 @@ export const getCurrentPromoCodeData = createSelector(
     }
 
     return promoStore.getIn([promoCode, 'codeData'], null)
-  }
+  },
 )
 
 export const getCurrentPromoCodeCustomText1 = createSelector(
@@ -25,7 +25,7 @@ export const getCurrentPromoCodeCustomText1 = createSelector(
     }
 
     return promoCodeData.getIn(['campaign', 'landingDetails1'], null)
-  }
+  },
 )
 
 export const getCurrentPromoCodeCustomText2 = createSelector(
@@ -36,7 +36,7 @@ export const getCurrentPromoCodeCustomText2 = createSelector(
     }
 
     return promoCodeData.getIn(['campaign', 'landingDetails2'], null)
-  }
+  },
 )
 
 export const getIsSkipWizardEnabled = ({ features }) =>

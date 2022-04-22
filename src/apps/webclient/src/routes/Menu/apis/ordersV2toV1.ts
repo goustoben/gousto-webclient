@@ -40,7 +40,7 @@ const transformMenuServiceImageToMedia = (image: AnyObject) => ({
 const safeTraversal = (
   objToTraverse: AnyObject | null | undefined,
   keys: any[],
-  defaultValue: any = undefined
+  defaultValue: any = undefined,
 ) => keys.reduce((obj, key) => obj && obj[key], { ...(objToTraverse || {}) }) || defaultValue
 
 const getRecipeItems = (recipes: AnyObject[], included: Included[]): RecipeItem[] =>
@@ -60,11 +60,11 @@ const getRecipeItems = (recipes: AnyObject[], included: Included[]): RecipeItem[
       itemableId: coreId,
       itemableType: ChoiceType.Recipe,
       media: safeTraversal(recipeIncludedBlock, ['attributes', 'images'], []).map(
-        transformMenuServiceImageToMedia
+        transformMenuServiceImageToMedia,
       ),
       quantity: String(safeTraversal(recipe, ['meta', 'portion_for'])),
       recipeGoustoReference: String(
-        safeTraversal(recipeIncludedBlock, ['attributes', 'gousto_reference'])
+        safeTraversal(recipeIncludedBlock, ['attributes', 'gousto_reference']),
       ),
       recipeId: coreId,
       recipeUuid: uuid,
@@ -189,7 +189,7 @@ export const transformOrderV2ToOrderV1 = (order: AnyObject, included: Included[]
       deliveryInstructions: safeTraversal(
         shippingAddress,
         ['attributes', 'delivery_instructions'],
-        ''
+        '',
       ),
       shippingDefault: safeTraversal(shippingAddress, ['attributes', 'shipping_default'], false),
       billingDefault: safeTraversal(shippingAddress, ['attributes', 'billing_default'], false),

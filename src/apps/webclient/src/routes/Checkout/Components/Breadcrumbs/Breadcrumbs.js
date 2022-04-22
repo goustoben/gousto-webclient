@@ -43,7 +43,7 @@ Breadcrumbs.propTypes = {
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       label: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   currentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   trackCheckoutNavigationLinks: PropTypes.func.isRequired,

@@ -13,7 +13,7 @@ describe('Given HeaderContent', () => {
         isExpanded={false}
         handleClick={handleClick}
         trackUTMAndPromoCode={trackUTMAndPromoCode}
-      />
+      />,
     )
   })
 

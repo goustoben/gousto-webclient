@@ -74,7 +74,7 @@ export const useAttributes = ({ maxNoAttributes }: { maxNoAttributes?: number } 
 
       return anAttribute ? [...acc, anAttribute] : acc
     },
-    []
+    [],
   )
 
   return attributesInPriorityOrder.filter(({ show }) => show !== false).slice(0, maxNoAttributes)
