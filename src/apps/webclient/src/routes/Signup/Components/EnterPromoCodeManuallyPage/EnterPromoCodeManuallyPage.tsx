@@ -22,17 +22,24 @@ import css from './EnterPromoCodeManuallyPage.css'
 const DEBOUNCE_MS = 500
 
 type SuccessSectionProps = {
-  promoCodeCampaignTextHtml: string
+  promoCodeCampaignTextHtml: string | null
 }
 
 /* eslint-disable react/no-danger */
 export const SuccessSection = ({ promoCodeCampaignTextHtml }: SuccessSectionProps) => (
   <>
     <Heading5>You got a discount!</Heading5>
-    <div
-      dangerouslySetInnerHTML={{ __html: promoCodeCampaignTextHtml }}
-      className={css.promoCodeCampaignText}
-    />
+    {promoCodeCampaignTextHtml ? (
+      <div
+        dangerouslySetInnerHTML={{ __html: promoCodeCampaignTextHtml }}
+        className={css.promoCodeCampaignText}
+      />
+    ) : (
+      <>
+        <p>Your discount will be automatically applied to your account.</p>
+        <p>Happy cooking!</p>
+      </>
+    )}
   </>
 )
 
