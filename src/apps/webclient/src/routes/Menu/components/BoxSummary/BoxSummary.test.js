@@ -8,6 +8,7 @@ import BoxSummary from './BoxSummary'
 
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
+import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
 
 describe('<BoxSummary />', () => {
   let wrapper
@@ -68,6 +69,10 @@ describe('<BoxSummary />', () => {
 
     test('should contain one BoxSummaryBanner component', () => {
       expect(wrapper.find(BoxSummaryBanner).length).toEqual(1)
+    })
+
+    test('should contain one CheckoutErrorModal component', () => {
+      expect(wrapper.find(CheckoutErrorModal).length).toEqual(1)
     })
 
     test('should contain one BoxSummaryOverlayContainer component', () => {

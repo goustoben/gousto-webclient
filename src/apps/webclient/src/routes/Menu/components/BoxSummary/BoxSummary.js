@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
 import { EscapeKeyPressed } from 'utils/DOMEvents'
-
+import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
 import css from './BoxSummary.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
@@ -64,7 +64,7 @@ class BoxSummary extends React.PureComponent {
       boxDetailsVisibilityChange(true)
     }
 
-    if (this.tooltipError()) {
+    if (this.handleError().showTooltip) {
       this.hideTooltipDelay = setTimeout(() => {
         const { hideTooltip } = this.state
 
@@ -98,6 +98,26 @@ class BoxSummary extends React.PureComponent {
     }
   }
 
+  /**
+   * Show tooltip if there is orderSaveError, and it is 'basket-expired', display error modal popup otherwise.
+   * @returns {{tooltipErrorText: string, showErrorModalPopup: boolean, showTooltip: boolean}}
+   */
+  handleError() {
+    const { orderSaveError } = this.props
+    const { hideTooltip } = this.state
+    const hadOrderSaveError = Boolean(orderSaveError) && orderSaveError !== 'no-stock'
+    const basketExpiredError = orderSaveError === 'basket-expired'
+    const showTooltip = hadOrderSaveError && !hideTooltip && basketExpiredError
+    const tooltipErrorText = basketExpiredError ? 'Sorry, your box has expired. Please re-add your recipe choices to continue' : undefined
+    const showErrorModalPopup = hadOrderSaveError && tooltipErrorText === undefined
+
+    return {
+      showTooltip,
+      tooltipErrorText,
+      showErrorModalPopup
+    }
+  }
+
   open = () => {
     const { boxDetailsVisibilityChange } = this.props
     boxDetailsVisibilityChange(true)
@@ -126,27 +146,6 @@ class BoxSummary extends React.PureComponent {
     return basketSum(okRecipes(recipes, menuRecipes, stock, numPortions))
   }
 
-  tooltipError() {
-    const { orderSaveError } = this.props
-    const showTooltip = Boolean(orderSaveError) && orderSaveError !== 'no-stock'
-
-    if (!showTooltip) {
-      return false
-    }
-
-    const { hideTooltip } = this.state
-
-    if (hideTooltip) {
-      return false
-    }
-
-    if (orderSaveError === 'basket-expired') {
-      return 'Sorry, your box has expired. Please re-add your recipe choices to continue.'
-    }
-
-    return 'Sorry, there has been an issue saving your order. Please try again or contact customer care.'
-  }
-
   render() {
     const {
       date,
@@ -159,12 +158,15 @@ class BoxSummary extends React.PureComponent {
       showDetails,
       isMobile,
       shouldMenuBrowseCTAShow,
-      isBoxSummaryOpened
+      isBoxSummaryOpened,
     } = this.props
     const numRecipes = this.numRecipes()
+    const { tooltipErrorText, showErrorModalPopup } = this.handleError()
 
     return (
       <div className={css.boxSummary} data-testing="boxSummary">
+        <CheckoutErrorModal shouldShow={ showErrorModalPopup } />
+
         <BoxSummaryBanner
           numRecipes={numRecipes}
           expandWarning={!menuFetchPending && numRecipes !== basketSum(recipes)}
@@ -176,7 +178,7 @@ class BoxSummary extends React.PureComponent {
           maxRecipesNum={maxRecipesNum}
           menuRecipesStore={menuRecipesStore}
           recipes={recipes}
-          errorText={this.tooltipError()}
+          errorText={tooltipErrorText}
           openDetails={this.open}
           isBoxSummaryOpened={isBoxSummaryOpened}
         />
