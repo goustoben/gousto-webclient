@@ -27,21 +27,22 @@ const Checkout = (props) => {
     menuFetchData,
     isButtonHovered,
     shouldRenderCounter,
+    orderSaveError,
   } = props
   const { pricing } = usePricing()
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
   const isPending =
-    checkoutPending ||
+    (checkoutPending ||
     pricingPending ||
     basketPreviewOrderChangePending ||
     orderSavePending ||
     loadingOrderPending ||
-    menuFetchData
+    menuFetchData) && orderSaveError === null
   const numRecipes = basketSum(okRecipes(recipes, menuRecipes, stock, numPortions))
   const isDisabled =
     checkoutPending ||
-    numRecipes < config.minRecipesNum
-
+    numRecipes < config.minRecipesNum ||
+    orderSaveError !== null
   const handleClick = useCallback((e) => {
     e.stopPropagation()
     checkoutBasket({ section, view, pricing })
@@ -90,6 +91,7 @@ Checkout.propTypes = {
   basketPreviewOrderChangePending: PropTypes.bool,
   isButtonHovered: PropTypes.bool,
   shouldRenderCounter: PropTypes.bool,
+  orderSaveError: PropTypes.string,
 }
 
 Checkout.defaultProps = {
@@ -102,6 +104,7 @@ Checkout.defaultProps = {
   basketPreviewOrderChangePending: false,
   isButtonHovered: false,
   shouldRenderCounter: false,
+  orderSaveError: null,
 }
 
 export { Checkout }

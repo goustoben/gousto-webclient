@@ -33,6 +33,7 @@ GoustoLink.propTypes = {
   to: PropTypes.string,
   clientRouted: PropTypes.bool,
   onClick: PropTypes.func,
+  children: PropTypes.node,
 }
 
 GoustoLink.defaultProps = {
