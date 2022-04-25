@@ -9,6 +9,7 @@ import { getUserId } from 'selectors/user'
 import { orderTrackingActions } from 'config/order'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
 import { getOrderForUpdateOrderV1 } from 'routes/Menu/selectors/order'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
@@ -16,14 +17,10 @@ import { orderConfirmationRedirect } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
 import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
 import { anyUnset } from '../utils/object'
-import {
-  saveOrder,
-  updateOrderAddress,
-} from '../apis/orders'
-
+import { updateOrderAddress } from '../apis/orders'
 import { fetchDeliveryDays } from '../apis/deliveries'
 import { unSkipDates, skipDates } from '../routes/Account/apis/subscription'
-import { getAccessToken, getAuthUserId } from '../selectors/auth'
+import { getAuthUserId } from '../selectors/auth'
 import { getBasketOrderId } from '../selectors/basket'
 import { openSidesModal } from '../routes/Menu/actions/sides'
 import { deleteOrder } from '../routes/Account/MyDeliveries/apis/orderV2'
@@ -89,13 +86,12 @@ export const orderUpdate = (isSidesEnabled = false) => async (dispatch, getState
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
 
   const state = getState()
-  const accessToken = getAccessToken(state)
   const orderId = getBasketOrderId(state)
   const order = getOrderForUpdateOrderV1(state)
   const orderAction = order.order_action
 
   try {
-    const { data: savedOrder } = await saveOrder(accessToken, orderId, order)
+    const { data: savedOrder } = await orderV2.updateOrder(dispatch, getState, orderId, order)
 
     if (savedOrder && savedOrder.id) {
       dispatch(trackOrder(
@@ -140,7 +136,6 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         delivery_slot_id: coreSlotId,
         day_slot_lead_time_id: slot.get('daySlotLeadTimeId', ''),
       }
-      const accessToken = getState().auth.get('accessToken')
       dispatch({
         type: actionTypes.TRACKING,
         trackingData: {
@@ -148,7 +143,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
           ...trackingData
         }
       })
-      const { data: updatedOrder } = await saveOrder(accessToken, orderId, order)
+      const { data: updatedOrder } = await orderV2.updateOrder(dispatch, getState, orderId, order)
       dispatch({
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
         orderId,

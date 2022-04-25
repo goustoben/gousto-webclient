@@ -307,12 +307,10 @@ describe('order actions', () => {
 
       await sendUpdateOrder()(dispatch, getState)
 
-      expect(getOrderV2Spy).toBeCalledWith(getState())
-      expect(getOrderV2Spy).toHaveBeenCalledTimes(1)
       expect(getBasketOrderIdSpy).toBeCalledWith(getState())
       expect(getBasketOrderIdSpy).toHaveBeenCalledTimes(1)
       expect(updateOrderSpy).toHaveBeenCalledTimes(1)
-      expect(updateOrderSpy).toHaveBeenCalledWith('access-token', 'order-id', { id: 'order_id' }, 'user-id')
+      expect(updateOrderSpy).toHaveBeenCalledWith(dispatch, getState, 'order-id')
     })
 
     test('should redirect the user to the order summary page if it succeeds', async () => {

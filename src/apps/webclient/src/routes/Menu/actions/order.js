@@ -5,9 +5,9 @@ import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { actionTypes } from 'actions/actionTypes'
 import { getAccessToken, getAuthUserId } from 'selectors/auth'
 import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import * as coreApi from '../apis/core'
-import { updateOrder } from '../apis/orderV2'
-import { getOrderDetails, getOrderV2, getOrderAction } from '../selectors/order'
+import { getOrderDetails, getOrderAction } from '../selectors/order'
 import { getBasketOrderId } from '../../../selectors/basket'
 import { openSidesModal } from './sides'
 
@@ -96,14 +96,11 @@ export const sendUpdateOrder = (isSidesEnabled = false) => async (dispatch, getS
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
 
   const state = getState()
-  const accessToken = getAccessToken(state)
-  const userId = getAuthUserId(state)
   const orderId = getBasketOrderId(state)
-  const orderPayload = getOrderV2(state)
   const orderAction = getOrderAction(state)
 
   try {
-    const { data: order } = await updateOrder(accessToken, orderId, orderPayload, userId)
+    const { data: order } = await orderV2.updateOrder(dispatch, getState, orderId)
 
     if (order) {
       dispatch(trackOrder(

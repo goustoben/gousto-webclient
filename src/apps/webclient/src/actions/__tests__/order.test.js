@@ -4,10 +4,10 @@ import * as deliveriesUtils from 'utils/deliveries'
 import * as menuOrderSelectors from 'routes/Menu/selectors/order'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import {
-  saveOrder,
   fetchOrder,
   updateOrderAddress,
 } from 'apis/orders'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import actionStatus from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
 import { trackAffiliatePurchase } from 'actions/tracking'
@@ -44,6 +44,7 @@ jest.mock('actions/orderConfirmation')
 jest.mock('utils/logger', () => ({
   error: jest.fn()
 }))
+jest.mock('routes/Menu/apis/orderV2')
 
 jest.mock('config/order', () => ({
   orderTrackingActions: {
@@ -269,7 +270,7 @@ describe('order actions', () => {
     })
 
     test('should mark ORDER_SAVE as pending', async () => {
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+      orderV2.updateOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve(resolve) })
       ))
 
@@ -282,7 +283,7 @@ describe('order actions', () => {
 
     test('should mark ORDER_SAVE as errored if it errors', async () => {
       const err = new Error('oops')
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+      orderV2.updateOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve, reject) => { reject(err) })
       ))
 
@@ -299,20 +300,20 @@ describe('order actions', () => {
       expect(dispatch).toBeCalledTimes(5)
     })
 
-    test('should map the arguments through to saveOrder correctly', async () => {
+    test('should map the arguments through to orderV2.updateOrder correctly', async () => {
       spyGetOrderForUpdateOrderV1.mockReturnValue({ id: 'order_id' })
 
       await orderUpdate()(dispatch, getState)
 
       expect(spyGetOrderForUpdateOrderV1).toBeCalledWith(getState())
       expect(spyGetOrderForUpdateOrderV1).toHaveBeenCalledTimes(1)
-      expect(saveOrder).toHaveBeenCalledTimes(1)
-      expect(saveOrder).toHaveBeenCalledWith('access-token', 'order-id', { id: 'order_id' })
+      expect(orderV2.updateOrder).toHaveBeenCalledTimes(1)
+      expect(orderV2.updateOrder).toHaveBeenCalledWith(dispatch, getState, 'order-id', { id: 'order_id' })
     })
 
     test('should redirect the user to the order summary page if it succeeds', async () => {
       spyGetOrderForUpdateOrderV1.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+      orderV2.updateOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
       ))
 
@@ -326,7 +327,7 @@ describe('order actions', () => {
 
     test('should open the sides modal if isSidesEnabled is passed in as true', async () => {
       spyGetOrderForUpdateOrderV1.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+      orderV2.updateOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
       ))
       const openSidesModalMock = jest.fn()
@@ -339,7 +340,7 @@ describe('order actions', () => {
     })
 
     test('should call sendClientMetric with correct details', async () => {
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+      orderV2.updateOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
       ))
 
@@ -631,7 +632,7 @@ describe('order actions', () => {
 
     it('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as errored if it errors', async () => {
       const err = new Error('oops')
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+      orderV2.updateOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve, reject) => reject(err))
       ))
 
@@ -646,7 +647,7 @@ describe('order actions', () => {
       expect(error).toHaveBeenNthCalledWith(2, 'ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', err.message)
     })
 
-    it('should map the arguments through to saveOrder and dispatch the action with the correct arguments', async () => {
+    it('should map the arguments through to orderV2.updateOrder and dispatch the action with the correct arguments', async () => {
       const updatedOrder = {
         data: {
           deliveryDate: '01-01-2017',
@@ -663,20 +664,20 @@ describe('order actions', () => {
         deliveryEndTime: '07:00:00',
       }))
 
-      saveOrder.mockReturnValueOnce(
+      orderV2.updateOrder.mockReturnValueOnce(
         new Promise(resolve => resolve(updatedOrder))
       )
 
       await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
-      expect(saveOrder).toHaveBeenCalled()
+      expect(orderV2.updateOrder).toHaveBeenCalled()
       const order = {
         delivery_day_id: 3,
         delivery_slot_id: 8,
         day_slot_lead_time_id: 'day-slot-lead-time-uuid',
       }
 
-      expect(saveOrder).toHaveBeenCalledWith('access-token', '12345', order)
+      expect(orderV2.updateOrder).toHaveBeenCalledWith(dispatch, getState, '12345', order)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
@@ -697,10 +698,10 @@ describe('order actions', () => {
       })
     })
 
-    it('should dispatch the SaveAttemptFailed action with the correct arguments if saveOrder fails', async () => {
+    it('should dispatch the SaveAttemptFailed action with the correct arguments if orderV2.updateOrder fails', async () => {
       const error = new Error('error message')
 
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+      orderV2.updateOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve, reject) => reject(error))
       ))
 
