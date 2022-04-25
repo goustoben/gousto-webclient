@@ -136,6 +136,8 @@ export const EnterPromoCodeManuallyPage = () => {
     setStatus,
   ])
 
+  // When component unmounts, stop the debounce timer so the request to check
+  // doesn't happen, so the follow-up state updates don't happen.
   useEffect(
     () => () => {
       cancel()
@@ -150,10 +152,7 @@ export const EnterPromoCodeManuallyPage = () => {
       headerSize="fontStyle2XL"
       hasSmallerMarginBelowHeader
     >
-      {/* Negative margin offsets the size of label+space between label and
-          input.  citrus/InputField has required label, and it is out of scope
-          for the current story to fix the external library. */}
-      <div style={{ marginTop: -32 }}>
+      <div className={css.inputFieldContainer}>
         <InputField
           id="enterPromoCodeManuallyInputField"
           data-testid="enterPromoCodeManuallyInputField"

@@ -58,7 +58,7 @@ export const getPromoCodeCampaignTextHtml = (
 export const checkPromoCode = (
   promoCode: string,
   isPending: boolean,
-  dispatch: any,
+  dispatch: Dispatch<any>,
   promoStore: Immutable.Map<string, any>,
   setStatus: (status: Status) => void,
   setCampaignTextHtml: (campaignTextHtml: string) => void,

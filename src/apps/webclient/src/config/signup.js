@@ -3,6 +3,10 @@ export const PaymentMethod = {
   PayPal: 'PayPal'
 }
 
+const checkAccountPageSlug = 'start'
+const applyVoucherPageSlug = 'apply-voucher'
+const enterPromoCodeManuallyPageSlug = 'enter-discount-code'
+
 export const signupConfig = {
   defaultSteps: ['boxSize', 'postcode', 'delivery'],
   steps: [
@@ -62,7 +66,12 @@ export const signupConfig = {
   },
   discountAppliedText: 'View this when you reach the checkout.',
   sellThePropositionPagePath: 'about',
-  checkAccountPageSlug: 'start',
-  applyVoucherPageSlug: 'apply-voucher',
-  enterPromoCodeManuallyPageSlug: 'enter-discount-code',
+  checkAccountPageSlug,
+  applyVoucherPageSlug,
+  enterPromoCodeManuallyPageSlug,
+  canLandOnStepWithoutRedirecting: [
+    checkAccountPageSlug,
+    applyVoucherPageSlug,
+    enterPromoCodeManuallyPageSlug,
+  ],
 }
