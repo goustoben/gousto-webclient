@@ -1,12 +1,10 @@
-@value Blackberry, DarkRadish, Radish, White, Bluecheese from 'styles/colors.css';
-@value sizeXS, bodyFontStackBold from 'styles/typography.css';
+@value W-0 #FFFFFF;
 
 .circle {
   composes: absolute from 'styles/position.css';
   right: 0.25rem;
   min-width: 3.5rem;
   height: 2.5rem;
-  background-color: Blackberry;
   border-radius: 1.25rem 1.25rem 0 0;
 }
 
@@ -14,13 +12,10 @@
   composes: circle;
   composes: textCenter from 'styles/typography.css';
   composes: relative from 'styles/position.css';
-  color: White;
+  color: W-0;
   padding: 0.5rem;
   margin-bottom: 0;
   margin-top: -2.25rem;
-}
-
-.isSimplifyBasketBarEnabled {
   background-color: rgba(51, 61, 71, 0.95);
   backdrop-filter: blur(4px);
 }
