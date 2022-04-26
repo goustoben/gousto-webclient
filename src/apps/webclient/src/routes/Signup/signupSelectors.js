@@ -41,3 +41,8 @@ export const getCurrentPromoCodeCustomText2 = createSelector(
 
 export const getIsSkipWizardEnabled = ({ features }) =>
   features && features.getIn(['isSkipWizardEnabled', 'value'], false)
+
+export const getPendingSlice = (state) => state.pending
+
+export const createSelectIsPendingByActionType = (actionType) =>
+  createSelector(getPendingSlice, (pendingSlice) => pendingSlice.get(actionType))

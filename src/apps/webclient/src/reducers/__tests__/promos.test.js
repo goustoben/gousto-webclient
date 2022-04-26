@@ -58,6 +58,24 @@ describe('promos reducer', () => {
         ),
       ).toEqual(true)
     })
+
+    test('should handle PROMO_STORE_SAVE_ERROR', () => {
+      const state = Immutable.Map()
+      const result = promosReducers.promoStore(state, {
+        type: actionTypes.PROMO_STORE_SAVE_ERROR,
+        code: 'ZZZ',
+        errorText: 'not-exist'
+      })
+
+      expect(
+        Immutable.is(
+          result,
+          Immutable.fromJS({
+            ZZZ: { errorText: 'not-exist'},
+          }),
+        ),
+      ).toEqual(true)
+    })
   })
 
   describe('promoAgeVerified', () => {

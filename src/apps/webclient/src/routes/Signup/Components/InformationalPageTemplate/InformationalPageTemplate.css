@@ -111,10 +111,21 @@
 }
 
 .heading {
-  composes: fontStyle3XL from 'design-language/typography.css';
   margin-bottom: 1.5rem;
 
   @media BreakpointFromMedium {
     margin-bottom: 2rem;
   }
+}
+
+.fontStyle2XL {
+  composes: fontStyle2XL from 'design-language/typography.css';
+}
+
+.fontStyle3XL {
+  composes: fontStyle3XL from 'design-language/typography.css';
+}
+
+.hasSmallerMarginBelowHeader {
+  margin-bottom: 1rem;
 }

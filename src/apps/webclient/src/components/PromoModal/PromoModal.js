@@ -7,9 +7,12 @@ import {
   clickCloseDiscountFailurePopup,
   clickGodClaimDiscountPopup,
   clickCloseGodDiscountPopup,
+  clickEnterPromoCodeManuallyButton,
 } from 'actions/trackingKeys'
 import { CTA, Modal } from 'goustouicomponents'
 import headerImage from 'media/images/discount-modal-header.jpg'
+import { signupConfig } from 'config/signup'
+import { EnterPromoCodeManuallyButton } from './EnterPromoCodeManuallyButton'
 import { AgeVerifyContainer } from './AgeVerify'
 import css from './PromoModal.css'
 
@@ -43,13 +46,27 @@ class PromoModal extends React.Component {
 
       return closeModal()
     } else {
-      const closeModalEvent = isGoustoOnDemandEnabled ? clickCloseGodDiscountPopup : clickCloseDiscountPopup
-      const claimDiscountEvent = isGoustoOnDemandEnabled ? clickGodClaimDiscountPopup : clickClaimDiscountPopup
+      const closeModalEvent = isGoustoOnDemandEnabled
+        ? clickCloseGodDiscountPopup
+        : clickCloseDiscountPopup
+      const claimDiscountEvent = isGoustoOnDemandEnabled
+        ? clickGodClaimDiscountPopup
+        : clickClaimDiscountPopup
       const eventType = type === 'close' ? closeModalEvent : claimDiscountEvent
-      trackUTMAndPromoCode(eventType, isGoustoOnDemandEnabled ? { discount_amount: percentageOff } : null)
+      trackUTMAndPromoCode(
+        eventType,
+        isGoustoOnDemandEnabled ? { discount_amount: percentageOff } : null
+      )
 
       return promoApply()
     }
+  }
+
+  handleEnterPromoCodeManuallyClick = () => {
+    const { trackUTMAndPromoCode, closeModal } = this.props
+    trackUTMAndPromoCode(clickEnterPromoCodeManuallyButton)
+    closeModal()
+    browserHistory.push(`/signup/${signupConfig.enterPromoCodeManuallyPageSlug}`)
   }
 
   render() {
@@ -62,6 +79,7 @@ class PromoModal extends React.Component {
       isAgeVerified,
       pending,
       isGoustoOnDemandError,
+      isGoustoOnDemandEnabled,
     } = this.props
 
     return (
@@ -74,7 +92,9 @@ class PromoModal extends React.Component {
           handleClose={this.handleClick('close')}
         >
           <div className={css.container} data-testing="promoModal">
-            {!error && !isGoustoOnDemandError && <img className={css.header} src={headerImage} alt="Enjoy a tasty offer on us" />}
+            {!error && !isGoustoOnDemandError && (
+              <img className={css.header} src={headerImage} alt="Enjoy a tasty offer on us" />
+            )}
             {(error || isGoustoOnDemandError) && <h4 className={css.errorSubHeader}>{title}</h4>}
             <div className={css.contentContainer}>
               {!error && !isGoustoOnDemandError && <h4 className={css.subHeader}>{title}</h4>}
@@ -91,6 +111,10 @@ class PromoModal extends React.Component {
               >
                 {buttonText}
               </CTA>
+              <EnterPromoCodeManuallyButton
+                isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+                onClick={this.handleEnterPromoCodeManuallyClick}
+              />
             </div>
           </div>
         </Modal>

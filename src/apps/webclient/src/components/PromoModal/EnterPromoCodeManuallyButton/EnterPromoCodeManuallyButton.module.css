@@ -1,0 +1,11 @@
+@value BreakpointToSmall (max-width: 374px);
+
+.container {
+  padding-top: 0.5rem;
+
+  @media BreakpointToSmall {
+    & > button > span {
+      white-space: normal;
+    }
+  }
+}
