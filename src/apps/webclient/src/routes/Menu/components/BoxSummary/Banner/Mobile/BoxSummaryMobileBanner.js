@@ -14,7 +14,7 @@ import { BannerButtonContainer } from '../../BannerButton'
 import { BrowseCTAContainer } from '../../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 
-import { OpenBoxButton } from './OpenBoxButton'
+import { OpenBoxButton } from '../OpenBoxButton'
 import { Title } from '../../Title'
 
 import css from './BoxSummaryMobileBanner.css'

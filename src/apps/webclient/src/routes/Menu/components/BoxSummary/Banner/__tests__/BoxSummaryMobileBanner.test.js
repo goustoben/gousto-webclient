@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import * as Redux from 'react-redux'
 import { BoxSummaryMobileBanner } from 'routes/Menu/components/BoxSummary/Banner/Mobile/BoxSummaryMobileBanner'
-import { OpenBoxButton } from 'routes/Menu/components/BoxSummary/Banner/Mobile/OpenBoxButton'
+import { OpenBoxButton } from 'routes/Menu/components/BoxSummary/Banner/OpenBoxButton'
 
 describe('BoxSummaryMobileBanner', () => {
   let wrapper
