@@ -1,0 +1,10 @@
+.promoCodeCampaignText {
+  composes: fontStyleBody from 'design-language/typography.css';
+}
+
+.inputFieldContainer {
+  /* Negative margin offsets the size of label+space between label and input.
+   citrus/InputField has required label, and it is out of scope for the current
+   story to fix the external library. */
+  margin-top: -2rem;
+}

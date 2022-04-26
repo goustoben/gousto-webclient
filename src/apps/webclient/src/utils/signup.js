@@ -53,3 +53,18 @@ export function getPromocodeQueryParam(promocode, operator = '&') {
 
   return ''
 }
+
+/**
+ * When a user lands on any signup step besides first, they are redirected to
+ * the first step.  This function provides exceptions to this.
+ *
+ * @param stepSlug: the path of URL after "/signup/", e.g. "start" when the URL
+ * path is `/signup/start`
+ *
+ * @return if true, then this step or a step-like page can be landed upon
+ */
+export const canLandOnStepWithoutRedirecting = (stepSlug) => {
+  const allowedSlugs = signupConfig.canLandOnStepWithoutRedirecting
+
+  return allowedSlugs.includes(stepSlug)
+}

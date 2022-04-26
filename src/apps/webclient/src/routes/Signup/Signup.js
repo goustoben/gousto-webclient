@@ -13,6 +13,7 @@ import {
   getPromocodeQueryParam,
   findStepBySlug,
   getStepFromPathname,
+  canLandOnStepWithoutRedirecting,
 } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
 import { menuLoadBoxPrices } from 'actions/menu'
@@ -30,6 +31,7 @@ import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
+import { EnterPromoCodeManuallyPage } from './Components/EnterPromoCodeManuallyPage'
 import { CheckAccountPageContainer } from './Components/CheckAccountPage'
 import { ApplyVoucherPageContainer } from './Components/ApplyVoucherPage'
 
@@ -187,11 +189,7 @@ class Signup extends PureComponent {
     if (
       params.stepName &&
       firstStep.get('slug') !== params.stepName &&
-      // This condition is for server rendering, where isGoustoOnDemandEnabled
-      // is not being set: don't redirect when landing directly on "check
-      // account" page or "apply voucher" page.
-      params.stepName !== signupConfig.checkAccountPageSlug &&
-      params.stepName !== signupConfig.applyVoucherPageSlug &&
+      !canLandOnStepWithoutRedirecting(params.stepName) &&
       params.pathname !== postCodePath &&
       !shouldSetStepFromParams
     ) {
@@ -305,6 +303,10 @@ class Signup extends PureComponent {
 
     if (stepName === signupConfig.applyVoucherPageSlug) {
       return <ApplyVoucherPageContainer />
+    }
+
+    if (stepName === signupConfig.enterPromoCodeManuallyPageSlug) {
+      return <EnterPromoCodeManuallyPage />
     }
 
     const steps = this.getSteps()

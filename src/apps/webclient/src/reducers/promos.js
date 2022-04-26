@@ -15,6 +15,9 @@ export const promosReducers = {
     case actionTypes.PROMO_RECEIVE:
       return state.set(action.promo.code, Immutable.fromJS(action.promo))
 
+    case actionTypes.PROMO_STORE_SAVE_ERROR:
+      return state.set(action.code, Immutable.fromJS({ errorText: action.errorText }))
+
     default:
       return state
     }

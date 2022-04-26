@@ -23,29 +23,35 @@ const promoReceive = promo => ({
   promo,
 })
 
+const promoStoreSaveError = (code, errorText) => ({
+  type: actionTypes.PROMO_STORE_SAVE_ERROR,
+  code,
+  errorText
+})
+
 export const promoGet = code => (
   async (dispatch, getState) => {
     dispatch(pending(actionTypes.PROMO_GET, true))
     dispatch(error(actionTypes.PROMO_GET, null))
     const accessToken = getState().auth.get('accessToken')
     let promo
-    let errored
+    let errorText
 
     try {
       const { data } = await fetchPromo(accessToken, code)
       promo = data
     } catch (e) {
-      errored = true
-      dispatch(error(actionTypes.PROMO_GET, e.message))
+      errorText = e.message
+      dispatch(error(actionTypes.PROMO_GET, errorText))
     }
 
     try {
       if (Boolean(promo.codeData.campaign.enabled) === false) {
-        dispatch(error(actionTypes.PROMO_GET, 'not-exist'))
-        errored = true
+        errorText = 'not-exist'
+        dispatch(error(actionTypes.PROMO_GET, errorText))
       }
     } catch (e) {
-      errored = true
+      errorText = 'other-error'
     }
 
     if (promo) {
@@ -96,8 +102,10 @@ export const promoGet = code => (
     }
 
     dispatch(pending(actionTypes.PROMO_GET, false))
-    if (!errored) {
+    if (!errorText) {
       dispatch(promoReceive(promo))
+    } else {
+      dispatch(promoStoreSaveError(code, errorText))
     }
   }
 )
