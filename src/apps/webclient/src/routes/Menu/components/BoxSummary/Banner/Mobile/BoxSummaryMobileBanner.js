@@ -18,7 +18,7 @@ import { OpenBoxButton } from '../OpenBoxButton'
 import { Title } from '../../Title'
 
 import css from './BoxSummaryMobileBanner.css'
-import { ExpandBoxSummaryButtonContainer } from '../Desktop/ExpandBoxSummaryButtonContainer'
+import { ExpandBoxSummaryButtonContainer } from '../ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
 import { boxSummaryBannerPropTypes } from '../propTypes'
 
 const BoxSummaryMobileBanner = ({

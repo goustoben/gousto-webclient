@@ -11,7 +11,7 @@ import { BannerButtonContainer } from '../../BannerButton'
 import { BrowseCTAContainer } from '../../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 
-import { ExpandBoxSummaryButtonContainer } from './ExpandBoxSummaryButtonContainer'
+import { ExpandBoxSummaryButtonContainer } from '../ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
 
 import css from './BoxSummaryDesktopBanner.css'
 import { boxSummaryBannerPropTypes } from '../propTypes'
