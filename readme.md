@@ -144,9 +144,10 @@ $ yarn run test:unit
 See also the [Regression test docs](tests/regression/README.md)
 
 ```bash
-# 1. Build and run the webapp (server and client)
+# 1. Build and run the webapp. Use production build or tests will be *slow*
 $ cd src/apps/webclient
-$ yarn dev
+$ npm run build
+$ yarn run start:with-static
 
 # 2. In a new terminal window open Cypress tests
 $ cd <repo>/tests/regression
