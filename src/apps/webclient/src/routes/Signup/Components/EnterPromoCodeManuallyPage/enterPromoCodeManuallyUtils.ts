@@ -5,7 +5,12 @@ import { promoGet, promoChange } from 'actions/promos'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { redirect } from 'actions/redirect'
 
-export type Status = 'empty' | 'success' | 'error'
+/**
+ * empty = nothing entered
+ * success = promo code is valid
+ * error = promo code is not valid
+ */
+export type PromoCodeCheckStatus = 'empty' | 'success' | 'error'
 
 /**
  * Given the promoStore entry, return the human-readable campaign description as html.
@@ -60,7 +65,7 @@ export const checkPromoCode = (
   isPending: boolean,
   dispatch: Dispatch<any>,
   promoStore: Immutable.Map<string, any>,
-  setStatus: (status: Status) => void,
+  setStatus: (status: PromoCodeCheckStatus) => void,
   setCampaignTextHtml: (campaignTextHtml: string) => void,
 ) => {
   if (!promoCode) {

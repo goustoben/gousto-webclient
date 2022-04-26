@@ -16,7 +16,11 @@ import { InformationalPageTemplate } from 'routes/Signup/Components/Informationa
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { getPromoStore, createSelectIsPendingByActionType } from 'routes/Signup/signupSelectors'
 import { promo } from 'config/home'
-import { Status, checkPromoCode, proceedWithPromoCode } from './enterPromoCodeManuallyUtils'
+import {
+  PromoCodeCheckStatus,
+  checkPromoCode,
+  proceedWithPromoCode,
+} from './enterPromoCodeManuallyUtils'
 import css from './EnterPromoCodeManuallyPage.css'
 
 const DEBOUNCE_MS = 500
@@ -81,7 +85,12 @@ export const FailureSection = () => {
   )
 }
 
-const getFormStatus = (status: Status) => {
+/**
+ * Get the "status" prop of citrus/InputField so that the input field looks
+ * correct according to the status of the promo code check; see
+ * citrus/Input/AppearanceProps.
+ */
+const getFormFieldStatus = (status: PromoCodeCheckStatus) => {
   switch (status) {
     case 'empty':
       return undefined
@@ -95,7 +104,7 @@ const getFormStatus = (status: Status) => {
 export const EnterPromoCodeManuallyPage = () => {
   const [valueUnderInput, setValueUnderInput] = useState('')
   const [checkedValue, setCheckedValue] = useState('')
-  const [status, setStatus] = useState<Status>('empty')
+  const [status, setStatus] = useState<PromoCodeCheckStatus>('empty')
   const [campaignTextHtml, setCampaignTextHtml] = useState<string | null>(null)
 
   const dispatch = useDispatch()
@@ -158,7 +167,7 @@ export const EnterPromoCodeManuallyPage = () => {
           data-testid="enterPromoCodeManuallyInputField"
           label=""
           placeholder="45-56-69"
-          status={getFormStatus(status)}
+          status={getFormFieldStatus(status)}
           validationMessage={status === 'error' ? 'This discount code is not valid.' : undefined}
           value={valueUnderInput}
           onChange={(event) => {
