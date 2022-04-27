@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 
-import { getSlotTimes } from 'utils/deliveries'
 import { MOBILE_VIEW } from 'utils/view'
 
 import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
@@ -15,7 +14,6 @@ import { BrowseCTAContainer } from '../../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 
 import { OpenBoxButton } from '../OpenBoxButton'
-import { Title } from '../../Title'
 
 import css from './BoxSummaryMobileBanner.css'
 import { ExpandBoxSummaryButtonContainer } from '../ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
@@ -27,62 +25,30 @@ const BoxSummaryMobileBanner = ({
   menuRecipesStore,
   recipes,
   errorText,
-  openDetails,
-  date,
-  deliveryDays,
-  slotId,
   onExpandClick,
   expandWarning,
   numRecipes,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
-  const slotTime = getSlotTimes({ date, deliveryDays, slotId })
 
   return (
     <div
-      className={classNames(css.barmobile, {
-        [css.isSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled,
-      })}
-      onClick={openDetails}
+      className={classNames(css.barmobile, css.isSimplifyBasketBarEnabled)}
+      onClick={onExpandClick}
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       role="button"
     >
       <div>
-        <OpenBoxButton isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled} />
-        {!isSimplifyBasketBarEnabled && (
-          <Title
-            view={MOBILE_VIEW}
-            date={date}
-            finalisedSlot={slotId !== ''}
-            slotTime={slotTime}
-          />
-        )}
+        <OpenBoxButton />
       </div>
-      <div
-        className={classNames(css.summaryMobile, {
-          [css.buttonsContainerIsSimplifyBasketEnabled]: isSimplifyBasketBarEnabled,
-        })}
-      >
-        {isSimplifyBasketBarEnabled ? (
-          // Note: showing the button from the "desktop" section for the purposes
-          // of the "simplify basket bar" experiment: when productionizing, this
-          // should be fixed: probably by getting rid of the desktop/mobile
-          // separation altogether.
-          <ExpandBoxSummaryButtonContainer
-            warning={expandWarning}
-            onClick={onExpandClick}
-            numRecipes={numRecipes}
-            view={MOBILE_VIEW}
-          />
-        ) : (
-          <RecipeListContainer
-            view={MOBILE_VIEW}
-            recipes={recipes}
-            menuRecipesStore={menuRecipesStore}
-            maxRecipesNum={maxRecipesNum}
-          />
-        )}
+      <div className={classNames(css.summaryMobile, css.buttonsContainerIsSimplifyBasketEnabled)}>
+        <ExpandBoxSummaryButtonContainer
+          warning={expandWarning}
+          onClick={onExpandClick}
+          numRecipes={numRecipes}
+          view={MOBILE_VIEW}
+        />
 
         {showBrowseCTA && (
           <Tooltip
@@ -116,18 +82,11 @@ const BoxSummaryMobileBanner = ({
 }
 
 BoxSummaryMobileBanner.propTypes = {
-  date: PropTypes.string,
-  deliveryDays: PropTypes.instanceOf(Immutable.Map),
-  slotId: PropTypes.string,
   onExpandClick: PropTypes.func.isRequired,
 
   ...boxSummaryBannerPropTypes,
 }
 
-BoxSummaryMobileBanner.defaultProps = {
-  date: null,
-  deliveryDays: [Immutable.Map()],
-  slotId: null,
-}
+BoxSummaryMobileBanner.defaultProps = {}
 
 export { BoxSummaryMobileBanner }

@@ -41,7 +41,6 @@ const BoxSummaryBanner = ({
   menuRecipesStore,
   recipes,
   errorText,
-  openDetails,
   isBoxSummaryOpened,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
@@ -75,29 +74,24 @@ const BoxSummaryBanner = ({
   return (
     <section>
       <BoxSummaryMobileBanner
-        date={date}
-        deliveryDays={deliveryDays}
-        slotId={slotId}
         showBrowseCTA={showBrowseCTA}
         maxRecipesNum={maxRecipesNum}
         menuRecipesStore={menuRecipesStore}
         recipes={recipes}
         errorText={errorText}
-        openDetails={openDetails}
-        isBoxSummaryOpened={isBoxSummaryOpened}
         onExpandClick={onExpandClick}
         expandWarning={expandWarning}
         numRecipes={numRecipes}
       />
       <BoxSummaryDesktopBanner
-        numRecipes={numRecipes}
-        expandWarning={expandWarning}
         showBrowseCTA={showBrowseCTA}
         maxRecipesNum={maxRecipesNum}
         menuRecipesStore={menuRecipesStore}
         recipes={recipes}
         errorText={errorText}
+        expandWarning={expandWarning}
         onExpandClick={onExpandClick}
+        numRecipes={numRecipes}
       />
       <HotjarTrigger name="simplify-basket-bar" shouldInvoke={isSimplifyBasketBarEnabled} />
       {isActionBarRedesignEnabled && <ActionBar variant="separate" />}
