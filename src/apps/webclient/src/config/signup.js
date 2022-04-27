@@ -1,3 +1,5 @@
+import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
+
 export const PaymentMethod = {
   Card: 'Card',
   PayPal: 'PayPal'
@@ -8,11 +10,18 @@ const applyVoucherPageSlug = 'apply-voucher'
 const enterPromoCodeManuallyPageSlug = 'enter-discount-code'
 
 export const signupConfig = {
-  defaultSteps: ['boxSize', 'postcode', 'delivery'],
+  /**
+   * If experiment steps should be added:
+   * 1. Create another entry in signupConfig with listing appropriate steps (similar to signupConfig.defaultSteps).
+   * 2. Add entries of new steps into signupConfig.steps array.
+   * 3. Refer to new steps variable in "getSignupSteps.ts" file.
+   * 4. Map step to component in "AvailableStepComponents.ts" file.
+   */
+  defaultSteps: [SignupSteps.BOX_SIZE, SignupSteps.POSTCODE, SignupSteps.DELIVERY],
   steps: [
-    { name: 'boxSize', slug: 'box-size' },
-    { name: 'postcode', slug: 'postcode' },
-    { name: 'delivery', slug: 'delivery-options' },
+    { name: SignupSteps.BOX_SIZE, slug: 'box-size' },
+    { name: SignupSteps.POSTCODE, slug: 'postcode' },
+    { name: SignupSteps.DELIVERY, slug: 'delivery-options' },
   ],
   payment_types: {
     card: 'card',

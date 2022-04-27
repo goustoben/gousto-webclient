@@ -15,6 +15,8 @@ const signupSetStep = jest.spyOn(actions, 'signupSetStep').mockResolvedValue()
 
 jest.mock('../../Menu/fetchData/menuService')
 
+const signupFetchData = Signup.fetchData
+
 describe('Signup', () => {
   let store
   let context
@@ -45,12 +47,14 @@ describe('Signup', () => {
         dispatch,
       },
     }
+    Signup.fetchData = jest.fn()
   })
 
   afterEach(() => {
     redirect.mockClear()
     menuLoadDays.mockClear()
     menuLoadDays.mockReset()
+    Signup.fetchData = signupFetchData
   })
 
   describe('fetchData', () => {
@@ -62,7 +66,7 @@ describe('Signup', () => {
 
     describe('when requested step is not the first one', () => {
       beforeEach(async () => {
-        await Signup.fetchData({
+        await signupFetchData({
           ...fetchDataProps,
           params: {
             stepName: 'delivery-options',
