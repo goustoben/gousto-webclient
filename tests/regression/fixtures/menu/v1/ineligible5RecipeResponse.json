@@ -1,0 +1,3674 @@
+{
+  "data": [
+      {
+          "id": "494",
+          "type": "menu",
+          "attributes": {
+              "starts_at": "2022-04-19T12:00:00+01:00",
+              "period": {
+                  "core_period_id": "432"
+              },
+              "signup_default_day": null,
+              "name": "variation",
+              "ends_at": "2022-04-26T11:59:59+01:00",
+              "is_default": false,
+              "core_menu_id": "494"
+          },
+          "relationships": {
+              "recipes": {
+                  "data": [
+                      {
+                          "type": "recipe",
+                          "id": "29eb801f-f9fe-42be-860c-23a68cadabae",
+                          "meta": {
+                              "core_recipe_id": "341"
+                          },
+                          "core_recipe_id": "341"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "669cf3d2-b4f2-4863-b88b-509a12db7324",
+                          "meta": {
+                              "core_recipe_id": "532"
+                          },
+                          "core_recipe_id": "532"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4323f985-9d42-4f31-a5b7-25542ed8622e",
+                          "meta": {
+                              "core_recipe_id": "753"
+                          },
+                          "core_recipe_id": "753"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "857214e3-eed1-477d-95db-3f7f21637deb",
+                          "meta": {
+                              "core_recipe_id": "882"
+                          },
+                          "core_recipe_id": "882"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "7e88aa74-a2f2-4306-9469-98eb6de99194",
+                          "meta": {
+                              "core_recipe_id": "929"
+                          },
+                          "core_recipe_id": "929"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "5df04dda-1521-4d17-b469-2f10cc1a32c2",
+                          "meta": {
+                              "core_recipe_id": "1009"
+                          },
+                          "core_recipe_id": "1009"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "c18789d7-d715-47ad-a465-0191ffc78655",
+                          "meta": {
+                              "core_recipe_id": "1098"
+                          },
+                          "core_recipe_id": "1098"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b681a730-2a07-4abe-ba82-73601f75bce2",
+                          "meta": {
+                              "core_recipe_id": "1366"
+                          },
+                          "core_recipe_id": "1366"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "128aeb12-81f7-4a8b-873c-a2d085197992",
+                          "meta": {
+                              "core_recipe_id": "1498"
+                          },
+                          "core_recipe_id": "1498"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b698c270-fa02-446c-8236-1a0ce018d974",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2005"
+                          },
+                          "core_recipe_id": "2005"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2041"
+                          },
+                          "core_recipe_id": "2041"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "db3bbabe-51b5-48ab-b567-b353850f900a",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2045"
+                          },
+                          "core_recipe_id": "2045"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "43d3b520-1104-448d-ad6d-32db848fcef5",
+                          "meta": {
+                              "core_recipe_id": "2069"
+                          },
+                          "core_recipe_id": "2069"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2106"
+                          },
+                          "core_recipe_id": "2106"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e03c9a77-c54b-4b7c-bc6b-d71b7f158c5b",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2146"
+                          },
+                          "core_recipe_id": "2146"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2169"
+                          },
+                          "core_recipe_id": "2169"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2171"
+                          },
+                          "core_recipe_id": "2171"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f848368e-6064-4501-b846-bf0a3b7debc3",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2178"
+                          },
+                          "core_recipe_id": "2178"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "c996ca51-d7a3-4c47-894a-3cef7fc272f4",
+                          "meta": {
+                              "core_recipe_id": "2213"
+                          },
+                          "core_recipe_id": "2213"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "c7654746-d7fb-4f19-a715-66836ef7d0ec",
+                          "meta": {
+                              "core_recipe_id": "2282"
+                          },
+                          "core_recipe_id": "2282"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "41793181-ab16-4d35-abe3-0f6463e1fc98",
+                          "meta": {
+                              "core_recipe_id": "2354"
+                          },
+                          "core_recipe_id": "2354"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b83a1401-32ab-4196-a066-e8d4fd19924f",
+                          "meta": {
+                              "core_recipe_id": "2364"
+                          },
+                          "core_recipe_id": "2364"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b2e8dd20-04ca-458f-917c-930a710a0e1f",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2394"
+                          },
+                          "core_recipe_id": "2394"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "57bcdc7d-eaf3-435d-a5dc-10e2fe4472db",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2413"
+                          },
+                          "core_recipe_id": "2413"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3b8490c6-b6bf-4d04-9dbe-5bda7f0567e0",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2630"
+                          },
+                          "core_recipe_id": "2630"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2655"
+                          },
+                          "core_recipe_id": "2655"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2656"
+                          },
+                          "core_recipe_id": "2656"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "78b855d5-5b71-44a2-9027-0f811848fd42",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2679"
+                          },
+                          "core_recipe_id": "2679"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "753bc549-bbdd-4285-b9a6-ae8e3976932b",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2804"
+                          },
+                          "core_recipe_id": "2804"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b24d81d6-3dc8-4618-9450-0aff36e56271",
+                          "meta": {
+                              "core_recipe_id": "2869"
+                          },
+                          "core_recipe_id": "2869"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "935ec61b-0642-4104-8105-710ed7c864bd",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2894"
+                          },
+                          "core_recipe_id": "2894"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "6f692bbe-d245-4da1-a38a-6447daf37548",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2899"
+                          },
+                          "core_recipe_id": "2899"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2903"
+                          },
+                          "core_recipe_id": "2903"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2904"
+                          },
+                          "core_recipe_id": "2904"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "50b9746f-1a3e-4b89-be42-4a7a6a05113f",
+                          "meta": {
+                              "core_recipe_id": "2927"
+                          },
+                          "core_recipe_id": "2927"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "1a89ada3-0580-4d8b-ba7f-9a50ae536220",
+                          "meta": {
+                              "core_recipe_id": "2948"
+                          },
+                          "core_recipe_id": "2948"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "816ed68e-976e-4ad3-a50e-7b436609f0bd",
+                          "meta": {
+                              "core_recipe_id": "3019"
+                          },
+                          "core_recipe_id": "3019"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f1521a11-0d52-4e25-adc0-6509efe6c968",
+                          "meta": {
+                              "core_recipe_id": "3070"
+                          },
+                          "core_recipe_id": "3070"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "49aa03e1-1a9d-4c0c-981a-c4598098b844",
+                          "meta": {
+                              "core_recipe_id": "3071"
+                          },
+                          "core_recipe_id": "3071"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3104"
+                          },
+                          "core_recipe_id": "3104"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3e5df291-2124-4eb1-b612-ebe30eee8b56",
+                          "meta": {
+                              "core_recipe_id": "3107"
+                          },
+                          "core_recipe_id": "3107"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "84797988-7607-40f4-a791-41ec8dde3100",
+                          "meta": {
+                              "core_recipe_id": "3123"
+                          },
+                          "core_recipe_id": "3123"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "96bd1eb8-838a-4137-bca1-3c3a612d040d",
+                          "meta": {
+                              "core_recipe_id": "3125"
+                          },
+                          "core_recipe_id": "3125"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "ac5d759d-84a0-437d-9b2a-86b47e5fdd71",
+                          "meta": {
+                              "core_recipe_id": "3143"
+                          },
+                          "core_recipe_id": "3143"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "1d9b5651-72d4-4c71-930d-19b70e1df8c0",
+                          "meta": {
+                              "core_recipe_id": "3250"
+                          },
+                          "core_recipe_id": "3250"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "fc2d4463-2660-47f0-bfd9-1172f3c92af9",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "3262"
+                          },
+                          "core_recipe_id": "3262"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e0568af0-88ae-4994-866c-8e06a3e75aa7",
+                          "meta": {
+                              "core_recipe_id": "3319"
+                          },
+                          "core_recipe_id": "3319"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "29f60dae-c256-41ff-8521-8dbc17d727d6",
+                          "meta": {
+                              "core_recipe_id": "3325"
+                          },
+                          "core_recipe_id": "3325"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "c6135874-d5e8-4b61-bd84-296a1f149ea0",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3328"
+                          },
+                          "core_recipe_id": "3328"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "5895d927-b940-4e91-90bd-f05dbdd30c57",
+                          "meta": {
+                              "core_recipe_id": "3354"
+                          },
+                          "core_recipe_id": "3354"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "98d37a49-d174-4164-8526-73eb38bc2955",
+                          "meta": {
+                              "core_recipe_id": "3357"
+                          },
+                          "core_recipe_id": "3357"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bea4d5f4-cf0e-40e1-81d8-95d7cff7c860",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3366"
+                          },
+                          "core_recipe_id": "3366"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bd54c849-8d2f-4320-8e6a-d50b8c10dbfc",
+                          "meta": {
+                              "core_recipe_id": "3422"
+                          },
+                          "core_recipe_id": "3422"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3427"
+                          },
+                          "core_recipe_id": "3427"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b7b6b5a5-b4cf-4fce-ba1a-cbb9903d8d64",
+                          "meta": {
+                              "core_recipe_id": "3432"
+                          },
+                          "core_recipe_id": "3432"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "d417c970-ab39-4831-ad59-1f1ed679f089",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3474"
+                          },
+                          "core_recipe_id": "3474"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3528"
+                          },
+                          "core_recipe_id": "3528"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "8abaa242-d2d1-4800-9824-d9ed61931a58",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3534"
+                          },
+                          "core_recipe_id": "3534"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "af16cf76-fa81-4a89-b75e-cf526b13eee8",
+                          "meta": {
+                              "core_recipe_id": "3561"
+                          },
+                          "core_recipe_id": "3561"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bf1d5617-76b5-4196-b669-630b5a205d49",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3629"
+                          },
+                          "core_recipe_id": "3629"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f5e54ca5-7328-4b11-8cc2-2b786b2a0fc0",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3632"
+                          },
+                          "core_recipe_id": "3632"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "71d2ed87-d507-4d06-8f6f-99c0db9c00f1",
+                          "meta": {
+                              "core_recipe_id": "3635"
+                          },
+                          "core_recipe_id": "3635"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a24eeb44-959c-49b1-aa2c-d44191878beb",
+                          "meta": {
+                              "core_recipe_id": "3676"
+                          },
+                          "core_recipe_id": "3676"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0626b901-702f-4c1a-9683-b35bf57d73ca",
+                          "meta": {
+                              "core_recipe_id": "3699"
+                          },
+                          "core_recipe_id": "3699"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e5aa2dc5-f867-4a3e-b24b-44137311f818",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "3733"
+                          },
+                          "core_recipe_id": "3733"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4b424207-2d7a-4245-8099-d29e48950032",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "3758"
+                          },
+                          "core_recipe_id": "3758"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "89c12dfd-b9ac-4750-902e-c9643f092bfc",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3792"
+                          },
+                          "core_recipe_id": "3792"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "23228173-f095-4005-8990-1c857970d32f",
+                          "meta": {
+                              "core_recipe_id": "3822"
+                          },
+                          "core_recipe_id": "3822"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "6b593123-1649-4cd6-97f9-7c5dc3aa80e8",
+                          "meta": {
+                              "core_recipe_id": "3834"
+                          },
+                          "core_recipe_id": "3834"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "732ec9b5-156b-4eba-9a69-c301bcab4461",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "3864"
+                          },
+                          "core_recipe_id": "3864"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "89227cbc-dbfb-4d99-b249-3c9dc10cea21",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3969"
+                          },
+                          "core_recipe_id": "3969"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0ccbe1c9-39b9-495d-898f-2b3ce2facf92",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "4041"
+                          },
+                          "core_recipe_id": "4041"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bba82e42-1d1e-419e-93ee-6a729498b21d",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4049"
+                          },
+                          "core_recipe_id": "4049"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "752aba25-87e8-45aa-b277-01d6b2fddad5",
+                          "meta": {
+                              "core_recipe_id": "4080"
+                          },
+                          "core_recipe_id": "4080"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3ec4592e-ac6b-4484-937b-d9b1975c1d49",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4097"
+                          },
+                          "core_recipe_id": "4097"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "58461fc4-94f9-4fc2-99e1-ea333dadcca1",
+                          "meta": {
+                              "core_recipe_id": "4125"
+                          },
+                          "core_recipe_id": "4125"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "cb3cedff-c4b9-4101-ac82-3f4ad701a869",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "pasta-pronto",
+                              "core_recipe_id": "4141"
+                          },
+                          "core_recipe_id": "4141"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "96405625-190c-49f9-93d3-6b09d4bc30a3",
+                          "meta": {
+                              "tagline": "pasta-pronto",
+                              "core_recipe_id": "4151"
+                          },
+                          "core_recipe_id": "4151"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "8c91b686-e04d-495d-8dc0-316b8fdc3050",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4167"
+                          },
+                          "core_recipe_id": "4167"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e189e852-a71b-431c-96bf-43e44c70e1b3",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "4249"
+                          },
+                          "core_recipe_id": "4249"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "8975b1bc-7cf1-42fe-87cc-0eef3a9bc79f",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4368"
+                          },
+                          "core_recipe_id": "4368"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "2f7a6b37-af42-4258-9f0b-9cc8f64add69",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4372"
+                          },
+                          "core_recipe_id": "4372"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "9b854d41-567c-4a89-8103-1010c076e190",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4401"
+                          },
+                          "core_recipe_id": "4401"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "01ff4a1f-d46a-4bf7-b826-976660246cd4",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4405"
+                          },
+                          "core_recipe_id": "4405"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "7cae5bbf-5142-4afa-9ecd-e0f530560b6a",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4425"
+                          },
+                          "core_recipe_id": "4425"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b9d90c1b-dc8e-4a25-8a7e-f049950ee08d",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4446"
+                          },
+                          "core_recipe_id": "4446"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "312b144e-90a5-4911-9149-2274e05aeb67",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4447"
+                          },
+                          "core_recipe_id": "4447"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "09b68d14-3f46-46e1-94b0-6d9f2af5711a",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4448"
+                          },
+                          "core_recipe_id": "4448"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "01d326d3-0b3c-46de-b7e6-f5ebc4379191",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4527"
+                          },
+                          "core_recipe_id": "4527"
+                      }
+                  ]
+              },
+              "featured_recipe": {
+                  "data": {
+                      "type": "recipe",
+                      "id": "57bcdc7d-eaf3-435d-a5dc-10e2fe4472db",
+                      "meta": {
+                          "core_recipe_id": "2413"
+                      },
+                      "core_recipe_id": "2413"
+                  }
+              },
+              "debut_recipes": {
+                  "data": []
+              },
+              "recipe_options": {
+                  "data": [
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2655"
+                                      },
+                                      "core_recipe_id": "2655"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3104"
+                                      },
+                                      "core_recipe_id": "3104"
+                                  }
+                              }
+                          ],
+                          "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Beef Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2041"
+                          },
+                          "core_recipe_id": "2041"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                                      "attributes": {
+                                          "short_display_name": "Mild Chicken Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2106"
+                                      },
+                                      "core_recipe_id": "2106"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                                      "attributes": {
+                                          "short_display_name": "Mild Basa Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2903"
+                                      },
+                                      "core_recipe_id": "2903"
+                                  }
+                              }
+                          ],
+                          "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                          "attributes": {
+                              "short_display_name": "Mild Paneer Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2904"
+                          },
+                          "core_recipe_id": "2904"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lean Beef Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3427"
+                                      },
+                                      "core_recipe_id": "3427"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lentil Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3528"
+                                      },
+                                      "core_recipe_id": "3528"
+                                  }
+                              }
+                          ],
+                          "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                          "attributes": {
+                              "short_display_name": "Comforting Cottage Pie"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2171"
+                          },
+                          "core_recipe_id": "2171"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                                      "attributes": {
+                                          "short_display_name": "Mild Paneer Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2904"
+                                      },
+                                      "core_recipe_id": "2904"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                                      "attributes": {
+                                          "short_display_name": "Mild Basa Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2903"
+                                      },
+                                      "core_recipe_id": "2903"
+                                  }
+                              }
+                          ],
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "attributes": {
+                              "short_display_name": "Mild Chicken Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2106"
+                          },
+                          "core_recipe_id": "2106"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2171"
+                                      },
+                                      "core_recipe_id": "2171"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lentil Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3528"
+                                      },
+                                      "core_recipe_id": "3528"
+                                  }
+                              }
+                          ],
+                          "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                          "attributes": {
+                              "short_display_name": "Comforting Lean Beef Cottage Pie"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3427"
+                          },
+                          "core_recipe_id": "3427"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                                      "attributes": {
+                                          "short_display_name": "Mild Paneer Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2904"
+                                      },
+                                      "core_recipe_id": "2904"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                                      "attributes": {
+                                          "short_display_name": "Mild Chicken Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2106"
+                                      },
+                                      "core_recipe_id": "2106"
+                                  }
+                              }
+                          ],
+                          "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                          "attributes": {
+                              "short_display_name": "Mild Basa Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2903"
+                          },
+                          "core_recipe_id": "2903"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2041"
+                                      },
+                                      "core_recipe_id": "2041"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3104"
+                                      },
+                                      "core_recipe_id": "3104"
+                                  }
+                              }
+                          ],
+                          "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2655"
+                          },
+                          "core_recipe_id": "2655"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "db3bbabe-51b5-48ab-b567-b353850f900a",
+                                      "attributes": {
+                                          "short_display_name": "Extra Special Bangers 'N’ Mash"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2045"
+                                      },
+                                      "core_recipe_id": "2045"
+                                  }
+                              }
+                          ],
+                          "id": "6f692bbe-d245-4da1-a38a-6447daf37548",
+                          "attributes": {
+                              "short_display_name": "Extra Special Meat-Free Bangers 'N' Mash"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2899"
+                          },
+                          "core_recipe_id": "2899"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2171"
+                                      },
+                                      "core_recipe_id": "2171"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lean Beef Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3427"
+                                      },
+                                      "core_recipe_id": "3427"
+                                  }
+                              }
+                          ],
+                          "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                          "attributes": {
+                              "short_display_name": "Comforting Lentil Cottage Pie"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3528"
+                          },
+                          "core_recipe_id": "3528"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                                      "attributes": {
+                                          "short_display_name": "Big Flavour Meat-Free Mince Lasagne"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2656"
+                                      },
+                                      "core_recipe_id": "2656"
+                                  }
+                              }
+                          ],
+                          "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                          "attributes": {
+                              "short_display_name": "Big Flavour Beef Lasagne"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2169"
+                          },
+                          "core_recipe_id": "2169"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f692bbe-d245-4da1-a38a-6447daf37548",
+                                      "attributes": {
+                                          "short_display_name": "Extra Special Meat-Free Bangers 'N' Mash"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2899"
+                                      },
+                                      "core_recipe_id": "2899"
+                                  }
+                              }
+                          ],
+                          "id": "db3bbabe-51b5-48ab-b567-b353850f900a",
+                          "attributes": {
+                              "short_display_name": "Extra Special Bangers 'N’ Mash"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2045"
+                          },
+                          "core_recipe_id": "2045"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                                      "attributes": {
+                                          "short_display_name": "Big Flavour Beef Lasagne"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2169"
+                                      },
+                                      "core_recipe_id": "2169"
+                                  }
+                              }
+                          ],
+                          "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                          "attributes": {
+                              "short_display_name": "Big Flavour Meat-Free Mince Lasagne"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2656"
+                          },
+                          "core_recipe_id": "2656"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2041"
+                                      },
+                                      "core_recipe_id": "2041"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2655"
+                                      },
+                                      "core_recipe_id": "2655"
+                                  }
+                              }
+                          ],
+                          "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3104"
+                          },
+                          "core_recipe_id": "3104"
+                      }
+                  ]
+              },
+              "boxes": {
+                  "data": [
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-2-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-2-4"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-3-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-3-4"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-4-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-4-4"
+                      }
+                  ]
+              },
+              "collections": {
+                  "data": []
+              },
+              "featured_categories": {
+                  "data": []
+              }
+          },
+          "meta": {
+              "recommender": {
+                  "version": ""
+              },
+              "swapsExperimentUserAllocationGroup": "control"
+          }
+      },
+      {
+          "id": "488",
+          "type": "menu",
+          "attributes": {
+              "starts_at": "2022-04-26T12:00:00+01:00",
+              "period": {
+                  "core_period_id": "433"
+              },
+              "signup_default_day": null,
+              "name": "variation",
+              "ends_at": "2022-05-03T11:59:59+01:00",
+              "is_default": false,
+              "core_menu_id": "488"
+          },
+          "relationships": {
+              "recipes": {
+                  "data": [
+                      {
+                          "type": "recipe",
+                          "id": "8a62fd51-a879-469f-80d7-ddb1dab9677a",
+                          "meta": {
+                              "core_recipe_id": "327"
+                          },
+                          "core_recipe_id": "327"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "ad40bd05-de5f-453e-b004-b6436a4a3823",
+                          "meta": {
+                              "core_recipe_id": "726"
+                          },
+                          "core_recipe_id": "726"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "07c245d2-6dbf-4915-9749-15c0d71819d4",
+                          "meta": {
+                              "core_recipe_id": "896"
+                          },
+                          "core_recipe_id": "896"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "d71fa35c-7862-422d-aa85-3bf956b4ea6e",
+                          "meta": {
+                              "core_recipe_id": "928"
+                          },
+                          "core_recipe_id": "928"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bde9ee59-799a-4136-b91d-e3b8de9b22ad",
+                          "meta": {
+                              "core_recipe_id": "1144"
+                          },
+                          "core_recipe_id": "1144"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "638eb072-f241-494c-bba3-162d39146be9",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "1310"
+                          },
+                          "core_recipe_id": "1310"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4fb4e9ff-ad6d-4a99-8dcf-e01d2bcffe3b",
+                          "meta": {
+                              "core_recipe_id": "1434"
+                          },
+                          "core_recipe_id": "1434"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "7da3cd90-3131-4552-9b05-6caf1bf72a93",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2002"
+                          },
+                          "core_recipe_id": "2002"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2041"
+                          },
+                          "core_recipe_id": "2041"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "db3bbabe-51b5-48ab-b567-b353850f900a",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2045"
+                          },
+                          "core_recipe_id": "2045"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2106"
+                          },
+                          "core_recipe_id": "2106"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f9dc883c-f633-4b40-8069-1ea2b17ea6da",
+                          "meta": {
+                              "core_recipe_id": "2134"
+                          },
+                          "core_recipe_id": "2134"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e03c9a77-c54b-4b7c-bc6b-d71b7f158c5b",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2146"
+                          },
+                          "core_recipe_id": "2146"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2169"
+                          },
+                          "core_recipe_id": "2169"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2171"
+                          },
+                          "core_recipe_id": "2171"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "44bb2051-361c-4186-a071-99553d60b3a5",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2309"
+                          },
+                          "core_recipe_id": "2309"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b2e8dd20-04ca-458f-917c-930a710a0e1f",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2394"
+                          },
+                          "core_recipe_id": "2394"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "57bcdc7d-eaf3-435d-a5dc-10e2fe4472db",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2413"
+                          },
+                          "core_recipe_id": "2413"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "02bc12c2-decf-42d1-ac0e-1c100b35c94e",
+                          "meta": {
+                              "core_recipe_id": "2431"
+                          },
+                          "core_recipe_id": "2431"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "d134a13b-647e-4b80-a31d-0657347db2b8",
+                          "meta": {
+                              "core_recipe_id": "2473"
+                          },
+                          "core_recipe_id": "2473"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "1f333248-2046-49cc-b435-22d4cff11106",
+                          "meta": {
+                              "core_recipe_id": "2545"
+                          },
+                          "core_recipe_id": "2545"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3b8490c6-b6bf-4d04-9dbe-5bda7f0567e0",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2630"
+                          },
+                          "core_recipe_id": "2630"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2655"
+                          },
+                          "core_recipe_id": "2655"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2656"
+                          },
+                          "core_recipe_id": "2656"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b32cb4e8-8667-414b-8d9b-d155895480b5",
+                          "meta": {
+                              "core_recipe_id": "2779"
+                          },
+                          "core_recipe_id": "2779"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "5854a646-128f-46c5-920c-53c1b01b6414",
+                          "meta": {
+                              "core_recipe_id": "2851"
+                          },
+                          "core_recipe_id": "2851"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "935ec61b-0642-4104-8105-710ed7c864bd",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2894"
+                          },
+                          "core_recipe_id": "2894"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "6f692bbe-d245-4da1-a38a-6447daf37548",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2899"
+                          },
+                          "core_recipe_id": "2899"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2903"
+                          },
+                          "core_recipe_id": "2903"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2904"
+                          },
+                          "core_recipe_id": "2904"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0f8fc424-f1eb-49fd-a205-af025c397870",
+                          "meta": {
+                              "core_recipe_id": "2940"
+                          },
+                          "core_recipe_id": "2940"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "04eddc6a-9948-4f21-b742-dac8e4be0ee1",
+                          "meta": {
+                              "core_recipe_id": "3078"
+                          },
+                          "core_recipe_id": "3078"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3104"
+                          },
+                          "core_recipe_id": "3104"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "c37fdc2a-db34-4ce5-ae68-340342b16db9",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3110"
+                          },
+                          "core_recipe_id": "3110"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a6afd6a0-8de9-4cda-87c7-f5bf1f4db457",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "3202"
+                          },
+                          "core_recipe_id": "3202"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b58e2f15-6d86-47a6-a234-b1d0afbb4dc1",
+                          "meta": {
+                              "core_recipe_id": "3235"
+                          },
+                          "core_recipe_id": "3235"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "2152cbf7-040b-4540-afdf-a3967423a078",
+                          "meta": {
+                              "core_recipe_id": "3274"
+                          },
+                          "core_recipe_id": "3274"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "9a3caa14-4b33-4835-87a5-02a3519ecbb9",
+                          "meta": {
+                              "core_recipe_id": "3327"
+                          },
+                          "core_recipe_id": "3327"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "90354443-2f9a-49a0-9288-5b0e48268aeb",
+                          "meta": {
+                              "core_recipe_id": "3339"
+                          },
+                          "core_recipe_id": "3339"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f829963f-8806-45da-8f63-4100af43d5b9",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "3346"
+                          },
+                          "core_recipe_id": "3346"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3427"
+                          },
+                          "core_recipe_id": "3427"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b652a34a-8477-47be-a77c-2fee0ebdefdb",
+                          "meta": {
+                              "core_recipe_id": "3473"
+                          },
+                          "core_recipe_id": "3473"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3528"
+                          },
+                          "core_recipe_id": "3528"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4276f957-c2b0-4fae-9022-2708e0a05682",
+                          "meta": {
+                              "core_recipe_id": "3617"
+                          },
+                          "core_recipe_id": "3617"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bf1d5617-76b5-4196-b669-630b5a205d49",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3629"
+                          },
+                          "core_recipe_id": "3629"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f5e54ca5-7328-4b11-8cc2-2b786b2a0fc0",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3632"
+                          },
+                          "core_recipe_id": "3632"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "094f3e79-a1d4-4f28-b6f0-7f233a89b3bf",
+                          "meta": {
+                              "core_recipe_id": "3637"
+                          },
+                          "core_recipe_id": "3637"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e3ad7185-239e-4d25-9359-c95066202746",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3882"
+                          },
+                          "core_recipe_id": "3882"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "7e205dad-2578-4653-beaf-1460dca37b9f",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "3948"
+                          },
+                          "core_recipe_id": "3948"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "89227cbc-dbfb-4d99-b249-3c9dc10cea21",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3969"
+                          },
+                          "core_recipe_id": "3969"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3801d905-1f99-4b3b-b536-7dc3402e6990",
+                          "meta": {
+                              "core_recipe_id": "4010"
+                          },
+                          "core_recipe_id": "4010"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0ccbe1c9-39b9-495d-898f-2b3ce2facf92",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "4041"
+                          },
+                          "core_recipe_id": "4041"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "109c5737-91c2-4ec9-90df-a449ef7f5290",
+                          "meta": {
+                              "core_recipe_id": "4054"
+                          },
+                          "core_recipe_id": "4054"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4dbc753a-911d-4f8a-941c-7351c113f01c",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4087"
+                          },
+                          "core_recipe_id": "4087"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "991d8137-229f-4d9a-9158-70f8883ad65a",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4098"
+                          },
+                          "core_recipe_id": "4098"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "277fae64-e627-4c24-a4c8-b36bba40f023",
+                          "meta": {
+                              "core_recipe_id": "4124"
+                          },
+                          "core_recipe_id": "4124"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bea1ffdf-157f-4aa5-a0d7-b6c54014c41e",
+                          "meta": {
+                              "tagline": "pasta-pronto",
+                              "core_recipe_id": "4148"
+                          },
+                          "core_recipe_id": "4148"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "86f99723-d4f3-4d8e-8b33-2d80e7501397",
+                          "meta": {
+                              "core_recipe_id": "4160"
+                          },
+                          "core_recipe_id": "4160"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a2a9ad80-7ee4-44ce-acf8-844774b27e2b",
+                          "meta": {
+                              "core_recipe_id": "4254"
+                          },
+                          "core_recipe_id": "4254"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "63798c26-0bb3-426b-a384-13e364571676",
+                          "meta": {
+                              "core_recipe_id": "4316"
+                          },
+                          "core_recipe_id": "4316"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "192847a3-3724-4df8-ae1b-b10b2c891389",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4427"
+                          },
+                          "core_recipe_id": "4427"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "ecd9971b-80c3-4ac3-bdf3-5e31f5146d8d",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4440"
+                          },
+                          "core_recipe_id": "4440"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "d2066d70-5423-47e7-9bd2-c7b4d5630d94",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4442"
+                          },
+                          "core_recipe_id": "4442"
+                      }
+                  ]
+              },
+              "featured_recipe": {
+                  "data": {
+                      "type": "recipe",
+                      "id": "57bcdc7d-eaf3-435d-a5dc-10e2fe4472db",
+                      "meta": {
+                          "core_recipe_id": "2413"
+                      },
+                      "core_recipe_id": "2413"
+                  }
+              },
+              "debut_recipes": {
+                  "data": []
+              },
+              "recipe_options": {
+                  "data": [
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2655"
+                                      },
+                                      "core_recipe_id": "2655"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3104"
+                                      },
+                                      "core_recipe_id": "3104"
+                                  }
+                              }
+                          ],
+                          "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Beef Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2041"
+                          },
+                          "core_recipe_id": "2041"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                                      "attributes": {
+                                          "short_display_name": "Mild Chicken Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2106"
+                                      },
+                                      "core_recipe_id": "2106"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                                      "attributes": {
+                                          "short_display_name": "Mild Basa Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2903"
+                                      },
+                                      "core_recipe_id": "2903"
+                                  }
+                              }
+                          ],
+                          "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                          "attributes": {
+                              "short_display_name": "Mild Paneer Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2904"
+                          },
+                          "core_recipe_id": "2904"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lean Beef Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3427"
+                                      },
+                                      "core_recipe_id": "3427"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lentil Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3528"
+                                      },
+                                      "core_recipe_id": "3528"
+                                  }
+                              }
+                          ],
+                          "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                          "attributes": {
+                              "short_display_name": "Comforting Cottage Pie"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2171"
+                          },
+                          "core_recipe_id": "2171"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                                      "attributes": {
+                                          "short_display_name": "Mild Paneer Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2904"
+                                      },
+                                      "core_recipe_id": "2904"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                                      "attributes": {
+                                          "short_display_name": "Mild Basa Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2903"
+                                      },
+                                      "core_recipe_id": "2903"
+                                  }
+                              }
+                          ],
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "attributes": {
+                              "short_display_name": "Mild Chicken Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2106"
+                          },
+                          "core_recipe_id": "2106"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2171"
+                                      },
+                                      "core_recipe_id": "2171"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lentil Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3528"
+                                      },
+                                      "core_recipe_id": "3528"
+                                  }
+                              }
+                          ],
+                          "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                          "attributes": {
+                              "short_display_name": "Comforting Lean Beef Cottage Pie"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3427"
+                          },
+                          "core_recipe_id": "3427"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                                      "attributes": {
+                                          "short_display_name": "Mild Paneer Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2904"
+                                      },
+                                      "core_recipe_id": "2904"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                                      "attributes": {
+                                          "short_display_name": "Mild Chicken Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2106"
+                                      },
+                                      "core_recipe_id": "2106"
+                                  }
+                              }
+                          ],
+                          "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                          "attributes": {
+                              "short_display_name": "Mild Basa Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2903"
+                          },
+                          "core_recipe_id": "2903"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2041"
+                                      },
+                                      "core_recipe_id": "2041"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3104"
+                                      },
+                                      "core_recipe_id": "3104"
+                                  }
+                              }
+                          ],
+                          "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2655"
+                          },
+                          "core_recipe_id": "2655"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "db3bbabe-51b5-48ab-b567-b353850f900a",
+                                      "attributes": {
+                                          "short_display_name": "Extra Special Bangers 'N’ Mash"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2045"
+                                      },
+                                      "core_recipe_id": "2045"
+                                  }
+                              }
+                          ],
+                          "id": "6f692bbe-d245-4da1-a38a-6447daf37548",
+                          "attributes": {
+                              "short_display_name": "Extra Special Meat-Free Bangers 'N' Mash"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2899"
+                          },
+                          "core_recipe_id": "2899"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "308f2001-8e3c-466c-9d76-7edba931722c",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2171"
+                                      },
+                                      "core_recipe_id": "2171"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "4058c354-0ee7-4197-8b83-77fbec75e2a7",
+                                      "attributes": {
+                                          "short_display_name": "Comforting Lean Beef Cottage Pie"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3427"
+                                      },
+                                      "core_recipe_id": "3427"
+                                  }
+                              }
+                          ],
+                          "id": "77ecc491-8edb-4cc3-8689-1f9057f00f9c",
+                          "attributes": {
+                              "short_display_name": "Comforting Lentil Cottage Pie"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3528"
+                          },
+                          "core_recipe_id": "3528"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                                      "attributes": {
+                                          "short_display_name": "Big Flavour Meat-Free Mince Lasagne"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2656"
+                                      },
+                                      "core_recipe_id": "2656"
+                                  }
+                              }
+                          ],
+                          "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                          "attributes": {
+                              "short_display_name": "Big Flavour Beef Lasagne"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2169"
+                          },
+                          "core_recipe_id": "2169"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f692bbe-d245-4da1-a38a-6447daf37548",
+                                      "attributes": {
+                                          "short_display_name": "Extra Special Meat-Free Bangers 'N' Mash"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2899"
+                                      },
+                                      "core_recipe_id": "2899"
+                                  }
+                              }
+                          ],
+                          "id": "db3bbabe-51b5-48ab-b567-b353850f900a",
+                          "attributes": {
+                              "short_display_name": "Extra Special Bangers 'N’ Mash"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2045"
+                          },
+                          "core_recipe_id": "2045"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                                      "attributes": {
+                                          "short_display_name": "Big Flavour Beef Lasagne"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2169"
+                                      },
+                                      "core_recipe_id": "2169"
+                                  }
+                              }
+                          ],
+                          "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                          "attributes": {
+                              "short_display_name": "Big Flavour Meat-Free Mince Lasagne"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2656"
+                          },
+                          "core_recipe_id": "2656"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2041"
+                                      },
+                                      "core_recipe_id": "2041"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2655"
+                                      },
+                                      "core_recipe_id": "2655"
+                                  }
+                              }
+                          ],
+                          "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3104"
+                          },
+                          "core_recipe_id": "3104"
+                      }
+                  ]
+              },
+              "boxes": {
+                  "data": [
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-2-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-2-4"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-3-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-3-4"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-4-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-4-4"
+                      }
+                  ]
+              },
+              "collections": {
+                  "data": []
+              },
+              "featured_categories": {
+                  "data": []
+              }
+          },
+          "meta": {
+              "recommender": {
+                  "version": ""
+              },
+              "swapsExperimentUserAllocationGroup": "control"
+          }
+      },
+      {
+          "id": "487",
+          "type": "menu",
+          "attributes": {
+              "starts_at": "2022-05-03T12:00:00+01:00",
+              "period": {
+                  "core_period_id": "434"
+              },
+              "signup_default_day": null,
+              "name": "default",
+              "ends_at": "2022-05-10T11:59:59+01:00",
+              "is_default": true,
+              "core_menu_id": "487"
+          },
+          "relationships": {
+              "recipes": {
+                  "data": [
+                      {
+                          "type": "recipe",
+                          "id": "be9dd055-3cde-49cc-adb9-8a925b3f0ec0",
+                          "meta": {
+                              "core_recipe_id": "672"
+                          },
+                          "core_recipe_id": "672"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e0be25fc-ff12-4c41-804d-89cd6cd64637",
+                          "meta": {
+                              "core_recipe_id": "763"
+                          },
+                          "core_recipe_id": "763"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e2269682-a37f-4fe3-b333-752260109473",
+                          "meta": {
+                              "core_recipe_id": "776"
+                          },
+                          "core_recipe_id": "776"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "ed198f8c-086b-4c65-8951-7d4156a2555a",
+                          "meta": {
+                              "core_recipe_id": "1093"
+                          },
+                          "core_recipe_id": "1093"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e0192fd0-f5bf-4c4c-bd4e-7055c302c181",
+                          "meta": {
+                              "core_recipe_id": "1110"
+                          },
+                          "core_recipe_id": "1110"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "adcfb8a4-cc21-4031-b89a-34fe9935605c",
+                          "meta": {
+                              "core_recipe_id": "1401"
+                          },
+                          "core_recipe_id": "1401"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f80aecec-af0d-4574-96dd-59943512eedb",
+                          "meta": {
+                              "core_recipe_id": "1413"
+                          },
+                          "core_recipe_id": "1413"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "1c87f228-a534-483c-853a-421d9e69c057",
+                          "meta": {
+                              "core_recipe_id": "1445"
+                          },
+                          "core_recipe_id": "1445"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "875b0546-66a4-43d9-99e6-711c69a89b3d",
+                          "meta": {
+                              "core_recipe_id": "1813"
+                          },
+                          "core_recipe_id": "1813"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "1e849d82-87be-4ae2-981d-d8af92681d60",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2017"
+                          },
+                          "core_recipe_id": "2017"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "fc6a91b8-745c-48c1-9120-8473b4dc1af6",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2023"
+                          },
+                          "core_recipe_id": "2023"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2041"
+                          },
+                          "core_recipe_id": "2041"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2106"
+                          },
+                          "core_recipe_id": "2106"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e03c9a77-c54b-4b7c-bc6b-d71b7f158c5b",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2146"
+                          },
+                          "core_recipe_id": "2146"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2169"
+                          },
+                          "core_recipe_id": "2169"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "735978f1-1baf-469d-91f5-3f37542f61f3",
+                          "meta": {
+                              "core_recipe_id": "2211"
+                          },
+                          "core_recipe_id": "2211"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "5fab42db-c87a-4c33-ac40-e924f47187f1",
+                          "meta": {
+                              "core_recipe_id": "2223"
+                          },
+                          "core_recipe_id": "2223"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a211e390-6475-4866-bd32-cee250a6e462",
+                          "meta": {
+                              "core_recipe_id": "2269"
+                          },
+                          "core_recipe_id": "2269"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b2e8dd20-04ca-458f-917c-930a710a0e1f",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2394"
+                          },
+                          "core_recipe_id": "2394"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "81bd64eb-386b-4e54-997d-e6b1d95f93cc",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2400"
+                          },
+                          "core_recipe_id": "2400"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "355e3e92-01f4-4744-b42e-3af1fb0984f2",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2418"
+                          },
+                          "core_recipe_id": "2418"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "949b0691-0b64-4d33-bd6f-afb407e353c4",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2426"
+                          },
+                          "core_recipe_id": "2426"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "261a776c-0d19-4186-a7e0-b005b7166afa",
+                          "meta": {
+                              "core_recipe_id": "2460"
+                          },
+                          "core_recipe_id": "2460"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3b8490c6-b6bf-4d04-9dbe-5bda7f0567e0",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2630"
+                          },
+                          "core_recipe_id": "2630"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2655"
+                          },
+                          "core_recipe_id": "2655"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2656"
+                          },
+                          "core_recipe_id": "2656"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a5e3bf96-150f-4175-b1da-332b7ed8ad9c",
+                          "meta": {
+                              "core_recipe_id": "2665"
+                          },
+                          "core_recipe_id": "2665"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "23da1f1b-df3b-42ac-ad37-8bfadfb38de0",
+                          "meta": {
+                              "core_recipe_id": "2677"
+                          },
+                          "core_recipe_id": "2677"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "1ed88d31-7358-47d2-b0b2-89cb305735c3",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2763"
+                          },
+                          "core_recipe_id": "2763"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "dee8470d-00b3-4f8c-8b58-f2992ff5df5b",
+                          "meta": {
+                              "core_recipe_id": "2791"
+                          },
+                          "core_recipe_id": "2791"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "999df9a9-7763-491f-8fcc-5072e68597bd",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "2828"
+                          },
+                          "core_recipe_id": "2828"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "68c68d23-8956-4b40-b81e-5c54b16cd92b",
+                          "meta": {
+                              "core_recipe_id": "2863"
+                          },
+                          "core_recipe_id": "2863"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "2c34865b-dc5f-4b07-a0ab-8349f0a38e5f",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "2880"
+                          },
+                          "core_recipe_id": "2880"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "935ec61b-0642-4104-8105-710ed7c864bd",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2894"
+                          },
+                          "core_recipe_id": "2894"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2903"
+                          },
+                          "core_recipe_id": "2903"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "2904"
+                          },
+                          "core_recipe_id": "2904"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0a63b390-b36f-4398-a967-8faf2bea98a6",
+                          "meta": {
+                              "core_recipe_id": "2918"
+                          },
+                          "core_recipe_id": "2918"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bfaf6669-7a5c-40c9-aca7-57a886594e76",
+                          "meta": {
+                              "core_recipe_id": "2945"
+                          },
+                          "core_recipe_id": "2945"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "b4be2555-305d-4d58-9184-f84906bd7267",
+                          "meta": {
+                              "core_recipe_id": "2987"
+                          },
+                          "core_recipe_id": "2987"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "70c8538b-5794-4dc0-8e87-85a7953d49db",
+                          "meta": {
+                              "core_recipe_id": "3028"
+                          },
+                          "core_recipe_id": "3028"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "99392d33-ae59-431e-a989-b6939d05412c",
+                          "meta": {
+                              "core_recipe_id": "3029"
+                          },
+                          "core_recipe_id": "3029"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a259ec73-4677-4773-b113-922086907d83",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3048"
+                          },
+                          "core_recipe_id": "3048"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3104"
+                          },
+                          "core_recipe_id": "3104"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4d5b7e9a-1f32-42cf-854b-adc2138391f2",
+                          "meta": {
+                              "core_recipe_id": "3227"
+                          },
+                          "core_recipe_id": "3227"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "740405c5-f70a-40a4-a3a2-ecd1f32c0667",
+                          "meta": {
+                              "core_recipe_id": "3280"
+                          },
+                          "core_recipe_id": "3280"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bb72ac3e-5789-4e6a-a14a-6c0170f1e545",
+                          "meta": {
+                              "core_recipe_id": "3289"
+                          },
+                          "core_recipe_id": "3289"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f38c88a9-70f3-4e90-a08c-8818b99e0031",
+                          "meta": {
+                              "core_recipe_id": "3456"
+                          },
+                          "core_recipe_id": "3456"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "96eeb3c0-4de8-478c-bd20-b21ace7916b4",
+                          "meta": {
+                              "core_recipe_id": "3458"
+                          },
+                          "core_recipe_id": "3458"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "5885d4e5-4a64-4282-ad0a-beea675a9c8b",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "3530"
+                          },
+                          "core_recipe_id": "3530"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "c93250ea-b6d0-44c0-b410-918544793b8f",
+                          "meta": {
+                              "tagline": "ten-minute-meals",
+                              "core_recipe_id": "3549"
+                          },
+                          "core_recipe_id": "3549"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "d06bb886-038a-4aef-8174-1364522b4d01",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3567"
+                          },
+                          "core_recipe_id": "3567"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "241db3e1-ce74-4a10-9caa-4ebca0762d61",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3571"
+                          },
+                          "core_recipe_id": "3571"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "8f9803cc-e25a-4492-9e8e-ee2775738876",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3572"
+                          },
+                          "core_recipe_id": "3572"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "de22d1d0-3b03-4b55-9669-4958c80a5c81",
+                          "meta": {
+                              "core_recipe_id": "3601"
+                          },
+                          "core_recipe_id": "3601"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "797ced04-0c94-4e2e-be7d-1b177ab7a6c7",
+                          "meta": {
+                              "core_recipe_id": "3621"
+                          },
+                          "core_recipe_id": "3621"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "bf1d5617-76b5-4196-b669-630b5a205d49",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3629"
+                          },
+                          "core_recipe_id": "3629"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f5e54ca5-7328-4b11-8cc2-2b786b2a0fc0",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3632"
+                          },
+                          "core_recipe_id": "3632"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "7f5d0139-63ac-47a4-bde8-e422498d311d",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3707"
+                          },
+                          "core_recipe_id": "3707"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f286e3ef-1d78-4923-96f8-1311766e0299",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3720"
+                          },
+                          "core_recipe_id": "3720"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3b58adad-a0f6-4cfd-868b-0e38ae05b57d",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "3721"
+                          },
+                          "core_recipe_id": "3721"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "68f8fa67-49f3-46b9-aac9-89b8fa7fde3e",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "3757"
+                          },
+                          "core_recipe_id": "3757"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "03a6d1f5-2592-483a-ada4-989d4af10ad3",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "3799"
+                          },
+                          "core_recipe_id": "3799"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "433a70f7-7854-4ff1-ad24-af5c5828608e",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "3973"
+                          },
+                          "core_recipe_id": "3973"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a90f3d23-fa14-4b70-a989-e5f453ce42b5",
+                          "meta": {
+                              "core_recipe_id": "4034"
+                          },
+                          "core_recipe_id": "4034"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0ccbe1c9-39b9-495d-898f-2b3ce2facf92",
+                          "meta": {
+                              "tagline": "everyday-favourites-tagline",
+                              "core_recipe_id": "4041"
+                          },
+                          "core_recipe_id": "4041"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "7b60a9de-0688-4010-a8df-2c0e2b2f9476",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "4043"
+                          },
+                          "core_recipe_id": "4043"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "d1e4673f-9832-4e16-aa6f-48a24b8a6413",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4053"
+                          },
+                          "core_recipe_id": "4053"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "46d6b685-565b-4a0f-8160-91752b20f9bb",
+                          "meta": {
+                              "tagline": "prepped-in-five",
+                              "core_recipe_id": "4109"
+                          },
+                          "core_recipe_id": "4109"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0f9ee3df-8c1a-4606-88d5-7534a7299f97",
+                          "meta": {
+                              "core_recipe_id": "4112"
+                          },
+                          "core_recipe_id": "4112"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "19e349b2-48f5-42bf-a418-df4edfd127f8",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4128"
+                          },
+                          "core_recipe_id": "4128"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "633f161f-043e-4983-8794-008783c38dc0",
+                          "meta": {
+                              "core_recipe_id": "4133"
+                          },
+                          "core_recipe_id": "4133"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "1fdd3567-8a13-4d0e-94e4-446b85451809",
+                          "meta": {
+                              "tagline": "pasta-pronto",
+                              "core_recipe_id": "4142"
+                          },
+                          "core_recipe_id": "4142"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "e154f177-bae9-4906-adbe-653dea944260",
+                          "meta": {
+                              "tagline": "pasta-pronto",
+                              "core_recipe_id": "4147"
+                          },
+                          "core_recipe_id": "4147"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "c4d7fd77-7b95-4ced-a76d-e793df0af2ea",
+                          "meta": {
+                              "core_recipe_id": "4225"
+                          },
+                          "core_recipe_id": "4225"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "10ecbc13-8cd3-46e1-a39f-2839b2b51890",
+                          "meta": {
+                              "core_recipe_id": "4250"
+                          },
+                          "core_recipe_id": "4250"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "72193176-a5d0-4ca3-b551-7bea455d209d",
+                          "meta": {
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4266"
+                          },
+                          "core_recipe_id": "4266"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f91544a0-4bb3-4852-964f-dd71a86f84d9",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4285"
+                          },
+                          "core_recipe_id": "4285"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "4a0c6633-61d4-4ebe-b8e9-bb97d3ef17a8",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4395"
+                          },
+                          "core_recipe_id": "4395"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "88995de6-a6a4-4298-b326-9653386956a4",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4414"
+                          },
+                          "core_recipe_id": "4414"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "78538176-4871-4d95-8b10-a783c3b705af",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4424"
+                          },
+                          "core_recipe_id": "4424"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "f973a372-d4e4-4e8d-99d1-d2e20258f126",
+                          "meta": {
+                              "availability": "limited-range-availability",
+                              "tagline": "fine-dine-in-tagline",
+                              "core_recipe_id": "4437"
+                          },
+                          "core_recipe_id": "4437"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "3f4b6474-6b0f-409c-939a-e90c10e07824",
+                          "meta": {
+                              "availability": "limited-range-availability",
+                              "tagline": "fine-dine-in-tagline",
+                              "core_recipe_id": "4443"
+                          },
+                          "core_recipe_id": "4443"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0b0151ee-b14e-4fdf-8429-8a9c3447a952",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4455"
+                          },
+                          "core_recipe_id": "4455"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "a1188452-ffec-4702-a7e4-c10c318d836f",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4514"
+                          },
+                          "core_recipe_id": "4514"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "ea805d9a-8a04-4d84-9503-fd406f82c89e",
+                          "meta": {
+                              "availability": "new-availability",
+                              "tagline": "joe-wicks-picks",
+                              "core_recipe_id": "4545"
+                          },
+                          "core_recipe_id": "4545"
+                      },
+                      {
+                          "type": "recipe",
+                          "id": "0c08a8a1-ed25-4ff3-8239-bdba5864a614",
+                          "meta": {
+                              "availability": "new-availability",
+                              "core_recipe_id": "4546"
+                          },
+                          "core_recipe_id": "4546"
+                      }
+                  ]
+              },
+              "featured_recipe": {
+                  "data": {
+                      "type": "recipe",
+                      "id": "735978f1-1baf-469d-91f5-3f37542f61f3",
+                      "meta": {
+                          "core_recipe_id": "2211"
+                      },
+                      "core_recipe_id": "2211"
+                  }
+              },
+              "debut_recipes": {
+                  "data": []
+              },
+              "recipe_options": {
+                  "data": [
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2655"
+                                      },
+                                      "core_recipe_id": "2655"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3104"
+                                      },
+                                      "core_recipe_id": "3104"
+                                  }
+                              }
+                          ],
+                          "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Beef Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2041"
+                          },
+                          "core_recipe_id": "2041"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                                      "attributes": {
+                                          "short_display_name": "Mild Chicken Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2106"
+                                      },
+                                      "core_recipe_id": "2106"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                                      "attributes": {
+                                          "short_display_name": "Mild Basa Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2903"
+                                      },
+                                      "core_recipe_id": "2903"
+                                  }
+                              }
+                          ],
+                          "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                          "attributes": {
+                              "short_display_name": "Mild Paneer Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2904"
+                          },
+                          "core_recipe_id": "2904"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                                      "attributes": {
+                                          "short_display_name": "Mild Paneer Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2904"
+                                      },
+                                      "core_recipe_id": "2904"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                                      "attributes": {
+                                          "short_display_name": "Mild Basa Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2903"
+                                      },
+                                      "core_recipe_id": "2903"
+                                  }
+                              }
+                          ],
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "attributes": {
+                              "short_display_name": "Mild Chicken Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2106"
+                          },
+                          "core_recipe_id": "2106"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "12e787df-6a22-4ebf-9e7a-be0c23fd1a9f",
+                                      "attributes": {
+                                          "short_display_name": "Mild Paneer Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2904"
+                                      },
+                                      "core_recipe_id": "2904"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                                      "attributes": {
+                                          "short_display_name": "Mild Chicken Curry"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2106"
+                                      },
+                                      "core_recipe_id": "2106"
+                                  }
+                              }
+                          ],
+                          "id": "58966a9e-abc8-453b-8fc6-e992a69ec3d3",
+                          "attributes": {
+                              "short_display_name": "Mild Basa Curry"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2903"
+                          },
+                          "core_recipe_id": "2903"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2041"
+                                      },
+                                      "core_recipe_id": "2041"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3104"
+                                      },
+                                      "core_recipe_id": "3104"
+                                  }
+                              }
+                          ],
+                          "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2655"
+                          },
+                          "core_recipe_id": "2655"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "99392d33-ae59-431e-a989-b6939d05412c",
+                                      "attributes": {
+                                          "short_display_name": "Spiced Basa Wraps With Tomato Salad And Mint Chutney "
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3029"
+                                      },
+                                      "core_recipe_id": "3029"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "e0192fd0-f5bf-4c4c-bd4e-7055c302c181",
+                                      "attributes": {
+                                          "short_display_name": "Spiced Chicken Wraps With Tomato Salad And Mint Chutney"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "1110"
+                                      },
+                                      "core_recipe_id": "1110"
+                                  }
+                              }
+                          ],
+                          "id": "70c8538b-5794-4dc0-8e87-85a7953d49db",
+                          "attributes": {
+                              "short_display_name": "Spiced Tofu Wraps With Tomato Salad And Mint Chutney"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3028"
+                          },
+                          "core_recipe_id": "3028"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "70c8538b-5794-4dc0-8e87-85a7953d49db",
+                                      "attributes": {
+                                          "short_display_name": "Spiced Tofu Wraps With Tomato Salad And Mint Chutney"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3028"
+                                      },
+                                      "core_recipe_id": "3028"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "e0192fd0-f5bf-4c4c-bd4e-7055c302c181",
+                                      "attributes": {
+                                          "short_display_name": "Spiced Chicken Wraps With Tomato Salad And Mint Chutney"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "1110"
+                                      },
+                                      "core_recipe_id": "1110"
+                                  }
+                              }
+                          ],
+                          "id": "99392d33-ae59-431e-a989-b6939d05412c",
+                          "attributes": {
+                              "short_display_name": "Spiced Basa Wraps With Tomato Salad And Mint Chutney "
+                          },
+                          "meta": {
+                              "core_recipe_id": "3029"
+                          },
+                          "core_recipe_id": "3029"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                                      "attributes": {
+                                          "short_display_name": "Big Flavour Meat-Free Mince Lasagne"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2656"
+                                      },
+                                      "core_recipe_id": "2656"
+                                  }
+                              }
+                          ],
+                          "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                          "attributes": {
+                              "short_display_name": "Big Flavour Beef Lasagne"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2169"
+                          },
+                          "core_recipe_id": "2169"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "70c8538b-5794-4dc0-8e87-85a7953d49db",
+                                      "attributes": {
+                                          "short_display_name": "Spiced Tofu Wraps With Tomato Salad And Mint Chutney"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3028"
+                                      },
+                                      "core_recipe_id": "3028"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "99392d33-ae59-431e-a989-b6939d05412c",
+                                      "attributes": {
+                                          "short_display_name": "Spiced Basa Wraps With Tomato Salad And Mint Chutney "
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "3029"
+                                      },
+                                      "core_recipe_id": "3029"
+                                  }
+                              }
+                          ],
+                          "id": "e0192fd0-f5bf-4c4c-bd4e-7055c302c181",
+                          "attributes": {
+                              "short_display_name": "Spiced Chicken Wraps With Tomato Salad And Mint Chutney"
+                          },
+                          "meta": {
+                              "core_recipe_id": "1110"
+                          },
+                          "core_recipe_id": "1110"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "aa212809-8fcf-4d1a-9ee5-d69bd8d2351b",
+                                      "attributes": {
+                                          "short_display_name": "Big Flavour Beef Lasagne"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2169"
+                                      },
+                                      "core_recipe_id": "2169"
+                                  }
+                              }
+                          ],
+                          "id": "e6d00a84-9a0c-4f70-8249-0394bb917138",
+                          "attributes": {
+                              "short_display_name": "Big Flavour Meat-Free Mince Lasagne"
+                          },
+                          "meta": {
+                              "core_recipe_id": "2656"
+                          },
+                          "core_recipe_id": "2656"
+                      },
+                      {
+                          "type": "recipe",
+                          "relationships": [
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "0ed30b44-4d37-4a89-a5ee-2d6b2ce38dcd",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Beef Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2041"
+                                      },
+                                      "core_recipe_id": "2041"
+                                  }
+                              },
+                              {
+                                  "type": "alternative",
+                                  "data": {
+                                      "type": "recipe",
+                                      "id": "6f36685d-d5a3-415f-a579-ac1c80ee4595",
+                                      "attributes": {
+                                          "short_display_name": "Simply Perfect Meat-Free Mince Spag Bol"
+                                      },
+                                      "meta": {
+                                          "core_recipe_id": "2655"
+                                      },
+                                      "core_recipe_id": "2655"
+                                  }
+                              }
+                          ],
+                          "id": "f9495828-2e4e-4955-8eb7-b5878790b76e",
+                          "attributes": {
+                              "short_display_name": "Simply Perfect Lean Beef Spag Bol"
+                          },
+                          "meta": {
+                              "core_recipe_id": "3104"
+                          },
+                          "core_recipe_id": "3104"
+                      }
+                  ]
+              },
+              "boxes": {
+                  "data": [
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-2-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-2-4"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-3-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-3-4"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-4-2"
+                      },
+                      {
+                          "type": "box",
+                          "id": "SKU-GMT-4-4"
+                      }
+                  ]
+              },
+              "collections": {
+                  "data": []
+              },
+              "featured_categories": {
+                  "data": []
+              }
+          },
+          "meta": {
+              "recommender": {
+                  "version": ""
+              },
+              "swapsExperimentUserAllocationGroup": "control"
+          }
+      }
+  ],
+  "included": [],
+  "meta": {
+      "recommendations": {
+          "version": ""
+      }
+  },
+  "status": "ok"
+}

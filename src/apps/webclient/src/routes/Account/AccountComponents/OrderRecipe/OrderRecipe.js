@@ -9,7 +9,7 @@ const OrderRecipe = ({
   recipeTitle,
   servings,
 }) => (
-  <div className={css.recipe}>
+  <div className={css.recipe} data-testing="orderRecipe">
     {recipeImage
       ? <img className={css.image} src={recipeImage} alt={recipeTitle} />
       : <div className={classNames(css.image, css.blankImage)} />}

@@ -46,7 +46,7 @@ class Order extends React.PureComponent {
       humanDeliveryDay, originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
       orderShouldCutoffAt, orderWhenMenuOpen, priceBreakdown, editDeliveryMode, portionsCount, isProjected,
       cancellable, deliveryDay, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
-      phase,
+      phase, maxNumRecipes,
     } = this.props
     const isOrderInteractive = orderState !== 'cancelled' && phase !== 'pre_menu'
 
@@ -69,6 +69,7 @@ class Order extends React.PureComponent {
               <OrderCollage
                 recipes={recipes}
                 orderState={orderState}
+                maxNumRecipes={maxNumRecipes}
               />
             </div>
             <div className={css.orderMain}>
@@ -158,6 +159,7 @@ class Order extends React.PureComponent {
                 recipesPeriodStockFetchError={recipesPeriodStockFetchError}
                 deliveryDay={deliveryDay}
                 portionsCount={portionsCount}
+                maxNumRecipes={maxNumRecipes}
               />
             </div>
           )
@@ -198,6 +200,7 @@ Order.propTypes = {
   userOpenCloseOrderCard: PropTypes.func.isRequired,
   userToggleEditDateSection: PropTypes.func.isRequired,
   phase: PropTypes.string,
+  maxNumRecipes: PropTypes.number,
 }
 
 Order.defaultProps = {
@@ -228,6 +231,7 @@ Order.defaultProps = {
   deliveryDay: '',
   portionsCount: '2',
   phase: '',
+  maxNumRecipes: '4',
 }
 
 export default Order

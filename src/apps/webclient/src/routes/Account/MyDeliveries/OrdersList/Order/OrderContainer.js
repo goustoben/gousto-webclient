@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
 import actions from 'actions/user'
-
+import { getMaxNumRecipes } from '../../selectors/index'
 import Order from './Order'
 
 function mapStateToProps(state, ownProps) {
@@ -37,6 +37,7 @@ function mapStateToProps(state, ownProps) {
     recipesPeriodStockFetchError: state.error.get(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE),
     portionsCount: order.get('portionsCount'),
     phase: order.get('phase'),
+    maxNumRecipes: getMaxNumRecipes(state),
   }
 }
 

@@ -16,6 +16,7 @@ const OrderRecipes = ({
   orderState,
   whenCutoff,
   portionsCount,
+  maxNumRecipes,
 }) => (
   <div>
     <div className={css.headerRow}>
@@ -30,7 +31,12 @@ const OrderRecipes = ({
         </div>
       ) : null}
     </div>
-    <OrderRecipeBox recipes={recipes} orderState={orderState} portionsCount={portionsCount} />
+    <OrderRecipeBox
+      recipes={recipes}
+      orderState={orderState}
+      portionsCount={portionsCount}
+      maxNumRecipes={maxNumRecipes}
+    />
     {orderState === 'menu open' ? (
       <div className={css.textRow}>
         <p className={css.subHeader}>
@@ -60,6 +66,7 @@ OrderRecipes.propTypes = {
   orderState: PropTypes.string,
   whenCutoff: PropTypes.string,
   portionsCount: PropTypes.string,
+  maxNumRecipes: PropTypes.number,
 }
 
 OrderRecipes.defaultProps = {
@@ -68,6 +75,7 @@ OrderRecipes.defaultProps = {
   orderState: '',
   whenCutoff: '',
   portionsCount: '2',
+  maxNumRecipes: 4,
 }
 
 export default OrderRecipes

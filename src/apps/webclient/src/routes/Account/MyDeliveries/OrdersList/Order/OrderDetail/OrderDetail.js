@@ -29,12 +29,13 @@ class OrderDetail extends React.PureComponent {
       editDeliveryMode,
       cancellable,
       deliveryDayId,
-      deliveryDay
+      deliveryDay,
+      maxNumRecipes
     } = this.props
     const fetchSuccess = recipesPeriodStockFetchError === null && orderDeliveryDaysFetchError === null
 
     return (
-      <div className={css.orderDetail}>
+      <div className={css.orderDetail} data-testing="orderDetail">
         {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderRecipes
@@ -43,6 +44,7 @@ class OrderDetail extends React.PureComponent {
               orderState={orderState}
               whenCutoff={whenCutoff}
               portionsCount={portionsCount}
+              maxNumRecipes={maxNumRecipes}
             />
           </section>
         ) : null}
@@ -111,6 +113,7 @@ OrderDetail.propTypes = {
   recipesPeriodStockFetchError: PropTypes.string,
   deliveryDay: PropTypes.string,
   portionsCount: PropTypes.string,
+  maxNumRecipes: PropTypes.number,
 }
 
 OrderDetail.contextType = ReactReduxContext
@@ -133,6 +136,7 @@ OrderDetail.defaultProps = {
   recipesPeriodStockFetchError: '',
   deliveryDay: '',
   portionsCount: '2',
+  maxNumRecipes: 4,
 }
 
 export default OrderDetail

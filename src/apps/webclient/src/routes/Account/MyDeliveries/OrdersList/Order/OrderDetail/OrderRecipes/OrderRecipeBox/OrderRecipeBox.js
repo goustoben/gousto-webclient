@@ -11,8 +11,9 @@ const OrderRecipeBox = ({
   recipes,
   orderState,
   portionsCount,
+  maxNumRecipes,
 }) => {
-  const maxRecipes = ['confirmed', 'dispatched'].indexOf(orderState) > -1 ? recipes.size : 4
+  const maxRecipes = ['confirmed', 'dispatched'].indexOf(orderState) > -1 ? recipes.size : maxNumRecipes
   const recipesRendered = []
   for (let i = 0; i < maxRecipes; i++) {
     const recipeId = recipes.getIn([i, 'id'], null)
@@ -42,12 +43,14 @@ OrderRecipeBox.propTypes = {
   ),
   orderState: PropTypes.string,
   portionsCount: PropTypes.string,
+  maxNumRecipes: PropTypes.number,
 }
 
 OrderRecipeBox.defaultProps = {
   recipes: Immutable.List([]),
   orderState: '',
   portionsCount: '2',
+  maxNumRecipes: 4,
 }
 
 export default OrderRecipeBox
