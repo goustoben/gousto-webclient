@@ -8,7 +8,6 @@ import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { getPromoCode } from 'selectors/basket'
 import { HotjarTrigger } from 'components/HotjarTrigger'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryBannerPropTypes } from './propTypes'
 import { BoxSummaryDesktopBanner } from './Desktop/BoxSummaryDesktopBanner'
 import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
 import { ActionBar } from '../../ActionBar/ActionBar'
@@ -103,12 +102,18 @@ BoxSummaryBanner.propTypes = {
   date: PropTypes.string,
   deliveryDays: PropTypes.instanceOf(Immutable.Map),
   slotId: PropTypes.string,
+  numRecipes: PropTypes.number.isRequired,
   expandWarning: PropTypes.bool.isRequired,
   onExpandClick: PropTypes.func.isRequired,
-  numRecipes: PropTypes.number.isRequired,
+  showBrowseCTA: PropTypes.bool.isRequired,
+  maxRecipesNum: PropTypes.number.isRequired,
+  menuRecipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
+  recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+  errorText: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired,
   isBoxSummaryOpened: PropTypes.bool,
-
-  ...boxSummaryBannerPropTypes,
 }
 
 BoxSummaryBanner.defaultProps = {

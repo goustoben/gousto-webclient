@@ -17,7 +17,6 @@ import { OpenBoxButton } from '../OpenBoxButton'
 
 import css from './BoxSummaryMobileBanner.css'
 import { ExpandBoxSummaryButtonContainer } from '../ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
-import { boxSummaryBannerPropTypes } from '../propTypes'
 
 const BoxSummaryMobileBanner = ({
   showBrowseCTA,
@@ -80,13 +79,5 @@ const BoxSummaryMobileBanner = ({
     </div>
   )
 }
-
-BoxSummaryMobileBanner.propTypes = {
-  onExpandClick: PropTypes.func.isRequired,
-
-  ...boxSummaryBannerPropTypes,
-}
-
-BoxSummaryMobileBanner.defaultProps = {}
 
 export { BoxSummaryMobileBanner }

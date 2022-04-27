@@ -14,7 +14,6 @@ import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 import { ExpandBoxSummaryButtonContainer } from '../ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
 
 import css from './BoxSummaryDesktopBanner.css'
-import { boxSummaryBannerPropTypes } from '../propTypes'
 
 const BoxSummaryDesktopBanner = ({
   showBrowseCTA,
@@ -68,14 +67,6 @@ const BoxSummaryDesktopBanner = ({
       </div>
     </div>
   )
-}
-
-BoxSummaryDesktopBanner.propTypes = {
-  expandWarning: PropTypes.bool.isRequired,
-  onExpandClick: PropTypes.func.isRequired,
-  numRecipes: PropTypes.number.isRequired,
-
-  ...boxSummaryBannerPropTypes,
 }
 
 export { BoxSummaryDesktopBanner }
