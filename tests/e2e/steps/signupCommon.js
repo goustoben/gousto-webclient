@@ -42,7 +42,7 @@ module.exports = {
         done()
       })
       .perform(function (done) {
-        signup.section.deliveryStep.checkIfDeliverySet()
+        signup.section.deliveryStep.selectTuesdaysAsDeliveryDay()
         done()
       })
       .perform(function (done) {
@@ -129,6 +129,10 @@ module.exports = {
       })
       .perform(done => {
         menu.section.menuContainer.clickContinueAfterPostcodeWasEntered()
+        done()
+      })
+      .perform(done => {
+        menu.section.boxSummaryDesktop.selectTuesdayAsDeliveryDay()
         done()
       })
       .perform(done => {

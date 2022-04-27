@@ -81,6 +81,14 @@ module.exports = {
 
           return this
         },
+
+        selectTuesdaysAsDeliveryDay: function(){
+          this
+            .selectOptionByText('*[data-testing="signupDeliveryDay"]', 'Tuesday', this)
+
+          return this
+        },
+
         goToNextStep,
       }],
     },
