@@ -122,6 +122,14 @@ module.exports = {
           return this
         },
 
+        selectTuesdayAsDeliveryDay: function () {
+          // select the first Tuesday available in the dropdown.
+          this.
+            selectOptionByText('*[data-testing="boxSummaryDesktop"] .Select', 'TUE', this)
+          
+          return this
+        }
+
       }],
     },
 
