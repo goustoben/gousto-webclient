@@ -24,10 +24,18 @@ describe('OrderCollage', () => {
       expect(wrapper.find(className)).toHaveLength(1)
     })
 
-    test('should always render four elements with collageItem class', () => {
-      wrapper = mount(<OrderCollage recipes={recipes} />)
+    test('should render four elements with collageItem class if maxNumRecipes is 4', () => {
+      const maxNumRecipes = 4
+      wrapper = mount(<OrderCollage recipes={recipes} maxNumRecipes={maxNumRecipes} />)
       const className = `.${css.emptyItem.split(' ').join('.')}`
       expect(wrapper.find(className)).toHaveLength(4)
+    })
+
+    test('should render five elements with collageItem class if maxNumRecipes is 5', () => {
+      const maxNumRecipes = 5
+      wrapper = mount(<OrderCollage recipes={recipes} maxNumRecipes={maxNumRecipes} />)
+      const className = `.${css.emptyItem.split(' ').join('.')}`
+      expect(wrapper.find(className)).toHaveLength(5)
     })
 
     describe('renders the correct number of images', () => {
@@ -65,6 +73,31 @@ describe('OrderCollage', () => {
         })
         wrapper = mount(<OrderCollage recipes={recipes} />)
         expect(wrapper.find('img').length).toBe(2)
+
+        recipes = Immutable.fromJS({
+          1: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          2: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          3: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          4: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          5: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+        })
+        wrapper = mount(<OrderCollage isCommitted recipes={recipes} />)
+        expect(wrapper.find('img').length).toBe(5)
       })
 
       describe('when an image with no image url is passed', () => {

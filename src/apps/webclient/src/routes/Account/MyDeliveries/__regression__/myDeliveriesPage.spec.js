@@ -1,30 +1,11 @@
+import { withPlatformTags, WEB } from '../../../../utils/regression/tags'
+import { initialize } from './pageUtils/myDeliveries'
+
 describe('My Deliveries', () => {
   beforeEach(() => {
-    cy.stubAll3rdParties()
-    cy.server()
-    cy.fixture('user/userCurrent').as('userCurrent')
-    cy.route('GET', /user\/current/, '@userCurrent').as('user')
-    cy.fixture('user/userCurrentOrders').as('userCurrentOrders')
-    cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('currentOrders')
-    cy.fixture('subscription/projectedDeliveries').as('subscriptionProjectDeliveries')
-    cy.route('GET', /subscriptionquery\/v1\/projected-deliveries\/(.*)/, '@subscriptionProjectDeliveries').as('projectedDeliveries')
-    cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
-    cy.route('GET', /user\/current\/address/, '@userCurrentAddress').as('currentAddress')
-    cy.route('GET', /subscriptionquery\/v1\/subscriptions\/(.*)/, 'fixture:subscription/subscriptionQueryResponse').as('currentSubscription')
-    cy.fixture('user/userAddresses').as('userAdresses')
-    cy.route('GET', '/customers/v1/customers/17247344/addresses', '@userAdresses')
-    cy.fixture('orderSkipRecovery').as('orderSkipRecovery')
-    cy.route('GET', /orderskiprecovery/, '@orderSkipRecovery')
-    cy.fixture('subscription/subscriptionUpdateResponse').as('subscriptionUpdateResponse')
-    cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/skip?/, '@subscriptionUpdateResponse').as('skipDates')
-    cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/unskip?/, '@subscriptionUpdateResponse').as('unSkipDates')
-    cy.route('DELETE', /order/, {}).as('cancelPendingOrder')
-    cy.route('GET', /delivery_day/, {})
-
-    cy.login()
-    cy.visit('/')
-    cy.visit('/my-deliveries')
-    cy.wait(['@currentOrders', '@user', '@projectedDeliveries', '@currentAddress', '@currentSubscription'])
+    initialize({
+      isEligibleFor5Recipes: false
+    })
   })
 
   describe('add box button', () => {
@@ -34,13 +15,25 @@ describe('My Deliveries', () => {
     })
   })
 
+  describe('committed orders', () => {
+    withPlatformTags(WEB).describe('on web', () => {
+      it('should show recipe tiles matching the amount of recipes ordered, without placeholders', () => {
+        cy.get('[data-testing="orderCollageContainer"]')
+          .first()
+          .within(() => {
+            cy.get('[data-testing="orderCollageItem"]').should('have.length', 3)
+          })
+      })
+    })
+  })
+
   describe('pending orders', () => {
     it('should be cancellable', () => {
-      cy.get('[data-testing="pendingOrder"]').first().click()
+      cy.get('[data-testing="pendingOrder"]').eq(1).click()
       cy.get('[data-testing="cancelButton"]').click()
       cy.wait('@cancelPendingOrder')
       cy.contains('You cannot restore this box').should('be.visible')
-      cy.get('[data-testing="pendingOrder"]').first().should('contain', 'Cancelled')
+      cy.get('[data-testing="pendingOrder"]').eq(1).should('contain', 'Cancelled')
     })
 
     it('should show the delivery address if the address is within the current user addresses', () => {
