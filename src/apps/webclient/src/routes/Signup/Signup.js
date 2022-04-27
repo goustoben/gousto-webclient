@@ -6,23 +6,9 @@ import { browserHistory } from 'react-router'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
-import routes from 'config/routes'
-import actions from 'actions'
-import {
-  stepByName,
-  getPromocodeQueryParam,
-  findStepBySlug,
-  getStepFromPathname,
-  canLandOnStepWithoutRedirecting,
-} from 'utils/signup'
+import { stepByName, getStepFromPathname } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
-import { menuLoadBoxPrices } from 'actions/menu'
-
-import { getPromoCode } from 'selectors/basket'
-import { promoGet } from 'actions/promos'
-import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
-import { hotjarSkipWizard } from 'actions/trackingKeys'
-import { invokeHotjarEvent } from 'utils/hotjarUtils'
+import { fetchSignupData } from 'routes/Signup/utils/fetchSignupData'
 
 import css from './Signup.css'
 
@@ -98,113 +84,8 @@ const defaultProps = {
   shouldSkipWizardByFeature: false,
 }
 
-const postCodePath = '/signup/postcode'
-
 class Signup extends PureComponent {
-  static fetchData = async ({ store, params = {}, query = {}, options = {} }) => {
-    let steps = Immutable.List(signupConfig.defaultSteps)
-    const querySteps = query.steps ? query.steps.split(',') : []
-    const promoCode = query.promo_code
-
-    const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
-    const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
-    const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
-    const { shouldSetStepFromParams, isGoustoOnDemandEnabled, shouldSkipWizardByFeature } = options
-
-    if (querySteps.length) {
-      steps = Immutable.List(querySteps)
-    } else if (featureSteps.length) {
-      steps = Immutable.List(featureSteps)
-    } else if (Immutable.Iterable.isIterable(signupSteps) && signupSteps.size) {
-      steps = signupSteps
-    }
-
-    steps = steps.filter((step) => step && availableSteps.includes(step))
-
-    const firstStep = stepByName(steps.first())
-
-    if (!store.getState().menuCutoffUntil) {
-      await store.dispatch(actions.menuLoadDays())
-    }
-
-    store.dispatch(actions.signupStepsReceive(steps))
-
-    let stepToSet = firstStep
-
-    if (shouldSetStepFromParams) {
-      const stepSlug = params.stepName
-      const requestedStep = findStepBySlug(stepSlug)
-      if (requestedStep) {
-        stepToSet = requestedStep
-      }
-    }
-
-    store.dispatch(actions.signupSetStep(stepToSet))
-
-    if (isGoustoOnDemandEnabled && params.stepName !== signupConfig.checkAccountPageSlug) {
-      const state = store.getState()
-      if (state.menuBoxPrices.size === 0) {
-        store.dispatch(menuLoadBoxPrices())
-      }
-
-      const basketPromoCode = getPromoCode(state)
-      if (basketPromoCode && !getCurrentPromoCodeData(state)) {
-        await store.dispatch(promoGet(basketPromoCode))
-      }
-    }
-
-    if (shouldSkipWizardByFeature && !isGoustoOnDemandEnabled) {
-      invokeHotjarEvent(hotjarSkipWizard)
-
-      return store.dispatch(actions.redirect(routes.client.menu))
-    }
-
-    // No Step specified and no query string specified
-    if (!params.stepName && querySteps.length === 0) {
-      return store.dispatch(
-        actions.redirect(
-          `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
-            promoCode,
-            '?',
-          )}`,
-        ),
-      )
-    }
-
-    // No Step specified but query steps overwrite
-    if (!params.stepName && querySteps.length > 0) {
-      const step = stepByName(querySteps.slice(0, 1).pop())
-      const futureSteps = querySteps.join(',')
-
-      return store.dispatch(
-        actions.redirect(
-          `${routes.client.signup}/${step.get('slug')}?steps=${futureSteps}${getPromocodeQueryParam(
-            promoCode,
-          )}`,
-        ),
-      )
-    }
-
-    // Step landed is not the first step
-    if (
-      params.stepName &&
-      firstStep.get('slug') !== params.stepName &&
-      !canLandOnStepWithoutRedirecting(params.stepName) &&
-      params.pathname !== postCodePath &&
-      !shouldSetStepFromParams
-    ) {
-      return store.dispatch(
-        actions.redirect(
-          `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
-            promoCode,
-            '?',
-          )}`,
-        ),
-      )
-    }
-
-    return null
-  }
+  static fetchData = fetchSignupData
 
   componentDidMount() {
     const {
