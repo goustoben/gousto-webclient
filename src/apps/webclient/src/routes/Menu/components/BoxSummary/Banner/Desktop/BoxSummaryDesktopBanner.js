@@ -20,32 +20,19 @@ const BoxSummaryDesktopBanner = ({
   showBrowseCTA,
   maxRecipesNum,
   menuRecipesStore,
-  numRecipes,
   recipes,
   errorText,
-  expandWarning,
   onExpandClick,
+  expandWarning,
+  numRecipes,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
   const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
   return (
-    <div className={isSimplifyBasketBarEnabled ? css.bardesktopVariant : css.bardesktop}>
-      {!isSimplifyBasketBarEnabled && (
-        <RecipeListContainer
-          view="desktop"
-          recipes={recipes}
-          menuRecipesStore={menuRecipesStore}
-          maxRecipesNum={maxRecipesNum}
-        />
-      )}
-
-      {isSimplifyBasketBarEnabled && isActionBarRedesignEnabled ? (
-        <ActionBar variant="embedded" />
-      ) : null}
-      <div
-        className={isSimplifyBasketBarEnabled ? css.buttonsContainerVariant : css.buttonsContainer}
-      >
+    <div className={css.bardesktopVariant}>
+      {isActionBarRedesignEnabled ? <ActionBar variant="embedded" /> : null}
+      <div className={css.buttonsContainerVariant}>
         {showBrowseCTA ? (
           <Tooltip
             message={errorText}
