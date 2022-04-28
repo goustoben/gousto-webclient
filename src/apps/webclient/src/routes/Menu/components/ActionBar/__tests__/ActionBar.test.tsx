@@ -27,9 +27,6 @@ describe('ActionBar', () => {
       recipes: [],
     }),
     pending: Immutable.fromJS({}),
-    features: Immutable.fromJS({
-      isSimplifyBasketBarEnabled: { value: false },
-    }),
     auth: Immutable.fromJS({
       accessToken: 'test-access-token',
     }),

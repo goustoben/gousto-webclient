@@ -2,7 +2,6 @@ import React from 'react'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import basketConfig from 'config/basket'
-import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import css from './ActionBarPresentational.module.css'
 import { CircularProgressIndicator } from './CircularProgressIndicator/CircularProgressIndicator'
@@ -26,7 +25,6 @@ export const ActionBarPresentational = ({
   const canCheckout = numRecipes >= basketConfig.minRecipesNum
   const nextTierPricePerPortion = useSelector(createGetNextTierPricePerPortion(numRecipes))
   const menuBoxPricesLoading = useSelector(getMenuBoxPricesLoading)
-  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
   const { isPending, pricing } = usePricing()
   const isLoading = isPending || menuBoxPricesLoading
   const currentTierPricePerPortion = pricing ? pricing.pricePerPortionDiscounted : null
@@ -39,7 +37,6 @@ export const ActionBarPresentational = ({
         [css.embedded]: variant === 'embedded',
         [css.actionBarCanCheckout]: canCheckout,
         [css.shouldAnimate]: shouldAnimate,
-        [css.isSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled,
       })}
       onAnimationEnd={onAnimationEnd}
     >
