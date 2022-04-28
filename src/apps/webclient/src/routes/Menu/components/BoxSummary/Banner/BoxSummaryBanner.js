@@ -31,7 +31,7 @@ const createGetActionTypeIsPending = (actionType) =>
 
 const getPromoStore = (state) => state.promoStore
 
-const createGetPromoCodeInformationFromPromoStore = (promoCode) =>
+const createGetPromoStoreEntry = (promoCode) =>
   createSelector(getPromoStore, (promoStore) => promoStore.get(promoCode))
 
 const BoxSummaryBanner = ({
@@ -46,15 +46,13 @@ const BoxSummaryBanner = ({
   const dispatch = useDispatch()
   const promoCode = useSelector(getPromoCode)
   const isPromoGetPending = useSelector(createGetActionTypeIsPending(actionTypes.PROMO_GET))
-  const promoCodeInformationFromPromoStore = useSelector(
-    createGetPromoCodeInformationFromPromoStore(promoCode),
-  )
+  const promoCodeEntry = useSelector(createGetPromoStoreEntry(promoCode))
 
   useEffect(() => {
-    if (promoCode && !promoCodeInformationFromPromoStore && !isPromoGetPending) {
+    if (promoCode && !promoCodeEntry && !isPromoGetPending) {
       dispatch(promoGet(promoCode))
     }
-  }, [promoCode, promoCodeInformationFromPromoStore, isPromoGetPending, dispatch])
+  }, [promoCode, promoCodeEntry, isPromoGetPending, dispatch])
   const isToMedium = useMedia(css.BreakpointToMedium)
   const view = isToMedium ? MOBILE_VIEW : DESKTOP_VIEW
 
