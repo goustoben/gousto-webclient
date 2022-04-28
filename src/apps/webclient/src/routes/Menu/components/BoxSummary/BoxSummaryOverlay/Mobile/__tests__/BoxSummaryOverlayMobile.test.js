@@ -24,11 +24,7 @@ describe('BoxSummaryOverlayMobile', () => {
     shouldDisplayFullScreenBoxSummary: false,
   }
 
-  describe('when isSimplifyBasketBarEnabled is on', () => {
-    beforeEach(() => {
-      useSelector.mockReturnValue(true)
-    })
-
+  describe('when rendered', () => {
     test('then it should render without crashing', () => {
       expect(() => {
         shallow(<BoxSummaryOverlayMobile {...defaultProps} />)

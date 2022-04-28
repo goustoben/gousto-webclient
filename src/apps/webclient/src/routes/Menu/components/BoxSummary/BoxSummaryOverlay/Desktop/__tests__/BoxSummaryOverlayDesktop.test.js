@@ -23,17 +23,4 @@ describe('BoxSummaryOverlayDesktop', () => {
     orderSaveError: '',
     shouldDisplayFullScreenBoxSummary: false,
   }
-
-  describe('when isSimplifyBasketBarEnabled is on', () => {
-    beforeEach(() => {
-      useSelector.mockReturnValue(true)
-      wrapper = shallow(<BoxSummaryOverlayDesktop {...defaultProps} />)
-    })
-
-    test('then it should render the variant', () => {
-      expect(
-        wrapper.find('[data-testing="boxSummaryDesktop"]').hasClass('detailContainerDesktopVariant')
-      ).toBe(true)
-    })
-  })
 })
