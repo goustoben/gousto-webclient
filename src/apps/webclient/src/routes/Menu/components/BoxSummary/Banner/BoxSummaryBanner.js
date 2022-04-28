@@ -54,6 +54,7 @@ const BoxSummaryBanner = ({
   isBoxSummaryOpened,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
+  const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
   const dispatch = useDispatch()
   const promoCode = useSelector(getPromoCode)
@@ -129,17 +130,43 @@ const BoxSummaryBanner = ({
           )}
         </div>
       </div>
+      <div className={css.bardesktopVariant}>
+        {isActionBarRedesignEnabled ? <ActionBar variant="embedded" /> : null}
+        <div className={css.buttonsContainerVariant}>
+          {showBrowseCTA ? (
+            <Tooltip
+              message={errorText}
+              visible={!!errorText}
+              style="button"
+              overlayClassName={css.errorTooltipDesktop}
+              className={css.errorMessage}
+            >
+              <BrowseCTAButtonContainer view="desktop" />
+            </Tooltip>
+          ) : (
+            <ExpandBoxSummaryButtonContainer
+              warning={expandWarning}
+              onClick={onExpandClick}
+              numRecipes={numRecipes}
+              view="desktop"
+            />
+          )}
 
-      <BoxSummaryDesktopBanner
-        showBrowseCTA={showBrowseCTA}
-        maxRecipesNum={maxRecipesNum}
-        menuRecipesStore={menuRecipesStore}
-        recipes={recipes}
-        errorText={errorText}
-        expandWarning={expandWarning}
-        onExpandClick={onExpandClick}
-        numRecipes={numRecipes}
-      />
+          {showBrowseCTA ? (
+            <BrowseCTAContainer view="desktop" />
+          ) : (
+            <Tooltip
+              message={errorText}
+              visible={!!errorText}
+              style="button"
+              overlayClassName={css.errorTooltipDesktop}
+              className={css.errorMessage}
+            >
+              <BannerButtonContainer view="desktop" toggleBasketView={onExpandClick} />
+            </Tooltip>
+          )}
+        </div>
+      </div>
       <HotjarTrigger name="simplify-basket-bar" shouldInvoke={isSimplifyBasketBarEnabled} />
       {isActionBarRedesignEnabled && <ActionBar variant="separate" />}
     </section>

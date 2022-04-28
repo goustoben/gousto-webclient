@@ -1,6 +1,6 @@
 @value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
 @value barMobileHeight from 'routes/Menu/components/BoxSummary/Banner/BoxSummaryBanner.css';
-@value barDesktopHeight, barHeightIsSimplifyBasketBarEnabled from 'routes/Menu/components/BoxSummary/Banner/Desktop/BoxSummaryDesktopBanner.css';
+@value barDesktopHeight, barHeightIsSimplifyBasketBarEnabled from 'routes/Menu/components/BoxSummary/Banner/BoxSummaryBanner.css';
 @value actionBarHeight, FI-50, FI-200, FS-50, FS-200 from './actionBarConstants.module.css';
 
 @value fullJumpDurationMs 1000ms;

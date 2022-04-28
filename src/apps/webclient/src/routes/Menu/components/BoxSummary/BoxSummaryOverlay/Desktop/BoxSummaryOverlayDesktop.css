@@ -1,6 +1,6 @@
 @value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value sizeLG from 'styles/typography.css';
-@value barDesktopHeight, barHeightIsSimplifyBasketBarEnabled from '../../Banner/Desktop/BoxSummaryDesktopBanner.css';
+@value barDesktopHeight, barHeightIsSimplifyBasketBarEnabled from '../../Banner/BoxSummaryBanner.css';
 
 .supercontainerDesktop {
   composes: fixed from 'styles/position.css';

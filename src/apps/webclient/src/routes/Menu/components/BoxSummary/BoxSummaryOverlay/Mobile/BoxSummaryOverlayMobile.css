@@ -2,7 +2,7 @@
 @value sizeLG, sizeXS, bodyFontStackBold from 'styles/typography.css';
 
 @value barMobileHeight 90px;
-@value barHeightIsSimplifyBasketBarEnabled from '../../Banner/Desktop/BoxSummaryDesktopBanner.css';
+@value barHeightIsSimplifyBasketBarEnabled from '../../Banner/BoxSummaryBanner.css';
 
 .detailContainer {
   composes: borderXS from 'styles/borders.css';
