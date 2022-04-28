@@ -108,7 +108,7 @@ const BoxSummaryBanner = ({
               visible={!!errorText}
               // eslint-disable-next-line react/style-prop-object
               style="button"
-              overlayClassName={css.errorTooltipDesktop}
+              overlayClassName={css.errorTooltip}
               className={css.errorMessage}
             >
               <BrowseCTAButtonContainer view={view} />
@@ -122,7 +122,7 @@ const BoxSummaryBanner = ({
               visible={!!errorText}
               // eslint-disable-next-line react/style-prop-object
               style="button"
-              overlayClassName={css.errorTooltipDesktop}
+              overlayClassName={css.errorTooltip}
               className={css.errorMessage}
             >
               <BannerButtonContainer view={view} toggleBasketView={onExpandClick} />
@@ -138,7 +138,7 @@ const BoxSummaryBanner = ({
               message={errorText}
               visible={!!errorText}
               style="button"
-              overlayClassName={css.errorTooltipDesktop}
+              overlayClassName={css.errorTooltip}
               className={css.errorMessage}
             >
               <BrowseCTAButtonContainer view={view} />
@@ -159,7 +159,7 @@ const BoxSummaryBanner = ({
               message={errorText}
               visible={!!errorText}
               style="button"
-              overlayClassName={css.errorTooltipDesktop}
+              overlayClassName={css.errorTooltip}
               className={css.errorMessage}
             >
               <BannerButtonContainer view={view} toggleBasketView={onExpandClick} />

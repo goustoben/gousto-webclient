@@ -11,6 +11,9 @@
 @value ScreenXSMax from 'styles/screenSizes.module.css';
 @value barHeightIsSimplifyBasketBarEnabled 4rem;
 
+@value FE-900 #BC1526;
+@value FE-800 #CB2432;
+
 .boxSummaryBanner {
   z-index: 500;
   position: fixed;
@@ -65,16 +68,12 @@
   }
 }
 
-.errorTooltipDesktop {
-  display: none;
+.errorTooltip {
   position: fixed;
-  @media ScreenSMMin {
-    display: inherit;
-  }
 }
 
 .errorMessage {
-  composes: textRegular from 'styles/typography.css';
-  color: DarkRadish;
-  box-shadow: 0px 2px 5px Radish;
+  composes: fontStyleBody from 'design-language/typography.css';
+  color: FE-900;
+  box-shadow: 0px 2px 5px FE-800;
 }
