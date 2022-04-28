@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 import { useSelector, useDispatch } from 'react-redux'
 import { createSelector } from 'reselect'
 import { promoGet } from 'actions/promos'
@@ -8,15 +7,15 @@ import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { getPromoCode } from 'selectors/basket'
 import { HotjarTrigger } from 'components/HotjarTrigger'
 import { actionTypes } from 'actions/actionTypes'
+import { useMedia } from 'react-use'
+import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
+import classNames from 'classnames'
+import { Tooltip } from 'goustouicomponents'
 import { ActionBar } from '../../ActionBar/ActionBar'
 import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
 
-import { useMedia } from 'react-use'
-import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
 import css from './BoxSummaryBanner.css'
-import classNames from 'classnames'
 import { ExpandBoxSummaryButtonContainer } from './ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
-import { Tooltip } from 'goustouicomponents'
 import { BannerButtonContainer } from '../BannerButton'
 import { BrowseCTAContainer } from '../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
@@ -38,18 +37,11 @@ const createGetPromoCodeInformationFromPromoStore = (promoCode) =>
   createSelector(getPromoStore, (promoStore) => promoStore.get(promoCode))
 
 const BoxSummaryBanner = ({
-  date,
-  deliveryDays,
-  slotId,
   numRecipes,
   expandWarning,
   onExpandClick,
   showBrowseCTA,
-  maxRecipesNum,
-  menuRecipesStore,
-  recipes,
   errorText,
-  isBoxSummaryOpened,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
   const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
@@ -141,25 +133,11 @@ const BoxSummaryBanner = ({
 }
 
 BoxSummaryBanner.propTypes = {
-  date: PropTypes.string,
-  deliveryDays: PropTypes.instanceOf(Immutable.Map),
-  slotId: PropTypes.string,
   numRecipes: PropTypes.number.isRequired,
   expandWarning: PropTypes.bool.isRequired,
   onExpandClick: PropTypes.func.isRequired,
   showBrowseCTA: PropTypes.bool.isRequired,
-  maxRecipesNum: PropTypes.number.isRequired,
-  menuRecipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-  recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
   errorText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  isBoxSummaryOpened: PropTypes.bool,
-}
-
-BoxSummaryBanner.defaultProps = {
-  date: null,
-  deliveryDays: [Immutable.Map()],
-  slotId: null,
-  isBoxSummaryOpened: false,
 }
 
 export { BoxSummaryBanner }
