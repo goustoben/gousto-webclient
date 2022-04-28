@@ -87,10 +87,8 @@ const BoxSummaryBanner = ({
     <section>
       <div
         className={classNames(css.boxSummaryBanner)}
-        onClick={onExpandClick}
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-        tabIndex={0}
-        role="button"
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...(isToMedium ? { onClick: onExpandClick } : {})}
       >
         {isToMedium ? (
           <div>
