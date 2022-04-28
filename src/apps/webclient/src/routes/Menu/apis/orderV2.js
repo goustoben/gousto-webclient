@@ -20,7 +20,7 @@ export const createOrder = async (accessToken, order, userId) => {
     { data: order },
     'POST',
     cacheDefault,
-    headers
+    headers,
   )
 
   const {
@@ -41,7 +41,7 @@ export async function updateOrder(dispatch, getState, orderId, additionalData) {
   const accessToken = getAccessToken(state)
   const userId = getUserId(state)
   const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
-    'radishes_order_api_v2_putorder_web_enabled'
+    'radishes_order_api_v2_putorder_web_enabled',
   )(dispatch, getState)
 
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
@@ -83,7 +83,7 @@ export async function updateOrder(dispatch, getState, orderId, additionalData) {
       })
       .catch((error) => {
         reject(error)
-      })
+      }),
   )
 }
 
@@ -92,7 +92,7 @@ export async function fetchOrder(dispatch, getState, orderId, include) {
   const userId = getUserId(state)
   const accessToken = getAccessToken(state)
   const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
-    'radishes_order_api_v2_getorder_web_enabled'
+    'radishes_order_api_v2_getorder_web_enabled',
   )(dispatch, getState)
 
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
@@ -115,7 +115,7 @@ export async function fetchOrder(dispatch, getState, orderId, include) {
       })
       .catch((error) => {
         reject(error)
-      })
+      }),
   )
 }
 
@@ -123,11 +123,12 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
   const state = getState()
   const userId = getUserId(state)
   const headers = getRequestHeaders(userId)
-  const params = new URLSearchParams(reqData).toString()
   const accessToken = getAccessToken(state)
-  const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
-    'radishes_order_api_v2_userorders_web_enabled'
-  )(dispatch, getState)
+  // const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
+  //   'radishes_order_api_v2_userorders_web_enabled'
+  // )(dispatch, getState)
+
+  const useOrderApiV2 = true
 
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
   if (!useOrderApiV2) {
@@ -135,8 +136,19 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
     return userApiV1.fetchUserOrders(accessToken, reqData)
   }
 
+  if (!userId) {
+    return { data: [] }
+  }
+
   let url = `${endpoint('order', 2)}/users/${userId}/orders`
-  if (params) {
+  if (reqData) {
+    const params = new URLSearchParams({
+      'page[limit]': reqData.limit,
+      'filter[state]': reqData.state,
+      sort: reqData.sort,
+      include: reqData.includes,
+    }).toString()
+
     url = `${url}?${params}`
   }
 
@@ -147,18 +159,13 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
     })
       .then((response) => response.json())
       .then((jsonResponse) => {
-        const transformedOrder =
+        const transformedOrders =
           jsonResponse?.data.map((d) => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
-        resolve({ ...jsonResponse, data: transformedOrder.reverse() })
-      })
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        const fromV2 =
-          jsonResponse?.data.map((d) => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
-        resolve({ ...jsonResponse, data: fromV2.reverse() })
+
+        resolve({ ...jsonResponse, data: transformedOrders })
       })
       .catch((error) => {
         reject(error)
-      })
+      }),
   )
 }
