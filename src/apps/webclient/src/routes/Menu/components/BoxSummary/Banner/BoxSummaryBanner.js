@@ -83,7 +83,7 @@ const BoxSummaryBanner = ({
   return (
     <section>
       <div
-        className={classNames(css.barmobile, css.isSimplifyBasketBarEnabled)}
+        className={classNames(css.boxSummaryBanner, css.tempMobile)}
         onClick={onExpandClick}
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
@@ -128,7 +128,7 @@ const BoxSummaryBanner = ({
           )}
         </div>
       </div>
-      <div className={css.bardesktopVariant}>
+      <div className={classNames(css.boxSummaryBanner, css.tempDesktop)}>
         {isActionBarRedesignEnabled ? <ActionBar variant="embedded" /> : null}
         <div className={css.buttonsContainerVariant}>
           {showBrowseCTA ? (
