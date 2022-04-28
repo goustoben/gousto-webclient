@@ -39,19 +39,6 @@
   }
 }
 
-/* remove once unified */
-.tempMobile {
-  @media BreakpointFromMedium {
-    display: none;
-  }
-}
-
-.tempDesktop {
-  @media BreakpointToMedium {
-    display: none;
-  }
-}
-
 .buttonsContainer {
   display: flex;
   justify-content: space-between;

@@ -80,10 +80,13 @@ const BoxSummaryBanner = ({
   const isToMedium = useMedia(css.BreakpointToMedium)
   const view = isToMedium ? MOBILE_VIEW : DESKTOP_VIEW
 
+  // On mobile: always show; on desktop; only if pop-over is not shown.
+  const shouldShowSummary = isToMedium || !showBrowseCTA
+
   return (
     <section>
       <div
-        className={classNames(css.boxSummaryBanner, css.tempMobile)}
+        className={classNames(css.boxSummaryBanner)}
         onClick={onExpandClick}
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
@@ -94,56 +97,9 @@ const BoxSummaryBanner = ({
             <OpenBoxButton />
           </div>
         ) : null}
-        <div className={css.buttonsContainer}>
-          <ExpandBoxSummaryButtonContainer
-            warning={expandWarning}
-            onClick={onExpandClick}
-            numRecipes={numRecipes}
-            view={view}
-          />
-
-          {showBrowseCTA && (
-            <Tooltip
-              message={errorText}
-              visible={!!errorText}
-              // eslint-disable-next-line react/style-prop-object
-              style="button"
-              overlayClassName={css.errorTooltip}
-              className={css.errorMessage}
-            >
-              <BrowseCTAButtonContainer view={view} />
-            </Tooltip>
-          )}
-          {showBrowseCTA ? (
-            <BrowseCTAContainer view={view} />
-          ) : (
-            <Tooltip
-              message={errorText}
-              visible={!!errorText}
-              // eslint-disable-next-line react/style-prop-object
-              style="button"
-              overlayClassName={css.errorTooltip}
-              className={css.errorMessage}
-            >
-              <BannerButtonContainer view={view} toggleBasketView={onExpandClick} />
-            </Tooltip>
-          )}
-        </div>
-      </div>
-      <div className={classNames(css.boxSummaryBanner, css.tempDesktop)}>
         {isActionBarRedesignEnabled && !isToMedium ? <ActionBar variant="embedded" /> : null}
         <div className={css.buttonsContainer}>
-          {showBrowseCTA ? (
-            <Tooltip
-              message={errorText}
-              visible={!!errorText}
-              style="button"
-              overlayClassName={css.errorTooltip}
-              className={css.errorMessage}
-            >
-              <BrowseCTAButtonContainer view={view} />
-            </Tooltip>
-          ) : (
+          {shouldShowSummary && (
             <ExpandBoxSummaryButtonContainer
               warning={expandWarning}
               onClick={onExpandClick}
@@ -153,11 +109,24 @@ const BoxSummaryBanner = ({
           )}
 
           {showBrowseCTA ? (
-            <BrowseCTAContainer view={view} />
+            <>
+              <Tooltip
+                message={errorText}
+                visible={!!errorText}
+                // eslint-disable-next-line react/style-prop-object
+                style="button"
+                overlayClassName={css.errorTooltip}
+                className={css.errorMessage}
+              >
+                <BrowseCTAButtonContainer view={view} />
+              </Tooltip>
+              <BrowseCTAContainer view={view} />
+            </>
           ) : (
             <Tooltip
               message={errorText}
               visible={!!errorText}
+              // eslint-disable-next-line react/style-prop-object
               style="button"
               overlayClassName={css.errorTooltip}
               className={css.errorMessage}
@@ -168,7 +137,7 @@ const BoxSummaryBanner = ({
         </div>
       </div>
       <HotjarTrigger name="simplify-basket-bar" shouldInvoke={isSimplifyBasketBarEnabled} />
-      {isActionBarRedesignEnabled && <ActionBar variant="separate" />}
+      {isActionBarRedesignEnabled && isToMedium ? <ActionBar variant="separate" /> : null}
     </section>
   )
 }
