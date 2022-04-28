@@ -1,16 +1,6 @@
-@value barHeightIsSimplifyBasketBarEnabled 4rem;
-
-@value Blackberry, DarkRadish, Radish, White, Bluecheese from 'styles/colors.css';
-@value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
-@value sizeLG, sizeXS from 'styles/typography.css';
-@value ScreenSMMin from 'styles/screenSizes.css';
-@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
-
-@value barMobileHeight 90px;
-@value barDesktopHeight 75px;
-@value ScreenXSMax from 'styles/screenSizes.module.css';
-@value barHeightIsSimplifyBasketBarEnabled 4rem;
-
+@value basketBarHeight 4rem;
+@value BreakpointToMedium from 'design-language/breakpoints.css'; /* imported for isToMedium in BoxSummaryBanner.js */
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
 @value FE-900 #BC1526;
 @value FE-800 #CB2432;
 
@@ -21,7 +11,7 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  height: barHeightIsSimplifyBasketBarEnabled;
+  height: basketBarHeight;
   box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.16);
   background-color: rgba(51, 61, 71, 0.95);
   backdrop-filter: blur(4px);
