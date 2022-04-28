@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { createSelector } from 'reselect'
 import { promoGet } from 'actions/promos'
 import { getPromoCode } from 'selectors/basket'
 import { actionTypes } from 'actions/actionTypes'
@@ -9,6 +8,8 @@ import { useMedia } from 'react-use'
 import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
 import classNames from 'classnames'
 import { Tooltip } from 'goustouicomponents'
+import { createGetPromoStoreEntry } from 'selectors/promoStoreSelectors'
+import { createGetActionTypeIsPending } from 'selectors/status'
 import { ActionBar } from '../../ActionBar/ActionBar'
 import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
 
@@ -18,21 +19,6 @@ import { BannerButtonContainer } from '../BannerButton'
 import { BrowseCTAContainer } from '../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
 import { OpenBoxButton } from './OpenBoxButton'
-
-// Note: the following selectors should be in proper files; as part of
-// productionizing isSimplifyBasketBarEnabled they should be moved there.
-// Putting them here, locally, is tech debt consciously taken for sake of
-// delivery speed.
-
-const getPending = (state) => state.pending
-
-const createGetActionTypeIsPending = (actionType) =>
-  createSelector(getPending, (pending) => pending.get(actionType))
-
-const getPromoStore = (state) => state.promoStore
-
-const createGetPromoStoreEntry = (promoCode) =>
-  createSelector(getPromoStore, (promoStore) => promoStore.get(promoCode))
 
 const BoxSummaryBanner = ({
   numRecipes,
