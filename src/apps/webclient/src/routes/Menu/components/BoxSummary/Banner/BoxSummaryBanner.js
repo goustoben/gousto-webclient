@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { createSelector } from 'reselect'
 import { promoGet } from 'actions/promos'
-import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { getPromoCode } from 'selectors/basket'
-import { HotjarTrigger } from 'components/HotjarTrigger'
 import { actionTypes } from 'actions/actionTypes'
 import { useMedia } from 'react-use'
 import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
@@ -43,7 +41,6 @@ const BoxSummaryBanner = ({
   showBrowseCTA,
   errorText,
 }) => {
-  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
   const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
   const dispatch = useDispatch()
@@ -54,21 +51,10 @@ const BoxSummaryBanner = ({
   )
 
   useEffect(() => {
-    if (
-      promoCode &&
-      isSimplifyBasketBarEnabled &&
-      !promoCodeInformationFromPromoStore &&
-      !isPromoGetPending
-    ) {
+    if (promoCode && !promoCodeInformationFromPromoStore && !isPromoGetPending) {
       dispatch(promoGet(promoCode))
     }
-  }, [
-    promoCode,
-    isSimplifyBasketBarEnabled,
-    promoCodeInformationFromPromoStore,
-    isPromoGetPending,
-    dispatch,
-  ])
+  }, [promoCode, promoCodeInformationFromPromoStore, isPromoGetPending, dispatch])
   const isToMedium = useMedia(css.BreakpointToMedium)
   const view = isToMedium ? MOBILE_VIEW : DESKTOP_VIEW
 
@@ -126,7 +112,6 @@ const BoxSummaryBanner = ({
           )}
         </div>
       </div>
-      <HotjarTrigger name="simplify-basket-bar" shouldInvoke={isSimplifyBasketBarEnabled} />
       {isActionBarRedesignEnabled && isToMedium ? <ActionBar variant="separate" /> : null}
     </section>
   )
