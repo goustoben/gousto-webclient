@@ -77,8 +77,8 @@ const BoxSummaryBanner = ({
     isPromoGetPending,
     dispatch,
   ])
-
-  const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
+  const isToMedium = useMedia(css.BreakpointToMedium)
+  const view = isToMedium ? MOBILE_VIEW : DESKTOP_VIEW
 
   return (
     <section>
@@ -89,15 +89,17 @@ const BoxSummaryBanner = ({
         tabIndex={0}
         role="button"
       >
-        <div>
-          <OpenBoxButton />
-        </div>
+        {isToMedium ? (
+          <div>
+            <OpenBoxButton />
+          </div>
+        ) : null}
         <div className={classNames(css.summaryMobile, css.buttonsContainerIsSimplifyBasketEnabled)}>
           <ExpandBoxSummaryButtonContainer
             warning={expandWarning}
             onClick={onExpandClick}
             numRecipes={numRecipes}
-            view={MOBILE_VIEW}
+            view={view}
           />
 
           {showBrowseCTA && (
@@ -109,11 +111,11 @@ const BoxSummaryBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BrowseCTAButtonContainer view={MOBILE_VIEW} />
+              <BrowseCTAButtonContainer view={view} />
             </Tooltip>
           )}
           {showBrowseCTA ? (
-            <BrowseCTAContainer view={MOBILE_VIEW} />
+            <BrowseCTAContainer view={view} />
           ) : (
             <Tooltip
               message={errorText}
@@ -123,13 +125,13 @@ const BoxSummaryBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BannerButtonContainer view={MOBILE_VIEW} toggleBasketView={onExpandClick} />
+              <BannerButtonContainer view={view} toggleBasketView={onExpandClick} />
             </Tooltip>
           )}
         </div>
       </div>
       <div className={classNames(css.boxSummaryBanner, css.tempDesktop)}>
-        {isActionBarRedesignEnabled ? <ActionBar variant="embedded" /> : null}
+        {isActionBarRedesignEnabled && !isToMedium ? <ActionBar variant="embedded" /> : null}
         <div className={css.buttonsContainerVariant}>
           {showBrowseCTA ? (
             <Tooltip
@@ -139,19 +141,19 @@ const BoxSummaryBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BrowseCTAButtonContainer view="desktop" />
+              <BrowseCTAButtonContainer view={view} />
             </Tooltip>
           ) : (
             <ExpandBoxSummaryButtonContainer
               warning={expandWarning}
               onClick={onExpandClick}
               numRecipes={numRecipes}
-              view="desktop"
+              view={view}
             />
           )}
 
           {showBrowseCTA ? (
-            <BrowseCTAContainer view="desktop" />
+            <BrowseCTAContainer view={view} />
           ) : (
             <Tooltip
               message={errorText}
@@ -160,7 +162,7 @@ const BoxSummaryBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BannerButtonContainer view="desktop" toggleBasketView={onExpandClick} />
+              <BannerButtonContainer view={view} toggleBasketView={onExpandClick} />
             </Tooltip>
           )}
         </div>
