@@ -94,7 +94,7 @@ const BoxSummaryBanner = ({
             <OpenBoxButton />
           </div>
         ) : null}
-        <div className={classNames(css.summaryMobile, css.buttonsContainerIsSimplifyBasketEnabled)}>
+        <div className={css.buttonsContainer}>
           <ExpandBoxSummaryButtonContainer
             warning={expandWarning}
             onClick={onExpandClick}
@@ -132,7 +132,7 @@ const BoxSummaryBanner = ({
       </div>
       <div className={classNames(css.boxSummaryBanner, css.tempDesktop)}>
         {isActionBarRedesignEnabled && !isToMedium ? <ActionBar variant="embedded" /> : null}
-        <div className={css.buttonsContainerVariant}>
+        <div className={css.buttonsContainer}>
           {showBrowseCTA ? (
             <Tooltip
               message={errorText}

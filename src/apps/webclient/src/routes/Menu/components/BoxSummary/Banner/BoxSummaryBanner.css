@@ -49,12 +49,7 @@
   }
 }
 
-.summaryMobile {
-  composes: flex spaceAround from 'styles/flex.css';
-  composes: marginXXSTop from 'sass-loader!styles/spacing.scss';
-}
-
-.buttonsContainerIsSimplifyBasketEnabled {
+.buttonsContainer {
   display: flex;
   justify-content: space-between;
   margin: 0;
@@ -62,6 +57,12 @@
   align-items: center;
 
   padding: 0 0.75rem;
+
+  @media BreakpointFromMedium {
+    flex: 1;
+    justify-content: flex-end;
+    padding: 0;
+  }
 }
 
 .errorTooltipDesktop {
@@ -76,12 +77,4 @@
   composes: textRegular from 'styles/typography.css';
   color: DarkRadish;
   box-shadow: 0px 2px 5px Radish;
-}
-
-.buttonsContainerVariant {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0;
-  flex: 1;
 }
