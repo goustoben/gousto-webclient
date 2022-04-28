@@ -13,6 +13,17 @@ import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
 import { ActionBar } from '../../ActionBar/ActionBar'
 import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
 
+import { useMedia } from 'react-use'
+import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
+import css from './BoxSummaryBanner.css'
+import classNames from 'classnames'
+import { ExpandBoxSummaryButtonContainer } from './ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
+import { Tooltip } from 'goustouicomponents'
+import { BannerButtonContainer } from '../BannerButton'
+import { BrowseCTAContainer } from '../BrowseCTA'
+import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
+import { OpenBoxButton } from './OpenBoxButton'
+
 // Note: the following selectors should be in proper files; as part of
 // productionizing isSimplifyBasketBarEnabled they should be moved there.
 // Putting them here, locally, is tech debt consciously taken for sake of
@@ -48,7 +59,7 @@ const BoxSummaryBanner = ({
   const promoCode = useSelector(getPromoCode)
   const isPromoGetPending = useSelector(createGetActionTypeIsPending(actionTypes.PROMO_GET))
   const promoCodeInformationFromPromoStore = useSelector(
-    createGetPromoCodeInformationFromPromoStore(promoCode)
+    createGetPromoCodeInformationFromPromoStore(promoCode),
   )
 
   useEffect(() => {
@@ -72,16 +83,53 @@ const BoxSummaryBanner = ({
 
   return (
     <section>
-      <BoxSummaryMobileBanner
-        showBrowseCTA={showBrowseCTA}
-        maxRecipesNum={maxRecipesNum}
-        menuRecipesStore={menuRecipesStore}
-        recipes={recipes}
-        errorText={errorText}
-        onExpandClick={onExpandClick}
-        expandWarning={expandWarning}
-        numRecipes={numRecipes}
-      />
+      <div
+        className={classNames(css.barmobile, css.isSimplifyBasketBarEnabled)}
+        onClick={onExpandClick}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+        role="button"
+      >
+        <div>
+          <OpenBoxButton />
+        </div>
+        <div className={classNames(css.summaryMobile, css.buttonsContainerIsSimplifyBasketEnabled)}>
+          <ExpandBoxSummaryButtonContainer
+            warning={expandWarning}
+            onClick={onExpandClick}
+            numRecipes={numRecipes}
+            view={MOBILE_VIEW}
+          />
+
+          {showBrowseCTA && (
+            <Tooltip
+              message={errorText}
+              visible={!!errorText}
+              // eslint-disable-next-line react/style-prop-object
+              style="button"
+              overlayClassName={css.errorTooltipDesktop}
+              className={css.errorMessage}
+            >
+              <BrowseCTAButtonContainer view={MOBILE_VIEW} />
+            </Tooltip>
+          )}
+          {showBrowseCTA ? (
+            <BrowseCTAContainer view={MOBILE_VIEW} />
+          ) : (
+            <Tooltip
+              message={errorText}
+              visible={!!errorText}
+              // eslint-disable-next-line react/style-prop-object
+              style="button"
+              overlayClassName={css.errorTooltipDesktop}
+              className={css.errorMessage}
+            >
+              <BannerButtonContainer view={MOBILE_VIEW} toggleBasketView={onExpandClick} />
+            </Tooltip>
+          )}
+        </div>
+      </div>
+
       <BoxSummaryDesktopBanner
         showBrowseCTA={showBrowseCTA}
         maxRecipesNum={maxRecipesNum}
@@ -109,10 +157,7 @@ BoxSummaryBanner.propTypes = {
   maxRecipesNum: PropTypes.number.isRequired,
   menuRecipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
-  errorText: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool
-  ]).isRequired,
+  errorText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   isBoxSummaryOpened: PropTypes.bool,
 }
 
