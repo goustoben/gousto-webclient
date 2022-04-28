@@ -8,8 +8,6 @@ import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { getPromoCode } from 'selectors/basket'
 import { HotjarTrigger } from 'components/HotjarTrigger'
 import { actionTypes } from 'actions/actionTypes'
-import { BoxSummaryDesktopBanner } from './Desktop/BoxSummaryDesktopBanner'
-import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
 import { ActionBar } from '../../ActionBar/ActionBar'
 import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
 
