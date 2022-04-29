@@ -8,7 +8,7 @@ import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
-import { CheckoutCounter } from '../CheckoutCounter/CheckoutCounter'
+import { CheckoutCounter } from '../../Banner/CheckoutCounter/CheckoutCounter'
 
 const Checkout = (props) => {
   const {
