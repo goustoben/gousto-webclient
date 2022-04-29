@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import { MOBILE_VIEW } from 'utils/view'
 
-import { Button, Segment } from 'goustouicomponents'
+import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
 import { Title } from '../../Title'
 import { Description } from '../../Description'
 
@@ -12,19 +12,14 @@ import css from './ExpandBoxSummaryButton.css'
 
 export const Contents = ({ numPortions, numRecipes, date, slotId, warning }) => (
   <div className={css.buttonTextWrapper}>
-        <Title
-          view="desktop"
-          numRecipes={numRecipes}
-          date={date}
-          finalisedSlot={slotId !== ''}
-        />
-        <Description
-          view="desktop"
-          numPortions={numPortions}
-          numRecipes={numRecipes}
-          deliveryOptions={slotId === ''}
-          warning={warning}
-        />
+    <Title view="desktop" numRecipes={numRecipes} date={date} finalisedSlot={slotId !== ''} />
+    <Description
+      view="desktop"
+      numPortions={numPortions}
+      numRecipes={numRecipes}
+      deliveryOptions={slotId === ''}
+      warning={warning}
+    />
   </div>
 )
 
@@ -54,45 +49,31 @@ const ExpandBoxSummaryButton = ({
       date={date}
       slotId={slotId}
       warning={warning}
-      isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled}
     />
   ) : (
-    <div className={css.bsButton}>
+    <div className={css.buttonContainer}>
       <Button
-        fill={showDetails}
-        className={css.overflowFix}
-        color="secondary"
+        height={48}
+        colorVariant={ButtonColorVariant.Secondary}
+        onClick={onClick}
         data-testing="expandBoxSummaryButton"
       >
-        <Segment
-          fill={showDetails}
-          onClick={onClick}
-          className={
-               css.summaryDesktopSegmentVariant
-          }
-          color="secondary"
-        >
-          <Contents
-            showDetails={showDetails}
-            pricingPending={pricingPending}
-            numPortions={numPortions}
-            numRecipes={numRecipes}
-            date={date}
-            slotId={slotId}
-            warning={warning}
-            onClick={onClick}
-            view={view}
-          />
+        <Contents
+          showDetails={showDetails}
+          pricingPending={pricingPending}
+          numPortions={numPortions}
+          numRecipes={numRecipes}
+          date={date}
+          slotId={slotId}
+          warning={warning}
+          view={view}
+        />
+        <span className={css.iconDesktop} data-testing="boxSummaryIcon">
           <span
-            className={css.iconDesktop}
-            data-testing="boxSummaryIcon"
-          >
-            <span
-              className={showDetails ? css.arrowDown : css.arrowUp}
-              data-testing="boxSummaryArrow"
-            />
-          </span>
-        </Segment>
+            className={showDetails ? css.arrowDown : css.arrowUp}
+            data-testing="boxSummaryArrow"
+          />
+        </span>
       </Button>
     </div>
   )
