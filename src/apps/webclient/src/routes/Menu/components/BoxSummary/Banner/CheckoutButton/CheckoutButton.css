@@ -1,15 +1,8 @@
 @value BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value BreakpointToSmall from 'styles/appBreakpoints.css';
 
 .buttonContainer {
-  margin-left: 1rem;
-  margin-right: 0;
-  @media BreakpointFromMedium and BreakpointToLarge {
-    margin-right: 0.75rem;
-  }
-
-  @media BreakpointFromLarge {
-    margin-right: 2rem;
-  }
+  margin: 0;
 
   /*
    Override strange behavior of citrus/Button: non-hovered disabled state
@@ -18,9 +11,20 @@
 
    Should be removed after the following bug is fixed:
    https://github.com/Gousto/citrus/issues/299
-  */
+   */
   & > button[disabled]:hover {
     border-width: 0;
+  }
+
+  /*
+    Reduce paddings on 320..374 so that all contents fit; again something that
+    citrus/Button doesn't allow to customize directly.
+   */
+  @media BreakpointToSmall {
+    button {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 }
 

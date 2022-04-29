@@ -1,0 +1,4 @@
+/* Define breakpoints by the pattern of design-language/breakpoints for cases
+   that are missing there but are still useful in the app. */
+@value BreakpointToSmall (max-width: 374px);
+@value BreakpointFromSmall (min-width: 375px);

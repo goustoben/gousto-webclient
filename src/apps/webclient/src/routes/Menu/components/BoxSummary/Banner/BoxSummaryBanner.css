@@ -16,16 +16,17 @@
   background-color: rgba(51, 61, 71, 0.95);
   backdrop-filter: blur(4px);
 
+  padding: 0 0.75rem;
+
   @media BreakpointFromMedium {
     display: flex;
     justify-content: space-around;
     align-items: center;
     z-index: 501;
-    padding-left: 0.75rem;
   }
 
   @media BreakpointFromLarge {
-    padding-left: 2rem;
+    padding: 0 2rem;
   }
 }
 
@@ -36,7 +37,7 @@
   height: 100%;
   align-items: center;
 
-  padding: 0 0.75rem;
+  padding: 0;
 
   @media BreakpointFromMedium {
     flex: 1;

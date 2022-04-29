@@ -20,6 +20,7 @@ import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
 import { OpenBoxButton } from './OpenBoxButton'
 import { CheckoutButton } from './CheckoutButton'
 import * as trackingKeys from 'actions/trackingKeys'
+import { Box } from '@gousto-internal/citrus-react'
 
 const BoxSummaryBanner = ({
   numRecipes,
@@ -84,16 +85,19 @@ const BoxSummaryBanner = ({
               <BrowseCTAContainer view={view} />
             </>
           ) : (
-            <Tooltip
-              message={errorText}
-              visible={!!errorText}
-              // eslint-disable-next-line react/style-prop-object
-              style="button"
-              overlayClassName={css.errorTooltip}
-              className={css.errorMessage}
-            >
-              <CheckoutButton view={view} section={trackingKeys.menu} />
-            </Tooltip>
+            <>
+              <Box width="1rem" />
+              <Tooltip
+                message={errorText}
+                visible={!!errorText}
+                // eslint-disable-next-line react/style-prop-object
+                style="button"
+                overlayClassName={css.errorTooltip}
+                className={css.errorMessage}
+              >
+                <CheckoutButton view={view} section={trackingKeys.menu} />
+              </Tooltip>
+            </>
           )}
         </div>
       </div>
