@@ -133,3 +133,6 @@ export const kales_clickDietaryCollectionLink = 'kales_click_dietary_collection_
 export const dismissRecipesInBasketProgress = 'click_close_action_bar'
 export const clickEnterPromoCodeManuallyContinue = 'click_discount_modal_continue'
 export const clickEnterPromoCodeManuallyButton = 'click_other_discount_code_popup'
+export const cuisineSelected = 'cuisine_selected'
+export const cuisineDeselected = 'cuisine_deselected'
+export const signupPersonalisationComplete = 'signup_personalisation_complete'

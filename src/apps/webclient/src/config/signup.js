@@ -18,10 +18,12 @@ export const signupConfig = {
    * 4. Map step to component in "AvailableStepComponents.ts" file.
    */
   defaultSteps: [SignupSteps.BOX_SIZE, SignupSteps.POSTCODE, SignupSteps.DELIVERY],
+  personaliseMenuSteps: [SignupSteps.BOX_SIZE, SignupSteps.POSTCODE, SignupSteps.DELIVERY, SignupSteps.PERSONALISE_MENU],
   steps: [
     { name: SignupSteps.BOX_SIZE, slug: 'box-size' },
     { name: SignupSteps.POSTCODE, slug: 'postcode' },
     { name: SignupSteps.DELIVERY, slug: 'delivery-options' },
+    { name: SignupSteps.PERSONALISE_MENU, slug: 'personalise-menu' },
   ],
   payment_types: {
     card: 'card',

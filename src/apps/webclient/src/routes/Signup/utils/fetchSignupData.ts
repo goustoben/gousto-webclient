@@ -178,7 +178,7 @@ export const fetchSignupData = async ({
   options = {},
 }: FetchSignupDataParams): Promise<void> => {
   const querySteps = query.steps?.split(',') || []
-  const steps = getSignupSteps(store, querySteps)
+  const steps = await getSignupSteps(store, querySteps)
   await loadMenuDays(store)
   store.dispatch(actions.signupStepsReceive(steps))
 

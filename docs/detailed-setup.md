@@ -6,6 +6,16 @@
 ### Run application for development
 
 **Note: local development will consume staging services by default**
+To point a local instance of the application to a different environment requires the following steps:
+
+1. Update value of `LOCAL_SERVICE_HOSTNAME` in [./src/apps/webclient/src/config/service-environment/service-url.ts](file:///./src/apps/webclient/src/config/service-environment/service-url.ts) to point to the correct environment.
+2. Rebuild the application.
+3. Run the application!
+4. (Don't forget to change it back before you merge!)
+
+
+[See it on GitHub](https://github.com/Gousto/gousto-webclient/blob/c57dfd00365277e8daf72f539d677de976846f3a/src/apps/webclient/src/config/service-environment/service-url.ts#L14)
+
 
 ### Step 1: [Create a .env file for run-time server configuration](./config/server-config.md)
 

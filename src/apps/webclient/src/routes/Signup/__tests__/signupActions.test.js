@@ -6,6 +6,9 @@ import {
   signupCheckAccountGoToBoxPrices,
   signupCheckAccountLogin,
   signupApplyVoucherGoToDeliveries,
+  trackCuisineDeselected,
+  trackCuisineSelected,
+  trackSignupPersonalisationComplete,
 } from '../signupActions'
 
 jest.mock('actions/tracking', () => ({
@@ -62,6 +65,54 @@ describe('signupActions', () => {
     test('then it should dispatch correct actions', () => {
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith('click_apply_voucher_existing_account')
       expect(redirect).toHaveBeenCalledWith('/my-deliveries')
+    })
+  })
+
+  describe('given trackCuisineSelected is called with a cuisine', () => {
+    beforeEach(() => {
+      trackCuisineSelected('American')(dispatch)
+    })
+
+    test('then it should dispatch correct actions', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        trackingData: {
+          actionType: 'cuisine_selected',
+          cuisineName: 'American',
+        },
+      })
+    })
+  })
+
+  describe('given trackCuisineDeselected is called with a cuisine', () => {
+    beforeEach(() => {
+      trackCuisineDeselected('British')(dispatch)
+    })
+
+    test('then it should dispatch correct actions', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        trackingData: {
+          actionType: 'cuisine_deselected',
+          cuisineName: 'British',
+        },
+      })
+    })
+  })
+
+  describe('given trackSignupPersonalisationComplete is called with cuisines', () => {
+    beforeEach(() => {
+      trackSignupPersonalisationComplete(['French', 'Asian'])(dispatch)
+    })
+
+    test('then it should dispatch correct actions', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        trackingData: {
+          actionType: 'signup_personalisation_complete',
+          selectedCuisines: ['French', 'Asian'],
+        },
+      })
     })
   })
 })
