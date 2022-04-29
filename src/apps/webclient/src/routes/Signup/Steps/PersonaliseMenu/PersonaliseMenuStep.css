@@ -1,0 +1,114 @@
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  @media BreakpointFromLarge {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.left,
+.right {
+  width: 100%;
+  text-align: left;
+
+  @media BreakpointFromLarge {
+    width: 50%;
+    max-width: calc(50% - 0.5rem);
+  }
+}
+
+.left {
+  margin-bottom: 0.5rem;
+
+  @media BreakpointFromLarge {
+    margin: 0;
+  }
+}
+
+.disableClick {
+  pointer-events: none;
+}
+
+.centralize {
+  justify-content: center;
+}
+
+.negativeMargin {
+  margin: 0 -0.75rem;
+}
+
+.subtitle {
+  margin-bottom: 1rem;
+  composes: fontStyleBody from 'design-language/typography.css';
+
+  @media BreakpointFromLarge {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.bold {
+  composes: fontBold from 'design-language/typography.css';
+}
+
+.item {
+  margin: 0;
+  padding: 0 0 0 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.sellTheProposition {
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+  }
+
+
+.list {
+    composes: fontStyleBody from 'design-language/typography.css';
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    min-width: none;
+  }
+
+.responsive {
+    @media BreakpointToMedium {
+      display: none;
+    }
+
+    @media BreakpointFromMedium {
+      width: 180px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+}
+
+.strong {
+  composes: fontSemiBold from 'design-language/typography.css';
+}
+
+.cuisineButton {
+  flex: 1;
+  height: 50px;
+}
+
+.cuisineButtonContainer {
+  background-color: rgb(46, 25, 240);
+  height: 100px;
+}
+
+.cuisinesContainer {
+  margin-bottom: 42px;
+  display: grid;
+  grid-gap: 8px 15px;
+  grid-template-columns: repeat(3, 1fr);
+  @media BreakpointToLarge {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

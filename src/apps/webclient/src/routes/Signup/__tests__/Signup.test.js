@@ -7,6 +7,10 @@ import { Signup } from 'routes/Signup/Signup'
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
 import css from '../Signup.css'
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+}))
+
 jest.spyOn(actions, 'signupStepsReceive').mockResolvedValue()
 
 const redirect = jest.spyOn(actions, 'redirect').mockResolvedValue()

@@ -6,4 +6,5 @@ export enum SignupSteps {
   BOX_SIZE = 'boxSize',
   POSTCODE = 'postcode',
   DELIVERY = 'delivery',
+  PERSONALISE_MENU = 'personaliseMenu',
 }

@@ -28,6 +28,10 @@ jest.mock('utils/hotjarUtils', () => ({
   invokeHotjarEvent: jest.fn(),
 }))
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+}))
+
 describe('fetchSignupData', () => {
   const mockStore = configureMockStore<GetSignupDataStore>()
   const mockedStore = mockStore({

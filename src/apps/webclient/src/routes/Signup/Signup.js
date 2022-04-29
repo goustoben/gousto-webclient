@@ -15,6 +15,7 @@ import css from './Signup.css'
 import { BoxSizeStep } from './Steps/BoxSize'
 import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
+import { PersonaliseMenuStep } from './Steps/PersonaliseMenu'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
 import { EnterPromoCodeManuallyPage } from './Components/EnterPromoCodeManuallyPage'
@@ -25,6 +26,7 @@ const components = {
   boxSize: BoxSizeStep,
   postcode: PostcodeStep,
   delivery: DeliveryStep,
+  personaliseMenu: PersonaliseMenuStep,
 }
 
 const availableSteps = Object.keys(components)

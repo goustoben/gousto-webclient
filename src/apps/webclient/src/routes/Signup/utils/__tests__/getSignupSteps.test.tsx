@@ -17,10 +17,14 @@ jest.mock('routes/Signup/constants/AvailableStepComponents', () => ({
   },
 }))
 
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+}))
+
 describe('getSignupSteps util', () => {
-  test('should filter out steps without components', () => {
+  test('should filter out steps without components', async () => {
     const expected = ['availableStep1', 'availableStep2']
-    const actual = getSignupSteps(mockedStore, expected.concat('unavailableStep3'))
+    const actual = await getSignupSteps(mockedStore, expected.concat('unavailableStep3'))
     expect(actual).toEqual(Immutable.List(expected))
   })
 })
