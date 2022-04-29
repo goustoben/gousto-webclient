@@ -4,8 +4,8 @@ import Immutable from 'immutable'
 import { LayoutContentWrapper } from 'goustouicomponents'
 import { Details } from '../../Details/Details'
 import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
-jest.mock('../../BannerButton/Checkout', () => ({
-  CheckoutContainer: 'CheckoutContainer'
+jest.mock('../../Banner/CheckoutButton', () => ({
+  CheckoutButton: () => <div id="CheckoutButton" />
 }))
 
 describe('Details', () => {

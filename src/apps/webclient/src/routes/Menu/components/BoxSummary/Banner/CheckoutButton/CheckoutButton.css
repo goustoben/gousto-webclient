@@ -1,0 +1,33 @@
+@value BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
+
+.buttonContainer {
+  margin-left: 1rem;
+  margin-right: 0;
+  @media BreakpointFromMedium and BreakpointToLarge {
+    margin-right: 0.75rem;
+  }
+
+  @media BreakpointFromLarge {
+    margin-right: 2rem;
+  }
+
+  /*
+   Override strange behavior of citrus/Button: non-hovered disabled state
+   doesn't have a border while hovered state does, which leads to layout
+   jumping 2 pixels when a disabled Checkout button is hovered.
+
+   Should be removed after the following bug is fixed:
+   https://github.com/Gousto/citrus/issues/299
+  */
+  & > button[disabled]:hover {
+    border-width: 0;
+  }
+}
+
+.isFullWidth {
+  width: 100%;
+}
+
+.checkoutLabel {
+  margin-right: 0.75rem;
+}

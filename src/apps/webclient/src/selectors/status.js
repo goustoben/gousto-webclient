@@ -7,3 +7,8 @@ export const getPending = (state) => state.pending
 
 export const createGetActionTypeIsPending = (actionType) =>
   createSelector(getPending, (pending) => pending.get(actionType))
+
+export const getErrorSlice = (state) => state.error
+
+export const createGetErrorForActionType = (actionType) =>
+  createSelector(getErrorSlice, (errorSlice) => errorSlice.get(actionType, null))

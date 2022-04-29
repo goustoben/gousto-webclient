@@ -15,10 +15,11 @@ import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRede
 
 import css from './BoxSummaryBanner.css'
 import { ExpandBoxSummaryButtonContainer } from './ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
-import { BannerButtonContainer } from '../BannerButton'
 import { BrowseCTAContainer } from '../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
 import { OpenBoxButton } from './OpenBoxButton'
+import { CheckoutButton } from './CheckoutButton'
+import * as trackingKeys from 'actions/trackingKeys'
 
 const BoxSummaryBanner = ({
   numRecipes,
@@ -91,7 +92,7 @@ const BoxSummaryBanner = ({
               overlayClassName={css.errorTooltip}
               className={css.errorMessage}
             >
-              <BannerButtonContainer view={view} toggleBasketView={onExpandClick} />
+              <CheckoutButton view={view} section={trackingKeys.menu} />
             </Tooltip>
           )}
         </div>
