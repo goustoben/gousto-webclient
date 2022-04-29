@@ -56,6 +56,11 @@
 
 .iconDesktop {
   composes: marginXSLeft from 'sass-loader!styles/spacing.scss';
+  margin-left: 0;
+  flex: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttonTextWrapper {
@@ -65,14 +70,6 @@
   @media BreakpointFromMedium {
     margin-right: 1rem;
   }
-}
-
-.isSimplifyBasketBarEnabled {
-  margin-left: 0;
-  flex: 0 0 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .arrowDown {

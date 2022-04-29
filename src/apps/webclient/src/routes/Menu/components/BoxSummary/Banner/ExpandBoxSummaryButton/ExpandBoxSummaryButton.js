@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import { MOBILE_VIEW } from 'utils/view'
-import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 
 import { Button, Segment } from 'goustouicomponents'
 import { Title } from '../../Title'
@@ -11,10 +10,8 @@ import { Description } from '../../Description'
 
 import css from './ExpandBoxSummaryButton.css'
 
-export const Contents = ({ numPortions, numRecipes, date, slotId, warning, isSimplifyBasketBarEnabled }) => (
-  <div className={classNames({ [css.buttonTextWrapper]: isSimplifyBasketBarEnabled })}>
-    {isSimplifyBasketBarEnabled ? (
-      <>
+export const Contents = ({ numPortions, numRecipes, date, slotId, warning }) => (
+  <div className={css.buttonTextWrapper}>
         <Title
           view="desktop"
           numRecipes={numRecipes}
@@ -28,25 +25,6 @@ export const Contents = ({ numPortions, numRecipes, date, slotId, warning, isSim
           deliveryOptions={slotId === ''}
           warning={warning}
         />
-      </>
-    ) : (
-      <>
-        {numRecipes > 0 ? <span className={css.badge}>{numRecipes}</span> : ''}
-        <Title
-          view="desktop"
-          date={date}
-          finalisedSlot={slotId !== ''}
-          numRecipes={numRecipes}
-        />
-        <Description
-          numPortions={numPortions}
-          numRecipes={numRecipes}
-          view="desktop"
-          deliveryOptions={slotId === ''}
-          warning={warning}
-        />
-      </>
-    )}
   </div>
 )
 
@@ -56,7 +34,6 @@ Contents.propTypes = {
   date: PropTypes.string.isRequired,
   slotId: PropTypes.string.isRequired,
   warning: PropTypes.bool.isRequired,
-  isSimplifyBasketBarEnabled: PropTypes.bool.isRequired,
 }
 
 const ExpandBoxSummaryButton = ({
@@ -70,9 +47,7 @@ const ExpandBoxSummaryButton = ({
   onClick,
   view,
 }) => {
-  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
-
-  return isSimplifyBasketBarEnabled && view === MOBILE_VIEW ? (
+  return view === MOBILE_VIEW ? (
     <Contents
       numPortions={numPortions}
       numRecipes={numRecipes}
@@ -87,16 +62,13 @@ const ExpandBoxSummaryButton = ({
         fill={showDetails}
         className={css.overflowFix}
         color="secondary"
-        pending={!isSimplifyBasketBarEnabled && pricingPending}
         data-testing="expandBoxSummaryButton"
       >
         <Segment
           fill={showDetails}
           onClick={onClick}
           className={
-            isSimplifyBasketBarEnabled
-              ? css.summaryDesktopSegmentVariant
-              : css.summaryDesktopSegment
+               css.summaryDesktopSegmentVariant
           }
           color="secondary"
         >
@@ -110,12 +82,9 @@ const ExpandBoxSummaryButton = ({
             warning={warning}
             onClick={onClick}
             view={view}
-            isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled}
           />
           <span
-            className={classNames(css.iconDesktop, {
-              [css.isSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled,
-            })}
+            className={css.iconDesktop}
             data-testing="boxSummaryIcon"
           >
             <span
