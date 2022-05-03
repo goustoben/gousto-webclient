@@ -1,6 +1,5 @@
 import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
-import { validateProcessEnv } from 'utils/processEnv'
-import { getServerEnvironment, isServer } from './utils/serverEnvironment'
+import { isServer } from './utils/serverEnvironment'
 import { extractScriptOptions } from './routes/scripts'
 import { configureDDTracer } from './datadog'
 import { getProtocol, isDev } from '../src/utils/isomorphicEnvironment'
@@ -17,9 +16,6 @@ const bodyParser = require('koa-body')
 const { renderToString } = require('react-dom/server')
 const Footer = require('Footer').default
 const { Provider } = require('react-redux')
-const path = require('path')
-/* eslint-disable-next-line import/no-extraneous-dependencies */
-const koaWebpack = require('koa-webpack')
 const app = new Koa()
 
 const MainLayout = require('layouts/MainLayout').default
@@ -41,32 +37,6 @@ const htmlTemplate = require('./template')
 const { appsRedirect } = require('./middleware/apps')
 const { sessionMiddleware } = require('./middleware/tracking')
 const { processRequest, configureHistoryAndStore } = require('./processRequest')
-
-function enableHmr() {
-  koaWebpack({
-    configPath: path.join(process.cwd(), './config/webpack.client.js'),
-    devMiddleware: {
-      compress: true,
-      headers: {
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-        'Access-Control-Allow-Origin': '*',
-      },
-      historyApiFallback: true,
-      hot: true,
-      port: 8080,
-      public: 'frontend.gousto.local',
-      watchOptions: { aggregateTimeout: 300, poll: 1000 },
-      writeToDisk: true,
-    },
-    hotClient: {
-      host: 'frontend.gousto.local',
-      server: app.server
-    }
-  }).then((middleware) => {
-    app.use(middleware)
-  })
-}
 
 app.use(sessionMiddleware())
 
@@ -195,19 +165,4 @@ if (isDev() || withStatic) {
 
 app.use(processRequest)
 
-const port = getServerEnvironment() === 'local' ? 8080 : 80
-
-if (isDev() && !withStatic) {
-  enableHmr()
-}
-
-function checkEnvAndStartServer() {
-  validateProcessEnv()
-
-  app.listen(port, () => {
-    logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
-  })
-}
-
-checkEnvAndStartServer()
-
+export { app }

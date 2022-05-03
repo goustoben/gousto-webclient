@@ -27,7 +27,7 @@ const config = {
   context: path.resolve(__dirname, '..'),
   target: 'node',
   entry: [
-    './server/main.js',
+    './server/server.js',
   ],
   output: {
     path: path.resolve('./dist'),
