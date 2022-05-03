@@ -46,11 +46,10 @@ $ yarn install
 # 5. Go to webclient subfolder
 $ cd src/apps/webclient # OR yw webclient <command> (see above)
 
-# 6. Start the main webclient in development mode
+# 6. Start the main webclient in development mode (HMR will be enabled as default)
 $ yarn build:client
 $ yarn dev
 ```
-
 ## Pre-requisites
 
 * You'll need to have Yarn installed - if you install Yarn 1 (`npm install yarn -g`), it will bootstrap Yarn 3 from `.yarn/releases/yarn-3.1.1.cjs`
@@ -145,6 +144,10 @@ See also the [Regression test docs](tests/regression/README.md)
 
 ```bash
 # 1. Build and run the webapp. Use production build or tests will be *slow*
+To run regression tests on your local environment you must change the base url in cypress.json to:
+
+http://frontend.gousto.local:80
+
 $ cd src/apps/webclient
 $ npm run build
 $ yarn run start:with-static

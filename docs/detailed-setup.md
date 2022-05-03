@@ -54,6 +54,20 @@ There are three other ways to run Webclient. The service can be run in docker, o
 
 A script in the repo root called `./run.sh` has been created to help with all of these scenarios.
 
+## Running webclient without HMR, watching server and client
+The default development setup does not enable watching/reloading server changes. This can be achieved by doing the following:
+```
+# In terminal tab 1
+$ yarn watch:client
+
+# In terminal tab 2
+$ yarn watch:server
+
+# In terminal tab 3
+$ yarn dev:server
+
+**Please note when using the production build, the server will listen on port 80.**
+```
 #### Option One [Deprecated]
 * `./run.sh build` will build a Docker image using the checked out files to run the Webclient service.
 * `./run.sh run` will run that image in a Docker container.

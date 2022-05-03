@@ -343,7 +343,7 @@ jobs:
         default: tests/regression
       application_base_url:
         type: string
-        default: http://frontend.gousto.local:8080
+        default: http://frontend.gousto.local:80
       test_node_options:
         type: string
         default: --max-http-header-size=1000000
@@ -372,7 +372,7 @@ jobs:
       - run:
           name: Wait for application to be ready
           working_directory: scripts
-          command: ./waitForHttpPath.sh 8080 / 10
+          command: ./waitForHttpPath.sh 80 / 10
       - when:
           condition:
             equal: [web, << parameters.platform >>]
