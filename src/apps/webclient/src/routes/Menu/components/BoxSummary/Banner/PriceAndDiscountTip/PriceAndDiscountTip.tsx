@@ -11,7 +11,8 @@ import { Price } from '../../Price'
 import css from './PriceAndDiscountTip.css'
 
 const Lines = ({ numRecipes }: any) => {
-  const { pricing } = usePricing()
+  const { pricing, isPending } = usePricing()
+
   const discountTip = useDiscountTip()
 
   const canCheckout = numRecipes >= basketConfig.minRecipesNum
@@ -22,11 +23,7 @@ const Lines = ({ numRecipes }: any) => {
     return (
       <>
         <div>
-          <Price
-            grossTotal={parseFloat(pricing?.grossTotal || '0')}
-            totalDiscount={parseFloat(pricing?.totalDiscount || '0')}
-            total={parseFloat(pricing?.total || '0')}
-          />
+          <Price pricing={pricing} isPending={isPending} />
         </div>
         <div className={css.bold}>{isDiscountEnabled ? discountTip : 'Free UK delivery'}</div>
       </>

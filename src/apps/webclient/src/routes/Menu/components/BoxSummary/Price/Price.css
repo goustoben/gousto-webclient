@@ -1,17 +1,8 @@
-@value ScreenSMMin, ScreenMLMax from 'styles/screenSizes.css';
-@value SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value CG-200 #AEB7C0;
 @value CG-600 #516272;
 @value CG-800 #333D47;
 @value W-0 #FFFFFF;
-
-.dash {
-  composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
-  transform: scale(3,1);
-  transform-origin: left;
-  display: inline-block;
-}
 
 .strikedOutPrice {
   display: inline-block;
