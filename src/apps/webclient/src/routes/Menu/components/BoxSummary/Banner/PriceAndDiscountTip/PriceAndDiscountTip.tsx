@@ -6,7 +6,7 @@ import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { useCheckoutPrices, useDiscountTip } from 'routes/Menu/components/BoxSummary/utilHooks'
 
-import { Price } from '../../Price'
+import { Price } from './Price'
 
 import css from './PriceAndDiscountTip.css'
 
