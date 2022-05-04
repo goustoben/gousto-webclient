@@ -23,9 +23,9 @@ const Lines = ({ numRecipes }: any) => {
       <>
         <div>
           <Price
-            recipeTotal={parseFloat(pricing?.grossTotal || '0')}
-            recipeDiscount={parseFloat(pricing?.totalDiscount || '0')}
-            recipeTotalDiscounted={parseFloat(pricing?.total || '0')}
+            grossTotal={parseFloat(pricing?.grossTotal || '0')}
+            totalDiscount={parseFloat(pricing?.totalDiscount || '0')}
+            total={parseFloat(pricing?.total || '0')}
           />
         </div>
         <div className={css.bold}>{isDiscountEnabled ? discountTip : 'Free UK delivery'}</div>

@@ -5,8 +5,8 @@ import { formatPrice } from 'utils/format'
 
 import css from './Price.css'
 
-const Price = ({ recipeTotal, recipeDiscount, recipeTotalDiscounted }) => {
-  if (recipeTotal === 0) {
+const Price = ({ grossTotal, totalDiscount, total }) => {
+  if (grossTotal === 0) {
     return (
       <div>
         £<span className={css.dash}>-</span>
@@ -14,28 +14,28 @@ const Price = ({ recipeTotal, recipeDiscount, recipeTotalDiscounted }) => {
     )
   }
 
-  const recipeDiscountExists = recipeDiscount > 0
+  const recipeDiscountExists = totalDiscount > 0
 
   return recipeDiscountExists ? (
     <>
-      <span className={css.strikedOutPrice}>{formatPrice(recipeTotal)}</span>
-      <span className={css.primaryPrice}>{formatPrice(recipeTotalDiscounted)}</span>
+      <span className={css.strikedOutPrice}>{formatPrice(grossTotal)}</span>
+      <span className={css.primaryPrice}>{formatPrice(total)}</span>
     </>
   ) : (
-    <span className={css.primaryPrice}>{formatPrice(recipeTotal)}</span>
+    <span className={css.primaryPrice}>{formatPrice(grossTotal)}</span>
   )
 }
 
 Price.defaultProps = {
-  recipeTotal: 0,
-  recipeDiscount: 0,
-  recipeTotalDiscounted: 0,
+  grossTotal: 0,
+  totalDiscount: 0,
+  total: 0,
 }
 
 Price.propTypes = {
-  recipeTotal: PropTypes.number,
-  recipeDiscount: PropTypes.number,
-  recipeTotalDiscounted: PropTypes.number,
+  grossTotal: PropTypes.number,
+  totalDiscount: PropTypes.number,
+  total: PropTypes.number,
 }
 
 export { Price }
