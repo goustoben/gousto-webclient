@@ -7,10 +7,12 @@ import { PriceAndDiscountTip } from '../PriceAndDiscountTip'
 
 import css from './ExpandBoxSummaryButton.css'
 
-const ExpandBoxSummaryButton = ({ showDetails, numRecipes, onClick, view }) => {
-  return view === MOBILE_VIEW ? (
-    <PriceAndDiscountTip numRecipes={numRecipes} />
-  ) : (
+const ExpandBoxSummaryButton = ({ showDetails, numRecipes, onClick, showBrowseCTA }) => {
+  if (showBrowseCTA) {
+    return null
+  }
+
+  return (
     <div className={css.buttonContainer}>
       <Button
         height={48}
@@ -34,7 +36,7 @@ ExpandBoxSummaryButton.propTypes = {
   showDetails: PropTypes.bool.isRequired,
   numRecipes: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
-  view: PropTypes.string.isRequired,
+  showBrowseCTA: PropTypes.bool.isRequired,
 }
 
 export { ExpandBoxSummaryButton }

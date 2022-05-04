@@ -19,6 +19,7 @@ import { BrowseCTAContainer } from '../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
 import { OpenBoxButton } from './OpenBoxButton'
 import { CheckoutButton } from './CheckoutButton'
+import { PriceAndDiscountTip } from './PriceAndDiscountTip'
 import * as trackingKeys from 'actions/trackingKeys'
 import { Box } from '@gousto-internal/citrus-react'
 
@@ -44,9 +45,6 @@ const BoxSummaryBanner = ({
   const isToMedium = useMedia(css.BreakpointToMedium)
   const view = isToMedium ? MOBILE_VIEW : DESKTOP_VIEW
 
-  // On mobile: always show; on desktop; only if pop-over is not shown.
-  const shouldShowSummary = isToMedium || !showBrowseCTA
-
   return (
     <section>
       <div
@@ -61,11 +59,14 @@ const BoxSummaryBanner = ({
         ) : null}
         {isActionBarRedesignEnabled && !isToMedium ? <ActionBar variant="embedded" /> : null}
         <div className={css.buttonsContainer}>
-          {shouldShowSummary && (
+          {isToMedium ? (
+            <PriceAndDiscountTip numRecipes={numRecipes} />
+          ) : (
             <ExpandBoxSummaryButtonContainer
               onClick={onExpandClick}
               numRecipes={numRecipes}
               view={view}
+              showBrowseCTA={showBrowseCTA}
             />
           )}
 
