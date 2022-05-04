@@ -63,7 +63,6 @@ const BoxSummaryBanner = ({
         <div className={css.buttonsContainer}>
           {shouldShowSummary && (
             <ExpandBoxSummaryButtonContainer
-              warning={expandWarning}
               onClick={onExpandClick}
               numRecipes={numRecipes}
               view={view}

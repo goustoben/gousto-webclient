@@ -6,17 +6,8 @@ import { ExpandBoxSummaryButton } from './ExpandBoxSummaryButton'
 
 const mapStateToProps = (state) => ({
   showDetails: state.boxSummaryShow.get('show'),
-  numPortions: getNumPortions(state),
-  date: getBasketDate(state),
-  slotId: getBasketSlotId(state)
 })
 
-const ExpandBoxSummaryButtonPure = (props) => {
-  const { isPending } = usePricing()
-
-  return <ExpandBoxSummaryButton {...props} pricingPending={isPending} />
-}
-
-const ExpandBoxSummaryButtonContainer = connect(mapStateToProps)(ExpandBoxSummaryButtonPure)
+const ExpandBoxSummaryButtonContainer = connect(mapStateToProps)(ExpandBoxSummaryButton)
 
 export { ExpandBoxSummaryButtonContainer }

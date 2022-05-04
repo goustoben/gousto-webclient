@@ -6,7 +6,7 @@ import { Description } from '../../Description'
 
 import css from './PriceAndDiscountTip.css'
 
-export const PriceAndDiscountTip = ({ numPortions, numRecipes, date, slotId, warning }: any) => (
+export const PriceAndDiscountTip = ({ numRecipes }: any) => (
   <div className={css.buttonTextWrapper}>
     <Title numRecipes={numRecipes} />
     <Description numRecipes={numRecipes} />
@@ -14,9 +14,5 @@ export const PriceAndDiscountTip = ({ numPortions, numRecipes, date, slotId, war
 )
 
 PriceAndDiscountTip.propTypes = {
-  numPortions: PropTypes.number.isRequired,
   numRecipes: PropTypes.number.isRequired,
-  date: PropTypes.string.isRequired,
-  slotId: PropTypes.string.isRequired,
-  warning: PropTypes.bool.isRequired,
 }

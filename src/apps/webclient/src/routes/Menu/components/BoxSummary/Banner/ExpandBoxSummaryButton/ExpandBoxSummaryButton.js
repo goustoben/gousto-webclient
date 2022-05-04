@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { useSelector } from 'react-redux'
 import { MOBILE_VIEW } from 'utils/view'
 
 import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
@@ -9,25 +7,9 @@ import { PriceAndDiscountTip } from '../PriceAndDiscountTip'
 
 import css from './ExpandBoxSummaryButton.css'
 
-const ExpandBoxSummaryButton = ({
-  showDetails,
-  pricingPending,
-  numPortions,
-  numRecipes,
-  date,
-  slotId,
-  warning,
-  onClick,
-  view,
-}) => {
+const ExpandBoxSummaryButton = ({ showDetails, numRecipes, onClick, view }) => {
   return view === MOBILE_VIEW ? (
-    <PriceAndDiscountTip
-      numPortions={numPortions}
-      numRecipes={numRecipes}
-      date={date}
-      slotId={slotId}
-      warning={warning}
-    />
+    <PriceAndDiscountTip numRecipes={numRecipes} />
   ) : (
     <div className={css.buttonContainer}>
       <Button
@@ -36,16 +18,7 @@ const ExpandBoxSummaryButton = ({
         onClick={onClick}
         data-testing="expandBoxSummaryButton"
       >
-        <PriceAndDiscountTip
-          showDetails={showDetails}
-          pricingPending={pricingPending}
-          numPortions={numPortions}
-          numRecipes={numRecipes}
-          date={date}
-          slotId={slotId}
-          warning={warning}
-          view={view}
-        />
+        <PriceAndDiscountTip numRecipes={numRecipes} />
         <span className={css.iconDesktop} data-testing="boxSummaryIcon">
           <span
             className={showDetails ? css.arrowDown : css.arrowUp}
@@ -59,12 +32,7 @@ const ExpandBoxSummaryButton = ({
 
 ExpandBoxSummaryButton.propTypes = {
   showDetails: PropTypes.bool.isRequired,
-  pricingPending: PropTypes.bool.isRequired,
-  numPortions: PropTypes.number.isRequired,
   numRecipes: PropTypes.number.isRequired,
-  date: PropTypes.string.isRequired,
-  slotId: PropTypes.string.isRequired,
-  warning: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
 }
