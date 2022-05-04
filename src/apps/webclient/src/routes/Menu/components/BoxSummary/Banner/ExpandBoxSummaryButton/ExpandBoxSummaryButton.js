@@ -5,31 +5,9 @@ import { useSelector } from 'react-redux'
 import { MOBILE_VIEW } from 'utils/view'
 
 import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
-import { Title } from '../../Title'
-import { Description } from '../../Description'
+import { PriceAndDiscountTip } from '../PriceAndDiscountTip'
 
 import css from './ExpandBoxSummaryButton.css'
-
-export const Contents = ({ numPortions, numRecipes, date, slotId, warning }) => (
-  <div className={css.buttonTextWrapper}>
-    <Title view="desktop" numRecipes={numRecipes} date={date} finalisedSlot={slotId !== ''} />
-    <Description
-      view="desktop"
-      numPortions={numPortions}
-      numRecipes={numRecipes}
-      deliveryOptions={slotId === ''}
-      warning={warning}
-    />
-  </div>
-)
-
-Contents.propTypes = {
-  numPortions: PropTypes.number.isRequired,
-  numRecipes: PropTypes.number.isRequired,
-  date: PropTypes.string.isRequired,
-  slotId: PropTypes.string.isRequired,
-  warning: PropTypes.bool.isRequired,
-}
 
 const ExpandBoxSummaryButton = ({
   showDetails,
@@ -43,7 +21,7 @@ const ExpandBoxSummaryButton = ({
   view,
 }) => {
   return view === MOBILE_VIEW ? (
-    <Contents
+    <PriceAndDiscountTip
       numPortions={numPortions}
       numRecipes={numRecipes}
       date={date}
@@ -58,7 +36,7 @@ const ExpandBoxSummaryButton = ({
         onClick={onClick}
         data-testing="expandBoxSummaryButton"
       >
-        <Contents
+        <PriceAndDiscountTip
           showDetails={showDetails}
           pricingPending={pricingPending}
           numPortions={numPortions}

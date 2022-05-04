@@ -25,7 +25,7 @@ const useSimplifyBasketBarContent = (canCheckout) => {
   return content
 }
 
-const Description = ({ numRecipes, view }) => {
+const Description = ({ numRecipes }) => {
   const canCheckout = numRecipes >= basketConfig.minRecipesNum
   const content = useSimplifyBasketBarContent(canCheckout)
 
@@ -41,7 +41,6 @@ const Description = ({ numRecipes, view }) => {
 }
 
 Description.propTypes = {
-  view: PropTypes.string.isRequired,
   numRecipes: PropTypes.number.isRequired,
 }
 
