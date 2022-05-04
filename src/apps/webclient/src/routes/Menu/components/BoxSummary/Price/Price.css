@@ -6,27 +6,12 @@
 @value CG-800 #333D47;
 @value W-0 #FFFFFF;
 
-.hide {
-  visibility: hidden;
-  float: left;
-}
-
-.total {
-  composes: textStrike from 'styles/typography.css';
-  composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
-  @media ScreenMLMax {
-    display: block;
-  }
-}
-
 .dash {
   composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
   transform: scale(3,1);
   transform-origin: left;
   display: inline-block;
 }
-
-/* isSimplifyBasketBarEnabled styles */
 
 .strikedOutPrice {
   display: inline-block;
