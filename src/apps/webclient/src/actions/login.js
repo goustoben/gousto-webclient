@@ -12,6 +12,10 @@ import { getUserId } from 'selectors/user'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { getProtocol, getDomain } from 'utils/isomorphicEnvironment'
+import {
+  feLoggingLogEvent,
+  logLevels,
+} from 'actions/log'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import statusActions from './status'
 import authActions from './auth'
@@ -96,6 +100,9 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
         await postLoginSteps(isAdmin(userRoles), orderId, getState().features)(dispatch, getState)
       }
     } catch (err) {
+      if (orderId) {
+        dispatch(feLoggingLogEvent(logLevels.info, `Signup login failed: ${err.message}`, orderId))
+      }
       const errMsg = err.message ? err.message : 'Sorry, we were unable to log you in. Please contact customer care.'
       dispatch(error(actionTypes.USER_LOGIN, errMsg))
       dispatch({ type: actionTypes.LOGIN_FAILED })
