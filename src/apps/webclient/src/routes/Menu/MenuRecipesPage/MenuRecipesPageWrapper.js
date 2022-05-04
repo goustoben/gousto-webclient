@@ -12,6 +12,7 @@ import { MenuRecipesPage } from './MenuRecipesPage'
 import { isMenuLoading, getMenuLoadingErrorMessage, getRecipeCount } from '../selectors/menu'
 import fetchData from '../fetchData'
 import { isSignupReductionEnabled, shouldShowCommunicationPanel, shouldShowCapacityInfo } from '../selectors/signupReduction'
+import { useHotjarIdentify } from './useHotjarIdentify'
 
 const MenuRecipesPageWrapper = (ownProps) => {
   const {
@@ -38,6 +39,8 @@ const MenuRecipesPageWrapper = (ownProps) => {
     loadOptimizelySDK,
     fetchMenuData: fetchData,
   }, dispatch)
+
+  useHotjarIdentify()
 
   return (
     <MenuRecipesPage
