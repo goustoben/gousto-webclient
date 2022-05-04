@@ -246,7 +246,7 @@ export const Footer = ({
   const renderVerificationOfValueNotice = () => (
     <div id="verification-of-value-notice" className={css.verificationOfValueNotice}>
       <p>
-        <span>Our &apos;UK&apos;s best value recipe box&apos; claim is based on Gousto offering the cheapest price on standard box prices (i.e. with no applied offers or discounts) and include any delivery costs charged by each company. These cost comparisons are tracked on a monthly basis. The full details of this comparison can be found here:</span>
+        <span>** Our &apos;UK&apos;s best value recipe box&apos; claim is based on Gousto offering the cheapest price on standard box prices (i.e. with no applied offers or discounts) and include any delivery costs charged by each company. These cost comparisons are tracked on a monthly basis. The full details of this comparison can be found here:</span>
         {' '}
         <a href="https://cook.gousto.co.uk/value/">
           Verification of value
