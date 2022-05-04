@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet'
 import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { getAuthUserId } from 'selectors/auth'
 import { getServerEnvironment, isServer } from './utils/serverEnvironment'
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
@@ -32,7 +33,7 @@ const fetchAllData = (renderProps, store, headers, path, sessionId) => {
   const { location, params } = renderProps
   const queries = []
 
-  const userId = store.getState().auth.get('id')
+  const userId = getAuthUserId(store.getState())
 
   const serverSideRenderEligible = isServerSideFetchEligible(headers, path, userId, sessionId)
 
