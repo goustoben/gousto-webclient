@@ -10,59 +10,49 @@ import { Price } from '../../Price'
 
 import css from './PriceAndDiscountTip.css'
 
-const deliveryTip = <b>Free UK delivery,</b>
-
-const useSimplifyBasketBarContent = (canCheckout: boolean) => {
-  const discountTip = useDiscountTip()
-  const { isDiscountEnabled } = useCheckoutPrices()
-
-  let content
-  if (canCheckout) {
-    if (isDiscountEnabled) {
-      content = discountTip
-    } else {
-      content = 'Free UK delivery'
-    }
-  } else if (isDiscountEnabled) {
-    content = '+ Free UK delivery'
-  } else {
-    content = '7 days a week'
-  }
-
-  return content
-}
-
-export const PriceAndDiscountTip = ({ numRecipes }: any) => {
+const Lines = ({ numRecipes }: any) => {
   const { pricing } = usePricing()
   const discountTip = useDiscountTip()
 
   const canCheckout = numRecipes >= basketConfig.minRecipesNum
-  const content = useSimplifyBasketBarContent(canCheckout)
+  const checkoutPrices = useCheckoutPrices()
+  const { isDiscountEnabled } = checkoutPrices
 
-  const titleContent =
-    numRecipes < basketConfig.minRecipesNum ? (
-      <div className={css.discountTip}>{discountTip || deliveryTip}</div>
-    ) : (
-      <Price
-        recipeTotal={parseFloat(pricing?.grossTotal || '0')}
-        recipeDiscount={parseFloat(pricing?.totalDiscount || '0')}
-        recipeTotalDiscounted={parseFloat(pricing?.total || '0')}
-      />
+  if (canCheckout) {
+    return (
+      <>
+        <div>
+          <Price
+            recipeTotal={parseFloat(pricing?.grossTotal || '0')}
+            recipeDiscount={parseFloat(pricing?.totalDiscount || '0')}
+            recipeTotalDiscounted={parseFloat(pricing?.total || '0')}
+          />
+        </div>
+        <div className={css.bold}>{isDiscountEnabled ? discountTip : 'Free UK delivery'}</div>
+      </>
     )
-
-  return (
-    <div className={css.buttonTextWrapper}>
-      <div className={classNames(css.titleWrapperVariant)}>{titleContent}</div>
-      <p
-        className={classNames(css.description, {
-          [css.canCheckout]: canCheckout,
-        })}
-      >
-        {content}
-      </p>
-    </div>
-  )
+  } else if (isDiscountEnabled) {
+    return (
+      <>
+        <div className={classNames(css.bold)}>{discountTip}</div>
+        <div>+ Free UK delivery</div>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <div className={classNames(css.bold)}>Free UK delivery,</div>
+        <div>7 days a week</div>
+      </>
+    )
+  }
 }
+
+export const PriceAndDiscountTip = ({ numRecipes }: any) => (
+  <div className={css.priceAndDiscountTip}>
+    <Lines numRecipes={numRecipes} />
+  </div>
+)
 
 PriceAndDiscountTip.propTypes = {
   numRecipes: PropTypes.number.isRequired,

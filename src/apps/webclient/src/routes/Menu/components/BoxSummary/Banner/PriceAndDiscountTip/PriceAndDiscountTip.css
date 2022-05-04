@@ -2,43 +2,24 @@
 @value FS-800 #008610;
 @value FS-200 #9CDC9E;
 
-.buttonTextWrapper {
+.priceAndDiscountTip {
+  color: FS-200;
+  composes: fontStyleXS from 'design-language/typography.css';
+
   /* Make sure it's positioned over the blurredBackground which has position: absolute. */
   position: relative;
 
   @media BreakpointFromMedium {
+    color: FS-800;
+
+    /* When in button, override default centering. */
+    text-align: start;
+
+    /* Space between the information and the arrow. */
     margin-right: 1rem;
   }
 }
 
-.titleWrapperVariant {
-  composes: fontStyleXS from 'design-language/typography.css';
-  composes: fontSemiBold from 'design-language/typography.css';
-}
-
-.discountTip {
-  color: FS-200;
-
-  @media BreakpointFromMedium {
-    color: FS-800;
-  }
-}
-
-.description {
-  margin: 0;
-  color: FS-200;
-  composes: fontStyleXS from 'design-language/typography.css';
-
-  @media ScreenMLMax {
-    /* undo display: none from .desktopText */
-    display: block;
-  }
-
-  @media BreakpointFromMedium {
-    color: FS-800;
-  }
-}
-
-.canCheckout {
+.bold {
   composes: fontSemiBold from 'design-language/typography.css';
 }
