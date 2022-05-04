@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { getIsAuthenticated } from 'selectors/auth'
 import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
+import { getPromoCode } from 'selectors/basket'
 
 /**
  * Checkout prices information for display purposes
@@ -38,16 +39,16 @@ export type DiscountTuple = [number, boolean]
 /**
  * Returns discount amount number and if flat discount enabled; e.g. [discountAmount, isDiscountFlat]
  */
-export const createExtractDiscountFromStore =
-  (promoCode?: string | null) =>
-  (state: any): DiscountTuple => {
-    const promocodeDetails = state.promoStore?.getIn([promoCode, 'details'])
-    const flatDiscount = promocodeDetails?.get('discount-whole-order-amount')
-    const percentageDiscount = promocodeDetails?.get('discount-whole-order-percent')
-    const isDiscountFlat = !!flatDiscount && !percentageDiscount
+export const getDiscountFromStore = (state: any): DiscountTuple => {
+  const promoCode = getPromoCode(state)
 
-    return [isDiscountFlat ? flatDiscount : percentageDiscount, isDiscountFlat]
-  }
+  const promoCodeDetails = state.promoStore?.getIn([promoCode, 'details'])
+  const flatDiscount = promoCodeDetails?.get('discount-whole-order-amount')
+  const percentageDiscount = promoCodeDetails?.get('discount-whole-order-percent')
+  const isDiscountFlat = !!flatDiscount && !percentageDiscount
+
+  return [isDiscountFlat ? flatDiscount : percentageDiscount, isDiscountFlat]
+}
 
 /**
  * Returns gross & total prices and discount percentage or amount for current order.
@@ -58,7 +59,8 @@ export const useCheckoutPrices = (): CheckoutPrices => {
   const totalPrice = Number(pricing?.recipeTotalDiscounted)
   const isAuthenticated = useSelector<unknown, boolean>(getIsAuthenticated)
 
-  // for authenticated users promocode discount is extracted from store.pricing slice
+  // For authenticated users, promo code discount is extracted from the
+  // `pricing` hook.
   const existingUsersDiscountAmount = getPercentageOrAmountOff(pricing)
   const isPricingDiscountFlat = pricing?.flatDiscountApplied
   // const isPricingDiscountEnabled = useSelector<any, boolean>(getPromoCodeValid)
@@ -66,10 +68,10 @@ export const useCheckoutPrices = (): CheckoutPrices => {
   const isPricingDiscountEnabled =
     existingUsersDiscountAmount !== null && existingUsersDiscountAmount !== undefined
 
-  // for new users promocode discount is extracted from store.promocode slice
-  const promoCode = pricing?.promoCode
+  // For new users, the promo code discount is extracted from the `promoStore`
+  // slice based on the current promo code stored in the `basket` slice.
   const [newUsersDiscountAmount, isDiscountFlat] = useSelector<any, [number, boolean]>(
-    createExtractDiscountFromStore(promoCode),
+    getDiscountFromStore,
   )
   const isDiscountEnabled = !!newUsersDiscountAmount
 
