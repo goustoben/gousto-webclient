@@ -34,4 +34,4 @@ const OrderSummaryContainer = connect(mapStateToProps, {
   showProductDetail: productDetailVisibilityChange,
 })(OrderSummary)
 
-export default OrderSummaryContainer
+export { OrderSummaryContainer }

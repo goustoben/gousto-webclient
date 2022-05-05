@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
 import configProducts from 'config/products'
-import ProductDetailContainer from '../ProductDetails'
+import { ProductDetailContainer } from '../ProductDetails'
 import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
 
@@ -13,7 +13,7 @@ const propTypes = {
     id: PropTypes.string,
     title: PropTypes.string,
     listPrice: PropTypes.string,
-    images: PropTypes.object,
+    images: PropTypes.instanceOf(Immutable.Map),
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
     stock: PropTypes.number,

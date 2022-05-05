@@ -6,7 +6,9 @@ import { mockProduct } from 'routes/OrderConfirmation/components/config'
 
 import { Product } from '../Product.logic'
 
-jest.mock('../../ProductDetails', () => 'div')
+jest.mock('../../ProductDetails', () => ({
+  ProductDetailContainer: jest.fn(() => 'div')
+}))
 
 global.scrollTo = jest.fn()
 

@@ -9,7 +9,7 @@ import Overlay from 'Overlay'
 import CloseButton from 'Overlay/CloseButton'
 import { SaveButton } from 'OrderSummary/SaveButton'
 import { ProductsNavBar } from '../ProductsNavBar'
-import OrderSummaryContainer from '../OrderSummary/OrderSummaryContainer'
+import { OrderSummaryContainer } from '../OrderSummary/OrderSummaryContainer'
 import { ProductList } from '../ProductList'
 import { ReferAFriend } from '../ReferAFriend'
 
@@ -28,7 +28,7 @@ const propTypes = {
       id: PropTypes.string,
       title: PropTypes.string,
       listPrice: PropTypes.string,
-      images: PropTypes.object,
+      images: PropTypes.instanceOf(Immutable.Map),
       ageRestricted: PropTypes.bool,
       quantity: PropTypes.number,
     })
@@ -41,7 +41,7 @@ const propTypes = {
       id: PropTypes.string,
       title: PropTypes.string,
       listPrice: PropTypes.string,
-      images: PropTypes.object,
+      images: PropTypes.instanceOf(Immutable.Map),
       ageRestricted: PropTypes.bool,
       quantity: PropTypes.number,
     })
