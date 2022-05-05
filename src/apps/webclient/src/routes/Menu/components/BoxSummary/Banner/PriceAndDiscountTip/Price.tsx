@@ -2,10 +2,16 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { formatPrice } from 'utils/format'
+import { Pricing } from 'routes/Menu/domains/pricing'
 
 import css from './Price.css'
 
-const Price = ({ pricing, isPending }) => {
+type Props = {
+  pricing: Pricing
+  isPending: boolean
+}
+
+export const Price = ({ pricing, isPending }: Props) => {
   if (isPending) {
     return <span className={css.primaryPrice}>£&mdash;</span>
   }
@@ -25,5 +31,3 @@ const Price = ({ pricing, isPending }) => {
     <span className={css.primaryPrice}>{formatPrice(grossTotal)}</span>
   )
 }
-
-export { Price }

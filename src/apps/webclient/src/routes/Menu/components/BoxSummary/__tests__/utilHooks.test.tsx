@@ -5,7 +5,7 @@ import { getIsAuthenticated } from 'selectors/auth'
 import {
   useCheckoutPrices,
   useDiscountTip,
-  createExtractDiscountFromStore,
+  getDiscountFromStore,
   DiscountTuple,
 } from '../utilHooks'
 
@@ -31,17 +31,15 @@ jest.mock('react-redux', () => ({
 const mockedUseSelector = useSelector as jest.MockedFunction<typeof useSelector>
 
 describe('BoxSummary utilHooks', () => {
-  describe('given createExtractDiscountFromStore is called', () => {
-    let selector: (state: RootStateOrAny) => DiscountTuple
+  describe('given getDiscountFromStore is called', () => {
     let state: RootStateOrAny
-
-    beforeEach(() => {
-      selector = createExtractDiscountFromStore('DTI-SB-6030')
-    })
 
     describe('when the promo store has details that say the promo code is flat-discount', () => {
       beforeEach(() => {
         state = {
+          basket: Immutable.fromJS({
+            promoCode: 'DTI-SB-6030',
+          }),
           promoStore: Immutable.fromJS({
             'DTI-SB-6030': {
               details: {
@@ -52,14 +50,17 @@ describe('BoxSummary utilHooks', () => {
         }
       })
 
-      test('then the returned selector should extract amount and say flat is true', () => {
-        expect(selector(state)).toEqual([40, true])
+      test('then it should extract amount and say flat is true', () => {
+        expect(getDiscountFromStore(state)).toEqual([40, true])
       })
     })
 
     describe('when the promo store has details that say the promo code is percentage-discount', () => {
       beforeEach(() => {
         state = {
+          basket: Immutable.fromJS({
+            promoCode: 'DTI-SB-6030',
+          }),
           promoStore: Immutable.fromJS({
             'DTI-SB-6030': {
               details: {
@@ -70,8 +71,8 @@ describe('BoxSummary utilHooks', () => {
         }
       })
 
-      test('then the returned selector should extract amount and say flat is false', () => {
-        expect(selector(state)).toEqual([60, false])
+      test('then it should extract amount and say flat is false', () => {
+        expect(getDiscountFromStore(state)).toEqual([60, false])
       })
     })
   })

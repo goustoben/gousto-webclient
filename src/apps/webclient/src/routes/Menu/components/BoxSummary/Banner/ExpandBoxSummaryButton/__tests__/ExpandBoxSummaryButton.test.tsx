@@ -1,77 +1,41 @@
 import React from 'react'
-import { shallow, ShallowWrapper } from 'enzyme'
 import { useSelector } from 'react-redux'
-import { MOBILE_VIEW, DESKTOP_VIEW } from 'utils/view'
-import { ExpandBoxSummaryButton, Contents } from '../ExpandBoxSummaryButton'
+import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
+import { ExpandBoxSummaryButton } from '../ExpandBoxSummaryButton'
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
+jest.mock('routes/Menu/components/BoxSummary/Banner/PriceAndDiscountTip', () => ({
+  PriceAndDiscountTip: jest.fn().mockReturnValue(<div>price and discount tip</div>),
 }))
 
-const mockedUseSelector = useSelector as jest.MockedFunction<typeof useSelector>
-
-const render = () =>
-  shallow(
-    <ExpandBoxSummaryButton
-      showDetails={false}
-      pricingPending={false}
-      numPortions={4}
-      numRecipes={2}
-      date="2022-03-09"
-      slotId="test-slot-id"
-      warning={false}
-      onClick={jest.fn()}
-      view={MOBILE_VIEW}
-    />,
-  )
-
 describe('given ExpandBoxSummaryButton is rendered', () => {
-  let wrapper: ShallowWrapper<any, any>
+  let rendered: RenderResult
+
+  const onClick = jest.fn()
 
   beforeEach(() => {
-    wrapper = render()
-  })
-
-  test('then it should render Contents directly', () => {
-    expect(wrapper.find('Button')).toHaveLength(0)
-    expect(wrapper.find('Contents')).toHaveLength(1)
-  })
-
-  describe('and when view is Desktop', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        view: DESKTOP_VIEW,
-      })
-    })
-
-    test('then it should render Contents through the Button', () => {
-      expect(wrapper.find('Button')).toHaveLength(1)
-      expect(wrapper.find('Contents')).toHaveLength(1)
-    })
-  })
-})
-
-describe('given ExpandBoxSummaryButton Contents is rendered', () => {
-  let wrapper: ShallowWrapper<any, any>
-
-  beforeEach(() => {
-    wrapper = shallow(
-      <Contents
-        numPortions={4}
+    rendered = render(
+      <ExpandBoxSummaryButton
+        showDetails={false}
+        showBrowseCTA={false}
         numRecipes={2}
-        date="2022-03-09"
-        slotId="test-slot-id"
-        warning={false}
+        onClick={onClick}
       />,
     )
   })
 
-  test('then it should render correctly', () => {
-    expect(wrapper.hasClass('buttonTextWrapper')).toBe(true)
-    expect(wrapper.find('.badge')).toHaveLength(0)
-    expect(wrapper.find('Title')).toHaveLength(1)
-    expect(wrapper.find('Description')).toHaveLength(1)
+  test('then it should render a Button with PriceAndDiscountTip', () => {
+    const { getByRole, getByText } = rendered
+    expect(getByRole('button')).toBeDefined()
+    expect(getByText('price and discount tip')).toBeDefined()
+  })
+
+  describe('when clicked', () => {
+    beforeEach(() => {
+      fireEvent.click(screen.getByText('price and discount tip'))
+    })
+
+    test('then it should invoke onClick', () => {
+      expect(onClick).toHaveBeenCalled()
+    })
   })
 })

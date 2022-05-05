@@ -17,55 +17,55 @@ const initialState = Immutable.fromJS({
 const signup = {
   signup: (state = initialState, action) => {
     switch (action.type) {
-    case actionTypes.SIGNUP_STEPS_RECEIVE: {
-      return state.setIn(['wizard', 'steps'], Immutable.fromJS(action.steps))
-    }
+      case actionTypes.SIGNUP_STEPS_RECEIVE: {
+        return state.setIn(['wizard', 'steps'], Immutable.fromJS(action.steps))
+      }
 
-    case actionTypes.SIGNUP_STEP_SET: {
-      return state
-        .setIn(['wizard', 'currentStepName'], action.currentStepName)
-        .setIn(['wizard', 'currentStepNumber'], action.currentStepNumber)
-        .setIn(['wizard', 'isLastStep'], action.isLastStep)
-    }
+      case actionTypes.SIGNUP_STEP_SET: {
+        return state
+          .setIn(['wizard', 'currentStepName'], action.currentStepName)
+          .setIn(['wizard', 'currentStepNumber'], action.currentStepNumber)
+          .setIn(['wizard', 'isLastStep'], action.isLastStep)
+      }
 
-    case actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR: {
-      return state.set('isDiscountAppliedBarDismissed', true)
-    }
+      case actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR: {
+        return state.set('isDiscountAppliedBarDismissed', true)
+      }
 
-    case actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS: {
-      return state
-        .setIn(['wizard', 'amountOfCustomers'], action.count || null)
-        .setIn(['wizard', 'district'], action.district || null)
-    }
+      case actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS: {
+        return state
+          .setIn(['wizard', 'amountOfCustomers'], action.count || null)
+          .setIn(['wizard', 'district'], action.district || null)
+      }
 
-    case actionTypes.WIZARD_SEEN: {
-      return state.set('isInWizardFunnel', true)
-    }
+      case actionTypes.WIZARD_SEEN: {
+        return state.set('isInWizardFunnel', true)
+      }
 
-    case actionTypes.PAGE_CHANGED: {
-      const funnelPaths = ['/menu', '/signup', '/check-out']
-      const isInFunnelPage = funnelPaths.some(path => action.newLocation.includes(path))
+      case actionTypes.PAGE_CHANGED: {
+        const funnelPaths = ['/menu', '/signup', '/check-out']
+        const isInFunnelPage = funnelPaths.some((path) => action.newLocation.includes(path))
 
-      const isWizardSeen = state.get('isInWizardFunnel')
+        const isWizardSeen = state.get('isInWizardFunnel')
 
-      return state.set('isInWizardFunnel', isInFunnelPage && isWizardSeen)
-    }
+        return state.set('isInWizardFunnel', isInFunnelPage && isWizardSeen)
+      }
 
-    default: {
-      return state
-    }
+      default: {
+        return state
+      }
     }
   },
 
   signupCookForKids: (state = false, action) => {
     switch (action.type) {
-    case actionTypes.SIGNUP_COOK_FOR_KIDS: {
-      return action.cookForKids
-    }
+      case actionTypes.SIGNUP_COOK_FOR_KIDS: {
+        return action.cookForKids
+      }
 
-    default: {
-      return state
-    }
+      default: {
+        return state
+      }
     }
   },
 }
