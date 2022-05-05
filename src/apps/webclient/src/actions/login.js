@@ -103,8 +103,8 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
       if (orderId) {
         const logData = {
           orderId,
-          emailEmpty: !email || email.length === 0,
-          passwordEmpty: !password || password.length === 0,
+          emailEmpty: !email,
+          passwordEmpty: !password,
         }
         dispatch(feLoggingLogEvent(logLevels.info, `Signup login failed: ${err.message}`, logData))
       }
