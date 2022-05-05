@@ -17,7 +17,7 @@ import configRoutes from '../config/routes'
 import { BoxPrices } from './BoxPrices'
 import { UnsubscribeRoute } from './Unsubscribe'
 import { GetHelp } from './GetHelp'
-import OrderConfirmation from './OrderConfirmation'
+import { OrderConfirmationRoute } from './OrderConfirmation'
 import { Payment } from './Payment'
 import { PrivacyStatement } from './PrivacyStatement'
 import { ModernSlaveryStatement } from './ModernSlaveryStatement'
@@ -40,7 +40,7 @@ const routes = (store) => (
     <Route component={MainLayout}>
       {Welcome(store)}
       {Account(store)}
-      {OrderConfirmation(store)}
+      {OrderConfirmationRoute(store)}
     </Route>
 
     {Checkout(store)}

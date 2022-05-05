@@ -30,4 +30,4 @@ const mapDispatchToProps = {
 
 const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))
 
-export default OrderConfirmationContainer
+export { OrderConfirmationContainer }

@@ -96,7 +96,6 @@
 /src/apps/webclient/src/utils/recipe.js                                @Gousto/squad-radishes
 /src/apps/webclient/src/utils/__tests__/recipe.test.js                 @Gousto/squad-radishes
 /src/apps/webclient/src/containers/OptimizelyRollouts/                 @Gousto/squad-radishes
-/src/apps/webclient/src/routes/OrderConfirmation/                      @Gousto/squad-radishes
 
 # squad-haricots ownership
 /src/apps/webclient/src/actions/__tests__/getHelp.test.js                          @Gousto/squad-haricots
@@ -218,3 +217,14 @@
 /tests/regression/fixtures/payments/                                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                                    @Gousto/squad-beetroots
 /src/apps/webclient/src/middlewares/tracking/dataLayerTracker/          @Gousto/squad-beetroots
+
+# squad-mandarins (squad-marketplace) ownership
+/src/apps/webclient/src/routes/OrderConfirmation/                       @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/orderConfirmation.js                    @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/__tests__/orderConfirmation.test.js     @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/products.js                             @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/__tests__/products.test.js              @Gousto/squad-mandarins
+/src/apps/webclient/src/apis/products.js                                @Gousto/squad-mandarins
+/src/apps/webclient/src/apis/__tests__/products.test.js                 @Gousto/squad-mandarins
+/src/apps/webclient/src/reducers/__tests__/products.test.js             @Gousto/squad-mandarins
+/src/apps/webclient/src/reducers/products.js                            @Gousto/squad-mandarins
