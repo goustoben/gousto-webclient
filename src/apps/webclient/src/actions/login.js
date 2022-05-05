@@ -101,7 +101,7 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
       }
     } catch (err) {
       if (orderId) {
-        dispatch(feLoggingLogEvent(logLevels.info, `Signup login failed: ${err.message}`, orderId))
+        dispatch(feLoggingLogEvent(logLevels.info, `Signup login failed: ${err.message}`, { orderId }))
       }
       const errMsg = err.message ? err.message : 'Sorry, we were unable to log you in. Please contact customer care.'
       dispatch(error(actionTypes.USER_LOGIN, errMsg))
