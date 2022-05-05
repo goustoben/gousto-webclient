@@ -8,7 +8,8 @@ import tempActions from 'actions/temp'
 import logger from 'utils/logger'
 import { getBasketOrderId } from 'selectors/basket'
 
-export const basketUpdateProducts = (isOrderConfirmation = false) => (
+export const basketUpdateProducts =
+  (isOrderConfirmation = false) =>
   async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
     const state = getState()

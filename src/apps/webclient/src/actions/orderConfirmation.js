@@ -4,7 +4,13 @@ import { push } from 'react-router-redux'
 import config from 'config/routes'
 import logger from 'utils/logger'
 import { getUserOrderRecipeUuIds } from 'utils/user'
-import { basketOrderLoad } from 'actions/basket'
+import {
+  basketDateChange,
+  basketNumPortionChange,
+  basketPostcodeChange,
+  basketChosenAddressChange,
+  basketOrderLoad,
+} from 'actions/basket'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import { orderCheckPossibleDuplicate } from './order'
@@ -12,12 +18,6 @@ import { getAuthUserId, getAccessToken } from '../selectors/auth'
 import { fetchSimpleMenu } from '../routes/Menu/fetchData/menuApi'
 import recipeActions from './recipes'
 import { actionTypes } from './actionTypes'
-import {
-  basketDateChange,
-  basketNumPortionChange,
-  basketPostcodeChange,
-  basketChosenAddressChange,
-} from './basket'
 
 export const orderConfirmationRedirect = (orderId, orderAction) => (dispatch) => {
   const confirmationUrl = config.client.orderConfirmation.replace(':orderId', orderId)
