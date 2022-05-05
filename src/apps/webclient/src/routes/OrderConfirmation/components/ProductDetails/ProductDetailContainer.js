@@ -44,4 +44,4 @@ function mapStateToProps(state, props) {
 
 const ProductDetailContainer = connect(mapStateToProps)(ProductDetails)
 
-export default ProductDetailContainer
+export { ProductDetailContainer }
