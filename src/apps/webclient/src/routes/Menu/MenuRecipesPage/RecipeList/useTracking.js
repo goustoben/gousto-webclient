@@ -12,16 +12,20 @@ export function useTracking() {
   const basketDate = useSelector(getBasketDate)
   const boxSummaryDeliveryDays = useSelector(getBoxSummaryDeliveryDays)
   const transactionType = useSelector(getTransactionType)
-  const severedVariantExperimentBucket = useSelector(({ menuService }) => (
-    menuService.data[0]?.meta?.swapsExperimentUserAllocationGroup
-  ))
+  const severedVariantExperimentBucket = useSelector(
+    ({ menuService }) => menuService.data[0]?.meta?.swapsExperimentUserAllocationGroup,
+  )
+  const cfyLengthExperimentBucket = useSelector(
+    ({ menuService }) => menuService.data[0]?.meta?.cfyLengthExperimentUserAllocationGroup,
+  )
   const menuCollections = useSelector(getMenuCollections)
   const currentMenuId = useSelector(getBasketMenuId)
   const orderId = useSelector(getBasketOrderId)
   const browseMode = useSelector(getMenuBrowseCTAShow)
-  const recommenderVersion = useSelector(({ menuService }) => (
-    menuService.meta.recommendations && menuService.meta.recommendations.version
-  ))
+  const recommenderVersion = useSelector(
+    ({ menuService }) =>
+      menuService.meta.recommendations && menuService.meta.recommendations.version,
+  )
 
   return useCallback(
     (collectionId, displayedOrder) => {
@@ -35,7 +39,7 @@ export function useTracking() {
         trackingData: {
           actionType: trackingKeys.recipesShown,
           identifier,
-          displayedOrder
+          displayedOrder,
         },
       })
 
@@ -53,6 +57,7 @@ export function useTracking() {
           currentMenuId,
           transactionType,
           severedVariantExperimentBucket,
+          cfyLengthExperimentBucket,
         },
       })
     },
@@ -62,11 +67,12 @@ export function useTracking() {
       boxSummaryDeliveryDays,
       transactionType,
       severedVariantExperimentBucket,
+      cfyLengthExperimentBucket,
       menuCollections,
       currentMenuId,
       orderId,
       browseMode,
-      recommenderVersion
-    ]
+      recommenderVersion,
+    ],
   )
 }
