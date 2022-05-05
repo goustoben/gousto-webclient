@@ -56,19 +56,4 @@ describe('<Price />', () => {
     expect(wrapper.find(strikeClassSelector).length).toBe(1)
     expect(wrapper.text().indexOf('£34.99') > -1).toBe(true)
   })
-
-  describe('when isSimplifyBasketBarEnabled is on', () => {
-    beforeEach(() => {
-      useSelector.mockReturnValue(true)
-      wrapper.setProps({
-        recipeTotal,
-        recipeDiscount,
-        recipeTotalDiscounted,
-      })
-    })
-
-    test('then it should render the variant', () => {
-      expect(wrapper.find('span').hasClass('primaryPrice')).toBe(true)
-    })
-  })
 })
