@@ -2164,6 +2164,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@features/recipe-tile-copy@workspace:src/modules/features/recipe-tile copy":
+  version: 0.0.0-use.local
+  resolution: "@features/recipe-tile-copy@workspace:src/modules/features/recipe-tile copy"
+  dependencies:
+    "@library/nonjs-imports": "workspace:*"
+    "@storybook/addon-controls": ^6.4.19
+    "@storybook/addon-essentials": ^6.4.19
+    "@testing-library/react": 12.1.2
+    "@testing-library/react-hooks": ^3.4.2
+    immutable: 3.8.2
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-redux: 7.2.4
+    react-test-renderer: 16.13.1
+    swr: ^1.1.2
+  peerDependencies:
+    immutable: 3.8.2
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-redux: 7.2.4
+    swr: ^1.1.2
+  languageName: unknown
+  linkType: soft
+
 "@features/recipe-tile@workspace:src/modules/features/recipe-tile":
   version: 0.0.0-use.local
   resolution: "@features/recipe-tile@workspace:src/modules/features/recipe-tile"
@@ -2192,20 +2216,6 @@ __metadata:
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
   checksum: d05081e0887a49c178b75ee3067bd6ee086f73c154d121b854fb2e044e8a89cb1cbb6de3a0dd93a519b80f0531fda68b099dd7256205f7fbb3490324342f2217
-  languageName: node
-  linkType: hard
-
-"@gousto-internal/citrus-react@npm:^0.22.3":
-  version: 0.22.3
-  resolution: "@gousto-internal/citrus-react@npm:0.22.3::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.22.3.tgz"
-  dependencies:
-    classnames: ^2.3.1
-    focus-visible: ^5.2.0
-  peerDependencies:
-    "@emotion/react": ^11.7.0
-    react: ">=16"
-    react-modal: ^3.14.3
-  checksum: a1df5e6e8e3e32d6fae5a016acac2d49828ad79087f3f952224c4874a10f79e1f48cfc51948d648a9dc83762128c707088137859f678ecd9a7be9d01ca67f605
   languageName: node
   linkType: hard
 
@@ -2737,6 +2747,12 @@ __metadata:
 "@library/babel@workspace:*, @library/babel@workspace:src/modules/library/babel":
   version: 0.0.0-use.local
   resolution: "@library/babel@workspace:src/modules/library/babel"
+  languageName: unknown
+  linkType: soft
+
+"@library/eslint-plugin-custom-rules@workspace:*, @library/eslint-plugin-custom-rules@workspace:src/modules/library/eslint-plugin-custom-rules":
+  version: 0.0.0-use.local
+  resolution: "@library/eslint-plugin-custom-rules@workspace:src/modules/library/eslint-plugin-custom-rules"
   languageName: unknown
   linkType: soft
 
@@ -7946,7 +7962,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.x, classnames@npm:^2.2.1, classnames@npm:^2.2.4, classnames@npm:^2.2.5, classnames@npm:^2.2.6, classnames@npm:^2.3.1":
+"classnames@npm:2.x, classnames@npm:^2.2.1, classnames@npm:^2.2.4, classnames@npm:^2.2.5, classnames@npm:^2.2.6":
   version: 2.3.1
   resolution: "classnames@npm:2.3.1"
   checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
@@ -12176,13 +12192,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"focus-visible@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "focus-visible@npm:5.2.0"
-  checksum: 876f646ef453680d3d34e9f9b23961527ffd5ccaed8690f423d4fbfa37ff023d98a490972bc1387850e37ec2e44958c81f6096ef95b67462e5c4b5404cf1dbb9
-  languageName: node
-  linkType: hard
-
 "follow-redirects@npm:^1.14.0, follow-redirects@npm:^1.14.4":
   version: 1.14.7
   resolution: "follow-redirects@npm:1.14.7"
@@ -13139,6 +13148,7 @@ __metadata:
     "@babel/preset-react": 7.16.7
     "@babel/preset-typescript": 7.16.7
     "@library/babel": "workspace:*"
+    "@library/eslint-plugin-custom-rules": "workspace:*"
     "@library/storybook": "workspace:*"
     "@storybook/react": ^6.4.18
     "@types/jest": 27.4.0
@@ -26950,7 +26960,6 @@ __metadata:
     "@datadog/browser-rum": ^3.8.0
     "@datadog/datadog-ci": ^0.17.12
     "@emotion/react": ^11.7.0
-    "@gousto-internal/citrus-react": ^0.22.3
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@sheerun/mutationobserver-shim": ^0.3.3

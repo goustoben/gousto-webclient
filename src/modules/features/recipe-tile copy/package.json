@@ -1,0 +1,31 @@
+{
+  "name": "@features/recipe-tile-copy",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "scripts": {
+    "dev": "yarn run --top-level start-storybook -p 6006",
+    "test:unit": "yarn run --top-level jest",
+    "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
+    "typecheck": "yarn run --top-level tsc --noEmit"
+  },
+  "peerDependencies": {
+    "immutable": "3.8.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-redux": "7.2.4",
+    "swr": "^1.1.2"
+  },
+  "devDependencies": {
+    "@library/nonjs-imports": "workspace:*",
+    "@storybook/addon-controls": "^6.4.19",
+    "@storybook/addon-essentials": "^6.4.19",
+    "@testing-library/react": "12.1.2",
+    "@testing-library/react-hooks": "^3.4.2",
+    "immutable": "3.8.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-redux": "7.2.4",
+    "react-test-renderer": "16.13.1",
+    "swr": "^1.1.2"
+  }
+}

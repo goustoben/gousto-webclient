@@ -1,0 +1,4 @@
+{
+  "name": "@library/eslint-plugin-custom-rules",
+  "main": "index.js"
+}
