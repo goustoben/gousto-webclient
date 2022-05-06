@@ -6,8 +6,5 @@ export const boxSummaryBannerPropTypes = {
   recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
   menuRecipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
   maxRecipesNum: PropTypes.number.isRequired,
-  errorText: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool
-  ]).isRequired,
+  errorText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
 }

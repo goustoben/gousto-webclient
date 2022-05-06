@@ -33,20 +33,21 @@ const Checkout = (props) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
   const isPending =
     (checkoutPending ||
-    pricingPending ||
-    basketPreviewOrderChangePending ||
-    orderSavePending ||
-    loadingOrderPending ||
-    menuFetchData) && orderSaveError === null
+      pricingPending ||
+      basketPreviewOrderChangePending ||
+      orderSavePending ||
+      loadingOrderPending ||
+      menuFetchData) &&
+    orderSaveError === null
   const numRecipes = basketSum(okRecipes(recipes, menuRecipes, stock, numPortions))
-  const isDisabled =
-    checkoutPending ||
-    numRecipes < config.minRecipesNum ||
-    orderSaveError !== null
-  const handleClick = useCallback((e) => {
-    e.stopPropagation()
-    checkoutBasket({ section, view, pricing })
-  }, [checkoutBasket, section, view, pricing])
+  const isDisabled = checkoutPending || numRecipes < config.minRecipesNum || orderSaveError !== null
+  const handleClick = useCallback(
+    (e) => {
+      e.stopPropagation()
+      checkoutBasket({ section, view, pricing })
+    },
+    [checkoutBasket, section, view, pricing],
+  )
 
   return (
     <BaseBannerButton
@@ -65,7 +66,11 @@ const Checkout = (props) => {
         <>
           <div className={css.checkoutLabel}>Checkout</div>
           {shouldRenderCounter && (
-          <CheckoutCounter isDisabled={isDisabled} isButtonHovered={isButtonHovered} numRecipes={numRecipes} />
+            <CheckoutCounter
+              isDisabled={isDisabled}
+              isButtonHovered={isButtonHovered}
+              numRecipes={numRecipes}
+            />
           )}
         </>
       ) : (

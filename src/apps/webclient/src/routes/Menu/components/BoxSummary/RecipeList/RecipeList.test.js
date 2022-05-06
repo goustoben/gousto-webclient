@@ -41,12 +41,16 @@ describe('<RecipeList />', () => {
     })
 
     test('should return 3 filled recipe slots', () => {
-      const filledSlots = wrapper.findWhere(n => n.name() === 'RecipeHolder' && !n.prop('data-testing'))
+      const filledSlots = wrapper.findWhere(
+        (n) => n.name() === 'RecipeHolder' && !n.prop('data-testing'),
+      )
       expect(filledSlots).toHaveLength(3)
     })
 
     test('should return 1 non-filled recipe slots', () => {
-      const emptyHolder = wrapper.findWhere(n => n.name() === 'RecipeHolder' && n.prop('data-testing') === 'empty')
+      const emptyHolder = wrapper.findWhere(
+        (n) => n.name() === 'RecipeHolder' && n.prop('data-testing') === 'empty',
+      )
       expect(emptyHolder).toHaveLength(1)
     })
   })

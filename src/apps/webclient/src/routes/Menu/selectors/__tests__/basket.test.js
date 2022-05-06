@@ -22,14 +22,15 @@ describe('the composed selectors', () => {
           2: 1000,
           4: 1000,
           8: 0,
-        }
+        },
       })
       numPortions = 2
     })
 
     test('calls the okRecipes function with correct arguments', () => {
-      expect(getOkRecipeIds.resultFunc(basketRecipes, menuRecipeIds, stock, numPortions))
-        .toEqual(okRecipes(basketRecipes, menuRecipeIds, stock, numPortions))
+      expect(getOkRecipeIds.resultFunc(basketRecipes, menuRecipeIds, stock, numPortions)).toEqual(
+        okRecipes(basketRecipes, menuRecipeIds, stock, numPortions),
+      )
     })
   })
 
@@ -63,7 +64,9 @@ describe('the composed selectors', () => {
         })
 
         test('returns an empty list', () => {
-          expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toBe(Immutable.Map())
+          expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toBe(
+            Immutable.Map(),
+          )
         })
       })
 
@@ -80,7 +83,9 @@ describe('the composed selectors', () => {
             300: 2,
           })
 
-          expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toEqual(expectedUnavailable)
+          expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toEqual(
+            expectedUnavailable,
+          )
         })
       })
 
@@ -90,7 +95,9 @@ describe('the composed selectors', () => {
         })
 
         test('returns all recipes as unavailable', () => {
-          expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toEqual(basketRecipes)
+          expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toEqual(
+            basketRecipes,
+          )
         })
       })
     })
@@ -106,44 +113,55 @@ describe('the composed selectors', () => {
             id: 123,
             title: 'Chicken',
             media: {
-              images: [{
-                urls: [{
-                  src: 'url-for-image'
-                }]
-              }]
-            }
-          }
-        })
+              images: [
+                {
+                  urls: [
+                    {
+                      src: 'url-for-image',
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        }),
       }
       rules = [
         {
           items: ['123'],
           message: 'Only 1 oven ready meal is available per order',
-          name: 'charlie-binghams-basket-limit'
+          name: 'charlie-binghams-basket-limit',
         },
         {
           items: ['123'],
           message: 'Only 1 new-rule meal is available per order',
-          name: 'new-rule'
-        }
+          name: 'new-rule',
+        },
       ]
     })
 
     test('should return formated data', () => {
       const result = getFormatedRulesMessage(state, rules)
-      const expectedResult = [{
-        description: 'Only 1 oven ready meal is available per order',
-        recipes: [{
-          imageUrl: 'url-for-image',
-          title: 'Chicken'}]
-      },
-      {
-        description: 'Only 1 new-rule meal is available per order',
-        recipes: [{
-          imageUrl: 'url-for-image',
-          title: 'Chicken'
-        }]
-      }]
+      const expectedResult = [
+        {
+          description: 'Only 1 oven ready meal is available per order',
+          recipes: [
+            {
+              imageUrl: 'url-for-image',
+              title: 'Chicken',
+            },
+          ],
+        },
+        {
+          description: 'Only 1 new-rule meal is available per order',
+          recipes: [
+            {
+              imageUrl: 'url-for-image',
+              title: 'Chicken',
+            },
+          ],
+        },
+      ]
       expect(result).toEqual(expectedResult)
     })
   })

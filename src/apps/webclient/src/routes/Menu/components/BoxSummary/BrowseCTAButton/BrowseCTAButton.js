@@ -5,7 +5,11 @@ import { Button, Segment } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
 import css from './BrowseCTAButton.css'
 
-const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow) => {
+const handleSetDeliveryDateClick = (
+  menuBrowseCTAVisibilityChange,
+  boxDetailsVisibilityChange,
+  boxSummaryShow,
+) => {
   if (!boxSummaryShow) {
     menuBrowseCTAVisibilityChange(false)
     boxDetailsVisibilityChange(true)
@@ -14,19 +18,30 @@ const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVis
   }
 }
 
-const BrowseCTAButton = ({ menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view, disable, fullWidth }) => {
+const BrowseCTAButton = ({
+  menuBrowseCTAVisibilityChange,
+  boxDetailsVisibilityChange,
+  boxSummaryShow,
+  view,
+  disable,
+  fullWidth,
+}) => {
   const isMobileView = isMobile(view)
-  const classes = classnames(
-    css[`setDeliveryDateButton-${view}`],
-    { [css.fullWidth]: isMobileView && fullWidth },
-  )
+  const classes = classnames(css[`setDeliveryDateButton-${view}`], {
+    [css.fullWidth]: isMobileView && fullWidth,
+  })
 
   return (
     <Button className={classes} data-testing="menuBrowseCTAButton">
       <Segment
         onClick={() => {
           if (!disable) {
-            handleSetDeliveryDateClick(menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view)
+            handleSetDeliveryDateClick(
+              menuBrowseCTAVisibilityChange,
+              boxDetailsVisibilityChange,
+              boxSummaryShow,
+              view,
+            )
           }
         }}
         className={css[view]}

@@ -12,60 +12,70 @@ import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 import { validateMenuLimitsForBasket } from '../selectors/menu'
 import { isBasketTransactionalOrder } from '../../../selectors/basket'
 
-export const getIsSidesEnabled = isOptimizelyFeatureEnabledFactory('radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled')
+export const getIsSidesEnabled = isOptimizelyFeatureEnabledFactory(
+  'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
+)
 
-export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_create_web_enabled')
+export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory(
+  'radishes_order_api_create_web_enabled',
+)
 
-export const isOrderApiUpdateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_update_web_enabled')
+export const isOrderApiUpdateEnabled = isOptimizelyFeatureEnabledFactory(
+  'radishes_order_api_update_web_enabled',
+)
 
-export const checkoutBasket = ({ section, view, pricing }) => async (dispatch, getState) => {
-  const state = getState()
-  const isAuthenticated = getIsAuthenticated(state)
-  const isTransactionalOrder = isBasketTransactionalOrder(state)
-  const rules = validateMenuLimitsForBasket(state)
-  const transactionalOrderForNonLoggedInUser = isTransactionalOrder && !isAuthenticated
+export const checkoutBasket =
+  ({ section, view, pricing }) =>
+  async (dispatch, getState) => {
+    const state = getState()
+    const isAuthenticated = getIsAuthenticated(state)
+    const isTransactionalOrder = isBasketTransactionalOrder(state)
+    const rules = validateMenuLimitsForBasket(state)
+    const transactionalOrderForNonLoggedInUser = isTransactionalOrder && !isAuthenticated
 
-  dispatch(boxSummaryVisibilityChange(false))
-  dispatch(basketCheckedOut({ view, pricing }))
-  dispatch(basketCheckoutClicked(section))
+    dispatch(boxSummaryVisibilityChange(false))
+    dispatch(basketCheckedOut({ view, pricing }))
+    dispatch(basketCheckoutClicked(section))
 
-  if (rules.length !== 0) {
-    dispatch(status.error(actionTypes.BASKET_NOT_VALID, {
-      errorTitle: 'Basket Not Valid',
-      recipeId: null,
-      rules
-    }))
+    if (rules.length !== 0) {
+      dispatch(
+        status.error(actionTypes.BASKET_NOT_VALID, {
+          errorTitle: 'Basket Not Valid',
+          recipeId: null,
+          rules,
+        }),
+      )
 
-    return
-  }
-
-  if (transactionalOrderForNonLoggedInUser) {
-    dispatch(basketProceedToCheckout())
-
-    return
-  }
-
-  if (isTransactionalOrder) {
-    const isCreateV2Enabled = await isOrderApiCreateEnabled(dispatch, getState)
-
-    if (isCreateV2Enabled) {
-      dispatch(checkoutTransactionalOrder())
-    } else {
-      dispatch(checkoutTransactionalOrderV1('create'))
+      return
     }
 
-    return
-  }
+    if (transactionalOrderForNonLoggedInUser) {
+      dispatch(basketProceedToCheckout())
 
-  const isUpdateV2Enabled = await isOrderApiUpdateEnabled(dispatch, getState)
-  const isSidesEnabled = await getIsSidesEnabled(dispatch, getState)
+      return
+    }
 
-  if (isUpdateV2Enabled) {
-    dispatch(sendUpdateOrder(isSidesEnabled))
-  } else {
-    dispatch(orderUpdate(isSidesEnabled))
+    if (isTransactionalOrder) {
+      const isCreateV2Enabled = await isOrderApiCreateEnabled(dispatch, getState)
+
+      if (isCreateV2Enabled) {
+        dispatch(checkoutTransactionalOrder())
+      } else {
+        dispatch(checkoutTransactionalOrderV1('create'))
+      }
+
+      return
+    }
+
+    const isUpdateV2Enabled = await isOrderApiUpdateEnabled(dispatch, getState)
+    const isSidesEnabled = await getIsSidesEnabled(dispatch, getState)
+
+    if (isUpdateV2Enabled) {
+      dispatch(sendUpdateOrder(isSidesEnabled))
+    } else {
+      dispatch(orderUpdate(isSidesEnabled))
+    }
   }
-}
 
 export const clearBasketNotValidError = () => (dispatch) => {
   dispatch(status.error(actionTypes.BASKET_NOT_VALID, null))

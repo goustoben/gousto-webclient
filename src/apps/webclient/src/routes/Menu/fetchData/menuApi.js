@@ -8,7 +8,7 @@ const options = {
   headers: {},
   timeout: null,
   includeCookies: false,
-  useMenuService: true
+  useMenuService: true,
 }
 
 const getTasteProfileIdFromQuery = (query) => {
@@ -25,8 +25,8 @@ export function fetchMenus(accessToken, query) {
     accessToken,
     headers: {
       ...options.headers,
-      ...getRequestHeaders()
-    }
+      ...getRequestHeaders(),
+    },
   }
 
   let adminLinkData
@@ -62,14 +62,14 @@ export function fetchMenusWithUserId(accessToken, query, userId) {
     accessToken,
     headers: {
       ...options.headers,
-      ...getRequestHeaders(userId)
-    }
+      ...getRequestHeaders(userId),
+    },
   }
 
   const requestQueryParams = {
     include: 'ingredients',
     addAlternatives: true,
-    userId
+    userId,
   }
 
   const tasteProfileId = getTasteProfileIdFromQuery(query)
@@ -87,13 +87,13 @@ export function fetchSimpleMenu(accessToken, userId) {
     accessToken,
     headers: {
       ...options.headers,
-      ...getRequestHeaders(userId)
-    }
+      ...getRequestHeaders(userId),
+    },
   }
 
   const requestQueryParams = {
     includeMenuRelationships: false,
-    userId
+    userId,
   }
 
   return fetchRaw(`${endpoint('menu')}/menus`, requestQueryParams, fetchOptions)

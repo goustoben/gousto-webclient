@@ -32,7 +32,9 @@ describe('BoxSummaryOverlayDesktop', () => {
 
     test('then it should render the variant', () => {
       expect(
-        wrapper.find('[data-testing="boxSummaryDesktop"]').hasClass('detailContainerDesktopVariant')
+        wrapper
+          .find('[data-testing="boxSummaryDesktop"]')
+          .hasClass('detailContainerDesktopVariant'),
       ).toBe(true)
     })
   })

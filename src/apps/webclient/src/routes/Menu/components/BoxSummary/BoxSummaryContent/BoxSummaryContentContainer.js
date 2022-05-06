@@ -16,4 +16,3 @@ function mapStateToProps(state) {
 const BoxSummaryContentContainer = connect(mapStateToProps)(BoxSummaryContent)
 
 export { BoxSummaryContentContainer }
-

@@ -5,17 +5,17 @@ import { isAvailableRecipeList } from 'utils/recipe'
 import { RecipeList } from '../../Details/RecipeList'
 
 jest.mock('goustouicomponents', () => ({
-  LayoutContentWrapper: () => <div />
+  LayoutContentWrapper: () => <div />,
 }))
 
 jest.mock('../../Details/UnavailableMessage', () => ({
-  UnavailableMessage: () => <div />
+  UnavailableMessage: () => <div />,
 }))
 
-jest.mock('Item', () => (<div />))
+jest.mock('Item', () => <div />)
 
 jest.mock('utils/recipe', () => ({
-  isAvailableRecipeList: jest.fn()
+  isAvailableRecipeList: jest.fn(),
 }))
 
 describe('RecipeList', () => {
@@ -49,7 +49,7 @@ describe('RecipeList', () => {
   describe('when has unavailableRecipeList and not menuFetchPending', () => {
     const trackingUnavailableRecipeListSpy = jest.fn()
     beforeEach(() => {
-      isAvailableRecipeList.mockImplementation(param => param)
+      isAvailableRecipeList.mockImplementation((param) => param)
       wrapper = shallow(
         <RecipeList
           {...defaultProps}
@@ -57,11 +57,11 @@ describe('RecipeList', () => {
           unavailableRecipeIds={Immutable.fromJS({
             '123dss': {
               id: '123dss',
-              media: {}
-            }
+              media: {},
+            },
           })}
           trackingUnavailableRecipeList={trackingUnavailableRecipeListSpy}
-        />
+        />,
       )
     })
     test('should call trackingUnavailableRecipeList', () => {

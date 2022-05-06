@@ -7,7 +7,7 @@ import { Image } from './Image'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: jest.fn()
+  useSelector: jest.fn(),
 }))
 
 describe('Recipe components > Image', () => {
@@ -32,14 +32,14 @@ describe('Recipe components > Image', () => {
           width: 300,
         },
       ],
-    }
+    },
   ])
 
   beforeEach(() => {
     recipe = Immutable.fromJS({
       id: '1234',
       title: 'A Really Nice Recipe',
-      media: { images }
+      media: { images },
     })
     useContextMock.mockClear()
     useRecipeFieldMock.mockClear()
@@ -82,7 +82,7 @@ describe('Recipe components > Image', () => {
           src={expectedSrc}
           srcSet={expectedSrcSet}
           sizes="(max-width: 500px) 400px, (max-width: 991px) 700px, 400px"
-        />
+        />,
       )
     })
 
@@ -100,7 +100,7 @@ describe('Recipe components > Image', () => {
               srcSet={expectedSrcSet}
               sizes="(max-width: 500px) 400px, (max-width: 991px) 700px, 400px"
             />
-          </LazyLoad>
+          </LazyLoad>,
         )
       })
     })

@@ -15,11 +15,13 @@ const RecipesInBasketProgress = ({ isAuthenticated }) => {
   const dispatch = useDispatch()
 
   const handleClose = (maxRecipes, percentage) => {
-    dispatch(trackUTMAndPromoCode(dismissRecipesInBasketProgress, {
-      num_recipes: recipeCount,
-      max_recipes: maxRecipes,
-      percentage_complete: percentage,
-    }))
+    dispatch(
+      trackUTMAndPromoCode(dismissRecipesInBasketProgress, {
+        num_recipes: recipeCount,
+        max_recipes: maxRecipes,
+        percentage_complete: percentage,
+      }),
+    )
   }
 
   return (
@@ -33,6 +35,4 @@ const RecipesInBasketProgress = ({ isAuthenticated }) => {
 
 RecipesInBasketProgress.propTypes = propTypes
 
-export {
-  RecipesInBasketProgress
-}
+export { RecipesInBasketProgress }

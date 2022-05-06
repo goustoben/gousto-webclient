@@ -8,7 +8,7 @@ import { RecipeList } from './RecipeList'
 const mapStateToProps = (state) => ({
   browser: getBrowserType(state),
   boxSummaryVisible: state.boxSummaryShow.get('show'),
-  recipes: getBasketRecipeWithSidesBaseId(state)
+  recipes: getBasketRecipeWithSidesBaseId(state),
 })
 
 const RecipeListContainer = connect(mapStateToProps, {

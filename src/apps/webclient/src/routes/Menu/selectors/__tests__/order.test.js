@@ -20,8 +20,12 @@ describe('order selectors', () => {
       const slotInformation = getSlotForBoxSummaryDeliveryDays(state)
 
       expect(slotInformation).toEqual([
-        new Immutable.Map({id: 'slot-uuid', coreSlotId: 'slot-core-id', daySlotLeadTimeId: 'day-slot-lead-time-uuid'}),
-        'slot-uuid'
+        new Immutable.Map({
+          id: 'slot-uuid',
+          coreSlotId: 'slot-core-id',
+          daySlotLeadTimeId: 'day-slot-lead-time-uuid',
+        }),
+        'slot-uuid',
       ])
     })
   })
@@ -61,11 +65,11 @@ describe('order selectors', () => {
         recipe_choices: [
           { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
           { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
-          { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
+          { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
         ],
         day_slot_lead_time_id: 'day-slot-lead-time-uuid',
         delivery_tariff_id: deliveryTariffTypes.NON_NDD,
-        address_id: null
+        address_id: null,
       })
     })
 
@@ -74,9 +78,9 @@ describe('order selectors', () => {
         const state = createState({
           basket: {
             chosenAddress: {
-              id: '1234'
-            }
-          }
+              id: '1234',
+            },
+          },
         })
 
         const orderDetails = getOrderDetails(state)
@@ -87,11 +91,11 @@ describe('order selectors', () => {
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
-            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
+            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
           delivery_tariff_id: deliveryTariffTypes.NON_NDD,
-          address_id: '1234'
+          address_id: '1234',
         })
       })
     })
@@ -100,8 +104,8 @@ describe('order selectors', () => {
       test('returns a object containing the key order_id for the order id', () => {
         const state = createState({
           basket: {
-            orderId: '1234'
-          }
+            orderId: '1234',
+          },
         })
 
         const orderDetails = getOrderDetails(state)
@@ -112,12 +116,12 @@ describe('order selectors', () => {
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
-            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
+            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
           delivery_tariff_id: deliveryTariffTypes.NON_NDD,
           address_id: null,
-          order_id: '1234'
+          order_id: '1234',
         })
       })
     })
@@ -126,8 +130,8 @@ describe('order selectors', () => {
       test('returns a object containing the key promo_code for the promo code', () => {
         const state = createState({
           basket: {
-            promoCode: '1234'
-          }
+            promoCode: '1234',
+          },
         })
 
         const orderDetails = getOrderDetails(state)
@@ -138,12 +142,12 @@ describe('order selectors', () => {
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
-            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
+            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
           delivery_tariff_id: deliveryTariffTypes.NON_NDD,
           address_id: null,
-          promo_code: '1234'
+          promo_code: '1234',
         })
       })
     })
@@ -164,8 +168,8 @@ describe('order selectors', () => {
       test('returns true', () => {
         const state = createState({
           basket: {
-            date: undefined
-          }
+            date: undefined,
+          },
         })
 
         const couldBasketBeExpired = getCouldBasketBeExpired(state)
@@ -178,9 +182,9 @@ describe('order selectors', () => {
       test('returns true', () => {
         const state = createState({
           basket: {
-            slotId: undefined
+            slotId: undefined,
           },
-          boxSummaryDeliveryDays: undefined
+          boxSummaryDeliveryDays: undefined,
         })
 
         const couldBasketBeExpired = getCouldBasketBeExpired(state)
@@ -218,8 +222,8 @@ describe('order selectors', () => {
         const state = createState({
           basket: { orderId: 'order-id' },
           user: {
-            orders: Immutable.List([])
-          }
+            orders: Immutable.List([]),
+          },
         })
 
         const orderAction = getOrderAction(state)
@@ -234,9 +238,9 @@ describe('order selectors', () => {
           basket: { orderId: 'order-id' },
           user: {
             orders: Immutable.List([
-              Immutable.Map({ id: 'order-id', recipeItems: Immutable.List([]) })
-            ])
-          }
+              Immutable.Map({ id: 'order-id', recipeItems: Immutable.List([]) }),
+            ]),
+          },
         })
 
         const orderAction = getOrderAction(state)
@@ -251,9 +255,9 @@ describe('order selectors', () => {
           basket: { orderId: 'order-id' },
           user: {
             orders: Immutable.List([
-              Immutable.Map({ id: 'order-id', recipeItems: Immutable.List([1]) })
-            ])
-          }
+              Immutable.Map({ id: 'order-id', recipeItems: Immutable.List([1]) }),
+            ]),
+          },
         })
 
         const orderAction = getOrderAction(state)
@@ -267,8 +271,8 @@ describe('order selectors', () => {
     test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
       const state = createState({
         slot: {
-          daySlotLeadTimeId: null
-        }
+          daySlotLeadTimeId: null,
+        },
       })
 
       const orderDetails = getOrderForUpdateOrderV1(state)
@@ -279,11 +283,11 @@ describe('order selectors', () => {
         recipe_choices: [
           { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
           { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
-          { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
+          { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
         ],
         day_slot_lead_time_id: null,
         order_action: 'create',
-        address_id: null
+        address_id: null,
       })
     })
 
@@ -299,11 +303,11 @@ describe('order selectors', () => {
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
-            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
+            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
           order_action: 'create',
-          address_id: null
+          address_id: null,
         })
       })
     })
@@ -313,9 +317,9 @@ describe('order selectors', () => {
         const state = createState({
           basket: {
             chosenAddress: {
-              id: '1234'
-            }
-          }
+              id: '1234',
+            },
+          },
         })
 
         const orderDetails = getOrderForUpdateOrderV1(state)
@@ -326,11 +330,11 @@ describe('order selectors', () => {
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
-            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
+            { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
           order_action: 'create',
-          address_id: '1234'
+          address_id: '1234',
         })
       })
     })
@@ -340,8 +344,8 @@ describe('order selectors', () => {
     test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
       const state = createState({
         slot: {
-          daySlotLeadTimeId: null
-        }
+          daySlotLeadTimeId: null,
+        },
       })
 
       const orderDetails = getOrderV2(state)
@@ -353,34 +357,35 @@ describe('order selectors', () => {
         },
         relationships: {
           components: {
-            data: [{
-              id: 'recipe-uuid-1',
-              meta: {
-                portion_for: 2
+            data: [
+              {
+                id: 'recipe-uuid-1',
+                meta: {
+                  portion_for: 2,
+                },
+                type: 'recipe',
               },
-              type: 'recipe'
-            },
-            {
-              id: 'recipe-uuid-2',
-              meta: {
-                portion_for: 2
+              {
+                id: 'recipe-uuid-2',
+                meta: {
+                  portion_for: 2,
+                },
+                type: 'recipe',
               },
-              type: 'recipe'
-            },
-            {
-              id: 'recipe-uuid-2',
-              meta: {
-                portion_for: 2
+              {
+                id: 'recipe-uuid-2',
+                meta: {
+                  portion_for: 2,
+                },
+                type: 'recipe',
               },
-              type: 'recipe'
-            }
-            ]
+            ],
           },
           delivery_day: {
             data: {
               id: 'delivery-days-id',
-              type: 'delivery-day'
-            }
+              type: 'delivery-day',
+            },
           },
           delivery_slot: {
             data: {
@@ -389,15 +394,15 @@ describe('order selectors', () => {
               meta: {
                 uuid: 'slot-uuid',
               },
-            }
+            },
           },
           delivery_tariff: {
             data: {
               id: deliveryTariffTypes.NON_NDD,
-              type: 'delivery-tariff'
-            }
-          }
-        }
+              type: 'delivery-tariff',
+            },
+          },
+        },
       })
     })
 
@@ -405,7 +410,7 @@ describe('order selectors', () => {
       test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
         const state = createState({
           slot: {
-            daySlotLeadTimeId: null
+            daySlotLeadTimeId: null,
           },
           basket: {
             recipes: {
@@ -413,7 +418,7 @@ describe('order selectors', () => {
               'recipe-id-2': 2,
               'recipe-id-is-missing-from-this-week': 2,
             },
-          }
+          },
         })
 
         const orderDetails = getOrderV2(state)
@@ -425,34 +430,35 @@ describe('order selectors', () => {
           },
           relationships: {
             components: {
-              data: [{
-                id: 'recipe-uuid-1',
-                meta: {
-                  portion_for: 2
+              data: [
+                {
+                  id: 'recipe-uuid-1',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              },
-              {
-                id: 'recipe-uuid-2',
-                meta: {
-                  portion_for: 2
+                {
+                  id: 'recipe-uuid-2',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              },
-              {
-                id: 'recipe-uuid-2',
-                meta: {
-                  portion_for: 2
+                {
+                  id: 'recipe-uuid-2',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              }
-              ]
+              ],
             },
             delivery_day: {
               data: {
                 id: 'delivery-days-id',
-                type: 'delivery-day'
-              }
+                type: 'delivery-day',
+              },
             },
             delivery_slot: {
               data: {
@@ -461,15 +467,15 @@ describe('order selectors', () => {
                 meta: {
                   uuid: 'slot-uuid',
                 },
-              }
+              },
             },
             delivery_tariff: {
               data: {
                 id: deliveryTariffTypes.NON_NDD,
-                type: 'delivery-tariff'
-              }
-            }
-          }
+                type: 'delivery-tariff',
+              },
+            },
+          },
         })
       })
     })
@@ -481,8 +487,8 @@ describe('order selectors', () => {
             recipe: undefined,
           },
           slot: {
-            daySlotLeadTimeId: null
-          }
+            daySlotLeadTimeId: null,
+          },
         })
 
         const orderDetails = getOrderV2(state)
@@ -494,13 +500,13 @@ describe('order selectors', () => {
           },
           relationships: {
             components: {
-              data: []
+              data: [],
             },
             delivery_day: {
               data: {
                 id: 'delivery-days-id',
-                type: 'delivery-day'
-              }
+                type: 'delivery-day',
+              },
             },
             delivery_slot: {
               data: {
@@ -509,15 +515,15 @@ describe('order selectors', () => {
                 meta: {
                   uuid: 'slot-uuid',
                 },
-              }
+              },
             },
             delivery_tariff: {
               data: {
                 id: deliveryTariffTypes.NON_NDD,
-                type: 'delivery-tariff'
-              }
-            }
-          }
+                type: 'delivery-tariff',
+              },
+            },
+          },
         })
       })
     })
@@ -535,31 +541,35 @@ describe('order selectors', () => {
           },
           relationships: {
             components: {
-              data: [{
-                id: 'recipe-uuid-1',
-                meta: {
-                  portion_for: 2
+              data: [
+                {
+                  id: 'recipe-uuid-1',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              }, {
-                id: 'recipe-uuid-2',
-                meta: {
-                  portion_for: 2
+                {
+                  id: 'recipe-uuid-2',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              }, {
-                id: 'recipe-uuid-2',
-                meta: {
-                  portion_for: 2
+                {
+                  id: 'recipe-uuid-2',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              }]
+              ],
             },
             delivery_day: {
               data: {
                 id: 'delivery-days-id',
-                type: 'delivery-day'
-              }
+                type: 'delivery-day',
+              },
             },
             delivery_slot: {
               data: {
@@ -568,7 +578,7 @@ describe('order selectors', () => {
                 meta: {
                   uuid: 'slot-uuid',
                 },
-              }
+              },
             },
             delivery_slot_lead_time: {
               data: {
@@ -579,10 +589,10 @@ describe('order selectors', () => {
             delivery_tariff: {
               data: {
                 id: deliveryTariffTypes.NON_NDD,
-                type: 'delivery-tariff'
-              }
-            }
-          }
+                type: 'delivery-tariff',
+              },
+            },
+          },
         })
       })
     })
@@ -592,9 +602,9 @@ describe('order selectors', () => {
         const state = createState({
           basket: {
             chosenAddress: {
-              id: '1234'
-            }
-          }
+              id: '1234',
+            },
+          },
         })
 
         const orderDetails = getOrderV2(state)
@@ -606,31 +616,35 @@ describe('order selectors', () => {
           },
           relationships: {
             components: {
-              data: [{
-                id: 'recipe-uuid-1',
-                meta: {
-                  portion_for: 2
+              data: [
+                {
+                  id: 'recipe-uuid-1',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              }, {
-                id: 'recipe-uuid-2',
-                meta: {
-                  portion_for: 2
+                {
+                  id: 'recipe-uuid-2',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              }, {
-                id: 'recipe-uuid-2',
-                meta: {
-                  portion_for: 2
+                {
+                  id: 'recipe-uuid-2',
+                  meta: {
+                    portion_for: 2,
+                  },
+                  type: 'recipe',
                 },
-                type: 'recipe'
-              }]
+              ],
             },
             delivery_day: {
               data: {
                 id: 'delivery-days-id',
-                type: 'delivery-day'
-              }
+                type: 'delivery-day',
+              },
             },
             delivery_slot: {
               data: {
@@ -639,13 +653,13 @@ describe('order selectors', () => {
                 meta: {
                   uuid: 'slot-uuid',
                 },
-              }
+              },
             },
             shipping_address: {
               data: {
                 id: '1234',
-                type: 'shipping-address'
-              }
+                type: 'shipping-address',
+              },
             },
             delivery_slot_lead_time: {
               data: {
@@ -656,10 +670,10 @@ describe('order selectors', () => {
             delivery_tariff: {
               data: {
                 id: deliveryTariffTypes.NON_NDD,
-                type: 'delivery-tariff'
-              }
-            }
-          }
+                type: 'delivery-tariff',
+              },
+            },
+          },
         })
       })
     })
@@ -671,11 +685,11 @@ describe('order selectors', () => {
             products: {
               product_1: 2,
               product_2: 1,
-            }
+            },
           },
           slot: {
-            daySlotLeadTimeId: null
-          }
+            daySlotLeadTimeId: null,
+          },
         })
 
         const orderDetails = getOrderV2(state)
@@ -699,7 +713,7 @@ describe('order selectors', () => {
               },
               type: 'product',
             },
-          ])
+          ]),
         )
       })
     })
@@ -708,15 +722,15 @@ describe('order selectors', () => {
       const promoCode = 'ABC-XX-30M'
       const state = createState({
         basket: {
-          promoCode
-        }
+          promoCode,
+        },
       })
 
       test('order details contains promo code', () => {
         const orderDetails = getOrderV2(state)
 
         expect(orderDetails.attributes.prices).toEqual({
-          promo_code: promoCode
+          promo_code: promoCode,
         })
       })
     })
@@ -733,29 +747,27 @@ describe('getUpdateOrderProductItemsOrderV1', () => {
           'product-1': 2,
           'product-2': 1,
         },
-      })
+      }),
     }
   })
 
   test('should call updateOrderItems api with products', () => {
     const updateOrderProductItemsOrderV1 = getUpdateOrderProductItemsOrderV1(state)
 
-    expect(updateOrderProductItemsOrderV1).toEqual(
-      {
-        item_choices: [
-          {
-            id: 'product-1',
-            quantity: 2,
-            type: 'Product',
-          },
-          {
-            id: 'product-2',
-            quantity: 1,
-            type: 'Product',
-          },
-        ],
-        restrict: 'Product',
-      },
-    )
+    expect(updateOrderProductItemsOrderV1).toEqual({
+      item_choices: [
+        {
+          id: 'product-1',
+          quantity: 2,
+          type: 'Product',
+        },
+        {
+          id: 'product-2',
+          quantity: 1,
+          type: 'Product',
+        },
+      ],
+      restrict: 'Product',
+    })
   })
 })

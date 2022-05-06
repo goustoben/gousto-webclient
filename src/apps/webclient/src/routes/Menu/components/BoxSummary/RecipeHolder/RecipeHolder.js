@@ -23,17 +23,17 @@ const RecipeHolder = ({ recipe, view, onClick, browserType, children }) => {
       role="button"
       tabIndex={0}
     >
-      {(recipe.size > 0)
-        ? (
-          <Image
-            media={getFeaturedImage(recipe, '', browserType)}
-            className={classnames(
-              { [css.recipeImg]: !isMobileView },
-              { [css.imgMobile]: isMobileView }
-            )}
-          />
-        )
-        : <div className={css.paddingForAddRecipes}>{children}</div>}
+      {recipe.size > 0 ? (
+        <Image
+          media={getFeaturedImage(recipe, '', browserType)}
+          className={classnames(
+            { [css.recipeImg]: !isMobileView },
+            { [css.imgMobile]: isMobileView },
+          )}
+        />
+      ) : (
+        <div className={css.paddingForAddRecipes}>{children}</div>
+      )}
     </div>
   )
 }
@@ -49,7 +49,7 @@ RecipeHolder.propTypes = {
 RecipeHolder.defaultProps = {
   recipe: Immutable.Map({}),
   view: DESKTOP_VIEW,
-  onClick: () => { },
+  onClick: () => {},
   children: 'Add recipe',
 }
 

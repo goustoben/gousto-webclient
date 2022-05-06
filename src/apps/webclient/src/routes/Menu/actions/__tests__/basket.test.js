@@ -23,8 +23,8 @@ describe('basketUpdateProducts', () => {
       }),
       auth: Immutable.Map({ accessToken: '12234' }),
       temp: Immutable.Map({
-        originalGrossTotal: ''
-      })
+        originalGrossTotal: '',
+      }),
     })
 
     updateOrderItemsSpy = jest.spyOn(OrderAPIV1, 'updateOrderItems').mockImplementation(jest.fn())
@@ -49,25 +49,21 @@ describe('basketUpdateProducts', () => {
       await basketUpdateProducts()(dispatch, getStateSpy)
 
       expect(updateOrderItemsSpy).toHaveBeenCalled()
-      expect(updateOrderItemsSpy).toHaveBeenCalledWith(
-        '12234',
-        '23',
-        {
-          item_choices: [
-            {
-              id: 'product-1',
-              quantity: 2,
-              type: 'Product',
-            },
-            {
-              id: 'product-2',
-              quantity: 1,
-              type: 'Product',
-            },
-          ],
-          restrict: 'Product',
-        },
-      )
+      expect(updateOrderItemsSpy).toHaveBeenCalledWith('12234', '23', {
+        item_choices: [
+          {
+            id: 'product-1',
+            quantity: 2,
+            type: 'Product',
+          },
+          {
+            id: 'product-2',
+            quantity: 1,
+            type: 'Product',
+          },
+        ],
+        restrict: 'Product',
+      })
     })
 
     test('should dispatch correct pending and action events for BASKET_CHECKOUT', async () => {
@@ -110,7 +106,10 @@ describe('basketUpdateProducts', () => {
 
     test('should dispatch orderConfirmationUpdateOrderTrackingSpy if isOrderConfirmation true', async () => {
       updateOrderItemsSpy.mockReturnValue(Promise.resolve({ data: order }))
-      const orderConfirmationUpdateOrderTrackingSpy = jest.spyOn(orderConfirmationActions, 'orderConfirmationUpdateOrderTracking')
+      const orderConfirmationUpdateOrderTrackingSpy = jest.spyOn(
+        orderConfirmationActions,
+        'orderConfirmationUpdateOrderTracking',
+      )
 
       await basketUpdateProducts(true)(dispatch, getStateSpy)
 
@@ -156,7 +155,7 @@ describe('basketUpdateProducts', () => {
         await basketUpdateProducts()(dispatch, getStateSpy)
       } catch (e) {
         expect(loggerErrorSpy).toHaveBeenCalledTimes(1)
-        expect(loggerErrorSpy).toHaveBeenCalledWith((new Error({ e: 'Error' })))
+        expect(loggerErrorSpy).toHaveBeenCalledWith(new Error({ e: 'Error' }))
       }
     })
   })

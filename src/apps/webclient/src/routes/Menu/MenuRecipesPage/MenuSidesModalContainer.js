@@ -6,7 +6,7 @@ import {
   trackAddSide,
   trackViewSidesAllergens,
   trackCloseSidesAllergens,
-  trackSidesContinueClicked
+  trackSidesContinueClicked,
 } from 'actions/menu'
 import { checkoutWithSides } from '../actions/menuSidesCheckoutClick'
 import { closeSidesModal } from '../actions/sides'
@@ -20,13 +20,14 @@ const mapStateToProps = (state) => {
     accessToken: getAccessToken(state),
     userId: getUserId(state),
     isOpen: state.menuSidesModalOpen,
-    order
+    order,
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   trackAddSide: (sideId, orderId) => dispatch(trackAddSide(sideId, orderId)),
-  trackSidesContinueClicked: (sideIds, total, quantity) => dispatch(trackSidesContinueClicked(sideIds, total, quantity)),
+  trackSidesContinueClicked: (sideIds, total, quantity) =>
+    dispatch(trackSidesContinueClicked(sideIds, total, quantity)),
   trackViewSidesAllergens: () => dispatch(trackViewSidesAllergens()),
   trackCloseSidesAllergens: () => dispatch(trackCloseSidesAllergens()),
   onClose: () => dispatch(closeSidesModal()),

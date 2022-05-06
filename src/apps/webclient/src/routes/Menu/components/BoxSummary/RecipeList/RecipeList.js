@@ -39,7 +39,7 @@ const RecipeList = ({
   const classes = classnames(
     { [css.recipeSection]: isDesktop },
     { [css.recipeSectionMobile]: !isDesktop },
-    { [css.invisible]: invisible }
+    { [css.invisible]: invisible },
   )
 
   const recipeIds = recipes
@@ -47,34 +47,29 @@ const RecipeList = ({
     .reduce(
       (reducedRecipes, recipeQty, recipeId) =>
         reducedRecipes.concat(Array(recipeQty).fill(recipeId)),
-      []
+      [],
     )
 
   return (
     <div className={classes}>
-      {
-        recipeIds
-          .map((recipeId, index) => (
-            // Since id-s in the recipeIds array can repeat, there's no better
-            // key than the index.
-            /* eslint-disable react/no-array-index-key */
-            <RecipeHolder
-              recipe={menuRecipesStore.get(recipeId)}
-              onClick={() => onClick(recipeId)}
-              view={view}
-              key={index}
-              browserType={browser}
-            />
-            /* eslint-enable react/no-array-index-key */
-          ))
-      }
+      {recipeIds.map((recipeId, index) => (
+        // Since id-s in the recipeIds array can repeat, there's no better
+        // key than the index.
+        /* eslint-disable react/no-array-index-key */
+        <RecipeHolder
+          recipe={menuRecipesStore.get(recipeId)}
+          onClick={() => onClick(recipeId)}
+          view={view}
+          key={index}
+          browserType={browser}
+        />
+        /* eslint-enable react/no-array-index-key */
+      ))}
 
-      {
-        Array.from({ length: emptySlots }).map((_, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <RecipeHolder data-testing="empty" view={view} key={index} browserType={browser} />
-        ))
-      }
+      {Array.from({ length: emptySlots }).map((_, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <RecipeHolder data-testing="empty" view={view} key={index} browserType={browser} />
+      ))}
 
       {isDesktop ? <span className={css.arrowRight} /> : ''}
     </div>

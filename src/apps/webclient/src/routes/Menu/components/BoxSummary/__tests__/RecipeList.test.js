@@ -42,9 +42,7 @@ describe('RecipeList', () => {
   })
 
   test('should return 4 RecipeHolder', () => {
-    const wrapper = shallow(
-      <RecipeList recipes={recipes} menuRecipesStore={menuRecipesStore} />,
-    )
+    const wrapper = shallow(<RecipeList recipes={recipes} menuRecipesStore={menuRecipesStore} />)
 
     expect(wrapper.find(RecipeHolder).length).toEqual(4)
     wrapper.find(RecipeHolder).forEach((node, index) => {
@@ -54,19 +52,10 @@ describe('RecipeList', () => {
 
   test('should return X RecipeHolder when max recipes specified', () => {
     const wrapper = shallow(
-      <RecipeList
-        maxRecipesNum={3}
-        recipes={recipes}
-        menuRecipesStore={menuRecipesStore}
-      />,
+      <RecipeList maxRecipesNum={3} recipes={recipes} menuRecipesStore={menuRecipesStore} />,
     )
     expect(wrapper.find(RecipeHolder).length).toEqual(3)
-    expect(
-      wrapper
-        .find(RecipeHolder)
-        .last()
-        .prop('recipe'),
-    ).not.toBeInstanceOf(Immutable.Map)
+    expect(wrapper.find(RecipeHolder).last().prop('recipe')).not.toBeInstanceOf(Immutable.Map)
   })
 
   test('should call detailsVisibilityChange once clicked if browser not mobile', () => {
@@ -86,7 +75,7 @@ describe('RecipeList', () => {
     const wrapper = shallow(
       <RecipeList
         recipes={Immutable.Map({ 101: {} })}
-        detailVisibilityChange={() => { }}
+        detailVisibilityChange={() => {}}
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
         browser="mobile"
         boxSummaryVisible={false}
@@ -101,7 +90,7 @@ describe('RecipeList', () => {
     const wrapper = shallow(
       <RecipeList
         recipes={Immutable.Map({ 101: {} })}
-        detailVisibilityChange={() => { }}
+        detailVisibilityChange={() => {}}
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
         browser="mobile"
         boxSummaryVisible
@@ -116,7 +105,7 @@ describe('RecipeList', () => {
     const wrapper = shallow(
       <RecipeList
         recipes={Immutable.Map({ 101: {} })}
-        detailVisibilityChange={() => { }}
+        detailVisibilityChange={() => {}}
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
         browser="mobile"
         boxSummaryVisible={false}
@@ -131,7 +120,7 @@ describe('RecipeList', () => {
     const wrapper = shallow(
       <RecipeList
         recipes={Immutable.Map({ 101: {} })}
-        detailVisibilityChange={() => { }}
+        detailVisibilityChange={() => {}}
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
         browser="mobile"
         boxSummaryVisible

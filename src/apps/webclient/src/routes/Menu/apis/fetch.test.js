@@ -4,26 +4,27 @@ import { get, post } from './fetch'
 
 jest.mock('isomorphic-fetch', () => jest.fn())
 
-const cookieHelper2GetSpy = jest.spyOn(cookieHelper2, 'get').mockImplementation((_cookies, key, withVersionPrefix, shouldDecode) => {
-  if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
-    return 'session-id'
-  }
+const cookieHelper2GetSpy = jest
+  .spyOn(cookieHelper2, 'get')
+  .mockImplementation((_cookies, key, withVersionPrefix, shouldDecode) => {
+    if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
+      return 'session-id'
+    }
 
-  return null
-})
+    return null
+  })
 
-const setMockFetchResult = (data, status = 200) => (
+const setMockFetchResult = (data, status = 200) =>
   isomorphicFetch.mockResolvedValue({
     json: () => data,
     status,
   })
-)
 
 describe('Menu > apis > fetch', () => {
   const authOptions = {
     accessToken: 'access-token',
     sessionId: 'session-id',
-    userId: 'user-id'
+    userId: 'user-id',
   }
 
   const url = 'http://example.com/foo'
@@ -61,56 +62,71 @@ describe('Menu > apis > fetch', () => {
     test('should use correct method', async () => {
       await post(authOptions, url)
 
-      expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-        method: 'POST'
-      }))
+      expect(isomorphicFetch).toHaveBeenCalledWith(
+        url,
+        expect.objectContaining({
+          method: 'POST',
+        }),
+      )
     })
 
     test('should attach only Content-Type header if no auth options provided', async () => {
       cookieHelper2GetSpy.mockImplementationOnce(() => null)
       const expectedHeaders = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
 
       await post({}, url)
 
-      expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-        headers: expectedHeaders
-      }))
+      expect(isomorphicFetch).toHaveBeenCalledWith(
+        url,
+        expect.objectContaining({
+          headers: expectedHeaders,
+        }),
+      )
     })
 
     test('should attach Content-Type header', async () => {
       const expectedHeaders = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
 
       await post({}, url)
 
-      expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-        headers: expect.objectContaining(expectedHeaders)
-      }))
+      expect(isomorphicFetch).toHaveBeenCalledWith(
+        url,
+        expect.objectContaining({
+          headers: expect.objectContaining(expectedHeaders),
+        }),
+      )
     })
 
     test('should attach auth headers', async () => {
       const expectedHeaders = {
         'x-gousto-device-id': authOptions.sessionId,
         'x-gousto-user-id': authOptions.userId,
-        Authorization: `Bearer ${authOptions.accessToken}`
+        Authorization: `Bearer ${authOptions.accessToken}`,
       }
 
       await post(authOptions, url)
 
-      expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-        headers: expect.objectContaining(expectedHeaders)
-      }))
+      expect(isomorphicFetch).toHaveBeenCalledWith(
+        url,
+        expect.objectContaining({
+          headers: expect.objectContaining(expectedHeaders),
+        }),
+      )
     })
 
     describe('when accessToken not provided', () => {
       test('should not attach authorisation header', async () => {
-        await post({
-          ...authOptions,
-          accessToken: null
-        }, url)
+        await post(
+          {
+            ...authOptions,
+            accessToken: null,
+          },
+          url,
+        )
 
         const fetchCallParams = isomorphicFetch.mock.calls[0]
         const requestOptions = fetchCallParams[1]
@@ -126,9 +142,12 @@ describe('Menu > apis > fetch', () => {
         test('should add data to body', async () => {
           await post(authOptions, url, data)
 
-          expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-            body: JSON.stringify(data)
-          }))
+          expect(isomorphicFetch).toHaveBeenCalledWith(
+            url,
+            expect.objectContaining({
+              body: JSON.stringify(data),
+            }),
+          )
         })
       })
 
@@ -138,9 +157,12 @@ describe('Menu > apis > fetch', () => {
         test('should add data to body', async () => {
           await post(authOptions, url, data)
 
-          expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-            body: data
-          }))
+          expect(isomorphicFetch).toHaveBeenCalledWith(
+            url,
+            expect.objectContaining({
+              body: data,
+            }),
+          )
         })
       })
     })
@@ -152,9 +174,12 @@ describe('Menu > apis > fetch', () => {
       test('should attach headers', async () => {
         await post(authOptions, url, data, customHeaders)
 
-        expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-          headers: expect.objectContaining(customHeaders)
-        }))
+        expect(isomorphicFetch).toHaveBeenCalledWith(
+          url,
+          expect.objectContaining({
+            headers: expect.objectContaining(customHeaders),
+          }),
+        )
       })
     })
 
@@ -167,7 +192,7 @@ describe('Menu > apis > fetch', () => {
       })
 
       test('should return correct values', async () => {
-        const [ actual, error, status ] = await post(authOptions, url)
+        const [actual, error, status] = await post(authOptions, url)
 
         expect(actual).toEqual(response)
         expect(error).toEqual(null)
@@ -183,7 +208,7 @@ describe('Menu > apis > fetch', () => {
       })
 
       test('should return correct values', async () => {
-        const [ actual, error, status ] = await post(authOptions, url)
+        const [actual, error, status] = await post(authOptions, url)
 
         expect(actual).toEqual(null)
         expect(error).toEqual(null)
@@ -191,23 +216,23 @@ describe('Menu > apis > fetch', () => {
       })
     })
 
-    describe.each([
-      400, 401, 403, 404,
-      500, 502, 503, 504
-    ])('when request fails with status %i', (failStatus) => {
-      const mockResponse = { data: [1, 2, 3, 4] }
+    describe.each([400, 401, 403, 404, 500, 502, 503, 504])(
+      'when request fails with status %i',
+      (failStatus) => {
+        const mockResponse = { data: [1, 2, 3, 4] }
 
-      beforeEach(() => {
-        setMockFetchResult(mockResponse, failStatus)
-      })
+        beforeEach(() => {
+          setMockFetchResult(mockResponse, failStatus)
+        })
 
-      test('should return the correct values', async () => {
-        const [ response, error, status ] = await post(authOptions, url)
+        test('should return the correct values', async () => {
+          const [response, error, status] = await post(authOptions, url)
 
-        expect(response).toEqual(null)
-        expect(error).toEqual(mockResponse)
-        expect(status).toEqual(failStatus)
-      })
-    })
+          expect(response).toEqual(null)
+          expect(error).toEqual(mockResponse)
+          expect(status).toEqual(failStatus)
+        })
+      },
+    )
   })
 })

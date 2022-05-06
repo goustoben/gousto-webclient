@@ -10,10 +10,9 @@ describe('<SoldOutOverlay', () => {
 
   describe('when a recipe has is in stock', () => {
     beforeEach(() => {
-      jest.spyOn(DomainMenu, 'useStock')
-        .mockImplementation(() => ({
-          isRecipeOutOfStock: () => false,
-        }))
+      jest.spyOn(DomainMenu, 'useStock').mockImplementation(() => ({
+        isRecipeOutOfStock: () => false,
+      }))
 
       wrapper = shallow(<SoldOutOverlay />)
     })
@@ -25,10 +24,9 @@ describe('<SoldOutOverlay', () => {
 
   describe('when recipe is not in stock', () => {
     beforeEach(() => {
-      jest.spyOn(DomainMenu, 'useStock')
-        .mockImplementation(() => ({
-          isRecipeOutOfStock: () => true,
-        }))
+      jest.spyOn(DomainMenu, 'useStock').mockImplementation(() => ({
+        isRecipeOutOfStock: () => true,
+      }))
 
       wrapper = shallow(<SoldOutOverlay />)
     })

@@ -94,7 +94,7 @@ describe('RecipesInBasketProgressPresentation Component', () => {
 
       test('renders the RecipesInBasketProgressContent component inside ExtraInfoMain', () => {
         expect(wrapper.find('ExtraInfoMain').find('RecipesInBasketProgressContent').exists()).toBe(
-          true
+          true,
         )
       })
 

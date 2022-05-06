@@ -9,10 +9,10 @@
   padding-top: 3rem;
   margin-bottom: -2rem;
 
-	@media ScreenXSMax {
-		padding-left: 0;
-		padding-right: 0;
-	}
+  @media ScreenXSMax {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .gradientImageBackground {
@@ -27,7 +27,7 @@
   width: 100%;
   height: 100%;
   top: 0;
-  left:0;
+  left: 0;
 }
 
 .gradientImage {

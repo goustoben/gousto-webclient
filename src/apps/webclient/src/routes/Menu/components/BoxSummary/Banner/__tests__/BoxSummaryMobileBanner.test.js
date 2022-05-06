@@ -17,16 +17,12 @@ describe('BoxSummaryMobileBanner', () => {
     deliveryDays: Immutable.Map({}),
     slotId: '',
     isBoxSummaryOpened: false,
-    onExpandClick: () => { },
-    openDetails: () => { },
+    onExpandClick: () => {},
+    openDetails: () => {},
   }
   beforeEach(() => {
     jest.spyOn(Redux, 'useSelector').mockReturnValue(true) // getIsSimplifyBasketBarEnabled
-    wrapper = shallow(
-      <BoxSummaryMobileBanner
-        {...defaultProps}
-      />
-    )
+    wrapper = shallow(<BoxSummaryMobileBanner {...defaultProps} />)
   })
   test('should render BoxSummaryMobileBanner without crashing', () => {
     expect(() => {

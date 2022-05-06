@@ -13,9 +13,7 @@ export const getDefaultImage = (srcs) => {
   return sortedSrcs.getIn([midpointInArray, 'src'], '')
 }
 
-const getSrcSet = srcs =>
-  srcs.map(src => `${src.get('src')} ${src.get('width')}w`)
-    .join(', ')
+const getSrcSet = (srcs) => srcs.map((src) => `${src.get('src')} ${src.get('width')}w`).join(', ')
 
 /**
  * Get the recipe image from context
@@ -39,5 +37,5 @@ export const useRecipeImage = (useHomepageImage) => {
     return [null, null]
   }
 
-  return [ image, getSrcSet(imageUrls) ]
+  return [image, getSrcSet(imageUrls)]
 }

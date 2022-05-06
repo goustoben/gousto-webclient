@@ -9,7 +9,7 @@ export const sendClientMetric = async (name, value, unit = 'None', userId) => {
     client: 'web',
     name,
     value,
-    unit
+    unit,
   }
 
   const headers = getRequestHeaders(userId)
@@ -20,9 +20,11 @@ export const sendClientMetric = async (name, value, unit = 'None', userId) => {
     logger.warning({
       message: 'Failed to send client metric',
       extra: {
-        name, value, unit
+        name,
+        value,
+        unit,
       },
-      error: new Error('mock error')
+      error: new Error('mock error'),
     })
   }
 }

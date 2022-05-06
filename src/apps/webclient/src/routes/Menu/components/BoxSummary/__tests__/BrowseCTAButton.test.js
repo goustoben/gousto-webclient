@@ -21,7 +21,7 @@ describe('BrowseCTAButton', () => {
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
         menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
         view={view}
-      />
+      />,
     )
 
     expect(wrapper.type()).toEqual(Button)
@@ -35,7 +35,7 @@ describe('BrowseCTAButton', () => {
           boxDetailsVisibilityChange={boxDetailsVisibilityChange}
           menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
           view={view}
-        />
+        />,
       )
       wrapper.find(Segment).simulate('click')
 
@@ -54,7 +54,7 @@ describe('BrowseCTAButton', () => {
           boxDetailsVisibilityChange={boxDetailsVisibilityChange}
           menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
           view={view}
-        />
+        />,
       )
       wrapper.find(Segment).simulate('click')
 

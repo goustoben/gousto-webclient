@@ -7,9 +7,7 @@ import { Day } from './Day'
 import { getCalendarDates } from './utils/getCalendarDates'
 import { datesPropType } from '../deliverySlotPropTypes'
 
-const dayNoToDayName = dayNo => (
-  moment(dayNo, 'E').format('ddd')
-)
+const dayNoToDayName = (dayNo) => moment(dayNo, 'E').format('ddd')
 
 function dateToDay(dateString, date, weekNo, dayNo, selected) {
   return {
@@ -19,7 +17,7 @@ function dateToDay(dateString, date, weekNo, dayNo, selected) {
     disabled: date ? date.disabled : true,
     selected: date ? date.date === selected : false,
     icon: date ? date.icon : null,
-    orderId: date ? date.orderId : null
+    orderId: date ? date.orderId : null,
   }
 }
 
@@ -35,12 +33,12 @@ const createGrid = (start, finish, dates, selectedDate) => {
     4: [],
     5: [],
     6: [],
-    7: []
+    7: [],
   }
 
   for (const m = startMoment; m.diff(finishMoment, 'days') <= 0; m.add(1, 'days')) {
     const dateString = m.format('YYYY-MM-DD')
-    const matchingDate = dates.find(d => d && d.date === dateString)
+    const matchingDate = dates.find((d) => d && d.date === dateString)
     const weekNo = parseInt(m.format('GGGGWW'), 10)
     const dayNo = parseInt(m.format('E'), 10)
     const weekday = m.isoWeekday()
@@ -66,25 +64,23 @@ const Calendar = ({ dates, selected, onClick }) => {
     <div className={css.calendar}>
       <Title dates={dates} />
       <div className={css.grid}>
-        {DAY_ORDER.map(dayNo => (
+        {DAY_ORDER.map((dayNo) => (
           <div key={dayNo} className={css.column}>
             <div className={css.dayName}>{dayNoToDayName(dayNo)}</div>
-            {
-              grid[dayNo].map(date => (
-                <Day
-                  key={`${date.weekNo}-${date.dayNo}`}
-                  className={css.day}
-                  onClick={onClick}
-                  date={date.date}
-                  weekNo={date.weekNo}
-                  dayNo={date.dayNo}
-                  selected={date.selected}
-                  disabled={date.disabled}
-                  icon={date.icon}
-                  orderId={date.orderId}
-                />
-              ))
-            }
+            {grid[dayNo].map((date) => (
+              <Day
+                key={`${date.weekNo}-${date.dayNo}`}
+                className={css.day}
+                onClick={onClick}
+                date={date.date}
+                weekNo={date.weekNo}
+                dayNo={date.dayNo}
+                selected={date.selected}
+                disabled={date.disabled}
+                icon={date.icon}
+                orderId={date.orderId}
+              />
+            ))}
           </div>
         ))}
       </div>

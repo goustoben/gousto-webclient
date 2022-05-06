@@ -6,11 +6,11 @@ export const getOutOfStockRecipeReplacer = ({
   recipesInStock,
   dietaryClaims,
 }) => {
-  const recipesInStockIds = new Set(recipesInStock.map(r => r.get('id')))
+  const recipesInStockIds = new Set(recipesInStock.map((r) => r.get('id')))
 
-  const wrapRecipe = (recipe, reference) => ({recipe, originalId: recipe.get('id'), reference})
+  const wrapRecipe = (recipe, reference) => ({ recipe, originalId: recipe.get('id'), reference })
 
-  return ({recipe, reference}) => {
+  return ({ recipe, reference }) => {
     if (recipesInStockIds.has(recipe.get('id'))) {
       return wrapRecipe(recipe, reference)
     }
@@ -26,12 +26,14 @@ export const getOutOfStockRecipeReplacer = ({
       return wrapRecipe(recipe, reference)
     }
 
-    const recipeAlternativeWhichIsInStock = recipesAlternatives
-      .alternatives
-      .find(r => recipesInStockIds.has(r.get('coreRecipeId')))
+    const recipeAlternativeWhichIsInStock = recipesAlternatives.alternatives.find((r) =>
+      recipesInStockIds.has(r.get('coreRecipeId')),
+    )
 
     if (recipeAlternativeWhichIsInStock) {
-      const alternative = recipes.find(r => r.get('id') === recipeAlternativeWhichIsInStock.get('coreRecipeId'))
+      const alternative = recipes.find(
+        (r) => r.get('id') === recipeAlternativeWhichIsInStock.get('coreRecipeId'),
+      )
 
       return wrapRecipe(alternative, reference)
     }

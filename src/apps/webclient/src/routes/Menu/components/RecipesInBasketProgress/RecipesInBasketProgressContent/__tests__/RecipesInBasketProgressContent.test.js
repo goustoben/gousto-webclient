@@ -20,9 +20,7 @@ describe('RecipesInBasketProgressContent', () => {
   beforeEach(() => {
     useSelector.mockReturnValue(true)
     useDispatch.mockReturnValue(() => {})
-    wrapper = mount(
-      <RecipesInBasketProgressContent {...props} />
-    )
+    wrapper = mount(<RecipesInBasketProgressContent {...props} />)
   })
 
   test('renders without crashing', () => {
@@ -54,12 +52,7 @@ describe('RecipesInBasketProgressContent', () => {
         })
 
         test('renders the basket progress text in the second cell', () => {
-          expect(
-            layout2Cells
-              .find('.item-1')
-              .find('BoxProgressMessage')
-              .prop('numRecipes')
-          ).toBe(1)
+          expect(layout2Cells.find('.item-1').find('BoxProgressMessage').prop('numRecipes')).toBe(1)
         })
       })
 
@@ -81,8 +74,7 @@ describe('RecipesInBasketProgressContent', () => {
       let layoutContentWrapper
 
       beforeEach(() => {
-        layoutContentWrapper = wrapper
-          .find('LayoutContentWrapper')
+        layoutContentWrapper = wrapper.find('LayoutContentWrapper')
       })
 
       describe('inside a Layout2Cells', () => {
@@ -97,12 +89,7 @@ describe('RecipesInBasketProgressContent', () => {
         })
 
         test('renders the basket progress text in the second cell', () => {
-          expect(
-            layout2Cells
-              .find('.item-1')
-              .find('BoxProgressMessage')
-              .prop('numRecipes')
-          ).toBe(2)
+          expect(layout2Cells.find('.item-1').find('BoxProgressMessage').prop('numRecipes')).toBe(2)
         })
       })
 
@@ -124,8 +111,7 @@ describe('RecipesInBasketProgressContent', () => {
       let layoutContentWrapper
 
       beforeEach(() => {
-        layoutContentWrapper = wrapper
-          .find('LayoutContentWrapper')
+        layoutContentWrapper = wrapper.find('LayoutContentWrapper')
       })
 
       describe('inside a Layout2Cells', () => {
@@ -140,12 +126,7 @@ describe('RecipesInBasketProgressContent', () => {
         })
 
         test('renders the basket progress text in the second cell', () => {
-          expect(
-            layout2Cells
-              .find('.item-1')
-              .find('BoxProgressMessage')
-              .prop('numRecipes')
-          ).toBe(3)
+          expect(layout2Cells.find('.item-1').find('BoxProgressMessage').prop('numRecipes')).toBe(3)
         })
       })
 
@@ -167,8 +148,7 @@ describe('RecipesInBasketProgressContent', () => {
       let layoutContentWrapper
 
       beforeEach(() => {
-        layoutContentWrapper = wrapper
-          .find('LayoutContentWrapper')
+        layoutContentWrapper = wrapper.find('LayoutContentWrapper')
       })
 
       describe('inside a Layout2Cells', () => {
@@ -179,17 +159,11 @@ describe('RecipesInBasketProgressContent', () => {
         })
 
         test('renders the progress completed icon in the first cell', () => {
-          expect(layout2Cells.find('.item-0').find('.iconProgressCompleted'))
-            .toHaveLength(1)
+          expect(layout2Cells.find('.item-0').find('.iconProgressCompleted')).toHaveLength(1)
         })
 
         test('renders the basket progress text in the second cell', () => {
-          expect(
-            layout2Cells
-              .find('.item-1')
-              .find('BoxProgressMessage')
-              .prop('numRecipes')
-          ).toBe(4)
+          expect(layout2Cells.find('.item-1').find('BoxProgressMessage').prop('numRecipes')).toBe(4)
         })
       })
 

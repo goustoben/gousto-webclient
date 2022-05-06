@@ -12,15 +12,14 @@ describe('Given we render the CapacityInfo', () => {
 
   describe.each([
     [null, 'https://cook.gousto.co.uk/coronavirus-3/'],
-    ['1234', `${zendesk.covid}/?user_id=1234`]
+    ['1234', `${zendesk.covid}/?user_id=1234`],
   ])('when the userIdProp is %s', (userId, url) => {
     beforeEach(() => {
       wrapper.setProps({ userId })
     })
 
     test(`it renders a link to zendesk, plus: "${url}"`, () => {
-      expect(wrapper.find('a').prop('href'))
-        .toBe(url)
+      expect(wrapper.find('a').prop('href')).toBe(url)
     })
   })
 })

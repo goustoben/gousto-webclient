@@ -14,5 +14,5 @@ export const MenuDateRange = ({ variant, text }) => (
 
 MenuDateRange.propTypes = {
   variant: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 }

@@ -51,12 +51,7 @@ const BoxSummaryMobileBanner = ({
       <div>
         <OpenBoxButton isSimplifyBasketBarEnabled={isSimplifyBasketBarEnabled} />
         {!isSimplifyBasketBarEnabled && (
-          <Title
-            view={MOBILE_VIEW}
-            date={date}
-            finalisedSlot={slotId !== ''}
-            slotTime={slotTime}
-          />
+          <Title view={MOBILE_VIEW} date={date} finalisedSlot={slotId !== ''} slotTime={slotTime} />
         )}
       </div>
       <div

@@ -22,7 +22,9 @@ const BoxSummaryOverlayMobile = ({
 
   const classNameToApply = shouldDisplayFullScreenBoxSummary
     ? css.fullScreen
-    : classNames(css.mobileOverlay, {[css.mobileOverlayIsSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled})
+    : classNames(css.mobileOverlay, {
+        [css.mobileOverlayIsSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled,
+      })
 
   return (
     <Overlay

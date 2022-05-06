@@ -18,7 +18,7 @@ describe('<BoxSummary />', () => {
     numPortions: 2,
     recipes: Immutable.fromJS({
       4: 1,
-      2726: 2
+      2726: 2,
     }),
     menuRecipesStore: Immutable.fromJS({
       1: 'store1',
@@ -27,12 +27,9 @@ describe('<BoxSummary />', () => {
       4: 'store4',
     }),
     showDetails: true,
-    boxDetailsVisibilityChange: () => { },
-    basketRestorePreviousValues: () => { },
-    menuRecipes: Immutable.fromJS([
-      { id: '2726'},
-      { id: '4'},
-    ]),
+    boxDetailsVisibilityChange: () => {},
+    basketRestorePreviousValues: () => {},
+    menuRecipes: Immutable.fromJS([{ id: '2726' }, { id: '4' }]),
     stock: Immutable.fromJS({ 1: {} }),
     disabled: false,
     menuFetchPending: false,
@@ -52,11 +49,13 @@ describe('<BoxSummary />', () => {
       jest.spyOn(basketUtils, 'basketSum').mockImplementation(() => false)
       jest.spyOn(basketUtils, 'okRecipes').mockImplementation(() => false)
       boxDetailsVisibilityChangeSpy = jest.fn()
-      wrapper = shallow(<BoxSummary
-        {...defaultProps}
-        boxDetailsVisibilityChange={boxDetailsVisibilityChangeSpy}
-        shouldShowBoxSummary
-      />)
+      wrapper = shallow(
+        <BoxSummary
+          {...defaultProps}
+          boxDetailsVisibilityChange={boxDetailsVisibilityChangeSpy}
+          shouldShowBoxSummary
+        />,
+      )
     })
 
     afterEach(() => {
@@ -86,11 +85,13 @@ describe('<BoxSummary />', () => {
         jest.spyOn(basketUtils, 'basketSum').mockImplementation(() => false)
         jest.spyOn(basketUtils, 'okRecipes').mockImplementation(() => false)
         boxDetailsVisibilityChangeSpy = jest.fn()
-        wrapper = shallow(<BoxSummary
-          {...defaultProps}
-          boxDetailsVisibilityChange={boxDetailsVisibilityChangeSpy}
-          shouldShowBoxSummary
-        />)
+        wrapper = shallow(
+          <BoxSummary
+            {...defaultProps}
+            boxDetailsVisibilityChange={boxDetailsVisibilityChangeSpy}
+            shouldShowBoxSummary
+          />,
+        )
       })
 
       afterEach(() => {
@@ -103,11 +104,13 @@ describe('<BoxSummary />', () => {
 
     describe('when shouldShowBoxSummary is false', () => {
       beforeEach(() => {
-        wrapper = shallow(<BoxSummary
-          {...defaultProps}
-          boxDetailsVisibilityChange={boxDetailsVisibilityChangeSpy}
-          shouldShowBoxSummary={false}
-        />)
+        wrapper = shallow(
+          <BoxSummary
+            {...defaultProps}
+            boxDetailsVisibilityChange={boxDetailsVisibilityChangeSpy}
+            shouldShowBoxSummary={false}
+          />,
+        )
       })
       test('should not call boxDetailsVisibilityChange', () => {
         expect(boxDetailsVisibilityChangeSpy).not.toHaveBeenCalled()

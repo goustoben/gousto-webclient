@@ -4,9 +4,7 @@ import routes from 'config/routes'
 import { createPreviewOrder } from 'apis/orders'
 
 import { actionTypes } from 'actions/actionTypes'
-import {
-  basketPreviewOrderChange,
-} from 'actions/basket'
+import { basketPreviewOrderChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import statusActions from 'actions/status'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
@@ -40,7 +38,9 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     logger.error({ message: `Can't find any slot with id: ${slotId}`, actor: userId })
 
     dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false))
-    dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, `Can't find any slot with id: ${slotId}`))
+    dispatch(
+      error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, `Can't find any slot with id: ${slotId}`),
+    )
 
     return
   }
@@ -61,15 +61,26 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
         recipeChoices: orderDetails.recipeChoices,
         path,
         serverSide: isServer(),
-      }
+      },
     })
 
-    dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, { message: 'Missing data, persistent basket might be expired', code: 'basket-expired' }))
+    dispatch(
+      error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, {
+        message: 'Missing data, persistent basket might be expired',
+        code: 'basket-expired',
+      }),
+    )
   }
 
   try {
     const { data: previewOrder = {} } = await createPreviewOrder(orderDetails)
-    dispatch(basketPreviewOrderChange(String(previewOrder.order.id), previewOrder.order.boxId, previewOrder.surcharges))
+    dispatch(
+      basketPreviewOrderChange(
+        String(previewOrder.order.id),
+        previewOrder.order.boxId,
+        previewOrder.surcharges,
+      ),
+    )
     dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
 
     dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.running))
@@ -85,7 +96,7 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
         orderDetails,
         path,
         serverSide: isServer(),
-      }
+      },
     })
     logger.error(e)
 
@@ -107,9 +118,13 @@ export const checkoutTransactionalOrder = (orderAction) => async (dispatch, getS
   const isAuthenticated = getIsAuthenticated(getState())
 
   if (previewOrderError || !orderId) {
-    logger.warning(`Preview order id failed to create, persistent basket might be expired, error: ${previewOrderErrorName}`)
+    logger.warning(
+      `Preview order id failed to create, persistent basket might be expired, error: ${previewOrderErrorName}`,
+    )
 
-    dispatch(redirect(`${routes.client.menu}?from=newcheckout&error=${previewOrderErrorName}`, true))
+    dispatch(
+      redirect(`${routes.client.menu}?from=newcheckout&error=${previewOrderErrorName}`, true),
+    )
 
     return
   }
