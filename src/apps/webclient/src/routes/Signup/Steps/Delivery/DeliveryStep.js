@@ -17,6 +17,7 @@ import { completeWizardDeliveryDay } from 'actions/trackingKeys'
 import { SocialBelongingBanner } from 'routes/Signup/SocialBelongingBanner'
 import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { SubscriptionTransparencyText } from '../../Components/SubscriptionTransparencyText'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
@@ -340,6 +341,7 @@ const DeliveryStep = ({
           </Button>
         </div>
       </div>
+      <RibbonTriggerContainer name="wizard-delivery-options" />
     </div>
   )
 }

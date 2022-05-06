@@ -29,6 +29,7 @@ describe('CreateAccount', () => {
     checkout: Immutable.fromJS({
       errors: {},
     }),
+    ribbon: Immutable.fromJS({}),
   })
 
   test('should render CreateAccount component', () => {

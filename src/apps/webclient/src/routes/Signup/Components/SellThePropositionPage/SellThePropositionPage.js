@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import css from './SellThePropositionPage.css'
 
 export const items = [
@@ -78,6 +79,7 @@ export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled
       <CheckoutButton onClick={signupGoToMenu} isFullWidth testingSelector="sellThePropositionCTA">
         See this week’s menu
       </CheckoutButton>
+      <RibbonTriggerContainer name="wizard-proposition" />
     </InformationalPageTemplate>
   )
 }

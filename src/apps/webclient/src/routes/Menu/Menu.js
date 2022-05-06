@@ -8,6 +8,7 @@ import browserHelper from 'utils/browserHelper'
 
 import MainLayout from 'layouts/MainLayout'
 import ErrorPage from 'components/ErrorPage'
+import { RibbonTrigger } from 'components/RibbonTrigger'
 import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
 import { BoxSummaryContainer } from './components/BoxSummary'
 import { DetailRecipeMetaContainer } from './components/RecipeMeta'
@@ -145,6 +146,7 @@ class Menu extends React.PureComponent {
             <RecipesInBasketProgress isAuthenticated={isAuthenticated} />
           )}
         </div>
+        <RibbonTrigger name="menu" />
       </MainLayout>
     )
   }

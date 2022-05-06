@@ -7,6 +7,7 @@ import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
 import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
 import { HotjarTrigger } from 'HotjarTrigger'
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { SubmitButton } from '../SubmitButton'
 import { ErrorMessage } from '../ErrorMessage'
 import { Checkout3DSModal } from './Checkout3DSModal'
@@ -282,6 +283,7 @@ class CheckoutPayment extends React.Component {
         <PaymentFooter isGoustoOnDemandEnabled={isGoustoOnDemandEnabled} />
         <Checkout3DSModal />
         {!prerender && <HotjarTrigger name={hotjarTriggerName} shouldInvoke />}
+        {!prerender && <RibbonTriggerContainer name="checkout-payment" />}
       </div>
     )
   }
