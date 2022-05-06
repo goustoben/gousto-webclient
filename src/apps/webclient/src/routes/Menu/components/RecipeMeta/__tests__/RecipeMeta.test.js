@@ -9,14 +9,18 @@ describe('RecipeMeta', () => {
   const recipe = Immutable.fromJS({
     id: '12345',
     title: 'A Recipe Title',
-    description: 'The best you\'ve ever tasted.',
+    description: "The best you've ever tasted.",
     media: {
-      images: [{
-        urls: [{
-          src: 'protocol://imageurl.com/image.jpg',
-          width: 700,
-        }],
-      }],
+      images: [
+        {
+          urls: [
+            {
+              src: 'protocol://imageurl.com/image.jpg',
+              width: 700,
+            },
+          ],
+        },
+      ],
     },
   })
 

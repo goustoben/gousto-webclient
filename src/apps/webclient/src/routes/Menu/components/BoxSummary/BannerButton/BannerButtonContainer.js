@@ -4,7 +4,7 @@ import { BannerButton } from './BannerButton'
 
 function mapStateToProps(state) {
   return {
-    boxSummaryCurrentView: getCurrentBoxSummaryView(state)
+    boxSummaryCurrentView: getCurrentBoxSummaryView(state),
   }
 }
 

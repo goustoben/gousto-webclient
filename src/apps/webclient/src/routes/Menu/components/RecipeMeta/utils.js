@@ -12,11 +12,10 @@ export const getPortionPrice = (recipe) => {
 
 export const getMetaImageLink = (recipe) => {
   const media = recipe && recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))
-  const image = media && media.find(imageProps => imageProps.get('width') === 700)
+  const image = media && media.find((imageProps) => imageProps.get('width') === 700)
 
   return image ? image.get('src') : defaultMetaImageLink
 }
 
-export const getRecipeDetailURL = (recipe) => (
+export const getRecipeDetailURL = (recipe) =>
   `https://www.gousto.co.uk/menu?recipeDetailId=${recipe.get('id')}`
-)

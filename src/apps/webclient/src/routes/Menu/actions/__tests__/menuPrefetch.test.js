@@ -8,8 +8,8 @@ describe('menuPrefetch', () => {
     expect(result).toEqual({
       type: actionTypes.MENU_PREFETCHED,
       payload: {
-        menuPrefetched: true
-      }
+        menuPrefetched: true,
+      },
     })
   })
 })

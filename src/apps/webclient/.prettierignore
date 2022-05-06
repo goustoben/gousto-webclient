@@ -20,3 +20,4 @@
 !src/middlewares/tracking/dataLayerTracker/**/*
 !src/routes/BoxPrices/**/*
 !src/performanceTracker/**/*
+!src/routes/Menu/**/*

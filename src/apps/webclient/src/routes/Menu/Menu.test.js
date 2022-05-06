@@ -5,20 +5,20 @@ import Immutable from 'immutable'
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
 
-jest.mock('layouts/MainLayout', () => ('MainLayout'))
+jest.mock('layouts/MainLayout', () => 'MainLayout')
 jest.mock('utils/browserHelper', () => ({
-  isChrome: () => { }
+  isChrome: () => {},
 }))
 jest.mock('actions/order')
 jest.mock('./components/BoxSummary', () => ({
-  BoxSummaryContainer: () => <div />
+  BoxSummaryContainer: () => <div />,
 }))
-jest.mock('routes/Menu/components/Detail/DetailOverlay', () => ('DetailOverlay'))
+jest.mock('routes/Menu/components/Detail/DetailOverlay', () => 'DetailOverlay')
 jest.mock('routes/Menu/components/RecipesInBasketProgress', () => ({
-  RecipesInBasketProgress: () => <div />
+  RecipesInBasketProgress: () => <div />,
 }))
 jest.mock('./components/RecipeMeta', () => ({
-  DetailRecipeMetaContainer: () => <div />
+  DetailRecipeMetaContainer: () => <div />,
 }))
 
 jest.mock('react-lazyload', () => ({
@@ -34,30 +34,30 @@ describe('Menu', () => {
   const getStateMock = () => ({
     features: Immutable.fromJS({
       menuService: {
-        value: false
-      }
-    })
+        value: false,
+      },
+    }),
   })
 
   beforeEach(() => {
     requiredProps = {
-      basketNumPortionChange: () => { },
+      basketNumPortionChange: () => {},
       disabled: false,
       isAuthenticated: false,
-      menuLoadBoxPrices: () => { },
+      menuLoadBoxPrices: () => {},
       query: {
         orderId: '',
-        reload: false
+        reload: false,
       },
       boxSummaryDeliveryDaysLoad: jest.fn().mockReturnValue(
-        new Promise(resolve => {
+        new Promise((resolve) => {
           resolve()
-        })
+        }),
       ),
       menuLoadDays: jest.fn().mockReturnValue(
-        new Promise(resolve => {
+        new Promise((resolve) => {
           resolve()
-        })
+        }),
       ),
       onOverlayClick: jest.fn(),
       fetchData: jest.fn(),
@@ -95,7 +95,7 @@ describe('Menu', () => {
             boxSummaryDeliveryDays={Immutable.Map()}
             disabled={false}
           />,
-          mountOptions
+          mountOptions,
         )
       })
 
@@ -119,7 +119,9 @@ describe('Menu', () => {
         })
 
         test('has the isAuthenticated prop passed to it', () => {
-          expect(recipesInBasketProgress.prop('isAuthenticated')).toBe(requiredProps.isAuthenticated)
+          expect(recipesInBasketProgress.prop('isAuthenticated')).toBe(
+            requiredProps.isAuthenticated,
+          )
         })
       })
     })
@@ -132,9 +134,9 @@ describe('Menu', () => {
             isLoading={false}
             boxSummaryDeliveryDays={Immutable.Map()}
             disabled={false}
-            params={{ orderId: '123456'}}
+            params={{ orderId: '123456' }}
           />,
-          mountOptions
+          mountOptions,
         )
       })
 
@@ -156,7 +158,7 @@ describe('Menu', () => {
           disabled={false}
           loginVisibilityChange={loginVisibilityChange}
         />,
-        mountOptions
+        mountOptions,
       )
     })
     test('should call loginVisibilityChange', () => {
@@ -174,7 +176,7 @@ describe('Menu', () => {
         context: {
           store: {
             getState: getStateMock,
-            subscribe: () => { },
+            subscribe: () => {},
           },
         },
       }
@@ -201,11 +203,7 @@ describe('Menu', () => {
 
     test('should not load Box Prices for admin users', async () => {
       await mount(
-        <Menu
-          {...requiredProps}
-          menuLoadBoxPrices={menuLoadBoxPrices}
-          disabled
-        />,
+        <Menu {...requiredProps} menuLoadBoxPrices={menuLoadBoxPrices} disabled />,
         mountOptions,
       )
       expect(menuLoadBoxPrices).not.toHaveBeenCalled()
@@ -213,11 +211,7 @@ describe('Menu', () => {
 
     test('should call fetchData', async () => {
       await mount(
-        <Menu
-          {...requiredProps}
-          menuLoadBoxPrices={menuLoadBoxPrices}
-          disabled
-        />,
+        <Menu {...requiredProps} menuLoadBoxPrices={menuLoadBoxPrices} disabled />,
         mountOptions,
       )
       expect(requiredProps.fetchData).toHaveBeenCalled()
@@ -244,19 +238,14 @@ describe('Menu', () => {
     let wrapper
 
     beforeEach(async () => {
-      wrapper = await mount(
-        <Menu
-          {...requiredProps}
-        />,
-        {
-          context: {
-            store: {
-              getState: getStateMock,
-              subscribe: () => { }
-            },
+      wrapper = await mount(<Menu {...requiredProps} />, {
+        context: {
+          store: {
+            getState: getStateMock,
+            subscribe: () => {},
           },
         },
-      )
+      })
       forceCheck.mockClear()
     })
     afterEach(() => {
@@ -271,7 +260,7 @@ describe('Menu', () => {
 
     describe('when user authentificate', () => {
       beforeEach(() => {
-        wrapper.setProps({isAuthenticated: true})
+        wrapper.setProps({ isAuthenticated: true })
       })
       test('should call fetchData ', () => {
         expect(requiredProps.fetchData).toHaveBeenCalledTimes(2)
@@ -280,9 +269,11 @@ describe('Menu', () => {
 
     describe('when use previewMenu url', () => {
       beforeEach(() => {
-        wrapper.setProps({query: {
-          'preview[auth_user_id]': 'previewUserToken'
-        }})
+        wrapper.setProps({
+          query: {
+            'preview[auth_user_id]': 'previewUserToken',
+          },
+        })
       })
       test('should not call fetch data function', () => {
         expect(requiredProps.fetchData).toHaveBeenCalledTimes(1)
@@ -296,7 +287,7 @@ describe('Menu', () => {
         context: {
           store: {
             getState: getStateMock,
-            subscribe: () => { },
+            subscribe: () => {},
           },
         },
       }
@@ -310,12 +301,8 @@ describe('Menu', () => {
       const menuLoadBoxPrices = jest.fn()
 
       const wrapper = await shallow(
-        <Menu
-          {...requiredProps}
-          menuLoadBoxPrices={menuLoadBoxPrices}
-          tariffId={1}
-        />,
-        mountOptions
+        <Menu {...requiredProps} menuLoadBoxPrices={menuLoadBoxPrices} tariffId={1} />,
+        mountOptions,
       )
 
       wrapper.setProps({ tariffId: 2 })
@@ -325,12 +312,7 @@ describe('Menu', () => {
 
     test('should NOT call menuLoadBoxPrices if disabled', () => {
       const menuLoadBoxPrices = jest.fn()
-      shallow(
-        <Menu
-          {...requiredProps}
-          disabled
-        />,
-      )
+      shallow(<Menu {...requiredProps} disabled />)
       expect(menuLoadBoxPrices).not.toHaveBeenCalled()
     })
   })

@@ -130,10 +130,7 @@ describe('RecipeTilePurchaseInfo', () => {
         isRecipeOutOfStock: false,
         useRecipeIsFineDineIn: false,
       })
-      wrapper = shallow(<RecipeTilePurchaseInfo
-        {...defaultProps}
-        fdiStyling
-      />)
+      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} fdiStyling />)
     })
 
     test('should have class of surchargeInfo', () => {
@@ -148,9 +145,7 @@ describe('RecipeTilePurchaseInfo', () => {
         isRecipeOutOfStock: false,
         useRecipeIsFineDineIn: false,
       })
-      wrapper = shallow(<RecipeTilePurchaseInfo
-        {...defaultProps}
-      />)
+      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
     })
 
     test('should have class of surchargeInfo', () => {
@@ -165,10 +160,7 @@ describe('RecipeTilePurchaseInfo', () => {
         isRecipeOutOfStock: false,
         useRecipeIsFineDineIn: true,
       })
-      wrapper = shallow(<RecipeTilePurchaseInfo
-        {...defaultProps}
-        fdiStyling
-      />)
+      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} fdiStyling />)
     })
 
     test('should have class of surchargeInfoIsFineDineIn', () => {
@@ -183,10 +175,7 @@ describe('RecipeTilePurchaseInfo', () => {
         isRecipeOutOfStock: false,
         useRecipeIsFineDineIn: false,
       })
-      wrapper = shallow(<RecipeTilePurchaseInfo
-        {...defaultProps}
-        hasAlternativeOptions={false}
-      />)
+      wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} hasAlternativeOptions={false} />)
     })
 
     test('should not render buttons for swapping alternative options', () => {
@@ -200,7 +189,7 @@ describe('RecipeTilePurchaseInfo', () => {
       beforeEach(() => {
         const props = {
           ...defaultProps,
-          hasAlternativeOptions: true
+          hasAlternativeOptions: true,
         }
         mockedUseDeviceType.mockReturnValue('mobile')
 
@@ -211,9 +200,7 @@ describe('RecipeTilePurchaseInfo', () => {
           alternativeOptionsForRecipe: ['content does not really matter for the test', 'foo'],
         })
 
-        wrapper = shallow(<RecipeTilePurchaseInfo
-          {...props}
-        />)
+        wrapper = shallow(<RecipeTilePurchaseInfo {...props} />)
       })
 
       test('should render mobile component for swapping alternative options', () => {
@@ -223,8 +210,12 @@ describe('RecipeTilePurchaseInfo', () => {
 
       test('should pass the necessary props down to the swapping alternative options component', () => {
         expect(wrapper.find(SwapAlternativeOptionsMobile).prop('recipeId')).toEqual('123')
-        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('originalId')).toEqual(defaultProps.originalId)
-        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('categoryId')).toEqual(defaultProps.categoryId)
+        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('originalId')).toEqual(
+          defaultProps.originalId,
+        )
+        expect(wrapper.find(SwapAlternativeOptionsMobile).prop('categoryId')).toEqual(
+          defaultProps.categoryId,
+        )
       })
     })
 
@@ -241,9 +232,7 @@ describe('RecipeTilePurchaseInfo', () => {
           useRecipeIsFineDineIn: false,
           alternativeOptionsForRecipe: ['content does not really matter for the test', 'foo'],
         })
-        wrapper = shallow(<RecipeTilePurchaseInfo
-          {...props}
-        />)
+        wrapper = shallow(<RecipeTilePurchaseInfo {...props} />)
       })
 
       test('should render Desktop specific component for swapping alternative options', () => {
@@ -253,8 +242,12 @@ describe('RecipeTilePurchaseInfo', () => {
 
       test('should pass the necessary props down to the swapping alternative options component', () => {
         expect(wrapper.find(SwapAlternativeOptions).prop('recipeId')).toEqual('123')
-        expect(wrapper.find(SwapAlternativeOptions).prop('originalId')).toEqual(defaultProps.originalId)
-        expect(wrapper.find(SwapAlternativeOptions).prop('categoryId')).toEqual(defaultProps.categoryId)
+        expect(wrapper.find(SwapAlternativeOptions).prop('originalId')).toEqual(
+          defaultProps.originalId,
+        )
+        expect(wrapper.find(SwapAlternativeOptions).prop('categoryId')).toEqual(
+          defaultProps.categoryId,
+        )
       })
     })
   })
@@ -268,29 +261,30 @@ const mockHooks = ({
   useRecipeField = '123',
 }) => {
   if (isRecipeOutOfStock !== undefined) {
-    jest.spyOn(MenuHook, 'useStock')
-      .mockImplementation(() => ({
-        isRecipeOutOfStock: () => isRecipeOutOfStock,
-      }))
+    jest.spyOn(MenuHook, 'useStock').mockImplementation(() => ({
+      isRecipeOutOfStock: () => isRecipeOutOfStock,
+    }))
   }
 
   if (useGetSurchargeForRecipeId !== undefined) {
-    jest.spyOn(RecipeTilePurchaseInfoHooks, 'useGetSurchargeForRecipeId')
+    jest
+      .spyOn(RecipeTilePurchaseInfoHooks, 'useGetSurchargeForRecipeId')
       .mockImplementation(() => useGetSurchargeForRecipeId)
   }
 
   if (useRecipeIsFineDineIn !== undefined) {
-    jest.spyOn(RecipeContext, 'useRecipeIsFineDineIn')
+    jest
+      .spyOn(RecipeContext, 'useRecipeIsFineDineIn')
       .mockImplementation(() => useRecipeIsFineDineIn)
   }
 
   if (alternativeOptionsForRecipe !== undefined) {
-    jest.spyOn(MenuHook, 'useGetAlternativeOptionsForRecipeLight')
+    jest
+      .spyOn(MenuHook, 'useGetAlternativeOptionsForRecipeLight')
       .mockImplementation(() => () => alternativeOptionsForRecipe)
   }
 
   if (useRecipeField !== undefined) {
-    jest.spyOn(RecipeContext, 'useRecipeField')
-      .mockImplementation(() => useRecipeField)
+    jest.spyOn(RecipeContext, 'useRecipeField').mockImplementation(() => useRecipeField)
   }
 }

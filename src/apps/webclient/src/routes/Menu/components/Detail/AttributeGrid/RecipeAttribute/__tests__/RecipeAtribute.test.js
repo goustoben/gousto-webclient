@@ -6,13 +6,13 @@ import { RecipeAttribute } from '../RecipeAttribute'
 
 describe('Recipe Attribute', () => {
   test('should return a <div>', () => {
-    const wrapper = shallow( <RecipeAttribute name="cookingTime" value={1} /> )
+    const wrapper = shallow(<RecipeAttribute name="cookingTime" value={1} />)
 
     expect(wrapper.type()).toEqual('div')
   })
 
   test('should have an SVG and a span as children', () => {
-    const wrapper = shallow( <RecipeAttribute name="cookingTime" value={1} /> )
+    const wrapper = shallow(<RecipeAttribute name="cookingTime" value={1} />)
 
     expect(wrapper.find(Svg).length).toEqual(1)
     expect(wrapper.find('span').length).toEqual(1)
@@ -20,7 +20,7 @@ describe('Recipe Attribute', () => {
 
   test('should display the cooking time correctly', () => {
     const wrapper = shallow(<RecipeAttribute name="cookingTime" value={1} />)
-    expect( wrapper.find('span').text()).toContain('Takes 1 mins')
+    expect(wrapper.find('span').text()).toContain('Takes 1 mins')
   })
 
   test('should display the use within date formatted correctly with spaces', () => {
@@ -56,7 +56,7 @@ describe('Recipe Attribute', () => {
   test('should display the normal diet types correctly', () => {
     const diets = ['Meat', 'Fish', 'Vegetarian']
 
-    diets.forEach(diet => {
+    diets.forEach((diet) => {
       const wrapper = shallow(<RecipeAttribute name="diet" value={diet} />)
       expect(wrapper.find('span').text()).toContain(diet)
     })
@@ -68,7 +68,12 @@ describe('Recipe Attribute', () => {
   })
 
   test('should display equipment required label without the equipment listed ', () => {
-    const wrapper = shallow(<RecipeAttribute name="equipmentRequired" value={Immutable.fromJS(['Spoon', 'Egg Beater'])} />)
+    const wrapper = shallow(
+      <RecipeAttribute
+        name="equipmentRequired"
+        value={Immutable.fromJS(['Spoon', 'Egg Beater'])}
+      />,
+    )
     expect(wrapper.find('span').text()).toContain('Equipment required')
   })
 })

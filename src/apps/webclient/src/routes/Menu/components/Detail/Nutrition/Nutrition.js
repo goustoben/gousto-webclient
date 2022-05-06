@@ -6,7 +6,9 @@ import css from './Nutrition.css'
 
 const NutritionInfo = ({ perPortion, per100Grams, inset }) => (
   <div>
-    <div className={classnames(css.header, inset && css.insetHeader)}>Nutritional information&#42;</div>
+    <div className={classnames(css.header, inset && css.insetHeader)}>
+      Nutritional information&#42;
+    </div>
     <table className={classnames(css.table, inset && css.tableMargins)}>
       <thead>
         <tr className={css.tableBorder}>
@@ -19,22 +21,14 @@ const NutritionInfo = ({ perPortion, per100Grams, inset }) => (
         <tr className={css.tableBorder}>
           <td className={css.tablePadding}>Energy</td>
           <td className={css.tablePadding}>
-            {Math.round(per100Grams.energyKj)}
-            {' '}
-            kJ
+            {Math.round(per100Grams.energyKj)} kJ
             <br />
-            {Math.round(per100Grams.energyKcal)}
-            {' '}
-            kcal
+            {Math.round(per100Grams.energyKcal)} kcal
           </td>
           <td className={css.tablePadding}>
-            {Math.round(perPortion.energyKj)}
-            {' '}
-            kJ
+            {Math.round(perPortion.energyKj)} kJ
             <br />
-            {Math.round(perPortion.energyKcal)}
-            {' '}
-            kcal
+            {Math.round(perPortion.energyKcal)} kcal
           </td>
         </tr>
         <tr className={css.tableBorder}>
@@ -44,22 +38,14 @@ const NutritionInfo = ({ perPortion, per100Grams, inset }) => (
             of which saturates
           </td>
           <td className={css.tablePadding}>
-            {per100Grams.fat.toFixed(1)}
-            {' '}
-            g
+            {per100Grams.fat.toFixed(1)} g
             <br />
-            {per100Grams.fatSaturates.toFixed(1)}
-            {' '}
-            g
+            {per100Grams.fatSaturates.toFixed(1)} g
           </td>
           <td className={css.tablePadding}>
-            {perPortion.fat.toFixed(1)}
-            {' '}
-            g
+            {perPortion.fat.toFixed(1)} g
             <br />
-            {perPortion.fatSaturates.toFixed(1)}
-            {' '}
-            g
+            {perPortion.fatSaturates.toFixed(1)} g
           </td>
         </tr>
         <tr className={css.tableBorder}>
@@ -69,62 +55,30 @@ const NutritionInfo = ({ perPortion, per100Grams, inset }) => (
             of which sugars
           </td>
           <td className={css.tablePadding}>
-            {per100Grams.carbs.toFixed(1)}
-            {' '}
-            g
+            {per100Grams.carbs.toFixed(1)} g
             <br />
-            {per100Grams.carbsSugars.toFixed(1)}
-            {' '}
-            g
+            {per100Grams.carbsSugars.toFixed(1)} g
           </td>
           <td className={css.tablePadding}>
-            {perPortion.carbs.toFixed(1)}
-            {' '}
-            g
+            {perPortion.carbs.toFixed(1)} g
             <br />
-            {perPortion.carbsSugars.toFixed(1)}
-            {' '}
-            g
+            {perPortion.carbsSugars.toFixed(1)} g
           </td>
         </tr>
         <tr className={css.tableBorder}>
           <td className={css.tablePadding}>Fibre</td>
-          <td className={css.tablePadding}>
-            {per100Grams.fibre.toFixed(1)}
-            {' '}
-            g
-          </td>
-          <td className={css.tablePadding}>
-            {perPortion.fibre.toFixed(1)}
-            {' '}
-            g
-          </td>
+          <td className={css.tablePadding}>{per100Grams.fibre.toFixed(1)} g</td>
+          <td className={css.tablePadding}>{perPortion.fibre.toFixed(1)} g</td>
         </tr>
         <tr className={css.tableBorder}>
           <td className={css.tablePadding}>Protein</td>
-          <td className={css.tablePadding}>
-            {per100Grams.protein.toFixed(1)}
-            {' '}
-            g
-          </td>
-          <td className={css.tablePadding}>
-            {perPortion.protein.toFixed(1)}
-            {' '}
-            g
-          </td>
+          <td className={css.tablePadding}>{per100Grams.protein.toFixed(1)} g</td>
+          <td className={css.tablePadding}>{perPortion.protein.toFixed(1)} g</td>
         </tr>
         <tr>
           <td className={css.tablePadding}>Salt</td>
-          <td className={css.tablePadding}>
-            {per100Grams.salt.toFixed(2)}
-            {' '}
-            g
-          </td>
-          <td className={css.tablePadding}>
-            {perPortion.salt.toFixed(2)}
-            {' '}
-            g
-          </td>
+          <td className={css.tablePadding}>{per100Grams.salt.toFixed(2)} g</td>
+          <td className={css.tablePadding}>{perPortion.salt.toFixed(2)} g</td>
         </tr>
       </tbody>
     </table>

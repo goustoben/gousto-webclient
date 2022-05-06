@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
   showDetails: state.boxSummaryShow.get('show'),
   numPortions: getNumPortions(state),
   date: getBasketDate(state),
-  slotId: getBasketSlotId(state)
+  slotId: getBasketSlotId(state),
 })
 
 const ExpandBoxSummaryButtonPure = (props) => {

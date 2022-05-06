@@ -17,7 +17,11 @@ This is primarily driven from the query string (if present), otherwise it falls 
 ```ts
 const { currentCollection, currentCollectionId } = useCollections()
 
-return <h2>{ currentCollection.get('name') } ({ currentCollectionId })</h2>
+return (
+  <h2>
+    {currentCollection.get('name')} ({currentCollectionId})
+  </h2>
+)
 ```
 
 ### Getting all collections
@@ -27,9 +31,7 @@ This gives a list of all **visible** collections to the user - taking into accou
 ```ts
 const { collections } = useCollections()
 
-return collections.map(c => (
-    <h2 key={ c.get('id') }>{ c.get('name') }</h2>
-))
+return collections.map((c) => <h2 key={c.get('id')}>{c.get('name')}</h2>)
 ```
 
 ### Changing collection
@@ -40,6 +42,6 @@ This can be used to change the currently selected collection
 const { changeCollectionById } = useCollections()
 
 const onClick = () => {
-    changeCollectionById(someTargetCollectionId)
+  changeCollectionById(someTargetCollectionId)
 }
 ```

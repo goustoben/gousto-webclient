@@ -11,12 +11,16 @@ describe('CollectionHeaderWrapper', () => {
         color: '#F2F2F2',
         description: 'Header description',
         gradientColor: '#0C3FC2',
-        headerImage: [{
-          url: 'gradientTitleImage-url'
-        }],
-        image: [{
-          url: 'gradientImage-url'
-        }],
+        headerImage: [
+          {
+            url: 'gradientTitleImage-url',
+          },
+        ],
+        image: [
+          {
+            url: 'gradientImage-url',
+          },
+        ],
         imageLocation: 'right',
       }
 
@@ -37,11 +41,13 @@ describe('CollectionHeaderWrapper', () => {
         description: 'Header description',
         gradientColor: '#0C3FC2',
         headerImage: [],
-        image: [{
-          url: 'gradientImage-url'
-        }],
+        image: [
+          {
+            url: 'gradientImage-url',
+          },
+        ],
         imageLocation: 'right',
-        altText: 'nice picture'
+        altText: 'nice picture',
       }
 
       wrapper = shallow(<GradientInfoHeader headerAttributes={headerAttributes} />)
@@ -59,9 +65,11 @@ describe('CollectionHeaderWrapper', () => {
         color: '#F2F2F2',
         description: 'Header description',
         gradientColor: '#0C3FC2',
-        headerImage: [{
-          url: 'gradientTitleImage-url'
-        }],
+        headerImage: [
+          {
+            url: 'gradientTitleImage-url',
+          },
+        ],
         image: [],
         imageLocation: 'right',
       }

@@ -18,11 +18,13 @@ describe('getAlternativeOptionsForRecipe', () => {
 
   describe('when there is alternative option and it is out of stock', () => {
     const mockStore = configureMockStore()
-    const store = mockStore(createMockState({
-      menuRecipeStock: Immutable.fromJS({
-        [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
+    const store = mockStore(
+      createMockState({
+        menuRecipeStock: Immutable.fromJS({
+          [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
+        }),
       }),
-    }))
+    )
 
     const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
@@ -35,19 +37,21 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).isOutOfStock).toEqual(false)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).isOutOfStock).toEqual(true)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isOutOfStock).toEqual(false)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isOutOfStock).toEqual(true)
     })
   })
 
   describe('when there is alternative option and it is in stock', () => {
     const mockStore = configureMockStore()
-    const store = mockStore(createMockState({
-      menuRecipeStock: Immutable.fromJS({
-        [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
-        [RECIPE_ID_2]: { 2: 1000, 4: 1000 },
+    const store = mockStore(
+      createMockState({
+        menuRecipeStock: Immutable.fromJS({
+          [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
+          [RECIPE_ID_2]: { 2: 1000, 4: 1000 },
+        }),
       }),
-    }))
+    )
 
     const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
@@ -60,8 +64,8 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).isOutOfStock).toEqual(false)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).isOutOfStock).toEqual(false)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isOutOfStock).toEqual(false)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isOutOfStock).toEqual(false)
     })
   })
 
@@ -80,8 +84,8 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).surcharge).toEqual(0.5)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).surcharge).toEqual(null)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).surcharge).toEqual(0.5)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).surcharge).toEqual(null)
     })
   })
 
@@ -100,8 +104,8 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).isOnDetailScreen).toEqual(true)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).isOnDetailScreen).toEqual(true)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isOnDetailScreen).toEqual(true)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isOnDetailScreen).toEqual(true)
     })
   })
 
@@ -120,8 +124,8 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).isChecked).toEqual(true)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).isChecked).toEqual(false)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isChecked).toEqual(true)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isChecked).toEqual(false)
     })
   })
 
@@ -140,8 +144,8 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).isChecked).toEqual(false)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).isChecked).toEqual(true)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isChecked).toEqual(false)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isChecked).toEqual(true)
     })
   })
 
@@ -160,22 +164,24 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).recipeId).toEqual(RECIPE_ID_1)
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).recipeId).toEqual(RECIPE_ID_2)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).recipeId).toEqual(RECIPE_ID_1)
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).recipeId).toEqual(RECIPE_ID_2)
 
-      expect(options.find(o => o.recipeId === RECIPE_ID_1).recipeName).toEqual('Title ONE')
-      expect(options.find(o => o.recipeId === RECIPE_ID_2).recipeName).toEqual('Title TWO')
+      expect(options.find((o) => o.recipeId === RECIPE_ID_1).recipeName).toEqual('Title ONE')
+      expect(options.find((o) => o.recipeId === RECIPE_ID_2).recipeName).toEqual('Title TWO')
     })
   })
 
   describe('When isOnDetailScreen is FALSE', () => {
-    const selectRecipeVariant = jest.fn().mockReturnValue({type: 'foo'})
-    const menuRecipeDetailVisibilityChange = jest.fn().mockReturnValue({type: 'bar'})
+    const selectRecipeVariant = jest.fn().mockReturnValue({ type: 'foo' })
+    const menuRecipeDetailVisibilityChange = jest.fn().mockReturnValue({ type: 'bar' })
 
     beforeEach(() => {
       jest.clearAllMocks()
       jest.spyOn(MenuRecipeDetails, 'selectRecipeVariant').mockImplementation(selectRecipeVariant)
-      jest.spyOn(MenuRecipeDetails, 'menuRecipeDetailVisibilityChange').mockImplementation(menuRecipeDetailVisibilityChange)
+      jest
+        .spyOn(MenuRecipeDetails, 'menuRecipeDetailVisibilityChange')
+        .mockImplementation(menuRecipeDetailVisibilityChange)
     })
     describe('When changeCheckedRecipe is called', () => {
       const mockStore = configureMockStore()
@@ -189,8 +195,8 @@ describe('getAlternativeOptionsForRecipe', () => {
       const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
       const [
-        {changeCheckedRecipe: changeCheckedRecipeForRecipeOne},
-        {changeCheckedRecipe: changeCheckedRecipeForRecipeTwo},
+        { changeCheckedRecipe: changeCheckedRecipeForRecipeOne },
+        { changeCheckedRecipe: changeCheckedRecipeForRecipeTwo },
       ] = result.current.getAlternativeOptionsForRecipe({
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
@@ -229,13 +235,15 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('When isOnDetailScreen is TRUE', () => {
-    const selectRecipeVariant = jest.fn().mockReturnValue({type: 'foo'})
-    const menuRecipeDetailVisibilityChange = jest.fn().mockReturnValue({type: 'foo'})
+    const selectRecipeVariant = jest.fn().mockReturnValue({ type: 'foo' })
+    const menuRecipeDetailVisibilityChange = jest.fn().mockReturnValue({ type: 'foo' })
 
     beforeEach(() => {
       jest.clearAllMocks()
       jest.spyOn(MenuRecipeDetails, 'selectRecipeVariant').mockImplementation(selectRecipeVariant)
-      jest.spyOn(MenuRecipeDetails, 'menuRecipeDetailVisibilityChange').mockImplementation(menuRecipeDetailVisibilityChange)
+      jest
+        .spyOn(MenuRecipeDetails, 'menuRecipeDetailVisibilityChange')
+        .mockImplementation(menuRecipeDetailVisibilityChange)
     })
 
     describe('When changeCheckedRecipe is called', () => {
@@ -251,8 +259,8 @@ describe('getAlternativeOptionsForRecipe', () => {
       const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
       const [
-        {changeCheckedRecipe: changeCheckedRecipeForRecipeOne},
-        {changeCheckedRecipe: changeCheckedRecipeForRecipeTwo},
+        { changeCheckedRecipe: changeCheckedRecipeForRecipeOne },
+        { changeCheckedRecipe: changeCheckedRecipeForRecipeTwo },
       ] = result.current.getAlternativeOptionsForRecipe({
         recipeId: RECIPE_ID_1,
         originalId: RECIPE_ID_1,
@@ -298,9 +306,13 @@ describe('getAlternativeOptionsForRecipe', () => {
     const store = mockStore(state)
 
     const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
-    const { result } = renderHook(() => useAlternativeOptions({
-      allCollections: state.menuCollections,
-    }), { wrapper })
+    const { result } = renderHook(
+      () =>
+        useAlternativeOptions({
+          allCollections: state.menuCollections,
+        }),
+      { wrapper },
+    )
 
     test('The option does not contain affected items', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -311,8 +323,8 @@ describe('getAlternativeOptionsForRecipe', () => {
       })
 
       expect(options.length).toEqual(1)
-      expect(!! options.find(o => o.recipeId === RECIPE_ID_1)).toEqual(true)
-      expect(!! options.find(o => o.recipeId === RECIPE_ID_2)).toEqual(false)
+      expect(!!options.find((o) => o.recipeId === RECIPE_ID_1)).toEqual(true)
+      expect(!!options.find((o) => o.recipeId === RECIPE_ID_2)).toEqual(false)
     })
   })
 })
@@ -327,21 +339,23 @@ function createMockState(args = {}) {
     dietaryClaims: Immutable.fromJS([
       {
         name: 'Gluten-free',
-        slug: 'gluten-free'
-      }
+        slug: 'gluten-free',
+      },
     ]),
-    meals: Immutable.fromJS([{
-      numPortions: 2,
-      surcharge: {
-        listPrice: '0.99'
-      }
-    },
-    {
-      numPortions: 4,
-      surcharge: {
-        listPrice: '1.99'
-      }
-    }])
+    meals: Immutable.fromJS([
+      {
+        numPortions: 2,
+        surcharge: {
+          listPrice: '0.99',
+        },
+      },
+      {
+        numPortions: 4,
+        surcharge: {
+          listPrice: '1.99',
+        },
+      },
+    ]),
   })
 
   const RECIPE_2 = Immutable.Map({
@@ -354,10 +368,10 @@ function createMockState(args = {}) {
     id: COLLECTION_ID,
     published: true,
     shortTitle: 'One Category',
-    recipesInCollection: Immutable.List([RECIPE_1, RECIPE_2].map(r => r.get('id'))),
+    recipesInCollection: Immutable.List([RECIPE_1, RECIPE_2].map((r) => r.get('id'))),
     requirements: Immutable.fromJS({
       dietary_claims: args.dietaryClaims || [],
-    })
+    }),
   })
 
   const state = {
@@ -370,19 +384,18 @@ function createMockState(args = {}) {
       recipes: {},
       currentMenuId: menuId,
     }),
-    menuRecipeStock: args.menuRecipeStock || Immutable.fromJS({
-      [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
-      [RECIPE_ID_2]: { 2: 1000, 4: 1000 },
-    }),
-    menuRecipes: Immutable.fromJS([
-      RECIPE_1.get('id'),
-      RECIPE_2.get('id'),
-    ]),
+    menuRecipeStock:
+      args.menuRecipeStock ||
+      Immutable.fromJS({
+        [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
+        [RECIPE_ID_2]: { 2: 1000, 4: 1000 },
+      }),
+    menuRecipes: Immutable.fromJS([RECIPE_1.get('id'), RECIPE_2.get('id')]),
     menuCollections: Immutable.fromJS({
       [COLLECTION_A.get('id')]: COLLECTION_A,
     }),
     menuRecipeDetails: Immutable.Map({
-      recipeId: '1234'
+      recipeId: '1234',
     }),
     menu: Immutable.fromJS({
       recipeId: RECIPE_ID_1,
@@ -391,19 +404,23 @@ function createMockState(args = {}) {
       menuVariants: Immutable.fromJS({
         [menuId]: {
           [RECIPE_ID_1]: {
-            alternatives: [{
-              id: 'UUID_1',
-              coreRecipeId: RECIPE_ID_2,
-              displayName: RECIPE_2.get('title'),
-            }]
+            alternatives: [
+              {
+                id: 'UUID_1',
+                coreRecipeId: RECIPE_ID_2,
+                displayName: RECIPE_2.get('title'),
+              },
+            ],
           },
           [RECIPE_ID_2]: {
-            alternatives: [{
-              id: 'UUID_2',
-              coreRecipeId: RECIPE_ID_1,
-            }]
+            alternatives: [
+              {
+                id: 'UUID_2',
+                coreRecipeId: RECIPE_ID_1,
+              },
+            ],
           },
-        }
+        },
       }),
     }),
   }

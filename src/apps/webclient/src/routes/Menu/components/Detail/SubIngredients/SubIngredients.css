@@ -1,4 +1,4 @@
 .bold {
-	composes: textBold from 'styles/typography.css';
-	text-transform: uppercase;
+  composes: textBold from 'styles/typography.css';
+  text-transform: uppercase;
 }

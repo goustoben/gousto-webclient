@@ -18,9 +18,11 @@ const propTypes = {
   onClose: PropTypes.func.isRequired,
 }
 
-const RecipesInBasketProgressPresentation = (
-  { isAuthenticated, selectedRecipesCount, onClose }
-) => {
+const RecipesInBasketProgressPresentation = ({
+  isAuthenticated,
+  selectedRecipesCount,
+  onClose,
+}) => {
   const { maxRecipesNum } = basketConfig
   const percentage = Math.round((selectedRecipesCount / maxRecipesNum) * 100)
 
@@ -34,32 +36,35 @@ const RecipesInBasketProgressPresentation = (
       offsetVertical="8rem"
       onCloseIconClick={() => onClose(maxRecipesNum, percentage)}
     >
-      {
-        isAuthenticated ? (
-          <div className={css.wrapExtraInfo}>
-            <ExtraInfo>
-              <ExtraInfoMain>
-                <RecipesInBasketProgressContent selectedRecipesCount={selectedRecipesCount} percentage={percentage} />
-              </ExtraInfoMain>
-              <ExtraInfoSecondary label="Next:" title="Market items">
-                <LayoutContentWrapper>
-                  <div className={css.extraInfo}>
-                    You can add desserts, drinks, snacks & more from the Gousto Market once you confirm your order.
-                  </div>
-                </LayoutContentWrapper>
-              </ExtraInfoSecondary>
-            </ExtraInfo>
-          </div>
-        ) : (
-          <RecipesInBasketProgressContent selectedRecipesCount={selectedRecipesCount} percentage={percentage} />
-        )
-      }
+      {isAuthenticated ? (
+        <div className={css.wrapExtraInfo}>
+          <ExtraInfo>
+            <ExtraInfoMain>
+              <RecipesInBasketProgressContent
+                selectedRecipesCount={selectedRecipesCount}
+                percentage={percentage}
+              />
+            </ExtraInfoMain>
+            <ExtraInfoSecondary label="Next:" title="Market items">
+              <LayoutContentWrapper>
+                <div className={css.extraInfo}>
+                  You can add desserts, drinks, snacks & more from the Gousto Market once you
+                  confirm your order.
+                </div>
+              </LayoutContentWrapper>
+            </ExtraInfoSecondary>
+          </ExtraInfo>
+        </div>
+      ) : (
+        <RecipesInBasketProgressContent
+          selectedRecipesCount={selectedRecipesCount}
+          percentage={percentage}
+        />
+      )}
     </FloatCard>
   )
 }
 
 RecipesInBasketProgressPresentation.propTypes = propTypes
 
-export {
-  RecipesInBasketProgressPresentation
-}
+export { RecipesInBasketProgressPresentation }

@@ -12,19 +12,26 @@ describe('BasketValidationErrorModal', () => {
       shouldShowSwapButton: false,
       basketRecipeSwap: () => {},
       closeModal: () => {},
-      brokenRulesToDisplay: [{
-        description: 'Only 1 oven ready meal is available per order',
-        recipes: [{
-          imageUrl: 'url-for-image',
-          title: 'Chicken'}]
-      },
-      {
-        description: 'Only 1 new-rule meal is available per order',
-        recipes: [{
-          imageUrl: 'url-for-image',
-          title: 'Chicken'
-        }]
-      }]
+      brokenRulesToDisplay: [
+        {
+          description: 'Only 1 oven ready meal is available per order',
+          recipes: [
+            {
+              imageUrl: 'url-for-image',
+              title: 'Chicken',
+            },
+          ],
+        },
+        {
+          description: 'Only 1 new-rule meal is available per order',
+          recipes: [
+            {
+              imageUrl: 'url-for-image',
+              title: 'Chicken',
+            },
+          ],
+        },
+      ],
     }
     wrapper = shallow(<BasketValidationErrorModal {...props} />)
   })
@@ -55,19 +62,26 @@ describe('BasketValidationErrorModal', () => {
         shouldShowSwapButton: false,
         basketRecipeSwap: () => {},
         closeModal: closeModalFunction,
-        brokenRulesToDisplay: [{
-          description: 'Only 1 oven ready meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'}]
-        },
-        {
-          description: 'Only 1 new-rule meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'
-          }]
-        }]
+        brokenRulesToDisplay: [
+          {
+            description: 'Only 1 oven ready meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+          {
+            description: 'Only 1 new-rule meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+        ],
       }
       wrapper = shallow(<BasketValidationErrorModal {...props} />)
     })
@@ -92,19 +106,26 @@ describe('BasketValidationErrorModal', () => {
         shouldShowSwapButton: true,
         basketRecipeSwap,
         closeModal: () => {},
-        brokenRulesToDisplay: [{
-          description: 'Only 1 oven ready meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'}]
-        },
-        {
-          description: 'Only 1 new-rule meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'
-          }]
-        }]
+        brokenRulesToDisplay: [
+          {
+            description: 'Only 1 oven ready meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+          {
+            description: 'Only 1 new-rule meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+        ],
       }
       wrapper = shallow(<BasketValidationErrorModal {...props} />)
     })

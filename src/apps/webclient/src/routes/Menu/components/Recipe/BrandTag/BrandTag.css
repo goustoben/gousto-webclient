@@ -6,7 +6,7 @@
   font-size: sizeXXS;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  
+
   @media ScreenSMMin {
     font-size: sizeXS;
   }

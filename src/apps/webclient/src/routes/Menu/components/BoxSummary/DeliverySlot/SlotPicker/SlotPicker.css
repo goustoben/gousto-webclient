@@ -4,68 +4,68 @@
 @value TertiaryBgColor from 'styles/buttons.css';
 
 .label {
-	composes: textBold from 'styles/typography.css';
-	font-size: sizeSM;
-	text-transform: none;
+  composes: textBold from 'styles/typography.css';
+  font-size: sizeSM;
+  text-transform: none;
 }
 .blockLabel {
-    composes: label;
-    composes: block from 'styles/display.css';
+  composes: label;
+  composes: block from 'styles/display.css';
 }
 .inlineLabel {
-    composes: label;
-    margin-left: SpacingXXS;
+  composes: label;
+  margin-left: SpacingXXS;
 }
 .fullWidth {
-	composes: inlineBlock from 'styles/display.css';
-    width: 100%;
-    position: relative;
+  composes: inlineBlock from 'styles/display.css';
+  width: 100%;
+  position: relative;
 }
 .compact {
-    line-height: 19px;
+  line-height: 19px;
 }
 
-.disableLabel::before  {
-    content: '';
-    height: 1px;
-    width: 50%;
-    background-color: Duckegg;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
+.disableLabel::before {
+  content: '';
+  height: 1px;
+  width: 50%;
+  background-color: Duckegg;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
 }
 
 .disabledLine {
-    height: 1px;
-    background-color: Bluecheese50;
-    position: absolute;
+  height: 1px;
+  background-color: Bluecheese50;
+  position: absolute;
 }
 
 .disabledLine1 {
-    composes: disabledLine;
-    transform: translateY(18px) rotate(20deg);
-    width: 100%;
+  composes: disabledLine;
+  transform: translateY(18px) rotate(20deg);
+  width: 100%;
 }
 
 .disabledLine2 {
-    composes: disabledLine;
-    transform: translateY(18px) rotate(-20deg);
-    width: 100%;
+  composes: disabledLine;
+  transform: translateY(18px) rotate(-20deg);
+  width: 100%;
 }
 
 .bigDisabledLine1 {
-    composes: disabledLine;
-    transform: rotate(7deg);
-    top: 19px;
-    width: 113%;
+  composes: disabledLine;
+  transform: rotate(7deg);
+  top: 19px;
+  width: 113%;
 }
 
 .bigDisabledLine2 {
-    composes: disabledLine;
-    transform: rotate(-7deg);
-    top: 19px;
-    left: -36px;
-    width: 113%;
+  composes: disabledLine;
+  transform: rotate(-7deg);
+  top: 19px;
+  left: -36px;
+  width: 113%;
 }

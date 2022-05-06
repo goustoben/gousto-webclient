@@ -13,7 +13,7 @@ describe('BasketValidationErrorModalContainer', () => {
     beforeEach(() => {
       const mockStore = configureMockStore()
       const store = mockStore({
-        error: Immutable.fromJS({})
+        error: Immutable.fromJS({}),
       })
 
       wrapper = shallow(<BasketValidationErrorModalContainer store={store} />)
@@ -27,8 +27,9 @@ describe('BasketValidationErrorModalContainer', () => {
           shouldShow: false,
           shouldShowSwapButton: false,
           basketRecipeSwap: expect.any(Function),
-          title: 'Basket Not Valid'
-        }))
+          title: 'Basket Not Valid',
+        }),
+      )
     })
   })
 
@@ -37,30 +38,39 @@ describe('BasketValidationErrorModalContainer', () => {
       beforeEach(() => {
         const getBasketNotValidErrorSpy = safeJestMock(statusSelectors, 'getBasketNotValidError')
         const getFormatedRulesMessageSpy = safeJestMock(basketSelectors, 'getFormatedRulesMessage')
-        getFormatedRulesMessageSpy.mockReturnValue([{
-          description: 'Only 1 oven ready meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'}]
-        },
-        {
-          description: 'Only 1 new-rule meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'
-          }]
-        }])
+        getFormatedRulesMessageSpy.mockReturnValue([
+          {
+            description: 'Only 1 oven ready meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+          {
+            description: 'Only 1 new-rule meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+        ])
         getBasketNotValidErrorSpy.mockReturnValue({
           errorTitle: 'Basket Not Valid',
-          rules: [{
-            name: 'rule-name',
-            message: 'Only 1 oven ready meal is available per order',
-            items: ['123']
-          }]
+          rules: [
+            {
+              name: 'rule-name',
+              message: 'Only 1 oven ready meal is available per order',
+              items: ['123'],
+            },
+          ],
         })
         const mockStore = configureMockStore()
         const store = mockStore({
-          error: Immutable.fromJS({})
+          error: Immutable.fromJS({}),
         })
 
         wrapper = shallow(<BasketValidationErrorModalContainer store={store} />)
@@ -68,25 +78,33 @@ describe('BasketValidationErrorModalContainer', () => {
       test('should render BasketValidationErrorModal with the right props', () => {
         expect(wrapper.find('BasketValidationErrorModal').props()).toEqual(
           expect.objectContaining({
-            brokenRulesToDisplay: [{
-              description: 'Only 1 oven ready meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'}]
-            },
-            {
-              description: 'Only 1 new-rule meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'
-              }]
-            }],
+            brokenRulesToDisplay: [
+              {
+                description: 'Only 1 oven ready meal is available per order',
+                recipes: [
+                  {
+                    imageUrl: 'url-for-image',
+                    title: 'Chicken',
+                  },
+                ],
+              },
+              {
+                description: 'Only 1 new-rule meal is available per order',
+                recipes: [
+                  {
+                    imageUrl: 'url-for-image',
+                    title: 'Chicken',
+                  },
+                ],
+              },
+            ],
             closeModal: expect.any(Function),
             shouldShow: true,
             shouldShowSwapButton: false,
             basketRecipeSwap: expect.any(Function),
-            title: 'Basket Not Valid'
-          }))
+            title: 'Basket Not Valid',
+          }),
+        )
       })
     })
 
@@ -94,32 +112,41 @@ describe('BasketValidationErrorModalContainer', () => {
       beforeEach(() => {
         const getBasketNotValidErrorSpy = safeJestMock(statusSelectors, 'getBasketNotValidError')
         const getFormatedRulesMessageSpy = safeJestMock(basketSelectors, 'getFormatedRulesMessage')
-        getFormatedRulesMessageSpy.mockReturnValue([{
-          description: 'Only 1 oven ready meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'}]
-        },
-        {
-          description: 'Only 1 new-rule meal is available per order',
-          recipes: [{
-            imageUrl: 'url-for-image',
-            title: 'Chicken'
-          }]
-        }])
+        getFormatedRulesMessageSpy.mockReturnValue([
+          {
+            description: 'Only 1 oven ready meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+          {
+            description: 'Only 1 new-rule meal is available per order',
+            recipes: [
+              {
+                imageUrl: 'url-for-image',
+                title: 'Chicken',
+              },
+            ],
+          },
+        ])
         getBasketNotValidErrorSpy.mockReturnValue({
           errorTitle: 'Basket Not Valid',
           recipeId: '1234',
-          rules: [{
-            name: 'rule-name',
-            message: 'Only 1 oven ready meal is available per order',
-            items: ['123']
-          }]
+          rules: [
+            {
+              name: 'rule-name',
+              message: 'Only 1 oven ready meal is available per order',
+              items: ['123'],
+            },
+          ],
         })
 
         const mockStore = configureMockStore()
         const store = mockStore({
-          error: Immutable.fromJS({})
+          error: Immutable.fromJS({}),
         })
 
         wrapper = shallow(<BasketValidationErrorModalContainer store={store} />)
@@ -127,27 +154,34 @@ describe('BasketValidationErrorModalContainer', () => {
       test('should render BasketValidationErrorModal with the right props', () => {
         expect(wrapper.find('BasketValidationErrorModal').props()).toEqual(
           expect.objectContaining({
-            brokenRulesToDisplay: [{
-              description: 'Only 1 oven ready meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'}]
-            },
-            {
-              description: 'Only 1 new-rule meal is available per order',
-              recipes: [{
-                imageUrl: 'url-for-image',
-                title: 'Chicken'
-              }]
-            }],
+            brokenRulesToDisplay: [
+              {
+                description: 'Only 1 oven ready meal is available per order',
+                recipes: [
+                  {
+                    imageUrl: 'url-for-image',
+                    title: 'Chicken',
+                  },
+                ],
+              },
+              {
+                description: 'Only 1 new-rule meal is available per order',
+                recipes: [
+                  {
+                    imageUrl: 'url-for-image',
+                    title: 'Chicken',
+                  },
+                ],
+              },
+            ],
             closeModal: expect.any(Function),
             shouldShow: true,
             shouldShowSwapButton: true,
             basketRecipeSwap: expect.any(Function),
-            title: 'Basket Not Valid'
-          }))
+            title: 'Basket Not Valid',
+          }),
+        )
       })
     })
   })
 })
-

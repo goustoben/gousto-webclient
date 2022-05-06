@@ -9,13 +9,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
 
     const {
-      link: {
-        collectionId
-      }
+      link: { collectionId },
     } = ownProps.headerAttributes
 
     dispatch(merchandisingBannerClick(collectionId))
-  }
+  },
 })
 
 const WaveLinkHeaderContainer = connect(null, mapDispatchToProps)(WaveLinkHeader)

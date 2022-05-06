@@ -9,17 +9,22 @@ const mapStateToProps = (state) => {
   const basketRuleBroken = getBasketNotValidError(state)
   const hasBasketError = Boolean(basketRuleBroken)
 
-  return ({
+  return {
     title: hasBasketError ? basketRuleBroken.errorTitle : 'Basket Not Valid',
     shouldShow: hasBasketError,
     shouldShowSwapButton: hasBasketError && Boolean(basketRuleBroken.recipeId),
-    brokenRulesToDisplay: hasBasketError ? getFormatedRulesMessage(state, basketRuleBroken.rules) : []
-  })
+    brokenRulesToDisplay: hasBasketError
+      ? getFormatedRulesMessage(state, basketRuleBroken.rules)
+      : [],
+  }
 }
 
 const mapDispatchToProps = {
   closeModal: clearBasketNotValidError,
-  basketRecipeSwap
+  basketRecipeSwap,
 }
 
-export const BasketValidationErrorModalContainer = connect(mapStateToProps, mapDispatchToProps)(BasketValidationErrorModal)
+export const BasketValidationErrorModalContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BasketValidationErrorModal)

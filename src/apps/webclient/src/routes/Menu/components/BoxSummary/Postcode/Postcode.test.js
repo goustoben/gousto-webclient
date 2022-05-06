@@ -43,8 +43,7 @@ describe('Postcode', () => {
       expect(wrapper.find(TextInput).prop('color')).toEqual('secondary')
     })
     test('should not change the className of the leading text to be .errorText', () => {
-      expect(wrapper.find('p').at(1).prop('className')
-        .indexOf(css.errorText)).toEqual(-1)
+      expect(wrapper.find('p').at(1).prop('className').indexOf(css.errorText)).toEqual(-1)
     })
     test('should not show the button to be pending', () => {
       expect(wrapper.find(Button).prop('pending')).toEqual(false)
@@ -53,7 +52,13 @@ describe('Postcode', () => {
     describe('when the button is clicked', () => {
       test('should call the boxSummaryNext function prop', () => {
         const boxSummaryNextSpy = jest.fn()
-        wrapper = shallow(<Postcode tempPostcode="w30df" boxSummaryNext={boxSummaryNextSpy} setTempPostcode={setTempPostcodeSpy} />)
+        wrapper = shallow(
+          <Postcode
+            tempPostcode="w30df"
+            boxSummaryNext={boxSummaryNextSpy}
+            setTempPostcode={setTempPostcodeSpy}
+          />,
+        )
         wrapper.find(Button).simulate('click')
         expect(boxSummaryNextSpy).toHaveBeenCalled()
       })
@@ -70,7 +75,13 @@ describe('Postcode', () => {
     describe('when the Form is submitted', () => {
       test('should call the boxSummaryNextSpy function prop when the Form is submitted', () => {
         const boxSummaryNextSpy = jest.fn()
-        wrapper = shallow(<Postcode boxSummaryNext={boxSummaryNextSpy} tempPostcode="w30df" setTempPostcode={setTempPostcodeSpy} />)
+        wrapper = shallow(
+          <Postcode
+            boxSummaryNext={boxSummaryNextSpy}
+            tempPostcode="w30df"
+            setTempPostcode={setTempPostcodeSpy}
+          />,
+        )
         wrapper.find(Form).simulate('submit')
         expect(boxSummaryNextSpy).toHaveBeenCalled()
       })
@@ -93,8 +104,7 @@ describe('Postcode', () => {
       expect(wrapper.find(TextInput).prop('color')).toEqual('primary')
     })
     test('should change the className of the error text to be .errorText', () => {
-      expect(wrapper.find('p').at(1).prop('className')
-        .indexOf(css.errorText)).not.toEqual(-1)
+      expect(wrapper.find('p').at(1).prop('className').indexOf(css.errorText)).not.toEqual(-1)
     })
   })
 
@@ -149,7 +159,8 @@ describe('Postcode', () => {
           billing_default: false,
           state: 'valid',
           premium_delivery: true,
-        }, {
+        },
+        {
           id: '325007',
           deleted: false,
           user_id: '77213',
@@ -166,9 +177,16 @@ describe('Postcode', () => {
           billing_default: false,
           state: 'valid',
           premium_delivery: true,
-        }])
+        },
+      ])
       basketChosenAddressChangeSpy = jest.fn()
-      wrapper = shallow(<Postcode addresses={addresses} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
+      wrapper = shallow(
+        <Postcode
+          addresses={addresses}
+          basketChosenAddressChange={basketChosenAddressChangeSpy}
+          setTempPostcode={setTempPostcodeSpy}
+        />,
+      )
     })
 
     test('should not show me a textinput', () => {
@@ -181,10 +199,12 @@ describe('Postcode', () => {
 
     test('should have a dropdowninput with the addresses mapped to it', () => {
       const actual = wrapper.find(DropdownInput).prop('options')
-      const expected = addresses.map(address => ({
-        label: `${address.get('name')}, ${address.get('postcode')}`,
-        value: address.get('id'),
-      })).toArray()
+      const expected = addresses
+        .map((address) => ({
+          label: `${address.get('name')}, ${address.get('postcode')}`,
+          value: address.get('id'),
+        }))
+        .toArray()
       expect(actual).toEqual(expected)
     })
 
@@ -193,7 +213,15 @@ describe('Postcode', () => {
       const changePostcodeSpy = jest.fn()
       const changeAddressSpy = jest.fn()
 
-      wrapper = shallow(<Postcode addresses={addresses} changePostcode={changePostcodeSpy} basketChosenAddressChange={basketChosenAddressChangeSpy} changeAddress={changeAddressSpy} setTempPostcode={setTempPostcodeSpy} />)
+      wrapper = shallow(
+        <Postcode
+          addresses={addresses}
+          changePostcode={changePostcodeSpy}
+          basketChosenAddressChange={basketChosenAddressChangeSpy}
+          changeAddress={changeAddressSpy}
+          setTempPostcode={setTempPostcodeSpy}
+        />,
+      )
       wrapper.find(DropdownInput).simulate('change', address.get('id'))
 
       expect(basketChosenAddressChangeSpy).toHaveBeenCalledTimes(1)
@@ -205,7 +233,16 @@ describe('Postcode', () => {
       const changePostcodeSpy = jest.fn()
       const address = addresses.get(1)
 
-      wrapper = shallow(<Postcode addresses={addresses} boxSummaryNext={boxSummaryNextSpy} changePostcode={changePostcodeSpy} chosenAddress={address} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
+      wrapper = shallow(
+        <Postcode
+          addresses={addresses}
+          boxSummaryNext={boxSummaryNextSpy}
+          changePostcode={changePostcodeSpy}
+          chosenAddress={address}
+          basketChosenAddressChange={basketChosenAddressChangeSpy}
+          setTempPostcode={setTempPostcodeSpy}
+        />,
+      )
       wrapper.find(DropdownInput).simulate('change', address.get('id'))
       wrapper.find(Button).simulate('click')
 
@@ -215,7 +252,14 @@ describe('Postcode', () => {
     describe('when the user has chosen an option', () => {
       test('should enable the continue button', () => {
         const address = addresses.get(1)
-        wrapper = shallow(<Postcode addresses={addresses} chosenAddress={address} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
+        wrapper = shallow(
+          <Postcode
+            addresses={addresses}
+            chosenAddress={address}
+            basketChosenAddressChange={basketChosenAddressChangeSpy}
+            setTempPostcode={setTempPostcodeSpy}
+          />,
+        )
         wrapper.find(DropdownInput).simulate('change', address.get('id'))
         expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(false)
       })
@@ -223,7 +267,13 @@ describe('Postcode', () => {
 
     describe('if the chosenAddress prop is not set', () => {
       test('should disable the next button', () => {
-        wrapper = shallow(<Postcode addresses={addresses} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
+        wrapper = shallow(
+          <Postcode
+            addresses={addresses}
+            basketChosenAddressChange={basketChosenAddressChangeSpy}
+            setTempPostcode={setTempPostcodeSpy}
+          />,
+        )
         expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(true)
       })
     })
@@ -232,7 +282,9 @@ describe('Postcode', () => {
   describe('when fullScreenBoxSummary true', () => {
     beforeEach(() => {
       setTempPostcodeSpy = jest.fn()
-      wrapper = shallow(<Postcode setTempPostcode={setTempPostcodeSpy} shouldDisplayFullScreenBoxSummary />)
+      wrapper = shallow(
+        <Postcode setTempPostcode={setTempPostcodeSpy} shouldDisplayFullScreenBoxSummary />,
+      )
     })
     test('should render stickyButton', () => {
       expect(wrapper.find('.stickyButton')).toHaveLength(1)
@@ -242,7 +294,9 @@ describe('Postcode', () => {
   describe('when fullScreenBoxSummary false', () => {
     beforeEach(() => {
       setTempPostcodeSpy = jest.fn()
-      wrapper = shallow(<Postcode setTempPostcode={setTempPostcodeSpy} shouldDisplayFullScreenBoxSummary={false} />)
+      wrapper = shallow(
+        <Postcode setTempPostcode={setTempPostcodeSpy} shouldDisplayFullScreenBoxSummary={false} />,
+      )
     })
     test('should NOT render stickyButton', () => {
       expect(wrapper.find('.stickyButton').exists()).toBe(false)

@@ -63,7 +63,7 @@ describe('BannerButton', () => {
       wrapper = mount(
         <Provider store={mockedStore}>
           <BannerButton {...props} boxSummaryCurrentView={boxSummaryViews.DETAILS} open={openSpy} />
-        </Provider>
+        </Provider>,
       )
     })
 
@@ -85,7 +85,7 @@ describe('BannerButton', () => {
             open={openSpy}
             view="desktop"
           />
-        </Provider>
+        </Provider>,
       )
       expect(wrapper.find(CheckoutContainer)).toHaveLength(1)
       expect(wrapper.find(CheckoutContainer).prop('view')).toEqual('desktop')
@@ -98,7 +98,7 @@ describe('BannerButton', () => {
       wrapper = mount(
         <Provider store={mockedStore}>
           <BannerButton {...props} boxSummaryCurrentView={boxSummaryViews.DETAILS} open={openSpy} />
-        </Provider>
+        </Provider>,
       )
 
       wrapper.simulate('mouseEnter')

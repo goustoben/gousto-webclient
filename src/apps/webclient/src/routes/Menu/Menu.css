@@ -11,84 +11,84 @@
 @value oneHundrendPercent 100%;
 
 .container {
-	background: Coconut;
-	padding-bottom: 75px;
-	min-height: 500px;
+  background: Coconut;
+  padding-bottom: 75px;
+  min-height: 500px;
 }
 
 .blur {
-	composes: blur from 'styles/effects.css';
-	@media ScreenXSMax {
-		-webkit-filter: none;
-	}
+  composes: blur from 'styles/effects.css';
+  @media ScreenXSMax {
+    -webkit-filter: none;
+  }
 }
 
 .greyOverlay {
-	composes: fixed from 'styles/position.css';
-	left: 0;
-	top: 0;
+  composes: fixed from 'styles/position.css';
+  left: 0;
+  top: 0;
 
-	width: 100%;
-	height: 100%;
-	background-color: #000;
-	opacity: 0;
-	z-index: 100;
-	pointer-events: none;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0;
+  z-index: 100;
+  pointer-events: none;
 
-	@media ScreenSMMin {
-		transition: opacity 0.3s ease-in-out;
-	}
+  @media ScreenSMMin {
+    transition: opacity 0.3s ease-in-out;
+  }
 
-	@media ScreenXSMax {
-		transition: none;
-	}
+  @media ScreenXSMax {
+    transition: none;
+  }
 
-	@media screen and (-webkit-min-device-pixel-ratio:0) {
-		margin-top: -15px;
-	}
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    margin-top: -15px;
+  }
 }
 
 .greyOverlayShow {
-	composes: greyOverlay;
-	composes: fadeIn from 'styles/effects.css';
+  composes: greyOverlay;
+  composes: fadeIn from 'styles/effects.css';
 
-	pointer-events: all;
-	opacity: 0.4;
+  pointer-events: all;
+  opacity: 0.4;
 
-	@media ScreenXSMax {
-		animation: none;
-	}
+  @media ScreenXSMax {
+    animation: none;
+  }
 }
 
 .menuContainer {
-	composes: pageContainer from 'styles/layout.css';
-	padding-top: 3rem;
+  composes: pageContainer from 'styles/layout.css';
+  padding-top: 3rem;
 
-	@media ScreenXSMax {
-		padding-left: 0;
-		padding-right: 0;
-	}
+  @media ScreenXSMax {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .legal {
-	composes: textXS textCenter from 'styles/typography.css';
-	composes: marginLG from 'sass-loader!styles/spacing.scss';
-	color: NewGrey;
+  composes: textXS textCenter from 'styles/typography.css';
+  composes: marginLG from 'sass-loader!styles/spacing.scss';
+  color: NewGrey;
 }
 
 .willFade {
-	opacity: 1;
-	transition: 0.5s opacity;
+  opacity: 1;
+  transition: 0.5s opacity;
 }
 
 .fadeOut {
-	composes: willFade;
-	opacity: 0.4;
-	pointer-events: none;
+  composes: willFade;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .fade--recommendations {
-	composes: willFade;
-	opacity: 0;
-	pointer-events: none;
+  composes: willFade;
+  opacity: 0;
+  pointer-events: none;
 }

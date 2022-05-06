@@ -17,10 +17,7 @@ export const handlers = [
     const userId = getUserId(req)
 
     if (userId === user.withError) {
-      return res(
-        ctx.status(500),
-        ctx.json(errorSideFixture),
-      )
+      return res(ctx.status(500), ctx.json(errorSideFixture))
     }
 
     if (userId === user.withOutSides) {

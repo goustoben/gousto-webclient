@@ -12,7 +12,7 @@ export const createState = (partialOverwrite = {}) => {
     ...rest
   } = partialOverwrite
 
-  return ({
+  return {
     basket: Immutable.fromJS({
       currentMenuId: '433',
       date: '2019-10-10',
@@ -22,20 +22,20 @@ export const createState = (partialOverwrite = {}) => {
         'recipe-id-2': 2,
       },
       numPortions: 2,
-      ...basket
+      ...basket,
     }),
     menuService: {
       recipe: {
         'recipe-id-1': {
-          id: 'recipe-uuid-1'
+          id: 'recipe-uuid-1',
         },
         'recipe-id-2': {
-          id: 'recipe-uuid-2'
+          id: 'recipe-uuid-2',
         },
       },
-      ...menuService
+      ...menuService,
     },
-    boxSummaryDeliveryDays: Immutable.fromJS( {
+    boxSummaryDeliveryDays: Immutable.fromJS({
       '2019-10-10': {
         id: 'delivery-days-uuid',
         date: '2019-10-10',
@@ -46,25 +46,25 @@ export const createState = (partialOverwrite = {}) => {
             id: 'slot-uuid',
             coreSlotId: 'slot-core-id',
             daySlotLeadTimeId: 'day-slot-lead-time-uuid',
-            ...slot
+            ...slot,
           },
         ],
       },
     }),
     features: Immutable.fromJS({
       ndd: {
-        value: 'features-ndd-day-slot-lead-time-uuid'
+        value: 'features-ndd-day-slot-lead-time-uuid',
       },
-      ...features
+      ...features,
     }),
     user: Immutable.fromJS({
       orders: Immutable.List([]),
       deliveryTariffId: 'user-day-slot-lead-time-uuid',
-      ...user
+      ...user,
     }),
     auth: Immutable.fromJS({
-      ...auth
+      ...auth,
     }),
     ...rest,
-  })
+  }
 }

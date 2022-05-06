@@ -11,16 +11,18 @@ import { Description } from '../../Description'
 
 import css from './ExpandBoxSummaryButton.css'
 
-export const Contents = ({ numPortions, numRecipes, date, slotId, warning, isSimplifyBasketBarEnabled }) => (
+export const Contents = ({
+  numPortions,
+  numRecipes,
+  date,
+  slotId,
+  warning,
+  isSimplifyBasketBarEnabled,
+}) => (
   <div className={classNames({ [css.buttonTextWrapper]: isSimplifyBasketBarEnabled })}>
     {isSimplifyBasketBarEnabled ? (
       <>
-        <Title
-          view="desktop"
-          numRecipes={numRecipes}
-          date={date}
-          finalisedSlot={slotId !== ''}
-        />
+        <Title view="desktop" numRecipes={numRecipes} date={date} finalisedSlot={slotId !== ''} />
         <Description
           view="desktop"
           numPortions={numPortions}
@@ -32,12 +34,7 @@ export const Contents = ({ numPortions, numRecipes, date, slotId, warning, isSim
     ) : (
       <>
         {numRecipes > 0 ? <span className={css.badge}>{numRecipes}</span> : ''}
-        <Title
-          view="desktop"
-          date={date}
-          finalisedSlot={slotId !== ''}
-          numRecipes={numRecipes}
-        />
+        <Title view="desktop" date={date} finalisedSlot={slotId !== ''} numRecipes={numRecipes} />
         <Description
           numPortions={numPortions}
           numRecipes={numRecipes}

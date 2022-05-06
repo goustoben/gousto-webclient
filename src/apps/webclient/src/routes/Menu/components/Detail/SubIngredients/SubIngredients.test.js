@@ -11,7 +11,9 @@ describe('<SubIngredients/>', () => {
   })
 
   test('it should forward className to the paragraph element', () => {
-    const { container } = render(<SubIngredients className="hey" allergens={allergens} subIngredients="cheese" />)
+    const { container } = render(
+      <SubIngredients className="hey" allergens={allergens} subIngredients="cheese" />,
+    )
 
     expect(container).toContainHTML('<p class="hey">cheese</p>')
   })
@@ -77,11 +79,11 @@ describe('<SubIngredients/>', () => {
     'should render bold for all this ingredient (%s) as its part of the hardcoded list of allergens',
     (ingredient) => {
       const { container } = render(
-        <SubIngredients allergens={allergens} subIngredients={ingredient} />
+        <SubIngredients allergens={allergens} subIngredients={ingredient} />,
       )
 
       expect(container).toContainHTML(`<p class=""><span class="bold">${ingredient}</span></p>`)
-    }
+    },
   )
 
   describe('when give a full descriptions with custom allergens', () => {
@@ -92,10 +94,12 @@ describe('<SubIngredients/>', () => {
           subIngredients={
             'May contain peanut, (nuts), tofu and sesame. \n\nAlso may contain 1 or 2rd garlic purée tasty-ness!'
           }
-        />
+        />,
       )
 
-      expect(container).toContainHTML('<p class="">May contain <span class="bold">peanut</span>, (<span class="bold">nuts</span>), <span class="bold">tofu</span> and <span class="bold">sesame</span>.  <br />  <br /> Also may contain 1 or 2rd garlic purée tasty-ness!</p>')
+      expect(container).toContainHTML(
+        '<p class="">May contain <span class="bold">peanut</span>, (<span class="bold">nuts</span>), <span class="bold">tofu</span> and <span class="bold">sesame</span>.  <br />  <br /> Also may contain 1 or 2rd garlic purée tasty-ness!</p>',
+      )
     })
   })
 })

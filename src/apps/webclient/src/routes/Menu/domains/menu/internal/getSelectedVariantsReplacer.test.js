@@ -10,11 +10,15 @@ describe('getSelectedVariantsReplacer produces recipe replacer function that', (
     const replacer = getSelectedVariantsReplacer({
       recipes: [RECIPE_1, RECIPE_2],
       replacementMap: {
-        [reference]: RECIPE_2.get('id')
+        [reference]: RECIPE_2.get('id'),
       },
     })
     test('returns alternative for given recipe', () => {
-      expect(replacer({reference, recipe: RECIPE_1})).toEqual({recipe: RECIPE_2, originalId: RECIPE_1.get('id'), reference})
+      expect(replacer({ reference, recipe: RECIPE_1 })).toEqual({
+        recipe: RECIPE_2,
+        originalId: RECIPE_1.get('id'),
+        reference,
+      })
     })
   })
 
@@ -24,7 +28,10 @@ describe('getSelectedVariantsReplacer produces recipe replacer function that', (
       replacementMap: {},
     })
     test('return original recipe', () => {
-      expect(replacer({recipe: RECIPE_1})).toEqual({recipe: RECIPE_1, originalId: RECIPE_1.get('id')})
+      expect(replacer({ recipe: RECIPE_1 })).toEqual({
+        recipe: RECIPE_1,
+        originalId: RECIPE_1.get('id'),
+      })
     })
   })
 })

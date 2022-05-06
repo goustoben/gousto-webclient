@@ -58,7 +58,7 @@ describe('VariantHeader', () => {
             useGetAlternativeOptionsForRecipeLight: [
               { id: '1200-1200', coreRecipeId: '1200', displayName: 'Recipe' },
               { id: '1230-1230', coreRecipeId: '1230', displayName: 'Alternative One' },
-              { id: '1234-1234', coreRecipeId: '1234', displayName: 'Alternative Two' }
+              { id: '1234-1234', coreRecipeId: '1234', displayName: 'Alternative Two' },
             ],
             isRecipeOutOfStock: false,
             recipeId: 'recipe ID',
@@ -116,19 +116,18 @@ const mockHooks = ({
   recipeId,
 } = {}) => {
   if (useGetAlternativeOptionsForRecipeLight !== undefined) {
-    jest.spyOn(MenuHooks, 'useGetAlternativeOptionsForRecipeLight')
+    jest
+      .spyOn(MenuHooks, 'useGetAlternativeOptionsForRecipeLight')
       .mockImplementation(() => () => useGetAlternativeOptionsForRecipeLight)
   }
 
   if (isRecipeOutOfStock !== undefined) {
-    jest.spyOn(MenuHooks, 'useStock')
-      .mockImplementation(() => ({
-        isRecipeOutOfStock: () => isRecipeOutOfStock,
-      }))
+    jest.spyOn(MenuHooks, 'useStock').mockImplementation(() => ({
+      isRecipeOutOfStock: () => isRecipeOutOfStock,
+    }))
   }
 
   if (recipeId !== undefined) {
-    jest.spyOn(RecipeContext, 'useRecipeField')
-      .mockImplementation(() => recipeId)
+    jest.spyOn(RecipeContext, 'useRecipeField').mockImplementation(() => recipeId)
   }
 }

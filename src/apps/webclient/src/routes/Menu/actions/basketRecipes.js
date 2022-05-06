@@ -13,8 +13,8 @@ import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { isOutOfStock } from '../selectors/recipe'
 import { sendClientMetric } from '../apis/clientMetrics'
 
-export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, orderId) => (
-  (dispatch, getState) => {
+export const validBasketRecipeAdd =
+  (recipeId, view, recipeInfo, maxRecipesNum, orderId) => (dispatch, getState) => {
     const state = getState()
     const { basket, menuRecipeStock, menuRecipes } = state
     const numPortions = basket.get('numPortions')
@@ -45,7 +45,7 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
         view,
         position: recipeInfo && recipeInfo.position,
         collection,
-        recipe_count: basket.get('recipes').size + 1,// The action is performed in the same time so the size is not updated yet
+        recipe_count: basket.get('recipes').size + 1, // The action is performed in the same time so the size is not updated yet
       },
     })
 
@@ -58,8 +58,18 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
       },
     })
 
-    const { basket: newBasket, menuRecipes: newMenuRecipes, menuRecipeStock: newMenuRecipeStock } = getState()
-    reachedLimit = limitReached(newBasket, newMenuRecipes, newMenuRecipeStock, undefined, maxRecipesNum)
+    const {
+      basket: newBasket,
+      menuRecipes: newMenuRecipes,
+      menuRecipeStock: newMenuRecipeStock,
+    } = getState()
+    reachedLimit = limitReached(
+      newBasket,
+      newMenuRecipes,
+      newMenuRecipeStock,
+      undefined,
+      maxRecipesNum,
+    )
     if (reachedLimit) {
       dispatch({
         type: actionTypes.BASKET_LIMIT_REACHED,
@@ -76,11 +86,11 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
     const prevRecipes = basket.get('recipes')
     const slotId = newBasket.get('slotId')
     const recipes = newBasket.get('recipes')
-    const {promoCode, UTM} = getUTMAndPromoCode(state)
+    const { promoCode, UTM } = getUTMAndPromoCode(state)
 
     let recipesCount = 0
 
-    recipes.forEach(count => {
+    recipes.forEach((count) => {
       recipesCount += count
     })
 
@@ -96,17 +106,17 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
       })
     }
   }
-)
 
-export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, orderId) => (
-  (dispatch, getState) => {
+export const basketRecipeAdd =
+  (recipeId, view, recipeInfo, maxRecipesNum, orderId) => (dispatch, getState) => {
     const state = getState()
     const basketBreakingRules = {
       errorTitle: 'Oven Ready meals',
       recipeId,
-      rules: validateMenuLimitsForBasket(state, recipeId)
+      rules: validateMenuLimitsForBasket(state, recipeId),
     }
-    const shouldCloseDetailsScreen = basketBreakingRules.rules.length && getMenuRecipeIdForDetails(state)
+    const shouldCloseDetailsScreen =
+      basketBreakingRules.rules.length && getMenuRecipeIdForDetails(state)
 
     if (shouldCloseDetailsScreen) {
       dispatch(menuRecipeDetailVisibilityChange())
@@ -121,60 +131,56 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, order
     dispatch(validBasketRecipeAdd(recipeId, view, recipeInfo, maxRecipesNum, orderId))
     dispatch(trackUserAddRemoveRecipe())
   }
-)
 
-export const basketRecipeRemove = (recipeId, view, position) => (
-  (dispatch, getState) => {
-    let state = getState()
-    const { basket } = state
-    const collection = getCurrentCollectionId(state)
-    dispatch({
-      type: actionTypes.BASKET_RECIPE_REMOVE,
+export const basketRecipeRemove = (recipeId, view, position) => (dispatch, getState) => {
+  let state = getState()
+  const { basket } = state
+  const collection = getCurrentCollectionId(state)
+  dispatch({
+    type: actionTypes.BASKET_RECIPE_REMOVE,
+    recipeId,
+    trackingData: {
+      actionType: trackingKeys.removeRecipe,
       recipeId,
+      view,
+      position,
+      collection,
+      recipe_count: basket.get('recipes').size - 1, // The action is performed in the same time so the size is not updated yet
+    },
+  })
+
+  const numPortions = getState().basket.get('numPortions')
+  dispatch({
+    type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+    stock: { [recipeId]: { [numPortions]: 1 } },
+  })
+
+  state = getState()
+  const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
+  if (!reachedLimit) {
+    dispatch({
+      type: actionTypes.BASKET_LIMIT_REACHED,
+      limitReached: reachedLimit,
       trackingData: {
-        actionType: trackingKeys.removeRecipe,
-        recipeId,
+        actionType: trackingKeys.basketLimit,
+        limitReached: reachedLimit,
         view,
-        position,
-        collection,
-        recipe_count: basket.get('recipes').size - 1,// The action is performed in the same time so the size is not updated yet
+        source: actionTypes.RECIPE_REMOVED,
       },
     })
-
-    const numPortions = getState().basket.get('numPortions')
-    dispatch({
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: { [recipeId]: { [numPortions]: 1 } },
-    })
-
-    state = getState()
-    const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
-    if (!reachedLimit) {
-      dispatch({
-        type: actionTypes.BASKET_LIMIT_REACHED,
-        limitReached: reachedLimit,
-        trackingData: {
-          actionType: trackingKeys.basketLimit,
-          limitReached: reachedLimit,
-          view,
-          source: actionTypes.RECIPE_REMOVED,
-        },
-      })
-    }
-    dispatch(trackUserAddRemoveRecipe())
   }
-)
+  dispatch(trackUserAddRemoveRecipe())
+}
 
-export const basketRecipeSwap = () =>
-  (dispatch, getState) => {
-    const basketNotValidError = getBasketNotValidError(getState())
+export const basketRecipeSwap = () => (dispatch, getState) => {
+  const basketNotValidError = getBasketNotValidError(getState())
 
-    if (basketNotValidError) {
-      const recipeFromBasket = basketNotValidError.rules[0].items[0]
-      const recipeToReplace = basketNotValidError.recipeId
+  if (basketNotValidError) {
+    const recipeFromBasket = basketNotValidError.rules[0].items[0]
+    const recipeToReplace = basketNotValidError.recipeId
 
-      dispatch(basketRecipeRemove(recipeFromBasket, 'swapModal'))
-      dispatch(validBasketRecipeAdd(recipeToReplace, 'swapModal'))
-      dispatch(clearBasketNotValidError())
-    }
+    dispatch(basketRecipeRemove(recipeFromBasket, 'swapModal'))
+    dispatch(validBasketRecipeAdd(recipeToReplace, 'swapModal'))
+    dispatch(clearBasketNotValidError())
   }
+}

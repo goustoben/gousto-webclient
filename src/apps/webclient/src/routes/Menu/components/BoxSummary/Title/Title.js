@@ -32,7 +32,14 @@ const defaultProps = {
   numRecipes: 0,
 }
 
-export function Title({ slotTime, date, view, spinnerClassName, spinnerContainerClassName, numRecipes }) {
+export function Title({
+  slotTime,
+  date,
+  view,
+  spinnerClassName,
+  spinnerContainerClassName,
+  numRecipes,
+}) {
   const { pricing, isPending } = usePricing()
   const spinnerClassNames = {
     [css.spinnerContainer]: true,

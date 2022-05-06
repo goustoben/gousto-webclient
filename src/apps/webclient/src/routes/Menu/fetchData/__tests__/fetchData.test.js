@@ -50,11 +50,13 @@ describe('menu fetchData', () => {
     pending: Immutable.Map({}),
     menu: menuInitialState,
     menuService: {
-      data: [{
-        id: '123',
-        ends_at: '2019-01-03T11:59:59+01:00'
-      }]
-    }
+      data: [
+        {
+          id: '123',
+          ends_at: '2019-01-03T11:59:59+01:00',
+        },
+      ],
+    },
   }
 
   const originalState = { ...state }
@@ -63,10 +65,10 @@ describe('menu fetchData', () => {
   let getState
 
   const query = {
-    error: null
+    error: null,
   }
   const params = {
-    orderId: null
+    orderId: null,
   }
 
   // we need to manually set up mocks for the thunks, because we don't want mocks around the non-thunk actions
@@ -126,13 +128,13 @@ describe('menu fetchData', () => {
       const force = false
       const paramsWithoutOrderId = {
         ...params,
-        orderId: null
+        orderId: null,
       }
 
       beforeEach(() => {
         const recipes = ['001', '002', '003', '004', '005', '006', '007', '008', '009']
         state.menuRecipes = Immutable.List(recipes)
-        state.menuCollections = state.menuCollections.set('123', { recipesInCollection: recipes } )
+        state.menuCollections = state.menuCollections.set('123', { recipesInCollection: recipes })
         state.menuRecipesUpdatedAt = moment()
         getUserMenuVariant.mockReturnValue('')
       })
@@ -148,33 +150,37 @@ describe('menu fetchData', () => {
       test('should dispatch pending action', async () => {
         await fetchData({ query, params }, false, false)(dispatch, getState)
 
-        expect(dispatch.mock.calls[0]).toEqual([{
-          type: actionTypes.PENDING,
-          key: actionTypes[actionTypes.MENU_FETCH_DATA],
-          value: true
-        }])
+        expect(dispatch.mock.calls[0]).toEqual([
+          {
+            type: actionTypes.PENDING,
+            key: actionTypes[actionTypes.MENU_FETCH_DATA],
+            value: true,
+          },
+        ])
       })
 
       describe('query has error', () => {
         const errorQuery = {
           ...query,
-          error: 'some-error'
+          error: 'some-error',
         }
 
         test('should dispatch error action', async () => {
           await fetchData({ query: errorQuery, params }, false, false)(dispatch, getState)
 
-          expect(dispatch.mock.calls[2]).toEqual([{
-            type: actionTypes.ERROR,
-            key: actionTypes[actionTypes.ORDER_SAVE],
-            value: 'some-error'
-          }])
+          expect(dispatch.mock.calls[2]).toEqual([
+            {
+              type: actionTypes.ERROR,
+              key: actionTypes[actionTypes.ORDER_SAVE],
+              value: 'some-error',
+            },
+          ])
         })
 
         describe('error is no-stock', () => {
           const noStockQuery = {
             ...query,
-            error: 'no-stock'
+            error: 'no-stock',
           }
 
           test('should dispatch menuLoadStock action', async () => {
@@ -194,7 +200,7 @@ describe('menu fetchData', () => {
         const orderId = '123'
         const paramsWithOrderId = {
           ...params,
-          orderId
+          orderId,
         }
 
         describe('is authenticated', () => {
@@ -208,7 +214,9 @@ describe('menu fetchData', () => {
             const menuLoadOrderDetailsResult = Symbol('fake action creator result')
 
             // use mockImplementation and only return the symbol if it's called with the expected orderId
-            actions.menuLoadOrderDetails.mockImplementation(loadOrderId => (loadOrderId === orderId ? menuLoadOrderDetailsResult : undefined))
+            actions.menuLoadOrderDetails.mockImplementation((loadOrderId) =>
+              loadOrderId === orderId ? menuLoadOrderDetailsResult : undefined,
+            )
 
             await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
 
@@ -217,10 +225,13 @@ describe('menu fetchData', () => {
 
           describe('menuLoadOrderDetails changes number of recipes in basket', () => {
             beforeEach(() => {
-              state.basket = state.basket.set('recipes', Immutable.fromJS({
-                200: 1,
-                250: 2
-              }))
+              state.basket = state.basket.set(
+                'recipes',
+                Immutable.fromJS({
+                  200: 1,
+                  250: 2,
+                }),
+              )
             })
 
             test('should dispatch basketRecipeAdd for each previous recipe', async () => {
@@ -229,7 +240,7 @@ describe('menu fetchData', () => {
               const menuLoadOrderDetailsResult = Symbol('fake action creator result')
               actions.menuLoadOrderDetails.mockReturnValue(menuLoadOrderDetailsResult)
 
-              dispatch.mockImplementation(event => {
+              dispatch.mockImplementation((event) => {
                 if (event === menuLoadOrderDetailsResult) {
                   return Promise.resolve(undefined).then(() => {
                     state.basket = originalState.basket
@@ -240,9 +251,13 @@ describe('menu fetchData', () => {
               })
 
               // just make it return an object with the recipe id to make for easier assertions
-              basketRecipeAddSpy.mockImplementation(recipeId => ({ recipeId }))
+              basketRecipeAddSpy.mockImplementation((recipeId) => ({ recipeId }))
 
-              await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
+              await fetchData(
+                { query, params: paramsWithOrderId },
+                false,
+                false,
+              )(dispatch, getState)
 
               expect(dispatch.mock.calls[4]).toEqual([{ recipeId: '200' }])
               expect(dispatch.mock.calls[5]).toEqual([{ recipeId: '250' }])
@@ -296,12 +311,14 @@ describe('menu fetchData', () => {
           test('should dispatch basket reset action with default shipping address', async () => {
             await fetchData({ query, params }, false, false)(dispatch, getState)
 
-            expect(dispatch.mock.calls[2]).toEqual([{
-              type: actionTypes.BASKET_RESET,
-              payload: {
-                chosenAddress: defaultShippingAddress
-              }
-            }])
+            expect(dispatch.mock.calls[2]).toEqual([
+              {
+                type: actionTypes.BASKET_RESET,
+                payload: {
+                  chosenAddress: defaultShippingAddress,
+                },
+              },
+            ])
           })
 
           describe('when there is no default shipping address', () => {
@@ -315,12 +332,14 @@ describe('menu fetchData', () => {
             test('should dispatch basket reset action with first shipping address', async () => {
               await fetchData({ query, params }, false, false)(dispatch, getState)
 
-              expect(dispatch.mock.calls[2]).toEqual([{
-                type: actionTypes.BASKET_RESET,
-                payload: {
-                  chosenAddress: firstShippingAddress
-                }
-              }])
+              expect(dispatch.mock.calls[2]).toEqual([
+                {
+                  type: actionTypes.BASKET_RESET,
+                  payload: {
+                    chosenAddress: firstShippingAddress,
+                  },
+                },
+              ])
             })
           })
         })
@@ -331,7 +350,7 @@ describe('menu fetchData', () => {
           const queryWithSlots = {
             ...query,
             day_id: '123',
-            slot_id: '456'
+            slot_id: '456',
           }
           beforeEach(async () => {
             // we need to test that dispatch is called with the **result** of the action creator
@@ -339,7 +358,9 @@ describe('menu fetchData', () => {
 
             actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
 
-            boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
+            boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(
+              boxSummaryDeliveryDaysLoadResult,
+            )
 
             await fetchData({ query: queryWithSlots, params }, false, false)(dispatch, getState)
           })
@@ -355,7 +376,10 @@ describe('menu fetchData', () => {
           test('should call setSlotFromIds', async () => {
             await fetchData({ query: queryWithSlots, params }, false, false)(dispatch, getState)
 
-            expect(setSlotFromIds).toHaveBeenCalledWith(queryWithSlots.slot_id, queryWithSlots.day_id)
+            expect(setSlotFromIds).toHaveBeenCalledWith(
+              queryWithSlots.slot_id,
+              queryWithSlots.day_id,
+            )
           })
 
           describe('when setSlotFromIds throws an error', () => {
@@ -372,7 +396,7 @@ describe('menu fetchData', () => {
 
               expect(logger.error).toHaveBeenCalledWith({
                 message: `Debug fetchData: ${err.message}`,
-                errors: [err]
+                errors: [err],
               })
             })
           })
@@ -414,7 +438,9 @@ describe('menu fetchData', () => {
             test('should dispatch boxSummaryDeliveryDaysLoad', async () => {
               const boxSummaryDeliveryDaysLoadResult = Symbol('fake action creator result')
 
-              boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
+              boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(
+                boxSummaryDeliveryDaysLoadResult,
+              )
 
               await fetchData({ query, params }, false, false)(dispatch, getState)
 
@@ -437,7 +463,7 @@ describe('menu fetchData', () => {
         describe('query has num_portions', () => {
           const queryWithNumPortions = {
             ...query,
-            num_portions: 10
+            num_portions: 10,
           }
 
           test('should dispatch basketNumPortionChange', async () => {
@@ -448,9 +474,15 @@ describe('menu fetchData', () => {
             // use mockImplementation and only return the symbol if it's called with the expected parameters
             // this would normally be accomplished using `toHaveBeenCalledWith`, but what we are actually
             // testing is that the correct action is passed to dispatch
-            actions.basketNumPortionChange.mockImplementation(numPortions => (numPortions === 10 ? basketNumPortionChangeResult : undefined))
+            actions.basketNumPortionChange.mockImplementation((numPortions) =>
+              numPortions === 10 ? basketNumPortionChangeResult : undefined,
+            )
 
-            await fetchData({ query: queryWithNumPortions, params }, false, false)(dispatch, getState)
+            await fetchData(
+              { query: queryWithNumPortions, params },
+              false,
+              false,
+            )(dispatch, getState)
 
             expect(dispatch.mock.calls[5]).toEqual([basketNumPortionChangeResult])
           })
@@ -459,7 +491,7 @@ describe('menu fetchData', () => {
         describe('query has postcode and basket does not have postcode', () => {
           const queryWithPostcode = {
             ...query,
-            postcode: 'W2 3LX'
+            postcode: 'W2 3LX',
           }
 
           beforeEach(() => {
@@ -469,10 +501,12 @@ describe('menu fetchData', () => {
           test('should dispatch basketPostcodeChangePure', async () => {
             await fetchData({ query: queryWithPostcode, params }, false, false)(dispatch, getState)
 
-            expect(dispatch.mock.calls[8]).toEqual([{
-              type: actionTypes.BASKET_POSTCODE_CHANGE,
-              postcode: 'W2 3LX'
-            }])
+            expect(dispatch.mock.calls[8]).toEqual([
+              {
+                type: actionTypes.BASKET_POSTCODE_CHANGE,
+                postcode: 'W2 3LX',
+              },
+            ])
           })
         })
 
@@ -493,8 +527,9 @@ describe('menu fetchData', () => {
             throw new Error('Error occurred')
           })
 
-          await expect(fetchData({ query, params }, false, false)(dispatch, getState))
-            .rejects.toThrow()
+          await expect(
+            fetchData({ query, params }, false, false)(dispatch, getState),
+          ).rejects.toThrow()
         })
 
         describe('when user is admin', () => {
@@ -502,11 +537,11 @@ describe('menu fetchData', () => {
             const newState = {
               ...state,
               basket: Immutable.fromJS({
-                date: '2020-02-12'
+                date: '2020-02-12',
               }),
               auth: Immutable.fromJS({
-                isAdmin: true
-              })
+                isAdmin: true,
+              }),
             }
 
             getState = () => newState
@@ -533,15 +568,17 @@ describe('menu fetchData', () => {
             const newState = {
               ...state,
               auth: Immutable.fromJS({
-                isAdmin: false
+                isAdmin: false,
               }),
               menuService: {
-                data: [{
-                  attributes: {
-                    ends_at: '2020-10-13'
-                  }
-                }]
-              }
+                data: [
+                  {
+                    attributes: {
+                      ends_at: '2020-10-13',
+                    },
+                  },
+                ],
+              },
             }
             getState = () => newState
           })
@@ -556,11 +593,16 @@ describe('menu fetchData', () => {
 
             actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
 
-            await fetchData({ query: {
-              'preview[auth_user_id]': 'user-id-preview',
-            },
-            params: {}
-            }, false, false)(dispatch, getState)
+            await fetchData(
+              {
+                query: {
+                  'preview[auth_user_id]': 'user-id-preview',
+                },
+                params: {},
+              },
+              false,
+              false,
+            )(dispatch, getState)
             expect(actions.menuLoadMenu).toHaveBeenCalledWith('2020-10-12', false)
           })
         })
@@ -570,12 +612,14 @@ describe('menu fetchData', () => {
         const collectionName = 'foo'
         const queryWithCollection = {
           ...query,
-          collection: collectionName
+          collection: collectionName,
         }
 
         test('should call selectCollection with name from getPreselectedCollectionName', async () => {
           // mockImplementation is used here to ensure that queryName is passed correctly
-          getPreselectedCollectionName.mockImplementation((stateArg, queryName) => (queryName === collectionName ? 'some-collection-name' : undefined))
+          getPreselectedCollectionName.mockImplementation((stateArg, queryName) =>
+            queryName === collectionName ? 'some-collection-name' : undefined,
+          )
 
           await fetchData({ query: queryWithCollection, params }, false, false)(dispatch, getState)
 
@@ -587,17 +631,22 @@ describe('menu fetchData', () => {
         const collectionName = 'foo'
         const queryWithCollection = {
           ...query,
-          collection: collectionName
+          collection: collectionName,
         }
 
         beforeEach(() => {
-          state.menuCollections = state.menuCollections.set('123', Immutable.fromJS({ slug: 'recommendations' }))
+          state.menuCollections = state.menuCollections.set(
+            '123',
+            Immutable.fromJS({ slug: 'recommendations' }),
+          )
           state.auth = state.auth.set('isAuthenticated', false)
         })
 
         test('should call selectCollection with name from getPreselectedCollectionName', async () => {
           // mockImplementation is used here to ensure that queryName is passed correctly
-          getPreselectedCollectionName.mockImplementation((stateArg, queryName) => (queryName === collectionName ? 'some-collection-name' : undefined))
+          getPreselectedCollectionName.mockImplementation((stateArg, queryName) =>
+            queryName === collectionName ? 'some-collection-name' : undefined,
+          )
 
           await fetchData({ query: queryWithCollection, params }, false, false)(dispatch, getState)
 
@@ -614,9 +663,7 @@ describe('menu fetchData', () => {
 
         menuLoadComplete.mockReturnValue(menuLoadCompleteResult)
 
-        now.mockReturnValueOnce(firstTime)
-          .mockReturnValueOnce(secondTime)
-          .mockReturnValue(999999)
+        now.mockReturnValueOnce(firstTime).mockReturnValueOnce(secondTime).mockReturnValue(999999)
 
         await fetchData({ query, params }, false, false)(dispatch, getState)
 
@@ -631,7 +678,7 @@ describe('menu fetchData', () => {
       const orderId = '123'
       const paramsWithOrderId = {
         ...params,
-        orderId
+        orderId,
       }
 
       await fetchData({ query, params: paramsWithOrderId })(dispatch, getState)
@@ -654,10 +701,15 @@ describe('menu fetchData', () => {
         const orderId = '123'
         const paramsWithOrderId = {
           ...params,
-          orderId
+          orderId,
         }
 
-        await fetchData({ query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)(dispatch, getState)
+        await fetchData(
+          { query, params: paramsWithOrderId },
+          false,
+          false,
+          menuServiceFeatureFlag,
+        )(dispatch, getState)
 
         expect(fetchMenusWithUserId).not.toHaveBeenCalled()
       })
@@ -673,7 +725,7 @@ describe('menu fetchData', () => {
         const orderId = '123'
         const paramsWithOrderId = {
           ...params,
-          orderId
+          orderId,
         }
 
         await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
@@ -693,10 +745,15 @@ describe('menu fetchData', () => {
         const orderId = '123'
         const paramsWithOrderId = {
           ...params,
-          orderId
+          orderId,
         }
 
-        await fetchData({ query, params: paramsWithOrderId }, false, false, userMenuVariant)(dispatch, getState)
+        await fetchData(
+          { query, params: paramsWithOrderId },
+          false,
+          false,
+          userMenuVariant,
+        )(dispatch, getState)
 
         expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', query, 'menuA')
       })

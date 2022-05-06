@@ -7,9 +7,15 @@ import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../CapacityInfo'
 
 jest.mock('routes/Menu/components/SubHeader')
-jest.mock('routes/Menu/components/CollectionsNav', () => ({ CollectionsNavWrapper: 'CollectionsNav' }))
-jest.mock('routes/Menu/components/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
-jest.mock('../BasketValidationErrorModal', () => ({ BasketValidationErrorModalContainer: 'BasketValidationErrorModalContainer'}))
+jest.mock('routes/Menu/components/CollectionsNav', () => ({
+  CollectionsNavWrapper: 'CollectionsNav',
+}))
+jest.mock('routes/Menu/components/JustForYouTutorial', () => ({
+  JustForYouTutorial: () => <div />,
+}))
+jest.mock('../BasketValidationErrorModal', () => ({
+  BasketValidationErrorModalContainer: 'BasketValidationErrorModalContainer',
+}))
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
   useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
@@ -30,7 +36,6 @@ describe('initial render', () => {
         userId: '1234',
         isAuthenticated: true,
         loadOptimizelySDK: jest.fn(),
-
       }
       checkQueryParamsSpy = jest.fn()
 
@@ -42,7 +47,7 @@ describe('initial render', () => {
           showLoading={false}
           checkQueryParams={checkQueryParamsSpy}
           shouldShowCapacityInfo={false}
-        />
+        />,
       )
     })
     test('should render 1 SubHeaderContainer', () => {
@@ -76,7 +81,7 @@ describe('initial render', () => {
 
     describe('when showCommunicationPanel true', () => {
       beforeEach(() => {
-        wrapper.setProps({showCommunicationPanel: true})
+        wrapper.setProps({ showCommunicationPanel: true })
       })
 
       test('should render CommunicationPanel', () => {

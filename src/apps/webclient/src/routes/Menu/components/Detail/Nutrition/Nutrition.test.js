@@ -32,9 +32,7 @@ describe('<NutritionInfo />', () => {
       protein: 8.888,
       salt: 9.999,
     }
-    wrapper = shallow(
-      <NutritionInfo perPortion={perPortion} per100Grams={per100Grams} />,
-    )
+    wrapper = shallow(<NutritionInfo perPortion={perPortion} per100Grams={per100Grams} />)
   })
 
   test('should return a <div>', () => {

@@ -53,7 +53,7 @@
 }
 
 .checkoutCounter.isDisabled .checkoutCounterBackground {
-  background: #AEB7C0;
+  background: #aeb7c0;
 }
 
 @keyframes counterScaleAndWiggle {

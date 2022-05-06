@@ -11,8 +11,8 @@ const createMockStore = (valueOverrides) => {
   const initialState = {
     routing: {
       locationBeforeTransitions: {
-        query: {}
-      }
+        query: {},
+      },
     },
     auth: authInitialState(),
     basket: basketInitialState(),
@@ -21,9 +21,11 @@ const createMockStore = (valueOverrides) => {
     menuCollections: Immutable.OrderedMap(valueOverrides.menuCollections) || Immutable.OrderedMap(),
     menuRecipeStock: Immutable.Map(valueOverrides.menuRecipeStock) || Immutable.Map({}),
     menuRecipeDetails: Immutable.Map({}),
-    menu: Immutable.Map(valueOverrides.menu) || Immutable.fromJS({
-      menuVariants: { }
-    })
+    menu:
+      Immutable.Map(valueOverrides.menu) ||
+      Immutable.fromJS({
+        menuVariants: {},
+      }),
   }
 
   const mockStore = configureMockStore()
@@ -36,14 +38,13 @@ const createMockStore = (valueOverrides) => {
   return store
 }
 
-const createMockCollection = (id, shortTitle, recipes) => (
+const createMockCollection = (id, shortTitle, recipes) =>
   Immutable.Map({
     id,
     published: true,
     shortTitle,
-    recipesInCollection: Immutable.List(recipes.map(r => r.get('id')))
+    recipesInCollection: Immutable.List(recipes.map((r) => r.get('id'))),
   })
-)
 
 describe('menu domain / useMenu', () => {
   const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
@@ -61,15 +62,10 @@ describe('menu domain / useMenu', () => {
       [RECIPE_3.get('id')]: RECIPE_3,
       [RECIPE_4.get('id')]: RECIPE_4,
     },
-    menuRecipes: [
-      RECIPE_1.get('id'),
-      RECIPE_2.get('id'),
-      RECIPE_3.get('id'),
-      RECIPE_4.get('id'),
-    ],
+    menuRecipes: [RECIPE_1.get('id'), RECIPE_2.get('id'), RECIPE_3.get('id'), RECIPE_4.get('id')],
     menuCollections: {
       [COLLECTION_A.get('id')]: COLLECTION_A,
-      [COLLECTION_B.get('id')]: COLLECTION_B
+      [COLLECTION_B.get('id')]: COLLECTION_B,
     },
     menuRecipeStock: {
       [RECIPE_1.get('id')]: Immutable.fromJS({ 2: 0, 4: 0 }),
@@ -78,7 +74,7 @@ describe('menu domain / useMenu', () => {
       [RECIPE_4.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
     },
     menu: Immutable.fromJS({
-      menuVariants: Immutable.fromJS({ }),
+      menuVariants: Immutable.fromJS({}),
     }),
   })
 
@@ -89,10 +85,20 @@ describe('menu domain / useMenu', () => {
 
     const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_B.get('id'))
 
-    expect(recipes).toEqual(Immutable.List([
-      {recipe: RECIPE_3, originalId: RECIPE_3.get('id'), reference: `recipe_family_reference_${RECIPE_3.get('id')}__1`},
-      {recipe: RECIPE_4, originalId: RECIPE_4.get('id'), reference: `recipe_family_reference_${RECIPE_4.get('id')}__1`},
-    ]))
+    expect(recipes).toEqual(
+      Immutable.List([
+        {
+          recipe: RECIPE_3,
+          originalId: RECIPE_3.get('id'),
+          reference: `recipe_family_reference_${RECIPE_3.get('id')}__1`,
+        },
+        {
+          recipe: RECIPE_4,
+          originalId: RECIPE_4.get('id'),
+          reference: `recipe_family_reference_${RECIPE_4.get('id')}__1`,
+        },
+      ]),
+    )
   })
 
   describe('when some Recipes are out of stock', () => {
@@ -101,10 +107,20 @@ describe('menu domain / useMenu', () => {
 
       const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
 
-      expect(recipes).toEqual(Immutable.List([
-        {recipe: RECIPE_2, originalId: RECIPE_2.get('id'), reference: `recipe_family_reference_${RECIPE_2.get('id')}__1`},
-        {recipe: RECIPE_1, originalId: RECIPE_1.get('id'), reference: `recipe_family_reference_${RECIPE_1.get('id')}__1`},
-      ]))
+      expect(recipes).toEqual(
+        Immutable.List([
+          {
+            recipe: RECIPE_2,
+            originalId: RECIPE_2.get('id'),
+            reference: `recipe_family_reference_${RECIPE_2.get('id')}__1`,
+          },
+          {
+            recipe: RECIPE_1,
+            originalId: RECIPE_1.get('id'),
+            reference: `recipe_family_reference_${RECIPE_1.get('id')}__1`,
+          },
+        ]),
+      )
     })
   })
 })
@@ -115,7 +131,11 @@ describe('getRecipesForCollectionId', () => {
   const RECIPE_3 = Immutable.Map({ id: 'cccc' })
   const RECIPE_4 = Immutable.Map({ id: 'dddd' })
 
-  const COLLECTION_A = createMockCollection('1234-5678', 'One Category', [RECIPE_3, RECIPE_2, RECIPE_4])
+  const COLLECTION_A = createMockCollection('1234-5678', 'One Category', [
+    RECIPE_3,
+    RECIPE_2,
+    RECIPE_4,
+  ])
 
   const store = createMockStore({
     recipes: {
@@ -124,12 +144,7 @@ describe('getRecipesForCollectionId', () => {
       [RECIPE_3.get('id')]: RECIPE_3,
       [RECIPE_4.get('id')]: RECIPE_4,
     },
-    menuRecipes: [
-      RECIPE_1.get('id'),
-      RECIPE_2.get('id'),
-      RECIPE_3.get('id'),
-      RECIPE_4.get('id'),
-    ],
+    menuRecipes: [RECIPE_1.get('id'), RECIPE_2.get('id'), RECIPE_3.get('id'), RECIPE_4.get('id')],
     menuCollections: {
       [COLLECTION_A.get('id')]: COLLECTION_A,
     },
@@ -140,7 +155,7 @@ describe('getRecipesForCollectionId', () => {
       [RECIPE_4.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
     },
     menu: Immutable.fromJS({
-      menuVariants: Immutable.fromJS({ }),
+      menuVariants: Immutable.fromJS({}),
     }),
   })
 
@@ -152,11 +167,25 @@ describe('getRecipesForCollectionId', () => {
 
       const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
 
-      expect(recipes).toEqual(Immutable.List([
-        {recipe: RECIPE_3, originalId: RECIPE_3.get('id'), reference: `recipe_family_reference_${RECIPE_3.get('id')}__1`},
-        {recipe: RECIPE_2, originalId: RECIPE_2.get('id'), reference: `recipe_family_reference_${RECIPE_2.get('id')}__1`},
-        {recipe: RECIPE_4, originalId: RECIPE_4.get('id'), reference: `recipe_family_reference_${RECIPE_4.get('id')}__1`},
-      ]))
+      expect(recipes).toEqual(
+        Immutable.List([
+          {
+            recipe: RECIPE_3,
+            originalId: RECIPE_3.get('id'),
+            reference: `recipe_family_reference_${RECIPE_3.get('id')}__1`,
+          },
+          {
+            recipe: RECIPE_2,
+            originalId: RECIPE_2.get('id'),
+            reference: `recipe_family_reference_${RECIPE_2.get('id')}__1`,
+          },
+          {
+            recipe: RECIPE_4,
+            originalId: RECIPE_4.get('id'),
+            reference: `recipe_family_reference_${RECIPE_4.get('id')}__1`,
+          },
+        ]),
+      )
     })
   })
 })

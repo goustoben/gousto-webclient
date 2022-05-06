@@ -1,5 +1,3 @@
 import { RecipeTag } from './RecipeTag'
 
-export {
-  RecipeTag,
-}
+export { RecipeTag }

@@ -66,7 +66,7 @@ describe('transformOrderV2ToOrderV1', () => {
     expect(result.deliverySlot).toEqual({
       id: '66',
       deliveryStart: '2021-06-25T00:00:00Z',
-      deliveryEnd: '2021-06-27T00:00:00Z'
+      deliveryEnd: '2021-06-27T00:00:00Z',
     })
   })
 
@@ -84,7 +84,7 @@ describe('transformOrderV2ToOrderV1', () => {
       postcode: 'W3 7UP',
       deliveryInstructions: 'bla bla bla',
       shippingDefault: true,
-      billingDefault: false
+      billingDefault: false,
     })
   })
 
@@ -92,7 +92,7 @@ describe('transformOrderV2ToOrderV1', () => {
     expect(result.box).toEqual({
       sku: 'box-id',
       numPortions: '4',
-      numRecipes: '3'
+      numRecipes: '3',
     })
   })
 
@@ -117,14 +117,14 @@ describe('transformOrderV2ToOrderV1', () => {
             type: 'mood-image',
             urls: [
               { src: 'crop/url.jpg', width: '500' },
-              { src: 'crop/url2.jpg', width: '300' }
-            ]
-          }
+              { src: 'crop/url2.jpg', width: '300' },
+            ],
+          },
         ],
         quantity: '2',
         recipeGoustoReference: 'recipe-goustoref-1',
         title: 'Steak and Chips',
-        updatedAt: '2020-07-22 00:00:00'
+        updatedAt: '2020-07-22 00:00:00',
       })
     })
 
@@ -142,14 +142,14 @@ describe('transformOrderV2ToOrderV1', () => {
             type: 'mood-image',
             urls: [
               { src: 'lasagne/url.jpg', width: '400' },
-              { src: 'lasagne/url2.jpg', width: '200' }
-            ]
-          }
+              { src: 'lasagne/url2.jpg', width: '200' },
+            ],
+          },
         ],
         quantity: '2',
         recipeGoustoReference: 'recipe-goustoref-2',
         title: 'Lasagne',
-        updatedAt: '2020-01-01 00:00:00'
+        updatedAt: '2020-01-01 00:00:00',
       })
     })
 
@@ -167,8 +167,8 @@ describe('transformOrderV2ToOrderV1', () => {
             type: 'mood-image',
             urls: [
               { src: 'imgs/a.jpg', width: '600' },
-              { src: 'imgs/b.jpg', width: '400' }
-            ]
+              { src: 'imgs/b.jpg', width: '400' },
+            ],
           },
           {
             title: 'Second image',
@@ -176,14 +176,14 @@ describe('transformOrderV2ToOrderV1', () => {
             type: 'mood-image',
             urls: [
               { src: 'imgs/c.jpg', width: '400' },
-              { src: 'imgs/d.jpg', width: '200' }
-            ]
-          }
+              { src: 'imgs/d.jpg', width: '200' },
+            ],
+          },
         ],
         quantity: '4',
         recipeGoustoReference: 'recipe-goustoref-3',
         title: 'Salmon & Spicy Stir-Fried Greens',
-        updatedAt: '2020-02-01 00:00:00'
+        updatedAt: '2020-02-01 00:00:00',
       })
     })
 
@@ -196,26 +196,22 @@ describe('transformOrderV2ToOrderV1', () => {
         itemableType: 'Recipe',
         media: [
           {
-            title: 'Tomato & Goats\' Cheese Gnocchi',
+            title: "Tomato & Goats' Cheese Gnocchi",
             description: 'Very delicious, and good photography',
             type: 'headshot-image',
-            urls: [
-              { src: 'https://example.com/gnocchi/first-pic.jpg', width: '600' }
-            ]
+            urls: [{ src: 'https://example.com/gnocchi/first-pic.jpg', width: '600' }],
           },
           {
-            title: 'Tomato & Goats\' Cheese Gnocchi',
+            title: "Tomato & Goats' Cheese Gnocchi",
             description: 'More delicious photos',
             type: 'mood-image',
-            urls: [
-              { src: 'https://example.com/foo/second-pic.jpg', width: '200' }
-            ]
-          }
+            urls: [{ src: 'https://example.com/foo/second-pic.jpg', width: '200' }],
+          },
         ],
         quantity: '2',
         recipeGoustoReference: 'recipe-goustoref-4',
-        title: 'Tomato & Goats\' Cheese Gnocchi',
-        updatedAt: '2020-06-22 00:00:00'
+        title: "Tomato & Goats' Cheese Gnocchi",
+        updatedAt: '2020-06-22 00:00:00',
       })
     })
   })
@@ -242,11 +238,9 @@ describe('transformOrderV2ToOrderV1', () => {
             description: 'Product media description bla bla bla',
             title: 'This is the media title',
             type: 'mood-image',
-            urls: [
-              { src: 'product-mood-image.png', width: '50' }
-            ]
-          }
-        ]
+            urls: [{ src: 'product-mood-image.png', width: '50' }],
+          },
+        ],
       })
     })
 
@@ -267,8 +261,8 @@ describe('transformOrderV2ToOrderV1', () => {
             type: 'mood-image',
             urls: [
               { src: 'a.png', width: '50' },
-              { src: 'b.png', width: '100' }
-            ]
+              { src: 'b.png', width: '100' },
+            ],
           },
           {
             description: 'Even more cool description this time',
@@ -277,10 +271,10 @@ describe('transformOrderV2ToOrderV1', () => {
             urls: [
               { src: 'c.png', width: '200' },
               { src: 'd.png', width: '400' },
-              { src: '3.png', width: '600' }
-            ]
-          }
-        ]
+              { src: '3.png', width: '600' },
+            ],
+          },
+        ],
       })
     })
   })
@@ -300,13 +294,13 @@ describe('transformOrderV2ToOrderV1', () => {
       pricePerPortionDiscounted: 9,
       productTotal: 40,
       recipeTotal: 20,
-      surchargeTotal: 5.50,
-      recipeDiscount: 6.50,
-      deliveryTotal: 3.80,
+      surchargeTotal: 5.5,
+      recipeDiscount: 6.5,
+      deliveryTotal: 3.8,
       grossTotal: 100,
       vatCharged: 20,
       total: 120,
-      totalDiscount: 19
+      totalDiscount: 19,
     })
   })
 
@@ -315,8 +309,8 @@ describe('transformOrderV2ToOrderV1', () => {
       ...UserOrdersMockV2.data[0],
       attributes: {
         ...UserOrdersMockV2.data[0].attributes,
-        prices: undefined
-      }
+        prices: undefined,
+      },
     }
     const newResult = transformOrderV2ToOrderV1(newOrder, UserOrdersMockV2.included)
 
@@ -337,7 +331,7 @@ describe('transformOrderV2ToOrderV1', () => {
         grossTotal: undefined,
         vatCharged: undefined,
         total: undefined,
-        totalDiscount: undefined
+        totalDiscount: undefined,
       })
     })
   })
@@ -349,16 +343,16 @@ describe('transformOrderV2ToOrderV1', () => {
         ...UserOrdersMockV2.data[0].attributes,
         original_delivery_day: {
           date: '2021-04-15T00:00:00Z',
-          rescheduledReason: 'run out of sellotape'
-        }
-      }
+          rescheduledReason: 'run out of sellotape',
+        },
+      },
     }
     const newResult = transformOrderV2ToOrderV1(newOrder, UserOrdersMockV2.included)
 
     test('should transform originalDeliveryDay correctly', () => {
       expect(newResult.originalDeliveryDay).toEqual({
         humanDate: 'Thursday 15th April',
-        unavailableReason: 'run out of sellotape'
+        unavailableReason: 'run out of sellotape',
       })
     })
   })
@@ -366,7 +360,7 @@ describe('transformOrderV2ToOrderV1', () => {
   test('should transform period correctly', () => {
     expect(result.period).toEqual({
       whenStart: '2021-01-01 00:00:00',
-      whenCutoff: '2021-01-14 23:59:00'
+      whenCutoff: '2021-01-14 23:59:00',
     })
   })
 })

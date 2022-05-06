@@ -26,14 +26,23 @@ const DetailAddRecipe = ({ id, view, position }) => {
         buttonText={buttonText}
       />
     </div>
-
   )
 }
 
 DetailAddRecipe.propTypes = {
   id: PropTypes.string.isRequired,
   position: PropTypes.number.isRequired,
-  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'chefPrepared', 'fineDineIn', 'fineDineInDetail', 'detail', 'smallGrid']).isRequired,
+  view: PropTypes.oneOf([
+    'grid',
+    'list',
+    'featured',
+    'simple',
+    'chefPrepared',
+    'fineDineIn',
+    'fineDineInDetail',
+    'detail',
+    'smallGrid',
+  ]).isRequired,
 }
 
 export { DetailAddRecipe }

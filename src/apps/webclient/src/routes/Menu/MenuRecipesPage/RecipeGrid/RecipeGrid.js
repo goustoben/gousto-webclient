@@ -21,14 +21,9 @@ class RecipeGrid extends PureComponent {
     const { shouldShowOverlay } = this.state
 
     return (
-      <div
-        className={css.menuContainer}
-        data-testing="menuRecipesList"
-      >
+      <div className={css.menuContainer} data-testing="menuRecipesList">
         <RecipeListWrapper />
-        <DetailOverlay
-          showOverlay={shouldShowOverlay}
-        />
+        <DetailOverlay showOverlay={shouldShowOverlay} />
       </div>
     )
   }
@@ -41,7 +36,7 @@ RecipeGrid.propTypes = {
 }
 
 RecipeGrid.defaultProps = {
-  query: {}
+  query: {},
 }
 
 export { RecipeGrid }

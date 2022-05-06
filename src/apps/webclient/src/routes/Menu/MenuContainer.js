@@ -23,10 +23,7 @@ function mapStateToProps(state, ownProps) {
     disabled: state.auth.get('isAdmin'),
     isAuthenticated: state.auth.get('isAuthenticated'),
     tariffId: state.basket.get('tariffId'),
-    menuLoadingBoxPrices: state.pending.get(
-      actionTypes.MENU_BOX_PRICES_RECEIVE,
-      false
-    ),
+    menuLoadingBoxPrices: state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
     forceLoad: state.menu.get('forceLoad', false),
     postcode: state.basket.get('postcode'),
   }
@@ -41,9 +38,11 @@ const mapDispatchToProps = {
   boxSummaryDeliveryDaysLoad,
   menuCalculateTimeToUsable,
   fetchData,
-  applyPromoCodeAndShowModal
+  applyPromoCodeAndShowModal,
 }
 
-const MenuContainer = withIsActionBarRedesignEnabled(connect(mapStateToProps, mapDispatchToProps)(Menu))
+const MenuContainer = withIsActionBarRedesignEnabled(
+  connect(mapStateToProps, mapDispatchToProps)(Menu),
+)
 
 export { MenuContainer }
