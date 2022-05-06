@@ -15,6 +15,7 @@ import {
   basketRestorePreviousValues,
   basketRestorePreviousDate,
   basketDateChange,
+  basketProductRemove,
 } from 'actions/basket'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
@@ -640,6 +641,66 @@ describe('basket actions', () => {
         date: '2020-05-02 00:00:00',
         type: 'BASKET_DATE_CHANGE'
       })
+    })
+  })
+
+  describe('basketProductRemove', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getStateSpy.mockReturnValue({
+        products: Immutable.fromJS({
+          'mock-product-id': {
+            id: 'mock-product-id',
+            title: 'mock-product-title',
+            images: {},
+            media: [],
+            tags: [],
+            categories: []
+          }
+        })
+      })
+    })
+
+    test('should dispatch BASKET_PRODUCT_REMOVE action', () => {
+      const expected = {
+        type: actionTypes.BASKET_PRODUCT_REMOVE,
+        productId: 'mock-product-id',
+        unsaved: true,
+        trackingData: {
+          actionType: actionTypes.BASKET_PRODUCT_REMOVE,
+          productId: 'mock-product-id',
+          view: 'mock-view',
+          eventName: 'basket_market_product_removed',
+          eventAction: 'clicked',
+          eventType: 'primary_action',
+          eventProperties: {
+            productProperties: Immutable.fromJS({
+              id: 'mock-product-id',
+              title: 'mock-product-title',
+            })
+          }
+        }
+      }
+
+      basketProductRemove('mock-product-id', 'mock-view')(dispatch, getStateSpy)
+
+      expect(dispatch).nthCalledWith(1, expected)
+    })
+
+    test('should dispatch PRODUCTS_STOCK_CHANGE action', () => {
+      const expected = {
+        type: actionTypes.PRODUCTS_STOCK_CHANGE,
+        stock: {'mock-product-id': 1}
+      }
+
+      basketProductRemove('mock-product-id', 'mock-view')(dispatch, getStateSpy)
+
+      expect(dispatch).nthCalledWith(2, expected)
+    })
+
+    test('should not call dispatch when product is not found in state', () => {
+      basketProductRemove('wrong-mock-product-id', 'mock-view')(dispatch, getStateSpy)
+      expect(dispatch).not.toHaveBeenCalled()
     })
   })
 })

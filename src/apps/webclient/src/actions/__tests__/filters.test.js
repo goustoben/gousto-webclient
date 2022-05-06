@@ -165,7 +165,14 @@ describe('filters actions', () => {
     let dispatchSpyCalls
 
     beforeEach(() => {
-      filterProductCategory('all-products')(dispatchSpy)
+      filterProductCategory(
+        'market_category',
+        'clicked',
+        'secondary_action',
+        'All Products',
+        10,
+        'all-products'
+      )(dispatchSpy)
       dispatchSpyCalls = dispatchSpy.mock.calls
     })
 
@@ -180,8 +187,15 @@ describe('filters actions', () => {
       expect(dispatchSpyCalls[1][0]).toEqual({
         type: actionTypes.PRODUCTS_FILTER_TRACKING,
         trackingData: {
-          actionType: 'Products filtered',
-          categoryId: 'all-products',
+          eventAction: 'clicked',
+          eventName: 'market_category',
+          eventType: 'secondary_action',
+          eventProperties: {
+            categoryProperties: {
+              primaryCategory: 'All Products',
+              productsPerCategory: 10
+            }
+          }
         },
       })
     })

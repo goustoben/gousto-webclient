@@ -230,6 +230,8 @@ export const basketProductRemove = (productId, view) => (
     const product = getState().products.get(productId, false)
 
     if (product) {
+      const productProperties = product.delete('media').delete('images').delete('tags').delete('categories')
+
       dispatch({
         type: actionTypes.BASKET_PRODUCT_REMOVE,
         productId,
@@ -238,6 +240,10 @@ export const basketProductRemove = (productId, view) => (
           actionType: actionTypes.BASKET_PRODUCT_REMOVE,
           productId,
           view,
+          eventName: 'basket_market_product_removed',
+          eventAction: 'clicked',
+          eventType: 'primary_action',
+          eventProperties: { productProperties }
         },
       })
 

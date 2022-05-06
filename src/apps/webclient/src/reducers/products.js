@@ -90,4 +90,19 @@ export const productsReducers = {
     }
     }
   },
+
+  productRecipePairings: (state = Immutable.Map({}), action) => {
+    switch (action.type) {
+    case actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE: {
+      const recipePairings = (action.recipePairings || []).reduce((reducerState, recipePairing) => reducerState.set(`${recipePairing.recipeId}`, Immutable.fromJS(recipePairing)), Immutable.OrderedMap({}))
+      const newState = state.merge(recipePairings)
+
+      return newState
+    }
+
+    default: {
+      return state
+    }
+    }
+  },
 }

@@ -11,6 +11,7 @@ const propTypes = {
   isLimitReached: PropTypes.func.isRequired,
   toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   numberOfColumnClass: PropTypes.string,
+  trackingCategory: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
@@ -19,7 +20,7 @@ const defaultProps = {
   ageVerified: false,
 }
 
-const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggleAgeVerificationPopUp, numberOfColumnClass }) => (
+const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggleAgeVerificationPopUp, numberOfColumnClass, trackingCategory }) => (
   <div className={css.productList}>
     {
       Object.keys(products).map(productKey => {
@@ -34,6 +35,7 @@ const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggle
             ageVerified={ageVerified}
             numberOfColumnClass={numberOfColumnClass}
             toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+            category={trackingCategory}
           />
         )
       })

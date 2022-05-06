@@ -55,10 +55,10 @@ export const changeCollectionById = (id = ALL_RECIPES_COLLECTION_ID) => (
   }
 )
 
-export const filterProductCategory = (category) => (
+export const filterProductCategory = (eventName, eventAction, eventType, primaryCategory, productsPerCategory, categoryId) => (
   (dispatch) => {
-    dispatch({ type: 'FILTERS_PRODUCT_CATEGORY', value: category })
-    dispatch(trackProductFiltering(category))
+    dispatch({ type: 'FILTERS_PRODUCT_CATEGORY', value: categoryId })
+    dispatch(trackProductFiltering(eventName, eventAction, eventType, primaryCategory, productsPerCategory))
   }
 )
 

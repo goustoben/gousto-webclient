@@ -1,1 +1,1 @@
-export { MarketContainer as Market } from './MarketContainer'
+export { Market } from './Market'

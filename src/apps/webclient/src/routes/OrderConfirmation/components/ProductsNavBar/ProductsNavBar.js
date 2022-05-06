@@ -11,25 +11,32 @@ const propTypes = {
   onSelectCategory: PropTypes.func.isRequired,
 }
 
-const ProductsNavBar = ({ categories, onSelectCategory }) => (
-  <CollectionsNavigation>
-    {
-      Object.keys(categories).map(categoryId => {
-        const { id, label, count } = categories[categoryId]
+const getDefaultCategoryId = (categories) =>
+  (categories?.pairings ? categories.pairings.id : categories['all-products'].id)
 
-        return (
-          <CollectionsNavigationItem
-            key={id}
-            isActive={!!(id === 'all-products')}
-            onClick={() => onSelectCategory(id)}
-          >
-            {`${label} (${count})`}
-          </CollectionsNavigationItem>
-        )
-      })
-    }
-  </CollectionsNavigation>
-)
+const ProductsNavBar = ({ categories, onSelectCategory }) => {
+  const defaultCategoryId = getDefaultCategoryId(categories)
+
+  return (
+    <CollectionsNavigation>
+      {
+        Object.keys(categories).map((categoryId) => {
+          const { id, label, count } = categories[categoryId]
+
+          return (
+            <CollectionsNavigationItem
+              key={id}
+              isActive={id === defaultCategoryId}
+              onClick={() => onSelectCategory(id)}
+            >
+              {`${label} (${count})`}
+            </CollectionsNavigationItem>
+          )
+        })
+      }
+    </CollectionsNavigation>
+  )
+}
 
 ProductsNavBar.propTypes = propTypes
 
