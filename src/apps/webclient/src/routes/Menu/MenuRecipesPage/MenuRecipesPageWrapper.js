@@ -11,13 +11,17 @@ import { checkQueryParams } from '../actions/menuRecipeDetails'
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { isMenuLoading, getMenuLoadingErrorMessage, getRecipeCount } from '../selectors/menu'
 import fetchData from '../fetchData'
-import { isSignupReductionEnabled, shouldShowCommunicationPanel, shouldShowCapacityInfo } from '../selectors/signupReduction'
+import {
+  isSignupReductionEnabled,
+  shouldShowCommunicationPanel,
+  shouldShowCapacityInfo,
+} from '../selectors/signupReduction'
 import { useHotjarIdentify } from './useHotjarIdentify'
 
 const MenuRecipesPageWrapper = (ownProps) => {
   const {
     params,
-    location: { query = {} }
+    location: { query = {} },
   } = ownProps
 
   const dispatch = useDispatch()
@@ -32,13 +36,16 @@ const MenuRecipesPageWrapper = (ownProps) => {
   const userId = useSelector(getUserId)
   const showCapacityInfo = useSelector(shouldShowCapacityInfo)
   const menuLoadingErrorMessage = useSelector(getMenuLoadingErrorMessage)
-  const actionDispatchers = bindActionCreators({
-    checkQueryParams,
-    basketOrderLoaded: actions.basketOrderLoaded,
-    portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
-    loadOptimizelySDK,
-    fetchMenuData: fetchData,
-  }, dispatch)
+  const actionDispatchers = bindActionCreators(
+    {
+      checkQueryParams,
+      basketOrderLoaded: actions.basketOrderLoaded,
+      portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
+      loadOptimizelySDK,
+      fetchMenuData: fetchData,
+    },
+    dispatch,
+  )
 
   useHotjarIdentify()
 

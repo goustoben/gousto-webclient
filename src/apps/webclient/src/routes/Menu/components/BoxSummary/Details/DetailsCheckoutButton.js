@@ -5,21 +5,17 @@ import PropTypes from 'prop-types'
 import { CheckoutContainer } from '../BannerButton/Checkout'
 
 const DetailsCheckoutButton = (props) => {
-  const {btnClassName, displayCta, ctaText, view, onClick} = props
+  const { btnClassName, displayCta, ctaText, view, onClick } = props
 
   return (
     <div className={btnClassName}>
-      {
-        displayCta ? (
-          <Button
-            onClick={onClick}
-            width="full"
-          >
-            {ctaText}
-          </Button>
-        )
-          : <CheckoutContainer view={view} section={trackingKeys.boxSummary} hideCounter />
-      }
+      {displayCta ? (
+        <Button onClick={onClick} width="full">
+          {ctaText}
+        </Button>
+      ) : (
+        <CheckoutContainer view={view} section={trackingKeys.boxSummary} hideCounter />
+      )}
     </div>
   )
 }
@@ -29,7 +25,7 @@ DetailsCheckoutButton.propTypes = {
   displayCta: PropTypes.bool.isRequired,
   ctaText: PropTypes.string.isRequired,
   view: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 }
 
 export { DetailsCheckoutButton }

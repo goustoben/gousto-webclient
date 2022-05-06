@@ -4,12 +4,16 @@ import Svg from 'Svg'
 import { WarningExistingOrder } from '../WarningExistingOrder'
 import css from '../DeliverySlot.css'
 
-const DeliverySupportingText = ({ hasEmptyOrders, hasFullOrders, doesDateHaveDisabledSlots, showWarning, tempDate }) => {
+const DeliverySupportingText = ({
+  hasEmptyOrders,
+  hasFullOrders,
+  doesDateHaveDisabledSlots,
+  showWarning,
+  tempDate,
+}) => {
   let warningMessage
   if (showWarning) {
-    warningMessage = (
-      <WarningExistingOrder tempDate={tempDate} />
-    )
+    warningMessage = <WarningExistingOrder tempDate={tempDate} />
   }
   let deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
   if (hasFullOrders) {

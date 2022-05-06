@@ -1,11 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import {
-  Layout2Cells,
-  LayoutContentWrapper,
-  ProgressBar,
-} from 'goustouicomponents'
+import { Layout2Cells, LayoutContentWrapper, ProgressBar } from 'goustouicomponents'
 import css from './RecipesInBasketProgressContent.css'
 import { BoxProgressMessage } from '../../BoxProgressMessage'
 
@@ -17,13 +13,10 @@ const propTypes = {
 const RecipesInBasketProgressContent = ({ selectedRecipesCount, percentage }) => {
   const isBasketFull = percentage === 100
 
-  const cardClasses = classnames(
-    css.cardContentWrapper,
-    {
-      [css.greenBorder]: isBasketFull,
-      [css.cardContentWrapperFull]: isBasketFull,
-    }
-  )
+  const cardClasses = classnames(css.cardContentWrapper, {
+    [css.greenBorder]: isBasketFull,
+    [css.cardContentWrapperFull]: isBasketFull,
+  })
 
   return (
     <div className={cardClasses}>
@@ -31,22 +24,13 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount, percentage }) =>
         {isBasketFull ? (
           <Layout2Cells>
             <span className={css.iconProgressCompleted} />
-            <BoxProgressMessage
-              className={css.message}
-              numRecipes={selectedRecipesCount}
-            />
+            <BoxProgressMessage className={css.message} numRecipes={selectedRecipesCount} />
           </Layout2Cells>
         ) : (
           <div className={css.cardContentWrapperPartial}>
             <Layout2Cells>
-              <p className={css.percentageNumber}>
-                {percentage}
-                %
-              </p>
-              <BoxProgressMessage
-                className={css.message}
-                numRecipes={selectedRecipesCount}
-              />
+              <p className={css.percentageNumber}>{percentage}%</p>
+              <BoxProgressMessage className={css.message} numRecipes={selectedRecipesCount} />
             </Layout2Cells>
             <div className={css.progressBarWrapper}>
               <ProgressBar percentage={percentage} theme="transition-1" />
@@ -60,6 +44,4 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount, percentage }) =>
 
 RecipesInBasketProgressContent.propTypes = propTypes
 
-export {
-  RecipesInBasketProgressContent
-}
+export { RecipesInBasketProgressContent }

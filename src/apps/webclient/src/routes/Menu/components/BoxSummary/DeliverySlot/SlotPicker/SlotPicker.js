@@ -11,39 +11,40 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => {
 
   return (
     <Button color="quaternary" width="full">
-      {slots[date] && slots[date].map(slot => (
-        <Segment
-          key={slot.value}
-          fill={slot.value === slotId && !slot.disabled}
-          onClick={() => {
-            if (!slot.disabled) {
-              onClick(slot.value)
-            }
-          }}
-          className={classnames(
-            {[css.disabled]: slot.disabled },
-            {[css.enabled]: !slot.disabled },
-            {[css.selected]: slot.value === slotId },
-            {[css.compact]: hasMoreThanTwoSlots}
-          )}
-          noHover={slot.disabled}
-          disabled={slot.disabled}
-        >
-          <span className={css.fullWidth}>
-            <span
-              className={
-                classnames(
+      {slots[date] &&
+        slots[date].map((slot) => (
+          <Segment
+            key={slot.value}
+            fill={slot.value === slotId && !slot.disabled}
+            onClick={() => {
+              if (!slot.disabled) {
+                onClick(slot.value)
+              }
+            }}
+            className={classnames(
+              { [css.disabled]: slot.disabled },
+              { [css.enabled]: !slot.disabled },
+              { [css.selected]: slot.value === slotId },
+              { [css.compact]: hasMoreThanTwoSlots },
+            )}
+            noHover={slot.disabled}
+            disabled={slot.disabled}
+          >
+            <span className={css.fullWidth}>
+              <span
+                className={classnames(
                   hasMoreThanTwoSlots ? css.blockLabel : css.label,
                   slot.disabled && css.disableLabel,
-                )
-              }
-            >
-              {slot.label}
-              <span className={hasMoreThanTwoSlots ? css.blockLabel : css.inlineLabel}>{slot.subLabel}</span>
+                )}
+              >
+                {slot.label}
+                <span className={hasMoreThanTwoSlots ? css.blockLabel : css.inlineLabel}>
+                  {slot.subLabel}
+                </span>
+              </span>
             </span>
-          </span>
-        </Segment>
-      ))}
+          </Segment>
+        ))}
     </Button>
   )
 }

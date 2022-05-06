@@ -63,14 +63,7 @@ describe('SlotPicker', () => {
     date = '2016-02-03'
     slotId = '234-234-234'
     onClick = sinon.spy()
-    wrapper = shallow(
-      <SlotPicker
-        slots={slots}
-        date={date}
-        slotId={slotId}
-        onClick={onClick}
-      />,
-    )
+    wrapper = shallow(<SlotPicker slots={slots} date={date} slotId={slotId} onClick={onClick} />)
   })
 
   test('should render a Button', () => {
@@ -78,10 +71,7 @@ describe('SlotPicker', () => {
   })
 
   test('should call the onClick prop if slot is not disabled with the slot ID of the clicked on slot', () => {
-    wrapper
-      .find(Segment)
-      .at(1)
-      .simulate('click')
+    wrapper.find(Segment).at(1).simulate('click')
     expect(onClick.callCount).toBe(1)
     expect(onClick.getCall(0).args[0]).toBe('234-234-234')
   })
@@ -92,31 +82,12 @@ describe('SlotPicker', () => {
   })
 
   test('should put the label and sublabel for each slot into the respective segments', () => {
-    expect(
-      wrapper
-        .find(Segment)
-        .at(0)
-        .children('span')
-        .at(0)
-        .text(),
-    ).toEqual('1-2am£99.99')
-    expect(
-      wrapper
-        .find(Segment)
-        .at(1)
-        .children('span')
-        .at(0)
-        .text(),
-    ).toEqual('3-5am£0.99')
+    expect(wrapper.find(Segment).at(0).children('span').at(0).text()).toEqual('1-2am£99.99')
+    expect(wrapper.find(Segment).at(1).children('span').at(0).text()).toEqual('3-5am£0.99')
   })
 
   test('should fill the segment when not disabled for which the slotId is chosen for', () => {
-    expect(
-      wrapper
-        .find(Segment)
-        .at(1)
-        .prop('fill'),
-    ).toEqual(true)
+    expect(wrapper.find(Segment).at(1).prop('fill')).toEqual(true)
   })
 
   describe('with 2 slots for the date', () => {
@@ -128,14 +99,7 @@ describe('SlotPicker', () => {
   describe('with 1 slots for the date', () => {
     beforeEach(() => {
       date = '2017-02-03'
-      wrapper = shallow(
-        <SlotPicker
-          slots={slots}
-          date={date}
-          slotId={slotId}
-          onClick={onClick}
-        />,
-      )
+      wrapper = shallow(<SlotPicker slots={slots} date={date} slotId={slotId} onClick={onClick} />)
     })
 
     test('should render 1 Segment', () => {
@@ -147,20 +111,12 @@ describe('SlotPicker', () => {
     beforeEach(() => {
       date = '2016-02-03'
       wrapper = shallow(
-        <SlotPicker
-          slots={slotsDisabled}
-          date={date}
-          slotId={slotId}
-          onClick={onClick}
-        />,
+        <SlotPicker slots={slotsDisabled} date={date} slotId={slotId} onClick={onClick} />,
       )
     })
 
     test('should not call the onClick prop if slot is disabled', () => {
-      wrapper
-        .find(Segment)
-        .at(0)
-        .simulate('click')
+      wrapper.find(Segment).at(0).simulate('click')
       expect(onClick.callCount).toBe(0)
     })
 
@@ -169,12 +125,7 @@ describe('SlotPicker', () => {
     })
 
     test('should not fill the segment when disabled', () => {
-      expect(
-        wrapper
-          .find(Segment)
-          .at(0)
-          .prop('fill'),
-      ).toEqual(false)
+      expect(wrapper.find(Segment).at(0).prop('fill')).toEqual(false)
     })
   })
 })

@@ -8,18 +8,19 @@ import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
-  getProtocol: () => 'https:'
+  getProtocol: () => 'https:',
 }))
 
-const createState = (partialOverwrite = {}) => createOrderState({
-  ...partialOverwrite,
-  auth: {
-    id: 'auth-user-id',
-    accessToken: 'auth-access-token',
-    isAuthenticated: true,
-    ...(partialOverwrite.auth || {})
-  }
-})
+const createState = (partialOverwrite = {}) =>
+  createOrderState({
+    ...partialOverwrite,
+    auth: {
+      id: 'auth-user-id',
+      accessToken: 'auth-access-token',
+      isAuthenticated: true,
+      ...(partialOverwrite.auth || {}),
+    },
+  })
 
 describe('Menu > actions > checkoutTransactionalOrder', () => {
   const mockOrder = {
@@ -29,10 +30,10 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
       components: [
         { type: 'recipe', id: 'some-cool-recipe-guid-1' },
         { type: 'recipe', id: 'another-cool-recipe-guid' },
-        { type: 'recipe', id: 'guid-guid-guid' }
-      ]
+        { type: 'recipe', id: 'guid-guid-guid' },
+      ],
     },
-    attributes: { state: 'pending' }
+    attributes: { state: 'pending' },
   }
   let createOrder
   let trackOrder
@@ -41,8 +42,10 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
 
   beforeEach(() => {
     createOrder = jest.spyOn(orderV2Api, 'createOrder').mockImplementation(() => mockOrder)
-    trackOrder = jest.spyOn(actionsOrder, 'trackOrder').mockImplementation(() => { })
-    orderConfirmationRedirect = jest.spyOn(actionsOrderConfirmation, 'orderConfirmationRedirect').mockImplementation(() => { })
+    trackOrder = jest.spyOn(actionsOrder, 'trackOrder').mockImplementation(() => {})
+    orderConfirmationRedirect = jest
+      .spyOn(actionsOrderConfirmation, 'orderConfirmationRedirect')
+      .mockImplementation(() => {})
     dispatch = jest.fn()
   })
 
@@ -56,12 +59,13 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
   })
 
   describe('when no slot', () => {
-    const getState = () => createState({
-      basket: {
-        slotId: undefined
-      },
-      boxSummaryDeliveryDays: undefined
-    })
+    const getState = () =>
+      createState({
+        basket: {
+          slotId: undefined,
+        },
+        boxSummaryDeliveryDays: undefined,
+      })
 
     test('should not call createOrder', async () => {
       await checkoutTransactionalOrder()(dispatch, getState)
@@ -74,7 +78,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.PENDING,
         key: actionTypes.ORDER_SAVE,
-        value: false
+        value: false,
       })
     })
 
@@ -86,7 +90,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ERROR,
         key: actionTypes.ORDER_SAVE,
-        value: errorMessage
+        value: errorMessage,
       })
     })
   })
@@ -97,23 +101,33 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
     test('should call createOrder with correct order', async () => {
       await checkoutTransactionalOrder()(dispatch, getState)
 
-      expect(createOrder).toHaveBeenCalledWith('auth-access-token',
+      expect(createOrder).toHaveBeenCalledWith(
+        'auth-access-token',
         {
-          attributes: {menu_id: '433'},
+          attributes: { menu_id: '433' },
           relationships: {
             components: {
               data: [
-                {id: 'recipe-uuid-1', meta: { portion_for: 2 }, type: 'recipe'},
-                {id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe'},
-                {id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe'}]},
-            delivery_day: { data: { id: 'delivery-days-id', type: 'delivery-day'}},
-            delivery_slot: { data: { id: 'slot-core-id', meta: {uuid: 'slot-uuid' }, type: 'delivery-slot'}},
-            delivery_tariff: { data: { id: '9037a447-e11a-4960-ae69-d89a029569af', type: 'delivery-tariff'}},
-            delivery_slot_lead_time: { data: { id: 'day-slot-lead-time-uuid', type: 'delivery-slot-lead-time'}},
+                { id: 'recipe-uuid-1', meta: { portion_for: 2 }, type: 'recipe' },
+                { id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe' },
+                { id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe' },
+              ],
+            },
+            delivery_day: { data: { id: 'delivery-days-id', type: 'delivery-day' } },
+            delivery_slot: {
+              data: { id: 'slot-core-id', meta: { uuid: 'slot-uuid' }, type: 'delivery-slot' },
+            },
+            delivery_tariff: {
+              data: { id: '9037a447-e11a-4960-ae69-d89a029569af', type: 'delivery-tariff' },
+            },
+            delivery_slot_lead_time: {
+              data: { id: 'day-slot-lead-time-uuid', type: 'delivery-slot-lead-time' },
+            },
           },
-          type: 'order'
+          type: 'order',
         },
-        'auth-user-id')
+        'auth-user-id',
+      )
     })
 
     test('should call trackOrder with response', async () => {
@@ -134,7 +148,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.PENDING,
         key: actionTypes.ORDER_SAVE,
-        value: false
+        value: false,
       })
     })
 
@@ -158,7 +172,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.ERROR,
           key: actionTypes.ORDER_SAVE,
-          value: { message, code }
+          value: { message, code },
         })
       })
     })

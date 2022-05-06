@@ -15,15 +15,13 @@ const defaultProps = {
 const Loading = ({ loading }) => {
   const loadingCss = css.loading
 
-  return (
-    (loading) ? (
-      <div className={css.container}>
-        <div className={loadingCss}>
-          <LoadingComponent />
-        </div>
+  return loading ? (
+    <div className={css.container}>
+      <div className={loadingCss}>
+        <LoadingComponent />
       </div>
-    ) : null
-  )
+    </div>
+  ) : null
 }
 
 Loading.propTypes = propTypes

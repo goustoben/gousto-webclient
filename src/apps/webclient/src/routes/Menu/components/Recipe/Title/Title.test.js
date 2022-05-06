@@ -11,7 +11,7 @@ describe('Recipe components > Title', () => {
 
   const recipe = Immutable.fromJS({
     id: '1234',
-    title: titleText
+    title: titleText,
   })
   const useContextMock = jest.spyOn(React, 'useContext').mockImplementation(() => recipe)
   jest.spyOn(recipeContext, 'useRecipeTitle')

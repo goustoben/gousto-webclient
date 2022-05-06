@@ -114,16 +114,11 @@ export const Detail = (props) => {
           <AttributeGrid />
           <RecipeDisclaimer recipeId={id} />
           {equipment && !!equipment.size && (
-            <p className={css.additionalInfo}>
-              Equipment required:
-              {' '}
-              {equipment.toJS().join(', ')}
-            </p>
+            <p className={css.additionalInfo}>Equipment required: {equipment.toJS().join(', ')}</p>
           )}
           {youWillNeed && !!youWillNeed.size && (
             <p className={css.additionalInfo}>
-              What you&#8217;ll need:
-              {' '}
+              What you&#8217;ll need:{' '}
               {youWillNeed.map((item, idx) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <span key={idx}>
@@ -144,12 +139,7 @@ export const Detail = (props) => {
           <DetailAllergenIngredientsContainer recipeId={recipeLegalDetailId} />
         </div>
         <div className={css.stickyContainer}>
-          <DetailAddRecipe
-            id={id}
-            view={view}
-            surcharge={surcharge}
-            position={position}
-          />
+          <DetailAddRecipe id={id} view={view} surcharge={surcharge} position={position} />
         </div>
       </div>
     </div>

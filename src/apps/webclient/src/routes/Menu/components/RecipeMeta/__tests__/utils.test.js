@@ -1,12 +1,9 @@
 import Immutable from 'immutable'
 import { getSurcharge } from 'utils/recipe'
 import { defaultMetaImageLink, perPortionPrice } from '../config'
-import {
-  getMetaImageLink,
-  getPortionPrice,
-} from '../utils'
+import { getMetaImageLink, getPortionPrice } from '../utils'
 jest.mock('utils/recipe', () => ({
-  getSurcharge: jest.fn()
+  getSurcharge: jest.fn(),
 }))
 
 describe('utils', () => {
@@ -18,12 +15,14 @@ describe('utils', () => {
       title: 'test',
       description: 'test description',
       media: {
-        images: [{
-          urls: [
-            { src: 'test url', width: 700 },
-            { src: 'test url 2', width: 500 }
-          ]
-        }]
+        images: [
+          {
+            urls: [
+              { src: 'test url', width: 700 },
+              { src: 'test url 2', width: 500 },
+            ],
+          },
+        ],
       },
       range: 'test range',
     })
@@ -42,7 +41,7 @@ describe('utils', () => {
       getSurcharge.mockReturnValue(surcharge)
 
       const price = getPortionPrice(recipe)
-      expect(price).toEqual(String(perPortionPrice + (surcharge / 4)))
+      expect(price).toEqual(String(perPortionPrice + surcharge / 4))
     })
 
     it('should return the the default price if there is no recipe', () => {
@@ -71,11 +70,11 @@ describe('utils', () => {
         title: 'test',
         description: 'test description',
         media: {
-          images: [{
-            urls: [
-              { src: 'test url 2', width: 500 }
-            ]
-          }]
+          images: [
+            {
+              urls: [{ src: 'test url 2', width: 500 }],
+            },
+          ],
         },
         range: 'test range',
       })

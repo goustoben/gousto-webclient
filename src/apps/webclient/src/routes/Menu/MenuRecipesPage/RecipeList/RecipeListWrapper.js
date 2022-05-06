@@ -17,15 +17,15 @@ const RecipeListWrapper = (ownProps) => {
   const { trackSoldOutRecipes } = useSoldOutTracking()
 
   const isDietaryCollectionLinksEnabled = useIsOptimizelyFeatureEnabled(
-    'kales_dietary_category_links'
+    'kales_dietary_category_links',
   )
 
   const actionDispatchers = bindActionCreators(
     {
       showDetailRecipe,
-      trackSoldOutRecipes
+      trackSoldOutRecipes,
     },
-    dispatch
+    dispatch,
   )
 
   const { recipes } = getRecipesForCollectionId(currentCollectionId)

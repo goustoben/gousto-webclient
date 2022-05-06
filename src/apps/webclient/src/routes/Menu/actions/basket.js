@@ -10,7 +10,8 @@ import { getAccessToken } from 'selectors/auth'
 import { getBasketOrderId } from 'selectors/basket'
 import { getUpdateOrderProductItemsOrderV1 } from '../selectors/order'
 
-export const basketUpdateProducts = (isOrderConfirmation = false) => (
+export const basketUpdateProducts =
+  (isOrderConfirmation = false) =>
   async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
     const state = getState()
@@ -53,4 +54,3 @@ export const basketUpdateProducts = (isOrderConfirmation = false) => (
       throw err
     }
   }
-)

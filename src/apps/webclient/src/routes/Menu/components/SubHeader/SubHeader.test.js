@@ -22,7 +22,7 @@ describe('SubHeader', () => {
       expect(wrapper.find(InfoToggle)).toHaveLength(2)
     })
 
-    test('should render a date range for this week\'s menu', () => {
+    test("should render a date range for this week's menu", () => {
       expect(wrapper.find('Connect(MenuDateRange)')).toHaveLength(1)
       expect(wrapper.find('Connect(MenuDateRange)').prop('variant')).toBe('desktop')
     })

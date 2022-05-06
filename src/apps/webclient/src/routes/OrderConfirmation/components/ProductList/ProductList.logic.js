@@ -18,7 +18,8 @@ const propTypes = {
   }),
   ageVerified: PropTypes.bool,
   toggleAgeVerificationPopUp: PropTypes.func.isRequired,
-  numberOfColumn: PropTypes.oneOf(Object.keys(availableNumberOfColumn))
+  numberOfColumn: PropTypes.oneOf(Object.keys(availableNumberOfColumn)),
+  trackingCategory: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
@@ -27,7 +28,7 @@ const defaultProps = {
   ageVerified: false,
 }
 
-const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, numberOfColumn }) => {
+const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, numberOfColumn, trackingCategory }) => {
   const isLimitReached = (product) => {
     const { id } = product
     const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
@@ -44,6 +45,7 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
           isLimitReached={isLimitReached}
           toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
           numberOfColumnClass={availableNumberOfColumn[numberOfColumn]}
+          trackingCategory={trackingCategory}
         />
       )
         : <Loading />}

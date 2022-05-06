@@ -16,7 +16,7 @@ class InfoToggle extends React.Component {
     }
   }
 
-  toggleVisibility = visible => {
+  toggleVisibility = (visible) => {
     this.setState({ visible })
   }
 
@@ -43,9 +43,7 @@ class InfoToggle extends React.Component {
         onVisibleChange={this.toggleVisibility}
         triggers={['click']}
       >
-        <span className={css.title}>
-          {children[0]}
-        </span>
+        <span className={css.title}>{children[0]}</span>
       </Tooltip>
     )
   }

@@ -35,11 +35,11 @@
   margin-bottom: 1rem;
   font-weight: bold;
   font-size: 16px;
-    @media ScreenSMMin {
-      color: BlueBase;
-      background-color: White;
-      padding: 0.5rem;
-      width: 70%;
+  @media ScreenSMMin {
+    color: BlueBase;
+    background-color: White;
+    padding: 0.5rem;
+    width: 70%;
   }
 }
 
@@ -49,26 +49,25 @@
   color: White;
 }
 
-
 .ctaAllRecipe {
-    width: 100%;
-    position: relative;
-    margin: 0 0.75rem 0.75rem 0.75rem;
-    flex-direction: column;
+  width: 100%;
+  position: relative;
+  margin: 0 0.75rem 0.75rem 0.75rem;
+  flex-direction: column;
 
-    @media ScreenSMMin {
-        margin: 0 1rem 1rem 0;
-        width: calc(50% - 1rem);
-        height: auto;
-    }
-    @media ScreenMDMin {
-        width: calc(33.33% - 1rem);
-        height: auto;
-    }
-    @media ScreenLGMin {
-        width: calc(25% - 1rem);
-        height: auto;
-    }
+  @media ScreenSMMin {
+    margin: 0 1rem 1rem 0;
+    width: calc(50% - 1rem);
+    height: auto;
+  }
+  @media ScreenMDMin {
+    width: calc(33.33% - 1rem);
+    height: auto;
+  }
+  @media ScreenLGMin {
+    width: calc(25% - 1rem);
+    height: auto;
+  }
 }
 
 .spottyBorder {
@@ -77,5 +76,5 @@
   display: none;
   @media ScreenSMMin {
     display: block;
-	}
+  }
 }

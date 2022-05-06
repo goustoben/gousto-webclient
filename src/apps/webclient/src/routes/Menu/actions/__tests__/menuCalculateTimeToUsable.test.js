@@ -21,13 +21,13 @@ describe('given menuCalculateTimeToUsable action is called', () => {
   beforeEach(() => {
     state = {
       auth: Immutable.Map({
-        id: authId
+        id: authId,
       }),
       menu: Immutable.fromJS({
         hasCalculatedTimeToUsable: false,
         hasVisitedNonMenuPage: false,
-        menuPrefetched: true
-      })
+        menuPrefetched: true,
+      }),
     }
   })
 
@@ -55,9 +55,9 @@ describe('given menuCalculateTimeToUsable action is called', () => {
               actionType: menuTimeToUsable,
               timeToFirstByte: 456,
               timeToUsable: 123,
-              menuPrefetched: true
-            }
-          }
+              menuPrefetched: true,
+            },
+          },
         ])
       })
 

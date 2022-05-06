@@ -9,11 +9,11 @@ const Title = ({ className }) => {
 }
 
 Title.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 }
 
 Title.defaultProps = {
-  className: undefined
+  className: undefined,
 }
 
 export { Title }

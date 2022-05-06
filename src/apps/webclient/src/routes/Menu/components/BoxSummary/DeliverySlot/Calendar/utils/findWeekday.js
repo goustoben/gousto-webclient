@@ -6,12 +6,10 @@ const recursiveFindWeekday = (dateMoment, targetWeekday, dayDelta) => {
     return dateMoment
   }
 
-  return recursiveFindWeekday(
-    dateMoment.add(dayDelta, 'days'),
-    targetWeekday,
-    dayDelta
-  )
+  return recursiveFindWeekday(dateMoment.add(dayDelta, 'days'), targetWeekday, dayDelta)
 }
 
-export const getUpcomingFridayInclusive = (dateMoment) => recursiveFindWeekday(dateMoment, WEEKDAY_FRIDAY, 1)
-export const getPrecedingSaturdayInclusive = (dateMoment) => recursiveFindWeekday(dateMoment, WEEKDAY_SATURDAY, -1)
+export const getUpcomingFridayInclusive = (dateMoment) =>
+  recursiveFindWeekday(dateMoment, WEEKDAY_FRIDAY, 1)
+export const getPrecedingSaturdayInclusive = (dateMoment) =>
+  recursiveFindWeekday(dateMoment, WEEKDAY_SATURDAY, -1)

@@ -6,9 +6,7 @@ import css from './ContentMask.css'
 const ContentMask = ({ className, children }) => (
   <div className={className}>
     <div className={css.container}>
-      <div className={css.content}>
-        {children}
-      </div>
+      <div className={css.content}>{children}</div>
     </div>
   </div>
 )
@@ -19,7 +17,7 @@ ContentMask.propTypes = {
 }
 
 ContentMask.defaultProps = {
-  className: ''
+  className: '',
 }
 
 export { ContentMask }

@@ -3,9 +3,7 @@ import { render, screen, within, fireEvent, waitFor, cleanup } from '@testing-li
 import * as OrderAPI from 'apis/orders'
 import { user } from 'routes/Menu/apis/sides.hook.mock'
 import Modal from 'react-modal'
-import {
-  withMockEnvironmentAndDomain
-} from '_testing/isomorphic-environment-test-utils'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { SidesModal } from './SidesModal'
 
 jest.setTimeout(10000)
@@ -109,7 +107,10 @@ describe('<SideModal />', () => {
 
   beforeEach(() => {
     jest.clearAllMocks() // trying to avoid potential collisions with tests that aren't cleaning up their mocks properly.
-    updateOrderItems = jest.spyOn(OrderAPI, 'updateOrderItems').mockImplementation().mockResolvedValue()
+    updateOrderItems = jest
+      .spyOn(OrderAPI, 'updateOrderItems')
+      .mockImplementation()
+      .mockResolvedValue()
     onSubmit = jest.fn()
     onClose = jest.fn()
     trackAddSide = jest.fn()
@@ -146,11 +147,8 @@ describe('<SideModal />', () => {
     />
   )
 
-  const renderModal = ({
-    userId,
-    order = getOrder(),
-    isOpen,
-  }) => render(<SideModalWithMockedProps userId={userId} order={order} isOpen={isOpen} />)
+  const renderModal = ({ userId, order = getOrder(), isOpen }) =>
+    render(<SideModalWithMockedProps userId={userId} order={order} isOpen={isOpen} />)
 
   /*
    * Sides/Products looks like;
@@ -159,7 +157,13 @@ describe('<SideModal />', () => {
    *    [SideIds.BlanchedPeas]: 2,
    *  }
    */
-  const expectSubmitToHaveBeenNthCalledWith = async (nth, sides, totalQntOfSides, totalPrice, products = {}) => {
+  const expectSubmitToHaveBeenNthCalledWith = async (
+    nth,
+    sides,
+    totalQntOfSides,
+    totalPrice,
+    products = {},
+  ) => {
     // We track submitting with sides
     await waitFor(() => expect(updateOrderItems).toBeCalledTimes(nth))
     await waitFor(() => expect(trackSidesContinueClicked).toBeCalledTimes(nth))
@@ -168,19 +172,16 @@ describe('<SideModal />', () => {
     const sideIds = Object.keys(sides)
     const sideIdsAndProducts = [...sideIds, ...Object.keys(products)]
 
-    expect(updateOrderItems).toHaveBeenNthCalledWith(
-      nth,
-      'access-token',
-      'order-id',
-      {
-        item_choices: expect.arrayContaining(sideIdsAndProducts.map((id) => ({
+    expect(updateOrderItems).toHaveBeenNthCalledWith(nth, 'access-token', 'order-id', {
+      item_choices: expect.arrayContaining(
+        sideIdsAndProducts.map((id) => ({
           id,
           quantity: sides[id] || products[id],
-          type: 'Product'
-        }))),
-        restrict: 'Product'
-      }
-    )
+          type: 'Product',
+        })),
+      ),
+      restrict: 'Product',
+    })
 
     expect(trackSidesContinueClicked).toHaveBeenNthCalledWith(
       nth,
@@ -191,14 +192,10 @@ describe('<SideModal />', () => {
       totalQntOfSides,
     )
 
-    expect(onSubmit).toHaveBeenNthCalledWith(
-      nth,
-      'sides-modal-with-sides',
-      {
-        ...sides,
-        ...products,
-      }
-    )
+    expect(onSubmit).toHaveBeenNthCalledWith(nth, 'sides-modal-with-sides', {
+      ...sides,
+      ...products,
+    })
   }
 
   describe('when modal is not open', () => {
@@ -251,27 +248,37 @@ describe('<SideModal />', () => {
       it('should render the sides tiles', async () => {
         await renderOpenSidesModal()
 
-        expect(screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 })).not.toBeInTheDocument()
+        expect(
+          screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 }),
+        ).not.toBeInTheDocument()
 
         // plainNaan Side
         const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
         expect(plainNaanSideTile.queryByText(/£1.00 ● 2 Servings/)).toBeInTheDocument()
         expect(plainNaanSideTile.queryByLabelText('Add or Remove Side')).toBeInTheDocument()
         const plainNaanImage = plainNaanSideTile.getByAltText('Plain Naan (x2)')
-        expect(plainNaanImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Naan-3914-x400.jpg')
+        expect(plainNaanImage).toHaveAttribute(
+          'src',
+          'https://production-media.gousto.co.uk/cms/product-image-landscape/Naan-3914-x400.jpg',
+        )
 
         // blanchedPeas Side
         const blanchedPeasSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
         expect(blanchedPeasSideTile.queryByText(/£1.00 ● 2 Servings/)).toBeInTheDocument()
         expect(blanchedPeasSideTile.queryByLabelText('Add or Remove Side')).toBeInTheDocument()
         const blanchedPeasImage = blanchedPeasSideTile.getByAltText('Blanched Peas (160g)')
-        expect(blanchedPeasImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Peas-3924-x400.jpg')
+        expect(blanchedPeasImage).toHaveAttribute(
+          'src',
+          'https://production-media.gousto.co.uk/cms/product-image-landscape/Peas-3924-x400.jpg',
+        )
       })
 
       it('should call onClose when modal close button is clicked and hide allergens', async () => {
         await renderOpenSidesModal()
 
-        const header = within(screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }).closest('div'))
+        const header = within(
+          screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }).closest('div'),
+        )
         const closeButton = header.getByTestId('modalClose')
 
         // Show Allergens
@@ -302,7 +309,9 @@ describe('<SideModal />', () => {
 
           await screen.findByRole('heading', { name: 'Allergens and Nutrition', level: 2 })
 
-          expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument()
+          expect(
+            screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 }),
+          ).not.toBeInTheDocument()
 
           // plainNaan Side
           const plainNaanSideTile = getSideTileFromHeader('Plain Naan (x2)')
@@ -318,7 +327,9 @@ describe('<SideModal />', () => {
           // No allergen test as peas don't have any
 
           // Hide Allergens
-          const hideAllergensButton = screen.getByRole('button', { name: 'Hide Allergens and Nutrition' })
+          const hideAllergensButton = screen.getByRole('button', {
+            name: 'Hide Allergens and Nutrition',
+          })
 
           fireEvent.click(hideAllergensButton)
 
@@ -327,7 +338,9 @@ describe('<SideModal />', () => {
 
           await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
 
-          expect(screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 })).not.toBeInTheDocument()
+          expect(
+            screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 }),
+          ).not.toBeInTheDocument()
         })
       })
 
@@ -337,10 +350,16 @@ describe('<SideModal />', () => {
             const { rerender } = await renderOpenSidesModal()
 
             // Footer
-            let footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
+            let footer = within(
+              screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'),
+            )
 
-            expect(footer.queryByRole('button', { name: 'Continue without sides' })).toBeInTheDocument()
-            expect(footer.queryByRole('button', { name: 'Continue with sides' })).not.toBeInTheDocument()
+            expect(
+              footer.queryByRole('button', { name: 'Continue without sides' }),
+            ).toBeInTheDocument()
+            expect(
+              footer.queryByRole('button', { name: 'Continue with sides' }),
+            ).not.toBeInTheDocument()
 
             // Add a Side
             const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
@@ -357,8 +376,12 @@ describe('<SideModal />', () => {
             expect(footer.getByText('+£1.00')).toBeInTheDocument()
 
             // Check continue button
-            expect(footer.queryByRole('button', { name: 'Continue without sides' })).not.toBeInTheDocument()
-            expect(footer.queryByRole('button', { name: 'Continue with sides' })).toBeInTheDocument()
+            expect(
+              footer.queryByRole('button', { name: 'Continue without sides' }),
+            ).not.toBeInTheDocument()
+            expect(
+              footer.queryByRole('button', { name: 'Continue with sides' }),
+            ).toBeInTheDocument()
 
             // Add 2 Sides
             addSideToBasket('Blanched Peas (160g)', 2)
@@ -371,7 +394,9 @@ describe('<SideModal />', () => {
             expect(footer.getByText('+£3.00')).toBeInTheDocument()
 
             // Submit with Sides
-            let continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+            let continueWithSidesButton = footer.getByRole('button', {
+              name: 'Continue with sides',
+            })
 
             fireEvent.click(continueWithSidesButton)
 
@@ -385,7 +410,7 @@ describe('<SideModal />', () => {
               // Total quantity of sides
               3,
               // Total price of sides
-              3
+              3,
             )
 
             expect(continueWithSidesButton).toBeDisabled()
@@ -393,29 +418,47 @@ describe('<SideModal />', () => {
             // Close and Open Modal should reset disabled state and resets selected products base on Order
             rerender(<SideModalWithMockedProps userId={user.withSides} isOpen={false} />)
 
-            await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument())
+            await waitFor(() =>
+              expect(
+                screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 }),
+              ).not.toBeInTheDocument(),
+            )
 
-            const doughBalls = [{
-              type: 'product',
-              id: SideIds.DoughBall,
-              meta: {
-                quantity: 1,
-                amendments: [],
+            const doughBalls = [
+              {
+                type: 'product',
+                id: SideIds.DoughBall,
+                meta: {
+                  quantity: 1,
+                  amendments: [],
+                },
               },
-            }]
+            ]
 
-            rerender(<SideModalWithMockedProps userId={user.withSides} isOpen order={getOrder(doughBalls)} />)
+            rerender(
+              <SideModalWithMockedProps
+                userId={user.withSides}
+                isOpen
+                order={getOrder(doughBalls)}
+              />,
+            )
 
-            await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument())
+            await waitFor(() =>
+              expect(
+                screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 }),
+              ).toBeInTheDocument(),
+            )
 
             // Reselect footer and continueWithSidesButton
-            footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
+            footer = within(
+              screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'),
+            )
             continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
 
             expect(continueWithSidesButton).not.toBeDisabled()
 
             // Reselect tiles and remove Sides
-            const doughBallSideTile = getWrappedSideTileFromHeader(('8 Dough Ball Bites'))
+            const doughBallSideTile = getWrappedSideTileFromHeader('8 Dough Ball Bites')
 
             const doughBallSideMinusButton = doughBallSideTile.queryByRole('button', { name: '-' })
 
@@ -427,7 +470,9 @@ describe('<SideModal />', () => {
             expect(footer.queryByText('Sides price')).not.toBeInTheDocument()
 
             // Submit without Sides
-            const continueWithoutSidesButton = footer.getByRole('button', { name: 'Continue without sides' })
+            const continueWithoutSidesButton = footer.getByRole('button', {
+              name: 'Continue without sides',
+            })
 
             fireEvent.click(continueWithoutSidesButton)
 
@@ -438,7 +483,7 @@ describe('<SideModal />', () => {
               // Total quantity of sides
               0,
               // Total price of sides
-              0
+              0,
             )
 
             expect(continueWithoutSidesButton).toBeDisabled()
@@ -452,7 +497,9 @@ describe('<SideModal />', () => {
             await renderOpenSidesModal()
 
             // Footer
-            const footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
+            const footer = within(
+              screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'),
+            )
 
             // Add a Side
             const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
@@ -461,7 +508,9 @@ describe('<SideModal />', () => {
             fireEvent.click(plainNaanSideAddButton)
 
             // Submit with Sides
-            const continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+            const continueWithSidesButton = footer.getByRole('button', {
+              name: 'Continue with sides',
+            })
 
             fireEvent.click(continueWithSidesButton)
 
@@ -489,11 +538,19 @@ describe('<SideModal />', () => {
             // only renders on the page once hovered over
             fireEvent.mouseOver(sidePlusButton)
 
-            expect(screen.queryByRole('tooltip', { name: 'Sorry, we can\'t fit anymore of this item in your box' })).toBeInTheDocument()
+            expect(
+              screen.queryByRole('tooltip', {
+                name: "Sorry, we can't fit anymore of this item in your box",
+              }),
+            ).toBeInTheDocument()
 
             // Submit with Sides
-            const footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
-            const continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+            const footer = within(
+              screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'),
+            )
+            const continueWithSidesButton = footer.getByRole('button', {
+              name: 'Continue with sides',
+            })
 
             fireEvent.click(continueWithSidesButton)
 
@@ -501,12 +558,12 @@ describe('<SideModal />', () => {
             await expectSubmitToHaveBeenNthCalledWith(
               1,
               {
-                [SideIds.PlainNaan]: 2
+                [SideIds.PlainNaan]: 2,
               },
               // Total quantity of sides
               2,
               // Total price of sides
-              2
+              2,
             )
           })
         })
@@ -527,11 +584,19 @@ describe('<SideModal />', () => {
             // only renders on the page once hovered over
             fireEvent.mouseOver(plainNaanSidePlusButton)
 
-            expect(screen.queryByRole('tooltip', { name: 'Sorry, we can\'t fit anymore "Sides" items in your box' })).toBeInTheDocument()
+            expect(
+              screen.queryByRole('tooltip', {
+                name: 'Sorry, we can\'t fit anymore "Sides" items in your box',
+              }),
+            ).toBeInTheDocument()
 
             // Submit with Sides
-            const footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
-            const continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+            const footer = within(
+              screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'),
+            )
+            const continueWithSidesButton = footer.getByRole('button', {
+              name: 'Continue with sides',
+            })
 
             fireEvent.click(continueWithSidesButton)
 
@@ -546,7 +611,7 @@ describe('<SideModal />', () => {
               // Total quantity of sides
               10,
               // Total price of sides
-              14
+              14,
             )
           })
         })
@@ -555,14 +620,16 @@ describe('<SideModal />', () => {
           describe('when user tries to add more products than the max product limit', () => {
             it('should not let them add more than the limit', async () => {
               const productId = 'product-id'
-              const productWithQuantityOf8 = [ {
-                type: 'product',
-                id: productId,
-                meta: {
-                  quantity: 8,
-                  amendments: [],
+              const productWithQuantityOf8 = [
+                {
+                  type: 'product',
+                  id: productId,
+                  meta: {
+                    quantity: 8,
+                    amendments: [],
+                  },
                 },
-              }]
+              ]
 
               await renderOpenSidesModal(getOrder(productWithQuantityOf8))
 
@@ -575,11 +642,19 @@ describe('<SideModal />', () => {
               // only renders on the page once hovered over
               fireEvent.mouseOver(sidePlusButton)
 
-              expect(screen.queryByRole('tooltip', { name: 'Sorry, we can\'t fit anymore items in your box' })).toBeInTheDocument()
+              expect(
+                screen.queryByRole('tooltip', {
+                  name: "Sorry, we can't fit anymore items in your box",
+                }),
+              ).toBeInTheDocument()
 
               // Submit with Sides
-              const footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
-              const continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+              const footer = within(
+                screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'),
+              )
+              const continueWithSidesButton = footer.getByRole('button', {
+                name: 'Continue with sides',
+              })
 
               fireEvent.click(continueWithSidesButton)
 
@@ -596,7 +671,7 @@ describe('<SideModal />', () => {
                 // Products
                 {
                   [productId]: 8,
-                }
+                },
               )
             })
           })
@@ -606,14 +681,16 @@ describe('<SideModal />', () => {
       describe('stock', () => {
         describe('when user tries to add a single side more times than the stock for that side', () => {
           it('should not let them add more than the stock', async () => {
-            const doughBalls = [{
-              type: 'product',
-              id: SideIds.DoughBall,
-              meta: {
-                quantity: 1,
-                amendments: [],
+            const doughBalls = [
+              {
+                type: 'product',
+                id: SideIds.DoughBall,
+                meta: {
+                  quantity: 1,
+                  amendments: [],
+                },
               },
-            }]
+            ]
 
             await renderOpenSidesModal(getOrder(doughBalls))
 
@@ -630,11 +707,17 @@ describe('<SideModal />', () => {
             // only renders on the page once hovered over
             fireEvent.mouseOver(sidePlusButton)
 
-            expect(screen.queryByRole('tooltip', { name: 'Sorry, we don\'t have any more in stock' })).toBeInTheDocument()
+            expect(
+              screen.queryByRole('tooltip', { name: "Sorry, we don't have any more in stock" }),
+            ).toBeInTheDocument()
 
             // Submit with Sides
-            const footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
-            const continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+            const footer = within(
+              screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'),
+            )
+            const continueWithSidesButton = footer.getByRole('button', {
+              name: 'Continue with sides',
+            })
 
             fireEvent.click(continueWithSidesButton)
 
@@ -648,7 +731,7 @@ describe('<SideModal />', () => {
               // Total quantity of sides
               3,
               // Total price of sides
-              6.75
+              6.75,
             )
           })
         })

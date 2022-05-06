@@ -115,8 +115,6 @@ describe('<Ingredient />', () => {
     const cross = <span>&#8224;</span>
     expect(label.length).toEqual(2)
     expect(label.first().childAt(0).text()).toEqual(ingredient.get('label'))
-    expect(label.last().childAt(0).text()).toEqual(
-      cross.props.children,
-    )
+    expect(label.last().childAt(0).text()).toEqual(cross.props.children)
   })
 })

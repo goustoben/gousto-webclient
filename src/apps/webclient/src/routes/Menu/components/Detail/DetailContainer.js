@@ -8,11 +8,7 @@ import { Detail } from './Detail'
 function mapStateToProps(state) {
   let [cutoffDate] = getCutoffs(state.basket, state.boxSummaryDeliveryDays) // eslint-disable-line prefer-const
   if (!cutoffDate) {
-    cutoffDate = moment()
-      .minutes(0)
-      .seconds(0)
-      .milliseconds(0)
-      .toISOString()
+    cutoffDate = moment().minutes(0).seconds(0).milliseconds(0).toISOString()
   }
 
   return {

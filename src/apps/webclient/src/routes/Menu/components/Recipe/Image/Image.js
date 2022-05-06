@@ -6,7 +6,7 @@ import { useRecipeImage } from './useRecipeImage'
 
 const Image = ({ lazy, className, useHomepageImage }) => {
   const title = useRecipeTitle()
-  const [ image, srcSet ] = useRecipeImage(useHomepageImage)
+  const [image, srcSet] = useRecipeImage(useHomepageImage)
 
   if (!image) {
     return null
@@ -23,7 +23,11 @@ const Image = ({ lazy, className, useHomepageImage }) => {
   )
 
   if (lazy) {
-    return <LazyLoad once offset={200} height={0}>{imageComponent}</LazyLoad>
+    return (
+      <LazyLoad once offset={200} height={0}>
+        {imageComponent}
+      </LazyLoad>
+    )
   }
 
   return imageComponent

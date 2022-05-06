@@ -1,7 +1,7 @@
 .extraNutritionalInformation {
-	composes: textSM from 'styles/typography.css';
+  composes: textSM from 'styles/typography.css';
 }
 
 .extraInfoMargins {
-	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+  composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
 }

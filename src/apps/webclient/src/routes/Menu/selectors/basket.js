@@ -9,31 +9,33 @@ export const getOkRecipeIds = createSelector(
   getMenuRecipeIds,
   getStock,
   getNumPortions,
-  (basketRecipes, menuRecipeIds, stock, numPortions) => okRecipes(basketRecipes, menuRecipeIds, stock, numPortions)
+  (basketRecipes, menuRecipeIds, stock, numPortions) =>
+    okRecipes(basketRecipes, menuRecipeIds, stock, numPortions),
 )
 
 export const getUnavailableRecipeIds = createSelector(
   getBasketRecipes,
   getOkRecipeIds,
-  (basketRecipes, okRecipeIds) => basketRecipes.filter((obj, recipeId) => !okRecipeIds.has(recipeId))
+  (basketRecipes, okRecipeIds) =>
+    basketRecipes.filter((obj, recipeId) => !okRecipeIds.has(recipeId)),
 )
 
 export const getFormatedRulesMessage = (state, rules) => {
   const rulesToDisplay = []
-  rules.forEach(rule => {
+  rules.forEach((rule) => {
     const recipesForRule = []
-    rule.items.forEach(item => {
+    rule.items.forEach((item) => {
       const recipe = getRecipeById(state, item)
       if (recipe) {
         recipesForRule.push({
           title: getRecipeTitle(recipe),
-          imageUrl: getRecipeImages(recipe).getIn([0, 'src'], '')
+          imageUrl: getRecipeImages(recipe).getIn([0, 'src'], ''),
         })
       }
     })
     rulesToDisplay.push({
       description: rule.message,
-      recipes: recipesForRule
+      recipes: recipesForRule,
     })
   })
 

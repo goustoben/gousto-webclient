@@ -21,11 +21,8 @@ import { getPreviewMenuDateForCutoff } from '../selectors/menuService'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 import { sendClientMetric } from '../apis/clientMetrics'
 
-const requiresMenuRecipesClear = (state, orderId) => (
-  orderId &&
-    getIsAuthenticated(state) &&
-    state.basket.get('recipes').size
-)
+const requiresMenuRecipesClear = (state, orderId) =>
+  orderId && getIsAuthenticated(state) && state.basket.get('recipes').size
 
 const chooseFirstDate = () => async (dispatch, getState) => {
   const isAuthenticated = getIsAuthenticated(getState())
@@ -97,7 +94,14 @@ const loadOrder = (orderId) => async (dispatch, getState) => {
       logger.notice({ message: `Unauthenticated user trying to edit: ${orderId}` })
     }
 
-    await dispatch(actions.redirect(`/menu?target=${encodeURIComponent(`${getProtocol()}//${getDomain()}/menu/${orderId}`)}#login`, true))
+    await dispatch(
+      actions.redirect(
+        `/menu?target=${encodeURIComponent(
+          `${getProtocol()}//${getDomain()}/menu/${orderId}`,
+        )}#login`,
+        true,
+      ),
+    )
   }
 }
 
@@ -107,10 +111,9 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
   if (getState().basket.get('orderId')) {
     const shippingAddresses = getState().user.get('shippingAddresses')
 
-    const addressToSelect = (
-      shippingAddresses.find(address => address.shippingDefault === true) ||
+    const addressToSelect =
+      shippingAddresses.find((address) => address.shippingDefault === true) ||
       shippingAddresses.first()
-    )
 
     await dispatch(actions.basketReset(addressToSelect))
   }
@@ -163,23 +166,24 @@ const selectCollectionFromQuery = (query) => (dispatch, getState) => {
 }
 
 const shouldFetchData = (state, params, force, userMenuVariant) => {
-  const {menuRecipes} = state
-  const {menuCollections} = state
+  const { menuRecipes } = state
+  const { menuCollections } = state
   const threshold = isDev() ? 4 : 8
   const stale = moment(state.menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
   const requiresClear = requiresMenuRecipesClear(state, params.orderId)
   const isAccessTokenDifferent = getMenuAccessToken(state) !== getAccessToken(state)
-  const isMenuVariantDifferent = userMenuVariant && getMenuFetchVariant(state) !== getUserMenuVariant(state)
+  const isMenuVariantDifferent =
+    userMenuVariant && getMenuFetchVariant(state) !== getUserMenuVariant(state)
 
   return (
     force ||
-      isAccessTokenDifferent ||
-      isMenuVariantDifferent ||
-      !menuRecipes ||
-      (menuRecipes && menuRecipes.size <= threshold) ||
-      stale ||
-      requiresClear ||
-      !menuCollections.size
+    isAccessTokenDifferent ||
+    isMenuVariantDifferent ||
+    !menuRecipes ||
+    (menuRecipes && menuRecipes.size <= threshold) ||
+    stale ||
+    requiresClear ||
+    !menuCollections.size
   )
 }
 
@@ -207,7 +211,8 @@ export default function fetchData({ query, params }, force, background, userMenu
 
     if (isAuthenticated && userId) {
       fetchMenuPromise = fetchMenusWithUserId(accessToken, query, userId)
-    } else if (userMenuVariant) { // A/B test on signup page
+    } else if (userMenuVariant) {
+      // A/B test on signup page
       fetchMenuPromise = fetchMenusWithUserId(accessToken, query, userMenuVariant)
     } else {
       fetchMenuPromise = fetchMenus(accessToken, query)

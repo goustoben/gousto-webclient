@@ -18,7 +18,7 @@ class CollectionsNav extends React.PureComponent {
     super(props)
     this.state = {
       navBarOffsetTop: 0,
-      scrolledPastPoint: false
+      scrolledPastPoint: false,
     }
     this.eles = {}
   }
@@ -119,15 +119,20 @@ class CollectionsNav extends React.PureComponent {
   showHideArrows = () => {
     const { menuCollections } = this.props
     if (menuCollections.size > 0) {
-      const collectionIds = menuCollections
-        .map(collection => collection.get('id'))
-        .toList()
+      const collectionIds = menuCollections.map((collection) => collection.get('id')).toList()
       const lastCollectionId = collectionIds.last()
       const firstCollectionId = collectionIds.first()
 
-      const firstCollectionVisible = this.isElementVisible(this.eles[firstCollectionId], this.eles.parent, true)
-      const lastCollectionVisible = this.isElementVisible(this.eles[lastCollectionId], this.eles.parent)
-      this.setState({ showArrows: (!firstCollectionVisible || !lastCollectionVisible) })
+      const firstCollectionVisible = this.isElementVisible(
+        this.eles[firstCollectionId],
+        this.eles.parent,
+        true,
+      )
+      const lastCollectionVisible = this.isElementVisible(
+        this.eles[lastCollectionId],
+        this.eles.parent,
+      )
+      this.setState({ showArrows: !firstCollectionVisible || !lastCollectionVisible })
       this.evaluatePosition(null, this.eles.parent.scrollLeft)
     }
   }
@@ -162,10 +167,11 @@ class CollectionsNav extends React.PureComponent {
 
   prevCollection = () => {
     const { menuCurrentCollectionId, menuCollections, changeCollectionById } = this.props
-    const prevIdx = menuCollections
-      .map(collection => collection.get('id'))
-      .toList()
-      .indexOf(menuCurrentCollectionId) - 1
+    const prevIdx =
+      menuCollections
+        .map((collection) => collection.get('id'))
+        .toList()
+        .indexOf(menuCurrentCollectionId) - 1
 
     let prevCollectionId = null
     if (prevIdx >= 0) {
@@ -192,10 +198,11 @@ class CollectionsNav extends React.PureComponent {
 
   nextCollection = () => {
     const { menuCurrentCollectionId, menuCollections, changeCollectionById } = this.props
-    const nextIdx = menuCollections
-      .map(collection => collection.get('id'))
-      .toList()
-      .indexOf(menuCurrentCollectionId) + 1
+    const nextIdx =
+      menuCollections
+        .map((collection) => collection.get('id'))
+        .toList()
+        .indexOf(menuCurrentCollectionId) + 1
 
     let nextCollectionId = null
     if (nextIdx <= menuCollections.size) {
@@ -230,14 +237,14 @@ class CollectionsNav extends React.PureComponent {
         top(document.body, position)
       }
     }
-    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > (navBarOffsetTop + 1)) {
+    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > navBarOffsetTop + 1) {
       window.scrollTo(0, navBarOffsetTop)
     }
   }
 
   checkCollectionOffsetTop = () => {
     const offsetTopNavBar = getElementOffsetTop(document, '#collectionNavBar')
-    this.setState({ ...this.state, navBarOffsetTop: offsetTopNavBar})
+    this.setState({ ...this.state, navBarOffsetTop: offsetTopNavBar })
   }
 
   isElementVisible(ele, parent) {
@@ -245,7 +252,7 @@ class CollectionsNav extends React.PureComponent {
 
     return (
       rect.left >= 0 &&
-      (rect.right + rect.width) <= (parent.innerWidth || document.documentElement.clientWidth)
+      rect.right + rect.width <= (parent.innerWidth || document.documentElement.clientWidth)
     )
   }
 
@@ -253,7 +260,9 @@ class CollectionsNav extends React.PureComponent {
     if (this.eles[collectionId] && this.eles.parent) {
       const parentRect = this.eles.parent.getBoundingClientRect()
       const rect = this.eles[collectionId].getBoundingClientRect()
-      const target = Math.round(this.eles[collectionId].offsetLeft - (parentRect.width * 0.5) + (rect.width * 0.5))
+      const target = Math.round(
+        this.eles[collectionId].offsetLeft - parentRect.width * 0.5 + rect.width * 0.5,
+      )
       this.scrollNavbar(target, animate, collectionId)
     }
   }
@@ -279,15 +288,9 @@ class CollectionsNav extends React.PureComponent {
   }
 
   render() {
-    const {
-      menuCollections,
-      menuCurrentCollectionId,
-    } = this.props
+    const { menuCollections, menuCurrentCollectionId } = this.props
 
-    const {
-      scrolledPastPoint,
-      scrollJumped
-    } = this.state
+    const { scrolledPastPoint, scrollJumped } = this.state
 
     let className = scrolledPastPoint ? css.navBarContainerFixed : css.navBarContainer
     if (scrollJumped) {
@@ -307,35 +310,46 @@ class CollectionsNav extends React.PureComponent {
     return (
       <div>
         <div className={className} id="collectionNavBar">
-          {showArrows && !isAtStart ? <div className={leftArrowClassName} onClick={this.prevCollection} /> : null}
-          <div className={css.nav} ref={ref => { this.eles.parent = ref }}>
+          {showArrows && !isAtStart ? (
+            <div className={leftArrowClassName} onClick={this.prevCollection} />
+          ) : null}
+          <div
+            className={css.nav}
+            ref={(ref) => {
+              this.eles.parent = ref
+            }}
+          >
             <div className={css.navBar}>
               {menuCollections
-                .map(collection => {
+                .map((collection) => {
                   const collectionId = collection.get('id')
-                  const isCurrent = (menuCurrentCollectionId === collectionId)
+                  const isCurrent = menuCurrentCollectionId === collectionId
 
                   return (
                     <CollectionItem
                       key={collectionId}
                       dataId={collectionId}
                       className={isCurrent ? css.currentItem : css.item}
-                      onClick={() => { this.changeCollection(collectionId) }}
+                      onClick={() => {
+                        this.changeCollection(collectionId)
+                      }}
                       idenifier={`collectionnav-${collectionId}`}
-                      element={ref => { this.eles[collectionId] = ref }}
+                      element={(ref) => {
+                        this.eles[collectionId] = ref
+                      }}
                       collectionId={collectionId}
                       slug={collection.get('slug')}
                     >
-                      <span className={css.itemTitle}>
-                        {collection.get('shortTitle')}
-                      </span>
+                      <span className={css.itemTitle}>{collection.get('shortTitle')}</span>
                     </CollectionItem>
                   )
                 })
                 .toArray()}
             </div>
           </div>
-          {showArrows && !isAtEnd ? <div className={rightArrowClassName} onClick={this.nextCollection} /> : null}
+          {showArrows && !isAtEnd ? (
+            <div className={rightArrowClassName} onClick={this.nextCollection} />
+          ) : null}
         </div>
       </div>
     )
@@ -351,7 +365,7 @@ CollectionsNav.propTypes = {
 
 CollectionsNav.defaultProps = {
   menuCurrentCollectionId: null,
-  isPolicyAccepted: false
+  isPolicyAccepted: false,
 }
 
 export { CollectionsNav }

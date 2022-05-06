@@ -6,7 +6,8 @@ export const loadMenuServiceDataIfDeepLinked = (isSignUpPage) => async (dispatch
   const menuServiceData = state.menuService
   const userMenuVariant = getUserMenuVariant(state)
 
-  const hasNoMenuDataAlready = !menuServiceData || !menuServiceData.data || !menuServiceData.data.length
+  const hasNoMenuDataAlready =
+    !menuServiceData || !menuServiceData.data || !menuServiceData.data.length
   const mustLoadVariantMenu = isSignUpPage && userMenuVariant
   const shouldForce = !!mustLoadVariantMenu
 

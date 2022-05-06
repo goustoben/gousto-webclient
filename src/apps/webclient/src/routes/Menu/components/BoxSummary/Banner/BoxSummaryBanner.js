@@ -50,7 +50,7 @@ const BoxSummaryBanner = ({
   const promoCode = useSelector(getPromoCode)
   const isPromoGetPending = useSelector(createGetActionTypeIsPending(actionTypes.PROMO_GET))
   const promoCodeInformationFromPromoStore = useSelector(
-    createGetPromoCodeInformationFromPromoStore(promoCode)
+    createGetPromoCodeInformationFromPromoStore(promoCode),
   )
 
   useEffect(() => {

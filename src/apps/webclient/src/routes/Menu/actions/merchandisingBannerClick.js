@@ -8,16 +8,14 @@ const mechandisingBannerClickTracking = (sourceCollectionId, targetCollectionId)
   trackingData: {
     actionType: clickMerchandisingBanner,
     collection_id: targetCollectionId,
-    click_collection_id: sourceCollectionId
-  }
+    click_collection_id: sourceCollectionId,
+  },
 })
 
-export const merchandisingBannerClick = (targetCollectionId) => (
-  (dispatch, getState) => {
-    const currentCollectionId = getCurrentCollectionId(getState())
+export const merchandisingBannerClick = (targetCollectionId) => (dispatch, getState) => {
+  const currentCollectionId = getCurrentCollectionId(getState())
 
-    dispatch(changeCollectionById(targetCollectionId))
+  dispatch(changeCollectionById(targetCollectionId))
 
-    dispatch(mechandisingBannerClickTracking(currentCollectionId, targetCollectionId))
-  }
-)
+  dispatch(mechandisingBannerClickTracking(currentCollectionId, targetCollectionId))
+}

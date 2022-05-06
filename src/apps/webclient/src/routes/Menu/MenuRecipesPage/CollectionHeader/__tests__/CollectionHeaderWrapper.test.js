@@ -41,7 +41,7 @@ describe('CollectionHeaderWrapper', () => {
       jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => ({
         id: 'header-id',
         type: 'gradient-info-header',
-        attributes: {}
+        attributes: {},
       }))
       wrapper = shallow(<CollectionHeaderWrapper />)
     })
@@ -56,7 +56,7 @@ describe('CollectionHeaderWrapper', () => {
       jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => ({
         id: 'header-id',
         type: 'wave-link-header',
-        attributes: {}
+        attributes: {},
       }))
       wrapper = shallow(<CollectionHeaderWrapper />)
     })

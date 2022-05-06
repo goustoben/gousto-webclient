@@ -2,11 +2,11 @@
 @value ScreenXXSMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
 
 .container {
-	position: relative;
-	background-color: Blackberry;
-	color: White;
+  position: relative;
+  background-color: Blackberry;
+  color: White;
 }
 
 .content {
-	padding: 1rem 0 2.5rem;
+  padding: 1rem 0 2.5rem;
 }

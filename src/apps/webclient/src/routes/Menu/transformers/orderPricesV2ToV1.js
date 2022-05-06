@@ -1,6 +1,4 @@
-export const transformOrderPricesV2ToOrderV1 = (
-  response,
-) => {
+export const transformOrderPricesV2ToOrderV1 = (response) => {
   const { prices } = response.data.attributes
 
   return {
@@ -22,7 +20,7 @@ export const transformOrderPricesV2ToOrderV1 = (
       total: prices.total,
       totalDiscount: prices.total_discount,
       recipeTotalDiscounted: prices.recipe_total_discounted,
-      items: Array(prices.surcharge_count).fill({ type: 'Surcharge' })
-    }
+      items: Array(prices.surcharge_count).fill({ type: 'Surcharge' }),
+    },
   }
 }

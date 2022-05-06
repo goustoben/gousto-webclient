@@ -1,7 +1,5 @@
 import { renderHook, cleanup } from '@testing-library/react-hooks'
-import {
-  withMockEnvironmentAndDomain
-} from '_testing/isomorphic-environment-test-utils'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { user } from './sides.hook.mock'
 import { useSides } from './sides.hook'
 
@@ -25,15 +23,15 @@ describe('useSides', () => {
       })
 
       expect(result.current.data).toBeUndefined()
-      expect(result.current.error.info).toEqual(
-        {
-          errors: [{
+      expect(result.current.error.info).toEqual({
+        errors: [
+          {
             detail: 'Internal Server Error',
-            status: '500'
-          }],
-          meta: {trace_id: 'trace_id'}
-        }
-      )
+            status: '500',
+          },
+        ],
+        meta: { trace_id: 'trace_id' },
+      })
       expect(result.current.error.status).toEqual(500)
     })
   })
@@ -49,9 +47,11 @@ describe('useSides', () => {
       })
 
       expect(result.current.error).toBeUndefined()
-      expect(result.current.data).toEqual(
-        {data: [], includes: [], meta: {max_products_per_box: 10}}
-      )
+      expect(result.current.data).toEqual({
+        data: [],
+        includes: [],
+        meta: { max_products_per_box: 10 },
+      })
     })
   })
 
@@ -66,23 +66,21 @@ describe('useSides', () => {
       })
 
       expect(result.current.error).toBeUndefined()
-      expect(result.current.data).toEqual(
-        {
-          data: expect.arrayContaining([
-            expect.objectContaining({
-              type: 'product',
-            }),
-            expect.objectContaining({
-              type: 'product',
-            }),
-            expect.objectContaining({
-              type: 'product',
-            }),
-          ]),
-          includes: [],
-          meta: {max_products_per_box: 10}
-        }
-      )
+      expect(result.current.data).toEqual({
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            type: 'product',
+          }),
+          expect.objectContaining({
+            type: 'product',
+          }),
+          expect.objectContaining({
+            type: 'product',
+          }),
+        ]),
+        includes: [],
+        meta: { max_products_per_box: 10 },
+      })
     })
   })
 })

@@ -3,6 +3,7 @@ import { getBasket } from 'selectors/root'
 import { getTempProductId, getTempAddProduct } from 'selectors/temp'
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
+import { openProductModalTracking } from 'actions/tracking'
 import tempActions from 'actions/temp'
 import { Product } from './Product.logic'
 
@@ -22,7 +23,8 @@ const mapDispatchToProps = {
   basketProductAdd,
   basketProductRemove,
   temp: tempActions.temp,
-  orderConfirmationProductTracking
+  orderConfirmationProductTracking,
+  openProductModalTracking
 }
 
 const ProductContainer = connect(mapStateToProps, mapDispatchToProps)(Product)

@@ -5,8 +5,8 @@ export const trackAddSide = (recipeId, variantRecipeId) => ({
   trackingData: {
     actionType: 'add_side',
     recipe_id: recipeId,
-    variant_recipe_id: variantRecipeId
-  }
+    variant_recipe_id: variantRecipeId,
+  },
 })
 
 export const trackNoSide = (recipeId) => ({
@@ -14,7 +14,7 @@ export const trackNoSide = (recipeId) => ({
   trackingData: {
     actionType: 'no_side',
     recipe_id: recipeId,
-  }
+  },
 })
 
 export const trackCloseSide = (recipeId) => ({
@@ -22,7 +22,7 @@ export const trackCloseSide = (recipeId) => ({
   trackingData: {
     actionType: 'close_side',
     recipe_id: recipeId,
-  }
+  },
 })
 
 export const trackSelectSide = (recipeId, variantRecipeId, screenName) => ({
@@ -31,8 +31,8 @@ export const trackSelectSide = (recipeId, variantRecipeId, screenName) => ({
     actionType: 'select_side',
     recipe_id: recipeId,
     variant_recipe_id: variantRecipeId,
-    screen_name: screenName
-  }
+    screen_name: screenName,
+  },
 })
 
 export const trackDeselectSide = (recipeId, variantRecipeId, screenName) => ({
@@ -41,6 +41,6 @@ export const trackDeselectSide = (recipeId, variantRecipeId, screenName) => ({
     actionType: 'deselect_side',
     recipe_id: recipeId,
     variant_recipe_id: variantRecipeId,
-    screen_name: screenName
-  }
+    screen_name: screenName,
+  },
 })

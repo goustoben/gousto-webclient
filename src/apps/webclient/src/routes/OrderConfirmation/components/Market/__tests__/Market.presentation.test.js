@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Map } from 'immutable'
+import { Map, List } from 'immutable'
 import { MarketPresentation } from '../Market.presentation'
 
 describe('<MarketPresentation />', () => {
@@ -16,6 +16,9 @@ describe('<MarketPresentation />', () => {
     showOrderConfirmationReceipt: false,
     toggleAgeVerificationPopUp: jest.fn(),
     toggleOrderSummary: jest.fn(),
+    showPairings: false,
+    productRecipePairings: List(),
+    isLoading: false,
   }
 
   let wrapper
@@ -72,6 +75,42 @@ describe('<MarketPresentation />', () => {
         expect(wrapper.find('.orderDetails Connect(ReferAFriend)').exists()).toBe(false)
       })
     })
+
+    describe('when show recipe pairings in true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          showPairings: true,
+        })
+      })
+
+      describe('and there are no product recipe pairings', () => {
+        beforeEach(() => {
+          wrapper.setProps({
+            productRecipePairings: List(),
+          })
+        })
+
+        test('renders the product list', () => {
+          expect(wrapper.find('ProductList').exists()).toBe(true)
+        })
+      })
+    })
+
+    describe('when isLoading is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isLoading: true,
+        })
+      })
+
+      test('does not render the product list pairings', () => {
+        expect(wrapper.find('ProductList').exists()).toBe(false)
+      })
+
+      test('renders the loading icon', () => {
+        expect(wrapper.find('LoadingWrapper').exists()).toBe(true)
+      })
+    })
   })
 
   describe('when products fail to load', () => {
@@ -97,6 +136,44 @@ describe('<MarketPresentation />', () => {
 
     test('applies a modifier class for styling', () => {
       expect(wrapper.find('.productsLoadError')).toHaveLength(1)
+    })
+  })
+
+  describe('when there are are product recipe pairings', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isLoading: false,
+        showPairings: true,
+        productRecipePairings: List([1,2,3])
+      })
+    })
+
+    test('does not render the alert component', () => {
+      expect(wrapper.exists('Alert')).toBe(false)
+    })
+
+    test('renders the market place content section', () => {
+      expect(wrapper.find('.marketPlaceContent').exists()).toBe(true)
+    })
+
+    test('renders the product list pairings', () => {
+      expect(wrapper.find('ProductListPairings').exists()).toBe(true)
+    })
+
+    describe('when isLoading is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isLoading: true,
+        })
+      })
+
+      test('does not render the product list pairings', () => {
+        expect(wrapper.find('ProductListPairings').exists()).toBe(false)
+      })
+
+      test('renders the loading icon', () => {
+        expect(wrapper.find('LoadingWrapper').exists()).toBe(true)
+      })
     })
   })
 })

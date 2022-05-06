@@ -1,8 +1,5 @@
 import Immutable from 'immutable'
-import {
-  getVariantsForRecipe,
-  getCurrentCollectionDietaryClaims,
-} from '../variants'
+import { getVariantsForRecipe, getCurrentCollectionDietaryClaims } from '../variants'
 
 describe('getVariantsForRecipe', () => {
   describe('when no variants', () => {
@@ -17,7 +14,7 @@ describe('getVariantsForRecipe', () => {
 
   describe('when no recipeVariants', () => {
     const variants = Immutable.Map({
-      143: {}
+      143: {},
     })
     const coreRecipeId = '123'
 
@@ -31,12 +28,14 @@ describe('getVariantsForRecipe', () => {
     const variants = Immutable.fromJS({
       123: {
         displayName: 'recipe',
-        alternatives: [{
-          id: 'abd123',
-          coreRecipeId: '132',
-          displayName: 'recipeVariant'
-        }]
-      }
+        alternatives: [
+          {
+            id: 'abd123',
+            coreRecipeId: '132',
+            displayName: 'recipeVariant',
+          },
+        ],
+      },
     })
     const coreRecipeId = '123'
 
@@ -44,24 +43,20 @@ describe('getVariantsForRecipe', () => {
       const result = getVariantsForRecipe.resultFunc(variants, coreRecipeId)
       expect(result).toEqual({
         type: 'alternatives',
-        alternatives: Immutable.fromJS(
-          [
-            {
-              id: 'abd123',
-              coreRecipeId: '132',
-              displayName: 'recipeVariant'
-            }
-          ]
-        ),
-        variantsList: Immutable.fromJS(
-          [
-            {
-              id: 'abd123',
-              coreRecipeId: '132',
-              displayName: 'recipeVariant'
-            }
-          ]
-        )
+        alternatives: Immutable.fromJS([
+          {
+            id: 'abd123',
+            coreRecipeId: '132',
+            displayName: 'recipeVariant',
+          },
+        ]),
+        variantsList: Immutable.fromJS([
+          {
+            id: 'abd123',
+            coreRecipeId: '132',
+            displayName: 'recipeVariant',
+          },
+        ]),
       })
     })
   })
@@ -81,8 +76,8 @@ describe('getCurrentCollectionDietaryClaims', () => {
             default: true,
             recipesInCollection: ['123', '321', '4578'],
             requirements: {
-              dietary_claims: ['diary-free']
-            }
+              dietary_claims: ['diary-free'],
+            },
           },
         }),
       }
@@ -105,8 +100,8 @@ describe('getCurrentCollectionDietaryClaims', () => {
             default: true,
             recipesInCollection: ['123', '321', '4578'],
             requirements: {
-              dietary_claims: ['gluten-free']
-            }
+              dietary_claims: ['gluten-free'],
+            },
           },
         }),
         basket: Immutable.fromJS({
@@ -115,10 +110,10 @@ describe('getCurrentCollectionDietaryClaims', () => {
         routing: {
           locationBeforeTransitions: {
             query: {
-              collection: 'gluten-free'
-            }
-          }
-        }
+              collection: 'gluten-free',
+            },
+          },
+        },
       }
     })
     test('should return the diatery claims for collection with slug', () => {

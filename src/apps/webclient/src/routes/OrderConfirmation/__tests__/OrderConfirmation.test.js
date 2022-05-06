@@ -50,7 +50,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('renders the Market', () => {
-      expect(wrapper.find('Connect(Market)').exists()).toBe(true)
+      expect(wrapper.find('Market').exists()).toBe(true)
     })
 
     test('renders an AwinPixel', () => {
@@ -86,7 +86,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('renders the Market component', () => {
-      expect(wrapper.find('Connect(Market)').exists()).toBe(true)
+      expect(wrapper.find('Market').exists()).toBe(true)
     })
   })
 
@@ -110,7 +110,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('renders the Market component in the second VerticalStageItem', () => {
-      expect(wrapper.find('VerticalStagesItem').at(1).find('Connect(Market)').exists()).toBe(true)
+      expect(wrapper.find('VerticalStagesItem').at(1).find('Market').exists()).toBe(true)
     })
 
     test('renders the ReferAFriend in the first VerticalStageItem', () => {
