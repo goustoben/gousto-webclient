@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import TextInput from 'Form/Input'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { PostcodeStepMessage } from './PostcodeStepMessage'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
@@ -103,6 +104,7 @@ class PostcodeStep extends PureComponent {
             />
           </div>
         </div>
+        <RibbonTriggerContainer name="wizard-postcode-step" />
       </div>
     )
   }
