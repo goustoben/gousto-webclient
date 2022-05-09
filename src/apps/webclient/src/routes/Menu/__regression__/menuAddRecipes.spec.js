@@ -134,9 +134,10 @@ describe('Given I am a logged out user', () => {
 
       it('Then 5th recipe is added to my basket', () => {
         // Recipes count is still be 4 as same recipe is added for 4 portions which makes it 5 in total.
-        cy.window().then(getRecipes).then(
-          recipes => recipes.length
-        ).should('equal', 4)
+        cy.window()
+          .then(getRecipes)
+          .then((recipes) => recipes.length)
+          .should('equal', 4)
       })
     })
 
