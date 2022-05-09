@@ -9,7 +9,8 @@ import css from '../Details.css'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
-    const { trackingUnavailableRecipeList, menuFetchPending, unavailableRecipeIds, recipesStore } = this.props
+    const { trackingUnavailableRecipeList, menuFetchPending, unavailableRecipeIds, recipesStore } =
+      this.props
     const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
 
     if (unavailableRecipeList.size > 0 && !menuFetchPending) {
@@ -29,7 +30,7 @@ class RecipeList extends React.PureComponent {
       showRecipeDetailsOnClick,
       unavailableRecipeIds,
       basketRestorePreviousDate,
-      clearSlot
+      clearSlot,
     } = this.props
     const okRecipeList = isAvailableRecipeList(okRecipeIds, recipesStore)
     const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
@@ -38,20 +39,22 @@ class RecipeList extends React.PureComponent {
       <div>
         <LayoutContentWrapper>
           <div className={css.recipeItems}>
-            {okRecipeList.map(recipe => (
-              <Item
-                key={recipe.get('id')}
-                type="recipe"
-                available
-                fromBox
-                media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
-                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
-                quantity={basketRecipes.get(recipe.get('id')) * numPortions}
-                recipeId={recipe.get('id')}
-                title={recipe.get('title')}
-              />
-            )).toArray()}
+            {okRecipeList
+              .map((recipe) => (
+                <Item
+                  key={recipe.get('id')}
+                  type="recipe"
+                  available
+                  fromBox
+                  media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
+                  onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                  onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
+                  quantity={basketRecipes.get(recipe.get('id')) * numPortions}
+                  recipeId={recipe.get('id')}
+                  title={recipe.get('title')}
+                />
+              ))
+              .toArray()}
 
             <UnavailableMessage
               basketRestorePreviousDate={basketRestorePreviousDate}
@@ -61,18 +64,20 @@ class RecipeList extends React.PureComponent {
               orderSaveError={orderSaveError}
             />
 
-            {unavailableRecipeList.map(recipe => (
-              <Item
-                key={recipe.get('id')}
-                type="recipe"
-                available={menuFetchPending}
-                media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
-                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
-                quantity={basketRecipes.get(recipe.get('id')) * numPortions}
-                title={recipe.get('title')}
-              />
-            )).toArray()}
+            {unavailableRecipeList
+              .map((recipe) => (
+                <Item
+                  key={recipe.get('id')}
+                  type="recipe"
+                  available={menuFetchPending}
+                  media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
+                  onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                  onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
+                  quantity={basketRecipes.get(recipe.get('id')) * numPortions}
+                  title={recipe.get('title')}
+                />
+              ))
+              .toArray()}
           </div>
         </LayoutContentWrapper>
       </div>

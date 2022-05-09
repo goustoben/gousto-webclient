@@ -12,6 +12,7 @@ import { documentLocation } from 'utils/window'
 import { SetupOptimizelyOverride } from 'containers/OptimizelyRollouts'
 import { ThemeProvider } from '@gousto-internal/citrus-react'
 import { canUseWindow } from 'utils/browserEnvironment'
+import { RibbonIsAuthenticatedAttributeReporter } from 'components/RibbonTrigger'
 
 export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
@@ -34,6 +35,7 @@ export const AppContainer = ({ history, routes, store }) => (
         >
           {routes}
         </Router>
+        <RibbonIsAuthenticatedAttributeReporter />
       </ThemeProvider>
     </SWRConfig>
   </Provider>

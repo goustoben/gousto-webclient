@@ -20,7 +20,7 @@ export const createOrder = async (accessToken, order, userId) => {
     { data: order },
     'POST',
     cacheDefault,
-    headers
+    headers,
   )
 
   const {
@@ -41,7 +41,7 @@ export async function updateOrder(dispatch, getState, orderId, additionalData) {
   const accessToken = getAccessToken(state)
   const userId = getUserId(state)
   const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
-    'radishes_order_api_v2_putorder_web_enabled'
+    'radishes_order_api_v2_putorder_web_enabled',
   )(dispatch, getState)
 
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
@@ -83,7 +83,7 @@ export async function updateOrder(dispatch, getState, orderId, additionalData) {
       })
       .catch((error) => {
         reject(error)
-      })
+      }),
   )
 }
 
@@ -92,7 +92,7 @@ export async function fetchOrder(dispatch, getState, orderId, include) {
   const userId = getUserId(state)
   const accessToken = getAccessToken(state)
   const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
-    'radishes_order_api_v2_getorder_web_enabled'
+    'radishes_order_api_v2_getorder_web_enabled',
   )(dispatch, getState)
 
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
@@ -115,7 +115,7 @@ export async function fetchOrder(dispatch, getState, orderId, include) {
       })
       .catch((error) => {
         reject(error)
-      })
+      }),
   )
 }
 
@@ -126,7 +126,7 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
   const params = new URLSearchParams(reqData).toString()
   const accessToken = getAccessToken(state)
   const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
-    'radishes_order_api_v2_userorders_web_enabled'
+    'radishes_order_api_v2_userorders_web_enabled',
   )(dispatch, getState)
 
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
@@ -159,6 +159,6 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
       })
       .catch((error) => {
         reject(error)
-      })
+      }),
   )
 }

@@ -8,37 +8,43 @@ import { PostcodeContainer } from '../Postcode'
 import { DeliverySlotContainer } from '../DeliverySlot'
 
 const BoxSummaryContent = (props) => {
-  const { view = 'desktop', date, orderId, displayOptions, numPortions, recipes, boxSummaryCurrentView } = props
+  const {
+    view = 'desktop',
+    date,
+    orderId,
+    displayOptions,
+    numPortions,
+    recipes,
+    boxSummaryCurrentView,
+  } = props
 
   let boxSummaryView
 
   switch (boxSummaryCurrentView) {
-  case boxSummaryViews.POSTCODE:
-    boxSummaryView = <PostcodeContainer view={view} />
-    break
-  case boxSummaryViews.DELIVERY_SLOT:
-    boxSummaryView = <DeliverySlotContainer view={view} displayOptions={displayOptions} />
-    break
-  case boxSummaryViews.DETAILS:
-    boxSummaryView = (
-      <DetailsContainer
-        view={view}
-        displayOptions={displayOptions}
-        date={date}
-        orderId={orderId}
-        numPortions={numPortions}
-        basketRecipes={recipes}
-      />
-    )
-    break
-  default:
-    boxSummaryView = null
-    break
+    case boxSummaryViews.POSTCODE:
+      boxSummaryView = <PostcodeContainer view={view} />
+      break
+    case boxSummaryViews.DELIVERY_SLOT:
+      boxSummaryView = <DeliverySlotContainer view={view} displayOptions={displayOptions} />
+      break
+    case boxSummaryViews.DETAILS:
+      boxSummaryView = (
+        <DetailsContainer
+          view={view}
+          displayOptions={displayOptions}
+          date={date}
+          orderId={orderId}
+          numPortions={numPortions}
+          basketRecipes={recipes}
+        />
+      )
+      break
+    default:
+      boxSummaryView = null
+      break
   }
 
-  return (
-    <div>{boxSummaryView}</div>
-  )
+  return <div>{boxSummaryView}</div>
 }
 
 BoxSummaryContent.propTypes = {

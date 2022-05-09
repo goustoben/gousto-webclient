@@ -13,13 +13,15 @@ describe('WaveLinkHeader', () => {
         description: 'Header description',
         waveColor: '#FF0032',
         backgroundColor: '#0C3FC2',
-        headerImage: [{
-          url: 'waveLinkTitleImage-url'
-        }],
+        headerImage: [
+          {
+            url: 'waveLinkTitleImage-url',
+          },
+        ],
         link: {
           collectionSlug: 'healthy',
           collectionId: '123',
-        }
+        },
       }
 
       wrapper = shallow(<WaveLinkHeader headerAttributes={headerAttributes} onClick={onClick} />)
@@ -46,10 +48,12 @@ describe('WaveLinkHeader', () => {
         link: {
           collectionSlug: 'healthy',
           collectionId: '123',
-        }
+        },
       }
 
-      wrapper = shallow(<WaveLinkHeader headerAttributes={headerAttributes} changeCollectionById={() => {}} />)
+      wrapper = shallow(
+        <WaveLinkHeader headerAttributes={headerAttributes} changeCollectionById={() => {}} />,
+      )
     })
 
     test('should not render image waveLinkTitleImage with src', () => {

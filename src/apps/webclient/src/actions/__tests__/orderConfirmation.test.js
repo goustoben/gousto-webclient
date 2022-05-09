@@ -74,20 +74,21 @@ describe('orderConfirmation actions', () => {
   })
 
   describe('orderConfirmationRedirect', () => {
+    const orderId = '1234'
     test('should call orderDetails', () => {
-      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+      orderConfirmationRedirect(orderId, 'transactional')(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalled()
     })
 
     test('should call orderCheckPossibleDuplicate', () => {
-      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+      orderConfirmationRedirect(orderId, 'transactional')(dispatch, getState)
 
       expect(orderCheckPossibleDuplicate).toHaveBeenCalled()
     })
 
     test('should push the client to the order confirmation', () => {
-      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+      orderConfirmationRedirect(orderId, 'transactional')(dispatch, getState)
 
       expect(redirect).not.toHaveBeenCalled()
       expect(push).toHaveBeenCalledWith('/order-confirmation/1234?order_action=transactional')
@@ -110,6 +111,7 @@ describe('orderConfirmation actions', () => {
     })
 
     describe('when fetchOrder returns an order containing recipe ids', () => {
+      const orderId = '1234'
       beforeEach(() => {
         fetchOrder.mockReturnValue(
           Promise.resolve({
@@ -123,13 +125,15 @@ describe('orderConfirmation actions', () => {
       })
 
       test('should fetch the recipes for the given recipe ids in the order', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
         expect(recipes.recipesLoadFromMenuRecipesById).toHaveBeenCalledWith(['uuid-1', 'uuid-2'])
       })
     })
 
     describe('when fetchOrder returns an order and a cutoff date', () => {
+      const orderId = '1234'
+
       beforeEach(() => {
         fetchOrder.mockReturnValue(
           Promise.resolve({
@@ -150,7 +154,7 @@ describe('orderConfirmation actions', () => {
       })
 
       test('should fetch the products for the returned cutoff date', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
         expect(productsLoadProducts).toHaveBeenCalledWith(
           '2019-04-12 19:00:00',
@@ -161,10 +165,10 @@ describe('orderConfirmation actions', () => {
       })
 
       test('should call basket order load for the returned order', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
         expect(basketOrderLoad).toHaveBeenCalledWith(
-          '1234',
+          orderId,
           Immutable.Map({
             id: '1234',
             whenCutoff: '2019-04-12 19:00:00',
@@ -181,24 +185,24 @@ describe('orderConfirmation actions', () => {
       })
 
       test('should call basket date change for the returned order', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
         expect(basketDateChange).toHaveBeenCalledWith('2019-04-16 19:00:00')
       })
 
       test('should call basket num portion change for the returned order', async () => {
-        await orderDetails('1234')(dispatch, getState)
-        expect(basketNumPortionChange).toHaveBeenCalledWith(4, '1234')
+        await orderDetails(orderId)(dispatch, getState)
+        expect(basketNumPortionChange).toHaveBeenCalledWith(4, orderId)
       })
 
       test('should call basket choosen address change for the returned order', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
         expect(basketChosenAddressChange).toHaveBeenCalledWith({
           postcode: 'AA1 2AA',
         })
       })
 
       test('should call basket postcode change for the returned order', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
         expect(basketPostcodeChange).toHaveBeenCalledWith('AA1 2AA')
       })
 
@@ -214,7 +218,7 @@ describe('orderConfirmation actions', () => {
           ],
         })
 
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
         expect(productsLoadProducts).toHaveBeenCalledWith(
           '2019-04-12 19:00:00',
@@ -233,12 +237,13 @@ describe('orderConfirmation actions', () => {
     })
 
     describe('when the fetchOrder call fails', () => {
+      const orderId = '1234'
       beforeEach(() => {
         fetchOrder.mockReturnValue(Promise.reject(new Error('error')))
       })
 
       test('should not fetch the products', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
         expect(productsLoadProducts).not.toHaveBeenCalled()
       })
@@ -254,10 +259,7 @@ describe('orderConfirmation actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: {
-          actionType: 'MarketProduct Added',
-          product_id: '1234',
-        },
+        trackingData: '1234',
       })
     })
 
@@ -269,10 +271,7 @@ describe('orderConfirmation actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: {
-          actionType: 'MarketProduct Removed',
-          product_id: '1234',
-        },
+        trackingData: '1234',
       })
     })
   })

@@ -9,8 +9,8 @@ export const trackTimeToUsable = (timeToFirstByte, timeToUsable, menuPrefetched)
     actionType: menuTimeToUsable,
     timeToFirstByte,
     timeToUsable,
-    menuPrefetched
-  }
+    menuPrefetched,
+  },
 })
 
 export const menuCalculateTimeToUsable = () => (dispatch, getState) => {

@@ -32,9 +32,7 @@ export const orderV2PricesFixture = {
 
 describe('transformOrderPricesV2ToOrderV1', () => {
   test('should transform deliverySlot correctly', () => {
-    expect(
-      transformOrderPricesV2ToOrderV1(orderV2PricesFixture)
-    ).toMatchInlineSnapshot(`
+    expect(transformOrderPricesV2ToOrderV1(orderV2PricesFixture)).toMatchInlineSnapshot(`
 Object {
   "data": Object {
     "amountOff": "0.00",

@@ -29,7 +29,7 @@ describe('<Image />', () => {
     ])
   })
 
-  it('shouldn\'t render a GoustoImage without media', () => {
+  it("shouldn't render a GoustoImage without media", () => {
     wrapper = shallow(<Image media={Immutable.List()} />)
 
     expect(wrapper.find(GoustoImage)).toHaveLength(0)
@@ -45,4 +45,3 @@ describe('<Image />', () => {
     expect(wrapper.find(SoldOutOverlay).length).toEqual(1)
   })
 })
-

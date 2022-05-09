@@ -28,9 +28,9 @@ describe('openSidesModal', () => {
       trackingData: {
         event_name: 'view_order_sides_screen',
         event_screen: 'order_sides_screen',
-        event_type: 'screen_view'
+        event_type: 'screen_view',
       },
-      type: 'TRACK_VIEW_ORDER_SIDES_SCREEN'
+      type: 'TRACK_VIEW_ORDER_SIDES_SCREEN',
     })
     expect(dispatch).toBeCalledWith({ key: 'BASKET_CHECKOUT', type: 'PENDING', value: true })
     expect(dispatch).toBeCalledWith({ type: 'MENU_OPEN_SIDES_MODAL' })
@@ -47,9 +47,9 @@ describe('closeSidesModalAction', () => {
     expect(dispatch).toBeCalledWith({
       trackingData: {
         event_name: 'order_sides_cancel',
-        event_type: 'close_screen'
+        event_type: 'close_screen',
       },
-      type: 'TRACK_ORDER_SIDES_CANCEL'
+      type: 'TRACK_ORDER_SIDES_CANCEL',
     })
     expect(dispatch).toBeCalledWith({ key: 'BASKET_CHECKOUT', type: 'PENDING', value: false })
     expect(dispatch).toBeCalledWith({ type: 'MENU_CLOSE_SIDES_MODAL' })

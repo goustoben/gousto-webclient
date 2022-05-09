@@ -3,14 +3,10 @@ import Immutable from 'immutable'
 import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 
-import {
-  getMetaImageLink,
-  getPortionPrice,
-  getRecipeDetailURL,
-} from './utils'
+import { getMetaImageLink, getPortionPrice, getRecipeDetailURL } from './utils'
 
-const RecipeMeta = ({ recipe }) => (
-  (recipe) ? (
+const RecipeMeta = ({ recipe }) =>
+  recipe ? (
     <Helmet
       meta={[
         {
@@ -56,7 +52,6 @@ const RecipeMeta = ({ recipe }) => (
       ]}
     />
   ) : null
-)
 
 RecipeMeta.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map),

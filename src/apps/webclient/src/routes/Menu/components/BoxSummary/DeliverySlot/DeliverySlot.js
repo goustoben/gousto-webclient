@@ -12,20 +12,30 @@ class DeliverySlot extends React.PureComponent {
   render = () => {
     const {
       numPortions,
-      disabledSlots, isAuthenticated,
-      isSubscriptionActive, shouldDisplayFullScreenBoxSummary,
-      boxSummaryNext, menuPending,
+      disabledSlots,
+      isAuthenticated,
+      isSubscriptionActive,
+      shouldDisplayFullScreenBoxSummary,
+      boxSummaryNext,
+      menuPending,
       menuFetchDataPending,
-      tempOrderId, tempDate,
-      tempSlotId, clearPostcode, disableOnDelivery,
-      userOrders, getBoxSummaryTextProps,
+      tempOrderId,
+      tempDate,
+      tempSlotId,
+      clearPostcode,
+      disableOnDelivery,
+      userOrders,
+      getBoxSummaryTextProps,
       deliveryDays: deliveryDaysProps,
       userHasAvailableSlots,
       userOrderLoadingState,
     } = this.props
 
-    const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
-    const doesDateHaveDisabledSlots = datesOfDisabledSlots.includes(tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
+    const datesOfDisabledSlots = disabledSlots.map((date) => date.slice(0, 10))
+    const doesDateHaveDisabledSlots =
+      datesOfDisabledSlots.includes(tempDate) &&
+      isAuthenticated &&
+      isSubscriptionActive === 'inactive'
     const helperProps = {
       disableOnDelivery,
       disabledSlots,
@@ -34,7 +44,7 @@ class DeliverySlot extends React.PureComponent {
       tempDate,
       userOrders,
       tempSlotId,
-      deliveryDaysProps
+      deliveryDaysProps,
     }
     const {
       slots,
@@ -49,21 +59,24 @@ class DeliverySlot extends React.PureComponent {
 
     return (
       <LayoutContentWrapper>
-        <Heading isCenter size="_legacy_large" type="h2">Delivery Options</Heading>
+        <Heading isCenter size="_legacy_large" type="h2">
+          Delivery Options
+        </Heading>
         <div className={css.row}>
-          <p className={css.leadingText}>Our menus change weekly. Please select a date so we can show you the latest recipes</p>
+          <p className={css.leadingText}>
+            Our menus change weekly. Please select a date so we can show you the latest recipes
+          </p>
         </div>
         <div className={tempOrderId ? css.disabledRow : css.row}>
-          <Button
-            fill={false}
-            width="full"
-          >
-            <Segment
-              className={css.textInput}
-              fill={false}
-              onClick={clearPostcode}
-            >
-              <span className={deliveryLocationText.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{deliveryLocationText}</span>
+          <Button fill={false} width="full">
+            <Segment className={css.textInput} fill={false} onClick={clearPostcode}>
+              <span
+                className={
+                  deliveryLocationText.length > 21 ? css.limitedLengthPadding : css.limitedLength
+                }
+              >
+                {deliveryLocationText}
+              </span>
               <span className={css.clear}>
                 <span className={css.clearIcon} />
                 edit
@@ -71,7 +84,15 @@ class DeliverySlot extends React.PureComponent {
             </Segment>
           </Button>
         </div>
-        <DatePickerContainer slots={slots} slotId={slotId} deliveryDays={deliveryDays} tempOrderId={tempOrderId} tempSlotId={tempSlotId} tempDate={tempDate} subLabelClassName={subLabelClassName} />
+        <DatePickerContainer
+          slots={slots}
+          slotId={slotId}
+          deliveryDays={deliveryDays}
+          tempOrderId={tempOrderId}
+          tempSlotId={tempSlotId}
+          tempDate={tempDate}
+          subLabelClassName={subLabelClassName}
+        />
         <div className={css.row}>
           <DeliverySupportingText
             hasEmptyOrders={hasEmptyOrders}
@@ -81,18 +102,16 @@ class DeliverySlot extends React.PureComponent {
             tempDate={tempDate}
           />
         </div>
-        {
-          (userHasAvailableSlots === false && userOrderLoadingState === false) && (
-            <div className={css.row}>
-              <Alert type="danger">
-                <p className={css.alertContent}>
-                  Due to extremely high demand, all of our one-off box delivery slots are full.
-                  If you skipped a box you will not be able to replace it.
-                </p>
-              </Alert>
-            </div>
-          )
-        }
+        {userHasAvailableSlots === false && userOrderLoadingState === false && (
+          <div className={css.row}>
+            <Alert type="danger">
+              <p className={css.alertContent}>
+                Due to extremely high demand, all of our one-off box delivery slots are full. If you
+                skipped a box you will not be able to replace it.
+              </p>
+            </Alert>
+          </div>
+        )}
         <div className={css.row}>
           <p className={css.highlightText}>
             <span className={css.tick} />

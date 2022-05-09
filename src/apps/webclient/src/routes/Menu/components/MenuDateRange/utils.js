@@ -24,7 +24,7 @@ const findDateRangeForMenuWeek = (basketDate) => {
 
   return {
     startMoment,
-    endMoment
+    endMoment,
   }
 }
 

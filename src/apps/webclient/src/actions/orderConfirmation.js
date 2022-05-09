@@ -55,14 +55,11 @@ export const orderDetails = (orderId) => async (dispatch, getState) => {
   }
 }
 
-export const orderConfirmationProductTracking = (productId, added) => (
+export const orderConfirmationProductTracking = (trackingData) => (
   (dispatch) => {
     dispatch({
       type: actionTypes.BASKET_PRODUCT_TRACKING,
-      trackingData: {
-        actionType: added ? 'MarketProduct Added' : 'MarketProduct Removed',
-        product_id: productId,
-      },
+      trackingData
     })
   }
 )

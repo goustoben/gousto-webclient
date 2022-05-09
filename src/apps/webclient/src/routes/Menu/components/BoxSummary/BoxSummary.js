@@ -56,7 +56,12 @@ class BoxSummary extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { hasUnavailableRecipes, orderSaveError, boxDetailsVisibilityChange, shouldShowBoxSummary } = this.props
+    const {
+      hasUnavailableRecipes,
+      orderSaveError,
+      boxDetailsVisibilityChange,
+      shouldShowBoxSummary,
+    } = this.props
 
     window.document.addEventListener('click', this.handleClick, false)
 
@@ -108,13 +113,15 @@ class BoxSummary extends React.PureComponent {
     const hadOrderSaveError = Boolean(orderSaveError) && orderSaveError !== 'no-stock'
     const basketExpiredError = orderSaveError === 'basket-expired'
     const showTooltip = hadOrderSaveError && !hideTooltip && basketExpiredError
-    const tooltipErrorText = basketExpiredError ? 'Sorry, your box has expired. Please re-add your recipe choices to continue' : undefined
+    const tooltipErrorText = basketExpiredError
+      ? 'Sorry, your box has expired. Please re-add your recipe choices to continue'
+      : undefined
     const showErrorModalPopup = hadOrderSaveError && tooltipErrorText === undefined
 
     return {
       showTooltip,
       tooltipErrorText,
-      showErrorModalPopup
+      showErrorModalPopup,
     }
   }
 
@@ -165,7 +172,7 @@ class BoxSummary extends React.PureComponent {
 
     return (
       <div className={css.boxSummary} data-testing="boxSummary">
-        <CheckoutErrorModal shouldShow={ showErrorModalPopup } />
+        <CheckoutErrorModal shouldShow={showErrorModalPopup} />
 
         <BoxSummaryBanner
           numRecipes={numRecipes}

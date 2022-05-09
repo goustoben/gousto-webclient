@@ -7,17 +7,17 @@ jest.mock('utils/fetch', () => ({
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
-  })
+  }),
 }))
 
 jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
+  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`),
 )
 
 jest.mock('config/routes', () => ({
   core: {
     userOrder: '/userOrder',
-  }
+  },
 }))
 
 describe('radish core apis', () => {

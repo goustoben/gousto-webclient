@@ -53,6 +53,10 @@ describe('<Market />', () => {
         showOrderConfirmationReceipt: DEFAULT_PROPS.showOrderConfirmationReceipt,
         toggleAgeVerificationPopUp: DEFAULT_PROPS.toggleAgeVerificationPopUp,
         toggleOrderSummary: wrapper.instance().toggleOrderSummary,
+        showPairings: false,
+        productRecipePairings: Map(),
+        isLoading: false,
+        trackingCategory: '',
       }
     )
   })

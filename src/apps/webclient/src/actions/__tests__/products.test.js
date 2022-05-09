@@ -1,13 +1,14 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { fetchProducts, fetchProductCategories, fetchRandomProducts } from 'apis/products'
-import { productsLoadProducts, trackProductFiltering, productsLoadCategories, productsLoadRandomProducts } from '../products'
+import { fetchProducts, fetchProductCategories, fetchRandomProducts, fetchRecipePairingsProducts } from 'apis/products'
+import { productsLoadProducts, trackProductFiltering, productsLoadCategories, productsLoadRandomProducts, productsLoadRecipePairings } from '../products'
 import statusActions from '../status'
 
 jest.mock('apis/products', () => ({
   fetchProducts: jest.fn(),
   fetchProductCategories: jest.fn(),
   fetchRandomProducts: jest.fn(),
+  fetchRecipePairingsProducts: jest.fn(),
 }))
 
 jest.mock('utils/isomorphicEnvironment', () => ({
@@ -462,15 +463,96 @@ describe('productsLoadRandomProducts', () => {
   })
 })
 
+describe('productsLoadRecipePairings', () => {
+  let dispatchSpy
+  let getStateSpy
+  const statusPendingSpy = jest.spyOn(statusActions, 'pending')
+  const statusErrorSpy = jest.spyOn(statusActions, 'error')
+
+  beforeEach(() => {
+    fetchRecipePairingsProducts.mockReturnValue(Promise.resolve(
+      {
+        data: [
+          {recipeId: 1, products: [{id: 'abc'}]},
+          {recipeId: 2, products: [{id: 'abc'}]}
+        ]
+      }
+    ))
+
+    dispatchSpy = jest.fn()
+    getStateSpy = () => ({
+      auth: Immutable.Map({ accessToken: 'access-token' }),
+    })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('should dispatch status "pending" true for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action before fetching pairings', async () => {
+    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy).nthCalledWith(1, actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, true)
+  })
+
+  test('should dispatch status "pending" false for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action after fetching pairings', async () => {
+    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy).nthCalledWith(2, actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, false)
+  })
+
+  test('should dispatch status "error" with message for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action after if an error occurs while fetching pairings', async () => {
+    fetchRecipePairingsProducts.mockReturnValue(Promise.reject(new Error('error!')))
+
+    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+
+    expect(statusErrorSpy).nthCalledWith(1, actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, 'error!')
+  })
+
+  test.each([
+    [],
+    null,
+    undefined
+  ])('should not dispatch status "pending" true for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action when recipeIds is not an valid', async (recipeIds) => {
+    await productsLoadRecipePairings(recipeIds)(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy).not.toHaveBeenCalled()
+  })
+
+  test('should dispatch with recipe pairings data', async () => {
+    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+
+    expect(fetchRecipePairingsProducts).toHaveBeenCalled()
+    expect(dispatchSpy).nthCalledWith(2, {
+      recipePairings: [
+        {recipeId: 1, products: [{id: 'abc'}]},
+        {recipeId: 2, products: [{id: 'abc'}]}
+      ],
+      type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE
+    })
+  })
+})
+
 describe('the trackProductFiltering action creator', () => {
-  const testCategoryId = 'test-category-id'
+  const eventName = 'marketplace_category'
+  const eventAction = 'clicked'
+  const eventType = 'secondary_action'
+  const primaryCategory = 'All Products'
+  const productsPerCategory = 10
 
   test('creates the correct action', () => {
-    expect(trackProductFiltering(testCategoryId)).toEqual({
+    expect(trackProductFiltering(eventName, eventAction, eventType, primaryCategory, productsPerCategory)).toEqual({
       type: actionTypes.PRODUCTS_FILTER_TRACKING,
       trackingData: {
-        actionType: 'Products filtered',
-        categoryId: testCategoryId,
+        eventAction,
+        eventName,
+        eventType,
+        eventProperties: {
+          categoryProperties: {
+            primaryCategory,
+            productsPerCategory
+          }
+        }
       }
     })
   })

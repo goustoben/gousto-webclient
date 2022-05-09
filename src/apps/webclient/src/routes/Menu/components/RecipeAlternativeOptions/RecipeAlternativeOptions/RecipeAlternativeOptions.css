@@ -2,23 +2,21 @@
 @value sizeXL from 'styles/typography.css';
 
 .recipeList {
-    width: 100%;
-    color: Black;
+  width: 100%;
+  color: Black;
 }
 
 .recipeListText {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .variantsTitle {
-    font-size: sizeXL;
+  font-size: sizeXL;
 }
 
 .item {
-    text-align: left;
-    box-sizing: content-box;
+  text-align: left;
+  box-sizing: content-box;
 }
-
-

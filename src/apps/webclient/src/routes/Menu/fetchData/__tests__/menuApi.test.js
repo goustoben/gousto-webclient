@@ -1,9 +1,7 @@
 import * as fetchModule from 'utils/fetch'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
-import {
-  withMockEnvironmentAndDomain
-} from '_testing/isomorphic-environment-test-utils'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
 
 const mockFetchResult = { data: [1, 2, 3] }
@@ -13,8 +11,8 @@ jest.mock('config/routes', () => ({
     menu: 'v1',
   },
   menu: {
-    menus: '/menus'
-  }
+    menus: '/menus',
+  },
 }))
 
 describe('menus', () => {
@@ -26,7 +24,7 @@ describe('menus', () => {
 
   beforeEach(() => {
     fetchRawSpy = jest.spyOn(fetchModule, 'fetchRaw').mockImplementation(() => {
-      const getData = async () => (mockFetchResult)
+      const getData = async () => mockFetchResult
 
       return getData()
     })
@@ -49,7 +47,8 @@ describe('menus', () => {
 
       expect(cookieGetSpy).toBeCalledWith(Cookies, 'gousto_session_id', false, false)
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
+      expect(fetchRawSpy).toHaveBeenCalledWith(
+        'https://production-api.gousto.co.uk/menu/v1/menus',
         { addAlternatives: true, include: 'ingredients' },
         {
           accessToken: 'token',
@@ -62,7 +61,8 @@ describe('menus', () => {
           method: 'GET',
           timeout: null,
           useMenuService: true,
-        })
+        },
+      )
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -93,9 +93,9 @@ describe('menus', () => {
             'preview[menu_id]': previewMenuId,
             'preview[auth_user_id]': previewAuthUserId,
             'preview[expiry]': previewExpiry,
-            'preview[signature]': previewSignature
+            'preview[signature]': previewSignature,
           }),
-          expect.any(Object)
+          expect.any(Object),
         )
       })
     })
@@ -113,9 +113,9 @@ describe('menus', () => {
         expect(fetchRawSpy).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
-            tasteProfileId
+            tasteProfileId,
           }),
-          expect.any(Object)
+          expect.any(Object),
         )
       })
     })
@@ -132,7 +132,8 @@ describe('menus', () => {
 
       expect(cookieGetSpy).toBeCalledWith(Cookies, 'gousto_session_id', false, false)
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
+      expect(fetchRawSpy).toHaveBeenCalledWith(
+        'https://production-api.gousto.co.uk/menu/v1/menus',
         { addAlternatives: true, include: 'ingredients', userId: 'user_id' },
         {
           accessToken: 'token',
@@ -146,7 +147,8 @@ describe('menus', () => {
           method: 'GET',
           timeout: null,
           useMenuService: true,
-        })
+        },
+      )
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -167,9 +169,9 @@ describe('menus', () => {
         expect(fetchRawSpy).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
-            tasteProfileId
+            tasteProfileId,
           }),
-          expect.any(Object)
+          expect.any(Object),
         )
       })
     })
@@ -181,10 +183,12 @@ describe('menus', () => {
 
       expect(cookieGetSpy).toBeCalledWith(Cookies, 'gousto_session_id', false, false)
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
+      expect(fetchRawSpy).toHaveBeenCalledWith(
+        'https://production-api.gousto.co.uk/menu/v1/menus',
         {
           includeMenuRelationships: false,
-          userId: 'user_id', },
+          userId: 'user_id',
+        },
         {
           accessToken: 'token',
           cache: 'default',
@@ -197,7 +201,8 @@ describe('menus', () => {
           method: 'GET',
           timeout: null,
           useMenuService: true,
-        })
+        },
+      )
     })
   })
 })

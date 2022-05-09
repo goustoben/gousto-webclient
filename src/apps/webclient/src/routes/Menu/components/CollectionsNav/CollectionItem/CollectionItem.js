@@ -5,7 +5,16 @@ import { useMenu } from 'routes/Menu/domains/menu'
 
 import css from './CollectionItem.css'
 
-const CollectionItem = ({ collectionId, className, dataId, onClick, identifier, element, children, slug }) => {
+const CollectionItem = ({
+  collectionId,
+  className,
+  dataId,
+  onClick,
+  identifier,
+  element,
+  children,
+  slug,
+}) => {
   const { getRecipesForCollectionId } = useMenu()
   const count = getRecipesForCollectionId(collectionId).recipes.size
 
@@ -35,6 +44,4 @@ CollectionItem.propTypes = {
   slug: PropTypes.string.isRequired,
 }
 
-export {
-  CollectionItem
-}
+export { CollectionItem }

@@ -15,7 +15,7 @@ describe('basketUpdateProducts', () => {
     dispatch = jest.fn()
     getStateSpy = jest.fn().mockReturnValue({
       basket: Immutable.fromJS({
-        orderId: '23',
+        orderId: '1234',
         products: {
           'product-1': 2,
           'product-2': 1,
@@ -36,7 +36,7 @@ describe('basketUpdateProducts', () => {
 
   describe('when update is successful', () => {
     const order = {
-      id: '23',
+      id: '1234',
       products: [
         { id: 1, itemableId: 'product-1', quantity: 2 },
         { id: 2, itemableId: 'product-2', quantity: 1 },
@@ -44,12 +44,13 @@ describe('basketUpdateProducts', () => {
     }
 
     test('should call updateOrder api with products', async () => {
+      const orderId = '1234'
       updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
 
       await basketUpdateProducts()(dispatch, getStateSpy)
 
       expect(updateOrderSpy).toHaveBeenCalled()
-      expect(updateOrderSpy).toHaveBeenCalledWith(dispatch, getStateSpy, '23')
+      expect(updateOrderSpy).toHaveBeenCalledWith(dispatch, getStateSpy, orderId)
     })
 
     test('should dispatch correct pending and action events for BASKET_CHECKOUT', async () => {

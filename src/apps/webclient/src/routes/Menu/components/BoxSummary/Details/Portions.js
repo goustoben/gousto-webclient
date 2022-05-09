@@ -3,10 +3,7 @@ import React from 'react'
 import { Button, Segment } from 'goustouicomponents'
 
 const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange, orderId }) => (
-  <Button
-    fill={false}
-    width="full"
-  >
+  <Button fill={false} width="full">
     <Segment
       key={1}
       fill={numPortions === 2}

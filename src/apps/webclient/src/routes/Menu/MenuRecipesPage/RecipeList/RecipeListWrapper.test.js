@@ -20,10 +20,10 @@ jest.mock('../../domains/collections', () => ({
 }))
 jest.mock('../../domains/menu', () => ({
   useMenu: () => ({
-    getRecipesForCollectionId: jest.fn(() => ({ recipes: Immutable.List([]) }))
+    getRecipesForCollectionId: jest.fn(() => ({ recipes: Immutable.List([]) })),
   }),
   useStock: () => ({
-    getOutOfStockRecipeIds: jest.fn(() => null)
+    getOutOfStockRecipeIds: jest.fn(() => null),
   }),
 }))
 
@@ -41,11 +41,13 @@ describe('RecipeListWrapper', () => {
       },
     }),
     menuService: {
-      data: [{
-        meta: {
-          swapsExperimentUserAllocationGroup: 'control',
+      data: [
+        {
+          meta: {
+            swapsExperimentUserAllocationGroup: 'control',
+          },
         },
-      }],
+      ],
       meta: {
         recommendations: {
           version: 'v1',
@@ -70,7 +72,8 @@ describe('RecipeListWrapper', () => {
       wrapper = mount(
         <Provider store={store}>
           <RecipeListWrapper />
-        </Provider>)
+        </Provider>,
+      )
     })
 
     test('should render RecipeList', () => {

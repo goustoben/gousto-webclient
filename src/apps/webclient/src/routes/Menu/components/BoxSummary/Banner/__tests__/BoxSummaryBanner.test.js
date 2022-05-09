@@ -27,7 +27,7 @@ describe('BoxSummaryBanner', () => {
         menuRecipesStore={Immutable.fromJS({})}
         maxRecipesNum={4}
         errorText=""
-      />
+      />,
     )
   })
 

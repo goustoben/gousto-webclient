@@ -57,3 +57,5 @@ export const doesRecipeHaveSurcharges = (state, recipeId) => {
 
   return Object.values(surcharges).some((surcharge) => surcharge !== null)
 }
+
+export const menuBoxes = (state) => state.menuService?.box

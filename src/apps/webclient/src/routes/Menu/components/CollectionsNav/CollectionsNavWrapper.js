@@ -5,11 +5,7 @@ import { useCollections } from '../../domains/collections'
 import { CollectionsNav } from './CollectionsNav'
 
 const CollectionsNavWrapper = (ownProps) => {
-  const {
-    currentCollectionId,
-    collections,
-    changeCollectionById
-  } = useCollections()
+  const { currentCollectionId, collections, changeCollectionById } = useCollections()
   const isPolicyAccepted = useSelector(getIsPolicyAccepted)
 
   return (

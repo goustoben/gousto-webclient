@@ -36,7 +36,7 @@ describe('<Carousel />', () => {
     test('should add lazy false to <Image /> for every image object', () => {
       images = Immutable.fromJS([{ urls: [] }, { urls: [] }, { urls: [] }])
       wrapper = shallow(<Carousel images={images} />)
-      wrapper.find(Image).forEach(image => {
+      wrapper.find(Image).forEach((image) => {
         expect(image.prop('lazy')).toBe(false)
       })
     })

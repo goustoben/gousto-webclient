@@ -14,7 +14,7 @@ class Postcode extends React.PureComponent {
 
   handleAddressChange = (addressId) => {
     const { addresses, basketChosenAddressChange } = this.props
-    const address = addresses.filter(addr => addr.get('id') === addressId).first()
+    const address = addresses.filter((addr) => addr.get('id') === addressId).first()
     const postcode = address.get('postcode')
     basketChosenAddressChange(address)
     this.handleChange(postcode)
@@ -31,12 +31,12 @@ class Postcode extends React.PureComponent {
   addressesToOptions = () => {
     const { addresses } = this.props
 
-    return (
-      addresses.map(address => ({
+    return addresses
+      .map((address) => ({
         label: `${address.get('name')}, ${address.get('postcode')}`,
         value: address.get('id'),
-      })).toArray()
-    )
+      }))
+      .toArray()
   }
 
   savedAddresses = () => {
@@ -47,7 +47,9 @@ class Postcode extends React.PureComponent {
       <span>
         <div className={css.row}>
           <p className={deliveryDaysError ? css.errorText : css.supportingText}>
-            {deliveryDaysError ? 'There has been an error changing to that postcode, please try again or contact customer care' : 'Select delivery address:'}
+            {deliveryDaysError
+              ? 'There has been an error changing to that postcode, please try again or contact customer care'
+              : 'Select delivery address:'}
           </p>
           <DropdownInput
             color="secondary"
@@ -58,7 +60,10 @@ class Postcode extends React.PureComponent {
           />
         </div>
         <div className={css.row}>
-          <p className={css.supportingText}>Want to have your box delivered to a new address? Visit &apos;My Details &gt; My Delivery Address&apos;</p>
+          <p className={css.supportingText}>
+            Want to have your box delivered to a new address? Visit &apos;My Details &gt; My
+            Delivery Address&apos;
+          </p>
         </div>
       </span>
     )
@@ -72,7 +77,7 @@ class Postcode extends React.PureComponent {
 
     if (deliveryDaysError) {
       if (deliveryDaysError === 'do-not-deliver') {
-        errMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
+        errMsg = "Sorry, it looks like we don't currently deliver to your area."
       } else {
         errMsg = 'Please enter a valid postcode'
       }
@@ -81,9 +86,7 @@ class Postcode extends React.PureComponent {
     return (
       <span>
         <div className={css.row}>
-          <p className={messageClass}>
-            {deliveryDaysError ? errMsg : 'Enter your Postcode:'}
-          </p>
+          <p className={messageClass}>{deliveryDaysError ? errMsg : 'Enter your Postcode:'}</p>
           <TextInput
             isFixed
             placeholder="Postcode"
@@ -98,7 +101,9 @@ class Postcode extends React.PureComponent {
           />
         </div>
         <div className={css.row}>
-          <p className={css.supportingText}>Your postcode will help us figure out which delivery slots are available in your area</p>
+          <p className={css.supportingText}>
+            Your postcode will help us figure out which delivery slots are available in your area
+          </p>
         </div>
       </span>
     )
@@ -114,17 +119,20 @@ class Postcode extends React.PureComponent {
   }
 
   render = () => {
-    const { shouldDisplayFullScreenBoxSummary,
-      addresses, postcodePending,
-      prevPostcode } = this.props
+    const { shouldDisplayFullScreenBoxSummary, addresses, postcodePending, prevPostcode } =
+      this.props
     const disabled = this.getIsDisabled()
 
     return (
       <LayoutContentWrapper>
         <Form onSubmit={this.handleClick}>
-          <Heading isCenter size="_legacy_large" type="h2">Delivery Options</Heading>
+          <Heading isCenter size="_legacy_large" type="h2">
+            Delivery Options
+          </Heading>
           <div className={css.row}>
-            <p className={css.leadingText}>We deliver for free up to 7 days a week depending on where you live</p>
+            <p className={css.leadingText}>
+              We deliver for free up to 7 days a week depending on where you live
+            </p>
           </div>
           {addresses ? this.savedAddresses() : this.noSavedAddresses()}
           <div className={shouldDisplayFullScreenBoxSummary && css.stickyButton}>
@@ -145,11 +153,8 @@ class Postcode extends React.PureComponent {
 }
 
 Postcode.propTypes = {
-  deliveryDaysError: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.object,
-  ]).isRequired,
+  deliveryDaysError: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.object])
+    .isRequired,
   postcodePending: PropTypes.bool.isRequired,
   prevPostcode: PropTypes.string.isRequired,
   addresses: PropTypes.object.isRequired,

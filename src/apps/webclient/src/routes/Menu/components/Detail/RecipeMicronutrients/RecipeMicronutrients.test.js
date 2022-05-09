@@ -11,26 +11,22 @@ describe('RecipeMicronutrients', () => {
         name: 'Iron',
         content: {
           amount: 6.5,
-          unit: 'µg'
+          unit: 'µg',
         },
-        nrvPercent: 46.4
+        nrvPercent: 46.4,
       },
       {
         name: 'Magnesium',
         content: {
           amount: 197.5,
-          unit: 'mg'
+          unit: 'mg',
         },
-        nrvPercent: 52.7
-      }
+        nrvPercent: 52.7,
+      },
     ])
 
     beforeEach(() => {
-      wrapper = shallow(
-        <RecipeMicronutrients
-          micronutrients={micronutrients}
-        />
-      )
+      wrapper = shallow(<RecipeMicronutrients micronutrients={micronutrients} />)
     })
 
     test('should display a table containing the micronutrients', () => {
@@ -48,11 +44,7 @@ describe('RecipeMicronutrients', () => {
 
   describe('when there are no micronutrients', () => {
     test('should not display the micronutrients', () => {
-      wrapper = shallow(
-        <RecipeMicronutrients
-          micronutrients={null}
-        />
-      )
+      wrapper = shallow(<RecipeMicronutrients micronutrients={null} />)
       expect(wrapper.find('.micronutrientsWrapper').exists()).toBe(false)
     })
   })

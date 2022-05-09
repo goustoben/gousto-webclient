@@ -15,17 +15,14 @@ const CategoryPropType = PropTypes.shape({
 const AttributesPropType = PropTypes.shape({
   id: PropTypes.string,
   title: PropTypes.string,
-  unit: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  unit: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   value: PropTypes.string,
 })
 
 const MediaPropType = PropTypes.shape({
   src: PropTypes.string,
   url: PropTypes.string,
-  width: PropTypes.number
+  width: PropTypes.number,
 })
 
 const MediaObjectPropType = PropTypes.shape({

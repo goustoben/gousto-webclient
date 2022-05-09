@@ -2,16 +2,16 @@
 @value attributesLineHeight 1.8;
 
 .icon {
-    width: 19px;
-    height: 19px;
-    vertical-align: text-bottom;
+  width: 19px;
+  height: 19px;
+  vertical-align: text-bottom;
 }
 
 .description {
-	composes: paragraphXS from 'styles/typography.css';
+  composes: paragraphXS from 'styles/typography.css';
 }
 
 .attribute {
-	min-height: calc(sizeMD * attributesLineHeight);
-    min-width: 50%;
+  min-height: calc(sizeMD * attributesLineHeight);
+  min-width: 50%;
 }

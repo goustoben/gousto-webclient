@@ -49,6 +49,12 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
+  etm_market_orderconfirmation_addingpairings_web_apr22: {
+    id: 'ETM_market_orderconfirmation_addingPairings_web_apr22',
+    name: 'ETM_market_orderconfirmation_addingPairings_web_apr22',
+    variationName: 'v1_pairingsShown',
+    defaultName: 'v0_noPairingsShown',
+  },
 }
 
 const getConfig = (featureName) => {

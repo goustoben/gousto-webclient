@@ -37,10 +37,7 @@ describe('Recipe components > Image > findImage', () => {
 
     describe('when homepageImage has no urls', () => {
       beforeEach(() => {
-        images = Immutable.List([
-          homePageImage.set('urls', Immutable.List()),
-          moodImage
-        ])
+        images = Immutable.List([homePageImage.set('urls', Immutable.List()), moodImage])
       })
 
       test('should return the mood image urls', () => {
@@ -50,23 +47,24 @@ describe('Recipe components > Image > findImage', () => {
     })
   })
 
-  describe.each([
-    false, undefined
-  ])('when useHomepageImage prop is falsy [%s]', (useHomepageImage) => {
-    test('should return the mood image urls', () => {
-      const result = findImageUrls(images, useHomepageImage)
-      expect(result).toEqual(moodImage.get('urls'))
-    })
-
-    describe('when there is no moodImage', () => {
-      beforeEach(() => {
-        images = Immutable.List([homePageImage])
-      })
-
-      test('should return the first urls from first image', () => {
+  describe.each([false, undefined])(
+    'when useHomepageImage prop is falsy [%s]',
+    (useHomepageImage) => {
+      test('should return the mood image urls', () => {
         const result = findImageUrls(images, useHomepageImage)
-        expect(result).toEqual(homePageImage.get('urls'))
+        expect(result).toEqual(moodImage.get('urls'))
       })
-    })
-  })
+
+      describe('when there is no moodImage', () => {
+        beforeEach(() => {
+          images = Immutable.List([homePageImage])
+        })
+
+        test('should return the first urls from first image', () => {
+          const result = findImageUrls(images, useHomepageImage)
+          expect(result).toEqual(homePageImage.get('urls'))
+        })
+      })
+    },
+  )
 })

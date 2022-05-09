@@ -1,6 +1,7 @@
 import { getPreviewMenuDateForCutoff, doesRecipeHaveSurcharges } from '../menuService'
 
-const covertArrayToObjectWithIds = (items) => items.reduce((memo, r) => ({ ...memo, [r.id]: r }) , {})
+const covertArrayToObjectWithIds = (items) =>
+  items.reduce((memo, r) => ({ ...memo, [r.id]: r }), {})
 
 export const wellformedMenuService = ({
   meta = {},
@@ -15,25 +16,25 @@ export const wellformedMenuService = ({
     collection: covertArrayToObjectWithIds(collections),
     recipe: covertArrayToObjectWithIds(recipes),
     ingredient: covertArrayToObjectWithIds(ingredients),
-  }
+  },
 })
 
 export const wellformedRecipe = (recipe = {}) => ({
   id: recipe.id || 'recipe_01',
   relationships: {
     ingredients: {
-      data: recipe.ingredients || []
-    }
+      data: recipe.ingredients || [],
+    },
   },
   attributes: {
     surcharges: {
       for2: null,
       for4: null,
-      ...(recipe.surcharges || {})
+      ...(recipe.surcharges || {}),
     },
   },
   published_at: '2021-02-25T11:47:31+00:00',
-  type: 'recipe'
+  type: 'recipe',
 })
 
 describe('getPreviewMenuDateForCutoff', () => {
@@ -42,11 +43,13 @@ describe('getPreviewMenuDateForCutoff', () => {
   describe('when menu service has data with one menu', () => {
     beforeEach(() => {
       state = wellformedMenuService({
-        menus: [{
-          attributes: {
-            ends_at: '2020-10-13'
-          }
-        }]
+        menus: [
+          {
+            attributes: {
+              ends_at: '2020-10-13',
+            },
+          },
+        ],
       })
     })
 
@@ -72,7 +75,7 @@ describe('doesRecipeHaveSurcharges', () => {
   describe('when menu service has recipe with surcharges', () => {
     beforeEach(() => {
       state = wellformedMenuService({
-        recipes: [wellformedRecipe({ id: 'recipe_01' })]
+        recipes: [wellformedRecipe({ id: 'recipe_01' })],
       })
     })
 
@@ -84,25 +87,27 @@ describe('doesRecipeHaveSurcharges', () => {
   describe('when menu service has no data', () => {
     beforeEach(() => {
       state = wellformedMenuService({
-        recipes: [wellformedRecipe({
-          id: 'recipe_01',
-          surcharges: {
-            for2: {
-              name: 'Premium Recipe Surcharge',
-              price: {
-                value: 99,
-                currency: 'GBP'
-              }
+        recipes: [
+          wellformedRecipe({
+            id: 'recipe_01',
+            surcharges: {
+              for2: {
+                name: 'Premium Recipe Surcharge',
+                price: {
+                  value: 99,
+                  currency: 'GBP',
+                },
+              },
+              for4: {
+                name: 'Premium Recipe Surcharge',
+                price: {
+                  value: 199,
+                  currency: 'GBP',
+                },
+              },
             },
-            for4: {
-              name: 'Premium Recipe Surcharge',
-              price: {
-                value: 199,
-                currency: 'GBP'
-              }
-            },
-          }
-        })]
+          }),
+        ],
       })
     })
 

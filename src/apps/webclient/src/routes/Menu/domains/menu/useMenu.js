@@ -7,7 +7,7 @@ export { recipeReferencePrefix } from './internal/getRecipeReferenceInjector'
 export const useMenu = () => {
   const allCollections = useAllCollections()
 
-  const { getAlternativeOptionsForRecipe } = useAlternativeOptions({allCollections})
+  const { getAlternativeOptionsForRecipe } = useAlternativeOptions({ allCollections })
 
   const { getRecipesForCollectionId } = useGetRecipesForCollectionId(allCollections)
 
@@ -22,7 +22,7 @@ export const useMenu = () => {
  */
 export const useGetAlternativeOptionsForRecipeLight = () => {
   const allCollections = useAllCollections()
-  const { getAlternativeOptionsForRecipe } = useAlternativeOptions({allCollections})
+  const { getAlternativeOptionsForRecipe } = useAlternativeOptions({ allCollections })
 
   return getAlternativeOptionsForRecipe
 }

@@ -10,14 +10,17 @@ const RecipeDisclaimer = ({ recipeId }) => {
   const brandInfo = useBrandInfo()
   const brandTags = brandInfo.brand?.tags || []
 
-  const claim = useSelector(state => getRecipeDisclaimerProps(state, { brandTags, recipeId }))
+  const claim = useSelector((state) => getRecipeDisclaimerProps(state, { brandTags, recipeId }))
 
   if (!claim || !claim.disclaimer || !claim.theme) {
     return null
   }
 
   return (
-    <div className={css.disclaimerWrapper} style={{backgroundColor: claim.theme.backgroundColor, color: claim.theme.color}}>
+    <div
+      className={css.disclaimerWrapper}
+      style={{ backgroundColor: claim.theme.backgroundColor, color: claim.theme.color }}
+    >
       <Svg fileName={claim.icon} className={css.disclaimerIcon} />
       <p className={css.disclaimerText}>{claim.disclaimer}</p>
     </div>

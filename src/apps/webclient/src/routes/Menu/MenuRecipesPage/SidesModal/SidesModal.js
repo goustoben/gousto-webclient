@@ -22,51 +22,39 @@ const SidesContentFooter = ({
 }) => (
   <div className={css.sidesModalFooter}>
     <div>
-      <button
-        type="button"
-        className={css.sidesModalLink}
-        onClick={toggleShowAllergenAndNutrition}
-      >
-        {showAllergenAndNutrition
-          ? 'Hide Allergens and Nutrition'
-          : 'Show Allergens and Nutrition'}
+      <button type="button" className={css.sidesModalLink} onClick={toggleShowAllergenAndNutrition}>
+        {showAllergenAndNutrition ? 'Hide Allergens and Nutrition' : 'Show Allergens and Nutrition'}
       </button>
       {Boolean(total) && (
         <div className={css.sideModalSidePrice}>
-          <span className={css.sideModalSidePriceText}>
-            Sides price
-          </span>
-          <span className={css.sideModalSidePriceValue}>
-            {`+£${total.toFixed(2)}`}
-          </span>
+          <span className={css.sideModalSidePriceText}>Sides price</span>
+          <span className={css.sideModalSidePriceValue}>{`+£${total.toFixed(2)}`}</span>
         </div>
       )}
       <div>
-        {total
-          ? (
-            <CTA
-              isFullWidth
-              size="medium"
-              variant="primary"
-              onClick={onSubmit}
-              isLoading={isSubmitting}
-              isDisabled={isSubmitting}
-            >
-              Continue with sides
-            </CTA>
-          )
-          : (
-            <CTA
-              isFullWidth
-              size="medium"
-              variant="secondary"
-              onClick={onSubmit}
-              isLoading={isSubmitting}
-              isDisabled={isSubmitting}
-            >
-              Continue without sides
-            </CTA>
-          )}
+        {total ? (
+          <CTA
+            isFullWidth
+            size="medium"
+            variant="primary"
+            onClick={onSubmit}
+            isLoading={isSubmitting}
+            isDisabled={isSubmitting}
+          >
+            Continue with sides
+          </CTA>
+        ) : (
+          <CTA
+            isFullWidth
+            size="medium"
+            variant="secondary"
+            onClick={onSubmit}
+            isLoading={isSubmitting}
+            isDisabled={isSubmitting}
+          >
+            Continue without sides
+          </CTA>
+        )}
       </div>
     </div>
   </div>
@@ -89,47 +77,42 @@ const SidesContent = ({
   getLimit,
 }) => (
   <React.Fragment>
-    {sides.map(
-      side => {
-        const quantity = getQuantityForSidesBasket(side.id)
-        const limit = getLimit(side.id)
-        const isOutOfStockForSide = isOutOfStock(side.id)
-        const isAvailable = !(isOutOfStockForSide || limit)
+    {sides.map((side) => {
+      const quantity = getQuantityForSidesBasket(side.id)
+      const limit = getLimit(side.id)
+      const isOutOfStockForSide = isOutOfStock(side.id)
+      const isAvailable = !(isOutOfStockForSide || limit)
 
-        return (
-          <div key={side.id} className={css.sidesModalSidesContainer}>
-            <div className={css.sidesModalSidesImageContainer}>
-              <Image media={Immutable.fromJS(side.images).toList()} className={css.sidesModalSidesImage} title={side.title} />
-            </div>
-            <div className={css.sidesModalSidesDetails}>
-              <h3 className={css.sidesModalSidesHeader}>
-                {side.title}
-              </h3>
-              <span className={css.sidesModalSidesText}>
-                {`£${side.list_price} ● 2 Servings`}
-              </span>
-              <div
-                role="button"
-                aria-label="Add or Remove Side"
-              >
-                <Buttons
-                  fill
-                  fullWidth
-                  isAgeVerificationRequired={false}
-                  onAdd={addSide}
-                  onRemove={removeSide}
-                  productId={side.id}
-                  outOfStock={isOutOfStockForSide}
-                  limitReached={limit}
-                  qty={quantity}
-                  isAvailable={isAvailable}
-                />
-              </div>
+      return (
+        <div key={side.id} className={css.sidesModalSidesContainer}>
+          <div className={css.sidesModalSidesImageContainer}>
+            <Image
+              media={Immutable.fromJS(side.images).toList()}
+              className={css.sidesModalSidesImage}
+              title={side.title}
+            />
+          </div>
+          <div className={css.sidesModalSidesDetails}>
+            <h3 className={css.sidesModalSidesHeader}>{side.title}</h3>
+            <span className={css.sidesModalSidesText}>{`£${side.list_price} ● 2 Servings`}</span>
+            <div role="button" aria-label="Add or Remove Side">
+              <Buttons
+                fill
+                fullWidth
+                isAgeVerificationRequired={false}
+                onAdd={addSide}
+                onRemove={removeSide}
+                productId={side.id}
+                outOfStock={isOutOfStockForSide}
+                limitReached={limit}
+                qty={quantity}
+                isAvailable={isAvailable}
+              />
             </div>
           </div>
-        )
-      }
-    )}
+        </div>
+      )
+    })}
   </React.Fragment>
 )
 
@@ -142,24 +125,18 @@ SidesContent.propTypes = {
   sides: PropTypes.arrayOf(SidePropType).isRequired,
 }
 
-const SidesAllergenAndNutritionContent = ({
-  sides,
-}) => (
+const SidesAllergenAndNutritionContent = ({ sides }) => (
   <div className={css.sideModalForSidesAllergenAndNutrition}>
-    {sides.map(
-      side => (
-        <div key={side.id}>
-          <h3 className={css.sideModalInformationHeader}>
-            {side.title}
-          </h3>
-          <SubIngredients
-            className={css.sideModalAllergenAndNutritionSideText}
-            subIngredients={side.description}
-            allergens={getAllergenListFromAttributes(Immutable.fromJS(side.attributes).toList())}
-          />
-        </div>
-      )
-    )}
+    {sides.map((side) => (
+      <div key={side.id}>
+        <h3 className={css.sideModalInformationHeader}>{side.title}</h3>
+        <SubIngredients
+          className={css.sideModalAllergenAndNutritionSideText}
+          subIngredients={side.description}
+          allergens={getAllergenListFromAttributes(Immutable.fromJS(side.attributes).toList())}
+        />
+      </div>
+    ))}
   </div>
 )
 
@@ -219,43 +196,35 @@ export const SidesModal = ({
   }
 
   return (
-    <Overlay
-      open={isOpen}
-      from="top"
-      contentClassName={classnames([
-        css.overlayContentForMobile,
-      ])}
-    >
+    <Overlay open={isOpen} from="top" contentClassName={classnames([css.overlayContentForMobile])}>
       <ModalPanel closePortal={onModalClose} className={css.sidesModalPanelContainer}>
         <ModalHeader align="left" withSeparator>
-          {showAllergenAndNutrition
-            ? 'Allergens and Nutrition'
-            : 'Fancy any sides?'}
+          {showAllergenAndNutrition ? 'Allergens and Nutrition' : 'Fancy any sides?'}
         </ModalHeader>
-        <div className={classnames([
-          css.sideModalForSidesSelections,
-          total ? '' : css.sideModalForSidesSelectionsWithOutSides
-        ])}
+        <div
+          className={classnames([
+            css.sideModalForSidesSelections,
+            total ? '' : css.sideModalForSidesSelectionsWithOutSides,
+          ])}
         >
-          {showAllergenAndNutrition
-            ? (
-              <SidesAllergenAndNutritionContent
-                sides={sides}
-                toggleShowAllergenAndNutrition={toggleShowAllergenAndNutrition}
-              />
-            ) : (
-              <SidesContent
-                getQuantityForSidesBasket={getQuantityForSidesBasket}
-                addSide={addSide}
-                removeSide={removeSide}
-                onSubmit={onSubmit}
-                sides={sides}
-                toggleShowAllergenAndNutrition={toggleShowAllergenAndNutrition}
-                total={total}
-                isOutOfStock={isOutOfStock}
-                getLimit={getLimit}
-              />
-            )}
+          {showAllergenAndNutrition ? (
+            <SidesAllergenAndNutritionContent
+              sides={sides}
+              toggleShowAllergenAndNutrition={toggleShowAllergenAndNutrition}
+            />
+          ) : (
+            <SidesContent
+              getQuantityForSidesBasket={getQuantityForSidesBasket}
+              addSide={addSide}
+              removeSide={removeSide}
+              onSubmit={onSubmit}
+              sides={sides}
+              toggleShowAllergenAndNutrition={toggleShowAllergenAndNutrition}
+              total={total}
+              isOutOfStock={isOutOfStock}
+              getLimit={getLimit}
+            />
+          )}
         </div>
         <SidesContentFooter
           toggleShowAllergenAndNutrition={toggleShowAllergenAndNutrition}

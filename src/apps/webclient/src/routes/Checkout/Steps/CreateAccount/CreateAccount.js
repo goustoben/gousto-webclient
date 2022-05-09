@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { formContainer } from '../../Components/formContainer'
 
 import { AboutYouContainer, addInitialValues } from '../../Components/AboutYou'
@@ -17,14 +17,17 @@ export const CreateAccountStep = ({
   trackUTMAndPromoCode,
   onLoginClick,
 }) => (
-  <AboutYouSection
-    receiveRef={receiveRef}
-    submit={submit}
-    userProspect={userProspect}
-    checkoutValid={checkoutValid}
-    trackUTMAndPromoCode={trackUTMAndPromoCode}
-    onLoginClick={onLoginClick}
-  />
+  <>
+    <AboutYouSection
+      receiveRef={receiveRef}
+      submit={submit}
+      userProspect={userProspect}
+      checkoutValid={checkoutValid}
+      trackUTMAndPromoCode={trackUTMAndPromoCode}
+      onLoginClick={onLoginClick}
+    />
+    <RibbonTriggerContainer name="checkout-account" />
+  </>
 )
 
 CreateAccountStep.propTypes = {

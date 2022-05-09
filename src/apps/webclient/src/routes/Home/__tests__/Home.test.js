@@ -87,8 +87,11 @@ describe('Home', () => {
     })
   })
 
-  test('should render 3 components', () => {
-    expect(wrapper.children()).toHaveLength(3)
+  test('should render correct components', () => {
+    expect(wrapper.find('HelmetWrapper')).toHaveLength(1)
+    expect(wrapper.find('PromoBannerContainer')).toHaveLength(1)
+    expect(wrapper.find('HomeSections')).toHaveLength(1)
+    expect(wrapper.find('Connect(RibbonTrigger)')).toHaveLength(1)
   })
 
   describe('helmet', () => {

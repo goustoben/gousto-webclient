@@ -29,3 +29,9 @@ export const getProductsForMarket = createSelector(
     inStockProducts.concat(outOfStockProducts).toJS()
   )
 )
+
+export const getIsProductRecipePairingsLoading = ({ pending }) => pending.get(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, true)
+
+export const getProductsRecipePairings = ({ productRecipePairings }) => productRecipePairings
+
+export const getProductsSelectedCategory = ({ filters }) => filters.get('selectedCategory') || 'all-products'

@@ -10,10 +10,8 @@ import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfS
 import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
 import { getRecipeReferenceInjector } from './getRecipeReferenceInjector'
 
-const getDietaryClaimsInCollection = (menuCollections, collectionId) => menuCollections.getIn(
-  [collectionId, 'requirements', 'dietary_claims'],
-  null
-)
+const getDietaryClaimsInCollection = (menuCollections, collectionId) =>
+  menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
 
 export const useGetRecipesForCollectionId = (collections) => {
   const recipes = useSelector(getCurrentMenuRecipes)
@@ -23,7 +21,7 @@ export const useGetRecipesForCollectionId = (collections) => {
 
   const recipeComparatorForOutOfStock = useMemo(
     () => getRecipeComparatorForOutOfStock(recipesInStock),
-    [recipesInStock]
+    [recipesInStock],
   )
 
   const getRecipesForCollectionId = (collectionId) => {
@@ -46,7 +44,7 @@ export const useGetRecipesForCollectionId = (collections) => {
       dietaryClaims,
     })
 
-    const recipeReferenceInjector = getRecipeReferenceInjector({recipesVariants})
+    const recipeReferenceInjector = getRecipeReferenceInjector({ recipesVariants })
 
     // The order of mappers below matters:
     //  * ensure the recipes are wrapped in an envelop with additional meta data: originalId and reference
@@ -55,19 +53,18 @@ export const useGetRecipesForCollectionId = (collections) => {
     //  * ensure any remaining out of stock recipes are moved to the end of the list
 
     const originalRecipes = recipeIdsInCollection
-      .map(id => recipes.find(other => other.get('id') === id))
-      .filter(recipe => Boolean(recipe))
+      .map((id) => recipes.find((other) => other.get('id') === id))
+      .filter((recipe) => Boolean(recipe))
       .map(recipeReferenceInjector)
       .map(selectedVariantReplacer)
       .map(outOfStockRecipeReplacer)
 
-    const resultingRecipes = originalRecipes
-      .sort(recipeComparatorForOutOfStock)
+    const resultingRecipes = originalRecipes.sort(recipeComparatorForOutOfStock)
 
     return { recipes: resultingRecipes }
   }
 
   return {
-    getRecipesForCollectionId
+    getRecipesForCollectionId,
   }
 }

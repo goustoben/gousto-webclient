@@ -2,81 +2,80 @@
 @value White, Cacao from 'styles/colors.css';
 
 .recipeImg {
-	composes: centerHorizontal from 'styles/positioning.css';
+  composes: centerHorizontal from 'styles/positioning.css';
 }
 
 .container {
-	position: relative;
-	overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .grid {
-	composes: container;
-	width: 100%;
-	/*4:3*/
-	padding-bottom: 75%;
+  composes: container;
+  width: 100%;
+  /*4:3*/
+  padding-bottom: 75%;
 
-	@media ScreenXSMax {
-		/*16:9*/
-		padding-bottom: 56.25%;
-	}
+  @media ScreenXSMax {
+    /*16:9*/
+    padding-bottom: 56.25%;
+  }
 }
 
 .fineDineIn {
-	composes: grid;
-	padding-bottom: 100%;
+  composes: grid;
+  padding-bottom: 100%;
 }
 
 .list {
-	composes: container;
-	width: 80px;
-	min-width: 80px;
-	height: 55px;
+  composes: container;
+  width: 80px;
+  min-width: 80px;
+  height: 55px;
 }
 
 .detail {
-	composes: container;
-	width: 100%;
-	/*4:3*/
-	padding-bottom: 56.25%;
+  composes: container;
+  width: 100%;
+  /*4:3*/
+  padding-bottom: 56.25%;
 }
 
 .fineDineInDetail {
-	height: 420px;
+  height: 420px;
 
-	@media ScreenXXSMin {
-		height: 485px;
-	}
+  @media ScreenXXSMin {
+    height: 485px;
+  }
 
-	@media ScreenMDMin {
-		height: 550px;
-	}
+  @media ScreenMDMin {
+    height: 550px;
+  }
 
-	@media ScreenLGMin {
-		height: 615px;
-	}
+  @media ScreenLGMin {
+    height: 615px;
+  }
 }
 
 .fineDineInDetail img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .featured .recipeImg {
+  @media ScreenMLMin {
+    height: 100%;
+    width: auto;
+  }
 
-	@media ScreenMLMin {
-		height: 100%;
-		width: auto;
-	}
-
-	@media ScreenMDMin {
-		height: auto;
-		width: 102%;
-	}
+  @media ScreenMDMin {
+    height: auto;
+    width: 102%;
+  }
 }
 
 .placeholder {
-	background-image: url('media/images/recipe-placeholder.png');
-	background-size: cover;
+  background-image: url('media/images/recipe-placeholder.png');
+  background-size: cover;
 }

@@ -30,7 +30,7 @@ describe('CheckoutButton', () => {
       numPortions: 2,
       stock: Immutable.Map({}),
       isBoxSummaryOpened: false,
-      toggleBasketView: () => {}
+      toggleBasketView: () => {},
     }
     jest.spyOn(Redux, 'useSelector').mockReturnValue(true) // getIsSimplifyBasketBarEnabled
   })
@@ -51,7 +51,7 @@ describe('CheckoutButton', () => {
       child.simulate('click', { stopPropagation: () => undefined })
     }
 
-    test('when the button\'s nested child is clicked it should trigger a basket checkout', () => {
+    test("when the button's nested child is clicked it should trigger a basket checkout", () => {
       const checkoutBasket = jest.fn()
       const openSidesModal = jest.fn()
 

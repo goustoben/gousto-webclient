@@ -18,15 +18,12 @@ describe('<BoxProgressMessage />', () => {
   })
 
   const NO_RECIPES_TEXT = `Add ${config.maxRecipesNum} recipes for the best price per serving`
-  const FULL_BOX_TEXT = 'Nice! You\'ve got the best price per serving'
+  const FULL_BOX_TEXT = "Nice! You've got the best price per serving"
   const MORE_RECIPES_TEXT = 'Add more recipes to complete your box'
 
   test('renders without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(
-      <BoxProgressMessage numRecipes={0} />,
-      div
-    )
+    ReactDOM.render(<BoxProgressMessage numRecipes={0} />, div)
   })
 
   describe('when mounted', () => {

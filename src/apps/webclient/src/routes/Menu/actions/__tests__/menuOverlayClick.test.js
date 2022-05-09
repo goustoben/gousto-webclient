@@ -13,7 +13,7 @@ describe('given menuOverlayClick action is called', () => {
 
   beforeEach(() => {
     state = {
-      boxSummaryShow: Immutable.fromJS({ show: false })
+      boxSummaryShow: Immutable.fromJS({ show: false }),
     }
   })
 

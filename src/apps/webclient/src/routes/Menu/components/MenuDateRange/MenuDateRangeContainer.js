@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
   const text = getMenuDateRangeText(basketDate)
 
   return {
-    text
+    text,
   }
 }
 

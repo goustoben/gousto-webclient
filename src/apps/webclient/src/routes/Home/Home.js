@@ -7,6 +7,7 @@ import { CTA, seo } from 'config/home'
 import routesConfig from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
 import { menuLoadBoxPrices } from 'actions/menu'
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { PromoBanner } from './PromoBanner'
 import { HomeSections } from './HomeSections'
 
@@ -100,6 +101,7 @@ class Home extends Component {
           isSignupReductionEnabled={isSignupReductionEnabled}
           pricePerServing={pricePerServing}
         />
+        <RibbonTriggerContainer name="home-page" />
       </div>
     )
   }

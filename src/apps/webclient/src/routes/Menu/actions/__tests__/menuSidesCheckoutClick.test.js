@@ -25,7 +25,7 @@ describe('checkoutWithSides', () => {
       }),
       auth: Immutable.fromJS({
         id: 'user_id',
-        isAuthenticated: true
+        isAuthenticated: true,
       }),
       user: Immutable.fromJS({
         orders: Immutable.List([]),
@@ -37,7 +37,9 @@ describe('checkoutWithSides', () => {
     orderConfirmationRedirectMock = jest.fn()
     closeSidesModalSpy = jest.spyOn(sidesAction, 'closeSidesModal').mockImplementation()
     jest.spyOn(menuCheckoutClick, 'isOrderApiUpdateEnabled').mockResolvedValue(true)
-    orderConfirmationSpy = jest.spyOn(orderConfirmation, 'orderConfirmationRedirect').mockReturnValue(orderConfirmationRedirectMock)
+    orderConfirmationSpy = jest
+      .spyOn(orderConfirmation, 'orderConfirmationRedirect')
+      .mockReturnValue(orderConfirmationRedirectMock)
   })
 
   afterEach(() => {

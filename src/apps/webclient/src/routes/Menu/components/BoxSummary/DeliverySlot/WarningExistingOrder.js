@@ -10,14 +10,13 @@ const WarningExistingOrder = ({ tempDate }) => {
     <span>
       <span className={css.warningTriangle} />
       You have an existing order for
-      {date}
-      . Are you sure you want to edit this order?
+      {date}. Are you sure you want to edit this order?
     </span>
   )
 }
 
 WarningExistingOrder.propTypes = {
-  tempDate: PropTypes.string.isRequired
+  tempDate: PropTypes.string.isRequired,
 }
 
 export { WarningExistingOrder }

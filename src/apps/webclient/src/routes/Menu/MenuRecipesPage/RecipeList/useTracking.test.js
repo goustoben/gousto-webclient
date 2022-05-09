@@ -49,11 +49,13 @@ describe('useTracking', () => {
         }),
       }),
       menuService: {
-        data: [{
-          meta: {
-            swapsExperimentUserAllocationGroup: 'control',
+        data: [
+          {
+            meta: {
+              swapsExperimentUserAllocationGroup: 'control',
+            },
           },
-        }],
+        ],
         meta: {
           recommendations: {
             version: 'v1',

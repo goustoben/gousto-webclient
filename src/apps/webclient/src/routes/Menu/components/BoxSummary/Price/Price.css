@@ -21,7 +21,7 @@
 
 .dash {
   composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
-  transform: scale(3,1);
+  transform: scale(3, 1);
   transform-origin: left;
   display: inline-block;
 }

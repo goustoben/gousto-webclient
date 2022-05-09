@@ -8,6 +8,7 @@ import browserHelper from 'utils/browserHelper'
 
 import MainLayout from 'layouts/MainLayout'
 import ErrorPage from 'components/ErrorPage'
+import { RibbonTrigger } from 'components/RibbonTrigger'
 import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
 import { BoxSummaryContainer } from './components/BoxSummary'
 import { DetailRecipeMetaContainer } from './components/RecipeMeta'
@@ -41,7 +42,7 @@ class Menu extends React.PureComponent {
       menuLoadBoxPrices,
       menuCalculateTimeToUsable,
       fetchData,
-      applyPromoCodeAndShowModal
+      applyPromoCodeAndShowModal,
     } = this.props
 
     const forceDataLoad = Boolean(query.reload)
@@ -59,7 +60,7 @@ class Menu extends React.PureComponent {
       promises.push(
         menuLoadDays().then(() => {
           boxSummaryDeliveryDaysLoad()
-        })
+        }),
       )
     }
 
@@ -77,7 +78,16 @@ class Menu extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { menuLoadBoxPrices, tariffId, params, query, isAuthenticated, fetchData, disabled, menuLoadingBoxPrices } = this.props
+    const {
+      menuLoadBoxPrices,
+      tariffId,
+      params,
+      query,
+      isAuthenticated,
+      fetchData,
+      disabled,
+      menuLoadingBoxPrices,
+    } = this.props
     const isAdminQuery = !!(query && query['preview[auth_user_id]'])
 
     if (!disabled && !menuLoadingBoxPrices && prevProps.tariffId !== tariffId) {
@@ -106,7 +116,7 @@ class Menu extends React.PureComponent {
     } = this.props
 
     const { isChrome } = this.state
-    const overlayShowCSS = (showOverlay && isChrome) ? css.blur : null
+    const overlayShowCSS = showOverlay && isChrome ? css.blur : null
 
     const { orderId } = params
 
@@ -121,11 +131,7 @@ class Menu extends React.PureComponent {
     return (
       <MainLayout route={{ withRecipeBar: true }}>
         <div data-testing="menuContainer">
-          <Helmet
-            title={menu.helmet.title}
-            meta={menu.helmet.meta}
-            style={menu.helmet.style}
-          />
+          <Helmet title={menu.helmet.title} meta={menu.helmet.meta} style={menu.helmet.style} />
           <DetailRecipeMetaContainer query={query} />
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
@@ -145,6 +151,7 @@ class Menu extends React.PureComponent {
             <RecipesInBasketProgress isAuthenticated={isAuthenticated} />
           )}
         </div>
+        <RibbonTrigger name="menu" />
       </MainLayout>
     )
   }

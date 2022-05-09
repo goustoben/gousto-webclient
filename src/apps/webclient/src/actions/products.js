@@ -1,6 +1,13 @@
 import { push } from 'react-router-redux'
 
-import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
+import {
+  fetchProduct,
+  fetchRandomProducts,
+  fetchProductCategories,
+  fetchProductStock,
+  fetchProducts,
+  fetchRecipePairingsProducts,
+} from 'apis/products'
 import { getProductsByCutoff, sortProductsByPrice } from 'utils/products'
 import logger from 'utils/logger'
 import { getActiveMenuIdForOrderDate } from 'routes/Menu/selectors/menu'
@@ -191,11 +198,32 @@ export const productsLoadStock = (forceRefresh = false) => (
   }
 )
 
-export const trackProductFiltering = (categoryId) => ({
+export const productsLoadRecipePairings = (recipeIds) => (
+  async (dispatch, getState) => {
+    if (Array.isArray(recipeIds) && recipeIds.length > 0) {
+      dispatch(statusActions.pending(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, true))
+      try {
+        const { data: recipePairings } = await fetchRecipePairingsProducts(getState().auth.get('accessToken'), recipeIds)
+        dispatch({ type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, recipePairings })
+      } catch (err) {
+        dispatch(statusActions.error(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, err.message))
+        logger.error(err)
+      } finally {
+        dispatch(statusActions.pending(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, false))
+      }
+    }
+  }
+)
+
+export const trackProductFiltering = (eventName, eventAction, eventType, primaryCategory, productsPerCategory) => ({
   type: actionTypes.PRODUCTS_FILTER_TRACKING,
   trackingData: {
-    actionType: 'Products filtered',
-    categoryId,
+    eventName,
+    eventAction,
+    eventType,
+    eventProperties: {
+      categoryProperties: { primaryCategory, productsPerCategory }
+    }
   }
 })
 
@@ -206,6 +234,7 @@ export const productsActions = {
   productsLoadRandomProducts,
   productsLoadProductsById,
   productsLoadStock,
+  productsLoadRecipePairings,
   trackProductFiltering,
 }
 

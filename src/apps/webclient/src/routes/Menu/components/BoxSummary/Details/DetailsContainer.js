@@ -5,10 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, trackingUnavailableRecipeList } from 'actions/boxSummary'
 import { getBasketSlotId } from 'selectors/basket'
 import { getFullScreenBoxSummary } from 'selectors/features'
-import {
-  getOkRecipeIds,
-  getUnavailableRecipeIds,
-} from 'routes/Menu/selectors/basket'
+import { getOkRecipeIds, getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { basketRecipeRemove } from '../../../actions/basketRecipes'
@@ -46,7 +43,7 @@ const DetailsContainer = connect(mapStateToProps, {
   showRecipeDetailsOnClick: menuRecipeDetailVisibilityChange,
   boxSummaryVisibilityChange,
   trackingUnavailableRecipeList,
-  checkoutBasket
+  checkoutBasket,
 })(DetailsPure)
 
 export { DetailsContainer }

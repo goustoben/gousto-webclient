@@ -14,6 +14,21 @@ import { trackOrder } from 'apis/tracking'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvironment } from 'utils/isomorphicEnvironment'
 
+export const openProductModalTracking = (trackingData) => (dispatch) => {
+  dispatch({ type: actionTypes.PRODUCT_DETAILS_MODAL_TRACKING, trackingData })
+}
+
+export const trackPairingsData = (productsPerCategory, recipesPerCategory) => (dispatch) => {
+  dispatch({
+    type: actionTypes.TRACK_PAIRINGS_DATA,
+    trackingData: {
+      event_name: 'pairings_loaded',
+      event_action: 'page_load',
+      pairingProperties: { productsPerCategory, recipesPerCategory }
+    }
+  })
+}
+
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
     const { user } = getState()

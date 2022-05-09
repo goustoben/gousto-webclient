@@ -15,8 +15,9 @@ describe('RibbonTrigger', () => {
       <RibbonTrigger
         setRibbonTriggered={setRibbonTriggered}
         isRibbonTriggered={isRibbonTriggered}
+        shouldLimitToOncePerSession
         {...props}
-      />
+      />,
     )
 
   beforeEach(() => {
@@ -32,7 +33,7 @@ describe('RibbonTrigger', () => {
 
       test('then it should invoke the ribbon trigger and remember it', () => {
         expect(wrapper.children()).toHaveLength(0)
-        expect(ribbon).toHaveBeenCalledWith('123', 'control_welcome')
+        expect(ribbon).toHaveBeenCalledWith('trigger', 'control_welcome')
         expect(setRibbonTriggered).toHaveBeenCalled()
       })
     })
