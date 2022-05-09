@@ -41,8 +41,8 @@ export const orderAssignToUser = (orderAction, existingOrderId) => async (dispat
       message: 'saveUserOrder in orderAssignToUser failed, logging error below...',
       actor: userId,
       extra: {
-        orderDetails
-      }
+        orderDetails,
+      },
     })
 
     logger.error(err)
@@ -66,8 +66,8 @@ export const orderAssignToUser = (orderAction, existingOrderId) => async (dispat
         message: 'updateUserOrder in orderAssignToUser failed, logging error below...',
         actor: userId,
         extra: {
-          updateUserOrderPayload
-        }
+          updateUserOrderPayload,
+        },
       })
       logger.error(error)
 
@@ -91,37 +91,36 @@ export const orderAssignToUser = (orderAction, existingOrderId) => async (dispat
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
 }
 
-export const sendUpdateOrder = (isSidesEnabled = false) => async (dispatch, getState) => {
-  dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
-  dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
+export const sendUpdateOrder =
+  (isSidesEnabled = false) =>
+  async (dispatch, getState) => {
+    dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
+    dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
 
-  const state = getState()
-  const orderId = getBasketOrderId(state)
-  const orderAction = getOrderAction(state)
+    const state = getState()
+    const orderId = getBasketOrderId(state)
+    const orderAction = getOrderAction(state)
 
-  try {
-    const { data: order } = await orderV2.updateOrder(dispatch, getState, orderId)
+    try {
+      const { data: order } = await orderV2.updateOrder(dispatch, getState, orderId)
 
-    if (order) {
-      dispatch(trackOrder(
-        orderAction,
-        order,
-      ))
+      if (order) {
+        dispatch(trackOrder(orderAction, order))
 
-      sendClientMetric('menu-edit-complete-order-api-v2', 1, 'Count')
+        sendClientMetric('menu-edit-complete-order-api-v2', 1, 'Count')
 
-      if (isSidesEnabled) {
-        dispatch(openSidesModal())
-      } else {
-        dispatch(orderConfirmationRedirect(orderId, orderAction))
+        if (isSidesEnabled) {
+          dispatch(openSidesModal())
+        } else {
+          dispatch(orderConfirmationRedirect(orderId, orderAction))
+        }
       }
+    } catch (err) {
+      logger.error({ message: 'saveOrder api call failed, logging error below...' })
+      logger.error(err)
+      dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
+      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
     }
-  } catch (err) {
-    logger.error({ message: 'saveOrder api call failed, logging error below...' })
-    logger.error(err)
-    dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
-    dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
-  }
 
-  dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
-}
+    dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
+  }

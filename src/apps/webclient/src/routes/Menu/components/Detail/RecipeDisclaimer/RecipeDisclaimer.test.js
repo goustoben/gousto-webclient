@@ -16,17 +16,15 @@ describe('RecipeDisclaimer', () => {
     theme: {
       color: 'black',
       backgroundColor: 'light-green',
-      iconColor: 'green'
-    }
+      iconColor: 'green',
+    },
   }
 
   describe('when the recipe contains a disclaimer', () => {
     beforeEach(() => {
       jest.spyOn(reactRedux, 'useSelector').mockImplementation(() => claim)
 
-      wrapper = shallow(
-        <RecipeDisclaimer />
-      )
+      wrapper = shallow(<RecipeDisclaimer />)
     })
 
     test('should display a paragraph containing the disclaimer', () => {
@@ -50,9 +48,7 @@ describe('RecipeDisclaimer', () => {
     afterAll(() => jest.clearAllMocks())
 
     test('should not display the disclaimer', () => {
-      wrapper = shallow(
-        <RecipeDisclaimer />
-      )
+      wrapper = shallow(<RecipeDisclaimer />)
       expect(wrapper.find('.disclaimerWrapper').exists()).toBe(false)
     })
   })
@@ -65,9 +61,7 @@ describe('RecipeDisclaimer', () => {
     afterAll(() => jest.clearAllMocks())
 
     test('should not display the disclaimer', () => {
-      wrapper = shallow(
-        <RecipeDisclaimer />
-      )
+      wrapper = shallow(<RecipeDisclaimer />)
       expect(wrapper.find('.disclaimerWrapper').exists()).toBe(false)
     })
   })

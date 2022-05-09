@@ -15,10 +15,10 @@ describe('JustForYouTutorial Component', () => {
   let wrapper
 
   beforeEach(() => {
-    jest.spyOn(useShowJFYTutorial, 'useShowJFYTutorial')
-      .mockImplementation(() => true)
+    jest.spyOn(useShowJFYTutorial, 'useShowJFYTutorial').mockImplementation(() => true)
 
-    jest.spyOn(TutorialActions, 'incrementTutorialViewed')
+    jest
+      .spyOn(TutorialActions, 'incrementTutorialViewed')
       .mockImplementation(incrementTutorialViewed)
 
     wrapper = shallow(<JustForYouTutorial />)
@@ -33,8 +33,7 @@ describe('JustForYouTutorial Component', () => {
   })
 
   it('should not render if showTutorial is false', () => {
-    jest.spyOn(useShowJFYTutorial, 'useShowJFYTutorial')
-      .mockImplementationOnce(() => false)
+    jest.spyOn(useShowJFYTutorial, 'useShowJFYTutorial').mockImplementationOnce(() => false)
 
     wrapper = shallow(<JustForYouTutorial />)
 

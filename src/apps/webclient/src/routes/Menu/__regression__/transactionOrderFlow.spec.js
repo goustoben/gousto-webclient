@@ -12,13 +12,28 @@ describe.skip('when the user is logged out', () => {
       cy.server()
 
       cy.route(/user\/current/, 'fixture:user/userCurrent.json').as('userCurrent')
-      cy.route(/user\/current\/projected-deliveries/, 'fixture:user/userCurrentProjectedDeliveries.json').as('projectedDeliveries')
-      cy.route(/user\/current\/address/, 'fixture:user/userCurrentAddress.json').as('currentAddress')
-      cy.route(/user\/current\/subscription/, 'fixture:user/userCurrentActiveSubscription.json').as('currentSubscription')
+      cy.route(
+        /user\/current\/projected-deliveries/,
+        'fixture:user/userCurrentProjectedDeliveries.json',
+      ).as('projectedDeliveries')
+      cy.route(/user\/current\/address/, 'fixture:user/userCurrentAddress.json').as(
+        'currentAddress',
+      )
+      cy.route(/user\/current\/subscription/, 'fixture:user/userCurrentActiveSubscription.json').as(
+        'currentSubscription',
+      )
       cy.route('/customers/v1/customers/17247344/addresses', 'fixture:user/userAddresses.json')
       cy.route(/orderskiprecovery/, 'fixture:orderSkipRecovery.json')
-      cy.route('POST', /user\/current\/subscription\/delivery\/disable/, 'fixture:user/userCurrentSubscriptionDelivery.json').as('cancelProjectedDelivery')
-      cy.route('POST', /user\/(.*)\/subscription\/delivery\/enable/, 'fixture:user/userCurrentSubscriptionDelivery.json').as('restoreProjectedDelivery')
+      cy.route(
+        'POST',
+        /user\/current\/subscription\/delivery\/disable/,
+        'fixture:user/userCurrentSubscriptionDelivery.json',
+      ).as('cancelProjectedDelivery')
+      cy.route(
+        'POST',
+        /user\/(.*)\/subscription\/delivery\/enable/,
+        'fixture:user/userCurrentSubscriptionDelivery.json',
+      ).as('restoreProjectedDelivery')
       cy.route('DELETE', /order/).as('cancelPendingOrder')
       cy.route(/prices/, 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')
       cy.route('boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
@@ -27,7 +42,9 @@ describe.skip('when the user is logged out', () => {
       cy.route('deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
       cy.route('delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
       cy.route(/menu\/v1/, 'fixture:menu/twoWeeksDetails.json').as('getMenu')
-      cy.route('/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
+      cy.route('/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as(
+        'getExperiments',
+      )
 
       cy.login()
 
@@ -55,8 +72,7 @@ describe.skip('when the user is logged out', () => {
       withPlatformTags(WEB).it('should be visible for desktop', () => {
         cy.contains('Menu for May')
 
-        cy.get('[data-testing="menuDateRange-mobile"]')
-          .should('not.be.visible')
+        cy.get('[data-testing="menuDateRange-mobile"]').should('not.be.visible')
       })
     })
 
@@ -66,9 +82,10 @@ describe.skip('when the user is logged out', () => {
       })
 
       it('Then that recipe is added to my basket', () => {
-        cy.window().then(getRecipes).then(
-          recipes => recipes.length
-        ).should('equal', 1)
+        cy.window()
+          .then(getRecipes)
+          .then((recipes) => recipes.length)
+          .should('equal', 1)
       })
     })
 
@@ -78,9 +95,10 @@ describe.skip('when the user is logged out', () => {
       })
 
       it('Then that recipe is also added to my basket', () => {
-        cy.window().then(getRecipes).then(
-          recipes => recipes.length
-        ).should('equal', 2)
+        cy.window()
+          .then(getRecipes)
+          .then((recipes) => recipes.length)
+          .should('equal', 2)
       })
 
       it('And the “checkout” CTA is enabled', () => {
@@ -95,26 +113,34 @@ describe.skip('when the user is logged out', () => {
 
       describe('And I click on “Add recipe“ for the selected recipe', () => {
         before(() => {
-          cy.get('[data-testing="menuRecipeDetailsClose"]').first().find('[data-testing="menuRecipeAdd"]').click()
+          cy.get('[data-testing="menuRecipeDetailsClose"]')
+            .first()
+            .find('[data-testing="menuRecipeAdd"]')
+            .click()
         })
 
         it('Then that recipe is added to my basket', () => {
-          cy.window().then(getRecipes).then(
-            recipes => recipes.length
-          ).should('equal', 3)
+          cy.window()
+            .then(getRecipes)
+            .then((recipes) => recipes.length)
+            .should('equal', 3)
         })
       })
 
       describe('And I click on “Add recipe“ for the selected recipe again', () => {
         before(() => {
-          cy.get('[data-testing="menuRecipeDetailsClose"]').first().find('[data-testing="menuAddServings"]').eq(2)
+          cy.get('[data-testing="menuRecipeDetailsClose"]')
+            .first()
+            .find('[data-testing="menuAddServings"]')
+            .eq(2)
             .click()
         })
 
         it('Then that recipe is added to my basket twice', () => {
-          cy.window().then(getRecipes).then(
-            recipes => recipes.length
-          ).should('equal', 3)
+          cy.window()
+            .then(getRecipes)
+            .then((recipes) => recipes.length)
+            .should('equal', 3)
         })
       })
     })
@@ -131,7 +157,9 @@ describe.skip('when the user is logged out', () => {
 
     describe('And the menu has recipes out of stock', () => {
       it('Then the out of stock recipe menuRecipeAdd CTA should not exist', () => {
-        cy.get('[data-testing="menuRecipeOutOfStock"]').find('[data-testing="menuRecipeAdd"]').should('not.exist')
+        cy.get('[data-testing="menuRecipeOutOfStock"]')
+          .find('[data-testing="menuRecipeAdd"]')
+          .should('not.exist')
       })
     })
 

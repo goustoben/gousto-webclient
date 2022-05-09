@@ -12,14 +12,22 @@ const getGradientImageSrc = (headerAttributes, property) => {
 }
 
 const GradientInfoHeader = ({ headerAttributes }) => {
-  const { gradientColor, color, headerImage, description, altText = 'Campaign banner' } = headerAttributes
+  const {
+    gradientColor,
+    color,
+    headerImage,
+    description,
+    altText = 'Campaign banner',
+  } = headerAttributes
 
   return (
-    <div
-      className={css.gradientInfoHeader}
-    >
+    <div className={css.gradientInfoHeader}>
       <div className={css.gradientImageBackground}>
-        <img className={css.gradientImage} src={getGradientImageSrc(headerAttributes, 'image')} alt={altText} />
+        <img
+          className={css.gradientImage}
+          src={getGradientImageSrc(headerAttributes, 'image')}
+          alt={altText}
+        />
         <div
           className={classnames(css.gradientBackground, css.hideMobile)}
           style={{
@@ -35,23 +43,18 @@ const GradientInfoHeader = ({ headerAttributes }) => {
         <div
           className={css.gradientText}
           style={{
-            color: `${color}`
+            color: `${color}`,
           }}
         >
-          {
-            headerImage[0] &&
-            (
+          {headerImage[0] && (
             <img
               src={getGradientImageSrc(headerAttributes, 'headerImage')}
               alt={altText}
-              style={{width: headerImage[0].width, height: headerImage[0].height}}
+              style={{ width: headerImage[0].width, height: headerImage[0].height }}
               className={css.gradientTitleImage}
             />
-            )
-          }
-          <p className={css.gradientDescription}>
-            {description}
-          </p>
+          )}
+          <p className={css.gradientDescription}>{description}</p>
         </div>
       </div>
     </div>
@@ -64,16 +67,20 @@ GradientInfoHeader.propTypes = {
     description: PropTypes.string,
     gradientColor: PropTypes.string,
     altText: PropTypes.string,
-    headerImage: PropTypes.arrayOf(PropTypes.shape({
-      width: PropTypes.number,
-      height: PropTypes.number,
-      url: PropTypes.string
-    })),
-    image: PropTypes.arrayOf(PropTypes.shape({
-      url: PropTypes.string
-    })),
+    headerImage: PropTypes.arrayOf(
+      PropTypes.shape({
+        width: PropTypes.number,
+        height: PropTypes.number,
+        url: PropTypes.string,
+      }),
+    ),
+    image: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string,
+      }),
+    ),
     imageLocation: PropTypes.string,
-  }).isRequired
+  }).isRequired,
 }
 
 export { GradientInfoHeader }

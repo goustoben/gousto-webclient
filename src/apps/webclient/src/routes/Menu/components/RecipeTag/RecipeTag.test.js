@@ -7,8 +7,7 @@ import { RecipeTag } from './RecipeTag'
 describe('RecipeTag', () => {
   describe('when given null brandTag', () => {
     beforeEach(() => {
-      jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag')
-        .mockImplementation(() => null)
+      jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag').mockImplementation(() => null)
     })
 
     afterEach(() => {
@@ -24,12 +23,11 @@ describe('RecipeTag', () => {
 
   describe('when given new brand tag', () => {
     beforeEach(() => {
-      jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag')
-        .mockImplementation(() => ({
-          slug: 'new',
-          text: 'New',
-          theme: { borderColor: '#01A92B', color: '#01A92B', name: 'light' },
-        }))
+      jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag').mockImplementation(() => ({
+        slug: 'new',
+        text: 'New',
+        theme: { borderColor: '#01A92B', color: '#01A92B', name: 'light' },
+      }))
     })
 
     afterEach(() => {

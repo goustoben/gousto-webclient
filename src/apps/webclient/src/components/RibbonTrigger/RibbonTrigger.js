@@ -6,9 +6,10 @@ export const RibbonTrigger = ({
   probabilityPercentage,
   isRibbonTriggered,
   setRibbonTriggered,
+  shouldLimitToOncePerSession,
 }) => {
   useLayoutEffect(() => {
-    if (isRibbonTriggered) {
+    if (shouldLimitToOncePerSession && isRibbonTriggered) {
       return
     }
 
@@ -22,9 +23,17 @@ export const RibbonTrigger = ({
       return
     }
 
-    window.ribbon(window.ribbon.ribbonID, name)
-    setRibbonTriggered()
-  }, [name, isRibbonTriggered, setRibbonTriggered, probabilityPercentage])
+    window.ribbon('trigger', name)
+    if (setRibbonTriggered) {
+      setRibbonTriggered()
+    }
+  }, [
+    name,
+    isRibbonTriggered,
+    setRibbonTriggered,
+    probabilityPercentage,
+    shouldLimitToOncePerSession,
+  ])
 
   return null
 }
@@ -32,11 +41,14 @@ export const RibbonTrigger = ({
 RibbonTrigger.propTypes = {
   name: PropTypes.string.isRequired,
   probabilityPercentage: PropTypes.number,
-  setRibbonTriggered: PropTypes.func.isRequired,
+  setRibbonTriggered: PropTypes.func,
   isRibbonTriggered: PropTypes.bool,
+  shouldLimitToOncePerSession: PropTypes.bool,
 }
 
 RibbonTrigger.defaultProps = {
+  setRibbonTriggered: null,
   probabilityPercentage: 100,
   isRibbonTriggered: false,
+  shouldLimitToOncePerSession: false,
 }

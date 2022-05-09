@@ -4,18 +4,20 @@ import { getCollectionIdWithName } from 'utils/collections'
 import menuConfig from 'config/menu'
 import { isOutOfStock } from './recipe'
 
-export const getRecipesInCollection = (menuCollections, collectionId) => menuCollections.getIn([collectionId, 'recipesInCollection'], null)
+export const getRecipesInCollection = (menuCollections, collectionId) =>
+  menuCollections.getIn([collectionId, 'recipesInCollection'], null)
 
-export const getCollectionId = collection => collection.get('id')
-const getCollectionSlug = collection => collection.get('slug')
-const isCollectionPublished = collection => Boolean(collection.get('published'))
+export const getCollectionId = (collection) => collection.get('id')
+const getCollectionSlug = (collection) => collection.get('slug')
+const isCollectionPublished = (collection) => Boolean(collection.get('published'))
 
-const isCollectionDefault = collection => Boolean(collection.get('default'))
-const isCollectionRecommendations = collection => getCollectionSlug(collection) === 'recommendations'
+const isCollectionDefault = (collection) => Boolean(collection.get('default'))
+const isCollectionRecommendations = (collection) =>
+  getCollectionSlug(collection) === 'recommendations'
 
-export const getMenuCollections = state => state.menuCollections
-export const getMenuRecipeStock = state => state.menuRecipeStock
-export const getCollectionSlugFromQuery = state => {
+export const getMenuCollections = (state) => state.menuCollections
+export const getMenuRecipeStock = (state) => state.menuRecipeStock
+export const getCollectionSlugFromQuery = (state) => {
   if (
     !state.routing ||
     !state.routing.locationBeforeTransitions ||
@@ -30,7 +32,7 @@ export const getCollectionSlugFromQuery = state => {
 
 export const getRecommendationsCollection = createSelector(
   getMenuCollections,
-  menuCollections => menuCollections.find(isCollectionRecommendations) || null
+  (menuCollections) => menuCollections.find(isCollectionRecommendations) || null,
 )
 
 const collectionHasRecipes = (menuCollections, collectionId) => {
@@ -50,7 +52,9 @@ export const getDisplayedCollections = createSelector(
   getRecommendationsCollection,
   (menuCollections, menuRecipeStock, numPortions, recommendations) => {
     const collections = menuCollections.filter(
-      collection => isCollectionPublished(collection) && collectionHasRecipes(menuCollections, getCollectionId(collection))
+      (collection) =>
+        isCollectionPublished(collection) &&
+        collectionHasRecipes(menuCollections, getCollectionId(collection)),
     )
 
     if (!recommendations) {
@@ -60,7 +64,7 @@ export const getDisplayedCollections = createSelector(
     const recommendationsId = getCollectionId(recommendations)
     const { recommendationInStockRecipeThreshold } = menuConfig
 
-    return collections.filter(collection => {
+    return collections.filter((collection) => {
       const collectionId = getCollectionId(collection)
 
       if (collectionId !== recommendationsId) {
@@ -87,10 +91,10 @@ export const getDisplayedCollections = createSelector(
 
       return collectionRecipesInStock >= recommendationInStockRecipeThreshold
     })
-  }
+  },
 )
 
-export const getDefaultCollection = state => {
+export const getDefaultCollection = (state) => {
   const collections = getDisplayedCollections(state)
 
   const defaultCollection = collections.find(isCollectionDefault)
@@ -113,7 +117,8 @@ export const getDefaultCollection = state => {
 }
 
 export const getCurrentCollectionId = (state, props) => {
-  if (props && props.categoryId) {// eslint-disable-line
+  if (props && props.categoryId) {
+    // eslint-disable-line
     return props.categoryId
   }
 
@@ -142,12 +147,13 @@ export const getRecommendationShortName = createSelector(
     const shortName = recommendationCollection && recommendationCollection.get('shortTitle')
 
     return shortName || ''
-  }
+  },
 )
 
 export const isCurrentCollectionRecommendation = createSelector(
   [getCurrentCollectionId, getRecommendationsCollection],
-  (currentCollectionId, recommendationsCollection) => (recommendationsCollection && getCollectionId(recommendationsCollection) === currentCollectionId)
+  (currentCollectionId, recommendationsCollection) =>
+    recommendationsCollection && getCollectionId(recommendationsCollection) === currentCollectionId,
 )
 
 export const getCurrentCollectionSlug = createSelector(
@@ -157,7 +163,7 @@ export const getCurrentCollectionSlug = createSelector(
     const currentCollectionSlug = (currentCollection && currentCollection.get('slug')) || null
 
     return currentCollectionSlug
-  }
+  },
 )
 
 const getCollectionsPerMenuFromProps = (_, { collectionsPerMenu }) => collectionsPerMenu
@@ -165,13 +171,14 @@ const getCollectionsPerMenuFromProps = (_, { collectionsPerMenu }) => collection
 const getCurrentMenuCollectionsWithHeaders = createSelector(
   [getCollectionsPerMenuFromProps, getBasketMenuId],
   (collectionsPerMenu, menuId) => {
-    const currentMenuCollections = collectionsPerMenu && collectionsPerMenu.find(menu => menu.id === menuId)
+    const currentMenuCollections =
+      collectionsPerMenu && collectionsPerMenu.find((menu) => menu.id === menuId)
     if (currentMenuCollections) {
       return currentMenuCollections.relationships.collections.data
     }
 
     return null
-  }
+  },
 )
 
 const getHeadersFromProps = (_, { headers }) => headers
@@ -179,16 +186,19 @@ const getHeadersFromProps = (_, { headers }) => headers
 export const getCollectionsHeaders = createSelector(
   [getCurrentMenuCollectionsWithHeaders, getCurrentCollectionId, getHeadersFromProps],
   (collectionWithHeaders, collectionId, headers) => {
-    const collectionInfo = collectionWithHeaders && collectionWithHeaders.find(collection => collection.id === collectionId)
+    const collectionInfo =
+      collectionWithHeaders &&
+      collectionWithHeaders.find((collection) => collection.id === collectionId)
     if (collectionInfo && headers) {
-      return headers.find(header => header.id === collectionInfo.header)
+      return headers.find((header) => header.id === collectionInfo.header)
     }
 
     return null
-  }
+  },
 )
 
 export const getCurrentCollectionThumbnail = createSelector(
   [getMenuCollections, getCurrentCollectionId],
-  (menuCollections, currentCollectionId) => menuCollections.getIn([currentCollectionId, 'thumbnail'], null)
+  (menuCollections, currentCollectionId) =>
+    menuCollections.getIn([currentCollectionId, 'thumbnail'], null),
 )

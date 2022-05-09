@@ -5,18 +5,19 @@ import { get as getFromCookie } from 'utils/cookieHelper2'
 
 const getSessionId = () => getFromCookie(Cookies, 'gousto_session_id', false, false)
 
-const getAuthorizationHeader = (accessToken) => (accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
+const getAuthorizationHeader = (accessToken) =>
+  accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
 
 const getHeadersToSend = (accessToken, userId, customHeaders = {}) => {
   const sessionId = getSessionId()
 
-  return ({
-    ...( sessionId ? { 'x-gousto-device-id': sessionId } : {} ),
-    ...( userId ? { 'x-gousto-user-id': userId } : {} ),
+  return {
+    ...(sessionId ? { 'x-gousto-device-id': sessionId } : {}),
+    ...(userId ? { 'x-gousto-user-id': userId } : {}),
     ...getAuthorizationHeader(accessToken),
     'Content-Type': 'application/json',
-    ...customHeaders
-  })
+    ...customHeaders,
+  }
 }
 
 /**
@@ -33,21 +34,12 @@ const getHeadersToSend = (accessToken, userId, customHeaders = {}) => {
  *                                            the response from server, if a failure,
  *                                            the response status code
  */
-const fetch = async (
-  method,
-  {
-    accessToken,
-    userId
-  },
-  url,
-  data = null,
-  headers = null
-) => {
+const fetch = async (method, { accessToken, userId }, url, data = null, headers = null) => {
   let requestUrl = url
 
   const request = {
     method: method.toUpperCase(),
-    headers: getHeadersToSend(accessToken, userId, headers)
+    headers: getHeadersToSend(accessToken, userId, headers),
   }
 
   if (data) {
@@ -63,16 +55,16 @@ const fetch = async (
   const response = await isomorphicFetch(requestUrl, request)
 
   if (response.status === 204) {
-    return [ null, null, response.status ]
+    return [null, null, response.status]
   }
 
   const parsed = await response.json()
 
   if (response.status >= 400) {
-    return [ null, parsed, response.status ]
+    return [null, parsed, response.status]
   }
 
-  return [ parsed, null, response.status ]
+  return [parsed, null, response.status]
 }
 
 /**
@@ -110,7 +102,12 @@ class HTTPError extends Error {}
  * @param {{}} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link auth}
  */
 export const getFetcher = async (url, data, accessToken, userId, headers) => {
-  const [response, requestError, statusCode] = await get({ accessToken, userId }, url, data, headers)
+  const [response, requestError, statusCode] = await get(
+    { accessToken, userId },
+    url,
+    data,
+    headers,
+  )
 
   if (requestError) {
     const error = new HTTPError(`Fetch error: ${statusCode}`)
@@ -133,7 +130,12 @@ export const getFetcher = async (url, data, accessToken, userId, headers) => {
  * @param {{}} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link auth}
  */
 export const postFetcher = async (url, data, accessToken, userId, headers) => {
-  const [response, requestError, statusCode] = await post({ accessToken, userId }, url, data, headers)
+  const [response, requestError, statusCode] = await post(
+    { accessToken, userId },
+    url,
+    data,
+    headers,
+  )
 
   if (requestError) {
     const error = new HTTPError(`Fetch error: ${statusCode}`)

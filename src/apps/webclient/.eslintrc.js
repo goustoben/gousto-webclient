@@ -367,6 +367,7 @@ module.exports = {
         'src/**/*.tsx',
         'server/**/*.ts',
         'server/**/*.tsx',
+        'src/routes/Menu/**/*.js',
       ],
       rules: {
         'prettier/prettier': 'error',
@@ -388,6 +389,8 @@ module.exports = {
         'react/jsx-one-expression-per-line': 0,
         'react/jsx-wrap-multilines': 0,
         'react/jsx-curly-newline': 0,
+        'no-extra-semi': 0,
+        'react/jsx-closing-tag-location': 0,
       },
     },
   ],

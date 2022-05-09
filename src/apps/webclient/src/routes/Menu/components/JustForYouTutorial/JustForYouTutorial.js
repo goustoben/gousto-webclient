@@ -31,17 +31,20 @@ export const JustForYouTutorial = () => {
 
   return (
     <Portal>
-      <Tutorial
-        onClose={onCloseTutorial}
-        trackStepViewed={trackStepViewed}
-      >
+      <Tutorial onClose={onCloseTutorial} trackStepViewed={trackStepViewed}>
         <Step selector={`[data-slug='${CollectionSlug.Recommendations}']`}>
           <p className={css.intro}>Introducing</p>
           <p className={css.main}>{collectionName}</p>
-          <p className={css.text}>{'We now show you a personalised selection of recipes we think you\u0027ll really enjoy'}</p>
+          <p className={css.text}>
+            {
+              'We now show you a personalised selection of recipes we think you\u0027ll really enjoy'
+            }
+          </p>
         </Step>
         <Step selector="[data-slug='all-recipes']">
-          <p className={css.text}>You can still browse all available recipes by clicking All Recipes.</p>
+          <p className={css.text}>
+            You can still browse all available recipes by clicking All Recipes.
+          </p>
         </Step>
       </Tutorial>
     </Portal>

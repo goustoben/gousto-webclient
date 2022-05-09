@@ -16,6 +16,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export const DetailRecipeMetaContainer = connect(
-  mapStateToProps,
-)(RecipeMeta)
+export const DetailRecipeMetaContainer = connect(mapStateToProps)(RecipeMeta)

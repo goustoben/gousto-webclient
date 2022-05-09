@@ -11,11 +11,7 @@ jest.mock('containers/OptimizelyRollouts', () => ({
 
 describe('RecipeGrid', () => {
   const wrapper = shallow(
-    <RecipeGrid
-      menuCurrentCollectionId=""
-      menuRecipeDetailShow=""
-      isClient
-    />
+    <RecipeGrid menuCurrentCollectionId="" menuRecipeDetailShow="" isClient />,
   )
 
   test('should not show a collections nav', () => {

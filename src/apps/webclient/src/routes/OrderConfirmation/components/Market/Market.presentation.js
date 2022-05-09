@@ -9,11 +9,58 @@ import Overlay from 'Overlay'
 import CloseButton from 'Overlay/CloseButton'
 import { SaveButton } from 'OrderSummary/SaveButton'
 import { ProductsNavBar } from '../ProductsNavBar'
-import OrderSummaryContainer from '../OrderSummary/OrderSummaryContainer'
+import { OrderSummaryContainer } from '../OrderSummary/OrderSummaryContainer'
 import { ProductList } from '../ProductList'
 import { ReferAFriend } from '../ReferAFriend'
+import { ProductListPairings } from '../ProductListPairings'
+import { LoadingWrapper } from '../LoadingWrapper'
 
 import css from './Market.css'
+
+const filteredProductPropType = PropTypes.objectOf(
+  PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    listPrice: PropTypes.string,
+    images: PropTypes.instanceOf(Immutable.Map),
+    ageRestricted: PropTypes.bool,
+    quantity: PropTypes.number
+  })
+)
+
+const productPropType = PropTypes.arrayOf(
+  PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    listPrice: PropTypes.string,
+    isVatable: PropTypes.bool,
+    isForSale: PropTypes.bool,
+    ageRestricted: PropTypes.bool,
+    boxLimit: PropTypes.number,
+    alwaysOnMenu: PropTypes.bool,
+    volume: PropTypes.number,
+    zone: PropTypes.string,
+    createdAt: PropTypes.string,
+    categories: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+      boxLimit: PropTypes.number,
+      isDefault: PropTypes.bool,
+      recentlyAdded: PropTypes.bool,
+      hidden: PropTypes.bool,
+      pivot: PropTypes.shape({
+        createdAt: PropTypes.string
+      })
+    })),
+    tags: PropTypes.arrayOf(PropTypes.string),
+    images: PropTypes.objectOf(PropTypes.shape({
+      src: PropTypes.string,
+      url: PropTypes.string,
+      width: PropTypes.number,
+    })),
+  })
+)
 
 const propTypes = {
   ageVerified: PropTypes.bool,
@@ -23,16 +70,7 @@ const propTypes = {
     label: PropTypes.string,
     count: PropTypes.number,
   })).isRequired,
-  filteredProducts: PropTypes.objectOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      listPrice: PropTypes.string,
-      images: PropTypes.object,
-      ageRestricted: PropTypes.bool,
-      quantity: PropTypes.number,
-    })
-  ),
+  filteredProducts: PropTypes.oneOfType([productPropType, filteredProductPropType]),
   getFilteredProducts: PropTypes.func.isRequired,
   isOrderSummaryOpen: PropTypes.bool,
   onOrderSave: PropTypes.func.isRequired,
@@ -41,9 +79,9 @@ const propTypes = {
       id: PropTypes.string,
       title: PropTypes.string,
       listPrice: PropTypes.string,
-      images: PropTypes.object,
+      images: PropTypes.instanceOf(Immutable.Map),
       ageRestricted: PropTypes.bool,
-      quantity: PropTypes.number,
+      quantity: PropTypes.number
     })
   ).isRequired,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -51,10 +89,13 @@ const propTypes = {
   saveError: PropTypes.bool,
   saveRequired: PropTypes.bool,
   saving: PropTypes.bool,
-  selectedCategory: PropTypes.string.isRequired,
   showOrderConfirmationReceipt: PropTypes.bool.isRequired,
   toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   toggleOrderSummary: PropTypes.func.isRequired,
+  showPairings: PropTypes.bool,
+  productRecipePairings: PropTypes.instanceOf(Immutable.List),
+  isLoading: PropTypes.bool,
+  trackingCategory: PropTypes.string,
 }
 
 const defaultProps = {
@@ -65,6 +106,10 @@ const defaultProps = {
   saveError: false,
   saveRequired: false,
   saving: false,
+  showPairings: false,
+  productRecipePairings: Immutable.Map({}),
+  isLoading: false,
+  trackingCategory: '',
 }
 
 const MarketPresentation = ({
@@ -81,39 +126,49 @@ const MarketPresentation = ({
   saveError,
   saveRequired,
   saving,
-  selectedCategory,
   showOrderConfirmationReceipt,
   toggleAgeVerificationPopUp,
   toggleOrderSummary,
-}) => (
-  <div className={css.marketPlaceWrapper}>
-    {!productsLoadError && (
-      <ProductsNavBar
-        categories={categoriesForNavBar}
-        onSelectCategory={getFilteredProducts}
-      />
-    )}
-    <div className={css.marketPlaceContent}>
-      <section
-        className={classnames(
-          css.marketPlaceProducts,
-          { [css.productsLoadError]: productsLoadError }
-        )}
-      >
-        {productsLoadError
-          ? <Alert type="warning">{config.productsLoadErrorMessage}</Alert>
-          : (
-            <ProductList
-              products={filteredProducts || products}
-              basket={basket}
-              ageVerified={ageVerified}
-              productsCategories={productsCategories}
-              toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-              selectedCategory={selectedCategory}
-            />
+  showPairings,
+  productRecipePairings,
+  isLoading,
+  trackingCategory
+}) => {
+  const shouldShowPairings = showPairings && productRecipePairings.size > 0
+
+  return (
+    <div className={css.marketPlaceWrapper} data-testid="MarketPresentation">
+      {!productsLoadError && (
+      <ProductsNavBar categories={categoriesForNavBar} onSelectCategory={getFilteredProducts} />
+      )}
+      <div className={css.marketPlaceContent}>
+        <section className={classnames(css.marketPlaceProducts, { [css.productsLoadError]: productsLoadError })}>
+          {productsLoadError && <Alert type="warning">{config.productsLoadErrorMessage}</Alert>}
+          {isLoading && <LoadingWrapper />}
+          {(!isLoading && shouldShowPairings) && (
+          <ProductListPairings
+            productRecipePairings={productRecipePairings}
+            products={filteredProducts || products}
+            basket={basket}
+            ageVerified={ageVerified}
+            productsCategories={productsCategories}
+            toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+            trackingCategory={trackingCategory}
+          />
           )}
-      </section>
-      {showOrderConfirmationReceipt && (
+
+          {(!isLoading && !shouldShowPairings) && (
+          <ProductList
+            products={filteredProducts || products}
+            basket={basket}
+            ageVerified={ageVerified}
+            productsCategories={productsCategories}
+            toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+            trackingCategory={trackingCategory}
+          />
+          )}
+        </section>
+        {showOrderConfirmationReceipt && (
         <section className={classnames(css.orderDetails, css.mobileHide)}>
           <div className={css.orderDetailsSection}>
             <OrderSummaryContainer onOrderConfirmationMobile />
@@ -122,39 +177,40 @@ const MarketPresentation = ({
             <ReferAFriend />
           </div>
         </section>
-      )}
-      <section
-        className={classnames(css.orderDetailsMobile, css.mobileShow)}
-      >
-        <button
-          className={css.orderDetailsOpenButton}
-          type="button"
-          onClick={toggleOrderSummary}
+        )}
+        <section
+          className={classnames(css.orderDetailsMobile, css.mobileShow)}
         >
-          Open Order Summary
-        </button>
-        <Overlay open={isOrderSummaryOpen} from="bottom">
-          <div className={css.orderDetailsMobileContent}>
-            <div className={css.orderDetailsCloseButton}>
-              <CloseButton onClose={toggleOrderSummary} />
+          <button
+            className={css.orderDetailsOpenButton}
+            type="button"
+            onClick={toggleOrderSummary}
+          >
+            Open Order Summary
+          </button>
+          <Overlay open={isOrderSummaryOpen} from="bottom">
+            <div className={css.orderDetailsMobileContent}>
+              <div className={css.orderDetailsCloseButton}>
+                <CloseButton onClose={toggleOrderSummary} />
+              </div>
+              <OrderSummaryContainer
+                orderSummaryCollapsed={false}
+                onOrderConfirmationMobile
+              />
             </div>
-            <OrderSummaryContainer
-              orderSummaryCollapsed={false}
-              onOrderConfirmationMobile
-            />
-          </div>
-        </Overlay>
-        <SaveButton
-          onOrderConfirmationMobile
-          saving={saving}
-          saveRequired={saveRequired}
-          onClick={onOrderSave}
-          error={saveError}
-        />
-      </section>
+          </Overlay>
+          <SaveButton
+            onOrderConfirmationMobile
+            saving={saving}
+            saveRequired={saveRequired}
+            onClick={onOrderSave}
+            error={saveError}
+          />
+        </section>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 MarketPresentation.propTypes = propTypes
 MarketPresentation.defaultProps = defaultProps

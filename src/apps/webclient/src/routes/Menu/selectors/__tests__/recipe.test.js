@@ -10,11 +10,12 @@ import {
   getRecipeIngredientsProps,
   getRecipeAllergensProps,
   getRecipePerPortionProps,
-  getRecipePer100gProps, getRecipeSidesSurcharge,
+  getRecipePer100gProps,
+  getRecipeSidesSurcharge,
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
-  stockThreshold: 3
+  stockThreshold: 3,
 }))
 
 describe('menu recipe selectors', () => {
@@ -28,8 +29,8 @@ describe('menu recipe selectors', () => {
       123: {
         title: 'foo',
         boxType: 'bar',
-        dietType: 'quz'
-      }
+        dietType: 'quz',
+      },
     })
 
     describe('when recipe id is null', () => {
@@ -74,15 +75,15 @@ describe('menu recipe selectors', () => {
             meals: [
               {
                 numPortions: 2,
-                surcharge: { listPrice: 1.50 }
+                surcharge: { listPrice: 1.5 },
               },
               {
                 numPortions: 4,
-                surcharge: { listPrice: 3.00 }
-              }
-            ]
-          }
-        })
+                surcharge: { listPrice: 3.0 },
+              },
+            ],
+          },
+        }),
       }
     })
 
@@ -91,14 +92,14 @@ describe('menu recipe selectors', () => {
         state = {
           ...state,
           basket: Immutable.fromJS({
-            numPortions: 2
-          })
+            numPortions: 2,
+          }),
         }
       })
 
       test('should return 2 portion surcharge', () => {
         const result = getRecipeSidesSurcharge(state, { recipeId })
-        expect(result).toEqual(1.50)
+        expect(result).toEqual(1.5)
       })
     })
 
@@ -107,14 +108,14 @@ describe('menu recipe selectors', () => {
         state = {
           ...state,
           basket: Immutable.fromJS({
-            numPortions: 4
-          })
+            numPortions: 4,
+          }),
         }
       })
 
       test('should return 4 portion surcharge', () => {
         const result = getRecipeSidesSurcharge(state, { recipeId })
-        expect(result).toEqual(3.00)
+        expect(result).toEqual(3.0)
       })
     })
   })
@@ -127,17 +128,17 @@ describe('menu recipe selectors', () => {
           {
             numPortions: 2,
             surcharge: {
-              listPrice: 1.49
-            }
-          }
-        ]
+              listPrice: 1.49,
+            },
+          },
+        ],
       },
     })
     let props
 
     beforeEach(() => {
       props = {
-        recipeId
+        recipeId,
       }
     })
 
@@ -145,9 +146,9 @@ describe('menu recipe selectors', () => {
       test('should return the amount of the surcharge', () => {
         const state = {
           basket: Immutable.fromJS({
-            numPortions: 2
+            numPortions: 2,
           }),
-          recipes
+          recipes,
         }
         const result = getRecipeSurcharge(state, props)
         expect(result).toEqual(0.75)
@@ -166,32 +167,32 @@ describe('menu recipe selectors', () => {
                 {
                   disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
                   slug: 'health-kitchen',
-                }
-              ]
+                },
+              ],
             },
-            ingredients: [
-              { name: 'Apple', label: 'apple' }
-            ],
+            ingredients: [{ name: 'Apple', label: 'apple' }],
             allergens: ['milk', 'wheat'],
             nutritionalInformation: {
               perPortion: {
-                energyKj: 100
+                energyKj: 100,
               },
               per100g: {
-                energyKj: 50
-              }
-            }
+                energyKj: 50,
+              },
+            },
           },
           2: {
-            health: {}
+            health: {},
           },
           4: {
             health: {
-              claims: [{
-                slug: 'unknown',
-                disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue'
-              }]
-            }
+              claims: [
+                {
+                  slug: 'unknown',
+                  disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+                },
+              ],
+            },
           },
         }),
       }
@@ -200,7 +201,7 @@ describe('menu recipe selectors', () => {
     describe('getRecipeIngredientsProps', () => {
       describe('when recipeId is not part of recipes', () => {
         const props = {
-          recipeId: '3'
+          recipeId: '3',
         }
 
         test('should return null', () => {
@@ -211,7 +212,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has no ingredients', () => {
         const props = {
-          recipeId: '2'
+          recipeId: '2',
         }
 
         test('should return empty list', () => {
@@ -222,7 +223,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has ingredients', () => {
         const props = {
-          recipeId: '1'
+          recipeId: '1',
         }
 
         test('should return ingredients', () => {
@@ -235,7 +236,7 @@ describe('menu recipe selectors', () => {
     describe('getRecipeAllergensProps', () => {
       describe('when recipeId is not part of recipes', () => {
         const props = {
-          recipeId: '3'
+          recipeId: '3',
         }
 
         test('should return null', () => {
@@ -246,7 +247,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has no allergens', () => {
         const props = {
-          recipeId: '2'
+          recipeId: '2',
         }
 
         test('should return empty list', () => {
@@ -257,7 +258,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has allergens', () => {
         const props = {
-          recipeId: '1'
+          recipeId: '1',
         }
 
         test('should return allergens', () => {
@@ -270,7 +271,7 @@ describe('menu recipe selectors', () => {
     describe('getRecipePerPortionProps', () => {
       describe('when recipeId is not part of recipes', () => {
         const props = {
-          recipeId: '3'
+          recipeId: '3',
         }
 
         test('should return null', () => {
@@ -281,7 +282,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has no nutritional info', () => {
         const props = {
-          recipeId: '2'
+          recipeId: '2',
         }
 
         test('should return empty map', () => {
@@ -292,7 +293,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has nutritional info', () => {
         const props = {
-          recipeId: '1'
+          recipeId: '1',
         }
 
         test('should return per portion', () => {
@@ -305,7 +306,7 @@ describe('menu recipe selectors', () => {
     describe('getRecipePer100gProps', () => {
       describe('when recipeId is not part of recipes', () => {
         const props = {
-          recipeId: '3'
+          recipeId: '3',
         }
 
         test('should return null', () => {
@@ -316,7 +317,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has no nutritional info', () => {
         const props = {
-          recipeId: '2'
+          recipeId: '2',
         }
 
         test('should return empty map', () => {
@@ -327,7 +328,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has nutritional info', () => {
         const props = {
-          recipeId: '1'
+          recipeId: '1',
         }
 
         test('should return per 100g', () => {
@@ -340,7 +341,7 @@ describe('menu recipe selectors', () => {
     describe('getRecipeDisclaimerProps', () => {
       describe('when recipeId is not part of recipes', () => {
         const props = {
-          recipeId: '3'
+          recipeId: '3',
         }
 
         test('should return null', () => {
@@ -351,7 +352,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe has no health claims', () => {
         const props = {
-          recipeId: '2'
+          recipeId: '2',
         }
 
         test('should return null', () => {
@@ -362,7 +363,7 @@ describe('menu recipe selectors', () => {
 
       describe('when recipe health slug is not part of brand data', () => {
         const props = {
-          recipeId: '4'
+          recipeId: '4',
         }
 
         test('should return only disclaimer', () => {
@@ -381,12 +382,14 @@ describe('menu recipe selectors', () => {
             {
               slug: 'health-kitchen',
               icon: 'health-kitchen-heart',
-              themes: [{
-                name: 'light',
-                backgroundColor: 'green',
-                iconColor: 'lightGreen'
-              }]
-            }
+              themes: [
+                {
+                  name: 'light',
+                  backgroundColor: 'green',
+                  iconColor: 'lightGreen',
+                },
+              ],
+            },
           ],
         }
 
@@ -399,8 +402,8 @@ describe('menu recipe selectors', () => {
             theme: {
               backgroundColor: 'green',
               iconColor: 'lightGreen',
-              name: 'light'
-            }
+              name: 'light',
+            },
           }
           expect(result).toEqual(expectedResult)
         })
@@ -418,7 +421,12 @@ describe('menu recipe selectors', () => {
         variants = null
       })
       test('should return null', () => {
-        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        const result = getVariantsForRecipeForCurrentCollection(
+          variants,
+          recipeId,
+          menuRecipes,
+          collectionDietaryClaims,
+        )
         expect(result).toEqual(null)
       })
     })
@@ -426,11 +434,16 @@ describe('menu recipe selectors', () => {
       beforeEach(() => {
         variants = Immutable.fromJS({
           2: {},
-          3: {}
+          3: {},
         })
       })
       test('should return null', () => {
-        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        const result = getVariantsForRecipeForCurrentCollection(
+          variants,
+          recipeId,
+          menuRecipes,
+          collectionDietaryClaims,
+        )
         expect(result).toEqual(null)
       })
     })
@@ -439,13 +452,18 @@ describe('menu recipe selectors', () => {
       beforeEach(() => {
         variants = Immutable.fromJS({
           1: {
-            alternatives: []
+            alternatives: [],
           },
-          2: {}
+          2: {},
         })
       })
       test('should return null', () => {
-        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        const result = getVariantsForRecipeForCurrentCollection(
+          variants,
+          recipeId,
+          menuRecipes,
+          collectionDietaryClaims,
+        )
         expect(result).toEqual(null)
       })
     })
@@ -455,26 +473,37 @@ describe('menu recipe selectors', () => {
         collectionDietaryClaims = null
         variants = Immutable.fromJS({
           1: {
-            alternatives: [{
-              id: '1sds1231sds',
-              coreRecipeId: '2'
-            }]
+            alternatives: [
+              {
+                id: '1sds1231sds',
+                coreRecipeId: '2',
+              },
+            ],
           },
-          2: {}
+          2: {},
         })
       })
       test('should return recipe variants', () => {
-        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        const result = getVariantsForRecipeForCurrentCollection(
+          variants,
+          recipeId,
+          menuRecipes,
+          collectionDietaryClaims,
+        )
         expect(result).toEqual({
           type: 'alternatives',
-          alternatives: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
-          }]),
-          variantsList: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
-          }])
+          alternatives: Immutable.fromJS([
+            {
+              id: '1sds1231sds',
+              coreRecipeId: '2',
+            },
+          ]),
+          variantsList: Immutable.fromJS([
+            {
+              id: '1sds1231sds',
+              coreRecipeId: '2',
+            },
+          ]),
         })
       })
     })
@@ -484,17 +513,21 @@ describe('menu recipe selectors', () => {
         collectionDietaryClaims = Immutable.List(['gluten-free'])
         variants = Immutable.fromJS({
           1: {
-            alternatives: [{
-              id: '1sds1231sds',
-              coreRecipeId: '2'
-            }]
+            alternatives: [
+              {
+                id: '1sds1231sds',
+                coreRecipeId: '2',
+              },
+            ],
           },
           2: {
-            alternatives: [{
-              id: '1sds1231sds',
-              coreRecipeId: '1'
-            }]
-          }
+            alternatives: [
+              {
+                id: '1sds1231sds',
+                coreRecipeId: '1',
+              },
+            ],
+          },
         })
         menuRecipes = Immutable.fromJS([
           {
@@ -503,7 +536,7 @@ describe('menu recipe selectors', () => {
               {
                 name: 'Gluten free',
                 slug: 'gluten-free',
-              }
+              },
             ],
           },
           {
@@ -512,23 +545,32 @@ describe('menu recipe selectors', () => {
               {
                 name: 'Gluten free',
                 slug: 'gluten-free',
-              }
+              },
             ],
-          }
+          },
         ])
       })
       test('should return recipe variants that have same claims', () => {
-        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        const result = getVariantsForRecipeForCurrentCollection(
+          variants,
+          recipeId,
+          menuRecipes,
+          collectionDietaryClaims,
+        )
         expect(result).toEqual({
           type: 'alternatives',
-          alternatives: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
-          }]),
-          variantsList: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
-          }])
+          alternatives: Immutable.fromJS([
+            {
+              id: '1sds1231sds',
+              coreRecipeId: '2',
+            },
+          ]),
+          variantsList: Immutable.fromJS([
+            {
+              id: '1sds1231sds',
+              coreRecipeId: '2',
+            },
+          ]),
         })
       })
 
@@ -541,7 +583,7 @@ describe('menu recipe selectors', () => {
                 {
                   name: 'Gluten free',
                   slug: 'gluten-free',
-                }
+                },
               ],
             },
             {
@@ -550,17 +592,22 @@ describe('menu recipe selectors', () => {
                 {
                   name: 'Vegetarian',
                   slug: 'vegetarian',
-                }
+                },
               ],
-            }
+            },
           ])
         })
         test('should return recipe variants that have same claims', () => {
-          const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+          const result = getVariantsForRecipeForCurrentCollection(
+            variants,
+            recipeId,
+            menuRecipes,
+            collectionDietaryClaims,
+          )
           expect(result).toEqual({
             type: 'alternatives',
             alternatives: Immutable.List(),
-            variantsList: Immutable.List()
+            variantsList: Immutable.List(),
           })
         })
       })
@@ -575,15 +622,20 @@ describe('menu recipe selectors', () => {
             {
               id: '2',
               dietaryClaims: [],
-            }
+            },
           ])
         })
         test('should return recipe variants that have same claims', () => {
-          const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+          const result = getVariantsForRecipeForCurrentCollection(
+            variants,
+            recipeId,
+            menuRecipes,
+            collectionDietaryClaims,
+          )
           expect(result).toEqual({
             type: 'alternatives',
             alternatives: Immutable.List(),
-            variantsList: Immutable.List([])
+            variantsList: Immutable.List([]),
           })
         })
       })
@@ -594,17 +646,21 @@ describe('menu recipe selectors', () => {
         collectionDietaryClaims = Immutable.List(['gluten-free'])
         variants = Immutable.fromJS({
           1: {
-            sides: [{
-              id: '1sds1231sds',
-              coreRecipeId: '2'
-            }]
+            sides: [
+              {
+                id: '1sds1231sds',
+                coreRecipeId: '2',
+              },
+            ],
           },
           2: {
-            sides: [{
-              id: '1sds1231sds',
-              coreRecipeId: '1'
-            }]
-          }
+            sides: [
+              {
+                id: '1sds1231sds',
+                coreRecipeId: '1',
+              },
+            ],
+          },
         })
         menuRecipes = Immutable.fromJS([
           {
@@ -613,7 +669,7 @@ describe('menu recipe selectors', () => {
               {
                 name: 'Gluten free',
                 slug: 'gluten-free',
-              }
+              },
             ],
           },
           {
@@ -622,24 +678,33 @@ describe('menu recipe selectors', () => {
               {
                 name: 'Gluten free',
                 slug: 'gluten-free',
-              }
+              },
             ],
-          }
+          },
         ])
       })
 
       test('should return recipe variants as sides', () => {
-        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        const result = getVariantsForRecipeForCurrentCollection(
+          variants,
+          recipeId,
+          menuRecipes,
+          collectionDietaryClaims,
+        )
         expect(result).toEqual({
           type: 'sides',
-          variantsList: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
-          }]),
-          sides: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
-          }])
+          variantsList: Immutable.fromJS([
+            {
+              id: '1sds1231sds',
+              coreRecipeId: '2',
+            },
+          ]),
+          sides: Immutable.fromJS([
+            {
+              id: '1sds1231sds',
+              coreRecipeId: '2',
+            },
+          ]),
         })
       })
     })
@@ -652,7 +717,7 @@ describe('menu recipe selectors', () => {
         boxType: 'bar',
         dietType: 'quz',
         isFineDineIn: true,
-      }
+      },
     })
 
     describe('when recipe id is null', () => {

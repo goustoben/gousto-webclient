@@ -20,10 +20,10 @@ export const menuPropTypes = {
 
 export const defaultMenuPropTypes = {
   boxSummaryDeliveryDays: Immutable.Map(),
-  boxSummaryDeliveryDaysLoad: () => { },
+  boxSummaryDeliveryDaysLoad: () => {},
   showOverlay: false,
-  loginVisibilityChange: () => { },
-  menuLoadDays: () => { },
+  loginVisibilityChange: () => {},
+  menuLoadDays: () => {},
   menuLoadingBoxPrices: false,
   params: {},
   query: {},

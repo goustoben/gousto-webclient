@@ -46,13 +46,7 @@ export class MenuRecipesPage extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      loadOptimizelySDK,
-      orderId,
-      query,
-      params,
-      fetchMenuData,
-    } = this.props
+    const { loadOptimizelySDK, orderId, query, params, fetchMenuData } = this.props
 
     loadOptimizelySDK()
 
@@ -90,7 +84,11 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div>
-        {isSignupReductionEnabled ? <div className={css.cvBanner}><CoronaVirusBanner /></div> : null}
+        {isSignupReductionEnabled ? (
+          <div className={css.cvBanner}>
+            <CoronaVirusBanner />
+          </div>
+        ) : null}
         {showCommunicationPanel ? (
           <div className={css.communicationPanelContainer}>
             <div className={css.communicationPanel}>
@@ -110,15 +108,10 @@ export class MenuRecipesPage extends PureComponent {
 
         <CollectionHeaderWrapper />
 
-        {
-          stateRecipeCount &&
-          <RecipeGrid query={query} />
-        }
+        {stateRecipeCount && <RecipeGrid query={query} />}
 
         {showError ? (
-          <h2 className={css.menuLoadingErrorMessage}>
-            {menuLoadingErrorMessage}
-          </h2>
+          <h2 className={css.menuLoadingErrorMessage}>{menuLoadingErrorMessage}</h2>
         ) : null}
 
         {this.getModals()}
@@ -164,7 +157,7 @@ MenuRecipesPage.propTypes = {
   numPortions: PropTypes.number,
   query: PropTypes.shape({
     reload: PropTypes.bool,
-    collection: PropTypes.string
+    collection: PropTypes.string,
   }),
   params: PropTypes.shape({}),
   isSignupReductionEnabled: PropTypes.bool,

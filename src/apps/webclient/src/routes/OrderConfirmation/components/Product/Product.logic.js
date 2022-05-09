@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
 import configProducts from 'config/products'
-import ProductDetailContainer from '../ProductDetails'
+import { ProductDetailContainer } from '../ProductDetails'
 import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
 
@@ -13,7 +13,7 @@ const propTypes = {
     id: PropTypes.string,
     title: PropTypes.string,
     listPrice: PropTypes.string,
-    images: PropTypes.object,
+    images: PropTypes.instanceOf(Immutable.Map),
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
     stock: PropTypes.number,
@@ -36,12 +36,15 @@ const propTypes = {
   addProduct: PropTypes.bool.isRequired,
   toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   productId: PropTypes.string,
+  category: PropTypes.string,
+  openProductModalTracking: PropTypes.func.isRequired
 }
 
 const defaultProps = {
   ageVerified: false,
   productId: null,
   numberOfColumnClass: '',
+  category: '',
 }
 
 class Product extends PureComponent {
@@ -66,6 +69,14 @@ class Product extends PureComponent {
   }
 
   toggleDetailsVisibility = () => {
+    const { openProductModalTracking } = this.props
+    const { showDetailsScreen } = this.state
+
+    if (!showDetailsScreen) {
+      const trackingData = this.mapProductToTrackingData('market_product_detail_view', 'secondary_action')
+      openProductModalTracking(trackingData)
+    }
+
     this.setState((prevState) => ({
       showDetailsScreen: !prevState.showDetailsScreen
     }))
@@ -89,9 +100,24 @@ class Product extends PureComponent {
     return !ageVerified && ageRestricted
   }
 
+  mapProductToTrackingData = (eventName, eventType) => {
+    const { product, category } = this.props
+    const productProperties = { ...product }
+
+    delete productProperties.media
+    delete productProperties.images
+    delete productProperties.categories
+    delete productProperties.tags
+    productProperties.category = category
+
+    return { eventName, eventAction: 'clicked', eventType, eventProperties: { productProperties }}
+  }
+
   onAddProduct = () => {
     const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp, temp, orderConfirmationProductTracking } = this.props
+
     const { id } = product
+
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
     if (!limitReached) {
       if (isAgeVerificationRequired) {
@@ -100,7 +126,8 @@ class Product extends PureComponent {
         temp('addProduct', true)
       } else {
         basketProductAdd(id)
-        orderConfirmationProductTracking(id, true)
+        const trackingData = this.mapProductToTrackingData('market_product_added', 'primary_action')
+        orderConfirmationProductTracking(trackingData)
       }
     }
   }
@@ -109,7 +136,8 @@ class Product extends PureComponent {
     const { product, basketProductRemove, orderConfirmationProductTracking } = this.props
     const { id } = product
     basketProductRemove(id)
-    orderConfirmationProductTracking(id, false)
+    const trackingData = this.mapProductToTrackingData('market_product_removed', 'primary_action')
+    orderConfirmationProductTracking(trackingData)
   }
 
   getProductCardContent = () => {

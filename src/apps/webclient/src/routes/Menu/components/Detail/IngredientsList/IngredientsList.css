@@ -1,21 +1,21 @@
 .insetSection {
-	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
 }
 
 .section {
-	composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
+  composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .heading {
-	composes: headerXL from 'styles/typography.css';
-	composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
+  composes: headerXL from 'styles/typography.css';
+  composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .bold {
-	composes: textBold from 'styles/typography.css';
+  composes: textBold from 'styles/typography.css';
 }
 
 .paragraph {
-	display: inline;
-	margin: 0;
+  display: inline;
+  margin: 0;
 }

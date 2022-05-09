@@ -5,20 +5,20 @@ import { MenuDateRangeContainer } from './MenuDateRangeContainer'
 import { getMenuDateRangeText } from './utils'
 
 jest.mock('../MenuDateRange/utils', () => ({
-  getMenuDateRangeText: jest.fn(() => 'Menu for MMM DD - MMM DD')
+  getMenuDateRangeText: jest.fn(() => 'Menu for MMM DD - MMM DD'),
 }))
 
 describe('MenuDateRangeContainer', () => {
   let wrapper
   const initialState = {
     basket: Immutable.Map({
-      date: '2020-09-22'
-    })
+      date: '2020-09-22',
+    }),
   }
   const store = {
     getState: jest.fn(() => initialState),
     dispatch: jest.fn(),
-    subscribe: jest.fn()
+    subscribe: jest.fn(),
   }
 
   beforeEach(() => {

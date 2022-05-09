@@ -8,7 +8,7 @@ import { wellformedMenuService, wellformedRecipe } from '../../selectors/__tests
 import { safeJestMock } from '../../../../_testing/mocks'
 
 jest.mock('react-router-redux', () => ({
-  push: jest.fn()
+  push: jest.fn(),
 }))
 
 const {
@@ -30,7 +30,13 @@ describe('selectRecipeVariant', () => {
     const dispatch = jest.fn()
     const getState = () => wellformedMenuService({ recipes: [wellformedRecipe({ id: variantId })] })
 
-    await selectRecipeVariant({originalRecipeId, variantId, collectionId, variantOutOfStock, view})(dispatch, getState)
+    await selectRecipeVariant({
+      originalRecipeId,
+      variantId,
+      collectionId,
+      variantOutOfStock,
+      view,
+    })(dispatch, getState)
 
     expect(dispatch).toHaveBeenCalledWith({
       type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
@@ -38,7 +44,7 @@ describe('selectRecipeVariant', () => {
         collectionId,
         originalRecipeId,
         variantId,
-        close: true
+        close: true,
       },
       trackingData: {
         actionType: 'select_recipe_variant',
@@ -48,21 +54,23 @@ describe('selectRecipeVariant', () => {
         variant_out_of_stock: variantOutOfStock,
         view,
         has_surcharge: false,
-      }
+      },
     })
   })
 })
 
 describe('selectRecipeVariant', () => {
   test('should dispatch a MENU_RECIPE_VARIANT_SELECTED action with correct payload and trackingData', async () => {
-    const selectedRecipeVariants = { 'ca8f71be-63ac-11e6-a693-068306404bab': { 2041: '3104', 2171: '3427' }}
+    const selectedRecipeVariants = {
+      'ca8f71be-63ac-11e6-a693-068306404bab': { 2041: '3104', 2171: '3427' },
+    }
 
     const action = initSelectedRecipeVariantAction(selectedRecipeVariants)
 
     expect(action).toEqual({
       type: actionTypes.MENU_RECIPE_VARIANT_INIT,
       payload: {
-        selectedRecipeVariants
+        selectedRecipeVariants,
       },
     })
   })
@@ -78,7 +86,15 @@ describe('selectRecipeVariantAction', () => {
     const close = true
     const hasSurcharge = false
 
-    const result = selectRecipeVariantAction(originalRecipeId, variantId, collectionId, variantOutOfStock, view, close, hasSurcharge)
+    const result = selectRecipeVariantAction(
+      originalRecipeId,
+      variantId,
+      collectionId,
+      variantOutOfStock,
+      view,
+      close,
+      hasSurcharge,
+    )
 
     expect(result).toEqual({
       type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
@@ -95,8 +111,8 @@ describe('selectRecipeVariantAction', () => {
         collection_id: collectionId,
         variant_out_of_stock: variantOutOfStock,
         view,
-        has_surcharge: hasSurcharge
-      }
+        has_surcharge: hasSurcharge,
+      },
     })
   })
 })
@@ -104,28 +120,30 @@ describe('selectRecipeVariantAction', () => {
 describe('showDetailRecipe', () => {
   const state = {
     menuRecipeDetails: Immutable.fromJS({
-      recipeId: null
+      recipeId: null,
     }),
     recipes: Immutable.Map({
-      1234: {}
-    })
+      1234: {},
+    }),
   }
   let dispatch
   describe('when boxSummaryShow is true', () => {
     beforeAll(() => {
-      safeJestMock(recipeListSelectors, 'replaceSideRecipeIdWithBaseRecipeId').mockImplementation((_, { recipeId }) => recipeId)
+      safeJestMock(recipeListSelectors, 'replaceSideRecipeIdWithBaseRecipeId').mockImplementation(
+        (_, { recipeId }) => recipeId,
+      )
 
       dispatch = jest.fn()
       const stateWithTrueBoxSummaryShow = {
         ...state,
         boxSummaryShow: Immutable.fromJS({
-          show: false
+          show: false,
         }),
         routing: {
           locationBeforeTransitions: {
-            query: ''
-          }
-        }
+            query: '',
+          },
+        },
       }
       const getStateForTest = () => stateWithTrueBoxSummaryShow
 
@@ -139,7 +157,7 @@ describe('showDetailRecipe', () => {
         trackingData: {
           actionType: trackingKeys.changeMenuRecipeDetailVisibility,
           recipeId: '1234',
-          show: true
+          show: true,
         },
       })
     })
@@ -154,18 +172,18 @@ describe('menuRecipeDetailVisibilityChange', () => {
     getState.mockReturnValue({
       auth: Immutable.Map({
         accessToken: 'an-access-token',
-        isAuthenticated: false
+        isAuthenticated: false,
       }),
       features: Immutable.fromJS({}),
       routing: {
         locationBeforeTransitions: {
-          query: {}
-        }
+          query: {},
+        },
       },
       menuCollections: Immutable.fromJS({}),
       recipes: Immutable.Map({
         123: {},
-      })
+      }),
     })
   })
 
@@ -179,18 +197,18 @@ describe('menuRecipeDetailVisibilityChange', () => {
       getState.mockReturnValue({
         auth: Immutable.Map({
           accessToken: 'an-access-token',
-          isAuthenticated: false
+          isAuthenticated: false,
         }),
         features: Immutable.fromJS({}),
         routing: {
           locationBeforeTransitions: {
-            query: {}
-          }
+            query: {},
+          },
         },
         menuCollections: Immutable.fromJS({}),
         recipes: Immutable.Map({
           346: {},
-        })
+        }),
       })
     })
     test('should not dispatch', () => {
@@ -204,21 +222,23 @@ describe('menuRecipeDetailVisibilityChange', () => {
       getState.mockReturnValue({
         auth: Immutable.Map({
           accessToken: 'an-access-token',
-          isAuthenticated: false
+          isAuthenticated: false,
         }),
         features: Immutable.fromJS({}),
         routing: {
           locationBeforeTransitions: {
-            query: {}
-          }
+            query: {},
+          },
         },
         menuCollections: Immutable.fromJS({}),
         recipes: Immutable.Map({
           789: {},
-        })
+        }),
       })
 
-      safeJestMock(recipeListSelectors, 'replaceSideRecipeIdWithBaseRecipeId').mockReturnValue('mock-base-recipe-id-789')
+      safeJestMock(recipeListSelectors, 'replaceSideRecipeIdWithBaseRecipeId').mockReturnValue(
+        'mock-base-recipe-id-789',
+      )
     })
 
     test('should replace recipeId with the base recipeId', () => {
@@ -245,8 +265,8 @@ describe('checkQueryParams', () => {
     getState.mockReturnValue({
       routing: {
         locationBeforeTransitions: {
-          query: {}
-        }
+          query: {},
+        },
       },
     })
   })
@@ -269,17 +289,17 @@ describe('checkQueryParams', () => {
         routing: {
           locationBeforeTransitions: {
             query: {
-              recipeDetailId: '1234'
-            }
-          }
-        }
+              recipeDetailId: '1234',
+            },
+          },
+        },
       })
     })
 
     test('should dispatch push with new route without recipeDetailId', () => {
       menuRecipeDetailsActions.checkQueryParams()(dispatch, getState)
       expect(push).toHaveBeenCalledWith({
-        query: {}
+        query: {},
       })
     })
 

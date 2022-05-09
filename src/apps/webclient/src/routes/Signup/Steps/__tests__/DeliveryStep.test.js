@@ -12,6 +12,7 @@ const mockStore = configureMockStore()
 const mockedStore = mockStore({
   features: Immutable.Map(),
   signup: Immutable.Map(),
+  ribbon: Immutable.fromJS({}),
 })
 const dispatch = jest.fn()
 jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)

@@ -4,13 +4,11 @@ import { fetch } from 'utils/fetch'
 import logger from 'utils/logger'
 import MockDate from 'mockdate'
 import * as useOptimizely from 'containers/OptimizelyRollouts/useOptimizely.hook'
-import {
-  withMockEnvironmentAndDomain
-} from '_testing/isomorphic-environment-test-utils'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { sendClientMetric, useSendClientMetric } from '../clientMetrics'
 
 jest.mock('utils/fetch', () => ({
-  fetch: jest.fn().mockResolvedValue({ data: [1, 2, 3] })
+  fetch: jest.fn().mockResolvedValue({ data: [1, 2, 3] }),
 }))
 
 jest.mock('config/routes', () => ({
@@ -44,7 +42,7 @@ describe('clientMetrics', () => {
         client: 'web',
         name: 'menu-load-complete',
         value: 1.0,
-        unit: 'Count'
+        unit: 'Count',
       }
 
       const headers = {
@@ -58,7 +56,14 @@ describe('clientMetrics', () => {
       await result.current('menu-load-complete', 1.0, 'Count')
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
+        'https://production-api.gousto.co.uk/clientmetrics/v1/metric',
+        expectedReqData,
+        'POST',
+        'default',
+        headers,
+      )
     })
   })
 
@@ -69,7 +74,7 @@ describe('clientMetrics', () => {
           client: 'web',
           name: 'menu-load-complete',
           value: 1.0,
-          unit: 'Count'
+          unit: 'Count',
         }
 
         const headers = {
@@ -81,7 +86,14 @@ describe('clientMetrics', () => {
         await sendClientMetric('menu-load-complete', 1.0, 'Count', 'userId')
 
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
+        expect(fetch).toHaveBeenCalledWith(
+          null,
+          'https://production-api.gousto.co.uk/clientmetrics/v1/metric',
+          expectedReqData,
+          'POST',
+          'default',
+          headers,
+        )
       })
     })
 
@@ -91,7 +103,7 @@ describe('clientMetrics', () => {
           client: 'web',
           name: 'menu-load-complete',
           value: 1.0,
-          unit: 'Count'
+          unit: 'Count',
         }
 
         const headers = {
@@ -101,7 +113,14 @@ describe('clientMetrics', () => {
         await sendClientMetric('menu-load-complete', 1.0, 'Count')
 
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
+        expect(fetch).toHaveBeenCalledWith(
+          null,
+          'https://production-api.gousto.co.uk/clientmetrics/v1/metric',
+          expectedReqData,
+          'POST',
+          'default',
+          headers,
+        )
       })
     })
 
@@ -118,9 +137,9 @@ describe('clientMetrics', () => {
           extra: {
             name: 'menu-load-complete',
             value: 1.0,
-            unit: 'Count'
+            unit: 'Count',
           },
-          error: new Error('mock error')
+          error: new Error('mock error'),
         })
       })
     })

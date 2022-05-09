@@ -35,7 +35,9 @@ const mockUp = ({
     getStockForRecipe: () => stockLevel,
   }))
   jest.spyOn(Auth, 'useAuth').mockImplementation(() => ({ isAdmin }))
-  jest.spyOn(UseSurchargePerPortion, 'useSurchargePerPortion').mockImplementation(() => surchargePerPortion)
+  jest
+    .spyOn(UseSurchargePerPortion, 'useSurchargePerPortion')
+    .mockImplementation(() => surchargePerPortion)
 
   const basketRecipeAdd = jest.fn()
   jest.spyOn(BasketActions, 'basketRecipeAdd').mockImplementation(basketRecipeAdd)
@@ -44,13 +46,17 @@ const mockUp = ({
   jest.spyOn(BasketActions, 'basketRecipeRemove').mockImplementation(basketRecipeRemove)
 
   const menuBrowseCTAVisibilityChange = jest.fn()
-  jest.spyOn(actions, 'menuBrowseCTAVisibilityChange').mockImplementation(menuBrowseCTAVisibilityChange)
+  jest
+    .spyOn(actions, 'menuBrowseCTAVisibilityChange')
+    .mockImplementation(menuBrowseCTAVisibilityChange)
 
-  jest.spyOn(OptimizelyRollouts, 'useIsOptimizelyFeatureEnabled').mockReturnValue(isCloseModalOnAddRecipeEnabled)
+  jest
+    .spyOn(OptimizelyRollouts, 'useIsOptimizelyFeatureEnabled')
+    .mockReturnValue(isCloseModalOnAddRecipeEnabled)
 
   jest.spyOn(MenuRecipeDetailsActions, 'menuRecipeDetailVisibilityChange')
 
-  return {dispatch, basketRecipeAdd, basketRecipeRemove, menuBrowseCTAVisibilityChange}
+  return { dispatch, basketRecipeAdd, basketRecipeRemove, menuBrowseCTAVisibilityChange }
 }
 
 describe('the RecipeDetailsButtons component', () => {
@@ -116,7 +122,9 @@ describe('the RecipeDetailsButtons component', () => {
 
         test('has the classes for surcharge recipes in grid view', () => {
           expect(wrapper.find('Segment').hasClass('segment')).toBe(true)
-          expect(wrapper.find('Segment').find('div').hasClass('surchargeWrapped surcharge')).toBe(true)
+          expect(wrapper.find('Segment').find('div').hasClass('surchargeWrapped surcharge')).toBe(
+            true,
+          )
         })
 
         describe('when viewing the recipe in detail', () => {
@@ -126,7 +134,9 @@ describe('the RecipeDetailsButtons component', () => {
 
           test('does not have the classes for surcharge recipes in grid view', () => {
             expect(wrapper.find('Segment').hasClass('segment')).toBe(false)
-            expect(wrapper.find('Segment').find('div').hasClass('surchargeWrapped surcharge')).toBe(false)
+            expect(wrapper.find('Segment').find('div').hasClass('surchargeWrapped surcharge')).toBe(
+              false,
+            )
           })
         })
       })
@@ -169,7 +179,9 @@ describe('the RecipeDetailsButtons component', () => {
       })
 
       test('should not have the classes for surcharge recipes in grid view', () => {
-        wrapper.find('Segment').forEach(segment => expect(segment.hasClass('segmentSelected')).toBe(false))
+        wrapper
+          .find('Segment')
+          .forEach((segment) => expect(segment.hasClass('segmentSelected')).toBe(false))
       })
 
       describe('and the selected recipe has a surcharge', () => {
@@ -187,8 +199,12 @@ describe('the RecipeDetailsButtons component', () => {
         })
 
         test('has the classes for surcharge recipes in grid view', () => {
-          wrapper.find('Segment').forEach(segment => expect(segment.hasClass('segmentSelected')).toBe(true))
-          expect(wrapper.find('Segment').find('div').hasClass('surchargeHidden surcharge')).toBe(true)
+          wrapper
+            .find('Segment')
+            .forEach((segment) => expect(segment.hasClass('segmentSelected')).toBe(true))
+          expect(wrapper.find('Segment').find('div').hasClass('surchargeHidden surcharge')).toBe(
+            true,
+          )
         })
 
         describe('when viewing the recipe in detail', () => {
@@ -198,8 +214,12 @@ describe('the RecipeDetailsButtons component', () => {
           })
 
           test('does not have the classes for surcharge recipes in grid view', () => {
-            wrapper.find('Segment').forEach(segment => expect(segment.hasClass('segmentSelected')).toBe(false))
-            expect(wrapper.find('Segment').find('div').hasClass('surchargeHidden surcharge')).toBe(false)
+            wrapper
+              .find('Segment')
+              .forEach((segment) => expect(segment.hasClass('segmentSelected')).toBe(false))
+            expect(wrapper.find('Segment').find('div').hasClass('surchargeHidden surcharge')).toBe(
+              false,
+            )
           })
         })
       })
@@ -240,18 +260,14 @@ describe('the RecipeDetailsButtons component', () => {
             let basketRecipeAdd
 
             beforeEach(() => {
-              ({basketRecipeAdd} = mockUp())
+              ;({ basketRecipeAdd } = mockUp())
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
 
             test('then it adds the recipe', () => {
               buttonContent = wrapper.find('Segment').first()
               buttonContent.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(
-                recipeId,
-                view,
-                { position, score }
-              )
+              expect(basketRecipeAdd).toHaveBeenCalledWith(recipeId, view, { position, score })
             })
           })
 
@@ -259,18 +275,14 @@ describe('the RecipeDetailsButtons component', () => {
             let basketRecipeAdd
 
             beforeEach(() => {
-              ({basketRecipeAdd} = mockUp({ isCloseModalOnAddRecipeEnabled: true }))
+              ;({ basketRecipeAdd } = mockUp({ isCloseModalOnAddRecipeEnabled: true }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
 
             test('then it adds the recipe and closes the recipe details modal', () => {
               buttonContent = wrapper.find('Segment').first()
               buttonContent.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(
-                recipeId,
-                view,
-                { position, score }
-              )
+              expect(basketRecipeAdd).toHaveBeenCalledWith(recipeId, view, { position, score })
               expect(MenuRecipeDetailsActions.menuRecipeDetailVisibilityChange).toHaveBeenCalled()
             })
           })
@@ -282,7 +294,7 @@ describe('the RecipeDetailsButtons component', () => {
           let basketRecipeAdd
 
           beforeEach(() => {
-            ({basketRecipeAdd} = mockUp({stockLevel: null}))
+            ;({ basketRecipeAdd } = mockUp({ stockLevel: null }))
             wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
           })
 
@@ -298,7 +310,7 @@ describe('the RecipeDetailsButtons component', () => {
         let menuBrowseCTAVisibilityChange
 
         beforeEach(() => {
-          ({menuBrowseCTAVisibilityChange} = mockUp({stockLevel: null}))
+          ;({ menuBrowseCTAVisibilityChange } = mockUp({ stockLevel: null }))
           wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
         })
 
@@ -313,7 +325,7 @@ describe('the RecipeDetailsButtons component', () => {
         let menuBrowseCTAVisibilityChange
 
         beforeEach(() => {
-          ({menuBrowseCTAVisibilityChange} = mockUp({stockLevel: null}))
+          ;({ menuBrowseCTAVisibilityChange } = mockUp({ stockLevel: null }))
           jest.useFakeTimers()
           wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} view="detail" />)
         })
@@ -337,7 +349,7 @@ describe('the RecipeDetailsButtons component', () => {
             let basketRecipeAdd
 
             beforeEach(() => {
-              ({basketRecipeAdd} = mockUp({quantity: 2}))
+              ;({ basketRecipeAdd } = mockUp({ quantity: 2 }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
 
@@ -345,11 +357,7 @@ describe('the RecipeDetailsButtons component', () => {
               segmentRemove = wrapper.find('Segment').at(0)
               segmentAdd = wrapper.find('Segment').at(2)
               segmentAdd.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(
-                recipeId,
-                view,
-                { position, score }
-              )
+              expect(basketRecipeAdd).toHaveBeenCalledWith(recipeId, view, { position, score })
             })
           })
 
@@ -357,17 +365,13 @@ describe('the RecipeDetailsButtons component', () => {
             let basketRecipeRemove
 
             beforeEach(() => {
-              ({ basketRecipeRemove } = mockUp({quantity: 2}))
+              ;({ basketRecipeRemove } = mockUp({ quantity: 2 }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
             test('then it should remove the recipe', () => {
               segmentRemove = wrapper.find('Segment').at(0)
               segmentRemove.simulate('click')
-              expect(basketRecipeRemove).toHaveBeenCalledWith(
-                recipeId,
-                view,
-                position,
-              )
+              expect(basketRecipeRemove).toHaveBeenCalledWith(recipeId, view, position)
             })
           })
         })
@@ -377,7 +381,7 @@ describe('the RecipeDetailsButtons component', () => {
             let basketRecipeAdd
 
             beforeEach(() => {
-              ({basketRecipeAdd} = mockUp({quantity: 2, stockLevel: null}))
+              ;({ basketRecipeAdd } = mockUp({ quantity: 2, stockLevel: null }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
 
@@ -392,16 +396,12 @@ describe('the RecipeDetailsButtons component', () => {
             let basketRecipeRemove
 
             beforeEach(() => {
-              ({ basketRecipeRemove } = mockUp({quantity: 2, stockLevel: null}))
+              ;({ basketRecipeRemove } = mockUp({ quantity: 2, stockLevel: null }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
             test('then it should remove the recipe', () => {
               segmentRemove.simulate('click')
-              expect(basketRecipeRemove).toHaveBeenCalledWith(
-                recipeId,
-                view,
-                position,
-              )
+              expect(basketRecipeRemove).toHaveBeenCalledWith(recipeId, view, position)
             })
           })
         })

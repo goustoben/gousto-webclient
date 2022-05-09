@@ -1,7 +1,12 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { getRecipes, getBasket } from 'selectors/root'
-import { formatRecipeTitle, getSurcharge, getSurchargePerPortion, getDietaryTags } from 'utils/recipe'
+import {
+  formatRecipeTitle,
+  getSurcharge,
+  getSurchargePerPortion,
+  getDietaryTags,
+} from 'utils/recipe'
 import { getNumPortions } from 'selectors/basket'
 import menuConfig from 'config/menu'
 
@@ -20,8 +25,12 @@ export const getRecipeTitle = createSelector(
       return null
     }
 
-    return formatRecipeTitle(recipe.get('title'), recipe.get('boxType', ''), recipe.get('dietType', ''))
-  }
+    return formatRecipeTitle(
+      recipe.get('title'),
+      recipe.get('boxType', ''),
+      recipe.get('dietType', ''),
+    )
+  },
 )
 
 export const getRecipeIsFineDineIn = createSelector(
@@ -34,12 +43,12 @@ export const getRecipeIsFineDineIn = createSelector(
     }
 
     return recipe.get('isFineDineIn')
-  }
+  },
 )
 
 export const getRecipeIdInBasket = createSelector(
   [getBasket, getRecipeIdFromProps],
-  (basket, recipeId) => basket.hasIn(['recipes', recipeId])
+  (basket, recipeId) => basket.hasIn(['recipes', recipeId]),
 )
 
 export const isOutOfStock = (recipeId, numPortions, recipesStock) => {
@@ -49,20 +58,22 @@ export const isOutOfStock = (recipeId, numPortions, recipesStock) => {
 
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
 
-  return (stock <= menuConfig.stockThreshold)
+  return stock <= menuConfig.stockThreshold
 }
 
 export const getSurchargeForRecipe = (recipeId, numPortions, recipes) => {
   const meals = recipes.getIn([recipeId, 'meals'])
   const overallSurcharge = getSurcharge(meals, numPortions)
-  const surchargePerPortion = overallSurcharge ? getSurchargePerPortion(overallSurcharge, numPortions) : null
+  const surchargePerPortion = overallSurcharge
+    ? getSurchargePerPortion(overallSurcharge, numPortions)
+    : null
 
   return surchargePerPortion
 }
 
 export const getRecipeSurcharge = createSelector(
   [getRecipeIdFromProps, getNumPortions, getRecipes],
-  getSurchargeForRecipe
+  getSurchargeForRecipe,
 )
 
 export const getRecipeSidesSurcharge = createSelector(
@@ -71,7 +82,7 @@ export const getRecipeSidesSurcharge = createSelector(
     const meals = recipes.getIn([recipeId, 'meals'])
 
     return getSurcharge(meals, numPortions)
-  }
+  },
 )
 
 export const findTag = (allTags, tag) => {
@@ -83,7 +94,7 @@ export const findTag = (allTags, tag) => {
     return {
       ...foundTag,
       themes: undefined,
-      theme: foundTheme
+      theme: foundTheme,
     }
   }
 
@@ -103,12 +114,12 @@ const getClaimForRecipeId = createSelector(
     if (healthClaims) {
       return {
         disclaimer: healthClaims.get('disclaimer'),
-        slug: healthClaims.get('slug')
+        slug: healthClaims.get('slug'),
       }
     }
 
     return null
-  }
+  },
 )
 
 const getBrandTagsFromProps = (state, props) => props.brandTags
@@ -122,9 +133,9 @@ export const getRecipeDisclaimerProps = createSelector(
 
     return {
       disclaimer: claim.disclaimer,
-      ...findTag(allTags, claim.slug)
+      ...findTag(allTags, claim.slug),
     }
-  }
+  },
 )
 
 export const getRecipeIngredientsProps = createSelector(
@@ -137,7 +148,7 @@ export const getRecipeIngredientsProps = createSelector(
     }
 
     return recipe.get('ingredients', Immutable.List([]))
-  }
+  },
 )
 
 export const getRecipeAllergensProps = createSelector(
@@ -150,7 +161,7 @@ export const getRecipeAllergensProps = createSelector(
     }
 
     return recipe.get('allergens', Immutable.List([]))
-  }
+  },
 )
 
 export const getRecipePerPortionProps = createSelector(
@@ -163,7 +174,7 @@ export const getRecipePerPortionProps = createSelector(
     }
 
     return recipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))
-  }
+  },
 )
 
 export const getRecipePer100gProps = createSelector(
@@ -176,10 +187,15 @@ export const getRecipePer100gProps = createSelector(
     }
 
     return recipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))
-  }
+  },
 )
 
-export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, menuRecipes, collectionDietaryClaims) => {
+export const getVariantsForRecipeForCurrentCollection = (
+  variants,
+  recipeId,
+  menuRecipes,
+  collectionDietaryClaims,
+) => {
   if (!variants) {
     return null
   }
@@ -207,16 +223,20 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
   }
 
   const alternativesDietaryClaims = alternatives.filter((variant) => {
-    const variantRecipeDietaryAttributes = getDietaryTags(menuRecipes.find(
-      recipe => recipe.get('id') === variant.get('coreRecipeId')
-    ))
+    const variantRecipeDietaryAttributes = getDietaryTags(
+      menuRecipes.find((recipe) => recipe.get('id') === variant.get('coreRecipeId')),
+    )
 
     if (!variantRecipeDietaryAttributes || !variantRecipeDietaryAttributes.size) {
       return false
     }
 
-    return (collectionDietaryClaims.every(claim => variantRecipeDietaryAttributes.includes(claim)))
+    return collectionDietaryClaims.every((claim) => variantRecipeDietaryAttributes.includes(claim))
   })
 
-  return { type: 'alternatives', alternatives: alternativesDietaryClaims, variantsList: alternativesDietaryClaims }
+  return {
+    type: 'alternatives',
+    alternatives: alternativesDietaryClaims,
+    variantsList: alternativesDietaryClaims,
+  }
 }

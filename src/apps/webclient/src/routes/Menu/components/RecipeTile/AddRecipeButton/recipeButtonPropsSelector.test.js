@@ -9,7 +9,7 @@ describe('getRecipesButtonProps', () => {
       expect(result).toEqual({
         buttonClassName: 'removeButton',
         lineClassName: 'removeButtonLine',
-        buttonText: 'Remove recipe'
+        buttonText: 'Remove recipe',
       })
     })
   })
@@ -22,7 +22,7 @@ describe('getRecipesButtonProps', () => {
       expect(result).toEqual({
         buttonClassName: 'addButton',
         lineClassName: 'addButtonLine',
-        buttonText: 'Add recipe'
+        buttonText: 'Add recipe',
       })
     })
   })

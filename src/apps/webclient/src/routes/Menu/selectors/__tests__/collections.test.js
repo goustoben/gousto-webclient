@@ -30,10 +30,10 @@ describe('collections selectors', () => {
         routing: {
           locationBeforeTransitions: {
             query: {
-              collection: 'gluten-free'
-            }
+              collection: 'gluten-free',
+            },
           },
-        }
+        },
       }
 
       test('should return slug', () => {
@@ -48,10 +48,10 @@ describe('collections selectors', () => {
         routing: {
           locationBeforeTransitions: {
             query: {
-              collection: ''
-            }
+              collection: '',
+            },
           },
-        }
+        },
       }
 
       test('should return null', () => {
@@ -65,9 +65,9 @@ describe('collections selectors', () => {
       const state = {
         routing: {
           locationBeforeTransitions: {
-            query: {}
+            query: {},
           },
-        }
+        },
       }
 
       test('should return null', () => {
@@ -86,9 +86,9 @@ describe('collections selectors', () => {
           '12dddv3v3': {
             id: '12dddv3v3',
             slug: 'recommendations',
-            shortTitle: 'Choosen For You'
-          }
-        })
+            shortTitle: 'Choosen For You',
+          },
+        }),
       }
       expect(getRecommendationShortName(state)).toBe('Choosen For You')
     })
@@ -99,9 +99,9 @@ describe('collections selectors', () => {
           '12bbbbbv3': {
             id: '12bbbbbv3',
             slug: 'test',
-            shortTitle: 'Test Collection'
-          }
-        })
+            shortTitle: 'Test Collection',
+          },
+        }),
       }
       expect(getRecommendationShortName(state)).toBe('')
     })
@@ -111,7 +111,7 @@ describe('collections selectors', () => {
     describe('when a collection has slug `recommendations`', () => {
       const collection = Immutable.Map({ id: '123', slug: 'recommendations' })
       const menuCollections = Immutable.OrderedMap({
-        123: collection
+        123: collection,
       })
 
       test('should return that collection', () => {
@@ -124,7 +124,7 @@ describe('collections selectors', () => {
     describe('when no collection has slug `recommendations`', () => {
       const collection = Immutable.Map({ id: '123', slug: 'foo' })
       const menuCollections = Immutable.OrderedMap({
-        123: collection
+        123: collection,
       })
 
       test('should return null', () => {
@@ -153,7 +153,7 @@ describe('collections selectors', () => {
   describe('getMenuRecipeStock', () => {
     test('should return menuRecipeStock from state', () => {
       const menuRecipeStock = Immutable.fromJS({
-        123: { 2: 500, 4: 800 }
+        123: { 2: 500, 4: 800 },
       })
 
       const result = getMenuRecipeStock({ menuRecipeStock })
@@ -167,21 +167,34 @@ describe('collections selectors', () => {
     describe('when there is no recommendations collection', () => {
       const menuRecipeStock = Immutable.fromJS({
         123: { 2: 1000, 4: 1000 },
-        234: { 2: 1000, 4: 1000 }
+        234: { 2: 1000, 4: 1000 },
       })
 
       const recommendationCollection = null
 
       describe('when there are 2 collections with recipes', () => {
-        const collectionA = Immutable.Map({ id: '123', published: true, recipesInCollection: Immutable.List(['345'])})
-        const collectionB = Immutable.Map({ id: '234', published: true, recipesInCollection: Immutable.List(['456'])})
+        const collectionA = Immutable.Map({
+          id: '123',
+          published: true,
+          recipesInCollection: Immutable.List(['345']),
+        })
+        const collectionB = Immutable.Map({
+          id: '234',
+          published: true,
+          recipesInCollection: Immutable.List(['456']),
+        })
         const menuCollections = Immutable.OrderedMap({
           234: collectionB,
           123: collectionA,
         })
 
         test('should return both collections', () => {
-          const result = getDisplayedCollections.resultFunc(menuCollections, menuRecipeStock, numPortions, recommendationCollection)
+          const result = getDisplayedCollections.resultFunc(
+            menuCollections,
+            menuRecipeStock,
+            numPortions,
+            recommendationCollection,
+          )
           const expected = Immutable.OrderedMap({
             234: collectionB,
             123: collectionA,
@@ -193,14 +206,23 @@ describe('collections selectors', () => {
 
       describe('when there is a collection without a recipesInCollection entry', () => {
         const collectionA = Immutable.Map({ id: '123', published: true })
-        const collectionB = Immutable.Map({ id: '234', published: true, recipesInCollection: Immutable.List(['345']) })
+        const collectionB = Immutable.Map({
+          id: '234',
+          published: true,
+          recipesInCollection: Immutable.List(['345']),
+        })
         const menuCollections = Immutable.OrderedMap({
           234: collectionB,
           123: collectionA,
         })
 
         test('should not return that collection', () => {
-          const result = getDisplayedCollections.resultFunc(menuCollections, menuRecipeStock, numPortions, recommendationCollection)
+          const result = getDisplayedCollections.resultFunc(
+            menuCollections,
+            menuRecipeStock,
+            numPortions,
+            recommendationCollection,
+          )
           const expected = Immutable.OrderedMap({
             234: collectionB,
           })
@@ -210,15 +232,28 @@ describe('collections selectors', () => {
       })
 
       describe('when there is a collection without recipes', () => {
-        const collectionA = Immutable.Map({ id: '123', published: true, recipesInCollection: Immutable.List([]) })
-        const collectionB = Immutable.Map({ id: '234', published: true, recipesInCollection: Immutable.List(['345']) })
+        const collectionA = Immutable.Map({
+          id: '123',
+          published: true,
+          recipesInCollection: Immutable.List([]),
+        })
+        const collectionB = Immutable.Map({
+          id: '234',
+          published: true,
+          recipesInCollection: Immutable.List(['345']),
+        })
         const menuCollections = Immutable.OrderedMap({
           234: collectionB,
           123: collectionA,
         })
 
         test('should not return that collection', () => {
-          const result = getDisplayedCollections.resultFunc(menuCollections, menuRecipeStock, numPortions, recommendationCollection)
+          const result = getDisplayedCollections.resultFunc(
+            menuCollections,
+            menuRecipeStock,
+            numPortions,
+            recommendationCollection,
+          )
           const expected = Immutable.OrderedMap({
             234: collectionB,
           })
@@ -228,15 +263,28 @@ describe('collections selectors', () => {
       })
 
       describe('when there is an unpublished collection', () => {
-        const collectionA = Immutable.Map({ id: '123', published: true, recipesInCollection: Immutable.List(['456']) })
-        const collectionB = Immutable.Map({ id: '234', published: false, recipesInCollection: Immutable.List(['345']) })
+        const collectionA = Immutable.Map({
+          id: '123',
+          published: true,
+          recipesInCollection: Immutable.List(['456']),
+        })
+        const collectionB = Immutable.Map({
+          id: '234',
+          published: false,
+          recipesInCollection: Immutable.List(['345']),
+        })
         const menuCollections = Immutable.OrderedMap({
           234: collectionB,
           123: collectionA,
         })
 
         test('should not return that collection', () => {
-          const result = getDisplayedCollections.resultFunc(menuCollections, menuRecipeStock, numPortions, recommendationCollection)
+          const result = getDisplayedCollections.resultFunc(
+            menuCollections,
+            menuRecipeStock,
+            numPortions,
+            recommendationCollection,
+          )
           const expected = Immutable.OrderedMap({
             123: collectionA,
           })
@@ -247,11 +295,20 @@ describe('collections selectors', () => {
     })
 
     describe('when there is a recommendations collection', () => {
-      const recommendations = Immutable.Map({ id: '123', slug: 'recommendations', published: true, recipesInCollection: Immutable.List(['111', '222', '333', '444']) })
-      const otherCollection = Immutable.Map({ id: '456', published: true, recipesInCollection: Immutable.List(['111']) })
+      const recommendations = Immutable.Map({
+        id: '123',
+        slug: 'recommendations',
+        published: true,
+        recipesInCollection: Immutable.List(['111', '222', '333', '444']),
+      })
+      const otherCollection = Immutable.Map({
+        id: '456',
+        published: true,
+        recipesInCollection: Immutable.List(['111']),
+      })
       const menuCollections = Immutable.OrderedMap({
         123: recommendations,
-        456: otherCollection
+        456: otherCollection,
       })
 
       describe('when recommendations collection has 4 recipes in stock', () => {
@@ -263,7 +320,12 @@ describe('collections selectors', () => {
         })
 
         test('should return recommendations collection', () => {
-          const result = getDisplayedCollections.resultFunc(menuCollections, menuRecipeStock, numPortions, recommendations)
+          const result = getDisplayedCollections.resultFunc(
+            menuCollections,
+            menuRecipeStock,
+            numPortions,
+            recommendations,
+          )
 
           expect(result).toEqual(menuCollections)
         })
@@ -278,7 +340,12 @@ describe('collections selectors', () => {
         })
 
         test('should not return recommendations collection', () => {
-          const result = getDisplayedCollections.resultFunc(menuCollections, menuRecipeStock, numPortions, recommendations)
+          const result = getDisplayedCollections.resultFunc(
+            menuCollections,
+            menuRecipeStock,
+            numPortions,
+            recommendations,
+          )
 
           expect(result).toEqual(Immutable.OrderedMap({ 456: otherCollection }))
         })
@@ -292,32 +359,43 @@ describe('collections selectors', () => {
     beforeEach(() => {
       state = {
         basket: Immutable.fromJS({
-          numPortions: 2
+          numPortions: 2,
         }),
         menuCollections: Immutable.fromJS({
-          201: {recipesInCollection: ['101', '102', '103', '104']},
-          202: {recipesInCollection: ['101', '102', '103', '104']},
+          201: { recipesInCollection: ['101', '102', '103', '104'] },
+          202: { recipesInCollection: ['101', '102', '103', '104'] },
         }),
         menuRecipeStock: Immutable.fromJS({
           101: { 2: 500, 4: 800 },
           102: { 2: 500, 4: 800 },
           103: { 2: 500, 4: 800 },
           104: { 2: 500, 4: 800 },
-        })
+        }),
       }
     })
 
     describe('when there is a collection marked default', () => {
-      const defaultCollection = Immutable.fromJS({ id: '201', published: true, default: true, slug: 'other', recipesInCollection: ['101', '102', '103', '104'] })
-      const recommendationCollection = Immutable.fromJS({ id: '202', published: true, slug: 'recommendations', recipesInCollection: ['101', '102', '103', '104'] })
+      const defaultCollection = Immutable.fromJS({
+        id: '201',
+        published: true,
+        default: true,
+        slug: 'other',
+        recipesInCollection: ['101', '102', '103', '104'],
+      })
+      const recommendationCollection = Immutable.fromJS({
+        id: '202',
+        published: true,
+        slug: 'recommendations',
+        recipesInCollection: ['101', '102', '103', '104'],
+      })
 
       beforeEach(() => {
         state = {
           ...state,
           menuCollections: Immutable.Map({
             201: defaultCollection,
-            202: recommendationCollection
-          })
+            202: recommendationCollection,
+          }),
         }
       })
 
@@ -330,16 +408,26 @@ describe('collections selectors', () => {
 
     describe('when there is not a collection marked default', () => {
       describe('when there is a recommendations with sufficient stock', () => {
-        const fooCollection = Immutable.fromJS({ id: '201', published: true, slug: 'foo', recipesInCollection: [''] })
-        const recommendationCollection = Immutable.fromJS({ id: '202', published: true, slug: 'recommendations', recipesInCollection: ['101', '102', '103', '104'] })
+        const fooCollection = Immutable.fromJS({
+          id: '201',
+          published: true,
+          slug: 'foo',
+          recipesInCollection: [''],
+        })
+        const recommendationCollection = Immutable.fromJS({
+          id: '202',
+          published: true,
+          slug: 'recommendations',
+          recipesInCollection: ['101', '102', '103', '104'],
+        })
 
         beforeEach(() => {
           state = {
             ...state,
             menuCollections: Immutable.Map({
               201: fooCollection,
-              202: recommendationCollection
-            })
+              202: recommendationCollection,
+            }),
           }
         })
 
@@ -351,22 +439,32 @@ describe('collections selectors', () => {
       })
 
       describe('when there is a recommendations with insufficient stock', () => {
-        const fooCollection = Immutable.fromJS({ id: '201', published: true, slug: 'foo', recipesInCollection: [''] })
-        const recommendationCollection = Immutable.fromJS({ id: '202', published: true, slug: 'recommendations', recipesInCollection: ['']})
+        const fooCollection = Immutable.fromJS({
+          id: '201',
+          published: true,
+          slug: 'foo',
+          recipesInCollection: [''],
+        })
+        const recommendationCollection = Immutable.fromJS({
+          id: '202',
+          published: true,
+          slug: 'recommendations',
+          recipesInCollection: [''],
+        })
 
         beforeEach(() => {
           state = {
             ...state,
             menuCollections: Immutable.Map({
               201: fooCollection,
-              202: recommendationCollection
+              202: recommendationCollection,
             }),
             menuRecipeStock: Immutable.fromJS({
               101: { 2: 0, 4: 0 },
               102: { 2: 0, 4: 0 },
               103: { 2: 0, 4: 0 },
               104: { 2: 0, 4: 0 },
-            })
+            }),
           }
         })
 
@@ -381,7 +479,7 @@ describe('collections selectors', () => {
         beforeEach(() => {
           state = {
             ...state,
-            menuCollections: Immutable.Map({})
+            menuCollections: Immutable.Map({}),
           }
         })
 
@@ -398,7 +496,7 @@ describe('collections selectors', () => {
     const VALID_COLLECTION_ID = '12345'
     const INVALID_COLLECTION_ID = '99999'
     const menuCollections = Immutable.fromJS({
-      [VALID_COLLECTION_ID]: { id: VALID_COLLECTION_ID, published: true, slug: 'foo' }
+      [VALID_COLLECTION_ID]: { id: VALID_COLLECTION_ID, published: true, slug: 'foo' },
     })
 
     describe('when on a valid collection', () => {
@@ -426,21 +524,23 @@ describe('collections selectors', () => {
         type: 'menu',
         relationships: {
           collections: {
-            data: [{
-              header: 'header-wave-id',
-              id: 'collection-id',
-              type: 'collection'
-            }]
-          }
-        }
-      }
+            data: [
+              {
+                header: 'header-wave-id',
+                id: 'collection-id',
+                type: 'collection',
+              },
+            ],
+          },
+        },
+      },
     ]
     const headers = [
       {
         attributes: {},
         id: 'header-wave-id',
-        type: 'wave-link-header'
-      }
+        type: 'wave-link-header',
+      },
     ]
 
     beforeEach(() => {
@@ -453,13 +553,13 @@ describe('collections selectors', () => {
             slug: 'gluten-free',
             id: 'collection-id',
             default: true,
-            recipesInCollection: ['123', '321', '4578']
+            recipesInCollection: ['123', '321', '4578'],
           },
         }),
         basket: Immutable.fromJS({
           numPortions: 2,
-          currentMenuId: '342'
-        })
+          currentMenuId: '342',
+        }),
       }
     })
     test('should return the correct collections headers', () => {
@@ -467,7 +567,7 @@ describe('collections selectors', () => {
       expect(result).toEqual({
         attributes: {},
         id: 'header-wave-id',
-        type: 'wave-link-header'
+        type: 'wave-link-header',
       })
     })
 
@@ -477,8 +577,8 @@ describe('collections selectors', () => {
           ...state,
           basket: Immutable.fromJS({
             numPortions: 2,
-            currentMenuId: '340'
-          })
+            currentMenuId: '340',
+          }),
         }
       })
       test('should return null', () => {

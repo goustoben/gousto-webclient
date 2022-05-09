@@ -202,10 +202,7 @@ describe('orderConfirmation actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: {
-          actionType: 'MarketProduct Added',
-          product_id: '1234'
-        }
+        trackingData: '1234'
       })
     })
 
@@ -217,10 +214,7 @@ describe('orderConfirmation actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: {
-          actionType: 'MarketProduct Removed',
-          product_id: '1234'
-        }
+        trackingData: '1234'
       })
     })
   })

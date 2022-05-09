@@ -161,6 +161,7 @@ module.exports = {
   products: {
     getProducts: '/products',
     categories: '/categories',
+    recipePairings: '/recipe_pairings',
   },
   recipes: {
     availableDates: '/dates/available',

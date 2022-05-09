@@ -21,8 +21,12 @@ describe('<MenuSidesModalContainer/>', () => {
   const fakeActionResponse = jest.fn().mockReturnValue({ action: 'test', type: 'action' })
 
   beforeEach(() => {
-    closeSidesModalSpy = jest.spyOn(SidesActions, 'closeSidesModal').mockImplementation(fakeActionResponse)
-    checkoutWithSidesSpy = jest.spyOn(MenuSidesCheckoutClick, 'checkoutWithSides').mockImplementation(fakeActionResponse)
+    closeSidesModalSpy = jest
+      .spyOn(SidesActions, 'closeSidesModal')
+      .mockImplementation(fakeActionResponse)
+    checkoutWithSidesSpy = jest
+      .spyOn(MenuSidesCheckoutClick, 'checkoutWithSides')
+      .mockImplementation(fakeActionResponse)
 
     trackAddSideSpy = jest.spyOn(Menu, 'trackAddSide')
     trackViewSidesAllergensSpy = jest.spyOn(Menu, 'trackViewSidesAllergens')
@@ -33,7 +37,7 @@ describe('<MenuSidesModalContainer/>', () => {
     store = mockStore({
       ...createState({
         basket: {
-          orderId: '1234'
+          orderId: '1234',
         },
         auth: {
           id: 'auth-user-id',
@@ -66,13 +70,15 @@ describe('<MenuSidesModalContainer/>', () => {
   })
 
   test('should provide an order', () => {
-    expect(wrapper.find('SidesModal').props().order).toEqual(expect.objectContaining({
-      type: 'order',
-      id: '1234',
-      attributes: {
-        menu_id: '433',
-      },
-    }))
+    expect(wrapper.find('SidesModal').props().order).toEqual(
+      expect.objectContaining({
+        type: 'order',
+        id: '1234',
+        attributes: {
+          menu_id: '433',
+        },
+      }),
+    )
   })
 
   test('should provide on close method that calls closeSidesModal and tracks with trackCancelSide', () => {
@@ -110,8 +116,8 @@ describe('<MenuSidesModalContainer/>', () => {
   })
 
   test('should provide a track add side method that calls trackSidesContinueClicked', () => {
-    wrapper.find('SidesModal').props().trackSidesContinueClicked(['side-id'], 1 , 2)
+    wrapper.find('SidesModal').props().trackSidesContinueClicked(['side-id'], 1, 2)
 
-    expect(trackSidesContinueClickedSpy).toBeCalledWith(['side-id'], 1 , 2)
+    expect(trackSidesContinueClickedSpy).toBeCalledWith(['side-id'], 1, 2)
   })
 })

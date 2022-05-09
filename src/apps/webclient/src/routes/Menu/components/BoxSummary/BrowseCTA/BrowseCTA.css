@@ -52,7 +52,7 @@
   composes: textCenter from 'styles/typography.css';
   opacity: 0;
   transform: scale(0.1);
-  transition: all 0.3s cubic-bezier(.39,1.55,.68,.98);
+  transition: all 0.3s cubic-bezier(0.39, 1.55, 0.68, 0.98);
   width: 260px;
   height: 210px;
   margin: 0 auto;

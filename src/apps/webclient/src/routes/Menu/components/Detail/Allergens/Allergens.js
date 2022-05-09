@@ -4,9 +4,8 @@ import Immutable from 'immutable'
 import menu from 'config/menu'
 import css from './Allergens.css'
 
-const replaceGluten = (allergens) => allergens.map(a =>
-  (a === 'gluten' ? 'cereals containing gluten' : a)
-)
+const replaceGluten = (allergens) =>
+  allergens.map((a) => (a === 'gluten' ? 'cereals containing gluten' : a))
 
 export const allergenNamesInParentheses = (allergens) => {
   const allergenString = replaceGluten(allergens).join(', ')
@@ -16,16 +15,14 @@ export const allergenNamesInParentheses = (allergens) => {
 }
 
 const Allergens = ({ allergens, inset }) => (
-  <div className={(inset) ? css.insetSection : css.section}>
+  <div className={inset ? css.insetSection : css.section}>
     <h1 className={css.heading}>Allergens</h1>
-    {(allergens.size > 0) ? (
+    {allergens.size > 0 ? (
       <dl>
         <span data-testing="allergen">
           For allergens, see ingredients in
           <span className={css.bold}> BOLD. </span>
-          <span className={css.bold}>
-            {allergenNamesInParentheses(allergens)}
-          </span>
+          <span className={css.bold}>{allergenNamesInParentheses(allergens)}</span>
         </span>
       </dl>
     ) : null}

@@ -33,6 +33,29 @@
 /src/apps/webclient/src/store.js                        @Gousto/frontend-foundations
 /tests/regression/cypress.json                          @Gousto/frontend-foundations
 
+# squad-kales ownership
+/src/modules/features/recipe-tile/                                     @Gousto/squad-kales
+/src/routes/Menu/domains/brand/                                        @Gousto/squad-kales
+/src/routes/Menu/domains/basket/                                       @Gousto/squad-kales
+/src/routes/Menu/domains/collections/                                  @Gousto/squad-kales
+/src/routes/Menu/domains/menu/                                         @Gousto/squad-kales
+/src/apps/webclient/src/actions/basket.js                              @Gousto/squad-kales
+/src/apps/webclient/src/actions/__tests__/basket.test.js               @Gousto/squad-kales
+/src/apps/webclient/src/reducers/basket.js                             @Gousto/squad-kales
+/src/apps/webclient/src/reducers/__tests__/basket.test.js              @Gousto/squad-kales
+/src/apps/webclient/src/selectors/basket.js                            @Gousto/squad-kales
+/src/apps/webclient/src/selectors/__tests__/basket.test.js             @Gousto/squad-kales
+/src/apps/webclient/src/utils/basket.js                                @Gousto/squad-kales
+/src/apps/webclient/src/utils/__tests__/basket.test.js                 @Gousto/squad-kales
+/src/apps/webclient/src/reducers/menuService.js                        @Gousto/squad-kales
+/src/apps/webclient/src/reducers/__tests__/menuService.test.js         @Gousto/squad-kales
+/src/apps/webclient/src/actions/menuService.js                         @Gousto/squad-kales
+/src/apps/webclient/src/actions/__tests__/menuService.test.js          @Gousto/squad-kales
+/src/apps/webclient/src/actions/menuServiceLoadDays.js                 @Gousto/squad-kales
+/src/apps/webclient/src/actions/__tests__/menuServiceLoadDays.test.js  @Gousto/squad-kales
+/src/apps/webclient/src/utils/menuService.js                           @Gousto/squad-kales
+/src/apps/webclient/src/utils/__tests__/menuService.test.js            @Gousto/squad-kales
+
 # squad-radishes ownership
 /src/apps/webclient/src/components/FiveRecipesPaintedDoorTest          @Gousto/squad-radishes
 /src/apps/webclient/src/routes/Menu/                                   @Gousto/squad-radishes
@@ -40,8 +63,6 @@
 /src/apps/webclient/src/config/menu.js                                 @Gousto/squad-radishes
 /src/apps/webclient/src/config/recipes.js                              @Gousto/squad-radishes
 /src/apps/webclient/src/containers/menu/                               @Gousto/squad-radishes
-/src/apps/webclient/src/actions/basket.js                              @Gousto/squad-radishes
-/src/apps/webclient/src/actions/__tests__/basket.test.js               @Gousto/squad-radishes
 /src/apps/webclient/src/actions/boxSummary.js                          @Gousto/squad-radishes
 /src/apps/webclient/src/actions/__tests__/boxSummary.test.js           @Gousto/squad-radishes
 /src/apps/webclient/src/actions/menu.js                                @Gousto/squad-radishes
@@ -50,18 +71,12 @@
 /src/apps/webclient/src/actions/__tests__/menuActionHelper.test.js     @Gousto/squad-radishes
 /src/apps/webclient/src/actions/menuCollections.js                     @Gousto/squad-radishes
 /src/apps/webclient/src/actions/__tests__/menuCollections.test.js      @Gousto/squad-radishes
-/src/apps/webclient/src/actions/menuService.js                         @Gousto/squad-radishes
-/src/apps/webclient/src/actions/__tests__/menuService.test.js          @Gousto/squad-radishes
-/src/apps/webclient/src/actions/menuServiceLoadDays.js                 @Gousto/squad-radishes
-/src/apps/webclient/src/actions/__tests__/menuServiceLoadDays.test.js  @Gousto/squad-radishes
 /src/apps/webclient/src/actions/collections.js                         @Gousto/squad-radishes
 /src/apps/webclient/src/actions/__tests__/collections.test.js          @Gousto/squad-radishes
 /src/apps/webclient/src/actions/recipes.js                             @Gousto/squad-radishes
 /src/apps/webclient/src/actions/__tests__/recipes.test.js              @Gousto/squad-radishes
 /src/apps/webclient/src/actions/filters.js                             @Gousto/squad-radishes
 /src/apps/webclient/src/actions/__tests__/filters.test.js              @Gousto/squad-radishes
-/src/apps/webclient/src/reducers/basket.js                             @Gousto/squad-radishes
-/src/apps/webclient/src/reducers/__tests__/basket.test.js              @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/boxSummary.js                         @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/__tests__/boxSummary.test.js          @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/collections.js                        @Gousto/squad-radishes
@@ -70,12 +85,8 @@
 /src/apps/webclient/src/reducers/__tests__/filters.test.js             @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/menu.js                               @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/__tests__/menu.test.js                @Gousto/squad-radishes
-/src/apps/webclient/src/reducers/menuService.js                        @Gousto/squad-radishes
-/src/apps/webclient/src/reducers/__tests__/menuService.test.js         @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/recipes.js                            @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/__tests__/recipes.test.js             @Gousto/squad-radishes
-/src/apps/webclient/src/selectors/basket.js                            @Gousto/squad-radishes
-/src/apps/webclient/src/selectors/__tests__/basket.test.js             @Gousto/squad-radishes
 /src/apps/webclient/src/selectors/boxSummary.js                        @Gousto/squad-radishes
 /src/apps/webclient/src/selectors/__tests__/boxSummary.test.js         @Gousto/squad-radishes
 /src/apps/webclient/src/selectors/collections.js                       @Gousto/squad-radishes
@@ -86,17 +97,12 @@
 /src/apps/webclient/src/selectors/__tests__/recipe.test.js             @Gousto/squad-radishes
 /src/apps/webclient/src/selectors/menu.js                              @Gousto/squad-radishes
 /src/apps/webclient/src/selectors/__tests__/menu.test.js               @Gousto/squad-radishes
-/src/apps/webclient/src/utils/basket.js                                @Gousto/squad-radishes
-/src/apps/webclient/src/utils/__tests__/basket.test.js                 @Gousto/squad-radishes
 /src/apps/webclient/src/utils/boxSummary.js                            @Gousto/squad-radishes
 /src/apps/webclient/src/utils/collections.js                           @Gousto/squad-radishes
 /src/apps/webclient/src/utils/menu.js                                  @Gousto/squad-radishes
-/src/apps/webclient/src/utils/menuService.js                           @Gousto/squad-radishes
-/src/apps/webclient/src/utils/__tests__/menuService.test.js            @Gousto/squad-radishes
 /src/apps/webclient/src/utils/recipe.js                                @Gousto/squad-radishes
 /src/apps/webclient/src/utils/__tests__/recipe.test.js                 @Gousto/squad-radishes
 /src/apps/webclient/src/containers/OptimizelyRollouts/                 @Gousto/squad-radishes
-/src/apps/webclient/src/routes/OrderConfirmation/                      @Gousto/squad-radishes
 
 # squad-haricots ownership
 /src/apps/webclient/src/actions/__tests__/getHelp.test.js                          @Gousto/squad-haricots
@@ -218,3 +224,14 @@
 /tests/regression/fixtures/payments/                                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                                    @Gousto/squad-beetroots
 /src/apps/webclient/src/middlewares/tracking/dataLayerTracker/          @Gousto/squad-beetroots
+
+# squad-mandarins (squad-marketplace) ownership
+/src/apps/webclient/src/routes/OrderConfirmation/                       @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/orderConfirmation.js                    @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/__tests__/orderConfirmation.test.js     @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/products.js                             @Gousto/squad-mandarins
+/src/apps/webclient/src/actions/__tests__/products.test.js              @Gousto/squad-mandarins
+/src/apps/webclient/src/apis/products.js                                @Gousto/squad-mandarins
+/src/apps/webclient/src/apis/__tests__/products.test.js                 @Gousto/squad-mandarins
+/src/apps/webclient/src/reducers/__tests__/products.test.js             @Gousto/squad-mandarins
+/src/apps/webclient/src/reducers/products.js                            @Gousto/squad-mandarins

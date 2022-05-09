@@ -4,6 +4,7 @@ import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { PrimaryButton } from './PrimaryButton'
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
 import css from './BoxSizeStep.css'
@@ -67,6 +68,7 @@ export const BoxSizeStep = ({
           <div className={css.boxSizeInner}>{renderCarouselItems()}</div>
         )}
       </div>
+      <RibbonTriggerContainer name="wizard-box-size" />
     </div>
   )
 }

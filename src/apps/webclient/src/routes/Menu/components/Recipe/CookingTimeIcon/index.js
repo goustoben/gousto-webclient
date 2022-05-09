@@ -35,10 +35,8 @@ const CookingTimeIcon = () => {
   )
 }
 
-CookingTimeIcon.propTypes = {
-}
+CookingTimeIcon.propTypes = {}
 
-CookingTimeIcon.defaultProps = {
-}
+CookingTimeIcon.defaultProps = {}
 
 export { CookingTimeIcon }

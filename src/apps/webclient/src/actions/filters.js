@@ -10,13 +10,13 @@ export const filtersCollectionChange = (collectionName, collectionId) => ({
   collectionId,
   trackingData: {
     actionType: actionTypes.RECIPE_COLLECTION_SELECTED,
-    collectionId,
-  },
+    collectionId
+  }
 })
 
 export const collectionFilterIdReceive = (collectionId) => ({
   type: actionTypes.FILTERS_COLLECTION_CHANGE,
-  collectionId,
+  collectionId
 })
 
 export function collectionFilterChange(collectionId) {
@@ -25,13 +25,13 @@ export function collectionFilterChange(collectionId) {
     const query = { ...prevLoc.query }
 
     const navCollections = getDisplayedCollections(getState())
-    const matchingNavCollection = navCollections.some(collection => collection.get('id') === collectionId)
+    const matchingNavCollection = navCollections.some((collection) => collection.get('id') === collectionId)
 
     if (!matchingNavCollection) {
       return
     }
 
-    const collectionName = getState().menuCollections.getIn([collectionId, 'slug'], '')
+    const collectionName = getState().menuCollections.getIn([ collectionId, 'slug' ], '')
     if (collectionName) {
       query.collection = collectionName
     } else if (query.collection) {
@@ -55,10 +55,10 @@ export const changeCollectionById = (id = ALL_RECIPES_COLLECTION_ID) => (
   }
 )
 
-export const filterProductCategory = (category) => (
+export const filterProductCategory = (eventName, eventAction, eventType, primaryCategory, productsPerCategory, categoryId) => (
   (dispatch) => {
-    dispatch({ type: 'FILTERS_PRODUCT_CATEGORY', value: category })
-    dispatch(trackProductFiltering(category))
+    dispatch({ type: 'FILTERS_PRODUCT_CATEGORY', value: categoryId })
+    dispatch(trackProductFiltering(eventName, eventAction, eventType, primaryCategory, productsPerCategory))
   }
 )
 

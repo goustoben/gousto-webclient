@@ -31,7 +31,7 @@ describe('RecipeList', () => {
           currentCollectionId="123"
           browserType="desktop"
           showDetailRecipe={showDetailRecipe}
-        />
+        />,
       )
       expect(wrapper.find(RecipeTile).exists()).toBe(false)
     })
@@ -40,7 +40,9 @@ describe('RecipeList', () => {
   describe('when it is All Recipes category', () => {
     describe('when the isDietaryCollectionLinksEnabled feature is enabled', () => {
       it('should render Links to Dietary collections', () => {
-        recipes = Immutable.List([1, 2, 3, 4].map(i => ({ recipe: Immutable.Map({ id: `${i}`})})))
+        recipes = Immutable.List(
+          [1, 2, 3, 4].map((i) => ({ recipe: Immutable.Map({ id: `${i}` }) })),
+        )
 
         wrapper = shallow(
           <RecipeList
@@ -49,7 +51,7 @@ describe('RecipeList', () => {
             browserType="desktop"
             isDietaryCollectionLinksEnabled
             showDetailRecipe={showDetailRecipe}
-          />
+          />,
         )
 
         expect(wrapper.find(CollectionLink).exists()).toBe(true)
@@ -57,7 +59,9 @@ describe('RecipeList', () => {
     })
     describe('when the isDietaryCollectionLinksEnabled feature is disabled', () => {
       it('should NOT render Links to Dietary collections', () => {
-        recipes = Immutable.List([1, 2, 3, 4].map(i => ({ recipe: Immutable.Map({ id: `${i}`})})))
+        recipes = Immutable.List(
+          [1, 2, 3, 4].map((i) => ({ recipe: Immutable.Map({ id: `${i}` }) })),
+        )
         wrapper = shallow(
           <RecipeList
             recipes={recipes}
@@ -65,7 +69,7 @@ describe('RecipeList', () => {
             browserType="desktop"
             isDietaryCollectionLinksEnabled={false}
             showDetailRecipe={showDetailRecipe}
-          />
+          />,
         )
 
         expect(wrapper.find(CollectionLink).exists()).toBe(false)
@@ -75,7 +79,7 @@ describe('RecipeList', () => {
 
   describe('when it is not category with Dietary collections promotions', () => {
     it('should not render the Links to dietary collections', () => {
-      recipes = Immutable.List([1, 2, 3, 4].map(i => ({ recipe: Immutable.Map({ id: `${i}`})})))
+      recipes = Immutable.List([1, 2, 3, 4].map((i) => ({ recipe: Immutable.Map({ id: `${i}` }) })))
       wrapper = shallow(
         <RecipeList
           recipes={recipes}
@@ -83,7 +87,7 @@ describe('RecipeList', () => {
           browserType="desktop"
           isDietaryCollectionLinksEnabled
           showDetailRecipe={showDetailRecipe}
-        />
+        />,
       )
 
       expect(wrapper.find(CollectionLink).exists()).toBe(false)
@@ -100,12 +104,12 @@ describe('RecipeList', () => {
         boxType: 'vegetarian',
         dietType: 'Vegetarian',
         isRecommended: false,
-      })
+      }),
     },
     {
       originalId: '1',
-      recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
-    }
+      recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false }),
+    },
   ])
 })
 
@@ -114,7 +118,7 @@ describe('buildTracker', () => {
     const dummyTracker = jest.fn()
 
     const tracker = buildTracker({
-      recipes: Immutable.List([1, 2, 3, 4].map(i => ({ recipe: Immutable.Map({ id: `${i}`})}))),
+      recipes: Immutable.List([1, 2, 3, 4].map((i) => ({ recipe: Immutable.Map({ id: `${i}` }) }))),
       currentCollectionId: 'some_collection_id',
       track: dummyTracker,
     })

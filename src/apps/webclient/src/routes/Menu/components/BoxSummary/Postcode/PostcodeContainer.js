@@ -10,7 +10,10 @@ function mapStateToProps(state) {
   let tempPostcode = state.temp.get('postcode', '')
 
   if (state.user.get('shippingAddresses')) {
-    shippingDefault = state.user.get('shippingAddresses').filter(address => address.get('shippingDefault')).first()
+    shippingDefault = state.user
+      .get('shippingAddresses')
+      .filter((address) => address.get('shippingDefault'))
+      .first()
   }
 
   const chosenAddress = state.basket.get('chosenAddress') || shippingDefault
@@ -34,7 +37,7 @@ function mapStateToProps(state) {
 const PostcodeContainer = connect(mapStateToProps, {
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   basketChosenAddressChange: actions.basketChosenAddressChange,
-  setTempPostcode: postcode => actions.temp('postcode', postcode),
+  setTempPostcode: (postcode) => actions.temp('postcode', postcode),
   boxSummaryNext,
 })(Postcode)
 

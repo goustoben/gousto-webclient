@@ -8,13 +8,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  setTempSlotId: slotId => tempActions.temp('slotId', slotId),
-  handleDateChange: setTempDeliveryOptions
+  setTempSlotId: (slotId) => tempActions.temp('slotId', slotId),
+  handleDateChange: setTempDeliveryOptions,
 }
 
-const DatePickerContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DatePicker)
+const DatePickerContainer = connect(mapStateToProps, mapDispatchToProps)(DatePicker)
 
 export { DatePickerContainer }

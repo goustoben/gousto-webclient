@@ -9,25 +9,27 @@ describe('RecipeAlternativeOptions', () => {
   describe('When there are recipe alternative options', () => {
     const changeCheckedRecipeTwo = jest.fn()
 
-    const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => ([{
-      recipeId: '111',
-      recipeName: 'Test Recipe One',
-      changeCheckedRecipe: () => {},
-      isChecked: true,
-      isOnDetailScreen: false,
-      isOutOfStock: false,
-    },{
-      recipeId: '222',
-      recipeName: 'Test Recipe Two',
-      changeCheckedRecipe: changeCheckedRecipeTwo,
-      isChecked: false,
-      isOnDetailScreen: false,
-      isOutOfStock: false,
-    }]))
+    const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => [
+      {
+        recipeId: '111',
+        recipeName: 'Test Recipe One',
+        changeCheckedRecipe: () => {},
+        isChecked: true,
+        isOnDetailScreen: false,
+        isOutOfStock: false,
+      },
+      {
+        recipeId: '222',
+        recipeName: 'Test Recipe Two',
+        changeCheckedRecipe: changeCheckedRecipeTwo,
+        isChecked: false,
+        isOnDetailScreen: false,
+        isOutOfStock: false,
+      },
+    ])
 
     beforeEach(() => {
-      jest.spyOn(Menu, 'useMenu')
-        .mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
+      jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
       jest.spyOn(Tracking, 'useTrackVariantListDisplay').mockImplementation()
     })
 
@@ -36,12 +38,15 @@ describe('RecipeAlternativeOptions', () => {
       jest.clearAllMocks()
     })
 
-    const renderRecipeAlternativeOptions = () => render(<RecipeAlternativeOptions
-      originalId="recipe_1"
-      recipeId="recipe_1"
-      isOnDetailScreen
-      categoryId="category_1"
-    />)
+    const renderRecipeAlternativeOptions = () =>
+      render(
+        <RecipeAlternativeOptions
+          originalId="recipe_1"
+          recipeId="recipe_1"
+          isOnDetailScreen
+          categoryId="category_1"
+        />,
+      )
 
     test('it should render recipe list', () => {
       renderRecipeAlternativeOptions()
@@ -63,12 +68,14 @@ describe('RecipeAlternativeOptions', () => {
 
     describe('when user click on option item', () => {
       const renderRecipeAlternativeOptionsAndPickAnOption = () => {
-        render(<RecipeAlternativeOptions
-          originalId="recipe_1"
-          recipeId="recipe_1"
-          isOnDetailScreen
-          categoryId="category_1"
-        />)
+        render(
+          <RecipeAlternativeOptions
+            originalId="recipe_1"
+            recipeId="recipe_1"
+            isOnDetailScreen
+            categoryId="category_1"
+          />,
+        )
 
         // Pick second item on the list
         fireEvent.click(screen.getAllByRole('radio')[1])
@@ -90,12 +97,14 @@ describe('RecipeAlternativeOptions', () => {
         jest.spyOn(Tracking, 'useTrackVariantListDisplay').mockRestore()
         jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
 
-        render(<RecipeAlternativeOptions
-          originalId="recipe_1"
-          recipeId="recipe_1"
-          isOnDetailScreen
-          categoryId="category_1"
-        />)
+        render(
+          <RecipeAlternativeOptions
+            originalId="recipe_1"
+            recipeId="recipe_1"
+            isOnDetailScreen
+            categoryId="category_1"
+          />,
+        )
 
         expect(dispatch).toHaveBeenCalledWith({
           type: 'TRACK_VARIANT_RECIPE_LIST_DISPLAY',
@@ -117,12 +126,14 @@ describe('RecipeAlternativeOptions', () => {
         jest.spyOn(Tracking, 'useTrackVariantListDisplay').mockRestore()
         jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
 
-        render(<RecipeAlternativeOptions
-          originalId="recipe_1"
-          recipeId="recipe_1"
-          isOnDetailScreen={false}
-          categoryId="category_1"
-        />)
+        render(
+          <RecipeAlternativeOptions
+            originalId="recipe_1"
+            recipeId="recipe_1"
+            isOnDetailScreen={false}
+            categoryId="category_1"
+          />,
+        )
 
         expect(dispatch).toHaveBeenCalledWith({
           type: 'TRACK_VARIANT_RECIPE_LIST_DISPLAY',
@@ -136,11 +147,10 @@ describe('RecipeAlternativeOptions', () => {
   })
 
   describe('When there are no recipe alternative options', () => {
-    const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => ([]))
+    const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => [])
 
     beforeEach(() => {
-      jest.spyOn(Menu, 'useMenu')
-        .mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
+      jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
     })
 
     afterEach(() => {
@@ -148,12 +158,15 @@ describe('RecipeAlternativeOptions', () => {
       jest.clearAllMocks()
     })
 
-    const renderRecipeAlternativeOptions = () => render(<RecipeAlternativeOptions
-      originalId="recipe_1"
-      recipeId="recipe_1"
-      isOnDetailScreen
-      categoryId="category_1"
-    />)
+    const renderRecipeAlternativeOptions = () =>
+      render(
+        <RecipeAlternativeOptions
+          originalId="recipe_1"
+          recipeId="recipe_1"
+          isOnDetailScreen
+          categoryId="category_1"
+        />,
+      )
 
     test('it should not render the component', () => {
       renderRecipeAlternativeOptions()
@@ -162,18 +175,19 @@ describe('RecipeAlternativeOptions', () => {
   })
 
   describe('When the options consist of just a selected recipe', () => {
-    const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => ([{
-      recipeId: '111',
-      recipeName: 'Test Recipe One',
-      changeCheckedRecipe: () => {},
-      isChecked: true,
-      isOnDetailScreen: false,
-      isOutOfStock: false,
-    }]))
+    const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => [
+      {
+        recipeId: '111',
+        recipeName: 'Test Recipe One',
+        changeCheckedRecipe: () => {},
+        isChecked: true,
+        isOnDetailScreen: false,
+        isOutOfStock: false,
+      },
+    ])
 
     beforeEach(() => {
-      jest.spyOn(Menu, 'useMenu')
-        .mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
+      jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
     })
 
     afterEach(() => {
@@ -181,12 +195,15 @@ describe('RecipeAlternativeOptions', () => {
       jest.clearAllMocks()
     })
 
-    const renderRecipeAlternativeOptions = () => render(<RecipeAlternativeOptions
-      originalId="recipe_1"
-      recipeId="recipe_1"
-      isOnDetailScreen
-      categoryId="category_1"
-    />)
+    const renderRecipeAlternativeOptions = () =>
+      render(
+        <RecipeAlternativeOptions
+          originalId="recipe_1"
+          recipeId="recipe_1"
+          isOnDetailScreen
+          categoryId="category_1"
+        />,
+      )
 
     test('it should not render the component', () => {
       renderRecipeAlternativeOptions()

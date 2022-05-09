@@ -16,7 +16,7 @@ import {
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
-  getProtocol: () => 'http:'
+  getProtocol: () => 'http:',
 }))
 
 // The first spec to create optimizely instance will point to this function.
@@ -66,7 +66,7 @@ describe('menuCheckoutClick', () => {
 
         expect(isFeatureEnabled).toBeCalledWith(
           'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
-          'user_id'
+          'user_id',
         )
         expect(isEnabled).toBe(true)
       })
@@ -186,11 +186,11 @@ describe('menuCheckoutClick', () => {
             expect(isFeatureEnabled).toBeCalledTimes(2)
             expect(isFeatureEnabled).toBeCalledWith(
               'radishes_order_api_update_web_enabled',
-              'user_id'
+              'user_id',
             )
             expect(isFeatureEnabled).toBeCalledWith(
               'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
-              'user_id'
+              'user_id',
             )
             expect(orderUpdateSpy).toBeCalledWith(false)
             expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
@@ -211,16 +211,16 @@ describe('menuCheckoutClick', () => {
 
               await checkoutBasket({ section, view: 'sendUpdateOrder', pricing })(
                 dispatch,
-                getState
+                getState,
               )
 
               expect(isFeatureEnabled).toBeCalledWith(
                 'radishes_order_api_update_web_enabled',
-                'user_id'
+                'user_id',
               )
               expect(isFeatureEnabled).toBeCalledWith(
                 'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
-                'user_id'
+                'user_id',
               )
               expect(sendUpdateOrderSpy).toBeCalledWith(false)
               expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)
@@ -244,11 +244,11 @@ describe('menuCheckoutClick', () => {
 
               expect(isFeatureEnabled).toBeCalledWith(
                 'radishes_order_api_update_web_enabled',
-                'user_id'
+                'user_id',
               )
               expect(isFeatureEnabled).toBeCalledWith(
                 'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
-                'user_id'
+                'user_id',
               )
               expect(orderUpdateSpy).toBeCalledWith(true)
               expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
@@ -269,16 +269,16 @@ describe('menuCheckoutClick', () => {
 
                 await checkoutBasket({ section, view: 'sendUpdateOrder', pricing })(
                   dispatch,
-                  getState
+                  getState,
                 )
 
                 expect(isFeatureEnabled).toBeCalledWith(
                   'radishes_order_api_update_web_enabled',
-                  'user_id'
+                  'user_id',
                 )
                 expect(isFeatureEnabled).toBeCalledWith(
                   'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
-                  'user_id'
+                  'user_id',
                 )
                 expect(sendUpdateOrderSpy).toBeCalledWith(true)
                 expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)

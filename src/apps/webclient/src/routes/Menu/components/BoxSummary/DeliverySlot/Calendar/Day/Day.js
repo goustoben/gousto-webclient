@@ -4,20 +4,20 @@ import classnames from 'classnames'
 import moment from 'moment'
 import css from './Day.css'
 
-const weekNoDayNoToDay = (weekNo, dayNo) => (
-  moment(`${weekNo}-${dayNo}`, 'GGGGWW-E').format('DD')
-)
+const weekNoDayNoToDay = (weekNo, dayNo) => moment(`${weekNo}-${dayNo}`, 'GGGGWW-E').format('DD')
 
-const dateToDay = date => (
-  moment(date, 'YYYY-MM-DD').format('DD')
-)
+const dateToDay = (date) => moment(date, 'YYYY-MM-DD').format('DD')
 
 const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, className }) => {
   if (date && !disabled) {
     return (
       <div
         className={classnames(selected ? css.currentDay : css.day, className, css.square)}
-        onClick={() => { if (!disabled) { onClick(date, orderId) } }}
+        onClick={() => {
+          if (!disabled) {
+            onClick(date, orderId)
+          }
+        }}
         data-testing="dateSlot"
         role="button"
         tabIndex={0}
@@ -33,7 +33,7 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
   return (
     <div key={`${weekNo}-${dayNo}`} className={classnames(css.emptyDay, className, css.square)}>
       <div className={css.content}>
-        {icon ? (<span className={css[`icon-${icon}`]} />) : null}
+        {icon ? <span className={css[`icon-${icon}`]} /> : null}
         {date ? dateToDay(date) : weekNoDayNoToDay(weekNo, dayNo)}
       </div>
     </div>

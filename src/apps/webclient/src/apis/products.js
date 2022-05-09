@@ -52,3 +52,9 @@ export function fetchRandomProducts(accessToken, limit, imageSizes, userId, menu
 export function fetchProductStock(accessToken) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.productStock}`, {}, 'GET')
 }
+
+export function fetchRecipePairingsProducts(accessToken, recipeIds = []) {
+  const queryString = recipeIds.map((recipeId) => `recipeIds[]=${recipeId}`).join('&')
+
+  return fetch(accessToken, `${endpoint('products', 2)}${routes.products.recipePairings}?${queryString}`, {}, 'GET')
+}

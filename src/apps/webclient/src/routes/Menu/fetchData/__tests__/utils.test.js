@@ -9,15 +9,15 @@ import { getPreselectedCollectionName, selectCollection, setSlotFromIds } from '
 
 jest.mock('actions/basket', () => ({
   basketDateChange: jest.fn(),
-  basketSlotChange: jest.fn()
+  basketSlotChange: jest.fn(),
 }))
 jest.mock('actions/redirect', () => ({
-  redirect: jest.fn()
+  redirect: jest.fn(),
 }))
 
 describe('getPreselectedCollectionName', () => {
   const state = {
-    features: {}
+    features: {},
   }
 
   describe('when just for you collection is present', () => {
@@ -31,7 +31,9 @@ describe('getPreselectedCollectionName', () => {
       const collectionNameFormQueryParam = ''
 
       it('should return recommendations collection short title', () => {
-        expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(recommendationsSlug)
+        expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(
+          recommendationsSlug,
+        )
       })
     })
 
@@ -39,7 +41,9 @@ describe('getPreselectedCollectionName', () => {
       const collectionNameFormQueryParam = 'query-collection-name'
 
       it('should return collection name from query param', () => {
-        expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(collectionNameFormQueryParam)
+        expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(
+          collectionNameFormQueryParam,
+        )
       })
     })
   })
@@ -50,7 +54,9 @@ describe('getPreselectedCollectionName', () => {
     })
 
     it('should return collection name from query param', () => {
-      expect(getPreselectedCollectionName(state, 'default-collection-name')).toEqual('default-collection-name')
+      expect(getPreselectedCollectionName(state, 'default-collection-name')).toEqual(
+        'default-collection-name',
+      )
     })
   })
 })
@@ -60,12 +66,12 @@ describe('selectCollection', () => {
     features: Immutable.Map({}),
     menuCollections: Immutable.fromJS({
       testCollectionId: {
-        recipesInCollection: ['1', '2', '3']
-      }
+        recipesInCollection: ['1', '2', '3'],
+      },
     }),
     basket: Immutable.fromJS({
-      numPortions: 2
-    })
+      numPortions: 2,
+    }),
   }
 
   describe('when collection id exists for the given collection name and collection is published', () => {
@@ -80,10 +86,10 @@ describe('selectCollection', () => {
             shortTitle: 'test collection name',
             slug: 'test-collection-name',
             published: true,
-            recipesInCollection: ['1', '2', '3']
-          }
-        })
-      )
+            recipesInCollection: ['1', '2', '3'],
+          },
+        }),
+      ),
     }
 
     it('should dispatch FILTERS_COLLECTION_CHANGE event with collection id', () => {
@@ -110,16 +116,15 @@ describe('selectCollection', () => {
           shortTitle: 'different name',
           default: false,
           published: true,
-          recipesInCollection: ['1', '2', '3']
+          recipesInCollection: ['1', '2', '3'],
         }),
         defaultCollectionId: Immutable.fromJS({
           id: 'defaultCollectionId',
           shortTitle: 'default collection name',
           default: true,
           published: true,
-          recipesInCollection: ['1', '2', '3']
-
-        })
+          recipesInCollection: ['1', '2', '3'],
+        }),
       }),
     }
 
@@ -141,7 +146,7 @@ describe('setSlotFromIds', () => {
   const dispatchSpy = jest.fn()
   let getState
   const state = {
-    boxSummaryDeliveryDays: {}
+    boxSummaryDeliveryDays: {},
   }
   beforeEach(() => {
     state.boxSummaryDeliveryDays = Immutable.fromJS({
@@ -151,17 +156,17 @@ describe('setSlotFromIds', () => {
         slots: [
           {
             id: 'db015db8-12d1-11e6-b30b-06ddb628bdc5',
-            coreSlotId: '1'
+            coreSlotId: '1',
           },
           {
             id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4',
-            coreSlotId: '2'
+            coreSlotId: '2',
           },
           {
             id: '8ee02d93-aad4-4a6e-ac49-9c66dd667082',
-            coreSlotId: '3'
-          }
-        ]
+            coreSlotId: '3',
+          },
+        ],
       },
       '2019-08-03': {
         coreDayId: '1801',
@@ -169,13 +174,13 @@ describe('setSlotFromIds', () => {
         slots: [
           {
             id: 'db047c82-12d1-11e6-bc7b-06ddb628bdc5',
-            coreSlotId: '4'
+            coreSlotId: '4',
           },
           {
             id: '30ef5793-1fd2-4859-a11e-fe7eb8412305',
-            coreSlotId: '5'
-          }
-        ]
+            coreSlotId: '5',
+          },
+        ],
       },
     })
 

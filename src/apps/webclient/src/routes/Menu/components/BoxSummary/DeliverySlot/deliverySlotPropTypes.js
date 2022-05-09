@@ -6,7 +6,7 @@ export const datesPropType = PropTypes.arrayOf(
     disabled: PropTypes.bool.isRequired,
     icon: PropTypes.string.isRequired,
     orderId: PropTypes.string.isRequired,
-  })
+  }),
 )
 
 export const slotsPropType = PropTypes.shape({

@@ -6,7 +6,9 @@ import { mockProduct } from 'routes/OrderConfirmation/components/config'
 
 import { Product } from '../Product.logic'
 
-jest.mock('../../ProductDetails', () => 'div')
+jest.mock('../../ProductDetails', () => ({
+  ProductDetailContainer: jest.fn(() => 'div')
+}))
 
 global.scrollTo = jest.fn()
 
@@ -166,6 +168,7 @@ describe('Product component', () => {
           ageRestricted: false,
           id: '1234'
         },
+        category: 'Test Category',
         basketProductAdd: jest.fn(),
         orderConfirmationProductTracking: orderConfirmationProductTrackingMock
       })
@@ -173,7 +176,7 @@ describe('Product component', () => {
       const { onAddProduct } = wrapper.instance()
       await onAddProduct()
 
-      expect(orderConfirmationProductTrackingMock).toHaveBeenCalledWith('1234', true)
+      expect(orderConfirmationProductTrackingMock).toHaveBeenCalledWith({eventAction: 'clicked', eventName: 'market_product_added', eventProperties: {productProperties: {ageRestricted: false, category: 'Test Category', id: '1234'}}, eventType: 'primary_action'})
     })
   })
 
@@ -187,6 +190,7 @@ describe('Product component', () => {
           basketProductAdd={jest.fn()}
           basketProductRemove={jest.fn()}
           temp={jest.fn()}
+          openProductModalTracking={jest.fn()}
         />
       )
     })

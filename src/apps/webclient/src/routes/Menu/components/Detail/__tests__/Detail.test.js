@@ -18,20 +18,20 @@ jest.mock('react-redux', () => ({
 }))
 
 jest.mock('../DetailAddRecipe', () => ({
-  DetailAddRecipe: () => <div />
+  DetailAddRecipe: () => <div />,
 }))
 
 jest.mock('routes/Menu/domains/menu', () => ({
   ...jest.requireActual('routes/Menu/domains/menu'),
   useStock: () => ({
     isRecipeOutOfStock: () => false,
-  })
+  }),
 }))
 
 describe('<Detail />', () => {
   const DETAIL = (
     <Detail
-      media={Immutable.fromJS([{urls: [{width: 10}]}])}
+      media={Immutable.fromJS([{ urls: [{ width: 10 }] }])}
       equipment={Immutable.List(['spoon, mixer'])}
       id="123"
       title="title"
@@ -210,18 +210,18 @@ describe('DetailContainer', () => {
     const mockStore = configureMockStore()
     const store = mockStore({
       basket: Immutable.fromJS({
-        currentMenuId: '377'
+        currentMenuId: '377',
       }),
       recipes: Immutable.fromJS({
         123: {
           id: '123',
-        }
-      })
+        },
+      }),
     })
 
     wrapper = shallow(
       <DetailContainer
-        media={Immutable.fromJS([{urls: [{width: 10}]}])}
+        media={Immutable.fromJS([{ urls: [{ width: 10 }] }])}
         equipment={Immutable.List(['spoon, mixer'])}
         id="123"
         title="title"
@@ -234,7 +234,8 @@ describe('DetailContainer', () => {
         inBasket={false}
         description="Recipe description"
         store={store}
-      />)
+      />,
+    )
   })
   test('should render', () => {
     expect(wrapper.find('Detail')).toBeTruthy()

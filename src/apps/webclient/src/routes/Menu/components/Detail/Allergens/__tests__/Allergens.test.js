@@ -1,4 +1,4 @@
-import {allergenNamesInParentheses} from '../Allergens'
+import { allergenNamesInParentheses } from '../Allergens'
 
 describe('Allergens', () => {
   describe('allergenNamesInParentheses', () => {

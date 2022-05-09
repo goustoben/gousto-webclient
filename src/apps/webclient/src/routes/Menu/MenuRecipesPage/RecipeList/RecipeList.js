@@ -10,10 +10,12 @@ import css from './RecipeList.css'
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
 import { useTracking } from './useTracking'
 
-export const buildTracker = ({recipes, currentCollectionId, track}) => () => {
-  const recipeIds = recipes.map(({ recipe }) => recipe.get('id'))
-  track(currentCollectionId, recipeIds.toJS())
-}
+export const buildTracker =
+  ({ recipes, currentCollectionId, track }) =>
+  () => {
+    const recipeIds = recipes.map(({ recipe }) => recipe.get('id'))
+    track(currentCollectionId, recipeIds.toJS())
+  }
 
 export const RecipeList = ({
   recipes,
@@ -23,7 +25,7 @@ export const RecipeList = ({
 }) => {
   const track = useTracking()
 
-  useEffect(() => buildTracker({recipes, currentCollectionId, track})(), [])
+  useEffect(() => buildTracker({ recipes, currentCollectionId, track })(), [])
 
   return (
     <div className={css.emeRecipeList}>
@@ -32,7 +34,7 @@ export const RecipeList = ({
           {isDietaryCollectionLinksEnabled &&
             showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
               <CollectionLink />
-          )}
+            )}
           <RecipeReferenceProvider value={value.reference}>
             <RecipeContextProvider value={value.recipe}>
               <RecipeTile

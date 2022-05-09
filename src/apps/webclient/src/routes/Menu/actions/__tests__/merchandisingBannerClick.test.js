@@ -40,13 +40,15 @@ describe('given merchandisingBannerClick action is called', () => {
 
     merchandisingBannerClick(targetCollectionId)(dispatch, getState)
 
-    expect(dispatch.mock.calls[1]).toEqual([{
-      type: actionTypes.TRACKING,
-      trackingData: {
-        actionType: clickMerchandisingBanner,
-        collection_id: targetCollectionId,
-        click_collection_id: currentCollectionId
-      }
-    }])
+    expect(dispatch.mock.calls[1]).toEqual([
+      {
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: clickMerchandisingBanner,
+          collection_id: targetCollectionId,
+          click_collection_id: currentCollectionId,
+        },
+      },
+    ])
   })
 })

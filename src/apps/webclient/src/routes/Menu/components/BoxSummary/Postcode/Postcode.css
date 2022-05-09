@@ -1,42 +1,42 @@
 @value Radish, Pepper, Mackerel from 'styles/colors.css';
 
 .row {
-	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
-	composes: textCenter from 'styles/typography.css';
+  composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+  composes: textCenter from 'styles/typography.css';
 }
 
 .supportingText {
-	composes: paragraphXS from 'styles/typography.css';
+  composes: paragraphXS from 'styles/typography.css';
 }
 
 .leadingText {
-	composes: textBold from 'styles/typography.css';
+  composes: textBold from 'styles/typography.css';
 }
 
 .textInput {
-	composes: textLG textCenter textUpper textBold from 'styles/typography.css';
-	width: 100%;
+  composes: textLG textCenter textUpper textBold from 'styles/typography.css';
+  width: 100%;
 }
 
 .errorText {
-	composes: supportingText;
-	color: Radish;
+  composes: supportingText;
+  color: Radish;
 }
 
 .title {
-	composes: headerMD headlineFont textCenter from 'styles/typography.css';
-	color: Pepper;
+  composes: headerMD headlineFont textCenter from 'styles/typography.css';
+  color: Pepper;
 }
 
 .hide {
-	composes: none from 'styles/display.css';
+  composes: none from 'styles/display.css';
 }
 
 .stickyButton {
-	box-shadow: 0px -1px 10px Mackerel;
-	position: fixed;
-	width: 100%;
-	padding: 0.75rem 0.5rem;
-	bottom: 0;
-	left: 0;
+  box-shadow: 0px -1px 10px Mackerel;
+  position: fixed;
+  width: 100%;
+  padding: 0.75rem 0.5rem;
+  bottom: 0;
+  left: 0;
 }

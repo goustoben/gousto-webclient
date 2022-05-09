@@ -19,86 +19,98 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
   beforeEach(() => {
     const limitReachSpy = safeJestMock(basketUtils, 'limitReached')
     limitReachSpy.mockReturnValue(false)
-    getStateSpy = jest.fn().mockReturnValueOnce({
-      auth: Immutable.Map({
-        id: ''
-      }),
-      tracking: Immutable.fromJS({}),
-      basket: Immutable.Map({
-        recipes: Immutable.Map([['123', 1]]),
-        numPortions: 2,
-        limitReached: false,
-        promoCode: 'test-promo-code',
-        slotId: 'test-slot-id',
-      }),
-      menuRecipeStock: Immutable.fromJS({
-        123: { 2: 30, 4: 10 },
-        234: { 2: 50, 4: 10 },
-      }),
-      menuRecipes: Immutable.fromJS({
-        123: {},
-        234: {},
-      }),
-      menuCollections: Immutable.fromJS({
-        '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
-          id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          published: true,
-          default: true,
-          slug: 'foo',
-          recipesInCollection: ['123', '234']
-        }
-      }),
-      routing: {
-        locationBeforeTransitions: {
-          query: {
-            collection: 'foo'
-          }
-        }
-      }
-    }).mockReturnValueOnce({
-      basket: Immutable.Map({
-        recipes: Immutable.Map([['123', 1], ['234', 1]]),
-        numPortions: 2,
-        limitReached: false,
-        promoCode: 'test-promo-code',
-        slotId: 'test-slot-id',
-      }),
-      menuRecipeStock: Immutable.fromJS({
-        123: { 2: 30, 4: 10 },
-        234: { 2: 50, 4: 10 },
-      }),
-      menuRecipes: Immutable.fromJS({
-        123: {},
-        234: {},
-      }),
-      menuCollections: Immutable.fromJS({
-        '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
-          id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          published: true,
-          default: true,
-          slug: 'foo',
-          recipesInCollection: ['123', '234']
-        }
-      }),
-      routing: {
-        locationBeforeTransitions: {
-          query: {
-            collection: 'foo'
-          }
-        }
-      }
-    })
+    getStateSpy = jest
+      .fn()
+      .mockReturnValueOnce({
+        auth: Immutable.Map({
+          id: '',
+        }),
+        tracking: Immutable.fromJS({}),
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['123', 1]]),
+          numPortions: 2,
+          limitReached: false,
+          promoCode: 'test-promo-code',
+          slotId: 'test-slot-id',
+        }),
+        menuRecipeStock: Immutable.fromJS({
+          123: { 2: 30, 4: 10 },
+          234: { 2: 50, 4: 10 },
+        }),
+        menuRecipes: Immutable.fromJS({
+          123: {},
+          234: {},
+        }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo',
+            recipesInCollection: ['123', '234'],
+          },
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              collection: 'foo',
+            },
+          },
+        },
+      })
+      .mockReturnValueOnce({
+        basket: Immutable.Map({
+          recipes: Immutable.Map([
+            ['123', 1],
+            ['234', 1],
+          ]),
+          numPortions: 2,
+          limitReached: false,
+          promoCode: 'test-promo-code',
+          slotId: 'test-slot-id',
+        }),
+        menuRecipeStock: Immutable.fromJS({
+          123: { 2: 30, 4: 10 },
+          234: { 2: 50, 4: 10 },
+        }),
+        menuRecipes: Immutable.fromJS({
+          123: {},
+          234: {},
+        }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo',
+            recipesInCollection: ['123', '234'],
+          },
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              collection: 'foo',
+            },
+          },
+        },
+      })
   })
 
   test('`BASKET_ELIGIBLE_TRACK` should be dispatched', () => {
-    basketActions.validBasketRecipeAdd('234', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+    basketActions.validBasketRecipeAdd('234', 'boxsummary', { position: '57' })(
+      dispatch,
+      getStateSpy,
+    )
 
     expect(dispatch).toHaveBeenNthCalledWith(3, {
       type: actionTypes.BASKET_ELIGIBLE_TRACK,
       trackingData: {
         actionType: trackingKeys.basketEligible,
         promoCode: 'test-promo-code',
-        recipes: Immutable.Map([['123', 1], ['234', 1]]),
+        recipes: Immutable.Map([
+          ['123', 1],
+          ['234', 1],
+        ]),
       },
     })
   })
@@ -118,13 +130,13 @@ describe('validBasketRecipeAdd', () => {
       mockSendClientMetrics = safeJestMock(clientMetrics, 'sendClientMetric')
       getStateSpy = jest.fn().mockReturnValue({
         auth: Immutable.Map({
-          id: authId
+          id: authId,
         }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
           recipes: Immutable.Map(),
           numPortions: 2,
-          hasAddedFirstRecipe: false
+          hasAddedFirstRecipe: false,
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30, 4: 10 },
@@ -136,9 +148,9 @@ describe('validBasketRecipeAdd', () => {
             published: true,
             default: true,
             slug: 'foo',
-            recipesInCollection: ['123', '234']
-          }
-        })
+            recipesInCollection: ['123', '234'],
+          },
+        }),
       })
     })
 
@@ -150,7 +162,13 @@ describe('validBasketRecipeAdd', () => {
       const orderId = '12345'
 
       test('then it should not call', () => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
+        basketActions.validBasketRecipeAdd(
+          '123',
+          'boxsummary',
+          { position: '57' },
+          undefined,
+          orderId,
+        )(dispatch, getStateSpy)
 
         expect(mockSendClientMetrics).not.toHaveBeenCalled()
       })
@@ -160,7 +178,13 @@ describe('validBasketRecipeAdd', () => {
       const orderId = undefined
 
       test('then it should call sendClientMetric with the correct info', () => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
+        basketActions.validBasketRecipeAdd(
+          '123',
+          'boxsummary',
+          { position: '57' },
+          undefined,
+          orderId,
+        )(dispatch, getStateSpy)
 
         expect(mockSendClientMetrics).toHaveBeenCalledWith('menu-first-recipe-add', 1, 'Count')
       })
@@ -175,13 +199,13 @@ describe('validBasketRecipeAdd', () => {
       mockSendClientMetrics = safeJestMock(clientMetrics, 'sendClientMetric')
       getStateSpy = jest.fn().mockReturnValue({
         auth: Immutable.Map({
-          id: authId
+          id: authId,
         }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1]]),
           numPortions: 2,
-          hasAddedFirstRecipe: true
+          hasAddedFirstRecipe: true,
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30, 4: 10 },
@@ -193,12 +217,15 @@ describe('validBasketRecipeAdd', () => {
             published: true,
             default: true,
             slug: 'foo',
-            recipesInCollection: ['123', '234']
-          }
-        })
+            recipesInCollection: ['123', '234'],
+          },
+        }),
       })
 
-      basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+      basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(
+        dispatch,
+        getStateSpy,
+      )
     })
 
     afterEach(() => {
@@ -216,13 +243,13 @@ describe('validBasketRecipeAdd', () => {
       limitReachSpy.mockReturnValue(false)
       getStateSpy = jest.fn().mockReturnValue({
         auth: Immutable.Map({
-          id: authId
+          id: authId,
         }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1]]),
           numPortions: 2,
-          limitReached: false
+          limitReached: false,
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30, 4: 10 },
@@ -237,16 +264,16 @@ describe('validBasketRecipeAdd', () => {
             published: true,
             default: true,
             slug: 'foo',
-            recipesInCollection: ['123', '234']
-          }
+            recipesInCollection: ['123', '234'],
+          },
         }),
         routing: {
           locationBeforeTransitions: {
             query: {
-              collection: 'foo'
-            }
-          }
-        }
+              collection: 'foo',
+            },
+          },
+        },
       })
     })
 
@@ -256,7 +283,10 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call `validBasketRecipeAdd` with recipe already within the basket which is in stock', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(
+          dispatch,
+          getStateSpy,
+        )
       })
 
       test('then state should have been retrieved two times', () => {
@@ -279,7 +309,7 @@ describe('validBasketRecipeAdd', () => {
             recipeId: '123',
             position: '57',
             collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-            recipe_count: 2
+            recipe_count: 2,
           },
         })
       })
@@ -294,7 +324,10 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call `validBasketRecipeAdd` with recipe that is out of stock', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('234', 'healthkitchen', { position: '23' })(dispatch, getStateSpy)
+        basketActions.validBasketRecipeAdd('234', 'healthkitchen', { position: '23' })(
+          dispatch,
+          getStateSpy,
+        )
       })
 
       test('then no actions should have been dispatched', () => {
@@ -309,13 +342,16 @@ describe('validBasketRecipeAdd', () => {
 
       getStateSpy = jest.fn().mockReturnValue({
         auth: Immutable.Map({
-          id: authId
+          id: authId,
         }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
-          recipes: Immutable.Map([['123', 1], ['234', 1]]),
+          recipes: Immutable.Map([
+            ['123', 1],
+            ['234', 1],
+          ]),
           numPortions: 4,
-          limitReached: false
+          limitReached: false,
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30, 4: 10 },
@@ -331,16 +367,16 @@ describe('validBasketRecipeAdd', () => {
             published: true,
             default: true,
             slug: 'foo',
-            recipesInCollection: ['123', '234']
-          }
+            recipesInCollection: ['123', '234'],
+          },
         }),
         routing: {
           locationBeforeTransitions: {
             query: {
-              collection: 'foo'
-            }
-          }
-        }
+              collection: 'foo',
+            },
+          },
+        },
       })
 
       limitReachSpy.mockImplementation(multiReturnMock([false, true]))
@@ -352,7 +388,10 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call `validBasketRecipeAdd`', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(
+          dispatch,
+          getStateSpy,
+        )
       })
 
       test('then state should have been retrieved two times', () => {
@@ -375,7 +414,7 @@ describe('validBasketRecipeAdd', () => {
             recipeId: '123',
             position: '57',
             collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-            recipe_count: 3
+            recipe_count: 3,
           },
         })
       })
@@ -396,7 +435,7 @@ describe('validBasketRecipeAdd', () => {
             limitReached: true,
             view: 'boxsummary',
             source: actionTypes.RECIPE_ADDED,
-          }
+          },
         })
       })
     })
@@ -406,15 +445,23 @@ describe('validBasketRecipeAdd', () => {
     beforeEach(() => {
       getStateSpy = jest.fn().mockReturnValue({
         auth: Immutable.Map({
-          id: authId
+          id: authId,
         }),
         basket: Immutable.Map({
-          recipes: Immutable.Map([['123', 1], ['234', 2], ['345', 1]]),
+          recipes: Immutable.Map([
+            ['123', 1],
+            ['234', 2],
+            ['345', 1],
+          ]),
           numPortions: 2,
-          limitReached: true
+          limitReached: true,
         }),
         newBasket: Immutable.Map({
-          recipes: Immutable.Map([['123', 1], ['234', 2], ['345', 1]]),
+          recipes: Immutable.Map([
+            ['123', 1],
+            ['234', 2],
+            ['345', 1],
+          ]),
           slotId: 'test-id',
         }),
         menuRecipeStock: Immutable.fromJS({
@@ -433,16 +480,16 @@ describe('validBasketRecipeAdd', () => {
             published: true,
             default: true,
             slug: 'foo',
-            recipesInCollection: ['123', '234']
-          }
+            recipesInCollection: ['123', '234'],
+          },
         }),
         routing: {
           locationBeforeTransitions: {
             query: {
-              collection: 'foo'
-            }
-          }
-        }
+              collection: 'foo',
+            },
+          },
+        },
       })
 
       jest.spyOn(basketUtils, 'limitReached').mockImplementation(() => true)
@@ -450,7 +497,10 @@ describe('validBasketRecipeAdd', () => {
 
     describe('when call  `validBasketRecipeAdd`', () => {
       beforeEach(() => {
-        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(
+          dispatch,
+          getStateSpy,
+        )
       })
 
       test('then no actions should have been dispatched', () => {
@@ -471,20 +521,21 @@ describe('basketRecipeAdd', () => {
     state = {
       basket: Immutable.Map({
         123: 1,
-        345: 1
+        345: 1,
       }),
       menuRecipeDetails: Immutable.Map({
-        recipeId: null
-      })
+        recipeId: null,
+      }),
     }
-    getStateSpy = () => (state)
+    getStateSpy = () => state
     dispatch = jest.fn()
   })
 
   describe('when there are no rules that will break the basket ', () => {
     beforeEach(() => {
       jest.spyOn(loggingmanagerActions, 'trackUserAddRemoveRecipe')
-      jest.spyOn(basketActions, 'validBasketRecipeAdd')
+      jest
+        .spyOn(basketActions, 'validBasketRecipeAdd')
         .mockReturnValue('mockedValidBasketRecipeAddReturn')
       validateMenuLimitsForBasketSpy.mockReturnValue([])
     })
@@ -514,18 +565,20 @@ describe('basketRecipeAdd', () => {
 
   describe('when there are rules that will break the basket ', () => {
     beforeEach(() => {
-      jest.spyOn(basketActions, 'validBasketRecipeAdd').mockReturnValue('mockedValidBasketRecipeAddReturn')
+      jest
+        .spyOn(basketActions, 'validBasketRecipeAdd')
+        .mockReturnValue('mockedValidBasketRecipeAddReturn')
       validateMenuLimitsForBasketSpy.mockReturnValue([
         {
           items: ['3037'],
           message: 'Only 1 oven ready meal is available per order',
-          name: 'charlie-binghams-basket-limit'
+          name: 'charlie-binghams-basket-limit',
         },
         {
           items: ['3037'],
           message: 'Only 1 new-rule meal is available per order',
-          name: 'new-rule'
-        }
+          name: 'new-rule',
+        },
       ])
     })
 
@@ -538,41 +591,48 @@ describe('basketRecipeAdd', () => {
 
       expect(validateMenuLimitsForBasketSpy).toBeCalledWith(state, '123')
       expect(dispatch).toHaveBeenCalledTimes(1)
-      expect(dispatch).toHaveBeenCalledWith(
-        {
-          key: 'BASKET_NOT_VALID',
-          type: 'ERROR',
-          value: {
-            errorTitle: 'Oven Ready meals',
-            recipeId: '123',
-            rules: [{
+      expect(dispatch).toHaveBeenCalledWith({
+        key: 'BASKET_NOT_VALID',
+        type: 'ERROR',
+        value: {
+          errorTitle: 'Oven Ready meals',
+          recipeId: '123',
+          rules: [
+            {
               items: ['3037'],
               message: 'Only 1 oven ready meal is available per order',
-              name: 'charlie-binghams-basket-limit'
-            }, {
+              name: 'charlie-binghams-basket-limit',
+            },
+            {
               items: ['3037'],
               message: 'Only 1 new-rule meal is available per order',
-              name: 'new-rule'
-            }
-            ]
-          }
-        })
+              name: 'new-rule',
+            },
+          ],
+        },
+      })
     })
 
     describe('when details screen is opened', () => {
       beforeEach(() => {
-        const menuRecipeDetailVisibilityChangeSpy = safeJestMock(menuRecipeDetailsActions, 'menuRecipeDetailVisibilityChange')
-        returnArgumentsFromMock(menuRecipeDetailVisibilityChangeSpy, 'menuRecipeDetailVisibilityChange')
+        const menuRecipeDetailVisibilityChangeSpy = safeJestMock(
+          menuRecipeDetailsActions,
+          'menuRecipeDetailVisibilityChange',
+        )
+        returnArgumentsFromMock(
+          menuRecipeDetailVisibilityChangeSpy,
+          'menuRecipeDetailVisibilityChange',
+        )
         state = {
           basket: Immutable.Map({
             123: 1,
-            345: 1
+            345: 1,
           }),
           menuRecipeDetails: Immutable.Map({
-            recipeId: '1234'
-          })
+            recipeId: '1234',
+          }),
         }
-        getStateSpy = () => (state)
+        getStateSpy = () => state
         dispatch = jest.fn()
       })
 
@@ -594,24 +654,23 @@ describe('basketRecipeRemove', () => {
         numPortions: 2,
         limitReached: true,
       }),
-      filters: Immutable.Map({
-      }),
+      filters: Immutable.Map({}),
       menuCollections: Immutable.fromJS({
         '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
           id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           published: true,
           default: true,
           slug: 'foo',
-          recipesInCollection: ['123', '234']
-        }
+          recipesInCollection: ['123', '234'],
+        },
       }),
       routing: {
         locationBeforeTransitions: {
           query: {
-            collection: 'foo'
-          }
-        }
-      }
+            collection: 'foo',
+          },
+        },
+      },
     })
     const limitReachSpy = safeJestMock(basketUtils, 'limitReached')
     limitReachSpy.mockReturnValue(false)
@@ -630,34 +689,40 @@ describe('basketRecipeRemove', () => {
       expect(getStateSpy.mock.calls).toHaveLength(3)
       expect(dispatch.mock.calls).toHaveLength(4)
 
-      expect(dispatch.mock.calls[0]).toEqual([{
-        type: actionTypes.BASKET_RECIPE_REMOVE,
-        recipeId: '123',
-        trackingData: {
-          actionType: trackingKeys.removeRecipe,
+      expect(dispatch.mock.calls[0]).toEqual([
+        {
+          type: actionTypes.BASKET_RECIPE_REMOVE,
           recipeId: '123',
-          view: undefined,
-          position: undefined,
-          collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          recipe_count: 0
+          trackingData: {
+            actionType: trackingKeys.removeRecipe,
+            recipeId: '123',
+            view: undefined,
+            position: undefined,
+            collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            recipe_count: 0,
+          },
         },
-      }])
+      ])
 
-      expect(dispatch.mock.calls[1]).toEqual([{
-        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-        stock: { 123: { 2: 1 } },
-      }])
+      expect(dispatch.mock.calls[1]).toEqual([
+        {
+          type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+          stock: { 123: { 2: 1 } },
+        },
+      ])
 
-      expect(dispatch.mock.calls[2]).toEqual([{
-        type: actionTypes.BASKET_LIMIT_REACHED,
-        limitReached: false,
-        trackingData: {
-          view: undefined,
-          source: actionTypes.RECIPE_REMOVED,
-          actionType: trackingKeys.basketLimit,
+      expect(dispatch.mock.calls[2]).toEqual([
+        {
+          type: actionTypes.BASKET_LIMIT_REACHED,
           limitReached: false,
+          trackingData: {
+            view: undefined,
+            source: actionTypes.RECIPE_REMOVED,
+            actionType: trackingKeys.basketLimit,
+            limitReached: false,
+          },
         },
-      }])
+      ])
     })
 
     test('then trackUserAddRemoveRecipe is called correctly', () => {
@@ -671,95 +736,110 @@ describe('basketRecipeRemove', () => {
     expect(getStateSpy.mock.calls).toHaveLength(3)
     expect(dispatch.mock.calls).toHaveLength(4)
 
-    expect(dispatch.mock.calls[0]).toEqual([{
-      type: actionTypes.BASKET_RECIPE_REMOVE,
-      recipeId: '123',
-      trackingData: {
-        actionType: trackingKeys.removeRecipe,
+    expect(dispatch.mock.calls[0]).toEqual([
+      {
+        type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
-        view: 'boxsummary',
-        position: undefined,
-        collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-        recipe_count: 0
+        trackingData: {
+          actionType: trackingKeys.removeRecipe,
+          recipeId: '123',
+          view: 'boxsummary',
+          position: undefined,
+          collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipe_count: 0,
+        },
       },
-    }])
+    ])
 
-    expect(dispatch.mock.calls[1]).toEqual([{
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: { 123: { 2: 1 } },
-    }])
+    expect(dispatch.mock.calls[1]).toEqual([
+      {
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: { 123: { 2: 1 } },
+      },
+    ])
 
-    expect(dispatch.mock.calls[2]).toEqual([{
-      type: actionTypes.BASKET_LIMIT_REACHED,
-      limitReached: false,
-      trackingData: {
-        view: 'boxsummary',
-        source: actionTypes.RECIPE_REMOVED,
-        actionType: trackingKeys.basketLimit,
+    expect(dispatch.mock.calls[2]).toEqual([
+      {
+        type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
+        trackingData: {
+          view: 'boxsummary',
+          source: actionTypes.RECIPE_REMOVED,
+          actionType: trackingKeys.basketLimit,
+          limitReached: false,
+        },
       },
-    }])
+    ])
   })
 
   test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE when portion and recipe limit is reached', () => {
     getStateSpy = jest.fn().mockReturnValue({
       basket: Immutable.Map({
-        recipes: Immutable.Map([['111', 1], ['222', 1], ['333', 1]]),
+        recipes: Immutable.Map([
+          ['111', 1],
+          ['222', 1],
+          ['333', 1],
+        ]),
         numPortions: 2,
         limitReached: true,
       }),
-      filters: Immutable.Map({
-      }),
+      filters: Immutable.Map({}),
       menuCollections: Immutable.fromJS({
         '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
           id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           published: true,
           default: true,
           slug: 'foo',
-          recipesInCollection: ['123', '234']
-        }
+          recipesInCollection: ['123', '234'],
+        },
       }),
       routing: {
         locationBeforeTransitions: {
           query: {
-            collection: 'foo'
-          }
-        }
-      }
+            collection: 'foo',
+          },
+        },
+      },
     })
     basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
 
     expect(getStateSpy.mock.calls).toHaveLength(3)
     expect(dispatch.mock.calls).toHaveLength(4)
 
-    expect(dispatch.mock.calls[0]).toEqual([{
-      type: actionTypes.BASKET_RECIPE_REMOVE,
-      recipeId: '123',
-      trackingData: {
-        actionType: trackingKeys.removeRecipe,
+    expect(dispatch.mock.calls[0]).toEqual([
+      {
+        type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
-        view: undefined,
-        position: undefined,
-        collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-        recipe_count: 2
+        trackingData: {
+          actionType: trackingKeys.removeRecipe,
+          recipeId: '123',
+          view: undefined,
+          position: undefined,
+          collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipe_count: 2,
+        },
       },
-    }])
+    ])
 
-    expect(dispatch.mock.calls[1]).toEqual([{
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: { 123: { 2: 1 } },
-    }])
+    expect(dispatch.mock.calls[1]).toEqual([
+      {
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: { 123: { 2: 1 } },
+      },
+    ])
 
-    expect(dispatch.mock.calls[2]).toEqual([{
-      type: actionTypes.BASKET_LIMIT_REACHED,
-      limitReached: false,
-      trackingData: {
-        view: undefined,
-        source: actionTypes.RECIPE_REMOVED,
-        actionType: trackingKeys.basketLimit,
+    expect(dispatch.mock.calls[2]).toEqual([
+      {
+        type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
+        trackingData: {
+          view: undefined,
+          source: actionTypes.RECIPE_REMOVED,
+          actionType: trackingKeys.basketLimit,
+          limitReached: false,
+        },
       },
-    }])
+    ])
   })
 })
 
@@ -771,9 +851,9 @@ describe('basketRecipeSwap', () => {
   describe('When there is no basket valid error', () => {
     beforeEach(() => {
       state = {
-        error: Immutable.Map({})
+        error: Immutable.Map({}),
       }
-      getStateSpy = () => (state)
+      getStateSpy = () => state
       dispatch = jest.fn()
     })
     test('then it should not dispatch anything', () => {
@@ -793,23 +873,26 @@ describe('basketRecipeSwap', () => {
               {
                 name: 'Rule one',
                 message: 'You cannot add two of these',
-                items: ['678']
-              }
-            ]
-          }
+                items: ['678'],
+              },
+            ],
+          },
         }),
       }
-      getStateSpy = () => (state)
+      getStateSpy = () => state
       dispatch = jest.fn()
 
-      safeJestMock(basketActions, 'validBasketRecipeAdd')
-        .mockReturnValue('mockedValidBasketRecipeAddReturn')
+      safeJestMock(basketActions, 'validBasketRecipeAdd').mockReturnValue(
+        'mockedValidBasketRecipeAddReturn',
+      )
 
-      safeJestMock(basketActions, 'basketRecipeRemove')
-        .mockReturnValue('mockedBasketRecipeRemoveReturn')
+      safeJestMock(basketActions, 'basketRecipeRemove').mockReturnValue(
+        'mockedBasketRecipeRemoveReturn',
+      )
 
-      safeJestMock(menuCheckoutClickActions, 'clearBasketNotValidError')
-        .mockReturnValue('mockedClearBasketNotValidErrorReturn')
+      safeJestMock(menuCheckoutClickActions, 'clearBasketNotValidError').mockReturnValue(
+        'mockedClearBasketNotValidErrorReturn',
+      )
     })
 
     test('then it should dipatch basketRecipeRemove', () => {

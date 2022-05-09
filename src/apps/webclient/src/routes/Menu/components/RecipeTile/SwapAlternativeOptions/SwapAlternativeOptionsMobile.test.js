@@ -8,41 +8,41 @@ import { SwapAlternativeOptionsMobile } from './SwapAlternativeOptionsMobile'
 
 Modal.setAppElement(document.body)
 
-const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => ([{
-  recipeId: '111',
-  recipeName: 'Test Recipe One',
-  changeCheckedRecipe: () => {},
-  isChecked: true,
-  isOnDetailScreen: false,
-  isOutOfStock: false,
-},{
-  recipeId: '222',
-  recipeName: 'Test Recipe Two',
-  changeCheckedRecipe: () => {},
-  isChecked: false,
-  isOnDetailScreen: false,
-  isOutOfStock: false,
-}]))
+const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => [
+  {
+    recipeId: '111',
+    recipeName: 'Test Recipe One',
+    changeCheckedRecipe: () => {},
+    isChecked: true,
+    isOnDetailScreen: false,
+    isOutOfStock: false,
+  },
+  {
+    recipeId: '222',
+    recipeName: 'Test Recipe Two',
+    changeCheckedRecipe: () => {},
+    isChecked: false,
+    isOnDetailScreen: false,
+    isOutOfStock: false,
+  },
+])
 
 describe('<SwapAlternativeOptionsMobile />', () => {
   let trackRecipeAlternativeOptionsMenuOpen
   let trackRecipeAlternativeOptionsMenuSwapRecipes
 
   beforeEach(() => {
-    jest.spyOn(Menu, 'useMenu')
-      .mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
+    jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
 
     trackRecipeAlternativeOptionsMenuOpen = jest.fn()
     trackRecipeAlternativeOptionsMenuSwapRecipes = jest.fn()
 
-    jest.spyOn(Tracker, 'useTracking')
-      .mockImplementation(() => ({
-        trackRecipeAlternativeOptionsMenuOpen,
-        trackRecipeAlternativeOptionsMenuSwapRecipes,
-      }))
+    jest.spyOn(Tracker, 'useTracking').mockImplementation(() => ({
+      trackRecipeAlternativeOptionsMenuOpen,
+      trackRecipeAlternativeOptionsMenuSwapRecipes,
+    }))
 
-    jest.spyOn(RecipeAlternativeOptionsTracker, 'useTrackVariantListDisplay')
-      .mockImplementation()
+    jest.spyOn(RecipeAlternativeOptionsTracker, 'useTrackVariantListDisplay').mockImplementation()
   })
 
   afterEach(() => {
@@ -51,7 +51,8 @@ describe('<SwapAlternativeOptionsMobile />', () => {
   })
 
   describe('when rendered initially', () => {
-    const renderOptions = () => render(<SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="111" />)
+    const renderOptions = () =>
+      render(<SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="111" />)
 
     test('should show only button', () => {
       renderOptions()
@@ -79,7 +80,9 @@ describe('<SwapAlternativeOptionsMobile />', () => {
 
   describe('when clicked on', () => {
     const renderExtendedDropdown = () => {
-      const renderedResults = render(<SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="111" />)
+      const renderedResults = render(
+        <SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="111" />,
+      )
       fireEvent.click(screen.getByRole('button'))
 
       return renderedResults

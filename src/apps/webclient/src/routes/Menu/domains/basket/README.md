@@ -17,6 +17,7 @@ import { useBasket } from 'routes/Menu/domains/basket'
 ### Recipes in basket
 
 You can
+
 - access the current recipes in basket with `recipes: BasketRecipe[]` **(not yet implemented)**
 - use `canAddRecipes: boolean` to check if the basket is ready for the user to add recipes to
 - add a recipe to the basket with `addRecipe(recipeId: string, view?: string): void`
@@ -26,14 +27,18 @@ You can
 const { canAddRecipes, addRecipe } = useBasket()
 
 const onClick = () => {
-    if (!canAddRecipes) {
-        return
-    }
+  if (!canAddRecipes) {
+    return
+  }
 
-    addRecipe(props.recipeId, 'grid')
+  addRecipe(props.recipeId, 'grid')
 }
 
-return <button disabled={!canAddRecipes} onClick={onClick}>Add Recipe</button>
+return (
+  <button disabled={!canAddRecipes} onClick={onClick}>
+    Add Recipe
+  </button>
+)
 ```
 
 ### Delivery details
@@ -65,7 +70,7 @@ If the basket is part of an existing order, this will be present. Otherwise this
 ```ts
 const { orderId } = useBasket()
 
-return <span>Order ID for basket: { orderId }</span>
+return <span>Order ID for basket: {orderId}</span>
 ```
 
 ### Menu information
@@ -73,7 +78,7 @@ return <span>Order ID for basket: { orderId }</span>
 ```ts
 const { menuId } = useBasket()
 
-return <span>Menu ID for basket: { menuId }</span>
+return <span>Menu ID for basket: {menuId}</span>
 ```
 
 ### Portion count
@@ -83,5 +88,5 @@ const { setNumPortions, numPortions } = useBasket()
 
 const change = () => setNumPortions(2)
 
-return <span>{ numPortions } portions</span>
+return <span>{numPortions} portions</span>
 ```

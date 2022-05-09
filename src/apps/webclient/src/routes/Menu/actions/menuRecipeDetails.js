@@ -6,35 +6,37 @@ import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
 import { doesRecipeHaveSurcharges } from '../selectors/menuService'
 
-export const menuRecipeDetailVisibilityChange = (recipeId, categoryId, recipeReference) => (dispatch, getState) => {
-  const { recipes } = getState()
-  if (recipeId && !recipes.get(recipeId, null)) {
-    return
+export const menuRecipeDetailVisibilityChange =
+  (recipeId, categoryId, recipeReference) => (dispatch, getState) => {
+    const { recipes } = getState()
+    if (recipeId && !recipes.get(recipeId, null)) {
+      return
+    }
+
+    // If the recipe is a side, then get the base recipe id associated with it and display that instead.
+    const baseRecipeId = replaceSideRecipeIdWithBaseRecipeId(getState(), { recipeId })
+
+    dispatch({
+      type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+      recipeId: baseRecipeId,
+      categoryId,
+      recipeReference,
+      trackingData: {
+        actionType: trackingKeys.changeMenuRecipeDetailVisibility,
+        recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
+        show: Boolean(baseRecipeId),
+      },
+    })
   }
 
-  // If the recipe is a side, then get the base recipe id associated with it and display that instead.
-  const baseRecipeId = replaceSideRecipeIdWithBaseRecipeId(getState(), { recipeId })
+export const showDetailRecipe =
+  (recipeId, categoryIds, recipeReference) => (dispatch, getState) => {
+    const { boxSummaryShow } = getState()
 
-  dispatch({
-    type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
-    recipeId: baseRecipeId,
-    categoryId,
-    recipeReference,
-    trackingData: {
-      actionType: trackingKeys.changeMenuRecipeDetailVisibility,
-      recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
-      show: Boolean(baseRecipeId),
-    },
-  })
-}
-
-export const showDetailRecipe = (recipeId, categoryIds, recipeReference) => (dispatch, getState) => {
-  const { boxSummaryShow } = getState()
-
-  if (!boxSummaryShow.get('show')) {
-    menuRecipeDetailVisibilityChange(recipeId, categoryIds, recipeReference)(dispatch, getState)
+    if (!boxSummaryShow.get('show')) {
+      menuRecipeDetailVisibilityChange(recipeId, categoryIds, recipeReference)(dispatch, getState)
+    }
   }
-}
 
 export const checkQueryParams = () => (dispatch, getState) => {
   const prevLoc = locationBeforeTransitions(getState())
@@ -83,20 +85,28 @@ export const selectRecipeVariantAction = (
 })
 
 export const selectRecipeVariant =
-  ({originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true, recipeReference}) =>
-    async (dispatch, getState) => {
-      const hasSurcharges = doesRecipeHaveSurcharges(getState(), variantId)
+  ({
+    originalRecipeId,
+    variantId,
+    collectionId,
+    variantOutOfStock,
+    view = 'grid',
+    close = true,
+    recipeReference,
+  }) =>
+  async (dispatch, getState) => {
+    const hasSurcharges = doesRecipeHaveSurcharges(getState(), variantId)
 
-      dispatch(
-        selectRecipeVariantAction(
-          originalRecipeId,
-          variantId,
-          collectionId,
-          variantOutOfStock,
-          view,
-          close,
-          hasSurcharges,
-          recipeReference,
-        )
-      )
-    }
+    dispatch(
+      selectRecipeVariantAction(
+        originalRecipeId,
+        variantId,
+        collectionId,
+        variantOutOfStock,
+        view,
+        close,
+        hasSurcharges,
+        recipeReference,
+      ),
+    )
+  }

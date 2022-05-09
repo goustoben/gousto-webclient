@@ -1,9 +1,6 @@
 import Immutable from 'immutable'
 
-import {
-  fetchOrder,
-  updateOrderAddress,
-} from 'apis/orders'
+import { fetchOrder, updateOrderAddress } from 'apis/orders'
 import actionStatus from 'actions/status'
 import * as deliveriesUtils from 'utils/deliveries'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
@@ -26,7 +23,7 @@ jest.mock('actions/tracking')
 jest.mock('actions/order')
 jest.mock('actions/orderConfirmation')
 jest.mock('utils/logger', () => ({
-  error: jest.fn()
+  error: jest.fn(),
 }))
 
 jest.mock('config/order', () => ({
@@ -39,15 +36,13 @@ jest.mock('config/order', () => ({
       actionType: '',
       trackAffiliate: true,
     },
-  }
+  },
 }))
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
-    data: [
-      { id: 1 },
-    ]
-  })
+    data: [{ id: 1 }],
+  }),
 }))
 
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
@@ -74,31 +69,33 @@ describe('order actions', () => {
     getState.mockReturnValue({
       auth: Immutable.Map({
         accessToken: 'access-token',
-        id: 'user-id'
+        id: 'user-id',
       }),
       features: Immutable.Map({
         orderConfirmation: Immutable.Map({
           value: false,
-        })
+        }),
       }),
       basket: Immutable.Map({
         date: '2019-10-11',
-        slotId: '4'
+        slotId: '4',
       }),
       onScreenRecovery: Immutable.Map({
         valueProposition: 'mock-value-proposition',
-        offer: 'mock-offer'
+        offer: 'mock-offer',
       }),
       user: Immutable.Map({
-        newOrders: [Immutable.fromJS({ id: '123', orderState: 'scheduled' })]
-      })
+        newOrders: [Immutable.fromJS({ id: '123', orderState: 'scheduled' })],
+      }),
     })
 
-    jest.spyOn(deliveriesUtils, 'getSlot').mockReturnValue(Immutable.fromJS({
-      coreSlotId: '4',
-      id: 'deliveries-uuid',
-      daySlotLeadTimeId: 'day-slot-lead-time-uuid'
-    }))
+    jest.spyOn(deliveriesUtils, 'getSlot').mockReturnValue(
+      Immutable.fromJS({
+        coreSlotId: '4',
+        id: 'deliveries-uuid',
+        daySlotLeadTimeId: 'day-slot-lead-time-uuid',
+      }),
+    )
 
     // We stub out some action so they will be `undefined`
     dispatch = jest.fn(async (fn) => (fn ? fn(dispatch, getState) : undefined))
@@ -116,14 +113,22 @@ describe('order actions', () => {
   describe('orderAssignToUser', () => {
     beforeEach(() => {
       recipes = [1, 2, 3, 4, 5]
-      jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
-      ))
-      updateOrderAddress.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve() })
-      ))
+      jest.spyOn(orderV2, 'updateOrder').mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            resolve({ data: { id: '5678' } })
+          }),
+        ),
+      )
+      updateOrderAddress.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            resolve()
+          }),
+        ),
+      )
       jest.spyOn(orderSelectors, 'getOrderDetails').mockReturnValue({
-        recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
+        recipe_choices: recipes.map((id) => ({ id, type: 'Recipe', quantity: numPortions })),
         delivery_slot_id: coreSlotId,
         delivery_day_id: coreDayId,
       })
@@ -134,9 +139,13 @@ describe('order actions', () => {
     })
 
     test('should mark ORDER_SAVE as pending', async () => {
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
-      ))
+      saveUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            resolve({ data: { id: '5678' } })
+          }),
+        ),
+      )
       await orderAssignToUser(orderAction)(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(2)
@@ -146,9 +155,13 @@ describe('order actions', () => {
 
     test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async () => {
       const err = new Error('oops')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(err) })
-      ))
+      saveUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve, reject) => {
+            reject(err)
+          }),
+        ),
+      )
       await orderAssignToUser(orderAction)(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(3)
@@ -164,12 +177,20 @@ describe('order actions', () => {
     test('should mark ORDER_SAVE as errored with "update-order-fail" if it fails on updating order', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
       const orderUpdateErr = new Error('user already has an order for chosen delivery day')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr) })
-      ))
-      updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderUpdateErr) })
-      ))
+      saveUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve, reject) => {
+            reject(orderSaveErr)
+          }),
+        ),
+      )
+      updateUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve, reject) => {
+            reject(orderUpdateErr)
+          }),
+        ),
+      )
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
@@ -178,9 +199,13 @@ describe('order actions', () => {
 
     test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr) })
-      ))
+      saveUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve, reject) => {
+            reject(orderSaveErr)
+          }),
+        ),
+      )
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
@@ -200,12 +225,20 @@ describe('order actions', () => {
 
     test('should mark ORDER_SAVE as errored with "assign-order-fail" if updating order doesn\'t return data', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr) })
-      ))
-      updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({}) })
-      ))
+      saveUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve, reject) => {
+            reject(orderSaveErr)
+          }),
+        ),
+      )
+      updateUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            resolve({})
+          }),
+        ),
+      )
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
@@ -213,44 +246,44 @@ describe('order actions', () => {
     })
 
     test('should redirect the user to the order summary page if it succeeds on saving new order', async () => {
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '4321' } }) })
-      ))
+      saveUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            resolve({ data: { id: '4321' } })
+          }),
+        ),
+      )
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
       expect(trackOrder).toHaveBeenCalledWith('transaction', { id: '4321' })
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(
-        '4321',
-        'transaction',
-      )
-      expect(pending).toHaveBeenCalledWith(
-        actionTypes.ORDER_SAVE,
-        false,
-      )
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith('4321', 'transaction')
+      expect(pending).toHaveBeenCalledWith(actionTypes.ORDER_SAVE, false)
     })
 
     test('should redirect the user to the order summary page if it succeeds on updating existing order', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr) })
-      ))
+      saveUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve, reject) => {
+            reject(orderSaveErr)
+          }),
+        ),
+      )
 
-      updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '3456' } }) })
-      ))
+      updateUserOrder.mockImplementation(
+        jest.fn().mockReturnValue(
+          new Promise((resolve) => {
+            resolve({ data: { id: '3456' } })
+          }),
+        ),
+      )
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
       expect(trackOrder).toHaveBeenCalledWith('transaction', { id: '3456' })
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(
-        '3456',
-        'transaction',
-      )
-      expect(pending).toHaveBeenCalledWith(
-        actionTypes.ORDER_SAVE,
-        false,
-      )
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith('3456', 'transaction')
+      expect(pending).toHaveBeenCalledWith(actionTypes.ORDER_SAVE, false)
     })
   })
 
@@ -268,9 +301,13 @@ describe('order actions', () => {
     })
 
     test('should mark ORDER_SAVE as pending', async () => {
-      jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve) => { resolve(resolve) })
-      ))
+      jest.spyOn(orderV2, 'updateOrder').mockImplementation(
+        jest.fn().mockReturnValueOnce(
+          new Promise((resolve) => {
+            resolve(resolve)
+          }),
+        ),
+      )
 
       await sendUpdateOrder()(dispatch, getState)
 
@@ -281,9 +318,13 @@ describe('order actions', () => {
 
     test('should mark ORDER_SAVE as errored if it errors', async () => {
       const err = new Error('oops')
-      jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve, reject) => { reject(err) })
-      ))
+      jest.spyOn(orderV2, 'updateOrder').mockImplementation(
+        jest.fn().mockReturnValueOnce(
+          new Promise((resolve, reject) => {
+            reject(err)
+          }),
+        ),
+      )
 
       await sendUpdateOrder()(dispatch, getState)
 
@@ -299,10 +340,16 @@ describe('order actions', () => {
     })
 
     test('should map the arguments through to updateOrder correctly', async () => {
-      const updateOrderSpy = jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
-      ))
-      const getBasketOrderIdSpy = jest.spyOn(basketSelectors, 'getBasketOrderId').mockReturnValue('order-id')
+      const updateOrderSpy = jest.spyOn(orderV2, 'updateOrder').mockImplementation(
+        jest.fn().mockReturnValueOnce(
+          new Promise((resolve) => {
+            resolve({ data: { id: 'order_id' } })
+          }),
+        ),
+      )
+      const getBasketOrderIdSpy = jest
+        .spyOn(basketSelectors, 'getBasketOrderId')
+        .mockReturnValue('order-id')
       getOrderV2Spy.mockReturnValue({ id: 'order_id' })
 
       await sendUpdateOrder()(dispatch, getState)
@@ -316,26 +363,33 @@ describe('order actions', () => {
     test('should redirect the user to the order summary page if it succeeds', async () => {
       getOrderActionSpy.mockReturnValue('order_action')
       getOrderV2Spy.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
-      jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
-      ))
+      jest.spyOn(orderV2, 'updateOrder').mockImplementation(
+        jest.fn().mockReturnValueOnce(
+          new Promise((resolve) => {
+            resolve({ data: { id: 'order_id' } })
+          }),
+        ),
+      )
 
       await sendUpdateOrder()(dispatch, getState)
 
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(
-        'order-id',
-        'order_action',
-      )
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith('order-id', 'order_action')
     })
 
     test('should open the sides modal if isSidesEnabled is passed in as true', async () => {
       getOrderActionSpy.mockReturnValue('order_action')
       getOrderV2Spy.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
-      jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
-      ))
+      jest.spyOn(orderV2, 'updateOrder').mockImplementation(
+        jest.fn().mockReturnValueOnce(
+          new Promise((resolve) => {
+            resolve({ data: { id: 'order_id' } })
+          }),
+        ),
+      )
       const openSidesModalMock = jest.fn()
-      const openSidesModalSpy = jest.spyOn(SidesActions, 'openSidesModal').mockReturnValueOnce(openSidesModalMock)
+      const openSidesModalSpy = jest
+        .spyOn(SidesActions, 'openSidesModal')
+        .mockReturnValueOnce(openSidesModalMock)
 
       await sendUpdateOrder(true)(dispatch, getState)
 
@@ -344,13 +398,21 @@ describe('order actions', () => {
     })
 
     test('should call sendClientMetric with correct details', async () => {
-      jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
-      ))
+      jest.spyOn(orderV2, 'updateOrder').mockImplementation(
+        jest.fn().mockReturnValueOnce(
+          new Promise((resolve) => {
+            resolve({ data: { id: 'order_id' } })
+          }),
+        ),
+      )
 
       await sendUpdateOrder()(dispatch, getState)
 
-      expect(sendClientMetricMock).toHaveBeenCalledWith('menu-edit-complete-order-api-v2', 1, 'Count')
+      expect(sendClientMetricMock).toHaveBeenCalledWith(
+        'menu-edit-complete-order-api-v2',
+        1,
+        'Count',
+      )
     })
   })
 })

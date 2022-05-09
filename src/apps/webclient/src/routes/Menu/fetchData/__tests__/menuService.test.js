@@ -22,8 +22,8 @@ describe('menuservice', () => {
       menuFetchData.mockResolvedValue()
       getState = () => ({
         menuService: {
-          data: []
-        }
+          data: [],
+        },
       })
 
       await loadMenuServiceDataIfDeepLinked()(dispatch, getState)
@@ -36,7 +36,7 @@ describe('menuservice', () => {
       menuFetchData.mockResolvedValue()
       getState = () => ({
         menuService: {
-          data: []
+          data: [],
         },
       })
 

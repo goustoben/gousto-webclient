@@ -12,7 +12,7 @@ const buildDate = (date, disabled = false) => ({
   value: date,
   disabled,
   icon: '',
-  orderId: ''
+  orderId: '',
 })
 
 describe('DatePicker Calendar', () => {
@@ -29,9 +29,7 @@ describe('DatePicker Calendar', () => {
     beforeEach(() => {
       dates = null
       selected = '2017-03-28'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render empty', () => {
@@ -43,9 +41,7 @@ describe('DatePicker Calendar', () => {
     beforeEach(() => {
       dates = []
       selected = '2017-03-28'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render empty', () => {
@@ -67,9 +63,7 @@ describe('DatePicker Calendar', () => {
         buildDate('2017-03-30', true),
       ]
       selected = '2017-03-28'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render headings for all 7 days', () => {
@@ -87,16 +81,11 @@ describe('DatePicker Calendar', () => {
 
     test('should render a week starting on Saturday', () => {
       const className = `.${css.dayName.split(' ').join('.')}`
-      expect(
-        wrapper
-          .find(className)
-          .at(0)
-          .text(),
-      ).toEqual('Sat')
+      expect(wrapper.find(className).at(0).text()).toEqual('Sat')
     })
 
     test('should render the correct days in the correct boxes', () => {
-      [
+      ;[
         '2017-03-18',
         '2017-03-25',
         '2017-03-19',
@@ -138,9 +127,7 @@ describe('DatePicker Calendar', () => {
         buildDate('2017-03-30'),
       ]
       selected = '2017-03-23'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render headings for all 7 days', () => {
@@ -158,16 +145,11 @@ describe('DatePicker Calendar', () => {
 
     test('should render a week starting on Saturday', () => {
       const className = `.${css.dayName.split(' ').join('.')}`
-      expect(
-        wrapper
-          .find(className)
-          .at(0)
-          .text(),
-      ).toEqual('Sat')
+      expect(wrapper.find(className).at(0).text()).toEqual('Sat')
     })
 
     test('should render the correct days in the correct boxes', () => {
-      [
+      ;[
         '2017-03-18',
         '2017-03-25',
         '2017-03-19',
@@ -211,9 +193,7 @@ describe('DatePicker Calendar', () => {
         buildDate('2017-04-07'),
       ]
       selected = '2017-03-26'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render headings for all 7 days', () => {
@@ -231,12 +211,7 @@ describe('DatePicker Calendar', () => {
 
     test('should render a week starting on Saturday', () => {
       const className = `.${css.dayName.split(' ').join('.')}`
-      expect(
-        wrapper
-          .find(className)
-          .at(0)
-          .text(),
-      ).toEqual('Sat')
+      expect(wrapper.find(className).at(0).text()).toEqual('Sat')
     })
 
     test('should render headings for all 7 days', () => {
@@ -245,7 +220,7 @@ describe('DatePicker Calendar', () => {
     })
 
     test('should render the correct days in the correct boxes', () => {
-      [
+      ;[
         '2017-03-25',
         '2017-04-01',
         '2017-03-26',
@@ -259,7 +234,7 @@ describe('DatePicker Calendar', () => {
         '2017-03-30',
         '2017-04-06',
         '2017-03-31',
-        '2017-04-07'
+        '2017-04-07',
       ].forEach((date, index) => {
         const dateProp = wrapper.find(Day).at(index).prop('date')
 
@@ -286,12 +261,10 @@ describe('DatePicker Calendar', () => {
         buildDate('2017-01-02'),
         buildDate('2017-01-03'),
         buildDate('2017-01-04'),
-        buildDate('2017-01-05')
+        buildDate('2017-01-05'),
       ]
       selected = '2016-12-31'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render headings for all 7 days', () => {
@@ -300,7 +273,7 @@ describe('DatePicker Calendar', () => {
     })
 
     test('should render the correct days in the correct boxes', () => {
-      [
+      ;[
         '2016-12-24',
         '2016-12-31',
         '2016-12-25',
@@ -312,7 +285,7 @@ describe('DatePicker Calendar', () => {
         '2016-12-28',
         '2017-01-04',
         '2016-12-29',
-        '2017-01-05'
+        '2017-01-05',
       ].forEach((date, index) => {
         const dateProp = wrapper.find(Day).at(index).prop('date')
 
@@ -338,13 +311,11 @@ describe('DatePicker Calendar', () => {
         buildDate('2017-01-08'),
         buildDate('2017-01-09'),
         buildDate('2017-01-10'),
-        buildDate('2017-01-11')
+        buildDate('2017-01-11'),
       ]
       selected = '2017-01-03'
 
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render headings for all 7 days', () => {
@@ -353,7 +324,7 @@ describe('DatePicker Calendar', () => {
     })
 
     test('should render the correct days in the correct boxes', () => {
-      [
+      ;[
         '2016-12-31',
         '2017-01-07',
         '2017-01-01',
@@ -365,7 +336,7 @@ describe('DatePicker Calendar', () => {
         '2017-01-04',
         '2017-01-11',
         '2017-01-05',
-        '2017-01-12'
+        '2017-01-12',
       ].forEach((date, index) => {
         const dateProp = wrapper.find(Day).at(index).prop('date')
 
@@ -391,9 +362,7 @@ describe('DatePicker Calendar', () => {
         buildDate('2021-01-22'),
       ]
       selected = '2021-01-22'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render 1 week', () => {
@@ -401,7 +370,7 @@ describe('DatePicker Calendar', () => {
     })
 
     test('should render the correct days in the correct boxes', () => {
-      [
+      ;[
         '2021-01-16',
         '2021-01-17',
         '2021-01-18',
@@ -432,13 +401,11 @@ describe('DatePicker Calendar', () => {
         buildDate('2021-01-15', true),
       ]
       selected = '2021-01-15'
-      wrapper = shallow(
-        <Calendar dates={dates} selected={selected} onClick={onClick} />,
-      )
+      wrapper = shallow(<Calendar dates={dates} selected={selected} onClick={onClick} />)
     })
 
     test('should render saturday-friday 2 weeks', () => {
-      [
+      ;[
         '2021-01-02',
         '2021-01-09',
         '2021-01-03',

@@ -14,15 +14,18 @@ describe('menu closeRecipeDetails action', () => {
   beforeEach(() => {
     state = {
       menuRecipeDetails: Immutable.Map({
-        recipeId: detailRecipeId
+        recipeId: detailRecipeId,
       }),
     }
     dispatch = jest.fn()
 
-    menuRecipeDetailVisibilityChange = safeJestMock(menuRecipeDetailsActions, 'menuRecipeDetailVisibilityChange')
+    menuRecipeDetailVisibilityChange = safeJestMock(
+      menuRecipeDetailsActions,
+      'menuRecipeDetailVisibilityChange',
+    )
     menuRecipeDetailVisibilityChange.mockImplementation((recipeId) => ({
       type: 'mock_menuRecipeDetailVisibilityChange',
-      args: { recipeId }
+      args: { recipeId },
     }))
   })
 
@@ -35,8 +38,8 @@ describe('menu closeRecipeDetails action', () => {
     expect(dispatch).toHaveBeenCalledWith({
       type: 'mock_menuRecipeDetailVisibilityChange',
       args: {
-        recipeId: undefined
-      }
+        recipeId: undefined,
+      },
     })
   })
 })
