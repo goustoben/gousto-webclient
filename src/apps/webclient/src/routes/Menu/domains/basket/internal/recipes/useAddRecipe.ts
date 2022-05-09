@@ -13,8 +13,8 @@ import { getMenuRecipeIdForDetails } from 'routes/Menu/selectors/menuRecipeDetai
 import { getBasketRecipes, isFirstRecipeAdded, getBasketSlotId } from 'selectors/basket'
 import { getUTMAndPromoCode } from 'selectors/tracking'
 import status from 'actions/status'
+import { useRecipeLimitReached } from '../useRecipeLimitReached'
 import { useNumPortions } from '../useNumPortions'
-import { limitReached } from '../limitReached'
 
 const useAddValidRecipeToBasket = () => {
   const menuRecipes = useSelector(getBasketRecipes)
@@ -27,6 +27,8 @@ const useAddValidRecipeToBasket = () => {
   const { numPortions } = useNumPortions()
   const prevRecipes = usePrevious(menuRecipes)
 
+  const reachedLimit = useRecipeLimitReached(menuRecipes)
+
   const dispatch = useDispatch()
 
   return (
@@ -38,7 +40,6 @@ const useAddValidRecipeToBasket = () => {
     maxRecipesNum?: number,
     orderId?: string,
   ) => {
-    let reachedLimit = limitReached(menuRecipes)
     const outOfStock = isRecipeOutOfStock(recipeId)
     if (reachedLimit || outOfStock) {
       return
@@ -76,7 +77,6 @@ const useAddValidRecipeToBasket = () => {
       },
     })
 
-    reachedLimit = limitReached(menuRecipes)
     if (reachedLimit) {
       dispatch({
         type: actionTypes.BASKET_LIMIT_REACHED,
