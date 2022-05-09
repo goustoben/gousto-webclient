@@ -44,7 +44,8 @@ const typescriptRule = (tsconfigPath = "./tsconfig.json") => ({
     path.resolve('./src'),
     path.resolve('./libs/goustouicomponents/src'),
     // We directly compile internal feature modules, rather than pulling from a /dist
-    path.resolve('../../modules/features')
+    path.resolve('../../modules/features'),
+    path.resolve('../../modules/library')
   ],
 })
 
@@ -67,7 +68,8 @@ const javascriptRule = (tsconfigPath = "../../../tsconfig.json") => ({
     path.resolve('./src'),
     path.resolve('./libs/goustouicomponents/src'),
     // We directly compile internal feature modules, rather than pulling from a /dist
-    path.resolve('../../modules/features')
+    path.resolve('../../modules/features'),
+    path.resolve('../../modules/library')
   ],
 })
 
