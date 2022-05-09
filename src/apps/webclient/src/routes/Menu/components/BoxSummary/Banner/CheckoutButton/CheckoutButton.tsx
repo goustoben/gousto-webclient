@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 import classNames from 'classnames'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, Join, Space } from '@gousto-internal/citrus-react'
+import { Button } from '@gousto-internal/citrus-react'
 import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
@@ -44,7 +44,7 @@ export const CheckoutButton = ({
       e.stopPropagation()
       dispatch(checkoutBasket({ section, view, pricing }))
     },
-    [dispatch, checkoutBasket, section, view, pricing],
+    [dispatch, section, view, pricing],
   )
 
   // CheckoutCounter should change background color when the button is hovered.

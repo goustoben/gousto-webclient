@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MOBILE_VIEW } from 'utils/view'
 
 import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
 import { PriceAndDiscountTip } from '../PriceAndDiscountTip'

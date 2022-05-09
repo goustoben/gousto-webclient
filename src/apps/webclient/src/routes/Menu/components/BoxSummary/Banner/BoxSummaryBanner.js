@@ -10,6 +10,8 @@ import classNames from 'classnames'
 import { Tooltip } from 'goustouicomponents'
 import { createGetPromoStoreEntry } from 'selectors/promoStoreSelectors'
 import { createGetActionTypeIsPending } from 'selectors/status'
+import * as trackingKeys from 'actions/trackingKeys'
+import { Box } from '@gousto-internal/citrus-react'
 import { ActionBar } from '../../ActionBar/ActionBar'
 import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
 
@@ -20,16 +22,8 @@ import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
 import { OpenBoxButton } from './OpenBoxButton'
 import { CheckoutButton } from './CheckoutButton'
 import { PriceAndDiscountTip } from './PriceAndDiscountTip'
-import * as trackingKeys from 'actions/trackingKeys'
-import { Box } from '@gousto-internal/citrus-react'
 
-const BoxSummaryBanner = ({
-  numRecipes,
-  expandWarning,
-  onExpandClick,
-  showBrowseCTA,
-  errorText,
-}) => {
+const BoxSummaryBanner = ({ numRecipes, onExpandClick, showBrowseCTA, errorText }) => {
   const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
   const dispatch = useDispatch()
@@ -108,7 +102,6 @@ const BoxSummaryBanner = ({
 
 BoxSummaryBanner.propTypes = {
   numRecipes: PropTypes.number.isRequired,
-  expandWarning: PropTypes.bool.isRequired,
   onExpandClick: PropTypes.func.isRequired,
   showBrowseCTA: PropTypes.bool.isRequired,
   errorText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,

@@ -1,7 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import { useSelector } from 'react-redux'
 
 import { BoxSummaryOverlayMobile } from '../BoxSummaryOverlayMobile'
 

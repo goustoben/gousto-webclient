@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { useSelector } from 'react-redux'
 
 import { Price } from '../Price'
 import css from '../Price.css'

@@ -1,6 +1,4 @@
 import React from 'react'
-import classNames from 'classnames'
-
 import Overlay from 'Overlay'
 import { MOBILE_VIEW } from 'utils/view'
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
