@@ -23,7 +23,7 @@ const Lines = ({ numRecipes }: any) => {
     return (
       <>
         <div>
-          <Price pricing={pricing!} isPending={isPending} />
+          <Price pricing={pricing} isPending={isPending} />
         </div>
         <div className={css.bold}>{isDiscountEnabled ? discountTip : 'Free UK delivery'}</div>
       </>
