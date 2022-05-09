@@ -68,7 +68,7 @@ export const BoxSummaryBanner = ({
             <PriceAndDiscountTip numRecipes={numRecipes} />
           ) : (
             <ExpandBoxSummaryButtonContainer
-              onClick={onExpandClick ? onExpandClick : () => {}}
+              onClick={onExpandClick || (() => {})}
               numRecipes={numRecipes}
               showBrowseCTA={showBrowseCTA}
             />

@@ -1,6 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
+import { render, RenderResult } from '@testing-library/react'
 
 import { Price } from '../Price'
 

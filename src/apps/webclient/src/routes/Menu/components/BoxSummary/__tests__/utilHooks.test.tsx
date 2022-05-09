@@ -2,12 +2,7 @@ import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
 import { useSelector, RootStateOrAny } from 'react-redux'
 import { getIsAuthenticated } from 'selectors/auth'
-import {
-  useCheckoutPrices,
-  useDiscountTip,
-  getDiscountFromStore,
-  DiscountTuple,
-} from '../utilHooks'
+import { useCheckoutPrices, useDiscountTip, getDiscountFromStore } from '../utilHooks'
 
 jest.mock('routes/Menu/domains/pricing', () => ({
   usePricing: jest.fn().mockReturnValue({

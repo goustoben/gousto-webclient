@@ -1,11 +1,10 @@
 import React from 'react'
 import Immutable from 'immutable'
-import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
+import { render, RenderResult } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 import { useMedia } from 'react-use'
 
-import { useIsActionBarRedesignEnabled } from 'routes/Menu/hooks/useIsActionBarRedesignEnabled'
 import { BoxSummaryBanner } from '../BoxSummaryBanner'
 
 jest.mock('routes/Menu/hooks/useIsActionBarRedesignEnabled', () => ({
@@ -56,7 +55,7 @@ describe('BoxSummaryBanner', () => {
 
   describe('when rendered on desktop', () => {
     beforeEach(() => {
-      useMedia.mockReturnValue(false)
+      ;(useMedia as jest.Mock).mockReturnValue(false)
 
       rendered = render(
         <Provider store={mockedStore}>
@@ -78,7 +77,7 @@ describe('BoxSummaryBanner', () => {
 
   describe('when rendered on mobile', () => {
     beforeEach(() => {
-      useMedia.mockReturnValue(true)
+      ;(useMedia as jest.Mock).mockReturnValue(true)
 
       rendered = render(
         <Provider store={mockedStore}>
