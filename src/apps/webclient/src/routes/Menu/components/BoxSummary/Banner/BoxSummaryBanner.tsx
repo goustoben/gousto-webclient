@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, ButtonHTMLAttributes } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { promoGet } from 'actions/promos'
 import { getPromoCode } from 'selectors/basket'
@@ -23,7 +22,19 @@ import { OpenBoxButton } from './OpenBoxButton'
 import { CheckoutButton } from './CheckoutButton'
 import { PriceAndDiscountTip } from './PriceAndDiscountTip'
 
-const BoxSummaryBanner = ({ numRecipes, onExpandClick, showBrowseCTA, errorText }) => {
+type Props = {
+  numRecipes: number
+  onExpandClick: ButtonHTMLAttributes<Element>['onClick']
+  showBrowseCTA: boolean
+  errorText: string | undefined
+}
+
+export const BoxSummaryBanner = ({
+  numRecipes,
+  onExpandClick,
+  showBrowseCTA,
+  errorText,
+}: Props) => {
   const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
   const dispatch = useDispatch()
@@ -57,9 +68,8 @@ const BoxSummaryBanner = ({ numRecipes, onExpandClick, showBrowseCTA, errorText 
             <PriceAndDiscountTip numRecipes={numRecipes} />
           ) : (
             <ExpandBoxSummaryButtonContainer
-              onClick={onExpandClick}
+              onClick={onExpandClick ? onExpandClick : () => {}}
               numRecipes={numRecipes}
-              view={view}
               showBrowseCTA={showBrowseCTA}
             />
           )}
@@ -99,12 +109,3 @@ const BoxSummaryBanner = ({ numRecipes, onExpandClick, showBrowseCTA, errorText 
     </section>
   )
 }
-
-BoxSummaryBanner.propTypes = {
-  numRecipes: PropTypes.number.isRequired,
-  onExpandClick: PropTypes.func.isRequired,
-  showBrowseCTA: PropTypes.bool.isRequired,
-  errorText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-}
-
-export { BoxSummaryBanner }
