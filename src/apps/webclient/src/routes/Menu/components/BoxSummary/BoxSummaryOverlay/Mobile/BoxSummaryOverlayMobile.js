@@ -16,9 +16,7 @@ const BoxSummaryOverlayMobile = ({
   numPortions,
   shouldDisplayFullScreenBoxSummary,
 }) => {
-  const classNameToApply = shouldDisplayFullScreenBoxSummary
-    ? css.fullScreen
-    : css.mobileOverlay
+  const classNameToApply = shouldDisplayFullScreenBoxSummary ? css.fullScreen : css.mobileOverlay
 
   return (
     <Overlay

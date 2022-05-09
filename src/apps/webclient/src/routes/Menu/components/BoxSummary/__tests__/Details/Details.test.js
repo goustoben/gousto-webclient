@@ -5,7 +5,7 @@ import { LayoutContentWrapper } from 'goustouicomponents'
 import { Details } from '../../Details/Details'
 import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
 jest.mock('../../Banner/CheckoutButton', () => ({
-  CheckoutButton: () => <div id="CheckoutButton" />
+  CheckoutButton: () => <div id="CheckoutButton" />,
 }))
 
 describe('Details', () => {
@@ -13,7 +13,7 @@ describe('Details', () => {
     let wrapper
     const okRecipeIds = Immutable.fromJS({
       123: 1,
-      456: 1
+      456: 1,
     })
 
     const props = {
@@ -26,11 +26,13 @@ describe('Details', () => {
           id: 'dayId',
           date: '2019-09-05',
           coreDayId: '123',
-          slots: [{
-            id: '12e12'
-          }],
-          daySlots: []
-        }
+          slots: [
+            {
+              id: '12e12',
+            },
+          ],
+          daySlots: [],
+        },
       }),
       menuBoxPrices: Immutable.fromJS({
         2: {
@@ -38,22 +40,22 @@ describe('Details', () => {
             gourmet: {},
           },
           3: {
-            gourmet: {}
-          }
-        }
+            gourmet: {},
+          },
+        },
       }),
       promoCode: '',
       recipesStore: Immutable.fromJS({
         123: {
           id: '123',
           title: 'First recipe',
-          media: {}
+          media: {},
         },
         456: {
           id: '456',
           title: 'Second recipe',
-          media: {}
-        }
+          media: {},
+        },
       }),
       okRecipeIds,
       slotId: '12e12',
@@ -72,10 +74,8 @@ describe('Details', () => {
       checkoutBasket: () => {},
     }
 
-    const getCheckoutButtonWrapper = () => (
-      wrapper.find(LayoutContentWrapper).at(2).dive().find(DetailsCheckoutButton)
-        .dive()
-    )
+    const getCheckoutButtonWrapper = () =>
+      wrapper.find(LayoutContentWrapper).at(2).dive().find(DetailsCheckoutButton).dive()
 
     beforeEach(() => {
       wrapper = shallow(<Details {...props} />)
@@ -124,10 +124,7 @@ describe('Details', () => {
     describe('Details cta buttons', () => {
       describe('when shouldDisplayFullScreenBoxSummary is false', () => {
         beforeAll(() => {
-          wrapper = shallow(
-            <Details
-              {...props}
-            />)
+          wrapper = shallow(<Details {...props} />)
         })
         test('should NOT render sticky button', () => {
           expect(wrapper.find('.stickyButton').exists()).toBe(false)
@@ -135,11 +132,7 @@ describe('Details', () => {
       })
       describe('when shouldDisplayFullScreenBoxSummary is true', () => {
         beforeEach(() => {
-          wrapper = shallow(
-            <Details
-              {...props}
-              shouldDisplayFullScreenBoxSummary
-            />)
+          wrapper = shallow(<Details {...props} shouldDisplayFullScreenBoxSummary />)
         })
         test('should render sticky button', () => {
           const checkoutButton = getCheckoutButtonWrapper()
@@ -150,14 +143,10 @@ describe('Details', () => {
           beforeEach(() => {
             props.okRecipeIds = Immutable.Map({
               123: 1,
-              456: 1
+              456: 1,
             })
 
-            wrapper = shallow(
-              <Details
-                {...props}
-                shouldDisplayFullScreenBoxSummary
-              />)
+            wrapper = shallow(<Details {...props} shouldDisplayFullScreenBoxSummary />)
           })
 
           test('should render secondary CTA', () => {
@@ -176,11 +165,7 @@ describe('Details', () => {
               123: 1,
             })
 
-            wrapper = shallow(
-              <Details
-                {...props}
-                shouldDisplayFullScreenBoxSummary
-              />)
+            wrapper = shallow(<Details {...props} shouldDisplayFullScreenBoxSummary />)
           })
           test('should NOT render secondary CTA', () => {
             expect(wrapper.find('[color="secondary"]').exists()).toBe(false)
@@ -198,11 +183,7 @@ describe('Details', () => {
               456: 2,
             })
 
-            wrapper = shallow(
-              <Details
-                {...props}
-                shouldDisplayFullScreenBoxSummary
-              />)
+            wrapper = shallow(<Details {...props} shouldDisplayFullScreenBoxSummary />)
           })
           test('should NOT render secondary CTA', () => {
             expect(wrapper.find('[color="secondary"]').exists()).toBe(false)
