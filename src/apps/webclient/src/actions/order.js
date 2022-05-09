@@ -250,7 +250,7 @@ export const orderAddressChange = (orderId, addressId) => (
           ...trackingData
         }
       })
-      await updateOrderAddress(accessToken, orderId, addressId)
+      await orderV2.updateOrder(dispatch, getState, orderId)
       dispatch({
         type: actionTypes.ORDER_ADDRESS_CHANGE,
         data,
