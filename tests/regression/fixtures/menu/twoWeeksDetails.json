@@ -35429,6 +35429,62 @@
         ],
         "name": "5g parsley"
       }
+    },
+    {
+      "type": "box",
+      "id": "SKU-GMT-2-2",
+      "attributes": {
+        "number_of_portions": 2,
+        "number_of_recipes": 2
+      }
+    },
+    {
+      "type": "box",
+      "id": "SKU-GMT-2-4",
+      "attributes": {
+        "number_of_portions": 4,
+        "number_of_recipes": 2
+      }
+    },
+    {
+      "type": "box",
+      "id": "SKU-GMT-3-2",
+      "attributes": {
+        "number_of_portions": 2,
+        "number_of_recipes": 3
+      }
+    },
+    {
+      "type": "box",
+      "id": "SKU-GMT-3-4",
+      "attributes": {
+        "number_of_portions": 4,
+        "number_of_recipes": 3
+      }
+    },
+    {
+      "type": "box",
+      "id": "SKU-GMT-4-2",
+      "attributes": {
+        "number_of_portions": 2,
+        "number_of_recipes": 4
+      }
+    },
+    {
+      "type": "box",
+      "id": "SKU-GMT-4-4",
+      "attributes": {
+        "number_of_portions": 4,
+        "number_of_recipes": 4
+      }
+    },
+    {
+      "type": "box",
+      "id": "SKU-GMT-5-2",
+      "attributes": {
+        "number_of_portions": 2,
+        "number_of_recipes": 5
+      }
     }
   ],
   "meta": {

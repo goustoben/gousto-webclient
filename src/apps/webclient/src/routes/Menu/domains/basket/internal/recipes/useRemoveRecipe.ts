@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as trackingKeys from 'actions/trackingKeys'
 import { useCurrentCollectionId } from 'routes/Menu/domains/collections'
 import { getBasketRecipes } from 'selectors/basket'
+import { useRecipeLimitReached } from '../useRecipeLimitReached'
 import { useNumPortions } from '../useNumPortions'
-import { limitReached } from '../limitReached'
 
 export const useRemoveRecipe = () => {
   const { numPortions } = useNumPortions()
   const menuRecipes = useSelector(getBasketRecipes)
-  const reachedLimit = limitReached(menuRecipes)
+  const reachedLimit = useRecipeLimitReached(menuRecipes)
 
   const collection = useCurrentCollectionId()
   const dispatch = useDispatch()
