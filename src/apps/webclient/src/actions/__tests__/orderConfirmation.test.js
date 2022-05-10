@@ -251,39 +251,27 @@ describe('orderConfirmation actions', () => {
   })
 
   describe('orderConfirmationProductTracking', () => {
-    const trackingData = {
-      eventName: 'market_product_added',
-      trackingData: '1234'
-    }
     test('should return actionType as MarketProduct Added if boolean value is true', () => {
-      orderConfirmationProductTracking(trackingData, true)(dispatch)
+      const productId = '1234'
+      const added = true
+
+      orderConfirmationProductTracking(productId, added)(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: {
-          actionType: 'market_product_added',
-          trackingData: {
-            trackingData: '1234',
-            eventName: 'market_product_added',
-          },
-        }
+        trackingData: '1234',
       })
     })
 
     test('should return actionType as MarketProduct Removed if boolean value is false', () => {
-      trackingData.eventName = 'market_product_removed'
+      const productId = '1234'
+      const added = false
 
-      orderConfirmationProductTracking(trackingData, false)(dispatch)
+      orderConfirmationProductTracking(productId, added)(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: {
-          actionType: 'market_product_removed',
-          trackingData: {
-            trackingData: '1234',
-            eventName: 'market_product_removed',
-          },
-        }
+        trackingData: '1234',
       })
     })
   })

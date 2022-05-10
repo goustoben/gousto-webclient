@@ -187,7 +187,6 @@ describe('filters actions', () => {
       expect(dispatchSpyCalls[1][0]).toEqual({
         type: actionTypes.PRODUCTS_FILTER_TRACKING,
         trackingData: {
-          actionType: 'market_category',
           eventAction: 'clicked',
           eventName: 'market_category',
           eventType: 'secondary_action',

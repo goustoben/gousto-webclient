@@ -219,7 +219,6 @@ export const productsLoadRecipePairings = (recipeIds, menuStartDate) => (
 export const trackProductFiltering = (eventName, eventAction, eventType, primaryCategory, productsPerCategory) => ({
   type: actionTypes.PRODUCTS_FILTER_TRACKING,
   trackingData: {
-    actionType: eventName,
     eventName,
     eventAction,
     eventType,

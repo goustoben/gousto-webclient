@@ -90,6 +90,7 @@ const Market: FC<Props> = (props) => {
     null,
   )
   const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState<boolean>(false)
+  const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>('All Products')
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const isOrderConfirmation = true
   const [productRecipePairingData, setProductRecipePairingData] = useState(List([]))
@@ -117,9 +118,6 @@ const Market: FC<Props> = (props) => {
 
   const pairingsExperimentEnabled = useIsOptimizelyFeatureEnabled(
     userHasPairings ? 'etm_market_orderconfirmation_addingpairings_web_apr22' : null,
-  )
-  const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
-    pairingsExperimentEnabled ? 'Pairings' : 'All Products',
   )
 
   useEffect(() => {
