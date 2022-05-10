@@ -4,7 +4,10 @@ import classNames from 'classnames'
 
 import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
-import { useCheckoutPrices, useDiscountTip } from 'routes/Menu/components/BoxSummary/utilHooks'
+import {
+  useDiscountDescriptor,
+  formatDiscountTip,
+} from 'routes/Menu/components/BoxSummary/utilHooks'
 
 import { Price } from './Price'
 
@@ -17,11 +20,12 @@ type Props = {
 const Lines = ({ numRecipes }: Props) => {
   const { pricing, isPending } = usePricing()
 
-  const discountTip = useDiscountTip()
+  const discountDescriptor = useDiscountDescriptor()
+
+  const discountTip = formatDiscountTip(discountDescriptor)
 
   const canCheckout = numRecipes >= basketConfig.minRecipesNum
-  const checkoutPrices = useCheckoutPrices()
-  const { isDiscountEnabled } = checkoutPrices
+  const { isDiscountEnabled } = discountDescriptor
 
   if (canCheckout) {
     return (

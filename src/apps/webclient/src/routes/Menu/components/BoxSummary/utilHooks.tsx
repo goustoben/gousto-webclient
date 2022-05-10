@@ -1,87 +1,98 @@
+import Immutable from 'immutable'
 import { useSelector } from 'react-redux'
+import { createSelector } from 'reselect'
 import { getIsAuthenticated } from 'selectors/auth'
 import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
 import { getPromoCode } from 'selectors/basket'
+import { getPromoStore } from 'selectors/promoStoreSelectors'
 
-/**
- * Checkout prices information for display purposes
- */
-export interface CheckoutPrices {
+export type DiscountDescriptor = {
   isDiscountEnabled: boolean
-  /**
-   * If true, discount is monetary value, percentage value otherwise.
-   */
-  isDiscountFlat?: boolean
-  discountAmount?: number | null
-  /**
-   * Price without discounts applied.
-   */
-  grossPrice?: number
-  /**
-   * Price with discounts applied.
-   */
-  totalPrice?: number
+  discountKind?: 'flat' | 'percentage'
+  discountAmount?: string
 }
 
-/**
- * Returns either "amountOff" or "percentageOff" number value depending on "flatDiscountApplied" field
- * @returns {number} - discount amount
- */
-const getPercentageOrAmountOff = (
-  pricing?: Pricing | null,
-): Pricing['amountOff'] | Pricing['percentageOff'] | undefined => {
-  const flatDiscountApplied = pricing?.flatDiscountApplied
-
-  return pricing?.[flatDiscountApplied ? 'amountOff' : 'percentageOff']
+const isPositive = (price?: string | null): boolean => {
+  if (!price) {
+    return false
+  }
+  const parsed = Number.parseFloat(price)
+  return !Number.isNaN(parsed) && parsed > 0
 }
 
-export type DiscountTuple = [number, boolean]
-/**
- * Returns discount amount number and if flat discount enabled; e.g. [discountAmount, isDiscountFlat]
- */
-export const getDiscountFromStore = (state: any): DiscountTuple => {
-  const promoCode = getPromoCode(state)
-
-  const promoCodeDetails = state.promoStore?.getIn([promoCode, 'details'])
-  const flatDiscount = promoCodeDetails?.get('discount-whole-order-amount')
-  const percentageDiscount = promoCodeDetails?.get('discount-whole-order-percent')
-  const isDiscountFlat = !!flatDiscount && !percentageDiscount
-
-  return [isDiscountFlat ? flatDiscount : percentageDiscount, isDiscountFlat]
+const getDiscountFromPricing = (pricing?: Pricing | null): DiscountDescriptor => {
+  if (!pricing) {
+    return {
+      isDiscountEnabled: false,
+    }
+  }
+  const { flatDiscountApplied, amountOff, percentageOff } = pricing
+  if (flatDiscountApplied && isPositive(amountOff)) {
+    return {
+      isDiscountEnabled: true,
+      discountKind: 'flat',
+      discountAmount: amountOff as string,
+    }
+  } else if (isPositive(percentageOff)) {
+    return {
+      isDiscountEnabled: true,
+      discountKind: 'percentage',
+      discountAmount: percentageOff as string,
+    }
+  } else {
+    return {
+      isDiscountEnabled: false,
+    }
+  }
 }
 
+export const getDiscountFromStore = createSelector(
+  getPromoCode,
+  getPromoStore,
+  (promoCode: string | undefined, promoStore: Immutable.Map<string, any>): DiscountDescriptor => {
+    const promoCodeDetails = promoStore.getIn([promoCode, 'details'])
+    if (!promoCodeDetails) {
+      return {
+        isDiscountEnabled: false,
+      }
+    }
+
+    const amountOff = promoCodeDetails.get('discount-whole-order-amount', null)
+    const percentageOff = promoCodeDetails.get('discount-whole-order-percent', null)
+
+    if (isPositive(amountOff)) {
+      return {
+        isDiscountEnabled: true,
+        discountKind: 'flat',
+        discountAmount: amountOff,
+      }
+    } else if (isPositive(percentageOff)) {
+      return {
+        isDiscountEnabled: true,
+        discountKind: 'percentage',
+        discountAmount: percentageOff,
+      }
+    } else {
+      return {
+        isDiscountEnabled: false,
+      }
+    }
+  },
+)
+
 /**
- * Returns gross & total prices and discount percentage or amount for current order.
+ * Returns the descriptor for currently-applicable discount.
  */
-export const useCheckoutPrices = (): CheckoutPrices => {
+export const useDiscountDescriptor = (): DiscountDescriptor => {
   const { pricing } = usePricing()
-  const grossPrice = Number(pricing?.grossTotal)
-  const totalPrice = Number(pricing?.recipeTotalDiscounted)
   const isAuthenticated = useSelector<unknown, boolean>(getIsAuthenticated)
-
-  // For authenticated users, promo code discount is extracted from the
-  // `pricing` hook.
-  const existingUsersDiscountAmount = getPercentageOrAmountOff(pricing)
-  const isPricingDiscountFlat = pricing?.flatDiscountApplied
-  // const isPricingDiscountEnabled = useSelector<any, boolean>(getPromoCodeValid)
-  // TODO revert to line above once API is fixed
-  const isPricingDiscountEnabled =
-    existingUsersDiscountAmount !== null && existingUsersDiscountAmount !== undefined
 
   // For new users, the promo code discount is extracted from the `promoStore`
   // slice based on the current promo code stored in the `basket` slice.
-  const [newUsersDiscountAmount, isDiscountFlat] = useSelector<any, [number, boolean]>(
-    getDiscountFromStore,
-  )
-  const isDiscountEnabled = !!newUsersDiscountAmount
+  // For existing users, from the pricing hook.
+  const discountForNewUsers = useSelector<unknown, DiscountDescriptor>(getDiscountFromStore)
 
-  const result = {
-    grossPrice,
-    totalPrice,
-    isDiscountEnabled: isAuthenticated ? isPricingDiscountEnabled : isDiscountEnabled,
-    isDiscountFlat: isAuthenticated ? isPricingDiscountFlat : isDiscountFlat,
-    discountAmount: Number(isAuthenticated ? existingUsersDiscountAmount : newUsersDiscountAmount),
-  }
+  const result = isAuthenticated ? getDiscountFromPricing(pricing) : discountForNewUsers
 
   return result
 }
@@ -89,14 +100,16 @@ export const useCheckoutPrices = (): CheckoutPrices => {
 /**
  * Returns discount tip for display.
  */
-export const useDiscountTip = (): string | null => {
-  const { isDiscountEnabled, isDiscountFlat, discountAmount } = useCheckoutPrices()
+export const formatDiscountTip = (discountDescriptor: DiscountDescriptor): string | null => {
+  const { isDiscountEnabled, discountKind, discountAmount } = discountDescriptor
   if (!isDiscountEnabled) {
     return null
   }
-  const discountTip = isDiscountFlat
-    ? `£${discountAmount} off your box`
-    : `${discountAmount}% off your box`
+  const formattedAmount = Math.ceil(parseFloat(discountAmount as string))
+  const discountTip =
+    discountKind === 'flat'
+      ? `£${formattedAmount} off your box`
+      : `${formattedAmount}% off your box`
 
   return discountTip
 }
