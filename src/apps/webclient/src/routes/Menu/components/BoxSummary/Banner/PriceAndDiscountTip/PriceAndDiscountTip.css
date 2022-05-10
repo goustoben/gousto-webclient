@@ -13,7 +13,7 @@
     color: FS-800;
 
     /* When in button, override default centering. */
-    text-align: start;
+    text-align: left;
 
     /* Space between the information and the arrow. */
     margin-right: 1rem;
