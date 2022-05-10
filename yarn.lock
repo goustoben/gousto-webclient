@@ -2195,9 +2195,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gousto-internal/citrus-react@npm:^0.22.3":
-  version: 0.22.3
-  resolution: "@gousto-internal/citrus-react@npm:0.22.3::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.22.3.tgz"
+"@gousto-internal/citrus-react@npm:^0.22.6":
+  version: 0.22.6
+  resolution: "@gousto-internal/citrus-react@npm:0.22.6::__archiveUrl=https%3A%2F%2Fgousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com%3A443%2Fnpm%2Fproxy-repository%2F%40gousto-internal%2Fcitrus-react%2F-%2Fcitrus-react-0.22.6.tgz"
   dependencies:
     classnames: ^2.3.1
     focus-visible: ^5.2.0
@@ -2205,7 +2205,7 @@ __metadata:
     "@emotion/react": ^11.7.0
     react: ">=16"
     react-modal: ^3.14.3
-  checksum: a1df5e6e8e3e32d6fae5a016acac2d49828ad79087f3f952224c4874a10f79e1f48cfc51948d648a9dc83762128c707088137859f678ecd9a7be9d01ca67f605
+  checksum: 3bb99cce3f4b3e1ca6c585bc38b64944bc50f0ec794f5186d765563552771ab92c142de934737600fbecd057bc47d7dbb701dd7413e38ae22634a5400eacb184
   languageName: node
   linkType: hard
 
@@ -2734,9 +2734,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@library/babel@workspace:*, @library/babel@workspace:src/modules/library/babel":
+"@library/dev-babel@workspace:*, @library/dev-babel@workspace:src/modules/library/dev-babel":
   version: 0.0.0-use.local
-  resolution: "@library/babel@workspace:src/modules/library/babel"
+  resolution: "@library/dev-babel@workspace:src/modules/library/dev-babel"
   languageName: unknown
   linkType: soft
 
@@ -13138,7 +13138,7 @@ __metadata:
     "@babel/preset-env": 7.16.11
     "@babel/preset-react": 7.16.7
     "@babel/preset-typescript": 7.16.7
-    "@library/babel": "workspace:*"
+    "@library/dev-babel": "workspace:*"
     "@library/storybook": "workspace:*"
     "@storybook/react": ^6.4.18
     "@types/jest": 27.4.0
@@ -26943,7 +26943,7 @@ __metadata:
     "@datadog/browser-rum": ^3.8.0
     "@datadog/datadog-ci": ^0.17.12
     "@emotion/react": ^11.7.0
-    "@gousto-internal/citrus-react": ^0.22.3
+    "@gousto-internal/citrus-react": ^0.22.6
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@sheerun/mutationobserver-shim": ^0.3.3

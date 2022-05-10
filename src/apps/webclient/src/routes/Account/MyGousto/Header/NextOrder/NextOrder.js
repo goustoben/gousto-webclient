@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
+import { Card, CTA, Heading, InfoTip } from 'goustouicomponents'
 import Link from 'components/Link'
 import configRoutes from 'config/routes'
 import { windowOpen } from 'utils/window'
+import { OrderDetails } from 'routes/Account/AccountComponents/OrderDetails'
 import { myGoustoOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
 import { getClientOrderState } from '../../../../GetHelp/utils/orders'
 
@@ -17,12 +18,12 @@ const NextOrder = ({
   trackNextBoxTrackingClick,
   trackClickGetHelpWithThisBox,
 }) => {
-  const humanDeliveryDate = order.get('humanDeliveryDate')
+  const deliveryDate = order.get('deliveryDate')
   const orderId = order.get('id')
   const price = order.getIn(['prices', 'total'])
   const orderClientState = getClientOrderState(
     order.get('state'),
-    order.get('deliveryDate'),
+    deliveryDate,
     order.get('recipeItems'),
     order.get('phase')
   )
@@ -64,7 +65,7 @@ const NextOrder = ({
       </div>
       <Card>
         <OrderDetails
-          deliveryDate={humanDeliveryDate}
+          deliveryDate={deliveryDate}
           orderState={orderClientState}
           price={price}
           recipeImages={recipeImages.toJS()}

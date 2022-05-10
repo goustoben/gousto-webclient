@@ -106,7 +106,7 @@ describe('the NextOrder component', () => {
   test('renders OrderDetails with the right props inside a Card', () => {
     const orderDetails = wrapper.find('Card').find('OrderDetails')
 
-    expect(orderDetails.prop('deliveryDate')).toBe(ORDER_HUMAN_DELIVERY_DATE)
+    expect(orderDetails.prop('deliveryDate')).toBe(ORDER_DELIVERY_DATE)
     expect(orderDetails.prop('orderState')).toBe('recipes chosen')
     expect(orderDetails.prop('price')).toBe(ORDER_TOTAL_PRICE)
     expect(orderDetails.prop('recipeImages')).toEqual([

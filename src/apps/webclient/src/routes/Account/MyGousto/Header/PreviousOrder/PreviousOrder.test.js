@@ -7,6 +7,7 @@ describe('the PreviousOrder component', () => {
   let wrapper
   const trackClickGetHelpWithThisBox = jest.fn()
   const order = Immutable.fromJS({
+    deliveryDate: '2021-06-12T12:00:00.000Z',
     humanDeliveryDate: 'Tuesday 12 June',
     id: '100',
     phase: 'delivered',
@@ -45,7 +46,7 @@ describe('the PreviousOrder component', () => {
   })
 
   test('renders OrderDetails with correct props', () => {
-    expect(wrapper.find('OrderDetails').prop('deliveryDate')).toBe('Tuesday 12 June')
+    expect(wrapper.find('OrderDetails').prop('deliveryDate')).toBe('2021-06-12T12:00:00.000Z')
     expect(wrapper.find('OrderDetails').prop('orderState')).toBe('delivered')
     expect(wrapper.find('OrderDetails').prop('price')).toBe('23.00')
     expect(wrapper.find('OrderDetails').prop('recipeImages')).toEqual(
