@@ -16,12 +16,19 @@ import { checkoutBasket } from 'routes/Menu/actions/menuCheckoutClick'
 
 import css from './CheckoutButton.css'
 
+type Props = {
+  view: string
+  section: string
+  hideCounter?: boolean
+  isFullWidth?: boolean
+}
+
 export const CheckoutButton = ({
   view,
   section,
   hideCounter = false,
   isFullWidth = false,
-}: any) => {
+}: Props) => {
   const checkoutPending = useSelector(createGetActionTypeIsPending(actionTypes.BASKET_CHECKOUT))
   const orderSaveError = useSelector(createGetErrorForActionType(actionTypes.ORDER_SAVE))
 

@@ -10,7 +10,11 @@ import { Price } from './Price'
 
 import css from './PriceAndDiscountTip.css'
 
-const Lines = ({ numRecipes }: any) => {
+type Props = {
+  numRecipes: number
+}
+
+const Lines = ({ numRecipes }: Props) => {
   const { pricing, isPending } = usePricing()
 
   const discountTip = useDiscountTip()
@@ -45,7 +49,7 @@ const Lines = ({ numRecipes }: any) => {
   }
 }
 
-export const PriceAndDiscountTip = ({ numRecipes }: any) => (
+export const PriceAndDiscountTip = ({ numRecipes }: Props) => (
   <div className={css.priceAndDiscountTip}>
     <Lines numRecipes={numRecipes} />
   </div>
