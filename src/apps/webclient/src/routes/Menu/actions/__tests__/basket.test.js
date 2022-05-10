@@ -1,21 +1,21 @@
 import Immutable from 'immutable'
 import * as orderConfirmationActions from 'actions/orderConfirmation'
+import * as OrderAPIV1 from 'apis/orders'
 import utilsLogger from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
-import * as orderV2 from '../../apis/orderV2'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import { basketUpdateProducts } from '../basket'
 
 describe('basketUpdateProducts', () => {
   let dispatch
   let getStateSpy
-  let updateOrderSpy
+  let updateOrderItemsSpy
 
   beforeEach(() => {
     dispatch = jest.fn()
     getStateSpy = jest.fn().mockReturnValue({
       basket: Immutable.fromJS({
-        orderId: '1234',
+        orderId: '23',
         products: {
           'product-1': 2,
           'product-2': 1,
@@ -27,7 +27,7 @@ describe('basketUpdateProducts', () => {
       }),
     })
 
-    updateOrderSpy = jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn())
+    updateOrderItemsSpy = jest.spyOn(OrderAPIV1, 'updateOrderItems').mockImplementation(jest.fn())
   })
 
   afterEach(() => {
@@ -36,25 +36,38 @@ describe('basketUpdateProducts', () => {
 
   describe('when update is successful', () => {
     const order = {
-      id: '1234',
+      id: '23',
       products: [
         { id: 1, itemableId: 'product-1', quantity: 2 },
         { id: 2, itemableId: 'product-2', quantity: 1 },
       ],
     }
 
-    test('should call updateOrder api with products', async () => {
-      const orderId = '1234'
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+    test('should call updateOrderItems api with products', async () => {
+      updateOrderItemsSpy.mockReturnValue(Promise.resolve({ data: order }))
 
       await basketUpdateProducts()(dispatch, getStateSpy)
 
-      expect(updateOrderSpy).toHaveBeenCalled()
-      expect(updateOrderSpy).toHaveBeenCalledWith(dispatch, getStateSpy, orderId)
+      expect(updateOrderItemsSpy).toHaveBeenCalled()
+      expect(updateOrderItemsSpy).toHaveBeenCalledWith('12234', '23', {
+        item_choices: [
+          {
+            id: 'product-1',
+            quantity: 2,
+            type: 'Product',
+          },
+          {
+            id: 'product-2',
+            quantity: 1,
+            type: 'Product',
+          },
+        ],
+        restrict: 'Product',
+      })
     })
 
     test('should dispatch correct pending and action events for BASKET_CHECKOUT', async () => {
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+      updateOrderItemsSpy.mockReturnValue(Promise.resolve({ data: order }))
 
       await basketUpdateProducts()(dispatch, getStateSpy)
 
@@ -79,7 +92,7 @@ describe('basketUpdateProducts', () => {
     })
 
     test('should dispatch BASKET_ORDER_DETAILS_LOADED action with the orderDetails', async () => {
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+      updateOrderItemsSpy.mockReturnValue(Promise.resolve({ data: order }))
 
       await basketUpdateProducts()(dispatch, getStateSpy)
 
@@ -92,7 +105,7 @@ describe('basketUpdateProducts', () => {
     })
 
     test('should dispatch orderConfirmationUpdateOrderTrackingSpy if isOrderConfirmation true', async () => {
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+      updateOrderItemsSpy.mockReturnValue(Promise.resolve({ data: order }))
       const orderConfirmationUpdateOrderTrackingSpy = jest.spyOn(
         orderConfirmationActions,
         'orderConfirmationUpdateOrderTracking',
@@ -110,7 +123,7 @@ describe('basketUpdateProducts', () => {
 
     beforeEach(() => {
       dispatch = jest.fn()
-      updateOrderSpy.mockReturnValue(Promise.reject(new Error({ e: 'Error' })))
+      updateOrderItemsSpy.mockReturnValue(Promise.reject(new Error({ e: 'Error' })))
       loggerErrorSpy = jest.spyOn(utilsLogger, 'error')
     })
 
@@ -118,7 +131,7 @@ describe('basketUpdateProducts', () => {
       try {
         await basketUpdateProducts()(dispatch, getStateSpy)
       } catch (e) {
-        expect(updateOrderSpy).toHaveBeenCalledTimes(1)
+        expect(updateOrderItemsSpy).toHaveBeenCalledTimes(1)
         expect(dispatch).toBeCalledWith({
           type: actionTypes.PENDING,
           key: actionTypes.BASKET_CHECKOUT,
