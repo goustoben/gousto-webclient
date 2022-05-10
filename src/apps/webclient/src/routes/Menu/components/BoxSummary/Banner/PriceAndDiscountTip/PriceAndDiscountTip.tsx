@@ -4,10 +4,7 @@ import classNames from 'classnames'
 
 import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
-import {
-  useDiscountDescriptor,
-  formatDiscountTip,
-} from 'routes/Menu/components/BoxSummary/utilHooks'
+import { useDiscountDescriptor, formatDiscountTip } from './priceAndDiscountTipUtils'
 
 import { Price } from './Price'
 
