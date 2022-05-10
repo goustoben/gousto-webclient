@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { useSelector } from 'react-redux'
+import { useSelector, RootStateOrAny } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getIsAuthenticated } from 'selectors/auth'
 import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
@@ -17,10 +17,13 @@ const isPositive = (price?: string | null): boolean => {
     return false
   }
   const parsed = Number.parseFloat(price)
+
   return !Number.isNaN(parsed) && parsed > 0
 }
 
-const getDiscountFromPricing = (pricing?: Pricing | null): DiscountDescriptor => {
+export const getDiscountFromPricing = (
+  pricing?: Pick<Pricing, 'flatDiscountApplied' | 'amountOff' | 'percentageOff'> | null,
+): DiscountDescriptor => {
   if (!pricing) {
     return {
       isDiscountEnabled: false,
@@ -85,12 +88,12 @@ export const getDiscountFromStore = createSelector(
  */
 export const useDiscountDescriptor = (): DiscountDescriptor => {
   const { pricing } = usePricing()
-  const isAuthenticated = useSelector<unknown, boolean>(getIsAuthenticated)
+  const isAuthenticated = useSelector<RootStateOrAny, boolean>(getIsAuthenticated)
 
   // For new users, the promo code discount is extracted from the `promoStore`
   // slice based on the current promo code stored in the `basket` slice.
   // For existing users, from the pricing hook.
-  const discountForNewUsers = useSelector<unknown, DiscountDescriptor>(getDiscountFromStore)
+  const discountForNewUsers = useSelector<RootStateOrAny, DiscountDescriptor>(getDiscountFromStore)
 
   const result = isAuthenticated ? getDiscountFromPricing(pricing) : discountForNewUsers
 
