@@ -121,11 +121,10 @@ const Market: FC<Props> = (props) => {
   )
 
   useEffect(() => {
-    if (menuRecipeIds.size > 0 && order !== false) {
-      const menuStartDate = order.getIn(['period', 'whenStart']) as string | undefined
-      dispatch(productsLoadRecipePairings(menuRecipeIds.toJS(), menuStartDate))
+    if (menuRecipeIds.size > 0) {
+      dispatch(productsLoadRecipePairings(menuRecipeIds.toJS()))
     }
-  }, [menuRecipeIds, order, dispatch])
+  }, [menuRecipeIds, dispatch])
 
   useEffect(() => {
     if (
