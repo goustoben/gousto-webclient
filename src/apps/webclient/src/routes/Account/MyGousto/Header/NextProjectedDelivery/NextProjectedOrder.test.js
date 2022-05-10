@@ -30,7 +30,7 @@ describe('<NextProjectedDelivery>', () => {
 
     test('renders the projected delivery details with the right status and human date', () => {
       const orderDetails = card.find('OrderDetails')
-      expect(orderDetails.prop('deliveryDate')).toBe('Tuesday 3rd August')
+      expect(orderDetails.prop('deliveryDate')).toBe('2021-08-03')
       expect(orderDetails.prop('orderState')).toBe('scheduled')
     })
 

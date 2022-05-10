@@ -1,3 +1,3 @@
-const config = require('@library/babel')
+const config = require('@library/dev-babel')
 
 module.exports = config

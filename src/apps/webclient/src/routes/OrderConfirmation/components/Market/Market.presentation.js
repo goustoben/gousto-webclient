@@ -79,7 +79,11 @@ const propTypes = {
       id: PropTypes.string,
       title: PropTypes.string,
       listPrice: PropTypes.string,
-      images: PropTypes.instanceOf(Immutable.Map),
+      images: PropTypes.objectOf(PropTypes.shape({
+        src: PropTypes.string,
+        url: PropTypes.string,
+        width: PropTypes.number,
+      })),
       ageRestricted: PropTypes.bool,
       quantity: PropTypes.number
     })

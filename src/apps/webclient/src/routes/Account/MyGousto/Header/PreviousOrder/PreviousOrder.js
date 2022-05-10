@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { client } from 'config/routes'
-import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
+import { Card, CTA, Heading, InfoTip } from 'goustouicomponents'
 import Link from 'components/Link'
+import { OrderDetails } from 'routes/Account/AccountComponents/OrderDetails'
 import { myGoustoOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
 import css from './PreviousOrder.css'
 
@@ -12,7 +13,7 @@ const PreviousOrder = ({
   order,
   trackClickGetHelpWithThisBox,
 }) => {
-  const deliveryDate = order.get('humanDeliveryDate')
+  const deliveryDate = order.get('deliveryDate')
   const orderId = order.get('id')
   const orderState = order.get('phase')
   const price = order.getIn(['prices', 'total'])

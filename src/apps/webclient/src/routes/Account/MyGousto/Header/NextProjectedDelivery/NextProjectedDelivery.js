@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, CTA, Heading, OrderDetails } from 'goustouicomponents'
+import { Card, CTA, Heading } from 'goustouicomponents'
 import { client } from 'config/routes'
 import Link from 'components/Link'
-import humanTimeFormat from 'utils/timeFormat'
+import { OrderDetails } from 'routes/Account/AccountComponents/OrderDetails'
 
 const NextProjectedDelivery = ({ deliveryDate }) => (
   <div>
@@ -12,7 +12,7 @@ const NextProjectedDelivery = ({ deliveryDate }) => (
     </Heading>
     <Card>
       <OrderDetails
-        deliveryDate={humanTimeFormat(deliveryDate, 'day')}
+        deliveryDate={deliveryDate}
         orderState="scheduled"
       />
       <Link to={client.myDeliveries}>
