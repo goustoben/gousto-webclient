@@ -80,9 +80,6 @@ describe('Market', () => {
     basket: Immutable.fromJS({
       products: mockProducts,
       orderDetails: {
-        period: {
-          whenStart: '2022-05-17T11:00:00Z',
-        },
         recipeItems: [
           {
             recipeId: '2211',
@@ -134,7 +131,7 @@ describe('Market', () => {
     expect(screen.getByText('Overlay')).toBeInTheDocument()
 
     expect(dispatch).toBeCalledWith(productsLoadRecipePairings())
-    expect(productsLoadRecipePairings).toBeCalledWith(['2211'], '2022-05-17T11:00:00Z')
+    expect(productsLoadRecipePairings).toBeCalledWith(['2211'])
 
     fireEvent.click(screen.getByRole('button', { name: /^Snacks \(\d\)$/i }))
     expect(filterProductCategory).toBeCalledWith(
