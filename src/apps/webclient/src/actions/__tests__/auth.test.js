@@ -1,5 +1,6 @@
 import actions, { changeRecaptcha } from 'actions/auth'
-import { resetUserPassword, identifyUserUsingOAuth, identifyUserViaServer } from 'apis/auth'
+import loginActions from 'actions/login'
+import { resetUserPassword, identifyUserUsingOAuth, identifyUserViaServer, serverRefresh } from 'apis/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
@@ -8,6 +9,8 @@ import { trackUserLogin } from 'actions/loggingmanager'
 import { isServer } from '../../../server/utils/serverEnvironment'
 
 jest.mock('apis/auth')
+
+jest.mock('actions/login')
 
 jest.mock('utils/window')
 
@@ -323,6 +326,41 @@ describe('authIdentify', () => {
           },
         })
         expect(trackUserLogin).toHaveBeenCalledTimes(1)
+      })
+    })
+  })
+})
+
+describe('authRefresh', () => {
+  describe('when authRefresh is called', () => {
+    let dispatch
+    const getState = () => ({
+      auth: Immutable.Map({
+        rememberMe: false,
+      }),
+    })
+
+    beforeEach(() => {
+      dispatch = jest.fn()
+
+      jest.clearAllMocks()
+    })
+
+    describe('and it failed', () => {
+      beforeEach(() => {
+        serverRefresh.mockRejectedValue('error')
+      })
+
+      describe('in the browser', () => {
+        beforeEach(() => {
+          isServer.mockReturnValue(false)
+
+          actions.authRefresh()(dispatch, getState)
+        })
+
+        test('user is logged out', () => {
+          expect(dispatch).toHaveBeenCalledWith(loginActions.logoutUser())
+        })
       })
     })
   })
