@@ -128,6 +128,8 @@ const refresh = () => (
         datadogLogs.logger.warn('src/actions/auth.js:refresh failed to exchange refresh token', {
           err: (err || {}).message
         })
+
+        dispatch(loginActions.logoutUser())
       }
 
       switch (err.status) {
