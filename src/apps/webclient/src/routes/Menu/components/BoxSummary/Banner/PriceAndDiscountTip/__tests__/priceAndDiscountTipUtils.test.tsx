@@ -223,7 +223,7 @@ describe('priceAndDiscountTipUtils', () => {
       test('then it should return data from the promo store', () => {
         const { getByTestId } = rendered
         const element = getByTestId('result')
-        expect(JSON.parse(element.dataset.result)).toEqual({
+        expect(JSON.parse(element.dataset.result!)).toEqual({
           isDiscountEnabled: true,
           discountKind: 'flat',
           discountAmount: 40,
@@ -264,7 +264,7 @@ describe('priceAndDiscountTipUtils', () => {
       test('then it should return data from the pricing hook', () => {
         const { getByTestId } = rendered
         const element = getByTestId('result')
-        expect(JSON.parse(element.dataset.result)).toEqual({
+        expect(JSON.parse(element.dataset.result!)).toEqual({
           isDiscountEnabled: true,
           discountKind: 'percentage',
           discountAmount: '60.0000',

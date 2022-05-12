@@ -26,12 +26,7 @@ describe('given ExpandBoxSummaryButton is rendered', () => {
   beforeEach(() => {
     rendered = render(
       <Provider store={mockedStore}>
-        <ExpandBoxSummaryButton
-          showDetails={false}
-          showBrowseCTA={false}
-          numRecipes={2}
-          onClick={onClick}
-        />
+        <ExpandBoxSummaryButton showBrowseCTA={false} numRecipes={2} onClick={onClick} />
       </Provider>,
     )
   })
