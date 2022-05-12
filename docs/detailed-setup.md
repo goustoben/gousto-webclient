@@ -253,3 +253,13 @@ If you'd like to introduce prettier inside an unmigrated-yet route, please follo
 8. Check that the app behaves the same
 
 *After* the merge into `develop`, add the commit's hash into `.git-blame-ignore-revs` so that the bulk change doesn't show up in people's `git blame` invocations. Unfortunately it requires two merges, because we haven't invented self-referencing commits yet.
+
+### Codeowners reports
+
+To get the number of files owned by each owning group, run
+
+`yw webclient codeowners:report`
+
+To get the list of unowned files, run
+
+`yw webclient codeowners:unowned`

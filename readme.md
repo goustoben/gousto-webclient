@@ -2,6 +2,9 @@
 
 Webclient is the Node/React app that serves www.gousto.co.uk. It's owned by [guild-frontend](https://gousto.slack.com/archives/C52LRFWBY).
 
+Before making commits to Webclient, please read [CONTRIBUTING.md](CONTRIBUTING.md) and the
+[pipeline process document](https://gousto.atlassian.net/wiki/spaces/TECH/pages/3777495117/Keeping+the+webclient+pipeline+moving)
+
 - [Quick start](#quick-start)
 - [Pre-requisites](#pre-requisites)
 - [Tests](#tests)
