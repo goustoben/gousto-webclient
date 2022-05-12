@@ -6,12 +6,16 @@ import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'utils/window'
 import { fetchOrder } from 'routes/Menu/apis/orderV2'
 
-import { basketOrderLoad } from 'actions/basket'
+import {
+  basketOrderLoad,
+  basketDateChange,
+  basketNumPortionChange,
+  basketChosenAddressChange,
+  basketPostcodeChange,
+} from 'actions/basket'
 import recipes from 'actions/recipes'
 import { orderCheckPossibleDuplicate } from 'actions/order'
-import {
-  productsLoadProducts,
-} from 'actions/products'
+import { productsLoadProducts } from 'actions/products'
 
 import {
   orderDetails,
@@ -38,7 +42,7 @@ jest.mock('actions/recipes', () => ({
 jest.mock('actions/products', () => ({
   productsLoadProducts: jest.fn(),
   productsLoadStock: jest.fn(),
-  productsLoadCategories: jest.fn()
+  productsLoadCategories: jest.fn(),
 }))
 
 jest.mock('actions/order', () => ({
@@ -49,7 +53,7 @@ jest.mock('routes/Menu/apis/orderV2')
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
-  getProtocol: () => 'http:'
+  getProtocol: () => 'http:',
 }))
 
 describe('orderConfirmation actions', () => {
@@ -70,39 +74,39 @@ describe('orderConfirmation actions', () => {
   })
 
   describe('orderConfirmationRedirect', () => {
+    const orderId = '1234'
     test('should call orderDetails', () => {
-      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+      orderConfirmationRedirect(orderId, 'transactional')(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalled()
     })
 
     test('should call orderCheckPossibleDuplicate', () => {
-      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+      orderConfirmationRedirect(orderId, 'transactional')(dispatch, getState)
 
       expect(orderCheckPossibleDuplicate).toHaveBeenCalled()
     })
 
     test('should push the client to the order confirmation', () => {
-      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+      orderConfirmationRedirect(orderId, 'transactional')(dispatch, getState)
 
       expect(redirect).not.toHaveBeenCalled()
-      expect(push).toHaveBeenCalledWith(
-        '/order-confirmation/1234?order_action=transactional'
-      )
+      expect(push).toHaveBeenCalledWith('/order-confirmation/1234?order_action=transactional')
     })
   })
 
   describe('orderDetails', () => {
+    const orderId = '1234'
     beforeEach(() => {
       safeJestMock(menuApis, 'fetchSimpleMenu').mockResolvedValue({ data: [] })
     })
 
     test('should attempt to fetch the order details for the orderId given', async () => {
       fetchOrder.mockReturnValue(
-        Promise.resolve({ data: { id: '1234', whenCutoff: '2019-04-12 19:00:00' } })
+        Promise.resolve({ data: { id: '1234', whenCutoff: '2019-04-12 19:00:00' } }),
       )
 
-      await orderDetails('1234')(dispatch, getState)
+      await orderDetails(orderId)(dispatch, getState)
 
       expect(fetchOrder).toHaveBeenCalled()
     })
@@ -114,17 +118,14 @@ describe('orderConfirmation actions', () => {
             data: {
               id: '1234',
               whenCutoff: '2019-04-12 19:00:00',
-              recipeItems: [
-                { recipeUuid: 'uuid-1' },
-                { recipeUuid: 'uuid-2' },
-              ],
+              recipeItems: [{ recipeUuid: 'uuid-1' }, { recipeUuid: 'uuid-2' }],
             },
-          })
+          }),
         )
       })
 
       test('should fetch the recipes for the given recipe ids in the order', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
         expect(recipes.recipesLoadFromMenuRecipesById).toHaveBeenCalledWith(['uuid-1', 'uuid-2'])
       })
@@ -137,56 +138,73 @@ describe('orderConfirmation actions', () => {
             data: {
               id: '1234',
               whenCutoff: '2019-04-12 19:00:00',
-              periodId: '5678'
+              periodId: '5678',
             },
-          })
+          }),
         )
       })
 
       test('should fetch the products for the returned cutoff date', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
-        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678', {reload: true}, [])
+        expect(productsLoadProducts).toHaveBeenCalledWith(
+          '2019-04-12 19:00:00',
+          '5678',
+          { reload: true },
+          [],
+        )
       })
 
       test('should call basket order load for the returned order', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
-        expect(basketOrderLoad).toHaveBeenCalledWith('1234', Immutable.Map({
-          id: '1234',
-          whenCutoff: '2019-04-12 19:00:00',
-          periodId: '5678',
-        }))
+        expect(basketOrderLoad).toHaveBeenCalledWith(
+          orderId,
+          Immutable.Map({
+            id: '1234',
+            whenCutoff: '2019-04-12 19:00:00',
+            periodId: '5678',
+          }),
+        )
       })
 
       test('should fetch the products for the returned menu data', async () => {
-        safeJestMock(menuApis, 'fetchSimpleMenu').mockResolvedValue({ data: [{
-          id: '1234',
-          attributes: {
-            ends_at: '2020-08-11T11:59:59+01:00',
-          }
-        }]})
+        safeJestMock(menuApis, 'fetchSimpleMenu').mockResolvedValue({
+          data: [
+            {
+              id: '1234',
+              attributes: {
+                ends_at: '2020-08-11T11:59:59+01:00',
+              },
+            },
+          ],
+        })
 
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
-        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678', {reload: true}, [{
-          id: '1234',
-          attributes: {
-            ends_at: '2020-08-11T11:59:59+01:00',
-          }
-        }])
+        expect(productsLoadProducts).toHaveBeenCalledWith(
+          '2019-04-12 19:00:00',
+          '5678',
+          { reload: true },
+          [
+            {
+              id: '1234',
+              attributes: {
+                ends_at: '2020-08-11T11:59:59+01:00',
+              },
+            },
+          ],
+        )
       })
     })
 
     describe('when the fetchOrder call fails', () => {
       beforeEach(() => {
-        fetchOrder.mockReturnValue(
-          Promise.reject(new Error('error'))
-        )
+        fetchOrder.mockReturnValue(Promise.reject(new Error('error')))
       })
 
       test('should not fetch the products', async () => {
-        await orderDetails('1234')(dispatch, getState)
+        await orderDetails(orderId)(dispatch, getState)
 
         expect(productsLoadProducts).not.toHaveBeenCalled()
       })
@@ -202,7 +220,7 @@ describe('orderConfirmation actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: '1234'
+        trackingData: '1234',
       })
     })
 
@@ -214,7 +232,7 @@ describe('orderConfirmation actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: '1234'
+        trackingData: '1234',
       })
     })
   })
@@ -228,14 +246,14 @@ describe('orderConfirmation actions', () => {
             prices: {
               total: '25.5',
               promoCode: false,
-            }
-          }
+            },
+          },
         }),
         user: Immutable.fromJS({
           subscription: {
-            state: 'active'
-          }
-        })
+            state: 'active',
+          },
+        }),
       })
     })
 
@@ -249,8 +267,8 @@ describe('orderConfirmation actions', () => {
           order_total: '25.5',
           promo_code: false,
           signup: false,
-          subscription_active: true
-        }
+          subscription_active: true,
+        },
       })
     })
   })

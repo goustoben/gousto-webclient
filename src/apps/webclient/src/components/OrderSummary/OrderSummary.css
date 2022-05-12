@@ -1,5 +1,5 @@
 @value ScreenXSMax, ScreenSMMin, ScreenMDMin from 'styles/screenSizes.css';
-@value Blackberry from 'styles/colors.css';
+@value Blackberry, Radish from 'styles/colors.css';
 
 .container {
 	composes: marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
@@ -95,6 +95,10 @@
 	@media ScreenMDMin {
 		width: 35%;
 	}
+}
+
+.updateOrderButtonSummary > div > .error {
+  color: Radish;
 }
 
 
