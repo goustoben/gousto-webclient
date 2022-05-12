@@ -5,7 +5,7 @@ import { Pricing } from 'routes/Menu/domains/pricing'
 import css from './Price.css'
 
 type Props = {
-  pricing: Pick<Pricing, 'grossTotal' | 'totalDiscount' | 'total'> | null | undefined
+  pricing: Pricing | null | undefined
   isPending: boolean
 }
 

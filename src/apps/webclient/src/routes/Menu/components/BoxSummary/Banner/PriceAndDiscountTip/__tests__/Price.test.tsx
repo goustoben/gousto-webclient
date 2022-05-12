@@ -19,9 +19,24 @@ describe('Price', () => {
 
   describe('when isPending is false and there is a discount', () => {
     const pricing = {
-      grossTotal: '27.98',
+      flatDiscountApplied: false,
+      amountOff: '0.00',
+      percentageOff: '60.00',
+      promoCode: 'DTI-SB-63',
+      promoCodeValid: true,
+      pricePerPortion: '6.25',
+      pricePerPortionDiscounted: '2.50',
+      productTotal: '0.00',
+      recipeTotal: '24.99',
+      surchargeTotal: '0.00',
+      recipeDiscount: '14.99',
+      deliveryTotal: '0.00',
+      grossTotal: '24.99',
+      vatCharged: '0.00',
+      total: '10.00',
       totalDiscount: '14.99',
-      total: '12.99',
+      recipeTotalDiscounted: '10.00',
+      items: [],
     }
 
     beforeEach(() => {
@@ -30,16 +45,31 @@ describe('Price', () => {
 
     test('then it should render a striked-out price and the final price', () => {
       const { getByText } = rendered
-      expect(getByText('£27.98')).toBeDefined()
-      expect(getByText('£12.99')).toBeDefined()
+      expect(getByText('£24.99')).toBeDefined()
+      expect(getByText('£10.00')).toBeDefined()
     })
   })
 
   describe('when isPending is false and there is no discount', () => {
     const pricing = {
-      grossTotal: '27.98',
+      flatDiscountApplied: false,
+      amountOff: '0.00',
+      percentageOff: '0.00',
+      promoCodeValid: false,
+      pricePerPortion: '6.25',
+      pricePerPortionDiscounted: '6.25',
+      productTotal: '0.00',
+      recipeTotal: '24.99',
+      surchargeTotal: '0.00',
+      recipeDiscount: '0.00',
+      deliveryTotal: '0.00',
+      grossTotal: '24.99',
+      vatCharged: '0.00',
+      total: '24.99',
       totalDiscount: '0.00',
-      total: '27.98',
+      recipeTotalDiscounted: '24.99',
+      items: [],
+      promoCode: null,
     }
 
     beforeEach(() => {
@@ -48,7 +78,7 @@ describe('Price', () => {
 
     test('then it should render only the final price', () => {
       const { getByText } = rendered
-      expect(getByText('£27.98')).toBeDefined()
+      expect(getByText('£24.99')).toBeDefined()
     })
   })
 })

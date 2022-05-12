@@ -21,9 +21,7 @@ const isPositive = (price?: string | null): boolean => {
   return !Number.isNaN(parsed) && parsed > 0
 }
 
-export const getDiscountFromPricing = (
-  pricing?: Pick<Pricing, 'flatDiscountApplied' | 'amountOff' | 'percentageOff'> | null,
-): DiscountDescriptor => {
+export const getDiscountFromPricing = (pricing?: Pricing | null): DiscountDescriptor => {
   if (!pricing) {
     return {
       isDiscountEnabled: false,

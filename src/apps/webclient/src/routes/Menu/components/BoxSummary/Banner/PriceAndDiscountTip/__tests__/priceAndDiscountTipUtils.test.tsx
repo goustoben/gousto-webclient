@@ -98,30 +98,53 @@ describe('priceAndDiscountTipUtils', () => {
 
     describe('when pricing says the discount is flat-discount', () => {
       const pricing = {
-        grossTotal: '49.99',
-        recipeTotalDiscounted: '9.99',
         flatDiscountApplied: true,
-        amountOff: '40.0000',
-        promoCode: 'DTI-SB-6030',
+        amountOff: '10.0000',
         percentageOff: null,
+        promoCodeValid: true,
+        pricePerPortion: '6.25',
+        pricePerPortionDiscounted: '6.25',
+        productTotal: '0.00',
+        recipeTotal: '24.99',
+        surchargeTotal: '0.00',
+        recipeDiscount: '0.00',
+        deliveryTotal: '0.00',
+        grossTotal: '24.99',
+        vatCharged: '0.00',
+        total: '24.99',
+        totalDiscount: '0.00',
+        recipeTotalDiscounted: '14.99',
+        items: [],
+        promoCode: 'TEST-10',
       }
-
       test('then it should extract amount and say kind is flat', () => {
         expect(getDiscountFromPricing(pricing)).toEqual({
           isDiscountEnabled: true,
           discountKind: 'flat',
-          discountAmount: '40.0000',
+          discountAmount: '10.0000',
         })
       })
     })
 
     describe('when pricing says the discount is percentage-discount', () => {
       const pricing = {
-        grossTotal: '49.99',
-        recipeTotalDiscounted: '29.99',
         flatDiscountApplied: false,
         amountOff: null,
         percentageOff: '60.0000',
+        promoCodeValid: true,
+        pricePerPortion: '6.25',
+        pricePerPortionDiscounted: '6.25',
+        productTotal: '0.00',
+        recipeTotal: '24.99',
+        surchargeTotal: '0.00',
+        recipeDiscount: '0.00',
+        deliveryTotal: '0.00',
+        grossTotal: '49.99',
+        vatCharged: '0.00',
+        total: '24.99',
+        totalDiscount: '0.00',
+        recipeTotalDiscounted: '29.99',
+        items: [],
         promoCode: 'DTI-SB-6030',
       }
 
@@ -136,11 +159,23 @@ describe('priceAndDiscountTipUtils', () => {
 
     describe('when pricing says the discount is flat but amount is 0', () => {
       const pricing = {
-        grossTotal: '49.99',
-        recipeTotalDiscounted: '49.99',
         flatDiscountApplied: true,
         amountOff: '0.0000',
         percentageOff: null,
+        promoCodeValid: true,
+        pricePerPortion: '6.25',
+        pricePerPortionDiscounted: '6.25',
+        productTotal: '0.00',
+        recipeTotal: '24.99',
+        surchargeTotal: '0.00',
+        recipeDiscount: '0.00',
+        deliveryTotal: '0.00',
+        grossTotal: '49.99',
+        vatCharged: '0.00',
+        total: '24.99',
+        totalDiscount: '0.00',
+        recipeTotalDiscounted: '49.99',
+        items: [],
         promoCode: 'DTI-SB-6030',
       }
 
