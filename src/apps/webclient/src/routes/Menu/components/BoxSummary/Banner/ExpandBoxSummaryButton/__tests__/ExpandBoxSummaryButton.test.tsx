@@ -1,10 +1,23 @@
 import React from 'react'
 import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+
+import configureMockStore from 'redux-mock-store'
+
 import { ExpandBoxSummaryButton } from '../ExpandBoxSummaryButton'
 
 jest.mock('routes/Menu/components/BoxSummary/Banner/PriceAndDiscountTip', () => ({
   PriceAndDiscountTip: jest.fn().mockReturnValue(<div>price and discount tip</div>),
 }))
+
+const mockStore = configureMockStore()
+const state = {
+  boxSummaryShow: Immutable.fromJS({
+    show: false,
+  }),
+}
+const mockedStore = mockStore(state)
 
 describe('given ExpandBoxSummaryButton is rendered', () => {
   let rendered: RenderResult
@@ -13,12 +26,14 @@ describe('given ExpandBoxSummaryButton is rendered', () => {
 
   beforeEach(() => {
     rendered = render(
-      <ExpandBoxSummaryButton
-        showDetails={false}
-        showBrowseCTA={false}
-        numRecipes={2}
-        onClick={onClick}
-      />,
+      <Provider store={mockedStore}>
+        <ExpandBoxSummaryButton
+          showDetails={false}
+          showBrowseCTA={false}
+          numRecipes={2}
+          onClick={onClick}
+        />
+      </Provider>,
     )
   })
 

@@ -1,12 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { ButtonHTMLAttributes } from 'react'
+import { useSelector, RootStateOrAny } from 'react-redux'
 
 import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
 import { PriceAndDiscountTip } from '../PriceAndDiscountTip'
 
 import css from './ExpandBoxSummaryButton.css'
 
-const ExpandBoxSummaryButton = ({ showDetails, numRecipes, onClick, showBrowseCTA }) => {
+type Props = {
+  numRecipes: number
+  onClick: ButtonHTMLAttributes<Element>['onClick']
+  showBrowseCTA: boolean
+}
+
+export const ExpandBoxSummaryButton = ({ numRecipes, onClick, showBrowseCTA }: Props) => {
+  const showDetails = useSelector<RootStateOrAny, boolean>((state) =>
+    state.boxSummaryShow.get('show'),
+  )
+
   if (showBrowseCTA) {
     return null
   }
@@ -30,12 +40,3 @@ const ExpandBoxSummaryButton = ({ showDetails, numRecipes, onClick, showBrowseCT
     </div>
   )
 }
-
-ExpandBoxSummaryButton.propTypes = {
-  showDetails: PropTypes.bool.isRequired,
-  numRecipes: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
-  showBrowseCTA: PropTypes.bool.isRequired,
-}
-
-export { ExpandBoxSummaryButton }

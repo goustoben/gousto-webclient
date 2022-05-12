@@ -9,7 +9,7 @@ import { ActionBar } from '../../ActionBar/ActionBar'
 import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
 
 import css from './BoxSummaryBanner.css'
-import { ExpandBoxSummaryButtonContainer } from './ExpandBoxSummaryButton/ExpandBoxSummaryButtonContainer'
+import { ExpandBoxSummaryButton } from './ExpandBoxSummaryButton'
 import { BrowseCTAContainer } from '../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
 import { OpenBoxButton } from './OpenBoxButton'
@@ -51,7 +51,7 @@ export const BoxSummaryBanner = ({
           {isToMedium ? (
             <PriceAndDiscountTip numRecipes={numRecipes} />
           ) : (
-            <ExpandBoxSummaryButtonContainer
+            <ExpandBoxSummaryButton
               onClick={onExpandClick || (() => {})}
               numRecipes={numRecipes}
               showBrowseCTA={showBrowseCTA}
