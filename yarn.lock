@@ -2164,23 +2164,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@features/recipe-tile@workspace:src/modules/features/recipe-tile":
+"@features/homepage@workspace:src/modules/features/homepage":
   version: 0.0.0-use.local
-  resolution: "@features/recipe-tile@workspace:src/modules/features/recipe-tile"
+  resolution: "@features/homepage@workspace:src/modules/features/homepage"
   dependencies:
+    "@emotion/react": ^11.7.0
+    "@gousto-internal/citrus-react": ^0.22.6
     "@library/nonjs-imports": "workspace:*"
     "@storybook/addon-controls": ^6.4.19
     "@storybook/addon-essentials": ^6.4.19
     "@testing-library/react": 12.1.2
     "@testing-library/react-hooks": ^3.4.2
-    immutable: 3.8.2
     react: 17.0.2
     react-dom: 17.0.2
+    react-modal: ^3.14.3
     react-redux: 7.2.4
     react-test-renderer: 16.13.1
     swr: ^1.1.2
   peerDependencies:
-    immutable: 3.8.2
     react: 17.0.2
     react-dom: 17.0.2
     react-redux: 7.2.4

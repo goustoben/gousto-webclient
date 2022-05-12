@@ -1,6 +1,6 @@
-# @features/recipe-tile
+# @features/homepage experiment
 
-This is the new **recipe-tile** feature module. It's owned by **@squad-kales**.
+This is the new **homepage** feature module. It's owned by **@squad-kales**.
 
 ## Usage
 
@@ -8,13 +8,13 @@ Adding the dependency:
 ```json
 "dependencies": {
   ...
-  "@features/recipe-tile": "workspace:*"
+  "@features/homepage": "workspace:*"
 }
 ```
 
 Importing into JSX:
 ```tsx
-import { RecipeTile } from '@features/recipe-tile'
+import { RecipeTile } from '@features/homepage'
 
 function Component() {
   return (

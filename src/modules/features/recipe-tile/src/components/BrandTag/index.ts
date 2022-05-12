@@ -1,1 +1,0 @@
-export { BrandTag } from './BrandTag'
