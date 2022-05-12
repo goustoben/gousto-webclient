@@ -468,6 +468,8 @@ describe('productsLoadRecipePairings', () => {
   let getStateSpy
   const statusPendingSpy = jest.spyOn(statusActions, 'pending')
   const statusErrorSpy = jest.spyOn(statusActions, 'error')
+  const mockRecipeIds = ['1234']
+  const mockMenuStartDate = '2022-05-10T11:00:00Z'
 
   beforeEach(() => {
     fetchRecipePairingsProducts.mockReturnValue(Promise.resolve(
@@ -490,13 +492,13 @@ describe('productsLoadRecipePairings', () => {
   })
 
   test('should dispatch status "pending" true for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action before fetching pairings', async () => {
-    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+    await productsLoadRecipePairings(mockRecipeIds, mockMenuStartDate)(dispatchSpy, getStateSpy)
 
     expect(statusPendingSpy).nthCalledWith(1, actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, true)
   })
 
   test('should dispatch status "pending" false for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action after fetching pairings', async () => {
-    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+    await productsLoadRecipePairings(mockRecipeIds, mockMenuStartDate)(dispatchSpy, getStateSpy)
 
     expect(statusPendingSpy).nthCalledWith(2, actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, false)
   })
@@ -504,23 +506,34 @@ describe('productsLoadRecipePairings', () => {
   test('should dispatch status "error" with message for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action after if an error occurs while fetching pairings', async () => {
     fetchRecipePairingsProducts.mockReturnValue(Promise.reject(new Error('error!')))
 
-    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+    await productsLoadRecipePairings(mockRecipeIds, mockMenuStartDate)(dispatchSpy, getStateSpy)
 
     expect(statusErrorSpy).nthCalledWith(1, actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, 'error!')
   })
 
   test.each([
-    [],
-    null,
-    undefined
-  ])('should not dispatch status "pending" true for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action when recipeIds is not an valid', async (recipeIds) => {
-    await productsLoadRecipePairings(recipeIds)(dispatchSpy, getStateSpy)
+    [[], mockMenuStartDate],
+    [null, mockMenuStartDate],
+    [undefined, mockMenuStartDate]
+  ])('should not dispatch status "pending" true for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action when recipeIds is not an valid', async (recipeIds, menuStartDate) => {
+    await productsLoadRecipePairings(recipeIds, menuStartDate)(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy).not.toHaveBeenCalled()
+  })
+
+  test.each([
+    [mockRecipeIds, ''],
+    [mockRecipeIds, undefined],
+    [mockRecipeIds, null],
+    [mockRecipeIds, '2022-20-20T11:00:00Z']
+  ])('should not dispatch status "pending" true for PRODUCTS_RECIPE_PAIRINGS_RECIEVE action when menuStartDate is not an valid', async (recipeIds, menuStartDate) => {
+    await productsLoadRecipePairings(recipeIds, menuStartDate)(dispatchSpy, getStateSpy)
 
     expect(statusPendingSpy).not.toHaveBeenCalled()
   })
 
   test('should dispatch with recipe pairings data', async () => {
-    await productsLoadRecipePairings(['1234'])(dispatchSpy, getStateSpy)
+    await productsLoadRecipePairings(mockRecipeIds, mockMenuStartDate)(dispatchSpy, getStateSpy)
 
     expect(fetchRecipePairingsProducts).toHaveBeenCalled()
     expect(dispatchSpy).nthCalledWith(2, {
