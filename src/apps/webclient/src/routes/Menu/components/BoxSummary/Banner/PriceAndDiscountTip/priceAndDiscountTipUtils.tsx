@@ -4,12 +4,11 @@ import { createSelector } from 'reselect'
 import { getIsAuthenticated } from 'selectors/auth'
 import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
 import { getPromoCode } from 'selectors/basket'
-import { getPromoStore } from 'selectors/promoStoreSelectors'
+import { createGetPromoStoreEntry, getPromoStore } from 'selectors/promoStoreSelectors'
 
 import { useEffect } from 'react'
 import { promoGet } from 'actions/promos'
 import { actionTypes } from 'actions/actionTypes'
-import { createGetPromoStoreEntry } from 'selectors/promoStoreSelectors'
 import { createGetActionTypeIsPending } from 'selectors/status'
 
 export type DiscountDescriptor = {
@@ -104,8 +103,8 @@ export const useEnsureCurrentPromoCodeEntryIsFetched = () => {
  * Returns the descriptor for currently-applicable discount.
  */
 export const useDiscountDescriptor = (): DiscountDescriptor => {
-  const { pricing } = usePricing()
   const isAuthenticated = useSelector<RootStateOrAny, boolean>(getIsAuthenticated)
+  const { pricing } = usePricing()
 
   useEnsureCurrentPromoCodeEntryIsFetched()
 

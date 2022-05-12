@@ -1,7 +1,10 @@
+import React from 'react'
 import Immutable from 'immutable'
-import { renderHook } from '@testing-library/react-hooks'
-import { useSelector, RootStateOrAny } from 'react-redux'
-import { getIsAuthenticated } from 'selectors/auth'
+import { RootStateOrAny, Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+import { render, RenderResult } from '@testing-library/react'
+import { actionTypes } from 'actions/actionTypes'
+
 import {
   useDiscountDescriptor,
   formatDiscountTip,
@@ -21,14 +24,6 @@ jest.mock('routes/Menu/domains/pricing', () => ({
     },
   }),
 }))
-
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}))
-
-const mockedUseSelector = useSelector as jest.MockedFunction<typeof useSelector>
 
 describe('priceAndDiscountTipUtils', () => {
   describe('given getDiscountFromStore is called', () => {
@@ -188,25 +183,47 @@ describe('priceAndDiscountTipUtils', () => {
   })
 
   describe('given useDiscountDescriptor is invoked by a component', () => {
+    const mockStore = configureMockStore()
+    const Test = () => {
+      const result = useDiscountDescriptor()
+
+      return <div data-testid="result" data-result={JSON.stringify(result)} />
+    }
+
     describe('when user is not authenticated', () => {
+      const state = {
+        auth: Immutable.fromJS({
+          isAuthenticated: false,
+        }),
+        basket: Immutable.fromJS({
+          promoCode: 'DTI-SB-6030',
+        }),
+        promoStore: Immutable.fromJS({
+          'DTI-SB-6030': {
+            details: {
+              'discount-whole-order-amount': 40,
+            },
+          },
+        }),
+        pending: Immutable.fromJS({
+          [actionTypes.PROMO_GET]: false,
+        }),
+      }
+      const mockedStore = mockStore(state)
+      let rendered: RenderResult
+
       beforeEach(() => {
-        mockedUseSelector.mockImplementation((selectorFn) => {
-          if (selectorFn === getIsAuthenticated) {
-            return false
-          } else {
-            return {
-              isDiscountEnabled: true,
-              discountKind: 'flat',
-              discountAmount: 40,
-            }
-          }
-        })
+        rendered = render(
+          <Provider store={mockedStore}>
+            <Test />
+          </Provider>,
+        )
       })
 
-      test('then it should return data from promo store', () => {
-        const { result } = renderHook(() => useDiscountDescriptor())
-
-        expect(result.current).toEqual({
+      test('then it should return data from the promo store', () => {
+        const { getByTestId } = rendered
+        const element = getByTestId('result')
+        expect(JSON.parse(element.dataset.result)).toEqual({
           isDiscountEnabled: true,
           discountKind: 'flat',
           discountAmount: 40,
@@ -215,24 +232,39 @@ describe('priceAndDiscountTipUtils', () => {
     })
 
     describe('when user is authenticated', () => {
+      const state = {
+        auth: Immutable.fromJS({
+          isAuthenticated: true,
+        }),
+        basket: Immutable.fromJS({
+          promoCode: 'DTI-SB-6030',
+        }),
+        promoStore: Immutable.fromJS({
+          'DTI-SB-6030': {
+            details: {
+              'discount-whole-order-percent': 60,
+            },
+          },
+        }),
+        pending: Immutable.fromJS({
+          [actionTypes.PROMO_GET]: false,
+        }),
+      }
+      const mockedStore = mockStore(state)
+      let rendered: RenderResult
+
       beforeEach(() => {
-        mockedUseSelector.mockImplementation((selectorFn) => {
-          if (selectorFn === getIsAuthenticated) {
-            return true
-          } else {
-            return {
-              isDiscountEnabled: true,
-              discountKind: 'flat',
-              discountAmount: 40,
-            }
-          }
-        })
+        rendered = render(
+          <Provider store={mockedStore}>
+            <Test />
+          </Provider>,
+        )
       })
 
       test('then it should return data from the pricing hook', () => {
-        const { result } = renderHook(() => useDiscountDescriptor())
-
-        expect(result.current).toEqual({
+        const { getByTestId } = rendered
+        const element = getByTestId('result')
+        expect(JSON.parse(element.dataset.result)).toEqual({
           isDiscountEnabled: true,
           discountKind: 'percentage',
           discountAmount: '60.0000',
