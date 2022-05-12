@@ -53,8 +53,8 @@ export function fetchProductStock(accessToken) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.productStock}`, {}, 'GET')
 }
 
-export function fetchRecipePairingsProducts(accessToken, recipeIds = []) {
-  const queryString = recipeIds.map((recipeId) => `recipeIds[]=${recipeId}`).join('&')
+export function fetchRecipePairingsProducts(accessToken, recipeIds, menuStartDate) {
+  const queryString = `${recipeIds.map((recipeId) => `recipeIds[]=${recipeId}`).join('&')}&menuStartDate=${menuStartDate}`
 
   return fetch(accessToken, `${endpoint('products', 2)}${routes.products.recipePairings}?${queryString}`, {}, 'GET')
 }

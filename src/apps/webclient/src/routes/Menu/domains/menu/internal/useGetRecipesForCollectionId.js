@@ -9,6 +9,8 @@ import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
 import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
 import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
 import { getRecipeReferenceInjector } from './getRecipeReferenceInjector'
+import { useSelectedCuisines } from './useSelectedCuisines'
+import { orderCollectionRecipesByCuisine } from '../../collections'
 
 const getDietaryClaimsInCollection = (menuCollections, collectionId) =>
   menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
@@ -18,6 +20,7 @@ export const useGetRecipesForCollectionId = (collections) => {
   const recipesInStock = useSelector(getInStockRecipes)
   const recipesVariants = useSelector(getCurrentMenuVariants)
   const selectedRecipeVariants = useSelector(getSelectedRecipeVariants)
+  const selectedCuisines = useSelectedCuisines()
 
   const recipeComparatorForOutOfStock = useMemo(
     () => getRecipeComparatorForOutOfStock(recipesInStock),
@@ -60,6 +63,12 @@ export const useGetRecipesForCollectionId = (collections) => {
       .map(outOfStockRecipeReplacer)
 
     const resultingRecipes = originalRecipes.sort(recipeComparatorForOutOfStock)
+
+    if (selectedCuisines) {
+      const { orderedRecipes } = orderCollectionRecipesByCuisine(resultingRecipes, selectedCuisines)
+
+      return { recipes: orderedRecipes }
+    }
 
     return { recipes: resultingRecipes }
   }
