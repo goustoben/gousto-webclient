@@ -153,14 +153,17 @@ describe('products api', () => {
   })
 
   describe('fetchRecipePairingsProducts', () => {
+    const mockRecipeIds = ['1234', '5678']
+    const mockMenuStartDate = '2022-05-10T11:00:00Z'
+
     test('should fetch the correct url', async () => {
-      await fetchRecipePairingsProducts('token', ['1234', '5678'])
+      await fetchRecipePairingsProducts('token', mockRecipeIds, mockMenuStartDate)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/recipe_pairings?recipeIds[]=1234&recipeIds[]=5678', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/recipe_pairings?recipeIds[]=1234&recipeIds[]=5678&menuStartDate=2022-05-10T11:00:00Z', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchRecipePairingsProducts('token', ['1234', '5678'])
+      const result = await fetchRecipePairingsProducts('token', mockRecipeIds, mockMenuStartDate)
       expect(result).toEqual(mockFetchResult)
     })
   })
