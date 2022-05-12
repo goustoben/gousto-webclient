@@ -4,7 +4,11 @@ import classNames from 'classnames'
 
 import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
-import { useDiscountDescriptor, formatDiscountTip } from './priceAndDiscountTipUtils'
+import {
+  useDiscountDescriptor,
+  formatDiscountTip,
+  useEnsureCurrentPromoCodeEntryIsFetched,
+} from './priceAndDiscountTipUtils'
 
 import { Price } from './Price'
 

@@ -1,14 +1,8 @@
-import React, { useEffect, ButtonHTMLAttributes } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { promoGet } from 'actions/promos'
-import { getPromoCode } from 'selectors/basket'
-import { actionTypes } from 'actions/actionTypes'
+import React, { ButtonHTMLAttributes } from 'react'
 import { useMedia } from 'react-use'
 import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
 import classNames from 'classnames'
 import { Tooltip } from 'goustouicomponents'
-import { createGetPromoStoreEntry } from 'selectors/promoStoreSelectors'
-import { createGetActionTypeIsPending } from 'selectors/status'
 import * as trackingKeys from 'actions/trackingKeys'
 import { Box } from '@gousto-internal/citrus-react'
 import { ActionBar } from '../../ActionBar/ActionBar'
@@ -37,16 +31,6 @@ export const BoxSummaryBanner = ({
 }: Props) => {
   const isActionBarRedesignEnabled = useIsActionBarRedesignEnabled()
 
-  const dispatch = useDispatch()
-  const promoCode = useSelector(getPromoCode)
-  const isPromoGetPending = useSelector(createGetActionTypeIsPending(actionTypes.PROMO_GET))
-  const promoCodeEntry = useSelector(createGetPromoStoreEntry(promoCode))
-
-  useEffect(() => {
-    if (promoCode && !promoCodeEntry && !isPromoGetPending) {
-      dispatch(promoGet(promoCode))
-    }
-  }, [promoCode, promoCodeEntry, isPromoGetPending, dispatch])
   const isToMedium = useMedia(css.BreakpointToMedium)
   const view = isToMedium ? MOBILE_VIEW : DESKTOP_VIEW
 

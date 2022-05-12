@@ -1,10 +1,16 @@
 import Immutable from 'immutable'
-import { useSelector, RootStateOrAny } from 'react-redux'
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getIsAuthenticated } from 'selectors/auth'
 import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
 import { getPromoCode } from 'selectors/basket'
 import { getPromoStore } from 'selectors/promoStoreSelectors'
+
+import { useEffect } from 'react'
+import { promoGet } from 'actions/promos'
+import { actionTypes } from 'actions/actionTypes'
+import { createGetPromoStoreEntry } from 'selectors/promoStoreSelectors'
+import { createGetActionTypeIsPending } from 'selectors/status'
 
 export type DiscountDescriptor = {
   isDiscountEnabled: boolean
@@ -81,12 +87,27 @@ export const getDiscountFromStore = createSelector(
   },
 )
 
+export const useEnsureCurrentPromoCodeEntryIsFetched = () => {
+  const dispatch = useDispatch()
+  const promoCode = useSelector(getPromoCode)
+  const isPromoGetPending = useSelector(createGetActionTypeIsPending(actionTypes.PROMO_GET))
+  const promoCodeEntry = useSelector(createGetPromoStoreEntry(promoCode))
+
+  useEffect(() => {
+    if (promoCode && !promoCodeEntry && !isPromoGetPending) {
+      dispatch(promoGet(promoCode))
+    }
+  }, [promoCode, promoCodeEntry, isPromoGetPending, dispatch])
+}
+
 /**
  * Returns the descriptor for currently-applicable discount.
  */
 export const useDiscountDescriptor = (): DiscountDescriptor => {
   const { pricing } = usePricing()
   const isAuthenticated = useSelector<RootStateOrAny, boolean>(getIsAuthenticated)
+
+  useEnsureCurrentPromoCodeEntryIsFetched()
 
   // For new users, the promo code discount is extracted from the `promoStore`
   // slice based on the current promo code stored in the `basket` slice.
