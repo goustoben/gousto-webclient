@@ -17,6 +17,7 @@ describe('OrderPricingDetail', () => {
       grossExtrasPrice: 10.02,
       grossShippingPrice: 5.56,
       netOrderPrice: 30.0,
+      surcharge: 14.50,
     }),
   }
 
@@ -51,6 +52,10 @@ describe('OrderPricingDetail', () => {
 
     test('should render "Total" followed by "£" + the amount passed', () => {
       expect(wrapper.text()).toContain('Total£30.00')
+    })
+
+    test('should render surcharge price', () => {
+      expect(wrapper.text()).toContain('Surcharge£14.50')
     })
 
     describe('discount', () => {
@@ -129,7 +134,7 @@ describe('OrderPricingDetail', () => {
         expect(
           wrapper
             .find(Content)
-            .at(1)
+            .at(2)
             .props().contentKeys,
         ).toEqual('mydeliveriesOrderOrderpricingDeliveryfree')
       })
@@ -139,9 +144,23 @@ describe('OrderPricingDetail', () => {
         expect(
           wrapper
             .find(Content)
-            .at(1)
+            .at(2)
             .props().contentKeys,
         ).toEqual('mydeliveriesOrderOrderpricingDeliveryfree')
+      })
+    })
+
+    describe('surcharge', () => {
+      describe('when surcharge is not set', () => {
+        beforeEach(() => {
+          wrapper = shallow(
+            <OrderPricingDetail />,
+          )
+        })
+
+        test('should render surcharge price as 0', () => {
+          expect(wrapper.text()).toContain('Surcharge£0.00')
+        })
       })
     })
   })
