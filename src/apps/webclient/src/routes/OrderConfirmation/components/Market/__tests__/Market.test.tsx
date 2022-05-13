@@ -1,21 +1,22 @@
+import { fireEvent, render, screen } from '@testing-library/react'
+import { actionTypes } from 'actions/actionTypes'
+import { filterProductCategory } from 'actions/filters'
+import { productsLoadRecipePairings } from 'actions/products'
+import { trackPairingsData } from 'actions/tracking'
+import { marketCategory } from 'actions/trackingKeys'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import Immutable from 'immutable'
 import React from 'react'
 import * as Redux from 'react-redux'
-import Immutable from 'immutable'
-import { render, screen, fireEvent } from '@testing-library/react'
-import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
-import { actionTypes } from 'actions/actionTypes'
-import { productsLoadRecipePairings } from 'actions/products'
-import { filterProductCategory } from 'actions/filters'
-import { trackPairingsData } from 'actions/tracking'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { Market } from '../Market'
+import configureMockStore from 'redux-mock-store'
 import {
-  mockProducts,
-  mockMarketProducts,
-  mockProjectsCategories,
   mockGetProductRecipePairingsState,
+  mockMarketProducts,
+  mockProducts,
+  mockProjectsCategories,
 } from '../../config'
+import { Market } from '../Market'
 
 jest.mock('react-use', () => ({
   ...jest.requireActual('react-use'),
@@ -138,7 +139,7 @@ describe('Market', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /^Snacks \(\d\)$/i }))
     expect(filterProductCategory).toBeCalledWith(
-      'market_category',
+      marketCategory,
       'clicked',
       'secondary_action',
       'Snacks',
@@ -148,7 +149,7 @@ describe('Market', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /^Drinks Cabinet \(\d\)$/i }))
     expect(filterProductCategory).toBeCalledWith(
-      'market_category',
+      marketCategory,
       'clicked',
       'secondary_action',
       'Drinks Cabinet',
@@ -158,7 +159,7 @@ describe('Market', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /^All Products \(\d\)$/i }))
     expect(filterProductCategory).toBeCalledWith(
-      'market_category',
+      marketCategory,
       'clicked',
       'secondary_action',
       'All Products',
@@ -214,7 +215,7 @@ describe('Market', () => {
 
         fireEvent.click(screen.getByRole('button', { name: /^Pairings \(\d\)$/i }))
         expect(filterProductCategory).toBeCalledWith(
-          'market_category',
+          marketCategory,
           'clicked',
           'secondary_action',
           'Pairings',

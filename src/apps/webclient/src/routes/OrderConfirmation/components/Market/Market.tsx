@@ -1,6 +1,7 @@
 import { filterProductCategory } from 'actions/filters'
 import { productsLoadRecipePairings } from 'actions/products'
 import { trackPairingsData } from 'actions/tracking'
+import { marketCategory } from 'actions/trackingKeys'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { List, Map } from 'immutable'
 import React, { FC, useEffect, useState } from 'react'
@@ -24,10 +25,10 @@ import type {
   FilteredProducts,
   NavCategories,
   NavCategory,
-  Product,
-  ProductRecipePairings,
-  ProductRecipePairing,
   Order,
+  Product,
+  ProductRecipePairing,
+  ProductRecipePairings,
   RecipeItem,
 } from '../../types'
 import { MarketPresentation } from './Market.presentation'
@@ -90,7 +91,6 @@ const Market: FC<Props> = (props) => {
     null,
   )
   const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState<boolean>(false)
-  const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>('All Products')
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const isOrderConfirmation = true
   const [productRecipePairingData, setProductRecipePairingData] = useState(List([]))
@@ -118,6 +118,9 @@ const Market: FC<Props> = (props) => {
 
   const pairingsExperimentEnabled = useIsOptimizelyFeatureEnabled(
     userHasPairings ? 'etm_market_orderconfirmation_addingpairings_web_apr22' : null,
+  )
+  const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
+    pairingsExperimentEnabled ? 'Pairings' : 'All Products',
   )
 
   useEffect(() => {
@@ -239,7 +242,7 @@ const Market: FC<Props> = (props) => {
 
     dispatch(
       filterProductCategory(
-        'market_category',
+        marketCategory,
         'clicked',
         'secondary_action',
         selectedFilterCategory.label,

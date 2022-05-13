@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react'
-import Immutable from 'immutable'
-import PropTypes from 'prop-types'
-import Overlay from 'Overlay'
+import { marketProductAdded, marketProductRemoved } from 'actions/trackingKeys'
 import configProducts from 'config/products'
+import Immutable from 'immutable'
+import Overlay from 'Overlay'
+import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
 import { ProductDetailContainer } from '../ProductDetails'
-import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
+import { ProductPresentation } from './Product.presentation'
 
 const propTypes = {
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -126,7 +127,7 @@ class Product extends PureComponent {
         temp('addProduct', true)
       } else {
         basketProductAdd(id)
-        const trackingData = this.mapProductToTrackingData('market_product_added', 'primary_action')
+        const trackingData = this.mapProductToTrackingData(marketProductAdded, 'primary_action')
         orderConfirmationProductTracking(trackingData)
       }
     }
@@ -136,7 +137,7 @@ class Product extends PureComponent {
     const { product, basketProductRemove, orderConfirmationProductTracking } = this.props
     const { id } = product
     basketProductRemove(id)
-    const trackingData = this.mapProductToTrackingData('market_product_removed', 'primary_action')
+    const trackingData = this.mapProductToTrackingData(marketProductRemoved, 'primary_action')
     orderConfirmationProductTracking(trackingData)
   }
 
