@@ -12,6 +12,7 @@ const PreviousOrder = ({
   hasTooltip,
   order,
   trackClickGetHelpWithThisBox,
+  maxNumRecipes
 }) => {
   const deliveryDate = order.get('deliveryDate')
   const orderId = order.get('id')
@@ -40,6 +41,7 @@ const PreviousOrder = ({
           orderState={orderState}
           price={price}
           recipeImages={recipeImages.toJS()}
+          maxRecipesCount={maxNumRecipes}
         />
         <div className={css.linkWrapper}>
           {hasTooltip && (
@@ -69,6 +71,11 @@ PreviousOrder.propTypes = {
   hasTooltip: PropTypes.bool.isRequired,
   order: myGoustoOrderPropType.isRequired,
   trackClickGetHelpWithThisBox: PropTypes.func.isRequired,
+  maxNumRecipes: PropTypes.number
+}
+
+PreviousOrder.defaultProps = {
+  maxNumRecipes: 4
 }
 
 export { PreviousOrder }

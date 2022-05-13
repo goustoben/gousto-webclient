@@ -17,6 +17,7 @@ const NextOrder = ({
   order,
   trackNextBoxTrackingClick,
   trackClickGetHelpWithThisBox,
+  maxNumRecipes
 }) => {
   const deliveryDate = order.get('deliveryDate')
   const orderId = order.get('id')
@@ -69,6 +70,7 @@ const NextOrder = ({
           orderState={orderClientState}
           price={price}
           recipeImages={recipeImages.toJS()}
+          maxRecipesCount={maxNumRecipes}
         />
         <div className={css.ctasWrapper}>
           {boxTrackingUrl && (
@@ -117,10 +119,12 @@ NextOrder.propTypes = {
   order: myGoustoOrderPropType.isRequired,
   trackNextBoxTrackingClick: PropTypes.func.isRequired,
   trackClickGetHelpWithThisBox: PropTypes.func.isRequired,
+  maxNumRecipes: PropTypes.number
 }
 
 NextOrder.defaultProps = {
   boxTrackingUrl: null,
+  maxNumRecipes: 4
 }
 
 export { NextOrder }

@@ -86,6 +86,7 @@ const ProviderComponent = (props) => (
       isProjectedDeliveriesPending={false}
       loadNextProjectedOrder={loadNextProjectedOrder}
       loadOrders={loadOrders}
+      maxNumRecipes={5}
       {...props}
     />
   </Provider>
@@ -194,6 +195,7 @@ describe('MyGousto - Header', () => {
       const nextOrder = wrapper.find('NextOrderContainer')
       expect(nextOrder.prop('boxTrackingUrl')).toBe(NEXT_ORDER_TRACKING)
       expect(nextOrder.prop('order')).toBe(FUTURE_ORDER)
+      expect(nextOrder.prop('maxNumRecipes')).toBe(5)
     })
 
     test('GetHelp API shouldShowEntryPointTooltip is called with the right parameters', () => {
@@ -303,9 +305,10 @@ describe('MyGousto - Header', () => {
         })
       })
 
-      test('renders NextProjectedDelivery with the right date', () => {
+      test('renders NextProjectedDelivery with the right props', () => {
         expect(wrapper.find('NextProjectedDelivery').prop('deliveryDate'))
           .toBe(NEXT_PROJECTED_DELIVERY_DATE)
+        expect(wrapper.find('NextProjectedDelivery').prop('maxNumRecipes')).toBe(5)
       })
     })
 
@@ -328,6 +331,7 @@ describe('MyGousto - Header', () => {
     test('should render the PreviousOrder component with the order passed as a prop', () => {
       const previousOrder = wrapper.find('PreviousOrder')
       expect(previousOrder.prop('order')).toBe(PAST_ORDER)
+      expect(previousOrder.prop('maxNumRecipes')).toBe(5)
     })
 
     describe('and the call to GetHelp API shouldShowEntryPointTooltip errors', () => {
