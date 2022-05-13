@@ -5,7 +5,7 @@ import { client } from 'config/routes'
 import Link from 'components/Link'
 import { OrderDetails } from 'routes/Account/AccountComponents/OrderDetails'
 
-const NextProjectedDelivery = ({ deliveryDate }) => (
+const NextProjectedDelivery = ({ deliveryDate, maxNumRecipes }) => (
   <div>
     <Heading size="fontStyleM" type="h2">
       Upcoming delivery
@@ -14,6 +14,7 @@ const NextProjectedDelivery = ({ deliveryDate }) => (
       <OrderDetails
         deliveryDate={deliveryDate}
         orderState="scheduled"
+        maxRecipesCount={maxNumRecipes}
       />
       <Link to={client.myDeliveries}>
         <CTA
@@ -31,6 +32,11 @@ const NextProjectedDelivery = ({ deliveryDate }) => (
 
 NextProjectedDelivery.propTypes = {
   deliveryDate: PropTypes.string.isRequired,
+  maxNumRecipes: PropTypes.number
+}
+
+NextProjectedDelivery.defaultProps = {
+  maxNumRecipes: 4
 }
 
 export { NextProjectedDelivery }

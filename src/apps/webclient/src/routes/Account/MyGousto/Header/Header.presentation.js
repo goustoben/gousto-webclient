@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import Loading from 'Loading'
 import { myGoustoOrderPropType } from '../../../GetHelp/getHelpPropTypes'
 import { NextOrderContainer } from './NextOrder'
-import { NextProjectedDelivery } from './NextProjectedDelivery'
 import { NoNextOrder } from './NoNextOrder'
 import { PreviousOrderContainer } from './PreviousOrder'
 import { SubscriberPricingBanner } from './SubscriberPricingBanner'
 import css from './Header.css'
+import { NextProjectedDelivery } from './NextProjectedDelivery'
 
 const HeaderPresentation = ({
   nextProjectedOrder,
@@ -20,6 +20,7 @@ const HeaderPresentation = ({
   previousOrder,
   showSubscriberPricingBanner,
   subscriptionStatus,
+  maxNumRecipes
 }) => {
   const previousOrderCard = previousOrder
     ? (
@@ -27,6 +28,7 @@ const HeaderPresentation = ({
         hasDeliveryToday={hasDeliveryToday}
         hasTooltip={hasTooltipForPreviousOrder}
         order={previousOrder}
+        maxNumRecipes={maxNumRecipes}
       />
     ) : null
 
@@ -38,12 +40,18 @@ const HeaderPresentation = ({
           hasDeliveryToday={hasDeliveryToday}
           hasTooltip={hasTooltipForNextOrder}
           order={nextOrder}
+          maxNumRecipes={maxNumRecipes}
         />
       )
     }
 
     if (nextProjectedOrder) {
-      return <NextProjectedDelivery deliveryDate={nextProjectedOrder.deliveryDate} />
+      return (
+        <NextProjectedDelivery
+          deliveryDate={nextProjectedOrder.deliveryDate}
+          maxNumRecipes={maxNumRecipes}
+        />
+      )
     }
 
     return <NoNextOrder />
@@ -80,6 +88,7 @@ HeaderPresentation.propTypes = {
   previousOrder: myGoustoOrderPropType,
   showSubscriberPricingBanner: PropTypes.bool.isRequired,
   subscriptionStatus: PropTypes.string,
+  maxNumRecipes: PropTypes.number
 }
 
 HeaderPresentation.defaultProps = {
@@ -91,6 +100,7 @@ HeaderPresentation.defaultProps = {
   nextProjectedOrder: null,
   previousOrder: null,
   subscriptionStatus: 'inactive',
+  maxNumRecipes: 4
 }
 
 export { HeaderPresentation }

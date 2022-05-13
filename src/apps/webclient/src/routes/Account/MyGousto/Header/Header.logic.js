@@ -93,6 +93,7 @@ class Header extends PureComponent {
       previousOrder,
       showSubscriberPricingBanner,
       subscriptionStatus,
+      maxNumRecipes,
     } = this.props
     const {
       hasTooltipForNextOrder,
@@ -113,6 +114,7 @@ class Header extends PureComponent {
         previousOrder={previousOrder}
         showSubscriberPricingBanner={showSubscriberPricingBanner}
         subscriptionStatus={subscriptionStatus}
+        maxNumRecipes={maxNumRecipes}
       />
     )
   }
@@ -134,6 +136,7 @@ Header.propTypes = {
   showSubscriberPricingBanner: PropTypes.bool,
   subscriptionStatus: PropTypes.string,
   userId: PropTypes.string,
+  maxNumRecipes: PropTypes.number,
 }
 
 Header.defaultProps = {
@@ -145,6 +148,7 @@ Header.defaultProps = {
   showSubscriberPricingBanner: false,
   subscriptionStatus: 'inactive',
   userId: null,
+  maxNumRecipes: 4
 }
 
 export { Header }
