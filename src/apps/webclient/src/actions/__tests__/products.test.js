@@ -557,6 +557,7 @@ describe('the trackProductFiltering action creator', () => {
     expect(trackProductFiltering(eventName, eventAction, eventType, primaryCategory, productsPerCategory)).toEqual({
       type: actionTypes.PRODUCTS_FILTER_TRACKING,
       trackingData: {
+        actionType: eventName,
         eventAction,
         eventName,
         eventType,

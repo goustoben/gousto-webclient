@@ -20,6 +20,7 @@ import {
   orderConfirmationUpdateOrderTracking,
 } from 'actions/orderConfirmation'
 
+import { marketProductAdded, marketProductRemoved } from 'actions/trackingKeys'
 import * as menuApis from '../../routes/Menu/fetchData/menuApi'
 
 jest.mock('apis/orders')
@@ -194,27 +195,39 @@ describe('orderConfirmation actions', () => {
   })
 
   describe('orderConfirmationProductTracking', () => {
+    const trackingData = {
+      eventName: marketProductAdded,
+      trackingData: '1234'
+    }
     test('should return actionType as MarketProduct Added if boolean value is true', () => {
-      const productId = '1234'
-      const added = true
-
-      orderConfirmationProductTracking(productId, added)(dispatch)
+      orderConfirmationProductTracking(trackingData, true)(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: '1234'
+        trackingData: {
+          actionType: marketProductAdded,
+          trackingData: {
+            trackingData: '1234',
+            eventName: marketProductAdded,
+          },
+        }
       })
     })
 
     test('should return actionType as MarketProduct Removed if boolean value is false', () => {
-      const productId = '1234'
-      const added = false
+      trackingData.eventName = marketProductRemoved
 
-      orderConfirmationProductTracking(productId, added)(dispatch)
+      orderConfirmationProductTracking(trackingData, false)(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_PRODUCT_TRACKING,
-        trackingData: '1234'
+        trackingData: {
+          actionType: marketProductRemoved,
+          trackingData: {
+            trackingData: '1234',
+            eventName: marketProductRemoved,
+          },
+        }
       })
     })
   })

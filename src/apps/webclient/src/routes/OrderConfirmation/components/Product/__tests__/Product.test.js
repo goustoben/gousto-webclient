@@ -1,9 +1,8 @@
-import React from 'react'
+import { marketProductAdded } from 'actions/trackingKeys'
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
-
+import React from 'react'
 import { mockProduct } from 'routes/OrderConfirmation/components/config'
-
 import { Product } from '../Product.logic'
 
 jest.mock('../../ProductDetails', () => ({
@@ -176,7 +175,7 @@ describe('Product component', () => {
       const { onAddProduct } = wrapper.instance()
       await onAddProduct()
 
-      expect(orderConfirmationProductTrackingMock).toHaveBeenCalledWith({eventAction: 'clicked', eventName: 'market_product_added', eventProperties: {productProperties: {ageRestricted: false, category: 'Test Category', id: '1234'}}, eventType: 'primary_action'})
+      expect(orderConfirmationProductTrackingMock).toHaveBeenCalledWith({eventAction: 'clicked', eventName: marketProductAdded, eventProperties: {productProperties: {ageRestricted: false, category: 'Test Category', id: '1234'}}, eventType: 'primary_action'})
     })
   })
 

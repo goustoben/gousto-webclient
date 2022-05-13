@@ -136,3 +136,7 @@ export const clickEnterPromoCodeManuallyButton = 'click_other_discount_code_popu
 export const cuisineSelected = 'cuisine_selected'
 export const cuisineDeselected = 'cuisine_deselected'
 export const signupPersonalisationComplete = 'signup_personalisation_complete'
+export const marketCategory = 'market_category'
+export const marketProductAdded = 'market_product_added'
+export const marketProductRemoved = 'market_product_removed'
+export const pairingsLoaded = 'pairings_loaded'

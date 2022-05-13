@@ -1,3 +1,4 @@
+import { marketCategory } from 'actions/trackingKeys'
 import Immutable from 'immutable'
 import { actionTypes } from '../actionTypes'
 
@@ -166,7 +167,7 @@ describe('filters actions', () => {
 
     beforeEach(() => {
       filterProductCategory(
-        'market_category',
+        marketCategory,
         'clicked',
         'secondary_action',
         'All Products',
@@ -187,8 +188,9 @@ describe('filters actions', () => {
       expect(dispatchSpyCalls[1][0]).toEqual({
         type: actionTypes.PRODUCTS_FILTER_TRACKING,
         trackingData: {
+          actionType: marketCategory,
           eventAction: 'clicked',
-          eventName: 'market_category',
+          eventName: marketCategory,
           eventType: 'secondary_action',
           eventProperties: {
             categoryProperties: {
