@@ -6,7 +6,13 @@ import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'utils/window'
 import { fetchOrder } from 'routes/Menu/apis/orderV2'
 
-import { basketOrderLoad } from 'actions/basket'
+import {
+  basketOrderLoad,
+  basketDateChange,
+  basketNumPortionChange,
+  basketChosenAddressChange,
+  basketPostcodeChange,
+} from 'actions/basket'
 import recipes from 'actions/recipes'
 import { orderCheckPossibleDuplicate } from 'actions/order'
 import { productsLoadProducts } from 'actions/products'
@@ -134,6 +140,13 @@ describe('orderConfirmation actions', () => {
               id: '1234',
               whenCutoff: '2019-04-12 19:00:00',
               periodId: '5678',
+              deliveryDate: '2019-04-16 19:00:00',
+              box: {
+                numPortions: 4,
+              },
+              shippingAddress: {
+                postcode: 'AA1 2AA',
+              },
             },
           }),
         )
@@ -159,8 +172,37 @@ describe('orderConfirmation actions', () => {
             id: '1234',
             whenCutoff: '2019-04-12 19:00:00',
             periodId: '5678',
+            deliveryDate: '2019-04-16 19:00:00',
+            box: Immutable.Map({
+              numPortions: 4,
+            }),
+            shippingAddress: Immutable.Map({
+              postcode: 'AA1 2AA',
+            }),
           }),
         )
+      })
+
+      test('should call basket date change for the returned order', async () => {
+        await orderDetails(orderId)(dispatch, getState)
+        expect(basketDateChange).toHaveBeenCalledWith('2019-04-16 19:00:00')
+      })
+
+      test('should call basket num portion change for the returned order', async () => {
+        await orderDetails(orderId)(dispatch, getState)
+        expect(basketNumPortionChange).toHaveBeenCalledWith(4, orderId)
+      })
+
+      test('should call basket choosen address change for the returned order', async () => {
+        await orderDetails(orderId)(dispatch, getState)
+        expect(basketChosenAddressChange).toHaveBeenCalledWith({
+          postcode: 'AA1 2AA',
+        })
+      })
+
+      test('should call basket postcode change for the returned order', async () => {
+        await orderDetails(orderId)(dispatch, getState)
+        expect(basketPostcodeChange).toHaveBeenCalledWith('AA1 2AA')
       })
 
       test('should fetch the products for the returned menu data', async () => {
