@@ -55,6 +55,12 @@ const experimentsConfig = {
     variationName: 'v1_pairingsShown',
     defaultName: 'v0_noPairingsShown',
   },
+  etm_market_orderconfirmation_bundlesfakedoor_web_may22: {
+    id: 'etm_market_orderconfirmation_bundlesfakedoor_web_may22',
+    name: 'Mandarins - Marketplace product bundles',
+    variationName: 'v1_bundlesShown',
+    defaultName: 'v0_noBundlesShown',
+  },
 }
 
 const getConfig = (featureName) => {
