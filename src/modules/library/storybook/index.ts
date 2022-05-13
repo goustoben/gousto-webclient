@@ -26,6 +26,7 @@ export const base: StorybookConfig = {
   stories: [
     `../src/modules/features/**/*.stories.*`,
   ],
+  staticDirs: [path.resolve(__dirname, './assets')],
   addons: ['@storybook/addon-essentials'],
   framework: '@storybook/react',
   features: {
