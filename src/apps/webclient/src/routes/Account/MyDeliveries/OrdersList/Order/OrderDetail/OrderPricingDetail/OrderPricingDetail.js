@@ -11,12 +11,13 @@ const OrderPricingDetail = ({
   numberOfRecipes,
   priceBreakdown,
 }) => {
-  const flatDiscountAmount = priceBreakdown.get('flatDiscountAmount') != null ? priceBreakdown.get('flatDiscountAmount') : 0
-  const percentageDiscountAmount = priceBreakdown.get('percentageDiscountAmount') != null ? priceBreakdown.get('percentageDiscountAmount') : 0
-  const grossRecipesPrice = priceBreakdown.get('grossRecipesPrice') != null ? priceBreakdown.get('grossRecipesPrice') : ''
-  const grossExtrasPrice = priceBreakdown.get('grossExtrasPrice') != null ? priceBreakdown.get('grossExtrasPrice') : 0
-  const grossShippingPrice = priceBreakdown.get('grossShippingPrice') != null ? priceBreakdown.get('grossShippingPrice') : 0
-  const netOrderPrice = priceBreakdown.get('netOrderPrice') != null ? priceBreakdown.get('netOrderPrice') : ''
+  const flatDiscountAmount = priceBreakdown.get('flatDiscountAmount', 0)
+  const percentageDiscountAmount = priceBreakdown.get('percentageDiscountAmount', 0)
+  const grossRecipesPrice = priceBreakdown.get('grossRecipesPrice', '')
+  const grossExtrasPrice = priceBreakdown.get('grossExtrasPrice', 0)
+  const grossShippingPrice = priceBreakdown.get('grossShippingPrice', 0)
+  const netOrderPrice = priceBreakdown.get('netOrderPrice', '')
+  const surcharge = priceBreakdown.get('surcharge', 0)
 
   let discountRender = null
   if (percentageDiscountAmount && flatDiscountAmount) {
@@ -85,6 +86,17 @@ const OrderPricingDetail = ({
           </span>
         </div>
       ) : null}
+      <div className={`${css.row} ${css.separationBelow}`}>
+        <span>
+          <Content contentKeys="mydeliveriesOrderOrderpricingDelivery">
+            <span>Surcharge</span>
+          </Content>
+        </span>
+        <span>
+          £
+          {surcharge.toFixed(2)}
+        </span>
+      </div>
       <div className={`${css.row} ${css.separationBelow}`}>
         <span>
           <Content contentKeys="mydeliveriesOrderOrderpricingDelivery">

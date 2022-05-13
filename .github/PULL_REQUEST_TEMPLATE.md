@@ -1,19 +1,23 @@
+```
+Below is the default PR template. Please fill it out, delete anything irrelevant, and complete the checklist
+```
+
 # Description
-<!--- Update the JIRA ticket below -->
+
 This PR relates to the following [JIRA ticket](http://gousto.atlassian.net/browse/TECH-XXXX)
+
 <!-- What has changed? -->
 <!-- Why has it changed? -->
 <!-- How has it changed? -->
 
 # Merge Checklist - Must be complete
 
-**Is there an [open Production Deploy](https://github.com/Gousto/gousto-webclient/pulls?q=is%3Apr+is%3Aopen+head%3Adevelop+base%3Amaster)? If so, you must check with the owner before merging!**
-
 - [ ] I have installed the [Merge Autoselector extension](https://github.com/Gousto/chrome-ext-merge-autoselector)
 - [ ] and will make sure that **"Squash and merge"** is selected if the target branch is `develop`
 - [ ] [The most recent `develop` commit](https://github.com/Gousto/gousto-webclient/commits/develop) is in a **passing state**
 - [ ] [The E2E tests](https://app.circleci.com/insights/github/Gousto/gousto-webclient/workflows/e2e) are in a **passing state** -> `develop` :hammer_and_pick: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/develop.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/develop)
 - [ ] I have completed cross browser testing **/ or /** I have taken a decision that this work is not vulnerable to cross-browser issues
+- [ ] If there is an [open Production Deploy](https://github.com/Gousto/gousto-webclient/pulls?q=is%3Apr+is%3Aopen+head%3Adevelop+base%3Amaster), I have checked with the owner that they are happy for me to merge
 
 # Deploying
 

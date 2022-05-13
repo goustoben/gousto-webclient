@@ -60,7 +60,7 @@ export const orderConfirmationProductTracking = (trackingData) => (
   (dispatch) => {
     dispatch({
       type: actionTypes.BASKET_PRODUCT_TRACKING,
-      trackingData
+      trackingData: { actionType: trackingData.eventName, trackingData }
     })
   }
 )

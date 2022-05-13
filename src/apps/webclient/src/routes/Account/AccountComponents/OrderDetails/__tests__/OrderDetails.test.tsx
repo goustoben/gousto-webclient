@@ -126,7 +126,7 @@ describe('<OrderDetails />', () => {
       <OrderDetails
         deliveryDate={TODAY}
         orderState="confirmed"
-        maxRecipiesCount={5}
+        maxRecipesCount={5}
         recipeImages={Array(7).fill({ src: FAKE_URL, alt: FAKE_ALT })}
       />,
     )

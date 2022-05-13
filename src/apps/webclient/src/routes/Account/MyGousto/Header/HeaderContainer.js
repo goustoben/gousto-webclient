@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { userLoadOrderTrackingInfo } from 'actions/user'
 import { getIsMyGoustoBannerSubscriberPricingEnabled } from 'selectors/features'
 import { getUserId, getUserSubscriptionState } from 'selectors/user'
+import { getMaxNumRecipes } from 'routes/Account/MyDeliveries/selectors'
 import {
   getIsOrdersPending,
   getIsProjectedDeliveriesPending,
@@ -24,6 +25,7 @@ const mapStateToProps = state => ({
   showSubscriberPricingBanner: getIsMyGoustoBannerSubscriberPricingEnabled(state),
   subscriptionStatus: getUserSubscriptionState(state),
   userId: getUserId(state),
+  maxNumRecipes: getMaxNumRecipes(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {
