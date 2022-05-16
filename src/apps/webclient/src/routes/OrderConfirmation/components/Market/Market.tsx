@@ -12,7 +12,6 @@ import {
   getCategoriesForNavBar,
   getProductsForMarket,
   getProductsLoadError,
-  getProductsRecipePairings,
 } from 'selectors/products'
 import { getBasket, getMenuRecipeIds, getProductCategories } from 'selectors/root'
 import {
@@ -20,6 +19,7 @@ import {
   getBasketSavePending,
   getProductRecipePairingsPending,
 } from 'selectors/status'
+import { getProductsRecipePairingsWithStock } from '../../selectors/recipePairings'
 import type {
   Category,
   FilteredProducts,
@@ -112,7 +112,7 @@ const Market: FC<Props> = (props) => {
   const basketSaveRequired = useSelector(getBasketSaveRequired)
   const basketSavePending = useSelector(getBasketSavePending)
   const order = useSelector(getBasketOrderDetails)
-  const productRecipePairings = useSelector(getProductsRecipePairings)
+  const productRecipePairings = useSelector(getProductsRecipePairingsWithStock)
   const productRecipePairingsPending = useSelector(getProductRecipePairingsPending)
   const menuRecipeIds = useSelector(getMenuRecipeIds)
 
