@@ -1,0 +1,25 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value CG-800 #333D47;
+
+.buttonContainer {
+  /* Override internal padding of citrus/Button that doesn't allow it properly. */
+  & > button {
+    padding: 0 1rem;
+  }
+}
+
+.iconDesktop {
+  flex: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: CG-800;
+}
+
+.arrowDown {
+  composes: fa-basic-class fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+  composes: fa-basic-class fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+}

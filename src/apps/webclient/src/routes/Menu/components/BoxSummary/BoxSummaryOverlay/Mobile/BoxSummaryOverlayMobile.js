@@ -1,10 +1,6 @@
 import React from 'react'
-import classNames from 'classnames'
-import { useSelector } from 'react-redux'
-
 import Overlay from 'Overlay'
 import { MOBILE_VIEW } from 'utils/view'
-import { getIsSimplifyBasketBarEnabled } from 'routes/Menu/selectors/features'
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
 import css from './BoxSummaryOverlayMobile.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
@@ -18,13 +14,7 @@ const BoxSummaryOverlayMobile = ({
   numPortions,
   shouldDisplayFullScreenBoxSummary,
 }) => {
-  const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
-
-  const classNameToApply = shouldDisplayFullScreenBoxSummary
-    ? css.fullScreen
-    : classNames(css.mobileOverlay, {
-        [css.mobileOverlayIsSimplifyBasketBarEnabled]: isSimplifyBasketBarEnabled,
-      })
+  const classNameToApply = shouldDisplayFullScreenBoxSummary ? css.fullScreen : css.mobileOverlay
 
   return (
     <Overlay
