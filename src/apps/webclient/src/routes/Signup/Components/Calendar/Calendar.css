@@ -1,6 +1,5 @@
 @value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.module.css';
-@value BreakpointToSmall (max-width: 375px);
-@value BreakpointFromSmall (min-width: 375px);
+@value BreakpointToSmall, BreakpointFromSmall from 'styles/appBreakpoints.css';
 @value S-50 #EAE9FF;
 @value CG-100 #CED4D9;
 
