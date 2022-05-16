@@ -5,14 +5,16 @@ import { getCollectionsHeaders } from '../../selectors/collections'
 import { useBrandHeadersInfo } from '../../domains/brand'
 import { GradientInfoHeader } from './GradientInfoHeader'
 import { WaveLinkHeaderContainer } from './LinkHeaderContainer'
+import { useShouldRemoveMerchandisingBanner } from './useShouldRemoveMerchandisingBanner'
 
 const CollectionHeaderWrapper = () => {
   const { headers, collectionsPerMenu } = useBrandHeadersInfo()
   const collectionsHeaders = useSelector((state) =>
     getCollectionsHeaders(state, { headers, collectionsPerMenu }),
   )
+  const removeMerchandisingBanner = useShouldRemoveMerchandisingBanner()
 
-  if (!collectionsHeaders) {
+  if (!collectionsHeaders || removeMerchandisingBanner) {
     return null
   }
 
