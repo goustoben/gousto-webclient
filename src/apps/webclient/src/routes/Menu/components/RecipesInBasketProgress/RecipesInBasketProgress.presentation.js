@@ -25,8 +25,8 @@ const RecipesInBasketProgressPresentation = ({
   onClose,
 }) => {
   const { maxRecipesForPortion } = useSupportedBoxTypes()
-  const { numPortion } = useNumPortions()
-  const maxRecipesNum = maxRecipesForPortion(numPortion)
+  const { numPortions } = useNumPortions()
+  const maxRecipesNum = maxRecipesForPortion(numPortions)
   const percentage = Math.round((selectedRecipesCount / maxRecipesNum) * 100)
 
   if (!selectedRecipesCount) {

@@ -5,9 +5,9 @@ import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortio
 
 const BoxProgressMessage = ({ numRecipes, className }) => {
   const { maxRecipesForPortion, minRecipesForPortion } = useSupportedBoxTypes()
-  const { numPortion } = useNumPortions()
-  const maxRecipesNum = maxRecipesForPortion(numPortion)
-  const minRecipesNum = minRecipesForPortion(numPortion)
+  const { numPortions } = useNumPortions()
+  const maxRecipesNum = maxRecipesForPortion(numPortions)
+  const minRecipesNum = minRecipesForPortion(numPortions)
 
   if (numRecipes <= 0) {
     return (

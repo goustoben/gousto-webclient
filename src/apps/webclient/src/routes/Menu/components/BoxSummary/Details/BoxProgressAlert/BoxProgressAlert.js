@@ -8,8 +8,8 @@ import { BoxProgressMessage } from '../../../BoxProgressMessage'
 
 const BoxProgressAlert = ({ numRecipes }) => {
   const { maxRecipesForPortion } = useSupportedBoxTypes()
-  const { numPortion } = useNumPortions()
-  const maxRecipesNum = maxRecipesForPortion(numPortion)
+  const { numPortions } = useNumPortions()
+  const maxRecipesNum = maxRecipesForPortion(numPortions)
   const hasMaxRecipes = numRecipes >= maxRecipesNum
 
   return (
