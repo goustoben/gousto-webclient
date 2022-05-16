@@ -7,7 +7,8 @@ import {
   FloatCard,
   LayoutContentWrapper,
 } from 'goustouicomponents'
-import basketConfig from 'config/basket'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
 import { RecipesInBasketProgressContent } from './RecipesInBasketProgressContent'
 
 import css from './RecipesInBasketProgress.css'
@@ -23,7 +24,9 @@ const RecipesInBasketProgressPresentation = ({
   selectedRecipesCount,
   onClose,
 }) => {
-  const { maxRecipesNum } = basketConfig
+  const { maxRecipesForPortion } = useSupportedBoxTypes()
+  const { numPortion } = useNumPortions()
+  const maxRecipesNum = maxRecipesForPortion(numPortion)
   const percentage = Math.round((selectedRecipesCount / maxRecipesNum) * 100)
 
   if (!selectedRecipesCount) {
