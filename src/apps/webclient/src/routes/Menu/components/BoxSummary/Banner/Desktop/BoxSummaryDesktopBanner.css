@@ -1,0 +1,58 @@
+@value Blackberry from 'styles/colors.css';
+@value BreakpointToMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value barDesktopHeight 75px;
+@value ScreenXSMax from 'styles/screenSizes.module.css';
+@value barHeightIsSimplifyBasketBarEnabled 4rem;
+
+.bardesktop {
+  composes: row flex spaceAround from 'styles/flex.css';
+  composes: fixed from 'styles/position.css';
+  background-color: Blackberry;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 501;
+  height: barDesktopHeight;
+
+  @media BreakpointToMedium {
+    display: none;
+  }
+}
+
+.bardesktopVariant {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 501;
+  height: barHeightIsSimplifyBasketBarEnabled;
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.16);
+  background-color: rgba(51, 61, 71, 0.9);
+  backdrop-filter: blur(4px);
+
+  padding-left: 0.75rem;
+  @media BreakpointFromLarge {
+    padding-left: 2rem;
+  }
+
+  @media BreakpointToMedium {
+    display: none;
+  }
+}
+
+.buttonsContainer {
+  composes: row flex flexEnd verticalCenter from 'styles/flex.css';
+  padding: 10px 5px;
+  flex: 0 0 50%;
+}
+
+.buttonsContainerVariant {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+  flex: 1;
+}

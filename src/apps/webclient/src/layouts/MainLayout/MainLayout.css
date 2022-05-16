@@ -1,5 +1,7 @@
 @value White from 'styles/colors.css';
-@value basketBarHeight from 'routes/Menu/components/BoxSummary/Banner/BoxSummaryBanner.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value barMobileHeight from 'routes/Menu/components/BoxSummary/Banner/Mobile/BoxSummaryMobileBanner.css';
+@value barDesktopHeight from 'routes/Menu/components/BoxSummary/Banner/Desktop/BoxSummaryDesktopBanner.css';
 @value actionBarHeight from 'routes/Menu/components/ActionBar/actionBarConstants.module.css';
 
 /* Make sure bootstrap is included */
@@ -18,5 +20,9 @@
 }
 
 .withBottomBar {
-  padding-bottom: calc(basketBarHeight + actionBarHeight);
+  padding-bottom: calc(barMobileHeight + actionBarHeight);
+
+  @media BreakpointFromMedium {
+    padding-bottom: calc(barDesktopHeight + actionBarHeight);
+  }
 }

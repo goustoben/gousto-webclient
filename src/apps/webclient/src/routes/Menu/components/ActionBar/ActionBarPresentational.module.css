@@ -1,5 +1,6 @@
 @value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
-@value basketBarHeight from 'routes/Menu/components/BoxSummary/Banner/BoxSummaryBanner.css';
+@value barMobileHeight from 'routes/Menu/components/BoxSummary/Banner/Mobile/BoxSummaryMobileBanner.css';
+@value barDesktopHeight, barHeightIsSimplifyBasketBarEnabled from 'routes/Menu/components/BoxSummary/Banner/Desktop/BoxSummaryDesktopBanner.css';
 @value actionBarHeight, FI-50, FI-200, FS-50, FS-200 from './actionBarConstants.module.css';
 
 @value fullJumpDurationMs 1000ms;
@@ -14,12 +15,24 @@
 
 .separate {
   position: fixed;
-  bottom: basketBarHeight;
+  bottom: barMobileHeight;
   width: 100%;
   height: actionBarHeight;
   /* right padding is large so text doesn't hide under the OpenBoxButton at 320px */
   padding: 0.5rem 4rem 0.5rem 0.5rem;
   box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+
+  @media BreakpointFromMedium {
+    bottom: barDesktopHeight;
+  }
+
+  &.isSimplifyBasketBarEnabled {
+    bottom: barHeightIsSimplifyBasketBarEnabled;
+
+    @media BreakpointFromMedium {
+      display: none;
+    }
+  }
 }
 
 .embedded {

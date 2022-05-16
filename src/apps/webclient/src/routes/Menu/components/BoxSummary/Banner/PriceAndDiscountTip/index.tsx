@@ -1,1 +1,0 @@
-export { PriceAndDiscountTip } from './PriceAndDiscountTip'
