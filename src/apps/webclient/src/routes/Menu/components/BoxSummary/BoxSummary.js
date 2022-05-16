@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 
+import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
 import { EscapeKeyPressed } from 'utils/DOMEvents'
 import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
@@ -13,8 +14,10 @@ class BoxSummary extends React.PureComponent {
   // eslint-disable-next-line react/static-property-placement
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
+    date: PropTypes.string,
     numPortions: PropTypes.number.isRequired,
     recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+    menuRecipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
     showDetails: PropTypes.bool.isRequired,
     boxDetailsVisibilityChange: PropTypes.func.isRequired,
     basketRestorePreviousValues: PropTypes.func.isRequired,
@@ -23,19 +26,28 @@ class BoxSummary extends React.PureComponent {
     menuFetchPending: PropTypes.bool,
     hasUnavailableRecipes: PropTypes.bool,
     orderSaveError: PropTypes.string,
+    maxRecipesNum: PropTypes.number,
     pricingPending: PropTypes.bool,
+    deliveryDays: PropTypes.instanceOf(Immutable.Map),
+    slotId: PropTypes.string,
     shouldShowBoxSummary: PropTypes.bool,
     shouldMenuBrowseCTAShow: PropTypes.bool,
+    isBoxSummaryOpened: PropTypes.bool,
   }
 
   // eslint-disable-next-line react/static-property-placement
   static defaultProps = {
+    deliveryDays: Immutable.Map(),
+    maxRecipesNum: config.maxRecipesNum,
     shouldShowBoxSummary: false,
+    date: null,
     menuFetchPending: false,
     hasUnavailableRecipes: false,
     orderSaveError: null,
     pricingPending: false,
+    slotId: null,
     shouldMenuBrowseCTAShow: false,
+    isBoxSummaryOpened: false,
   }
 
   // eslint-disable-next-line react/state-in-constructor
@@ -142,7 +154,19 @@ class BoxSummary extends React.PureComponent {
   }
 
   render() {
-    const { recipes, menuFetchPending, showDetails, isMobile, shouldMenuBrowseCTAShow } = this.props
+    const {
+      date,
+      maxRecipesNum,
+      menuRecipesStore,
+      recipes,
+      menuFetchPending,
+      deliveryDays,
+      slotId,
+      showDetails,
+      isMobile,
+      shouldMenuBrowseCTAShow,
+      isBoxSummaryOpened,
+    } = this.props
     const numRecipes = this.numRecipes()
     const { tooltipErrorText, showErrorModalPopup } = this.handleError()
 
@@ -154,8 +178,16 @@ class BoxSummary extends React.PureComponent {
           numRecipes={numRecipes}
           expandWarning={!menuFetchPending && numRecipes !== basketSum(recipes)}
           onExpandClick={this.toggle}
+          date={date}
+          deliveryDays={deliveryDays}
+          slotId={slotId}
           showBrowseCTA={shouldMenuBrowseCTAShow}
+          maxRecipesNum={maxRecipesNum}
+          menuRecipesStore={menuRecipesStore}
+          recipes={recipes}
           errorText={tooltipErrorText}
+          openDetails={this.open}
+          isBoxSummaryOpened={isBoxSummaryOpened}
         />
         <BoxSummaryOverlayContainer
           isMobile={isMobile}

@@ -6,15 +6,15 @@ module.exports = {
   sections: {
     menuContainer: {
       selector: '*[data-testing="menuContainer"]',
-      elements: {
-        boxSummaryCheckoutButton: {
-          selector: '*[data-testing="boxSummaryButton"] > button',
-        },
-      },
+
       commands: [
         {
           goFromMenuToCheckout: function () {
-            this.safelyClick('@boxSummaryCheckoutButton')
+            this
+              .executeAndThrowOnFailure(function () {
+                const checkoutButton = document.querySelector('[data-testing="boxSummaryButton"]')
+                checkoutButton.click()
+            })
           },
           clickNextButton: function () {
             this
@@ -126,7 +126,7 @@ module.exports = {
           // select the first Tuesday available in the dropdown.
           this.
             selectOptionByText('*[data-testing="boxSummaryDesktop"] .Select', 'TUE', this)
-
+          
           return this
         }
 
@@ -140,16 +140,16 @@ module.exports = {
         menuBrowseCTAButton: {
           selector: '*[data-testing="menuBrowseCTAButton"]',
         },
-        boxSummaryCheckoutButton: {
-          selector: '*[data-testing="boxSummaryButton"] > button',
+        boxSummaryButtonSpinner: {
+          selector: '*[data-testing="boxSummaryButtonSpinner"]',
         },
       },
 
       commands: [{
         checkIfCheckoutButtonClickable: function () {
           this
-            .waitForElementVisible('@boxSummaryCheckoutButton')
-            .expect.element('@boxSummaryCheckoutButton').to.be.enabled
+            .waitForElementNotVisible('@boxSummaryButtonSpinner')
+            .expect.element('@boxSummaryButtonSpinner').to.have.css('display').which.equals('none')
 
           return this
         },

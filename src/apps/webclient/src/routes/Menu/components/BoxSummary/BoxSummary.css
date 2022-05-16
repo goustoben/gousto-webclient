@@ -3,6 +3,7 @@
 @value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value sizeLG from 'styles/typography.css';
 
+@value barDesktopHeight from './Banner/Desktop/BoxSummaryDesktopBanner.css';
 @value 100percent 100%;
 
 .container {

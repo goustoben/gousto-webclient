@@ -1,0 +1,51 @@
+@value ScreenSMMin, ScreenMLMax from 'styles/screenSizes.css';
+@value SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value CG-200 #AEB7C0;
+@value CG-600 #516272;
+@value CG-800 #333D47;
+@value W-0 #FFFFFF;
+
+.hide {
+  visibility: hidden;
+  float: left;
+}
+
+.total {
+  composes: textStrike from 'styles/typography.css';
+  composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+  @media ScreenMLMax {
+    display: block;
+  }
+}
+
+.dash {
+  composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+  transform: scale(3, 1);
+  transform-origin: left;
+  display: inline-block;
+}
+
+/* isSimplifyBasketBarEnabled styles */
+
+.strikedOutPrice {
+  display: inline-block;
+  text-decoration: line-through;
+  margin-right: 0.25rem;
+  composes: fontStyleXS from 'design-language/typography.module.css';
+  color: CG-200;
+
+  @media BreakpointFromMedium {
+    color: CG-600;
+  }
+}
+
+.primaryPrice {
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  composes: fontSemiBold from 'design-language/typography.module.css';
+
+  color: W-0;
+  @media BreakpointFromMedium {
+    color: CG-800;
+  }
+}

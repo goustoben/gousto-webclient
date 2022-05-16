@@ -1,4 +1,4 @@
-@value BreakpointToSmall from 'styles/appBreakpoints.css';
+@value BreakpointToSmall (max-width: 374px);
 
 .container {
   padding-top: 0.5rem;

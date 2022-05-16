@@ -1,7 +1,8 @@
 @value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value sizeLG, sizeXS, bodyFontStackBold from 'styles/typography.css';
 
-@value basketBarHeight from '../../Banner/BoxSummaryBanner.css';
+@value barMobileHeight 90px;
+@value barHeightIsSimplifyBasketBarEnabled from '../../Banner/Desktop/BoxSummaryDesktopBanner.css';
 
 .detailContainer {
   composes: borderXS from 'styles/borders.css';
@@ -30,8 +31,13 @@
 }
 
 .mobileOverlay {
-  height: calc(100% - basketBarHeight);
-  min-height: calc(100% - basketBarHeight);
+  height: calc(100% - barMobileHeight);
+  min-height: calc(100% - barMobileHeight);
+}
+
+.mobileOverlayIsSimplifyBasketBarEnabled {
+  height: calc(100% - barHeightIsSimplifyBasketBarEnabled);
+  min-height: calc(100% - barHeightIsSimplifyBasketBarEnabled);
 }
 
 .fullScreen {

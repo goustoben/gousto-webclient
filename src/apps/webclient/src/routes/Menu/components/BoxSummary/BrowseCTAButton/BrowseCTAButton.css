@@ -12,8 +12,7 @@
 }
 
 .mobile {
-  padding-bottom: 44px;
-  padding-top: 4px;
+  composes: coButtonSegment from '../BannerButton/BannerButton.css';
   padding-left: 0;
   padding-right: 0;
 }

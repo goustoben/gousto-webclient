@@ -1,6 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import { useSelector } from 'react-redux'
 
 import { BoxSummaryOverlayMobile } from '../BoxSummaryOverlayMobile'
 
@@ -23,7 +24,11 @@ describe('BoxSummaryOverlayMobile', () => {
     shouldDisplayFullScreenBoxSummary: false,
   }
 
-  describe('when rendered', () => {
+  describe('when isSimplifyBasketBarEnabled is on', () => {
+    beforeEach(() => {
+      useSelector.mockReturnValue(true)
+    })
+
     test('then it should render without crashing', () => {
       expect(() => {
         shallow(<BoxSummaryOverlayMobile {...defaultProps} />)
