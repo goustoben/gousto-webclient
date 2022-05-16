@@ -15,14 +15,19 @@ import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvironment } from 'utils/isomorphicEnvironment'
 
 export const openProductModalTracking = (trackingData) => (dispatch) => {
-  dispatch({ type: actionTypes.PRODUCT_DETAILS_MODAL_TRACKING, trackingData })
+  dispatch({
+    type: actionTypes.PRODUCT_DETAILS_MODAL_TRACKING,
+    trackingData: { actionType: trackingData.eventName, trackingData }
+  }
+  )
 }
 
 export const trackPairingsData = (productsPerCategory, recipesPerCategory) => (dispatch) => {
   dispatch({
     type: actionTypes.TRACK_PAIRINGS_DATA,
     trackingData: {
-      event_name: 'pairings_loaded',
+      actionType: trackingKeys.pairingsLoaded,
+      event_name: trackingKeys.pairingsLoaded,
       event_action: 'page_load',
       pairingProperties: { productsPerCategory, recipesPerCategory }
     }
