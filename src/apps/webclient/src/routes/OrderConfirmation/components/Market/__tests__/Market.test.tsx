@@ -15,6 +15,7 @@ import {
   mockMarketProducts,
   mockProducts,
   mockProjectsCategories,
+  mockProductsStock,
 } from '../../config'
 import { Market } from '../Market'
 
@@ -77,6 +78,7 @@ describe('Market', () => {
     products: mockMarketProducts,
     productsCategories: mockProjectsCategories,
     productRecipePairings: mockGetProductRecipePairingsState(),
+    productsStock: mockProductsStock,
     menuRecipes: Immutable.fromJS(['2211']),
     basket: Immutable.fromJS({
       products: mockProducts,

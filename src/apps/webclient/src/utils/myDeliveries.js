@@ -102,7 +102,8 @@ export const transformPendingOrders = (orders) => {
           grossOrderPrice: parseFloat(prices.get('grossTotal')),
           flatDiscountAmount: parseFloat(prices.get('totalDiscount')),
           percentageDiscountAmount: parseFloat(prices.get('percentageOff')),
-          netOrderPrice: parseFloat(prices.get('total'))
+          netOrderPrice: parseFloat(prices.get('total')),
+          surcharge: parseFloat(prices.get('surchargeTotal')),
         }),
         recipes: recipeItems.map(item => (Immutable.Map({
           id: item.get('id'),

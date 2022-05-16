@@ -537,6 +537,12 @@ export const mockProjectsCategories = Immutable.Map({
   }
 })
 
+export const mockProductsStock = Immutable.Map({
+  '268ab050-ffd1-11e9-ab00-02c58c8bcbea': 10,
+  'd1655396-8034-11ec-822e-02fd1d4b57a3': 10,
+  '012d8f6a-609e-11eb-913f-06a5bb631817': 0,
+})
+
 export const mockGetProductRecipePairingsState = () => {
   const recipePairings = [
     {

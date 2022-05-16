@@ -29,7 +29,7 @@ interface OrderDetailsProps {
   recipeImages?: ImageSource[]
   price?: number
   orderState?: OrderState
-  maxRecipiesCount?: number
+  maxRecipesCount?: number
   deliveryStartTime?: string
   deliveryEndTime?: string
 }
@@ -37,7 +37,7 @@ interface OrderDetailsProps {
 /**
  * Default number of recipe slots rendered in a single row
  */
-const DEFAULT_MAX_RECIPIE_NUMBER = 4
+const DEFAULT_MAX_RECIPE_NUMBER = 4
 
 const ORDER_STATE_TO_COLOR_MAPPING: Record<OrderState, Color> = {
   cancelled: Color.Primary_500,
@@ -69,13 +69,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = (props: OrderDetailsProps) => 
     orderState,
     price,
     recipeImages = [],
-    maxRecipiesCount = DEFAULT_MAX_RECIPIE_NUMBER,
+    maxRecipesCount = DEFAULT_MAX_RECIPE_NUMBER,
   } = props
   const formattedPrice = formatPrice(price)
   const formattedDeliveryDate = timeFormat(deliveryDate, 'day')
   const formattedStartTime = timeFormat(deliveryStartTime, 'hour')
   const formattedEndTime = timeFormat(deliveryEndTime, 'hour')
-  const limitedRecipeImages = recipeImages.slice(0, maxRecipiesCount)
+  const limitedRecipeImages = recipeImages.slice(0, maxRecipesCount)
 
   return (
     <>
@@ -115,7 +115,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = (props: OrderDetailsProps) => 
 
       {/* Recipies */}
       <Box
-        gridTemplateColumns={`repeat(${maxRecipiesCount}, 1fr)`}
+        gridTemplateColumns={`repeat(${maxRecipesCount}, 1fr)`}
         display={GridDisplay.Grid}
         gap="8px"
         data-testid="recipe-list"
@@ -124,7 +124,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = (props: OrderDetailsProps) => 
           // eslint-disable-next-line react/no-array-index-key
           <RecipeImageBox key={`${src}-${i}`} src={src} alt={alt} />
         ))}
-        {Array.from(new Array(maxRecipiesCount - limitedRecipeImages.length), (_, i: number) => (
+        {Array.from(new Array(maxRecipesCount - limitedRecipeImages.length), (_, i: number) => (
           <RecipeImageBox key={i} alt="Recipe image" />
         ))}
       </Box>

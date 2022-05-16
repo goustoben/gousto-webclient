@@ -23,7 +23,7 @@ describe('myDeliveries utils', () => {
         deliveryTotal: '0.00',
         grossTotal: '47.75',
         total: '47.75',
-        totalDiscount: '0.000'
+        totalDiscount: '0.000',
       },
       recipeItems: [
         {
@@ -89,7 +89,8 @@ describe('myDeliveries utils', () => {
         deliveryTotal: '4.99',
         grossTotal: '97.60',
         total: '97.60',
-        totalDiscount: '0.000'
+        totalDiscount: '0.000',
+        surchargeTotal: '0.00'
       },
       recipeItems: [
         {
@@ -325,7 +326,8 @@ describe('myDeliveries utils', () => {
             grossOrderPrice: parseFloat('97.60'),
             flatDiscountAmount: parseFloat('0.000'),
             percentageDiscountAmount: parseFloat(null),
-            netOrderPrice: parseFloat('97.60')
+            netOrderPrice: parseFloat('97.60'),
+            surcharge: parseFloat('0.00')
           }),
           recipes: Immutable.List(
             [
