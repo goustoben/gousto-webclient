@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 import { useSelector, useDispatch } from 'react-redux'
-import config from 'config/basket'
 import { BoxProgressAlert } from '../BoxProgressAlert'
 
 jest.mock('components/PricePerServingMessage', () => ({
@@ -13,6 +12,16 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
+}))
+
+const maxRecipesNum = 4
+const minRecipesNum = 2
+
+jest.mock('routes/Menu/domains/basket/internal/useSupportedBoxTypes', () => ({
+  useSupportedBoxTypes: () => ({
+    maxRecipesForPortion: jest.fn().mockImplementation(() => maxRecipesNum),
+    minRecipesForPortion: jest.fn().mockImplementation(() => minRecipesNum),
+  }),
 }))
 
 describe('<BoxProgressAlert', () => {
@@ -49,7 +58,7 @@ describe('<BoxProgressAlert', () => {
 
     describe('and the maximum number of recipes are selected', () => {
       beforeEach(() => {
-        wrapper.setProps({ numRecipes: config.maxRecipesNum })
+        wrapper.setProps({ numRecipes: maxRecipesNum })
       })
 
       test('renders a success alert', () => {
