@@ -16,6 +16,7 @@ const BoxSummaryContent = (props) => {
     numPortions,
     recipes,
     boxSummaryCurrentView,
+    portionChangeErrorModalHandler,
   } = props
 
   let boxSummaryView
@@ -36,6 +37,7 @@ const BoxSummaryContent = (props) => {
           orderId={orderId}
           numPortions={numPortions}
           basketRecipes={recipes}
+          portionChangeErrorModalHandler={portionChangeErrorModalHandler}
         />
       )
       break
@@ -55,6 +57,7 @@ BoxSummaryContent.propTypes = {
   numPortions: PropTypes.number.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
   boxSummaryCurrentView: PropTypes.string.isRequired,
+  portionChangeErrorModalHandler: PropTypes.func.isRequired,
 }
 
 export { BoxSummaryContent }

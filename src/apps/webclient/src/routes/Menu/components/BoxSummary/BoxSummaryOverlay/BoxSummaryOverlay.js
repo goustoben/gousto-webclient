@@ -15,6 +15,7 @@ const BoxSummaryOverlay = ({
   numPortions,
   shouldDisplayFullScreenBoxSummary,
   orderSaveError,
+  portionChangeErrorModalHandler,
 }) => {
   const onClose = useBrowserBack(showDetails ? onCloseClick : null)
   if (isMobile) {
@@ -40,6 +41,7 @@ const BoxSummaryOverlay = ({
       recipes={recipes}
       numPortions={numPortions}
       orderSaveError={orderSaveError}
+      portionChangeErrorModalHandler={portionChangeErrorModalHandler}
     />
   )
 }

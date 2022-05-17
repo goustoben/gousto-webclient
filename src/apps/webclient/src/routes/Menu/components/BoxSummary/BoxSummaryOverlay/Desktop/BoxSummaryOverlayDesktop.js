@@ -14,6 +14,7 @@ const BoxSummaryOverlayDesktop = ({
   recipes,
   numPortions,
   orderSaveError,
+  portionChangeErrorModalHandler,
 }) => {
   const isSimplifyBasketBarEnabled = useSelector(getIsSimplifyBasketBarEnabled)
 
@@ -41,6 +42,7 @@ const BoxSummaryOverlayDesktop = ({
             showDetails={showDetails}
             orderSaveError={orderSaveError}
             boxDetailsVisibilityChange={onToggleVisibility}
+            portionChangeErrorModalHandler={portionChangeErrorModalHandler}
             view="desktop"
           />
         </div>
