@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 
-import { RecipeContextProvider, useRecipe } from './context'
-import { Recipe } from "./recipe"
+import { RecipeContextProvider, useRecipe } from '.'
+import { Recipe } from "../recipe"
 
 describe('RecipeContext', () => {
   describe('useRecipe', () => {
