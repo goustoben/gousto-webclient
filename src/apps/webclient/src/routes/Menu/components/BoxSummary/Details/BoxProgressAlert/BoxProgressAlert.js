@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import config from 'config/basket'
 import { Alert } from 'goustouicomponents'
 import { PricePerServingMessage } from 'components/PricePerServingMessage'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
 import { BoxProgressMessage } from '../../../BoxProgressMessage'
 
 const BoxProgressAlert = ({ numRecipes }) => {
-  const hasMaxRecipes = numRecipes >= config.maxRecipesNum
+  const { maxRecipesForPortion } = useSupportedBoxTypes()
+  const { numPortions } = useNumPortions()
+  const maxRecipesNum = maxRecipesForPortion(numPortions)
+  const hasMaxRecipes = numRecipes >= maxRecipesNum
 
   return (
     <div data-testing="boxProgressAlert">

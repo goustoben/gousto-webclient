@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import { LayoutContentWrapper, Segment, Button } from 'goustouicomponents'
 import { Details } from '../../Details/Details'
 import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
+
 jest.mock('../../BannerButton/Checkout', () => ({
   CheckoutContainer: 'CheckoutContainer',
 }))
