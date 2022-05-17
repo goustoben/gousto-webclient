@@ -12,6 +12,7 @@ const BoxSummaryOverlayDesktop = ({
   recipes,
   numPortions,
   orderSaveError,
+  portionChangeErrorModalHandler,
 }) => (
   <div className={css.supercontainerDesktop}>
     <div
@@ -35,6 +36,7 @@ const BoxSummaryOverlayDesktop = ({
           showDetails={showDetails}
           orderSaveError={orderSaveError}
           boxDetailsVisibilityChange={onToggleVisibility}
+          portionChangeErrorModalHandler={portionChangeErrorModalHandler}
           view="desktop"
         />
       </div>

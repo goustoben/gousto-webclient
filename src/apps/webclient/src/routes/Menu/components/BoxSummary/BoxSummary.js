@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import { basketSum, okRecipes } from 'utils/basket'
 import { EscapeKeyPressed } from 'utils/DOMEvents'
+import { PortionChangeErrorModal } from 'routes/Menu/components/BoxSummary/PortionChangeNotAllowedModal/PortionChangeErrorModal'
 import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
 import css from './BoxSummary.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
@@ -41,6 +42,8 @@ class BoxSummary extends React.PureComponent {
   // eslint-disable-next-line react/state-in-constructor
   state = {
     hideTooltip: false,
+    showPortionChangeErrorModal: false,
+    maxRecipesForPortion: 4,
   }
 
   componentDidMount() {
@@ -124,6 +127,19 @@ class BoxSummary extends React.PureComponent {
     basketRestorePreviousValues()
   }
 
+  portionChangeErrorModalHandler = (showModal, maxRecipesForPortion) => {
+    this.setState({
+      showPortionChangeErrorModal: showModal,
+      maxRecipesForPortion,
+    })
+  }
+
+  onClosePortionChangeErrorModal = () => {
+    this.setState({
+      showPortionChangeErrorModal: false,
+    })
+  }
+
   toggle = () => {
     const { showDetails, pricingPending } = this.props
     const show = !showDetails && !pricingPending
@@ -145,10 +161,16 @@ class BoxSummary extends React.PureComponent {
     const { recipes, menuFetchPending, showDetails, isMobile, shouldMenuBrowseCTAShow } = this.props
     const numRecipes = this.numRecipes()
     const { tooltipErrorText, showErrorModalPopup } = this.handleError()
+    const { maxRecipesForPortion, showPortionChangeErrorModal } = this.state
 
     return (
       <div className={css.boxSummary} data-testing="boxSummary">
         <CheckoutErrorModal shouldShow={showErrorModalPopup} />
+        <PortionChangeErrorModal
+          shouldShow={showPortionChangeErrorModal}
+          maxRecipesForPortion={maxRecipesForPortion}
+          onClose={this.onClosePortionChangeErrorModal}
+        />
 
         <BoxSummaryBanner
           numRecipes={numRecipes}
@@ -162,6 +184,7 @@ class BoxSummary extends React.PureComponent {
           onCloseClick={this.close}
           onToggleVisibility={this.toggle}
           showDetails={showDetails}
+          portionChangeErrorModalHandler={this.portionChangeErrorModalHandler}
         />
       </div>
     )

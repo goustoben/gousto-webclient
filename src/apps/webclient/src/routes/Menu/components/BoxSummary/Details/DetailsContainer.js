@@ -7,6 +7,7 @@ import { getBasketSlotId } from 'selectors/basket'
 import { getFullScreenBoxSummary } from 'selectors/features'
 import { getOkRecipeIds, getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { basketRecipeRemove } from '../../../actions/basketRecipes'
 import { Details } from './Details'
@@ -28,9 +29,19 @@ const mapStateToProps = (state) => ({
 
 const DetailsPure = (props) => {
   const { isPending, pricing } = usePricing()
+  const { isPortionSizeAllowedByRecipeCount, maxRecipesForPortion, minRecipesForPortion } =
+    useSupportedBoxTypes()
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Details {...props} pricingPending={isPending} prices={pricing} />
+  return (
+    <Details
+      {...props} // eslint-disable-line react/jsx-props-no-spreading
+      pricingPending={isPending}
+      prices={pricing}
+      isPortionSizeAllowedByRecipeCount={isPortionSizeAllowedByRecipeCount}
+      maxRecipesForPortion={maxRecipesForPortion}
+      minRecipesForPortion={minRecipesForPortion}
+    />
+  )
 }
 
 const DetailsContainer = connect(mapStateToProps, {

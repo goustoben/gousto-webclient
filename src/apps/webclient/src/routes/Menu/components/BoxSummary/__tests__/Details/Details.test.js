@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import { LayoutContentWrapper } from 'goustouicomponents'
+import { LayoutContentWrapper, Segment, Button } from 'goustouicomponents'
 import { Details } from '../../Details/Details'
 import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
 
@@ -12,6 +12,10 @@ describe('Details', () => {
       123: 1,
       456: 1,
     })
+
+    const portionChangeErrorModalHandlerMock = jest.fn()
+    const basketNumPortionChangeMock = jest.fn()
+    const isPortionSizeAllowedByRecipeCountMock = jest.fn().mockReturnValue(false)
 
     const props = {
       orderId: '',
@@ -61,7 +65,11 @@ describe('Details', () => {
       pricingPending: false,
       prices: Immutable.Map(),
       unavailableRecipeIds: Immutable.Map(),
-      basketNumPortionChange: () => {},
+      basketNumPortionChange: basketNumPortionChangeMock,
+      portionChangeErrorModalHandler: portionChangeErrorModalHandlerMock,
+      maxRecipesForPortion: () => 4,
+      minRecipesForPortion: () => 2,
+      isPortionSizeAllowedByRecipeCount: isPortionSizeAllowedByRecipeCountMock,
       portionSizeSelectedTracking: () => {},
       basketRestorePreviousDate: () => {},
       boxSummaryVisibilityChange: () => {},
@@ -193,6 +201,39 @@ describe('Details', () => {
             expect(checkoutButton.find('CheckoutButton').exists()).toBe(true)
           })
         })
+      })
+    })
+
+    describe('portion change error modal', () => {
+      beforeAll(() => {
+        const propsWith5R4Portions = {
+          ...props,
+          numPortions: 4,
+          okRecipeIds: Immutable.Map({
+            123: 2,
+            456: 2,
+            789: 1,
+          }),
+          isPortionSizeAllowedByRecipeCount: jest.fn().mockReturnValue(false),
+        }
+        wrapper = shallow(<Details {...propsWith5R4Portions} />)
+      })
+      test('is shown when portion change is not allowed based on recipe and portion count', () => {
+        expect(wrapper.find('Portions').exists()).toBe(true)
+        // Select portion for 4 people option
+        wrapper
+          .find('Portions')
+          .shallow()
+          .find(Button)
+          .shallow()
+          .find(Segment)
+          .at(1)
+          .simulate('click')
+
+        expect(isPortionSizeAllowedByRecipeCountMock).toHaveBeenCalledTimes(1)
+        expect(portionChangeErrorModalHandlerMock).toHaveBeenCalledTimes(1)
+        expect(portionChangeErrorModalHandlerMock).toHaveBeenLastCalledWith(true, 4)
+        expect(basketNumPortionChangeMock).not.toHaveBeenCalled()
       })
     })
   })

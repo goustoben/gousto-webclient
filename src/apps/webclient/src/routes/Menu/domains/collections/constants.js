@@ -3,6 +3,7 @@ export const CollectionSlug = {
   AllRecipes: 'all-recipes',
   DairyFree: 'dairy-free',
   GlutenFree: 'gluten-free',
+  CalorieControlled: 'calorie-controlled',
 }
 
 export const CollectionId = {
