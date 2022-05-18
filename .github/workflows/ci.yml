@@ -17,6 +17,26 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Checkout PR changes
+      run: |
+        # Fill out branch history to allow for differential builds
+        # Un-shallow clone
+        git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+        # Get base branch history
+        git fetch origin develop:develop --depth=100
+        # Get topic branch history (and switch to it)
+        git fetch origin ${{ github.event.pull_request.head.ref }} --depth=$(( ${{ github.event.pull_request.commits }} + 1 ))
+        git checkout ${{ github.event.pull_request.head.ref }}
+    - name: Get branch point
+      id: branch_point
+      run: |
+        # Find common ancestor where topic branch diverged from base branch
+        BRANCH=$( git rev-parse --abbrev-ref HEAD )
+        BRANCH_POINT=$( git merge-base $BRANCH develop )
+        # Bail out if not found
+        [[ -z BRANCH_POINT ]] && echo "No branching point found; if develop has drifted by >100 commits then rebase the PR branch" && exit 1
+        # Set var; use by reading "steps.branch_point.outputs.REF"
+        echo "::set-output name=REF::$BRANCH_POINT"
     - name: Use Node.js 14.x
       uses: actions/setup-node@v2.1.5
       with:
@@ -48,7 +68,7 @@ jobs:
         path: |
           **/node_modules
           src/apps/webclient/libs
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}-${{ hashFiles('.yarn/releases/yarn-*') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
@@ -56,6 +76,26 @@ jobs:
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: yarn install --immutable
+    - name: Debug differential build
+      run: |
+        # Print git state to confirm changes are as expected
+        echo "Git branches:"
+        git branch
+        echo "Branch history:"
+        git log --oneline --graph ${{ github.event.pull_request.head.ref }} develop
+        echo "BRANCH_POINT value is: ${{ steps.branch_point.outputs.REF }}"
+        echo "Changed files:"
+        git diff --name-status ${{ steps.branch_point.outputs.REF }}
+        echo "Webclient lint files:"
+        yarn workspace-changes webclient --since=${{ steps.branch_point.outputs.REF }} --filter=lint
+    - name: Lint (apps/webclient)
+      working-directory: src/apps/webclient
+      run: |
+        # Optionally run eslint if required
+        yarn workspace-changes webclient --since=${{ steps.branch_point.outputs.REF }} --filter=lint > lint-changes
+        if [ -s lint-changes ]; then
+          ./scripts/run-eslint-ci.sh $( cat lint-changes )
+        fi
     - name: Lint (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run lint
     - name: Unit test (feature modules)
@@ -70,7 +110,7 @@ jobs:
     - name: Unit test (apps/webclient)
       run: yarn workspace webclient test:jest:ci:coverage
     - name: Compare code health
-      run: git fetch origin develop && git diff --name-status origin/develop | node ./scripts/compare-code-health.js develop tmp/artifacts/code_health.json
+      run: git diff --name-status ${{ steps.branch_point.outputs.REF }} | node ./scripts/compare-code-health.js develop tmp/artifacts/code_health.json
       working-directory: src/apps/webclient
       env:
        CIRCLECI_ACCESS_TOKEN: ${{ secrets.CIRCLECI_ACCESS_TOKEN }}
