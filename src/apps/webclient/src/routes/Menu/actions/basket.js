@@ -2,25 +2,29 @@ import statusActions from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import Immutable from 'immutable'
-import { updateOrderItems } from 'apis/orders'
 import { orderConfirmationUpdateOrderTracking } from 'actions/orderConfirmation'
 import tempActions from 'actions/temp'
 import logger from 'utils/logger'
-import { getAccessToken } from 'selectors/auth'
 import { getBasketOrderId } from 'selectors/basket'
-import { getUpdateOrderProductItemsOrderV1 } from '../selectors/order'
+import * as orderV2 from '../apis/orderV2'
 
 export const basketUpdateProducts =
   (isOrderConfirmation = false) =>
   async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
+    dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, false))
     const state = getState()
-    const token = getAccessToken(state)
     const orderId = getBasketOrderId(state)
-    const productInformation = getUpdateOrderProductItemsOrderV1(state)
 
     try {
-      const { data: order } = await updateOrderItems(token, orderId, productInformation)
+      const marketPlaceUpdate = true
+      const { data: order } = await orderV2.updateOrder(
+        dispatch,
+        getState,
+        orderId,
+        null,
+        marketPlaceUpdate,
+      )
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {
@@ -48,9 +52,8 @@ export const basketUpdateProducts =
       dispatch(tempActions.temp('originalNetTotal', orderTotal))
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
     } catch (err) {
+      logger.error({ message: 'Error saving order', errors: [err] })
+      dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, true))
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
-      dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
-      logger.error(err)
-      throw err
     }
   }
