@@ -8,6 +8,7 @@ export const loadOrders = () => async (dispatch, getState) => {
       limit: 10,
       sort_order: 'desc',
       state: 'pending',
+      includes: ['shipping_address'],
     }
     const { data: orders } = await orderV2.fetchUserOrders(dispatch, getState, payload)
 

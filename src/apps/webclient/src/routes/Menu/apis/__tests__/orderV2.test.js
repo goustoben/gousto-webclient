@@ -10,7 +10,7 @@ import * as orderSelectors from '../../selectors/order'
 import { updateOrder, createOrder, getOrderPrice, fetchOrder, fetchUserOrders } from '../orderV2'
 import * as menuFetch from '../fetch'
 import { mockFetchResponse } from '../fetch.mock'
-import { UserOrdersMockV2, OrderMockV2 } from '../mock/ordersV2.mock'
+import { UserOrdersMockV2, OrderMockV2, OrderErrorMockV2 } from '../mock/ordersV2.mock'
 
 jest.mock('utils/fetch')
 jest.mock('isomorphic-fetch')
@@ -22,6 +22,10 @@ const getUserId = safeJestMock(userSelectors, 'getUserId')
 const getAccessToken = safeJestMock(authSelectors, 'getAccessToken')
 const getOrderV2 = safeJestMock(orderSelectors, 'getOrderV2')
 const getOrderForUpdateOrderV1 = safeJestMock(orderSelectors, 'getOrderForUpdateOrderV1')
+const getUpdateOrderProductItemsOrderV1 = safeJestMock(
+  orderSelectors,
+  'getUpdateOrderProductItemsOrderV1',
+)
 const dispatch = jest.fn()
 const getState = jest.fn()
 
@@ -108,6 +112,7 @@ describe('orderApi', () => {
       beforeEach(() => {
         isOptimizelyFeatureEnabledFactory.mockReturnValue(() => false)
         getOrderForUpdateOrderV1.mockReturnValue({ order: 'v1 body' })
+        getUpdateOrderProductItemsOrderV1.mockReturnValue({ products: 'v2 body' })
       })
 
       test('should fetch the correct url', async () => {
@@ -129,6 +134,15 @@ describe('orderApi', () => {
         fetch.mockResolvedValue(apiResponse)
 
         const result = await updateOrder(dispatch, getState, 'order-id', { order: 'body' })
+
+        expect(result).toEqual(apiResponse)
+      })
+
+      test('should update market place items', async () => {
+        const apiResponse = { data: [1, 2, 3] }
+        fetch.mockResolvedValue(apiResponse)
+
+        const result = await updateOrder(dispatch, getState, 'order-id', { order: 'body' }, true)
 
         expect(result).toEqual(apiResponse)
       })
@@ -203,6 +217,32 @@ describe('orderApi', () => {
             method: 'PUT',
           },
         )
+      })
+
+      test('should handle error returned from core', async () => {
+        isomorphicFetch.mockImplementation(() =>
+          Promise.resolve({
+            json: () => Promise.resolve(OrderErrorMockV2),
+          }),
+        )
+        try {
+          await updateOrder(dispatch, getState, 'order-id')
+        } catch (e) {
+          expect(e).toEqual(new Error('error'))
+        }
+      })
+
+      test('should handle system error', async () => {
+        isomorphicFetch.mockImplementation(() =>
+          Promise.resolve({
+            json: () => Promise.resolve({ errors: { message: 'error' } }),
+          }),
+        )
+        try {
+          await updateOrder(dispatch, getState, 'order-id')
+        } catch (e) {
+          expect(e).toEqual(new Error('error'))
+        }
       })
     })
   })
