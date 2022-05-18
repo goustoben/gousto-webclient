@@ -23,6 +23,31 @@ type Props = {
   isFullWidth?: boolean
 }
 
+const useCheckoutButtonIsPending = () => {
+  const orderSaveError = useSelector(createGetErrorForActionType(actionTypes.ORDER_SAVE))
+
+  const { isPending: pricingPending } = usePricing()
+
+  const checkoutPending = useSelector(createGetActionTypeIsPending(actionTypes.BASKET_CHECKOUT))
+  const basketPreviewOrderChangePending = useSelector(
+    createGetActionTypeIsPending('BASKET_PREVIEW_ORDER_CHANGE'),
+  )
+  const orderSavePending = useSelector(createGetActionTypeIsPending('ORDER_SAVE'))
+  const loadingOrderPending = useSelector(createGetActionTypeIsPending(actionTypes.LOADING_ORDER))
+  const menuFetchData = useSelector(createGetActionTypeIsPending(actionTypes.MENU_FETCH_DATA))
+
+  const isPending =
+    (checkoutPending ||
+      pricingPending ||
+      basketPreviewOrderChangePending ||
+      orderSavePending ||
+      loadingOrderPending ||
+      menuFetchData) &&
+    orderSaveError === null
+
+  return isPending
+}
+
 export const CheckoutButton = ({
   view,
   section,
@@ -40,7 +65,8 @@ export const CheckoutButton = ({
 
   const numRecipes = basketSum(okRecipes(recipes, menuRecipes, stock, numPortions))
 
-  const isDisabled = checkoutPending || numRecipes < config.minRecipesNum || orderSaveError !== null
+  const isPending = useCheckoutButtonIsPending()
+  const isDisabled = isPending || numRecipes < config.minRecipesNum || orderSaveError !== null
 
   const { pricing } = usePricing()
 
