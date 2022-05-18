@@ -9,7 +9,11 @@ import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts
 import { transformOrderV2ToOrderV1 } from './ordersV2toV1'
 import { post } from './fetch'
 import { getRequestHeaders } from './_utils'
-import { getOrderForUpdateOrderV1, getOrderV2 } from '../selectors/order'
+import {
+  getUpdateOrderProductItemsOrderV1,
+  getOrderForUpdateOrderV1,
+  getOrderV2,
+} from '../selectors/order'
 
 export const createOrder = async (accessToken, order, userId) => {
   const headers = getRequestHeaders(userId)
@@ -36,19 +40,42 @@ export const getOrderPrice = async (accessToken, order, userId) => {
   return post(accessToken, `${endpoint('order', 2)}/prices`, { data: order }, headers)
 }
 
-export async function updateOrder(dispatch, getState, orderId, additionalData) {
+export async function updateOrder(
+  dispatch,
+  getState,
+  orderId,
+  additionalData,
+  marketPlaceUpdate = false,
+) {
   const state = getState()
   const accessToken = getAccessToken(state)
   const userId = getUserId(state)
-  const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
+  const useOrderApiV2Put = await isOptimizelyFeatureEnabledFactory(
     'radishes_order_api_v2_putorder_web_enabled',
   )(dispatch, getState)
 
+  const useOrderApiV2Get = await isOptimizelyFeatureEnabledFactory(
+    'radishes_order_api_v2_getorder_web_enabled',
+  )(dispatch, getState)
+
+  const useOrderApiV2PutforMarketplace = await isOptimizelyFeatureEnabledFactory(
+    'radishes_order_api_v2_putmarketplace_web_enabled',
+  )(dispatch, getState)
+
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
-  if (!useOrderApiV2) {
+  if (!marketPlaceUpdate && (!useOrderApiV2Put || !useOrderApiV2Get)) {
     const v1BaseOrder = getOrderForUpdateOrderV1(state)
 
-    return orderApiV1.saveOrder(accessToken, orderId, { ...v1BaseOrder, ...(additionalData || {}) })
+    return orderApiV1.saveOrder(accessToken, orderId, {
+      ...v1BaseOrder,
+      ...(additionalData || {}),
+    })
+    // To update market place items, we need `useOrderApiV2` enabled which sets
+    // v2 data in the  basket, if not we would fallback to v1 `updateOrderItems`
+  } else if (marketPlaceUpdate && (!useOrderApiV2PutforMarketplace || !useOrderApiV2Get)) {
+    const productInformation = getUpdateOrderProductItemsOrderV1(state)
+
+    return orderApiV1.updateOrderItems(accessToken, orderId, productInformation)
   }
 
   const orderRequest = getOrderV2(state)
@@ -78,8 +105,15 @@ export async function updateOrder(dispatch, getState, orderId, additionalData) {
     })
       .then((response) => response.json())
       .then((jsonResponse) => {
+        if (jsonResponse?.errors) {
+          let error = jsonResponse?.errors
+          error = Array.isArray(error) ? error.pop() : error
+
+          return reject(new Error(error.detail || error.message || 'OrderUpdateError'))
+        }
         const fromV2 = transformOrderV2ToOrderV1(jsonResponse.data, jsonResponse.included)
-        resolve({ ...jsonResponse, data: fromV2 })
+
+        return resolve({ ...jsonResponse, data: fromV2 })
       })
       .catch((error) => {
         reject(error)
