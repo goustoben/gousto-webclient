@@ -18,6 +18,5 @@ module.exports = {
     browser.end()
   },
 
-  tags: ['criticalUserJourney'],
+  tags: ['addTransactionalOrder'],
 }
-

@@ -44,7 +44,7 @@ const signup = {
 
     case actionTypes.PAGE_CHANGED: {
       const funnelPaths = ['/menu', '/signup', '/check-out']
-      const isInFunnelPage = funnelPaths.some(path => action.newLocation.includes(path))
+      const isInFunnelPage = funnelPaths.some((path) => action.newLocation.includes(path))
 
       const isWizardSeen = state.get('isInWizardFunnel')
 

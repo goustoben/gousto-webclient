@@ -1,0 +1,1 @@
+export { PriceAndDiscountTip } from './PriceAndDiscountTip'
