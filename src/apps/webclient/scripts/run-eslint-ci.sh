@@ -1,7 +1,7 @@
 #!/bin/bash
 
 func() {
-  yarn --silent run eslint -f json > eslint-results.json
+  yarn --silent run eslint:ci $@ > eslint-results.json
 
   local eslint_exit_code=$?
 
@@ -12,4 +12,4 @@ func() {
   exit $eslint_exit_code
 }
 
-func
+func $@
