@@ -21,7 +21,7 @@ function logOutAndLogIn(accountCredentials, browser) {
   const shared = browser.page.shared()
 
   browser
-    .logJourneyStep('Log in and log out')
+    .logJourneyStep('Log out and log in')
     .perform(function (browser, done) {
       shared.section.body.logout()
       shared.section.header.checkUserLoggedOut()

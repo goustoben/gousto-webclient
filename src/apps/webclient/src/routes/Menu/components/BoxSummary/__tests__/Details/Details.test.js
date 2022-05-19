@@ -5,10 +5,6 @@ import { LayoutContentWrapper, Segment, Button } from 'goustouicomponents'
 import { Details } from '../../Details/Details'
 import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
 
-jest.mock('../../BannerButton/Checkout', () => ({
-  CheckoutContainer: 'CheckoutContainer',
-}))
-
 describe('Details', () => {
   describe('render', () => {
     let wrapper
@@ -81,6 +77,8 @@ describe('Details', () => {
       onRemove: () => {},
       view: 'mobile',
       checkoutBasket: () => {},
+      date: '',
+      shouldDisplayFullScreenBoxSummary: false,
     }
 
     const getCheckoutButtonWrapper = () =>
@@ -162,9 +160,9 @@ describe('Details', () => {
             expect(wrapper.find('[color="secondary"]').exists()).toBe(true)
           })
 
-          test('should render Checkout Container', () => {
+          test('should render Checkout button', () => {
             const checkoutButton = getCheckoutButtonWrapper()
-            expect(checkoutButton.find('CheckoutContainer').exists()).toBe(true)
+            expect(checkoutButton.find('CheckoutButton').exists()).toBe(true)
           })
         })
 
@@ -200,7 +198,7 @@ describe('Details', () => {
 
           test('should render checkout button', () => {
             const checkoutButton = getCheckoutButtonWrapper()
-            expect(checkoutButton.find('CheckoutContainer').exists()).toBe(true)
+            expect(checkoutButton.find('CheckoutButton').exists()).toBe(true)
           })
         })
       })
