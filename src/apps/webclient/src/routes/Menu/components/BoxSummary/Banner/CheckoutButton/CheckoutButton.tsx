@@ -54,7 +54,6 @@ export const CheckoutButton = ({
   hideCounter = false,
   isFullWidth = false,
 }: Props) => {
-  const checkoutPending = useSelector(createGetActionTypeIsPending(actionTypes.BASKET_CHECKOUT))
   const orderSaveError = useSelector(createGetErrorForActionType(actionTypes.ORDER_SAVE))
 
   const recipes = useSelector(getBasketRecipes)
