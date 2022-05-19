@@ -2,13 +2,16 @@
 export const getMocks = ({
   isRecipeInBasket = false,
   numberOfAlternatives = 2,
+  cookingTime,
 }: {
   isRecipeInBasket?: boolean;
   numberOfAlternatives?: number;
+  cookingTime?: number;
 }) => {
   const recipe = {
     id: "12345",
     title: "A Recipe Title",
+    cookingTime,
   };
 
   const useStock = () => ({
@@ -31,6 +34,7 @@ export const getMocks = ({
     removeRecipe: () => false,
     reachedLimit: false,
     isRecipeInBasket: () => isRecipeInBasket,
+    numPortions: 2,
   })
 
   const useSetBrowserCTAVisibility = () => ({

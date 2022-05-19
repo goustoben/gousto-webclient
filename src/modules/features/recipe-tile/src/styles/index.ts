@@ -3,6 +3,7 @@
  * Commonly used colors
  */
 export const colors = {
+  black: '#333D47',
   bluecheese: '#615cff',
   white: '#ffffff',
   blueberry: '#3E3AC2',
