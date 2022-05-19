@@ -102,8 +102,6 @@ jobs:
       run: yarn workspaces foreach --include '@features/*' --verbose run test:unit
     - name: Typecheck (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run typecheck
-    - name: Lint (apps/webclient)
-      run: ./scripts/run-eslint-ci.sh
       working-directory: src/apps/webclient
     - name: Typecheck tests
       run: yarn workspace webclient typecheck:tests

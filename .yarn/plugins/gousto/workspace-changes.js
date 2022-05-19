@@ -4,6 +4,7 @@
  * For details on Yarn custom plugins, visit https://yarnpkg.com/advanced/plugin-tutorial
  */
 const path = require('path')
+const fs = require('fs')
 
 module.exports = {
   name: '@gousto/workspace-changes',
@@ -32,7 +33,7 @@ module.exports = {
           ],
           [
             'Changes to main webclient app, linting only',
-            'yarn workspace-changes webclient --since=REF --lint'
+            'yarn workspace-changes webclient --since=REF --filter=lint'
           ],
           [
             'Changes to the root project',
@@ -116,7 +117,7 @@ function makeFilterFlagFn (filterFlag) {
       return () => true
 
     case 'lint':
-      return changeCtx => changeCtx.filename.match(/[jt]s(x?)$/g)
+      return (changeCtx) => fs.existsSync(changeCtx.filename) && changeCtx.filename.match(/[jt]s(x?)$/g)
 
     default:
       throw new Error('The --filter option only supports "lint"')

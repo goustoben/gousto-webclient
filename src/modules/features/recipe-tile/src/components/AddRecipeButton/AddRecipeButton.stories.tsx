@@ -1,28 +1,28 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { VariantHeader } from "./VariantHeader";
+import { AddRecipeButton } from "./AddRecipeButton";
 import { RecipeTileDependencies } from "../../model/context";
 import { getMocks } from "../../utils/storybook/mocks";
 
-const defaultNumberOfAlternativesForThisStory = 2;
-
 type StoryArgs = {
-  numberOfAlternatives: number;
+  isRecipeInBasket: boolean;
 };
 
-type VariantHeaderStory = (args: StoryArgs) => ReturnType<typeof VariantHeader>;
+type AddRecipeButtonStory = (
+  args: StoryArgs
+) => ReturnType<typeof AddRecipeButton>;
 
-const Template: ComponentStory<VariantHeaderStory> = (_: StoryArgs) => (
-  <VariantHeader categoryId="some_category_id" originalId="some_original_id" />
+const Template: ComponentStory<AddRecipeButtonStory> = (_: StoryArgs) => (
+  <AddRecipeButton recipeId="recipe_123" />
 );
 
 export const Simple = Template.bind({});
 Simple.args = {
-  numberOfAlternatives: defaultNumberOfAlternativesForThisStory,
+  isRecipeInBasket: false,
 };
 
 export default {
-  title: "Menu/RecipeTile/VariantHeader",
+  title: "Menu/RecipeTile/AddRecipeButton",
   component: Template,
   decorators: [
     (Story, { args }) => {
@@ -33,7 +33,7 @@ export default {
         useBasket,
         useSetBrowserCTAVisibility,
       } = getMocks({
-        numberOfAlternatives: args.numberOfAlternatives,
+        isRecipeInBasket: args.isRecipeInBasket,
       });
 
       return (
@@ -49,4 +49,4 @@ export default {
       );
     },
   ],
-} as ComponentMeta<VariantHeaderStory>;
+} as ComponentMeta<AddRecipeButtonStory>;
