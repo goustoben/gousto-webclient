@@ -10,5 +10,12 @@ export function deleteOrder(accessToken, orderId, userId) {
     'x-gousto-user-id': userId
   }
 
-  return fetch(accessToken, `${endpoint('order', 2)}/orders/${orderId}`, {}, 'DELETE', undefined, headers)
+  return fetch(
+    accessToken,
+    `${endpoint('order', 2)}/orders/${orderId}?include[]=shipping_address`,
+    {},
+    'DELETE',
+    undefined,
+    headers,
+  )
 }

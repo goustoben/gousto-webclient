@@ -1,7 +1,24 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 import { RecipesInBasketProgressPresentation } from '../RecipesInBasketProgress.presentation'
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
+
+const maxRecipesNum = 4
+const minRecipesNum = 2
+
+jest.mock('routes/Menu/domains/basket/internal/useSupportedBoxTypes', () => ({
+  useSupportedBoxTypes: () => ({
+    maxRecipesForPortion: jest.fn().mockImplementation(() => maxRecipesNum),
+    minRecipesForPortion: jest.fn().mockImplementation(() => minRecipesNum),
+  }),
+}))
 
 describe('RecipesInBasketProgressPresentation Component', () => {
   let wrapper
@@ -14,7 +31,10 @@ describe('RecipesInBasketProgressPresentation Component', () => {
   }
 
   beforeEach(() => {
-    wrapper = mount(<RecipesInBasketProgressPresentation {...PROPS} />)
+    useSelector.mockReturnValue(true)
+    useDispatch.mockReturnValue(() => {})(
+      (wrapper = mount(<RecipesInBasketProgressPresentation {...PROPS} />)),
+    )
   })
 
   test('renders without crashing', () => {

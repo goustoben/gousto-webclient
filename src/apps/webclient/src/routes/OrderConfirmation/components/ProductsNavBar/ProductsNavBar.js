@@ -11,8 +11,12 @@ const propTypes = {
   onSelectCategory: PropTypes.func.isRequired,
 }
 
-const getDefaultCategoryId = (categories) =>
-  (categories?.pairings ? categories.pairings.id : categories['all-products'].id)
+const getDefaultCategoryId = (categories) => {
+  if (categories?.occasions) return categories.occasions.id
+  if (categories?.pairings) return categories.pairings.id
+
+  return categories['all-products'].id
+}
 
 const ProductsNavBar = ({ categories, onSelectCategory }) => {
   const defaultCategoryId = getDefaultCategoryId(categories)

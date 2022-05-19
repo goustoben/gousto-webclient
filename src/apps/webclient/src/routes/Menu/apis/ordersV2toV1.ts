@@ -133,7 +133,9 @@ const getPeriod = (included: Included[]) => {
   }
 }
 
-export const transformOrderV2ToOrderV1 = (order: AnyObject, included: Included[]): Order => {
+export const transformOrderV2ToOrderV1 = (order: AnyObject, included: Included[]): Order | null => {
+  if (!order) return null
+
   const { attributes, id: orderId, relationships } = order
   const { prices = {} } = attributes
   const boxId = safeTraversal(relationships, ['box', 'data', 'id'])

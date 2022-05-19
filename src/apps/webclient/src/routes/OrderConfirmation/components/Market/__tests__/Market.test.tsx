@@ -10,6 +10,7 @@ import React from 'react'
 import * as Redux from 'react-redux'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
+import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
 import {
   mockGetProductRecipePairingsState,
   mockMarketProducts,
@@ -32,6 +33,10 @@ jest.mock('react-redux', () => ({
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
   useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
+
+jest.mock('routes/OrderConfirmation/hooks/useBundlesExperiment.hook', () => ({
+  useIsBundlesEnabled: jest.fn().mockReturnValue(false),
 }))
 
 jest.mock('actions/products', () => ({
@@ -341,6 +346,35 @@ describe('Market', () => {
 
       expect(dispatch).not.toBeCalledWith(trackPairingsData)
       expect(trackPairingsData).not.toBeCalled()
+    })
+  })
+  describe('Bundles Experiment', () => {
+    describe('When user is in experiment', () => {
+      test('Should render Occasions category', () => {
+        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
+        ;(useIsBundlesEnabled as jest.Mock).mockReturnValue(true)
+
+        render(
+          <Provider store={mockedStore}>
+            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
+          </Provider>,
+        )
+        expect(screen.queryByText(/^Occasions \(\d\)$/i)).toBeInTheDocument()
+      })
+    })
+
+    describe('When user not in experiment', () => {
+      test('Should not render Occasions category', () => {
+        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
+        ;(useIsBundlesEnabled as jest.Mock).mockReturnValue(false)
+
+        render(
+          <Provider store={mockedStore}>
+            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
+          </Provider>,
+        )
+        expect(screen.queryByText(/^Occasions \(\d\)$/i)).not.toBeInTheDocument()
+      })
     })
   })
 })

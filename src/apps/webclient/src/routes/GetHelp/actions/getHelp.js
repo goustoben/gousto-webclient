@@ -67,7 +67,8 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
 
 export const loadOrderById = ({ orderId }) => async (dispatch, getState) => {
   const getPayload = async () => {
-    const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId)
+    const include = 'shipping_address'
+    const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId, include)
 
     return { order }
   }

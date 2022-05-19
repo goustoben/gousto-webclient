@@ -7,6 +7,7 @@ import { List, Map } from 'immutable'
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
+import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
 import { getBasketOrderDetails, getBasketSaveRequired } from 'selectors/basket'
 import {
   getCategoriesForNavBar,
@@ -94,11 +95,12 @@ const Market: FC<Props> = (props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const isOrderConfirmation = true
   const [productRecipePairingData, setProductRecipePairingData] = useState(List([]))
+  const bundlesExperimentEnabled = useIsBundlesEnabled()
 
   // Pairing experiment
-  const [pairingsExperimentCategories, setPairingsExperimentCategories] = useState<
-    NavCategories | undefined
-  >(undefined)
+  const [experimentCategories, setExperimentCategories] = useState<NavCategories | undefined>(
+    undefined,
+  )
   const [pairingsExperimentProducts, setPairingsExperimentProducts] = useState<Product[]>([])
   const [showPairings, setShowPairings] = useState<boolean>(false)
   const [userHasPairings, setUserHasPairings] = useState<boolean | undefined>(undefined)
@@ -119,6 +121,7 @@ const Market: FC<Props> = (props) => {
   const pairingsExperimentEnabled = useIsOptimizelyFeatureEnabled(
     userHasPairings ? 'etm_market_orderconfirmation_addingpairings_web_apr22' : null,
   )
+
   const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
     pairingsExperimentEnabled ? 'Pairings' : 'All Products',
   )
@@ -163,7 +166,7 @@ const Market: FC<Props> = (props) => {
             count: pairingsExperimentProducts.length,
           },
         }
-        setPairingsExperimentCategories({ ...pairings, ...categoriesForNavBar })
+        setExperimentCategories({ ...pairings, ...categoriesForNavBar })
         setShowPairings(true)
       }
     }
@@ -195,6 +198,15 @@ const Market: FC<Props> = (props) => {
     }
   }, [pairingsExperimentProducts.length, pairingsExperimentEnabled, showPairings, userHasPairings])
 
+  useEffect(() => {
+    if (bundlesExperimentEnabled && pairingsExperimentEnabled === false) {
+      const occasions: NavCategories = {
+        occasions: { id: 'occasions', label: 'Occasions', count: 3 },
+      }
+      setExperimentCategories({ ...occasions, ...categoriesForNavBar })
+    }
+  }, [bundlesExperimentEnabled, pairingsExperimentEnabled, categoriesForNavBar])
+
   const toggleOrderSummary = () => {
     setIsOrderSummaryOpen(!isOrderSummaryOpen)
   }
@@ -204,8 +216,8 @@ const Market: FC<Props> = (props) => {
   }
 
   const getFilteredProducts = (categoryId: string) => {
-    const selectedFilterCategory: NavCategory = pairingsExperimentCategories
-      ? pairingsExperimentCategories[categoryId]
+    const selectedFilterCategory: NavCategory = experimentCategories
+      ? experimentCategories[categoryId]
       : categoriesForNavBar[categoryId]
 
     if (!Object.keys(products).length || !selectedFilterCategory) return
@@ -260,7 +272,7 @@ const Market: FC<Props> = (props) => {
     <MarketPresentation
       ageVerified={ageVerified}
       basket={basket}
-      categoriesForNavBar={pairingsExperimentCategories || categoriesForNavBar}
+      categoriesForNavBar={experimentCategories || categoriesForNavBar}
       filteredProducts={filteredProducts}
       getFilteredProducts={getFilteredProducts}
       isOrderSummaryOpen={isOrderSummaryOpen}

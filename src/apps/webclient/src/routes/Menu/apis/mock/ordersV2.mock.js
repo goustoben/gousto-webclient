@@ -326,3 +326,8 @@ export const OrderMockV2 = {
   data: data[0],
   included,
 }
+
+export const OrderErrorMockV2 = {
+  errors: [{ detail: 'error' }],
+  status: 400,
+}

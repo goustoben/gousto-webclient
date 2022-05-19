@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import { getSurchargeItems } from 'utils/pricing'
 
-import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
@@ -21,8 +20,7 @@ import {
 } from './displayOptionsProps'
 import { DetailsCheckoutButton } from './DetailsCheckoutButton'
 class Details extends React.Component {
-  getCtaText = (numRecipes) => {
-    const { maxRecipesNum, minRecipesNum } = config.basket
+  getCtaText = (numRecipes, maxRecipesNum, minRecipesNum) => {
     let text = ''
 
     if (numRecipes < maxRecipesNum) {
@@ -35,16 +33,30 @@ class Details extends React.Component {
     return text
   }
 
-  renderPortions = ({
-    basketNumPortionChange,
-    numPortions,
-    orderId,
-    portionSizeSelectedTracking,
-  }) => (
+  validatePortionChange = (numPortions) => {
+    const {
+      basketNumPortionChange,
+      isPortionSizeAllowedByRecipeCount,
+      okRecipeIds,
+      portionChangeErrorModalHandler,
+      maxRecipesForPortion,
+    } = this.props
+    const numRecipes = basketSum(okRecipeIds)
+
+    if (!isPortionSizeAllowedByRecipeCount(numRecipes, numPortions)) {
+      portionChangeErrorModalHandler(true, maxRecipesForPortion(numPortions))
+
+      return
+    }
+
+    basketNumPortionChange(numPortions)
+  }
+
+  renderPortions = ({ numPortions, orderId, portionSizeSelectedTracking }) => (
     <div className={css.row}>
       <Portions
         numPortions={numPortions}
-        onNumPortionChange={basketNumPortionChange}
+        onNumPortionChange={this.validatePortionChange}
         trackNumPortionChange={portionSizeSelectedTracking}
         orderId={orderId}
       />
@@ -76,6 +88,8 @@ class Details extends React.Component {
       deliveryDays,
       slotId,
       shouldDisplayFullScreenBoxSummary,
+      maxRecipesForPortion,
+      minRecipesForPortion,
     } = this.props
 
     const {
@@ -90,11 +104,12 @@ class Details extends React.Component {
     } = prices || {}
 
     const numRecipes = basketSum(okRecipeIds)
-    const ctaText = this.getCtaText(numRecipes)
+    const maxRecipesNum = maxRecipesForPortion(numPortions)
+    const minRecipesNum = minRecipesForPortion(numPortions)
+    const ctaText = this.getCtaText(numRecipes, maxRecipesNum, minRecipesNum)
     const showSecondCta = numRecipes > 1 && numRecipes < 4 && shouldDisplayFullScreenBoxSummary
     const displayCta =
       !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText && !showSecondCta
-    const { maxRecipesNum } = config.basket
     let btnClassName = css.ctaButton
     if (shouldDisplayFullScreenBoxSummary) {
       btnClassName = css.stickyButton
@@ -148,7 +163,7 @@ class Details extends React.Component {
           ) : (
             <div>
               <Receipt
-                dashPricing={numRecipes < config.basket.minRecipesNum}
+                dashPricing={numRecipes < minRecipesNum}
                 numRecipes={numRecipes}
                 numPortions={numPortions}
                 prices={prices}
@@ -183,8 +198,12 @@ class Details extends React.Component {
 
 Details.propTypes = {
   accessToken: PropTypes.string,
+  portionChangeErrorModalHandler: PropTypes.func.isRequired,
+  maxRecipesForPortion: PropTypes.func.isRequired,
+  minRecipesForPortion: PropTypes.func.isRequired,
   basketNumPortionChange: PropTypes.func.isRequired,
   portionSizeSelectedTracking: PropTypes.func.isRequired,
+  isPortionSizeAllowedByRecipeCount: PropTypes.func.isRequired,
   basketRestorePreviousDate: PropTypes.func.isRequired,
   boxSummaryVisibilityChange: PropTypes.func.isRequired,
   clearSlot: PropTypes.func.isRequired,

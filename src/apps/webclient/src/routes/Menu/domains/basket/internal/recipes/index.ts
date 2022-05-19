@@ -30,6 +30,8 @@ const useBasketRecipes = () => {
     [recipeQuantities],
   )
 
+  const isRecipeInBasket = useIsRecipeInBasket()
+
   const addRecipe = useAddRecipe()
   const removeRecipe = useRemoveRecipe()
   const reachedLimit = useRecipeLimitReached(recipeQuantities)
@@ -44,6 +46,7 @@ const useBasketRecipes = () => {
     reachedLimit,
     recipeCount,
     getQuantitiesForRecipeId,
+    isRecipeInBasket,
   }
 }
 

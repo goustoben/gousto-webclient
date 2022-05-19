@@ -185,7 +185,7 @@ jobs:
       - run:
           name: Lint & gather report (apps/webclient)
           working_directory: src/apps/webclient
-          command: scripts/run-eslint-ci.sh
+          command: scripts/run-eslint-ci.sh .
       - persist_to_workspace:
           root: /
           paths:
@@ -301,7 +301,7 @@ jobs:
           name: Install CI dependencies
           command: apt-get -y update && apt-get -y install jq
       - browser-tools/install-chrome:
-          chrome-version: 99.0.4844.51
+          chrome-version: 101.0.4951.64
       - browser-tools/install-chromedriver
       - aws-cli/setup:
           aws-access-key-id: AWS_ERC_ACCESS_KEY

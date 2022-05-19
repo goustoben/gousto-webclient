@@ -8,13 +8,15 @@ import { useAuth } from './useAuth'
 const hookRenderer = ({
   authUserId,
   accessToken,
-}: { authUserId?: string; accessToken?: string } = {}) => {
+  isAuthenticated,
+}: { authUserId?: string; accessToken?: string; isAuthenticated?: boolean } = {}) => {
   const mockStore = configureMockStore()
 
   const store = mockStore({
     auth: Immutable.Map({
       ...(authUserId && { id: authUserId }),
       ...(accessToken && { accessToken }),
+      isAuthenticated,
     }),
   })
 
@@ -57,6 +59,24 @@ describe('useAuth', () => {
         result: { current },
       } = hookRenderer()
       expect(current.authUserId).toEqual(undefined)
+    })
+  })
+
+  describe('when there is authenticated', () => {
+    it('should return the isAuthenticated', () => {
+      const {
+        result: { current },
+      } = hookRenderer({ isAuthenticated: true })
+      expect(current.isAuthenticated).toEqual(true)
+    })
+  })
+
+  describe('when there is not authenticated', () => {
+    it('should return the false value', () => {
+      const {
+        result: { current },
+      } = hookRenderer()
+      expect(!!current.isAuthenticated).toEqual(false)
     })
   })
 })

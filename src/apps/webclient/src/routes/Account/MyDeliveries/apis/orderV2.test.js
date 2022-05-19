@@ -43,7 +43,14 @@ describe('rockets order api', () => {
       const orderId = '123'
       await deleteOrder('token', orderId, userId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `https://production-api.gousto.co.uk/order/v2/orders/${orderId}`, {}, 'DELETE', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(
+        'token',
+        `https://production-api.gousto.co.uk/order/v2/orders/${orderId}?include[]=shipping_address`,
+        {},
+        'DELETE',
+        undefined,
+        expectedHeaders,
+      )
     })
 
     test('should return the results of the fetch unchanged', async () => {

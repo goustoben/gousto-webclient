@@ -1,10 +1,10 @@
 {
   "name": "webclient",
   "version": "0.0.1",
-  "description": "Isomorphic Gousto WebClient",
+  "description": "Main webclient app",
   "main": "dist/server.js",
   "author": "Gousto",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "sideEffects": [
     "*.css",
     "*.scss"
@@ -34,6 +34,7 @@
     "test:jest:ci:coverage": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent --coverage",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "eslint": "eslint .",
+    "eslint:ci": "eslint --format=json",
     "codeowners:report": "node ./scripts/codeowners-report/codeowners-report.js",
     "codeowners:unowned": "node ./scripts/codeowners-report/codeowners-report.js --unowned",
     "clean-install": "rm -rf ./node_modules && yarn install",

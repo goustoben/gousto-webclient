@@ -11,4 +11,5 @@ export const boxSummaryOverlayPropTypes = {
   showDetails: PropTypes.bool.isRequired,
   orderSaveError: PropTypes.string,
   shouldDisplayFullScreenBoxSummary: PropTypes.bool,
+  portionChangeErrorModalHandler: PropTypes.func,
 }
