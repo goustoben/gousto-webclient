@@ -124,6 +124,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
     const slot = getSlot(availableDeliveryDays, slotDate, slotId)
 
     const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
+    const addressId = getState().user.getIn(['newOrders', orderId, 'shippingAddressId'])
     const trackingData = {
       order_id: orderId,
       original_deliveryslot_id: originalSlotId,
@@ -135,6 +136,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         delivery_day_id: coreDayId,
         delivery_slot_id: coreSlotId,
         day_slot_lead_time_id: slot.get('daySlotLeadTimeId', ''),
+        shipping_address_id: addressId
       }
       dispatch({
         type: actionTypes.TRACKING,
