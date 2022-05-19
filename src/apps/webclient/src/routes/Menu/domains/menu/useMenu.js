@@ -4,6 +4,8 @@ import { useGetRecipesForCollectionId } from './internal/useGetRecipesForCollect
 
 export { recipeReferencePrefix } from './internal/getRecipeReferenceInjector'
 
+export { useSetBrowserCTAVisibility } from './internal/browserCTA'
+
 export const useMenu = () => {
   const allCollections = useAllCollections()
 
