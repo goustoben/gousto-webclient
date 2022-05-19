@@ -1,14 +1,13 @@
 import React, { SyntheticEvent } from 'react'
-import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useBasket, useIsRecipeInBasket } from 'routes/Menu/domains/basket'
-import { menuBrowseCTAVisibilityChange } from 'actions/menu'
+import { useSetBrowserCTAVisibility } from 'routes/Menu/domains/menu'
 import { getRecipeButtonProps } from './recipeButtonPropsSelector'
 import css from './AddRecipeButton.css'
 
 export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) => {
-  const dispatch = useDispatch()
   const { canAddRecipes, addRecipe, removeRecipe, reachedLimit } = useBasket()
+  const { setBrowserCTAVisible } = useSetBrowserCTAVisibility()
   const isRecipeInBasket = useIsRecipeInBasket()
   const isInBasket = isRecipeInBasket(recipeId)
   const disabled = reachedLimit && !isInBasket
@@ -19,7 +18,7 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) =>
     e.stopPropagation()
 
     if (!canAddRecipes) {
-      dispatch(menuBrowseCTAVisibilityChange(true))
+      setBrowserCTAVisible()
 
       return
     }
