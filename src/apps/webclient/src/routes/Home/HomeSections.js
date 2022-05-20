@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { homeConfig } from 'config/home'
 import routesConfig from 'config/routes'
-import { PriceComparisonTable } from './PriceComparisonTable'
 import { Hero } from './Hero'
 import { Carousel } from './Carousel'
 import { TrustPilot } from './TrustPilot'
@@ -32,24 +31,11 @@ class HomeSections extends Component {
   mapModules = () => {
     const { isAuthenticated, isSignupReductionEnabled, pricePerServing } = this.props
 
-    /**
-     * FYI:
-     * This lint disabling required to pass lint
-     * lint suggesting to wrap components in React.memo,
-     * but with it page not rendering correctly
-     * TODO: refactor this component with tests in future tec10
-     * TICKET: https://gousto.atlassian.net/browse/TG-6505
-     */
     return {
-      // eslint-disable-next-line react/no-unstable-nested-components
       hero: (props) => (
         <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />
       ),
-      // eslint-disable-next-line react/no-unstable-nested-components
       trustPilot: () => <TrustPilot />,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      priceComparisonTable: () => <PriceComparisonTable />,
-      // eslint-disable-next-line react/no-unstable-nested-components
       whyChooseGousto: (props) => (
         <WhyChooseGousto
           ctaText={props.ctaText}
@@ -57,9 +43,7 @@ class HomeSections extends Component {
           pricePerServing={pricePerServing}
         />
       ),
-      // eslint-disable-next-line react/no-unstable-nested-components
       joeWicks: () => <JoeWicks />,
-      // eslint-disable-next-line react/no-unstable-nested-components
       recipes: (props) => <Carousel ctaText={props.ctaText} ctaUri={props.ctaUri} />,
       ...(isSignupReductionEnabled ? { emailForm: () => <EmailForm /> } : {}),
     }
