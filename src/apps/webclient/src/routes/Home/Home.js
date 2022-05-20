@@ -10,6 +10,7 @@ import { menuLoadBoxPrices } from 'actions/menu'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { PromoBanner } from './PromoBanner'
 import { HomeSections } from './HomeSections'
+import { priceComparisonTableToken } from './PriceComparisonTable'
 
 const propTypes = {
   isAuthenticated: PropTypes.bool,
@@ -57,6 +58,7 @@ class Home extends Component {
       isSignupReductionEnabled && 'emailForm',
       'hero',
       'trustPilot',
+      priceComparisonTableToken,
       'whyChooseGousto',
       'joeWicks',
       'recipes',

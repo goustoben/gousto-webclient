@@ -1,0 +1,20 @@
+@value BreakpointToLarge from 'design-language/breakpoints.module.css';
+@value BreakpointToSmall from './values.module.css';
+
+.priceComparisonTable {
+  margin: 0 auto;
+
+  /* FYI: there is certain behaviour in citrus */
+  /* We cannot apply gap as breakpoints values arr */
+  /* because gap={[1,2,3,4]} in JSX will apply*/
+  /* all values to same elm w/o breakpoints */
+  @media BreakpointToLarge {
+    gap: 1.5rem;
+  }
+
+  @media BreakpointToSmall {
+    /* !important here required to override <Box /> css */
+    padding-right: 0.75rem !important;
+    padding-left: 0.75rem !important;
+  }
+}
