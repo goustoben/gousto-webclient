@@ -32,6 +32,14 @@ import type {
   ProductRecipePairings,
   RecipeItem,
 } from '../../types'
+import {
+  ALL_PRODUCTS_CATEGORY_NAME,
+  ALL_PRODUCTS_CATEGORY_ID,
+  PAIRINGS_CATEGORY_NAME,
+  PAIRINGS_CATEGORY_ID,
+  OCCASIONS_CATEGORY_NAME,
+  OCCASIONS_CATEGORY_ID,
+} from '../../constants/categories'
 import { MarketPresentation } from './Market.presentation'
 
 interface Props {
@@ -102,7 +110,6 @@ const Market: FC<Props> = (props) => {
     undefined,
   )
   const [pairingsExperimentProducts, setPairingsExperimentProducts] = useState<Product[]>([])
-  const [showPairings, setShowPairings] = useState<boolean>(false)
   const [userHasPairings, setUserHasPairings] = useState<boolean | undefined>(undefined)
 
   const basket = useSelector(getBasket)
@@ -123,7 +130,7 @@ const Market: FC<Props> = (props) => {
   )
 
   const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
-    pairingsExperimentEnabled ? 'Pairings' : 'All Products',
+    ALL_PRODUCTS_CATEGORY_NAME,
   )
 
   useEffect(() => {
@@ -161,13 +168,12 @@ const Market: FC<Props> = (props) => {
 
         const pairings: NavCategories = {
           pairings: {
-            id: 'pairings',
-            label: 'Pairings',
+            id: PAIRINGS_CATEGORY_ID,
+            label: PAIRINGS_CATEGORY_NAME,
             count: pairingsExperimentProducts.length,
           },
         }
         setExperimentCategories({ ...pairings, ...categoriesForNavBar })
-        setShowPairings(true)
       }
     }
   }, [
@@ -183,27 +189,24 @@ const Market: FC<Props> = (props) => {
   useEffect(() => {
     if (pairingsExperimentEnabled === false) {
       setIsLoading(false)
-    } else if (
-      pairingsExperimentEnabled === true &&
-      showPairings === true &&
-      pairingsExperimentProducts.length > 0
-    ) {
+    } else if (pairingsExperimentEnabled === true && pairingsExperimentProducts.length > 0) {
+      setTrackingCategoryTitle(PAIRINGS_CATEGORY_NAME)
       setIsLoading(false)
     } else if (
       (pairingsExperimentEnabled === true || pairingsExperimentEnabled === null) &&
-      showPairings === false &&
       (userHasPairings === true || userHasPairings === false)
     ) {
       setIsLoading(false)
     }
-  }, [pairingsExperimentProducts.length, pairingsExperimentEnabled, showPairings, userHasPairings])
+  }, [pairingsExperimentProducts.length, pairingsExperimentEnabled, userHasPairings])
 
   useEffect(() => {
     if (bundlesExperimentEnabled && pairingsExperimentEnabled === false) {
       const occasions: NavCategories = {
-        occasions: { id: 'occasions', label: 'Occasions', count: 3 },
+        occasions: { id: OCCASIONS_CATEGORY_ID, label: OCCASIONS_CATEGORY_NAME, count: 3 },
       }
       setExperimentCategories({ ...occasions, ...categoriesForNavBar })
+      setTrackingCategoryTitle(OCCASIONS_CATEGORY_NAME)
     }
   }, [bundlesExperimentEnabled, pairingsExperimentEnabled, categoriesForNavBar])
 
@@ -226,12 +229,10 @@ const Market: FC<Props> = (props) => {
 
     setTrackingCategoryTitle(selectedFilterCategory.label)
 
-    if (categoryId === 'all-products') {
+    if (categoryId === ALL_PRODUCTS_CATEGORY_ID) {
       chosenCategoryProducts = products
-      setShowPairings(false)
-    } else if (categoryId === 'pairings') {
+    } else if (categoryId === PAIRINGS_CATEGORY_ID) {
       chosenCategoryProducts = pairingsExperimentProducts
-      setShowPairings(true)
     } else {
       Object.keys(products).forEach((productId) => {
         const productCategories = products[productId].categories
@@ -247,7 +248,6 @@ const Market: FC<Props> = (props) => {
           })
         }
       })
-      setShowPairings(false)
     }
 
     const numOfProducts = Object.keys(chosenCategoryProducts).length
@@ -286,7 +286,6 @@ const Market: FC<Props> = (props) => {
       saving={basketSavePending}
       showOrderConfirmationReceipt={!!order}
       toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-      showPairings={showPairings}
       trackingCategory={trackingCategoryTitle}
       productRecipePairings={productRecipePairingData}
       isLoading={isLoading}

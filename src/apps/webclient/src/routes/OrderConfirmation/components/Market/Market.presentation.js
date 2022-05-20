@@ -14,6 +14,7 @@ import { ProductList } from '../ProductList'
 import { ReferAFriend } from '../ReferAFriend'
 import { ProductListPairings } from '../ProductListPairings'
 import { LoadingWrapper } from '../LoadingWrapper'
+import { PAIRINGS_CATEGORY_NAME } from '../../constants/categories'
 
 import css from './Market.css'
 
@@ -96,7 +97,6 @@ const propTypes = {
   showOrderConfirmationReceipt: PropTypes.bool.isRequired,
   toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   toggleOrderSummary: PropTypes.func.isRequired,
-  showPairings: PropTypes.bool,
   productRecipePairings: PropTypes.instanceOf(Immutable.List),
   isLoading: PropTypes.bool,
   trackingCategory: PropTypes.string,
@@ -110,7 +110,6 @@ const defaultProps = {
   saveError: false,
   saveRequired: false,
   saving: false,
-  showPairings: false,
   productRecipePairings: Immutable.Map({}),
   isLoading: false,
   trackingCategory: '',
@@ -133,23 +132,19 @@ const MarketPresentation = ({
   showOrderConfirmationReceipt,
   toggleAgeVerificationPopUp,
   toggleOrderSummary,
-  showPairings,
   productRecipePairings,
   isLoading,
   trackingCategory
-}) => {
-  const shouldShowPairings = showPairings && productRecipePairings.size > 0
-
-  return (
-    <div className={css.marketPlaceWrapper} data-testid="MarketPresentation">
-      {!productsLoadError && (
+}) => (
+  <div className={css.marketPlaceWrapper} data-testid="MarketPresentation">
+    {!productsLoadError && (
       <ProductsNavBar categories={categoriesForNavBar} onSelectCategory={getFilteredProducts} />
-      )}
-      <div className={css.marketPlaceContent}>
-        <section className={classnames(css.marketPlaceProducts, { [css.productsLoadError]: productsLoadError })}>
-          {productsLoadError && <Alert type="warning">{config.productsLoadErrorMessage}</Alert>}
-          {isLoading && <LoadingWrapper />}
-          {(!isLoading && shouldShowPairings) && (
+    )}
+    <div className={css.marketPlaceContent}>
+      <section className={classnames(css.marketPlaceProducts, { [css.productsLoadError]: productsLoadError })}>
+        {productsLoadError && <Alert type="warning">{config.productsLoadErrorMessage}</Alert>}
+        {isLoading && <LoadingWrapper />}
+        {(!isLoading && trackingCategory === PAIRINGS_CATEGORY_NAME) && (
           <ProductListPairings
             productRecipePairings={productRecipePairings}
             products={filteredProducts || products}
@@ -159,9 +154,9 @@ const MarketPresentation = ({
             toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
             trackingCategory={trackingCategory}
           />
-          )}
+        )}
 
-          {(!isLoading && !shouldShowPairings) && (
+        {(!isLoading && trackingCategory !== PAIRINGS_CATEGORY_NAME) && (
           <ProductList
             products={filteredProducts || products}
             basket={basket}
@@ -170,9 +165,9 @@ const MarketPresentation = ({
             toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
             trackingCategory={trackingCategory}
           />
-          )}
-        </section>
-        {showOrderConfirmationReceipt && (
+        )}
+      </section>
+      {showOrderConfirmationReceipt && (
         <section className={classnames(css.orderDetails, css.mobileHide)}>
           <div className={css.orderDetailsSection}>
             <OrderSummaryContainer onOrderConfirmationMobile />
@@ -181,40 +176,39 @@ const MarketPresentation = ({
             <ReferAFriend />
           </div>
         </section>
-        )}
-        <section
-          className={classnames(css.orderDetailsMobile, css.mobileShow)}
+      )}
+      <section
+        className={classnames(css.orderDetailsMobile, css.mobileShow)}
+      >
+        <button
+          className={css.orderDetailsOpenButton}
+          type="button"
+          onClick={toggleOrderSummary}
         >
-          <button
-            className={css.orderDetailsOpenButton}
-            type="button"
-            onClick={toggleOrderSummary}
-          >
-            Open Order Summary
-          </button>
-          <Overlay open={isOrderSummaryOpen} from="bottom">
-            <div className={css.orderDetailsMobileContent}>
-              <div className={css.orderDetailsCloseButton}>
-                <CloseButton onClose={toggleOrderSummary} />
-              </div>
-              <OrderSummaryContainer
-                orderSummaryCollapsed={false}
-                onOrderConfirmationMobile
-              />
+          Open Order Summary
+        </button>
+        <Overlay open={isOrderSummaryOpen} from="bottom">
+          <div className={css.orderDetailsMobileContent}>
+            <div className={css.orderDetailsCloseButton}>
+              <CloseButton onClose={toggleOrderSummary} />
             </div>
-          </Overlay>
-          <SaveButton
-            onOrderConfirmationMobile
-            saving={saving}
-            saveRequired={saveRequired}
-            onClick={onOrderSave}
-            error={saveError}
-          />
-        </section>
-      </div>
+            <OrderSummaryContainer
+              orderSummaryCollapsed={false}
+              onOrderConfirmationMobile
+            />
+          </div>
+        </Overlay>
+        <SaveButton
+          onOrderConfirmationMobile
+          saving={saving}
+          saveRequired={saveRequired}
+          onClick={onOrderSave}
+          error={saveError}
+        />
+      </section>
     </div>
-  )
-}
+  </div>
+)
 
 MarketPresentation.propTypes = propTypes
 MarketPresentation.defaultProps = defaultProps
