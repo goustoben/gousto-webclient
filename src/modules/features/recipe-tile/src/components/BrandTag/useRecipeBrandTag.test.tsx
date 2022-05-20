@@ -1,6 +1,7 @@
 
 import * as React from 'react'
 import { RecipeContextProvider } from '../../model/context'
+
 import { Tag, useRecipeBrandTag, useRecipeBrandTagline, findTag, useTag } from './useRecipeBrandTag'
 import { renderHook } from '@testing-library/react-hooks'
 import { useBrandInfo } from './useBrandInfo'
@@ -37,6 +38,10 @@ const TAG_2: Tag = {
 
 const allTags = [TAG_1, TAG_2]
 
+interface customWrapperProps {
+  children?: React.ReactNode
+}
+
 describe('useRecipeBrandTag', () => {
   const images = [
     { type: 'homepage-image', urls: ['a.png'] },
@@ -58,7 +63,8 @@ describe('useRecipeBrandTag', () => {
       },
       tagline,
     }
-    const customWrapper: React.FC = ({ children }) => (
+
+    const customWrapper: React.FC<customWrapperProps> = ({ children }) => (
       <RecipeContextProvider value={recipeWithTagline}>{children}</RecipeContextProvider>
     )
 
@@ -97,7 +103,7 @@ describe('useRecipeBrandTagline', () => {
   afterEach(() => jest.resetAllMocks())
 
   describe('when recipe is not found in context', () => {
-    const localWrapper: React.FC = ({ children }) => <>{children}</>
+    const localWrapper: React.FC<customWrapperProps> = ({ children }) => <>{children}</>
 
     it('should return null', () => {
       const { result } = renderHook(() => useRecipeBrandTagline(), { wrapper: localWrapper })
@@ -114,7 +120,7 @@ describe('useRecipeBrandTagline', () => {
         images,
       },
     }
-    const localWrapper: React.FC = ({ children }) => (
+    const localWrapper: React.FC<customWrapperProps> = ({ children }) => (
       <RecipeContextProvider value={localRecipe}>{children}</RecipeContextProvider>
     )
 

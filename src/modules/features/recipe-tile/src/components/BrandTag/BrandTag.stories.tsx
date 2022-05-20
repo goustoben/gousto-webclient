@@ -2,7 +2,6 @@ import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { RecipeContextProvider } from '../../model/context'
 import { BrandTag } from './BrandTag'
-
 type GetMocksArgs = Partial<{
   text: string;
   color: string;

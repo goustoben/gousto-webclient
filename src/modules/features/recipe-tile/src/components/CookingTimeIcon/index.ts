@@ -1,0 +1,1 @@
+export { CookingTimeIcon } from './CookingTimeIcon'
