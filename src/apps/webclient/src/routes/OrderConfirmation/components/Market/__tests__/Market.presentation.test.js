@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Map, List } from 'immutable'
 import { MarketPresentation } from '../Market.presentation'
+import { PAIRINGS_CATEGORY_NAME, ALL_PRODUCTS_CATEGORY_NAME } from '../../../constants/categories'
 
 describe('<MarketPresentation />', () => {
   const DEFAULT_PROPS = {
@@ -16,7 +17,7 @@ describe('<MarketPresentation />', () => {
     showOrderConfirmationReceipt: false,
     toggleAgeVerificationPopUp: jest.fn(),
     toggleOrderSummary: jest.fn(),
-    showPairings: false,
+    trackingCategory: ALL_PRODUCTS_CATEGORY_NAME,
     productRecipePairings: List(),
     isLoading: false,
   }
@@ -139,11 +140,11 @@ describe('<MarketPresentation />', () => {
     })
   })
 
-  describe('when there are are product recipe pairings', () => {
+  describe('when there are product recipe pairings', () => {
     beforeEach(() => {
       wrapper.setProps({
         isLoading: false,
-        showPairings: true,
+        trackingCategory: PAIRINGS_CATEGORY_NAME,
         productRecipePairings: List([1,2,3])
       })
     })
