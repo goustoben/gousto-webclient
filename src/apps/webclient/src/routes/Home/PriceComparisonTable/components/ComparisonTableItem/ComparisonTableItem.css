@@ -1,0 +1,25 @@
+@value BreakpointToMedium from 'design-language/breakpoints.module.css';
+@value BreakpointToSmall from '../../values.module.css';
+
+.comparisonTableItem {
+  @media BreakpointToSmall {
+    /** FYI: this !important required here to override default <Box /> width
+     * And I can't override it by nesting because this block already at top
+     * level of component
+     */
+    width: 5.5rem !important;
+  }
+}
+
+.comparisonTableItem .badgeText {
+  /**
+   * FYI: this line-height at this breakpoint required by design
+   */
+  @media BreakpointToMedium {
+    line-height: 1rem;
+  }
+
+  @media BreakpointToSmall {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,14 @@
+@value BreakpointToMedium from 'design-language/breakpoints.module.css';
+@value BreakpointToSmall from '../../values.module.css';
+
+.tableSection {
+  @media BreakpointToSmall {
+    max-width: 18.5rem;
+  }
+}
+
+.tableSection .tableContent {
+  @media BreakpointToMedium {
+    gap: 0.5rem;
+  }
+}

@@ -1,0 +1,7 @@
+@value BreakpointToSmall from '../../values.module.css';
+
+.welcomeSection {
+  @media BreakpointToSmall {
+    max-width: 18.5rem;
+  }
+}

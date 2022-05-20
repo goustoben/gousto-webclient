@@ -147,7 +147,14 @@ describe('Home', () => {
   })
 
   describe('getModules', () => {
-    const defaultHomeModules = ['hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes']
+    const defaultHomeModules = [
+      'hero',
+      'trustPilot',
+      'priceComparisonTable',
+      'whyChooseGousto',
+      'joeWicks',
+      'recipes',
+    ]
 
     describe('given no arguments passed', () => {
       describe('when getModules is called', () => {
