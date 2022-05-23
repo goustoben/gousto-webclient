@@ -28,6 +28,9 @@ jest.mock('src/routes/Menu/domains/basket', () => ({
   useBasket: jest.fn().mockReturnValue({
     recipeCount: 2,
   }),
+  useSupportedBoxTypes: jest.fn().mockReturnValue({
+    maxRecipesForPortion: () => 4,
+  }),
 }))
 
 jest.mock('react-use', () => ({
