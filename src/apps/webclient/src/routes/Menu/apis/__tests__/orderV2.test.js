@@ -172,7 +172,7 @@ describe('orderApi', () => {
               'x-gousto-device-id': 'session-id',
               'x-gousto-user-id': 'test-user-id',
             },
-            body: JSON.stringify({ data: { order: 'v2 body' } }),
+            body: JSON.stringify({ data: { order: 'v2 body', id: 'order-id' } }),
             method: 'PUT',
           },
         )
@@ -212,6 +212,7 @@ describe('orderApi', () => {
                   delivery_day: { data: { id: 'test delivery_day_id' } },
                   delivery_slot_lead_time: { data: { id: 'test day_slot_lead_time_id' } },
                 },
+                id: 'order-id',
               },
             }),
             method: 'PUT',
