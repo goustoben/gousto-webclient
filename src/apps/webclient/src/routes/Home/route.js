@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 import { FullPage } from 'layouts/FullPage'
-import { HomeContainer } from './HomeContainer'
+import { Home as HomeContainer } from './Home'
 
 export const Home = (
   <Route component={FullPage} footerType="large" footerIsOnLandingPage>

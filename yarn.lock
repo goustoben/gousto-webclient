@@ -4822,6 +4822,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-helmet@npm:^6.1.5":
+  version: 6.1.5
+  resolution: "@types/react-helmet@npm:6.1.5"
+  dependencies:
+    "@types/react": "*"
+  checksum: d059cc084d3b3071cce3421bb1170dd42819cf39b81afe60d4fbd66c5ef9ffeaadf1802df80efd9553258f621678f69ceb5a21d73df0d8539d40ae9a0f995485
+  languageName: node
+  linkType: hard
+
 "@types/react-modal@npm:^3.13.1":
   version: 3.13.1
   resolution: "@types/react-modal@npm:3.13.1"
@@ -4855,7 +4864,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-router@npm:*":
+"@types/react-router@npm:*, @types/react-router@npm:^5.1.18":
   version: 5.1.18
   resolution: "@types/react-router@npm:5.1.18"
   dependencies:
@@ -27048,7 +27057,9 @@ __metadata:
     "@types/node": ^16.10.2
     "@types/react": ^17.0.38
     "@types/react-dom": ^17.0.11
+    "@types/react-helmet": ^6.1.5
     "@types/react-modal": ^3.13.1
+    "@types/react-router": ^5.1.18
     "@types/react-router-redux": ^5.0.20
     "@types/uuid": ^8.3.4
     "@typescript-eslint/eslint-plugin": ^5.12.1
