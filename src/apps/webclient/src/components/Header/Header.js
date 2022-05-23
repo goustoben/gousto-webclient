@@ -103,7 +103,7 @@ class Header extends React.PureComponent {
       pathLocal = `/${pathLocal}`
     }
 
-    Object.keys(menuItems).forEach(menuItem => {
+    Object.keys(menuItems).forEach((menuItem) => {
       const currentMenuItem = menuItems[menuItem]
 
       if (pathLocal.indexOf(currentMenuItem.url) > -1) {
@@ -126,14 +126,14 @@ class Header extends React.PureComponent {
       isAuthenticated && menuItems.referFriend,
       menuItems.sustainability,
       menuItems.help,
-    ].filter(item => item)
+    ].filter((item) => item)
 
     const mobileItems = [
       !isAuthenticated && menuItems.boxPrices,
       menuItems.menu,
       menuItems.sustainability,
       menuItems.help,
-    ].filter(item => item)
+    ].filter((item) => item)
 
     const myGousto = [menuItems.myGousto]
     const rateMyRecipes = [menuItems.rateMyRecipes]
@@ -145,12 +145,20 @@ class Header extends React.PureComponent {
     let mobileMenu = []
 
     if (isAuthenticated) {
-      mobileMenu = myGousto.concat(deliveries, subscription, details, referFriend, rateMyRecipes, homeMenuItem, mobileItems)
+      mobileMenu = myGousto.concat(
+        deliveries,
+        subscription,
+        details,
+        referFriend,
+        rateMyRecipes,
+        homeMenuItem,
+        mobileItems,
+      )
     } else {
       mobileMenu = mobileMenu.concat(homeMenuItem, mobileItems)
     }
 
-    return (device === 'mobile') ? mobileMenu : desktopItems
+    return device === 'mobile' ? mobileMenu : desktopItems
   }
 
   handleQuery = () => {
@@ -161,7 +169,10 @@ class Header extends React.PureComponent {
       if (routing.locationBeforeTransitions.pathname) {
         route = routing.locationBeforeTransitions.pathname
       }
-      if (routing.locationBeforeTransitions.query && routing.locationBeforeTransitions.query.from_wizard) {
+      if (
+        routing.locationBeforeTransitions.query &&
+        routing.locationBeforeTransitions.query.from_wizard
+      ) {
         fromWizard = true
       }
     }
@@ -184,15 +195,22 @@ class Header extends React.PureComponent {
   }
 
   renderAuthLink = () => {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, routing, doubleDeckerExperimentEnabled } = this.props
     const { logoutPending } = this.state
+    const pathName =
+      routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     let buttonState
     let button
 
     if (logoutPending) {
       buttonState = 'loggingOut'
       button = (
-        <button type="button" className={css.btn}>
+        <button
+          type="button"
+          className={classNames(css.btn, {
+            [css.experimentBtn]: pathName === client.menu && doubleDeckerExperimentEnabled,
+          })}
+        >
           You&#8217;re logged out
           <span className={css.confirm} />
         </button>
@@ -203,7 +221,9 @@ class Header extends React.PureComponent {
         <Link
           key={client.myGousto}
           to={client.myGousto}
-          className={css.btn}
+          className={classNames(css.btn, {
+            [css.experimentBtn]: pathName === client.menu && doubleDeckerExperimentEnabled,
+          })}
           clientRouted
           data-testing="myGoustoButtonLink"
         >
@@ -213,7 +233,13 @@ class Header extends React.PureComponent {
     } else {
       buttonState = 'loggedOut'
       button = (
-        <button type="button" className={css.btn} data-testing="loginButton">
+        <button
+          type="button"
+          className={classNames(css.btn, {
+            [css.experimentBtn]: pathName === client.menu && doubleDeckerExperimentEnabled,
+          })}
+          data-testing="loginButton"
+        >
           Login
         </button>
       )
@@ -222,7 +248,9 @@ class Header extends React.PureComponent {
       <span
         role="button"
         tabIndex="0"
-        className={css.linkDesktop}
+        className={classNames(css.linkDesktop, {
+          [css.experimentLink]: pathName === client.menu && doubleDeckerExperimentEnabled,
+        })}
         onClick={this.onLogoutClick}
         onKeyDown={onEnter(this.onLogoutClick)}
         data-testing="logoutButton"
@@ -246,7 +274,9 @@ class Header extends React.PureComponent {
   }
 
   renderMenuItems = (menu, hideNav) => {
-    const { isAuthenticated, trackNavigationClick } = this.props
+    const { isAuthenticated, trackNavigationClick, routing, doubleDeckerExperimentEnabled } = this.props
+    const pathName =
+      routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
 
     if (hideNav) {
       return null
@@ -258,25 +288,25 @@ class Header extends React.PureComponent {
       logged_in: isAuthenticated,
     }
 
-    return menu.map(menuItem => {
+    return menu.map((menuItem) => {
       if (menuItem.disabled) {
         return (
-          <span
-            key={menuItem.name}
-            className={classNames(css.linkDesktop, css.disabled)}
-          >
-            {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
+          <span key={menuItem.name} className={classNames(css.linkDesktop, css.disabled)}>
+            {menuItem.fullWidthPrefix && (
+              <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>
+            )}
             {menuItem.name}
           </span>
         )
       }
-
       const isHelpPreloginNeeded = menuItem.name.toLowerCase() === 'help'
       if (isHelpPreloginNeeded && !isAuthenticated) {
         return (
           <span
             key={menuItem.name}
-            className={css.linkDesktop}
+            className={classNames(css.linkDesktop, {
+              [css.experimentLink]: pathName === client.menu && doubleDeckerExperimentEnabled,
+            })}
             data-test="help-link"
             role="button"
             tabIndex="0"
@@ -299,11 +329,15 @@ class Header extends React.PureComponent {
           key={menuItem.name}
           data-optimizely={isHelpLink ? 'desktop-header-help-link' : null}
           to={menuItem.url}
-          className={css.linkDesktop}
+          className={classNames(css.linkDesktop, {
+            [css.experimentLink]: pathName === client.menu && doubleDeckerExperimentEnabled,
+          })}
           clientRouted={menuItem.clientRouted}
           tracking={() => trackNavigationClick(trackingData)}
         >
-          {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
+          {menuItem.fullWidthPrefix && (
+            <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>
+          )}
           {menuItem.name}
         </Link>
       )
@@ -317,12 +351,8 @@ class Header extends React.PureComponent {
   }
 
   renderLoginModal = () => {
-    const {
-      isHelpPreLoginOpen,
-      isLoginOpen,
-      showAppAwareness,
-      trackContinueAsNewCustomer,
-    } = this.props
+    const { isHelpPreLoginOpen, isLoginOpen, showAppAwareness, trackContinueAsNewCustomer } =
+      this.props
 
     return (
       <Overlay
@@ -338,23 +368,19 @@ class Header extends React.PureComponent {
           isNarrow
         >
           <Login
-            title={isHelpPreLoginOpen
-              ? 'We can help you faster if you\'re logged in'
-              : 'Login' }
+            title={isHelpPreLoginOpen ? "We can help you faster if you're logged in" : 'Login'}
           />
-          {isHelpPreLoginOpen
-            ? (
-              <Link
-                to={client.helpCentre}
-                data-optimizely="new-customer-help-link"
-                clientRouted={false}
-                className={css.continueAsNewCustomerLink}
-                tracking={trackContinueAsNewCustomer}
-              >
-                Continue as new customer
-              </Link>
-            )
-            : null}
+          {isHelpPreLoginOpen ? (
+            <Link
+              to={client.helpCentre}
+              data-optimizely="new-customer-help-link"
+              clientRouted={false}
+              className={css.continueAsNewCustomerLink}
+              tracking={trackContinueAsNewCustomer}
+            >
+              Continue as new customer
+            </Link>
+          ) : null}
         </ModalPanel>
       </Overlay>
     )
@@ -375,14 +401,16 @@ class Header extends React.PureComponent {
       routing,
       isAppAwarenessEnabled,
       hasLoginModal,
+      doubleDeckerExperimentEnabled
     } = this.props
-    const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
+    const pathName =
+      routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
     const hideNav = fromWizard || joinPage || disabled || false
     const mobileMenuItems = this.getMenuItems('mobile', path)
-    const homeElementMobile = mobileMenuItems.find(item => (item.name === 'Home'))
+    const homeElementMobile = mobileMenuItems.find((item) => item.name === 'Home')
     const desktopMenuItems = this.getMenuItems('desktop', path)
     let hasUserStartedNewSession
     if (canUseWindow()) {
@@ -418,22 +446,44 @@ class Header extends React.PureComponent {
           />
           <header className={css.header}>
             <div className={css.container}>
-              <div className={css.mainBar}>
+              <div
+                className={classNames(css.mainBar, {
+                  [css.menuHeader]: pathName === client.menu && doubleDeckerExperimentEnabled,
+                })}
+              >
                 <div className={css.mainContent}>
-                  <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !promoCodeUrl} className={css.logoLink} aria-label="Gousto Home button">
+                  <Link
+                    to={homeElementMobile.url}
+                    clientRouted={homeElementMobile.clientRouted && !promoCodeUrl}
+                    className={css.logoLink}
+                    aria-label="Gousto Home button"
+                  >
                     <span>
-                      <Svg fileName="gousto_logo" className={css.logoDesktop} />
+                      {pathName === client.menu && doubleDeckerExperimentEnabled ? (
+                        <Svg fileName="gousto-logo-red" className={css.logoDesktop} />
+                      ) : (
+                        <Svg fileName="gousto_logo" className={css.logoDesktop} />
+                      )}
                     </span>
                   </Link>
-                  {(path === client.menu) ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
+                  {path === client.menu ? (
+                    <span className={css.menuTitle}>Choose Recipes</span>
+                  ) : (
+                    ''
+                  )}
                   <span className={css.linkDesktopContainer}>
                     {this.renderMenuItems(desktopMenuItems, hideNav)}
                     {this.renderAuthLink()}
                   </span>
-                  {
-                    (isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled)
-                    && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button>
-                  }
+                  {isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled && (
+                    <Button
+                      color="secondary"
+                      className={css.useAppCta}
+                      onClick={this.onUseAppClick}
+                    >
+                      Use App
+                    </Button>
+                  )}
                   <MobileMenu
                     hideMobileMenu={this.hideMobileMenu}
                     onLoginClick={this.onLoginClick}
@@ -449,7 +499,11 @@ class Header extends React.PureComponent {
                       this.hideMobileMenu()
                     }}
                     serverError={serverError}
-                    shouldRenderAccountLink={isAuthenticated && pathName && (pathName.startsWith('/menu'))}
+                    shouldRenderAccountLink={
+                      isAuthenticated && pathName && pathName.startsWith('/menu')
+                    }
+                    isOnMenu={pathName && pathName.startsWith('/menu')}
+                    doubleDeckerExperimentEnabled={doubleDeckerExperimentEnabled}
                   />
                 </div>
               </div>
@@ -462,7 +516,11 @@ class Header extends React.PureComponent {
           <ExpiredBillingModalContainer />
           <SubscriptionPause />
           <OnScreenRecovery />
-          {path.indexOf('my-') !== -1 ? (<div><Account location={{ pathname: path }} /></div>) : null}
+          {path.indexOf('my-') !== -1 ? (
+            <div>
+              <Account location={{ pathname: path }} />
+            </div>
+          ) : null}
         </span>
       </div>
     )
@@ -492,6 +550,7 @@ Header.propTypes = {
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
   hasLoginModal: PropTypes.bool,
+  doubleDeckerExperimentEnabled: PropTypes.bool
 }
 
 Header.defaultProps = {
@@ -508,10 +567,11 @@ Header.defaultProps = {
   title: '',
   trackContinueAsNewCustomer: () => {},
   trackHelpPreLoginModalDisplayed: () => {},
-  trackNavigationClick: () => { },
+  trackNavigationClick: () => {},
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
   hasLoginModal: false,
+  doubleDeckerExperimentEnabled: false
 }
 
 export { Header }

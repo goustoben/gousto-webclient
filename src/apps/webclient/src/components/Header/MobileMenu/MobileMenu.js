@@ -9,12 +9,14 @@ const propTypes = {
   hideMobileMenu: PropTypes.func.isRequired,
   hideNav: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  mobileMenuItems: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    url: PropTypes.string,
-    clientRouted: PropTypes.bool,
-    tracking: PropTypes.string
-  })).isRequired,
+  mobileMenuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      url: PropTypes.string,
+      clientRouted: PropTypes.bool,
+      tracking: PropTypes.string,
+    }),
+  ).isRequired,
   mobileMenuOpen: PropTypes.bool.isRequired,
   onLoginClick: PropTypes.func.isRequired,
   onLogoutClick: PropTypes.func.isRequired,
@@ -23,6 +25,8 @@ const propTypes = {
   shouldRenderAccountLink: PropTypes.bool.isRequired,
   showMobileMenu: PropTypes.func.isRequired,
   trackNavigationClick: PropTypes.func.isRequired,
+  isOnMenu: PropTypes.string.isRequired,
+  doubleDeckerExperimentEnabled: PropTypes.bool.isRequired
 }
 
 class MobileMenu extends React.PureComponent {
@@ -39,6 +43,8 @@ class MobileMenu extends React.PureComponent {
       serverError,
       showMobileMenu,
       trackNavigationClick,
+      isOnMenu,
+      doubleDeckerExperimentEnabled
     } = this.props
 
     return (
@@ -56,7 +62,9 @@ class MobileMenu extends React.PureComponent {
         />
         <button
           type="button"
-          className={classNames([css.burgerIcon, 'needsclick'])}
+          className={classNames([css.burgerIcon, 'needsclick'], {
+            [css.experimentBurgerIcon]: isOnMenu && doubleDeckerExperimentEnabled,
+          })}
           onClick={showMobileMenu}
           href={serverError ? '#mobileMenu' : null}
           data-testing="burgerMenu"
@@ -72,15 +80,21 @@ class MobileMenu extends React.PureComponent {
   }
 
   render() {
-    const { shouldRenderAccountLink, isAuthenticated, trackNavigationClick } = this.props
+    const { shouldRenderAccountLink, isAuthenticated, trackNavigationClick, isOnMenu, doubleDeckerExperimentEnabled } = this.props
 
     return (
       <span className={css.linkMobileContainer}>
-        {
-          shouldRenderAccountLink
-            ? <LinkMobileMenu isAuthenticated={isAuthenticated} trackNavigationClick={trackNavigationClick} onLoginClick={this.onLoginClick} />
-            : this.renderBurgerMenu()
-        }
+        {shouldRenderAccountLink ? (
+          <LinkMobileMenu
+            isAuthenticated={isAuthenticated}
+            trackNavigationClick={trackNavigationClick}
+            onLoginClick={this.onLoginClick}
+            isOnMenu={isOnMenu}
+            doubleDeckerExperimentEnabled={doubleDeckerExperimentEnabled}
+          />
+        ) : (
+          this.renderBurgerMenu()
+        )}
       </span>
     )
   }

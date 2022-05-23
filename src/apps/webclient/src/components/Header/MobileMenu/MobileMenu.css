@@ -1,4 +1,4 @@
-@value Chia, Cacao, Tomato, Mushroom50, White, Blackberry, Basa from 'styles/colors.css';
+@value Chia, Cacao, Tomato, Mushroom50, White, Blackberry, Basa, Bluecheese from 'styles/colors.css';
 @value SpacingXL from 'sass-loader!styles/spacing.scss';
 @value bodyFontStackBold, sizeXS from 'styles/typography.css';
 @value MainColor Blackberry;
@@ -66,7 +66,7 @@ button:target .defaultState {
 	cursor: pointer;
 
 	&.disabled, &:hover, &:focus, &:active {
-		& button { 
+		& button {
 			border: 0;
 		}
 		width: 100%;
@@ -108,7 +108,7 @@ button:target .defaultState {
 	margin: 0 20px;
 }
 
-.mobileMenuTestWrapper { 
+.mobileMenuTestWrapper {
 	display: flex;
 	font-family: bodyFontStackBold;
 	font-size: sizeXS;
@@ -128,10 +128,27 @@ button:target .defaultState {
 	line-height: 1.4;
 }
 
+.experimentHelpMenuItem {
+	color: Bluecheese;
+	padding: 0 0.25rem;
+	margin: 0;
+	border: none;
+	background: none;
+	line-height: 1.4;
+}
+
 .accountMenuItem {
 	composes: helpMenuItem;
 	padding-right: 1.25rem;
 }
 .accountMenuItem:hover, .accountMenuItem:active, .accountMenuItem:focus {
 	color: White;
+}
+
+.experimentAccountMenuItem {
+	composes: experimentHelpMenuItem;
+	padding-right: 1.25rem;
+}
+.experimentAccountMenuItem:hover, .experimentAccountMenuItem:active, .experimentAccountMenuItem:focus {
+	color: Bluecheese;
 }
