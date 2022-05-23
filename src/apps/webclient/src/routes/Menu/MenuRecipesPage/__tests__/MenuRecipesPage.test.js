@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/MenuRecipesPage/RecipeGrid'
 import { CollectionsNavWrapper } from '../../components/CollectionsNav'
+import { SubHeaderContainer } from '../../components/SubHeader'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../CapacityInfo'
 
@@ -211,5 +212,42 @@ describe('with the force collections feature enabled', () => {
     )
 
     expect(wrapper.find(CollectionsNavWrapper).exists()).toBe(true)
+  })
+})
+
+describe('DoubleDeckerFeature', () => {
+  const defaultProps = {
+    stateRecipeCount: 30,
+    menuCurrentCollectionId: '234',
+    detailVisibilityChange: jest.fn(),
+    basketOrderLoaded: jest.fn(),
+    portionSizeSelectedTracking: jest.fn(),
+    userId: '1234',
+    isAuthenticated: true,
+    loadOptimizelySDK: jest.fn(),
+    checkQueryParamsSpy: jest.fn(),
+    basketNumPortionChange: jest.fn(),
+    fadeCss: 'fadeOut',
+    showLoading: false,
+    shouldShowCapacityInfo: false,
+  }
+  let wrapper
+
+  describe('when isDoubleDeckerFeatureOn feature is OFF', () => {
+    beforeEach(() => {
+      wrapper = shallow(<MenuRecipes {...defaultProps} isDoubleDeckerFeatureOn={false} />)
+    })
+    it('should include SubHeaderContainer', () => {
+      expect(wrapper.find(SubHeaderContainer)).toHaveLength(1)
+    })
+  })
+
+  describe('when isDoubleDeckerFeatureOn feature is ON', () => {
+    beforeEach(() => {
+      wrapper = shallow(<MenuRecipes {...defaultProps} isDoubleDeckerFeatureOn />)
+    })
+    it('should not include SubHeaderContainer', () => {
+      expect(wrapper.find(SubHeaderContainer)).toHaveLength(0)
+    })
   })
 })

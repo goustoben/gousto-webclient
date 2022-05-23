@@ -7,6 +7,10 @@ import { getMenuDateRangeText } from './utils'
 jest.mock('../MenuDateRange/utils', () => ({
   getMenuDateRangeText: jest.fn(() => 'Menu for MMM DD - MMM DD'),
 }))
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
 
 describe('MenuDateRangeContainer', () => {
   let wrapper

@@ -2,9 +2,14 @@ import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
 import config from 'config/menu'
-
 import { SubHeader } from './SubHeader'
 import InfoToggle from './InfoToggle'
+import { DeliveryInfo } from './DeliveryInfo'
+
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+}))
 
 describe('SubHeader', () => {
   describe('rendering', () => {
@@ -18,8 +23,8 @@ describe('SubHeader', () => {
       expect(wrapper.type()).toBe('div')
     })
 
-    test('should 2 InfoToggles', () => {
-      expect(wrapper.find(InfoToggle)).toHaveLength(2)
+    test('it should render 2 InfoToggles', () => {
+      expect(wrapper.find(DeliveryInfo)).toHaveLength(2)
     })
 
     test("should render a date range for this week's menu", () => {
@@ -58,21 +63,22 @@ describe('SubHeader', () => {
       clock = sinon.useFakeTimers(new Date(2017, 4, 21).getTime())
       sandbox.stub(config, 'notification', notifications)
       const wrapper = shallow(<SubHeader />)
-      expect(wrapper.find(InfoToggle).length).toBe(2)
+      expect(wrapper.find(DeliveryInfo).length).toBe(2)
     })
 
     test('should return 2 delivery infotoggles for authenticated user even when notifyGuests is false', () => {
       clock = sinon.useFakeTimers(new Date(2017, 3, 25).getTime())
       sandbox.stub(config, 'notification', notifications)
       const wrapper = shallow(<SubHeader isAuthenticated />)
-      expect(wrapper.find(InfoToggle).length).toBe(2)
+      expect(wrapper.find(DeliveryInfo).length).toBe(2)
     })
 
     test('should return 2 delivery and 2 notifcation infotoggles for authenticated user even when notifyGuests is false', () => {
       clock = sinon.useFakeTimers(new Date(2017, 4, 25).getTime())
       sandbox.stub(config, 'notification', notifications)
       const wrapper = shallow(<SubHeader isAuthenticated />)
-      expect(wrapper.find(InfoToggle).length).toBe(4)
+      expect(wrapper.find(InfoToggle).length).toBe(2)
+      expect(wrapper.find(DeliveryInfo).length).toBe(2)
     })
 
     test('should return 2 delivery and 2 notifcation infotoggles when notifyGuests is true even for non logged in user', () => {
@@ -89,7 +95,8 @@ describe('SubHeader', () => {
       })
       sandbox.stub(config, 'notification', notifications)
       const wrapper = shallow(<SubHeader />)
-      expect(wrapper.find(InfoToggle).length).toBe(4)
+      expect(wrapper.find(InfoToggle).length).toBe(2)
+      expect(wrapper.find(DeliveryInfo).length).toBe(2)
     })
   })
 })
