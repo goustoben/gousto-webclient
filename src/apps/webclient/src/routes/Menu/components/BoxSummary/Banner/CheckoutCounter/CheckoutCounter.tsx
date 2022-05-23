@@ -1,12 +1,10 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import { usePrevious } from 'react-use'
-import basketConfig from 'config/basket'
+import { useBasket, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
 import css from './CheckoutCounter.css'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const classNames = require('classnames')
-
-const maxRecipes = basketConfig.maxRecipesNum
 
 export interface CheckoutCounterProps {
   /**
@@ -30,11 +28,16 @@ export const CheckoutCounter = ({
   const onAnimationEnd = useCallback(() => {
     setShouldPlayAnimation(false)
   }, [])
+
   useLayoutEffect(() => {
     if (oldCounterValue !== numRecipes) {
       setShouldPlayAnimation(true)
     }
   }, [oldCounterValue, numRecipes])
+
+  const { numPortions } = useBasket()
+  const { maxRecipesForPortion } = useSupportedBoxTypes()
+  const recipeLimit = maxRecipesForPortion(numPortions)
 
   return (
     <div
@@ -59,7 +62,7 @@ export const CheckoutCounter = ({
       >
         <span data-testid="CheckoutCounter_numRecipes">{numRecipes}</span>
         <span className={css.slash}>/</span>
-        <span data-testid="CheckoutCounter_maxRecipes">{maxRecipes}</span>
+        <span data-testid="CheckoutCounter_recipeLimit">{recipeLimit}</span>
       </span>
     </div>
   )
