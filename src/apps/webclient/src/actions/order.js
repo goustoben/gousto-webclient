@@ -17,7 +17,6 @@ import { orderConfirmationRedirect } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
 import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
 import { anyUnset } from '../utils/object'
-import { updateOrderAddress } from '../apis/orders'
 import { fetchDeliveryDays } from '../apis/deliveries'
 import { unSkipDates, skipDates } from '../routes/Account/apis/subscription'
 import { getAuthUserId } from '../selectors/auth'
@@ -239,10 +238,15 @@ export const orderAddressChange = (orderId, addressId) => (
       errorMessage: ''
     }))
     dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, orderId))
-    const accessToken = getState().auth.get('accessToken')
     const data = {
       orderId,
       addressId,
+    }
+    const newOrder = getState().user.getIn(['newOrders', orderId])
+    const orderAdditionalData = {
+      shipping_address_id: addressId,
+      delivery_slot_id: newOrder.getIn(['deliverySlotId']),
+      delivery_day_id: newOrder.getIn(['coreDeliveryDayId']),
     }
     try {
       dispatch({
@@ -252,7 +256,7 @@ export const orderAddressChange = (orderId, addressId) => (
           ...trackingData
         }
       })
-      await updateOrderAddress(accessToken, orderId, addressId)
+      await orderV2.updateOrder(dispatch, getState, orderId, orderAdditionalData)
       dispatch({
         type: actionTypes.ORDER_ADDRESS_CHANGE,
         data,

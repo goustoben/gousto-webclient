@@ -3,10 +3,7 @@ import Immutable from 'immutable'
 import * as deliveriesUtils from 'utils/deliveries'
 import * as menuOrderSelectors from 'routes/Menu/selectors/order'
 import { fetchDeliveryDays } from 'apis/deliveries'
-import {
-  fetchOrder,
-  updateOrderAddress,
-} from 'apis/orders'
+import { fetchOrder } from 'apis/orders'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
 import actionStatus from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
@@ -377,14 +374,14 @@ describe('order actions', () => {
     })
 
     it('should call updateOrderAddress and dispatch the action with the correct arguments', async () => {
-      updateOrderAddress.mockReturnValueOnce(
-        new Promise(resolve => resolve())
+      const updateOrderV2Spy = orderV2.updateOrder.mockReturnValueOnce(
+        new Promise((resolve) => resolve({ data: { id: 'order_id' } }))
       )
 
       await orderAddressChange(orderId, addressId)(dispatch, getState)
 
-      expect(updateOrderAddress).toHaveBeenCalled()
-      expect(updateOrderAddress).toHaveBeenCalledWith('access-token', '12345', '101')
+      expect(updateOrderV2Spy).toHaveBeenCalled()
+      expect(updateOrderV2Spy).toHaveBeenCalledWith(dispatch, getState, '12345', {delivery_day_id: undefined, delivery_slot_id: undefined, shipping_address_id: '101'})
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_ADDRESS_CHANGE,
@@ -404,7 +401,7 @@ describe('order actions', () => {
     describe('when updateOrderAddress call errors', () => {
       beforeEach(() => {
         const err = new Error('error message')
-        updateOrderAddress.mockReturnValueOnce(
+        orderV2.updateOrder.mockReturnValueOnce(
           new Promise((resolve, reject) => reject(err))
         )
       })
