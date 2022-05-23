@@ -79,6 +79,7 @@ export async function updateOrder(
   }
 
   const orderRequest = getOrderV2(state)
+  orderRequest.id = orderRequest.id ?? orderId
   const headers = getRequestHeaders(userId)
   const url = `${endpoint('order', 2)}/orders/${orderId}`
 
@@ -94,6 +95,9 @@ export async function updateOrder(
     if (orderRequest?.relationships?.delivery_slot_lead_time?.data) {
       orderRequest.relationships.delivery_slot_lead_time.data.id =
         additionalData.day_slot_lead_time_id
+    }
+    if (orderRequest?.relationships?.shipping_address?.data && additionalData.shipping_address_id) {
+      orderRequest.relationships.shipping_address.data.id = additionalData.shipping_address_id
     }
   }
 
