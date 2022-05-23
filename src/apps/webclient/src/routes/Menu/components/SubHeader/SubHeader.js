@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import moment from 'moment'
 import config from 'config/menu'
-import { H3 } from 'Page/Header'
+import { DeliveryInfo } from './DeliveryInfo'
 import InfoToggle from './InfoToggle'
 import { MenuDateRangeContainer } from '../MenuDateRange'
 import css from './SubHeader.css'
@@ -19,25 +19,6 @@ const defaultProps = {
 }
 
 export class SubHeader extends React.PureComponent {
-  deliveryInfo = (mobile) => (
-    <InfoToggle>
-      <div className={mobile ? css.mobileDeliveryInfo : css.deliveryInfo}>
-        <span>
-          About Delivery <span className={css.iconArrowDown} />
-        </span>
-      </div>
-      <div>
-        <div className={css.tooltipTitle}>
-          <H3 headlineFont>How does delivery work?</H3>
-        </div>
-        <p className={css.tooltipText}>
-          Our insulated box and ice packs help keep your food cool. And if you’re not home, we can
-          leave your box in your chosen safe place.
-        </p>
-      </div>
-    </InfoToggle>
-  )
-
   notificationBanner = () => {
     const { isAuthenticated } = this.props
     const info = config.notification
@@ -76,12 +57,14 @@ export class SubHeader extends React.PureComponent {
             <MenuDateRangeContainer variant="desktop" />
             <div>{this.notificationBanner()}</div>
             <div className={css.filterRight}>
-              <div className={css.filterSection}>{this.deliveryInfo()}</div>
+              <div className={css.filterSection}>
+                <DeliveryInfo />
+              </div>
             </div>
           </div>
         </div>
         <div className={css.mobile}>
-          {this.deliveryInfo(true)}
+          <DeliveryInfo mobile />
           {this.notificationBanner()}
         </div>
       </div>

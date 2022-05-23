@@ -77,6 +77,7 @@ export class MenuRecipesPage extends PureComponent {
       showCommunicationPanel,
       menuLoadingErrorMessage,
       query,
+      isDoubleDeckerFeatureOn,
     } = this.props
     const { communicationPanel } = menuConfig
 
@@ -101,7 +102,8 @@ export class MenuRecipesPage extends PureComponent {
             </div>
           </div>
         ) : null}
-        <SubHeaderContainer />
+        {!isDoubleDeckerFeatureOn && <SubHeaderContainer />}
+
         <MenuDateRangeContainer variant="mobile" />
 
         <CollectionsNavWrapper />
@@ -168,6 +170,7 @@ MenuRecipesPage.propTypes = {
   loadOptimizelySDK: PropTypes.func.isRequired,
   menuLoadingErrorMessage: PropTypes.string,
   fetchMenuData: PropTypes.func.isRequired,
+  isDoubleDeckerFeatureOn: PropTypes.bool,
 }
 
 MenuRecipesPage.defaultProps = {
@@ -182,5 +185,6 @@ MenuRecipesPage.defaultProps = {
   userId: '',
   shouldShowCapacityInfo: false,
   menuLoadingErrorMessage: '',
+  isDoubleDeckerFeatureOn: false,
 }
 MenuRecipesPage.contextType = ReactReduxContext

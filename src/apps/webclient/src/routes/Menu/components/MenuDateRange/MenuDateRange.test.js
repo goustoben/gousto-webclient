@@ -1,26 +1,46 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
 import { MenuDateRange } from './MenuDateRange'
+import { useDoubleDeckerNav } from '../../../../hooks/useDoubleDeckerNav'
+
+jest.mock('../../../../hooks/useDoubleDeckerNav', () => ({
+  useDoubleDeckerNav: jest.fn(),
+}))
+
+const mockUseDoubleDeckerNav = useDoubleDeckerNav
 
 describe('Given we are rendering MenuDateRange', () => {
-  let wrapper
-  const TEXT = 'Menu for Sep 19 - Sep 25'
+  const text = 'Menu for Sep 19 - Sep 25'
 
-  beforeEach(() => {
-    wrapper = shallow(<MenuDateRange text={TEXT} variant="desktop" />)
-  })
+  describe('when double decker experiment is OFF', () => {
+    beforeEach(() => mockUseDoubleDeckerNav.mockReturnValue(false))
 
-  test('then it should render correctly', () => {
-    expect(wrapper.matchesElement(<h1 className="menuDateRange">{TEXT}</h1>)).toBeTruthy()
-  })
-
-  describe('When variant is mobile', () => {
-    beforeEach(() => {
-      wrapper.setProps({ variant: 'mobile' })
+    it('should return menu date range', () => {
+      render(<MenuDateRange text={text} variant="desktop" />)
+      expect(screen.queryByText(text)).toBeTruthy()
     })
 
-    test('then it should add the class name', () => {
-      expect(wrapper.matchesElement(<h1 className="menuDateRange mobile">{TEXT}</h1>)).toBeTruthy()
+    describe('when variant is desktop', () => {
+      it('should not have MOBILE specific class name', () => {
+        render(<MenuDateRange text={text} variant="desktop" />)
+        expect(screen.getByRole('heading')).not.toHaveClass('mobile')
+      })
+    })
+
+    describe('when variant is mobile', () => {
+      it('should have MOBILE specific class name', () => {
+        render(<MenuDateRange text={text} variant="mobile" />)
+        expect(screen.getByRole('heading')).toHaveClass('mobile')
+      })
+    })
+  })
+
+  describe('when double decker experiment is ON', () => {
+    beforeEach(() => mockUseDoubleDeckerNav.mockReturnValue(true))
+
+    it('should not render a component', () => {
+      render(<MenuDateRange text={text} variant="desktop" />)
+      expect(screen.queryByText(text)).toBeFalsy()
     })
   })
 })

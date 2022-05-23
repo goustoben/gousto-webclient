@@ -17,6 +17,7 @@ import {
   shouldShowCapacityInfo,
 } from '../selectors/signupReduction'
 import { useHotjarIdentify } from './useHotjarIdentify'
+import { useDoubleDeckerNav } from '../../../hooks/useDoubleDeckerNav'
 
 const MenuRecipesPageWrapper = (ownProps) => {
   const {
@@ -36,6 +37,7 @@ const MenuRecipesPageWrapper = (ownProps) => {
   const userId = useSelector(getUserId)
   const showCapacityInfo = useSelector(shouldShowCapacityInfo)
   const menuLoadingErrorMessage = useSelector(getMenuLoadingErrorMessage)
+  const isDoubleDeckerFeatureOn = useDoubleDeckerNav()
   const actionDispatchers = bindActionCreators(
     {
       checkQueryParams,
@@ -71,6 +73,7 @@ const MenuRecipesPageWrapper = (ownProps) => {
       portionSizeSelectedTracking={actionDispatchers.portionSizeSelectedTracking}
       loadOptimizelySDK={actionDispatchers.loadOptimizelySDK}
       fetchMenuData={actionDispatchers.fetchMenuData}
+      isDoubleDeckerFeatureOn={isDoubleDeckerFeatureOn}
     />
   )
 }

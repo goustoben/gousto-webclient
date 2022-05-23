@@ -33,6 +33,7 @@ const propTypes = {
   size: PropTypes.string,
   headlineFont: PropTypes.bool,
   children: PropTypes.node,
+  defaults: PropTypes.string
 }
 
 Header.propTypes = {
