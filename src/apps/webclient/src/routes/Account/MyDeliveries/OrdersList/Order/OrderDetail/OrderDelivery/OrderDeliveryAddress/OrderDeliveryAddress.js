@@ -96,7 +96,7 @@ class OrderDeliveryAddress extends React.PureComponent {
     } = this.props
     const { editAddressOpen, selectedAddressId } = this.state
     const submitDisabled = selectedAddressId === shippingAddressId
-    const shippingAddress = orderShippingAddress || addresses.find(address => address.get('id') === shippingAddressId)
+    const shippingAddress = addresses.find(address => address.get('id') === shippingAddressId) || orderShippingAddress
     const { client } = config.routes
 
     return (
