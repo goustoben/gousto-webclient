@@ -1,0 +1,51 @@
+name: Sets up common node_modules cache for use in branch builds
+on:
+  push:
+    branches:
+      - "develop"
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '14.x'
+      - uses: pioug/la-cle@v1.0.0 # set up a git ssh key so npm can install our private git repo dependencies (gousto-gulp and gousto-lumberjack-js)
+        with:
+          GH_SSH_KEY: ${{ secrets.GH_SSH_KEY }}
+      - name: Configure AWS credentials & auth with CA
+        id: codeartifact_authenticate
+        run: |
+          aws configure set region eu-west-1
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain gousto --domain-owner 472493421475 --query authorizationToken --output text`
+          echo "::add-mask::$CODEARTIFACT_AUTH_TOKEN"
+          echo "::set-output name=CODEARTIFACT_AUTH_TOKEN::$CODEARTIFACT_AUTH_TOKEN"
+      - name: Set npm registry CA auth token
+        run: |
+          yarn config unset npmScopes &&
+          yarn config set npmRegistryServer "https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/" &&
+          yarn config set 'npmRegistries["https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/"].npmAuthToken' "${{ steps.codeartifact_authenticate.outputs.CODEARTIFACT_AUTH_TOKEN }}" &&
+          yarn config set 'npmRegistries["https://gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/"].npmAlwaysAuth' "true"
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: |
+            **/node_modules
+            src/apps/webclient/libs
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}-${{ hashFiles('.yarn/releases/yarn-*') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn install --immutable
