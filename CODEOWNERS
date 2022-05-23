@@ -35,10 +35,11 @@
 
 # squad-kales ownership
 /src/modules/features/recipe-tile/                                     @Gousto/squad-kales
-/src/routes/Menu/domains/brand/                                        @Gousto/squad-kales
-/src/routes/Menu/domains/basket/                                       @Gousto/squad-kales
-/src/routes/Menu/domains/collections/                                  @Gousto/squad-kales
-/src/routes/Menu/domains/menu/                                         @Gousto/squad-kales
+/src/apps/webclient/src/routes/Menu/domains/brand/                     @Gousto/squad-kales
+/src/apps/webclient/src/routes/Menu/domains/basket/                    @Gousto/squad-kales
+/src/apps/webclient/src/routes/Menu/domains/collections/               @Gousto/squad-kales
+/src/apps/webclient/src/routes/Menu/domains/menu/                      @Gousto/squad-kales
+
 /src/apps/webclient/src/actions/basket.js                              @Gousto/squad-kales
 /src/apps/webclient/src/actions/__tests__/basket.test.js               @Gousto/squad-kales
 /src/apps/webclient/src/reducers/basket.js                             @Gousto/squad-kales
@@ -55,6 +56,7 @@
 /src/apps/webclient/src/actions/__tests__/menuServiceLoadDays.test.js  @Gousto/squad-kales
 /src/apps/webclient/src/utils/menuService.js                           @Gousto/squad-kales
 /src/apps/webclient/src/utils/__tests__/menuService.test.js            @Gousto/squad-kales
+/src/apps/webclient/src/routes/Menu/MenuRecipesPage/                   @Gousto/squad-kales
 
 # squad-radishes ownership
 /src/apps/webclient/src/components/FiveRecipesPaintedDoorTest          @Gousto/squad-radishes
