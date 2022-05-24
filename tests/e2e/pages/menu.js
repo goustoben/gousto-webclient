@@ -32,21 +32,27 @@ module.exports = {
               })
           },
           clickDateOfExistingOrder: function () {
+            console.log('~~~ start: clickDateOfExistingOrder ~~~');
             this
               .executeAndThrowOnFailure(function () {
                 const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
                 let dates = Array.from(getDateSlots())
                 let firstAvailableDate = dates.find(date => date.querySelector("*[data-testing='icon-full-box']"))
+                console.log(`~~~ clicking on first available date:  ${firstAvailableDate.innerHTML} ~~~`);
                 firstAvailableDate.click()
               })
+            console.log('~~~ end: clickDateOfExistingOrder ~~~');
           },
           clickDateOfNewOrder: function () {
+            console.log('~~~ start: clickDateOfNewOrder ~~~');
             this.executeAndThrowOnFailure(function () {
               const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
               let dates = Array.from(getDateSlots())
               let firstAvailableDate = dates.find(date => !date.querySelector("*[data-testing='icon-full-box']"))
+              console.log(`~~~ clicking on first available date:  ${firstAvailableDate.innerHTML} ~~~`);
               firstAvailableDate.click()
             })
+            console.log('~~~ end: clickDateOfNewOrder ~~~');
           },
           clickContinueAfterPostcodeWasEntered: function () {
             this
