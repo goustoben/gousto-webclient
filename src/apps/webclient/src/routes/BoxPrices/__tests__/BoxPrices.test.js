@@ -1,43 +1,62 @@
 import React from 'react'
+import { mount } from 'enzyme'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 import { BoxPrices } from 'routes/BoxPrices/BoxPrices'
-import { BoxPricesList } from 'routes/BoxPrices/BoxPricesList'
-import Loading from 'Loading'
-import { shallow } from 'enzyme'
+import { BoxPricesComponent } from 'routes/BoxPrices/BoxPricesComponent'
+import { menuLoadBoxPrices } from 'actions/menu'
 import numPersonsToBoxDescriptors from './__mocks__/numPersonsToBoxDescriptors.json'
 
-describe('Box Prices', () => {
+jest.mock('containers/OptimizelyRollouts', () => ({
+  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
+  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+  OptimizelyFeature: () => null,
+}))
+
+jest.mock('actions/menu', () => ({
+  menuLoadBoxPrices: jest.fn(),
+}))
+
+const mockStore = configureMockStore()
+const store = mockStore({
+  auth: Immutable.fromJS({}),
+})
+
+describe('BoxPrices', () => {
   let wrapper
 
-  const store = {
-    dispatch: jest.fn(),
-  }
-
   beforeEach(() => {
-    wrapper = shallow(<BoxPrices loading />, {
-      context: {
-        store,
-      },
-    })
+    wrapper = mount(
+      <Provider store={store}>
+        <BoxPrices loading menuLoadBoxPrices={menuLoadBoxPrices} />
+      </Provider>,
+    )
   })
 
   describe('when loading is true', () => {
     test('should render a loading screen when fetching data', () => {
-      expect(wrapper.find(Loading)).toHaveLength(1)
-      expect(wrapper.find(BoxPricesList)).toHaveLength(0)
+      expect(wrapper.find(BoxPricesComponent)).toHaveLength(1)
+      expect(wrapper.find(BoxPricesComponent).props().loading).toBeTruthy()
     })
   })
 
   describe('when loading is false', () => {
     beforeEach(() => {
-      wrapper.setProps({
-        loading: false,
-        numPersonsToBoxDescriptors,
-      })
+      wrapper = mount(
+        <Provider store={store}>
+          <BoxPrices
+            loading={false}
+            numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
+            menuLoadBoxPrices={menuLoadBoxPrices}
+          />
+        </Provider>,
+      )
     })
 
     test('should render a box prices list', () => {
-      expect(wrapper.find(Loading)).toHaveLength(0)
-      expect(wrapper.find(BoxPricesList)).toHaveLength(1)
+      expect(wrapper.find(BoxPricesComponent)).toHaveLength(1)
+      expect(wrapper.find(BoxPricesComponent).props().loading).toBeFalsy()
     })
   })
 })

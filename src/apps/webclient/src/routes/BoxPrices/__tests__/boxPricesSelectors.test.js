@@ -3,28 +3,11 @@ import {
   getPricePerServing,
   getMenuBoxPrices,
   getNumPersonsToBoxDescriptors,
-  getIsBoxPricesRedesignEnabled,
 } from '../boxPricesSelectors'
 import menuBoxPrices from './__mocks__/menuBoxPrices.json'
 
 describe('boxPricesSelectors', () => {
   let state
-
-  describe('given getIsBoxPricesRedesignEnabled is called', () => {
-    beforeEach(() => {
-      state = {
-        features: Immutable.fromJS({
-          isBoxPricesRedesignEnabled: {
-            value: true,
-          },
-        }),
-      }
-    })
-
-    test('then it should return true', () => {
-      expect(getIsBoxPricesRedesignEnabled(state)).toEqual(true)
-    })
-  })
 
   describe('given getMenuBoxPrices is called', () => {
     beforeEach(() => {

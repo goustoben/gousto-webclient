@@ -5,7 +5,12 @@ import { BoxPriceBlock } from '../BoxPriceBlock'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import css from './BoxPriceList.css'
 
-const BoxPricesList = ({ numPersonsToBoxDescriptors, boxPricesBoxSizeSelected }) => (
+const BoxPricesList = ({
+  numPersonsToBoxDescriptors,
+  boxPricesBoxSizeSelected,
+  selectedBox,
+  trackUTMAndPromoCode,
+}) => (
   <div className={css.boxPriceList}>
     {Object.entries(numPersonsToBoxDescriptors).map(([numPersonsStr, boxDescriptors]) => {
       const key = `box-type-${numPersonsStr}`
@@ -17,6 +22,8 @@ const BoxPricesList = ({ numPersonsToBoxDescriptors, boxPricesBoxSizeSelected })
           numPersons={numPersons}
           boxInfo={boxDescriptors}
           boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+          selectedBox={selectedBox}
+          trackUTMAndPromoCode={trackUTMAndPromoCode}
         />
       )
     })}
@@ -26,6 +33,8 @@ const BoxPricesList = ({ numPersonsToBoxDescriptors, boxPricesBoxSizeSelected })
 BoxPricesList.propTypes = {
   numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
   boxPricesBoxSizeSelected: PropTypes.func,
+  selectedBox: PropTypes.number.isRequired,
+  trackUTMAndPromoCode: PropTypes.func.isRequired,
 }
 
 BoxPricesList.defaultProps = {
@@ -33,4 +42,4 @@ BoxPricesList.defaultProps = {
   boxPricesBoxSizeSelected: () => {},
 }
 
-export const BoxPricesListComponent = withError(BoxPricesList)
+export const BoxPricesListContainer = withError(BoxPricesList)

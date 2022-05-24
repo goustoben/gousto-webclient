@@ -5,8 +5,7 @@ export const getHeroDetails = () => ({
   image: require('media/images/box-prices/box-prices-hero.jpg'),
 })
 
-export const cta = 'Build My Box'
-export const ctaRedesign = 'Build my box'
+export const cta = 'Build my box'
 
 // Note: the existing (pre-TG-4359) page's design is not flexible to support 5
 // recipes, so when moving to 5 recipes, this page should be revisited.
@@ -14,19 +13,6 @@ export const numPersonsValues = ['2', '4']
 export const numPortionsValues = ['2', '3', '4']
 
 export const boxTypes = {
-  2: {
-    type: '2-Person',
-    description: 'Delicious meals for two',
-    image: require('media/images/box-prices/couples-box.jpg'),
-  },
-  4: {
-    type: 'Family',
-    description: 'Tasty meals for 2 adults and 2-3 children',
-    image: require('media/images/box-prices/family-box.jpg'),
-  },
-}
-
-export const boxTypesRedesign = {
   2: {
     title: 'Regular box',
     subhead: 'Our regular box is suitable for:',

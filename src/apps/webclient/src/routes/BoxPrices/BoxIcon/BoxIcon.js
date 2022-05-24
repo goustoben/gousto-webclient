@@ -4,20 +4,16 @@ import React from 'react'
 import { icons } from 'routes/BoxPrices/boxPricesConfig'
 import css from './BoxIcon.css'
 
-class BoxIcon extends React.PureComponent {
-  render() {
-    const { numPersons, numPortions } = this.props
-    const icon = icons.find(
-      (configIcon) =>
-        configIcon.numPersons === numPersons && configIcon.numPortions === numPortions,
-    )
+const BoxIcon = ({ numPersons, numPortions }) => {
+  const icon = icons.find(
+    (configIcon) => configIcon.numPersons === numPersons && configIcon.numPortions === numPortions,
+  )
 
-    return icon && icon.image ? (
-      <div className={css.container}>
-        <img className={css.icon} src={icon.image} alt={icon.alt} />
-      </div>
-    ) : null
-  }
+  return icon && icon.image ? (
+    <div className={css.container}>
+      <img className={css.icon} src={icon.image} alt={icon.alt} />
+    </div>
+  ) : null
 }
 
 BoxIcon.propTypes = {

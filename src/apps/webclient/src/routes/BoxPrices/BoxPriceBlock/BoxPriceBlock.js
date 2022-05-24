@@ -1,60 +1,96 @@
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import React, { useState } from 'react'
 
-import Image from 'Image'
+import { CTA } from 'goustouicomponents'
 import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
-import { BoxInfo } from '../BoxInfo'
-import { BoxPriceButton } from '../BoxPriceButton/BoxPriceButton'
+import { Benefits } from 'routes/Home/Benefits'
+import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
+import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import css from './BoxPriceBlock.css'
 
-class BoxPriceBlock extends PureComponent {
-  render() {
-    const { boxInfo, numPersons, boxPricesBoxSizeSelected } = this.props
-    const boxType = boxTypes[numPersons]
+const BoxPriceBlock = ({
+  boxInfo,
+  numPersons,
+  boxPricesBoxSizeSelected,
+  selectedBox,
+  trackUTMAndPromoCode,
+}) => {
+  const [selectedIndex, setSelectedIndex] = useState(2)
+  const boxTypeConfig = boxTypes[numPersons]
+  const { title, boxSizeTrackingValue } = boxTypeConfig
 
-    return (
-      <div className={css.container}>
-        <h2 className={css.title}>
-          {boxType.type}
-          &nbsp;box
-        </h2>
-        <p>{boxType.description}</p>
-        <Image media={boxType.image} size={0} />
-        <p>Recipes in your box</p>
+  return (
+    <div className={numPersons === selectedBox ? css.containerActive : css.container}>
+      <div className={css.carouselItem}>
+        <h2 className={css.itemHeading}>{title}</h2>
+        <BoxPriceSuitableForSection numPersons={numPersons} />
+        <p className={css.subhead}>Select number of recipes</p>
+        <div className={css.buttonGroup}>
+          {boxInfo.map((item, index) => {
+            const numRecipes = item.num_portions
 
-        <div className={css.boxInfoList}>
-          {boxInfo.map((info) => (
-            <BoxInfo
-              key={`box-info-${numPersons}-${info.num_portions}`}
-              numPortions={info.num_portions}
-              pricePerPortion={info.price_per_portion}
-              totalPrice={info.total}
-              numPersons={numPersons}
-            />
-          ))}
+            return (
+              <button
+                key={numRecipes}
+                type="button"
+                onClick={() => {
+                  trackUTMAndPromoCode(boxPricesClickRecipeNumber, {
+                    box_size: boxSizeTrackingValue,
+                    number_of_recipes: numRecipes,
+                  })
+                  setSelectedIndex(index)
+                }}
+                className={selectedIndex === index ? css.boxSizeButtonActive : css.boxSizeButton}
+              >
+                {numRecipes}
+              </button>
+            )
+          })}
         </div>
-
-        <div className={css.link}>
-          <p>
-            Delivery is <strong className={css.uppercase}>Free</strong>
-          </p>
-          <BoxPriceButton
-            numPersons={numPersons}
-            boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
-          >
-            <span className={css.uppercase}>{cta}</span>
-          </BoxPriceButton>
+        {2 - selectedIndex > 0 ? (
+          <div className={css.selectDescription}>
+            {`Select ${2 - selectedIndex} more recipe${
+              selectedIndex === 1 ? '' : 's'
+            } for the best price`}
+          </div>
+        ) : (
+          <div className={css.selectDescriptionSuccess}>You’ve got the best price per portion!</div>
+        )}
+        <div className={css.select}>
+          <div className={css.selectItem}>
+            <span className={css.amount}>£{boxInfo[selectedIndex].total}</span>
+            <br />
+            per box
+          </div>
+          <div className={css.selectItem}>
+            <span className={css.amount}>£{boxInfo[selectedIndex].price_per_portion}</span>
+            <br />
+            per portion
+          </div>
+        </div>
+        <div className={css.benefitContainer}>
+          <Benefits byId="freeDelivery" isCentered fontStyleS />
+        </div>
+        <div className={css.ctaContainer}>
+          <CTA isFullWidth onClick={() => boxPricesBoxSizeSelected(numPersons)}>
+            {cta}
+          </CTA>
+        </div>
+        <div className={css.benefitContainer}>
+          <Benefits byId="noLockIn" isCentered fontStyleS />
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 BoxPriceBlock.propTypes = {
   boxInfo: BoxDescriptorsPropType.isRequired,
   numPersons: PropTypes.number.isRequired,
   boxPricesBoxSizeSelected: PropTypes.func,
+  selectedBox: PropTypes.number.isRequired,
+  trackUTMAndPromoCode: PropTypes.func.isRequired,
 }
 
 BoxPriceBlock.defaultProps = {
