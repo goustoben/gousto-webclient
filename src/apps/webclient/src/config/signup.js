@@ -1,6 +1,4 @@
 import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
-import twoPersonBoxImg from 'media/images/box-prices/two-person-box.jpg'
-import fourPersonBoxImg from 'media/images/box-prices/four-person-box.jpg'
 
 export const PaymentMethod = {
   Card: 'Card',
@@ -10,7 +8,6 @@ export const PaymentMethod = {
 const checkAccountPageSlug = 'start'
 const applyVoucherPageSlug = 'apply-voucher'
 const enterPromoCodeManuallyPageSlug = 'enter-discount-code'
-const postcodeSlug = 'postcode'
 
 export const signupConfig = {
   /**
@@ -22,21 +19,11 @@ export const signupConfig = {
    */
   defaultSteps: [SignupSteps.BOX_SIZE, SignupSteps.POSTCODE, SignupSteps.DELIVERY],
   personaliseMenuSteps: [SignupSteps.BOX_SIZE, SignupSteps.POSTCODE, SignupSteps.DELIVERY, SignupSteps.PERSONALISE_MENU],
-  boxSizeRecommenderSteps: [SignupSteps.NUMBER_OF_PEOPLE, SignupSteps.BOX_SIZE_RECOMMENDER, SignupSteps.POSTCODE, SignupSteps.DELIVERY],
-  boxSizeRecommenderWithPersonalizeMenuSteps: [
-    SignupSteps.NUMBER_OF_PEOPLE, // box size recommender experiment step
-    SignupSteps.BOX_SIZE_RECOMMENDER, // box size recommender experiment step
-    SignupSteps.POSTCODE,
-    SignupSteps.DELIVERY,
-    SignupSteps.PERSONALISE_MENU // personalize menu experiment step
-  ],
   steps: [
     { name: SignupSteps.BOX_SIZE, slug: 'box-size' },
     { name: SignupSteps.POSTCODE, slug: 'postcode' },
     { name: SignupSteps.DELIVERY, slug: 'delivery-options' },
     { name: SignupSteps.PERSONALISE_MENU, slug: 'personalise-menu' },
-    { name: SignupSteps.NUMBER_OF_PEOPLE, slug: 'number-of-people' },
-    { name: SignupSteps.BOX_SIZE_RECOMMENDER, slug: 'box-size-recommender' },
   ],
   payment_types: {
     card: 'card',
@@ -53,11 +40,11 @@ export const signupConfig = {
     boxSize: {
       2: {
         description: 'This smaller box is packed with enough pre-measured ingredients for each recipe to feed 2 people.',
-        image: twoPersonBoxImg,
+        image: require('media/images/box-prices/two-person-box.jpg'),
       },
       4: {
         description: 'This larger box is packed with enough pre-measured ingredients for each recipe to feed 4 people.',
-        image: fourPersonBoxImg,
+        image: require('media/images/box-prices/four-person-box.jpg'),
       },
     },
     discountApplied: 'Discount applied',
@@ -97,9 +84,5 @@ export const signupConfig = {
     checkAccountPageSlug,
     applyVoucherPageSlug,
     enterPromoCodeManuallyPageSlug,
-    /**
-     * Redirected to step from Box Prices.
-     */
-    postcodeSlug,
   ],
 }

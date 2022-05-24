@@ -46,5 +46,3 @@ export const getPendingSlice = (state) => state.pending
 
 export const createSelectIsPendingByActionType = (actionType) =>
   createSelector(getPendingSlice, (pendingSlice) => pendingSlice.get(actionType))
-
-export const getNumberOfPeople = (state) => state.signup.getIn(['numberOfPeople'])

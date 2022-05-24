@@ -10,7 +10,6 @@ const initialState = Immutable.fromJS({
     amountOfCustomers: null,
     district: null,
   },
-  numberOfPeople: null,
   isDiscountAppliedBarDismissed: false,
   isInWizardFunnel: false,
 })
@@ -50,10 +49,6 @@ const signup = {
       const isWizardSeen = state.get('isInWizardFunnel')
 
       return state.set('isInWizardFunnel', isInFunnelPage && isWizardSeen)
-    }
-
-    case actionTypes.SIGNUP_SET_NUMBER_OF_PEOPLE: {
-      return state.set('numberOfPeople', action.payload.numberOfPeople)
     }
 
     default: {

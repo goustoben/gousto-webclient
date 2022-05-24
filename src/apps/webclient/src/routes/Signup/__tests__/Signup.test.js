@@ -61,6 +61,31 @@ describe('Signup', () => {
     Signup.fetchData = signupFetchData
   })
 
+  describe('fetchData', () => {
+    const fetchDataProps = {
+      query: {},
+      params: {},
+      options: {},
+    }
+
+    describe('when requested step is not the first one', () => {
+      beforeEach(async () => {
+        await signupFetchData({
+          ...fetchDataProps,
+          params: {
+            stepName: 'delivery-options',
+          },
+          store: context.store,
+        })
+      })
+
+      test('then should redirect to the first step', async () => {
+        expect(redirect).toHaveBeenCalledWith('/signup/box-size')
+        expect(dispatch).toHaveBeenCalled()
+      })
+    })
+  })
+
   describe('Step size on Signup', () => {
     let wrapper
 
