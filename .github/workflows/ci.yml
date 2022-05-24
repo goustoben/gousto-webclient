@@ -94,7 +94,7 @@ jobs:
         # Optionally run eslint if required
         yarn workspace-changes webclient --since=${{ steps.branch_point.outputs.REF }} --filter=lint > lint-changes
         if [ -s lint-changes ]; then
-          ./scripts/run-eslint-ci.sh $( cat lint-changes )
+          ./scripts/run-eslint-ci.sh .
         fi
     - name: Lint (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run lint
