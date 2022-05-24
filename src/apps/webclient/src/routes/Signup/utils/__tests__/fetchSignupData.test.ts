@@ -2,10 +2,7 @@ import configureMockStore from 'redux-mock-store'
 import Immutable from 'immutable'
 import { fetchSignupData, GetSignupDataStore } from 'routes/Signup/utils/fetchSignupData'
 import { menuLoadBoxPrices, menuLoadDays } from 'actions/menu'
-import { signupSetStep, signupStepsReceive } from 'actions/signup'
-import { redirect } from 'actions/redirect'
 import { promoGet } from 'actions/promos'
-import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
 jest.mock('actions/signup', () => ({
   signupStepsReceive: jest.fn(),
@@ -49,23 +46,11 @@ describe('fetchSignupData', () => {
   test('when executed, should dispatch relevant actions', async () => {
     await fetchSignupData({ store: mockedStore })
     expect(menuLoadDays).toBeCalled()
-    expect(signupStepsReceive).toBeCalled()
-    expect(redirect).toBeCalled()
-    expect(signupSetStep).toBeCalled()
   })
 
   test('when isGoustoOnDemandEnabled, should load box prices', async () => {
     await fetchSignupData({ store: mockedStore, options: { isGoustoOnDemandEnabled: true } })
     expect(menuLoadBoxPrices).toBeCalled()
     expect(promoGet).toBeCalled()
-  })
-
-  test('when shouldSkipWizardByFeature, should skipWizard', async () => {
-    await fetchSignupData({
-      store: mockedStore,
-      options: { shouldSkipWizardByFeature: true },
-    })
-    expect(invokeHotjarEvent).toBeCalled()
-    expect(redirect).toBeCalled()
   })
 })

@@ -1,0 +1,33 @@
+@value 7XLarge, FontWeightBold, FontFamilyAxiformaBook from 'design-language/typography.css';
+@value W-0 #FFF;
+@value CG-600 #516272;
+
+.numberOfPeopleInput {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.counterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 6.1rem;
+  width: 5.2rem;
+  padding: 0.75rem;
+  border-radius: 3px;
+  color: W-0;
+  background-color: CG-600;
+}
+
+.numberOfPeopleCounter {
+  font: FontWeightBold 7XLarge FontFamilyAxiformaBook;
+}
+
+.changeNumberButton, .buttonSpacing {
+  height: 3rem;
+  width: 3rem;
+  font-size: 1.5rem;
+  color:
+}

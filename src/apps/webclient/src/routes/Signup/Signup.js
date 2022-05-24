@@ -2,34 +2,22 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { ReactReduxContext } from 'react-redux'
 import Helmet from 'react-helmet'
-import { browserHistory } from 'react-router'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
-import { stepByName, getStepFromPathname } from 'utils/signup'
+import { stepByName } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
 import { fetchSignupData } from 'routes/Signup/utils/fetchSignupData'
+import { AVAILABLE_STEP_COMPONENTS } from 'routes/Signup/constants/AvailableStepComponents'
+import { openProperStep } from 'routes/Signup/utils/openProperStep'
 
 import css from './Signup.css'
 
-import { BoxSizeStep } from './Steps/BoxSize'
-import { PostcodeStep } from './Steps/Postcode'
-import { DeliveryStep } from './Steps/Delivery'
-import { PersonaliseMenuStep } from './Steps/PersonaliseMenu'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
 import { EnterPromoCodeManuallyPage } from './Components/EnterPromoCodeManuallyPage'
 import { CheckAccountPageContainer } from './Components/CheckAccountPage'
 import { ApplyVoucherPageContainer } from './Components/ApplyVoucherPage'
-
-const components = {
-  boxSize: BoxSizeStep,
-  postcode: PostcodeStep,
-  delivery: DeliveryStep,
-  personaliseMenu: PersonaliseMenuStep,
-}
-
-const availableSteps = Object.keys(components)
 
 const propTypes = {
   stepName: PropTypes.string,
@@ -45,7 +33,6 @@ const propTypes = {
   params: PropTypes.shape({
     stepName: PropTypes.string,
   }),
-  orderDiscount: PropTypes.string,
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
     canApplyPromo: PropTypes.bool,
@@ -54,10 +41,10 @@ const propTypes = {
   trackDiscountVisibility: PropTypes.func,
   isDiscountAppliedBarDismissed: PropTypes.bool,
   signupDismissDiscountAppliedBar: PropTypes.func,
-  signupSetStep: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
   isWizardWithoutImagesEnabled: PropTypes.bool,
   shouldSkipWizardByFeature: PropTypes.bool,
+  signupSetStep: PropTypes.func,
 }
 
 const defaultProps = {
@@ -76,46 +63,28 @@ const defaultProps = {
   promoBannerState: {
     canApplyPromo: false,
   },
-  orderDiscount: '',
   trackDiscountVisibility: () => {},
   isDiscountAppliedBarDismissed: false,
   signupDismissDiscountAppliedBar: () => {},
-  signupSetStep: () => {},
   isGoustoOnDemandEnabled: false,
   isWizardWithoutImagesEnabled: false,
   shouldSkipWizardByFeature: false,
+  signupSetStep: () => {},
 }
 
 class Signup extends PureComponent {
   static fetchData = fetchSignupData
 
   componentDidMount() {
-    const {
-      location,
-      params,
-      orderDiscount,
-      signupSetStep,
-      isGoustoOnDemandEnabled,
-      shouldSkipWizardByFeature,
-    } = this.props
+    const { location, params, isGoustoOnDemandEnabled, shouldSkipWizardByFeature } = this.props
     const { store } = this.context
-    const query = location ? location.query : {}
-    const options = {
-      orderDiscount,
-      shouldSetStepFromParams: true,
+    openProperStep(store, location?.query, params, {
       isGoustoOnDemandEnabled,
       shouldSkipWizardByFeature,
-    }
-
-    Signup.fetchData({ store, query, params, options })
-    this.unlistenHistory = browserHistory.listen(({ pathname }) => {
-      const step = getStepFromPathname(pathname)
-      signupSetStep(step)
+    }).then(() => {
+      // without forceUpdate new props.steps would not be applied
+      this.forceUpdate()
     })
-  }
-
-  componentWillUnmount() {
-    this.unlistenHistory()
   }
 
   getCurrentStepNumber(steps) {
@@ -133,7 +102,7 @@ class Signup extends PureComponent {
     const { steps } = this.props
 
     const signupSteps = steps
-      .filter((step) => step && availableSteps.includes(step))
+      .filter((step) => !!AVAILABLE_STEP_COMPONENTS[step])
       .map((stepName) => stepByName(stepName))
 
     if (signupSteps.size === 0) {
@@ -143,22 +112,22 @@ class Signup extends PureComponent {
     return signupSteps
   }
 
-  renderSteps = (steps, currentStepNumber) => {
-    const { goToStep, stepName, isGoustoOnDemandEnabled, isWizardWithoutImagesEnabled } = this.props
-    const step = steps.getIn([currentStepNumber, 'name'])
-    const name = components[stepName]
-    const isLastStep = currentStepNumber === steps.size - 1
+  renderStep = (steps, currentStepNumber) => {
+    const { goToStep, isGoustoOnDemandEnabled, isWizardWithoutImagesEnabled } = this.props
+    const currentStepName = steps.getIn([currentStepNumber, 'name'])
     const nextStepName = steps.getIn([currentStepNumber + 1, 'name'])
-    const Component = components[step]
+    const isLastStep = currentStepNumber === steps.size - 1
+    const Component = AVAILABLE_STEP_COMPONENTS[currentStepName]
+    const { signupSetStep } = this.props
+    signupSetStep(stepByName(currentStepName))
 
     return (
       <Component
         next={() => goToStep(nextStepName)}
         nextStepName={nextStepName}
-        currentStepName={stepName}
+        currentStepName={currentStepName}
         stepNumber={currentStepNumber}
         isLastStep={isLastStep}
-        active={stepName === name}
         isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
         isWizardWithoutImagesEnabled={isWizardWithoutImagesEnabled}
       />
@@ -230,7 +199,7 @@ class Signup extends PureComponent {
         />
         <div className={css.stepsContainer}>
           <StepIndicator current={stepNumber + 1} size={steps.size} />
-          {this.renderSteps(steps, stepNumber)}
+          {this.renderStep(steps, stepNumber)}
         </div>
       </div>
     )

@@ -80,6 +80,9 @@ export function signupTracking() {
   }
 }
 
+/**
+ * Redirects application to Signup exact step.
+ */
 export function signupNextStep(stepName) {
   return (dispatch, getState) => {
     const step = stepByName(stepName)
