@@ -105,4 +105,13 @@ export const productsReducers = {
     }
     }
   },
+
+  productRecipePairingsTotalProducts: (state = 0, action) => {
+    switch (action.type) {
+    case actionTypes.PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS:
+      return action.totalProducts
+    default:
+      return state
+    }
+  }
 }

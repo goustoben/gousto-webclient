@@ -204,8 +204,9 @@ export const productsLoadRecipePairings = (recipeIds, menuStartDate) => (
     if (Array.isArray(recipeIds) && recipeIds.length > 0 && moment(menuStartDate, 'YYYY-MM-DD').isValid()) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, true))
       try {
-        const { data: recipePairings } = await fetchRecipePairingsProducts(getState().auth.get('accessToken'), recipeIds, menuStartDate)
+        const { data: recipePairings, meta: { total: totalProducts } } = await fetchRecipePairingsProducts(getState().auth.get('accessToken'), recipeIds, menuStartDate)
         dispatch({ type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, recipePairings })
+        dispatch({ type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS, totalProducts })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, err.message))
         logger.error(err)

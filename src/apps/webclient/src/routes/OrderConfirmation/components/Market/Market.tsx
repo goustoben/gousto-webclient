@@ -20,7 +20,10 @@ import {
   getBasketSavePending,
   getProductRecipePairingsPending,
 } from 'selectors/status'
-import { getProductsRecipePairingsWithStock } from '../../selectors/recipePairings'
+import {
+  getProductsRecipePairingsWithStock,
+  getProductRecipePairingsTotalProducts,
+} from '../../selectors/recipePairings'
 import type {
   Category,
   FilteredProducts,
@@ -82,17 +85,6 @@ export const getProductRecipePairings = (
   return productRecipePairingsData
 }
 
-const getProductsFromRecipePairings = (recipePairings: List<ProductRecipePairing>) => {
-  const products = recipePairings
-    .toArray()
-    .reduce(
-      (acc: any[], recipePairing: any) => [...acc, ...recipePairing.get('products').toJS()],
-      [],
-    )
-
-  return products
-}
-
 const Market: FC<Props> = (props) => {
   const dispatch = useDispatch()
 
@@ -109,7 +101,6 @@ const Market: FC<Props> = (props) => {
   const [experimentCategories, setExperimentCategories] = useState<NavCategories | undefined>(
     undefined,
   )
-  const [pairingsExperimentProducts, setPairingsExperimentProducts] = useState<Product[]>([])
   const [userHasPairings, setUserHasPairings] = useState<boolean | undefined>(undefined)
 
   const basket = useSelector(getBasket)
@@ -122,6 +113,7 @@ const Market: FC<Props> = (props) => {
   const basketSavePending = useSelector(getBasketSavePending)
   const order = useSelector(getBasketOrderDetails)
   const productRecipePairings = useSelector(getProductsRecipePairingsWithStock)
+  const productRecipePairingsTotalProducts = useSelector(getProductRecipePairingsTotalProducts)
   const productRecipePairingsPending = useSelector(getProductRecipePairingsPending)
   const menuRecipeIds = useSelector(getMenuRecipeIds)
 
@@ -159,18 +151,17 @@ const Market: FC<Props> = (props) => {
   useEffect(() => {
     if (pairingsExperimentEnabled === true) {
       setProductRecipePairingData(getProductRecipePairings(order, productRecipePairings))
-      setPairingsExperimentProducts(getProductsFromRecipePairings(productRecipePairings))
 
-      if (productRecipePairingData.size > 0) {
+      if (productRecipePairingData.size > 0 && productRecipePairingsTotalProducts > 0) {
         dispatch(
-          trackPairingsData(pairingsExperimentProducts.length, productRecipePairingData.size),
+          trackPairingsData(productRecipePairingsTotalProducts, productRecipePairingData.size),
         )
 
         const pairings: NavCategories = {
           pairings: {
             id: PAIRINGS_CATEGORY_ID,
             label: PAIRINGS_CATEGORY_NAME,
-            count: pairingsExperimentProducts.length,
+            count: productRecipePairingsTotalProducts,
           },
         }
         setExperimentCategories({ ...pairings, ...categoriesForNavBar })
@@ -180,7 +171,7 @@ const Market: FC<Props> = (props) => {
     pairingsExperimentEnabled,
     productRecipePairings,
     order,
-    pairingsExperimentProducts.length,
+    productRecipePairingsTotalProducts,
     categoriesForNavBar,
     productRecipePairingData?.size,
     dispatch,
@@ -189,7 +180,11 @@ const Market: FC<Props> = (props) => {
   useEffect(() => {
     if (pairingsExperimentEnabled === false) {
       setIsLoading(false)
-    } else if (pairingsExperimentEnabled === true && pairingsExperimentProducts.length > 0) {
+    } else if (
+      pairingsExperimentEnabled === true &&
+      userHasPairings === true &&
+      productRecipePairingsTotalProducts > 0
+    ) {
       setTrackingCategoryTitle(PAIRINGS_CATEGORY_NAME)
       setIsLoading(false)
     } else if (
@@ -198,7 +193,7 @@ const Market: FC<Props> = (props) => {
     ) {
       setIsLoading(false)
     }
-  }, [pairingsExperimentProducts.length, pairingsExperimentEnabled, userHasPairings])
+  }, [productRecipePairingsTotalProducts, pairingsExperimentEnabled, userHasPairings])
 
   useEffect(() => {
     if (bundlesExperimentEnabled && pairingsExperimentEnabled === false) {
@@ -225,14 +220,16 @@ const Market: FC<Props> = (props) => {
 
     if (!Object.keys(products).length || !selectedFilterCategory) return
 
-    let chosenCategoryProducts: FilteredProducts | Product[] = {}
+    let chosenCategoryProducts: FilteredProducts = {}
+    let numOfProducts = 0
 
     setTrackingCategoryTitle(selectedFilterCategory.label)
 
     if (categoryId === ALL_PRODUCTS_CATEGORY_ID) {
       chosenCategoryProducts = products
+      numOfProducts = Object.keys(products).length
     } else if (categoryId === PAIRINGS_CATEGORY_ID) {
-      chosenCategoryProducts = pairingsExperimentProducts
+      numOfProducts = productRecipePairingsTotalProducts
     } else {
       Object.keys(products).forEach((productId) => {
         const productCategories = products[productId].categories
@@ -247,10 +244,9 @@ const Market: FC<Props> = (props) => {
             }
           })
         }
+        numOfProducts = Object.keys(chosenCategoryProducts).length
       })
     }
-
-    const numOfProducts = Object.keys(chosenCategoryProducts).length
 
     dispatch(
       filterProductCategory(

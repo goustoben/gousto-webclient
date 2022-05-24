@@ -275,4 +275,18 @@ describe('products reducer', () => {
       expect(Immutable.is(result, expectedState)).toEqual(true)
     })
   })
+
+  describe('PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS', () => {
+    test('should add product recipe pairings total products into state', () => {
+      const totalProducts = 5
+      const action = {
+        type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS,
+        totalProducts
+      }
+
+      const result = productsReducers.productRecipePairingsTotalProducts(0, action)
+
+      expect(result).toEqual(totalProducts)
+    })
+  })
 })

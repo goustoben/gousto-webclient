@@ -4,6 +4,8 @@ import { getProductsStock } from './products'
 
 export const getProductsRecipePairings = ({ productRecipePairings }) => productRecipePairings
 
+export const getProductRecipePairingsTotalProducts = ({ productRecipePairingsTotalProducts }) => productRecipePairingsTotalProducts
+
 export const getProductsRecipePairingsWithStock = createSelector(
   [getProductsRecipePairings, getProductsStock],
   (pairings, productStock) => {
