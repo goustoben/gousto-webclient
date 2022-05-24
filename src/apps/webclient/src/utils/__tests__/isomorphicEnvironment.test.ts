@@ -105,6 +105,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getEnvironment', () => {
     test('returns expected fn if in browser', () => {
+      const mockGetClientEnvironment = getClientEnvironment as jest.Mock
       const mockBrowserEnvironment = 'mock browser environment'
 
       windowSpy.mockReturnValue({
@@ -114,7 +115,7 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientEnvironment as jest.Mock).mockReturnValue(mockBrowserEnvironment)
+      mockGetClientEnvironment.mockReturnValue(mockBrowserEnvironment)
 
       expect(getEnvironment()).toEqual(mockBrowserEnvironment)
     })
@@ -133,6 +134,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getDomain', () => {
     it('should call the getClientDomain when running on the client', () => {
+      const mockGetClientDomain = getClientDomain as jest.Mock
       windowSpy.mockReturnValue({
         document: {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -142,7 +144,7 @@ describe('isomorphicEnvironment utils', () => {
       })
 
       const stubDomainResponse = 'mockclientdomain.com'
-      ;(getClientDomain as jest.Mock).mockReturnValue(stubDomainResponse)
+      mockGetClientDomain.mockReturnValue(stubDomainResponse)
 
       expect(getDomain()).toEqual(stubDomainResponse)
     })
@@ -161,6 +163,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getProtocol', () => {
     it('should call the getClientProtocol when running on the client', () => {
+      const mockGetClientProtocol = getClientProtocol as jest.Mock
       windowSpy.mockReturnValue({
         document: {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -170,18 +173,19 @@ describe('isomorphicEnvironment utils', () => {
       })
 
       const stubProtocolValue = 'stubProtocolValue:http'
-      ;(getClientProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+      mockGetClientProtocol.mockReturnValue(stubProtocolValue)
 
       expect(getProtocol()).toEqual(stubProtocolValue)
     })
 
     it('should call the getServerProtocol when running on the server', () => {
+      const mockGetServerProtocol = getServerProtocol as jest.Mock
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
 
       const stubProtocolValue = 'stubProtocolValue:https'
-      ;(getServerProtocol as jest.Mock).mockReturnValue(stubProtocolValue)
+      mockGetServerProtocol.mockReturnValue(stubProtocolValue)
 
       expect(getProtocol()).toEqual(stubProtocolValue)
     })
@@ -189,6 +193,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getRecaptchaPublicKey', () => {
     it('should call getClientRecaptchaPublicKey when running in client', () => {
+      const mockGetClientRecaptchaPublicKey = getClientRecaptchaPublicKey as jest.Mock
       const expected = 'client-recaptcha-public-key'
 
       windowSpy.mockReturnValue({
@@ -198,7 +203,7 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientRecaptchaPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetClientRecaptchaPublicKey.mockReturnValue(expected)
 
       expect(getRecaptchaPublicKey()).toEqual(expected)
     })
@@ -217,6 +222,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getRecaptchaRAFPublicKey', () => {
     it('should call getClientRecaptchaRAFPublicKey when running in client', () => {
+      const mockGetClientRecaptchaRAFPublicKey = getClientRecaptchaRAFPublicKey as jest.Mock
       const expected = 'client-recaptcha-raf-public-key'
 
       windowSpy.mockReturnValue({
@@ -226,18 +232,19 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetClientRecaptchaRAFPublicKey.mockReturnValue(expected)
 
       expect(getRecaptchaRAFPublicKey()).toEqual(expected)
     })
 
     it('should call getServerRecaptchaRAFPublicKey when running in server', () => {
+      const mockGetServerRecaptchaRAFPublicKey = getServerRecaptchaRAFPublicKey as jest.Mock
       const expected = 'server-recaptcha-raf-public-key'
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
-      ;(getServerRecaptchaRAFPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetServerRecaptchaRAFPublicKey.mockReturnValue(expected)
 
       expect(getRecaptchaRAFPublicKey()).toEqual(expected)
     })
@@ -245,6 +252,7 @@ describe('isomorphicEnvironment utils', () => {
 
   describe('getCheckoutComPublicKey', () => {
     it('should call getClientCheckoutComPublicKey when running in client', () => {
+      const mockGetClientCheckoutComPublicKey = getClientCheckoutComPublicKey as jest.Mock
       const expected = 'client-checkout-com-public-key'
 
       windowSpy.mockReturnValue({
@@ -254,18 +262,19 @@ describe('isomorphicEnvironment utils', () => {
           createElement: () => null,
         },
       })
-      ;(getClientCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetClientCheckoutComPublicKey.mockReturnValue(expected)
 
       expect(getCheckoutComPublicKey()).toEqual(expected)
     })
 
     it('should call getServerCheckoutComPublicKey when running in server', () => {
+      const mockGetServerCheckoutComPublicKey = getServerCheckoutComPublicKey as jest.Mock
       const expected = 'server-checkout-com-public-key'
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       windowSpy.mockReturnValue(undefined)
-      ;(getServerCheckoutComPublicKey as jest.Mock).mockReturnValue(expected)
+      mockGetServerCheckoutComPublicKey.mockReturnValue(expected)
 
       expect(getCheckoutComPublicKey()).toEqual(expected)
     })
