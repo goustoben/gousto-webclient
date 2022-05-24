@@ -84,6 +84,7 @@ describe('Market', () => {
     productsCategories: mockProjectsCategories,
     productRecipePairings: mockGetProductRecipePairingsState(),
     productsStock: mockProductsStock,
+    productRecipePairingsTotalProducts: 1,
     menuRecipes: Immutable.fromJS(['2211']),
     basket: Immutable.fromJS({
       products: mockProducts,
@@ -257,7 +258,7 @@ describe('Market', () => {
         expect(trackPairingsData).not.toBeCalled()
       })
 
-      test('should not render pairings when productRecipePairings has no products', () => {
+      test('should not render pairings when productRecipePairingsTotalProducts is not greater than 0', () => {
         ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
           type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
           recipeParings: {},
@@ -267,10 +268,7 @@ describe('Market', () => {
 
         const newStore = mockStore({
           ...state,
-          productRecipePairings: state.productRecipePairings.setIn(
-            ['2211', 'products'],
-            Immutable.fromJS([]),
-          ),
+          productRecipePairingsTotalProducts: 0,
         })
 
         render(

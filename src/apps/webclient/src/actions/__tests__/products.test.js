@@ -474,6 +474,7 @@ describe('productsLoadRecipePairings', () => {
   beforeEach(() => {
     fetchRecipePairingsProducts.mockReturnValue(Promise.resolve(
       {
+        meta: { total: 2 },
         data: [
           {recipeId: 1, products: [{id: 'abc'}]},
           {recipeId: 2, products: [{id: 'abc'}]}
@@ -542,6 +543,10 @@ describe('productsLoadRecipePairings', () => {
         {recipeId: 2, products: [{id: 'abc'}]}
       ],
       type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE
+    })
+    expect(dispatchSpy).nthCalledWith(3, {
+      totalProducts: 2,
+      type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS
     })
   })
 })

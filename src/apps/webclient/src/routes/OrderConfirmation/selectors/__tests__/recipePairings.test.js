@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getProductsRecipePairings, getProductsRecipePairingsWithStock } from '../recipePairings'
+import { getProductsRecipePairings, getProductsRecipePairingsWithStock, getProductRecipePairingsTotalProducts, } from '../recipePairings'
 import { mockGetProductRecipePairingsState, mockProductsStock } from '../../components/config'
 
 describe('recipe pairings selectors', () => {
@@ -8,7 +8,8 @@ describe('recipe pairings selectors', () => {
   beforeEach(() => {
     state = {
       productRecipePairings: mockGetProductRecipePairingsState(),
-      productsStock: mockProductsStock
+      productsStock: mockProductsStock,
+      productRecipePairingsTotalProducts: 2
     }
   })
 
@@ -42,6 +43,14 @@ describe('recipe pairings selectors', () => {
 
         expect(result.getIn(['2211', 'products', 0, 'stock'])).toEqual(expected)
       })
+    })
+  })
+
+  describe('getProductRecipePairingsTotalProducts', () => {
+    test('should return productRecipePairingsTotalProducts from state', () => {
+      const result = getProductRecipePairingsTotalProducts(state)
+
+      expect(result).toEqual(2)
     })
   })
 })
