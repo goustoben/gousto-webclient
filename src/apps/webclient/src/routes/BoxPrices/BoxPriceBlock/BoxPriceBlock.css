@@ -17,17 +17,6 @@
   }
 }
 
-.boxInfoList {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-  @media ScreenMDMin {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
 .title {
   composes: headerXXL from 'styles/typography.css';
   text-align: center;
@@ -55,8 +44,8 @@
   margin-bottom: 1rem;
 }
 
-.containerRedesign,
-.containerRedesignActive {
+.container,
+.containerActive {
   max-width: 70%;
   padding: 0 0.938rem 0.313rem;
   margin: 0 0.938rem 1.25rem;
@@ -81,7 +70,7 @@
   }
 }
 
-.containerRedesignActive {
+.containerActive {
   @media BreakpointToMedium {
     max-width: 100%;
     display: block;

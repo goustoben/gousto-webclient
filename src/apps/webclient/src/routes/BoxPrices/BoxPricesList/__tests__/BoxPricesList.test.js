@@ -4,7 +4,7 @@ import { mount } from 'enzyme'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import { BoxPricesListRedesignContainer as BoxPricesListRedesign } from 'routes/BoxPrices/BoxPricesList/BoxPricesListRedesign'
+import { BoxPricesList } from 'routes/BoxPrices/BoxPricesList'
 import numPersonsToBoxDescriptors from '../../__tests__/__mocks__/numPersonsToBoxDescriptors.json'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
@@ -27,7 +27,7 @@ describe('Given BoxPriceList component', () => {
 
     wrapper = mount(
       <Provider store={mockedStore}>
-        <BoxPricesListRedesign
+        <BoxPricesList
           numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
           boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
           selectedBox={2}
@@ -38,7 +38,7 @@ describe('Given BoxPriceList component', () => {
   })
 
   test('should be rendered correctly', () => {
-    expect(wrapper.find('.boxPriceListRedesign').exists()).toBeTruthy()
+    expect(wrapper.find('.boxPriceList').exists()).toBeTruthy()
     expect(wrapper.find('BoxPriceBlock')).toHaveLength(2)
   })
 })

@@ -1,1 +1,1 @@
-export { BoxPricesListComponent as BoxPricesList } from './BoxPricesList'
+export { BoxPricesListContainer as BoxPricesList } from './BoxPricesList'

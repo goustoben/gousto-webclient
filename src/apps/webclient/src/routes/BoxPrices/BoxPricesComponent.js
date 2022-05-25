@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 import React, { Fragment, useState } from 'react'
-import { boxTypesRedesign, getHeroDetails } from 'routes/BoxPrices/boxPricesConfig'
+import { boxTypes, getHeroDetails } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
 import { boxPricesClickTab } from 'actions/trackingKeys'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 import { BoxPricesTabs } from './BoxPricesTabs'
 import css from './BoxPrices.css'
-import { BoxPricesListRedesignContainer as BoxPricesListRedesign } from './BoxPricesList/BoxPricesListRedesign'
+import { BoxPricesList } from './BoxPricesList'
 import { BoxPricesContent } from './BoxPricesContent'
 
-const BoxPricesRedesign = ({
+const BoxPricesComponent = ({
   loading,
   error,
   boxPricesBoxSizeSelected,
@@ -18,7 +18,7 @@ const BoxPricesRedesign = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const boxTypeConfigsArray = Object.values(boxTypesRedesign)
+  const boxTypeConfigsArray = Object.values(boxTypes)
   const labels = boxTypeConfigsArray.map(({ title }) => title)
 
   const handleSetActiveTabIndex = (index) => {
@@ -45,7 +45,7 @@ const BoxPricesRedesign = ({
               labels={labels}
               setActiveIndex={handleSetActiveTabIndex}
             />
-            <BoxPricesListRedesign
+            <BoxPricesList
               numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
               error={error}
               boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
@@ -60,7 +60,7 @@ const BoxPricesRedesign = ({
   )
 }
 
-BoxPricesRedesign.propTypes = {
+BoxPricesComponent.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
   boxPricesBoxSizeSelected: PropTypes.func,
@@ -68,17 +68,11 @@ BoxPricesRedesign.propTypes = {
   trackUTMAndPromoCode: PropTypes.func.isRequired,
 }
 
-BoxPricesRedesign.defaultProps = {
+BoxPricesComponent.defaultProps = {
   loading: false,
   error: null,
   boxPricesBoxSizeSelected: () => {},
   numPersonsToBoxDescriptors: null,
 }
 
-BoxPricesRedesign.contextTypes = {
-  store: PropTypes.shape({
-    dispatch: PropTypes.func,
-  }).isRequired,
-}
-
-export { BoxPricesRedesign }
+export { BoxPricesComponent }
