@@ -7,7 +7,7 @@ import classnames from 'classnames'
 
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getScrollOffset } from 'utils/menu'
-import { getWindow } from 'utils/window'
+import { getWindow, isWindowDefined } from 'utils/window'
 import { getElementOffsetTop } from 'utils/DOMhelper'
 import { CollectionItem } from './CollectionItem'
 import css from './CollectionsNav.css'
@@ -303,6 +303,10 @@ class CollectionsNav extends React.PureComponent {
   }
 
   isMobile() {
+    if (!isWindowDefined()) {
+      return false
+    }
+
     return getWindow().innerWidth < MOBILE_BREAKPOINT
   }
 
