@@ -7,7 +7,7 @@
   "fixturesFolder": "fixtures",
   "supportFile": "support/index.ts",
   "pluginsFile": false,
-  "video": true,
+  "video": false,
   "chromeWebSecurity": false,
   "defaultCommandTimeout": 15000,
   "env": {
