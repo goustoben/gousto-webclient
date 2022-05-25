@@ -15,6 +15,7 @@ describe('orderConfirmation selectors', () => {
           PRODUCTS_STOCK_CHANGE: false,
           PRODUCTS_RECEIVE: true,
           USER_LOAD_ORDERS: false,
+          PRODUCTS_RECIPE_PAIRINGS_RECIEVE: false
         })
       }
 
@@ -30,6 +31,7 @@ describe('orderConfirmation selectors', () => {
           PRODUCTS_STOCK_CHANGE: false,
           PRODUCTS_RECEIVE: false,
           USER_LOAD_ORDERS: false,
+          PRODUCTS_RECIPE_PAIRINGS_RECIEVE: false,
         })
       }
 

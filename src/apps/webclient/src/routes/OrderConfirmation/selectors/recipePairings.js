@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { getProductsStock } from './products'
+import { getOrderRecipeItems } from './orderDetails'
 
 export const getProductsRecipePairings = ({ productRecipePairings }) => productRecipePairings
 
@@ -9,7 +10,7 @@ export const getProductRecipePairingsTotalProducts = ({ productRecipePairingsTot
 export const getProductsRecipePairingsWithStock = createSelector(
   [getProductsRecipePairings, getProductsStock],
   (pairings, productStock) => {
-    if (pairings.size <= 0 || productStock <= 0) {
+    if (pairings.size <= 0) {
       return Immutable.Map({})
     }
 
@@ -21,5 +22,36 @@ export const getProductsRecipePairingsWithStock = createSelector(
     })
 
     return pairingsWithStock
+  }
+)
+
+export const getProductsRecipePairingsWithRecipes = createSelector(
+  [getProductsRecipePairingsWithStock, getOrderRecipeItems],
+  (pairings, recipes) => {
+    const pairingsWithRecipes = recipes.reduce((recipesAccumulator, recipe) => {
+      const productRecipePairing = pairings.get(recipe.get('recipeId'))
+
+      if (!productRecipePairing) {
+        return recipesAccumulator
+      }
+
+      const products = productRecipePairing.get('products', Immutable.List([]))
+
+      if (products.size <= 0) {
+        return recipesAccumulator
+      }
+
+      return [
+        ...recipesAccumulator,
+        {
+          recipeId: recipe.get('recipeId'),
+          title: recipe.get('title'),
+          media: recipe.get('media'),
+          products,
+        }
+      ]
+    }, [])
+
+    return Immutable.List(pairingsWithRecipes)
   }
 )
