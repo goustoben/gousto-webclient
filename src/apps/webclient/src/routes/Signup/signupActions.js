@@ -64,3 +64,10 @@ export const signupApplyVoucherGoToDeliveries = () => (dispatch) => {
   dispatch(trackUTMAndPromoCode(signupApplyVoucher))
   dispatch(redirect(`${routes.client.myDeliveries}`))
 }
+
+export const signupSetNumberOfPeople = (numberOfPeople) => ({
+  type: actionTypes.SIGNUP_SET_NUMBER_OF_PEOPLE,
+  payload: {
+    numberOfPeople,
+  },
+})

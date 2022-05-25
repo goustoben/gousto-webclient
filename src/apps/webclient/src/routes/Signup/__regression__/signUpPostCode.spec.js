@@ -1,4 +1,4 @@
-const PAGE_URL = '/signup/?steps=postcode'
+const PAGE_URL = '/signup/postcode'
 const POSTCODE_6_CHARS = 'W140EE'
 const POSTCODE_5_CHARS = 'W140E'
 const POSTCODE_8_CHARS = 'W140EE14'
@@ -86,7 +86,7 @@ describe('Given I land on postcode slide of the wizard', () => {
       cy.get('[data-testing="signupPostcodeCTA"]').click()
 
       cy.window().pipe(getBoxSummaryError).should('equal', 'do-not-deliver')
-      cy.url().should('include', 'steps=postcode')
+      cy.url().should('include', '/postcode')
     })
   })
 })
