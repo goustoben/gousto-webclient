@@ -17,6 +17,7 @@ There is currently an issue with the following tests:
 
 - myDetails
 - subscriptionSettings
+- blog
 
 ## Prerequisites
 
