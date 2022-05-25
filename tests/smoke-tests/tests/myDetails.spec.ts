@@ -1,7 +1,7 @@
 import { name } from "faker";
 import { home, myDetails, myGousto } from "../pages";
 
-describe("My Details", () => {
+xdescribe("My Details", () => {
   describe("direct requests", () => {
     beforeEach(() => {
       home.visit();
