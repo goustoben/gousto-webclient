@@ -42,6 +42,7 @@
 .itemHeading {
   composes: fontStyleL from 'design-language/typography.css';
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .container,
@@ -108,6 +109,7 @@
 .subhead {
   composes: fontStyleSubHead from 'design-language/typography.css';
   margin: 0.5rem 0;
+  text-align: left;
 }
 
 .list {

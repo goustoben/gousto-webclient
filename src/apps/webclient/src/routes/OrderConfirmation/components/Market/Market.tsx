@@ -1,10 +1,7 @@
 import { filterProductCategory } from 'actions/filters'
-import { productsLoadRecipePairings } from 'actions/products'
 import { trackPairingsData } from 'actions/tracking'
 import { marketCategory } from 'actions/trackingKeys'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { List, Map } from 'immutable'
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
@@ -14,27 +11,14 @@ import {
   getProductsForMarket,
   getProductsLoadError,
 } from 'selectors/products'
-import { getBasket, getMenuRecipeIds, getProductCategories } from 'selectors/root'
+import { getBasket, getProductCategories } from 'selectors/root'
+import { getBasketSaveError, getBasketSavePending } from 'selectors/status'
+import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
 import {
-  getBasketSaveError,
-  getBasketSavePending,
-  getProductRecipePairingsPending,
-} from 'selectors/status'
-import {
-  getProductsRecipePairingsWithStock,
+  getProductsRecipePairingsWithRecipes,
   getProductRecipePairingsTotalProducts,
 } from '../../selectors/recipePairings'
-import type {
-  Category,
-  FilteredProducts,
-  NavCategories,
-  NavCategory,
-  Order,
-  Product,
-  ProductRecipePairing,
-  ProductRecipePairings,
-  RecipeItem,
-} from '../../types'
+import type { Category, FilteredProducts, NavCategories, NavCategory, Product } from '../../types'
 import {
   ALL_PRODUCTS_CATEGORY_NAME,
   ALL_PRODUCTS_CATEGORY_ID,
@@ -50,58 +34,24 @@ interface Props {
   toggleAgeVerificationPopUp: () => void
 }
 
-export const getProductRecipePairings = (
-  order: Order,
-  productRecipePairings: ProductRecipePairings,
-) => {
-  const productRecipePairingsData = order
-    .getIn(['recipeItems'], List([]))
-    .map((recipeItem: RecipeItem) => {
-      const productRecipePairing: Map<string, ProductRecipePairing> | undefined =
-        productRecipePairings.get(recipeItem.get('recipeId') as unknown as string) as
-          | Map<string, ProductRecipePairing>
-          | undefined
-
-      if (!productRecipePairing) {
-        return false
-      }
-
-      const products: List<Product[]> =
-        (productRecipePairing.get('products') as unknown as List<Product[]>) || List([])
-
-      if (products.size <= 0) {
-        return false
-      }
-
-      return {
-        recipeId: recipeItem.get('recipeId'),
-        title: recipeItem.get('title'),
-        media: recipeItem.get('media'),
-        products,
-      }
-    })
-    .filter(Boolean)
-
-  return productRecipePairingsData
-}
-
-const Market: FC<Props> = (props) => {
+const Market = (props: Props) => {
   const dispatch = useDispatch()
 
   const [filteredProducts, setFilteredProducts] = useState<FilteredProducts | Product[] | null>(
     null,
   )
   const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState<boolean>(false)
+  const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
+    ALL_PRODUCTS_CATEGORY_NAME,
+  )
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const isOrderConfirmation = true
-  const [productRecipePairingData, setProductRecipePairingData] = useState(List([]))
-  const bundlesExperimentEnabled = useIsBundlesEnabled()
 
-  // Pairing experiment
+  const pairingsExperimentEnabled = useIsPairingsEnabled()
+  const bundlesExperimentEnabled = useIsBundlesEnabled()
   const [experimentCategories, setExperimentCategories] = useState<NavCategories | undefined>(
     undefined,
   )
-  const [userHasPairings, setUserHasPairings] = useState<boolean | undefined>(undefined)
 
   const basket = useSelector(getBasket)
   const categoriesForNavBar: NavCategories = useSelector(getCategoriesForNavBar)
@@ -112,88 +62,43 @@ const Market: FC<Props> = (props) => {
   const basketSaveRequired = useSelector(getBasketSaveRequired)
   const basketSavePending = useSelector(getBasketSavePending)
   const order = useSelector(getBasketOrderDetails)
-  const productRecipePairings = useSelector(getProductsRecipePairingsWithStock)
+  const productRecipePairings = useSelector(getProductsRecipePairingsWithRecipes)
   const productRecipePairingsTotalProducts = useSelector(getProductRecipePairingsTotalProducts)
-  const productRecipePairingsPending = useSelector(getProductRecipePairingsPending)
-  const menuRecipeIds = useSelector(getMenuRecipeIds)
-
-  const pairingsExperimentEnabled = useIsOptimizelyFeatureEnabled(
-    userHasPairings ? 'etm_market_orderconfirmation_addingpairings_web_apr22' : null,
-  )
-
-  const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
-    ALL_PRODUCTS_CATEGORY_NAME,
-  )
-
-  useEffect(() => {
-    if (menuRecipeIds.size > 0 && order !== false) {
-      const menuStartDate = order.getIn(['period', 'whenStart']) as string | undefined
-      dispatch(productsLoadRecipePairings(menuRecipeIds.toJS(), menuStartDate))
-    }
-  }, [menuRecipeIds, order, dispatch])
 
   useEffect(() => {
     if (
-      productRecipePairingsPending === false &&
-      Map.isMap(productRecipePairings) &&
-      order !== false
+      pairingsExperimentEnabled === true &&
+      productRecipePairings.size > 0 &&
+      productRecipePairingsTotalProducts > 0
     ) {
-      if (productRecipePairings.size > 0) {
-        setUserHasPairings(true)
-      } else {
-        setUserHasPairings(false)
+      dispatch(trackPairingsData(productRecipePairingsTotalProducts, productRecipePairings.size))
+
+      const pairings: NavCategories = {
+        pairings: {
+          id: PAIRINGS_CATEGORY_ID,
+          label: PAIRINGS_CATEGORY_NAME,
+          count: productRecipePairingsTotalProducts,
+        },
       }
-    } else {
-      setUserHasPairings(false)
-    }
-  }, [productRecipePairings, productRecipePairingsPending, order])
-
-  useEffect(() => {
-    if (pairingsExperimentEnabled === true) {
-      setProductRecipePairingData(getProductRecipePairings(order, productRecipePairings))
-
-      if (productRecipePairingData.size > 0 && productRecipePairingsTotalProducts > 0) {
-        dispatch(
-          trackPairingsData(productRecipePairingsTotalProducts, productRecipePairingData.size),
-        )
-
-        const pairings: NavCategories = {
-          pairings: {
-            id: PAIRINGS_CATEGORY_ID,
-            label: PAIRINGS_CATEGORY_NAME,
-            count: productRecipePairingsTotalProducts,
-          },
-        }
-        setExperimentCategories({ ...pairings, ...categoriesForNavBar })
-      }
+      setExperimentCategories({ ...pairings, ...categoriesForNavBar })
     }
   }, [
     pairingsExperimentEnabled,
-    productRecipePairings,
-    order,
     productRecipePairingsTotalProducts,
     categoriesForNavBar,
-    productRecipePairingData?.size,
+    productRecipePairings?.size,
     dispatch,
   ])
 
   useEffect(() => {
-    if (pairingsExperimentEnabled === false) {
-      setIsLoading(false)
-    } else if (
-      pairingsExperimentEnabled === true &&
-      userHasPairings === true &&
-      productRecipePairingsTotalProducts > 0
-    ) {
+    if (pairingsExperimentEnabled === true) {
       setTrackingCategoryTitle(PAIRINGS_CATEGORY_NAME)
-      setIsLoading(false)
-    } else if (
-      (pairingsExperimentEnabled === true || pairingsExperimentEnabled === null) &&
-      (userHasPairings === true || userHasPairings === false)
-    ) {
+    }
+
+    if (pairingsExperimentEnabled !== null && bundlesExperimentEnabled !== null) {
       setIsLoading(false)
     }
-  }, [productRecipePairingsTotalProducts, pairingsExperimentEnabled, userHasPairings])
+  }, [pairingsExperimentEnabled, bundlesExperimentEnabled])
 
   useEffect(() => {
     if (bundlesExperimentEnabled && pairingsExperimentEnabled === false) {
@@ -283,7 +188,7 @@ const Market: FC<Props> = (props) => {
       showOrderConfirmationReceipt={!!order}
       toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
       trackingCategory={trackingCategoryTitle}
-      productRecipePairings={productRecipePairingData}
+      productRecipePairings={productRecipePairings}
       isLoading={isLoading}
     />
   )

@@ -15,7 +15,10 @@ import {
 } from 'actions/basket'
 import recipes from 'actions/recipes'
 import { orderCheckPossibleDuplicate } from 'actions/order'
-import { productsLoadProducts } from 'actions/products'
+import {
+  productsLoadProducts,
+  productsLoadRecipePairings,
+} from 'actions/products'
 
 import {
   orderDetails,
@@ -44,6 +47,7 @@ jest.mock('actions/products', () => ({
   productsLoadProducts: jest.fn(),
   productsLoadStock: jest.fn(),
   productsLoadCategories: jest.fn(),
+  productsLoadRecipePairings: jest.fn(),
 }))
 
 jest.mock('actions/order', () => ({
@@ -119,7 +123,13 @@ describe('orderConfirmation actions', () => {
             data: {
               id: '1234',
               whenCutoff: '2019-04-12 19:00:00',
-              recipeItems: [{ recipeUuid: 'uuid-1' }, { recipeUuid: 'uuid-2' }],
+              recipeItems: [
+                { recipeUuid: 'uuid-1', itemableId: '1234' },
+                { recipeUuid: 'uuid-2', itemableId: '5678' },
+              ],
+              period: {
+                whenStart: '2022-05-17T11:00:00Z',
+              },
             },
           }),
         )
@@ -129,6 +139,12 @@ describe('orderConfirmation actions', () => {
         await orderDetails(orderId)(dispatch, getState)
 
         expect(recipes.recipesLoadFromMenuRecipesById).toHaveBeenCalledWith(['uuid-1', 'uuid-2'])
+      })
+
+      test('should fetch product recipe pairings for the given recipe ids and period whenStart in the order', async () => {
+        await orderDetails('1234')(dispatch, getState)
+
+        expect(productsLoadRecipePairings).toHaveBeenCalledWith(['1234', '5678'], '2022-05-17T11:00:00Z')
       })
     })
 

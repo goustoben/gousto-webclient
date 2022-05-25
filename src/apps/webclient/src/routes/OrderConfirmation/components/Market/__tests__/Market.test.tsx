@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { actionTypes } from 'actions/actionTypes'
 import { filterProductCategory } from 'actions/filters'
-import { productsLoadRecipePairings } from 'actions/products'
 import { trackPairingsData } from 'actions/tracking'
 import { marketCategory } from 'actions/trackingKeys'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
@@ -19,11 +18,6 @@ import {
   mockProductsStock,
 } from '../../config'
 import { Market } from '../Market'
-
-jest.mock('react-use', () => ({
-  ...jest.requireActual('react-use'),
-  useMedia: jest.fn().mockReturnValue(false),
-}))
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -119,10 +113,6 @@ describe('Market', () => {
   jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
 
   test('should render MarketPresentation correctly', () => {
-    ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
-      type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-      recipeParings: {},
-    })
     ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
     ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
 
@@ -141,9 +131,6 @@ describe('Market', () => {
     expect(screen.getByText('OrderSummaryContainer')).toBeInTheDocument()
     expect(screen.getByText('ReferAFriend')).toBeInTheDocument()
     expect(screen.getByText('Overlay')).toBeInTheDocument()
-
-    expect(dispatch).toBeCalledWith(productsLoadRecipePairings())
-    expect(productsLoadRecipePairings).toBeCalledWith(['2211'], '2022-05-17T11:00:00Z')
 
     fireEvent.click(screen.getByRole('button', { name: /^Snacks \(\d\)$/i }))
     expect(filterProductCategory).toBeCalledWith(
@@ -178,10 +165,6 @@ describe('Market', () => {
 
   describe('Pairings Experiment', () => {
     test('when user is not in experiment, should not render pairings or track pairings data', () => {
-      ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
-        type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-        recipeParings: {},
-      })
       ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
       ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
 
@@ -201,10 +184,6 @@ describe('Market', () => {
 
     describe('when user is in experiment', () => {
       test('should render pairings and track pairings data', () => {
-        ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
-          type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-          recipeParings: {},
-        })
         ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(true)
         ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
 
@@ -231,112 +210,9 @@ describe('Market', () => {
           'pairings',
         )
       })
-
-      test('should not render pairings when the user has no matching recipes', () => {
-        ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
-          type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-          recipeParings: {},
-        })
-        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(true)
-        ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
-
-        const newStore = mockStore({
-          ...state,
-          productRecipePairings: Immutable.Map({}),
-        })
-
-        render(
-          <Provider store={newStore}>
-            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-          </Provider>,
-        )
-
-        expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
-        expect(screen.getByText('ProductList')).toBeInTheDocument()
-
-        expect(dispatch).not.toBeCalledWith(trackPairingsData)
-        expect(trackPairingsData).not.toBeCalled()
-      })
-
-      test('should not render pairings when productRecipePairingsTotalProducts is not greater than 0', () => {
-        ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
-          type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-          recipeParings: {},
-        })
-        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(true)
-        ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
-
-        const newStore = mockStore({
-          ...state,
-          productRecipePairingsTotalProducts: 0,
-        })
-
-        render(
-          <Provider store={newStore}>
-            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-          </Provider>,
-        )
-
-        expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
-        expect(screen.getByText('ProductList')).toBeInTheDocument()
-
-        expect(dispatch).not.toBeCalledWith(trackPairingsData)
-        expect(trackPairingsData).not.toBeCalled()
-      })
-
-      test('should not render pairings when productRecipePairings data is empty', () => {
-        ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
-          type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-          recipeParings: {},
-        })
-        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(true)
-        ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
-
-        const newStore = mockStore({
-          ...state,
-          productRecipePairings: Immutable.fromJS({}),
-        })
-
-        render(
-          <Provider store={newStore}>
-            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-          </Provider>,
-        )
-
-        expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
-        expect(screen.getByText('ProductList')).toBeInTheDocument()
-
-        expect(dispatch).not.toBeCalledWith(trackPairingsData)
-        expect(trackPairingsData).not.toBeCalled()
-      })
-    })
-
-    test('should not render pairings when productRecipePairings is not a Map', () => {
-      ;(productsLoadRecipePairings as jest.Mock).mockReturnValue({
-        type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-        recipeParings: {},
-      })
-      ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(true)
-      ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
-
-      const newStore = mockStore({
-        ...state,
-        productRecipePairings: Immutable.fromJS([]),
-      })
-
-      render(
-        <Provider store={newStore}>
-          <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-        </Provider>,
-      )
-
-      expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
-      expect(screen.getByText('ProductList')).toBeInTheDocument()
-
-      expect(dispatch).not.toBeCalledWith(trackPairingsData)
-      expect(trackPairingsData).not.toBeCalled()
     })
   })
+
   describe('Bundles Experiment', () => {
     describe('When user is in experiment', () => {
       test('Should render Occasions category', () => {

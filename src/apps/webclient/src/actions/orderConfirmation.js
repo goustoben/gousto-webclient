@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 
 import config from 'config/routes'
 import logger from 'utils/logger'
-import { getUserOrderRecipeUuIds } from 'utils/user'
+import { getUserOrderRecipeUuIds, getUserOrderRecipeIds } from 'utils/user'
 import {
   basketDateChange,
   basketNumPortionChange,
@@ -12,7 +12,8 @@ import {
   basketOrderLoad,
 } from 'actions/basket'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
-import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
+import { productsLoadCategories, productsLoadProducts, productsLoadStock, productsLoadRecipePairings } from 'actions/products'
+import { getOrderWhenStartDate } from 'routes/OrderConfirmation/utils/order'
 import { orderCheckPossibleDuplicate } from './order'
 import { getAuthUserId, getAccessToken } from '../selectors/auth'
 import { fetchSimpleMenu } from '../routes/Menu/fetchData/menuApi'
@@ -36,9 +37,13 @@ export const orderDetails = (orderId) => async (dispatch, getState) => {
     const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId, include)
     const { data: menus } = await fetchSimpleMenu(accessToken, userId)
     const immutableOrderDetails = Immutable.fromJS(order)
-    const orderRecipeIds = getUserOrderRecipeUuIds(immutableOrderDetails)
-    dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeIds))
-    await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, { reload: true }, menus))
+    const orderRecipeUuIds = getUserOrderRecipeUuIds(immutableOrderDetails)
+    dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeUuIds))
+    await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, {reload: true}, menus))
+
+    const orderRecipeIds = getUserOrderRecipeIds(immutableOrderDetails)
+    const orderMenuStartDate = getOrderWhenStartDate(immutableOrderDetails)
+    await dispatch(productsLoadRecipePairings(orderRecipeIds, orderMenuStartDate))
 
     dispatch(basketOrderLoad(orderId, immutableOrderDetails))
     dispatch(basketDateChange(order.deliveryDate))
