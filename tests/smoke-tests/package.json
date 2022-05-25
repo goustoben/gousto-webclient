@@ -1,0 +1,25 @@
+{
+  "name": "smoke-tests",
+  "version": "1.0.0",
+  "description": "Smoke tests for FEF-414",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "test": "cypress run --headless"
+  },
+  "author": "maxhilliard",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/cypress": "^8.0.1",
+    "@types/faker": "^5.5.9",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.25",
+    "axios": "^0.27.2",
+    "cypress-wait-until": "^1.7.2",
+    "faker": "^5.5.3",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "cypress": "^8.6.0"
+  }
+}

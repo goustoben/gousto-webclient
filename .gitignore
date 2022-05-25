@@ -8,6 +8,7 @@ tests/e2e/node_modules
 tests/e2e/selenium-debug.log
 tests/e2e/reports
 tests/e2e/screenshots
+tests/e2e/videos
 tests/regression/node_modules
 tests/regression/screenshots
 tests/regression/results
