@@ -7,7 +7,9 @@ class Home extends Page {
   }
 
   waitForRecaptchaLoaded() {
-    cy.get("div.grecaptcha-badge");
+    cy.get("div.grecaptcha-badge", {
+      timeout: 30 * 1000,
+    });
   }
 
   // Act

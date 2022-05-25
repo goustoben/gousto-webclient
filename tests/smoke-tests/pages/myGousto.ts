@@ -5,7 +5,7 @@ class MyGousto extends Page {
   // Act
   // Assert
   assertPageContents() {
-    cy.findByText(/Last delivery/i);
+    cy.findByText(/your recent recipes/i);
   }
 }
 

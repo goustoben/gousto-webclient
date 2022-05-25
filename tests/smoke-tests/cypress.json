@@ -15,8 +15,6 @@
     "BASE_URL": "https://staging-www.gousto.info/"
   },
   "blockHosts": [
-    "*googletagmanager.com",
-    "*optimizely.com",
     "*facebook.net",
     "*trustpilot.net",
     "*braintreegateway.com",

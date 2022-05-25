@@ -8,9 +8,7 @@ class GetHelp extends Page {
 
   // Act
   clickContactUs() {
-    cy.findAllByText(/contact us/i)
-      .filter(":visible")
-      .click();
+    cy.get('a[href="/get-help/contact"]').click();
   }
 
   // Assert
