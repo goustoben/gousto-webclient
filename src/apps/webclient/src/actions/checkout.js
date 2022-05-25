@@ -36,6 +36,7 @@ import {
   feLoggingLogEvent,
   logLevels,
 } from 'actions/log'
+import { trackSignupFinished } from 'actions/loggingmanager'
 import { userSubscribe } from 'routes/Checkout/checkoutActions'
 
 import { getEnvironment } from 'utils/isomorphicEnvironment'
@@ -313,6 +314,7 @@ export function checkoutPostSignup({ pricing }) {
       dispatch(tempActions.temp('originalNetTotal', pricing.netTotal))
       dispatch(trackPurchase({ orderId, pricing }))
       dispatch(feLoggingLogEvent(logLevels.info, 'checkoutPostSignup: signup login success', signupTestData))
+      dispatch(trackSignupFinished({ email }))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.info, `checkoutPostSignup: signup login failed: ${err.message}`, signupTestData))
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })

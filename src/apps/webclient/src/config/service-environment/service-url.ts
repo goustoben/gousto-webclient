@@ -35,22 +35,35 @@ const webClientHost = ({ environmentName, serviceDomain }: ServiceUrlProperties)
     ? PRODUCTION_URL
     : `${PROTOCOL_PREFIX.HTTPS}//${environmentName}-webclient.${serviceDomain}`
 
-const overrideForLoggingManager = ({ environmentName, serviceDomain }: ServiceUrlProperties) =>
-  `${PROTOCOL_PREFIX.HTTPS}//${environmentName}-${DEFAULT_API_SUFFIX}.${serviceDomain}/${OVERRIDDEN_SERVICE_PATTERNS.loggingmanager}`
-
 const overrideForLocalDev = ({ basePath }: ServiceUrlProperties) =>
   `${PROTOCOL_PREFIX.HTTPS}//${LOCAL_SERVICE_HOSTNAME}${basePath}`
+
+/**
+ * FYI: From information I had:
+ * loggingManager should request staging-api on local environment.
+ * But it aims local url which don't even have.
+ * Removing this override will fix behaviour only for staging and local env
+ */
+const overrideForLoggingManager = ({ environmentName, serviceDomain }: ServiceUrlProperties) => {
+  const envNameOverride = environmentName === 'local' ? 'staging' : environmentName
+  const domainOverride = environmentName === 'local' ? 'gousto.info' : serviceDomain
+
+  const address = `${envNameOverride}-${DEFAULT_API_SUFFIX}`
+
+  return `${PROTOCOL_PREFIX.HTTPS}//${address}.${domainOverride}/${OVERRIDDEN_SERVICE_PATTERNS.loggingmanager}`
+}
 
 export function serviceOverrides(serviceUrlProperties: ServiceUrlProperties): string | undefined {
   switch (true) {
     case isWebclientProductionService(serviceUrlProperties):
       return webClientHost(serviceUrlProperties)
 
+    case isDev(serviceUrlProperties):
+      return overrideForLocalDev(serviceUrlProperties)
+
     case isLoggingManagerService(serviceUrlProperties):
       return overrideForLoggingManager(serviceUrlProperties)
 
-    case isDev(serviceUrlProperties):
-      return overrideForLocalDev(serviceUrlProperties)
     default:
       return undefined
   }

@@ -27,6 +27,7 @@ import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscri
 import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 import { canUseWindow } from 'utils/browserEnvironment'
 
+import { trackSignupStarted } from 'actions/loggingmanager'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure } from './basket'
@@ -409,17 +410,33 @@ function userProspect() {
       const deliveryForm = Immutable.fromJS(state.form[deliveryFormName])
       const delivery = deliveryForm ? deliveryForm.getIn(['values', 'delivery']) : {}
 
+      const email = account.get('email')
+      const promocode = getPromoCode(state)
+
       const reqData = {
-        email: account.get('email'),
+        email,
+        promocode,
+        step,
         user_name_first: deliveryForm ? delivery.get('firstName').trim() : '',
         user_name_last: deliveryForm ? delivery.get('lastName').trim() : '',
-        promocode: getPromoCode(state),
         allow_marketing_email: account.get('allowEmail'),
         preview_order_id: getPreviewOrderId(state),
-        step
       }
       dispatch(statusActions.pending(actionTypes.USER_PROSPECT, true))
       dispatch(statusActions.error(actionTypes.USER_PROSPECT, false))
+
+      if (step === 'account') {
+        const allowMarketingEmail = account.get('allowEmail')
+        const previewOrderId = state.basket.get('previewOrderId')
+
+        dispatch(trackSignupStarted({
+          email,
+          promocode,
+          allowMarketingEmail,
+          previewOrderId,
+        }))
+      }
+
       await prospectApi.storeProspect(reqData)
     } catch (err) {
       dispatch(statusActions.errorLoad(actionTypes.USER_PROSPECT, err))
