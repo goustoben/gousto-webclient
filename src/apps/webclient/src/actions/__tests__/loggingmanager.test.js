@@ -7,21 +7,26 @@ import {
   trackUserFreeFoodPageView,
   trackUserLogin,
   trackUserFreeFoodLinkShare,
+  trackSignupStarted,
+  trackSignupFinished,
 } from 'actions/loggingmanager'
+
+const MOCK_EVENT_ID = 'mock-event-id'
+const MOCK_USER_ID = 'mock-user-id'
+const MOCK_ACCESS_TOKEN = 'mock-access-token'
+const MOCK_OCCURRED_AT = '2021-01-07T00:00:00.000Z'
 
 jest.mock('apis/loggingManager', () => ({
   triggerLoggingManagerEvent: jest.fn(),
 }))
 
 jest.mock('uuid', () => ({
-  v4: jest.fn().mockReturnValue('mock-event-id'),
+  v4: jest.fn().mockImplementation(() => MOCK_EVENT_ID),
 }))
 
 describe('trackUserFreeFoodPageView', () => {
   let getState
   let dispatch
-  const id = 'mock-user-id'
-  const accessToken = 'mock-access-token'
   const browser = 'mobile'
 
   const state = {
@@ -29,9 +34,12 @@ describe('trackUserFreeFoodPageView', () => {
       browser,
     }),
     auth: Immutable.fromJS({
-      id,
-      accessToken
+      id: MOCK_USER_ID,
+      accessToken: MOCK_ACCESS_TOKEN,
     }),
+    user: Immutable.fromJS({
+      id: MOCK_USER_ID,
+    })
   }
 
   beforeEach(() => {
@@ -55,13 +63,13 @@ describe('trackUserFreeFoodPageView', () => {
 
     test('then the logging manager event should be triggered', async () => {
       expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
-        accessToken: 'mock-access-token',
+        accessToken: MOCK_ACCESS_TOKEN,
         loggingManagerRequest: {
           name: 'rafPage-visited',
-          id: 'mock-event-id',
-          authUserId: 'mock-user-id',
+          id: MOCK_EVENT_ID,
+          authUserId: MOCK_USER_ID,
           isAnonymousUser: undefined,
-          occurredAt: '2021-01-07T00:00:00.000Z',
+          occurredAt: MOCK_OCCURRED_AT,
           data: {
             device: browser,
           }
@@ -74,8 +82,6 @@ describe('trackUserFreeFoodPageView', () => {
 describe('trackUserLogin', () => {
   let getState
   let dispatch
-  const id = 'mock-user-id'
-  const accessToken = 'mock-access-token'
   const browser = 'mobile'
   const eventName = 'user-loggedin'
 
@@ -86,8 +92,8 @@ describe('trackUserLogin', () => {
           browser,
         }),
         auth: Immutable.fromJS({
-          id,
-          accessToken
+          id: MOCK_USER_ID,
+          accessToken: MOCK_ACCESS_TOKEN,
         }),
       }
 
@@ -99,13 +105,13 @@ describe('trackUserLogin', () => {
 
     test('then the logging manager event should be triggered', async () => {
       expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
-        accessToken: 'mock-access-token',
+        accessToken: MOCK_ACCESS_TOKEN,
         loggingManagerRequest: {
           name: eventName,
-          id: 'mock-event-id',
-          authUserId: 'mock-user-id',
+          id: MOCK_EVENT_ID,
+          authUserId: MOCK_USER_ID,
           isAnonymousUser: undefined,
-          occurredAt: '2021-01-07T00:00:00.000Z',
+          occurredAt: MOCK_OCCURRED_AT,
           data: {
             device: browser,
           }
@@ -114,7 +120,7 @@ describe('trackUserLogin', () => {
     })
   })
 
-  describe('when the user is NOT authed', () => {
+  describe('when the user is NOT authenticated', () => {
     beforeEach(async () => {
       const state = {
         request: Immutable.fromJS({
@@ -139,16 +145,14 @@ describe('trackUserAddRemoveRecipe', () => {
   let getState
   let dispatch
   let state
-  const id = 'mock-user-id'
-  const accessToken = 'mock-access-token'
   const browser = 'mobile'
   const defaultState = {
     request: Immutable.fromJS({
       browser,
     }),
     auth: Immutable.fromJS({
-      id,
-      accessToken
+      id: MOCK_USER_ID,
+      accessToken: MOCK_ACCESS_TOKEN,
     }),
   }
 
@@ -196,13 +200,13 @@ describe('trackUserAddRemoveRecipe', () => {
 
       test('triggerLoggingManagerEvent is called with at least recipes, dayId, slotId, addressId and numPortions', () => {
         expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
-          accessToken: 'mock-access-token',
+          accessToken: MOCK_ACCESS_TOKEN,
           loggingManagerRequest: {
             name: 'basket-updated',
-            id: 'mock-event-id',
-            authUserId: 'mock-user-id',
+            id: MOCK_EVENT_ID,
+            authUserId: MOCK_USER_ID,
             isAnonymousUser: undefined,
-            occurredAt: '2021-01-07T00:00:00.000Z',
+            occurredAt: MOCK_OCCURRED_AT,
             data: {
               device: 'mobile',
               recipe1: 'recipeTest1',
@@ -352,8 +356,8 @@ describe('sendGoustoAppLinkSMS', () => {
         browser: 'mobile',
       }),
       auth: Immutable.fromJS({
-        id: 'mock-user-id',
-        accessToken: 'mock-access-token'
+        id: MOCK_USER_ID,
+        accessToken: MOCK_ACCESS_TOKEN,
       })
     }
 
@@ -378,13 +382,13 @@ describe('sendGoustoAppLinkSMS', () => {
 
     test('triggerLoggingManagerEvent is called with authUserId', () => {
       expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
-        accessToken: 'mock-access-token',
+        accessToken: MOCK_ACCESS_TOKEN,
         loggingManagerRequest: {
           name: 'sendsmsapplink-appstore',
-          id: 'mock-event-id',
-          authUserId: 'mock-user-id',
+          id: MOCK_EVENT_ID,
+          authUserId: MOCK_USER_ID,
           isAnonymousUser: false,
-          occurredAt: '2021-01-07T00:00:00.000Z',
+          occurredAt: MOCK_OCCURRED_AT,
           data: {
             device: 'mobile',
             userPhoneNumber: 'test-phone-number',
@@ -412,13 +416,13 @@ describe('sendGoustoAppLinkSMS', () => {
 
     test('triggerLoggingManagerEvent is called without authUserId', () => {
       expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
-        accessToken: 'mock-access-token',
+        accessToken: MOCK_ACCESS_TOKEN,
         loggingManagerRequest: {
           name: 'sendsmsapplink-appstore',
-          id: 'mock-event-id',
+          id: MOCK_EVENT_ID,
           authUserId: undefined,
           isAnonymousUser: true,
-          occurredAt: '2021-01-07T00:00:00.000Z',
+          occurredAt: MOCK_OCCURRED_AT,
           data: {
             device: 'mobile',
             userPhoneNumber: 'test-phone-number',
@@ -463,8 +467,6 @@ describe('sendGoustoAppLinkSMS', () => {
 describe('trackUserFreeFoodLinkShare', () => {
   let getState
   let dispatch
-  const id = 'mock-user-id'
-  const accessToken = 'mock-access-token'
   const browser = 'mobile'
   const target = 'Email'
 
@@ -473,8 +475,8 @@ describe('trackUserFreeFoodLinkShare', () => {
       browser,
     }),
     auth: Immutable.fromJS({
-      id,
-      accessToken
+      id: MOCK_USER_ID,
+      accessToken: MOCK_ACCESS_TOKEN,
     }),
   }
 
@@ -492,17 +494,140 @@ describe('trackUserFreeFoodLinkShare', () => {
 
     test('then the logging manager event should be triggered', async () => {
       expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
-        accessToken: 'mock-access-token',
+        accessToken: MOCK_ACCESS_TOKEN,
         loggingManagerRequest: {
           name: 'rafLink-shared',
-          id: 'mock-event-id',
-          authUserId: id,
+          id: MOCK_EVENT_ID,
+          authUserId: MOCK_USER_ID,
           isAnonymousUser: undefined,
-          occurredAt: '2021-01-07T00:00:00.000Z',
+          occurredAt: MOCK_OCCURRED_AT,
           data: {
             device: browser,
             target,
           }
+        }
+      })
+    })
+  })
+})
+
+describe('Track user`s signup events', () => {
+  let getState
+  let dispatch
+  const browser = 'browser'
+  const email = 'test@gousto.co.uk'
+  const promocode = 'FAKEPROMO'
+  const allowMarketingEmail = true
+  const previewOrderId = 'fake-414'
+
+  describe('trackSignupStarted', () => {
+    afterEach(() => {
+      triggerLoggingManagerEvent.mockReset()
+    })
+    beforeEach(async () => {
+      const state = {
+        request: {
+          browser,
+          get: jest.fn(),
+        },
+        auth: {
+          id: '',
+          accessToken: MOCK_ACCESS_TOKEN,
+          get: jest.fn(),
+        },
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+
+      await trackSignupStarted({
+        email,
+        promocode,
+        allowMarketingEmail,
+        previewOrderId,
+      })(dispatch, getState)
+    })
+
+    test('loggingManager should be triggered with exact args', () => {
+      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+        accessToken: undefined,
+        loggingManagerRequest: {
+          name: EVENT_NAMES.signupStarted,
+          isAnonymousUser: true,
+          authUserId: undefined,
+          userId: undefined,
+          id: MOCK_EVENT_ID,
+          occurredAt: MOCK_OCCURRED_AT,
+          data: {
+            email,
+            promocode,
+            preview_order_id: previewOrderId,
+            allow_marketing_email: allowMarketingEmail,
+          },
+        }
+      })
+    })
+  })
+
+  describe('trackSignupFinished', () => {
+    afterEach(() => {
+      triggerLoggingManagerEvent.mockReset()
+    })
+
+    beforeEach(async () => {
+      const state = {
+        request: {
+          browser,
+          get: jest.fn().mockImplementation((key) => {
+            if (key === 'browser') {
+              return browser
+            }
+
+            return undefined
+          }),
+        },
+        auth: {
+          id: MOCK_USER_ID,
+          accessToken: MOCK_ACCESS_TOKEN,
+          get: jest.fn().mockImplementation((key) => {
+            if (key === 'id') {
+              return MOCK_USER_ID
+            } else if (key === 'accessToken') {
+              return MOCK_ACCESS_TOKEN
+            }
+
+            return undefined
+          }),
+        },
+        user: {
+          id: MOCK_USER_ID,
+          get: jest.fn().mockImplementation((key) => {
+            if (key === 'id') {
+              return MOCK_USER_ID
+            }
+
+            return undefined
+          }),
+        },
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+
+      await trackSignupFinished({ email })(dispatch, getState)
+    })
+
+    test('loggingManager should be triggered with exact args', () => {
+      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+        accessToken: MOCK_ACCESS_TOKEN,
+        loggingManagerRequest: {
+          name: EVENT_NAMES.signupFinished,
+          isAnonymousUser: false,
+          userId: undefined,
+          authUserId: MOCK_USER_ID,
+          id: MOCK_EVENT_ID,
+          occurredAt: MOCK_OCCURRED_AT,
+          data: {
+            email,
+          },
         }
       })
     })

@@ -11,6 +11,8 @@ export const EVENT_NAMES = {
   sendGoustoAppLinkPlayStoreSMS: 'sendsmsapplink-playstore',
   sendGoustoAppLinkNotSpecifiedStoreSMS: 'sendsmsapplink-notspecified',
   rafLinkShared: 'rafLink-shared',
+  signupStarted: 'signup_started',
+  signupFinished: 'signup_finished',
 }
 
 const generateLoggingManagerRequest = ({ loggingManagerEvent }) => {
@@ -196,7 +198,58 @@ const trackUserFreeFoodLinkShare = ({ target }) => (
 
     const loggingManagerRequest = generateLoggingManagerRequest({ loggingManagerEvent })
 
-    triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
+    await triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
+  }
+)
+
+const trackSignupStarted = ({ email, promocode, allowMarketingEmail, previewOrderId }) => (
+  async (dispatch, getState) => {
+    const { accessToken } = getDefaultParams(getState())
+    const eventName = EVENT_NAMES.signupStarted
+
+    const loggingManagerEvent = {
+      eventName,
+      isAnonymousUser: true,
+      data: {
+        email,
+        promocode,
+        allow_marketing_email: allowMarketingEmail,
+        preview_order_id: previewOrderId,
+      }
+    }
+    const loggingManagerRequest = generateLoggingManagerRequest({
+      loggingManagerEvent,
+    })
+
+    await triggerLoggingManagerEvent({
+      accessToken,
+      loggingManagerRequest,
+    })
+  }
+)
+
+const trackSignupFinished = ({ email }) => (
+  async (dispatch, getState) => {
+    const { authUserId, accessToken } = getDefaultParams(getState())
+    const eventName = EVENT_NAMES.signupFinished
+
+    const loggingManagerEvent = {
+      eventName,
+      authUserId,
+      userId: authUserId,
+      isAnonymousUser: false,
+      data: {
+        email,
+      }
+    }
+    const loggingManagerRequest = generateLoggingManagerRequest({
+      loggingManagerEvent,
+    })
+
+    await triggerLoggingManagerEvent({
+      accessToken,
+      loggingManagerRequest,
+    })
   }
 )
 
@@ -206,4 +259,6 @@ export {
   trackUserLogin,
   trackUserAddRemoveRecipe,
   trackUserFreeFoodLinkShare,
+  trackSignupStarted,
+  trackSignupFinished,
 }

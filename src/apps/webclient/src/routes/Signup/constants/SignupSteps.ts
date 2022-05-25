@@ -7,4 +7,6 @@ export enum SignupSteps {
   POSTCODE = 'postcode',
   DELIVERY = 'delivery',
   PERSONALISE_MENU = 'personaliseMenu',
+  NUMBER_OF_PEOPLE = 'numberOfPeople',
+  BOX_SIZE_RECOMMENDER = 'boxSizeRecommender',
 }

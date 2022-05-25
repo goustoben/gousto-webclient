@@ -2,5 +2,15 @@
   "eslint.workingDirectories": [
     "./src/apps/webclient",
     "."
+  ],
+  "cSpell.words": [
+    "appstore",
+    "Gousto",
+    "loggedin",
+    "notspecified",
+    "playstore",
+    "promocode",
+    "sendsmsapplink",
+    "uuidv"
   ]
 }
