@@ -70,6 +70,12 @@
   }
 }
 
+.doubleDeckerMenuContainer {
+  @media ScreenXSMax {
+    padding-top: 6.25rem;
+  }
+}
+
 .legal {
   composes: textXS textCenter from 'styles/typography.css';
   composes: marginLG from 'sass-loader!styles/spacing.scss';

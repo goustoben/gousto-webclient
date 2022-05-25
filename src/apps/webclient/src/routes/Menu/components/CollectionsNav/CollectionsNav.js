@@ -3,6 +3,7 @@ import React from 'react'
 import { top, left } from 'scroll'
 import Immutable from 'immutable'
 import actual from 'actual'
+import classnames from 'classnames'
 
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getScrollOffset } from 'utils/menu'
@@ -248,6 +249,10 @@ class CollectionsNav extends React.PureComponent {
   }
 
   isElementVisible(ele, parent) {
+    if (!ele) {
+      return false
+    }
+
     const rect = ele.getBoundingClientRect()
 
     return (
@@ -268,8 +273,10 @@ class CollectionsNav extends React.PureComponent {
   }
 
   scrollNavbar(tgt, animate, collectionId, jump) {
+    const { parent } = this.eles
     let target = tgt
-    const max = this.eles.parent.scrollWidth - this.eles.parent.clientWidth
+
+    const max = parent.scrollWidth - parent.clientWidth
     if (target < 0) {
       target = 0
     }
@@ -282,13 +289,43 @@ class CollectionsNav extends React.PureComponent {
       duration = 150
     }
 
-    left(this.eles.parent, target, { duration })
+    left(parent, target, { duration })
 
     this.evaluatePosition(collectionId, target)
   }
 
+  hideNavigationArrows() {
+    if (this.isTwoRowsMode()) {
+      return true
+    }
+
+    return false
+  }
+
+  isMobile() {
+    return getWindow().innerWidth < MOBILE_BREAKPOINT
+  }
+
+  isTwoRowsMode() {
+    const { doubleDeckerExperimentEnabled } = this.props
+
+    return this.isMobile() && doubleDeckerExperimentEnabled
+  }
+
   render() {
-    const { menuCollections, menuCurrentCollectionId } = this.props
+    const { menuCollections, menuCurrentCollectionId, doubleDeckerExperimentEnabled } = this.props
+
+    const collectionsForRendering = this.isTwoRowsMode()
+      ? menuCollections
+          .toArray()
+          .reduce(
+            (acc, collection, index) =>
+              index % 2 === 0
+                ? [[...acc[0], collection], acc[1]]
+                : [acc[0], [...acc[1], collection]],
+            [[], []],
+          )
+      : [[...menuCollections.toArray()]]
 
     const { scrolledPastPoint, scrollJumped } = this.state
 
@@ -309,19 +346,33 @@ class CollectionsNav extends React.PureComponent {
 
     return (
       <div>
-        <div className={className} id="collectionNavBar">
-          {showArrows && !isAtStart ? (
-            <div className={leftArrowClassName} onClick={this.prevCollection} />
+        <div
+          className={classnames(className, {
+            [css.doubleDeckerNavBarContainer]: doubleDeckerExperimentEnabled,
+            [css.doubleDeckerNavBarContainerFixed]: doubleDeckerExperimentEnabled && scrollJumped,
+            [css.navBarContainerFixedHeight]: !doubleDeckerExperimentEnabled,
+          })}
+          id="collectionNavBar"
+        >
+          {showArrows && !isAtStart && !this.hideNavigationArrows() ? (
+            <div
+              className={classnames(leftArrowClassName, {
+                [css.doubleDeckerNavBarArrow]: doubleDeckerExperimentEnabled,
+              })}
+              onClick={this.prevCollection}
+            />
           ) : null}
           <div
-            className={css.nav}
+            className={classnames(css.nav, {
+              [css.doubleDeckerNav]: doubleDeckerExperimentEnabled,
+            })}
             ref={(ref) => {
               this.eles.parent = ref
             }}
           >
-            <div className={css.navBar}>
-              {menuCollections
-                .map((collection) => {
+            {collectionsForRendering.map((collections) => (
+              <div key={`row_starting_with_${collections[0]?.get('id')}`} className={css.navBar}>
+                {collections.map((collection) => {
                   const collectionId = collection.get('id')
                   const isCurrent = menuCurrentCollectionId === collectionId
 
@@ -329,7 +380,15 @@ class CollectionsNav extends React.PureComponent {
                     <CollectionItem
                       key={collectionId}
                       dataId={collectionId}
-                      className={isCurrent ? css.currentItem : css.item}
+                      className={
+                        isCurrent
+                          ? classnames(css.currentItem, {
+                              [css.currentDoubleDeckerItem]: doubleDeckerExperimentEnabled,
+                            })
+                          : classnames(css.item, {
+                              [css.doubleDeckerItem]: doubleDeckerExperimentEnabled,
+                            })
+                      }
                       onClick={() => {
                         this.changeCollection(collectionId)
                       }}
@@ -343,12 +402,17 @@ class CollectionsNav extends React.PureComponent {
                       <span className={css.itemTitle}>{collection.get('shortTitle')}</span>
                     </CollectionItem>
                   )
-                })
-                .toArray()}
-            </div>
+                })}
+              </div>
+            ))}
           </div>
-          {showArrows && !isAtEnd ? (
-            <div className={rightArrowClassName} onClick={this.nextCollection} />
+          {showArrows && !isAtEnd && !this.hideNavigationArrows() ? (
+            <div
+              className={classnames(rightArrowClassName, {
+                [css.doubleDeckerNavBarArrow]: doubleDeckerExperimentEnabled,
+              })}
+              onClick={this.nextCollection}
+            />
           ) : null}
         </div>
       </div>
@@ -361,11 +425,13 @@ CollectionsNav.propTypes = {
   changeCollectionById: PropTypes.func.isRequired,
   menuCurrentCollectionId: PropTypes.string,
   isPolicyAccepted: PropTypes.bool,
+  doubleDeckerExperimentEnabled: PropTypes.bool,
 }
 
 CollectionsNav.defaultProps = {
   menuCurrentCollectionId: null,
   isPolicyAccepted: false,
+  doubleDeckerExperimentEnabled: false,
 }
 
 export { CollectionsNav }

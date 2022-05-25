@@ -1,4 +1,11 @@
-@value bodyFontStackNormal, sizeSM from 'styles/typography.css';
+@value bodyFontStackNormal, axiformaFontStack, sizeSM, sizeXS from 'styles/typography.css';
+
+.doubleDeckerCount {
+  padding: 3px 6px;
+  text-align: center;
+  font-size: sizeXS;
+  font-family: axiformaFontStack;
+}
 
 .count {
   margin-left: 10px;
@@ -7,7 +14,6 @@
   border-radius: 10px;
   background-color: #eaebec;
   text-align: center;
-  font-weight: 900;
   font-size: sizeSM;
   font-family: bodyFontStackNormal;
 }

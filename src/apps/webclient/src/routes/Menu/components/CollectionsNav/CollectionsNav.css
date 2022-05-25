@@ -1,6 +1,7 @@
-@value Coconut, Pomegranate, White from 'styles/colors.css';
+@value Coconut, Pomegranate, White, Bluecheese, Blackberry from 'styles/colors.css';
 @value SpacingXS, SpacingLG, SpacingXXL from 'sass-loader!styles/spacing.scss';
 @value ScreenMDMax, ScreenSMMin, ScreenSMMax, ScreenXSMax from 'styles/screenSizes.css';
+@value bodyFontStackNormal, axiformaFontStack, sizeXS from 'styles/typography.css';
 
 @value maxWidth 1540px;
 @value navBarHeight 43px;
@@ -13,12 +14,15 @@
   z-index: 1;
 
   overflow-y: hidden;
-  height: navBarHeight;
 
   @media ScreenXSMax {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+.navBarContainerFixedHeight {
+  height: navBarHeight;
 }
 
 .navBarContainerFixed {
@@ -28,10 +32,19 @@
   top: 0;
 }
 
+.doubleDeckerNavBarContainerFixed {
+  padding-top: 0.25rem;
+}
+
 .navBarContainerFixedTransition {
   composes: navBarContainerFixed;
   animation-duration: 0.5s;
   animation-name: navBarTransition;
+}
+
+.doubleDeckerNavBarContainer {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.5rem;
 }
 
 @keyframes navBarTransition {
@@ -57,6 +70,10 @@
   &::-webkit-scrollbar {
     -webkit-appearance: none;
   }
+}
+
+.doubleDeckerNav {
+  margin-bottom: -1.25rem;
 }
 
 .navBar {
@@ -87,8 +104,32 @@
   }
 }
 
+.doubleDeckerItem {
+  background-color: #f4f7fa;
+  color: Blackberry;
+  border-radius: 4px;
+  border: 1px solid #ced4d9;
+  justify-content: center;
+  cursor: pointer;
+  padding-left: 1rem;
+  margin: 0.25rem;
+  font-size: sizeXS;
+  font-family: axiformaFontStack;
+  font-weight: bolder;
+
+  &:first-child {
+    @media ScreenSMMin {
+      margin-left: 0;
+    }
+  }
+
+  &:last-child {
+    margin-right: SpacingXS;
+  }
+}
+
 .itemTitle {
-  line-height: 3em;
+  line-height: 2.25rem;
 }
 
 .currentItem {
@@ -96,6 +137,24 @@
   color: Pomegranate;
   border-color: Pomegranate;
   font-weight: bold;
+}
+
+.currentDoubleDeckerItem {
+  composes: doubleDeckerItem;
+  background-color: Bluecheese;
+  border: 1px solid Bluecheese;
+  color: White;
+  margin: 0.25rem;
+
+  &:first-child {
+    @media ScreenSMMin {
+      margin-left: 1rem;
+    }
+  }
+
+  &:last-child {
+    margin-right: SpacingXS;
+  }
 }
 
 .arrow {
@@ -111,6 +170,10 @@
     padding-left: 5px;
     padding-right: 5px;
   }
+}
+
+.doubleDeckerNavBarArrow {
+  color: Bluecheese;
 }
 
 .arrowLeft {

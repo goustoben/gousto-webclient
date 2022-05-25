@@ -110,7 +110,9 @@ export class MenuRecipesPage extends PureComponent {
 
         <CollectionHeaderWrapper />
 
-        {stateRecipeCount && <RecipeGrid query={query} />}
+        {stateRecipeCount && (
+          <RecipeGrid query={query} doubleDeckerExperimentEnabled={isDoubleDeckerFeatureOn} />
+        )}
 
         {showError ? (
           <h2 className={css.menuLoadingErrorMessage}>{menuLoadingErrorMessage}</h2>
