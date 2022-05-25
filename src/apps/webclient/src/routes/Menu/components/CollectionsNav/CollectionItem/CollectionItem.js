@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useDoubleDeckerNav } from 'hooks/useDoubleDeckerNav'
 import classnames from 'classnames'
 import { useMenu } from 'routes/Menu/domains/menu'
 
@@ -17,18 +18,26 @@ const CollectionItem = ({
 }) => {
   const { getRecipesForCollectionId } = useMenu()
   const count = getRecipesForCollectionId(collectionId).recipes.size
+  const doubleDeckerExperimentEnabled = useDoubleDeckerNav()
 
   return (
     <div
       data-id={dataId}
-      className={classnames(css.item, className)}
+      className={className}
       onClick={onClick}
       key={identifier}
       ref={element}
       data-slug={slug}
     >
       {children}
-      <span className={css.count}>{count}</span>
+      <span
+        className={classnames({
+          [css.count]: !doubleDeckerExperimentEnabled,
+          [css.doubleDeckerCount]: doubleDeckerExperimentEnabled,
+        })}
+      >
+        ({count})
+      </span>
     </div>
   )
 }
