@@ -386,16 +386,16 @@ describe('orderApi', () => {
 
       test('should fetch the correct url', async () => {
         const expectedReqData = {
-          'filter[phase]': 'delivery',
-          include: ['data'],
-          'page[limit]': 15,
-          sort: 'deliveryDate',
+          state: 'delivery',
+          includes: ['data'],
+          limit: 15,
+          sort_order: 'deliveryDate',
         }
 
         await fetchUserOrders(dispatch, getState, expectedReqData)
         expect(isomorphicFetch).toHaveBeenCalledTimes(1)
         expect(isomorphicFetch).toHaveBeenCalledWith(
-          'https://production-api.gousto.co.uk/order/v2/users/test-user-id/orders?filter%5Bphase%5D=delivery&include=data&page%5Blimit%5D=15&sort=deliveryDate',
+          'https://production-api.gousto.co.uk/order/v2/users/test-user-id/orders?page%5Blimit%5D=15&filter%5Bstate%5D=delivery&sort=deliveryDate&include%5B%5D=data',
           {
             headers: {
               Authorization: 'Bearer token',
