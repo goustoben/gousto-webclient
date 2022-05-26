@@ -38,6 +38,7 @@ describe('<Market />', () => {
       {
         ageVerified: false,
         basket: DEFAULT_PROPS.basket,
+        bundlesProducts: null,
         categoriesForNavBar: DEFAULT_PROPS.categoriesForNavBar,
         filteredProducts: null,
         getFilteredProducts: wrapper.instance().getFilteredProducts,

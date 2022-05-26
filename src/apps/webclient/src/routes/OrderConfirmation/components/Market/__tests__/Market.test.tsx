@@ -56,6 +56,10 @@ jest.mock('../../ProductList', () => ({
   ProductList: jest.fn(() => 'ProductList'),
 }))
 
+jest.mock('../../ProductListBundles', () => ({
+  ProductListBundles: jest.fn(() => 'ProductListBundles'),
+}))
+
 jest.mock('../../ProductListPairings', () => ({
   ProductListPairings: jest.fn(() => 'ProductListPairings'),
 }))
@@ -225,6 +229,8 @@ describe('Market', () => {
           </Provider>,
         )
         expect(screen.queryByText(/^Occasions \(\d\)$/i)).toBeInTheDocument()
+        expect(screen.queryByText('ProductListBundles')).toBeInTheDocument()
+        expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
       })
     })
 
@@ -239,6 +245,8 @@ describe('Market', () => {
           </Provider>,
         )
         expect(screen.queryByText(/^Occasions \(\d\)$/i)).not.toBeInTheDocument()
+        expect(screen.queryByText('ProductListBundles')).not.toBeInTheDocument()
+        expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
       })
     })
   })

@@ -28,6 +28,7 @@ import {
   OCCASIONS_CATEGORY_ID,
 } from '../../constants/categories'
 import { MarketPresentation } from './Market.presentation'
+import { mockBundlesData } from '../config'
 
 interface Props {
   ageVerified: boolean
@@ -52,6 +53,8 @@ const Market = (props: Props) => {
   const [experimentCategories, setExperimentCategories] = useState<NavCategories | undefined>(
     undefined,
   )
+
+  const [bundlesProducts, setBundlesProducts] = useState<any>(null)
 
   const basket = useSelector(getBasket)
   const categoriesForNavBar: NavCategories = useSelector(getCategoriesForNavBar)
@@ -107,6 +110,7 @@ const Market = (props: Props) => {
       }
       setExperimentCategories({ ...occasions, ...categoriesForNavBar })
       setTrackingCategoryTitle(OCCASIONS_CATEGORY_NAME)
+      setBundlesProducts(mockBundlesData)
     }
   }, [bundlesExperimentEnabled, pairingsExperimentEnabled, categoriesForNavBar])
 
@@ -187,6 +191,7 @@ const Market = (props: Props) => {
       saving={basketSavePending}
       showOrderConfirmationReceipt={!!order}
       toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+      bundlesProducts={bundlesProducts}
       trackingCategory={trackingCategoryTitle}
       productRecipePairings={productRecipePairings}
       isLoading={isLoading}
