@@ -7,10 +7,17 @@ const createReport = (coverageSummary, eslintResults) => {
   const files = []
 
   for (const file of eslintResults) {
+    // Don't count warnings from where we've passed ignored files through the differential lint process
+    const ignorePatternWarning = file.messages.find(
+      msg => msg.message.startsWith('File ignored because of a matching ignore pattern')
+    )
+
+    const warningCount = ignorePatternWarning ? 0 : file.warningCount
+
     files.push({
-      path: sanitiseFilePath(file.filePath), 
-      errorCount: file.errorCount, 
-      warningCount: file.warningCount,
+      path: sanitiseFilePath(file.filePath),
+      errorCount: file.errorCount,
+      warningCount,
       coveragePercent: null
     })
   }
@@ -57,7 +64,7 @@ module.exports = () => {
     console.log('No eslint results file could be found.')
     process.exit(0)
   }
-  
+
   const coverageSummary = require(coveragePath)
   const eslintResults = require(eslintResultsPath)
 

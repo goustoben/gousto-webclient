@@ -21,6 +21,7 @@
 /.github/                                               @Gousto/frontend-foundations
 /.gitignore                                             @Gousto/frontend-foundations
 /.git-blame-ignore-revs                                 @Gousto/frontend-foundations
+/src/modules/library                                    @Gousto/frontend-foundations
 /src/apps/webclient/.bowerrc                            @Gousto/frontend-foundations
 /src/apps/webclient/.eslintignore                       @Gousto/frontend-foundations
 /src/apps/webclient/.eslintrc                           @Gousto/frontend-foundations
