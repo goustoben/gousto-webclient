@@ -1,31 +1,25 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
+
 import css from './OrderConfirmationHeader.css'
 
-const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, whenCutoffTime, whenCutoffDate}) => (
+const OrderConfirmationHeader = ({
+  deliveryDate,
+  deliveryStart,
+  deliveryEnd,
+  whenCutoffTime,
+  whenCutoffDate,
+}) => (
   <div data-testing="orderConfirmationHeader">
     <p className={css.paragraph}>
-      Delivery date:
-      {' '}
-      {deliveryDate}
+      Delivery date: {deliveryDate}
       {', '}
-      between
-      {' '}
-      {deliveryStart}
-      {' '}
-      and
-      {' '}
-      {deliveryEnd}
+      between {deliveryStart} and {deliveryEnd}
     </p>
     <p className={classnames(css.paragraph, css.bold)}>
-      You can edit your choices until
-      {' '}
-      {whenCutoffTime}
-      {' '}
-      on
-      {' '}
-      {whenCutoffDate}
+      You can edit your choices until {whenCutoffTime} on {whenCutoffDate}
     </p>
   </div>
 )

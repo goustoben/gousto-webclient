@@ -8,11 +8,11 @@ export const getHeaderDetails = (order) => {
   const cutOffTimeFormat = moment(shouldCutoffAt).add(1, 'seconds').format('ha')
   const cutoffDayFormat = moment(shouldCutoffAt).format('dddd Do MMMM')
 
-  return ({
+  return {
     deliveryDate: humanDeliveryDate,
     deliveryStart: deliveryStartFormat,
     deliveryEnd: deliveryEndFormat,
     whenCutoffTime: cutOffTimeFormat,
-    whenCutoffDate: cutoffDayFormat
-  })
+    whenCutoffDate: cutoffDayFormat,
+  }
 }

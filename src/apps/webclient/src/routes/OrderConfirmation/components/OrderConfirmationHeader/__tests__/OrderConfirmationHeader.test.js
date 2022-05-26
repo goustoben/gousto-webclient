@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
+
 import { OrderConfirmationHeader } from '../OrderConfirmationHeader'
 
 describe('OrderConfirmationHeadrer', () => {

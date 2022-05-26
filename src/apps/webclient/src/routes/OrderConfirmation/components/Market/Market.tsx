@@ -6,7 +6,6 @@ import { filterProductCategory } from 'actions/filters'
 import { trackPairingsData } from 'actions/tracking'
 import { marketCategory } from 'actions/trackingKeys'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
-import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
 import { getBasketOrderDetails, getBasketSaveRequired } from 'selectors/basket'
 import {
   getCategoriesForNavBar,
@@ -24,6 +23,7 @@ import {
   OCCASIONS_CATEGORY_NAME,
   OCCASIONS_CATEGORY_ID,
 } from '../../constants/categories'
+import { useIsBundlesEnabled } from '../../hooks/useBundlesExperiment.hook'
 import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
 import {
   getProductsRecipePairingsWithRecipes,

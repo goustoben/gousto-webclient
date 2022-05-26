@@ -34,7 +34,7 @@
   padding: 0px 5px;
 
   &:last-child {
-    border-left: dotted 2px #D5D5D5;
+    border-left: dotted 2px #d5d5d5;
   }
 }
 
@@ -52,14 +52,13 @@
 }
 
 .rafLink {
-	margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 .mobileHide {
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 }
 
 .mobileShow {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 }
-

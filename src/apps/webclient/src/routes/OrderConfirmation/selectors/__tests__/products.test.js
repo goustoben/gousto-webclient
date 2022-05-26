@@ -1,12 +1,12 @@
-import { getProductsStock } from '../products'
 import { mockProductsStock } from '../../components/config'
+import { getProductsStock } from '../products'
 
 describe('products selectors', () => {
   let state
 
   beforeEach(() => {
     state = {
-      productsStock: mockProductsStock
+      productsStock: mockProductsStock,
     }
   })
 

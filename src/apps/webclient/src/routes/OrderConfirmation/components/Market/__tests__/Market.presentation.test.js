@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import { Map, List } from 'immutable'
-import { MarketPresentation } from '../Market.presentation'
+
 import { PAIRINGS_CATEGORY_NAME, ALL_PRODUCTS_CATEGORY_NAME } from '../../../constants/categories'
+import { MarketPresentation } from '../Market.presentation'
 
 describe('<MarketPresentation />', () => {
   const DEFAULT_PROPS = {
@@ -145,7 +147,7 @@ describe('<MarketPresentation />', () => {
       wrapper.setProps({
         isLoading: false,
         trackingCategory: PAIRINGS_CATEGORY_NAME,
-        productRecipePairings: List([1,2,3])
+        productRecipePairings: List([1, 2, 3]),
       })
     })
 

@@ -23,3 +23,4 @@ src/_testing/generate-endpoint-test-cases.ts
 !src/routes/BoxPrices/**/*
 !src/performanceTracker/**/*
 !src/routes/Menu/**/*
+!src/routes/OrderConfirmation/**/*

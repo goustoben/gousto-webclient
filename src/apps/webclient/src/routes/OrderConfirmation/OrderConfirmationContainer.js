@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+
 import userActions, { userFetchReferralOffer } from 'actions/user'
+import { getBasketOrderDetails } from 'selectors/basket'
+import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
 import { locationQuery } from 'selectors/routing'
 import { getAgeVerified } from 'selectors/user'
-import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
-import { getBasketOrderDetails } from 'selectors/basket'
+
 import { OrderConfirmation } from './OrderConfirmation'
 import { getHeaderDetails } from './helper'
 
@@ -15,12 +17,12 @@ const mapStateToProps = (state) => {
   const showHeader = !!(locationQueryParam && locationQueryParam.order_action) && !!headerDetails
   const isLoading = !order || isOrderConfirmationPageLoading(state)
 
-  return ({
+  return {
     ageVerified: getAgeVerified(state),
     headerDetails,
     isLoading,
-    showHeader
-  })
+    showHeader,
+  }
 }
 
 const mapDispatchToProps = {
@@ -28,6 +30,8 @@ const mapDispatchToProps = {
   userVerifyAge: userActions.userVerifyAge,
 }
 
-const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))
+const OrderConfirmationContainer = withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation),
+)
 
 export { OrderConfirmationContainer }

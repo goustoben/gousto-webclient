@@ -1,4 +1,4 @@
-.productBundleList{
+.productBundleList {
   padding-top: 24px;
   display: flex;
   flex-wrap: wrap;
@@ -16,7 +16,7 @@
   align-self: center;
 }
 
-.recipeHeader{
+.recipeHeader {
   padding: 8px 8px 0px 16px;
   align-self: center;
 }
@@ -25,10 +25,10 @@
   margin-bottom: 0px;
 }
 
-.recipeBox{
+.recipeBox {
   background-color: #dff4ff;
   margin-top: 24px;
-  
+
   @media ScreenXXSMin {
     width: calc(80% - 10px);
     margin: 0 auto;

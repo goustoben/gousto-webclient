@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { Route } from 'react-router'
+
+import { orderDetails } from 'actions/orderConfirmation'
 import config from 'config/routes'
 import { checkValidSession } from 'utils/routes'
-import { orderDetails } from 'actions/orderConfirmation'
 
 import { OrderConfirmationContainer } from './OrderConfirmationContainer'
 
@@ -21,7 +23,11 @@ const OrderConfirmationRoute = (store) => {
   }
 
   return (
-    <Route path={config.client.orderConfirmation} component={OrderConfirmationContainer} onEnter={onEnterHandler} />
+    <Route
+      path={config.client.orderConfirmation}
+      component={OrderConfirmationContainer}
+      onEnter={onEnterHandler}
+    />
   )
 }
 

@@ -1,8 +1,10 @@
-import { connect } from 'react-redux'
 import Immutable from 'immutable'
+import { connect } from 'react-redux'
+
 import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
 import { trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
 import { getReferralOffer, getReferralCode, getUserFirstName } from 'selectors/user'
+
 import { ReferAFriend } from './ReferAFriend'
 
 const mapStateToProps = (state) => ({

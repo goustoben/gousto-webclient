@@ -1,6 +1,12 @@
 import Immutable from 'immutable'
-import { getProductsRecipePairings, getProductsRecipePairingsWithStock, getProductRecipePairingsTotalProducts, getProductsRecipePairingsWithRecipes } from '../recipePairings'
+
 import { mockGetProductRecipePairingsState, mockProductsStock } from '../../components/config'
+import {
+  getProductsRecipePairings,
+  getProductsRecipePairingsWithStock,
+  getProductRecipePairingsTotalProducts,
+  getProductsRecipePairingsWithRecipes,
+} from '../recipePairings'
 
 describe('recipe pairings selectors', () => {
   let state
@@ -9,7 +15,7 @@ describe('recipe pairings selectors', () => {
     state = {
       productRecipePairings: mockGetProductRecipePairingsState(),
       productsStock: mockProductsStock,
-      productRecipePairingsTotalProducts: 2
+      productRecipePairingsTotalProducts: 2,
     }
   })
 
@@ -75,11 +81,11 @@ describe('recipe pairings selectors', () => {
                 {
                   recipeId: '2211',
                   title: 'mock recipe title',
-                  media: [ 1, 2, 3 ]
+                  media: [1, 2, 3],
                 },
               ],
-            }
-          })
+            },
+          }),
         }
       })
 
@@ -89,9 +95,11 @@ describe('recipe pairings selectors', () => {
           {
             recipeId: '2211',
             title: 'mock recipe title',
-            media: Immutable.List([ 1, 2, 3 ]),
-            products: mockProductRecipePairings.setIn(['2211', 'products', 0, 'stock'], 10).getIn(['2211', 'products'])
-          }
+            media: Immutable.List([1, 2, 3]),
+            products: mockProductRecipePairings
+              .setIn(['2211', 'products', 0, 'stock'], 10)
+              .getIn(['2211', 'products']),
+          },
         ])
 
         const result = getProductsRecipePairingsWithRecipes(state)
@@ -99,12 +107,15 @@ describe('recipe pairings selectors', () => {
         expect(result).toEqual(expected)
       })
 
-      describe('And pairings don\'t contain any products', () => {
+      describe("And pairings don't contain any products", () => {
         beforeEach(() => {
           const mockProductRecipePairings = mockGetProductRecipePairingsState()
           state = {
             ...state,
-            productRecipePairings: mockProductRecipePairings.setIn(['2211', 'products'], Immutable.List([]))
+            productRecipePairings: mockProductRecipePairings.setIn(
+              ['2211', 'products'],
+              Immutable.List([]),
+            ),
           }
         })
 
@@ -115,7 +126,7 @@ describe('recipe pairings selectors', () => {
         })
       })
 
-      describe('And recipe id doesn\'t match the pairing recipe id', () => {
+      describe("And recipe id doesn't match the pairing recipe id", () => {
         beforeEach(() => {
           state = {
             ...state,
@@ -125,11 +136,11 @@ describe('recipe pairings selectors', () => {
                   {
                     recipeId: '1234',
                     title: 'mock recipe title',
-                    media: [ 1, 2, 3 ]
+                    media: [1, 2, 3],
                   },
                 ],
-              }
-            })
+              },
+            }),
           }
         })
         test('should not return pairings', () => {

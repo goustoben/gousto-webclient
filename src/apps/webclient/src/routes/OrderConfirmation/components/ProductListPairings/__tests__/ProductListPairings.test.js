@@ -1,15 +1,17 @@
+import React from 'react'
+
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
-import React from 'react'
+
 import { ProductListPairings } from '..'
 import { mockProductRecipePairings } from '../../config'
 
 jest.mock('utils/basket', () => ({
-  getProductLimitReached: jest.fn()
+  getProductLimitReached: jest.fn(),
 }))
 
 jest.mock('../../Product', () => ({
-  Product: () => <div className="product" />
+  Product: () => <div className="product" />,
 }))
 
 describe('ProductListPairings component', () => {
@@ -22,7 +24,7 @@ describe('ProductListPairings component', () => {
     basketProductAdd: jest.fn(),
     basketProductRemove: jest.fn(),
     toggleAgeVerificationPopUp: jest.fn(),
-    productRecipePairings: mockProductRecipePairings
+    productRecipePairings: mockProductRecipePairings,
   }
 
   const assertElementLength = (element, assertion) => {
