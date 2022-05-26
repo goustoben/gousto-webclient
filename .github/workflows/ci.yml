@@ -87,19 +87,21 @@ jobs:
         echo "Changed files:"
         git diff --name-status ${{ steps.branch_point.outputs.REF }}
         echo "Webclient lint files:"
-        yarn workspace-changes webclient --since=${{ steps.branch_point.outputs.REF }} --filter=lint
+        yarn monorepo-build lint --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient
     - name: Lint (apps/webclient)
       working-directory: src/apps/webclient
       run: |
         # Optionally run eslint if required
-        yarn workspace-changes webclient --since=${{ steps.branch_point.outputs.REF }} --filter=lint > lint-changes
+        yarn monorepo-build lint --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient > lint-changes
         if [ -s lint-changes ]; then
-          ./scripts/run-eslint-ci.sh .
+          ./scripts/run-eslint-ci.sh $(cat lint-changes)
         fi
     - name: Lint (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run lint
     - name: Unit test (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run test:unit
+    - name: Unit test (libraries)
+      run: yarn workspaces foreach --include '@library/*' --verbose run test:unit
     - name: Typecheck (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run typecheck
       working-directory: src/apps/webclient

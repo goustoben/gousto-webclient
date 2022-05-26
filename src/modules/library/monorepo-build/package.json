@@ -1,0 +1,8 @@
+{
+  "name": "@library/monorepo-build",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:unit": "yarn run --top-level jest"
+  }
+}

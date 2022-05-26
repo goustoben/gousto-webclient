@@ -3029,6 +3029,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@library/monorepo-build@workspace:src/modules/library/monorepo-build":
+  version: 0.0.0-use.local
+  resolution: "@library/monorepo-build@workspace:src/modules/library/monorepo-build"
+  languageName: unknown
+  linkType: soft
+
 "@library/nonjs-imports@workspace:*, @library/nonjs-imports@workspace:src/modules/library/nonjs-imports":
   version: 0.0.0-use.local
   resolution: "@library/nonjs-imports@workspace:src/modules/library/nonjs-imports"
