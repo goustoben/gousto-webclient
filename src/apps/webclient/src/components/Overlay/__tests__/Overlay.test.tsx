@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { render, screen } from '@testing-library/react'
 import Modal from 'react-modal'
-import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from '../../../../server/utils/serverEnvironment'
 
+import { canUseWindow } from 'utils/browserEnvironment'
+
+import { isServer } from '../../../../server/utils/serverEnvironment'
 import Overlay from '../Overlay'
 
 jest.mock('utils/browserEnvironment')

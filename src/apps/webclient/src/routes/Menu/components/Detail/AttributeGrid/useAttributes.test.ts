@@ -1,8 +1,9 @@
-import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
-import { CollectionSlug } from '../../../domains/collections'
-import * as BasketHooks from '../../../domains/basket'
+import Immutable from 'immutable'
+
 import * as RecipeContext from '../../../context/recipeContext'
+import * as BasketHooks from '../../../domains/basket'
+import { CollectionSlug } from '../../../domains/collections'
 import { useAttributes } from './useAttributes'
 
 const getRecipe = ({

@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { actionTypes } from 'actions/actionTypes'
-import { getBasketOrderId } from 'selectors/basket'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
+import { getBasketOrderId } from 'selectors/basket'
+
 import { getOrderAction } from '../selectors/order'
 import { closeSidesModal } from './sides'
 

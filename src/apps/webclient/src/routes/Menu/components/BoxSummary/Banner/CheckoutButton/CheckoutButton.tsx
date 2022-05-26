@@ -1,18 +1,19 @@
 import React, { useState, useCallback } from 'react'
-import classNames from 'classnames'
 
-import { useSelector, useDispatch } from 'react-redux'
 import { Button } from '@gousto-internal/citrus-react'
+import classNames from 'classnames'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
-import { basketSum, okRecipes } from 'utils/basket'
-import { getBasketRecipes } from 'selectors/basket'
-import { createGetActionTypeIsPending, createGetErrorForActionType } from 'selectors/status'
-import { CheckoutCounter } from 'routes/Menu/components/BoxSummary/Banner/CheckoutCounter/CheckoutCounter'
-import { getMenuRecipeIds, getStock } from 'selectors/root'
-import { usePricing } from 'routes/Menu/domains/pricing'
-import { useBasket } from 'routes/Menu/domains/basket'
 import { checkoutBasket } from 'routes/Menu/actions/menuCheckoutClick'
+import { CheckoutCounter } from 'routes/Menu/components/BoxSummary/Banner/CheckoutCounter/CheckoutCounter'
+import { useBasket } from 'routes/Menu/domains/basket'
+import { usePricing } from 'routes/Menu/domains/pricing'
+import { getBasketRecipes } from 'selectors/basket'
+import { getMenuRecipeIds, getStock } from 'selectors/root'
+import { createGetActionTypeIsPending, createGetErrorForActionType } from 'selectors/status'
+import { basketSum, okRecipes } from 'utils/basket'
 
 import css from './CheckoutButton.css'
 

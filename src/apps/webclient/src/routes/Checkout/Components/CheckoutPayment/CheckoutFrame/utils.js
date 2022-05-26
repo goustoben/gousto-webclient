@@ -1,5 +1,6 @@
-import { isBillingAddressDifferent } from 'routes/Checkout/utils/state'
 import { actionTypes } from 'actions/actionTypes'
+import { isBillingAddressDifferent } from 'routes/Checkout/utils/state'
+
 import {
   sectionName as billingAddressSection,
   deliveryAddressSectionName as deliveryAddressSection,

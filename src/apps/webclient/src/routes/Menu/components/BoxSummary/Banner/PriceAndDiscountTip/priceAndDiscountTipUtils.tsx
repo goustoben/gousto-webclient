@@ -1,14 +1,15 @@
+import { useEffect } from 'react'
+
 import Immutable from 'immutable'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 import { createSelector } from 'reselect'
-import { getIsAuthenticated } from 'selectors/auth'
+
+import { actionTypes } from 'actions/actionTypes'
+import { promoGet } from 'actions/promos'
 import { Pricing, usePricing } from 'routes/Menu/domains/pricing'
+import { getIsAuthenticated } from 'selectors/auth'
 import { getPromoCode } from 'selectors/basket'
 import { createGetPromoStoreEntry, getPromoStore } from 'selectors/promoStoreSelectors'
-
-import { useEffect } from 'react'
-import { promoGet } from 'actions/promos'
-import { actionTypes } from 'actions/actionTypes'
 import { createGetActionTypeIsPending } from 'selectors/status'
 
 export type DiscountDescriptor = {

@@ -1,9 +1,12 @@
 import React, { ReactNode } from 'react'
-import Immutable from 'immutable'
+
 import { renderHook } from '@testing-library/react-hooks'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
+
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { useIsActionBarRedesignEnabled } from '../useIsActionBarRedesignEnabled'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

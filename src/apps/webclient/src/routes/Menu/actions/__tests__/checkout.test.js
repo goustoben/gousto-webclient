@@ -1,17 +1,14 @@
-import Immutable from 'immutable'
-
 import { safeJestMock } from '_testing/mocks'
-import { createPreviewOrder } from 'apis/orders'
+import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import status from 'actions/status'
-
-import logger from 'utils/logger'
+import { createPreviewOrder } from 'apis/orders'
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
+import logger from 'utils/logger'
 
 import { checkoutCreatePreviewOrder, checkoutTransactionalOrder } from '../checkout'
-
 import * as orderActions from '../order'
 
 const orderAssignToUser = safeJestMock(orderActions, 'orderAssignToUser')

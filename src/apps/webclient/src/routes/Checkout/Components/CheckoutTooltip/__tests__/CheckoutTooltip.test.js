@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { shallow, mount } from 'enzyme'
 import RCTooltip from 'rc-tooltip'
+
 import { CheckoutTooltip } from 'routes/Checkout/Components/CheckoutTooltip/CheckoutTooltip'
 
 describe('CheckoutTooltip', () => {

@@ -7,7 +7,9 @@ import {
   touch,
   registerField,
 } from 'redux-form'
+
 import { checkoutAddressLookup } from 'actions/checkout'
+
 import { Address } from '../Address'
 
 function mapStateToProps(state, ownProps) {

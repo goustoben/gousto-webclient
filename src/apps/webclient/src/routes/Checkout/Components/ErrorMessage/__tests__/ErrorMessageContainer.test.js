@@ -1,8 +1,11 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
+
 import { actionTypes } from 'actions/actionTypes'
 import { isSubmitting } from 'routes/Checkout/utils/state'
+
 import { ErrorMessageContainer } from '../ErrorMessageContainer'
 
 jest.mock('routes/Checkout/utils/state', () => ({

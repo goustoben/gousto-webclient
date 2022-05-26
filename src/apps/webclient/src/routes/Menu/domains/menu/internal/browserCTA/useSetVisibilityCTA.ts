@@ -1,5 +1,6 @@
-import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { useDispatch } from 'react-redux'
+
+import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 
 export const useSetBrowserCTAVisibility = () => {
   const dispatch = useDispatch()

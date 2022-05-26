@@ -1,5 +1,7 @@
 import { Map } from 'immutable'
+
 import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
+
 import { useSupportedBoxTypes } from './useSupportedBoxTypes'
 
 export const sumQuantities = (recipes: Map<string, number>) =>

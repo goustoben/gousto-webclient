@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
+
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { CollectionLink } from '../../components/CollectionLink'
 import { RecipeTile } from '../../components/RecipeTile'
 import { RecipeContextProvider } from '../../context/recipeContext'
 import { RecipeReferenceProvider } from '../../context/recipeReferenceContext'
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
-import css from './RecipeList.css'
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
 import { useTracking } from './useTracking'
+
+import css from './RecipeList.css'
 
 export const buildTracker =
   ({ recipes, currentCollectionId, track }) =>

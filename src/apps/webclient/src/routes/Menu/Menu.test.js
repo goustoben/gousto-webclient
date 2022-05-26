@@ -1,8 +1,9 @@
 import React from 'react'
+
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
-
 import { forceCheck } from 'react-lazyload'
+
 import Menu from 'routes/Menu/Menu'
 
 jest.mock('layouts/MainLayout', () => 'MainLayout')

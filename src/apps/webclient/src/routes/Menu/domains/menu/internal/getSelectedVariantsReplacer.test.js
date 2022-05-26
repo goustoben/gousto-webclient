@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
 
 describe('getSelectedVariantsReplacer produces recipe replacer function that', () => {

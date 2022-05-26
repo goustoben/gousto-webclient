@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { AlignItems, Box, FlexDirection, JustifyContent } from '@gousto-internal/citrus-react'
-import { WelcomeSection } from 'routes/Home/PriceComparisonTable/components/WelcomeSection/WelcomeSection'
+
+import css from 'routes/Home/PriceComparisonTable/PriceComparisonTable.css'
 import { ComparisonTable } from 'routes/Home/PriceComparisonTable/components/ComparisonTable/ComparisonTable'
 import { SignupCTA } from 'routes/Home/PriceComparisonTable/components/SignupCTA/SignupCTA'
-import css from 'routes/Home/PriceComparisonTable/PriceComparisonTable.css'
+import { WelcomeSection } from 'routes/Home/PriceComparisonTable/components/WelcomeSection/WelcomeSection'
 import { TABLE_DATA } from 'routes/Home/PriceComparisonTable/constants'
 
 export function PriceComparisonTable() {

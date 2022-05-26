@@ -1,4 +1,11 @@
 import {
+  getClientDomain,
+  getClientEnvironment,
+  getClientCheckoutComPublicKey,
+  getClientRecaptchaPublicKey,
+  getClientRecaptchaRAFPublicKey,
+} from 'utils/configFromWindow'
+import {
   createIsomorphicConfig,
   getEnvironment,
   getDomain,
@@ -7,13 +14,7 @@ import {
   getRecaptchaRAFPublicKey,
   getCheckoutComPublicKey,
 } from 'utils/isomorphicEnvironment'
-import {
-  getClientDomain,
-  getClientEnvironment,
-  getClientCheckoutComPublicKey,
-  getClientRecaptchaPublicKey,
-  getClientRecaptchaRAFPublicKey,
-} from 'utils/configFromWindow'
+
 import {
   getServerEnvironment,
   getServerDomain,

@@ -1,7 +1,8 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { useCollectionQuerySlug } from '../../domains/collections/internal/useCollectionQuerySlug'
+
 import { useAuth } from '../../domains/auth/useAuth'
 import { CollectionSlug } from '../../domains/collections'
+import { useCollectionQuerySlug } from '../../domains/collections/internal/useCollectionQuerySlug'
 
 export const useShouldRemoveMerchandisingBanner = () => {
   const { isAuthenticated } = useAuth()

@@ -1,25 +1,27 @@
-import Immutable from 'immutable'
-import PropTypes from 'prop-types'
 import React from 'react'
-import moment from 'moment'
-import classNames from 'classnames'
-import DropdownInput from 'Form/Dropdown'
 
+import DropdownInput from 'Form/Dropdown'
+import classNames from 'classnames'
+import { Heading, Alert } from 'goustouicomponents'
+import Immutable from 'immutable'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+
+import { completeWizardDeliveryDay } from 'actions/trackingKeys'
+import { RibbonTriggerContainer } from 'components/RibbonTrigger'
+import { unbounce as unbounceRoutes } from 'config/routes'
+import { signupConfig } from 'config/signup'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
+import { SocialBelongingBanner } from 'routes/Signup/SocialBelongingBanner'
 import {
   createNextDayDeliveryDays,
   generateNextDayDeliverySlots,
   getDateOffset,
 } from 'utils/deliverySlot'
-import { Heading, Alert } from 'goustouicomponents'
-import { unbounce as unbounceRoutes } from 'config/routes'
-import { signupConfig } from 'config/signup'
-import { completeWizardDeliveryDay } from 'actions/trackingKeys'
-import { SocialBelongingBanner } from 'routes/Signup/SocialBelongingBanner'
-import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { SubscriptionTransparencyText } from '../../Components/SubscriptionTransparencyText'
+
 import { Button } from '../../Button'
+import { SubscriptionTransparencyText } from '../../Components/SubscriptionTransparencyText'
 import { Image } from '../../Image'
 
 import signupCss from '../../Signup.css'

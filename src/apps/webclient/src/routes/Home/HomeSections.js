@@ -1,14 +1,17 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+
+import PropTypes from 'prop-types'
+
 import { homeConfig } from 'config/home'
 import routesConfig from 'config/routes'
-import { PriceComparisonTable } from './PriceComparisonTable'
-import { Hero } from './Hero'
+
 import { Carousel } from './Carousel'
+import { EmailForm } from './EmailForm'
+import { Hero } from './Hero'
+import { JoeWicks } from './JoeWicks'
+import { PriceComparisonTable } from './PriceComparisonTable'
 import { TrustPilot } from './TrustPilot'
 import { WhyChooseGousto } from './WhyChooseGousto'
-import { JoeWicks } from './JoeWicks'
-import { EmailForm } from './EmailForm'
 
 const propTypes = {
   modules: PropTypes.arrayOf(PropTypes.string),

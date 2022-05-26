@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import { InputRadio } from 'goustouicomponents'
+
 import { AlternativeOptionItem } from './AlternativeOptionItem'
 
 describe('AlternativeOptionItem', () => {

@@ -1,7 +1,9 @@
-import * as fetchModule from 'utils/fetch'
-import * as cookieHelper from 'utils/cookieHelper2'
-import Cookies from 'cookies-js'
 import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+import Cookies from 'cookies-js'
+
+import * as cookieHelper from 'utils/cookieHelper2'
+import * as fetchModule from 'utils/fetch'
+
 import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
 
 const mockFetchResult = { data: [1, 2, 3] }

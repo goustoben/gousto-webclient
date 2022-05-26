@@ -1,5 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
+import PropTypes from 'prop-types'
+
 import { useRecipeField } from '../../../context/recipeContext'
 import { useStock } from '../../../domains/menu'
 import { RecipeDetailsButtons } from '../RecipeDetailsButtons'

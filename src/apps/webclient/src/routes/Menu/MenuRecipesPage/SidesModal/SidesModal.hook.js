@@ -1,7 +1,9 @@
 import React from 'react'
+
+import { updateOrderItems } from 'apis/orders'
 import { useSides } from 'routes/Menu/apis/sides.hook'
 import { ResourceType } from 'routes/Menu/constants/resources'
-import { updateOrderItems } from 'apis/orders'
+
 import { SIDES, MAX_PRODUCTS_PER_BOX, LimitType } from '../../constants/products'
 
 // Note: this method should be replaced with `Object.fromEntries` when supported

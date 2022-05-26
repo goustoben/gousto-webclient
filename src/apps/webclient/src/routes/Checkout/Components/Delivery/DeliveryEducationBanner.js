@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {
   Box,
   Text,
@@ -8,7 +10,6 @@ import {
   IconVariant,
   AlignItems,
 } from '@gousto-internal/citrus-react'
-import React from 'react'
 
 const DeliveryEducationBanner = () => (
   <>

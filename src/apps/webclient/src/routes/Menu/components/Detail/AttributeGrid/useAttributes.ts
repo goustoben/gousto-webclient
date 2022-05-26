@@ -1,7 +1,8 @@
 import { getDietaryTags } from 'utils/recipe'
+
+import { useRecipe } from '../../../context/recipeContext'
 import { useBasket, NumberOfPortions } from '../../../domains/basket'
 import { CollectionSlug } from '../../../domains/collections'
-import { useRecipe } from '../../../context/recipeContext'
 import { VisibleAttribute } from './RecipeAttribute'
 import { detailedRecipePriorityOrder } from './config'
 

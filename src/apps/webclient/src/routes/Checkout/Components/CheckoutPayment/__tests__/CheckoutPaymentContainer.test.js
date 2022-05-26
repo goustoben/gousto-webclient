@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { mapStateToProps } from '../CheckoutPaymentContainer'
 
 describe('CheckoutPaymentContainer', () => {

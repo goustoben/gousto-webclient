@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { DetailViewType } from '../types'
 import { Stars } from './Stars'
+
 import css from './Rating.css'
 
 type RecipeRatingProps = {

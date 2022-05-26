@@ -1,7 +1,10 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import Overlay from 'components/Overlay'
+
 import ModalPanel from 'Modal/ModalPanel'
+import { shallow } from 'enzyme'
+
+import Overlay from 'components/Overlay'
+
 import { Checkout3DSModal } from '../Checkout3DSModal'
 
 import css from '../Checkout3DSModal.css'

@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { Alert } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { PricePerServingMessage } from 'components/PricePerServingMessage'
-import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
 import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+
 import { BoxProgressMessage } from '../../../BoxProgressMessage'
 
 const BoxProgressAlert = ({ numRecipes }) => {

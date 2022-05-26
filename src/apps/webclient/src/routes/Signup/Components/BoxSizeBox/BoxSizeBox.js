@@ -1,12 +1,16 @@
 import React from 'react'
+
+import Image from 'Image'
+import classNames from 'classnames'
+import { Button, Loader } from 'goustouicomponents'
+import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import classNames from 'classnames'
+
 import { signupConfig } from 'config/signup'
-import { Button, Loader } from 'goustouicomponents'
-import Image from 'Image'
-import Immutable from 'immutable'
+
 import { DiscountAppliedNotice } from '../DiscountAppliedNotice/DiscountAppliedNotice'
+
 import css from './BoxSizeBox.css'
 
 const BoxSizeBox = ({

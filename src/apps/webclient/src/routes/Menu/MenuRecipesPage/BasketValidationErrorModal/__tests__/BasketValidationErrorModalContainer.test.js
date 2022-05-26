@@ -1,8 +1,11 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
+
 import * as statusSelectors from 'selectors/status'
+
 import { safeJestMock } from '../../../../../_testing/mocks'
 import * as basketSelectors from '../../../selectors/basket'
 import { BasketValidationErrorModalContainer } from '../BasketValidationErrorModalContainer'

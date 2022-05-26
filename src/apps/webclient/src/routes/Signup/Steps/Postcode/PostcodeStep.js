@@ -1,15 +1,19 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+
 import TextInput from 'Form/Input'
-import { signupConfig } from 'config/signup'
+import classNames from 'classnames'
 import { Heading } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { PostcodeStepMessage } from './PostcodeStepMessage'
+import { signupConfig } from 'config/signup'
+
 import { Button } from '../../Button'
 import { Image } from '../../Image'
-import postcodeCss from './PostcodeStep.css'
+import { PostcodeStepMessage } from './PostcodeStepMessage'
+
 import css from '../../Signup.css'
+import postcodeCss from './PostcodeStep.css'
 
 class PostcodeStep extends PureComponent {
   handleClick = () => {

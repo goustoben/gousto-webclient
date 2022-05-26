@@ -1,7 +1,8 @@
-import { shallow } from 'enzyme'
 import React from 'react'
 
+import { shallow } from 'enzyme'
 import { Button, Segment } from 'goustouicomponents'
+
 import { BrowseCTAButton } from '../BrowseCTAButton/BrowseCTAButton'
 
 describe('BrowseCTAButton', () => {

@@ -1,10 +1,13 @@
 import * as React from 'react'
+
 import { renderHook } from '@testing-library/react-hooks'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import Immutable from 'immutable'
+
 import { initialState as authInitialState } from 'reducers/auth'
 import { initialState as basketInitialState } from 'reducers/basket'
+
 import { useMenu } from './useMenu'
 
 const createMockStore = (valueOverrides) => {

@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { render } from '@testing-library/react'
+
 import { useIsActionBarRedesignEnabled } from 'routes/Menu/hooks/useIsActionBarRedesignEnabled'
+
 import { withIsActionBarRedesignEnabled } from '../withIsActionBarRedesignEnabled'
 
 jest.mock('routes/Menu/hooks/useIsActionBarRedesignEnabled', () => ({

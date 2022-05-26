@@ -1,5 +1,6 @@
-import qs from 'qs'
 import isomorphicFetch from 'isomorphic-fetch'
+import qs from 'qs'
+
 import Cookies from 'utils/GoustoCookies'
 import { get as getFromCookie } from 'utils/cookieHelper2'
 

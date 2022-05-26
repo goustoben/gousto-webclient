@@ -1,13 +1,15 @@
-import { shallow } from 'enzyme'
 import React from 'react'
+
+import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { boxSummaryViews } from 'utils/boxSummary'
-import { useSelector, useDispatch } from 'react-redux'
+
 import { BoxSummaryContent as BoxSummary } from '../BoxSummaryContent/BoxSummaryContent'
+import { DeliverySlotContainer } from '../DeliverySlot'
 import { DetailsContainer } from '../Details'
 import { PostcodeContainer } from '../Postcode'
-import { DeliverySlotContainer } from '../DeliverySlot'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

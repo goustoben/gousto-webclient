@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { AddressOverhaul } from '../AddressOverhaul'
 
 describe('Given AddressOverhaul', () => {

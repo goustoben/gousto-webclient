@@ -1,12 +1,16 @@
 import React from 'react'
-import { Heading } from 'goustouicomponents'
+
 import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
-import { getNumberOfPeople } from 'routes/Signup/signupSelectors'
-import { useDispatch, useSelector } from 'react-redux'
-import { trackUTMAndPromoCode } from 'actions/tracking'
 import actions from 'actions'
+import { Heading } from 'goustouicomponents'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import { completeWizardBoxSizeRecommender } from 'actions/trackingKeys'
+import { getNumberOfPeople } from 'routes/Signup/signupSelectors'
+
 import { Button as SignupContinueButton } from '../../Button'
+
 import css from './BoxSizeRecommenderStep.css'
 
 const LargeBoxRecommendation = () => (

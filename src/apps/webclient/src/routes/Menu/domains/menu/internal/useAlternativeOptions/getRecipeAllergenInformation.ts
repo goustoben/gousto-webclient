@@ -1,4 +1,5 @@
 import { getDietaryTags } from 'utils/recipe'
+
 import { RecipeImmutable } from './types'
 
 const ALLERGEN_DAIRY_FREE = 'dairy-free'

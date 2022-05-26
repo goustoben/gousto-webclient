@@ -1,16 +1,17 @@
+import actions from 'actions'
 import Immutable from 'immutable'
 import { Store } from 'redux'
-import actions from 'actions'
+
+import { hotjarSkipWizard } from 'actions/trackingKeys'
+import routes from 'config/routes'
+import { getSignupSteps } from 'routes/Signup/utils/getSignupSteps'
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
 import {
   canLandOnStepWithoutRedirecting,
   findStepBySlug,
   getPromocodeQueryParam,
   stepByName,
 } from 'utils/signup'
-import { invokeHotjarEvent } from 'utils/hotjarUtils'
-import { getSignupSteps } from 'routes/Signup/utils/getSignupSteps'
-import { hotjarSkipWizard } from 'actions/trackingKeys'
-import routes from 'config/routes'
 
 /**
  * DO NOT import anywhere, type is exported for tests.

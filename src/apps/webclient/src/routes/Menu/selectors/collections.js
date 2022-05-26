@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect'
+
+import menuConfig from 'config/menu'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getCollectionIdWithName } from 'utils/collections'
-import menuConfig from 'config/menu'
+
 import { isOutOfStock } from './recipe'
 
 export const getRecipesInCollection = (menuCollections, collectionId) =>

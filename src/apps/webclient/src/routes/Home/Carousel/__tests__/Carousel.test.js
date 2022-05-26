@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
-import { Carousel } from 'routes/Home/Carousel/Carousel'
+
 import { CTAHomepageContainer } from 'routes/Home/CTA'
+import { Carousel } from 'routes/Home/Carousel/Carousel'
 import { RecipeCarousel } from 'routes/Home/Carousel/RecipeCarousel'
 
 describe('Carousel', () => {

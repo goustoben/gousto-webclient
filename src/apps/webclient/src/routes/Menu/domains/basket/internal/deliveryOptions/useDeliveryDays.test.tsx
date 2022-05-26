@@ -1,7 +1,8 @@
-import isomorphicFetch from 'isomorphic-fetch'
 import { renderHook } from '@testing-library/react-hooks'
 import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
-import { useDeliveryDays } from '.'
+import isomorphicFetch from 'isomorphic-fetch'
+
+import { useDeliveryDays } from './useDeliveryDays'
 
 jest.mock('isomorphic-fetch', () => jest.fn())
 

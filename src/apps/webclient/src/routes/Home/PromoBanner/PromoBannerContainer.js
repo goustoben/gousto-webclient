@@ -1,12 +1,15 @@
 import React from 'react'
+
 import { connect } from 'react-redux'
+
+import { applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { getPromoBannerText } from 'selectors/features'
-import { getPromoBannerState } from 'utils/home'
-import { applyPromoCodeAndShowModal } from 'actions/home'
 import { promo } from 'config/home'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { getPromoBannerText } from 'selectors/features'
+import { getPromoBannerState } from 'utils/home'
+
 import { PromoBanner } from './PromoBanner'
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,11 +1,13 @@
-import * as trackingKeys from 'actions/trackingKeys'
-import { actionTypes } from 'actions/actionTypes'
-import { v4 as uuid } from 'uuid'
-import { getTransactionType } from 'selectors/tracking'
-import { useDispatch, useSelector } from 'react-redux'
 import { useCallback } from 'react'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { v4 as uuid } from 'uuid'
+
+import { actionTypes } from 'actions/actionTypes'
+import * as trackingKeys from 'actions/trackingKeys'
 import { getBasketDate, getBasketMenuId, getBasketOrderId } from 'selectors/basket'
 import { getBoxSummaryDeliveryDays, getMenuBrowseCTAShow, getMenuCollections } from 'selectors/root'
+import { getTransactionType } from 'selectors/tracking'
 
 export function useTracking() {
   const dispatch = useDispatch()

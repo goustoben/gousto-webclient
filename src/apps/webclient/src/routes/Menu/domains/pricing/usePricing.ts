@@ -6,6 +6,7 @@ import { postFetcher } from 'routes/Menu/apis/fetch'
 import { getOrderV2 } from 'routes/Menu/selectors/order'
 import { transformOrderPricesV2ToOrderV1 } from 'routes/Menu/transformers/orderPricesV2ToV1'
 import { getBasketRecipesCount, getBasketSlotId } from 'selectors/basket'
+
 import { useAuth } from '../auth'
 
 export type Pricing = {

@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
+
 import { getUserAgent } from 'selectors/root'
+
 import { CollectionSlug, useCollections } from '../../domains/collections'
 
 const isIgnoredBrowser = (userAgent) => {

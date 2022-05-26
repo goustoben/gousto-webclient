@@ -1,9 +1,9 @@
-import { shallow } from 'enzyme'
 import React from 'react'
 
+import { shallow } from 'enzyme'
+import { Segment } from 'goustouicomponents'
 import sinon from 'sinon'
 
-import { Segment } from 'goustouicomponents'
 import { Portions } from '../../Details/Portions'
 
 describe('Portions', () => {

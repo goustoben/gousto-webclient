@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { getFormValues, change } from 'redux-form'
 
-import { hasCheckoutError } from 'selectors/checkout'
 import {
   fireCheckoutError,
   checkoutClearErrors,
@@ -10,9 +9,11 @@ import {
   trackingCardTokenizationFailed,
 } from 'actions/checkout'
 import { trackFailedCheckoutFlow } from 'actions/log'
+import { hasCheckoutError } from 'selectors/checkout'
+
 import { sectionName, deliveryAddressSectionName } from '../config'
-import { getBillingAddress } from './utils'
 import { CheckoutFrame } from './CheckoutFrame'
+import { getBillingAddress } from './utils'
 
 const mapStateToProps = (state) => {
   const formValues = {

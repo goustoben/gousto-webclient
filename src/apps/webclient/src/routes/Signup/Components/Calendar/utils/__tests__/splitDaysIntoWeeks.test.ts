@@ -1,5 +1,6 @@
-import { splitDaysIntoWeeks } from 'routes/Signup/Components/Calendar/utils/splitDaysIntoWeeks'
 import moment from 'moment'
+
+import { splitDaysIntoWeeks } from 'routes/Signup/Components/Calendar/utils/splitDaysIntoWeeks'
 
 const DELIVERY_DAY_FORMAT = 'YYYY-MM-DD'
 jest.mock('moment', () => () => jest.requireActual('moment')('2020-01-15', DELIVERY_DAY_FORMAT))

@@ -1,8 +1,9 @@
 import React from 'react'
-import configureMockStore from 'redux-mock-store'
-import { Provider } from 'react-redux'
-import { render, RenderOptions} from '@testing-library/react'
+
+import { render, RenderOptions } from '@testing-library/react'
 import { renderHook, RenderHookOptions } from '@testing-library/react-hooks'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 
 export const createStore = (state: any) => {
   const mockStore = configureMockStore()
@@ -17,7 +18,19 @@ export const createStore = (state: any) => {
 
 type Store = ReturnType<typeof createStore>
 
-export const renderWithStore = (component: React.ReactNode, store: Store, options?: Omit<RenderOptions, 'queries'>) => render(<Provider store={store}>{component}</Provider>, options)
+export const renderWithStore = (
+  component: React.ReactNode,
+  store: Store,
+  options?: Omit<RenderOptions, 'queries'>,
+) => render(<Provider store={store}>{component}</Provider>, options)
 
 // eslint-disable-next-line no-unused-vars
-export const renderHookWithStore = <P, R>(callback: (props: P) => R, store: Store, options?: RenderHookOptions<P>) => renderHook(callback, { ...(options || {}), wrapper: ({ children }) => <Provider store={store}>{children}</Provider> })
+export const renderHookWithStore = <P, R>(
+  callback: (props: P) => R,
+  store: Store,
+  options?: RenderHookOptions<P>,
+) =>
+  renderHook(callback, {
+    ...(options || {}),
+    wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+  })

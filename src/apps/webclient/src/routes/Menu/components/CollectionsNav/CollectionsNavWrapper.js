@@ -1,7 +1,10 @@
 import React from 'react'
+
 import { useSelector } from 'react-redux'
-import { getIsPolicyAccepted } from 'selectors/cookies'
+
 import { useDoubleDeckerNav } from 'hooks/useDoubleDeckerNav'
+import { getIsPolicyAccepted } from 'selectors/cookies'
+
 import { useCollections } from '../../domains/collections'
 import { CollectionsNav } from './CollectionsNav'
 

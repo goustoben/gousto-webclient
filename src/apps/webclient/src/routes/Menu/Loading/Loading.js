@@ -1,6 +1,8 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import LoadingComponent from 'Loading'
+
+import PropTypes from 'prop-types'
+
+import LoadingComponent from 'components/Loading'
 
 import css from './Loading.css'
 

@@ -1,5 +1,7 @@
 import React from 'react'
+
 import Svg from 'Svg'
+
 import css from './SubscriptionTransparencyText.css'
 
 const SubscriptionTransparencyText = () => (

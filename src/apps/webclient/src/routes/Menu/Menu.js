@@ -1,17 +1,18 @@
 import React from 'react'
+
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import { forceCheck as forceCheckLazyload } from 'react-lazyload'
 
-import menu from 'config/menu'
-import browserHelper from 'utils/browserHelper'
-
-import MainLayout from 'layouts/MainLayout'
 import ErrorPage from 'components/ErrorPage'
 import { RibbonTrigger } from 'components/RibbonTrigger'
-import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
+import menu from 'config/menu'
+import MainLayout from 'layouts/MainLayout'
+import browserHelper from 'utils/browserHelper'
+
 import { BoxSummaryContainer } from './components/BoxSummary'
 import { DetailRecipeMetaContainer } from './components/RecipeMeta'
+import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
 import css from './Menu.css'

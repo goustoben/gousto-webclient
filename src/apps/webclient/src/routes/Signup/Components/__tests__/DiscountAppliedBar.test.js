@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { DiscountAppliedBar } from '../DiscountAppliedBar/DiscountAppliedBar'
 
 describe('Given DiscountAppliedBar component', () => {

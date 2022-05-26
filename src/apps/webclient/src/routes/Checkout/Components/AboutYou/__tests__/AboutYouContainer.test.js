@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { mapStateToProps } from '../AboutYouContainer'
 
 describe('Given mapStateToProps', () => {

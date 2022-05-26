@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
-import { Field } from 'redux-form'
+
 import { ReduxFormInput } from 'Form/ReduxFormInput'
+import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+
 import checkoutCss from '../../Checkout.css'
 
 const AddressInputs = ({ receiveRef, sectionName }) => (

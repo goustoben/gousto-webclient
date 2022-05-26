@@ -1,21 +1,23 @@
+import React from 'react'
+
 import { Box, Space, Text, Display, BorderStyle, Color } from '@gousto-internal/citrus-react'
+import { ReduxFormInput } from 'Form/ReduxFormInput'
+import { HotjarTrigger } from 'HotjarTrigger'
+import Immutable from 'immutable'
+import moment from 'moment'
 
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
-import React from 'react'
-import moment from 'moment'
-import Immutable from 'immutable'
 import { Field, FormSection } from 'redux-form'
-import { ReduxFormInput } from 'Form/ReduxFormInput'
-import { HotjarTrigger } from 'HotjarTrigger'
-import * as deliveryUtils from 'routes/Checkout/utils/delivery'
 import scrollIntoView from 'scroll-into-view'
-import { getSlotTimes } from 'utils/deliveries'
-import { canUseWindow } from 'utils/browserEnvironment'
 
+import * as deliveryUtils from 'routes/Checkout/utils/delivery'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { getSlotTimes } from 'utils/deliveries'
+
+import { SectionHeader } from '../SectionHeader'
 import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
-import { SectionHeader } from '../SectionHeader'
 
 const propTypes = {
   formValues: PropTypes.objectOf(PropTypes.object),

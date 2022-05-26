@@ -1,7 +1,8 @@
-import { fetch } from 'utils/fetch'
-import logger from 'utils/logger'
 import endpoint from 'config/endpoint'
 import { useUserIdForOptimizely } from 'containers/OptimizelyRollouts/useOptimizely.hook'
+import { fetch } from 'utils/fetch'
+import logger from 'utils/logger'
+
 import { getRequestHeaders } from './_utils'
 
 export const sendClientMetric = async (name, value, unit = 'None', userId) => {

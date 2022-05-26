@@ -1,10 +1,11 @@
 import { actionTypes } from 'actions/actionTypes'
-import logger from 'utils/logger'
-import { getBasketRecipes } from 'selectors/basket'
-import { getCurrentPaymentMethod } from 'selectors/payment'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import { checkoutSteps } from 'routes/Checkout/checkoutConfig'
+import { getBasketRecipes } from 'selectors/basket'
+import { getCurrentPaymentMethod } from 'selectors/payment'
 import { canUseWindow } from 'utils/browserEnvironment'
+import logger from 'utils/logger'
+
 import {
   getUserDetails,
   getProductsValueForSingleRecipeById,

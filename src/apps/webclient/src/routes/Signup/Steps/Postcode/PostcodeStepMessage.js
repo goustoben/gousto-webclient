@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { signupConfig } from 'config/signup'
+
 import Svg from 'Svg'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
+import { signupConfig } from 'config/signup'
 import { Benefits } from 'routes/Home/Benefits'
+
 import postcodeCss from './PostcodeStep.css'
 
 export const PostcodeStepMessage = ({

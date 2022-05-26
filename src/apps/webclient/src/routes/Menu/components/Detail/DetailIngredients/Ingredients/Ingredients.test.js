@@ -1,9 +1,10 @@
 import React from 'react'
 
-import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import { Ingredients } from './Ingredients'
+import Immutable from 'immutable'
+
 import { Ingredient } from './Ingredient'
+import { Ingredients } from './Ingredients'
 
 describe('<Ingredients />', () => {
   const ingredients = Immutable.fromJS([

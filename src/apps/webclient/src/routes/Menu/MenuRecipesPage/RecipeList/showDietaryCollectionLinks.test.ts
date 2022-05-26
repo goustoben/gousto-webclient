@@ -1,4 +1,5 @@
 import { CollectionId } from 'routes/Menu/domains/collections'
+
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
 
 describe('showDietaryCollectionLinks', () => {

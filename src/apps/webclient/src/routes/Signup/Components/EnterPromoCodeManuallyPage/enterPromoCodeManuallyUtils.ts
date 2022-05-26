@@ -1,9 +1,10 @@
 import Immutable from 'immutable'
 import { Dispatch } from 'redux'
+
 import { basketPromoCodeChange } from 'actions/basket'
 import { promoGet, promoChange } from 'actions/promos'
-import { trackUTMAndPromoCode } from 'actions/tracking'
 import { redirect } from 'actions/redirect'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 
 /**
  * empty = nothing entered

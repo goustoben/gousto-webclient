@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { joeWicks } from 'config/home'
+
 import css from './JoeWicks.css'
 
 const JoeWicks = () => (

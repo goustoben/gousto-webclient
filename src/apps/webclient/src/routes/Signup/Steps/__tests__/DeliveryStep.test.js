@@ -1,11 +1,14 @@
 import React from 'react'
-import Immutable from 'immutable'
+
+import DropdownInput from 'Form/Dropdown'
 import { mount } from 'enzyme'
-import configureMockStore from 'redux-mock-store'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import * as Redux from 'react-redux'
-import DropdownInput from 'Form/Dropdown'
+import configureMockStore from 'redux-mock-store'
+
 import { unbounce as unbounceRoutes } from 'config/routes'
+
 import { DeliveryStep } from '../Delivery/DeliveryStep'
 
 const mockStore = configureMockStore()

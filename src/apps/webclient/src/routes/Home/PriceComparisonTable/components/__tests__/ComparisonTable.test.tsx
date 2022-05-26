@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { render, screen, fireEvent } from '@testing-library/react'
+
 import { ComparisonTable } from 'routes/Home/PriceComparisonTable/components/ComparisonTable/ComparisonTable'
 import { comparisonTableTexts, TABLE_DATA } from 'routes/Home/PriceComparisonTable/constants'
 

@@ -1,6 +1,8 @@
-import moment, { Moment } from 'moment'
-import Svg from 'Svg'
 import React from 'react'
+
+import Svg from 'Svg'
+import moment, { Moment } from 'moment'
+
 import css from './CalendarSpan.css'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jul', 'Jun', 'Aug', 'Sep', 'Nov', 'Oct', 'Dec']

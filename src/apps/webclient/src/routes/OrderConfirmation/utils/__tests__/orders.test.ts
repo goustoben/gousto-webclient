@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { getOrderWhenStartDate } from '../order'
 
 describe('OrderConfirmation order utils', () => {

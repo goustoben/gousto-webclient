@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react'
-import classnames from 'classnames'
 
 import Svg from 'Svg'
+import classnames from 'classnames'
+
 import { content, quotes } from 'routes/BoxPrices/boxPricesConfig'
+
 import css from './BoxPricesContent.css'
 
 export const BoxPricesContent = () => (

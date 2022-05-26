@@ -1,7 +1,10 @@
 import React from 'react'
-import * as trackingKeys from 'actions/trackingKeys'
+
 import { Button } from 'goustouicomponents'
 import PropTypes from 'prop-types'
+
+import * as trackingKeys from 'actions/trackingKeys'
+
 import { CheckoutButton } from '../Banner/CheckoutButton'
 
 const DetailsCheckoutButton = (props) => {

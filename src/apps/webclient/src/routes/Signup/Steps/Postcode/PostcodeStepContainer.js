@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
-import tempActions from 'actions/temp'
 import { signupChangePostcode, signupGetCountByPostcode } from 'actions/signup'
+import tempActions from 'actions/temp'
+
 import { PostcodeStep } from './PostcodeStep'
 
 function mapStateToProps(state) {

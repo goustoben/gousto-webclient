@@ -1,11 +1,14 @@
 import React from 'react'
+
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
-import configureMockStore from 'redux-mock-store'
-import { shallow } from 'enzyme'
 import Helmet from 'react-helmet'
+import configureMockStore from 'redux-mock-store'
+
 import menuFetchData from 'routes/Menu/fetchData'
-import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+
 import { Home } from '../Home'
 
 jest.mock('routes/Menu/fetchData')

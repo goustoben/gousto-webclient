@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { CollectionLinkTile } from './CollectionLinkTile'
 import { useDietaryCollections } from './useDietaryCollections'
+
 import css from './CollectionLink.css'
 
 const CollectionLink = () => {

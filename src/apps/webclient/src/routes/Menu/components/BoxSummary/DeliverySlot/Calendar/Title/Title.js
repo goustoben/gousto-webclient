@@ -1,6 +1,9 @@
 import React from 'react'
+
 import moment from 'moment'
+
 import { datesPropType } from '../../deliverySlotPropTypes'
+
 import css from './Title.css'
 
 const unique = (arr) => Array.from(new Set(arr))

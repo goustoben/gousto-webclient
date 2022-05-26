@@ -1,12 +1,15 @@
 import React, { useCallback } from 'react'
+
 import Immutable from 'immutable'
-import css from './CollectionLinkTile.css'
-import { useMenu } from '../../../domains/menu'
+
 import { useCollections } from '../../../domains/collections'
+import { useMenu } from '../../../domains/menu'
 import { MenuCollection } from '../../../types'
 import { findImageUrls } from '../../Recipe/Image/findImageUrls'
 import { getDefaultImage } from '../../Recipe/Image/useRecipeImage'
 import { useTracking } from './tracking'
+
+import css from './CollectionLinkTile.css'
 
 const extractImageFromRecipe = (recipe: Immutable.Map<string, string>): string => {
   const images = recipe.getIn(['media', 'images']) || Immutable.List()

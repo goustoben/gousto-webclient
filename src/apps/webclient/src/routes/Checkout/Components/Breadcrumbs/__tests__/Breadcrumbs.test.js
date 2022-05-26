@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
+
 import { Breadcrumbs } from '../Breadcrumbs'
 
 describe('Breadcrumbs', () => {

@@ -1,10 +1,13 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
+
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { dismissRecipesInBasketProgress } from 'actions/trackingKeys'
-import { RecipesInBasketProgressPresentation } from './RecipesInBasketProgress.presentation'
+
 import { useBasket } from '../../domains/basket'
+import { RecipesInBasketProgressPresentation } from './RecipesInBasketProgress.presentation'
 
 const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,

@@ -1,19 +1,22 @@
 import React, { useState, useCallback } from 'react'
-import { Heading } from 'goustouicomponents'
-import classNames from 'classnames'
 
-import goustoBoxesImage from 'media/images/gousto-boxes.jpg'
-import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 import { Checkbox } from '@gousto-internal/citrus-react'
+import classNames from 'classnames'
+import { Heading } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
+
 import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
+import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+
+import goustoBoxesImage from 'media/images/gousto-boxes.jpg'
+
+import { items } from '../../Components/SellThePropositionPage/SellThePropositionPage'
 import {
   trackCuisineSelected,
   trackCuisineDeselected,
   trackSignupPersonalisationComplete,
 } from '../../signupActions'
-import { items } from '../../Components/SellThePropositionPage/SellThePropositionPage'
 
 import signupCss from '../../Signup.css'
 import css from './PersonaliseMenuStep.css'

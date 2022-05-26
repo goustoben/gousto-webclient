@@ -1,9 +1,12 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import { FormSection } from 'redux-form'
 import scrollIntoView from 'scroll-into-view'
+
 import { canUseWindow } from 'utils/browserEnvironment'
+
 import { Delivery } from '../Delivery'
 
 jest.mock('scroll-into-view')

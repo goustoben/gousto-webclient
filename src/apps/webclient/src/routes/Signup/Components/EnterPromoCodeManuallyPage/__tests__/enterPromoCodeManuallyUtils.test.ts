@@ -1,9 +1,11 @@
 import Immutable from 'immutable'
-import { promoGet, promoChange } from 'actions/promos'
+
 import { basketPromoCodeChange } from 'actions/basket'
-import { trackUTMAndPromoCode } from 'actions/tracking'
+import { promoGet, promoChange } from 'actions/promos'
 import { redirect } from 'actions/redirect'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import { clickEnterPromoCodeManuallyContinue } from 'actions/trackingKeys'
+
 import {
   getPromoCodeCampaignTextHtml,
   checkPromoCode,

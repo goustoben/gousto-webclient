@@ -1,7 +1,9 @@
+import React from 'react'
+
 import PropTypes from 'prop-types'
 
-import React from 'react'
 import { isAddressConfirmed } from 'routes/Checkout/utils/delivery'
+
 import { CheckoutButton } from '../../CheckoutButton'
 import { ErrorMessage } from '../../ErrorMessage'
 

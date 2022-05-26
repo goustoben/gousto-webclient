@@ -1,9 +1,9 @@
-import { getEnvConfig } from 'utils/processEnv'
-import { canUseWindow } from 'utils/browserEnvironment'
 import {
   ENVIRONMENT_NAMES,
   PROTOCOL_PREFIX,
 } from 'config/service-environment/service-environment.types'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { getEnvConfig } from 'utils/processEnv'
 
 /**
  * Environment config getter for SERVER side environment

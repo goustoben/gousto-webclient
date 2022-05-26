@@ -1,8 +1,6 @@
 import Immutable from 'immutable'
-import customersApi, { customerSignup } from 'apis/customers'
-import { PaymentMethod } from 'config/signup'
+
 import { actionTypes } from 'actions/actionTypes'
-import { deliveryTariffTypes } from 'utils/deliveries'
 import {
   trackFirstPurchase,
   trackNewUser,
@@ -10,6 +8,9 @@ import {
   trackUnexpectedSignup,
 } from 'actions/tracking'
 import { placeOrder } from 'actions/trackingKeys'
+import customersApi, { customerSignup } from 'apis/customers'
+import { PaymentMethod } from 'config/signup'
+import { deliveryTariffTypes } from 'utils/deliveries'
 
 import { trackCheckoutUrgencyAction, userSubscribe } from '../checkoutActions'
 

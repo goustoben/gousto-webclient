@@ -1,11 +1,13 @@
-import statusActions from 'actions/status'
-import { actionTypes } from 'actions/actionTypes'
-import * as trackingKeys from 'actions/trackingKeys'
 import Immutable from 'immutable'
+
+import { actionTypes } from 'actions/actionTypes'
 import { orderConfirmationUpdateOrderTracking } from 'actions/orderConfirmation'
+import statusActions from 'actions/status'
 import tempActions from 'actions/temp'
-import logger from 'utils/logger'
+import * as trackingKeys from 'actions/trackingKeys'
 import { getBasketOrderId } from 'selectors/basket'
+import logger from 'utils/logger'
+
 import * as orderV2 from '../apis/orderV2'
 
 export const basketUpdateProducts =

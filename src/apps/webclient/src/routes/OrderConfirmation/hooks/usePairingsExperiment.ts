@@ -1,6 +1,8 @@
 import { Map } from 'immutable'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useSelector } from 'react-redux'
+
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { getProductsRecipePairings } from '../selectors/recipePairings'
 import type { ProductRecipePairings } from '../types'
 

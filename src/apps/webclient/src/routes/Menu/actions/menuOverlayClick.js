@@ -1,6 +1,6 @@
 import { basketRestorePreviousValues } from 'actions/basket'
-import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
+import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 
 export const menuOverlayClick = () => (dispatch, getState) => {
   const { boxSummaryShow, menuBrowseCTAShow } = getState()

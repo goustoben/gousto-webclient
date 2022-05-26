@@ -1,7 +1,7 @@
 import { actionTypes } from '../../../actions/actionTypes'
 import { menuTimeToUsable } from '../../../actions/trackingKeys'
-import { getTimeSinceRequestStart, getTimeToFirstByte } from './utils/browserTimings'
 import { sendClientMetric } from '../apis/clientMetrics'
+import { getTimeSinceRequestStart, getTimeToFirstByte } from './utils/browserTimings'
 
 export const trackTimeToUsable = (timeToFirstByte, timeToUsable, menuPrefetched) => ({
   type: actionTypes.MENU_SET_CALCULATED_TIME_TO_USABLE,

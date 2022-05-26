@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { useSupportedBoxTypes } from './useSupportedBoxTypes'
+
 import { useMenuBox } from './useMenuBox'
+import { useSupportedBoxTypes } from './useSupportedBoxTypes'
 
 jest.mock('./useMenuBox')
 

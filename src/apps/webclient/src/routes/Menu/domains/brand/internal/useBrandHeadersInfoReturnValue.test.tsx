@@ -1,8 +1,11 @@
 import * as React from 'react'
-import useSWR from 'swr'
-import { Provider } from 'react-redux'
+
 import { renderHook } from '@testing-library/react-hooks'
+import { Provider } from 'react-redux'
+import useSWR from 'swr'
+
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
+
 import { useBrandHeadersInfo } from './useBrandHeadersInfo'
 
 jest.mock('swr', () => jest.fn())

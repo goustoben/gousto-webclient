@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
+import PropTypes from 'prop-types'
+
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
-import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
 
 import { Image, CookingTimeIcon } from '../../Recipe'
+import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
 import { VariantHeader } from '../VariantHeader'
+
 import css from './TileImage.css'
 
 const isOnBiggerScreen = (deviceType: string) =>

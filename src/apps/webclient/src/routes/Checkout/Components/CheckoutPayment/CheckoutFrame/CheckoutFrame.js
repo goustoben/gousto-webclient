@@ -1,17 +1,19 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
-import logger from 'utils/logger'
-import { hasPropUpdated } from 'utils/react'
+
 import { actionTypes } from 'actions/actionTypes'
 import { getCheckoutComPublicKey } from 'utils/isomorphicEnvironment'
+import logger from 'utils/logger'
+import { hasPropUpdated } from 'utils/react'
 
-import { getErrorType } from './utils'
-import { checkoutStyles } from './checkoutStyles'
 import { CheckoutName } from '../CheckoutName'
 import { FrameField } from './FrameField'
+import { checkoutStyles } from './checkoutStyles'
+import { getErrorType } from './utils'
 
-import css from './CheckoutFrame.css'
 import checkoutCss from '../../../Checkout.css'
+import css from './CheckoutFrame.css'
 
 /* global Frames */
 class CheckoutFrame extends React.Component {

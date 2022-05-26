@@ -1,12 +1,16 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import * as RecipeContext from 'routes/Menu/context/recipeContext'
 import * as MenuHook from 'routes/Menu/domains/menu'
+
 import { Image } from '../../Recipe'
 import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
 import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
 import { VariantHeader } from '../VariantHeader'
 import { TileImage } from './TileImage'
+
 import css from './TileImage.css'
 
 describe('<TileImage />', () => {

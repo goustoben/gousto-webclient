@@ -1,15 +1,18 @@
+import React from 'react'
+
 import { fireEvent, render, screen } from '@testing-library/react'
+import Immutable from 'immutable'
+import * as Redux from 'react-redux'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import { actionTypes } from 'actions/actionTypes'
 import { filterProductCategory } from 'actions/filters'
 import { trackPairingsData } from 'actions/tracking'
 import { marketCategory } from 'actions/trackingKeys'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import Immutable from 'immutable'
-import React from 'react'
-import * as Redux from 'react-redux'
-import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
 import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
+
 import {
   mockGetProductRecipePairingsState,
   mockMarketProducts,

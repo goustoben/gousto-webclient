@@ -1,9 +1,10 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { render, RenderResult } from '@testing-library/react'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
 import { useMedia } from 'react-use'
+import configureMockStore from 'redux-mock-store'
 
 import { BoxSummaryBanner } from '../BoxSummaryBanner'
 

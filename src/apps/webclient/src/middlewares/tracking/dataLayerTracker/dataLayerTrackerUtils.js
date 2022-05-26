@@ -1,4 +1,6 @@
+import { ResourceType } from 'routes/Menu/constants/resources'
 import { getNumPortions } from 'selectors/basket'
+import { getRecipeById, getRecipeTitle } from 'selectors/recipe'
 import {
   getUserId,
   getUserFirstName,
@@ -7,8 +9,6 @@ import {
   getUserShippingAddress,
   getUserOrders,
 } from 'selectors/user'
-import { ResourceType } from 'routes/Menu/constants/resources'
-import { getRecipeById, getRecipeTitle } from 'selectors/recipe'
 
 export const getUserDetails = (state) => {
   const id = getUserId(state)

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import { RecipeMeta } from './RecipeMeta'
+
 import { getMenuRecipeIdForDetails } from '../../selectors/menuRecipeDetails'
+import { RecipeMeta } from './RecipeMeta'
 
 const mapStateToProps = (state) => {
   let recipe = null

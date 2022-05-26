@@ -1,9 +1,12 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { renderHook } from '@testing-library/react-hooks'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
+
 import * as TutorialActions from 'actions/tutorial'
+
 import { useShowJFYTutorial } from './useShowJFYTutorial'
 
 describe('useShowJFYTutorial', () => {

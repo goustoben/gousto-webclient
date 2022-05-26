@@ -1,8 +1,10 @@
+import React, { useEffect, useState } from 'react'
+
+import { useDispatch, useSelector } from 'react-redux'
+
 import { filterProductCategory } from 'actions/filters'
 import { trackPairingsData } from 'actions/tracking'
 import { marketCategory } from 'actions/trackingKeys'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
 import { getBasketOrderDetails, getBasketSaveRequired } from 'selectors/basket'
@@ -13,12 +15,7 @@ import {
 } from 'selectors/products'
 import { getBasket, getProductCategories } from 'selectors/root'
 import { getBasketSaveError, getBasketSavePending } from 'selectors/status'
-import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
-import {
-  getProductsRecipePairingsWithRecipes,
-  getProductRecipePairingsTotalProducts,
-} from '../../selectors/recipePairings'
-import type { Category, FilteredProducts, NavCategories, NavCategory, Product } from '../../types'
+
 import {
   ALL_PRODUCTS_CATEGORY_NAME,
   ALL_PRODUCTS_CATEGORY_ID,
@@ -27,8 +24,14 @@ import {
   OCCASIONS_CATEGORY_NAME,
   OCCASIONS_CATEGORY_ID,
 } from '../../constants/categories'
-import { MarketPresentation } from './Market.presentation'
+import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
+import {
+  getProductsRecipePairingsWithRecipes,
+  getProductRecipePairingsTotalProducts,
+} from '../../selectors/recipePairings'
+import type { Category, FilteredProducts, NavCategories, NavCategory, Product } from '../../types'
 import { mockBundlesData } from '../config'
+import { MarketPresentation } from './Market.presentation'
 
 interface Props {
   ageVerified: boolean

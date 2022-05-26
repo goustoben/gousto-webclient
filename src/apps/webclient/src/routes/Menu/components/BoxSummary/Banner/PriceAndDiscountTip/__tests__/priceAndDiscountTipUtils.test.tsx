@@ -1,8 +1,10 @@
 import React from 'react'
+
+import { render, RenderResult } from '@testing-library/react'
 import Immutable from 'immutable'
 import { RootStateOrAny, Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import { render, RenderResult } from '@testing-library/react'
+
 import { actionTypes } from 'actions/actionTypes'
 
 import {

@@ -1,6 +1,8 @@
 import React from 'react'
-import { Field } from 'redux-form'
+
 import { shallow } from 'enzyme'
+import { Field } from 'redux-form'
+
 import { DeliveryInstruction } from '../DeliveryInstruction'
 
 describe('DeliveryInstruction', () => {

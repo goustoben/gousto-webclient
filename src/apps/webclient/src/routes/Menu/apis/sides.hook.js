@@ -1,5 +1,7 @@
 import useSWR from 'swr'
+
 import endpoint from 'config/endpoint'
+
 import { postFetcher } from './fetch'
 
 export const useSides = ({ accessToken, userId, order, makeRequest = true }, options) => {

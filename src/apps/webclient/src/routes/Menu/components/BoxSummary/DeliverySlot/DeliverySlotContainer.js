@@ -1,15 +1,17 @@
+import actions from 'actions'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import actions from 'actions'
+
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
-import { getFullScreenBoxSummary } from 'selectors/features'
 import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
-import { getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions } from 'selectors/basket'
 import { getBoxSummaryTextProps } from 'selectors/boxSummary'
+import { getFullScreenBoxSummary } from 'selectors/features'
 import { getLoadingStateForOrder } from 'selectors/user'
+import { getTempDeliveryOptions } from 'utils/deliverySlotHelper'
+
 import { DeliverySlot } from './DeliverySlot'
 
 function mapStateToProps(state) {

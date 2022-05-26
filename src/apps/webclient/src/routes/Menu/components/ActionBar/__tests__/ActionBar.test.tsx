@@ -1,11 +1,14 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
-import configureMockStore from 'redux-mock-store'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import { useMedia } from 'react-use'
+import configureMockStore from 'redux-mock-store'
+
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getDomain } from 'utils/isomorphicEnvironment'
+
 import { ActionBar } from '../ActionBar'
 
 jest.useFakeTimers()

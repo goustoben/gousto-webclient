@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
+
 import * as orderConfirmation from 'actions/orderConfirmation'
+
 import * as menuCheckoutClick from '../menuCheckoutClick'
 import { checkoutWithSides } from '../menuSidesCheckoutClick'
 import * as sidesAction from '../sides'

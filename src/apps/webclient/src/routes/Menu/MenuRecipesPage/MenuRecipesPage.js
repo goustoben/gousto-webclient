@@ -1,21 +1,25 @@
 import React, { PureComponent } from 'react'
+
 import { CommunicationPanel } from 'goustouicomponents'
 import PropTypes from 'prop-types'
-import { CoronaVirusBanner } from 'CoronaVirusBanner'
-import menuConfig from 'config/menu'
 import { ReactReduxContext } from 'react-redux'
+
 import { AppModalContainer } from 'components/AppModal'
-import { CollectionsNavWrapper } from '../components/CollectionsNav'
-import { RecipeGrid } from './RecipeGrid'
-import { JustForYouTutorial } from '../components/JustForYouTutorial'
-import { SubHeaderContainer } from '../components/SubHeader'
+import { CoronaVirusBanner } from 'components/CoronaVirusBanner'
+import menuConfig from 'config/menu'
+
 import Loading from '../Loading'
-import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
+import { CollectionsNavWrapper } from '../components/CollectionsNav'
+import { JustForYouTutorial } from '../components/JustForYouTutorial'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
-import css from './MenuRecipesPage.css'
+import { SubHeaderContainer } from '../components/SubHeader'
+import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 import { CapacityInfo } from './CapacityInfo'
 import { CollectionHeaderWrapper } from './CollectionHeader'
 import { MenuSidesModalContainer } from './MenuSidesModalContainer'
+import { RecipeGrid } from './RecipeGrid'
+
+import css from './MenuRecipesPage.css'
 
 export class MenuRecipesPage extends PureComponent {
   async componentDidMount() {

@@ -1,14 +1,17 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
 
-import { basketSum, okRecipes } from 'utils/basket'
-import { EscapeKeyPressed } from 'utils/DOMEvents'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { PortionChangeErrorModal } from 'routes/Menu/components/BoxSummary/PortionChangeNotAllowedModal/PortionChangeErrorModal'
-import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
-import css from './BoxSummary.css'
-import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
+import { EscapeKeyPressed } from 'utils/DOMEvents'
+import { basketSum, okRecipes } from 'utils/basket'
+
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
+import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
+import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
+
+import css from './BoxSummary.css'
 
 class BoxSummary extends React.PureComponent {
   // eslint-disable-next-line react/static-property-placement

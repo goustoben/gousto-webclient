@@ -1,10 +1,12 @@
 // This is to pass the type check for jest-dom extending expect
-import '@testing-library/jest-dom'
 import React from 'react'
+
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import { safeJestMock } from '_testing/mocks'
-import * as OptimizelyHooks from './useOptimizely.hook'
+
 import { OptimizelyFeature } from './OptimizelyFeature'
+import * as OptimizelyHooks from './useOptimizely.hook'
 
 const mockedGetOptimizelyInstance = safeJestMock(OptimizelyHooks, 'useIsOptimizelyFeatureEnabled')
 

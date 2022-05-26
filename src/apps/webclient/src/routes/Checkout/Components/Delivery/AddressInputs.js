@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import TextInput from 'Form/Input'
+import PropTypes from 'prop-types'
 
 const AddressInputs = ({ houseNoVal, streetVal, townVal, countyVal, onChangeHandler }) => (
   <div>

@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import classnames from 'classnames'
 
-import Icon from 'Icon'
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
+
+import Icon from 'components/Icon'
+
 import css from './Arrow.css'
 
 const Arrow = ({ direction, onClick }) => (

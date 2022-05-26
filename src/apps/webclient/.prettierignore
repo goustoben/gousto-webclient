@@ -10,6 +10,8 @@
 
 # note: all ts and tsx files are checked: no special "ignore" declaration
 
+src/_testing/generate-endpoint-test-cases.ts
+
 !.eslintrc.js
 
 !src/routes/Checkout/**/*

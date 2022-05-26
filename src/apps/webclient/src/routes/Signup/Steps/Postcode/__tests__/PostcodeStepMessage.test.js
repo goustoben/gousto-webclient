@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { PostcodeStepMessage } from '../PostcodeStepMessage'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

@@ -1,7 +1,9 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { TermsAndConditions } from 'routes/Checkout/Components/TermsAndConditions'
+
 import { Link } from '@gousto-internal/citrus-react'
+import { shallow } from 'enzyme'
+
+import { TermsAndConditions } from 'routes/Checkout/Components/TermsAndConditions'
 
 describe('TermsAndConditions', () => {
   describe('rendering', () => {

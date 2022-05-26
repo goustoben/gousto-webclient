@@ -1,10 +1,11 @@
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
-import * as filterActions from 'actions/filters'
+
 import { actionTypes } from 'actions/actionTypes'
+import * as filterActions from 'actions/filters'
 import { clickMerchandisingBanner } from 'actions/trackingKeys'
 
-import { merchandisingBannerClick } from '../merchandisingBannerClick'
 import * as collectionSelectors from '../../selectors/collections'
+import { merchandisingBannerClick } from '../merchandisingBannerClick'
 
 describe('given merchandisingBannerClick action is called', () => {
   const dispatch = jest.fn()

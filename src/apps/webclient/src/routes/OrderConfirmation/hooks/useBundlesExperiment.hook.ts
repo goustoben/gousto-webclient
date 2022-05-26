@@ -1,5 +1,6 @@
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useSelector } from 'react-redux'
+
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { getIsAuthenticated } from 'selectors/auth'
 
 export const useIsBundlesEnabled = (): boolean | null => {

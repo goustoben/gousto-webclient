@@ -1,5 +1,5 @@
-import { canUseWindow } from 'utils/browserEnvironment'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { canUseWindow } from 'utils/browserEnvironment'
 
 export function useSelectedCuisines() {
   const featureEnabled = useIsOptimizelyFeatureEnabled('turnips_personalised_signup_enabled')

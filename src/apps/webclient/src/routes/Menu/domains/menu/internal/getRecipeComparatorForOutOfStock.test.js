@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
 
 describe('getRecipeComparatorForOutOfStock', () => {

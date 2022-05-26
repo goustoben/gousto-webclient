@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
-import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
-import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+import PropTypes from 'prop-types'
+
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
+import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
+
 import css from './SellThePropositionPage.css'
 
 export const items = [

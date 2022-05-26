@@ -1,6 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import Svg from 'Svg'
+import PropTypes from 'prop-types'
+
 import css from './Alert.css'
 
 export const Alert = ({ children }) => (

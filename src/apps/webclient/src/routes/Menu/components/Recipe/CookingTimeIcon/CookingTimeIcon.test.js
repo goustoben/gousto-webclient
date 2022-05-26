@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { render, cleanup } from '@testing-library/react'
 
 import * as recipeContext from 'routes/Menu/context/recipeContext'
-import { CookingTimeIcon } from '.'
+
+import { CookingTimeIcon } from './index'
 
 describe('CookingTimeIcon', () => {
   describe('when given null cookingTime', () => {

@@ -1,9 +1,12 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
+
 import { useBrowserBack } from 'hooks/useBrowserBack'
-import { boxSummaryOverlayPropTypes } from './propTypes'
-import { BoxSummaryOverlayMobile } from './Mobile/BoxSummaryOverlayMobile'
+
 import { BoxSummaryOverlayDesktop } from './Desktop/BoxSummaryOverlayDesktop'
+import { BoxSummaryOverlayMobile } from './Mobile/BoxSummaryOverlayMobile'
+import { boxSummaryOverlayPropTypes } from './propTypes'
 
 const BoxSummaryOverlay = ({
   isMobile,

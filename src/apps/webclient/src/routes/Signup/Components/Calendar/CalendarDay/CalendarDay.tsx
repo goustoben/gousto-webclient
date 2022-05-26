@@ -1,6 +1,9 @@
 import React from 'react'
+
 import classnames from 'classnames'
+
 import { CalendarDayInfo } from 'routes/Signup/Components/Calendar/models/CalendarDayInfo'
+
 import css from './CalendarDay.css'
 
 interface CalendarDayProps extends CalendarDayInfo {

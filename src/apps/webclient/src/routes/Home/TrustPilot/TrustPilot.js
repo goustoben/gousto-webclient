@@ -1,5 +1,7 @@
 import React from 'react'
+
 import classNames from 'classnames'
+
 import css from './TrustPilot.css'
 
 const TrustPilot = () => (

@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
+
 import PropTypes from 'prop-types'
-import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
-import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+
 import routesConfig from 'config/routes'
+import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
+
 import css from './CheckAccountPage.css'
 
 export const CheckAccountPage = ({

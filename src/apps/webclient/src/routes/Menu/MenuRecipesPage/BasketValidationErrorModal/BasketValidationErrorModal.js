@@ -1,7 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
+
 import { Button } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
+import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'components/ModalComponent'
+
 import css from './BasketValidationErrorModal.css'
 
 export const BasketValidationErrorModal = ({

@@ -1,8 +1,10 @@
 import React from 'react'
+
 import Immutable from 'immutable'
 
-import css from './Ingredients.css'
 import { Ingredient } from './Ingredient'
+
+import css from './Ingredients.css'
 
 type IngredientsProps = {
   ingredients: Immutable.List<Immutable.Map<string, any>>

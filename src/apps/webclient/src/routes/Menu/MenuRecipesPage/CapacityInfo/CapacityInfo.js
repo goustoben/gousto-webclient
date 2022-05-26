@@ -1,8 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { Heading } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { zendesk as zendeskRoutes } from 'config/routes'
 import { addUserIdToUrl } from 'utils/url'
+
 import css from './CapacityInfo.css'
 
 const ONE_OFF_CONTENT = {

@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import { boxPricesBoxSizeSelected } from 'actions/boxPrices'
-import { trackUTMAndPromoCode } from 'actions/tracking'
 import { menuLoadBoxPrices } from 'actions/menu'
-import { getNumPersonsToBoxDescriptors } from './boxPricesSelectors'
+import { trackUTMAndPromoCode } from 'actions/tracking'
+
 import { BoxPrices } from './BoxPrices'
+import { getNumPersonsToBoxDescriptors } from './boxPricesSelectors'
 
 const mapStateToProps = (state) => ({
   numPersonsToBoxDescriptors: getNumPersonsToBoxDescriptors(state),

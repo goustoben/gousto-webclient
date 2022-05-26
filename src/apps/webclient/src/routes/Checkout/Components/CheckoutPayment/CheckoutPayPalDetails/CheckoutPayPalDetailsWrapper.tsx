@@ -1,7 +1,10 @@
 import React, { useCallback } from 'react'
+
 import { useDispatch } from 'react-redux'
+
 import { setPayPalNonce } from 'actions/checkout'
 import { usePricing } from 'routes/Menu/domains/pricing'
+
 import { CheckoutPayPalDetailsContainer } from './CheckoutPayPalDetailsContainer'
 
 function useSetPayPalNonce() {

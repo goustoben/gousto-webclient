@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import Overlay from 'components/Overlay'
+
 import ModalPanel from 'Modal/ModalPanel'
+import PropTypes from 'prop-types'
+
+import Overlay from 'components/Overlay'
 import { getUrlParams } from 'utils/url'
 
 import css from './Checkout3DSModal.css'

@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
 
 describe('given PaymentMethodSelector', () => {

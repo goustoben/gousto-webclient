@@ -1,9 +1,12 @@
 import React from 'react'
+
 import { render, screen, fireEvent, cleanup } from '@testing-library/react'
 import * as Redux from 'react-redux'
+
 import * as Menu from 'routes/Menu/domains/menu'
+
+import { RecipeAlternativeOptions } from './RecipeAlternativeOptions'
 import * as Tracking from './useTracking'
-import { RecipeAlternativeOptions } from '.'
 
 describe('RecipeAlternativeOptions', () => {
   describe('When there are recipe alternative options', () => {

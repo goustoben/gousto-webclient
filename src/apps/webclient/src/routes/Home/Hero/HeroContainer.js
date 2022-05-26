@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { Hero } from './Hero'
 
 export const HeroContainer = (props) => {

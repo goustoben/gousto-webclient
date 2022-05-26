@@ -1,4 +1,5 @@
 import { getWindow, canUseWindow } from 'utils/browserEnvironment'
+
 import { loadFeatures } from '../loadFeatures'
 
 jest.mock('utils/browserEnvironment')

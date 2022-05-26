@@ -1,8 +1,11 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
+
 import { actionTypes } from 'actions/actionTypes'
+
 import { CheckoutFrame } from '../CheckoutFrame'
 import { CheckoutFrameContainer } from '../CheckoutFrameContainer'
 

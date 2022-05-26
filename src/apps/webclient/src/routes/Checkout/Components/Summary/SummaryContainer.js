@@ -1,7 +1,10 @@
 import React from 'react'
+
 import { connect } from 'react-redux'
+
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
+
 import { Summary } from './Summary'
 
 function mapStateToProps(state) {

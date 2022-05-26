@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+
 import { getPromoCode } from 'selectors/basket'
 
 export const getIsWizardWithoutImagesEnabled = ({ features }) =>

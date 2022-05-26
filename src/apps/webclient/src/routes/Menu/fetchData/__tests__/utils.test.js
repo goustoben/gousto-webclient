@@ -5,6 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { basketDateChange, basketSlotChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { recommendationsSlug } from 'config/collections'
+
 import { getPreselectedCollectionName, selectCollection, setSlotFromIds } from '../utils'
 
 jest.mock('actions/basket', () => ({

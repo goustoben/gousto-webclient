@@ -1,7 +1,9 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
+
 import { DiscountAppliedBarContainer } from '../DiscountAppliedBarContainer'
 
 describe('given DiscountAppliedBarContainer is rendered', () => {

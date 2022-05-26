@@ -1,11 +1,12 @@
-import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
 import { ReactNode } from 'react'
+
 import { BoxSizeStep } from 'routes/Signup/Steps/BoxSize'
-import { PostcodeStep } from 'routes/Signup/Steps/Postcode'
-import { DeliveryStep } from 'routes/Signup/Steps/Delivery'
-import { PersonaliseMenuStep } from 'routes/Signup/Steps/PersonaliseMenu'
-import { NumberOfPeopleStep } from 'routes/Signup/Steps/NumberOfPeople'
 import { BoxSizeRecommenderStep } from 'routes/Signup/Steps/BoxSizeRecommender'
+import { DeliveryStep } from 'routes/Signup/Steps/Delivery'
+import { NumberOfPeopleStep } from 'routes/Signup/Steps/NumberOfPeople'
+import { PersonaliseMenuStep } from 'routes/Signup/Steps/PersonaliseMenu'
+import { PostcodeStep } from 'routes/Signup/Steps/Postcode'
+import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
 
 /**
  * SignupSteps to StepComponent relation.

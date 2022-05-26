@@ -1,8 +1,9 @@
 import * as React from 'react'
-import Immutable from 'immutable'
 
 import { renderHook } from '@testing-library/react-hooks'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
+
 import { createMockBasketStore } from '../testing/createMockBasketStore'
 import { useBasketRecipes, useIsRecipeInBasket } from './index'
 

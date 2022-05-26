@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import moment from 'moment'
-import Immutable from 'immutable'
-import routes from 'config/routes'
+
 import Link from 'Link'
+import Immutable from 'immutable'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+
+import routes from 'config/routes'
 import { getSlotTimes } from 'utils/deliveries'
+
 import { RecipeSummary } from '../RecipeSummary'
+
 import css from './BoxDetails.css'
 
 export const BoxDetails = ({ numPortions, date, deliveryDays, slotId }) => {

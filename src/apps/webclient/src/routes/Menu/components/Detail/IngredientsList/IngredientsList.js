@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import Immutable from 'immutable'
-import css from './IngredientsList.css'
+import PropTypes from 'prop-types'
+
 import { SubIngredients } from '../SubIngredients/SubIngredients'
+
+import css from './IngredientsList.css'
 
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1)
 

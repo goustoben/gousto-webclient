@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
+
 import { NumberOfPeopleInput } from 'routes/Signup/Steps/NumberOfPeople/NumberOfPeopleInput/NumberOfPeopleInput'
 
 describe('Given <NumberOfPeopleInput /> component', () => {

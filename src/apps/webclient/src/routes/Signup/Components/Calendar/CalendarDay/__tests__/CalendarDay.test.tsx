@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import moment from 'moment'
+
 import { CalendarDay } from 'routes/Signup/Components/Calendar/CalendarDay/CalendarDay'
 
 describe('<CalendarSpan /> component', () => {

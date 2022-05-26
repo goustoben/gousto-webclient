@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
+
 import { getMicronutrientsForRecipeID } from 'selectors/recipe'
+
 import { RecipeMicronutrients } from './RecipeMicronutrients'
 
 const mapStateToProps = (state, ownProps) => ({

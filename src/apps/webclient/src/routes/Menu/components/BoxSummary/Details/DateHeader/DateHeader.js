@@ -1,9 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
+import { Button, Segment } from 'goustouicomponents'
 import Immutable from 'immutable'
 import moment from 'moment'
+import PropTypes from 'prop-types'
+
 import { getSlotTimes } from 'utils/deliveries'
-import { Button, Segment } from 'goustouicomponents'
 
 import css from '../Details.css'
 

@@ -1,7 +1,11 @@
 import React, { FC } from 'react'
+
 import Loading from 'routes/Menu/Loading'
+
 import { ProductBundle } from '../ProductBundle'
+
 import css from './ProductListBundles.css'
+
 interface ProductListBundlesProps {
   products: any | null // types to come later
 }

@@ -1,17 +1,20 @@
 import React from 'react'
-import { connect } from 'react-redux'
+
 import actions from 'actions'
+import { connect } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, trackingUnavailableRecipeList } from 'actions/boxSummary'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+import { usePricing } from 'routes/Menu/domains/pricing'
+import { getOkRecipeIds, getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { getBasketSlotId } from 'selectors/basket'
 import { getFullScreenBoxSummary } from 'selectors/features'
-import { getOkRecipeIds, getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
-import { usePricing } from 'routes/Menu/domains/pricing'
-import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
-import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
+
 import { basketRecipeRemove } from '../../../actions/basketRecipes'
-import { Details } from './Details'
 import { checkoutBasket } from '../../../actions/menuCheckoutClick'
+import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
+import { Details } from './Details'
 
 const mapStateToProps = (state) => ({
   accessToken: state.auth.get('accessToken'),

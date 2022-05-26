@@ -1,6 +1,9 @@
-import { Box, Color, Space, BorderStyle, Icon, AlignItems } from '@gousto-internal/citrus-react'
 import React, { useContext } from 'react'
+
+import { Box, Color, Space, BorderStyle, Icon, AlignItems } from '@gousto-internal/citrus-react'
+
 import { CheckoutUrgencyContext } from 'routes/Checkout/Components/CheckoutUrgency/CheckoutUrgencyContext'
+
 import { formatSeconds } from '../checkoutUrgencyUtils'
 
 export const CheckoutUrgencyBanner = () => {

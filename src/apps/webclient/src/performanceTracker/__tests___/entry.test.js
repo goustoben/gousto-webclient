@@ -1,5 +1,5 @@
-import { createTrackerInitializePerfume } from '../performanceTracker'
 import '../entry'
+import { createTrackerInitializePerfume } from '../performanceTracker'
 
 jest.mock('perfume.js', () => ({
   __esModule: true,

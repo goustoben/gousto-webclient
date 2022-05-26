@@ -1,6 +1,6 @@
-import { configureDDTracer } from '../datadog'
 import { DATADOG_ENABLED_ENVS } from '../../src/middlewares/datadog/config'
 import { getEnvironment } from '../../src/utils/isomorphicEnvironment'
+import { configureDDTracer } from '../datadog'
 
 jest.mock('../../src/utils/isomorphicEnvironment')
 

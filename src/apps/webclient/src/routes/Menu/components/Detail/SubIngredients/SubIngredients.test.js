@@ -1,6 +1,8 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { render } from '@testing-library/react'
+import Immutable from 'immutable'
+
 import { SubIngredients } from './SubIngredients'
 
 describe('<SubIngredients/>', () => {

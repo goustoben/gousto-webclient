@@ -1,8 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { rest } from 'msw'
+
 import sideFixture from 'fixtures/menu/v1/sides/POST.json'
-import emptySideFixture from 'fixtures/menu/v1/sides/POST_empty.json'
 import errorSideFixture from 'fixtures/menu/v1/sides/POST_500.json'
+import emptySideFixture from 'fixtures/menu/v1/sides/POST_empty.json'
 
 export const user = {
   withError: 'user-with-error',

@@ -1,8 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
-import { methodDescriptorPropType } from './propTypes'
+import PropTypes from 'prop-types'
+
 import { PaymentMethodToggle } from './PaymentMethodToggle'
+import { methodDescriptorPropType } from './propTypes'
+
 import css from './PaymentMethodSelector.css'
 
 export const PaymentMethodListItem = ({

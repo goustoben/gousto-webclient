@@ -1,12 +1,15 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import * as RecipeContext from 'routes/Menu/context/recipeContext'
 import * as MenuHook from 'routes/Menu/domains/menu'
-import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
-import { AddRecipeButton } from '../AddRecipeButton'
-import { SwapAlternativeOptionsMobile, SwapAlternativeOptions } from '../SwapAlternativeOptions'
+
 import { useDeviceType } from '../../../../../hooks/useDeviceType'
+import { AddRecipeButton } from '../AddRecipeButton'
 import * as RecipeTilePurchaseInfoHooks from '../Hooks'
+import { SwapAlternativeOptionsMobile, SwapAlternativeOptions } from '../SwapAlternativeOptions'
+import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 
 jest.mock('../../../../../hooks/useDeviceType')
 

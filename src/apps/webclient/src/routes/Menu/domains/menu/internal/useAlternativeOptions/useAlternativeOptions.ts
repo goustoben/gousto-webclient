@@ -1,5 +1,7 @@
 import * as Immutable from 'immutable'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
+
+import { useRecipeReference } from 'routes/Menu/context/recipeReferenceContext'
 import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import { getMenuCategoryIdForDetails } from 'routes/Menu/selectors/menuRecipeDetails'
 import {
@@ -11,9 +13,9 @@ import { getCurrentMenuVariants } from 'routes/Menu/selectors/variants'
 import { getNumPortions } from 'selectors/basket'
 import { getRecipeTitle } from 'selectors/recipe'
 import { getRecipes } from 'selectors/root'
-import { useRecipeReference } from 'routes/Menu/context/recipeReferenceContext'
-import { Recipe, RecipeImmutable, CollectionImmutable } from './types'
+
 import { getChangeCheckedRecipeHandler } from './getChangeCheckedRecipeHandler'
+import { Recipe, RecipeImmutable, CollectionImmutable } from './types'
 
 const compareCoreRecipeIds = (a: Recipe, b: Recipe) =>
   parseInt(a.coreRecipeId, 10) - parseInt(b.coreRecipeId, 10)

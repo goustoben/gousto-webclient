@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import { merchandisingBannerClick } from '../../actions/merchandisingBannerClick'
 import { WaveLinkHeader } from './WaveLinkHeader'
 

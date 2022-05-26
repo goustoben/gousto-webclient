@@ -1,7 +1,10 @@
-import { fromJS, Map } from 'immutable'
 import React, { FC } from 'react'
+
+import { fromJS, Map } from 'immutable'
+
 import Loading from 'routes/Menu/Loading'
 import { getProductLimitReached } from 'utils/basket'
+
 import type { Product, ProductRecipePairing } from '../../types'
 import { ProductListPairingsPresentation } from './ProductListPairings.presentation'
 

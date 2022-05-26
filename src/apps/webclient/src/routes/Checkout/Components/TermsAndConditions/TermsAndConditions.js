@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {
   Box,
   Link,
@@ -7,9 +9,9 @@ import {
   JustifyContent,
   AlignItems,
 } from '@gousto-internal/citrus-react'
-import React from 'react'
-import configRoutes from 'config/routes'
+
 import { checkoutConfig } from 'config/checkout'
+import configRoutes from 'config/routes'
 
 export const TermsAndConditions = () => (
   <Box

@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import { clickPriceComparisonTableHeading } from 'actions/trackingKeys'
 

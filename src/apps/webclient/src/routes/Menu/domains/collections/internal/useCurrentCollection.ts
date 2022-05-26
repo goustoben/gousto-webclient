@@ -1,5 +1,7 @@
 import { OrderedMap as IOrderedMap } from 'immutable'
+
 import { MenuCollection } from 'routes/Menu/types'
+
 import { CollectionSlug } from '../constants'
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'

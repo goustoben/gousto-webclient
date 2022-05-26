@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { render, screen } from '@testing-library/react'
+
 import { WelcomeSection } from 'routes/Home/PriceComparisonTable/components/WelcomeSection/WelcomeSection'
 import { welcomeSectionTexts } from 'routes/Home/PriceComparisonTable/constants'
 

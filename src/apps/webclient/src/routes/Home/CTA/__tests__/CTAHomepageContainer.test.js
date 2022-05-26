@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { CTAHomepageContainer } from '../CTAHomepageContainer'
 
 describe('CTAHomepageContainer', () => {

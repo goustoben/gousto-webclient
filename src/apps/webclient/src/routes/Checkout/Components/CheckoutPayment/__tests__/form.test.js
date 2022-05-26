@@ -1,6 +1,7 @@
-import { addPrefix } from 'validations/util'
 import { addressRules } from 'validations/address'
 import { validationRules } from 'validations/card-checkout'
+import { addPrefix } from 'validations/util'
+
 import { getValidationRules } from '../form'
 
 describe('given getValidationRules is called', () => {

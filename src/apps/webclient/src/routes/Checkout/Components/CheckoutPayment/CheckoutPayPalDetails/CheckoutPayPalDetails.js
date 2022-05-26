@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
+import classNames from 'classnames'
 import { Loader } from 'goustouicomponents'
+import PropTypes from 'prop-types'
 
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 

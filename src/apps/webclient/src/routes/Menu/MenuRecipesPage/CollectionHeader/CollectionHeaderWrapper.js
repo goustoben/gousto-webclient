@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { PropTypes } from 'prop-types'
 import { useSelector } from 'react-redux'
-import { getCollectionsHeaders } from '../../selectors/collections'
+
 import { useBrandHeadersInfo } from '../../domains/brand'
+import { getCollectionsHeaders } from '../../selectors/collections'
 import { GradientInfoHeader } from './GradientInfoHeader'
 import { WaveLinkHeaderContainer } from './LinkHeaderContainer'
 import { useShouldRemoveMerchandisingBanner } from './useShouldRemoveMerchandisingBanner'

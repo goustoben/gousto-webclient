@@ -1,9 +1,8 @@
-import { isBillingAddressDifferent } from 'routes/Checkout/utils/state'
-
 import {
   getBillingAddress,
   transformBillingAddress,
 } from 'routes/Checkout/Components/CheckoutPayment/CheckoutFrame/utils'
+import { isBillingAddressDifferent } from 'routes/Checkout/utils/state'
 
 jest.mock('routes/Checkout/utils/state', () => ({
   isBillingAddressDifferent: jest.fn(),

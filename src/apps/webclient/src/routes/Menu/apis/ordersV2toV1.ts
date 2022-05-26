@@ -1,11 +1,14 @@
 /* eslint-disable camelcase */
+
 /*
  * This file is a modified copy of the transformation
  * function from https://github.com/Gousto/order-api/blob/develop/src/lib/transformers/order-v2-to-v1/request.ts
  */
 import moment from 'moment'
-import logger from 'utils/logger'
+
 import { ResourceType } from 'routes/Menu/constants/resources'
+import logger from 'utils/logger'
+
 import { Included, Order, RecipeItem } from '../domains/orders/types'
 
 type AnyObject = Record<string, any>

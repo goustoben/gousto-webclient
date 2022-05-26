@@ -1,5 +1,7 @@
 import isomorphicFetch from 'isomorphic-fetch'
+
 import * as cookieHelper2 from 'utils/cookieHelper2'
+
 import { get, post } from './fetch'
 
 jest.mock('isomorphic-fetch', () => jest.fn())

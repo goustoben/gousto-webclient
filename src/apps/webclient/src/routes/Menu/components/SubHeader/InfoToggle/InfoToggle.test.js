@@ -1,7 +1,8 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
 
+import { shallow, mount } from 'enzyme'
 import { Tooltip } from 'goustouicomponents'
+
 import InfoToggle from './InfoToggle'
 
 describe('InfoToggle', () => {

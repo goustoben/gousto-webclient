@@ -1,23 +1,24 @@
-import { Box, Text, Icon, Space, Display } from '@gousto-internal/citrus-react'
 import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
-import { PaymentMethod } from 'config/signup'
-import ReCAPTCHA from 'components/Recaptcha'
-import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
+import { Box, Text, Icon, Space, Display } from '@gousto-internal/citrus-react'
 import { HotjarTrigger } from 'HotjarTrigger'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
+import ReCAPTCHA from 'components/Recaptcha'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { SubmitButton } from '../SubmitButton'
+import { PaymentMethod } from 'config/signup'
+import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
+
 import { ErrorMessage } from '../ErrorMessage'
+import { SectionHeader } from '../SectionHeader'
+import { SubmitButton } from '../SubmitButton'
 import { Checkout3DSModal } from './Checkout3DSModal'
-import { PaymentMethodSelector } from './PaymentMethodSelector'
 import { CheckoutCardDetails } from './CheckoutCardDetails'
 import { CheckoutPayPalDetailsWrapper } from './CheckoutPayPalDetails'
-
-import { SectionHeader } from '../SectionHeader'
-import { PaymentFooter } from './PaymentFooter'
 import { PayPalConfirmation } from './PayPalConfirmation'
+import { PaymentFooter } from './PaymentFooter'
+import { PaymentMethodSelector } from './PaymentMethodSelector'
 
 import css from './CheckoutPayment.css'
 

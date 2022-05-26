@@ -1,10 +1,14 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
-import Item from 'Item'
+
 import { LayoutContentWrapper } from 'goustouicomponents'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
+import Item from 'components/Item'
 import { isAvailableRecipeList } from 'utils/recipe'
+
 import { UnavailableMessage } from '../UnavailableMessage'
+
 import css from '../Details.css'
 
 class RecipeList extends React.PureComponent {

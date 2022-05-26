@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
+import moment from 'moment'
+
 import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
 import { DeliveryDay } from 'routes/Signup/Components/Calendar/models/DeliveryDay'
-import moment from 'moment'
 
 const DELIVERY_DAY_FORMAT = 'YYYY-MM-DD'
 jest.mock('moment', () => () => jest.requireActual('moment')('2020-01-15', DELIVERY_DAY_FORMAT))

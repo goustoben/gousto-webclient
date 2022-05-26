@@ -1,6 +1,8 @@
 import Perfume from 'perfume.js'
+
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { recordPerformanceMetric } from 'actions/trackingKeys'
+
 import { initializePerformanceTrackerSender } from '../initializePerformanceTrackerSender'
 import { trackerVarName } from '../performanceTracker'
 

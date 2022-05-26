@@ -1,4 +1,5 @@
 import type { TypesEqual } from '_testing/typesEqual'
+
 import { FirstOfTuple, LastOfTuple } from '../array'
 
 describe('array type utils', () => {

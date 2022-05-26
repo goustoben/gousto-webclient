@@ -1,11 +1,14 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/MenuRecipesPage/RecipeGrid'
+
 import { CollectionsNavWrapper } from '../../components/CollectionsNav'
 import { SubHeaderContainer } from '../../components/SubHeader'
-import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../CapacityInfo'
+import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 
 jest.mock('routes/Menu/components/SubHeader')
 jest.mock('routes/Menu/components/CollectionsNav', () => ({

@@ -1,9 +1,12 @@
 import React from 'react'
+
 import { render, screen, fireEvent, cleanup } from '@testing-library/react'
+
 import * as Menu from 'routes/Menu/domains/menu'
+
 import * as RecipeAlternativeOptionsTracker from '../../RecipeAlternativeOptions/RecipeAlternativeOptions/useTracking'
+import { SwapAlternativeOptions } from './SwapAlternativeOptions'
 import * as Tracker from './useTracking'
-import { SwapAlternativeOptions } from '.'
 
 const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => [
   {

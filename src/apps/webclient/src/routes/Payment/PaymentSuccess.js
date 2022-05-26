@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+
 import { PaymentResult } from './PaymentResult'
 
 class PaymentSuccess extends PureComponent {

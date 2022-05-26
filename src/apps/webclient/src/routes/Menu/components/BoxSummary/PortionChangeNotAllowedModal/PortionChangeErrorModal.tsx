@@ -1,6 +1,8 @@
-import { CTA, Modal, ModalHeader } from 'goustouicomponents'
 import React from 'react'
+
+import { CTA, Modal, ModalHeader } from 'goustouicomponents'
 import PropTypes from 'prop-types'
+
 import css from './PortionChangeErrorModal.css'
 
 export const PortionChangeErrorModal = ({

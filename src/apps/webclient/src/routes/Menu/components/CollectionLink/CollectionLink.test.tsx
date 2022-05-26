@@ -1,14 +1,17 @@
-import { Provider } from 'react-redux'
-import Immutable from 'immutable'
 import React from 'react'
+
 import { render, screen } from '@testing-library/react'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+
+import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import * as Collections from 'routes/Menu/domains/collections'
 import * as Menu from 'routes/Menu/domains/menu'
 import { MenuCollection } from 'routes/Menu/types'
-import { createMockStore } from 'routes/Menu/_testing/createMockStore'
-import * as UseDisplayedCollections from './useDietaryCollections'
-import { CollectionLink } from '.'
+
 import { createCollectionFromDefaultValues } from '../../domains/collections/internal/utils'
+import { CollectionLink } from './CollectionLink'
+import * as UseDisplayedCollections from './useDietaryCollections'
 
 const defaultCollection = createCollectionFromDefaultValues({
   id: '101',

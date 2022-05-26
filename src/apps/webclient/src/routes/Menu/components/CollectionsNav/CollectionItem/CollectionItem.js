@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { useDoubleDeckerNav } from 'hooks/useDoubleDeckerNav'
+
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
+
+import { useDoubleDeckerNav } from 'hooks/useDoubleDeckerNav'
 import { useMenu } from 'routes/Menu/domains/menu'
 
 import css from './CollectionItem.css'

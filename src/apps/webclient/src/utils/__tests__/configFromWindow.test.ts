@@ -1,4 +1,5 @@
 import { $getConfigFromWindow, getConfigFromWindow } from 'utils/configFromWindow'
+
 import { WindowEnvConfig } from '../../../server/utils/envConfigForClient'
 
 const windowSpy = jest.spyOn(global, 'window', 'get')

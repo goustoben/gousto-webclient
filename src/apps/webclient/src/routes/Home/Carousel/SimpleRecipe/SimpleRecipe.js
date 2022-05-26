@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Immutable from 'immutable'
+
 import GoustoImage from 'Image'
 import { TimeIndicator, Rating } from 'goustouicomponents'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { removeDiacritics } from 'utils/sanitizeText'
+
 import css from './SimpleRecipe.css'
 
 const SimpleRecipe = ({ media, title, maxMediaSize, averageRating, ratingCount, cookingTime }) => {

@@ -1,8 +1,12 @@
 import React, { SyntheticEvent } from 'react'
+
 import PropTypes from 'prop-types'
+
 import { useBasket, useIsRecipeInBasket } from 'routes/Menu/domains/basket'
 import { useSetBrowserCTAVisibility } from 'routes/Menu/domains/menu'
+
 import { getRecipeButtonProps } from './recipeButtonPropsSelector'
+
 import css from './AddRecipeButton.css'
 
 export const AddRecipeButton: React.FC<{ recipeId: string }> = ({ recipeId }) => {

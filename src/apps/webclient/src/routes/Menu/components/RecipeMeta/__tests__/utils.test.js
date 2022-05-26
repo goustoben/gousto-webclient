@@ -1,7 +1,10 @@
 import Immutable from 'immutable'
+
 import { getSurcharge } from 'utils/recipe'
+
 import { defaultMetaImageLink, perPortionPrice } from '../config'
 import { getMetaImageLink, getPortionPrice } from '../utils'
+
 jest.mock('utils/recipe', () => ({
   getSurcharge: jest.fn(),
 }))

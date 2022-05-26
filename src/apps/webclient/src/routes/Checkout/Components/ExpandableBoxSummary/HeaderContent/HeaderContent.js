@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { onEnter } from 'utils/accessibility'
+
 import Svg from 'Svg'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
+import { onEnter } from 'utils/accessibility'
 import { formatOrderPrice } from 'utils/pricing'
+
 import css from './HeaderContent.css'
 
 const poundSign = String.fromCharCode(163)

@@ -1,9 +1,11 @@
-import { connect } from 'react-redux'
 import actions from 'actions'
+import { connect } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import { trackSignupWizardAction } from 'actions/signup'
-import { getCurrentPromoCodeCustomText1 } from 'routes/Signup/signupSelectors'
 import { getNumPersonsToBoxDescriptors } from 'routes/BoxPrices/boxPricesSelectors'
+import { getCurrentPromoCodeCustomText1 } from 'routes/Signup/signupSelectors'
+
 import { BoxSizeStep } from './BoxSizeStep'
 
 const mapStateToProps = (state) => ({

@@ -1,10 +1,12 @@
 import React from 'react'
-import { Provider } from 'react-redux'
+
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
+import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import { RecipeListWrapper } from './RecipeListWrapper'
+
 import { RecipeList } from './RecipeList'
+import { RecipeListWrapper } from './RecipeListWrapper'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

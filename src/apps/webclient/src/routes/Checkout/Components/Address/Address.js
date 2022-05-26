@@ -1,17 +1,20 @@
-import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
+
 import moment from 'moment'
-import * as deliveryUtils from 'utils/deliveries'
-import logger from 'utils/logger'
-import { dottify } from 'utils/dottify'
-import { showAddress } from 'routes/Checkout/utils/delivery'
-import { fetchDeliveryDays } from 'apis/deliveries'
+import PropTypes from 'prop-types'
+
 import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
-import { DeliveryPhoneNumber } from '../Delivery/DeliveryPhoneNumber'
-import { DeliveryInstruction } from '../Delivery/DeliveryInstruction'
-import { DeliveryEducationBanner } from '../Delivery/DeliveryEducationBanner'
-import { AddressOverhaul } from './AddressOverhaul/AddressOverhaul'
+import { fetchDeliveryDays } from 'apis/deliveries'
+import { showAddress } from 'routes/Checkout/utils/delivery'
+import * as deliveryUtils from 'utils/deliveries'
+import { dottify } from 'utils/dottify'
+import logger from 'utils/logger'
+
 import { CheckoutButton } from '../CheckoutButton'
+import { DeliveryEducationBanner } from '../Delivery/DeliveryEducationBanner'
+import { DeliveryInstruction } from '../Delivery/DeliveryInstruction'
+import { DeliveryPhoneNumber } from '../Delivery/DeliveryPhoneNumber'
+import { AddressOverhaul } from './AddressOverhaul/AddressOverhaul'
 
 const propTypes = {
   formName: PropTypes.string,

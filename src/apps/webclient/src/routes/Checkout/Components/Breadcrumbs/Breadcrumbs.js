@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import Link from 'Link'
-import classNames from 'classnames'
 import Svg from 'Svg'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
 import css from './Breadcrumbs.css'
 
 const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReachedStepIndex }) => {

@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { onEnter } from 'utils/accessibility'
-import { signupClickVoucherInfo } from 'actions/trackingKeys'
+
 import Svg from 'Svg'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
+import { signupClickVoucherInfo } from 'actions/trackingKeys'
+import { onEnter } from 'utils/accessibility'
+
 import css from './ApplyVoucherPage.css'
 
 export const HeaderContent = ({ isExpanded, handleClick, trackUTMAndPromoCode }) => (

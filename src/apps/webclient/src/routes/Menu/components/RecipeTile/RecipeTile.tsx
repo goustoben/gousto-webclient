@@ -1,14 +1,18 @@
 import React, { SyntheticEvent } from 'react'
+
 import classnames from 'classnames'
+
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
+
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useRecipeReference } from '../../context/recipeReferenceContext'
-import { RecipeTag } from '../RecipeTag'
 import { Title, BrandTag } from '../Recipe'
-import { VariantHeader } from './VariantHeader'
+import { RecipeTag } from '../RecipeTag'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
+import { VariantHeader } from './VariantHeader'
+
 import css from './RecipeTile.css'
 
 type RecipeTileProps = {

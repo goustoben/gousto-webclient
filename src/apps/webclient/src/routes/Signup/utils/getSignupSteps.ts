@@ -1,8 +1,10 @@
-import { Store } from 'redux'
 import Immutable, { List } from 'immutable'
-import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
+import { Store } from 'redux'
+
 import { signupConfig } from 'config/signup'
 import { AVAILABLE_STEP_COMPONENTS } from 'routes/Signup/constants/AvailableStepComponents'
+import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
+
 import { isOptimizelyFeatureEnabledFactory } from '../../../containers/OptimizelyRollouts'
 
 const isPersonaliseSignUpEnabled = isOptimizelyFeatureEnabledFactory(

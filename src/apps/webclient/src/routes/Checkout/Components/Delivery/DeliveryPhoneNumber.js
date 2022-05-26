@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { Field } from 'redux-form'
+
 import { ReduxFormInput } from 'Form/ReduxFormInput'
+import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+
 import { phoneValidator } from 'utils/forms'
-import css from './Delivery.css'
+
 import checkoutCss from '../../Checkout.css'
+import css from './Delivery.css'
 
 export const DeliveryPhoneNumber = ({ receiveRef, sectionName }) => (
   <div className={css.deliveryFieldWrapper}>

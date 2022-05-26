@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import { getFormValues, isInvalid, submit } from 'redux-form'
-import { deliveryFormName } from 'selectors/checkout'
+
 import { getBrowserType } from 'selectors/browser'
+import { deliveryFormName } from 'selectors/checkout'
+
 import { SubmitButton } from './SubmitButton'
 
 function mapStateToProps(state, ownProps) {

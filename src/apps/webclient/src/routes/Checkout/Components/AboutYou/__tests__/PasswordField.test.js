@@ -1,7 +1,9 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 import { act } from 'react-dom/test-utils'
+
 import { PasswordField } from '../PasswordField/PasswordField'
 
 jest.useFakeTimers('legacy')

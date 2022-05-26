@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
+
 import * as MenuHooks from 'routes/Menu/domains/menu'
+
 import * as RecipeContext from '../../../../context/recipeContext'
 import { VariantHeader } from '../VariantHeader'
 

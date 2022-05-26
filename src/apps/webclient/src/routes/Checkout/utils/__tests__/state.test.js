@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
+
 import { actionTypes } from 'actions/actionTypes'
+
 import { isSubmitting, isBillingAddressDifferent } from '../state'
 
 describe('Checkout state selectors', () => {

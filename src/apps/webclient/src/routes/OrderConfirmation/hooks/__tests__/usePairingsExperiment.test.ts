@@ -1,9 +1,11 @@
-import { Map } from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { Map } from 'immutable'
 import { useSelector } from 'react-redux'
-import { useIsPairingsEnabled } from '../usePairingsExperiment'
+
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { mockGetProductRecipePairingsState } from '../../components/config'
+import { useIsPairingsEnabled } from '../usePairingsExperiment'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

@@ -1,11 +1,14 @@
 import * as React from 'react'
-import Immutable from 'immutable'
-import configureMockStore from 'redux-mock-store'
-import { Provider } from 'react-redux'
+
 import { renderHook } from '@testing-library/react-hooks'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import * as MenuRecipeDetails from 'routes/Menu/actions/menuRecipeDetails'
 import { RecipeReferenceProvider } from 'routes/Menu/context/recipeReferenceContext'
-import { useAlternativeOptions } from '.'
+
+import { useAlternativeOptions } from './useAlternativeOptions'
 
 const RECIPE_ID_1 = 'aaa'
 const RECIPE_ID_2 = 'bbb'

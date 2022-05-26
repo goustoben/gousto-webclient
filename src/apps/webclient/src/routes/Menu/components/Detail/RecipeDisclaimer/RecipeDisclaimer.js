@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
+import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import Svg from 'Svg'
+
+import Svg from 'components/Svg'
+
 import { useBrandInfo } from '../../../domains/brand'
 import { getRecipeDisclaimerProps } from '../../../selectors/recipe'
+
 import css from './RecipeDisclaimer.css'
 
 const RecipeDisclaimer = ({ recipeId }) => {

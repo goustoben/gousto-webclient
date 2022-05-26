@@ -1,9 +1,12 @@
 import * as React from 'react'
-import configureMockStore from 'redux-mock-store'
+
 import { renderHook } from '@testing-library/react-hooks'
-import { Provider } from 'react-redux'
 import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import menuConfig from 'config/menu'
+
 import { useStock } from './useStock'
 
 describe('useStock', () => {

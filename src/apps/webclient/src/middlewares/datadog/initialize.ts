@@ -1,5 +1,6 @@
 import { datadogLogs, LogsInitConfiguration } from '@datadog/browser-logs'
 import { datadogRum, RumInitConfiguration } from '@datadog/browser-rum'
+
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvironment } from 'utils/isomorphicEnvironment'
 

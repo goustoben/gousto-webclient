@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { Route } from 'react-router'
 
 import config from 'config/routes'
-import { PaymentSuccess } from './PaymentSuccess'
+
 import { PaymentFailure } from './PaymentFailure'
+import { PaymentSuccess } from './PaymentSuccess'
 
 export const route = (
   <Route>

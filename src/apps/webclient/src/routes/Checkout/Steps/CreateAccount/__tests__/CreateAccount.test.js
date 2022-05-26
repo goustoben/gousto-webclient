@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
-import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import { CreateAccount } from '../CreateAccount'
 
 describe('CreateAccount', () => {

@@ -1,6 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
+
 import actions from 'actions'
+import { connect } from 'react-redux'
+
 import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import {
@@ -12,9 +14,10 @@ import {
 } from 'actions/checkout'
 import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
-import { usePricing } from 'routes/Menu/domains/pricing'
+
 import { Checkout } from './Checkout'
 import { useSubmitOrder } from './useSubmitOrder'
 

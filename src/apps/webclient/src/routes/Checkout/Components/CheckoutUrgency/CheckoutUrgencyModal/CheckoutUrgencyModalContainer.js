@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
-import { getCheckoutUrgencyCurrentStatus } from 'routes/Checkout/checkoutSelectors'
+
+import { redirect } from 'actions/redirect'
+import routes from 'config/routes'
 import {
   checkoutUrgencySetCurrentStatus,
   trackCheckoutUrgencyAction,
 } from 'routes/Checkout/checkoutActions'
+import { getCheckoutUrgencyCurrentStatus } from 'routes/Checkout/checkoutSelectors'
 import { checkoutUrgencyDefaultModalSeconds } from 'routes/Checkout/checkoutUrgencyConfig'
-import { redirect } from 'actions/redirect'
 import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
-import routes from 'config/routes'
+
 import { CheckoutUrgencyModal } from './CheckoutUrgencyModal'
 
 const mapStateToProps = (state) => {

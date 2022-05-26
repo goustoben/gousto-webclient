@@ -1,16 +1,20 @@
 import React, { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+
+import actions from 'actions'
 import classnames from 'classnames'
 import { Button, Control, Segment } from 'goustouicomponents'
+import { useDispatch } from 'react-redux'
+
 import config from 'config/recipes'
-import actions from 'actions'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useBasket } from 'routes/Menu/domains/basket'
 import { useStock } from 'routes/Menu/domains/menu'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { Surcharge } from './Surcharge'
 import { useSurchargePerPortion } from './useSurchargePerPortion'
+
 import css from './RecipeDetailsButtons.css'
 
 type ButtonsProps = {

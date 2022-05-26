@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
+
 import {
   Text,
   Color,
@@ -11,6 +10,9 @@ import {
   IconVariant,
   AlignItems,
 } from '@gousto-internal/citrus-react'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { passwordCriteria } from './errors'
 
 const max = 'validation.max.string.password'

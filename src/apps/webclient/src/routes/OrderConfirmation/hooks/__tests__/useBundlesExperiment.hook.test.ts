@@ -1,5 +1,7 @@
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useSelector } from 'react-redux'
+
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { useIsBundlesEnabled } from '../useBundlesExperiment.hook'
 
 jest.mock('react-redux', () => ({

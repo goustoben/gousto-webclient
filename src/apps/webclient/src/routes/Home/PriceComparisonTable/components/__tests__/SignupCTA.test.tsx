@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { render, screen } from '@testing-library/react'
+
 import { SignupCTA } from 'routes/Home/PriceComparisonTable/components/SignupCTA/SignupCTA'
 import { CTAText } from 'routes/Home/PriceComparisonTable/constants'
 

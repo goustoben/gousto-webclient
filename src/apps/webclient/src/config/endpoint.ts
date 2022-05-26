@@ -1,15 +1,15 @@
+import { findServiceVersion } from 'config/service-environment/find-service-version'
 import {
   PROTOCOL_PREFIX,
   ServiceEnvironment,
   ServiceName,
   ServiceUrlProperties,
 } from 'config/service-environment/service-environment.types'
-import { serviceUrl } from 'config/service-environment/service-url'
 import { getServiceManifest } from 'config/service-environment/service-manifest'
-import { findServiceVersion } from 'config/service-environment/find-service-version'
+import { serviceUrl } from 'config/service-environment/service-url'
 import { canUseWindow } from 'utils/browserEnvironment'
-import { Domain } from 'utils/types/windowLocation'
 import { getEnvironment, getDomain, isDev } from 'utils/isomorphicEnvironment'
+import { Domain } from 'utils/types/windowLocation'
 
 export const buildServiceUrlProperties = (
   serviceName: ServiceName,

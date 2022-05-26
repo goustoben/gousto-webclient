@@ -1,8 +1,9 @@
 import { actionTypes } from 'actions/actionTypes'
 import * as actionsOrder from 'actions/order'
 import * as actionsOrderConfirmation from 'actions/orderConfirmation'
-import { getBasketSlotId } from 'selectors/basket'
 import { createState as createOrderState } from 'routes/Menu/selectors/__mocks__/order.mock'
+import { getBasketSlotId } from 'selectors/basket'
+
 import * as orderV2Api from '../apis/orderV2'
 import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 

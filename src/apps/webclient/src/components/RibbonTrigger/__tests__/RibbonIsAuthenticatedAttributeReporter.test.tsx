@@ -1,8 +1,10 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { mount } from 'enzyme'
-import configureMockStore from 'redux-mock-store'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import { RibbonIsAuthenticatedAttributeReporter } from '../RibbonIsAuthenticatedAttributeReporter'
 
 describe('RibbonIsAuthenticatedAttributeReporter', () => {

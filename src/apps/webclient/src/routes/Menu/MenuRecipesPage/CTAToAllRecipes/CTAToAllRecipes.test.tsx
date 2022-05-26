@@ -1,8 +1,11 @@
 import React from 'react'
-import { Provider } from 'react-redux'
+
 import { render, screen, fireEvent } from '@testing-library/react'
+import { Provider } from 'react-redux'
+
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import * as CollectionHooks from 'routes/Menu/domains/collections'
+
 import { CTAToAllRecipes } from './CTAToAllRecipes'
 
 function renderForTest(currentCollectionId: string) {

@@ -1,6 +1,9 @@
 import React, { ReactNode } from 'react'
+
 import classNames from 'classnames'
+
 import { ordinal, formatOptionalPrice } from '../actionBarUtils'
+
 import css from './ActionBarText.module.css'
 
 type FormatterProps = {

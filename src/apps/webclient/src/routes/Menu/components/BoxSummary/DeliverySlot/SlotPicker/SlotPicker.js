@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { Button, Segment } from 'goustouicomponents'
+
 import classnames from 'classnames'
+import { Button, Segment } from 'goustouicomponents'
+import PropTypes from 'prop-types'
 
 import { slotsPropType } from '../deliverySlotPropTypes'
+
 import css from './SlotPicker.css'
 
 const SlotPicker = ({ slots, date, slotId, onClick }) => {

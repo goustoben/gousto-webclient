@@ -1,10 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+
 import InputError from 'Form/InputError'
 import Svg from 'Svg'
-import css from './CheckoutFrame.css'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
 import checkoutCss from '../../../Checkout.css'
+import css from './CheckoutFrame.css'
 
 export const FrameField = ({
   header,

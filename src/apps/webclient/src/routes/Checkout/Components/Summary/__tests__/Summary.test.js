@@ -1,7 +1,9 @@
-import { shallow } from 'enzyme'
 import React from 'react'
-import Immutable from 'immutable'
+
 import { PricePerServingMessage } from 'PricePerServingMessage'
+import { shallow } from 'enzyme'
+import Immutable from 'immutable'
+
 import { PromoCode } from '../../PromoCode'
 import { Summary } from '../Summary'
 

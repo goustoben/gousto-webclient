@@ -1,7 +1,8 @@
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { redirect } from 'actions/redirect'
 import loginActions from 'actions/login'
 import { menuLoadBoxPrices } from 'actions/menu'
+import { redirect } from 'actions/redirect'
+import { trackUTMAndPromoCode } from 'actions/tracking'
+
 import {
   signupCheckAccountGoToBoxPrices,
   signupCheckAccountLogin,

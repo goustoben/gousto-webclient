@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
+
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
+
 import { getRecipesFromAllRecipesCollection } from '../carouselRecipes'
 
 describe('getRecipesFromAllRecipesCollection', () => {

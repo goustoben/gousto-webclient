@@ -1,5 +1,8 @@
 import Immutable from 'immutable'
+
 import { deliveryTariffTypes } from 'utils/deliveries'
+
+import { createState } from '../__mocks__/order.mock'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getOrderDetails,
@@ -10,7 +13,6 @@ import {
   getUpdateOrderProductItemsOrderV1,
   getUserDeliveryTariffId,
 } from '../order'
-import { createState } from '../__mocks__/order.mock'
 
 describe('order selectors', () => {
   describe('getSlotForBoxSummaryDeliveryDays', () => {

@@ -1,6 +1,8 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
 import css from './CarouselArrow.css'
 
 export const Arrow = ({ side, ...props }) => {

@@ -1,5 +1,7 @@
 import React, { ButtonHTMLAttributes } from 'react'
+
 import { CTA } from 'goustouicomponents'
+
 import css from './EnterPromoCodeManuallyButton.module.css'
 
 type Props = {

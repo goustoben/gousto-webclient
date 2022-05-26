@@ -1,8 +1,11 @@
-import { Box } from '@gousto-internal/citrus-react'
 import React, { FC } from 'react'
-import { Product } from '../Product'
-import css from './ProductListPairings.css'
+
+import { Box } from '@gousto-internal/citrus-react'
+
 import type { ProductRecipePairing } from '../../types'
+import { Product } from '../Product'
+
+import css from './ProductListPairings.css'
 
 interface ProductListPairingsProps {
   ageVerified: boolean

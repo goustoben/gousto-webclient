@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect'
-import { getMenuRecipeIds, getStock } from 'selectors/root'
+
 import { getBasketRecipes, getNumPortions } from 'selectors/basket'
 import { getRecipeById, getRecipeTitle, getRecipeImages } from 'selectors/recipe'
+import { getMenuRecipeIds, getStock } from 'selectors/root'
 import { okRecipes } from 'utils/basket'
 
 export const getOkRecipeIds = createSelector(

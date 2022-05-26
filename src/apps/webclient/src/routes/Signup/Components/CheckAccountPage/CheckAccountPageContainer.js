@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
+
+import { redirect } from 'actions/redirect'
 import {
   signupCheckAccountGoToBoxPrices,
   signupCheckAccountLogin,
 } from 'routes/Signup/signupActions'
 import { getIsAuthenticated } from 'selectors/auth'
-import { redirect } from 'actions/redirect'
+
 import { CheckAccountPage } from './CheckAccountPage'
 
 const mapStateToProps = (state) => ({

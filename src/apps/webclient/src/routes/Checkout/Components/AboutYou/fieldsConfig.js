@@ -1,7 +1,10 @@
 import React from 'react'
+
+import { Icon, IconVariant, Box, Color } from '@gousto-internal/citrus-react'
+
 import { client } from 'config/routes'
 import { emailValidator } from 'utils/forms'
-import { Icon, IconVariant, Box, Color } from '@gousto-internal/citrus-react'
+
 import css from './AboutYou.css'
 
 const passwordLabel = 'Password'

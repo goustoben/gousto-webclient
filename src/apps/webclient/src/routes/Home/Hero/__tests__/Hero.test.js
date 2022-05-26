@@ -1,8 +1,11 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
+
 import { CTAHomepageContainer } from 'routes/Home/CTA'
+
 import { Hero } from '../Hero'
 
 describe('Hero', () => {

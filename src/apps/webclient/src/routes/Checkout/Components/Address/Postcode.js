@@ -1,14 +1,16 @@
-import PropTypes from 'prop-types'
 import React, { Fragment, useState } from 'react'
-import Immutable from 'immutable'
-import classNames from 'classnames'
-import { Field } from 'redux-form'
-import { ReduxFormInput } from 'Form/ReduxFormInput'
-import { CheckoutButton } from '../CheckoutButton/CheckoutButton'
-import { transformAddresses } from '../../utils/delivery'
 
-import postcodeCss from './Postcode.css'
+import { ReduxFormInput } from 'Form/ReduxFormInput'
+import classNames from 'classnames'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+
+import { transformAddresses } from '../../utils/delivery'
+import { CheckoutButton } from '../CheckoutButton/CheckoutButton'
+
 import checkoutCss from '../../Checkout.css'
+import postcodeCss from './Postcode.css'
 
 const Postcode = ({
   onPostcodeLookup,

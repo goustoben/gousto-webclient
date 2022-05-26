@@ -1,8 +1,10 @@
 import * as React from 'react'
+
 import { renderHook } from '@testing-library/react-hooks'
-import configureMockStore from 'redux-mock-store'
 import Immutable from 'immutable'
 import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import { useSurchargePerPortion } from './useSurchargePerPortion'
 
 describe('useSurchargePerPortion', () => {

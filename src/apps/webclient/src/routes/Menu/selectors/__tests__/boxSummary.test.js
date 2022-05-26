@@ -1,4 +1,5 @@
 import Immutable, { fromJS } from 'immutable'
+
 import { getOneOffSlotAvailableSlots, getDisabledSlots, userHasAvailableSlots } from '../boxSummary'
 
 describe('given getOneOffSlotAvailableSlots is called', () => {

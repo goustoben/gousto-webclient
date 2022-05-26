@@ -1,9 +1,10 @@
+import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
 import Immutable from 'immutable'
-import * as boxSummaryActions from 'actions/boxSummary'
+
 import * as basketActions from 'actions/basket'
+import * as boxSummaryActions from 'actions/boxSummary'
 import * as menuActions from 'actions/menu'
 
-import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
 import { menuOverlayClick } from '../menuOverlayClick'
 
 describe('given menuOverlayClick action is called', () => {

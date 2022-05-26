@@ -1,7 +1,9 @@
 /* eslint-disable react/no-array-index-key */
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import css from './SubIngredients.css'
 
 const newLineString = 'NEWLINE'

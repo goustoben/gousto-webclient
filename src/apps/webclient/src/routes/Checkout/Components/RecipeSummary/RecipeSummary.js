@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 import { ReactReduxContext } from 'react-redux'
-import { basketSum } from 'utils/basket'
+
 import recipesActions from 'actions/recipes'
+import { basketSum } from 'utils/basket'
+
 import { OrderedRecipes } from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {

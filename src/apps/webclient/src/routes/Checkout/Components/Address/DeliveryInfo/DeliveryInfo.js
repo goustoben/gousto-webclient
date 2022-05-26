@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import moment from 'moment'
 
 import Svg from 'Svg'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+
 import css from './DeliveryInfo.css'
 
 const DeliveryInfo = ({ deliveryDate, cutOffDate, frequency }) => {

@@ -1,8 +1,9 @@
+import { useDispatch } from 'react-redux'
+
 import {
   menuRecipeDetailVisibilityChange,
   selectRecipeVariant,
 } from 'routes/Menu/actions/menuRecipeDetails'
-import { useDispatch } from 'react-redux'
 
 type GetChangeCheckedRecipeHandlerArgs = {
   dispatch: ReturnType<typeof useDispatch>

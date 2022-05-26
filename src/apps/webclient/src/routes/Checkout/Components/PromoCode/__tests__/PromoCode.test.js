@@ -1,5 +1,7 @@
-import { mount } from 'enzyme'
 import React from 'react'
+
+import { mount } from 'enzyme'
+
 import { PromoCode } from 'routes/Checkout/Components/PromoCode/PromoCode'
 
 jest.useFakeTimers()

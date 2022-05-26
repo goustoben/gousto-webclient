@@ -1,20 +1,23 @@
 import React, { ButtonHTMLAttributes } from 'react'
-import { useMedia } from 'react-use'
-import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
+
+import { Box } from '@gousto-internal/citrus-react'
 import classNames from 'classnames'
 import { Tooltip } from 'goustouicomponents'
-import * as trackingKeys from 'actions/trackingKeys'
-import { Box } from '@gousto-internal/citrus-react'
-import { ActionBar } from '../../ActionBar/ActionBar'
-import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
+import { useMedia } from 'react-use'
 
-import css from './BoxSummaryBanner.css'
-import { ExpandBoxSummaryButton } from './ExpandBoxSummaryButton'
+import * as trackingKeys from 'actions/trackingKeys'
+import { DESKTOP_VIEW, MOBILE_VIEW } from 'utils/view'
+
+import { useIsActionBarRedesignEnabled } from '../../../hooks/useIsActionBarRedesignEnabled'
+import { ActionBar } from '../../ActionBar/ActionBar'
 import { BrowseCTAContainer } from '../BrowseCTA'
 import { BrowseCTAButtonContainer } from '../BrowseCTAButton'
-import { OpenBoxButton } from './OpenBoxButton'
 import { CheckoutButton } from './CheckoutButton'
+import { ExpandBoxSummaryButton } from './ExpandBoxSummaryButton'
+import { OpenBoxButton } from './OpenBoxButton'
 import { PriceAndDiscountTip } from './PriceAndDiscountTip'
+
+import css from './BoxSummaryBanner.css'
 
 type Props = {
   numRecipes: number

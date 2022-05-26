@@ -1,6 +1,6 @@
 import { renderHTML } from '../processRequest'
-import { isServer } from '../utils/serverEnvironment'
 import htmlTemplate from '../template'
+import { isServer } from '../utils/serverEnvironment'
 
 jest.mock('../utils/serverEnvironment')
 jest.mock('../../src/utils/browserEnvironment')

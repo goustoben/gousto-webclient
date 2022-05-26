@@ -1,8 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
 import { PaymentMethod } from 'config/signup'
+
 import { PaymentMethodListItem } from './PaymentMethodListItem'
+
 import css from './PaymentMethodSelector.css'
 
 export const PaymentMethodSelector = ({

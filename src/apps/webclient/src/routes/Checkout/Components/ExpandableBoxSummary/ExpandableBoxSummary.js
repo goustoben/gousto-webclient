@@ -1,7 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { ExpandableSection } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { checkoutClickHideOrderSummary, checkoutClickShowOrderSummary } from 'actions/trackingKeys'
+
 import { HeaderContent } from './HeaderContent/HeaderContent'
 
 import css from './ExpandableBoxSummary.css'

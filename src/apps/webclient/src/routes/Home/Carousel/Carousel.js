@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
+
+import PropTypes from 'prop-types'
+
 import { carousel } from 'config/home'
-import { RecipeCarousel } from './RecipeCarousel'
+
 import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
+import { RecipeCarousel } from './RecipeCarousel'
+
 import css from './Carousel.css'
 
 const Carousel = ({ numRecipes, ctaUri, ctaText }) => (

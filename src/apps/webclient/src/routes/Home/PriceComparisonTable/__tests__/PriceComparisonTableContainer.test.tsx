@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { render, screen } from '@testing-library/react'
+
 import { PriceComparisonTable } from 'routes/Home/PriceComparisonTable'
 
 jest.mock('react-redux', () => ({

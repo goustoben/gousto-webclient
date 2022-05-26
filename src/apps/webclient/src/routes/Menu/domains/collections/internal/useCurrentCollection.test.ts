@@ -1,9 +1,9 @@
 import Immutable from 'immutable'
 
-import { useCollectionQuerySlug } from './useCollectionQuerySlug'
-import { useDisplayedCollections } from './useDisplayedCollections'
-import { useCurrentCollection } from './useCurrentCollection'
 import { CollectionSlug } from '../constants'
+import { useCollectionQuerySlug } from './useCollectionQuerySlug'
+import { useCurrentCollection } from './useCurrentCollection'
+import { useDisplayedCollections } from './useDisplayedCollections'
 import { createCollectionFromDefaultValues } from './utils'
 
 jest.mock('react-redux', () => ({

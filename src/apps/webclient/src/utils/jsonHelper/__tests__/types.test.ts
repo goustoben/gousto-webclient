@@ -1,4 +1,5 @@
 import type { TypesEqual } from '_testing/typesEqual'
+
 import { SnakeToCamelCase, CamelCasedValue } from '../camelCasing'
 
 describe('SnakeToCamelCase generic type', () => {

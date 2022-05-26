@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import { Button } from './Button'
 
 const mapStateToProps = (state) => ({

@@ -1,24 +1,28 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
+import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
+import Receipt from 'components/Receipt'
+import { UserCreditMessage } from 'components/UserCreditMessage'
 import { basketSum } from 'utils/basket'
 import { getSurchargeItems } from 'utils/pricing'
 
-import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
-import { UserCreditMessage } from 'components/UserCreditMessage'
-import Receipt from 'Receipt'
-import { Portions } from './Portions'
-import css from './Details.css'
 import { BoxProgressAlert } from './BoxProgressAlert'
-import { RecipeList } from './RecipeList'
 import { DateHeader } from './DateHeader'
+import { DetailsCheckoutButton } from './DetailsCheckoutButton'
+import { Portions } from './Portions'
+import { RecipeList } from './RecipeList'
 import {
   HIDE_CHOOSE_RECIPES_CTA,
   HIDE_RECIPE_LIST,
   HIDE_PORTIONS,
   HIDE_PROMO_CODE_TEXT,
 } from './displayOptionsProps'
-import { DetailsCheckoutButton } from './DetailsCheckoutButton'
+
+import css from './Details.css'
+
 class Details extends React.Component {
   getCtaText = (numRecipes, maxRecipesNum, minRecipesNum) => {
     let text = ''

@@ -1,9 +1,11 @@
 import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
+
 import { actionTypes } from 'actions/actionTypes'
-import { useChangeCollectionById } from './useChangeCollectionById'
+
 import { CollectionSlug } from '../constants'
+import { useChangeCollectionById } from './useChangeCollectionById'
 import { useDisplayedCollections } from './useDisplayedCollections'
 import { useLocation } from './useLocation'
 import { createCollectionFromDefaultValues } from './utils'

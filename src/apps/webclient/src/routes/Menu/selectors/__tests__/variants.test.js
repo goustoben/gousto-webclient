@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { getVariantsForRecipe, getCurrentCollectionDietaryClaims } from '../variants'
 
 describe('getVariantsForRecipe', () => {

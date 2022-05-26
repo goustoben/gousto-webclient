@@ -1,14 +1,15 @@
-import logger from 'utils/logger'
-import { trackOrder } from 'actions/order'
-import statusActions from 'actions/status'
-import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { actionTypes } from 'actions/actionTypes'
-import { getAccessToken, getAuthUserId } from 'selectors/auth'
+import { trackOrder } from 'actions/order'
+import { orderConfirmationRedirect } from 'actions/orderConfirmation'
+import statusActions from 'actions/status'
 import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
+import { getAccessToken, getAuthUserId } from 'selectors/auth'
+import logger from 'utils/logger'
+
+import { getBasketOrderId } from '../../../selectors/basket'
 import * as coreApi from '../apis/core'
 import { getOrderDetails, getOrderAction } from '../selectors/order'
-import { getBasketOrderId } from '../../../selectors/basket'
 import { openSidesModal } from './sides'
 
 const handleErrorForOrder = (message) => (dispatch) => {

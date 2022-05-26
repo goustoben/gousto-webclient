@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
+
 import * as recipeUtils from 'utils/recipe'
+
 import { safeJestMock } from '../../../../_testing/mocks'
 import {
   getRecipeTitle,

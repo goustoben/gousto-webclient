@@ -1,7 +1,10 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import { useDispatch } from 'react-redux'
+
 import { trackUTMAndPromoCode } from 'actions/tracking'
+
 import { RecipesInBasketProgress } from '../RecipesInBasketProgress.logic'
 
 jest.mock('src/routes/Menu/domains/basket', () => ({

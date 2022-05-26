@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
-import { getAccessToken } from 'selectors/auth'
-import { getUserId } from 'selectors/user'
-import * as trackingKeys from 'actions/trackingKeys'
+
 import {
   trackAddSide,
   trackViewSidesAllergens,
   trackCloseSidesAllergens,
   trackSidesContinueClicked,
 } from 'actions/menu'
+import * as trackingKeys from 'actions/trackingKeys'
+import { getAccessToken } from 'selectors/auth'
+import { getUserId } from 'selectors/user'
+
 import { checkoutWithSides } from '../actions/menuSidesCheckoutClick'
 import { closeSidesModal } from '../actions/sides'
 import { getOrderV2 } from '../selectors/order'

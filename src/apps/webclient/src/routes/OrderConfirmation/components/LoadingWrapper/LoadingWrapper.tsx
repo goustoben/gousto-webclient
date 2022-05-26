@@ -1,5 +1,7 @@
 import React from 'react'
+
 import Loading from 'Loading'
+
 import css from './LoadingWrapper.module.css'
 
 const LoadingWrapper = () => (

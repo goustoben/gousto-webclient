@@ -1,7 +1,8 @@
 import { renderHook, cleanup } from '@testing-library/react-hooks'
 import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
-import { user } from './sides.hook.mock'
+
 import { useSides } from './sides.hook'
+import { user } from './sides.hook.mock'
 
 describe('useSides', () => {
   const accessToken = 'access-token'

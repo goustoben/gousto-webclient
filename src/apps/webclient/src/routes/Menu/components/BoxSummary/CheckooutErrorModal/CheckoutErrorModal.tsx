@@ -1,8 +1,11 @@
-import { CTA, Modal, ModalHeader, ModalBody } from 'goustouicomponents'
 import React, { useEffect, useState } from 'react'
+
+import { CTA, Modal, ModalHeader, ModalBody } from 'goustouicomponents'
 import PropTypes from 'prop-types'
+
+import Link from 'components/Link'
 import configRoutes from 'config/routes'
-import Link from 'Link'
+
 import css from './CheckoutErrorModal.css'
 
 export const CheckoutErrorModal = ({ shouldShow }: { shouldShow: boolean }) => {

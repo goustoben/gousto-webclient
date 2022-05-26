@@ -1,10 +1,14 @@
-import { Box, Text, Space, FontWeight, FontFamily, Color } from '@gousto-internal/citrus-react'
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
-import config from 'config/menu'
+
+import { Box, Text, Space, FontWeight, FontFamily, Color } from '@gousto-internal/citrus-react'
 import GoustoImage from 'Image'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
+import config from 'config/menu'
+
 import { ButtonsContainer } from '../Buttons'
+
 import css from './OrderedRecipe.css'
 
 export const OrderedRecipes = ({ title, recipeId, stock, media, featureBtn, isFineDineIn }) => (

@@ -1,8 +1,8 @@
+import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
+import { getIsAuthenticated } from 'selectors/auth'
 import { getIsSignupReductionEnabled, getIsCommunicationPanelEnabled } from 'selectors/features'
 import { getBoxSummaryDeliveryDays } from 'selectors/root'
-import { getIsAuthenticated } from 'selectors/auth'
 import { getLoadingStateForOrder } from 'selectors/user'
-import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 
 export const shouldShowCapacityInfo = (state) =>
   !userHasAvailableSlots(state) &&

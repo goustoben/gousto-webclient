@@ -1,11 +1,14 @@
 import React from 'react'
-import { P } from 'Page/Elements'
-import TextInput from 'Form/Input'
-import { CTA } from 'goustouicomponents'
+
 import Form from 'Form'
-import { validateEmail } from 'utils/auth'
+import TextInput from 'Form/Input'
+import { P } from 'Page/Elements'
+import { CTA } from 'goustouicomponents'
+
 import { newsletterSubscribe } from 'apis/customers'
 import { homeConfig } from 'config/home'
+import { validateEmail } from 'utils/auth'
+
 import css from './EmailForm.css'
 
 class EmailForm extends React.PureComponent {

@@ -1,11 +1,12 @@
 import { LogsInitConfiguration } from '@datadog/browser-logs'
 import { RumInitConfiguration } from '@datadog/browser-rum'
-import { getEnvironment } from 'utils/isomorphicEnvironment'
+
 import {
   getClientDatadogRumSdkAppID,
   getClientDatadogRumSdkClientToken,
   getClientDatadogBrowserLogsClientToken,
 } from 'utils/configFromWindow'
+import { getEnvironment } from 'utils/isomorphicEnvironment'
 
 export const DATADOG_ENABLED_ENVS = ['production']
 export const DATADOG_CLIENT_SAMPLE_RATE = 25

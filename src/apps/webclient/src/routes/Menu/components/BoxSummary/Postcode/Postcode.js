@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Form from 'Form'
-import TextInput from 'Form/Input'
+
 import { Button, Heading, LayoutContentWrapper } from 'goustouicomponents'
-import DropdownInput from 'Form/Dropdown'
+import PropTypes from 'prop-types'
+
+import Form from 'components/Form'
+import DropdownInput from 'components/Form/Dropdown'
+import TextInput from 'components/Form/Input'
+
 import css from './Postcode.css'
 
 class Postcode extends React.PureComponent {

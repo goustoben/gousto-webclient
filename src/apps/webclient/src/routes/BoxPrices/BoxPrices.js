@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
+
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+
 import { seo } from 'routes/BoxPrices/boxPricesConfig'
-import { BoxDescriptorsPropType } from './boxPricesPropTypes'
+
 import { BoxPricesComponent } from './BoxPricesComponent'
+import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 
 const BoxPrices = ({
   boxPricesBoxSizeSelected,

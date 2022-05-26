@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import classnames from 'classnames'
 import { Button, Segment } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { isMobile } from 'utils/view'
+
 import css from './BrowseCTAButton.css'
 
 const handleSetDeliveryDateClick = (

@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { Field } from 'redux-form'
+
 import { ReduxFormInput } from 'Form/ReduxFormInput'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import { Field } from 'redux-form'
+
 import { checkoutConfig } from 'config/checkout'
-import css from './Delivery.css'
+
 import checkoutCss from '../../Checkout.css'
+import css from './Delivery.css'
 
 const LEAVE_BOX_OPTIONS = checkoutConfig.leaveBoxOptions
   .filter((option) => option)

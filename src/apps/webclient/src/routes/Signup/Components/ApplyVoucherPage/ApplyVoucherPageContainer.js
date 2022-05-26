@@ -1,8 +1,10 @@
 import { connect } from 'react-redux'
+
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { ApplyVoucherPage } from './ApplyVoucherPage'
-import { getCurrentPromoCodeCustomText2 } from '../../signupSelectors'
+
 import { signupApplyVoucherGoToDeliveries } from '../../signupActions'
+import { getCurrentPromoCodeCustomText2 } from '../../signupSelectors'
+import { ApplyVoucherPage } from './ApplyVoucherPage'
 
 const mapStateToProps = (state) => ({
   applyVoucherCustomText: getCurrentPromoCodeCustomText2(state),

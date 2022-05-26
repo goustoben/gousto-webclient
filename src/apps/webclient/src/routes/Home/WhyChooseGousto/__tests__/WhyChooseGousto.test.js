@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { CTAHomepageContainer } from 'routes/Home/CTA'
+
 import { WhyChooseGousto } from '../WhyChooseGousto'
 
 describe('WhyChooseGousto', () => {

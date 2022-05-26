@@ -1,5 +1,6 @@
-import { reduxForm } from 'redux-form'
 import { validate } from 'Form/validate'
+import { reduxForm } from 'redux-form'
+
 import { scrollToRefsWrapper } from 'components/ScrollToRefs/ScrollToRefs'
 import { dottify } from 'utils/dottify'
 

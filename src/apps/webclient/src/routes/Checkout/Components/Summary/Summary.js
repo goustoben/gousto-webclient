@@ -1,3 +1,5 @@
+import React, { PureComponent } from 'react'
+
 import {
   Box,
   Text,
@@ -10,15 +12,17 @@ import {
   IconVariant,
   Space,
 } from '@gousto-internal/citrus-react'
-import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
-import Immutable from 'immutable'
+import Loading from 'Loading'
 import { PricePerServingMessage } from 'PricePerServingMessage'
 import Receipt from 'Receipt'
-import Loading from 'Loading'
-import { getSurchargeItems } from 'utils/pricing'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { basketSum } from 'utils/basket'
+import { getSurchargeItems } from 'utils/pricing'
+
 import { PromoCode } from '../PromoCode'
+
 import css from './Summary.css'
 
 const propTypes = {

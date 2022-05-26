@@ -1,4 +1,5 @@
 import type { TypesEqual } from '_testing/typesEqual'
+
 import { Split } from '../string'
 
 describe('string type utils', () => {

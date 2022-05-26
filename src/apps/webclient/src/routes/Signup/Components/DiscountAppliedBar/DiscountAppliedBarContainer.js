@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
-import { getPromoBannerState } from 'utils/home'
-import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
+
 import { signupDismissDiscountAppliedBar } from 'actions/signup'
+import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
+import { getPromoBannerState } from 'utils/home'
+
 import { DiscountAppliedBar } from './DiscountAppliedBar'
 
 const mapStateToProps = (state) => {

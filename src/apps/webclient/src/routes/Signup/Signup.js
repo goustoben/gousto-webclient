@@ -1,23 +1,25 @@
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { ReactReduxContext } from 'react-redux'
-import Helmet from 'react-helmet'
-import Immutable from 'immutable'
+
 import classNames from 'classnames'
-import { signupConfig } from 'config/signup'
-import { stepByName } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
-import { fetchSignupData } from 'routes/Signup/utils/fetchSignupData'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
+import { ReactReduxContext } from 'react-redux'
+
+import { signupConfig } from 'config/signup'
 import { AVAILABLE_STEP_COMPONENTS } from 'routes/Signup/constants/AvailableStepComponents'
+import { fetchSignupData } from 'routes/Signup/utils/fetchSignupData'
 import { openProperStep } from 'routes/Signup/utils/openProperStep'
+import { stepByName } from 'utils/signup'
+
+import { ApplyVoucherPageContainer } from './Components/ApplyVoucherPage'
+import { CheckAccountPageContainer } from './Components/CheckAccountPage'
+import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
+import { EnterPromoCodeManuallyPage } from './Components/EnterPromoCodeManuallyPage'
+import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
 
 import css from './Signup.css'
-
-import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
-import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
-import { EnterPromoCodeManuallyPage } from './Components/EnterPromoCodeManuallyPage'
-import { CheckAccountPageContainer } from './Components/CheckAccountPage'
-import { ApplyVoucherPageContainer } from './Components/ApplyVoucherPage'
 
 const propTypes = {
   stepName: PropTypes.string,

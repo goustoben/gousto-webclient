@@ -1,7 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { DeliveryDay } from 'routes/Signup/Components/Calendar/models/DeliveryDay'
-import { useDeliveryDaysMap } from 'routes/Signup/Components/Calendar/hooks/useDeliveryDaysMap'
 import moment from 'moment'
+
+import { useDeliveryDaysMap } from 'routes/Signup/Components/Calendar/hooks/useDeliveryDaysMap'
+import { DeliveryDay } from 'routes/Signup/Components/Calendar/models/DeliveryDay'
 
 describe('useDeliveryDaysMap hook', () => {
   test('should correctly map delivery days', () => {

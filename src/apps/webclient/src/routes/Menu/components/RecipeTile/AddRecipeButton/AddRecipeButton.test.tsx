@@ -1,8 +1,11 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import Immutable from 'immutable'
+
 import { render, fireEvent, screen } from '@testing-library/react'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
+
 import { createMockInitialState, createMockStore } from '../../../_testing/createMockStore'
 import { AddRecipeButton } from './AddRecipeButton'
 

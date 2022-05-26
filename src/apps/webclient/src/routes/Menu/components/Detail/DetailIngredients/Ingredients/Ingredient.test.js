@@ -1,9 +1,11 @@
 import React from 'react'
 
 import { shallow } from 'enzyme'
-import Image from 'Image'
-import Svg from 'Svg'
 import Immutable from 'immutable'
+
+import Image from 'components/Image'
+import Svg from 'components/Svg'
+
 import { Ingredient } from './Ingredient'
 
 describe('<Ingredient />', () => {

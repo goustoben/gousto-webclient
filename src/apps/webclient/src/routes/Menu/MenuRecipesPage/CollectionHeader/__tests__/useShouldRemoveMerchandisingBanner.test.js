@@ -1,8 +1,9 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import * as useCollectionQuerySlug from '../../../domains/collections/internal/useCollectionQuerySlug'
+
 import * as useAuth from '../../../domains/auth/useAuth'
-import { useShouldRemoveMerchandisingBanner } from '../useShouldRemoveMerchandisingBanner'
 import { CollectionSlug } from '../../../domains/collections'
+import * as useCollectionQuerySlug from '../../../domains/collections/internal/useCollectionQuerySlug'
+import { useShouldRemoveMerchandisingBanner } from '../useShouldRemoveMerchandisingBanner'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   ...jest.requireActual('containers/OptimizelyRollouts'),

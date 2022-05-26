@@ -1,5 +1,6 @@
-import { CalendarDayInfo } from 'routes/Signup/Components/Calendar/models/CalendarDayInfo'
 import moment from 'moment'
+
+import { CalendarDayInfo } from 'routes/Signup/Components/Calendar/models/CalendarDayInfo'
 import { getLatestDeliveryDay } from 'routes/Signup/Components/Calendar/utils/getLatestDeliveryDay'
 
 describe('getLatestDeliveryDay util', () => {

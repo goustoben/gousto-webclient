@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom'
+
 import { CDN_CHECKOUT_COM, loadCheckoutScript } from '../loadCheckoutScript'
 
 describe('loadCheckoutScript', () => {

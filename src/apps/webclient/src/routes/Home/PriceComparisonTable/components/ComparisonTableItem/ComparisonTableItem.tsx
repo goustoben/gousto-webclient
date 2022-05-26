@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   AlignItems,
   Box,
@@ -14,12 +15,13 @@ import {
   Text,
   TextAlign,
 } from '@gousto-internal/citrus-react'
-import { TableItemType } from 'routes/Home/PriceComparisonTable/enums'
-import { TableItemData } from 'routes/Home/PriceComparisonTable/types'
-import css from 'routes/Home/PriceComparisonTable/components/ComparisonTableItem/ComparisonTableItem.css'
+
 import GoustoPNG from 'routes/Home/PriceComparisonTable/assets/Gousto.png'
 import HelloFreshPNG from 'routes/Home/PriceComparisonTable/assets/HelloFresh.png'
 import MindfulChefPNG from 'routes/Home/PriceComparisonTable/assets/MindfulChef.png'
+import css from 'routes/Home/PriceComparisonTable/components/ComparisonTableItem/ComparisonTableItem.css'
+import { TableItemType } from 'routes/Home/PriceComparisonTable/enums'
+import { TableItemData } from 'routes/Home/PriceComparisonTable/types'
 
 interface ItemImageProps {
   type: TableItemType

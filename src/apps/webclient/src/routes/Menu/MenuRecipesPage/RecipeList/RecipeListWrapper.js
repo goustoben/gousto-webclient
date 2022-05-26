@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from 'react'
-import { bindActionCreators } from 'redux'
+
 import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
+
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
-import { RecipeList } from './RecipeList'
 import { useCurrentCollectionId } from '../../domains/collections'
 import { useMenu, useStock } from '../../domains/menu'
+import { RecipeList } from './RecipeList'
 import { useSoldOutTracking } from './useSoldOutTracking'
 
 const RecipeListWrapper = (ownProps) => {

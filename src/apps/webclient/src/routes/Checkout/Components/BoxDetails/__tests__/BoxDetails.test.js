@@ -1,9 +1,11 @@
-import { shallow } from 'enzyme'
 import React from 'react'
-import Immutable from 'immutable'
-import { RecipeSummary } from 'routes/Checkout/Components/RecipeSummary'
-import { BoxDetails } from 'routes/Checkout/Components/BoxDetails/BoxDetails'
+
 import Link from 'Link'
+import { shallow } from 'enzyme'
+import Immutable from 'immutable'
+
+import { BoxDetails } from 'routes/Checkout/Components/BoxDetails/BoxDetails'
+import { RecipeSummary } from 'routes/Checkout/Components/RecipeSummary'
 
 describe('BoxDetails', () => {
   let recipes
