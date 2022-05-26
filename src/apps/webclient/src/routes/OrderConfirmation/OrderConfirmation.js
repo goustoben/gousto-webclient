@@ -1,19 +1,18 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+
 import classnames from 'classnames'
+import { LayoutPageWrapper, VerticalStages, VerticalStagesItem } from 'goustouicomponents'
 import Immutable from 'immutable'
-import Overlay from 'Overlay'
-import { PageLoader } from 'PageLoader'
-import { AgeVerificationPopUp } from 'Product/AgeVerification'
-import {
-  LayoutPageWrapper,
-  VerticalStages,
-  VerticalStagesItem,
-} from 'goustouicomponents'
-import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
-import { ReferAFriend } from './components/ReferAFriend'
+import PropTypes from 'prop-types'
+
+import Overlay from 'components/Overlay'
+import { PageLoader } from 'components/PageLoader'
+import { AgeVerificationPopUp } from 'components/Product/AgeVerification'
+
 import { AwinPixel } from './components/AwinPixel'
 import { Market } from './components/Market'
+import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
+import { ReferAFriend } from './components/ReferAFriend'
 
 import css from './OrderConfirmation.css'
 
@@ -37,7 +36,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  headerDetails: {}
+  headerDetails: {},
 }
 
 class OrderConfirmation extends PureComponent {
@@ -45,7 +44,7 @@ class OrderConfirmation extends PureComponent {
     super()
     this.state = {
       hasConfirmedAge: false,
-      showAgeVerification: false
+      showAgeVerification: false,
     }
   }
 
@@ -57,7 +56,7 @@ class OrderConfirmation extends PureComponent {
 
   toggleAgeVerificationPopUp = () => {
     this.setState((prevState) => ({
-      showAgeVerification: !prevState.showAgeVerification
+      showAgeVerification: !prevState.showAgeVerification,
     }))
   }
 
@@ -70,12 +69,7 @@ class OrderConfirmation extends PureComponent {
   }
 
   render() {
-    const {
-      ageVerified,
-      headerDetails,
-      isLoading,
-      showHeader,
-    } = this.props
+    const { ageVerified, headerDetails, isLoading, showHeader } = this.props
     const { hasConfirmedAge, showAgeVerification } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
@@ -85,10 +79,7 @@ class OrderConfirmation extends PureComponent {
 
     return (
       <LayoutPageWrapper padding="large-screens-only">
-        <div
-          className={css.pageContent}
-          data-testing="orderConfirmationContainer"
-        >
+        <div className={css.pageContent} data-testing="orderConfirmationContainer">
           <Overlay open={showAgeVerification} from="top">
             <AgeVerificationPopUp
               onClose={this.toggleAgeVerificationPopUp}
@@ -97,47 +88,39 @@ class OrderConfirmation extends PureComponent {
             />
           </Overlay>
 
-          {
-            showHeader
-              ? (
-                <VerticalStages hasFullWidth>
-                  <VerticalStagesItem
-                    title="Order created"
-                    isCompleted
-                    backgroundColor="lightGrey"
-                  >
-                    <div>
-                      <OrderConfirmationHeader {...headerDetails} />
-                      <div className={classnames(css.mobileShow, css.rafMobile)}>
-                        <ReferAFriend />
-                      </div>
-                    </div>
-                  </VerticalStagesItem>
-
-                  <VerticalStagesItem
-                    title="Add desserts, drinks, snacks & more from the Gousto Market"
-                    isCompleted={false}
-                  >
-                    <Market
-                      ageVerified={ageVerified}
-                      toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-                    />
-                  </VerticalStagesItem>
-                </VerticalStages>
-              )
-              : (
+          {showHeader ? (
+            <VerticalStages hasFullWidth>
+              <VerticalStagesItem title="Order created" isCompleted backgroundColor="lightGrey">
                 <div>
-                  <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
-                  <Market
-                    ageVerified={ageVerified}
-                    toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-                  />
+                  <OrderConfirmationHeader {...headerDetails} />
                   <div className={classnames(css.mobileShow, css.rafMobile)}>
                     <ReferAFriend />
                   </div>
                 </div>
-              )
-          }
+              </VerticalStagesItem>
+
+              <VerticalStagesItem
+                title="Add desserts, drinks, snacks & more from the Gousto Market"
+                isCompleted={false}
+              >
+                <Market
+                  ageVerified={ageVerified}
+                  toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                />
+              </VerticalStagesItem>
+            </VerticalStages>
+          ) : (
+            <div>
+              <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
+              <Market
+                ageVerified={ageVerified}
+                toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+              />
+              <div className={classnames(css.mobileShow, css.rafMobile)}>
+                <ReferAFriend />
+              </div>
+            </div>
+          )}
 
           <AwinPixel />
         </div>

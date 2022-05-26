@@ -1,12 +1,15 @@
-import { marketProductAdded } from 'actions/trackingKeys'
+import React from 'react'
+
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
-import React from 'react'
+
+import { marketProductAdded } from 'actions/trackingKeys'
 import { mockProduct } from 'routes/OrderConfirmation/components/config'
+
 import { Product } from '../Product.logic'
 
 jest.mock('../../ProductDetails', () => ({
-  ProductDetailContainer: jest.fn(() => 'div')
+  ProductDetailContainer: jest.fn(() => 'div'),
 }))
 
 global.scrollTo = jest.fn()
@@ -21,7 +24,9 @@ describe('Product component', () => {
 
     test('should render image of product', () => {
       expect(wrapper.find('img').length).toBe(1)
-      expect(wrapper.find('img').prop('src')).toBe('https://production-media.gousto.co.uk/cms/product-image-landscape/YAddOns-WhiteWines-Borsao_013244-x400.jpg')
+      expect(wrapper.find('img').prop('src')).toBe(
+        'https://production-media.gousto.co.uk/cms/product-image-landscape/YAddOns-WhiteWines-Borsao_013244-x400.jpg',
+      )
     })
 
     test('should render title of product', () => {
@@ -55,24 +60,18 @@ describe('Product component', () => {
     })
 
     test('product price is not rendered with the product header', () => {
-      expect(
-        wrapper.find('.productInfo').find('.productPrice').exists()
-      ).toBe(false)
+      expect(wrapper.find('.productInfo').find('.productPrice').exists()).toBe(false)
     })
 
     test('product price is rendered in the same level as Add Product button', () => {
-      expect(
-        wrapper.find('.productContent').childAt(1).find('.productPrice').exists()
-      ).toBe(true)
+      expect(wrapper.find('.productContent').childAt(1).find('.productPrice').exists()).toBe(true)
 
-      expect(
-        wrapper.find('.productContent').childAt(1).find('Buttons').exists()
-      ).toBe(true)
+      expect(wrapper.find('.productContent').childAt(1).find('Buttons').exists()).toBe(true)
     })
 
     test('Button is set to fullWidth', () => {
       expect(
-        wrapper.find('.productButtonWrapper').find('Button').hasClass('btnWrapper--fullWidth')
+        wrapper.find('.productButtonWrapper').find('Button').hasClass('btnWrapper--fullWidth'),
       ).toEqual(true)
     })
 
@@ -81,8 +80,8 @@ describe('Product component', () => {
         const mockWithoutImages = {
           ...mockProduct,
           images: {
-            400: null
-          }
+            400: null,
+          },
         }
 
         wrapper = mount(<Product product={mockWithoutImages} ageVerified />)
@@ -118,7 +117,7 @@ describe('Product component', () => {
           basketProductAdd={jest.fn()}
           basketProductRemove={jest.fn()}
           temp={jest.fn()}
-        />
+        />,
       )
     })
 
@@ -127,15 +126,15 @@ describe('Product component', () => {
         basket: Immutable.fromJS({
           products: {
             1234: 1,
-          }
-        })
+          },
+        }),
       })
 
       expect(wrapper.text()).toContain('-1+')
       wrapper.setProps({
         basket: Immutable.fromJS({
-          products: {}
-        })
+          products: {},
+        }),
       })
 
       expect(wrapper.text()).toContain('Add')
@@ -146,7 +145,7 @@ describe('Product component', () => {
 
       wrapper.setProps({
         ageVerified: false,
-        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy
+        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy,
       })
 
       wrapper.find('Buttons').prop('onAdd')()
@@ -159,23 +158,30 @@ describe('Product component', () => {
         basket: Immutable.fromJS({
           products: {
             1234: 1,
-          }
+          },
         }),
         limitReached: false,
         ageVerified: true,
         product: {
           ageRestricted: false,
-          id: '1234'
+          id: '1234',
         },
         category: 'Test Category',
         basketProductAdd: jest.fn(),
-        orderConfirmationProductTracking: orderConfirmationProductTrackingMock
+        orderConfirmationProductTracking: orderConfirmationProductTrackingMock,
       })
 
       const { onAddProduct } = wrapper.instance()
       await onAddProduct()
 
-      expect(orderConfirmationProductTrackingMock).toHaveBeenCalledWith({eventAction: 'clicked', eventName: marketProductAdded, eventProperties: {productProperties: {ageRestricted: false, category: 'Test Category', id: '1234'}}, eventType: 'primary_action'})
+      expect(orderConfirmationProductTrackingMock).toHaveBeenCalledWith({
+        eventAction: 'clicked',
+        eventName: marketProductAdded,
+        eventProperties: {
+          productProperties: { ageRestricted: false, category: 'Test Category', id: '1234' },
+        },
+        eventType: 'primary_action',
+      })
     })
   })
 
@@ -190,7 +196,7 @@ describe('Product component', () => {
           basketProductRemove={jest.fn()}
           temp={jest.fn()}
           openProductModalTracking={jest.fn()}
-        />
+        />,
       )
     })
 
@@ -211,7 +217,7 @@ describe('Product component', () => {
 
       wrapper.setProps({
         ageVerified: false,
-        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy
+        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy,
       })
 
       wrapper.find('button.productImage').simulate('click')
@@ -223,7 +229,7 @@ describe('Product component', () => {
 
       wrapper.setProps({
         ageVerified: false,
-        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy
+        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy,
       })
 
       wrapper.find('button.productInfo').simulate('click')

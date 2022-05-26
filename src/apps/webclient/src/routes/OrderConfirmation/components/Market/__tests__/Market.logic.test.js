@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import { Map } from 'immutable'
+
 import { Market } from '../Market.logic'
 
 describe('<Market />', () => {
@@ -34,31 +36,29 @@ describe('<Market />', () => {
   })
 
   test('renders the Market presentation component with correct props', () => {
-    expect(wrapper.find('MarketPresentation').props()).toEqual(
-      {
-        ageVerified: false,
-        basket: DEFAULT_PROPS.basket,
-        bundlesProducts: null,
-        categoriesForNavBar: DEFAULT_PROPS.categoriesForNavBar,
-        filteredProducts: null,
-        getFilteredProducts: wrapper.instance().getFilteredProducts,
-        isOrderSummaryOpen: false,
-        onOrderSave: wrapper.instance().onOrderSave,
-        products: DEFAULT_PROPS.products,
-        productsCategories: DEFAULT_PROPS.productsCategories,
-        productsLoadError: DEFAULT_PROPS.productsLoadError,
-        saveError: false,
-        saveRequired: false,
-        saving: false,
-        selectedCategory: DEFAULT_PROPS.selectedCategory,
-        showOrderConfirmationReceipt: DEFAULT_PROPS.showOrderConfirmationReceipt,
-        toggleAgeVerificationPopUp: DEFAULT_PROPS.toggleAgeVerificationPopUp,
-        toggleOrderSummary: wrapper.instance().toggleOrderSummary,
-        productRecipePairings: Map(),
-        isLoading: false,
-        trackingCategory: '',
-      }
-    )
+    expect(wrapper.find('MarketPresentation').props()).toEqual({
+      ageVerified: false,
+      basket: DEFAULT_PROPS.basket,
+      bundlesProducts: null,
+      categoriesForNavBar: DEFAULT_PROPS.categoriesForNavBar,
+      filteredProducts: null,
+      getFilteredProducts: wrapper.instance().getFilteredProducts,
+      isOrderSummaryOpen: false,
+      onOrderSave: wrapper.instance().onOrderSave,
+      products: DEFAULT_PROPS.products,
+      productsCategories: DEFAULT_PROPS.productsCategories,
+      productsLoadError: DEFAULT_PROPS.productsLoadError,
+      saveError: false,
+      saveRequired: false,
+      saving: false,
+      selectedCategory: DEFAULT_PROPS.selectedCategory,
+      showOrderConfirmationReceipt: DEFAULT_PROPS.showOrderConfirmationReceipt,
+      toggleAgeVerificationPopUp: DEFAULT_PROPS.toggleAgeVerificationPopUp,
+      toggleOrderSummary: wrapper.instance().toggleOrderSummary,
+      productRecipePairings: Map(),
+      isLoading: false,
+      trackingCategory: '',
+    })
   })
 
   describe('getFilteredProducts', () => {

@@ -368,6 +368,7 @@ module.exports = {
         'server/**/*.ts',
         'server/**/*.tsx',
         'src/routes/Menu/**/*.js',
+        'src/routes/OrderConfirmation/**/*.{js,ts,tsx}',
       ],
       rules: {
         'prettier/prettier': 'error',

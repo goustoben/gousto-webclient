@@ -14,7 +14,7 @@
 }
 
 .productWrapper {
-  background:White;
+  background: White;
   border: 1px solid Mackerel;
   margin-bottom: 20px;
   transition: box-shadow 200ms ease-in;
@@ -36,7 +36,7 @@
 }
 
 .productWrapper:hover {
-  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.10);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .bundleDetails {
@@ -101,7 +101,6 @@
 }
 
 .productTitle {
-
   font-family: avenirHeavyFontStack;
   font-weight: 400;
   margin-bottom: 5px;
@@ -117,7 +116,6 @@
   margin-bottom: 0.5rem;
   cursor: pointer;
   padding: 8px 0px 8px 0px;
-
 
   @media FullWidthBreakpoint {
     font-size: 0.75rem;

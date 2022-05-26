@@ -1,22 +1,24 @@
 import { connect } from 'react-redux'
-import { getBasket } from 'selectors/root'
-import { getTempProductId, getTempAddProduct } from 'selectors/temp'
+
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
-import { openProductModalTracking } from 'actions/tracking'
 import tempActions from 'actions/temp'
+import { openProductModalTracking } from 'actions/tracking'
+import { getBasket } from 'selectors/root'
+import { getTempProductId, getTempAddProduct } from 'selectors/temp'
+
 import { Product } from './Product.logic'
 
 const mapStateToProps = (state, props) => {
-  const isSelectedProduct = props.product && (props.product.id === state.temp.get('productId'))
+  const isSelectedProduct = props.product && props.product.id === state.temp.get('productId')
 
-  return ({
+  return {
     basket: getBasket(state),
     productId: getTempProductId(state),
     addProduct: getTempAddProduct(state),
     ageVerificationPending: state.pending.get('USER_AGE_VERIFY'),
     isSelectedProduct,
-  })
+  }
 }
 
 const mapDispatchToProps = {
@@ -24,7 +26,7 @@ const mapDispatchToProps = {
   basketProductRemove,
   temp: tempActions.temp,
   orderConfirmationProductTracking,
-  openProductModalTracking
+  openProductModalTracking,
 }
 
 const ProductContainer = connect(mapStateToProps, mapDispatchToProps)(Product)

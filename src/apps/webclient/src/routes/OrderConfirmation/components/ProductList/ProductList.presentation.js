@@ -1,6 +1,9 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
+
 import { Product } from '../Product'
+
 import css from './ProductList.css'
 
 const propTypes = {
@@ -20,26 +23,31 @@ const defaultProps = {
   ageVerified: false,
 }
 
-const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggleAgeVerificationPopUp, numberOfColumnClass, trackingCategory }) => (
+const ProductListPresentation = ({
+  products,
+  ageVerified,
+  isLimitReached,
+  toggleAgeVerificationPopUp,
+  numberOfColumnClass,
+  trackingCategory,
+}) => (
   <div className={css.productList}>
-    {
-      Object.keys(products).map(productKey => {
-        const productProps = products[productKey]
-        const limitReached = isLimitReached(productProps)
+    {Object.keys(products).map((productKey) => {
+      const productProps = products[productKey]
+      const limitReached = isLimitReached(productProps)
 
-        return (
-          <Product
-            key={productProps.id}
-            product={productProps}
-            limitReached={limitReached}
-            ageVerified={ageVerified}
-            numberOfColumnClass={numberOfColumnClass}
-            toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-            category={trackingCategory}
-          />
-        )
-      })
-    }
+      return (
+        <Product
+          key={productProps.id}
+          product={productProps}
+          limitReached={limitReached}
+          ageVerified={ageVerified}
+          numberOfColumnClass={numberOfColumnClass}
+          toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+          category={trackingCategory}
+        />
+      )
+    })}
   </div>
 )
 

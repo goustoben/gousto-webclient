@@ -1,14 +1,18 @@
 import React from 'react'
+
+import classnames from 'classnames'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
+
 import { SocialButton } from 'components/SocialLinks/SocialButton'
-import { UserRAFLink } from 'components/UserRAFLink'
+import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
 import { SocialShareSheetCTA } from 'components/SocialLinks/SocialShareSheetCTA'
-import css from './ReferAFriend.css'
+import { UserRAFLink } from 'components/UserRAFLink'
+
 import { Offer } from './Offer'
+
+import css from './ReferAFriend.css'
 
 const propTypes = {
   rafOffer: ImmutablePropTypes.map({
@@ -28,15 +32,27 @@ const defaultProps = {
   rafOffer: Immutable.Map(),
 }
 
-const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingReferFriend, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare }) => {
+const ReferAFriend = ({
+  rafOffer,
+  referralCode,
+  userFirstName,
+  device,
+  trackingReferFriend,
+  trackingReferFriendSocialSharing,
+  trackUserFreeFoodLinkShare,
+}) => {
   const yourOffer = rafOffer.get('creditFormatted')
   const theirBoxOffer = rafOffer.get('firstBoxDiscountFormatted')
   const theirMonthOffer = rafOffer.get('firstMonthDiscountFormatted')
 
   return (
     <section data-testing="referAFriendSection" className={css.rafContainer}>
-      <h3 className={classnames(css.rafTitle, css.mobileHide)}>Invite your friends to try Gousto</h3>
-      <h2 className={classnames(css.rafTitleMobile, css.mobileShow)}>Invite your friends to try Gousto</h2>
+      <h3 className={classnames(css.rafTitle, css.mobileHide)}>
+        Invite your friends to try Gousto
+      </h3>
+      <h2 className={classnames(css.rafTitleMobile, css.mobileShow)}>
+        Invite your friends to try Gousto
+      </h2>
       <div className={css.offerContainer}>
         <Offer isYourOffer offer={yourOffer} />
         <Offer isYourOffer={false} offer={theirBoxOffer} theirMonthOffer={theirMonthOffer} />
@@ -69,7 +85,6 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
           isFixed={false}
         />
       </div>
-
     </section>
   )
 }

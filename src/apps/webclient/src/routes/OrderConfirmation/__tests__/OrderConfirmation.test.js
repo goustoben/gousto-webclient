@@ -1,6 +1,7 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 
 import { OrderConfirmation } from '../OrderConfirmation'
 
@@ -24,7 +25,7 @@ describe('OrderConfirmation', () => {
     showHeader: false,
     products: {},
     isLoading: false,
-    filterProductCategory: () => { },
+    filterProductCategory: () => {},
     showOrderConfirmationReceipt: false,
     ageVerified: false,
     selectedCategory: 'all-products',
@@ -96,7 +97,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('sends the right props to Order Confirmation Header', () => {
-      Object.keys(DEFAULT_HEADER_DETAILS).forEach(key => {
+      Object.keys(DEFAULT_HEADER_DETAILS).forEach((key) => {
         expect(wrapper.find('OrderConfirmationHeader').prop(key)).toBe(DEFAULT_HEADER_DETAILS[key])
       })
     })
@@ -106,7 +107,9 @@ describe('OrderConfirmation', () => {
     })
 
     test('renders the OrderConfirmationHeader in the first VerticalStageItem', () => {
-      expect(wrapper.find('VerticalStagesItem').first().find('OrderConfirmationHeader').exists()).toBe(true)
+      expect(
+        wrapper.find('VerticalStagesItem').first().find('OrderConfirmationHeader').exists(),
+      ).toBe(true)
     })
 
     test('renders the Market component in the second VerticalStageItem', () => {
@@ -114,7 +117,9 @@ describe('OrderConfirmation', () => {
     })
 
     test('renders the ReferAFriend in the first VerticalStageItem', () => {
-      expect(wrapper.find('VerticalStagesItem').first().find('Connect(ReferAFriend)')).toHaveLength(1)
+      expect(wrapper.find('VerticalStagesItem').first().find('Connect(ReferAFriend)')).toHaveLength(
+        1,
+      )
     })
 
     test('the hasFullWidth prop passed to VerticalStages as true', () => {

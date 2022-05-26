@@ -1,8 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import Loading from 'routes/Menu/Loading'
 import { getProductLimitReached } from 'utils/basket'
+
 import { ProductListPresentation } from './ProductList.presentation'
 
 const availableNumberOfColumn = {
@@ -28,10 +31,23 @@ const defaultProps = {
   ageVerified: false,
 }
 
-const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, numberOfColumn, trackingCategory }) => {
+const ProductList = ({
+  basket,
+  products,
+  productsCategories,
+  toggleAgeVerificationPopUp,
+  ageVerified,
+  numberOfColumn,
+  trackingCategory,
+}) => {
   const isLimitReached = (product) => {
     const { id } = product
-    const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
+    const limitReachedResult = getProductLimitReached(
+      id,
+      basket,
+      Immutable.fromJS(products),
+      productsCategories,
+    )
 
     return limitReachedResult
   }
@@ -47,8 +63,9 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
           numberOfColumnClass={availableNumberOfColumn[numberOfColumn]}
           trackingCategory={trackingCategory}
         />
-      )
-        : <Loading />}
+      ) : (
+        <Loading />
+      )}
     </div>
   )
 }

@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
+
+import { actionTypes } from 'actions/actionTypes'
 import { basketProductRemove } from 'actions/basket'
 import { productDetailVisibilityChange } from 'actions/products'
-import OrderSummary from 'OrderSummary'
-import { actionTypes } from 'actions/actionTypes'
+import OrderSummary from 'components/OrderSummary'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
+
 import { getOrderRecipes } from '../../selectors/orderDetails'
 
 function mapStateToProps(state) {

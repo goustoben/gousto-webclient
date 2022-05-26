@@ -1,11 +1,13 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
-import { getProductsStock } from './products'
+
 import { getOrderRecipeItems } from './orderDetails'
+import { getProductsStock } from './products'
 
 export const getProductsRecipePairings = ({ productRecipePairings }) => productRecipePairings
 
-export const getProductRecipePairingsTotalProducts = ({ productRecipePairingsTotalProducts }) => productRecipePairingsTotalProducts
+export const getProductRecipePairingsTotalProducts = ({ productRecipePairingsTotalProducts }) =>
+  productRecipePairingsTotalProducts
 
 export const getProductsRecipePairingsWithStock = createSelector(
   [getProductsRecipePairings, getProductsStock],
@@ -16,13 +18,15 @@ export const getProductsRecipePairingsWithStock = createSelector(
 
     const pairingsWithStock = pairings.map((pairing) => {
       const products = pairing.get('products')
-      const productsWithStock = products.map((product) => product.set('stock', productStock.get(product.get('id'), 0)))
+      const productsWithStock = products.map((product) =>
+        product.set('stock', productStock.get(product.get('id'), 0)),
+      )
 
       return pairing.set('products', productsWithStock)
     })
 
     return pairingsWithStock
-  }
+  },
 )
 
 export const getProductsRecipePairingsWithRecipes = createSelector(
@@ -48,10 +52,10 @@ export const getProductsRecipePairingsWithRecipes = createSelector(
           title: recipe.get('title'),
           media: recipe.get('media'),
           products,
-        }
+        },
       ]
     }, [])
 
     return Immutable.List(pairingsWithRecipes)
-  }
+  },
 )

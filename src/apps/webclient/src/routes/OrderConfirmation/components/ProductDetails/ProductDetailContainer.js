@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
-import ProductDetails from 'Product/Detail'
-import { getProductLimitReached } from 'utils/basket'
-import { getAgeVerified } from 'selectors/user'
 import { connect } from 'react-redux'
+
+import ProductDetails from 'components/Product/Detail'
+import { getAgeVerified } from 'selectors/user'
+import { getProductLimitReached } from 'utils/basket'
 
 function mapStateToProps(state, props) {
   const { productsStock, basket, products, productsCategories, pending } = state

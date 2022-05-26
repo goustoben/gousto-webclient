@@ -1,7 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Buttons from 'Product/Buttons'
+
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
+
+import Buttons from 'components/Product/Buttons'
+
 import css from './Product.css'
 
 const propTypes = {
@@ -49,11 +52,7 @@ const ProductPresentation = ({
       className={classnames(css.resetButtonStyle, css.productImage)}
       onClick={() => openDetailsScreen()}
     >
-      <img
-        className={classnames({ [css.fadedImage]: outOfStock })}
-        src={imgSource}
-        alt={title}
-      />
+      <img className={classnames({ [css.fadedImage]: outOfStock })} src={imgSource} alt={title} />
     </button>
     {lowStock && !outOfStock && <span className={css.productLowStock}>low stock</span>}
     <div className={css.productContent}>
@@ -67,15 +66,8 @@ const ProductPresentation = ({
         </button>
       </div>
       <div>
-        <p className={css.productPrice}>
-          £
-          {listPrice}
-        </p>
-        <div
-          className={css.productButtonWrapper}
-          role="button"
-          aria-label="Add or Remove Product"
-        >
+        <p className={css.productPrice}>£{listPrice}</p>
+        <div className={css.productButtonWrapper} role="button" aria-label="Add or Remove Product">
           <Buttons
             ageVerificationPending={ageVerificationPending}
             fullWidth

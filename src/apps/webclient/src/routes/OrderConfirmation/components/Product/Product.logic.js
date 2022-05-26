@@ -1,12 +1,16 @@
-import { marketProductAdded, marketProductRemoved } from 'actions/trackingKeys'
-import configProducts from 'config/products'
-import Immutable from 'immutable'
-import Overlay from 'Overlay'
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
+
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
+import { marketProductAdded, marketProductRemoved } from 'actions/trackingKeys'
+import Overlay from 'components/Overlay'
+import configProducts from 'config/products'
+
 import { ProductDetailContainer } from '../ProductDetails'
-import css from './Product.css'
 import { ProductPresentation } from './Product.presentation'
+
+import css from './Product.css'
 
 const propTypes = {
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -24,7 +28,7 @@ const propTypes = {
     PropTypes.shape({
       value: PropTypes.string,
       type: PropTypes.string,
-    })
+    }),
   ]).isRequired,
   ageVerified: PropTypes.bool,
   ageVerificationPending: PropTypes.bool.isRequired,
@@ -38,7 +42,7 @@ const propTypes = {
   toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   productId: PropTypes.string,
   category: PropTypes.string,
-  openProductModalTracking: PropTypes.func.isRequired
+  openProductModalTracking: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -74,12 +78,15 @@ class Product extends PureComponent {
     const { showDetailsScreen } = this.state
 
     if (!showDetailsScreen) {
-      const trackingData = this.mapProductToTrackingData('market_product_detail_view', 'secondary_action')
+      const trackingData = this.mapProductToTrackingData(
+        'market_product_detail_view',
+        'secondary_action',
+      )
       openProductModalTracking(trackingData)
     }
 
     this.setState((prevState) => ({
-      showDetailsScreen: !prevState.showDetailsScreen
+      showDetailsScreen: !prevState.showDetailsScreen,
     }))
   }
 
@@ -111,11 +118,18 @@ class Product extends PureComponent {
     delete productProperties.tags
     productProperties.category = category
 
-    return { eventName, eventAction: 'clicked', eventType, eventProperties: { productProperties }}
+    return { eventName, eventAction: 'clicked', eventType, eventProperties: { productProperties } }
   }
 
   onAddProduct = () => {
-    const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp, temp, orderConfirmationProductTracking } = this.props
+    const {
+      product,
+      basketProductAdd,
+      limitReached,
+      toggleAgeVerificationPopUp,
+      temp,
+      orderConfirmationProductTracking,
+    } = this.props
 
     const { id } = product
 
@@ -142,13 +156,14 @@ class Product extends PureComponent {
   }
 
   getProductCardContent = () => {
-    const { ageVerified, product, basket, limitReached, ageVerificationPending, productId } = this.props
+    const { ageVerified, product, basket, limitReached, ageVerificationPending, productId } =
+      this.props
     const { id, title, listPrice, images, ageRestricted, stock } = product
     const quantity = basket && basket.get('products').has(id) ? basket.getIn(['products', id]) : 0
 
     const imgSource = images && images['400'] && images['400'].src
     const isAgeVerificationRequired = !ageVerified && ageRestricted
-    const lowStock = (stock <= configProducts.lowStockThreshold)
+    const lowStock = stock <= configProducts.lowStockThreshold
     const outOfStock = stock <= 0
 
     const inProgress = ageVerificationPending && id === productId
@@ -165,7 +180,7 @@ class Product extends PureComponent {
       ageVerificationPending,
       qty: quantity,
       openDetailsScreen: this.toggleModal,
-      inProgress
+      inProgress,
     }
   }
 

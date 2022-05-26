@@ -1,15 +1,17 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
+
 import { ProductList } from '..'
 import { mockProducts } from '../../config'
 
 jest.mock('utils/basket', () => ({
-  getProductLimitReached: jest.fn()
+  getProductLimitReached: jest.fn(),
 }))
 
 jest.mock('../../Product', () => ({
-  Product: () => <div className="product" />
+  Product: () => <div className="product" />,
 }))
 
 describe('ProductList component', () => {
@@ -17,8 +19,8 @@ describe('ProductList component', () => {
   const propsProductList = {
     basket: Immutable.fromJS({
       products: {
-        1234: 1
-      }
+        1234: 1,
+      },
     }),
     productsCategories: Immutable.Map({}),
     ageVerified: true,
