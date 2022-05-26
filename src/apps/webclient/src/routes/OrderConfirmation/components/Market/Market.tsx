@@ -30,8 +30,8 @@ import {
   getProductRecipePairingsTotalProducts,
 } from '../../selectors/recipePairings'
 import type { Category, FilteredProducts, NavCategories, NavCategory, Product } from '../../types'
-import { MarketPresentation } from './Market.presentation'
 import { mockBundlesData } from '../config'
+import { MarketPresentation } from './Market.presentation'
 
 interface Props {
   ageVerified: boolean

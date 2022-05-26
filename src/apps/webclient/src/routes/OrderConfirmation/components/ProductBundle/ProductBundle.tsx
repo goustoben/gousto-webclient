@@ -1,9 +1,12 @@
+import React, { FC } from 'react'
+
 import { Box, Display, FontFamily, Heading6, Image, Paragraph } from '@gousto-internal/citrus-react'
-import classnames from 'classnames'
 import Overlay from 'Overlay'
 import Buttons from 'Product/Buttons'
-import React, { FC } from 'react'
+import classnames from 'classnames'
+
 import { Product } from 'routes/OrderConfirmation/types'
+
 import css from './ProductBundle.css'
 
 interface Props {
