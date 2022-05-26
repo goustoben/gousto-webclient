@@ -154,3 +154,5 @@ export const isFetchingUserAddresses = state => state.pending.get(
   actionTypes.USER_LOAD_ADDRESSES,
   false
 )
+
+export const isFetchingUserData = state => getUserId(state) === undefined

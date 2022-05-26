@@ -113,8 +113,8 @@ const getOriginalDeliveryDay = (originalDeliveryDay: AnyObject): Order['original
   }
 }
 
-const getPeriod = (included: Included[]) => {
-  const [period] = filterByType<Included>(included, ResourceType.Period)
+const getPeriod = (included: Included[], id: string) => {
+  const period = findByIdAndType(included, id, ResourceType.Period)
 
   /*
    * We use the time stamps below to make request
@@ -128,8 +128,8 @@ const getPeriod = (included: Included[]) => {
    * Example: https://staging-api.gousto.info/deliveries/v1.0/days?filters%5Bcutoff_datetime_from%5D=2021-03-30T12%3A00%3A00%2B01%3A00&filters%5Bcutoff_datetime_until%5D=2021-04-06T11%3A59%3A59%2B01%3A00&ndd=false&delivery_tariff_id=9037a447-e11a-4960-ae69-d89a029569af&sort=date&direction=asc&postcode=n11
    */
   return {
-    whenStart: period?.attributes?.starts_at,
-    whenCutoff: period?.attributes?.ends_at,
+    whenStart: String(safeTraversal(period, ['attributes', 'starts_at'])),
+    whenCutoff: String(safeTraversal(period, ['attributes', 'ends_at'])),
   }
 }
 
@@ -155,7 +155,7 @@ export const transformOrderV2ToOrderV1 = (order: AnyObject, included: Included[]
   const cutOfDate = formatISODateToOrderV1Date(attributes.cut_off_date)
   const menuActiveFrom = formatISODateToOrderV1Date(attributes.menu_active_from)
   const originalDeliveryDay = getOriginalDeliveryDay(attributes.original_delivery_day)
-  const period = getPeriod(included)
+  const period = getPeriod(included, String(order.relationships.period.data.id))
 
   return {
     id: orderId,

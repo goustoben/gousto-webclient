@@ -87,6 +87,12 @@ const data = [
           },
         ],
       },
+      period: {
+        data: {
+          id: 438,
+          type: ResourceType.Period,
+        },
+      },
       box: {
         data: {
           id: 'box-id',
@@ -268,6 +274,15 @@ const included = [
     },
   },
   {
+    id: '437',
+    type: ResourceType.Period,
+    attributes: {
+      starts_at: '2021-09-01 00:00:00',
+      ends_at: '2021-09-15 23:59:00',
+    },
+  },
+  {
+    id: '438',
     type: ResourceType.Period,
     attributes: {
       starts_at: '2021-01-01 00:00:00',

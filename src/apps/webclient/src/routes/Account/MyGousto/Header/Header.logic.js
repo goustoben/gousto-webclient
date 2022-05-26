@@ -12,13 +12,7 @@ class Header extends PureComponent {
   }
 
   componentDidMount() {
-    const { loadNextProjectedOrder, loadOrders, userId } = this.props
-
-    loadOrders()
-
-    if (userId) {
-      loadNextProjectedOrder(userId)
-    }
+    this.fetchOrders()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -61,6 +55,20 @@ class Header extends PureComponent {
     }
   }
 
+  fetchOrders = async () => {
+    const { loadNextProjectedOrder, loadOrders, userId, userLoadData } = this.props
+
+    if (!userId) {
+      await userLoadData()
+    }
+
+    loadOrders()
+
+    if (userId) {
+      loadNextProjectedOrder(userId)
+    }
+  }
+
   checkShouldShowTooltip = async ({ orderDate, targetTime }) => {
     const { accessToken } = this.props
 
@@ -94,12 +102,13 @@ class Header extends PureComponent {
       showSubscriberPricingBanner,
       subscriptionStatus,
       maxNumRecipes,
+      isFetchingUserData,
     } = this.props
     const {
       hasTooltipForNextOrder,
       hasTooltipForPreviousOrder
     } = this.state
-    const isLoading = isOrdersPending || isProjectedDeliveriesPending
+    const isLoading = isOrdersPending || isProjectedDeliveriesPending || isFetchingUserData
     const hasDeliveryToday = !!(nextOrder && isOrderBeingDeliveredToday(nextOrder.get('deliveryDate')))
 
     return (
@@ -123,9 +132,11 @@ class Header extends PureComponent {
 Header.propTypes = {
   accessToken: PropTypes.string.isRequired,
   isOrdersPending: PropTypes.bool.isRequired,
+  isFetchingUserData: PropTypes.bool.isRequired,
   isProjectedDeliveriesPending: PropTypes.bool.isRequired,
   loadNextProjectedOrder: PropTypes.func.isRequired,
   loadOrders: PropTypes.func.isRequired,
+  userLoadData: PropTypes.func.isRequired,
   loadOrderTrackingInfo: PropTypes.func,
   nextOrder: myGoustoOrderPropType,
   nextOrderTracking: PropTypes.string,

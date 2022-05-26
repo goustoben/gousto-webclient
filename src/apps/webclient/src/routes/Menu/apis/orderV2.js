@@ -161,7 +161,6 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
   const state = getState()
   const userId = getUserId(state)
   const headers = getRequestHeaders(userId)
-  const params = new URLSearchParams(reqData).toString()
   const accessToken = getAccessToken(state)
   const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
     'radishes_order_api_v2_userorders_web_enabled',
@@ -173,8 +172,19 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
     return userApiV1.fetchUserOrders(accessToken, reqData)
   }
 
+  if (!userId) {
+    return { data: [] }
+  }
+
   let url = `${endpoint('order', 2)}/users/${userId}/orders`
-  if (params) {
+  if (reqData) {
+    const params = new URLSearchParams({
+      'page[limit]': reqData.limit,
+      'filter[state]': reqData.state,
+      sort: reqData.sort_order,
+      'include[]': reqData.includes,
+    }).toString()
+
     url = `${url}?${params}`
   }
 

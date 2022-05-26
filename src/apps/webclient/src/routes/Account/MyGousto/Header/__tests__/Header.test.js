@@ -75,6 +75,7 @@ let store
 const mockLoadOrderTrackingInfo = jest.fn()
 const loadNextProjectedOrder = jest.fn()
 const loadOrders = jest.fn()
+const userLoadData = jest.fn()
 const initialState = {}
 const mockStore = configureStore([thunk])
 
@@ -86,6 +87,8 @@ const ProviderComponent = (props) => (
       isProjectedDeliveriesPending={false}
       loadNextProjectedOrder={loadNextProjectedOrder}
       loadOrders={loadOrders}
+      userLoadData={userLoadData}
+      isFetchingUserData={false}
       maxNumRecipes={5}
       {...props}
     />
