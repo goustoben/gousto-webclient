@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+
 import { numPersonsValues, numPortionsValues } from './boxPricesConfig'
 
 export const getMenuBoxPrices = (state) => state.menuBoxPrices

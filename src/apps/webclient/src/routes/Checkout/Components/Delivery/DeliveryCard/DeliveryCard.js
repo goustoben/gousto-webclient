@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {
   Box,
   Color,
@@ -10,6 +10,8 @@ import {
   IconVariant,
 } from '@gousto-internal/citrus-react'
 import Svg from 'Svg'
+import PropTypes from 'prop-types'
+
 import css from './DeliveryCard.css'
 
 const DeliveryCardIcon = ({ name }) => {

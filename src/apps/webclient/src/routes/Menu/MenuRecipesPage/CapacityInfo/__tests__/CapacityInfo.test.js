@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
+
 import { zendesk } from 'config/routes'
+
 import { CapacityInfo } from '..'
 
 describe('Given we render the CapacityInfo', () => {

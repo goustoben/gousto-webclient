@@ -1,15 +1,8 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import Immutable from 'immutable'
-import PropTypes from 'prop-types'
-import configureMockStore from 'redux-mock-store'
-import config from 'config/routes'
-import { PaymentMethod } from 'config/signup'
-import { Summary } from 'routes/Checkout/Components/Summary'
-import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
-import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
-import { BoxDetailsContainer } from 'routes/Checkout/Components/BoxDetails'
-import { CheckoutPaymentContainer } from 'routes/Checkout/Components/CheckoutPayment'
+
+import { Login } from 'Login'
+import Overlay from 'Overlay'
+
 /* eslint-disable import/named */
 import {
   menuLoadDays,
@@ -20,12 +13,22 @@ import {
   checkoutStepIndexReached,
   trackSignupStep,
 } from 'actions'
+import { shallow } from 'enzyme'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import configureMockStore from 'redux-mock-store'
+
 /* eslint-enable import/named */
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import config from 'config/routes'
+import { PaymentMethod } from 'config/signup'
 import { Checkout } from 'routes/Checkout/Checkout'
+import { BoxDetailsContainer } from 'routes/Checkout/Components/BoxDetails'
+import { CheckoutPaymentContainer } from 'routes/Checkout/Components/CheckoutPayment'
+import { Summary } from 'routes/Checkout/Components/Summary'
+import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
+import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
 import logger from 'utils/logger'
-import Overlay from 'Overlay'
-import { Login } from 'Login'
 
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 

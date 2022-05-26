@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
+
+import { actionTypes } from 'actions/actionTypes'
 import { getMenuBoxPrices } from 'routes/BoxPrices/boxPricesSelectors'
 import { getNumPortions } from 'selectors/basket'
-import { actionTypes } from 'actions/actionTypes'
 
 export const createGetNextTierPricePerPortion = (numRecipes = 0) =>
   createSelector(getMenuBoxPrices, getNumPortions, (menuBoxPrices, numPortions): string | null => {

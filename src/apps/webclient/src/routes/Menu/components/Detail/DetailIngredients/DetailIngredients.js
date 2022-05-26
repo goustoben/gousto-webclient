@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
+import { Ingredients } from './Ingredients'
 
 import css from '../Detail.css'
-import { Ingredients } from './Ingredients'
 
 const DetailIngredients = ({ ingredients }) => {
   if (!ingredients || !ingredients.size) {

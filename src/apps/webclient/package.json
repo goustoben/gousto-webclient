@@ -40,7 +40,8 @@
     "clean-install": "rm -rf ./node_modules && yarn install",
     "typecheck:tests": "tsc -p ./tsconfig.tests.json",
     "datadog:upload-sourcemaps": "datadog-ci sourcemaps upload $BUILD_DIR --service gousto-webclient --release-version $CIRCLE_BUILD_NUM --minified-path-prefix $ASSET_URL_PREFIX",
-    "datadog:upload-report:e2e": "datadog-ci junit upload --service gousto-webclient ../../../tests/e2e/reports"
+    "datadog:upload-report:e2e": "datadog-ci junit upload --service gousto-webclient ../../../tests/e2e/reports",
+    "prettier": "prettier -w ./"
   },
   "dependencies": {
     "@axe-core/react": "^4.1.1",
@@ -116,6 +117,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/classnames": "2.2.6",
     "@types/enzyme": "^3.10.11",
     "@types/isomorphic-fetch": "0.0.35",

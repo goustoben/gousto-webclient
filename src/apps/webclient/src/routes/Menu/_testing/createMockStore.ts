@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import configureMockStore from 'redux-mock-store'
+
 import { initialState as authInitialState } from 'reducers/auth'
 import { initialState as basketInitialState } from 'reducers/basket'
 

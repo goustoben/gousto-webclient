@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { validationMessages, mapStateToProps, getInitialValues } from '../DeliveryContainer'
 
 jest.mock('redux-form', () => ({

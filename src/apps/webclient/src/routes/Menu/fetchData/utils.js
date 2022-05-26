@@ -1,9 +1,10 @@
-import { hasJustForYouCollection } from 'selectors/collections'
-import { recommendationsSlug } from 'config/collections'
-import { getCollectionIdWithName } from 'utils/collections'
 import { basketDateChange, basketSlotChange } from 'actions/basket'
-import { redirect } from 'actions/redirect'
 import { collectionFilterIdReceive } from 'actions/filters'
+import { redirect } from 'actions/redirect'
+import { recommendationsSlug } from 'config/collections'
+import { hasJustForYouCollection } from 'selectors/collections'
+import { getCollectionIdWithName } from 'utils/collections'
+
 import { getDefaultCollection } from '../selectors/collections'
 
 export const getPreselectedCollectionName = (state, collectionNameFromQueryParam) => {

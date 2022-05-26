@@ -1,15 +1,17 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
-import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
 import Immutable from 'immutable'
 import { act } from 'react-dom/test-utils'
-import { CollectionHeaderWrapper } from '../CollectionHeaderWrapper'
-import { getCollectionsHeaders } from '../../../selectors/collections'
-import { useShouldRemoveMerchandisingBanner } from '../useShouldRemoveMerchandisingBanner'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import { useBrandHeadersInfo } from '../../../domains/brand'
-import { WaveLinkHeaderContainer } from '../LinkHeaderContainer'
+import { getCollectionsHeaders } from '../../../selectors/collections'
+import { CollectionHeaderWrapper } from '../CollectionHeaderWrapper'
 import { GradientInfoHeader } from '../GradientInfoHeader'
+import { WaveLinkHeaderContainer } from '../LinkHeaderContainer'
+import { useShouldRemoveMerchandisingBanner } from '../useShouldRemoveMerchandisingBanner'
 
 const mockStore = configureMockStore()
 

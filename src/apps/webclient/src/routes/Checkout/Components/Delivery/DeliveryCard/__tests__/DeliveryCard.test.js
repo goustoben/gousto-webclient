@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
+
 import { DeliveryCard } from '../DeliveryCard'
 
 describe('DeliveryCard', () => {

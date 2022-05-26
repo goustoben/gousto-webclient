@@ -1,8 +1,11 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import * as TutorialActions from 'actions/tutorial'
-import * as useShowJFYTutorial from './useShowJFYTutorial'
+
 import { JustForYouTutorial } from './JustForYouTutorial'
+import * as useShowJFYTutorial from './useShowJFYTutorial'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

@@ -1,11 +1,24 @@
 import Immutable from 'immutable'
-import { signupConfig } from 'config/signup'
-import GoustoException from 'utils/GoustoException'
+
 import { actionTypes } from 'actions/actionTypes'
-import { getUTMAndPromoCode } from 'selectors/tracking'
-import logger from 'utils/logger'
-import { getNDDFeatureValue, getIsGoustoOnDemandEnabled } from 'selectors/features'
-import { isCardPayment } from 'selectors/payment'
+import { basketPreviewOrderChange } from 'actions/basket'
+import {
+  feLoggingLogEvent,
+  logLevels,
+  trackSuccessfulCheckoutFlow,
+  trackFailedCheckoutFlow,
+} from 'actions/log'
+import statusActions from 'actions/status'
+import {
+  trackUnexpectedSignup,
+  trackFirstPurchase,
+  trackNewUser,
+  trackNewOrder,
+} from 'actions/tracking'
+import { placeOrder } from 'actions/trackingKeys'
+import { customerSignup } from 'apis/customers'
+import { signupConfig } from 'config/signup'
+import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import {
   accountFormName,
   deliveryFormName,
@@ -13,26 +26,14 @@ import {
   getSignupE2ETestName,
   getFormattedPhoneNumber,
 } from 'selectors/checkout'
-import { getAddress } from 'utils/checkout'
-import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import { getSessionId } from 'selectors/cookies'
+import { getNDDFeatureValue, getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { isCardPayment } from 'selectors/payment'
+import { getUTMAndPromoCode } from 'selectors/tracking'
+import GoustoException from 'utils/GoustoException'
+import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
-import {
-  feLoggingLogEvent,
-  logLevels,
-  trackSuccessfulCheckoutFlow,
-  trackFailedCheckoutFlow,
-} from 'actions/log'
-import {
-  trackUnexpectedSignup,
-  trackFirstPurchase,
-  trackNewUser,
-  trackNewOrder,
-} from 'actions/tracking'
-import statusActions from 'actions/status'
-import { customerSignup } from 'apis/customers'
-import { placeOrder } from 'actions/trackingKeys'
-import { basketPreviewOrderChange } from 'actions/basket'
+import logger from 'utils/logger'
 
 export const checkoutUrgencySetCurrentStatus = (currentStatus) => ({
   type: actionTypes.CHECKOUT_URGENCY_SET_CURRENT_STATUS,

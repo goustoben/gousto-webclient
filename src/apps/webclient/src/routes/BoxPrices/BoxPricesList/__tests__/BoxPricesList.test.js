@@ -1,10 +1,12 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
 import { BoxPricesList } from 'routes/BoxPrices/BoxPricesList'
+
 import numPersonsToBoxDescriptors from '../../__tests__/__mocks__/numPersonsToBoxDescriptors.json'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

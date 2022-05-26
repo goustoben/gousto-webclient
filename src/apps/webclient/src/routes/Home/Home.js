@@ -1,16 +1,19 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+
+import { generateHref } from 'Helmet/GoustoHelmet'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { ReactReduxContext } from 'react-redux'
-import menuFetchData from 'routes/Menu/fetchData'
-import { CTA, seo } from 'config/home'
-import routesConfig from 'config/routes'
-import { generateHref } from 'Helmet/GoustoHelmet'
+
 import { menuLoadBoxPrices } from 'actions/menu'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { PromoBanner } from './PromoBanner'
+import { CTA, seo } from 'config/home'
+import routesConfig from 'config/routes'
+import menuFetchData from 'routes/Menu/fetchData'
+
 import { HomeSections } from './HomeSections'
 import { priceComparisonTableToken } from './PriceComparisonTable'
+import { PromoBanner } from './PromoBanner'
 
 const propTypes = {
   isAuthenticated: PropTypes.bool,

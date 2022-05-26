@@ -1,6 +1,7 @@
 import React from 'react'
-import { formatPrice } from 'utils/format'
+
 import { Pricing } from 'routes/Menu/domains/pricing'
+import { formatPrice } from 'utils/format'
 
 import css from './Price.css'
 

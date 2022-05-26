@@ -1,10 +1,12 @@
 import React from 'react'
+
 import { mount, ReactWrapper } from 'enzyme'
-import { NumberOfPeopleStep } from 'routes/Signup/Steps/NumberOfPeople'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import * as Redux from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import Immutable from 'immutable'
+
+import { NumberOfPeopleStep } from 'routes/Signup/Steps/NumberOfPeople'
 
 const mockStore = configureMockStore()
 const mockedStore = mockStore({

@@ -1,6 +1,7 @@
-import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 import isomorphicFetch from 'isomorphic-fetch'
+
 import { getEnvironment, getProtocol, getDomain } from 'utils/isomorphicEnvironment'
+import { proxyAssetRequest, ASSET_PATH } from 'utils/media'
 
 jest.mock('isomorphic-fetch')
 jest.mock('utils/isomorphicEnvironment')

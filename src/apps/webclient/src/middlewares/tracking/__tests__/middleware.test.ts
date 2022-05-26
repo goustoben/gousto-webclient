@@ -1,4 +1,5 @@
 import { canUseWindow, getWindow } from 'utils/browserEnvironment'
+
 import middleware from '../middleware'
 
 jest.mock('utils/browserEnvironment')

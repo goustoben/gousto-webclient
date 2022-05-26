@@ -1,6 +1,8 @@
 import React from 'react'
-import * as reactRedux from 'react-redux'
+
 import { shallow } from 'enzyme'
+import * as reactRedux from 'react-redux'
+
 import { RecipeDisclaimer } from './RecipeDisclaimer'
 
 jest.mock('utils/configFromWindow', () => ({

@@ -1,10 +1,14 @@
 import React, { Component, createRef } from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
-import { homeConfig } from 'config/home'
 import { Heading } from 'goustouicomponents'
-import { CTAHomepageContainer } from '../CTA'
+import PropTypes from 'prop-types'
+
+import { homeConfig } from 'config/home'
+
 import { Benefits } from '../Benefits'
+import { CTAHomepageContainer } from '../CTA'
+
 import css from './Hero.css'
 
 class Hero extends Component {

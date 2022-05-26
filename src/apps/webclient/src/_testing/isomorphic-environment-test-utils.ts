@@ -1,5 +1,6 @@
 import * as isoMorph from 'utils/isomorphicEnvironment'
 import { Domain } from 'utils/types/windowLocation'
+
 /*
  * Environment mocks
  * -----------------

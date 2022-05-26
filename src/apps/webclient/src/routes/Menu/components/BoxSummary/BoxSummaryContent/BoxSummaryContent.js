@@ -1,11 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 
 import { boxSummaryViews } from 'utils/boxSummary'
+
+import { DeliverySlotContainer } from '../DeliverySlot'
 import { DetailsContainer } from '../Details'
 import { PostcodeContainer } from '../Postcode'
-import { DeliverySlotContainer } from '../DeliverySlot'
 
 const BoxSummaryContent = (props) => {
   const {

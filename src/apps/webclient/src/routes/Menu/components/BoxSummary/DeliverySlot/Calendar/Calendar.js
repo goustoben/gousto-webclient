@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import moment from 'moment'
-import css from './Calendar.css'
-import { Title } from './Title'
-import { Day } from './Day'
-import { getCalendarDates } from './utils/getCalendarDates'
+import PropTypes from 'prop-types'
+
 import { datesPropType } from '../deliverySlotPropTypes'
+import { Day } from './Day'
+import { Title } from './Title'
+import { getCalendarDates } from './utils/getCalendarDates'
+
+import css from './Calendar.css'
 
 const dayNoToDayName = (dayNo) => moment(dayNo, 'E').format('ddd')
 

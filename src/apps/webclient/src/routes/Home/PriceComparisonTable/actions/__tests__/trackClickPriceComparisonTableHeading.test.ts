@@ -1,6 +1,6 @@
-import { trackClickPriceComparisonTableHeader } from 'routes/Home/PriceComparisonTable/actions/trackClickPriceComparisonTableHeading'
 import { actionTypes } from 'actions/actionTypes'
 import { clickPriceComparisonTableHeading } from 'actions/trackingKeys'
+import { trackClickPriceComparisonTableHeader } from 'routes/Home/PriceComparisonTable/actions/trackClickPriceComparisonTableHeading'
 
 const mockedDispatch = jest.fn()
 

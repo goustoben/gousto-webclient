@@ -1,5 +1,7 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
+
 import { useRecipeTitle } from 'routes/Menu/context/recipeContext'
 
 const Title = ({ className }) => {

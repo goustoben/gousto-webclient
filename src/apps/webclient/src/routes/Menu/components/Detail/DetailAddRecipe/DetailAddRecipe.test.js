@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
-import { DetailAddRecipe } from './DetailAddRecipe'
+
 import * as DomainMenu from '../../../domains/menu'
+import { DetailAddRecipe } from './DetailAddRecipe'
 
 describe('DetailAddRecipe', () => {
   let wrapper

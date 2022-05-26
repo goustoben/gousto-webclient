@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { checkoutConfig } from 'config/checkout'
+
 import { InputField, Space, FormFieldStatus } from '@gousto-internal/citrus-react'
+import PropTypes from 'prop-types'
+
+import { checkoutConfig } from 'config/checkout'
 
 const propTypes = {
   promoCode: PropTypes.string,

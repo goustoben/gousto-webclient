@@ -1,6 +1,7 @@
 import { ResponsiveValue } from '@gousto-internal/citrus-react/dist/types/theme/types'
-import { TableItemData } from 'routes/Home/PriceComparisonTable/types'
+
 import { TableItemType, Currency } from 'routes/Home/PriceComparisonTable/enums'
+import { TableItemData } from 'routes/Home/PriceComparisonTable/types'
 
 export const TABLE_DATA: TableItemData[] = [
   {

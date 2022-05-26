@@ -1,9 +1,13 @@
 import React from 'react'
-import Immutable from 'immutable'
-import GoustoImage from 'Image'
+
 import classnames from 'classnames'
+import Immutable from 'immutable'
+
+import GoustoImage from 'components/Image'
+
 import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
 import { DetailViewType } from '../types'
+
 import css from './DetailImage.css'
 
 type DetailImageProps = {

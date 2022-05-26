@@ -1,9 +1,10 @@
+import actions from 'actions'
 import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta } from 'redux-form'
-import { deliveryFormName } from 'selectors/checkout'
-import actions from 'actions'
+
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
+import { deliveryFormName } from 'selectors/checkout'
 
 import { Delivery } from './Delivery'
 

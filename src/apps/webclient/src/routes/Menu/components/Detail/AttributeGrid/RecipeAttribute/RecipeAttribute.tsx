@@ -1,7 +1,10 @@
 import React from 'react'
-import Svg from 'Svg'
-import css from './RecipeAttribute.css'
+
+import Svg from 'components/Svg'
+
 import { getDescription, VisibleAttribute } from './config'
+
+import css from './RecipeAttribute.css'
 
 type RecipeAttributeProps = {
   icon: string

@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import * as RecipeContext from 'routes/Menu/context/recipeContext'
 
 import { RecipeTag } from './RecipeTag'

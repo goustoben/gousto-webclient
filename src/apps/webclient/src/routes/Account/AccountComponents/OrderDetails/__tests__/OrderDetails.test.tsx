@@ -1,6 +1,7 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+
 import { colors, Color } from '@gousto-internal/citrus-react'
+import { render } from '@testing-library/react'
 
 import { OrderDetails, OrderState } from '../OrderDetails.logic'
 

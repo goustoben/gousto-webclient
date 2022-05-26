@@ -1,9 +1,12 @@
 import * as React from 'react'
+
+import { renderHook } from '@testing-library/react-hooks'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import isomorphicFetch from 'isomorphic-fetch'
 import { Provider } from 'react-redux'
-import { renderHook } from '@testing-library/react-hooks'
+
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
-import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+
 import { useBrandHeadersInfo } from './useBrandHeadersInfo'
 
 jest.mock('isomorphic-fetch', () => jest.fn())

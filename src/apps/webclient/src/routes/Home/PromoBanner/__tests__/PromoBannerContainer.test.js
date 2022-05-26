@@ -1,10 +1,13 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { promo } from 'config/home'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { PromoBannerContainer } from '../PromoBannerContainer'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

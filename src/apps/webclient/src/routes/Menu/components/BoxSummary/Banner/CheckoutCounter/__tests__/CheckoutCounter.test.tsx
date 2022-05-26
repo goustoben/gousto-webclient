@@ -1,8 +1,11 @@
 import React from 'react'
+
 import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
-import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import { useSupportedBoxTypes } from 'routes/Menu/domains/basket'
+
 import { CheckoutCounter } from '../CheckoutCounter'
 
 jest.mock('src/routes/Menu/domains/basket', () => ({

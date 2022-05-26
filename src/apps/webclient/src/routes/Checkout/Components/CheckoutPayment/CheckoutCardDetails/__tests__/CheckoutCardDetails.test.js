@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
-import { CheckoutCardDetails } from '../CheckoutCardDetails'
-import { CheckoutFrame } from '../../CheckoutFrame'
+
 import { CheckoutAddress } from '../../CheckoutAddress'
+import { CheckoutFrame } from '../../CheckoutFrame'
+import { CheckoutCardDetails } from '../CheckoutCardDetails'
 
 describe('given CheckoutCardDetails is rendered', () => {
   let wrapper

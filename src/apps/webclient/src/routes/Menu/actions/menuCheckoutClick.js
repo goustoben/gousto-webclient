@@ -3,26 +3,18 @@ import { actionTypes } from 'actions/actionTypes'
 import { basketCheckedOut, basketCheckoutClicked, basketProceedToCheckout } from 'actions/basket'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
 import { checkoutTransactionalOrder as checkoutTransactionalOrderV1 } from 'actions/checkout'
-import status from 'actions/status'
 import { orderUpdate } from 'actions/order'
-import { getIsAuthenticated } from 'selectors/auth'
-import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
+import status from 'actions/status'
 import { sendUpdateOrder } from 'routes/Menu/actions/order'
-import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
-import { validateMenuLimitsForBasket } from '../selectors/menu'
+import { getIsAuthenticated } from 'selectors/auth'
+
 import { isBasketTransactionalOrder } from '../../../selectors/basket'
+import { validateMenuLimitsForBasket } from '../selectors/menu'
+import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 
-export const getIsSidesEnabled = isOptimizelyFeatureEnabledFactory(
-  'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
-)
-
-export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory(
-  'radishes_order_api_create_web_enabled',
-)
-
-export const isOrderApiUpdateEnabled = isOptimizelyFeatureEnabledFactory(
-  'radishes_order_api_update_web_enabled',
-)
+export const getIsSidesEnabled = async () => false
+export const isOrderApiCreateEnabled = async () => true
+export const isOrderApiUpdateEnabled = async () => false
 
 export const checkoutBasket =
   ({ section, view, pricing }) =>

@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
-import tempActions from 'actions/temp'
+
 import { setTempDeliveryOptions } from 'actions/deliveries'
+import tempActions from 'actions/temp'
+
 import { DatePicker } from './DatePicker'
 
 const mapStateToProps = (state) => ({

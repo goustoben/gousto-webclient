@@ -1,15 +1,15 @@
+import actions from 'actions'
 import { connect } from 'react-redux'
 
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { applyPromoCodeAndShowModal } from 'actions/home'
-
 import { withIsActionBarRedesignEnabled } from 'routes/Menu/components/withIsActionBarRedesignEnabled'
+
 import Menu from './Menu'
+import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable'
 import { menuOverlayClick } from './actions/menuOverlayClick'
 import fetchData from './fetchData'
-import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable'
 
 function mapStateToProps(state, ownProps) {
   const query = ownProps.location && ownProps.location.query

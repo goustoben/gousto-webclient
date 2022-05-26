@@ -1,10 +1,11 @@
 import { push } from 'react-router-redux'
+
 import { actionTypes } from '../../../actions/actionTypes'
 import * as trackingKeys from '../../../actions/trackingKeys'
-import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
-import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
+import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { doesRecipeHaveSurcharges } from '../selectors/menuService'
+import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 
 export const menuRecipeDetailVisibilityChange =
   (recipeId, categoryId, recipeReference) => (dispatch, getState) => {

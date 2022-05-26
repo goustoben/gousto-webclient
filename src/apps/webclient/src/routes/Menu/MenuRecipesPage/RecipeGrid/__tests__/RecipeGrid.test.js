@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
-import { RecipeGrid } from '../RecipeGrid'
-import { RecipeListWrapper } from '../../RecipeList'
+
 import { DetailOverlay } from '../../../components/Detail/DetailOverlay'
+import { RecipeListWrapper } from '../../RecipeList'
+import { RecipeGrid } from '../RecipeGrid'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),

@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 
 import { PaymentResult } from '../PaymentResult'
+
 import css from '../PaymentResult/PaymentResult.css'
 
 describe('PaymentResult', () => {

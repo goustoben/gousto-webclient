@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import LazyLoad from 'react-lazyload'
+
 import * as recipeContext from '../../../context/recipeContext'
 import { Image } from './Image'
 

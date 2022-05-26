@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
+import Svg from 'Svg'
 import classNames from 'classnames'
 import { InputRadio } from 'goustouicomponents'
-import Svg from 'Svg'
+import PropTypes from 'prop-types'
+
 import { methodDescriptorPropType } from './propTypes'
+
 import css from './PaymentMethodSelector.css'
 
 export const PaymentMethodToggle = ({ methodDescriptor, isActive, setCurrentPaymentMethod }) => {

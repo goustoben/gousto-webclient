@@ -1,21 +1,24 @@
 import React from 'react'
-import { connect } from 'react-redux'
+
 import actions from 'actions'
+import { connect } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, boxSummaryNext } from 'actions/boxSummary'
+import { usePricing } from 'routes/Menu/domains/pricing'
+import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { getBrowserType } from 'selectors/browser'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
-import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { isMobile } from 'utils/view'
-import { usePricing } from 'routes/Menu/domains/pricing'
-import BoxSummaryDesktop from './BoxSummary'
-import { getMenuBrowseCTAShow } from '../../../../selectors/root'
+
 import {
   getNumPortions,
   getBasketOrderId,
   getBasketRecipes,
   shouldShowBoxSummary,
 } from '../../../../selectors/basket'
+import { getMenuBrowseCTAShow } from '../../../../selectors/root'
+import BoxSummaryDesktop from './BoxSummary'
 
 const mapStateToProps = (state) => ({
   isMobile: isMobile(getBrowserType(state)),

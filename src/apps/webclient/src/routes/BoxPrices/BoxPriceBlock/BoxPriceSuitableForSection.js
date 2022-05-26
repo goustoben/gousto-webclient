@@ -1,6 +1,9 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
+
 import { boxTypes } from 'routes/BoxPrices/boxPricesConfig'
+
 import css from './BoxPriceBlock.css'
 
 export const BoxPriceSuitableForSection = ({ numPersons }) => {

@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {
   Box,
   Color,
@@ -10,8 +12,6 @@ import {
   JustifyContent,
   AlignItems,
 } from '@gousto-internal/citrus-react'
-
-import React from 'react'
 
 export const SubscriptionTransparency = () => (
   <Box width="100%" display={Display.Flex} justifyContent={JustifyContent.Center}>

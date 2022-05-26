@@ -1,12 +1,16 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
+
 import Carousel from 'Carousel'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { formatRecipeTitle } from 'utils/recipe'
-import { SimpleRecipe } from '../SimpleRecipe'
+
 import { Arrow } from '../CarouselArrow/CarouselArrow'
-import css from './RecipeCarousel.css'
+import { SimpleRecipe } from '../SimpleRecipe'
 import { orderRecipes } from './orderRecipes'
+
+import css from './RecipeCarousel.css'
 
 const RecipeCarousel = ({ homeCarouselRecipes }) => (
   <div className={`homepageSlider ${css.container}`}>

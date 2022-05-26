@@ -33,3 +33,8 @@ c57dfd00365277e8daf72f539d677de976846f3a
 
 # [TG-6078] Reformat Javascript files in routes/Menu with prettier
 2b58b1ad9adbe86156ccea85764d097afe4cb668
+
+# [TECH-XXX] Sort imports with prettier (#5252)
+75c433cd12843cf9bc0a629282fd0c8ca25fd7d1
+9eb7d5a68aff8402c8d7958c0edba79da305d08b
+ae4081f3d542dd00b6cf6f376188ba25335b9a58

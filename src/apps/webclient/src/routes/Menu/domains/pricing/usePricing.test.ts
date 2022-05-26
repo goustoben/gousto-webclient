@@ -1,9 +1,11 @@
-import { useDispatch } from 'react-redux'
 import { renderHook } from '@testing-library/react-hooks'
-import { safeJestMock } from '_testing/mocks'
-import * as basketSelectors from 'selectors/basket'
-import * as orderSelectors from 'routes/Menu/selectors/order'
 import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+import { safeJestMock } from '_testing/mocks'
+import { useDispatch } from 'react-redux'
+
+import * as orderSelectors from 'routes/Menu/selectors/order'
+import * as basketSelectors from 'selectors/basket'
+
 import { useAuth } from '../auth'
 import { usePricing } from './usePricing'
 import { user } from './usePricing.mock'

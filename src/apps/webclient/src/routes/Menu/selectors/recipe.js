@@ -1,5 +1,8 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
+
+import menuConfig from 'config/menu'
+import { getNumPortions } from 'selectors/basket'
 import { getRecipes, getBasket } from 'selectors/root'
 import {
   formatRecipeTitle,
@@ -7,8 +10,6 @@ import {
   getSurchargePerPortion,
   getDietaryTags,
 } from 'utils/recipe'
-import { getNumPortions } from 'selectors/basket'
-import menuConfig from 'config/menu'
 
 export const getRecipeIdFromProps = (state, props) => props.recipeId
 

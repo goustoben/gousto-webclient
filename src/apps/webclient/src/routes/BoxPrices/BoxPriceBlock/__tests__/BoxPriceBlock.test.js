@@ -1,8 +1,10 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import * as Redux from 'react-redux'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
+
 import { BoxPriceBlock } from '../BoxPriceBlock'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

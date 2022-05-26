@@ -1,10 +1,13 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
-import SlickCarousel from 'Carousel'
+import Immutable from 'immutable'
+
+import SlickCarousel from 'components/Carousel'
+
 import { DetailImage as Image } from '../DetailImage'
-import { ContentMask } from './ContentMask'
 import Carousel from './Carousel'
+import { ContentMask } from './ContentMask'
 
 describe('<Carousel />', () => {
   let wrapper

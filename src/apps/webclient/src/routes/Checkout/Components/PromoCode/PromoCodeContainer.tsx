@@ -1,7 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
+
 import actions from 'actions'
+import { connect } from 'react-redux'
+
 import { usePricing } from 'routes/Menu/domains/pricing'
+
 import { PromoCode } from './PromoCode'
 
 function mapStateToProps(state: any) {

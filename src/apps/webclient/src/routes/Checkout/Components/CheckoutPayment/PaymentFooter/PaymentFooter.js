@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
+
 import PropTypes from 'prop-types'
+
 import { SubscriptionTransparency } from '../../SubscriptionTransparency'
 import { TermsAndConditions } from '../../TermsAndConditions'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+
 import {
   AlignItems,
   BorderStyle,
@@ -11,11 +11,13 @@ import {
   Text,
   TextAlign,
 } from '@gousto-internal/citrus-react'
-import { ComparisonTableItem } from 'routes/Home/PriceComparisonTable/components/ComparisonTableItem/ComparisonTableItem'
+import { useDispatch } from 'react-redux'
+
 import { trackClickPriceComparisonTableHeader } from 'routes/Home/PriceComparisonTable/actions/trackClickPriceComparisonTableHeading'
-import { TableItemData } from 'routes/Home/PriceComparisonTable/types'
 import css from 'routes/Home/PriceComparisonTable/components/ComparisonTable/ComparisonTable.css'
+import { ComparisonTableItem } from 'routes/Home/PriceComparisonTable/components/ComparisonTableItem/ComparisonTableItem'
 import { comparisonTableTexts, BLOCK_WIDTH_LIST } from 'routes/Home/PriceComparisonTable/constants'
+import { TableItemData } from 'routes/Home/PriceComparisonTable/types'
 
 interface Props {
   items: TableItemData[]

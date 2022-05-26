@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 import { getUpcomingFridayInclusive, getPrecedingSaturdayInclusive } from './findWeekday'
 
 const formatDate = (dateMoment) => dateMoment.format('YYYY-MM-DD')

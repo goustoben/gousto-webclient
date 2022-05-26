@@ -1,6 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { Button, Segment } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import css from './BoxPriceButton.css'
 
 export const BoxPriceButton = ({ numPersons, boxPricesBoxSizeSelected, children }) => {

@@ -1,8 +1,8 @@
-import { shallow } from 'enzyme'
 import React from 'react'
 
-import sinon from 'sinon'
+import { shallow } from 'enzyme'
 import { Button, Segment } from 'goustouicomponents'
+import sinon from 'sinon'
 
 import { SlotPicker } from '../SlotPicker'
 

@@ -1,16 +1,18 @@
-import isomorphicFetch from 'isomorphic-fetch'
-import { fetch } from 'utils/fetch'
-import * as cookieHelper2 from 'utils/cookieHelper2'
 import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { safeJestMock } from '_testing/mocks'
+import isomorphicFetch from 'isomorphic-fetch'
+
 import * as optimizelyRollouts from 'containers/OptimizelyRollouts'
-import * as userSelectors from 'selectors/user'
 import * as authSelectors from 'selectors/auth'
+import * as userSelectors from 'selectors/user'
+import * as cookieHelper2 from 'utils/cookieHelper2'
+import { fetch } from 'utils/fetch'
+
 import * as orderSelectors from '../../selectors/order'
-import { updateOrder, createOrder, getOrderPrice, fetchOrder, fetchUserOrders } from '../orderV2'
 import * as menuFetch from '../fetch'
 import { mockFetchResponse } from '../fetch.mock'
 import { UserOrdersMockV2, OrderMockV2, OrderErrorMockV2 } from '../mock/ordersV2.mock'
+import { updateOrder, createOrder, getOrderPrice, fetchOrder, fetchUserOrders } from '../orderV2'
 
 jest.mock('utils/fetch')
 jest.mock('isomorphic-fetch')

@@ -1,17 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classnames from 'classnames'
 import { ModalHeader, CTA } from 'goustouicomponents'
-import Overlay from 'Overlay'
-import Buttons from 'Product/Buttons'
-import Image from 'components/Image'
 import Immutable from 'immutable'
-import { getAllergenListFromAttributes } from 'Product/Detail/Detail'
-import ModalPanel from 'Modal/ModalPanel'
+import PropTypes from 'prop-types'
+
+import Image from 'components/Image'
+import ModalPanel from 'components/Modal/ModalPanel'
+import Overlay from 'components/Overlay'
+import Buttons from 'components/Product/Buttons'
+import { getAllergenListFromAttributes } from 'components/Product/Detail/Detail'
+
 import { SubIngredients } from '../../components/Detail/SubIngredients/SubIngredients'
-import css from './SidesModal.css'
-import { SidePropType } from './SidesPropTypes'
 import { useSidesBasket } from './SidesModal.hook'
+import { SidePropType } from './SidesPropTypes'
+
+import css from './SidesModal.css'
 
 const SidesContentFooter = ({
   toggleShowAllergenAndNutrition,

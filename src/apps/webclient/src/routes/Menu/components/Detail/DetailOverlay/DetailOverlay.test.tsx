@@ -1,10 +1,13 @@
 import React from 'react'
-import Immutable from 'immutable'
-import Modal from 'Modal'
-import * as Redux from 'react-redux'
+
 import { mount, ReactWrapper } from 'enzyme'
-import configureMockStore from 'redux-mock-store'
+import Immutable from 'immutable'
+import * as Redux from 'react-redux'
 import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
+import Modal from 'components/Modal'
+
 import { closeRecipeDetails } from '../../../actions/closeRecipeDetails'
 import { DetailContainer } from '../DetailContainer'
 import { DetailOverlay } from './DetailOverlay'

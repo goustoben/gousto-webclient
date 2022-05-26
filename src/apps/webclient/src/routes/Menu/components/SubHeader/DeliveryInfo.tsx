@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { H3 } from 'Page/Header'
+
 import InfoToggle from './InfoToggle'
+
 import css from './SubHeader.css'
 
 export const DeliveryInfo = ({ mobile = false }: { mobile: boolean }) => (

@@ -1,6 +1,8 @@
-import { connect } from 'react-redux'
 import actions from 'actions'
+import { connect } from 'react-redux'
+
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
+
 import { BrowseCTA } from './BrowseCTA'
 
 function mapStateToProps(state) {

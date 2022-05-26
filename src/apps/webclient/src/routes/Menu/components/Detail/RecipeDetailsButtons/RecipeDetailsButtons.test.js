@@ -1,16 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+
+import actions from 'actions'
 import { shallow } from 'enzyme'
+import ReactDOM from 'react-dom'
 import * as Redux from 'react-redux'
+
+import * as OptimizelyRollouts from 'containers/OptimizelyRollouts'
+import * as Auth from 'routes/Menu/domains/auth'
 import * as Basket from 'routes/Menu/domains/basket'
 import * as Menu from 'routes/Menu/domains/menu'
-import * as Auth from 'routes/Menu/domains/auth'
-import actions from 'actions'
-import * as OptimizelyRollouts from 'containers/OptimizelyRollouts'
-import * as UseSurchargePerPortion from './useSurchargePerPortion'
+
 import * as BasketActions from '../../../actions/basketRecipes'
 import * as MenuRecipeDetailsActions from '../../../actions/menuRecipeDetails'
 import { RecipeDetailsButtons } from './RecipeDetailsButtons'
+import * as UseSurchargePerPortion from './useSurchargePerPortion'
 
 const mockUp = ({
   numPortions = 2,

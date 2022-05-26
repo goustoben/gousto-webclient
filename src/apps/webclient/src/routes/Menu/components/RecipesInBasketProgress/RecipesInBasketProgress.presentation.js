@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {
   ExtraInfo,
   ExtraInfoMain,
@@ -7,8 +7,11 @@ import {
   FloatCard,
   LayoutContentWrapper,
 } from 'goustouicomponents'
-import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+import PropTypes from 'prop-types'
+
 import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+
 import { RecipesInBasketProgressContent } from './RecipesInBasketProgressContent'
 
 import css from './RecipesInBasketProgress.css'

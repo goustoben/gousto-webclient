@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import {
   getCurrentPromoCodeCustomText1,
   getCurrentPromoCodeCustomText2,

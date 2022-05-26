@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useDispatch } from 'react-redux'
-import { PersonaliseMenuStep } from '../PersonaliseMenuStep'
+
 import { items } from '../../../Components/SellThePropositionPage/SellThePropositionPage'
 import { trackSignupPersonalisationComplete } from '../../../signupActions'
+import { PersonaliseMenuStep } from '../PersonaliseMenuStep'
 
 jest.mock('../../../signupActions', () => ({
   ...jest.requireActual('../../../signupActions'),

@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
 
 describe('getOutOfStockRecipeReplacer produces recipe replacer function that', () => {

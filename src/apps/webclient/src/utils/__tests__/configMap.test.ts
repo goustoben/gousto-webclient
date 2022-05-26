@@ -1,4 +1,5 @@
 import * as env from 'utils/isomorphicEnvironment'
+
 import { createConfigMap } from '../configMap'
 
 const getClientEnvironmentSpy = jest.spyOn(env, 'getEnvironment')

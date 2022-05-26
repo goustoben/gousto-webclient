@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Field, FormSection } from 'redux-form'
 
 import { ReduxFormInput } from 'Form/ReduxFormInput'
+import PropTypes from 'prop-types'
+import { Field, FormSection } from 'redux-form'
 
 import css from './CheckoutName.css'
 

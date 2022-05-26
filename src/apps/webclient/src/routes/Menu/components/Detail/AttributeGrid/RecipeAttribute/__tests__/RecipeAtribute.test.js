@@ -1,7 +1,10 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import Svg from 'Svg'
+
+import Svg from 'components/Svg'
+
 import { RecipeAttribute } from '../RecipeAttribute'
 
 describe('Recipe Attribute', () => {

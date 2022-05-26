@@ -1,8 +1,10 @@
 import * as React from 'react'
+
 import { renderHook } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
-import configureMockStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
+
 import * as brandHooks from '../domains/brand'
 import { Tag } from '../domains/brand/types'
 import {

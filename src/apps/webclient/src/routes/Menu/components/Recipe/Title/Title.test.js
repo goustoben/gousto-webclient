@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
+
 import * as recipeContext from '../../../context/recipeContext'
 import { Title } from './Title'
 

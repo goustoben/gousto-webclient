@@ -1,4 +1,5 @@
 import { RootStateOrAny, useSelector } from 'react-redux'
+
 import { getAccessToken, getAuthUserId, getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 
 export const useAuth = () => {

@@ -1,8 +1,9 @@
-import configureMockStore from 'redux-mock-store'
 import Immutable, { List } from 'immutable'
-import { openProperStep, OpenStepStore } from 'routes/Signup/utils/openProperStep'
-import { signupSetStep, signupStepsReceive } from 'actions/signup'
+import configureMockStore from 'redux-mock-store'
+
 import { redirect } from 'actions/redirect'
+import { signupSetStep, signupStepsReceive } from 'actions/signup'
+import { openProperStep, OpenStepStore } from 'routes/Signup/utils/openProperStep'
 import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
 jest.mock('routes/Signup/utils/getSignupSteps', () => ({

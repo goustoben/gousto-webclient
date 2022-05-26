@@ -1,9 +1,12 @@
 import React from 'react'
+
 import { render, screen, within, fireEvent, waitFor, cleanup } from '@testing-library/react'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+import Modal from 'react-modal'
+
 import * as OrderAPI from 'apis/orders'
 import { user } from 'routes/Menu/apis/sides.hook.mock'
-import Modal from 'react-modal'
-import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+
 import { SidesModal } from './SidesModal'
 
 jest.setTimeout(10000)

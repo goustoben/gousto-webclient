@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+
 import { CTA } from 'goustouicomponents'
+import PropTypes from 'prop-types'
 
 import details from './images/ordersummary1.png'
 import extra from './images/ordersummary3.png'

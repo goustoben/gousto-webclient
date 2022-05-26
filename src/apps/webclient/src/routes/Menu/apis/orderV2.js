@@ -1,19 +1,21 @@
 import isomorphicFetch from 'isomorphic-fetch'
-import { fetch, cacheDefault } from 'utils/fetch'
-import endpoint from 'config/endpoint'
-import * as userApiV1 from 'apis/user'
+
 import * as orderApiV1 from 'apis/orders'
-import { getUserId } from 'selectors/user'
-import { getAccessToken } from 'selectors/auth'
+import * as userApiV1 from 'apis/user'
+import endpoint from 'config/endpoint'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
-import { transformOrderV2ToOrderV1 } from './ordersV2toV1'
-import { post } from './fetch'
-import { getRequestHeaders } from './_utils'
+import { getAccessToken } from 'selectors/auth'
+import { getUserId } from 'selectors/user'
+import { fetch, cacheDefault } from 'utils/fetch'
+
 import {
   getUpdateOrderProductItemsOrderV1,
   getOrderForUpdateOrderV1,
   getOrderV2,
 } from '../selectors/order'
+import { getRequestHeaders } from './_utils'
+import { post } from './fetch'
+import { transformOrderV2ToOrderV1 } from './ordersV2toV1'
 
 export const createOrder = async (accessToken, order, userId) => {
   const headers = getRequestHeaders(userId)

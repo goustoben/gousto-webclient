@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { findImageUrls } from './findImageUrls'
 
 describe('Recipe components > Image > findImage', () => {

@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 
 import css from './Nutrition.css'
 

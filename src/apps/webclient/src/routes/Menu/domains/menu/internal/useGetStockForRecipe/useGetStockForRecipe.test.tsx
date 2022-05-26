@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
-import { useGetStockForRecipe } from '.'
+
+import { useGetStockForRecipe } from './useGetStockForRecipe'
 
 describe('useGetStockForRecipe', () => {
   const recipeId = 'recipe-one'

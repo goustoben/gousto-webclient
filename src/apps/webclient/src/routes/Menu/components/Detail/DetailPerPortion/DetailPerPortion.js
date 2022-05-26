@@ -1,12 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 
-import css from '../Detail.css'
-
-import { RecipeMicronutrientsContainer } from '../RecipeMicronutrients'
 import { NutritionInfo } from '../Nutrition'
 import { NutritionDisclaimerText } from '../NutritionDisclaimerText'
+import { RecipeMicronutrientsContainer } from '../RecipeMicronutrients'
+
+import css from '../Detail.css'
 
 const DetailPerPortion = ({ recipeId, perPortion, per100Grams }) => {
   if (!perPortion || !perPortion.size) {

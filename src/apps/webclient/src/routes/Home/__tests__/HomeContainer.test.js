@@ -1,8 +1,11 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
-import menuBoxPrices from 'routes/BoxPrices/__tests__/__mocks__/menuBoxPrices.json'
+import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
+
+import menuBoxPrices from 'routes/BoxPrices/__tests__/__mocks__/menuBoxPrices.json'
+
 import { HomeContainer, getKnownVariant } from '../HomeContainer'
 
 jest.mock('config/home', () => ({

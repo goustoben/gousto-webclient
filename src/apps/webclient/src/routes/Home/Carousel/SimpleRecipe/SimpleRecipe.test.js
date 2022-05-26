@@ -1,7 +1,9 @@
 import React from 'react'
+
+import GoustoImage from 'Image'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import GoustoImage from 'Image'
+
 import { SimpleRecipe } from './SimpleRecipe'
 
 jest.mock('utils/sanitizeText', () => ({

@@ -1,13 +1,15 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 
 import * as MenuHooks from 'routes/Menu/domains/menu'
-import { RecipeTile } from './RecipeTile'
-import { TileImage } from './TileImage'
-import { RecipeTag } from '../RecipeTag'
-import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
-import { Title, BrandTag } from '../Recipe'
+
 import * as RecipeContext from '../../context/recipeContext'
+import { Title, BrandTag } from '../Recipe'
+import { RecipeTag } from '../RecipeTag'
+import { RecipeTile } from './RecipeTile'
+import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
+import { TileImage } from './TileImage'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

@@ -1,12 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
-import { useDiscountDescriptor, formatDiscountTip } from './priceAndDiscountTipUtils'
 
 import { Price } from './Price'
+import { useDiscountDescriptor, formatDiscountTip } from './priceAndDiscountTipUtils'
 
 import css from './PriceAndDiscountTip.css'
 

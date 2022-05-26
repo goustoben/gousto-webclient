@@ -1,10 +1,12 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { BoxPricesComponent } from '../BoxPricesComponent'
-import numPersonsToBoxDescriptors from './__mocks__/numPersonsToBoxDescriptors.json'
-import { BoxPricesTabs } from '../BoxPricesTabs'
-import { BoxPricesList } from '../BoxPricesList'
 import { BoxPricesContent } from '../BoxPricesContent'
+import { BoxPricesList } from '../BoxPricesList'
+import { BoxPricesTabs } from '../BoxPricesTabs'
+import numPersonsToBoxDescriptors from './__mocks__/numPersonsToBoxDescriptors.json'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),

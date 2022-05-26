@@ -1,6 +1,9 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
+
 import { Waves } from './components/Waves'
+
 import css from './WaveLinkHeader.css'
 
 const WaveLinkHeader = ({ headerAttributes, onClick }) => {

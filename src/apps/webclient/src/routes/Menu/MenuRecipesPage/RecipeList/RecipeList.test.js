@@ -1,10 +1,11 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { CollectionId } from '../../domains/collections'
 import { CollectionLink } from '../../components/CollectionLink'
 import { RecipeTile } from '../../components/RecipeTile'
+import { CollectionId } from '../../domains/collections'
 import { buildTracker, RecipeList } from './RecipeList'
 
 jest.mock('react-redux', () => ({

@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import * as ReactRedux from 'react-redux'
+
 import { useCreateTrackEvent } from '../useTracking'
 
 describe('useCreateTrackEvent', () => {

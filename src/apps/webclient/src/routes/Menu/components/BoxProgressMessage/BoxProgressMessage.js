@@ -1,7 +1,9 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
-import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+
 import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
 
 const BoxProgressMessage = ({ numRecipes, className }) => {
   const { maxRecipesForPortion, minRecipesForPortion } = useSupportedBoxTypes()

@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
-import { NumberOfPeopleInput } from 'routes/Signup/Steps/NumberOfPeople/NumberOfPeopleInput/NumberOfPeopleInput'
+
 import { Heading } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
+
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { completeWizardNumberOfPeople } from 'actions/trackingKeys'
+import { NumberOfPeopleInput } from 'routes/Signup/Steps/NumberOfPeople/NumberOfPeopleInput/NumberOfPeopleInput'
 import { signupSetNumberOfPeople } from 'routes/Signup/signupActions'
+
 import { Button } from '../../Button'
+
 import css from './NumberOfPeopleStep.css'
 
 interface NumberOfPeopleStepProps {

@@ -1,18 +1,22 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
+
 import { Modal, CTA } from 'goustouicomponents'
-import { CheckoutUrgencyContext } from 'routes/Checkout/Components/CheckoutUrgency/CheckoutUrgencyContext'
-import {
-  checkoutUrgencyStatuses,
-  checkoutUrgencyDefaultCriticalSeconds,
-} from 'routes/Checkout/checkoutUrgencyConfig'
+import PropTypes from 'prop-types'
+
 import {
   checkoutUrgencyInitialModalDismissed,
   checkoutUrgencyInitialModalPrimaryButtonClicked,
   checkoutUrgencyExpiredModalDismissed,
   checkoutUrgencyExpiredModalPrimaryButtonClicked,
 } from 'actions/trackingKeys'
+import { CheckoutUrgencyContext } from 'routes/Checkout/Components/CheckoutUrgency/CheckoutUrgencyContext'
+import {
+  checkoutUrgencyStatuses,
+  checkoutUrgencyDefaultCriticalSeconds,
+} from 'routes/Checkout/checkoutUrgencyConfig'
+
 import { Clock } from '../Clock'
+
 import css from './CheckoutUrgencyModal.css'
 
 const getModalComponents = (isExpired) => {

@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { checkoutClickContinueToDelivery } from 'actions/trackingKeys'
+
 import { AboutYou } from '../AboutYou'
 
 describe('Given AboutYou component', () => {

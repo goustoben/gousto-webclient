@@ -1,3 +1,4 @@
+import { getIsRecaptchaEnabled } from '../../../../../selectors/auth'
 import { goToCheckout, clearAndFillAccountForm } from './checkoutCreateAccount'
 import {
   selectAddress,
@@ -6,7 +7,6 @@ import {
   clearAndFillPhoneNumber,
 } from './checkoutDelivery'
 import { getFormState, getStore } from './checkoutGeneralUtils'
-import { getIsRecaptchaEnabled } from '../../../../../selectors/auth'
 
 export const goToPayment = () => {
   goToCheckout()

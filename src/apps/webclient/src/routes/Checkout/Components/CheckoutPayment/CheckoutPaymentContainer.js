@@ -1,6 +1,8 @@
 import React from 'react'
-import { getFormAsyncErrors, getFormSyncErrors, touch } from 'redux-form'
+
 import { connect } from 'react-redux'
+import { getFormAsyncErrors, getFormSyncErrors, touch } from 'redux-form'
+
 import { storeSignupRecaptchaToken } from 'actions/auth'
 import {
   trackingOrderPlaceAttemptSucceeded,
@@ -8,15 +10,16 @@ import {
   trackingOrderPlaceAttemptFailed,
   setCurrentPaymentMethod,
 } from 'actions/checkout'
+import { usePricing } from 'routes/Menu/domains/pricing'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
 import { formatOrderPrice } from 'utils/pricing'
-import { usePricing } from 'routes/Menu/domains/pricing'
+
 import { formContainer } from '../formContainer'
-import { addInitialValues, getValidationRules } from './form'
-import { sectionName } from './config'
 import { CheckoutPayment } from './CheckoutPayment'
+import { sectionName } from './config'
+import { addInitialValues, getValidationRules } from './form'
 
 export const mapStateToProps = (state) => {
   const hotjarTriggerName = 'psd2_modal'

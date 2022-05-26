@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
+import PropTypes from 'prop-types'
+
 import { icons } from 'routes/BoxPrices/boxPricesConfig'
+
 import css from './BoxIcon.css'
 
 const BoxIcon = ({ numPersons, numPortions }) => {

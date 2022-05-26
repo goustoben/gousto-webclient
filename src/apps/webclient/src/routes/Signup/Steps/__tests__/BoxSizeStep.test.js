@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { BoxSizeStep } from '../BoxSize/BoxSizeStep'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

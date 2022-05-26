@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
+
 import { isRecipeInBasket } from 'utils/menu'
+
 import * as recipeListSelectors from '../recipeList'
 
 jest.mock('utils/menu')

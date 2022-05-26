@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { checkoutConfig } from 'config/checkout'
+
 import { CTA } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
+import { checkoutConfig } from 'config/checkout'
+
 import { Alert } from '../Alert'
+
 import css from './ErrorMessage.css'
 
 export const ErrorMessage = ({ errorType, onLoginClick }) => {

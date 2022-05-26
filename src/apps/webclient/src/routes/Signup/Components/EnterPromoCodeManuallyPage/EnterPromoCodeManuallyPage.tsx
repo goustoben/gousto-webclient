@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useDebounce, usePrevious } from 'react-use'
+
 import {
   Button,
   InputField,
@@ -10,17 +9,22 @@ import {
   Paragraph,
   Join,
 } from '@gousto-internal/citrus-react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useDebounce, usePrevious } from 'react-use'
+
 import { actionTypes } from 'actions/actionTypes'
 import { clickClaimDiscountPopup, clickEnterPromoCodeManuallyContinue } from 'actions/trackingKeys'
-import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { getPromoStore, createSelectIsPendingByActionType } from 'routes/Signup/signupSelectors'
 import { promo } from 'config/home'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
+import { getPromoStore, createSelectIsPendingByActionType } from 'routes/Signup/signupSelectors'
+
 import {
   PromoCodeCheckStatus,
   checkPromoCode,
   proceedWithPromoCode,
 } from './enterPromoCodeManuallyUtils'
+
 import css from './EnterPromoCodeManuallyPage.css'
 
 const DEBOUNCE_MS = 500

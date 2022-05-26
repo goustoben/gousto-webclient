@@ -1,6 +1,6 @@
 import { canUseWindow } from 'utils/browserEnvironment'
-import { isServer } from '../../../server/utils/serverEnvironment'
 
+import { isServer } from '../../../server/utils/serverEnvironment'
 import { cookieString } from '../cookieString'
 
 jest.mock('utils/browserEnvironment')

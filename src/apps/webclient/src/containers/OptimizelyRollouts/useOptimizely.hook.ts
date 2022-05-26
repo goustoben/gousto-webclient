@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
-import Cookies from 'utils/GoustoCookies'
-import { get } from 'utils/cookieHelper2'
-import { useLocalStorage } from 'usehooks-ts/dist/useLocalStorage'
 import useMountedState from 'react-use/lib/useMountedState'
+import { useLocalStorage } from 'usehooks-ts/dist/useLocalStorage'
+
+import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { getAuthUserId } from 'selectors/auth'
 import { locationQuery } from 'selectors/routing'
-import { feLoggingLogEvent, logLevels } from 'actions/log'
-import { getUserIdForOptimizely } from './optimizelyUtils'
+import Cookies from 'utils/GoustoCookies'
+import { get } from 'utils/cookieHelper2'
+
 import { getOptimizelyInstance, hasValidInstance, timeout } from './optimizelySDK'
+import { getUserIdForOptimizely } from './optimizelyUtils'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 
 const withVersionPrefixAsFalse = false

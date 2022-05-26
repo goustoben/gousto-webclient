@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
+import PropTypes from 'prop-types'
+
 import { withError } from 'utils/withError'
+
 import { BoxPriceBlock } from '../BoxPriceBlock'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
+
 import css from './BoxPriceList.css'
 
 const BoxPricesList = ({

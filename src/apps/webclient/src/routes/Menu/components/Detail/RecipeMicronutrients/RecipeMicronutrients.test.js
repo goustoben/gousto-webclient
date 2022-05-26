@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+
 import { RecipeMicronutrients } from './RecipeMicronutrients'
 
 describe('RecipeMicronutrients', () => {

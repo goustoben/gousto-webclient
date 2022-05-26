@@ -1,7 +1,10 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
+
 import { useRecipeTitle } from 'routes/Menu/context/recipeContext'
+
 import { useRecipeImage } from './useRecipeImage'
 
 const Image = ({ lazy, className, useHomepageImage }) => {

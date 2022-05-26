@@ -1,11 +1,13 @@
 import { useMemo } from 'react'
+
 import useSWR from 'swr'
+
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
+import { getFetcher } from 'routes/Menu/apis/fetch'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 import { getFirstPartPostcode } from 'utils/format'
 import { parseObjectKeysToCamelCase, CamelCasedValue } from 'utils/jsonHelper'
-import { getFetcher } from 'routes/Menu/apis/fetch'
 
 const getDeliveryOptionServiceUrl = () => `${endpoint('deliveries')}${routes.deliveries.days}`
 

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+
 import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 
 jest.mock('react-redux', () => ({

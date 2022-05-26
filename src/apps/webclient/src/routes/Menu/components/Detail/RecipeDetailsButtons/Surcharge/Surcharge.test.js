@@ -1,6 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+
 import { shallow } from 'enzyme'
+import ReactDOM from 'react-dom'
 
 import { Surcharge } from './Surcharge'
 

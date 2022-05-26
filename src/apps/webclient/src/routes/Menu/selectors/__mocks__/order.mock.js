@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { deliveryTariffTypes } from 'utils/deliveries'
 
 export const createState = (partialOverwrite = {}) => {

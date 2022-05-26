@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+
 import classnames from 'classnames'
-import { RecipeListWrapper } from '../RecipeList'
+import PropTypes from 'prop-types'
+
 import { DetailOverlay } from '../../components/Detail'
+import { RecipeListWrapper } from '../RecipeList'
 
 import css from '../../Menu.css'
 

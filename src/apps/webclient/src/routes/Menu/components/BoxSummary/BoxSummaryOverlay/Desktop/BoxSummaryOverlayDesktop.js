@@ -1,8 +1,11 @@
 import React from 'react'
+
 import classNames from 'classnames'
+
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
-import css from './BoxSummaryOverlayDesktop.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
+
+import css from './BoxSummaryOverlayDesktop.css'
 
 const BoxSummaryOverlayDesktop = ({
   onCloseClick,

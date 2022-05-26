@@ -1,9 +1,11 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
-import { getMenuCollections } from 'selectors/root'
-import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
+
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
+import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
+import { getMenuCollections } from 'selectors/root'
 import { getRecipeId } from 'utils/recipe'
+
 import { getRecipesInCollection } from '../../../Menu/selectors/collections'
 
 const getRecipesFromAllRecipesCollection = createSelector(

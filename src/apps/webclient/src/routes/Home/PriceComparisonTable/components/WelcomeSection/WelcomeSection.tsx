@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   AlignItems,
   Box,
@@ -8,9 +9,10 @@ import {
   Paragraph,
   TextAlign,
 } from '@gousto-internal/citrus-react'
+
 import { SignupCTA } from 'routes/Home/PriceComparisonTable/components/SignupCTA/SignupCTA'
-import { welcomeSectionTexts, BLOCK_WIDTH_LIST } from 'routes/Home/PriceComparisonTable/constants'
 import css from 'routes/Home/PriceComparisonTable/components/WelcomeSection/WelcomeSection.css'
+import { welcomeSectionTexts, BLOCK_WIDTH_LIST } from 'routes/Home/PriceComparisonTable/constants'
 
 export function WelcomeSection() {
   return (

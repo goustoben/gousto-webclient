@@ -1,24 +1,23 @@
-import { getPreviewOrderErrorName } from 'utils/order'
-import logger from 'utils/logger'
-import routes from 'config/routes'
-import { createPreviewOrder } from 'apis/orders'
-
 import { actionTypes } from 'actions/actionTypes'
 import { basketPreviewOrderChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import statusActions from 'actions/status'
+import { createPreviewOrder } from 'apis/orders'
+import routes from 'config/routes'
+import { checkoutUrgencySetCurrentStatus } from 'routes/Checkout/checkoutActions'
+import { checkoutUrgencyStatuses } from 'routes/Checkout/checkoutUrgencyConfig'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
 import { getPreviewOrderId } from 'selectors/basket'
 import { getUserStatus } from 'selectors/user'
-import { checkoutUrgencySetCurrentStatus } from 'routes/Checkout/checkoutActions'
-import { checkoutUrgencyStatuses } from 'routes/Checkout/checkoutUrgencyConfig'
+import logger from 'utils/logger'
+import { getPreviewOrderErrorName } from 'utils/order'
+
 import { isServer } from '../../../../server/utils/serverEnvironment'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getCouldBasketBeExpired,
   getOrderDetails,
 } from '../selectors/order'
-
 import { orderAssignToUser } from './order'
 
 const { pending, error } = statusActions

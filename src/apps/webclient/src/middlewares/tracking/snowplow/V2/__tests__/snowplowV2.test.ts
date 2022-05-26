@@ -1,5 +1,6 @@
-import { canUseWindow } from 'utils/browserEnvironment'
 import { actionTypes } from 'actions/actionTypes'
+import { canUseWindow } from 'utils/browserEnvironment'
+
 import * as snowplowV2 from '../snowplowV2'
 
 const mockTrackEventWithData = jest.fn()

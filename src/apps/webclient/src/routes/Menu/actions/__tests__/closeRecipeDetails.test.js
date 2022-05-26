@@ -1,7 +1,7 @@
-import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
-import { closeRecipeDetails } from '../closeRecipeDetails'
+import Immutable from 'immutable'
 
+import { closeRecipeDetails } from '../closeRecipeDetails'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
 
 describe('menu closeRecipeDetails action', () => {

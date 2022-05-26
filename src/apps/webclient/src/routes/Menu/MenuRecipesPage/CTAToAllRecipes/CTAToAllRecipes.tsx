@@ -1,9 +1,13 @@
 import React from 'react'
+
 import { useDispatch } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
-import spottyBorder from 'media/images/menu/spottyTileBorder.png'
 import { useCollections, CollectionId } from 'routes/Menu/domains/collections'
+
+import spottyBorder from 'media/images/menu/spottyTileBorder.png'
+
 import css from './CTAToAllRecipes.css'
 
 const trackAction = () => ({

@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types'
 import React, { useState, useRef } from 'react'
-import Immutable from 'immutable'
-import useDebounce from 'react-use/lib/useDebounce'
+
 import { InputField, FormFieldStatus } from '@gousto-internal/citrus-react'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import useDebounce from 'react-use/lib/useDebounce'
 
 const propTypes = {
   name: PropTypes.string,

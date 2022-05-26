@@ -1,6 +1,8 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import { CTA as CTAButton } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import css from './CTA.css'
 
 const CTA = ({ homeGetStarted, ctaUri, sectionForTracking, children, dataTesting }) => {

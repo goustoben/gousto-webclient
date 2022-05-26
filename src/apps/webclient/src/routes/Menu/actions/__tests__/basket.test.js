@@ -1,9 +1,11 @@
 import Immutable from 'immutable'
+
+import { actionTypes } from 'actions/actionTypes'
 import * as orderConfirmationActions from 'actions/orderConfirmation'
 import utilsLogger from 'utils/logger'
-import { actionTypes } from 'actions/actionTypes'
-import * as orderV2 from '../../apis/orderV2'
+
 import * as trackingKeys from '../../../../actions/trackingKeys'
+import * as orderV2 from '../../apis/orderV2'
 import { basketUpdateProducts } from '../basket'
 
 describe('basketUpdateProducts', () => {

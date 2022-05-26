@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { Button, ButtonColorVariant, Icon, IconVariant } from '@gousto-internal/citrus-react'
+
 import css from './NumberOfPeopleInput.css'
 
 const MAXIMUM_NUMBER_OF_PEOPLE = 6 // per design

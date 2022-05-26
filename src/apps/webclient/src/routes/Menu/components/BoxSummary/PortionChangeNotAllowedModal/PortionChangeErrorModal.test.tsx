@@ -1,6 +1,8 @@
-import { Modal } from 'goustouicomponents'
-import { shallow } from 'enzyme'
 import React from 'react'
+
+import { shallow } from 'enzyme'
+import { Modal } from 'goustouicomponents'
+
 import { PortionChangeErrorModal } from './PortionChangeErrorModal'
 
 describe('PortionChangeErrorModal', () => {

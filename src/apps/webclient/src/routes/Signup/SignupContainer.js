@@ -1,14 +1,16 @@
-import { connect } from 'react-redux'
 import actions from 'actions'
-import { getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { connect } from 'react-redux'
+
 import { signupDismissDiscountAppliedBar, signupSetStep } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
-import { getPromoBannerState } from 'utils/home'
 import {
   getIsWizardWithoutImagesEnabled,
   getIsSkipWizardEnabled,
 } from 'routes/Signup/signupSelectors'
 import { getIsAuthenticated } from 'selectors/auth'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
+import { getPromoBannerState } from 'utils/home'
+
 import { Signup } from './Signup'
 
 const mapStateToProps = (state, ownProps) => {

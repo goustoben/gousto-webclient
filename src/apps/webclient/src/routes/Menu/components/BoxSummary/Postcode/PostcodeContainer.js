@@ -1,8 +1,10 @@
-import { connect } from 'react-redux'
 import actions from 'actions'
+import { connect } from 'react-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
 import { getFullScreenBoxSummary } from 'selectors/features'
+
 import { Postcode } from './Postcode'
 
 function mapStateToProps(state) {

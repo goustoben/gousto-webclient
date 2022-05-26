@@ -1,15 +1,15 @@
+import { actionTypes } from 'actions/actionTypes'
+import loginActions from 'actions/login'
+import { menuLoadBoxPrices } from 'actions/menu'
+import { redirect } from 'actions/redirect'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import {
   signupCheckAccountNewCustomer,
   signupCheckAccountExistingCustomer,
   signupApplyVoucher,
 } from 'actions/trackingKeys'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { redirect } from 'actions/redirect'
-import loginActions from 'actions/login'
-import { menuLoadBoxPrices } from 'actions/menu'
-import routes from 'config/routes'
-import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
+import routes from 'config/routes'
 
 export const trackCuisineSelected = (cuisineName) => (dispatch) => {
   const type = trackingKeys.cuisineSelected

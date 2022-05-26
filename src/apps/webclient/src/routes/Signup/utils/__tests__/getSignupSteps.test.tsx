@@ -1,7 +1,9 @@
 import React from 'react'
-import configureMockStore from 'redux-mock-store'
-import { getSignupSteps } from 'routes/Signup/utils/getSignupSteps'
+
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
+
+import { getSignupSteps } from 'routes/Signup/utils/getSignupSteps'
 
 const mockStore = configureMockStore()
 const mockedStore = mockStore({

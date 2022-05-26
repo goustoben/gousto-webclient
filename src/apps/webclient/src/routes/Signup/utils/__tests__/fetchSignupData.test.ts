@@ -1,8 +1,9 @@
-import configureMockStore from 'redux-mock-store'
 import Immutable from 'immutable'
-import { fetchSignupData, GetSignupDataStore } from 'routes/Signup/utils/fetchSignupData'
+import configureMockStore from 'redux-mock-store'
+
 import { menuLoadBoxPrices, menuLoadDays } from 'actions/menu'
 import { promoGet } from 'actions/promos'
+import { fetchSignupData, GetSignupDataStore } from 'routes/Signup/utils/fetchSignupData'
 
 jest.mock('actions/signup', () => ({
   signupStepsReceive: jest.fn(),

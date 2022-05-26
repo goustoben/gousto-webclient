@@ -1,12 +1,16 @@
 import React from 'react'
+
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
+
 import basketConfig from 'config/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
-import css from './ActionBarPresentational.module.css'
-import { CircularProgressIndicator } from './CircularProgressIndicator/CircularProgressIndicator'
+
 import { ActionBarText } from './ActionBarText/ActionBarText'
+import { CircularProgressIndicator } from './CircularProgressIndicator/CircularProgressIndicator'
 import { getMenuBoxPricesLoading, createGetNextTierPricePerPortion } from './actionBarSelectors'
+
+import css from './ActionBarPresentational.module.css'
 
 type Props = {
   variant: 'separate' | 'embedded'

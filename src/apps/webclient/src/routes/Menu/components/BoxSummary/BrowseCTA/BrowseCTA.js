@@ -1,6 +1,8 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import { Button } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import css from './BrowseCTA.css'
 
 const handleClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange) => (e) => {

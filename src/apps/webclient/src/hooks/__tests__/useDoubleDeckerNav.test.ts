@@ -1,4 +1,5 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+
 import { useDoubleDeckerNav } from '../useDoubleDeckerNav'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

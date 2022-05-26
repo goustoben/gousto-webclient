@@ -1,7 +1,10 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
+
 import { signupConfig } from 'config/signup'
+
 import { BoxSizeBox } from '../BoxSizeBox/BoxSizeBox'
 
 describe('given we are rendering BoxSizeBox', () => {

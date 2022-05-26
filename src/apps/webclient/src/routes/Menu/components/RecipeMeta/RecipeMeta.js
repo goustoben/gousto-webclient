@@ -1,7 +1,8 @@
 import React from 'react'
+
 import Immutable from 'immutable'
-import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
 
 import { getMetaImageLink, getPortionPrice, getRecipeDetailURL } from './utils'
 

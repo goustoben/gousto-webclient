@@ -1,12 +1,15 @@
-import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
 import { CTA } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
+import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
 import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
 import { Benefits } from 'routes/Home/Benefits'
-import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
-import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
+
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
+import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
+
 import css from './BoxPriceBlock.css'
 
 const BoxPriceBlock = ({

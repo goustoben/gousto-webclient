@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import * as RecipeContext from '../../../context/recipeContext'
 import * as DomainMenu from '../../../domains/menu'
 import { SoldOutOverlay } from './SoldOutOverlay'

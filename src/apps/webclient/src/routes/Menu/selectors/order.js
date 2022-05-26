@@ -1,5 +1,6 @@
 import { Map } from 'immutable'
-import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
+import { createSelector } from 'reselect'
+
 import {
   getBasketDate,
   getBasketMenuId,
@@ -12,9 +13,10 @@ import {
   getPromoCode,
 } from 'selectors/basket'
 import { getNDDFeatureValue } from 'selectors/features'
-import { createSelector } from 'reselect'
 import { getBoxSummaryDeliveryDays } from 'selectors/root'
 import { getUserOrders } from 'selectors/user'
+import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
+
 import { ResourceType } from '../constants/resources'
 
 const getRecipesV1 = createSelector([getBasketRecipes, getNumPortions], (recipes, quantity) =>

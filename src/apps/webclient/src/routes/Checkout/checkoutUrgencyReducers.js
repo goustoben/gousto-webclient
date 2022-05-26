@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
+
 import { actionTypes } from 'actions/actionTypes'
+
 import { checkoutUrgencyStatuses } from './checkoutUrgencyConfig'
 
 const checkoutUrgencyInitialState = Immutable.fromJS({

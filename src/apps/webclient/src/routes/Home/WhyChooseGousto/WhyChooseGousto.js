@@ -1,10 +1,14 @@
 import React, { Fragment } from 'react'
+
 import PropTypes from 'prop-types'
-import { formatPrice } from 'utils/format'
+
 import { getWhyGoustoConfig } from 'config/home'
-import { StepsGuide } from './StepsGuide'
+import { formatPrice } from 'utils/format'
+
 import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
+import { StepsGuide } from './StepsGuide'
+
 import css from './WhyChooseGousto.css'
 
 const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {

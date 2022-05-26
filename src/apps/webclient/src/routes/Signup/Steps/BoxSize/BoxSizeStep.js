@@ -1,14 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { signupConfig } from 'config/signup'
+
 import { Heading } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { completeWizardBoxSize } from 'actions/trackingKeys'
-import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { PrimaryButton } from './PrimaryButton'
+import { signupConfig } from 'config/signup'
+import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
+
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
-import css from './BoxSizeStep.css'
+import { PrimaryButton } from './PrimaryButton'
+
 import signupCss from '../../Signup.css'
+import css from './BoxSizeStep.css'
 
 export const BoxSizeStep = ({
   numPortionChange,

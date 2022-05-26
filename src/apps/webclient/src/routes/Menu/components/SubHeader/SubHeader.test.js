@@ -1,10 +1,13 @@
-import sinon from 'sinon'
 import React from 'react'
+
 import { shallow } from 'enzyme'
+import sinon from 'sinon'
+
 import config from 'config/menu'
-import { SubHeader } from './SubHeader'
-import InfoToggle from './InfoToggle'
+
 import { DeliveryInfo } from './DeliveryInfo'
+import InfoToggle from './InfoToggle'
+import { SubHeader } from './SubHeader'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),

@@ -1,9 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classnames from 'classnames'
 import { Layout2Cells, LayoutContentWrapper, ProgressBar } from 'goustouicomponents'
-import css from './RecipesInBasketProgressContent.css'
+import PropTypes from 'prop-types'
+
 import { BoxProgressMessage } from '../../BoxProgressMessage'
+
+import css from './RecipesInBasketProgressContent.css'
 
 const propTypes = {
   selectedRecipesCount: PropTypes.number.isRequired,

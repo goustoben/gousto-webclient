@@ -1,15 +1,17 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
+
 import { Title } from '../../Recipe'
+import { RecipeAlternativeOptions } from '../../RecipeAlternativeOptions'
+import { AttributeGrid } from '../AttributeGrid'
 import { Detail } from '../Detail'
+import { DetailAllergenIngredientsContainer } from '../DetailAllergenIngredients'
 import { DetailContainer } from '../DetailContainer'
 import { DetailIngredientsContainer } from '../DetailIngredients'
-import { DetailAllergenIngredientsContainer } from '../DetailAllergenIngredients'
 import { DetailPerPortionContainer } from '../DetailPerPortion'
-import { AttributeGrid } from '../AttributeGrid'
-import { RecipeAlternativeOptions } from '../../RecipeAlternativeOptions'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

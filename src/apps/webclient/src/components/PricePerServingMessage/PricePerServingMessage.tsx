@@ -1,5 +1,7 @@
 import React from 'react'
+
 import classNames from 'classnames'
+
 import { formatOrderPrice } from 'utils/pricing'
 
 import css from './PricePerServingMessage.css'

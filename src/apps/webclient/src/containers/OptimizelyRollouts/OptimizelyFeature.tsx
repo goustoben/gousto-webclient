@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useIsOptimizelyFeatureEnabled } from './index'
 
 type OptimizelyFeatureProps = {

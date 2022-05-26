@@ -1,12 +1,12 @@
+import actions from 'actions'
 import Immutable from 'immutable'
 import { Store } from 'redux'
-import { signupConfig } from 'config/signup'
 
-import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
-import { getPromoCode } from 'selectors/basket'
-import actions from 'actions'
 import { menuLoadBoxPrices } from 'actions/menu'
 import { promoGet } from 'actions/promos'
+import { signupConfig } from 'config/signup'
+import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
+import { getPromoCode } from 'selectors/basket'
 
 /**
  * DO NOT import anywhere, type is exported for tests.

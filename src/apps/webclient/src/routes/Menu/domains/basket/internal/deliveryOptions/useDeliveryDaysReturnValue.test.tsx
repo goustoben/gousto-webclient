@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import useSWR from 'swr'
-import { useDeliveryDays } from '.'
+
+import { useDeliveryDays } from './useDeliveryDays'
 
 jest.mock('swr', () => jest.fn())
 jest.mock('utils/configFromWindow', () => ({

@@ -1,8 +1,11 @@
 import React from 'react'
-import Image from 'Image'
+
 import Immutable from 'immutable'
-import Svg from 'Svg'
+
+import Image from 'components/Image'
+import Svg from 'components/Svg'
 import { getMenuRecipeImage } from 'utils/image'
+
 import css from './Ingredient.css'
 
 type IngredientProps = {

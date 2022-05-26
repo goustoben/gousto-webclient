@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
-import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
+import PropTypes from 'prop-types'
+
 import { signupConfig } from 'config/signup'
-import { Benefits } from 'routes/Home/Benefits'
-import { BoxPricesTabs } from 'routes/BoxPrices/BoxPricesTabs'
 import { BoxPriceSuitableForSection } from 'routes/BoxPrices/BoxPriceBlock/BoxPriceSuitableForSection'
-import { PricePerNRecipesTable } from './PricePerNRecipesTable'
+import { BoxPricesTabs } from 'routes/BoxPrices/BoxPricesTabs'
+import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
+import { Benefits } from 'routes/Home/Benefits'
+
 import { PrimaryButton } from '../PrimaryButton'
+import { PricePerNRecipesTable } from './PricePerNRecipesTable'
+
 import css from './GoustoOnDemandBoxSizeContent.css'
 
 export const GoustoOnDemandBoxSizeContent = ({

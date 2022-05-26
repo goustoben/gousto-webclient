@@ -1,13 +1,16 @@
-import Immutable from 'immutable'
 import React from 'react'
-import { Provider } from 'react-redux'
+
 import { render, screen, fireEvent } from '@testing-library/react'
-import * as Menu from 'routes/Menu/domains/menu'
-import * as Collections from 'routes/Menu/domains/collections'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
-import * as Tracking from './tracking'
-import { CollectionLinkTile } from '.'
+import * as Collections from 'routes/Menu/domains/collections'
+import * as Menu from 'routes/Menu/domains/menu'
+
 import { createCollectionFromDefaultValues } from '../../../domains/collections/internal/utils'
+import { CollectionLinkTile } from './CollectionLinkTile'
+import * as Tracking from './tracking'
 
 const defaultCollection = createCollectionFromDefaultValues({
   id: '101',

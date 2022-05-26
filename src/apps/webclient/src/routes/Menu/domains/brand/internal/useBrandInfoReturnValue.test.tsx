@@ -1,9 +1,11 @@
 import * as React from 'react'
-import useSWR from 'swr'
+
+import { renderHook } from '@testing-library/react-hooks'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import Immutable from 'immutable'
-import { renderHook } from '@testing-library/react-hooks'
+import useSWR from 'swr'
+
 import { useBrandInfo } from './useBrandInfo'
 
 jest.mock('utils/configFromWindow', () => ({

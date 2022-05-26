@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import { Field } from 'redux-form'
+
 import { AddressInputs } from 'routes/Checkout/Components/Address/AddressInputs'
 
 describe('AddressInputs', () => {

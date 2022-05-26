@@ -1,9 +1,11 @@
 import * as React from 'react'
+
+import { renderHook } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 import { v4 as uuid } from 'uuid'
-import { renderHook } from '@testing-library/react-hooks'
+
 import { useTracking } from './useTracking'
 
 jest.mock('uuid', () => ({

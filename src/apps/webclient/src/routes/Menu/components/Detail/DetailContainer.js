@@ -1,7 +1,7 @@
+import moment from 'moment'
 import { connect } from 'react-redux'
 
 import { getCutoffs } from 'utils/deliveries'
-import moment from 'moment'
 
 import { Detail } from './Detail'
 

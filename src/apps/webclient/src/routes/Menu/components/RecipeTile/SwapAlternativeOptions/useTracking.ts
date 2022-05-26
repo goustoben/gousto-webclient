@@ -1,5 +1,6 @@
-import { actionTypes } from 'actions/actionTypes'
 import { useDispatch } from 'react-redux'
+
+import { actionTypes } from 'actions/actionTypes'
 
 type TrackRecipeAlternativeOptionsMenuOpen = (args: {
   recipeId: string

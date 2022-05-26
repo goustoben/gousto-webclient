@@ -1,4 +1,5 @@
 import Perfume from 'perfume.js'
+
 import {
   trackerVarName,
   PerformanceTracker,

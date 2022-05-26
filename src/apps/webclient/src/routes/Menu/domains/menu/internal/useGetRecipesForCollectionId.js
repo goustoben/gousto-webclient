@@ -1,16 +1,19 @@
 import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
+
 import Immutable from 'immutable'
+import { useSelector } from 'react-redux'
+
 import { getRecipesInCollection } from 'routes/Menu/selectors/collections'
 import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import { getInStockRecipes } from 'routes/Menu/selectors/recipeList'
 import { getCurrentMenuVariants, getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
+
+import { orderCollectionRecipesByCuisine } from '../../collections'
 import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
 import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
-import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
 import { getRecipeReferenceInjector } from './getRecipeReferenceInjector'
+import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
 import { useSelectedCuisines } from './useSelectedCuisines'
-import { orderCollectionRecipesByCuisine } from '../../collections'
 
 const getDietaryClaimsInCollection = (menuCollections, collectionId) =>
   menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)

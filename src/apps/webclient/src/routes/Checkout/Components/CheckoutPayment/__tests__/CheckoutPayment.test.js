@@ -1,14 +1,17 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { PaymentMethod } from 'config/signup'
 import { SubmitButton } from 'routes/Checkout/Components/SubmitButton'
+
+import { ErrorMessage } from '../../ErrorMessage'
 import { Checkout3DSModal } from '../Checkout3DSModal'
-import { CheckoutPayment } from '../CheckoutPayment'
 import { CheckoutCardDetails } from '../CheckoutCardDetails'
 import { CheckoutPayPalDetailsWrapper } from '../CheckoutPayPalDetails'
+import { CheckoutPayment } from '../CheckoutPayment'
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
-import { ErrorMessage } from '../../ErrorMessage'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

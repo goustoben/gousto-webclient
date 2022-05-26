@@ -1,10 +1,12 @@
 import { renderHook } from '@testing-library/react-hooks'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import { safeJestMock } from '_testing/mocks'
+import MockDate from 'mockdate'
+
+import * as useOptimizely from 'containers/OptimizelyRollouts/useOptimizely.hook'
 import { fetch } from 'utils/fetch'
 import logger from 'utils/logger'
-import MockDate from 'mockdate'
-import * as useOptimizely from 'containers/OptimizelyRollouts/useOptimizely.hook'
-import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+
 import { sendClientMetric, useSendClientMetric } from '../clientMetrics'
 
 jest.mock('utils/fetch', () => ({

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import { trackSignupWizardAction } from 'actions/signup'
+
 import { PersonaliseMenuStep } from './PersonaliseMenuStep'
 
 function mapStateToProps() {

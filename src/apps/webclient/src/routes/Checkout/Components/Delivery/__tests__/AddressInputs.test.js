@@ -1,7 +1,9 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { AddressInputs } from 'routes/Checkout/Components/Delivery/AddressInputs'
+
 import TextInput from 'Form/Input'
+import { shallow } from 'enzyme'
+
+import { AddressInputs } from 'routes/Checkout/Components/Delivery/AddressInputs'
 
 describe('AddressInputs', () => {
   let wrapper

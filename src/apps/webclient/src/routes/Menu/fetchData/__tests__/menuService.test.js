@@ -1,6 +1,6 @@
 import { getUserMenuVariant } from 'selectors/features'
-import menuFetchData from '../fetchData'
 
+import menuFetchData from '../fetchData'
 import { loadMenuServiceDataIfDeepLinked } from '../menuService'
 
 jest.mock('../fetchData')

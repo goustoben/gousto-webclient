@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
-import Immutable from 'immutable'
 import { LayoutContentWrapper, Segment, Button } from 'goustouicomponents'
+import Immutable from 'immutable'
+
 import { Details } from '../../Details/Details'
 import { DetailsCheckoutButton } from '../../Details/DetailsCheckoutButton'
 

@@ -1,13 +1,17 @@
-import PropTypes from 'prop-types'
 import React, { Fragment, useState } from 'react'
-import { boxTypes, getHeroDetails } from 'routes/BoxPrices/boxPricesConfig'
+
 import Loading from 'Loading'
+import PropTypes from 'prop-types'
+
 import { boxPricesClickTab } from 'actions/trackingKeys'
-import { BoxDescriptorsPropType } from './boxPricesPropTypes'
-import { BoxPricesTabs } from './BoxPricesTabs'
-import css from './BoxPrices.css'
-import { BoxPricesList } from './BoxPricesList'
+import { boxTypes, getHeroDetails } from 'routes/BoxPrices/boxPricesConfig'
+
 import { BoxPricesContent } from './BoxPricesContent'
+import { BoxPricesList } from './BoxPricesList'
+import { BoxPricesTabs } from './BoxPricesTabs'
+import { BoxDescriptorsPropType } from './boxPricesPropTypes'
+
+import css from './BoxPrices.css'
 
 const BoxPricesComponent = ({
   loading,

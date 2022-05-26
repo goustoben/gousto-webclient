@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { createGetNextTierPricePerPortion } from '../actionBarSelectors'
 
 describe('given createGetNextTierPricePerPortion is called', () => {

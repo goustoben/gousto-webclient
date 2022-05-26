@@ -1,11 +1,12 @@
-import globals from 'config/globals'
 import { push, replace } from 'react-router-redux'
 
-import * as windowUtils from 'utils/window'
+import globals from 'config/globals'
 import { canUseWindow } from 'utils/browserEnvironment'
+import * as windowUtils from 'utils/window'
+
 import { isServer } from '../../../server/utils/serverEnvironment'
-import redirectUtils, { redirect } from '../redirect'
 import { actionTypes } from '../actionTypes'
+import redirectUtils, { redirect } from '../redirect'
 
 jest.mock('react-router-redux')
 jest.mock('utils/browserEnvironment')

@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import moment from 'moment'
+
 import { CalendarSpan } from 'routes/Signup/Components/Calendar/CalendarSpan/CalendarSpan'
 
 jest.mock('moment', () => () => jest.requireActual('moment')('2020-01-15', 'YYYY-MM-DD'))

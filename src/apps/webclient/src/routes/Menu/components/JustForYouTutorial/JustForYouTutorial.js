@@ -1,13 +1,16 @@
 import React from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Portal } from 'Portal'
-import { Tutorial, Step } from 'Tutorial'
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
-import { getRecommendationShortName } from '../../selectors/collections'
+import { Portal } from 'components/Portal'
+import { Tutorial, Step } from 'components/Tutorial'
+
 import { CollectionSlug } from '../../domains/collections'
-import css from './JustForYouTutorial.css'
+import { getRecommendationShortName } from '../../selectors/collections'
 import { useShowJFYTutorial } from './useShowJFYTutorial'
+
+import css from './JustForYouTutorial.css'
 
 const tutorialName = 'just_for_you'
 

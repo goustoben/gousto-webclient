@@ -1,11 +1,13 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { EmailForm } from 'routes/Home/EmailForm'
+
 import Form from 'Form'
 import TextInput from 'Form/Input'
-import { CTA } from 'goustouicomponents'
 import { P } from 'Page/Elements'
+import { shallow } from 'enzyme'
+import { CTA } from 'goustouicomponents'
+
 import { newsletterSubscribe } from 'apis/customers'
+import { EmailForm } from 'routes/Home/EmailForm'
 
 let wrapper
 

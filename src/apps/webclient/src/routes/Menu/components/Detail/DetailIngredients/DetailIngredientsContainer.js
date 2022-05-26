@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import { getRecipeIngredientsProps } from '../../../selectors/recipe'
 import { DetailIngredients } from './DetailIngredients'
 

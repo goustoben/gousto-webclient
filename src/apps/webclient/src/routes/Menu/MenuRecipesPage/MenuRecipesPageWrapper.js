@@ -1,23 +1,25 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
-import { useDispatch, useSelector } from 'react-redux'
+
 import actions from 'actions'
-import { getUserId } from 'selectors/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import { loadOptimizelySDK } from 'actions/optimizely'
 import { getBasketOrderId, getNumPortions } from 'selectors/basket'
-import { useCurrentCollectionId } from '../domains/collections'
+import { getUserId } from 'selectors/user'
 
+import { useDoubleDeckerNav } from '../../../hooks/useDoubleDeckerNav'
 import { checkQueryParams } from '../actions/menuRecipeDetails'
-import { MenuRecipesPage } from './MenuRecipesPage'
-import { isMenuLoading, getMenuLoadingErrorMessage, getRecipeCount } from '../selectors/menu'
+import { useCurrentCollectionId } from '../domains/collections'
 import fetchData from '../fetchData'
+import { isMenuLoading, getMenuLoadingErrorMessage, getRecipeCount } from '../selectors/menu'
 import {
   isSignupReductionEnabled,
   shouldShowCommunicationPanel,
   shouldShowCapacityInfo,
 } from '../selectors/signupReduction'
+import { MenuRecipesPage } from './MenuRecipesPage'
 import { useHotjarIdentify } from './useHotjarIdentify'
-import { useDoubleDeckerNav } from '../../../hooks/useDoubleDeckerNav'
 
 const MenuRecipesPageWrapper = (ownProps) => {
   const {

@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
+
 import { getWhyGoustoConfig } from 'config/home'
+
 import css from './StepsGuide.css'
 
 class StepsGuide extends PureComponent {

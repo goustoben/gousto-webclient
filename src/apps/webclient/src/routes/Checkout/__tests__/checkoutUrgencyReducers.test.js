@@ -1,7 +1,7 @@
-import { checkoutUrgencyReducers } from '../checkoutUrgencyReducers'
 import { checkoutUrgencySetCurrentStatus } from '../checkoutActions'
-import { checkoutUrgencyStatuses } from '../checkoutUrgencyConfig'
 import { getCheckoutUrgencyCurrentStatus } from '../checkoutSelectors'
+import { checkoutUrgencyStatuses } from '../checkoutUrgencyConfig'
+import { checkoutUrgencyReducers } from '../checkoutUrgencyReducers'
 
 describe('checkoutUrgencyReducers', () => {
   const reducer = checkoutUrgencyReducers.checkoutUrgency

@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import { Button, Segment } from 'goustouicomponents'
+import PropTypes from 'prop-types'
 
 const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange, orderId }) => (
   <Button fill={false} width="full">

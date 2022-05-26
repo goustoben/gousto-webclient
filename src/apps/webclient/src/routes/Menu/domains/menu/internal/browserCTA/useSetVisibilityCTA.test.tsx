@@ -1,6 +1,8 @@
 import * as React from 'react'
+
 import { renderHook } from '@testing-library/react-hooks'
 import { Provider } from 'react-redux'
+
 import { createMockBasketStore } from '../../../basket/internal/testing/createMockBasketStore'
 import { useSetBrowserCTAVisibility } from './useSetVisibilityCTA'
 

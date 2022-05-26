@@ -1,11 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
-import DropdownInput from 'Form/Dropdown'
+import PropTypes from 'prop-types'
+
+import DropdownInput from 'components/Form/Dropdown'
+
 import { Calendar } from '../Calendar'
 import { SlotPicker } from '../SlotPicker'
-
 import { slotsPropType } from '../deliverySlotPropTypes'
+
 import css from '../DeliverySlot.css'
 
 const DatePicker = (props) => {

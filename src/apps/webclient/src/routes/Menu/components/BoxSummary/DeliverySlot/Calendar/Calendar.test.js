@@ -1,11 +1,13 @@
-import { shallow } from 'enzyme'
 import React from 'react'
+
+import { shallow } from 'enzyme'
 import sinon from 'sinon'
 
-import css from './Calendar.css'
 import { Calendar } from './Calendar'
-import { Title } from './Title'
 import { Day } from './Day'
+import { Title } from './Title'
+
+import css from './Calendar.css'
 
 const buildDate = (date, disabled = false) => ({
   date,

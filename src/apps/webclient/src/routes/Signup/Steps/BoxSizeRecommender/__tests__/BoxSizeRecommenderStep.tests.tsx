@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { mount, ReactWrapper } from 'enzyme'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import * as Redux from 'react-redux'
 import configureMockStore from 'redux-mock-store'
-import Immutable from 'immutable'
+
 import { BoxSizeRecommenderStep } from 'routes/Signup/Steps/BoxSizeRecommender'
 
 const mockStore = configureMockStore()

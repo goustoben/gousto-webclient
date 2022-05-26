@@ -1,4 +1,5 @@
 import { canUseWindow } from 'utils/browserEnvironment'
+
 import { isServer } from '../../../server/utils/serverEnvironment'
 import { encode, decode } from '../cookieHelper2'
 

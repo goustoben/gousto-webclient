@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { render, RenderResult } from '@testing-library/react'
+
 import { ActionBarText } from '../ActionBarText'
 
 describe('ActionBarText', () => {

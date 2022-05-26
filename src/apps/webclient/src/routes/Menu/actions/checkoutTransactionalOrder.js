@@ -1,11 +1,12 @@
-import logger from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
-import statusActions from 'actions/status'
 import { trackOrder } from 'actions/order'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
+import statusActions from 'actions/status'
 import { getAccessToken, getAuthUserId, getIsAuthenticated } from 'selectors/auth'
-import { getSlotForBoxSummaryDeliveryDays, getOrderV2 } from '../selectors/order'
+import logger from 'utils/logger'
+
 import { createOrder } from '../apis/orderV2'
+import { getSlotForBoxSummaryDeliveryDays, getOrderV2 } from '../selectors/order'
 
 const { pending, error } = statusActions
 

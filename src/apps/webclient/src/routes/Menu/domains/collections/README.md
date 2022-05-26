@@ -7,7 +7,7 @@ If you're using this, don't import from any file other than `index.js`.
 ## Usage
 
 ```ts
-import { useCollections } from 'Menu/domains/collections'
+import { useCollections } from 'routes/Menu/domains/collections'
 ```
 
 ### Getting current collection

@@ -1,7 +1,8 @@
 import React, { ButtonHTMLAttributes } from 'react'
-import { useSelector, RootStateOrAny } from 'react-redux'
 
 import { Button, ButtonColorVariant } from '@gousto-internal/citrus-react'
+import { useSelector, RootStateOrAny } from 'react-redux'
+
 import { PriceAndDiscountTip } from '../PriceAndDiscountTip'
 
 import css from './ExpandBoxSummaryButton.css'

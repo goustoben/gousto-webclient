@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { DeliveryStep } from '../Delivery'
 
 describe('DeliveryStep', () => {

@@ -1,7 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Immutable from 'immutable'
+
 import classnames from 'classnames'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 
 import css from './RecipeMicronutrients.css'
 

@@ -1,10 +1,12 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
 
-import css from '../Detail.css'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { Allergens } from '../Allergens/Allergens'
 import { IngredientsList } from '../IngredientsList/IngredientsList'
+
+import css from '../Detail.css'
 
 const DetailAllergenIngredients = ({ allergens, ingredients }) => {
   if (!ingredients.size) {

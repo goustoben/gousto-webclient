@@ -1,7 +1,10 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
+
 import { isAvailableRecipeList } from 'utils/recipe'
+
 import { RecipeList } from '../../Details/RecipeList'
 
 jest.mock('goustouicomponents', () => ({

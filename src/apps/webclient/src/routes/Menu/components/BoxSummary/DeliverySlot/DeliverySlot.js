@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import { Alert, Button, Heading, LayoutContentWrapper, Segment } from 'goustouicomponents'
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { reminder } from 'config/freeDelivery'
 import { getDeliveryDaysAndSlots } from 'utils/deliverySlotHelper'
+
 import { DatePickerContainer } from './DatePicker'
 import { DeliverySupportingText } from './DeliverySupportingText'
+
 import css from './DeliverySlot.css'
 
 class DeliverySlot extends React.PureComponent {

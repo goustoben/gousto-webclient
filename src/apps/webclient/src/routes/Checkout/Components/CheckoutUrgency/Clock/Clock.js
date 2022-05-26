@@ -1,7 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
 import { formatSeconds } from '../checkoutUrgencyUtils'
+
 import css from './Clock.css'
 
 export const Clock = ({ seconds, total, isCritical }) => {

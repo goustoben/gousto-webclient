@@ -1,9 +1,10 @@
-import { createSelector } from 'reselect'
 import Immutable from 'immutable'
+import { createSelector } from 'reselect'
 
-import { getStock } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
+import { getStock } from 'selectors/root'
 import { isRecipeInBasket } from 'utils/menu'
+
 import { getCurrentMenuRecipes } from './menu'
 import { isOutOfStock } from './recipe'
 import { getCurrentMenuVariants } from './variants'

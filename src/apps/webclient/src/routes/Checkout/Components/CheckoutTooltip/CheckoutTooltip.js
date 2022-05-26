@@ -1,6 +1,8 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
 import RCTooltip from 'rc-tooltip'
+
 import css from './CheckoutTooltip.css'
 
 const CheckoutTooltip = ({ version, placement, trigger, children }) => (

@@ -1,13 +1,15 @@
-import * as browserEnv from 'utils/browserEnvironment'
 import {
   GeneratedEndpointTestCase,
   generateEndpointTestCases,
 } from '_testing/generate-endpoint-test-cases'
+
 import { ServiceName } from 'config/service-environment/service-environment.types'
-import { getEnvConfig } from 'utils/processEnv'
+import * as browserEnv from 'utils/browserEnvironment'
 import { getClientEnvironment, getClientDomain } from 'utils/configFromWindow'
-import * as serviceUtils from '../service-environment/service-manifest'
+import { getEnvConfig } from 'utils/processEnv'
+
 import endpoint from '../endpoint'
+import * as serviceUtils from '../service-environment/service-manifest'
 
 jest.mock('utils/processEnv', () => ({
   ...jest.requireActual('utils/processEnv'),

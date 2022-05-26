@@ -1,9 +1,12 @@
 import React from 'react'
-import Overlay from 'Overlay'
+
+import Overlay from 'components/Overlay'
 import { MOBILE_VIEW } from 'utils/view'
+
 import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
-import css from './BoxSummaryOverlayMobile.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
+
+import css from './BoxSummaryOverlayMobile.css'
 
 const BoxSummaryOverlayMobile = ({
   onCloseClick,

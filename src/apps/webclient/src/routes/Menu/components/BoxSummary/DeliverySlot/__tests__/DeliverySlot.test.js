@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+
 import { DeliverySlot } from '../DeliverySlot'
 
 describe('given the DeliverySlot is rendered', () => {

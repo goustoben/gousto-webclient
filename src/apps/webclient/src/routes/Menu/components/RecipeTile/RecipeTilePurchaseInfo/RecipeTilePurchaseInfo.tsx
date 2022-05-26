@@ -1,13 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
+
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useRecipeId, useRecipeIsFineDineIn } from 'routes/Menu/context/recipeContext'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
+
 import { AddRecipeButton } from '../AddRecipeButton'
-import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
-import css from './RecipeTilePurchaseInfo.css'
 import { useGetSurchargeForRecipeId } from '../Hooks'
+import { SwapAlternativeOptions, SwapAlternativeOptionsMobile } from '../SwapAlternativeOptions'
+
+import css from './RecipeTilePurchaseInfo.css'
 
 type RecipeTilePurchaseInfoProps = {
   originalId: string

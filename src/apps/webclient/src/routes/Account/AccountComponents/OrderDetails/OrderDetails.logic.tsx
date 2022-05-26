@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   Box,
   Text,
@@ -12,6 +13,7 @@ import {
   GridDisplay,
   AspectRatio,
 } from '@gousto-internal/citrus-react'
+
 import { formatPrice } from 'utils/format'
 import timeFormat from 'utils/timeFormat'
 

@@ -1,8 +1,10 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
+
 import { Benefits } from '../Benefits'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

@@ -1,4 +1,5 @@
 import { getUserMenuVariant } from 'selectors/features'
+
 import menuFetchData from './fetchData'
 
 export const loadMenuServiceDataIfDeepLinked = (isSignUpPage) => async (dispatch, getState) => {

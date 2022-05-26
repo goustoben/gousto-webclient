@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useIsActionBarRedesignEnabled } from 'routes/Menu/hooks/useIsActionBarRedesignEnabled'
 
 export const withIsActionBarRedesignEnabled = (Component) => {

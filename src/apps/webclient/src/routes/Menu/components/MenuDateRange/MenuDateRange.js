@@ -1,7 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
 import { useDoubleDeckerNav } from 'hooks/useDoubleDeckerNav'
+
 import css from './MenuDateRange.css'
 
 export const MenuDateRange = ({ variant, text }) => {

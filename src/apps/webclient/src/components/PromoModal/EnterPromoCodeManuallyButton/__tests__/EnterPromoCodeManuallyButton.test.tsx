@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { render, fireEvent, RenderResult } from '@testing-library/react'
+
 import { EnterPromoCodeManuallyButton } from '../EnterPromoCodeManuallyButton'
 
 const TEXT = 'I have a discount code to enter'

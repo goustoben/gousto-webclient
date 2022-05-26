@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+
 import PropTypes from 'prop-types'
+
 import { clickClaimDiscountBar } from 'actions/trackingKeys'
+
 import { DiscountBar } from './DiscountBar/DiscountBar'
 
 export class PromoBanner extends Component {

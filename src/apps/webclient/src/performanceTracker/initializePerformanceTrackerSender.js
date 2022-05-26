@@ -1,5 +1,6 @@
-import { recordPerformanceMetric } from 'actions/trackingKeys'
 import { trackUTMAndPromoCode } from 'actions/tracking'
+import { recordPerformanceMetric } from 'actions/trackingKeys'
+
 import { trackerVarName, createTrackerInitializePerfume } from './performanceTracker'
 
 const sendPerformanceMetric = (store, metricName, value, pathname) => {

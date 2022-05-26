@@ -1,10 +1,14 @@
 import React from 'react'
-import Immutable from 'immutable'
-import { shallow } from 'enzyme'
+
 import actions from 'actions'
+import { shallow } from 'enzyme'
 import { StepIndicator } from 'goustouicomponents'
+import Immutable from 'immutable'
+
 import { Signup } from 'routes/Signup/Signup'
+
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
+
 import css from '../Signup.css'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
+
 import { filtersCollectionChange } from 'actions/filters'
+
 import { useDisplayedCollections } from './useDisplayedCollections'
 import { useLocation } from './useLocation'
 

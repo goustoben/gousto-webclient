@@ -1,11 +1,12 @@
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
-import * as trackingKeys from '../../../../actions/trackingKeys'
-import { actionTypes } from '../../../../actions/actionTypes'
-import * as menuRecipeDetailsActions from '../menuRecipeDetails'
-import * as recipeListSelectors from '../../selectors/recipeList'
-import { wellformedMenuService, wellformedRecipe } from '../../selectors/__tests__/menuService.test'
+
 import { safeJestMock } from '../../../../_testing/mocks'
+import { actionTypes } from '../../../../actions/actionTypes'
+import * as trackingKeys from '../../../../actions/trackingKeys'
+import { wellformedMenuService, wellformedRecipe } from '../../selectors/__tests__/menuService.test'
+import * as recipeListSelectors from '../../selectors/recipeList'
+import * as menuRecipeDetailsActions from '../menuRecipeDetails'
 
 jest.mock('react-router-redux', () => ({
   push: jest.fn(),

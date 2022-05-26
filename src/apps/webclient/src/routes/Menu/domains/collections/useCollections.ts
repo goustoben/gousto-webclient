@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux'
+
 import { getMenuCollections } from '../../selectors/collections'
-import { useDisplayedCollections } from './internal/useDisplayedCollections'
-import { useCurrentCollection } from './internal/useCurrentCollection'
-import { useChangeCollectionById } from './internal/useChangeCollectionById'
 import { MenuCollection } from '../../types'
+import { useChangeCollectionById } from './internal/useChangeCollectionById'
+import { useCurrentCollection } from './internal/useCurrentCollection'
+import { useDisplayedCollections } from './internal/useDisplayedCollections'
 
 export const useAllCollections = () => useSelector(getMenuCollections)
 

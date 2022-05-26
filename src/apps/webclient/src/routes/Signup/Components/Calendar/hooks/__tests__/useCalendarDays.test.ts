@@ -1,6 +1,7 @@
+import { renderHook } from '@testing-library/react-hooks'
+
 import { useCalendarDays } from 'routes/Signup/Components/Calendar/hooks/useCalendarDays'
 import { DeliveryDay } from 'routes/Signup/Components/Calendar/models/DeliveryDay'
-import { renderHook } from '@testing-library/react-hooks'
 
 describe('useCalendarDays hook', () => {
   test('should return correct amount of calendar days', () => {

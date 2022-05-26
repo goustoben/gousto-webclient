@@ -1,5 +1,6 @@
-import Immutable from 'immutable'
 import { renderHook } from '@testing-library/react-hooks'
+import Immutable from 'immutable'
+
 import * as UseDisplayedCollections from '../../domains/collections/internal/useDisplayedCollections'
 import { createCollectionFromDefaultValues } from '../../domains/collections/internal/utils'
 import { useDietaryCollections } from './useDietaryCollections'

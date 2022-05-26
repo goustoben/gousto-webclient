@@ -1,8 +1,11 @@
 import React from 'react'
+
 import { useMenu } from 'routes/Menu/domains/menu'
+
 import { AlternativeOptionItem } from '../AlternativeOptionItem'
-import css from './RecipeAlternativeOptions.css'
 import { useTrackVariantListDisplay } from './useTracking'
+
+import css from './RecipeAlternativeOptions.css'
 
 type RecipeAlternativeOptionsProps = {
   recipeId: string

@@ -1,7 +1,9 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import ReactDOM from 'react-dom'
+
 import { mount } from 'enzyme'
+import ReactDOM from 'react-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { RecipesInBasketProgressPresentation } from '../RecipesInBasketProgress.presentation'
 
 jest.mock('react-redux', () => ({

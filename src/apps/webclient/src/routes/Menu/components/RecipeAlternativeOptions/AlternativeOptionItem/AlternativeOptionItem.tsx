@@ -1,7 +1,10 @@
 import React from 'react'
-import { InputRadio } from 'goustouicomponents'
+
 import classnames from 'classnames'
+import { InputRadio } from 'goustouicomponents'
+
 import { ItemContent } from './ItemContent'
+
 import css from './AlternativeOptionItem.css'
 
 type AlternativeOptionItemProps = {

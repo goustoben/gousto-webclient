@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import { Domain } from 'utils/types/windowLocation'
+
 import { Nullable } from '../../types'
 
 export type ServiceVersion = {

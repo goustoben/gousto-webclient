@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+
 import { getCheckoutUrgencyCurrentStatus } from '../checkoutSelectors'
 
 describe('checkoutSelectors', () => {

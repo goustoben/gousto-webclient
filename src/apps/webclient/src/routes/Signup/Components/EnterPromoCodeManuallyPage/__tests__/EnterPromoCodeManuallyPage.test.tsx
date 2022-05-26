@@ -1,16 +1,19 @@
 import React from 'react'
+
+import { render, RenderResult, screen, fireEvent } from '@testing-library/react'
 import Immutable from 'immutable'
 import { Provider } from 'react-redux'
-import { render, RenderResult, screen, fireEvent } from '@testing-library/react'
 import configureMockStore from 'redux-mock-store'
-import { promo } from 'config/home'
+
 import { clickClaimDiscountPopup } from 'actions/trackingKeys'
-import { proceedWithPromoCode } from '../enterPromoCodeManuallyUtils'
+import { promo } from 'config/home'
+
 import {
   EnterPromoCodeManuallyPage,
   SuccessSection,
   FailureSection,
 } from '../EnterPromoCodeManuallyPage'
+import { proceedWithPromoCode } from '../enterPromoCodeManuallyUtils'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),

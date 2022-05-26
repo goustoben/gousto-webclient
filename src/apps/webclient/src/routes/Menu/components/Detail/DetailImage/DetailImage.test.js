@@ -1,9 +1,12 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import GoustoImage from 'Image'
-import { DetailImage as Image } from './DetailImage'
+
+import GoustoImage from 'components/Image'
+
 import { SoldOutOverlay } from '../../Recipe/SoldOutOverlay'
+import { DetailImage as Image } from './DetailImage'
 
 describe('<Image />', () => {
   let wrapper

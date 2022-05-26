@@ -1,8 +1,11 @@
 import React from 'react'
+
 import classnames from 'classnames'
+
 import { RecipeAttribute } from './RecipeAttribute'
-import css from './AttributeGrid.css'
 import { useAttributes } from './useAttributes'
+
+import css from './AttributeGrid.css'
 
 type AttributeGridProps = {
   maxNoAttributes?: number

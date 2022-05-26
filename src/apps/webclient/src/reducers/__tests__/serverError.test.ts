@@ -1,4 +1,5 @@
 import { canUseWindow } from 'utils/browserEnvironment'
+
 import { serverErrorReducers } from '../serverError'
 
 jest.mock('utils/browserEnvironment')

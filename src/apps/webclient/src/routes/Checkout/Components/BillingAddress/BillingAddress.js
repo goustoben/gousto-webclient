@@ -1,6 +1,8 @@
-import { Box, Text, Space, FontFamily, Checkbox, Color } from '@gousto-internal/citrus-react'
 import React from 'react'
+
+import { Box, Text, Space, FontFamily, Checkbox, Color } from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
+
 import { BillingAddressContainer } from './AddressContainer'
 
 export class BillingAddress extends React.PureComponent {

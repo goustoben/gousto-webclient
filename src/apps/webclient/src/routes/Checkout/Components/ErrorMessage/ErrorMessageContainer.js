@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
+
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
-import { ErrorMessage } from './ErrorMessage'
+import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
+
 import { isSubmitting } from '../../utils/state'
+import { ErrorMessage } from './ErrorMessage'
 
 const getErrorFromCollection = (errorsMap) => errorsMap.findEntry((value) => !!value)
 

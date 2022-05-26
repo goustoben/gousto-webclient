@@ -1,6 +1,9 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
+
 import { TabButton } from './TabButton'
+
 import css from './BoxPricesTabs.css'
 
 export const BoxPricesTabs = ({ labels, activeIndex, setActiveIndex }) => (

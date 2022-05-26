@@ -9,8 +9,8 @@ import {
 } from 'utils/configFromWindow'
 import { getEnvironment } from 'utils/isomorphicEnvironment'
 
-import * as dd from '../initialize'
 import { DATADOG_ENABLED_ENVS, DATADOG_CLIENT_SAMPLE_RATE } from '../config'
+import * as dd from '../initialize'
 
 jest.mock('@datadog/browser-logs', () => ({
   datadogLogs: {

@@ -1,14 +1,16 @@
 import Immutable from 'immutable'
-import * as basketUtils from 'utils/basket'
+
 import * as loggingmanagerActions from 'actions/loggingmanager'
+import * as basketUtils from 'utils/basket'
+
+import { safeJestMock, multiReturnMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
+import * as clientMetrics from '../../apis/clientMetrics'
+import * as menuSelectors from '../../selectors/menu'
 import * as basketActions from '../basketRecipes'
 import * as menuCheckoutClickActions from '../menuCheckoutClick'
-import { safeJestMock, multiReturnMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
-import * as menuSelectors from '../../selectors/menu'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
-import * as clientMetrics from '../../apis/clientMetrics'
 
 jest.mock('actions/loggingmanager')
 

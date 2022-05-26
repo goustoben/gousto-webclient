@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
+import PropTypes from 'prop-types'
+
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { formContainer } from '../../Components/formContainer'
 
 import { AboutYouContainer, addInitialValues } from '../../Components/AboutYou'
+import { formContainer } from '../../Components/formContainer'
 
 const sectionName = 'account'
 

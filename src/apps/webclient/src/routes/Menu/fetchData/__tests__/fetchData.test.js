@@ -1,27 +1,26 @@
+import actions from 'actions'
 import Immutable from 'immutable'
 import moment from 'moment'
 import now from 'performance-now'
 
-import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import * as boxSummaryActions from 'actions/boxSummary'
+import { menuLoadComplete } from 'actions/menu'
 import { initialState as initialAuthState } from 'reducers/auth'
 import { initialState as initialBasketState } from 'reducers/basket'
-import { initialState as initialRequestState } from 'reducers/request'
 import { initialState as initialFeaturesState } from 'reducers/features'
 import { menuInitialState } from 'reducers/menu'
+import { initialState as initialRequestState } from 'reducers/request'
 import { defaultState as defaultUserState } from 'reducers/user'
-import logger from 'utils/logger'
-import { getLandingDay } from 'utils/deliveries'
-import { menuLoadComplete } from 'actions/menu'
-import * as boxSummaryActions from 'actions/boxSummary'
 import { getUserMenuVariant } from 'selectors/features'
-import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
-import * as basketRecipesActions from '../../actions/basketRecipes'
+import { getLandingDay } from 'utils/deliveries'
+import logger from 'utils/logger'
+
 import { safeJestMock } from '../../../../_testing/mocks'
+import * as basketRecipesActions from '../../actions/basketRecipes'
 import * as clientMetrics from '../../apis/clientMetrics'
-
 import fetchData from '../fetchData'
-
+import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
 import { setSlotFromIds, getPreselectedCollectionName, selectCollection } from '../utils'
 
 jest.mock('../utils')

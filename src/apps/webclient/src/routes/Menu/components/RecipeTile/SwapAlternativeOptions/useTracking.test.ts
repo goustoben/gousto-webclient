@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { useTracking } from '.'
+
+import { useTracking } from './useTracking'
 
 const dispatch = jest.fn()
 

@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 
 export const menuPropTypes = {
   basketNumPortionChange: PropTypes.func.isRequired,

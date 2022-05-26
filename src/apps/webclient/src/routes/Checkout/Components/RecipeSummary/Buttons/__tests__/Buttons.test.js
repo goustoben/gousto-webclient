@@ -1,7 +1,8 @@
+import React from 'react'
+
+import { shallow, mount } from 'enzyme'
 import sinon from 'sinon'
 
-import React from 'react'
-import { shallow, mount } from 'enzyme'
 import { Buttons } from 'routes/Checkout/Components/RecipeSummary/Buttons/Buttons'
 
 describe('<Buttons />', () => {

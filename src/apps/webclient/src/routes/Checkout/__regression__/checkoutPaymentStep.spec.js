@@ -1,3 +1,4 @@
+import { setMocks, setPaymentSpecificMocks } from './pageUtils/checkout/checkoutMocks'
 import {
   goToPayment,
   fillAllIframe,
@@ -5,7 +6,6 @@ import {
   getPaymentSyncErrors,
   clearAndFillNumberIframe,
 } from './pageUtils/checkout/checkoutPayment'
-import { setMocks, setPaymentSpecificMocks } from './pageUtils/checkout/checkoutMocks'
 
 const CARDNAME_ERROR = { cardName: 'Card name is required' }
 

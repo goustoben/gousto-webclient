@@ -1,10 +1,14 @@
 import React, { useState, useRef } from 'react'
-import PropTypes from 'prop-types'
+
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
+
 import { EscapeKeyPressed } from 'utils/DOMEvents'
+
 import { RecipeAlternativeOptions } from '../../RecipeAlternativeOptions'
 import { useClickOutside } from './useClickOutside'
 import { useTracking } from './useTracking'
+
 import css from './SwapAlternativeOptions.css'
 
 export const SwapAlternativeOptions: React.FC<{

@@ -1,12 +1,14 @@
+import actions from 'actions'
 import { connect } from 'react-redux'
 import { isValid } from 'redux-form'
-import actions from 'actions'
+
 import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed, validatePassword } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { getIsGoustoOnDemandEnabled } from 'selectors/features'
-import { accountFormName, getPasswordValue } from 'selectors/checkout'
 import * as stateUtils from 'routes/Checkout/utils/state'
+import { accountFormName, getPasswordValue } from 'selectors/checkout'
+import { getIsGoustoOnDemandEnabled } from 'selectors/features'
+
 import { AboutYou } from './AboutYou'
 
 export function mapStateToProps(sectionName) {

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+
 import Svg from 'Svg'
+import PropTypes from 'prop-types'
+
 import { onEnter } from 'utils/accessibility'
 
 import css from './PayPalConfirmation.css'

@@ -1,5 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
+import PropTypes from 'prop-types'
+
 import css from './Dots.css'
 
 const Dots = ({ steps, stepNo }) => (

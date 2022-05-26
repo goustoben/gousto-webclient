@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
+
 import Immutable from 'immutable'
+
 import { MenuCollection } from 'routes/Menu/types'
+
 import { useDisplayedCollections } from '../../domains/collections'
 
 export const useDietaryCollections = () => {

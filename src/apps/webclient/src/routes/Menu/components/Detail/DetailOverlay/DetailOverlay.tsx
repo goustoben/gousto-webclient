@@ -1,24 +1,25 @@
 import React, { useCallback, useEffect } from 'react'
+
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSurcharge } from 'utils/recipe'
-import { getFeaturedImage, getRangeImages } from 'utils/image'
-import Modal from 'Modal'
 
+import Modal from 'components/Modal'
+import { getFeaturedImage, getRangeImages } from 'utils/image'
+import { getSurcharge } from 'utils/recipe'
+
+import { getNumPortions } from '../../../../../selectors/basket'
+import { getBrowserType } from '../../../../../selectors/browser'
+import { getRecipePosition } from '../../../../../selectors/collections'
+import { getRecipes } from '../../../../../selectors/root'
+import { EscapeKeyPressed } from '../../../../../utils/DOMEvents'
+import { closeRecipeDetails } from '../../../actions/closeRecipeDetails'
+import { RecipeContextProvider } from '../../../context/recipeContext'
+import { RecipeReferenceProvider } from '../../../context/recipeReferenceContext'
 import {
   getMenuRecipeIdForDetails,
   getMenuRecipeReferenceForDetails,
 } from '../../../selectors/menuRecipeDetails'
-import { getBrowserType } from '../../../../../selectors/browser'
-import { getRecipePosition } from '../../../../../selectors/collections'
-import { getNumPortions } from '../../../../../selectors/basket'
-import { getRecipes } from '../../../../../selectors/root'
-
 import { DetailContainer } from '../DetailContainer'
-import { EscapeKeyPressed } from '../../../../../utils/DOMEvents'
-import { RecipeContextProvider } from '../../../context/recipeContext'
-import { RecipeReferenceProvider } from '../../../context/recipeReferenceContext'
-import { closeRecipeDetails } from '../../../actions/closeRecipeDetails'
 
 interface DetailOverlayProps {
   showOverlay?: boolean

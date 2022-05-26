@@ -1,12 +1,15 @@
 import React from 'react'
+
+import { shallow } from 'enzyme'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { shallow } from 'enzyme'
-import { createState } from 'routes/Menu/selectors/__mocks__/order.mock'
+
 import * as Menu from 'actions/menu'
-import { MenuSidesModalContainer } from '../MenuSidesModalContainer'
-import * as SidesActions from '../../actions/sides'
+import { createState } from 'routes/Menu/selectors/__mocks__/order.mock'
+
 import * as MenuSidesCheckoutClick from '../../actions/menuSidesCheckoutClick'
+import * as SidesActions from '../../actions/sides'
+import { MenuSidesModalContainer } from '../MenuSidesModalContainer'
 
 describe('<MenuSidesModalContainer/>', () => {
   let wrapper

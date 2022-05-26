@@ -1,6 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { Heading6, Text, Space } from '@gousto-internal/citrus-react'
+import PropTypes from 'prop-types'
 
 export const SectionHeader = ({ title, subtitle }) => (
   <>

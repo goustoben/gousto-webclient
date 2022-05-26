@@ -1,8 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
-import { CheckoutFrame } from '../CheckoutFrame'
+import PropTypes from 'prop-types'
+
 import { CheckoutAddress } from '../CheckoutAddress'
+import { CheckoutFrame } from '../CheckoutFrame'
+
 import css from './CheckoutCardDetails.css'
 
 export const CheckoutCardDetails = (props) => {

@@ -1,6 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
-import { clickMerchandisingBanner } from 'actions/trackingKeys'
 import { changeCollectionById } from 'actions/filters'
+import { clickMerchandisingBanner } from 'actions/trackingKeys'
+
 import { getCurrentCollectionId } from '../selectors/collections'
 
 const mechandisingBannerClickTracking = (sourceCollectionId, targetCollectionId) => ({

@@ -1,6 +1,8 @@
-import { getSnowplowDomainUserId } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { useEffect } from 'react'
+
 import { useSelector } from 'react-redux'
+
+import { getSnowplowDomainUserId } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { getAuthUserId } from 'selectors/auth'
 import { identifyHotjarUser } from 'utils/hotjarUtils'
 import logger from 'utils/logger'

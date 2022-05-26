@@ -1,6 +1,9 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react'
+
 import { usePrevious } from 'react-use'
+
 import { useBasket, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
+
 import css from './CheckoutCounter.css'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

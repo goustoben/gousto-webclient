@@ -1,19 +1,23 @@
-import { Box, Display, Link, Text, FontFamily } from '@gousto-internal/citrus-react'
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import Immutable from 'immutable'
-import { Field, FormSection } from 'redux-form'
+
+import { Box, Display, Link, Text, FontFamily } from '@gousto-internal/citrus-react'
 import { ReduxFormInput } from 'Form/ReduxFormInput'
-import { onEnter } from 'utils/accessibility'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import { Field, FormSection } from 'redux-form'
+
 import { checkoutClickContinueToDelivery, checkoutClickPrivacyPolicy } from 'actions/trackingKeys'
-import { ErrorMessage } from '../ErrorMessage'
-import { SectionHeader } from '../SectionHeader'
+import { onEnter } from 'utils/accessibility'
+
 import { CheckoutButton } from '../CheckoutButton'
+import { ErrorMessage } from '../ErrorMessage'
 import { PasswordCriteria } from '../PasswordCriteria'
+import { SectionHeader } from '../SectionHeader'
 import { PasswordField } from './PasswordField'
 import { fieldsConfig } from './fieldsConfig'
-import css from './AboutYou.css'
+
 import checkoutCss from '../../Checkout.css'
+import css from './AboutYou.css'
 
 class AboutYou extends PureComponent {
   constructor(props) {

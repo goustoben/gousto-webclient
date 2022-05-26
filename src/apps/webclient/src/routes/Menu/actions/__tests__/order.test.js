@@ -1,20 +1,20 @@
 import Immutable from 'immutable'
-
-import { fetchOrder, updateOrderAddress } from 'apis/orders'
-import actionStatus from 'actions/status'
-import * as deliveriesUtils from 'utils/deliveries'
-import { orderConfirmationRedirect } from 'actions/orderConfirmation'
-import { trackOrder } from 'actions/order'
-import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
 import { actionTypes } from 'src/actions/actionTypes'
-import * as orderV2 from '../../apis/orderV2'
-import { saveUserOrder, updateUserOrder } from '../../apis/core'
-import * as orderSelectors from '../../selectors/order'
-import { orderAssignToUser, sendUpdateOrder } from '../order'
-import * as basketSelectors from '../../../../selectors/basket'
-import * as SidesActions from '../sides'
+
+import { trackOrder } from 'actions/order'
+import { orderConfirmationRedirect } from 'actions/orderConfirmation'
+import actionStatus from 'actions/status'
+import { fetchOrder, updateOrderAddress } from 'apis/orders'
+import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
+import * as deliveriesUtils from 'utils/deliveries'
 
 import { safeJestMock } from '../../../../_testing/mocks'
+import * as basketSelectors from '../../../../selectors/basket'
+import { saveUserOrder, updateUserOrder } from '../../apis/core'
+import * as orderV2 from '../../apis/orderV2'
+import * as orderSelectors from '../../selectors/order'
+import { orderAssignToUser, sendUpdateOrder } from '../order'
+import * as SidesActions from '../sides'
 
 jest.mock('../../apis/core')
 jest.mock('apis/orders')

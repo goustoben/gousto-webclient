@@ -2,11 +2,11 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+
 import * as basketUtils from 'utils/basket'
 
-import BoxSummary from './BoxSummary'
-
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
+import BoxSummary from './BoxSummary'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
 

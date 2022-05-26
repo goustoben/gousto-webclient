@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import classNames from 'classnames'
 import { Loader } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import css from './CheckoutButton.css'
 
 const CheckoutButton = ({

@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import classnames from 'classnames'
 import moment from 'moment'
+import PropTypes from 'prop-types'
+
 import config from 'config/menu'
+
+import { MenuDateRangeContainer } from '../MenuDateRange'
 import { DeliveryInfo } from './DeliveryInfo'
 import InfoToggle from './InfoToggle'
-import { MenuDateRangeContainer } from '../MenuDateRange'
+
 import css from './SubHeader.css'
 
 const propTypes = {

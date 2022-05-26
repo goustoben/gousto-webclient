@@ -1,7 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { CTA, Heading } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import typography from 'design-language/typography.module.css'
+
 import css from './PricePerServing.module.css'
 
 const PricePerServing = ({ portion, image, cost, onClick }) => {

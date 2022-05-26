@@ -1,4 +1,5 @@
 import { fetch } from 'utils/fetch'
+
 import { saveUserOrder, updateUserOrder } from '../core'
 
 const mockFetchResult = { data: [1, 2, 3] }

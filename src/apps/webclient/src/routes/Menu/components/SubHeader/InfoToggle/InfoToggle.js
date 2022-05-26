@@ -1,6 +1,8 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import { Tooltip } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import css from './InfoToggle.css'
 
 const propTypes = {

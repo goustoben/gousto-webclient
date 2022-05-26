@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
-import { getCurrentBoxSummaryView } from 'utils/boxSummary'
+
 import { getBasketDate, getBasketOrderId, getNumPortions, getBasketRecipes } from 'selectors/basket'
+import { getCurrentBoxSummaryView } from 'utils/boxSummary'
+
 import { BoxSummaryContent } from './BoxSummaryContent'
 
 function mapStateToProps(state) {

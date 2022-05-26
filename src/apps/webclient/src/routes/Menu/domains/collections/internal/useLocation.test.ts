@@ -1,4 +1,5 @@
 import { RootStateOrAny, useSelector } from 'react-redux'
+
 import { useLocation } from './useLocation'
 
 jest.mock('react-redux', () => ({

@@ -1,9 +1,11 @@
-import { createSelector } from 'reselect'
 import moment from 'moment'
+import { createSelector } from 'reselect'
+
 import { actionTypes } from 'actions/actionTypes'
-import { getRecipes, getMenuRecipeIds } from 'selectors/root'
 import { getNumPortions, getBasketMenuId, getBasketRecipes } from 'selectors/basket'
 import { getMenuLimits } from 'selectors/menu'
+import { getRecipes, getMenuRecipeIds } from 'selectors/root'
+
 import { getMenuCategoryIdForDetails } from './menuRecipeDetails'
 
 export const getMenuLoadingErrorMessage = (state) => state.menu.get('menuLoadingErrorMessage')

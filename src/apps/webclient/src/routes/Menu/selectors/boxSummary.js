@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
+
 import { getIsAuthenticated } from 'selectors/auth'
-import { getUserOpenOrders, getUserSubscriptionState } from 'selectors/user'
 import { getBoxSummaryDeliveryDays } from 'selectors/root'
+import { getUserOpenOrders, getUserSubscriptionState } from 'selectors/user'
 
 const isOneOffSlotActiveForUser = ({ daySlot, userSubscriptionState }) => {
   switch (userSubscriptionState) {

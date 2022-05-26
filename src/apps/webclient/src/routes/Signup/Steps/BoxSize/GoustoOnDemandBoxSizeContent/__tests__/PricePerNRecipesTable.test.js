@@ -1,6 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import numPersonsToBoxDescriptors from 'routes/BoxPrices/__tests__/__mocks__/numPersonsToBoxDescriptors.json'
+
 import { PricePerNRecipesTable } from '../PricePerNRecipesTable'
 
 describe('PricePerNRecipesTable', () => {

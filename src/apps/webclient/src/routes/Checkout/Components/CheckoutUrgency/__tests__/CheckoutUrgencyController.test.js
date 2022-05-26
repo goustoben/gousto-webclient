@@ -1,9 +1,12 @@
 import React from 'react'
+
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
+
 import { checkoutUrgencyStatuses } from 'routes/Checkout/checkoutUrgencyConfig'
-import { CheckoutUrgencyController } from '../CheckoutUrgencyController'
+
 import { CheckoutUrgencyContext } from '../CheckoutUrgencyContext'
+import { CheckoutUrgencyController } from '../CheckoutUrgencyController'
 
 jest.useFakeTimers()
 

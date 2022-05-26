@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
-import { BillingAddress } from '../BillingAddress'
+
 import { BillingAddressContainer } from '../AddressContainer'
+import { BillingAddress } from '../BillingAddress'
 
 describe('Billing Address', () => {
   let wrapper

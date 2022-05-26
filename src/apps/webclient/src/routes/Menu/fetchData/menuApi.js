@@ -1,6 +1,6 @@
-import { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import { getRequestHeaders } from 'routes/Menu/apis/_utils'
+import { fetchRaw } from 'utils/fetch'
 
 const options = {
   method: 'GET',

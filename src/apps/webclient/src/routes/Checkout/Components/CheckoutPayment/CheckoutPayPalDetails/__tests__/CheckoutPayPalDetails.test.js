@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
-import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
+
 import { PayPalConfirmation } from '../../PayPalConfirmation'
+import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
 
 describe('CheckoutPayPalDetails', () => {
   let wrapper

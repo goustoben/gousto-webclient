@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import { BoxDetails } from './BoxDetails'
 
 function mapStateToProps(state) {

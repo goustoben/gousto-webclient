@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
 
-import SlickCarousel from 'Carousel'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
+import SlickCarousel from 'components/Carousel'
+
 import { DetailImage as Image } from '../DetailImage'
-import { ContentMask } from './ContentMask'
 import { Arrow } from './Arrow'
+import { ContentMask } from './ContentMask'
+
 import css from './Carousel.css'
 
 const Carousel = ({ images, media, view, dots, arrows }) =>

@@ -1,8 +1,11 @@
 import * as React from 'react'
+
 import { renderHook } from '@testing-library/react-hooks'
-import { Provider } from 'react-redux'
 import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+
 import { basketChosenAddressChange, basketDateChange } from 'actions/basket'
+
 import { createMockBasketStore } from '../testing/createMockBasketStore'
 import { useBasketDelivery } from './delivery'
 import { Address } from './fields'

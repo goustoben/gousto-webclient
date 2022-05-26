@@ -1,6 +1,8 @@
-import { trackVariantListDisplay as trackVariantListDisplayAction } from 'actions/menu'
 import { useEffect } from 'react'
+
 import { useDispatch } from 'react-redux'
+
+import { trackVariantListDisplay as trackVariantListDisplayAction } from 'actions/menu'
 
 type ViewMode = 'details' | 'grid'
 

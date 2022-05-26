@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import { Button, Segment, Control, Tooltip } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { checkoutConfig } from 'config/checkout'
+
 import css from './Buttons.css'
 
 class Buttons extends React.Component {

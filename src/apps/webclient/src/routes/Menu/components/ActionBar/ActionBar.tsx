@@ -1,8 +1,12 @@
 import React, { useLayoutEffect, useState } from 'react'
+
 import { useSelector } from 'react-redux'
 import { usePrevious, useMedia } from 'react-use'
+
 import { getBasketRecipesCount } from 'selectors/basket'
+
 import { ActionBarPresentational } from './ActionBarPresentational'
+
 import css from './ActionBarPresentational.module.css'
 
 type Props = {

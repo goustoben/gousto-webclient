@@ -1,15 +1,18 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { top, left } from 'scroll'
-import Immutable from 'immutable'
+
 import actual from 'actual'
 import classnames from 'classnames'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import { top, left } from 'scroll'
 
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
+import { getElementOffsetTop } from 'utils/DOMhelper'
 import { getScrollOffset } from 'utils/menu'
 import { getWindow, isWindowDefined } from 'utils/window'
-import { getElementOffsetTop } from 'utils/DOMhelper'
+
 import { CollectionItem } from './CollectionItem'
+
 import css from './CollectionsNav.css'
 
 const MOBILE_BREAKPOINT = 543

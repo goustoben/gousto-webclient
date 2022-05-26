@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable'
+
 import { ImmutableMap } from './immutableMap'
 
 type MenuCollectionProperties = {

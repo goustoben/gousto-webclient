@@ -1,6 +1,7 @@
 import React from 'react'
-import Immutable from 'immutable'
+
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 
 import { BoxSummaryOverlayMobile } from '../BoxSummaryOverlayMobile'
 

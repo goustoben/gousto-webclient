@@ -1,7 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+
 import { mount } from 'enzyme'
+import ReactDOM from 'react-dom'
 import { useSelector, useDispatch } from 'react-redux'
+
 import { BoxProgressAlert } from '../BoxProgressAlert'
 
 jest.mock('components/PricePerServingMessage', () => ({

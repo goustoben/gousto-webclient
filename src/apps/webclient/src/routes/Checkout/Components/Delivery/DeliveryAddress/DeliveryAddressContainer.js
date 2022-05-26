@@ -1,5 +1,6 @@
-import { connect } from 'react-redux'
+import actions from 'actions'
 import { Map } from 'immutable'
+import { connect } from 'react-redux'
 import {
   change,
   getFormAsyncErrors,
@@ -9,11 +10,12 @@ import {
   touch,
   untouch,
 } from 'redux-form'
+
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import actions from 'actions'
-import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
+import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
+
 import { Address } from '../../Address'
 
 function getCutoffDate(state) {

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   AlignItems,
   Box,
@@ -11,6 +12,7 @@ import {
   Text,
   TextAlign,
 } from '@gousto-internal/citrus-react'
+
 import { client } from 'config/routes'
 import css from 'routes/Home/PriceComparisonTable/components/SignupCTA/SignupCTA.css'
 import { CTAText } from 'routes/Home/PriceComparisonTable/constants'

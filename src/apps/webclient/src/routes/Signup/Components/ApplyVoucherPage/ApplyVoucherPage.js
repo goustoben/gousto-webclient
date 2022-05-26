@@ -1,9 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { ExpandableSection } from 'goustouicomponents'
+import PropTypes from 'prop-types'
+
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+
 import { InformationalPageTemplate } from '../InformationalPageTemplate'
 import { HeaderContent } from './HeaderContent'
+
 import css from './ApplyVoucherPage.css'
 
 export const ApplyVoucherPage = ({

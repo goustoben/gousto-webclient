@@ -1,12 +1,14 @@
-import Immutable from 'immutable'
 import React from 'react'
+
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 import moment from 'moment'
+
+import { fetchDeliveryDays } from 'apis/deliveries'
 import { Address } from 'routes/Checkout/Components/Address/Address'
 import { AddressInputs } from 'routes/Checkout/Components/Address/AddressInputs'
-import { fetchDeliveryDays } from 'apis/deliveries'
-import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({

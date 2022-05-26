@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
+
 import { okRecipes } from 'utils/basket'
+
 import { getOkRecipeIds, getUnavailableRecipeIds, getFormatedRulesMessage } from '../basket'
 
 describe('the composed selectors', () => {

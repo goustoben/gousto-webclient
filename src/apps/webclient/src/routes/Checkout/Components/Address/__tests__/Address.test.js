@@ -1,7 +1,10 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
+
 import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton'
+
 import { Address } from '../Address'
 
 describe('Address', () => {

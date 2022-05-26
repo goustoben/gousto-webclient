@@ -1,7 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+
 import { useIsOptimizelyFeatureEnabled, OptimizelyFeature } from 'containers/OptimizelyRollouts'
+
 import css from './Benefits.css'
 
 const allBenefits = [
