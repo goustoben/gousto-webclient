@@ -4,33 +4,32 @@ import { ModalProvider } from '@gousto-internal/citrus-react'
 import { render } from '@testing-library/react'
 
 import { mockBundlesData } from '../../config'
-import { ProductBundleDetails } from '../ProductBundleDetails'
+import { FakeDoorModal } from '../FakeDoorModal'
 
-describe('<ProductBundleDetails />', () => {
+describe('<FakeDoorModal />', () => {
   const mockProps = { ...mockBundlesData[0], isOpen: true, close: jest.fn() }
 
-  test('Should render ProductBundleDetails when modal is open', () => {
+  test('Should render FakeDoorModal when modal is open', () => {
     const { getAllByTestId, getByText } = render(
       <ModalProvider>
-        <ProductBundleDetails {...mockProps} />
+        <FakeDoorModal {...mockProps} />
       </ModalProvider>,
     )
-
     expect(getByText('Zesty Date Night For Two')).toBeInTheDocument()
-    expect(getByText('£11.99')).toBeInTheDocument()
-    expect(getByText('Take your evening meal to another level')).toBeInTheDocument()
+    expect(getByText('1 x Percheron Chenin Blanc Viognier (750ml bottle)')).toBeInTheDocument()
     expect(getAllByTestId('bundleProducts')).toHaveLength(2)
   })
 
-  test('Should not render ProductBundleDetails when modal is closed', () => {
+  test('Should not render FakeDoorModal when modal is closed', () => {
     mockProps.isOpen = false
     const { queryAllByTestId, queryByText } = render(
       <ModalProvider>
-        <ProductBundleDetails {...mockProps} />
+        <FakeDoorModal {...mockProps} />
       </ModalProvider>,
     )
 
-    expect(queryByText('Zesty Date Night For Two')).not.toBeInTheDocument()
+    expect(queryByText('Gousto Market Occasions')).not.toBeInTheDocument()
+    expect(queryByText('Percheron Chenin Blanc Viognier (750ml bottle)')).not.toBeInTheDocument()
     expect(queryAllByTestId('bundleProducts')).toHaveLength(0)
   })
 })

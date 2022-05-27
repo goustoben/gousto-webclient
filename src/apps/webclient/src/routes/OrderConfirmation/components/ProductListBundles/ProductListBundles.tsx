@@ -15,7 +15,7 @@ const ProductListBundles: FC<ProductListBundlesProps> = ({ products = null }) =>
     {products ? (
       <div data-testid="ProductListBundlesPresentation" className={css.productBundleList}>
         {products.map((product: any) => (
-          <ProductBundle key={product.id} product={product} />
+          <ProductBundle key={product.id} bundleProduct={product} />
         ))}
       </div>
     ) : (
