@@ -1,4 +1,4 @@
-import Immutable, { List } from 'immutable'
+import Immutable, { List, Map } from 'immutable'
 import moment from 'moment'
 
 const cutoffDate = moment().day(7).hour(23).minute(59).second(59).format('YYYY-MM-DD HH:mm:ss ')
@@ -610,13 +610,18 @@ export const mockBundlesData = [
         boxLimit: 2,
         stock: 566,
         attributes: List([
-          { id: '92b6203a-f5a2-11e5-8fd2-02216daf9ab9', title: 'Volume', unit: 'ml', value: '750' },
-          {
+          Map({
+            id: '92b6203a-f5a2-11e5-8fd2-02216daf9ab9',
+            title: 'Volume',
+            unit: 'ml',
+            value: '750',
+          }),
+          Map({
             id: '66f87c3e-c417-11e5-b4eb-02fada0dd3b9',
             title: 'Allergen',
             unit: null,
             value: 'sulphites',
-          },
+          }),
         ]),
         title: 'Percheron Chenin Blanc Viognier (750ml bottle)',
         images: {
@@ -716,13 +721,18 @@ export const mockBundlesData = [
         boxLimit: 2,
         stock: 1378,
         attributes: List([
-          {
+          Map({
             id: '670f0e7c-c417-11e5-95fb-02fada0dd3b9',
             title: 'Allergen',
             unit: null,
             value: 'milk',
-          },
-          { id: 'c29e7cb6-f5a2-11e5-94d1-02216daf9ab9', title: 'Weight', unit: 'g', value: '100' },
+          }),
+          Map({
+            id: 'c29e7cb6-f5a2-11e5-94d1-02216daf9ab9',
+            title: 'Weight',
+            unit: 'g',
+            value: '100',
+          }),
         ]),
         title: 'Lemon & Lime Posset (100g)',
         images: {
@@ -792,7 +802,7 @@ export const mockBundlesData = [
       {
         id: '259d9e66-c6d3-11ec-bfea-06a97dbec6f5',
         sku: 'AP-ACH-BER-29',
-        title: 'Gipsy Hill - Bandit Pale Ale',
+        title: 'Gipsy Hill - Bandit Pale Ale (330ml)',
         description:
           "For true grill seekers, barrel into big flavour with a Gipsy Hill Bandit. This light, refreshing pale ale is the perfect partner to Kansas's sweet 'n' smoky sauce.\n\nIngredients\nwater, acidualted malt, cara gold, cara hell, flaked torrefied barley (gluten), naked malted oats (gluten), extra pale ale malt, hops\n\nAllergens\nbarley (gluten), oat (gluten)\n\nNutrition typical Values per 100ml:\nenergy 153KJ/ 37Kcal, fat 0g of which saturates 0g, carbohydrates 0g of which sugars 0g, fibre 0g, protein 0g, alcohol 3g",
         list_price: '1.25',

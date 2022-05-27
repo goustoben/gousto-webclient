@@ -54,6 +54,7 @@ export type Product = {
   categories: Category[]
   tags: string[]
   images: Images
+  attributes?: Attribute[]
 }
 
 export type FilteredProduct = {
@@ -97,3 +98,10 @@ export type RecipeItem = Map<
 export type Order = List<{
   recipeItems: List<RecipeItem>
 }>
+
+export type Attribute = {
+  id: string
+  title: string
+  unit: null | string
+  value: string
+}

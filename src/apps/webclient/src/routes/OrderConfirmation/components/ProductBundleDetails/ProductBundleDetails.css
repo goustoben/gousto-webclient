@@ -1,0 +1,42 @@
+@value avenirHeavyFontStack from 'styles/typography.css';
+@value DarkGrey from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+@value FullWidthBreakpoint ScreenXSMax;
+
+.bundleDescription {
+  padding: 24px 0px 8px 0px;
+  color: DarkGrey;
+  line-height: 16px;
+  font-size: 12px;
+}
+
+.bundlePrice {
+  font-family: avenirHeavyFontStack;
+  color: DarkGrey;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  padding: 8px 0px 8px 0px;
+
+  @media FullWidthBreakpoint {
+    font-size: 0.75rem;
+  }
+}
+
+.bundleTitle {
+  padding: 16px 0px 16px 0px;
+}
+
+.productDetailsDescription {
+  line-height: 22px;
+  white-space: pre-line;
+
+  @media ScreenSMMin {
+    max-height: 65vh;
+    overflow: auto;
+  }
+}
+
+.divider {
+  margin: -2rem;
+}
