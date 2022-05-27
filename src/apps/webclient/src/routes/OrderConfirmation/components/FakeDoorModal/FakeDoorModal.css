@@ -1,0 +1,41 @@
+@value Pepper30 from 'styles/colors.css';
+
+.item {
+  composes: flex spaceBetween flexStart from 'styles/flex.css';
+  composes: relative from 'styles/position.css';
+  padding: 0.5rem 0;
+}
+
+.item:last-child {
+  border-top: 1px solid Pepper30;
+  border-bottom: 1px solid Pepper30;
+}
+
+.occasions {
+  display: inline !important;
+}
+
+.callToAction {
+  padding-bottom: 24px;
+}
+
+.details {
+  padding-left: 16px;
+  align-self: flex-end;
+}
+
+.img {
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.productTitle {
+  padding-bottom: 19px;
+}
+
+.productsContainer {
+  padding-left: 24px;
+  padding-right: 24px;
+}

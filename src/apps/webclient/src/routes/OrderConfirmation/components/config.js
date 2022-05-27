@@ -577,38 +577,6 @@ export const mockBundlesData = [
     bundlePrice: '11.99',
     bundleProducts: [
       {
-        media: [
-          {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x50.jpg',
-            width: 50,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x200.jpg',
-            width: 200,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x400.jpg',
-            width: 400,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x700.jpg',
-            width: 700,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x1000.jpg',
-            width: 1000,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x1500.jpg',
-            width: 1500,
-          },
-        ],
-        isForSale: true,
-        listPrice: '7.99',
-        zone: 'Ambient',
-        alwaysOnMenu: false,
-        boxLimit: 2,
-        stock: 566,
         attributes: List([
           Map({
             id: '92b6203a-f5a2-11e5-8fd2-02216daf9ab9',
@@ -624,102 +592,15 @@ export const mockBundlesData = [
           }),
         ]),
         title: 'Percheron Chenin Blanc Viognier (750ml bottle)',
-        images: {
-          50: {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x50.jpg',
-            url: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x50.jpg',
-            width: 50,
-          },
-          200: {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x200.jpg',
-            url: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x200.jpg',
-            width: 200,
-          },
-          400: {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x400.jpg',
-            url: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x400.jpg',
-            width: 400,
-          },
-          700: {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x700.jpg',
-            url: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x700.jpg',
-            width: 700,
-          },
-          1000: {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x1000.jpg',
-            url: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x1000.jpg',
-            width: 1000,
-          },
-          1500: {
-            src: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x1500.jpg',
-            url: 'https://staging-media.gousto.info/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x1500.jpg',
-            width: 1500,
-          },
-        },
-        cutoffDates: ['2022-05-11 11:59:59'],
-        tags: [],
-        isVatable: true,
-        ageRestricted: true,
-        volume: 16000,
+        image:
+          'https://production-media.gousto.co.uk/cms/mood-image/Percheron-Chenin-Blanc-Viognier-750ml-bottle-x400.jpg',
         id: '1f8dff0c-ad68-11e9-b040-06ba16bc62ee',
-        createdAt: '2019-07-23T17:37:12+01:00',
-        categories: [
-          {
-            id: 'faeedf8a-bf7d-11e5-a0f9-02fada0dd3b9',
-            title: 'Drinks Cabinet',
-            boxLimit: 7,
-            isDefault: false,
-            recentlyAdded: false,
-            hidden: false,
-            pivot: { createdAt: '2019-07-23T17:37:33+01:00' },
-          },
-          {
-            id: '785741fc-3854-11e6-87a5-06f9522b85fb',
-            title: 'Large Alcohol',
-            boxLimit: 2,
-            isDefault: false,
-            recentlyAdded: false,
-            hidden: true,
-            pivot: { createdAt: '2019-07-23T17:37:33+01:00' },
-          },
-        ],
         description:
           'A national treasure of South Africa, this bright yet aromatic Chenin has hints of jasmine and a white peach finish. Goes great with prawns cooked with generous amounts of garlic and chilli, or beside delicate fish dishes. This wine is juicy and leaves you with a crisp fresh finish.\nABV: 12.5%\nOrigin: Western Cape, South Africa\nGrape: Chenin Blanc 75%, Viognier 25%\nContains: Sulphites\nFood Match: Seafood\nSuitable for vegetarians or vegans',
         sku: 'AP-ACH-WIN-WHI-42-P',
+        quantity: 1,
       },
       {
-        media: [
-          {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x50.jpg',
-            width: 50,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x200.jpg',
-            width: 200,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x400.jpg',
-            width: 400,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x700.jpg',
-            width: 700,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x1000.jpg',
-            width: 1000,
-          },
-          {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x1500.jpg',
-            width: 1500,
-          },
-        ],
-        isForSale: true,
-        listPrice: '2.00',
-        zone: 'Chilled',
-        alwaysOnMenu: false,
-        boxLimit: 2,
-        stock: 1378,
         attributes: List([
           Map({
             id: '670f0e7c-c417-11e5-95fb-02fada0dd3b9',
@@ -735,59 +616,13 @@ export const mockBundlesData = [
           }),
         ]),
         title: 'Lemon & Lime Posset (100g)',
-        images: {
-          50: {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x50.jpg',
-            url: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x50.jpg',
-            width: 50,
-          },
-          200: {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x200.jpg',
-            url: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x200.jpg',
-            width: 200,
-          },
-          400: {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x400.jpg',
-            url: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x400.jpg',
-            width: 400,
-          },
-          700: {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x700.jpg',
-            url: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x700.jpg',
-            width: 700,
-          },
-          1000: {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x1000.jpg',
-            url: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x1000.jpg',
-            width: 1000,
-          },
-          1500: {
-            src: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x1500.jpg',
-            url: 'https://staging-media.gousto.info/cms/product-image-landscape/lemon-and-lime-potsco-x1500.jpg',
-            width: 1500,
-          },
-        },
-        cutoffDates: ['2022-05-11 11:59:59'],
-        tags: [],
-        isVatable: true,
-        ageRestricted: false,
-        volume: 660,
+        image:
+          'https://production-media.gousto.co.uk/cms/product-image-landscape/lemon-and-lime-potsco-x400.jpg',
         id: '2f63c86c-c5c7-11ea-8ddf-027bd009e192',
-        createdAt: '2020-07-14T12:43:07+01:00',
-        categories: [
-          {
-            id: 'fec10d0e-bf7d-11e5-90a9-02fada0dd3b9',
-            title: 'Desserts',
-            boxLimit: 4,
-            isDefault: false,
-            recentlyAdded: false,
-            hidden: false,
-            pivot: { createdAt: '2020-07-14T12:50:14+01:00' },
-          },
-        ],
         description:
           'Handmade in London with thick double cream, zingy lemon zest, and freshly juiced lemon and limes.\n\nIngredients:\nDouble cream (milk), sugar, freshly squeezed lemon juice (12%), freshly squeezed lime juice\n(2%), lemon zest (1%), gelling agents: agar agar, cornflour.\n\nContains: milk\nMade in a kitchen that handles nuts.\n\nNutrition typical Values per 100g:\nEnergy 1,554KJ/375Kcal, fat 31g of which saturates 20g, carbohydrates 22g  of which sugars 21g, dietary fibre 0g, protein 1.2g, salt 0.04g.\n\nSuitable for Vegetarians.\n\nNot suitable for freezing. Consume product within use by date on pack.',
         sku: 'AP-1FCD-DES-18-P',
+        quantity: 2,
       },
     ],
   },
@@ -805,17 +640,9 @@ export const mockBundlesData = [
         title: 'Gipsy Hill - Bandit Pale Ale (330ml)',
         description:
           "For true grill seekers, barrel into big flavour with a Gipsy Hill Bandit. This light, refreshing pale ale is the perfect partner to Kansas's sweet 'n' smoky sauce.\n\nIngredients\nwater, acidualted malt, cara gold, cara hell, flaked torrefied barley (gluten), naked malted oats (gluten), extra pale ale malt, hops\n\nAllergens\nbarley (gluten), oat (gluten)\n\nNutrition typical Values per 100ml:\nenergy 153KJ/ 37Kcal, fat 0g of which saturates 0g, carbohydrates 0g of which sugars 0g, fibre 0g, protein 0g, alcohol 3g",
-        list_price: '1.25',
-        is_vatable: true,
-        is_for_sale: true,
-        age_restricted: true,
-        box_limit: 4,
-        always_on_menu: false,
-        volume: 450,
-        zone: 'Chilled',
-        created_at: '2022-04-28T10:11:11+01:00',
-        tags: [],
-        images: [],
+        image:
+          'https://production-media.gousto.co.uk/cms/product-image-landscape/Bandit-Gipsy-Hill-1-x400.jpg',
+        quantity: 2,
       },
       {
         id: 'aef55c4a-8037-11ec-ad10-067a6c8c5cd1',
@@ -823,17 +650,9 @@ export const mockBundlesData = [
         title: 'Smoky Barbecue Crunch Sharing Bag (104g)',
         description:
           'Smoky Barbeque snack for something different to crisps with a satisfying crunch.\n\nIngredients: barbecue coated pea (37%) (green peas (53%), corn starch, waxy corn starch, sugar, high oleic sunflower oil, barbecue seasoning (3%) (sugar, salt, maltodextrin, yeast extract, onion powder, garlic powder, tomato powder, sweet chilli powder, natural flavouring, spices, acidity regulator: citric acid, colour: paprika extract), salt.), corn chips (32%) (corn (72%), sunflower oil), chilli corn (31%) (corn, sunflower oil, chilli seasoning (2%) (maltodextrin, onion powder, garlic powder, paprika powder, pepper powder, cayenne powder, tomato powder, salt), salt, paprika oil (sunflower oil, paprika extract)). \n\nAllergens: None\nMay contain gluten, egg, soya, milk, peanuts, nuts, sesame, mustard\n\nNutrition Typical Values per 100g:\nEnergy 1902 kJ/455 kcal, fat 17g of which saturates 2g, carbohydrate 60g, of which sugars 5.9g, fibre 7.7g, protein 10g, salt 0.68g\n\nStore in a cool, dry place. Once opened enjoy within one week.\n\nMay contain hard corn',
-        list_price: '2.59',
-        is_vatable: true,
-        is_for_sale: true,
-        age_restricted: false,
-        box_limit: 4,
-        always_on_menu: false,
-        volume: 1100,
-        zone: 'Ambient',
-        created_at: '2022-01-28T12:41:58+00:00',
-        tags: [],
-        images: [],
+        image:
+          'https://production-media.gousto.co.uk/cms/product-image-landscape/Bandit-Gipsy-Hill-1-x400.jpg',
+        quantity: 1,
       },
     ],
   },

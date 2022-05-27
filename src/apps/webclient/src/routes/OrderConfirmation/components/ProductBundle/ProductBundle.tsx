@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 
 import {
   Box,
+  Button,
+  ButtonColorVariant,
+  ButtonSize,
   Display,
   FontFamily,
   Heading6,
@@ -11,28 +14,28 @@ import {
 } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
 
-import Buttons from 'components/Product/Buttons'
-import { Product } from 'routes/OrderConfirmation/types'
-
+import { FakeDoorModal } from '../FakeDoorModal/FakeDoorModal'
 import { ProductBundleDetails } from '../ProductBundleDetails/ProductBundleDetails'
 
 import css from './ProductBundle.css'
 
 interface Props {
-  product: {
+  bundleProduct: {
     bundleImage: string
     bundleDescription: string
     bundleName: string
     bundlePrice: string
-    bundleProducts: Product[]
+    bundleProducts: any[]
   }
 }
 
-const ProductBundle = ({ product }: Props) => {
-  const [modalToggle, setModalToggle] = useState<boolean>(false)
-  const { bundleDescription, bundleImage, bundleName, bundlePrice, bundleProducts } = product
+const ProductBundle = ({ bundleProduct }: Props) => {
+  const [bundleDetailsToggle, setBundleDetailsToggle] = useState<boolean>(false)
+  const [fakeDoorToggle, setFakeDoorToggle] = useState<boolean>(false)
+  const { bundleDescription, bundleImage, bundleName, bundlePrice, bundleProducts } = bundleProduct
 
-  const toggleModal = () => setModalToggle(!modalToggle)
+  const toggleDetailsModal = () => setBundleDetailsToggle(!bundleDetailsToggle)
+  const toggleFakeDoorModal = () => setFakeDoorToggle(!fakeDoorToggle)
 
   return (
     <ModalProvider>
@@ -41,7 +44,7 @@ const ProductBundle = ({ product }: Props) => {
           <button
             type="button"
             className={classnames(css.resetButtonStyle, css.bundleImage)}
-            onClick={toggleModal}
+            onClick={toggleDetailsModal}
           >
             <Image src={bundleImage} alt={bundleName} />
           </button>
@@ -50,7 +53,7 @@ const ProductBundle = ({ product }: Props) => {
               <button
                 type="button"
                 className={classnames(css.resetButtonStyle, css.bundleInfo)}
-                onClick={toggleModal}
+                onClick={toggleDetailsModal}
               >
                 <Heading6 className="bundleTitle" size={3}>
                   {bundleName}
@@ -58,9 +61,9 @@ const ProductBundle = ({ product }: Props) => {
                 <Paragraph className={css.bundleDescription}>{bundleDescription}</Paragraph>
               </button>
             </Box>
-            {bundleProducts.map((p: Product) => (
-              <h3 key={p.id} className={css.bundles}>
-                {p.title}
+            {bundleProducts.map((product: any) => (
+              <h3 key={product.id} className={css.bundles}>
+                {product.quantity} x {product.title}
               </h3>
             ))}
             <Box>
@@ -68,13 +71,25 @@ const ProductBundle = ({ product }: Props) => {
                 <Heading6 fontFamily={FontFamily.Bold} size={1} className={css.bundlePrice}>
                   £{bundlePrice}
                 </Heading6>
-                <Buttons showPopUp fullWidth />
+                <Button
+                  colorVariant={ButtonColorVariant.Secondary}
+                  size={ButtonSize.Medium}
+                  onClick={toggleFakeDoorModal}
+                  width="100%"
+                >
+                  Add
+                </Button>
               </Box>
             </Box>
           </Box>
         </Box>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <ProductBundleDetails {...product} isOpen={modalToggle} />
+        {/* eslint-disable react/jsx-props-no-spreading */}
+        <ProductBundleDetails
+          {...bundleProduct}
+          close={toggleDetailsModal}
+          isOpen={bundleDetailsToggle}
+        />
+        <FakeDoorModal {...bundleProduct} close={toggleFakeDoorModal} isOpen={fakeDoorToggle} />
       </section>
     </ModalProvider>
   )

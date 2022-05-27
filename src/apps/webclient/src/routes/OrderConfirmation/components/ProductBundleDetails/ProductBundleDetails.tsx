@@ -12,7 +12,6 @@ import {
   ModalClose,
   ModalHeader,
   Paragraph,
-  useModal,
 } from '@gousto-internal/citrus-react'
 
 import { getAllergenListFromAttributes } from 'components/Product/Detail/Detail'
@@ -29,19 +28,18 @@ interface Props {
   bundlePrice: string
   bundleProducts: any[]
   isOpen: boolean
+  close: () => void
 }
 
 export const ProductBundleDetails = (props: Props) => {
-  const { bundleDescription, bundleImage, bundleName, bundlePrice, bundleProducts, isOpen } = props
-  const { closeCurrentModal } = useModal()
-
-  const handleModalClose = () => closeCurrentModal()
+  const { bundleDescription, bundleImage, bundleName, bundlePrice, bundleProducts, isOpen, close } =
+    props
 
   return (
     <Modal name="BundleDetails" isOpen={isOpen}>
       <ModalHeader>
         <Heading5>{bundleName}</Heading5>
-        <ModalClose onClose={handleModalClose} />
+        <ModalClose onClose={close} />
       </ModalHeader>
       <ModalBody>
         <Image src={bundleImage} alt={bundleName} />
