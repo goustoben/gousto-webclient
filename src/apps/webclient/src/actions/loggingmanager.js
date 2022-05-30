@@ -16,16 +16,16 @@ export const EVENT_NAMES = {
 }
 
 const generateLoggingManagerRequest = ({ loggingManagerEvent }) => {
-  const { eventName, authUserId, data, isAnonymousUser } = loggingManagerEvent
-  const currentDateISOString = new Date().toISOString()
+  const { eventName: name, data, isAnonymousUser, ...params} = loggingManagerEvent
+  const occurredAt = new Date().toISOString()
 
   const request = {
     id: uuidv4(),
-    name: eventName,
-    authUserId,
+    name,
     isAnonymousUser,
-    occurredAt: currentDateISOString,
-    data
+    data,
+    occurredAt,
+    ...params
   }
 
   return request
