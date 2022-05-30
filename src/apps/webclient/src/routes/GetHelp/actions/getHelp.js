@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
+import { applyDeliveryCompensation, validateDelivery } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { getAccessToken } from 'selectors/auth'
@@ -15,6 +15,7 @@ import { getCompensation, getIsMultiComplaints } from '../selectors/compensation
 import { actionTypes, trackingKeys } from './actionTypes'
 import { asyncAndDispatch } from './utils'
 import { transformRecipesWithIngredients } from './transformers/recipeTransform'
+import { validateOrder } from '../apis/validateOrder'
 
 export const SE_CATEGORY_HELP = 'help'
 
@@ -403,16 +404,14 @@ export const validateLatestOrder = ({
       },
     )
     const {
-      massIssueIneligibleIngredientUuids,
-      otherIssueIneligibleIngredientUuids,
+      previousIssues,
       numOrdersChecked,
       numOrdersCompensated,
     } = response.data
 
     dispatch({
       type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
-      massIssueIneligibleIngredientUuids,
-      otherIssueIneligibleIngredientUuids,
+      previousIssues,
       numOrdersChecked,
       numOrdersCompensated,
     })

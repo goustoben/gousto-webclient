@@ -29,8 +29,8 @@ const getHelpInitialState = fromJS({
   selectedRecipeCards: [],
   selectedRecipeCardIssues: [],
   shippingAddresses: [],
-  massIssueIneligibleIngredientUuids: [],
-  otherIssueIneligibleIngredientUuids: [],
+  massIssueIneligibleIngrsByRecipeGRMap: {},
+  otherIssueIneligibleIngrsByRecipeGRMap: {},
   numOrdersChecked: null,
   numOrdersCompensated: null,
   hasSeenRepetitiveIssuesScreen: false,
@@ -223,9 +223,27 @@ const getHelp = (state, action) => {
       .setIn(['order', 'hasPassedDeliveryValidation'], action.payload.isValid)
   }
   case webClientActionTypes.GET_HELP_VALIDATE_ORDER: {
+    const otherIssueIneligibleIngrsByRecipeGRMap = {}
+    const massIssueIneligibleIngrsByRecipeGRMap = {}
+
+    if (action.previousIssues) {
+      action.previousIssues.forEach(({
+        ingredientUuid,
+        recipeGoustoReference,
+        issueType,
+      }) => {
+        const currentIssueMap =
+          issueType === 'other_issue' ?
+            otherIssueIneligibleIngrsByRecipeGRMap :
+            massIssueIneligibleIngrsByRecipeGRMap
+        const existingRecipe = currentIssueMap[recipeGoustoReference]
+        currentIssueMap[recipeGoustoReference] = existingRecipe ? [...existingRecipe, ingredientUuid] : [ingredientUuid]
+      })
+    }
+
     return state.merge({
-      massIssueIneligibleIngredientUuids: action.massIssueIneligibleIngredientUuids,
-      otherIssueIneligibleIngredientUuids: action.otherIssueIneligibleIngredientUuids,
+      otherIssueIneligibleIngrsByRecipeGRMap,
+      massIssueIneligibleIngrsByRecipeGRMap,
       numOrdersChecked: action.numOrdersChecked,
       numOrdersCompensated: action.numOrdersCompensated,
     })

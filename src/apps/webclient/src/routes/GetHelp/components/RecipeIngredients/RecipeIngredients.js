@@ -4,12 +4,12 @@ import { Alert, InputCheck, InfoTip } from 'goustouicomponents'
 import { recipePropType } from '../../getHelpPropTypes'
 import css from './RecipeIngredients.module.css'
 
-const renderIngredients = (eligibleIngredients, onChange, recipe, selectedIngredients, otherIssueIneligibleIngredientUuids) => (
+const renderIngredients = (eligibleIngredients, onChange, recipe, selectedIngredients, otherIssueIneligibleIngredients) => (
   eligibleIngredients.map(ingredient => {
     const ingredientFullId = `${recipe.id}&${ingredient.uuid}`
     const isChecked = selectedIngredients.get(ingredientFullId) || false
     const ingredientName = ingredient.label
-    const isIneligible = otherIssueIneligibleIngredientUuids.includes(ingredient.uuid)
+    const isIneligible = otherIssueIneligibleIngredients.includes(ingredient.uuid)
 
     return (
       <div data-testing="getHelpIngredientInputCheck" key={ingredient.uuid}>
@@ -25,7 +25,7 @@ const renderIngredients = (eligibleIngredients, onChange, recipe, selectedIngred
         {isIneligible && (
         <div className={css.ineligibleIngredientsInfoTip}>
           <InfoTip isCloseIconVisible={false} color="lightGrey" position="relative">
-            You have previously been compensated for this ingredient across all recipes.
+            You have previously been compensated for this ingredient in this recipe
           </InfoTip>
         </div>
         )}
@@ -67,15 +67,16 @@ const renderMassIssueIngredients = (ineligibleIngredients, recipe) => (
 )
 
 const RecipeIngredients = ({
-  massIssueIneligibleIngredientUuids,
+  massIssueIneligibleIngrsByRecipeGRMap,
   onChange,
-  otherIssueIneligibleIngredientUuids,
+  otherIssueIneligibleIngrsByRecipeGRMap,
   recipe,
   selectedIngredients,
   trackMassIssueAlertDisplayed,
 }) => {
-  const isEligible = (bool) => ({ uuid }) => massIssueIneligibleIngredientUuids.includes(uuid) !== bool
-
+  const massIssueIneligibleIngredients = massIssueIneligibleIngrsByRecipeGRMap[recipe.goustoReference] || []
+  const otherIssueIneligibleIngredients = otherIssueIneligibleIngrsByRecipeGRMap[recipe.goustoReference] || []
+  const isEligible = (bool) => ({ uuid }) => massIssueIneligibleIngredients.includes(uuid) !== bool
   const eligible = recipe.ingredients.filter(isEligible(true))
   const ineligible = recipe.ingredients.filter(isEligible(false))
   const hasIneligibleIngredients = Boolean(ineligible.length)
@@ -88,23 +89,23 @@ const RecipeIngredients = ({
 
   return (
     <div>
-      {renderIngredients(eligible, onChange, recipe, selectedIngredients, otherIssueIneligibleIngredientUuids)}
+      {renderIngredients(eligible, onChange, recipe, selectedIngredients, otherIssueIneligibleIngredients)}
       {renderMassIssueIngredients(ineligible, recipe)}
     </div>
   )
 }
 
 RecipeIngredients.propTypes = {
-  massIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string),
+  massIssueIneligibleIngrsByRecipeGRMap: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+  otherIssueIneligibleIngrsByRecipeGRMap: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   recipe: recipePropType,
   onChange: PropTypes.func.isRequired,
-  otherIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedIngredients: PropTypes.instanceOf(Map).isRequired,
   trackMassIssueAlertDisplayed: PropTypes.func.isRequired,
 }
 
 RecipeIngredients.defaultProps = {
-  massIssueIneligibleIngredientUuids: [],
+  massIssueIneligibleIngrsByRecipeGRMap: {},
   recipe: { id: '', title: '', ingredients: [] }
 }
 

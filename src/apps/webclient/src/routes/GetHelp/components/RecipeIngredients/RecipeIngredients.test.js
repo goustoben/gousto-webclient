@@ -15,11 +15,14 @@ describe('the RecipeIngredients component', () => {
     id: '1',
     title: 'First test recipe',
     ingredients: TEST_INGREDIENTS,
+    goustoReference: '1234'
   }
-  const INELIGIBLE_INGREDIENT_UUIDS = ['2', '3']
+  const INELIGIBLE_INGREDIENT_UUIDS = {
+    [TEST_RECIPE.goustoReference]: ['2', '3']
+  }
   const testProps = {
-    massIssueIneligibleIngredientUuids: [],
-    otherIssueIneligibleIngredientUuids: [],
+    massIssueIneligibleIngrsByRecipeGRMap: {},
+    otherIssueIneligibleIngrsByRecipeGRMap: {},
     recipe: TEST_RECIPE,
     selectedIngredients: new Map(),
     onChange: jest.fn(),
@@ -56,7 +59,7 @@ describe('the RecipeIngredients component', () => {
   describe('when mass issue ineligible ingredients uuids are passed', () => {
     beforeEach(() => {
       wrapper = mount(
-        <RecipeIngredients {...testProps} massIssueIneligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS} />
+        <RecipeIngredients {...testProps} massIssueIneligibleIngrsByRecipeGRMap={INELIGIBLE_INGREDIENT_UUIDS} />
       )
     })
 
@@ -66,9 +69,9 @@ describe('the RecipeIngredients component', () => {
 
     test('ineligible ingredients have disabled prop set to true', () => {
       const disabledFields = wrapper.find('InputCheck').getElements().filter(el => el.props.disabled === true)
-      disabledFields.forEach((disabledField, index) => {
+      disabledFields.forEach((disabledField) => {
         const [, ingredientUuid] = disabledField.props.id.split('&')
-        expect(ingredientUuid).toBe(INELIGIBLE_INGREDIENT_UUIDS[index])
+        expect(INELIGIBLE_INGREDIENT_UUIDS[TEST_RECIPE.goustoReference]).toContain(ingredientUuid)
       })
     })
 
@@ -86,15 +89,15 @@ describe('the RecipeIngredients component', () => {
   describe('when other issue ineligible ingredients uuids are passed', () => {
     beforeEach(() => {
       wrapper = mount(
-        <RecipeIngredients {...testProps} otherIssueIneligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS} />
+        <RecipeIngredients {...testProps} otherIssueIneligibleIngrsByRecipeGRMap={INELIGIBLE_INGREDIENT_UUIDS} />
       )
     })
 
     test('other ineligible ingredients have disabled prop set to true', () => {
       const disabledFields = wrapper.find('InputCheck').getElements().filter(el => el.props.disabled === true)
-      disabledFields.forEach((disabledField, index) => {
+      disabledFields.forEach((disabledField) => {
         const [, ingredientUuid] = disabledField.props.id.split('&')
-        expect(ingredientUuid).toBe(INELIGIBLE_INGREDIENT_UUIDS[index])
+        expect(INELIGIBLE_INGREDIENT_UUIDS[TEST_RECIPE.goustoReference]).toContain(ingredientUuid)
       })
     })
 

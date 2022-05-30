@@ -166,6 +166,11 @@ export const serviceManifest: ServiceManifest = {
       version: 'v2',
       basePath: '/ssr/v2',
     },
+    {
+      majorVersion: 3,
+      version: 'v3',
+      basePath: '/ssr/v3',
+    },
   ],
   ssrdeliveries: [
     {

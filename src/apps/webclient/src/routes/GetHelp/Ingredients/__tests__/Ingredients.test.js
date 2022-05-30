@@ -10,7 +10,9 @@ import { fromJS } from 'immutable'
 jest.mock('apis/getHelp')
 
 describe('<Ingredients />', () => {
-  const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
+  const MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP = {
+    4063: ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
+  }
   const recipes = [
     { id: '1', title: 'Fish Curry', ingredients: [{ uuid: '1', label: 'fish' }] },
     {
@@ -35,7 +37,7 @@ describe('<Ingredients />', () => {
   let wrapper
   const initialState = {
     getHelp: fromJS({
-      otherIssueIneligibleIngredientUuids: []
+      otherIssueIneligibleIngrsByRecipeGRMap: {}
     })}
 
   const storeSelectedIngredients = jest.fn()
@@ -49,7 +51,7 @@ describe('<Ingredients />', () => {
   const mockStore = configureStore([thunk])
 
   const PROPS = {
-    massIssueIneligibleIngredientUuids: MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
+    massIssueIneligibleIngrsByRecipeGRMap: MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP,
     isBoxDailyComplaintLimitReached: false,
     isMultiComplaintLimitReachedLastFourWeeks: false,
     isOrderValidationError: false,
@@ -133,8 +135,8 @@ describe('<Ingredients />', () => {
     })
 
     test('RecipeIngredients are rendered with the mass issue ineligible ingredient uuids', () => {
-      expect(wrapper.find('RecipeList').prop('children').props.massIssueIneligibleIngredientUuids)
-        .toBe(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS)
+      expect(wrapper.find('RecipeList').prop('children').props.massIssueIneligibleIngrsByRecipeGRMap)
+        .toBe(MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP)
     })
   })
 

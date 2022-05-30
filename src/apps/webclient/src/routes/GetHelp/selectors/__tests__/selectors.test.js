@@ -2,8 +2,8 @@ import { fromJS } from 'immutable'
 import {
   getAccessToken,
   getError,
-  getMassIssueIneligibleIngredientUuids,
-  getOtherIssueIneligibleIngredientUuids,
+  getMassIssueIneligibleIngrsByRecipeGRMap,
+  getOtherIssueIneligibleIngrsByRecipeGRMap,
   getNumOrdersChecked,
   getNumOrdersCompensated,
   getHasSeenRepetitiveIssuesScreen,
@@ -26,8 +26,17 @@ import {
 
 const ACCESS_TOKEN = 'shhh-its-a-secret'
 const ERROR_MESSAGE = 'An error message'
-const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a', 'b', 'c']
-const OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['a324', 'b345', 'c3454']
+const MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP = {
+  4063: ['4e949ce8-d92c-43fa-8c0d-110d903d6e60']
+}
+
+const OTHER_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP = {
+  4061: [
+    '44417cd2-bdb0-48e2-b6a3-b75bdd8ba6b7',
+    '528742df-d65f-45ca-b542-25bb77ac7461'
+  ],
+  4062: ['7893dfhgjk-204c-4ded-9dac-12df03f265d6']
+}
 const IS_AUTO_ACCEPT = 'is auto accept can be true or false'
 const HAS_SEEN_REPETITIVE_ISSUES = 'hasSeenRepetitiveIssuesScreen can be true or false'
 const ORDER_PENDING_VALUE = 'order pending can be true or false'
@@ -125,8 +134,8 @@ const STATE = {
     GET_HELP_LOAD_ORDERS_BY_ID: ERROR_MESSAGE,
   }),
   getHelp: fromJS({
-    massIssueIneligibleIngredientUuids: fromJS(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
-    otherIssueIneligibleIngredientUuids: fromJS(OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS),
+    massIssueIneligibleIngrsByRecipeGRMap: fromJS(MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP),
+    otherIssueIneligibleIngrsByRecipeGRMap: fromJS(OTHER_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP),
     numOrdersChecked: NUM_ORDERS_CHECKED,
     numOrdersCompensated: NUM_ORDERS_COMPENSATED,
     isAutoAccept: IS_AUTO_ACCEPT,
@@ -147,8 +156,8 @@ describe('Get Help selectors', () => {
 
   describe.each([
     ['getAccessToken', getAccessToken, ACCESS_TOKEN],
-    ['getMassIssueIneligibleIngredientUuids', getMassIssueIneligibleIngredientUuids, MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
-    ['getOtherIssueIneligibleIngredientUuids', getOtherIssueIneligibleIngredientUuids, OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS],
+    ['getMassIssueIneligibleIngrsByRecipeGRMap', getMassIssueIneligibleIngrsByRecipeGRMap, MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP],
+    ['getOtherIssueIneligibleIngrsByRecipeGRMap', getOtherIssueIneligibleIngrsByRecipeGRMap, OTHER_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP],
     ['getNumOrdersChecked', getNumOrdersChecked, NUM_ORDERS_CHECKED],
     ['getNumOrdersCompensated', getNumOrdersCompensated, NUM_ORDERS_COMPENSATED],
     ['getIsAutoAccept', getIsAutoAccept, IS_AUTO_ACCEPT],
