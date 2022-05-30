@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Helmet from 'react-helmet'
@@ -24,6 +24,7 @@ const propTypes = {
   trackingReferFriendSocialSharing: PropTypes.func,
   isLoading: PropTypes.bool,
   device: PropTypes.string,
+  userId: PropTypes.string,
   trackUserFreeFoodPageView: PropTypes.func,
   trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
@@ -31,6 +32,7 @@ const propTypes = {
 const defaultProps = {
   rafOffer: defaultOffer,
   userFirstName: '',
+  userId: '',
   userFetchReferralOffer: () => { },
   trackingReferFriend: () => { },
   trackingReferFriendSocialSharing: () => { },
@@ -39,38 +41,41 @@ const defaultProps = {
   trackUserFreeFoodPageView: () => {},
 }
 
-class Referral extends Component {
-  componentDidMount() {
-    const { trackUserFreeFoodPageView } = this.props
-    trackUserFreeFoodPageView()
+const Referral = (props) => {
+  const {
+    referralCode,
+    rafOffer,
+    userFirstName,
+    trackingReferFriend,
+    trackingReferFriendSocialSharing,
+    isLoading,
+    device,
+    trackUserFreeFoodLinkShare,
+    userFetchReferralOffer,
+    userId,
+    trackUserFreeFoodPageView
+  } = props
 
-    this.fetchReferralOffer()
-  }
+  const offerTitle = rafOffer.get('title')
+  const offerCredit = rafOffer.get('creditFormatted')
+  const offerDetails = rafOffer.get('details')
+  const offerDescription = rafOffer.get('description')
+  const expiry = rafOffer.get('expiry')
+  const displayLink = getReferralLink(referralCode)
 
-  fetchReferralOffer = () => {
-    const { userFetchReferralOffer } = this.props
+  useEffect(() => {
     userFetchReferralOffer()
-  }
+  }, [userFetchReferralOffer])
 
-  render() {
-    const {
-      referralCode,
-      rafOffer,
-      userFirstName,
-      trackingReferFriend,
-      trackingReferFriendSocialSharing,
-      isLoading,
-      device,
-      trackUserFreeFoodLinkShare,
-    } = this.props
-    const offerTitle = rafOffer.get('title')
-    const offerCredit = rafOffer.get('creditFormatted')
-    const offerDetails = rafOffer.get('details')
-    const offerDescription = rafOffer.get('description')
-    const expiry = rafOffer.get('expiry')
-    const displayLink = getReferralLink(referralCode)
+  useEffect(() => {
+    if (userId) {
+      trackUserFreeFoodPageView()
+    }
+  }, [userId, trackUserFreeFoodPageView])
 
-    return isLoading
+  return (
+
+    isLoading
       ? (
         <div className={css.loadingContainer}>
           <Loading loading={isLoading} />
@@ -87,7 +92,7 @@ class Referral extends Component {
               <div className={expiry ? css.iconReferDouble : css.iconRefer} />
               <RAFOffer offer={rafOffer} />
             </div>
-            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer} />}
+            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={() => { trackUserFreeFoodPageView() }} />}
             <div className={expiry ? css.rafCounterPresent : css.rafRow}>
               <UserRAFLink
                 classContainer={css.rafLink}
@@ -119,7 +124,7 @@ class Referral extends Component {
           <HowItWorks details={offerDetails} />
         </div>
       )
-  }
+  )
 }
 
 Referral.propTypes = propTypes
