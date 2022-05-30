@@ -41,14 +41,30 @@ const getDefaultParams = (state) => {
   }
 }
 
+const getParams = (state) => {
+  const defaultParams = getDefaultParams(state)
+  const { user } = state
+
+  let customParams = {}
+
+  if (user && user.get('id')) {
+    customParams = {...customParams, userId: user.get('id')}
+  }
+
+  return {
+    ...defaultParams,
+    ...customParams
+  }
+}
+
 const trackUserFreeFoodPageView = () => (
   async (dispatch, getState) => {
-    const { authUserId, device, accessToken } = getDefaultParams(getState())
+    const { device, accessToken, ...params } = getParams(getState())
     const eventName = EVENT_NAMES.rafPageVisited
 
     const loggingManagerEvent = {
+      ...params,
       eventName,
-      authUserId,
       data: {
         device,
       },
@@ -62,10 +78,11 @@ const trackUserFreeFoodPageView = () => (
 
 const trackUserLogin = () => (
   async (dispatch, getState) => {
-    const { authUserId, device, accessToken } = getDefaultParams(getState())
+    const { authUserId, device, accessToken, userId } = getDefaultParams(getState())
     const eventName = EVENT_NAMES.userLoggedIn
 
     const loggingManagerEvent = {
+      userId,
       eventName,
       authUserId,
       data: {
@@ -83,9 +100,9 @@ const trackUserAddRemoveRecipe = () => (
   async (dispatch, getState) => {
     const state = getState()
     const { basket, boxSummaryDeliveryDays } = state
-    const { authUserId, device, accessToken } = getDefaultParams(state)
+    const { device, accessToken, ...params } = getParams(state)
 
-    if (authUserId && basket.get('date') && boxSummaryDeliveryDays.get(basket.get('date'))) {
+    if (params.authUserId && basket.get('date') && boxSummaryDeliveryDays.get(basket.get('date'))) {
       const recipes = basket.get('recipes')
         .keySeq()
         .toArray()
@@ -102,7 +119,7 @@ const trackUserAddRemoveRecipe = () => (
       if (foundDaySlot) {
         const loggingManagerEvent = {
           eventName: EVENT_NAMES.basketUpdated,
-          authUserId,
+          ...params,
           data: {
             device,
             ...recipes,
@@ -184,12 +201,12 @@ const sendGoustoAppLinkSMS = ({ isAnonymousUser, goustoAppEventName: eventName, 
 
 const trackUserFreeFoodLinkShare = ({ target }) => (
   async (dispatch, getState) => {
-    const { authUserId, device, accessToken } = getDefaultParams(getState())
+    const { device, accessToken, ...params } = getParams(getState())
     const eventName = EVENT_NAMES.rafLinkShared
 
     const loggingManagerEvent = {
       eventName,
-      authUserId,
+      ...params,
       data: {
         device,
         target,
@@ -230,16 +247,16 @@ const trackSignupStarted = ({ email, promocode, allowMarketingEmail, previewOrde
 
 const trackSignupFinished = ({ email }) => (
   async (dispatch, getState) => {
-    const { authUserId, accessToken } = getDefaultParams(getState())
+    const { accessToken, device, ...params } = getDefaultParams(getState())
     const eventName = EVENT_NAMES.signupFinished
 
     const loggingManagerEvent = {
       eventName,
-      authUserId,
-      userId: authUserId,
+      ...params,
       isAnonymousUser: false,
       data: {
         email,
+        device
       }
     }
     const loggingManagerRequest = generateLoggingManagerRequest({
@@ -250,6 +267,7 @@ const trackSignupFinished = ({ email }) => (
       accessToken,
       loggingManagerRequest,
     })
+    triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
   }
 )
 

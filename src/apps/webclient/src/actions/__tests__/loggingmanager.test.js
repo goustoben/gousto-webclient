@@ -39,7 +39,7 @@ describe('trackUserFreeFoodPageView', () => {
     }),
     user: Immutable.fromJS({
       id: MOCK_USER_ID,
-    })
+    }),
   }
 
   beforeEach(() => {
@@ -66,8 +66,9 @@ describe('trackUserFreeFoodPageView', () => {
         accessToken: MOCK_ACCESS_TOKEN,
         loggingManagerRequest: {
           name: 'rafPage-visited',
-          id: MOCK_EVENT_ID,
-          authUserId: MOCK_USER_ID,
+          id: 'mock-event-id',
+          userId: 'mock-user-id',
+          authUserId: 'mock-user-id',
           isAnonymousUser: undefined,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
@@ -621,12 +622,12 @@ describe('Track user`s signup events', () => {
         loggingManagerRequest: {
           name: EVENT_NAMES.signupFinished,
           isAnonymousUser: false,
-          userId: undefined,
           authUserId: MOCK_USER_ID,
           id: MOCK_EVENT_ID,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
             email,
+            device: 'browser',
           },
         }
       })
