@@ -16,12 +16,20 @@ import {
   Text,
 } from '@gousto-internal/citrus-react'
 import GoustoImage from 'Image'
+import { useDispatch } from 'react-redux'
+
+import { marketBundleTracking } from 'actions/orderConfirmation'
+import { marketBundleBrowseItems } from 'actions/trackingKeys'
+import { ALL_PRODUCTS_CATEGORY_ID } from 'routes/OrderConfirmation/constants/categories'
+import { useProductNavBar } from 'routes/OrderConfirmation/context/productsNavBarContext'
+import { BundleProduct } from 'routes/OrderConfirmation/types'
 
 import css from './FakeDoorModal.css'
 
 interface Props {
   bundleName: string
-  bundleProducts: any[]
+  bundleProducts: BundleProduct[]
+  getFilteredProducts: (categoryId: string) => void
   isOpen: boolean
   close: () => void
 }
@@ -35,8 +43,20 @@ const locale = {
 }
 
 export const FakeDoorModal = (props: Props) => {
-  const { bundleName, bundleProducts, isOpen, close } = props
+  const { bundleName, bundleProducts, getFilteredProducts, isOpen, close } = props
   const { browseItems, callToAction, header, items, productTitle } = locale
+  const productNavRef = useProductNavBar()
+
+  const dispatch = useDispatch()
+
+  const handleFakeDoorPress = () => {
+    dispatch(marketBundleTracking(marketBundleBrowseItems))
+    close()
+    getFilteredProducts(ALL_PRODUCTS_CATEGORY_ID)
+    if (productNavRef?.current) {
+      productNavRef.current.setActive(1)
+    }
+  }
 
   return (
     <Modal name="FakeDoorModal" isOpen={isOpen}>
@@ -55,7 +75,7 @@ export const FakeDoorModal = (props: Props) => {
           </Text>
         </Box>
         <Box bg={Color.NeutralGrey_50} className={css.productsContainer}>
-          {bundleProducts.map((product: any) => (
+          {bundleProducts.map((product: BundleProduct) => (
             <div className={css.item} key={product.id} data-testid="bundleProducts">
               <GoustoImage media={product.image} title={product.title} className={css.img} />
               <Box className={css.details}>
@@ -68,7 +88,9 @@ export const FakeDoorModal = (props: Props) => {
         </Box>
       </ModalBody>
       <ModalFooter>
-        <ModalButton colorVariant={ButtonColorVariant.Primary}>{browseItems}</ModalButton>
+        <ModalButton colorVariant={ButtonColorVariant.Primary} onClick={handleFakeDoorPress}>
+          {browseItems}
+        </ModalButton>
       </ModalFooter>
     </Modal>
   )

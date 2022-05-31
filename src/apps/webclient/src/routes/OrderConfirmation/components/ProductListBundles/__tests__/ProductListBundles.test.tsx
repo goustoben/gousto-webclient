@@ -3,7 +3,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 
 import { ProductListBundles } from '..'
-import { mockBundlesData } from '../../config'
+import { TestBundle1, TestBundle2 } from '../../../productBundles/bundlesData'
 
 jest.mock('../../ProductBundle', () => ({
   ProductBundle: () => <div className="productBundle" />,
@@ -14,9 +14,8 @@ const assertProductBundlesLength = (container: any, length: number) => {
 }
 
 describe('<ProductListBundles />', () => {
-  const mockProps = { products: mockBundlesData }
-
   test('Should render ProductListBundles with props', () => {
+    const mockProps = { products: [TestBundle1, TestBundle2], getFilteredProducts: jest.fn() }
     const { container } = render(<ProductListBundles {...mockProps} />)
 
     assertProductBundlesLength(container, 2)
@@ -24,16 +23,16 @@ describe('<ProductListBundles />', () => {
   })
 
   test('Should render one ProductBundle', () => {
-    const { container } = render(
-      <ProductListBundles {...mockProps} products={[mockBundlesData[0]]} />,
-    )
+    const mockProps = { products: [TestBundle1], getFilteredProducts: jest.fn() }
+    const { container } = render(<ProductListBundles {...mockProps} />)
 
     assertProductBundlesLength(container, 1)
     expect(screen.getByTestId('ProductListBundlesPresentation')).toBeInTheDocument()
   })
 
   test('Should not render ProductListBundles without products', () => {
-    const { container } = render(<ProductListBundles {...mockProps} products={null} />)
+    const mockProps = { products: null, getFilteredProducts: jest.fn() }
+    const { container } = render(<ProductListBundles {...mockProps} />)
 
     assertProductBundlesLength(container, 0)
     expect(screen.queryByText('ProductListBundlesPresentation')).toBeNull()
