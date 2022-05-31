@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Link } from '@gousto-internal/citrus-react'
 import { shallow } from 'enzyme'
 
 import * as MenuHooks from 'routes/Menu/domains/menu'
@@ -11,9 +12,10 @@ import { RecipeTile } from './RecipeTile'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
 
+const dispatchMock = jest.fn()
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useDispatch: jest.fn().mockImplementation(() => jest.fn()),
+  useDispatch: jest.fn().mockImplementation(() => dispatchMock),
   useSelector: jest.fn(),
 }))
 
@@ -26,6 +28,10 @@ jest.mock('routes/Menu/domains/menu/internal/useAlternativeOptions', () => ({
   useAlternativeOptions: () => ({
     getAlternativeOptionsForRecipe: () => [],
   }),
+}))
+
+jest.mock('containers/OptimizelyRollouts', () => ({
+  useIsOptimizelyFeatureEnabled: jest.fn().mockImplementation(() => true),
 }))
 
 describe('RecipeTile', () => {
@@ -120,6 +126,22 @@ describe('RecipeTile', () => {
 
     test('should have class of recipeTileIsFineDineIn', () => {
       expect(wrapper.find('.recipeTileIsFineDineIn')).toHaveLength(0)
+    })
+  })
+
+  describe('When: RecipeTile "More description ->" Link experiment is on', () => {
+    test('"More description ->" link should be presented in tile', () => {
+      const link = wrapper.find(Link)
+
+      expect(link.contains('More details')).toBe(true)
+    })
+
+    test('"More description ->" click event should trigger dispatch', () => {
+      const link = wrapper.find(Link)
+
+      link.simulate('click', { stopPropagation() {} })
+
+      expect(dispatchMock).toHaveBeenCalledTimes(1)
     })
   })
 })
