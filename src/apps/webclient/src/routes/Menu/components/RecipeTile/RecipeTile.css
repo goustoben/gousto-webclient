@@ -125,6 +125,11 @@
   }
 }
 
+.recipeTileWithLinkTitle {
+  flex: auto;
+  margin-bottom: 0;
+}
+
 .recipeTagHolder {
   position: absolute;
   top: 0.5rem;

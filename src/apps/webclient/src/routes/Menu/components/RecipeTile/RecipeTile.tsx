@@ -1,14 +1,16 @@
 import React, { SyntheticEvent } from 'react'
 
+import { Box, Icon, IconVariant, Link, Color, colors } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
 
-import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
+import { DeviceType, useDeviceType } from 'hooks/useDeviceType'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
 
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useRecipeReference } from '../../context/recipeReferenceContext'
-import { Title, BrandTag } from '../Recipe'
+import { BrandTag, Title } from '../Recipe'
 import { RecipeTag } from '../RecipeTag'
+import { useGetRecipeTileLinkData } from './Hooks'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
 import { VariantHeader } from './VariantHeader'
@@ -28,6 +30,8 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   currentCollectionId: categoryId,
   onClick,
 }) => {
+  const { isRecipeTileLinkVisible, dispatchTrackClickMoreRecipeDetails } =
+    useGetRecipeTileLinkData()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)
@@ -52,6 +56,11 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   const handleOnClick = (e: SyntheticEvent) => {
     e.stopPropagation()
     onClick(recipeId, categoryId, recipeReference)
+  }
+
+  const handleOnRecipeTileLinkClick = (e: SyntheticEvent) => {
+    dispatchTrackClickMoreRecipeDetails()
+    handleOnClick(e)
   }
 
   // alternative options include the recipe itself
@@ -98,7 +107,39 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
         >
           <BrandTag />
 
-          <Title className={css.recipeTileTitle} />
+          <Title
+            className={classnames(css.recipeTileTitle, {
+              [css.recipeTileWithLinkTitle]: isRecipeTileLinkVisible,
+            })}
+          />
+
+          {isRecipeTileLinkVisible && (
+            <Box maxWidth="6.25rem" flexBasis="100%">
+              {/* FYI: By design we should use link, and we already have <Link /> component */}
+              {/* in our design system. Implementing component which looks like <Link /> is awkward. */}
+              {/* Also, we don't want this link to lead anywhere, that's why lint should be disabled. */}
+              {/* And such option supported by citrus, but not by eslint config. */}
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <Link
+                onClick={handleOnRecipeTileLinkClick}
+                size={1}
+                style={{ position: 'relative', width: '100%' }}
+              >
+                More details
+                <Icon
+                  name="arrow_right"
+                  variant={IconVariant.Confirmation}
+                  size={4}
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '0.125rem',
+                    color: colors[Color.Secondary_600],
+                  }}
+                />
+              </Link>
+            </Box>
+          )}
 
           <RecipeTilePurchaseInfo
             originalId={originalId}
