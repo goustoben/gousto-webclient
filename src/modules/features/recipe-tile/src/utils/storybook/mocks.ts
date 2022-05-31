@@ -2,15 +2,17 @@
 export const getMocks = ({
   isRecipeInBasket = false,
   numberOfAlternatives = 2,
-  cookingTime,
+  title = "A Recipe Title",
+  cookingTime = 5,
 }: {
   isRecipeInBasket?: boolean;
   numberOfAlternatives?: number;
+  title?: string;
   cookingTime?: number;
 }) => {
   const recipe = {
     id: "12345",
-    title: "A Recipe Title",
+    title,
     cookingTime,
   };
 
