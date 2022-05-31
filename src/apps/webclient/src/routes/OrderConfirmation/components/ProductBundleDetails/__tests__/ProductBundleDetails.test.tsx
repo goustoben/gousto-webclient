@@ -3,11 +3,12 @@ import React from 'react'
 import { ModalProvider } from '@gousto-internal/citrus-react'
 import { render } from '@testing-library/react'
 
-import { mockBundlesData } from '../../config'
+import { TestBundle1 } from 'routes/OrderConfirmation/productBundles/bundlesData'
+
 import { ProductBundleDetails } from '../ProductBundleDetails'
 
 describe('<ProductBundleDetails />', () => {
-  const mockProps = { ...mockBundlesData[0], isOpen: true, close: jest.fn() }
+  const mockProps = { ...TestBundle1, isOpen: true, close: jest.fn() }
 
   test('Should render ProductBundleDetails when modal is open', () => {
     const { getAllByTestId, getByText } = render(

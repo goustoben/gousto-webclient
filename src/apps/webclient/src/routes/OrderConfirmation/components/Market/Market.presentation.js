@@ -73,14 +73,16 @@ const productPropType = PropTypes.arrayOf(
 const propTypes = {
   ageVerified: PropTypes.bool,
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
-  bundlesProducts: PropTypes.shape({
-    id: PropTypes.number,
-    bundleName: PropTypes.string,
-    bundleDescription: PropTypes.string,
-    bundleImage: PropTypes.string,
-    bundlePrice: PropTypes.string,
-    bundlesProducts: PropTypes.arrayOf(productPropType),
-  }),
+  bundlesProducts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      bundleName: PropTypes.string,
+      bundleDescription: PropTypes.string,
+      bundleImage: PropTypes.string,
+      bundlePrice: PropTypes.string,
+      bundlesProducts: PropTypes.arrayOf(productPropType),
+    }),
+  ),
   categoriesForNavBar: PropTypes.objectOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -188,7 +190,12 @@ const MarketPresentation = ({
               trackingCategory={trackingCategory}
             />
           )}
-          {showOccasions && <ProductListBundles products={bundlesProducts} />}
+          {showOccasions && (
+            <ProductListBundles
+              getFilteredProducts={getFilteredProducts}
+              products={bundlesProducts}
+            />
+          )}
           {showDefault && (
             <ProductList
               products={filteredProducts || products}

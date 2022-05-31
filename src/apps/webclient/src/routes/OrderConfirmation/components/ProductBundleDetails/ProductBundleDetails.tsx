@@ -13,11 +13,12 @@ import {
   ModalHeader,
   Paragraph,
 } from '@gousto-internal/citrus-react'
+import { fromJS } from 'immutable'
 
 import { getAllergenListFromAttributes } from 'components/Product/Detail/Detail'
 import { Divider } from 'routes/Account/Subscription/components/Divider'
 import { SubIngredients } from 'routes/Menu/components/Detail/SubIngredients'
-import { Product } from 'routes/OrderConfirmation/types'
+import { BundleProduct } from 'routes/OrderConfirmation/types'
 
 import css from './ProductBundleDetails.css'
 
@@ -26,7 +27,7 @@ interface Props {
   bundleImage: string
   bundleName: string
   bundlePrice: string
-  bundleProducts: any[]
+  bundleProducts: BundleProduct[]
   isOpen: boolean
   close: () => void
 }
@@ -57,7 +58,7 @@ export const ProductBundleDetails = (props: Props) => {
         <Box className={css.divider}>
           <Divider />
         </Box>
-        {bundleProducts.map((product: Product) => (
+        {bundleProducts.map((product: BundleProduct) => (
           <Box key={product.id} data-testid="bundleProducts">
             <Paragraph className={css.bundleTitle} fontFamily={FontFamily.SemiBold}>
               {product.title}
@@ -65,7 +66,7 @@ export const ProductBundleDetails = (props: Props) => {
             <SubIngredients
               className={css.productDetailsDescription}
               subIngredients={product.description}
-              allergens={getAllergenListFromAttributes(product.attributes)}
+              allergens={getAllergenListFromAttributes(fromJS(product.attributes))}
             />
           </Box>
         ))}

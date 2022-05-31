@@ -11,6 +11,10 @@ export const getOrderNumPortion = createSelector(getBasket, (basket) =>
   basket.getIn(['orderDetails', 'box', 'numPortions'], 0),
 )
 
+export const getOrderWhenStartDate = createSelector(getBasket, (basket) =>
+  basket.getIn(['orderDetails', 'period', 'whenStart'], ''),
+)
+
 export const getOrderRecipes = createSelector(
   getOrderRecipeItems,
   getOrderNumPortion,

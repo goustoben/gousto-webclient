@@ -19,6 +19,7 @@ import {
   mockProducts,
   mockProjectsCategories,
   mockProductsStock,
+  mockBundlesData,
 } from '../../config'
 import { Market } from '../Market'
 
@@ -34,6 +35,10 @@ jest.mock('containers/OptimizelyRollouts', () => ({
 
 jest.mock('routes/OrderConfirmation/hooks/useBundlesExperiment.hook', () => ({
   useIsBundlesEnabled: jest.fn().mockReturnValue(false),
+}))
+
+jest.mock('routes/OrderConfirmation/productBundles/utils', () => ({
+  getBundles: jest.fn().mockReturnValue(mockBundlesData),
 }))
 
 jest.mock('actions/products', () => ({

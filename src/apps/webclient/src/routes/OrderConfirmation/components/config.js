@@ -569,7 +569,7 @@ export const mockGetProductRecipePairingsState = () => {
 /* eslint-disable */
 export const mockBundlesData = [
   {
-    id: 1,
+    id: '57c2e768-1f65-4675-827d-256b22cdd88f',
     bundleName: 'Zesty Date Night For Two',
     bundleDescription: 'Take your evening meal to another level',
     bundleImage:
@@ -627,7 +627,8 @@ export const mockBundlesData = [
     ],
   },
   {
-    id: 2,
+    id: 'ce567f3b-53c3-4953-925f-c0a1125ebdfb',
+    bundleStartDate: ['2022/05/01', '2022/05/08'],
     bundleName: 'The Big Match Bundle',
     bundleDescription: 'Get behind a winning team of snacks',
     bundleImage:

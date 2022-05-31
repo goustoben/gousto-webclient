@@ -13,6 +13,11 @@ import {
   Paragraph,
 } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
+import { useDispatch } from 'react-redux'
+
+import { marketBundleTracking } from 'actions/orderConfirmation'
+import { marketBundleAdded, marketBundleDetails } from 'actions/trackingKeys'
+import { BundleProduct } from 'routes/OrderConfirmation/types'
 
 import { FakeDoorModal } from '../FakeDoorModal/FakeDoorModal'
 import { ProductBundleDetails } from '../ProductBundleDetails/ProductBundleDetails'
@@ -25,17 +30,29 @@ interface Props {
     bundleDescription: string
     bundleName: string
     bundlePrice: string
-    bundleProducts: any[]
+    bundleProducts: BundleProduct[]
   }
+  getFilteredProducts: (categoryId: string) => void
 }
 
-const ProductBundle = ({ bundleProduct }: Props) => {
+const ProductBundle = ({ bundleProduct, getFilteredProducts }: Props) => {
   const [bundleDetailsToggle, setBundleDetailsToggle] = useState<boolean>(false)
   const [fakeDoorToggle, setFakeDoorToggle] = useState<boolean>(false)
   const { bundleDescription, bundleImage, bundleName, bundlePrice, bundleProducts } = bundleProduct
+  const dispatch = useDispatch()
 
   const toggleDetailsModal = () => setBundleDetailsToggle(!bundleDetailsToggle)
   const toggleFakeDoorModal = () => setFakeDoorToggle(!fakeDoorToggle)
+
+  const handleBundleDetailsPress = () => {
+    dispatch(marketBundleTracking(marketBundleDetails, bundleProduct))
+    toggleDetailsModal()
+  }
+
+  const handleFakeDoorPress = () => {
+    dispatch(marketBundleTracking(marketBundleAdded, bundleProduct))
+    toggleFakeDoorModal()
+  }
 
   return (
     <ModalProvider>
@@ -44,7 +61,7 @@ const ProductBundle = ({ bundleProduct }: Props) => {
           <button
             type="button"
             className={classnames(css.resetButtonStyle, css.bundleImage)}
-            onClick={toggleDetailsModal}
+            onClick={handleBundleDetailsPress}
           >
             <Image src={bundleImage} alt={bundleName} />
           </button>
@@ -53,7 +70,7 @@ const ProductBundle = ({ bundleProduct }: Props) => {
               <button
                 type="button"
                 className={classnames(css.resetButtonStyle, css.bundleInfo)}
-                onClick={toggleDetailsModal}
+                onClick={handleBundleDetailsPress}
               >
                 <Heading6 className="bundleTitle" size={3}>
                   {bundleName}
@@ -61,7 +78,7 @@ const ProductBundle = ({ bundleProduct }: Props) => {
                 <Paragraph className={css.bundleDescription}>{bundleDescription}</Paragraph>
               </button>
             </Box>
-            {bundleProducts.map((product: any) => (
+            {bundleProducts.map((product: BundleProduct) => (
               <h3 key={product.id} className={css.bundles}>
                 {product.quantity} x {product.title}
               </h3>
@@ -74,7 +91,7 @@ const ProductBundle = ({ bundleProduct }: Props) => {
                 <Button
                   colorVariant={ButtonColorVariant.Secondary}
                   size={ButtonSize.Medium}
-                  onClick={toggleFakeDoorModal}
+                  onClick={handleFakeDoorPress}
                   width="100%"
                 >
                   Add
@@ -89,7 +106,12 @@ const ProductBundle = ({ bundleProduct }: Props) => {
           close={toggleDetailsModal}
           isOpen={bundleDetailsToggle}
         />
-        <FakeDoorModal {...bundleProduct} close={toggleFakeDoorModal} isOpen={fakeDoorToggle} />
+        <FakeDoorModal
+          {...bundleProduct}
+          close={toggleFakeDoorModal}
+          getFilteredProducts={getFilteredProducts}
+          isOpen={fakeDoorToggle}
+        />
       </section>
     </ModalProvider>
   )

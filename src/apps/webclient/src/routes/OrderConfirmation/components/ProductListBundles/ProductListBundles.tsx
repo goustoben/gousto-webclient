@@ -1,21 +1,30 @@
 import React, { FC } from 'react'
 
 import Loading from 'routes/Menu/Loading'
+import { Bundle } from 'routes/OrderConfirmation/types'
 
 import { ProductBundle } from '../ProductBundle'
 
 import css from './ProductListBundles.css'
 
 interface ProductListBundlesProps {
-  products: any | null // types to come later
+  products: Bundle[] | null
+  getFilteredProducts: (categoryId: string) => void
 }
 
-const ProductListBundles: FC<ProductListBundlesProps> = ({ products = null }) => (
+const ProductListBundles: FC<ProductListBundlesProps> = ({
+  products = null,
+  getFilteredProducts,
+}) => (
   <>
     {products ? (
       <div data-testid="ProductListBundlesPresentation" className={css.productBundleList}>
-        {products.map((product: any) => (
-          <ProductBundle key={product.id} bundleProduct={product} />
+        {products.map((bundleProduct: Bundle) => (
+          <ProductBundle
+            key={bundleProduct.id}
+            bundleProduct={bundleProduct}
+            getFilteredProducts={getFilteredProducts}
+          />
         ))}
       </div>
     ) : (

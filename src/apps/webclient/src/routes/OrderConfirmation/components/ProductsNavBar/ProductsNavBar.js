@@ -3,6 +3,8 @@ import React from 'react'
 import { CollectionsNavigation, CollectionsNavigationItem } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
+import { useProductNavBar } from '../../context/productsNavBarContext'
+
 const propTypes = {
   categories: PropTypes.objectOf(
     PropTypes.shape({
@@ -23,9 +25,10 @@ const getDefaultCategoryId = (categories) => {
 
 const ProductsNavBar = ({ categories, onSelectCategory }) => {
   const defaultCategoryId = getDefaultCategoryId(categories)
+  const productNavRef = useProductNavBar()
 
   return (
-    <CollectionsNavigation>
+    <CollectionsNavigation ref={productNavRef}>
       {Object.keys(categories).map((categoryId) => {
         const { id, label, count } = categories[categoryId]
 

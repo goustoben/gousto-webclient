@@ -105,3 +105,23 @@ export type Attribute = {
   unit: null | string
   value: string
 }
+
+export type Bundle = {
+  id: string
+  bundleName: string
+  bundleDescription: string
+  bundleImage: string
+  bundlePrice: string
+  bundleProducts: BundleProduct[]
+  bundleStartDate?: string[]
+}
+
+export type BundleProduct = {
+  attributes?: Attribute[]
+  title: string
+  image: string
+  id: string
+  description: string
+  sku: string
+  quantity: number
+}

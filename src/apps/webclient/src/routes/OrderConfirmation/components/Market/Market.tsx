@@ -23,8 +23,11 @@ import {
   OCCASIONS_CATEGORY_NAME,
   OCCASIONS_CATEGORY_ID,
 } from '../../constants/categories'
+import { ProductNavBarProvider } from '../../context/productsNavBarContext'
 import { useIsBundlesEnabled } from '../../hooks/useBundlesExperiment.hook'
 import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
+// import { getBundles } from '../../productBundles/utils'
+import { getOrderWhenStartDate } from '../../selectors/orderDetails'
 import {
   getProductsRecipePairingsWithRecipes,
   getProductRecipePairingsTotalProducts,
@@ -70,6 +73,7 @@ const Market = (props: Props) => {
   const order = useSelector(getBasketOrderDetails)
   const productRecipePairings = useSelector(getProductsRecipePairingsWithRecipes)
   const productRecipePairingsTotalProducts = useSelector(getProductRecipePairingsTotalProducts)
+  const orderWhenStartDate = useSelector(getOrderWhenStartDate)
 
   useEffect(() => {
     if (
@@ -108,14 +112,22 @@ const Market = (props: Props) => {
 
   useEffect(() => {
     if (bundlesExperimentEnabled && pairingsExperimentEnabled === false) {
-      const occasions: NavCategories = {
-        occasions: { id: OCCASIONS_CATEGORY_ID, label: OCCASIONS_CATEGORY_NAME, count: 3 },
+      const productBundles = mockBundlesData // For testing on staging
+      // const productBundles = getBundles(orderWhenStartDate)
+      if (productBundles.length > 0) {
+        const occasions: NavCategories = {
+          occasions: {
+            id: OCCASIONS_CATEGORY_ID,
+            label: OCCASIONS_CATEGORY_NAME,
+            count: productBundles.length,
+          },
+        }
+        setExperimentCategories({ ...occasions, ...categoriesForNavBar })
+        setTrackingCategoryTitle(OCCASIONS_CATEGORY_NAME)
+        setBundlesProducts(productBundles)
       }
-      setExperimentCategories({ ...occasions, ...categoriesForNavBar })
-      setTrackingCategoryTitle(OCCASIONS_CATEGORY_NAME)
-      setBundlesProducts(mockBundlesData)
     }
-  }, [bundlesExperimentEnabled, pairingsExperimentEnabled, categoriesForNavBar])
+  }, [bundlesExperimentEnabled, pairingsExperimentEnabled, categoriesForNavBar, orderWhenStartDate])
 
   const toggleOrderSummary = () => {
     setIsOrderSummaryOpen(!isOrderSummaryOpen)
@@ -177,28 +189,30 @@ const Market = (props: Props) => {
   const { ageVerified, toggleAgeVerificationPopUp } = props
 
   return (
-    <MarketPresentation
-      ageVerified={ageVerified}
-      basket={basket}
-      categoriesForNavBar={experimentCategories || categoriesForNavBar}
-      filteredProducts={filteredProducts}
-      getFilteredProducts={getFilteredProducts}
-      isOrderSummaryOpen={isOrderSummaryOpen}
-      toggleOrderSummary={toggleOrderSummary}
-      onOrderSave={onOrderSave}
-      products={products}
-      productsCategories={productsCategories}
-      productsLoadError={productsLoadError}
-      saveError={basketSaveError}
-      saveRequired={basketSaveRequired}
-      saving={basketSavePending}
-      showOrderConfirmationReceipt={!!order}
-      toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-      bundlesProducts={bundlesProducts}
-      trackingCategory={trackingCategoryTitle}
-      productRecipePairings={productRecipePairings}
-      isLoading={isLoading}
-    />
+    <ProductNavBarProvider>
+      <MarketPresentation
+        ageVerified={ageVerified}
+        basket={basket}
+        categoriesForNavBar={experimentCategories || categoriesForNavBar}
+        filteredProducts={filteredProducts}
+        getFilteredProducts={getFilteredProducts}
+        isOrderSummaryOpen={isOrderSummaryOpen}
+        toggleOrderSummary={toggleOrderSummary}
+        onOrderSave={onOrderSave}
+        products={products}
+        productsCategories={productsCategories}
+        productsLoadError={productsLoadError}
+        saveError={basketSaveError}
+        saveRequired={basketSaveRequired}
+        saving={basketSavePending}
+        showOrderConfirmationReceipt={!!order}
+        toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+        bundlesProducts={bundlesProducts}
+        trackingCategory={trackingCategoryTitle}
+        productRecipePairings={productRecipePairings}
+        isLoading={isLoading}
+      />
+    </ProductNavBarProvider>
   )
 }
 

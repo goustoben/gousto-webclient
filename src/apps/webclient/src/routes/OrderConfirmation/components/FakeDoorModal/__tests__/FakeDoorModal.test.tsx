@@ -1,16 +1,37 @@
 import React from 'react'
 
 import { ModalProvider } from '@gousto-internal/citrus-react'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
+import * as Redux from 'react-redux'
 
-import { mockBundlesData } from '../../config'
+import { marketBundleTracking } from 'actions/orderConfirmation'
+
+import { TestBundle1 } from '../../../productBundles/bundlesData'
 import { FakeDoorModal } from '../FakeDoorModal'
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(),
+}))
+
+jest.mock('actions/orderConfirmation', () => ({
+  ...jest.requireActual('actions/orderConfirmation'),
+  marketBundleTracking: jest.fn(),
+}))
+
 describe('<FakeDoorModal />', () => {
-  const mockProps = { ...mockBundlesData[0], isOpen: true, close: jest.fn() }
+  const mockProps = {
+    ...TestBundle1,
+    isOpen: true,
+    getFilteredProducts: jest.fn(),
+    close: jest.fn(),
+  }
+  const dispatch = jest.fn()
+  jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
+  ;(marketBundleTracking as jest.Mock).mockReturnValue(marketBundleTracking)
 
   test('Should render FakeDoorModal when modal is open', () => {
-    const { getAllByTestId, getByText } = render(
+    const { getAllByTestId, getByRole, getByText } = render(
       <ModalProvider>
         <FakeDoorModal {...mockProps} />
       </ModalProvider>,
@@ -18,6 +39,8 @@ describe('<FakeDoorModal />', () => {
     expect(getByText('Zesty Date Night For Two')).toBeInTheDocument()
     expect(getByText('1 x Percheron Chenin Blanc Viognier (750ml bottle)')).toBeInTheDocument()
     expect(getAllByTestId('bundleProducts')).toHaveLength(2)
+    fireEvent.click(getByRole('button', { name: 'Browse Items' }))
+    expect(dispatch).toBeCalledWith(marketBundleTracking)
   })
 
   test('Should not render FakeDoorModal when modal is closed', () => {
@@ -28,7 +51,7 @@ describe('<FakeDoorModal />', () => {
       </ModalProvider>,
     )
 
-    expect(queryByText('Gousto Market Occasions')).not.toBeInTheDocument()
+    expect(queryByText('Zesty Date Night For Two')).not.toBeInTheDocument()
     expect(queryByText('Percheron Chenin Blanc Viognier (750ml bottle)')).not.toBeInTheDocument()
     expect(queryAllByTestId('bundleProducts')).toHaveLength(0)
   })
