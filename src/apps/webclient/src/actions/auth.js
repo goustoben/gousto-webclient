@@ -17,6 +17,7 @@ import logger from 'utils/logger'
 import { redirect, documentLocation } from 'utils/window'
 import { getGoToMyGousto, getGoToMyDeliveries } from 'selectors/features'
 import { trackUserLogin } from 'actions/loggingmanager'
+import { feLoggingLogEvent, logLevels } from 'actions/log'
 import { isServer } from '../../server/utils/serverEnvironment'
 
 import { canUseWindow } from '../utils/browserEnvironment'
@@ -102,6 +103,7 @@ const authenticate = (email, password, rememberMe, recaptchaToken) => (
       const { data: authResponse } = await serverAuthenticate(email, password, rememberMe, recaptchaToken)
       dispatch(userAuthenticatedViaAPI(authResponse))
     } catch (err) {
+      dispatch(feLoggingLogEvent(logLevels.info, 'Login original error', err))
       if (err.status === 401) {
         err.message = config.FAILED_LOGIN_TEXT
       } else {
