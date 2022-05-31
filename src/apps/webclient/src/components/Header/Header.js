@@ -418,6 +418,8 @@ class Header extends React.PureComponent {
     }
     const shouldShowAbandonBasketModal = abandonBasketFeature && hasUserStartedNewSession
 
+    const showWhiteHeader = pathName === client.menu && doubleDeckerExperimentEnabled
+
     if (simple && !isAuthenticated) {
       return (
         <Fragment>
@@ -426,6 +428,7 @@ class Header extends React.PureComponent {
             className={mobileMenuOpen ? css.overlayOpen : css.overlay}
             homeUrl={mobileMenuItems[0].url}
             title={title}
+            showWhiteHeader={showWhiteHeader}
           />
           {hasLoginModal && this.renderLoginModal()}
         </Fragment>
@@ -448,7 +451,7 @@ class Header extends React.PureComponent {
             <div className={css.container}>
               <div
                 className={classNames(css.mainBar, {
-                  [css.menuHeader]: pathName === client.menu && doubleDeckerExperimentEnabled,
+                  [css.menuHeader]: showWhiteHeader,
                 })}
               >
                 <div className={css.mainContent}>
@@ -459,7 +462,7 @@ class Header extends React.PureComponent {
                     aria-label="Gousto Home button"
                   >
                     <span>
-                      {pathName === client.menu && doubleDeckerExperimentEnabled ? (
+                      {showWhiteHeader ? (
                         <Svg fileName="gousto-logo-red" className={css.logoDesktop} />
                       ) : (
                         <Svg fileName="gousto_logo" className={css.logoDesktop} />

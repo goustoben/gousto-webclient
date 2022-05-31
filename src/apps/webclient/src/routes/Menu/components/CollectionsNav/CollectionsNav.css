@@ -229,3 +229,9 @@
   animation-duration: 0.5s;
   animation-name: navBarTransition;
 }
+
+.doubleDeckerCollectionsNavWrapper {
+  @media ScreenXSMax {
+    padding-bottom: 3rem;
+  }
+}

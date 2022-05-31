@@ -231,7 +231,7 @@ class CollectionsNav extends React.PureComponent {
   }
 
   changeCollection = (collectionId) => {
-    const { changeCollectionById } = this.props
+    const { changeCollectionById, doubleDeckerExperimentEnabled } = this.props
     const { navBarOffsetTop } = this.state
     if (!collectionId) return
     changeCollectionById(collectionId)
@@ -241,7 +241,14 @@ class CollectionsNav extends React.PureComponent {
         top(document.body, position)
       }
     }
-    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > navBarOffsetTop + 1) {
+    if (doubleDeckerExperimentEnabled) {
+      if (window.pageYOffset > navBarOffsetTop + 1) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+      }
+    } else if (
+      collectionId !== ALL_RECIPES_COLLECTION_ID &&
+      window.pageYOffset > navBarOffsetTop + 1
+    ) {
       window.scrollTo(0, navBarOffsetTop)
     }
   }
