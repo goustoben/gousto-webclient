@@ -446,27 +446,69 @@ describe('getHelp reducer', () => {
 
   describe('given an action with type GET_HELP_VALIDATE_ORDER is received', () => {
     describe('when there is a payload', () => {
-      const MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
-      const OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS = ['25949ce8-d92c-43fa-8c0d-110d903d6e60', '7893dfhgjk-204c-4ded-9dac-12df03f265d6']
       const NUM_ORDERS_CHECKED = 4
       const NUM_ORDERS_COMPENSATED = 1
+      const PREVIOUS_ISSUES = [
+        {
+          ingredientUuid: '44417cd2-bdb0-48e2-b6a3-b75bdd8ba6b7',
+          recipeGoustoReference: '4061',
+          issueType: 'other_issue'
+        },
+        {
+          ingredientUuid: '528742df-d65f-45ca-b542-25bb77ac7461',
+          recipeGoustoReference: '4061',
+          issueType: 'other_issue'
+        },
+        {
+          ingredientUuid: '7893dfhgjk-204c-4ded-9dac-12df03f265d6',
+          recipeGoustoReference: '4062',
+          issueType: 'other_issue'
+        },
+        {
+          ingredientUuid: '4e949ce8-d92c-43fa-8c0d-110d903d6e60',
+          recipeGoustoReference: '4063',
+          issueType: 'mass_issue'
+        },
+      ]
+
+      const MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP = {
+        4063: ['4e949ce8-d92c-43fa-8c0d-110d903d6e60']
+      }
+
+      const OTHER_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP = {
+        4061: [
+          '44417cd2-bdb0-48e2-b6a3-b75bdd8ba6b7',
+          '528742df-d65f-45ca-b542-25bb77ac7461'
+        ],
+        4062: ['7893dfhgjk-204c-4ded-9dac-12df03f265d6']
+      }
 
       beforeEach(() => {
         newState = getHelp(getHelpInitialState, {
           type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
-          massIssueIneligibleIngredientUuids: MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
-          otherIssueIneligibleIngredientUuids: OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS,
+          previousIssues: PREVIOUS_ISSUES,
           numOrdersChecked: NUM_ORDERS_CHECKED,
           numOrdersCompensated: NUM_ORDERS_COMPENSATED,
         })
       })
 
-      test('massIssueIneligibleIngredientUuids state is set as that payload', () => {
-        expect(newState.get('massIssueIneligibleIngredientUuids').toJS()).toEqual(MASS_ISSUE_INELIGIBLE_INGREDIENT_UUIDS)
+      test('recipeGoustoReference is used as a key for ineligible ingriend uuids', () => {
+        const ineligibleIngredientUuids = [
+          ...Object.keys(MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP),
+          ...Object.keys(OTHER_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP),
+        ].sort()
+
+        const previousIssuesIngredientUuids = PREVIOUS_ISSUES.map(issue => issue.recipeGoustoReference)
+        const uniquePreviousIssuesIngredientUuids = [...new Set(previousIssuesIngredientUuids)].sort()
+        expect(ineligibleIngredientUuids).toEqual(uniquePreviousIssuesIngredientUuids)
       })
 
-      test('otherIssueIneligibleIngredientUuids state is set as that payload', () => {
-        expect(newState.get('otherIssueIneligibleIngredientUuids').toJS()).toEqual(OTHER_ISSUE_INELIGIBLE_INGREDIENT_UUIDS)
+      test('massIssueIneligibleIngrsByRecipeGRMap state is set as that payload', () => {
+        expect(newState.get('massIssueIneligibleIngrsByRecipeGRMap').toJS()).toEqual(MASS_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP)
+      })
+
+      test('otherIssueIneligibleIngrsByRecipeGRMap state is set as that payload', () => {
+        expect(newState.get('otherIssueIneligibleIngrsByRecipeGRMap').toJS()).toEqual(OTHER_ISSUE_INELIGIBLE_INGRS_BY_RECIPE_GR_MAP)
       })
 
       test('numOrdersChecked state is set as that payload', () => {

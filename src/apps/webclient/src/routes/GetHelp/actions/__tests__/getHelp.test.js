@@ -8,6 +8,7 @@ import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
 import * as menuApi from '../../apis/menu'
+import { validateOrder } from '../../apis/validateOrder'
 import { trackingKeys } from '../actionTypes'
 import * as getHelpActionsUtils from '../utils'
 import {
@@ -54,12 +55,12 @@ jest.mock('apis/deliveries')
 jest.mock('apis/orders')
 jest.mock('../transformers/recipeTransform')
 jest.mock('routes/Menu/apis/orderV2')
+jest.mock('../../apis/validateOrder')
 
 const applyDeliveryCompensation = safeJestMock(getHelpApi, 'applyDeliveryCompensation')
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
 const fetchRecipesWithIngredients = safeJestMock(menuApi, 'fetchRecipesWithIngredients')
 const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
-const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
 const getIsMultiComplaintLimitReachedLastFourWeeks = safeJestMock(orderSelectors, 'getIsMultiComplaintLimitReachedLastFourWeeks')
 const getIsBoxDailyComplaintLimitReached = safeJestMock(orderSelectors, 'getIsBoxDailyComplaintLimitReached')
 const getNumOrdersChecked = safeJestMock(selectors, 'getNumOrdersChecked')
@@ -1161,8 +1162,23 @@ describe('GetHelp action generators and thunks', () => {
       }
       const validationResponse = {
         valid: true,
-        massIssueIneligibleIngredientUuids: ['a', 'b'],
-        otherIssueIneligibleIngredientUuids: ['c', 'd'],
+        previousIssues: [
+          {
+            ingredientUuid: '44417cd2-bdb0-48e2-b6a3-b75bdd8ba6b7',
+            recipeGoustoReference: '4061',
+            issueType: 'other_issue'
+          },
+          {
+            ingredientUuid: '528742df-d65f-45ca-b542-25bb77ac7461',
+            recipeGoustoReference: '4061',
+            issueType: 'other_issue'
+          },
+          {
+            ingredientUuid: '4e949ce8-d92c-43fa-8c0d-110d903d6e60',
+            recipeGoustoReference: '4063',
+            issueType: 'mass_issue'
+          },
+        ],
         numOrdersChecked: 4,
         numOrdersCompensated: 2,
       }
@@ -1192,8 +1208,7 @@ describe('GetHelp action generators and thunks', () => {
         test('order validation details are dispatched correctly', () => {
           expect(dispatch).toHaveBeenCalledWith({
             type: 'GET_HELP_VALIDATE_ORDER',
-            massIssueIneligibleIngredientUuids: validationResponse.massIssueIneligibleIngredientUuids,
-            otherIssueIneligibleIngredientUuids: validationResponse.otherIssueIneligibleIngredientUuids,
+            previousIssues: validationResponse.previousIssues,
             numOrdersChecked: validationResponse.numOrdersChecked,
             numOrdersCompensated: validationResponse.numOrdersCompensated,
           })

@@ -9,12 +9,12 @@ export const getAccessToken = (state) => state.auth.get('accessToken')
 
 export const getError = (state, actionType) => state.error.get(actionType, null)
 
-export const getMassIssueIneligibleIngredientUuids = (state) => (
-  state.getHelp.get('massIssueIneligibleIngredientUuids').toJS()
+export const getMassIssueIneligibleIngrsByRecipeGRMap = (state) => (
+  state.getHelp.get('massIssueIneligibleIngrsByRecipeGRMap').toJS()
 )
 
-export const getOtherIssueIneligibleIngredientUuids = (state) => (
-  state.getHelp.get('otherIssueIneligibleIngredientUuids').toJS()
+export const getOtherIssueIneligibleIngrsByRecipeGRMap = (state) => (
+  state.getHelp.get('otherIssueIneligibleIngrsByRecipeGRMap').toJS()
 )
 
 export const getNumOrdersChecked = (state) => (

@@ -1,4 +1,4 @@
-import fetch, { fetchRaw } from 'utils/fetch'
+import { fetch, fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 
 const fetchRefundAmount = (accessToken, body) => {
@@ -19,14 +19,6 @@ const setComplaint = (accessToken, body) => {
 
 const validateIngredients = (accessToken, body) => {
   const url = `${endpoint('ssr', 2)}/validate-ingredients`
-
-  return fetch(accessToken, url, body, 'POST', 'default', {
-    'Content-Type': 'application/json'
-  }, null, false)
-}
-
-const validateOrder = (accessToken, body) => {
-  const url = `${endpoint('ssr')}/ssr/validate`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
@@ -122,7 +114,6 @@ export {
   fetchRefundAmount,
   setComplaint,
   validateIngredients,
-  validateOrder,
   fetchOrderIssues,
   shouldShowEntryPointTooltip,
   applyDeliveryCompensation,

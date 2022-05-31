@@ -7,7 +7,7 @@ import { IngredientsPresentation } from './Ingredients.presentation'
 import { recipePropType } from '../getHelpPropTypes'
 
 const propTypes = {
-  massIssueIneligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  massIssueIneligibleIngrsByRecipeGRMap: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   isMultiComplaintLimitReachedLastFourWeeks: PropTypes.bool.isRequired,
   hasRepetitiveIssues: PropTypes.bool,
   isBoxDailyComplaintLimitReached: PropTypes.bool.isRequired,
@@ -150,7 +150,7 @@ class Ingredients extends PureComponent {
   }
 
   render() {
-    const { recipes, massIssueIneligibleIngredientUuids, isValidateOrderLoading } = this.props
+    const { recipes, massIssueIneligibleIngrsByRecipeGRMap, isValidateOrderLoading } = this.props
     const { selectedIngredients } = this.state
     const hasSelectAnyIngredient = selectedIngredients.size > 0
     const buttonLeftUrl = client.getHelp.index
@@ -164,7 +164,7 @@ class Ingredients extends PureComponent {
           changeHandler={this.changeHandler}
           cannotContinue={!hasSelectAnyIngredient}
           continueClick={this.continueClickHandler}
-          massIssueIneligibleIngredientUuids={massIssueIneligibleIngredientUuids}
+          massIssueIneligibleIngrsByRecipeGRMap={massIssueIneligibleIngrsByRecipeGRMap}
           recipes={recipes}
           selectedIngredients={selectedIngredients}
         />

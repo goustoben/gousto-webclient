@@ -43,7 +43,7 @@ describe('Given the customer is logged in', () => {
       cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
       cy.route('GET', /menu\/v1\/recipes/, 'fixture:getHelp/menu/recipeWithIngredientsFromMenu').as('recipesWithIngredientsRoute')
       cy.fixture('getHelp/ssr/validate').as('validate')
-      cy.route('POST', /ssr\/v1\/ssr\/validate/, '@validate')
+      cy.route('GET', /ssr\/v3\/validate/, '@validate')
 
       clickMyGousto()
 
@@ -171,7 +171,7 @@ describe('Given the customer is logged in', () => {
   describe('When their order is eligible for ingredients refund and they visit the Ingredients URL directly', () => {
     beforeEach(() => {
       cy.fixture('getHelp/ssr/validate').as('validate')
-      cy.route('POST', /ssr\/v1\/ssr\/validate/, '@validate')
+      cy.route('GET', /ssr\/v3\/validate/, '@validate')
       cy.fixture('getHelp/order/order26May20').as('urlOrder')
       cy.route('GET', /order\/16269494/, '@urlOrder')
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
