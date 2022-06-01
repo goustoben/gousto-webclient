@@ -194,6 +194,6 @@ const mockHooks = ({
   }
 
   if (recipeId !== undefined) {
-    useRecipeMock.mockImplementation(() => ({ id: recipeId }));
+    useRecipeMock.mockImplementation(() => ({ id: recipeId, title: "A Recipe Title" }));
   }
 };
