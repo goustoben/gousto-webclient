@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from 'react'
 
-import { Box, Icon, IconVariant, Link, Color, colors } from '@gousto-internal/citrus-react'
+import { Box, Icon, Link } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
 
 import { DeviceType, useDeviceType } from 'hooks/useDeviceType'
@@ -123,19 +123,17 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
               <Link
                 onClick={handleOnRecipeTileLinkClick}
                 size={1}
-                style={{ position: 'relative', width: '100%' }}
+                className={classnames(css.recipeTileLink, {
+                  [css.recipeTileFineDineInLink]: isFineDineIn,
+                })}
               >
                 More details
                 <Icon
                   name="arrow_right"
-                  variant={IconVariant.Confirmation}
                   size={4}
-                  style={{
-                    position: 'absolute',
-                    right: 0,
-                    top: '0.125rem',
-                    color: colors[Color.Secondary_600],
-                  }}
+                  className={classnames(css.recipeTileLinkIcon, {
+                    [css.recipeTileFineDineInLinkIcon]: isFineDineIn,
+                  })}
                 />
               </Link>
             </Box>

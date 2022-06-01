@@ -1,5 +1,5 @@
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
-@value White, Blackberry from 'styles/colors.css';
+@value White, Blackberry, BlueBase from 'styles/colors.css';
 @value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
 
 .recipeTile {
@@ -142,4 +142,55 @@
 .recipeTagHolderShifted {
   position: absolute;
   top: 2.625rem;
+}
+
+/* Everything below is a part of experiment
+ * https://gousto.atlassian.net/browse/TG-6541
+ */
+
+@value color-S200 #A29EFF;
+@value color-S600 #412dee;
+
+.recipeTileLink {
+  position: relative;
+  width: 100%;
+}
+
+/*
+ * FYI: this color not presented in colors.module.css
+ * Also there is no way to override color for Citrus/Link
+ * `> span` also requierd because this style should apply not text
+ * not to button
+ */
+.recipeTileFineDineInLink {
+  box-shadow: 0 1px 0 0 color-S200;
+
+  > span {
+    color: color-S200;
+  }
+
+  &:hover {
+    box-shadow: 0 1px 0 0 BlueBase;
+
+    > span {
+      color: BlueBase;
+    }
+  }
+}
+
+.recipeTileLinkIcon {
+  position: absolute;
+  right: 0;
+  top: 0.125rem;
+  color: BlueBase;
+}
+.recipeTileLink:hover .recipeTileLinkIcon {
+  color: color-S600;
+}
+
+.recipeTileFineDineInLinkIcon {
+  color: color-S200;
+}
+.recipeTileLink:hover .recipeTileFineDineInLinkIcon {
+  color: BlueBase;
 }
