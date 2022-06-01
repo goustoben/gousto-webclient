@@ -51,7 +51,7 @@ describe('<RepetitiveIngredientsIssues />', () => {
   })
 
   test('calls validateLatestOrder with params', () => {
-    expect(VALIDATE_LATEST_ORDER).toHaveBeenCalledWith({ orderId: ORDER_ID, costumerId: USER_ID})
+    expect(VALIDATE_LATEST_ORDER).toHaveBeenCalledWith({ orderId: ORDER_ID, customerId: USER_ID})
   })
 
   describe('when the Get in touch CTA is clicked', () => {
@@ -140,4 +140,3 @@ describe('<RepetitiveIngredientsIssues />', () => {
     })
   })
 })
-

@@ -29,6 +29,12 @@ describe('<Ingredients />', () => {
   }
   const order = {
     id: '888',
+    recipeDetailedItems: {
+      1: 'recipeGoustoReference_1',
+      2: 'recipeGoustoReference_2',
+      3: 'recipeGoustoReference_3',
+      4: 'recipeGoustoReference_4',
+    }
   }
 
   let continueButton
@@ -239,8 +245,11 @@ describe('<Ingredients />', () => {
         expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
         expect(validateSelectedIngredients).toHaveBeenCalledWith({
           accessToken: 'user-access-token',
-          costumerId: '777',
-          ingredientUuids: ['2222'],
+          customerId: '777',
+          ingredients: [{
+            ingredient_uuid: '2222',
+            recipe_gousto_reference: 'recipeGoustoReference_2',
+          }],
           orderId: '888',
         })
       })
@@ -278,7 +287,7 @@ describe('<Ingredients />', () => {
         await continueButton.prop('onClick')()
 
         expect(storeSelectedIngredients).toHaveBeenCalledWith([
-          { ingredientUuid: '2222', label: 'pasta', recipeId: '2' }
+          { ingredientUuid: '2222', label: 'pasta', recipeId: '2', recipeGoustoReference: 'recipeGoustoReference_2' }
         ])
       })
     })
@@ -295,7 +304,7 @@ describe('<Ingredients />', () => {
 
         test('calls validate order endpoint', () => {
           expect(validateLatestOrder).toHaveBeenCalledWith(
-            { costumerId: '777', orderId: '888' }
+            { customerId: '777', orderId: '888' }
           )
         })
       })

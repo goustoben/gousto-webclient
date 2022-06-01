@@ -1157,7 +1157,7 @@ describe('GetHelp action generators and thunks', () => {
   describe('ValidateLatestOrder action', () => {
     describe('when it succeeds', () => {
       const params = {
-        costumerId: '777',
+        customerId: '777',
         orderId: '888',
       }
       const validationResponse = {
