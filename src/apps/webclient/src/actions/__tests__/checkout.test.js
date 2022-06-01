@@ -315,7 +315,6 @@ const createState = (stateOverrides) => ({
       value: false,
     },
   }),
-  error: Immutable.fromJS({}),
   ...stateOverrides,
 })
 

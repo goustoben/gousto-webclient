@@ -1,26 +1,22 @@
 @value (
+  Blackberry,
+  Blueberry,
+  BlueberryLight,
+  Bluecheese,
+  Carrot,
+  CarrotLight,
+  Haricot,
+  HaricotLight,
   Radish,
   RadishLight
 ) from 'styles/colors.module.css';
-@value FS-50 #E6F7E7;
-@value FS-200 #9CDC9E;
 
 .alert {
-  border-width: 1px;
-  border-style: solid;
+  background: RadishLight;
+  border: 1px solid Radish;
   border-radius: 3px;
   display: flex;
   padding: 1rem;
-}
-
-.error {
-  background: RadishLight;
-  border-color: Radish;
-}
-
-.success {
-  background: FS-50;
-  border-color: FS-200;
 }
 
 @value iconSize 1.5rem;

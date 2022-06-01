@@ -12,10 +12,6 @@ export const getErrorSlice = (state) => state.error
 export const createGetErrorForActionType = (actionType) =>
   createSelector(getErrorSlice, (errorSlice) => errorSlice.get(actionType, null))
 
-export const getUserLoginError = createGetErrorForActionType(actionTypes.USER_LOGIN)
-
-export const getSignupLoginError = createGetErrorForActionType(actionTypes.CHECKOUT_SIGNUP_LOGIN)
-
 export const getBasketNotValidError = createGetErrorForActionType(actionTypes.BASKET_NOT_VALID)
 
 export const getBasketSaveError = createGetErrorForActionType(actionTypes.BASKET_CHECKOUT)

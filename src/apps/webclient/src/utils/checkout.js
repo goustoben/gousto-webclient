@@ -84,9 +84,6 @@ export const translateCheckoutErrorToMessageCode = (errorName, errorValue, isGou
   case actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED: {
     return 'valid-card-details-not-provided'
   }
-  case actionTypes.CHECKOUT_SIGNUP_LOGIN: {
-    return 'signupLoginFailed'
-  }
   default: {
     return 'generic'
   }

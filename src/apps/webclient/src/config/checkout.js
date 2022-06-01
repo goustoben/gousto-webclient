@@ -116,12 +116,6 @@ export const checkoutConfig = {
       header: 'An error occurred',
       message: 'Click "Order your box" to try again.',
     },
-    signupLoginFailed: {
-      header: 'Subscription started!',
-      message: 'You can see more details in your account.',
-      showLoginCTA: true,
-      showAsSuccess: true,
-    },
   },
   errorsThatClearOrderPreview: [
     'assign-order-failed',

@@ -14,7 +14,6 @@ import { usePricing } from 'routes/Menu/domains/pricing'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
-import { getSignupLoginError } from 'selectors/status'
 import { formatOrderPrice } from 'utils/pricing'
 
 import { formContainer } from '../formContainer'
@@ -37,7 +36,6 @@ export const mapStateToProps = (state) => {
     isPayPalReady: isPayPalReady(state),
     hotjarTriggerName,
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
-    signupLoginError: getSignupLoginError(state),
   }
 }
 

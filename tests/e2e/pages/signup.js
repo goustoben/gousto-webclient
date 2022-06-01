@@ -84,7 +84,6 @@ module.exports = {
 
         selectTuesdaysAsDeliveryDay: function(){
           this
-            .waitForElementPresent('@deliveryDay')
             .selectOptionByText('*[data-testing="signupDeliveryDay"]', 'Tuesday', this)
 
           return this

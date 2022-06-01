@@ -21,11 +21,11 @@ export const ErrorMessage = ({ errorType, onLoginClick }) => {
 
   const { errorMessage } = checkoutConfig
   const messageObject = errorMessage[errorType] || errorMessage.generic
-  const { header, message, showLoginCTA, showAsSuccess } = messageObject
+  const { header, message, showLoginCTA } = messageObject
 
   return (
     <div data-testing={`${errorType}`} className={css.container}>
-      <Alert severity={showAsSuccess ? 'success' : 'error'}>
+      <Alert>
         {header && <div className={css.header}>{header}</div>}
         <div className={css.messageContainer}>{message}</div>
         {showLoginCTA && (
