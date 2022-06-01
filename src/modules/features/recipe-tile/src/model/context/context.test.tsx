@@ -18,7 +18,8 @@ describe('RecipeContext', () => {
 
     describe('when in a RecipeContextProvider', () => {
       const recipe: Recipe = {
-        id: 'recipe-id'
+        id: 'recipe-id',
+        title: "A Recipe Title"
       }
 
       const wrapper: React.FC = ({ children }) => (

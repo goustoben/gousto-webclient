@@ -26,7 +26,7 @@ describe('useRecipeCookingTime', () => {
   describe('when there is a recipe in context', () => {
     const familyNumPortion = 4
     const defaultNumPortion = 2
-    const recipe = { id: '123', cookingTimeFamily: 30, cookingTime: 20 }
+    const recipe: Recipe = { id: '123', title: "A Recipe Title", cookingTimeFamily: 30, cookingTime: 20 }
 
     describe('when number of portions is for family', () => {
       beforeEach(() => {
