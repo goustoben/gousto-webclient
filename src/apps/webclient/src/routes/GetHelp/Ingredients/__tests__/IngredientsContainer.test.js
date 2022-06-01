@@ -11,14 +11,12 @@ import status from 'reducers/status'
 import contentReducer from 'reducers/content'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import { IngredientsContainer } from 'routes/GetHelp/Ingredients/IngredientsContainer'
+
+import { validateIngredients } from 'apis/getHelp'
 import { validateOrder } from 'routes/GetHelp/apis/validateOrder'
-import { validateIngredients } from '../../apis/ssrIngredients'
 
 jest.mock('apis/getHelp')
 jest.mock('routes/GetHelp/apis/validateOrder')
-
-jest.mock('apis/getHelp')
-jest.mock('../../apis/ssrIngredients')
 
 describe('<IngredientsContainer />', () => {
   const initialState = {
@@ -101,7 +99,7 @@ describe('<IngredientsContainer />', () => {
         .toEqual(fromJS({'1917&aaa': {ingredientUuid: 'aaa', label: '1 beef stock cube', recipeId: '1917', recipeGoustoReference: '123'}}))
     })
 
-    test('/v3/validate-ingredients endpoint is called correctly', async () => {
+    test('/v2/validate-ingredients endpoint is called correctly', async () => {
       const recipe = wrapper.find('ItemExpandable').at(1)
       recipe.find('Item').simulate('click')
 
@@ -113,13 +111,7 @@ describe('<IngredientsContainer />', () => {
 
       expect(validateIngredients).toHaveBeenCalledWith(
         '',
-        {
-          customer_id: '',
-          order_id: '6765330',
-          ingredients: JSON.stringify(
-            [{ ingredient_uuid: 'aaa', recipe_gousto_reference: '123' }]
-          )
-        }
+        { customer_id: 0, order_id: 6765330, ingredient_ids: [ 'aaa' ] }
       )
     })
   })

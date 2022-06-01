@@ -223,13 +223,22 @@ describe('getHelp reducer', () => {
 
   describe('given a GET_HELP_STORE_SELECTED_INGREDIENTS action type is received', () => {
     beforeEach(() => {
-      newState = getHelp(getHelpInitialState, {
+      const state = fromJS({
+        ...getHelpInitialState.toJS(),
+        order: {
+          recipeDetailedItems: {
+            2: '4'
+          }
+        }
+      })
+
+      newState = getHelp(state, {
         type: webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
-        selectedIngredientsInfo: [{ ingredientUuid: '2222', label: 'pasta', recipeId: '2', recipeGoustoReference: '4' }]
+        selectedIngredientsInfo: [{ ingredientUuid: '2222', label: 'pasta', recipeId: '2' }]
       })
     })
 
-    test('the selected ingredients from the action payload are stored in state.selectedIngredients ', () => {
+    test('the new state.order.id has the value of order id ', () => {
       expect(newState.get('selectedIngredients')).toEqual(fromJS({
         '2&2222': {
           ingredientUuid: '2222',

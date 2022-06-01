@@ -1,4 +1,5 @@
 import {
+  validateIngredients,
   fetchOrderIssues as fetchOrderIssuesApi,
 } from 'apis/getHelp'
 import { getCompensation, getIsMultiComplaints } from 'routes/GetHelp/selectors/compensationSelectors'
@@ -62,6 +63,34 @@ const trackRecipeCardClick = recipeId => ({
   }
 })
 
+const validateSelectedIngredients = ({
+  accessToken,
+  orderId,
+  costumerId,
+  ingredientUuids,
+}) => async (dispatch) => {
+  dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
+  dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
+
+  const validateIngredientsParams = [
+    accessToken,
+    {
+      customer_id: Number(costumerId),
+      order_id: Number(orderId),
+      ingredient_ids: ingredientUuids
+    },
+  ]
+
+  try {
+    await validateIngredients(...validateIngredientsParams)
+  } catch (error) {
+    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, error.message))
+    throw error
+  } finally {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, false))
+  }
+}
+
 const fetchIngredientIssues = () => async (dispatch, getState) => {
   dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, true))
   dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, null))
@@ -95,6 +124,7 @@ export {
   storeIngredientIssueDescriptions,
   storeSelectedIngredients,
   storeSelectedIngredientIssue,
+  validateSelectedIngredients,
   fetchIngredientIssues,
   trackAcceptIngredientsRefund,
   trackIngredientIssues,

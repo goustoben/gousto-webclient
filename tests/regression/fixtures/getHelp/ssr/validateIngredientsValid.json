@@ -1,6 +1,8 @@
 {
   "status": "ok",
   "data": {
-    "valid": true
+    "valid": true,
+    "other_issue_ineligible_ingredient_uuids": [],
+    "mass_issue_ineligible_ingredient_uuids": []
   }
 }

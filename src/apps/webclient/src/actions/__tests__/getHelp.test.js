@@ -1,11 +1,14 @@
 import Immutable from 'immutable'
+
 import { actionTypes } from 'actions/actionTypes'
 import {
   fetchOrderIssues as fetchOrderIssuesApi,
+  validateIngredients,
 } from 'apis/getHelp'
 import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
 import {
   fetchIngredientIssues as fetchOrderIssuesAction,
+  validateSelectedIngredients,
   trackAcceptIngredientsRefund
 } from 'actions/getHelp'
 
@@ -82,6 +85,33 @@ describe('getHelp actions', () => {
         type: actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES,
         ingredientIssues: fetchOrderIssuesMockResponse,
       })
+    })
+  })
+
+  describe('given validateSelectedIngredients is called', () => {
+    const body = {
+      accessToken: 'user-access-token',
+      costumerId: '777',
+      ingredientUuids: ['2222'],
+      orderId: '888',
+    }
+    const expectedParams = [
+      'user-access-token',
+      {
+        customer_id: 777,
+        ingredient_ids: ['2222'],
+        order_id: 888,
+      }
+    ]
+
+    beforeEach(async () => {
+      getState = jest.fn().mockReturnValueOnce(GET_STATE_PARAMS)
+
+      await validateSelectedIngredients(body)(dispatch, getState)
+    })
+
+    test('the validateIngredients is being called correctly', () => {
+      expect(validateIngredients).toHaveBeenCalledWith(...expectedParams)
     })
   })
 

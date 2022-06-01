@@ -84,16 +84,16 @@ const getHelp = (state, action) => {
     return state.set('selectedAddress', fromJS(action.payload.address))
   }
   case webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
+    const orderRecipeItems = state.getIn(['order', 'recipeDetailedItems']).toJS()
     const selectedIngredients = {}
-    action.selectedIngredientsInfo.forEach(
-      ({ recipeId, ingredientUuid, label, recipeGoustoReference }) => {
-        selectedIngredients[`${recipeId}&${ingredientUuid}`] = {
-          recipeId,
-          ingredientUuid,
-          label,
-          recipeGoustoReference,
-        }
-      })
+    action.selectedIngredientsInfo.forEach(({ recipeId, ingredientUuid, label }) => {
+      selectedIngredients[`${recipeId}&${ingredientUuid}`] = {
+        recipeId,
+        ingredientUuid,
+        label,
+        recipeGoustoReference: orderRecipeItems[recipeId],
+      }
+    })
 
     return state.set('selectedIngredients', fromJS(selectedIngredients))
   }

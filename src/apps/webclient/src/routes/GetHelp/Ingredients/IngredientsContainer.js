@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import {
+  validateSelectedIngredients,
   storeSelectedIngredients,
 } from 'actions/getHelp'
 import {
@@ -7,7 +8,6 @@ import {
   trackSelectIngredient,
   validateLatestOrder,
 } from '../actions/getHelp'
-import { validateSelectedIngredients } from '../actions/validateSelectedIngredients'
 import {
   getIsOrderValidationPending,
   getIsOrderValidationError,

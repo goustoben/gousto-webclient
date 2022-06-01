@@ -46,7 +46,7 @@ const RepetitiveIngredientsIssues = ({
   }, [updateHasSeenRepetitiveIssuesScreen])
 
   useEffect(() => {
-    validateLatestOrder({ orderId, customerId: userId })
+    validateLatestOrder({ orderId, costumerId: userId })
   }, [userId, orderId, validateLatestOrder])
 
   const { heading, body } = showPersonalisedCopy(firstName, numOrdersChecked, numOrdersCompensated)
@@ -111,3 +111,4 @@ RepetitiveIngredientsIssues.propTypes = {
 export {
   RepetitiveIngredientsIssues
 }
+

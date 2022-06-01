@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { LoadingWrapper } from '../LoadingWrapper'
 import { IngredientsPresentation } from './Ingredients.presentation'
-import { orderPropType, recipePropType } from '../getHelpPropTypes'
+import { recipePropType } from '../getHelpPropTypes'
 
 const propTypes = {
   massIssueIneligibleIngrsByRecipeGRMap: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
@@ -13,7 +13,9 @@ const propTypes = {
   isBoxDailyComplaintLimitReached: PropTypes.bool.isRequired,
   isOrderValidationError: PropTypes.bool.isRequired,
   isValidateOrderLoading: PropTypes.bool.isRequired,
-  order: orderPropType,
+  order: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }),
   recipes: PropTypes.arrayOf(recipePropType),
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -46,7 +48,7 @@ class Ingredients extends PureComponent {
     const { validateLatestOrder, user, order } = this.props
 
     validateLatestOrder({
-      customerId: user.id,
+      costumerId: user.id,
       orderId: order.id,
     })
   }
@@ -104,25 +106,24 @@ class Ingredients extends PureComponent {
       validateSelectedIngredients
     } = this.props
     const { selectedIngredients } = this.state
-    const { recipeDetailedItems } = order
-    const ingredients = []
+    const ingredientUuids = []
     const selectedIngredientsInfo = []
 
     selectedIngredients.forEach((value, checkboxId) => {
       const [recipeId, ingredientUuid] = checkboxId.split('&')
-      const recipeGoustoReference = recipeDetailedItems[recipeId]
       const label = this.getIngredientName(recipeId, ingredientUuid)
-      ingredients.push({ ingredient_uuid: ingredientUuid, recipe_gousto_reference: recipeGoustoReference })
-      selectedIngredientsInfo.push({ recipeId, ingredientUuid, label, recipeGoustoReference })
+      ingredientUuids.push(ingredientUuid)
+      selectedIngredientsInfo.push({ recipeId, ingredientUuid, label })
     })
 
     try {
       await validateSelectedIngredients({
         accessToken: user.accessToken,
-        customerId: user.id,
+        costumerId: user.id,
         orderId: order.id,
-        ingredients
+        ingredientUuids,
       })
+
       storeSelectedIngredients(selectedIngredientsInfo)
 
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.ingredientIssues}`)

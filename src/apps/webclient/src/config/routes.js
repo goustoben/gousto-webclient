@@ -169,9 +169,6 @@ module.exports = {
     recommendations: '/recommendations',
     steps: '/steps',
   },
-  ssr: {
-    validateIngredients: '/validate-ingredients'
-  },
   ssrrecipecards: {
     validate: '/validate',
   },
