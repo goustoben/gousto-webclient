@@ -7,7 +7,6 @@ import { checkoutConfig } from 'config/checkout'
 
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
-import GoustoException from 'utils/GoustoException'
 import { basketResetPersistent } from 'utils/basket'
 import { isValidPromoCode } from 'utils/order'
 
@@ -22,7 +21,6 @@ import {
   accountFormName,
   deliveryFormName,
   getPasswordValue,
-  getSignupE2ETestName,
 } from 'selectors/checkout'
 import { getSessionId } from 'selectors/cookies'
 import {
@@ -31,6 +29,7 @@ import {
   getPaymentData,
   getPaymentProvider,
 } from 'selectors/payment'
+import { getUserLoginError } from 'selectors/status'
 
 import {
   feLoggingLogEvent,
@@ -88,6 +87,7 @@ const errorCodes = {
   duplicateDetails: '409-duplicate-details',
   promoCodeHasBeenUsed: '409-offer-has-been-used',
   challengeFailed: '3ds-challenge-failed',
+  signupLoginFailed: 'signupLoginFailed'
 }
 
 function resetDuplicateCheck({ pricing }) {
@@ -297,35 +297,35 @@ export function checkoutPostSignup({ pricing }) {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     const state = getState()
-    const signupTestName = getSignupE2ETestName(state)
-    const signupTestData = signupTestName ? { testName: signupTestName } : undefined
-    try {
-      const { form } = state
-      const recaptchaToken = getSignupRecaptchaToken(state)
-      const accountValues = Immutable.fromJS(form[accountFormName].values)
-      const account = accountValues.get('account')
-      const email = account.get('email')
-      const password = getPasswordValue(state)
-      const orderId = getPreviewOrderId(state)
-      const basketRecipes = getBasketRecipes(state)
-      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes, pricing }) // used for data layer tracking
-      await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }, orderId))
-      dispatch(tempActions.temp('originalGrossTotal', pricing.grossTotal))
-      dispatch(tempActions.temp('originalNetTotal', pricing.netTotal))
-      dispatch(trackPurchase({ orderId, pricing }))
-      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutPostSignup: signup login success', signupTestData))
-      dispatch(trackSignupFinished({ email }))
-    } catch (err) {
-      dispatch(feLoggingLogEvent(logLevels.info, `checkoutPostSignup: signup login failed: ${err.message}`, signupTestData))
-      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
-      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, err.code, 'checkoutPostSignup'))
+
+    const { form } = state
+    const recaptchaToken = getSignupRecaptchaToken(state)
+    const accountValues = Immutable.fromJS(form[accountFormName].values)
+    const account = accountValues.get('account')
+    const email = account.get('email')
+    const password = getPasswordValue(state)
+    const orderId = getPreviewOrderId(state)
+    const basketRecipes = getBasketRecipes(state)
+    dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes, pricing }) // used for data layer tracking
+    await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }, orderId))
+    dispatch(tempActions.temp('originalGrossTotal', pricing.grossTotal))
+    dispatch(tempActions.temp('originalNetTotal', pricing.netTotal))
+    dispatch(trackPurchase({ orderId, pricing }))
+    dispatch(trackSignupFinished({ email }))
+
+    const stateAfterLogin = getState()
+    const loginError = getUserLoginError(stateAfterLogin)
+    if (loginError) {
+      dispatch(feLoggingLogEvent(logLevels.info, `checkoutPostSignup: signup login failed: ${loginError}`))
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, errorCodes.signupLoginFailed, 'checkoutPostSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
-      throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
-    } finally {
-      basketResetPersistent(Cookies)
-      dispatch(basketReset())
-      dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, false))
+    } else {
+      dispatch(feLoggingLogEvent(logLevels.info, 'checkoutPostSignup: signup login success'))
     }
+
+    basketResetPersistent(Cookies)
+    dispatch(basketReset())
+    dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, false))
   }
 }
 
