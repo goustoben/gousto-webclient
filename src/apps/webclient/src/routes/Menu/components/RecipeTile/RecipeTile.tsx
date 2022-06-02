@@ -120,6 +120,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
               flexBasis="100%"
               borderBottomWidth={1}
               paddingBottom={4}
+              style={{ boxSizing: 'content-box' }}
             >
               <button
                 type="button"
