@@ -59,6 +59,17 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
     ctx.response.body = {
       error: 'invalid_credentials',
     }
+
+    // investigate issues with recaptcha TG-6550
+    if ('error-codes' in error && error['error-codes'] === ['invalid-input-response']) {
+      const { recaptchaToken } = ctx.request.body
+      const { RECAPTCHA_PVTK } = getEnvConfig()
+      logger.error({
+        message: 'login captcha invalid input response',
+        recaptchaToken,
+        isPrivateTokenEmpty: !RECAPTCHA_PVTK
+      })
+    }
   }
 }
 
