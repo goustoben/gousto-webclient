@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { Link } from '@gousto-internal/citrus-react'
 import { shallow } from 'enzyme'
 
 import * as MenuHooks from 'routes/Menu/domains/menu'
@@ -131,13 +130,13 @@ describe('RecipeTile', () => {
 
   describe('When: RecipeTile "More description ->" Link experiment is on', () => {
     test('"More description ->" link should be presented in tile', () => {
-      const link = wrapper.find(Link)
+      const link = wrapper.find('button')
 
       expect(link.contains('More details')).toBe(true)
     })
 
     test('"More description ->" click event should trigger dispatch', () => {
-      const link = wrapper.find(Link)
+      const link = wrapper.find('button')
 
       link.simulate('click', { stopPropagation() {} })
 
