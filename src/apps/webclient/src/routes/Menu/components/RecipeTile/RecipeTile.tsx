@@ -114,7 +114,13 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           />
 
           {isRecipeTileLinkVisible && (
-            <Box maxWidth="6.45rem" flexBasis="100%" borderBottomWidth={1} paddingBottom={4}>
+            <Box
+              maxWidth="6.45rem"
+              width="6.25rem"
+              flexBasis="100%"
+              borderBottomWidth={1}
+              paddingBottom={4}
+            >
               <button
                 type="button"
                 onClick={handleOnRecipeTileLinkClick}
