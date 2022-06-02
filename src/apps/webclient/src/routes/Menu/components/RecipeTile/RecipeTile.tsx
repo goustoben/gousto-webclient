@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from 'react'
 
-import { Box, Icon, Link } from '@gousto-internal/citrus-react'
+import { Box, Color, FontFamily, FontWeight, Icon, Text } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
 
 import { DeviceType, useDeviceType } from 'hooks/useDeviceType'
@@ -114,20 +114,25 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           />
 
           {isRecipeTileLinkVisible && (
-            <Box maxWidth="6.25rem" flexBasis="100%">
-              {/* FYI: By design we should use link, and we already have <Link /> component */}
-              {/* in our design system. Implementing component which looks like <Link /> is awkward. */}
-              {/* Also, we don't want this link to lead anywhere, that's why lint should be disabled. */}
-              {/* And such option supported by citrus, but not by eslint config. */}
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <Link
+            <Box maxWidth="6.45rem" flexBasis="100%" borderBottomWidth={1} paddingBottom={4}>
+              <button
+                type="button"
                 onClick={handleOnRecipeTileLinkClick}
-                size={1}
                 className={classnames(css.recipeTileLink, {
                   [css.recipeTileFineDineInLink]: isFineDineIn,
                 })}
               >
-                More details
+                <Text
+                  fontFamily={FontFamily.UI}
+                  fontWeight={FontWeight.SemiBold}
+                  size={1}
+                  className={classnames(css.recipeTileLinkText, {
+                    [css.recipeFineDineInTileLinkText]: isFineDineIn,
+                  })}
+                  color={isFineDineIn ? Color.Secondary_200 : Color.Secondary_400}
+                >
+                  More details
+                </Text>
                 <Icon
                   name="arrow_right"
                   size={4}
@@ -135,7 +140,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
                     [css.recipeTileFineDineInLinkIcon]: isFineDineIn,
                   })}
                 />
-              </Link>
+              </button>
             </Box>
           )}
 

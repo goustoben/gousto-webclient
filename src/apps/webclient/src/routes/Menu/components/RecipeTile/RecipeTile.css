@@ -150,38 +150,54 @@
 
 @value color-S200 #A29EFF;
 @value color-S600 #412dee;
+@value outline-broder-width: 0.1875rem;
+@value outline-border-radius: 0.1875rem;
 
 .recipeTileLink {
-  position: relative;
   width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  border-bottom: 0.0625rem solid BlueBase;
+
+  &:focus {
+    outline: none;
+    border: outline-broder-width solid BlueBase;
+    border-radius: outline-border-radius;
+  }
+}
+.recipeTileFineDineInLink {
+  border-bottom-color: color-S200;
+
+  &:focus {
+    outline: none;
+    border: outline-broder-width solid BlueBase;
+    border-radius: outline-border-radius;
+  }
 }
 
-/*
- * FYI: this color not presented in colors.module.css
- * Also there is no way to override color for Citrus/Link
- * `> span` also requierd because this style should apply not text
- * not to button
- */
-.recipeTileFineDineInLink {
-  box-shadow: 0 1px 0 0 color-S200;
+.recipeTileLink:hover {
+  border-bottom-color: color-S600;
 
-  > span {
-    color: color-S200;
+  .recipeTileLinkText {
+    color: color-S600;
   }
+}
 
-  &:hover {
-    box-shadow: 0 1px 0 0 BlueBase;
+.recipeTileLink:hover {
+  border-bottom-color: BlueBase;
 
-    > span {
-      color: BlueBase;
-    }
+  .recipeFineDineInTileLinkText {
+    color: BlueBase;
   }
 }
 
 .recipeTileLinkIcon {
-  position: absolute;
-  right: 0;
-  top: 0.125rem;
   color: BlueBase;
 }
 .recipeTileLink:hover .recipeTileLinkIcon {
