@@ -171,7 +171,8 @@
     border-radius: outline-border-radius;
   }
 }
-.recipeTileFineDineInLink {
+
+.recipeTileLink.recipeTileFineDineInLink {
   border-bottom-color: color-S200;
 
   &:focus {
@@ -189,7 +190,7 @@
   }
 }
 
-.recipeTileLink:hover {
+.recipeTileLink.recipeTileFineDineInLink:hover {
   border-bottom-color: BlueBase;
 
   .recipeFineDineInTileLinkText {
@@ -197,14 +198,14 @@
   }
 }
 
-.recipeTileLinkIcon {
+.recipeTileLink .recipeTileLinkIcon {
   color: BlueBase;
 }
 .recipeTileLink:hover .recipeTileLinkIcon {
   color: color-S600;
 }
 
-.recipeTileFineDineInLinkIcon {
+.recipeTileLink .recipeTileFineDineInLinkIcon {
   color: color-S200;
 }
 .recipeTileLink:hover .recipeTileFineDineInLinkIcon {
