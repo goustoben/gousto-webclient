@@ -25,7 +25,7 @@ const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 */
 export async function login(ctx) { /* eslint-disable no-param-reassign */
   try {
-    const { username, password, rememberMe, recaptchaToken } = ctx.request.body
+    const { username, password, rememberMe, recaptchaToken, isSignupLogin } = ctx.request.body
     const { data } = await fetchFeatures()
     const { isRecaptchaEnabled } = data
 
