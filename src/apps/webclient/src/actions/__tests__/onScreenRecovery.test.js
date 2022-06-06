@@ -616,6 +616,34 @@ describe('onScreenRecovery', () => {
 
         expect(dispatchSpy).toHaveBeenCalled()
       })
+
+      test.each([500, 502, 503])('should pause the subscription if discounts endpoint is not reachable', async (code) => {
+        const error = new Error(`${code} Server Error`)
+
+        error.code = code
+        fetchSubscriptionPauseContent.mockRejectedValue(error)
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+          user: {
+            get: () => null
+          },
+          onScreenRecovery: {
+            get: () => null
+          }
+        })
+
+        await getPauseRecoveryContent({ data: { intervene: true } })(async (action) => {
+          if (typeof action === 'function') {
+            await action(dispatchSpy, getStateSpy)
+          }
+
+          dispatchSpy(action)
+        }, getStateSpy)
+
+        expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalled()
+      })
       test('should trigger tracking of subscription pause event', async () => {
         fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
           data: {
@@ -805,6 +833,27 @@ describe('onScreenRecovery', () => {
         await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
 
         expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalled()
+      })
+
+      test.each([500, 502, 503])('should not attempt to deactivate the subscription more than once if discounts endpoint is not reachable', async (code) => {
+        const error = new Error(`${code} Server Error`)
+
+        error.code = code
+        subPauseActions.subscriptionDeactivate.mockRejectedValue(error)
+        fetchSubscriptionPauseContent.mockResolvedValue({
+          data: {
+            intervene: false,
+          },
+        })
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+        })
+
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+
+        expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalledTimes(1)
       })
     })
 

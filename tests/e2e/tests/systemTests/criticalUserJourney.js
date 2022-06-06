@@ -8,14 +8,16 @@ module.exports = {
 
     beginSignUpButStopAtPayment(accountCredentials, browser)
     continueSignUpWithACreditCard(browser)
-    logOutAndLogIn(accountCredentials, browser)
-    editAnExistingOrder(browser)
+    // logOutAndLogIn(accountCredentials, browser)
+    // editAnExistingOrder(browser)
 
     browser.end()
   },
 
   tags: ['criticalUserJourney'],
 }
+
+/* Note: temporary commented tests until the end of investigation ROC-2128
 
 function logOutAndLogIn(accountCredentials, browser) {
   const shared = browser.page.shared()
@@ -85,3 +87,4 @@ function editAnExistingOrder(browser) {
     })
     .logJourneyStep('Done!')
 }
+*/
