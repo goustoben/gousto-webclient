@@ -99,7 +99,7 @@ describe('login actions', () => {
       expect(dispatch.mock.calls[3][0]).toEqual({
         type: actionTypes.LOGIN_REMEMBER_ME,
       })
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null, false)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -112,7 +112,7 @@ describe('login actions', () => {
 
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true, recaptchaToken })(dispatch, getState)
 
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, recaptchaToken)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, recaptchaToken, false)
     })
 
     it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /home, no redirect', async () => {
@@ -120,7 +120,7 @@ describe('login actions', () => {
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null, false)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -134,7 +134,7 @@ describe('login actions', () => {
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null, false)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -154,7 +154,7 @@ describe('login actions', () => {
 
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null, false)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -254,7 +254,7 @@ describe('login actions', () => {
 
         expect(statusActions.pending).toHaveBeenCalledTimes(2)
         expect(statusActions.error).toHaveBeenCalledTimes(1)
-        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null, true)
         expect(authActions.authIdentify).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -283,7 +283,7 @@ describe('login actions', () => {
 
         expect(statusActions.pending).toHaveBeenCalledTimes(2)
         expect(statusActions.error).toHaveBeenCalledTimes(1)
-        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null, true)
         expect(authActions.authIdentify).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))

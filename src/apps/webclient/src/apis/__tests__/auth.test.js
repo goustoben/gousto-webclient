@@ -221,7 +221,8 @@ describe('auth api', () => {
         grant_type: 'password',
         username: email,
         password,
-        rememberMe
+        rememberMe,
+        isSignupLogin: false
       }
 
       expect(fetch).toHaveBeenCalledTimes(1)
