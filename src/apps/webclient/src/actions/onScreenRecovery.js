@@ -11,6 +11,8 @@ import statusActions from './status'
 
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
 
+const SERVER_ERROR_500 = 500
+
 export const generateModalTrackingData = ({
   modalVisibility,
   status,
@@ -22,7 +24,7 @@ export const generateModalTrackingData = ({
   if (modalType === 'subscription') {
     return modalVisibility
       ? null
-      : { actionType: seActions.SUBSCRIPTION_KEPT_ACTIVE}
+      : { actionType: seActions.SUBSCRIPTION_KEPT_ACTIVE }
   }
 
   const actionType = (status === 'pending') ? 'Order Cancel' : 'Order Skip'
@@ -228,10 +230,16 @@ export const getPauseRecoveryContent = (enableOffer = true) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const modalType = 'subscription'
+
     dispatch(statusActions.pending(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, true))
     dispatch(statusActions.error(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, null))
+
+    let isIntervened = true
+
     try {
       const { data } = await fetchSubscriptionPauseContent(accessToken, enableOffer)
+
+      isIntervened = data.intervene
 
       if (data.intervene) {
         dispatch(modalVisibilityChange({
@@ -257,6 +265,12 @@ export const getPauseRecoveryContent = (enableOffer = true) => (
       }
     } catch (err) {
       logger.error(err)
+      // subpauseosr might return 5xx error, do not block the end user, let it deactivate its subscription
+      if (err.code >= SERVER_ERROR_500 && isIntervened) {
+        await dispatch(pauseSubscription())
+
+        return
+      }
       dispatch(statusActions.error(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, err))
     } finally {
       dispatch(statusActions.pending(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, false))
