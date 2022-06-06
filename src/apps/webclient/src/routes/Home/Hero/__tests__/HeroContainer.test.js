@@ -7,12 +7,6 @@ import configureMockStore from 'redux-mock-store'
 
 import { HeroContainer } from '../HeroContainer'
 
-jest.mock('containers/OptimizelyRollouts', () => ({
-  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
-  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
-  OptimizelyFeature: () => null,
-}))
-
 describe('<HeroContainer />', () => {
   let wrapper
   const mockStore = configureMockStore()

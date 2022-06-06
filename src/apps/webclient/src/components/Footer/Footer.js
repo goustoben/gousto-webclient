@@ -6,7 +6,6 @@ import * as trackingKeys from 'actions/trackingKeys'
 import { client as clientRoutes, giftCardsURL } from 'config/routes'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import Link from 'Link'
 import css from './Footer.css'
 
@@ -68,10 +67,6 @@ export const Footer = ({
   isCorporateEnquiriesLinkVisible,
   isOnLandingPage,
 }) => {
-  const isNewHeroLabelAndFooterEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_is_new_hero_label_and_footer_enabled'
-  )
-
   const renderTermsLink = () => (
     <li className={css.menuItem}>
       Terms
@@ -269,7 +264,7 @@ export const Footer = ({
       {renderFullList()}
       {copyright && renderCopyright()}
       {isOnLandingPage && renderVerificationOfValueNotice()}
-      {isNewHeroLabelAndFooterEnabled && isOnLandingPage && renderNo1Notice()}
+      {isOnLandingPage && renderNo1Notice()}
     </div>
   )
 
