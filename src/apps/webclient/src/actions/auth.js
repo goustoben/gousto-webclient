@@ -97,10 +97,10 @@ const redirectLoggedInUser = () => (
 )
 
 /* auth */
-const authenticate = (email, password, rememberMe, recaptchaToken) => (
+const authenticate = (email, password, rememberMe, recaptchaToken, isSignupLogin = false) => (
   async (dispatch) => {
     try {
-      const { data: authResponse } = await serverAuthenticate(email, password, rememberMe, recaptchaToken)
+      const { data: authResponse } = await serverAuthenticate(email, password, rememberMe, recaptchaToken, isSignupLogin)
       dispatch(userAuthenticatedViaAPI(authResponse))
     } catch (err) {
       dispatch(feLoggingLogEvent(logLevels.info, 'Login original error', err))

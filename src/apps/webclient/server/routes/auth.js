@@ -25,13 +25,13 @@ const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 */
 export async function login(ctx) { /* eslint-disable no-param-reassign */
   try {
-    const { username, password, rememberMe, recaptchaToken } = ctx.request.body
+    const { username, password, rememberMe, recaptchaToken, isSignupLogin } = ctx.request.body
     const { data } = await fetchFeatures()
     const { isRecaptchaEnabled } = data
 
     const { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET, RECAPTCHA_PVTK } = getEnvConfig()
 
-    if (isRecaptchaEnabled && username !== PINGDOM_USER) {
+    if (!isSignupLogin && isRecaptchaEnabled && username !== PINGDOM_USER) {
       const validateRecaptchaResponse = await validateRecaptchaUserToken(
         recaptchaToken,
         RECAPTCHA_PVTK

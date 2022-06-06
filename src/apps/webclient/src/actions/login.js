@@ -91,10 +91,8 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
       if (rememberMe) {
         dispatch({ type: actionTypes.LOGIN_REMEMBER_ME })
       }
-      if (orderId) {
-        dispatch(feLoggingLogEvent(logLevels.info, 'Signup login attempt', { orderId }))
-      }
-      await dispatch(authActions.authAuthenticate(email, password, rememberMe, recaptchaToken))
+      const isSignupLogin = !!orderId
+      await dispatch(authActions.authAuthenticate(email, password, rememberMe, recaptchaToken, isSignupLogin))
       await dispatch(authActions.authIdentify())
 
       const userRoles = getState().auth.get('roles', Immutable.List([]))
