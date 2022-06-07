@@ -49,13 +49,14 @@ export const orderCollectionRecipesByCuisine = (
   const otherRecipes: Recipe[] = []
   const recipesAsPlainJS = recipes.toJS()
 
-  recipesAsPlainJS.forEach(({ recipe, originalId }: Recipe) => {
+  recipesAsPlainJS.forEach((args: Recipe) => {
+    const { recipe, originalId } = args
     const recipeCuisine = recipe.toJS().cuisine.toLowerCase()
     const match = findMatch(recipeCuisine, selectedCuisines)
     if (match && topRecipes.length < 25) {
-      topRecipes.push({ recipe, originalId })
+      topRecipes.push({ ...args, recipe, originalId })
     } else {
-      otherRecipes.push({ recipe, originalId })
+      otherRecipes.push({ ...args, recipe, originalId })
     }
   })
   const trackingData = topRecipes.map((recipe) => recipe.originalId)
