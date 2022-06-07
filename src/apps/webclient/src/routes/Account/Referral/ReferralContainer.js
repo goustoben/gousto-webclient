@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
 import { trackUserFreeFoodPageView, trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
-import { getReferralOffer, getReferralCode, getUserFirstName, getLoadingStateForOffer } from 'selectors/user'
+import { getReferralOffer, getReferralCode, getUserFirstName, getLoadingStateForOffer, getUserId } from 'selectors/user'
 
 import { Referral } from './Referral'
 
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
   rafOffer: getReferralOffer(state),
   isLoading: getLoadingStateForOffer(state),
   device: state.request.get('browser'),
-  userId: state.user.get('id'),
+  userId: getUserId(state),
 })
 
 const ReferralContainer = connect(mapStateToProps, {

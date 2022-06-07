@@ -1,8 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import { Helmet } from 'react-helmet'
 import { canUseWindow } from 'utils/browserEnvironment'
+import * as userSelectors from 'selectors/user'
+import { safeJestMock } from '_testing/mocks'
 import { isServer } from '../../../server/utils/serverEnvironment'
 const { processRequest } = require('../../../server/processRequest')
+
+const getUserId = safeJestMock(userSelectors, 'getUserId')
 
 jest.mock('utils/browserEnvironment')
 jest.mock('../../../server/utils/serverEnvironment')
@@ -14,6 +18,7 @@ describe('router', () => {
     isServer.mockReturnValue(true)
     canUseWindow.mockReturnValue(false)
     Helmet.canUseDOM = false
+    getUserId.mockReturnValue('123456')
   })
 
   afterEach(() => {

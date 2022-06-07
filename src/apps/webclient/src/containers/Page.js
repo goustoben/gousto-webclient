@@ -36,6 +36,11 @@ class Page extends React.PureComponent {
     }
 
     if (!nextProps.disabled && nextProps.isAuthenticated) {
+      const { userId, trackUserLogin } = this.props
+      if (nextProps.userId && !userId) {
+        trackUserLogin()
+      }
+
       if (!nextProps.email) {
         this.fetchData()
       } else {
@@ -103,6 +108,7 @@ class Page extends React.PureComponent {
 Page.propTypes = {
   children: PropTypes.object.isRequired,
   email: PropTypes.string,
+  userId: PropTypes.string,
   goustoReference: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
   disabled: PropTypes.bool.isRequired,
@@ -110,12 +116,14 @@ Page.propTypes = {
   contentFetchPending: PropTypes.bool.isRequired,
   isSignupReductionEnabled: PropTypes.bool,
   trackUserAttributes: PropTypes.func.isRequired,
+  trackUserLogin: PropTypes.func.isRequired,
   userLoadData: PropTypes.func.isRequired,
 }
 
 Page.defaultProps = {
   isSignupReductionEnabled: false,
   email: null,
+  userId: null,
   goustoReference: null,
 }
 

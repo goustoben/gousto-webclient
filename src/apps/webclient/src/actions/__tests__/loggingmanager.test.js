@@ -554,15 +554,13 @@ describe('Track user`s signup events', () => {
         loggingManagerRequest: {
           name: EVENT_NAMES.signupStarted,
           isAnonymousUser: true,
-          authUserId: undefined,
-          userId: undefined,
           id: MOCK_EVENT_ID,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
             email,
             promocode,
-            preview_order_id: previewOrderId,
-            allow_marketing_email: allowMarketingEmail,
+            previewOrderId,
+            allowMarketingEmail,
           },
         }
       })

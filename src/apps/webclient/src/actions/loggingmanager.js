@@ -78,13 +78,12 @@ const trackUserFreeFoodPageView = () => (
 
 const trackUserLogin = () => (
   async (dispatch, getState) => {
-    const { authUserId, device, accessToken, userId } = getDefaultParams(getState())
+    const { device, accessToken, ...params } = getParams(getState())
     const eventName = EVENT_NAMES.userLoggedIn
 
     const loggingManagerEvent = {
-      userId,
+      ...params,
       eventName,
-      authUserId,
       data: {
         device,
       },
@@ -221,17 +220,18 @@ const trackUserFreeFoodLinkShare = ({ target }) => (
 
 const trackSignupStarted = ({ email, promocode, allowMarketingEmail, previewOrderId }) => (
   async (dispatch, getState) => {
-    const { accessToken } = getDefaultParams(getState())
+    const { accessToken, device } = getDefaultParams(getState())
     const eventName = EVENT_NAMES.signupStarted
 
     const loggingManagerEvent = {
       eventName,
       isAnonymousUser: true,
       data: {
+        device,
         email,
         promocode,
-        allow_marketing_email: allowMarketingEmail,
-        preview_order_id: previewOrderId,
+        allowMarketingEmail,
+        previewOrderId,
       }
     }
     const loggingManagerRequest = generateLoggingManagerRequest({
@@ -247,16 +247,16 @@ const trackSignupStarted = ({ email, promocode, allowMarketingEmail, previewOrde
 
 const trackSignupFinished = ({ email }) => (
   async (dispatch, getState) => {
-    const { accessToken, device, ...params } = getDefaultParams(getState())
+    const { accessToken, device, authUserId } = getDefaultParams(getState())
     const eventName = EVENT_NAMES.signupFinished
 
     const loggingManagerEvent = {
       eventName,
-      ...params,
+      authUserId,
       isAnonymousUser: false,
       data: {
+        device,
         email,
-        device
       }
     }
     const loggingManagerRequest = generateLoggingManagerRequest({
