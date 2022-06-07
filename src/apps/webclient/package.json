@@ -28,7 +28,6 @@
     "generate-libphonenumber-metadata": "libphonenumber-metadata-generator src/utils/phoneNumber/phone-metadata.json --countries GB --extended",
     "test:jest": "jest",
     "test:jest:ci": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent",
-    "test:jest:one:watch": "jest --watch",
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent --coverage",

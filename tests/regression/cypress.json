@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://frontend.gousto.local:8080/",
+  "baseUrl": "http://frontend.gousto.local:80/",
   "integrationFolder": "../..",
   "testFiles": ["src/apps/webclient/**/__regression__/*.spec.{js,ts}"],
   "screenshotsFolder": "screenshots",
