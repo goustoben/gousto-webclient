@@ -8,6 +8,7 @@ import { transformOrderPricesV2ToOrderV1 } from 'routes/Menu/transformers/orderP
 import { getBasketRecipesCount, getBasketSlotId } from 'selectors/basket'
 
 import { useAuth } from '../auth'
+import { OrderV2 } from '../orders/v2'
 
 export type Pricing = {
   flatDiscountApplied: boolean
@@ -32,7 +33,7 @@ export type Pricing = {
 
 const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Pricing | null } => {
   const { accessToken, authUserId } = useAuth()
-  const orderRequest = useSelector(getOrderV2)
+  const orderRequest = useSelector(getOrderV2) as unknown as OrderV2
   // eslint-disable-next-line no-unused-expressions
   let url = `${endpoint('order', 2)}/prices`
   const promo = (orderRequest as any)?.attributes?.prices?.promo_code

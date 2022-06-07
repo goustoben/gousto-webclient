@@ -1,4 +1,5 @@
 import isomorphicFetch from 'isomorphic-fetch'
+import { Dispatch } from 'redux'
 
 import * as orderApiV1 from 'apis/orders'
 import * as userApiV1 from 'apis/user'
@@ -8,6 +9,7 @@ import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
 import { fetch, cacheDefault } from 'utils/fetch'
 
+import { OrderV2 } from '../domains/orders/v2'
 import {
   getUpdateOrderProductItemsOrderV1,
   getOrderForUpdateOrderV1,
@@ -17,7 +19,16 @@ import { getRequestHeaders } from './_utils'
 import { post } from './fetch'
 import { transformOrderV2ToOrderV1 } from './ordersV2toV1'
 
-export const createOrder = async (accessToken, order, userId) => {
+/*
+  TODO: We need to type the global state - setting to any for now to satisfy TS
+*/
+type State = Record<string, any>
+
+export const createOrder = async (
+  accessToken: string,
+  order: Record<string, any>,
+  userId: string,
+) => {
   const headers = getRequestHeaders(userId)
 
   const response = await fetch(
@@ -36,17 +47,21 @@ export const createOrder = async (accessToken, order, userId) => {
   return orderResponse
 }
 
-export const getOrderPrice = async (accessToken, order, userId) => {
+export const getOrderPrice = async (
+  accessToken: string,
+  order: Record<string, any>,
+  userId: string,
+) => {
   const headers = getRequestHeaders(userId)
 
-  return post(accessToken, `${endpoint('order', 2)}/prices`, { data: order }, headers)
+  return post({ accessToken, userId }, `${endpoint('order', 2)}/prices`, { data: order }, headers)
 }
 
 export async function updateOrder(
-  dispatch,
-  getState,
-  orderId,
-  additionalData,
+  dispatch: Dispatch,
+  getState: () => State,
+  orderId: string,
+  additionalData: Record<string, any> = {},
   marketPlaceUpdate = false,
 ) {
   const state = getState()
@@ -66,7 +81,11 @@ export async function updateOrder(
 
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
   if (!marketPlaceUpdate && (!useOrderApiV2Put || !useOrderApiV2Get)) {
-    const v1BaseOrder = getOrderForUpdateOrderV1(state)
+    const v1BaseOrder = getOrderForUpdateOrderV1(
+      state as {
+        user: any
+      },
+    )
 
     return orderApiV1.saveOrder(accessToken, orderId, {
       ...v1BaseOrder,
@@ -75,12 +94,12 @@ export async function updateOrder(
     // To update market place items, we need `useOrderApiV2` enabled which sets
     // v2 data in the  basket, if not we would fallback to v1 `updateOrderItems`
   } else if (marketPlaceUpdate && (!useOrderApiV2PutforMarketplace || !useOrderApiV2Get)) {
-    const productInformation = getUpdateOrderProductItemsOrderV1(state)
+    const productInformation = getUpdateOrderProductItemsOrderV1(state as { basket: any })
 
     return orderApiV1.updateOrderItems(accessToken, orderId, productInformation)
   }
 
-  const orderRequest = getOrderV2(state)
+  const orderRequest = getOrderV2(state as { basket: any }) as unknown as OrderV2
   orderRequest.id = orderRequest.id ?? orderId
   const headers = getRequestHeaders(userId)
   const url = `${endpoint('order', 2)}/orders/${orderId}`
@@ -127,7 +146,12 @@ export async function updateOrder(
   )
 }
 
-export async function fetchOrder(dispatch, getState, orderId, include) {
+export async function fetchOrder(
+  dispatch: Dispatch,
+  getState: () => State,
+  orderId: string,
+  include?: string,
+) {
   const state = getState()
   const userId = getUserId(state)
   const accessToken = getAccessToken(state)
@@ -159,7 +183,11 @@ export async function fetchOrder(dispatch, getState, orderId, include) {
   )
 }
 
-export async function fetchUserOrders(dispatch, getState, reqData) {
+export async function fetchUserOrders(
+  dispatch: Dispatch,
+  getState: () => State,
+  reqData?: Record<string, any>,
+) {
   const state = getState()
   const userId = getUserId(state)
   const headers = getRequestHeaders(userId)
@@ -171,7 +199,7 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
   // Temporary feature flag until we complete the migration from Order API V1 to Order API V2
   if (!useOrderApiV2) {
     // eslint-disable-next-line import/no-named-as-default-member
-    return userApiV1.fetchUserOrders(accessToken, reqData)
+    return userApiV1.fetchUserOrders(accessToken, reqData || {})
   }
 
   if (!userId) {
@@ -198,17 +226,37 @@ export async function fetchUserOrders(dispatch, getState, reqData) {
       .then((response) => response.json())
       .then((jsonResponse) => {
         const transformedOrder =
-          jsonResponse?.data.map((d) => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
+          jsonResponse?.data.map((d: any) => transformOrderV2ToOrderV1(d, jsonResponse.included)) ||
+          []
         resolve({ ...jsonResponse, data: transformedOrder.reverse() })
-      })
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        const fromV2 =
-          jsonResponse?.data.map((d) => transformOrderV2ToOrderV1(d, jsonResponse.included)) || []
-        resolve({ ...jsonResponse, data: fromV2.reverse() })
       })
       .catch((error) => {
         reject(error)
       }),
   )
+}
+
+export async function cancelPendingOrders(
+  dispatch: Dispatch,
+  getState: () => State,
+  accessToken: string,
+  userId: string,
+): Promise<void> {
+  const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory(
+    'radishes_order_api_v2_cancel_pending_orders_web_enabled',
+  )(dispatch, getState)
+
+  if (!useOrderApiV2) {
+    return orderApiV1.cancelExistingOrders(accessToken)
+  }
+
+  const url = `${endpoint('order', 2)}/users/${userId}/orders?filter[state]=pending`
+  const headers = getRequestHeaders(userId)
+
+  await isomorphicFetch(url, {
+    method: 'DELETE',
+    headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+  })
+
+  return undefined
 }

@@ -10,7 +10,7 @@ export type ServiceVersion = {
   basePath: string
 }
 
-// eslint-disable-next-line no-shadow
+// eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow
 export enum PROTOCOL_PREFIX {
   HTTP = 'http:',
   HTTPS = 'https:',

@@ -91,7 +91,7 @@ export function serviceOverrides(serviceUrlProperties: ServiceUrlProperties): st
  */
 export function serviceUrl(
   serviceUrlProperties: ServiceUrlProperties,
-  // eslint-disable-next-line no-shadow,no-unused-vars
+  // eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow,no-unused-vars
   getOverriddenUrl: (
     serviceUrlProperties: ServiceUrlProperties,
   ) => string | undefined = serviceOverrides,

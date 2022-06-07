@@ -95,7 +95,7 @@ describe('recipeContext', () => {
     })
 
     describe('when there is no Recipe context around', () => {
-      // eslint-disable-next-line no-shadow
+      // eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow
       const render = (field: string | string[], defaultValue?: any) =>
         renderHook(() => useRecipeField(field, defaultValue))
 

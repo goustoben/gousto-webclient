@@ -186,82 +186,77 @@ export const getOrderV2 = createSelector(
       deliverySlotLeadTimeId,
     } = orderDetails
 
-    let shippingAddress = {}
-    let deliverySlotLeadTime = {}
-    let deliveryTariff = {}
-    const attributesBlock = {
+    const orderV2 = {
+      type: ResourceType.Order,
+      relationships: {
+        components: {
+          data: [...recipes, ...products],
+        },
+      },
       attributes: {
         menu_id: menuId,
       },
     }
 
+    if (orderId) {
+      orderV2.id = orderId
+    }
+
     if (shippingAddressId) {
-      shippingAddress = {
-        shipping_address: {
-          data: {
-            type: 'shipping-address',
-            id: shippingAddressId,
+      orderV2.relationships.shipping_address = {
+        data: {
+          type: 'shipping-address',
+          id: shippingAddressId,
+        },
+      }
+    }
+
+    if (deliverySlotId) {
+      orderV2.relationships.delivery_slot = {
+        data: {
+          type: 'delivery-slot',
+          id: deliverySlotId,
+          meta: {
+            uuid: deliverySlotUUID,
           },
         },
       }
     }
 
     if (deliverySlotLeadTimeId) {
-      deliverySlotLeadTime = {
-        delivery_slot_lead_time: {
-          data: {
-            type: 'delivery-slot-lead-time',
-            id: deliverySlotLeadTimeId,
-          },
+      orderV2.relationships.delivery_slot_lead_time = {
+        data: {
+          type: 'delivery-slot-lead-time',
+          id: deliverySlotLeadTimeId,
+        },
+      }
+    }
+
+    if (deliveryDayId) {
+      orderV2.relationships.delivery_day = {
+        data: {
+          type: 'delivery-day',
+          id: deliveryDayId,
         },
       }
     }
 
     if (deliveryTariffId) {
-      deliveryTariff = {
-        delivery_tariff: {
-          data: {
-            type: ResourceType.DeliveryTariff,
-            id: deliveryTariffId,
-          },
+      orderV2.relationships.delivery_tariff = {
+        data: {
+          type: ResourceType.DeliveryTariff,
+          id: deliveryTariffId,
         },
       }
     }
 
     if (promoCode) {
-      attributesBlock.attributes.prices = {
+      orderV2.attributes.prices = {
         promo_code: promoCode,
       }
     }
 
-    return {
-      ...(orderId ? { id: orderId } : {}),
-      type: ResourceType.Order,
-      relationships: {
-        ...shippingAddress,
-        delivery_slot: {
-          data: {
-            type: 'delivery-slot',
-            id: deliverySlotId,
-            meta: {
-              uuid: deliverySlotUUID,
-            },
-          },
-        },
-        ...deliverySlotLeadTime,
-        delivery_day: {
-          data: {
-            type: 'delivery-day',
-            id: deliveryDayId,
-          },
-        },
-        ...deliveryTariff,
-        components: {
-          data: [...recipes, ...products],
-        },
-      },
-      ...attributesBlock,
-    }
+    return orderV2
   },
 )
 
