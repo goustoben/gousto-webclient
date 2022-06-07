@@ -390,7 +390,7 @@ export const loadTrackingUrl = (orderId) => async (dispatch, getState) => {
 
 export const validateLatestOrder = ({
   orderId,
-  costumerId
+  customerId
 }) => async (dispatch, getState) => {
   dispatch(webClientStatusActions.pending(webClientActionTypes.GET_HELP_VALIDATE_ORDER, true))
   dispatch(webClientStatusActions.error(webClientActionTypes.GET_HELP_VALIDATE_ORDER, ''))
@@ -399,7 +399,7 @@ export const validateLatestOrder = ({
     const response = await validateOrder(
       getAccessToken(getState()),
       {
-        customer_id: Number(costumerId),
+        customer_id: Number(customerId),
         order_id: Number(orderId),
       },
     )

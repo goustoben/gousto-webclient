@@ -1,8 +1,6 @@
 {
   "status": "error",
   "errors": {
-    "ingredient_id": [
-      "We don't care about the reason in webclient"
-    ]
+    "ingredients": ["max length is 20"]
   }
 }

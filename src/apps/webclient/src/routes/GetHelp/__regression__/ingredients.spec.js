@@ -59,7 +59,7 @@ describe('Given the customer is logged in', () => {
       describe('And ingredients are selected which add up under the valid thresholds of money and number of ingredients', () => {
         beforeEach(() => {
           cy.fixture('getHelp/ssr/validateIngredientsValid').as('validateIngredientsValid')
-          cy.route('POST', /ssr\/v2\/validate-ingredients/ ,'@validateIngredientsValid')
+          cy.route('GET', /ssr\/v3\/validate-ingredients/ ,'@validateIngredientsValid')
           cy.fixture('getHelp/ssr/categories').as('categories')
           cy.route('GET', /ssr\/v1\/ssr\/categories/, '@categories').as('categoriesRequest')
 
@@ -124,8 +124,8 @@ describe('Given the customer is logged in', () => {
         beforeEach(() => {
           cy.fixture('getHelp/ssr/validateIngredientsNotValid').as('validateIngredientsNotValid')
           cy.route({
-            method: 'POST',
-            url: /ssr\/v2\/validate-ingredients/,
+            method: 'GET',
+            url: /ssr\/v3\/validate-ingredients/,
             status: 422,
             response: '@validateIngredientsNotValid',
           })
@@ -147,8 +147,8 @@ describe('Given the customer is logged in', () => {
         beforeEach(() => {
           cy.fixture('getHelp/ssr/validateIngredientsNotValid').as('validateIngredientsNotValid')
           cy.route({
-            method: 'POST',
-            url: /ssr\/v2\/validate-ingredients/,
+            method: 'GET',
+            url: /ssr\/v3\/validate-ingredients/,
             status: 422,
             response: '@validateIngredientsNotValid',
           })
