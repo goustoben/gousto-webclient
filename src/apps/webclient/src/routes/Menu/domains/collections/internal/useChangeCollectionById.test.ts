@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import { actionTypes } from 'actions/actionTypes'
+import { recipeCollectionSelected } from 'actions/trackingKeys'
 
 import { CollectionSlug } from '../constants'
 import { useChangeCollectionById } from './useChangeCollectionById'
+import { useCollectionQuerySlug } from './useCollectionQuerySlug'
 import { useDisplayedCollections } from './useDisplayedCollections'
 import { useLocation } from './useLocation'
 import { createCollectionFromDefaultValues } from './utils'
@@ -15,6 +17,7 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }))
 
+jest.mock('./useCollectionQuerySlug')
 jest.mock('./useDisplayedCollections')
 jest.mock('./useLocation')
 
@@ -23,6 +26,9 @@ const mockedUseDisplayedCollections = useDisplayedCollections as jest.MockedFunc
   typeof useDisplayedCollections
 >
 const mockedUseLocation = useLocation as jest.MockedFunction<typeof useLocation>
+const mockedUseCollectionQuerySlug = useCollectionQuerySlug as jest.MockedFunction<
+  typeof useCollectionQuerySlug
+>
 
 describe('useChangeCollectionById', () => {
   const defaultCollection = createCollectionFromDefaultValues({
@@ -37,8 +43,18 @@ describe('useChangeCollectionById', () => {
     default: false,
     slug: CollectionSlug.Recommendations,
   })
+  const anotherCollection = createCollectionFromDefaultValues({
+    id: '103',
+    published: true,
+    default: false,
+    slug: 'bar',
+  })
 
-  const collections = Immutable.OrderedMap({ a: defaultCollection, b: recommendationsCollection })
+  const collections = Immutable.OrderedMap({
+    a: defaultCollection,
+    b: recommendationsCollection,
+    c: anotherCollection,
+  })
 
   const dispatch = jest.fn()
   let location
@@ -54,6 +70,7 @@ describe('useChangeCollectionById', () => {
     }
 
     mockedUseLocation.mockReturnValue(location)
+    mockedUseCollectionQuerySlug.mockReturnValue(null)
   })
 
   describe('when no collection found for id', () => {
@@ -67,39 +84,75 @@ describe('useChangeCollectionById', () => {
   })
 
   describe('when collection found for id', () => {
-    const collectionId = '101'
+    const collectionId = anotherCollection.get('id')
 
     test('should dispatch push for new location', () => {
       useChangeCollectionById()(collectionId)
 
       const options = Object.create({})
       options.query = {
-        collection: defaultCollection.get('slug'),
+        collection: anotherCollection.get('slug'),
       }
       expect(dispatch).toHaveBeenLastCalledWith(expect.objectContaining(push(options)))
     })
 
-    test('should dispatch FILTERS_COLLECTION_CHANGE with correct id', () => {
+    test('should dispatch tracking event with correct ids', () => {
       useChangeCollectionById()(collectionId)
 
       expect(dispatch).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: actionTypes.FILTERS_COLLECTION_CHANGE,
+          type: actionTypes.TRACKING,
           trackingData: {
-            actionType: actionTypes.RECIPE_COLLECTION_SELECTED,
+            actionType: recipeCollectionSelected,
             collectionId,
+            fromCollectionId: defaultCollection.get('id'),
           },
         }),
       )
     })
 
-    describe('when collection in query already matches slug', () => {
+    describe('when query already contains a collection explicitly', () => {
       beforeEach(() => {
+        const slug = recommendationsCollection.get('slug')
+
         location = {
           query: {
-            collection: defaultCollection.get('slug'),
+            collection: slug,
           },
         }
+
+        mockedUseLocation.mockReturnValue(location)
+        mockedUseCollectionQuerySlug.mockReturnValue(slug)
+      })
+
+      test('should dispatch tracking event with correct ids', () => {
+        useChangeCollectionById()(collectionId)
+
+        expect(dispatch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: actionTypes.TRACKING,
+            trackingData: {
+              actionType: recipeCollectionSelected,
+              collectionId,
+              fromCollectionId: recommendationsCollection.get('id'),
+            },
+          }),
+        )
+      })
+    })
+
+    describe('when collection in query already matches slug', () => {
+      beforeEach(() => {
+        const slug = defaultCollection.get('slug')
+
+        location = {
+          query: {
+            collection: slug,
+          },
+        }
+
+        mockedUseLocation.mockReturnValue(location)
+        mockedUseCollectionQuerySlug.mockReturnValue(slug)
       })
 
       test('should not dispatch push', () => {

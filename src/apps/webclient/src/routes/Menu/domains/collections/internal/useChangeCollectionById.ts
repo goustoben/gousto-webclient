@@ -1,15 +1,34 @@
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { filtersCollectionChange } from 'actions/filters'
+import { actionTypes } from 'actions/actionTypes'
+import { recipeCollectionSelected } from 'actions/trackingKeys'
 
+import { useCurrentCollectionId } from './useCurrentCollection'
 import { useDisplayedCollections } from './useDisplayedCollections'
 import { useLocation } from './useLocation'
+
+function useTracking() {
+  const dispatch = useDispatch()
+  const currentCollectionId = useCurrentCollectionId()
+
+  return function track(newCollectionId: string) {
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: recipeCollectionSelected,
+        collectionId: newCollectionId,
+        fromCollectionId: currentCollectionId,
+      },
+    })
+  }
+}
 
 export const useChangeCollectionById = () => {
   const dispatch = useDispatch()
   const collections = useDisplayedCollections()
   const prevLoc = useLocation()
+  const track = useTracking()
 
   return (collectionId: string) => {
     const query = { ...prevLoc.query }
@@ -30,13 +49,11 @@ export const useChangeCollectionById = () => {
       delete query.collection
     }
 
-    if (collectionSlug) {
-      dispatch(filtersCollectionChange(collectionSlug, collectionId))
+    if (collectionSlug && collectionSlug !== prevLoc.query.collection) {
+      track(collectionId)
 
-      if (collectionSlug !== prevLoc.query.collection) {
-        const newLoc = { ...prevLoc, query }
-        dispatch(push(newLoc))
-      }
+      const newLoc = { ...prevLoc, query }
+      dispatch(push(newLoc))
     }
   }
 }
