@@ -327,6 +327,8 @@ module.exports = {
           // This check doesn't pick up default initializers in destructuring props.
           'react/require-default-props': 'off',
           'semi-style': 'off',
+          'no-shadow': 'off',
+          '@typescript-eslint/no-shadow': 'error',
         },
       },
     },

@@ -9,7 +9,7 @@ import moment from 'moment'
 import { ResourceType } from 'routes/Menu/constants/resources'
 import logger from 'utils/logger'
 
-import { Included, Order, RecipeItem } from '../domains/orders/types'
+import { Included, Order, RecipeItem } from '../domains/orders/v1'
 
 type AnyObject = Record<string, any>
 interface Logger {

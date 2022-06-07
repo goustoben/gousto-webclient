@@ -1,5 +1,4 @@
 import customersApi from 'apis/customers'
-import { cancelExistingOrders } from 'apis/orders'
 import config from 'config/subscription'
 import logger from 'utils/logger'
 import redirectActions from 'actions/redirect'
@@ -14,7 +13,9 @@ import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
 import * as trackingKeys from 'actions/trackingKeys'
 import { getUserId } from 'selectors/user'
+import { getAccessToken } from 'selectors/auth'
 import { deactivateSubscription } from '../routes/Account/apis/subscription'
+import { cancelPendingOrders } from '../routes/Menu/apis/orderV2'
 import statusActions from './status'
 import { actionTypes } from './actionTypes'
 
@@ -145,8 +146,8 @@ function subscriptionPauseTrackRecover() {
   return {
     type: actionTypes.TRACKING,
     trackingData: {
-      actionType: trackingKeys.recoverSubscription
-    }
+      actionType: trackingKeys.recoverSubscription,
+    },
   }
 }
 
@@ -157,7 +158,12 @@ function subscriptionPauseVisibilityChange(visible) {
   }
 }
 
-function subscriptionPauseProceed(stepType = 'next', staticScreenFallback = 'error', seRecoveryType, promoCode) {
+function subscriptionPauseProceed(
+  stepType = 'next',
+  staticScreenFallback = 'error',
+  seRecoveryType,
+  promoCode,
+) {
   return (dispatch, getState) => {
     const state = getState()
     const activeStepId = state.subscriptionPause.get('activeStepId')
@@ -170,7 +176,10 @@ function subscriptionPauseProceed(stepType = 'next', staticScreenFallback = 'err
       let reasonSlug
       if (chosenReasonIds.size > 0) {
         const categoryId = chosenReasonIds.first()
-        categorySlug = state.subscriptionPause.get('reasons').filter(reason => reason.get('id') === categoryId).first()
+        categorySlug = state.subscriptionPause
+          .get('reasons')
+          .filter((reason) => reason.get('id') === categoryId)
+          .first()
           .get('slug')
       }
       if (chosenReasonIds.size > 1) {
@@ -180,17 +189,23 @@ function subscriptionPauseProceed(stepType = 'next', staticScreenFallback = 'err
       }
       let modalType = activeSteps.getIn([activeStepId, 'type'])
       modalType = modalType || getModalType(getState)
-      dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_SUBSCRIPTION_KEPT_ACTIVE, {
-        promoCode,
-        categorySlug,
-        reasonSlug,
-        modalType,
-        seRecoveryType,
-      }))
+      dispatch(
+        subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_SUBSCRIPTION_KEPT_ACTIVE, {
+          promoCode,
+          categorySlug,
+          reasonSlug,
+          modalType,
+          seRecoveryType,
+        }),
+      )
     }
 
     if (stepType === 'initial' || !activeStepId) {
-      const firstStep = activeSteps.find(step => step.get('initial', false), undefined, activeSteps.first())
+      const firstStep = activeSteps.find(
+        (step) => step.get('initial', false),
+        undefined,
+        activeSteps.first(),
+      )
       nextStepId = firstStep ? firstStep.get('id') : undefined
     } else {
       nextStepId = activeSteps.getIn([activeStepId, `${stepType}StepId`])
@@ -199,9 +214,15 @@ function subscriptionPauseProceed(stepType = 'next', staticScreenFallback = 'err
     if (nextStepId) {
       const nextModalType = activeSteps.getIn([nextStepId, 'type'])
       if (stepType === 'initial' && nextModalType !== 'other') {
-        dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_RECOVERY_ATTEMPT_MODAL_VIEWED, { modalType: nextModalType }))
+        dispatch(
+          subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_RECOVERY_ATTEMPT_MODAL_VIEWED, {
+            modalType: nextModalType,
+          }),
+        )
       }
-      if (['recovered', 'recoveredPromo', 'recoveredSkipped', 'paused'].indexOf(nextModalType) > -1) {
+      if (
+        ['recovered', 'recoveredPromo', 'recoveredSkipped', 'paused'].indexOf(nextModalType) > -1
+      ) {
         dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_END_MODAL_VIEWED))
       }
       dispatch(subPauseActions.subscriptionPauseLoadStep(nextStepId))
@@ -218,10 +239,12 @@ function subscriptionPauseCancelPendingOrders() {
     const errorPrefix = 'Subscription pause cancel pending order error:'
 
     try {
-      const accessToken = getState().auth.get('accessToken')
+      const state = getState()
+      const accessToken = getAccessToken(state)
+      const userId = getUserId(state)
 
       try {
-        await cancelExistingOrders(accessToken)
+        await cancelPendingOrders(dispatch, getState, accessToken, userId)
         await dispatch(userActions.userLoadOrders())
       } catch (err) {
         throw new GoustoException(`${errorPrefix} cancel pending orders failed, ${err}`, {
@@ -232,7 +255,12 @@ function subscriptionPauseCancelPendingOrders() {
       dispatch(subPauseActions.subscriptionPauseTrack('EXISTING_ORDERS_CANCELLED'))
       dispatch(subPauseActions.subscriptionPauseProceed('pause', 'paused'))
     } catch (err) {
-      dispatch(subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_CANCEL_ORDERS))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadError(
+          err,
+          actionTypes.SUBSCRIPTION_PAUSE_CANCEL_ORDERS,
+        ),
+      )
     } finally {
       dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_CANCEL_ORDERS, false))
     }
@@ -273,7 +301,9 @@ function subscriptionPauseApplyPromo(promo) {
 
       dispatch(subPauseActions.subscriptionPauseProceed('next', 'recovered', 'promo', promoCode))
     } catch (err) {
-      dispatch(subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_PROMO_APPLY))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_PROMO_APPLY),
+      )
     } finally {
       dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_PROMO_APPLY, false))
     }
@@ -333,7 +363,9 @@ function subscriptionPauseFetchReasons() {
 
       dispatch(subPauseActions.subscriptionPauseReasonsReceive(reasons, metaData))
     } catch (err) {
-      dispatch(subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_FETCH))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_FETCH),
+      )
     } finally {
       dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_FETCH, false))
     }
@@ -391,13 +423,18 @@ function subscriptionPauseGoBack() {
         }
       }
     } catch (err) {
-      dispatch(subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_REASON_GO_BACK))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadError(
+          err,
+          actionTypes.SUBSCRIPTION_PAUSE_REASON_GO_BACK,
+        ),
+      )
     }
   }
 }
 
 function subscriptionPauseLoadError(err = '', actionType = actionTypes.SUBSCRIPTION_PAUSE_ERROR) {
-  return dispatch => {
+  return (dispatch) => {
     const message = err.message || err
     const error = err.error || message
     const logLevel = err.level || 'error'
@@ -419,7 +456,10 @@ function subscriptionPauseRedirect(location) {
       if (location === routesConfig.client.myDeliveries || location === routesConfig.client.help) {
         const state = getState().subscriptionPause
         const categoryId = state.get('chosenReasonIds').first()
-        const categorySlug = state.get('reasons').filter(reason => reason.get('id') === categoryId).first()
+        const categorySlug = state
+          .get('reasons')
+          .filter((reason) => reason.get('id') === categoryId)
+          .first()
           .get('slug')
         const reasonId = state.get('chosenReasonIds').last()
         const activeReasons = state.get('activeReasons')
@@ -432,12 +472,14 @@ function subscriptionPauseRedirect(location) {
           seRecoveryType = 'contact_cc'
         }
 
-        dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_SUBSCRIPTION_KEPT_ACTIVE, {
-          categorySlug,
-          reasonSlug,
-          seRecoveryType,
-          seModal: 'RecoveryAttemptModal',
-        }))
+        dispatch(
+          subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_SUBSCRIPTION_KEPT_ACTIVE, {
+            categorySlug,
+            reasonSlug,
+            seRecoveryType,
+            seModal: 'RecoveryAttemptModal',
+          }),
+        )
       }
       dispatch(subPauseActions.subscriptionPauseVisibilityChange(false))
       setTimeout(() => dispatch(redirectActions.redirect(location)), 300)
@@ -466,7 +508,11 @@ function subscriptionPauseReasonSubmit(freeText) {
 
       try {
         chosenReasonId = chosenReasonIds.last()
-        chosenReasonSlug = getState().subscriptionPause.getIn(['activeReasons', chosenReasonId, 'slug'])
+        chosenReasonSlug = getState().subscriptionPause.getIn([
+          'activeReasons',
+          chosenReasonId,
+          'slug',
+        ])
 
         if (!chosenReasonSlug) {
           throw new GoustoException()
@@ -489,11 +535,18 @@ function subscriptionPauseReasonSubmit(freeText) {
       }
 
       const modalType = getModalType(getState)
-      dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_SUBSCRIPTION_PAUSED, { reason, modalType }))
+      dispatch(
+        subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_SUBSCRIPTION_PAUSED, {
+          reason,
+          modalType,
+        }),
+      )
 
       const orderState = getState().user.get('orders')
-      const pendingOrderIds = orderState.filter(o => o.get('phase') === 'open')
-      const committedOrderIds = orderState.filter(o => ['cutoff', 'delivery', 'packing', 'picking'].indexOf(o.get('phase')) >= 0)
+      const pendingOrderIds = orderState.filter((o) => o.get('phase') === 'open')
+      const committedOrderIds = orderState.filter(
+        (o) => ['cutoff', 'delivery', 'packing', 'picking'].indexOf(o.get('phase')) >= 0,
+      )
 
       if (!(pendingOrderIds.size || committedOrderIds.size)) {
         dispatch(subPauseActions.subscriptionPauseProceed('pause', 'paused'))
@@ -506,7 +559,12 @@ function subscriptionPauseReasonSubmit(freeText) {
         windowObj.toggleSubscriptionPage()
       }
     } catch (err) {
-      dispatch(subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_REASON_SUBMIT))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadError(
+          err,
+          actionTypes.SUBSCRIPTION_PAUSE_REASON_SUBMIT,
+        ),
+      )
     } finally {
       dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_REASON_SUBMIT, false))
     }
@@ -546,33 +604,46 @@ function subscriptionPauseReasonChoice(chosenReasonId) {
         })
       }
 
-      dispatch(subPauseActions.subscriptionPauseLoadReasonChoice(chosenReasonIds, { type, chosenReasonSlug }))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadReasonChoice(chosenReasonIds, {
+          type,
+          chosenReasonSlug,
+        }),
+      )
 
       if (type === 'category') {
-        dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_REASON_CATEGORY_SELECTED, {
-          selectedCategory: chosenReasonSlug,
-        }))
+        dispatch(
+          subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_REASON_CATEGORY_SELECTED, {
+            selectedCategory: chosenReasonSlug,
+          }),
+        )
         dispatch(subPauseActions.subscriptionPauseLoadReasons(chosenReasonSubReasons))
-        dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_REASON_LIST_MODAL_VIEWED, {
-          selectedCategory: chosenReasonSlug,
-        }))
+        dispatch(
+          subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_REASON_LIST_MODAL_VIEWED, {
+            selectedCategory: chosenReasonSlug,
+          }),
+        )
       } else {
-        dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_REASON_SELECTED, {
-          selectedReason: chosenReasonSlug,
-        }))
+        dispatch(
+          subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_REASON_SELECTED, {
+            selectedReason: chosenReasonSlug,
+          }),
+        )
         const chosenReasonSteps = getState().subscriptionPause.get('activeSteps')
 
         if (!chosenReasonSteps || !chosenReasonSteps.size) {
           throw new GoustoException(`${errorPrefix} no steps found for "${chosenReasonSlug}"`)
         }
 
-        if (chosenReasonSteps.some(step => step.get('initial', false))) {
+        if (chosenReasonSteps.some((step) => step.get('initial', false))) {
           // if there's an initial step, there is recovery
           const recoveryFeature = getState().features.get('recovery')
           if (recoveryFeature && recoveryFeature.get('experiment')) {
-            dispatch(subPauseActions.subscriptionPauseTrack('IN_RECOVERY_EXPERIMENT', {
-              experiment: recoveryFeature.get('value'),
-            }))
+            dispatch(
+              subPauseActions.subscriptionPauseTrack('IN_RECOVERY_EXPERIMENT', {
+                experiment: recoveryFeature.get('value'),
+              }),
+            )
           }
           dispatch(subPauseActions.subscriptionPauseProceed('initial'))
         } else {
@@ -581,7 +652,12 @@ function subscriptionPauseReasonChoice(chosenReasonId) {
         }
       }
     } catch (err) {
-      dispatch(subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_REASON_CHOICE))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadError(
+          err,
+          actionTypes.SUBSCRIPTION_PAUSE_REASON_CHOICE,
+        ),
+      )
     } finally {
       dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_REASON_CHOICE, false))
     }
@@ -610,21 +686,29 @@ function subscriptionPauseSkipNextBox() {
                 level: 'warning',
               })
             } else {
-              throw new GoustoException(`${errorPrefix} failed to skip next box, ${orderSkipError}`, {
-                error: 'failed-skip',
-              })
+              throw new GoustoException(
+                `${errorPrefix} failed to skip next box, ${orderSkipError}`,
+                {
+                  error: 'failed-skip',
+                },
+              )
             }
           }
         } else {
-          throw new GoustoException(`${errorPrefix} failed to cancel next box, ${orderCancelError}`, {
-            error: 'failed-cancel',
-          })
+          throw new GoustoException(
+            `${errorPrefix} failed to cancel next box, ${orderCancelError}`,
+            {
+              error: 'failed-cancel',
+            },
+          )
         }
       }
 
       dispatch(subPauseActions.subscriptionPauseProceed('next', 'recovered', 'quoteSkipNext'))
     } catch (err) {
-      dispatch(subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_SKIP_BOX))
+      dispatch(
+        subPauseActions.subscriptionPauseLoadError(err, actionTypes.SUBSCRIPTION_PAUSE_SKIP_BOX),
+      )
     } finally {
       dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_SKIP_BOX, false))
     }
@@ -643,8 +727,9 @@ function subscriptionPauseEnd() {
       const chosenReasonIds = state.get('chosenReasonIds')
       if (chosenReasonIds.size > 0) {
         const categoryId = chosenReasonIds.get(0)
-        categorySlug = state.get('reasons').filter(reason => reason.get('id') === categoryId)
-        categorySlug = categorySlug && categorySlug.size > 0 ? categorySlug.first().get('slug') : undefined
+        categorySlug = state.get('reasons').filter((reason) => reason.get('id') === categoryId)
+        categorySlug =
+          categorySlug && categorySlug.size > 0 ? categorySlug.first().get('slug') : undefined
       }
       if (chosenReasonIds.size > 1) {
         const reasonId = chosenReasonIds.last()
