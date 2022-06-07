@@ -146,12 +146,6 @@
   color: White;
   margin: 0.25rem;
 
-  &:first-child {
-    @media ScreenSMMin {
-      margin-left: 1rem;
-    }
-  }
-
   &:last-child {
     margin-right: SpacingXS;
   }

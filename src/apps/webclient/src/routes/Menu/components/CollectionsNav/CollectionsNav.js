@@ -243,7 +243,7 @@ class CollectionsNav extends React.PureComponent {
     }
     if (doubleDeckerExperimentEnabled) {
       if (window.pageYOffset > navBarOffsetTop + 1) {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+        window.scrollTo({ top: 50, left: 0, behavior: 'smooth' })
       }
     } else if (
       collectionId !== ALL_RECIPES_COLLECTION_ID &&
