@@ -1,7 +1,14 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
 .emeRecipeList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: calc(100% + 1rem);
-  max-width: 100%;
+  margin-top: 0.5rem;
+
+  @media ScreenXSMax {
+    max-width: 100%;
+    margin-top: 0;
+  }
 }
