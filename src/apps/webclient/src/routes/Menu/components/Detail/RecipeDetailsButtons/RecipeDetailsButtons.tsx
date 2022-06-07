@@ -6,7 +6,6 @@ import { Button, Control, Segment } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
 
 import config from 'config/recipes'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useBasket } from 'routes/Menu/domains/basket'
 import { useStock } from 'routes/Menu/domains/menu'
 
@@ -47,9 +46,6 @@ export const RecipeDetailsButtons = ({
   const { numPortions, reachedLimit, getQuantitiesForRecipeId, canAddRecipes } = useBasket()
   const { getStockForRecipe } = useStock()
   const surchargePerPortion = useSurchargePerPortion({ recipeId, numPortions })
-  const isCloseModalOnAddRecipeEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_is_close_modal_on_add_recipe_enabled',
-  )
   const stock = getStockForRecipe(recipeId)
   const qty = getQuantitiesForRecipeId(recipeId)
 
@@ -58,7 +54,7 @@ export const RecipeDetailsButtons = ({
       if (stock !== null && canAddRecipes) {
         dispatch(basketRecipeAdd(recipeId, view, { position }))
 
-        if (isCloseModalOnAddRecipeEnabled && isFirstInBatchOfSameRecipes) {
+        if (isFirstInBatchOfSameRecipes) {
           dispatch(menuRecipeDetailVisibilityChange())
         }
       } else if (config.recipeDetailViews.includes(view)) {
@@ -70,7 +66,7 @@ export const RecipeDetailsButtons = ({
         dispatch(actions.menuBrowseCTAVisibilityChange(true))
       }
     },
-    [dispatch, stock, canAddRecipes, recipeId, view, position, isCloseModalOnAddRecipeEnabled],
+    [dispatch, stock, canAddRecipes, recipeId, view, position],
   )
 
   const handleRemove = useCallback(() => {
