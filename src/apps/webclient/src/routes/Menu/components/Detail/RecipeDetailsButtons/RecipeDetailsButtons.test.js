@@ -5,7 +5,6 @@ import { shallow } from 'enzyme'
 import ReactDOM from 'react-dom'
 import * as Redux from 'react-redux'
 
-import * as OptimizelyRollouts from 'containers/OptimizelyRollouts'
 import * as Auth from 'routes/Menu/domains/auth'
 import * as Basket from 'routes/Menu/domains/basket'
 import * as Menu from 'routes/Menu/domains/menu'
@@ -23,7 +22,6 @@ const mockUp = ({
   stockLevel = 1000,
   isAdmin = false,
   surchargePerPortion = null,
-  isCloseModalOnAddRecipeEnabled = false,
 } = {}) => {
   const dispatch = jest.fn()
 
@@ -52,10 +50,6 @@ const mockUp = ({
   jest
     .spyOn(actions, 'menuBrowseCTAVisibilityChange')
     .mockImplementation(menuBrowseCTAVisibilityChange)
-
-  jest
-    .spyOn(OptimizelyRollouts, 'useIsOptimizelyFeatureEnabled')
-    .mockReturnValue(isCloseModalOnAddRecipeEnabled)
 
   jest.spyOn(MenuRecipeDetailsActions, 'menuRecipeDetailVisibilityChange')
 
@@ -272,20 +266,10 @@ describe('the RecipeDetailsButtons component', () => {
               buttonContent.simulate('click')
               expect(basketRecipeAdd).toHaveBeenCalledWith(recipeId, view, { position, score })
             })
-          })
 
-          describe('when beetroots_is_close_modal_on_add_recipe_enabled is on', () => {
-            let basketRecipeAdd
-
-            beforeEach(() => {
-              ;({ basketRecipeAdd } = mockUp({ isCloseModalOnAddRecipeEnabled: true }))
-              wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
-            })
-
-            test('then it adds the recipe and closes the recipe details modal', () => {
+            test('then it closes the recipe', () => {
               buttonContent = wrapper.find('Segment').first()
               buttonContent.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(recipeId, view, { position, score })
               expect(MenuRecipeDetailsActions.menuRecipeDetailVisibilityChange).toHaveBeenCalled()
             })
           })

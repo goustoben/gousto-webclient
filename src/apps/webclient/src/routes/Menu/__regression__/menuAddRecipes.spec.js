@@ -106,44 +106,10 @@ describe('Given I am a logged out user', () => {
             .then((recipes) => recipes.length)
             .should('equal', 3)
         })
-      })
 
-      describe('And I click on “Add recipe“ for the selected recipe again', () => {
-        before(() => {
-          cy.get('[data-testing="menuRecipeDetailsClose"]')
-            .first()
-            .find('[data-testing="menuAddServings"]')
-            .eq(2)
-            .click()
+        it('Then the recipe card is closed', () => {
+          cy.get('[data-testing="menuRecipeDetailsClose"]').should('not.exist')
         })
-
-        it('Then that recipe is added to my basket twice', () => {
-          cy.window()
-            .then(getRecipes)
-            .then((recipes) => recipes.length)
-            .should('equal', 3)
-        })
-      })
-    })
-
-    describe('And I click on “Add recipe“ for 5th recipe', () => {
-      before(() => {
-        cy.get('[data-testing="menuRecipeDetailsClose"]').eq(1).click()
-        cy.get('[data-testing="menuRecipeAdd"]').eq(2).click()
-      })
-
-      it('Then 5th recipe is added to my basket', () => {
-        // Recipes count is still be 4 as same recipe is added for 4 portions which makes it 5 in total.
-        cy.window()
-          .then(getRecipes)
-          .then((recipes) => recipes.length)
-          .should('equal', 4)
-      })
-    })
-
-    describe('And I view the menu after 5 recipes have been added', () => {
-      it('Then the add recipe CTAs should be disabled', () => {
-        cy.get('[data-testing="menuRecipeAddDisabled"]').first().should('exist')
       })
     })
 

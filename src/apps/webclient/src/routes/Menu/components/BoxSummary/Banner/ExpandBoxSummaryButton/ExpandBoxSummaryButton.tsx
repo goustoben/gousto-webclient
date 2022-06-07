@@ -25,6 +25,7 @@ export const ExpandBoxSummaryButton = ({ numRecipes, onClick, showBrowseCTA }: P
   return (
     <div className={css.buttonContainer}>
       <Button
+        className={css.button}
         height={48}
         colorVariant={ButtonColorVariant.Secondary}
         onClick={onClick}

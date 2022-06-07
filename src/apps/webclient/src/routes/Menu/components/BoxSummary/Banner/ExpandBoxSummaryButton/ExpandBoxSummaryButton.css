@@ -8,6 +8,12 @@
   }
 }
 
+.buttonContainer > .button {
+  @media (max-width: 660px) and (min-width: 640px) {
+    padding: 0 0.5rem;
+  }
+}
+
 .iconDesktop {
   flex: 0 0 1rem;
   display: flex;
