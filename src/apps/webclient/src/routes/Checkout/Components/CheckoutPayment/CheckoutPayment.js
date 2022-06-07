@@ -188,8 +188,13 @@ class CheckoutPayment extends React.Component {
   }
 
   renderStartYourSubscriptionButton = () => {
-    const { pricingHookResponse, isPayPalReady, currentPaymentMethod } = this.props
+    const { pricingHookResponse, isPayPalReady, currentPaymentMethod, signupLoginError } =
+      this.props
 
+    if (signupLoginError) {
+      // The Login CTA in the Alert is what we want the user to press.
+      return null
+    }
     const { isPending } = pricingHookResponse
 
     const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : isPending
@@ -319,6 +324,7 @@ CheckoutPayment.propTypes = {
   isGoustoOnDemandEnabled: PropTypes.bool,
   isFreeBox: PropTypes.bool,
   pricingHookResponse: PropTypes.object,
+  signupLoginError: PropTypes.string,
 }
 
 CheckoutPayment.defaultProps = {
@@ -347,6 +353,7 @@ CheckoutPayment.defaultProps = {
   isFreeBox: false,
   // eslint-disable-next-line react/forbid-prop-types
   pricingHookResponse: {},
+  signupLoginError: null,
 }
 
 export { CheckoutPayment }

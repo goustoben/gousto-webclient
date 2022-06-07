@@ -28,6 +28,7 @@ describe('CheckoutPaymentContainer', () => {
     payment: Immutable.fromJS({
       paymentMethod: 'Card',
     }),
+    error: Immutable.fromJS({}),
   }
 
   const store = {
