@@ -11,7 +11,8 @@ const mapStateToProps = (state) => ({
   userFirstName: getUserFirstName(state),
   rafOffer: getReferralOffer(state),
   isLoading: getLoadingStateForOffer(state),
-  device: state.request.get('browser')
+  device: state.request.get('browser'),
+  userId: state.user.get('id'),
 })
 
 const ReferralContainer = connect(mapStateToProps, {

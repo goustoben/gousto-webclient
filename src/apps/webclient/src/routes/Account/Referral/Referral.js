@@ -26,6 +26,7 @@ const propTypes = {
   device: PropTypes.string,
   trackUserFreeFoodPageView: PropTypes.func,
   trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
+  userId: PropTypes.string,
 }
 
 const defaultProps = {
@@ -37,14 +38,19 @@ const defaultProps = {
   isLoading: false,
   device: 'desktop',
   trackUserFreeFoodPageView: () => {},
+  userId: null
 }
 
 class Referral extends Component {
   componentDidMount() {
-    const { trackUserFreeFoodPageView } = this.props
-    trackUserFreeFoodPageView()
-
     this.fetchReferralOffer()
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { trackUserFreeFoodPageView, userId } = this.props
+    if (nextProps.userId && !userId) {
+      trackUserFreeFoodPageView()
+    }
   }
 
   fetchReferralOffer = () => {

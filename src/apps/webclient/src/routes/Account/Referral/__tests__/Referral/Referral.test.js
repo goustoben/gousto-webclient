@@ -31,6 +31,7 @@ describe('Referral', () => {
       describe('componentDidMount', () => {
         describe('when the free food page is loaded', () => {
           test('then trackUserFreeFoodPageView should be called on mount', () => {
+            wrapper.setProps({ userId: '1' })
             expect(trackUserFreeFoodPageViewSpy).toHaveBeenCalled()
           })
         })
