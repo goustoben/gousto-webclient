@@ -8,7 +8,8 @@ import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import { getUserOrders } from 'selectors/user'
 import { getBasketRecipes } from 'selectors/basket'
-import { getTransactionType , getUTMAndPromoCode } from 'selectors/tracking'
+import { getTransactionType, getUTMAndPromoCode } from 'selectors/tracking'
+import moment from 'moment'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import { boxSummaryDeliveryDaysLoad } from './boxSummary'
@@ -294,13 +295,18 @@ export const basketPostcodeChange = (postcode, forgetPrevPostcode = false) => (
         type: actionTypes.BASKET_POSTCODE_PENDING,
         pending: true,
       })
-      await dispatch(boxSummaryDeliveryDaysLoad())
+      const today = moment().startOf('day')
+      await dispatch(boxSummaryDeliveryDaysLoad(
+        today.toISOString(),
+        today.add(28, 'days') // calendar displays 4 weeks ahead
+          .toISOString()
+      ))
       dispatch({
         type: actionTypes.BASKET_POSTCODE_PENDING,
         pending: false,
       })
 
-      const {promoCode, UTM} = getUTMAndPromoCode(getState())
+      const { promoCode, UTM } = getUTMAndPromoCode(getState())
       dispatch({
         type: actionTypes.BASKET_SELECT_POSTCODE,
         trackingData: {
