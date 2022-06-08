@@ -1,4 +1,4 @@
-@value CG-200, FI-900, FS-900 from '../actionBarConstants.module.css';
+@value CG-200, FI-100, FI-900, FS-900 from '../actionBarConstants.module.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value transitionDuration 0.3s;
 
@@ -40,10 +40,14 @@
   }
 }
 
-.arcCanCheckout {
+.arcGreen {
   stroke: FS-900;
 }
 
 .slash {
   color: CG-200;
+}
+
+.checkoutSlash {
+  color: FI-100;
 }

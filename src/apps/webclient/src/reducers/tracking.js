@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 
-const initialState = Immutable.Map({
+export const initialState = Immutable.Map({
   asource: undefined,
   utmSource: undefined,
   awc: '',

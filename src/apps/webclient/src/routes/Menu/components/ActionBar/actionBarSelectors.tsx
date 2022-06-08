@@ -1,27 +1,20 @@
-import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 
-import { actionTypes } from 'actions/actionTypes'
 import { getMenuBoxPrices } from 'routes/BoxPrices/boxPricesSelectors'
 import { getNumPortions } from 'selectors/basket'
 
-export const createGetNextTierPricePerPortion = (numRecipes = 0) =>
+export const createGetBestTierPricePerPortion = () =>
   createSelector(getMenuBoxPrices, getNumPortions, (menuBoxPrices, numPortions): string | null => {
     if (!menuBoxPrices) {
       return null
     }
 
-    const nextNumRecipes = numRecipes + 1
+    const numRecipes = 4
 
-    const next = menuBoxPrices.getIn([
+    return menuBoxPrices.getIn([
       numPortions.toString(),
-      nextNumRecipes.toString(),
+      numRecipes.toString(),
       'gourmet',
       'pricePerPortionDiscounted',
     ])
-
-    return next
   })
-
-export const getMenuBoxPricesLoading = (state: { pending: Immutable.Map<string, boolean> }) =>
-  state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE)

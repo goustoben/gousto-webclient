@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
@@ -11,27 +11,36 @@ import { RecipesInBasketProgressPresentation } from './RecipesInBasketProgress.p
 
 const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  isActionBarRedesignEnabled: PropTypes.bool.isRequired,
 }
 
-const RecipesInBasketProgress = ({ isAuthenticated }) => {
+function useTracking() {
   const { recipeCount } = useBasket()
   const dispatch = useDispatch()
+  const dispatchTrackUTMAndPromoCode = useCallback(
+    (maxRecipes, percentage) => {
+      dispatch(
+        trackUTMAndPromoCode(dismissRecipesInBasketProgress, {
+          num_recipes: recipeCount,
+          max_recipes: maxRecipes,
+          percentage_complete: percentage,
+        }),
+      )
+    },
+    [recipeCount, dispatch],
+  )
 
-  const handleClose = (maxRecipes, percentage) => {
-    dispatch(
-      trackUTMAndPromoCode(dismissRecipesInBasketProgress, {
-        num_recipes: recipeCount,
-        max_recipes: maxRecipes,
-        percentage_complete: percentage,
-      }),
-    )
-  }
+  return { dispatchTrackUTMAndPromoCode, recipeCount }
+}
 
-  return (
+const RecipesInBasketProgress = ({ isAuthenticated, isActionBarRedesignEnabled }) => {
+  const { dispatchTrackUTMAndPromoCode, recipeCount } = useTracking()
+
+  return isActionBarRedesignEnabled ? null : (
     <RecipesInBasketProgressPresentation
       isAuthenticated={isAuthenticated}
       selectedRecipesCount={recipeCount}
-      onClose={handleClose}
+      onClose={dispatchTrackUTMAndPromoCode}
     />
   )
 }

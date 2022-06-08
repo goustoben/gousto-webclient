@@ -84,9 +84,8 @@ export const signupConfig = {
     genericErrorMessage: 'Please enter a valid postcode'
   },
   deliveryOptionsStep: {
-    title: 'Which delivery day would you like?',
+    title: 'When would you like your first box delivered?',
     goustoOnDemandTitle: 'When do you want your box delivered?',
-    wizardCalendarExperimentTitle: 'When would you like your first box delivered?',
   },
   discountAppliedText: 'View this when you reach the checkout.',
   sellThePropositionPagePath: 'about',

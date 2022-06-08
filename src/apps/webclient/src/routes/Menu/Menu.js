@@ -147,9 +147,10 @@ class Menu extends React.PureComponent {
             />
           </div>
           <BoxSummaryContainer />
-          {isActionBarRedesignEnabled ? null : (
-            <RecipesInBasketProgress isAuthenticated={isAuthenticated} />
-          )}
+          <RecipesInBasketProgress
+            isAuthenticated={isAuthenticated}
+            isActionBarRedesignEnabled={isActionBarRedesignEnabled}
+          />
         </div>
         <RibbonTrigger name="menu" />
       </MainLayout>

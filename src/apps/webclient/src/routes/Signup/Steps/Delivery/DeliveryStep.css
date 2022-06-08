@@ -12,7 +12,7 @@
   }
 }
 
-.wizardCalendarExperimentContainer {
+.calendarContainer {
   margin: auto auto 1rem;
   @media BreakpointToMedium {
     max-width: 22rem;

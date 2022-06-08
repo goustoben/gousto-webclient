@@ -41,8 +41,6 @@ const DeliveryStepContainer = connect(mapStateToProps, {
   setTempDate: (date) => actions.temp('date', date),
   setTempSlotId: (slotId) => actions.temp('slotId', slotId),
   boxSummaryDeliverySlotChosen,
-  trackDeliveryDayDropDownOpened: actions.trackDeliveryDayDropDownOpened,
-  trackDeliveryDayDropDownClosed: actions.trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened: actions.trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited: actions.trackDeliveryDayEdited,
   trackDeliverySlotEdited: actions.trackDeliverySlotEdited,

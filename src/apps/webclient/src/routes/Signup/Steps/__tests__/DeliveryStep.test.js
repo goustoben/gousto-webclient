@@ -8,6 +8,7 @@ import * as Redux from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
 import { unbounce as unbounceRoutes } from 'config/routes'
+import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
 
 import { DeliveryStep } from '../Delivery/DeliveryStep'
 
@@ -94,11 +95,6 @@ describe('Delivery Step', () => {
     )
   })
 
-  test('renders an image in the header', () => {
-    expect(wrapper.find('SignupImage')).toHaveLength(1)
-    expect(wrapper.find('SignupImage').prop('name')).toBe('delivery-day')
-  })
-
   describe('Capacity Message', () => {
     describe('When all slots are disabled', () => {
       beforeEach(() => {
@@ -143,14 +139,14 @@ describe('Delivery Step', () => {
     })
   })
 
-  describe('Delivery day dropdown', () => {
-    let deliveryDayDropdown
+  describe('Delivery day calendar', () => {
+    let calendar
 
     beforeEach(() => {
-      deliveryDayDropdown = wrapper.find(DropdownInput).at(0)
+      calendar = wrapper.find(Calendar).at(0)
     })
 
-    test('should display correct dropdown options', () => {
+    test('should display correct delivery days', () => {
       const expectedOptions = [
         {
           date: '2020-02-14',
@@ -165,11 +161,11 @@ describe('Delivery Step', () => {
           label: 'Saturdays (starting 15th Feb)',
         },
       ]
-      expect(deliveryDayDropdown.prop('options')).toEqual(expectedOptions)
+      expect(calendar.prop('deliveryDays')).toEqual(expectedOptions)
     })
 
     test('should pre select temp date', () => {
-      expect(deliveryDayDropdown.prop('value')).toEqual('2020-02-14')
+      expect(calendar.prop('selectedDay')).toEqual('2020-02-14')
     })
 
     describe('when all slots for a given day are disabled', () => {
@@ -185,7 +181,7 @@ describe('Delivery Step', () => {
             />
           </Provider>,
         )
-        deliveryDayDropdown = wrapper.find(DropdownInput).at(0)
+        calendar = wrapper.find(Calendar).at(0)
       })
 
       test('should add disabled attribute to relevant day', () => {
@@ -203,7 +199,7 @@ describe('Delivery Step', () => {
             label: 'Saturdays (starting 15th Feb)',
           },
         ]
-        expect(deliveryDayDropdown.prop('options')).toEqual(expectedOptions)
+        expect(calendar.prop('deliveryDays')).toEqual(expectedOptions)
       })
     })
   })
@@ -212,7 +208,7 @@ describe('Delivery Step', () => {
     let deliverySlotDropdown
 
     beforeEach(() => {
-      deliverySlotDropdown = wrapper.find(DropdownInput).at(1)
+      deliverySlotDropdown = wrapper.find(DropdownInput).at(0)
     })
 
     test('should display correct dropdown options', () => {
@@ -252,7 +248,7 @@ describe('Delivery Step', () => {
             />
           </Provider>,
         )
-        deliverySlotDropdown = wrapper.find(DropdownInput).at(1)
+        deliverySlotDropdown = wrapper.find(DropdownInput).at(0)
       })
 
       test('should add disabled attribute to relevant slot', () => {
