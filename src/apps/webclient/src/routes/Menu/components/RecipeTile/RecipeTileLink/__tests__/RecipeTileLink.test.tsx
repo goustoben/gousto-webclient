@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 
+import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import { RecipeTileLink } from 'routes/Menu/components/RecipeTile/RecipeTileLink'
 
 const onClickTileMock = jest.fn()
@@ -12,28 +13,53 @@ const mockedProps = {
 }
 
 describe('Given: RecipeTileLink component', () => {
-  // describe('When: User clicks on "More description ->" button', () => {
-  //   test('Click event should trigger dispatch', () => {
-  //     // const wrapper = render(<RecipeTileLink {...mockedProps} />)
-  //     //
-  //     // screen.logTestingPlaygroundURL()
-  //     //
-  //     // link.simulate('click', { stopPropagation() {} })
-  //     //
-  //     // expect(onClickTileMock).toHaveBeenCalledTimes(1)
-  //   })
-  // })
+  const mockedStore = createMockStore({})
+  describe('When: User clicks on "More description ->" button', () => {
+    test('Click event should trigger dispatch', () => {
+      render(
+        <Provider store={mockedStore}>
+          <RecipeTileLink {...mockedProps} />
+        </Provider>,
+      )
+
+      const button = screen.getByRole('button', { name: 'More details' })
+
+      fireEvent(
+        button,
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+        }),
+      )
+
+      expect(onClickTileMock).toHaveBeenCalledTimes(1)
+    })
+  })
 
   describe('When: user sees different kind of recipes', () => {
     test('With fineDineIn enabled', () => {
       const updatedProps = { ...mockedProps, isFineDineIn: true }
-      render(<RecipeTileLink {...updatedProps} />)
+      render(
+        <Provider store={mockedStore}>
+          <RecipeTileLink {...updatedProps} />
+        </Provider>,
+      )
 
-      screen.logTestingPlaygroundURL()
+      expect(screen.getByText('More details')).toBeDefined()
+      expect(screen.getByRole('button', { name: 'More details' })).toBeDefined()
+      expect(screen.getByTestId('arrow_right')).toBeDefined()
     })
 
     test('With fineDineIn disabled', () => {
-      render(<RecipeTileLink {...mockedProps} />)
+      render(
+        <Provider store={mockedStore}>
+          <RecipeTileLink {...mockedProps} />
+        </Provider>,
+      )
+
+      expect(screen.getByText('More details')).toBeDefined()
+      expect(screen.getByRole('button', { name: 'More details' })).toBeDefined()
+      expect(screen.getByTestId('arrow_right')).toBeDefined()
     })
   })
 })

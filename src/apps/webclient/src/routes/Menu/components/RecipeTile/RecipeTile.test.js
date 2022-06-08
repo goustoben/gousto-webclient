@@ -127,12 +127,4 @@ describe('RecipeTile', () => {
       expect(wrapper.find('.recipeTileIsFineDineIn')).toHaveLength(0)
     })
   })
-
-  describe('When: RecipeTile "More description ->" Link experiment is on', () => {
-    test('"More description ->" link should be presented in tile', () => {
-      const link = wrapper.find('button')
-
-      expect(link.contains('More details')).toBe(true)
-    })
-  })
 })
