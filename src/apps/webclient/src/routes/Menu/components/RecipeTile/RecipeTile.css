@@ -1,5 +1,5 @@
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
-@value White, Blackberry, BlueBase from 'styles/colors.css';
+@value White, Blackberry from 'styles/colors.css';
 @value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
 
 .recipeTile {
@@ -142,72 +142,4 @@
 .recipeTagHolderShifted {
   position: absolute;
   top: 2.625rem;
-}
-
-/* Everything below is a part of experiment
- * https://gousto.atlassian.net/browse/TG-6541
- */
-
-@value color-S200 #A29EFF;
-@value color-S600 #412dee;
-@value outline-broder-width: 0.1875rem;
-@value outline-border-radius: 0.1875rem;
-
-.recipeTileLink {
-  width: 100%;
-  border: none;
-  background: transparent;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-
-  border-bottom: 0.0625rem solid BlueBase;
-
-  &:focus {
-    outline: none;
-    border: outline-broder-width solid BlueBase;
-    border-radius: outline-border-radius;
-  }
-}
-
-.recipeTileLink.recipeTileFineDineInLink {
-  border-bottom-color: color-S200;
-
-  &:focus {
-    outline: none;
-    border: outline-broder-width solid BlueBase;
-    border-radius: outline-border-radius;
-  }
-}
-
-.recipeTileLink:hover {
-  border-bottom-color: color-S600;
-
-  .recipeTileLinkText {
-    color: color-S600;
-  }
-}
-
-.recipeTileLink.recipeTileFineDineInLink:hover {
-  border-bottom-color: BlueBase;
-
-  .recipeFineDineInTileLinkText {
-    color: BlueBase;
-  }
-}
-
-.recipeTileLink .recipeTileLinkIcon {
-  color: BlueBase;
-}
-.recipeTileLink:hover .recipeTileLinkIcon {
-  color: color-S600;
-}
-
-.recipeTileLink .recipeTileFineDineInLinkIcon {
-  color: color-S200;
-}
-.recipeTileLink:hover .recipeTileFineDineInLinkIcon {
-  color: BlueBase;
 }

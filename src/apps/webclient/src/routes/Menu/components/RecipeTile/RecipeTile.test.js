@@ -134,13 +134,5 @@ describe('RecipeTile', () => {
 
       expect(link.contains('More details')).toBe(true)
     })
-
-    test('"More description ->" click event should trigger dispatch', () => {
-      const link = wrapper.find('button')
-
-      link.simulate('click', { stopPropagation() {} })
-
-      expect(dispatchMock).toHaveBeenCalledTimes(1)
-    })
   })
 })

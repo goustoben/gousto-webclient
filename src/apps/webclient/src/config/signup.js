@@ -12,6 +12,9 @@ const applyVoucherPageSlug = 'apply-voucher'
 const enterPromoCodeManuallyPageSlug = 'enter-discount-code'
 const postcodeSlug = 'postcode'
 
+/*
+interface?
+ */
 export const signupConfig = {
   /**
    * If experiment steps should be added:

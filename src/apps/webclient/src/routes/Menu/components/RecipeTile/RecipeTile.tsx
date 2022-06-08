@@ -1,16 +1,18 @@
 import React, { SyntheticEvent } from 'react'
 
-import { Box, Color, FontFamily, FontWeight, Icon, Text } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
 
 import { DeviceType, useDeviceType } from 'hooks/useDeviceType'
+import {
+  RecipeTileLink,
+  useGetRecipeTileLinkData,
+} from 'routes/Menu/components/RecipeTile/RecipeTileLink'
 import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
 
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useRecipeReference } from '../../context/recipeReferenceContext'
 import { BrandTag, Title } from '../Recipe'
 import { RecipeTag } from '../RecipeTag'
-import { useGetRecipeTileLinkData } from './Hooks'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
 import { VariantHeader } from './VariantHeader'
@@ -30,8 +32,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   currentCollectionId: categoryId,
   onClick,
 }) => {
-  const { isRecipeTileLinkVisible, dispatchTrackClickMoreRecipeDetails } =
-    useGetRecipeTileLinkData()
+  const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)
@@ -56,11 +57,6 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   const handleOnClick = (e: SyntheticEvent) => {
     e.stopPropagation()
     onClick(recipeId, categoryId, recipeReference)
-  }
-
-  const handleOnRecipeTileLinkClick = (e: SyntheticEvent) => {
-    dispatchTrackClickMoreRecipeDetails()
-    handleOnClick(e)
   }
 
   // alternative options include the recipe itself
@@ -114,41 +110,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           />
 
           {isRecipeTileLinkVisible && (
-            <Box
-              maxWidth="6.45rem"
-              width="6.25rem"
-              flexBasis="100%"
-              borderBottomWidth={1}
-              paddingBottom={4}
-              style={{ boxSizing: 'content-box' }}
-            >
-              <button
-                type="button"
-                onClick={handleOnRecipeTileLinkClick}
-                className={classnames(css.recipeTileLink, {
-                  [css.recipeTileFineDineInLink]: isFineDineIn,
-                })}
-              >
-                <Text
-                  fontFamily={FontFamily.UI}
-                  fontWeight={FontWeight.SemiBold}
-                  size={1}
-                  className={classnames(css.recipeTileLinkText, {
-                    [css.recipeFineDineInTileLinkText]: isFineDineIn,
-                  })}
-                  color={isFineDineIn ? Color.Secondary_200 : Color.Secondary_400}
-                >
-                  More details
-                </Text>
-                <Icon
-                  name="arrow_right"
-                  size={4}
-                  className={classnames(css.recipeTileLinkIcon, {
-                    [css.recipeTileFineDineInLinkIcon]: isFineDineIn,
-                  })}
-                />
-              </button>
-            </Box>
+            <RecipeTileLink isFineDineIn={isFineDineIn} onClickTile={handleOnClick} />
           )}
 
           <RecipeTilePurchaseInfo
