@@ -31,5 +31,4 @@ export const getRUMSDKConfig: () => RumInitConfiguration = () => ({
   clientToken: getClientDatadogRumSdkClientToken(),
   trackInteractions: false,
   defaultPrivacyLevel: 'mask-user-input',
-  allowedTracingOrigins: [/https:\/\/.*-api\.gousto\.(info|co\.uk)/],
 })

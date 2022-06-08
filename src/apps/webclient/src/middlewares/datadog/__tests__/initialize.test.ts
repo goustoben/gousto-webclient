@@ -113,7 +113,6 @@ describe('datadog', () => {
           site: 'datadoghq.eu',
           trackInteractions: false,
           version: 'MOCK_CIRCLE_BUILD_NUM',
-          allowedTracingOrigins: [/https:\/\/.*-api\.gousto\.(info|co\.uk)/],
         })
       })
     })
