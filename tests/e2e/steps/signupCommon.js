@@ -42,7 +42,7 @@ module.exports = {
         done()
       })
       .perform(function (done) {
-        signup.section.deliveryStep.selectTuesdaysAsDeliveryDay()
+        signup.section.deliveryStep.selectEarliestAvailableDay()
         done()
       })
       .perform(function (done) {

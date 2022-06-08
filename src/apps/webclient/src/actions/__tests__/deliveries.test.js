@@ -1,7 +1,5 @@
 import Immutable from 'immutable'
 import {
-  trackDeliveryDayDropDownOpened,
-  trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited,
   trackDeliverySlotEdited,
@@ -38,42 +36,6 @@ describe('delivery actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-  })
-
-  describe('trackDeliveryDayDropDownOpened', () => {
-    test('Should dispatch DELIVERY_DAY_DROPDOWN_OPEN action when date dropdown is opened', () => {
-      const date = '2019-01-01'
-      const dayOffset = 1
-      const deliverySlotId = 'a1b2c3d4'
-      trackDeliveryDayDropDownOpened(date, dayOffset, deliverySlotId)(dispatch)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.DELIVERY_DAY_DROPDOWN_OPEN,
-        trackingData: {
-          actionType: 'DeliveryDayDropDown Opened',
-          date: '2019-01-01',
-          day_offset: 1,
-          delivery_slot_id: 'a1b2c3d4'
-        }
-      })
-    })
-  })
-
-  describe('trackDeliveryDayDropDownClosed', () => {
-    test('Should dispatch DELIVERY_DAY_DROPDOWN_CLOSED action when date dropdown is closed', () => {
-      const date = '2019-01-02'
-      const dayOffset = 2
-      const deliverySlotId = 'a2b2c3d4'
-      trackDeliveryDayDropDownClosed(date, dayOffset, deliverySlotId)(dispatch)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.DELIVERY_DAY_DROPDOWN_CLOSED,
-        trackingData: {
-          actionType: 'DeliveryDayDropDown Closed',
-          date: '2019-01-02',
-          day_offset: 2,
-          delivery_slot_id: 'a2b2c3d4'
-        }
-      })
-    })
   })
 
   describe('trackDeliverySlotDropDownOpened', () => {

@@ -6,30 +6,6 @@ import { getDisabledSlotDates } from 'routes/Menu/selectors/boxSummary'
 import { getIsAuthenticated } from 'selectors/auth'
 import { actionTypes } from './actionTypes'
 
-export const trackDeliveryDayDropDownOpened = (date, dayOffset, deliverySlotId) => dispatch => {
-  dispatch({
-    type: actionTypes.DELIVERY_DAY_DROPDOWN_OPEN,
-    trackingData: {
-      actionType: 'DeliveryDayDropDown Opened',
-      date,
-      day_offset: dayOffset,
-      delivery_slot_id: deliverySlotId
-    }
-  })
-}
-
-export const trackDeliveryDayDropDownClosed = (date, dayOffset, deliverySlotId) => dispatch => {
-  dispatch({
-    type: actionTypes.DELIVERY_DAY_DROPDOWN_CLOSED,
-    trackingData: {
-      actionType: 'DeliveryDayDropDown Closed',
-      date,
-      day_offset: dayOffset,
-      delivery_slot_id: deliverySlotId
-    }
-  })
-}
-
 export const trackDeliverySlotDropDownOpened = (date, dayOffset, deliverySlotId) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_SLOT_DROPDOWN_OPEN,
@@ -152,8 +128,6 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
 }
 
 export const deliveriesActions = {
-  trackDeliveryDayDropDownOpened,
-  trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited,
   trackDeliverySlotEdited,

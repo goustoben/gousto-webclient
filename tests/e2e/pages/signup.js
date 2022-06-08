@@ -64,6 +64,9 @@ module.exports = {
         deliveryDay: {
           selector: '*[data-testing="signupDeliveryDay"]',
         },
+        earliestAvailableDeliveryDay: {
+          selector: '*[data-testing="signupDeliveryDay"] button:not([disabled])'
+        },
         deliveryTime: {
           selector: '*[data-testing="signupDeliveryTime"]',
         },
@@ -82,9 +85,9 @@ module.exports = {
           return this
         },
 
-        selectTuesdaysAsDeliveryDay: function(){
+        selectEarliestAvailableDay: function (){
           this
-            .selectOptionByText('*[data-testing="signupDeliveryDay"]', 'Tuesday', this)
+            .safelyClick('@earliestAvailableDeliveryDay')
 
           return this
         },

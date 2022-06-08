@@ -35,6 +35,7 @@ export const CalendarDay = ({
           [css.disabled]: !isDeliveryDay,
           [css.selectedDay]: isSelected,
         })}
+        disabled={!isDeliveryDay}
       >
         <span className={css.dayNumber}>{date.date()}</span>
       </button>

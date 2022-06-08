@@ -11,7 +11,6 @@ import { completeWizardDeliveryDay } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { unbounce as unbounceRoutes } from 'config/routes'
 import { signupConfig } from 'config/signup'
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
 import { SocialBelongingBanner } from 'routes/Signup/SocialBelongingBanner'
 import {
@@ -121,8 +120,6 @@ const DeliveryStep = ({
   boxSummaryDeliverySlotChosen,
   nextDayDeliveryPaintedDoorFeature,
   next,
-  trackDeliveryDayDropDownOpened,
-  trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited,
   trackDeliverySlotEdited,
@@ -150,9 +147,6 @@ const DeliveryStep = ({
     slots = { ...generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
   }
 
-  const isWizardCalendarViewEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_wizard_calendar_view_enabled',
-  )
   const dateLabel = deliveryDays.find((day) => day.date === tempDate)?.label
 
   const onTempDateChange = (date) => {
@@ -186,14 +180,6 @@ const DeliveryStep = ({
       trackDeliverySlotEdited(tempDate, getDateOffset(tempDate), slotId)
     }
     setTempSlotId(slotId)
-  }
-
-  const onDayDropdownOpen = () => {
-    trackDeliveryDayDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
-  }
-
-  const onDayDropdownClose = () => {
-    trackDeliveryDayDropDownClosed(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
   const onSlotDropdownOpen = () => {
@@ -238,9 +224,8 @@ const DeliveryStep = ({
     )
   }
 
-  const { wizardCalendarExperimentTitle, title, goustoOnDemandTitle } =
-    signupConfig.deliveryOptionsStep
-  let headingTitle = isWizardCalendarViewEnabled ? wizardCalendarExperimentTitle : title
+  const { title, goustoOnDemandTitle } = signupConfig.deliveryOptionsStep
+  let headingTitle = title
   if (isGoustoOnDemandEnabled) {
     headingTitle = goustoOnDemandTitle
   }
@@ -254,9 +239,6 @@ const DeliveryStep = ({
           })}
         >
           <Heading type="h1">{headingTitle}</Heading>
-          {!isWizardWithoutImagesEnabled && !isWizardCalendarViewEnabled && (
-            <Image name="delivery-day" />
-          )}
         </div>
         {showSocialBelongingBanner && (
           <SocialBelongingBanner
@@ -266,80 +248,40 @@ const DeliveryStep = ({
             isWizardWithoutImagesEnabled={isWizardWithoutImagesEnabled}
           />
         )}
-        {isWizardCalendarViewEnabled ? (
-          <div className={css.wizardCalendarExperimentContainer}>
+        <div className={css.calendarContainer}>
+          <div data-testing="signupDeliveryDay">
             <Calendar
               deliveryDays={deliveryDays}
               selectedDay={tempDate}
               onDayChange={onTempDateChange}
             />
-            <div
-              className={classNames(css.dropdown, css.marginBottom, {
-                [css.disableClick]: slots[tempDate] && slots[tempDate].length === 1,
-              })}
-              data-testing="signupDeliveryTime"
-            >
-              <DropdownInput
-                color="secondary"
-                options={slots[tempDate] ? slots[tempDate] : []}
-                onChange={onTempSlotChange}
-                value={tempSlotId}
-                onOpen={onSlotDropdownOpen}
-                isInCheckout
-              />
-            </div>
-            {!isGoustoOnDemandEnabled && (
-              <div className={css.negativeMargin}>
-                <SubscriptionTransparencyText />
-              </div>
-            )}
           </div>
-        ) : (
-          <div className={signupCss.body}>
-            <div className={css.container}>
-              <div className={classNames(css.left, css.dropdown)} data-testing="signupDeliveryDay">
-                <DropdownInput
-                  color="secondary"
-                  options={deliveryDays}
-                  onChange={onTempDateChange}
-                  value={tempDate}
-                  onOpen={onDayDropdownOpen}
-                  onClose={onDayDropdownClose}
-                  isInCheckout
-                />
-              </div>
-              <div
-                className={classNames(css.right, css.dropdown, {
-                  [css.disableClick]: slots[tempDate] && slots[tempDate].length === 1,
-                })}
-                data-testing="signupDeliveryTime"
-              >
-                <DropdownInput
-                  color="secondary"
-                  options={slots[tempDate] ? slots[tempDate] : []}
-                  onChange={onTempSlotChange}
-                  value={tempSlotId}
-                  onOpen={onSlotDropdownOpen}
-                  isInCheckout
-                />
-              </div>
-            </div>
-            {!isGoustoOnDemandEnabled && (
-              <div className={css.negativeMargin}>
-                <SubscriptionTransparencyText />
-              </div>
-            )}
+          <div
+            className={classNames(css.dropdown, css.marginBottom, {
+              [css.disableClick]: slots[tempDate] && slots[tempDate].length === 1,
+            })}
+            data-testing="signupDeliveryTime"
+          >
+            <DropdownInput
+              color="secondary"
+              options={slots[tempDate] ? slots[tempDate] : []}
+              onChange={onTempSlotChange}
+              value={tempSlotId}
+              onOpen={onSlotDropdownOpen}
+              isInCheckout
+            />
           </div>
-        )}
+          {!isGoustoOnDemandEnabled && (
+            <div className={css.negativeMargin}>
+              <SubscriptionTransparencyText />
+            </div>
+          )}
+        </div>
       </div>
       <div className={signupCss.footer}>
-        <div
-          className={classNames(signupCss.inputContainer, {
-            [css.confirmButton]: isWizardCalendarViewEnabled,
-          })}
-        >
+        <div className={classNames(signupCss.inputContainer, css.confirmButton)}>
           <Button data-testing="signupDeliveryCTA" width="full" onClick={onShowRecipe}>
-            {isWizardCalendarViewEnabled ? `Select ${dateLabel}` : 'Confirm'}
+            {`Select ${dateLabel}`}
           </Button>
         </div>
       </div>
@@ -355,8 +297,6 @@ DeliveryStep.propTypes = {
   setTempDate: PropTypes.func,
   setTempSlotId: PropTypes.func,
   boxSummaryDeliverySlotChosen: PropTypes.func,
-  trackDeliveryDayDropDownOpened: PropTypes.func,
-  trackDeliveryDayDropDownClosed: PropTypes.func,
   trackDeliverySlotDropDownOpened: PropTypes.func,
   trackDeliveryDayEdited: PropTypes.func,
   trackDeliverySlotEdited: PropTypes.func,
@@ -379,8 +319,6 @@ DeliveryStep.defaultProps = {
   setTempDate: () => {},
   setTempSlotId: () => {},
   boxSummaryDeliverySlotChosen: () => {},
-  trackDeliveryDayDropDownOpened: () => {},
-  trackDeliveryDayDropDownClosed: () => {},
   trackDeliverySlotDropDownOpened: () => {},
   trackDeliveryDayEdited: () => {},
   trackDeliverySlotEdited: () => {},
