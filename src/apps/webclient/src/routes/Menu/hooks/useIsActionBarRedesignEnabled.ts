@@ -1,10 +1,8 @@
-import { useSelector } from 'react-redux'
-
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { getIsAuthenticated } from 'selectors/auth'
+import { useAuth } from 'routes/Menu/domains/auth'
 
 export const useIsActionBarRedesignEnabled = (): boolean | null => {
-  const isAuthenticated = useSelector(getIsAuthenticated)
+  const { isAuthenticated } = useAuth()
   const featureValue = useIsOptimizelyFeatureEnabled(
     'beetroots_action_bar_redesign_prospects_web_enabled',
   )

@@ -4,34 +4,29 @@ import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 
 import basketConfig from 'config/basket'
-import { usePricing } from 'routes/Menu/domains/pricing'
 
 import { ActionBarText } from './ActionBarText/ActionBarText'
 import { CircularProgressIndicator } from './CircularProgressIndicator/CircularProgressIndicator'
-import { getMenuBoxPricesLoading, createGetNextTierPricePerPortion } from './actionBarSelectors'
+import { createGetBestTierPricePerPortion } from './actionBarSelectors'
 
 import css from './ActionBarPresentational.module.css'
 
 type Props = {
   variant: 'separate' | 'embedded'
-  numRecipes: number
+  recipeCount: number
   shouldAnimate: boolean
   onAnimationEnd: () => void
 }
 
 export const ActionBarPresentational = ({
   variant,
-  numRecipes,
+  recipeCount,
   shouldAnimate,
   onAnimationEnd,
 }: Props) => {
   const maxRecipes = basketConfig.maxRecipesNum
-  const canCheckout = numRecipes >= basketConfig.minRecipesNum
-  const nextTierPricePerPortion = useSelector(createGetNextTierPricePerPortion(numRecipes))
-  const menuBoxPricesLoading = useSelector(getMenuBoxPricesLoading)
-  const { isPending, pricing } = usePricing()
-  const isLoading = isPending || menuBoxPricesLoading
-  const currentTierPricePerPortion = pricing ? pricing.pricePerPortionDiscounted : null
+  const maxRecipesNumAchieved = recipeCount === basketConfig.maxRecipesNum
+  const nextTierPricePerPortion = useSelector(createGetBestTierPricePerPortion())
 
   return (
     <div
@@ -39,22 +34,20 @@ export const ActionBarPresentational = ({
       className={classNames(css.actionBarPresentational, {
         [css.separate]: variant === 'separate',
         [css.embedded]: variant === 'embedded',
-        [css.actionBarCanCheckout]: canCheckout,
+        [css.actionBarCanCheckout]: maxRecipesNumAchieved,
         [css.shouldAnimate]: shouldAnimate,
       })}
       onAnimationEnd={onAnimationEnd}
     >
       <CircularProgressIndicator
-        numRecipes={numRecipes}
+        maxRecipesNumAchieved={maxRecipesNumAchieved}
+        recipeCount={recipeCount}
         maxRecipes={maxRecipes}
-        canCheckout={canCheckout}
       />
       <ActionBarText
-        numRecipes={numRecipes}
+        recipeCount={recipeCount}
         maxRecipes={maxRecipes}
-        currentTierPricePerPortion={currentTierPricePerPortion}
         nextTierPricePerPortion={nextTierPricePerPortion}
-        isLoading={isLoading}
         isInEmbeddedActionBar={variant === 'embedded'}
       />
     </div>

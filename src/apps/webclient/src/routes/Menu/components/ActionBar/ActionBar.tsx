@@ -1,9 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react'
 
-import { useSelector } from 'react-redux'
 import { usePrevious, useMedia } from 'react-use'
 
-import { getBasketRecipesCount } from 'selectors/basket'
+import { useBasket } from 'routes/Menu/domains/basket'
 
 import { ActionBarPresentational } from './ActionBarPresentational'
 
@@ -14,28 +13,28 @@ type Props = {
 }
 
 export const ActionBar = ({ variant }: Props) => {
-  const numRecipes = useSelector(getBasketRecipesCount)
-  const [displayedNumRecipes, setDisplayedNumRecipes] = useState<number>(numRecipes)
-  const previousNumRecipes = usePrevious(numRecipes)
+  const { recipeCount } = useBasket()
+  const [displayedNumRecipes, setDisplayedNumRecipes] = useState<number>(recipeCount)
+  const previousNumRecipes = usePrevious(recipeCount)
   const [shouldAnimate, setShouldAnimate] = useState(false)
   const isToMedium = useMedia(css.BreakpointToMedium)
 
   useLayoutEffect(() => {
     // The mobile animation is "jump out of view -> jump into view".  When
     // jumping out, we'd like to display the previous content, hence updating
-    // numRecipes is delayed.
-    if (numRecipes !== previousNumRecipes && previousNumRecipes !== undefined) {
+    // recipeCount is delayed.
+    if (recipeCount !== previousNumRecipes && previousNumRecipes !== undefined) {
       if (isToMedium && variant === 'separate') {
         setShouldAnimate(true)
         setDisplayedNumRecipes(previousNumRecipes)
         setTimeout(() => {
-          setDisplayedNumRecipes(numRecipes)
+          setDisplayedNumRecipes(recipeCount)
         }, Number.parseInt(css.fullJumpDurationMs, 10) / 2)
       } else {
-        setDisplayedNumRecipes(numRecipes)
+        setDisplayedNumRecipes(recipeCount)
       }
     }
-  }, [numRecipes, previousNumRecipes, isToMedium, variant])
+  }, [recipeCount, previousNumRecipes, isToMedium, variant])
 
   const handleAnimationEnd = () => {
     setShouldAnimate(false)
@@ -44,7 +43,7 @@ export const ActionBar = ({ variant }: Props) => {
   return (
     <ActionBarPresentational
       variant={variant}
-      numRecipes={displayedNumRecipes}
+      recipeCount={displayedNumRecipes}
       shouldAnimate={shouldAnimate}
       onAnimationEnd={handleAnimationEnd}
     />

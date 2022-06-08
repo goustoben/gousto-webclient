@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 
 import classNames from 'classnames'
 
-import { ordinal, formatOptionalPrice } from '../actionBarUtils'
+import { formatOptionalPrice } from '../actionBarUtils'
 
 import css from './ActionBarText.module.css'
 
@@ -17,53 +17,50 @@ const Info = ({ children }: FormatterProps) => <span className={css.info}>{child
 const Success = ({ children }: FormatterProps) => <span className={css.success}>{children}</span>
 
 type Props = {
-  numRecipes: number
+  recipeCount: number
   maxRecipes: number
-  currentTierPricePerPortion: string | null
   nextTierPricePerPortion: string | null
-  isLoading: boolean
   isInEmbeddedActionBar: boolean
 }
 
 export const ActionBarText = ({
-  numRecipes,
+  recipeCount,
   maxRecipes,
-  currentTierPricePerPortion,
   nextTierPricePerPortion,
-  isLoading,
   isInEmbeddedActionBar,
 }: Props) => {
   const renderContent = () => {
-    if (numRecipes === 0) {
+    if (recipeCount === 0) {
       return (
         <Info>
           <Bold>Add first recipe</Bold> to get started
         </Info>
       )
-    } else if (numRecipes === 1) {
+    } else if (recipeCount === 1) {
       return (
         <Info>
-          <Bold>Add at least 2 recipes</Bold> to checkout
+          <Bold>Add more recipes</Bold> to complete your box
         </Info>
       )
-    } else if (numRecipes < maxRecipes) {
+    } else if (recipeCount < maxRecipes) {
+      const recipeCountDiff = maxRecipes - recipeCount
+
       return (
-        <>
-          <span>Add {ordinal(numRecipes + 1)} recipe to reduce price per portion: </span>
-          {!isLoading && (
+        <Info>
+          <span>
             <Bold>
-              {formatOptionalPrice(currentTierPricePerPortion)} →{' '}
-              <Success>{formatOptionalPrice(nextTierPricePerPortion)}</Success>
+              Add {recipeCountDiff} more recipe{recipeCountDiff > 1 ? 's' : ''}
             </Bold>
-          )}
-        </>
+            &nbsp;for the best price per portion of&nbsp;
+            {formatOptionalPrice(nextTierPricePerPortion)}
+          </span>
+        </Info>
       )
     } else {
       return (
         <Success>
-          <span>{numRecipes} recipes added at the </span>
-          <Bold>best price per portion</Bold>{' '}
-          {!isLoading && <>of {formatOptionalPrice(currentTierPricePerPortion)}</>}
+          <span>{recipeCount} recipes added at the </span>
+          <Bold>best price per portion of {formatOptionalPrice(nextTierPricePerPortion)}</Bold>
         </Success>
       )
     }

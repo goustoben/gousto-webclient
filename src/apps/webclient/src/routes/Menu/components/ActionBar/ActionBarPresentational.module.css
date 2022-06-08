@@ -19,13 +19,13 @@
   height: actionBarHeight;
   /* right padding is large so text doesn't hide under the OpenBoxButton at 320px */
   padding: 0.5rem 4rem 0.5rem 0.5rem;
-  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .embedded {
   flex: 1;
   height: 3rem;
-  max-width: 16rem;
+  max-width: 17rem;
   border-radius: 3px;
   border: 1px solid FI-200;
   padding: 0.5rem 0.75rem;

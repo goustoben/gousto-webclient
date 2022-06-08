@@ -11,11 +11,9 @@ describe('ActionBarText', () => {
     beforeEach(() => {
       rendered = render(
         <ActionBarText
-          numRecipes={0}
+          recipeCount={0}
           maxRecipes={4}
-          currentTierPricePerPortion={null}
           nextTierPricePerPortion={null}
-          isLoading={false}
           isInEmbeddedActionBar={false}
         />,
       )
@@ -32,11 +30,9 @@ describe('ActionBarText', () => {
     beforeEach(() => {
       rendered = render(
         <ActionBarText
-          numRecipes={1}
+          recipeCount={1}
           maxRecipes={4}
-          currentTierPricePerPortion={null}
           nextTierPricePerPortion={null}
-          isLoading={false}
           isInEmbeddedActionBar={false}
         />,
       )
@@ -44,8 +40,8 @@ describe('ActionBarText', () => {
 
     test('then it should display correct text', () => {
       const { getByText } = rendered
-      expect(getByText('Add at least 2 recipes')).toBeDefined()
-      expect(getByText('to checkout')).toBeDefined()
+      expect(getByText('Add more recipes')).toBeDefined()
+      expect(getByText('to complete your box')).toBeDefined()
     })
   })
 
@@ -53,11 +49,9 @@ describe('ActionBarText', () => {
     beforeEach(() => {
       rendered = render(
         <ActionBarText
-          numRecipes={2}
+          recipeCount={2}
           maxRecipes={4}
-          currentTierPricePerPortion="1.59"
           nextTierPricePerPortion="1.43"
-          isLoading={false}
           isInEmbeddedActionBar={false}
         />,
       )
@@ -65,9 +59,27 @@ describe('ActionBarText', () => {
 
     test('then it should display correct text and prices', () => {
       const { getByText } = rendered
-      expect(getByText('Add 3rd recipe to reduce price per portion:')).toBeDefined()
-      expect(getByText('£1.59 →')).toBeDefined()
-      expect(getByText('£1.43')).toBeDefined()
+      expect(getByText('Add 2 more recipes')).toBeDefined()
+      expect(getByText('for the best price per portion of £1.43')).toBeDefined()
+    })
+  })
+
+  describe('when there are three recipes', () => {
+    beforeEach(() => {
+      rendered = render(
+        <ActionBarText
+          recipeCount={3}
+          maxRecipes={4}
+          nextTierPricePerPortion="1.43"
+          isInEmbeddedActionBar={false}
+        />,
+      )
+    })
+
+    test('then it should display correct text and prices', () => {
+      const { getByText } = rendered
+      expect(getByText('Add 1 more recipe')).toBeDefined()
+      expect(getByText('for the best price per portion of £1.43')).toBeDefined()
     })
   })
 
@@ -75,11 +87,9 @@ describe('ActionBarText', () => {
     beforeEach(() => {
       rendered = render(
         <ActionBarText
-          numRecipes={4}
+          recipeCount={4}
           maxRecipes={4}
-          currentTierPricePerPortion="1.26"
-          nextTierPricePerPortion={null}
-          isLoading={false}
+          nextTierPricePerPortion="1.26"
           isInEmbeddedActionBar={false}
         />,
       )
@@ -88,8 +98,7 @@ describe('ActionBarText', () => {
     test('then it should display correct text and prices', () => {
       const { getByText } = rendered
       expect(getByText('4 recipes added at the')).toBeDefined()
-      expect(getByText('best price per portion')).toBeDefined()
-      expect(getByText('of £1.26')).toBeDefined()
+      expect(getByText('best price per portion of £1.26')).toBeDefined()
     })
   })
 })

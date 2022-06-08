@@ -4,8 +4,8 @@ import { render, fireEvent, screen, RenderResult } from '@testing-library/react'
 import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import { useMedia } from 'react-use'
-import configureMockStore from 'redux-mock-store'
 
+import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getDomain } from 'utils/isomorphicEnvironment'
 
@@ -24,7 +24,6 @@ jest.mock('utils/isomorphicEnvironment')
 describe('ActionBar', () => {
   let rendered: RenderResult
 
-  const mockStore = configureMockStore()
   const state = {
     basket: Immutable.fromJS({
       recipes: [],
@@ -36,7 +35,7 @@ describe('ActionBar', () => {
     }),
     menuService: {},
   }
-  const mockedStore = mockStore(state)
+  const mockedStore = createMockStore(state)
 
   beforeEach(() => {
     ;(canUseWindow as jest.Mock).mockReturnValue(false)
@@ -58,7 +57,7 @@ describe('ActionBar', () => {
   describe('when numRecipes change', () => {
     describe('when on mobile', () => {
       test('then it should animate', () => {
-        const newStore = mockStore({
+        const newStore = createMockStore({
           ...state,
           basket: Immutable.fromJS({
             recipes: [1],
@@ -91,7 +90,7 @@ describe('ActionBar', () => {
       })
 
       test('then it should set the new value immediately', () => {
-        const newStore = mockStore({
+        const newStore = createMockStore({
           ...state,
           basket: Immutable.fromJS({
             recipes: [1],
