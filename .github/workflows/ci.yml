@@ -104,7 +104,6 @@ jobs:
       run: yarn workspaces foreach --include '@library/*' --verbose run test:unit
     - name: Typecheck (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run typecheck
-      working-directory: src/apps/webclient
     - name: Typecheck tests
       run: yarn workspace webclient typecheck:tests
     - name: Unit test (apps/webclient)
