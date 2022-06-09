@@ -28,6 +28,7 @@ export const typography = {
   fontFamilyAxiformaBook,
   fontStyleBody: `Medium ${fontFamilyAxiformaBook}`,
   fontFamilyAxiformaSemiBold: 'AxiformaSemiBold,Helvetica,sans-serif',
+  avenirBookFontStack:  'AvenirBook,Helvetica,sans-serif',
 }
 
 export const screen = {
