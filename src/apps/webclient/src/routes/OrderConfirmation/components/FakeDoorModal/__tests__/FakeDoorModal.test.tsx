@@ -43,6 +43,17 @@ describe('<FakeDoorModal />', () => {
     expect(dispatch).toBeCalledWith(marketBundleTracking)
   })
 
+  test('Should call dispatch on modal close', () => {
+    const { getByRole } = render(
+      <ModalProvider>
+        <FakeDoorModal {...mockProps} />
+      </ModalProvider>,
+    )
+
+    fireEvent.click(getByRole('button', { name: 'Close modal' }))
+    expect(dispatch).toBeCalledWith(marketBundleTracking)
+  })
+
   test('Should not render FakeDoorModal when modal is closed', () => {
     mockProps.isOpen = false
     const { queryAllByTestId, queryByText } = render(

@@ -114,6 +114,7 @@ export type Bundle = {
   bundlePrice: string
   bundleProducts: BundleProduct[]
   bundleStartDate?: string[]
+  isNew?: boolean
 }
 
 export type BundleProduct = {

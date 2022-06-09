@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 
 import Loading from 'routes/Menu/Loading'
+import { GradientMarketplaceHeader } from 'routes/OrderConfirmation/components/GradientMarketplaceHeader'
 import { Bundle } from 'routes/OrderConfirmation/types'
 
 import { ProductBundle } from '../ProductBundle'
@@ -17,6 +18,7 @@ const ProductListBundles: FC<ProductListBundlesProps> = ({
   getFilteredProducts,
 }) => (
   <>
+    <GradientMarketplaceHeader />
     {products ? (
       <div data-testid="ProductListBundlesPresentation" className={css.productBundleList}>
         {products.map((bundleProduct: Bundle) => (
