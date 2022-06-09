@@ -19,7 +19,7 @@ import GoustoImage from 'Image'
 import { useDispatch } from 'react-redux'
 
 import { marketBundleTracking } from 'actions/orderConfirmation'
-import { marketBundleBrowseItems } from 'actions/trackingKeys'
+import { marketBundleBrowseItems, marketBundleClose } from 'actions/trackingKeys'
 import { ALL_PRODUCTS_CATEGORY_ID } from 'routes/OrderConfirmation/constants/categories'
 import { useProductNavBar } from 'routes/OrderConfirmation/context/productsNavBarContext'
 import { BundleProduct } from 'routes/OrderConfirmation/types'
@@ -58,11 +58,16 @@ export const FakeDoorModal = (props: Props) => {
     }
   }
 
+  const handleClose = () => {
+    dispatch(marketBundleTracking(marketBundleClose))
+    close()
+  }
+
   return (
     <Modal name="FakeDoorModal" isOpen={isOpen}>
       <ModalHeader>
         <Heading5>{header}</Heading5>
-        <ModalClose onClose={close} />
+        <ModalClose onClose={handleClose} />
       </ModalHeader>
       <ModalBody>
         <Box className={css.callToAction}>
