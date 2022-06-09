@@ -108,8 +108,3 @@ jobs:
       run: yarn workspace webclient typecheck:tests
     - name: Unit test (apps/webclient)
       run: yarn workspace webclient test:jest:ci:coverage
-    - name: Compare code health
-      run: git diff --name-status ${{ steps.branch_point.outputs.REF }} | node ./scripts/compare-code-health.js develop tmp/artifacts/code_health.json
-      working-directory: src/apps/webclient
-      env:
-       CIRCLECI_ACCESS_TOKEN: ${{ secrets.CIRCLECI_ACCESS_TOKEN }}
