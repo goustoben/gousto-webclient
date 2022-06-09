@@ -1,8 +1,8 @@
 {
   "status": "ok",
   "data": {
-    "value": 5.0,
+    "value": "5.0",
     "type": "credit",
-    "multi_complaint_total_value": 0
+    "multi_complaint_total_value": "0"
   }
 }

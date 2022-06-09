@@ -73,7 +73,7 @@ describe('Given the customer is logged in', () => {
         describe('And the descriptions about the ingredient issues are filled', () => {
           beforeEach(() => {
             cy.fixture('getHelp/ssr/value').as('value')
-            cy.route('POST', /ssr\/v2\/value/, '@value').as('valueRequest')
+            cy.route('GET', /ssr\/v3\/value/, '@value').as('valueRequest')
 
             fillIngredientIssueDescriptions([
               'It is not in the box',
