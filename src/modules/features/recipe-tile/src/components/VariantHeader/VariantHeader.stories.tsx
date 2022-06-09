@@ -32,6 +32,7 @@ export default {
         useGetAlternativeOptionsForRecipe,
         useBasket,
         useSetBrowserCTAVisibility,
+        useTracking,
       } = getMocks({
         numberOfAlternatives: args.numberOfAlternatives,
       });
@@ -43,6 +44,7 @@ export default {
           useStock={useStock}
           useBasket={useBasket}
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
+          useTracking={useTracking}
         >
           <Story />
         </RecipeTileDependencies>
