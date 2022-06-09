@@ -13,7 +13,7 @@ import {
 } from "./styles";
 
 /**
- * This component should be replaced with one from Citrus component library
+ * TODO: This component should be replaced with one from Citrus component library
  */
 
 type InputRadioProps = {

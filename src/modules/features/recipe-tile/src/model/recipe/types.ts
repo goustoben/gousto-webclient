@@ -4,4 +4,5 @@ export type Recipe = {
   tagline?: string
   cookingTimeFamily?: number
   cookingTime?: number
+  isFineDineIn?: boolean
 }

@@ -1,4 +1,5 @@
 import { UseTracking } from '../../model/context/useTracking'
+import { Recipe } from '../../model/recipe';
 
 export const getMocks = ({
   alternativeCheckedIndex,
@@ -9,6 +10,9 @@ export const getMocks = ({
   isRecipeInBasket = false,
   numberOfAlternatives = 2,
   title = "A Recipe Title",
+  surcharge = 0,
+  isRecipeOutOfStock = false,
+  isFineDineIn = false,
 }: {
   alternativeCheckedIndex?: number;
   alternativeOutOfStockFlags?: boolean[];
@@ -18,15 +22,19 @@ export const getMocks = ({
   isRecipeInBasket?: boolean;
   numberOfAlternatives?: number;
   title?: string;
+  surcharge?: number
+  isRecipeOutOfStock?: boolean,
+  isFineDineIn?: boolean,
 }) => {
-  const recipe = {
+  const recipe: Recipe = {
     id: "12345",
     title,
     cookingTime,
+    isFineDineIn,
   };
 
   const useStock = () => ({
-    isRecipeOutOfStock: () => false,
+    isRecipeOutOfStock: () => isRecipeOutOfStock,
   });
 
   const useGetAlternativeOptionsForRecipe = () => () =>
@@ -61,6 +69,8 @@ export const getMocks = ({
     })
   })
 
+  const useGetSurchargeForRecipeId = () => surcharge
+
   return {
     recipe,
     useStock,
@@ -68,5 +78,6 @@ export const getMocks = ({
     useBasket,
     useSetBrowserCTAVisibility,
     useTracking,
+    useGetSurchargeForRecipeId,
   };
 };

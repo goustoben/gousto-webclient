@@ -34,6 +34,7 @@ export default {
         useBasket,
         useSetBrowserCTAVisibility,
         useTracking,
+        useGetSurchargeForRecipeId,
       } = getMocks({
         title: args.title,
       });
@@ -46,6 +47,7 @@ export default {
           useBasket={useBasket}
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
           useTracking={useTracking}
+          useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
         >
           <Story />
         </RecipeTileDependencies>
