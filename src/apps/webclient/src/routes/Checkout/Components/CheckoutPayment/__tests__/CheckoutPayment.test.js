@@ -9,7 +9,7 @@ import { SubmitButton } from 'routes/Checkout/Components/SubmitButton'
 import { ErrorMessage } from '../../ErrorMessage'
 import { Checkout3DSModal } from '../Checkout3DSModal'
 import { CheckoutCardDetails } from '../CheckoutCardDetails'
-import { CheckoutPayPalDetailsWrapper } from '../CheckoutPayPalDetails'
+import { CheckoutPayPalDetailsContainer } from '../CheckoutPayPalDetails'
 import { CheckoutPayment } from '../CheckoutPayment'
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
 
@@ -71,9 +71,9 @@ describe('CheckoutPayment', () => {
   })
 
   describe('rendering', () => {
-    test('should render a CheckoutPayPalDetailsWrapper', () => {
-      expect(wrapper.find(CheckoutPayPalDetailsWrapper)).toHaveLength(1)
-      expect(wrapper.find(CheckoutPayPalDetailsWrapper).prop('hide')).toBeTruthy()
+    test('should render a CheckoutPayPalDetailsContainer', () => {
+      expect(wrapper.find(CheckoutPayPalDetailsContainer)).toHaveLength(1)
+      expect(wrapper.find(CheckoutPayPalDetailsContainer).prop('hide')).toBeTruthy()
     })
 
     test('should render CheckoutCardDetails', () => {
@@ -182,7 +182,7 @@ describe('CheckoutPayment', () => {
 
     test('then it should show the Card details and hide PayPal details', () => {
       expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeFalsy()
-      expect(wrapper.find(CheckoutPayPalDetailsWrapper).prop('hide')).toBeTruthy()
+      expect(wrapper.find(CheckoutPayPalDetailsContainer).prop('hide')).toBeTruthy()
     })
 
     test('should render 3DS modal', () => {
@@ -197,7 +197,7 @@ describe('CheckoutPayment', () => {
 
     test('then it should hide the Card details and show PayPal details', () => {
       expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeTruthy()
-      expect(wrapper.find(CheckoutPayPalDetailsWrapper).prop('hide')).toBeFalsy()
+      expect(wrapper.find(CheckoutPayPalDetailsContainer).prop('hide')).toBeFalsy()
     })
   })
 
