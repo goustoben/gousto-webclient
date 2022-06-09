@@ -1,1 +1,1 @@
-export { CheckoutPayPalDetailsWrapper } from './CheckoutPayPalDetailsWrapper'
+export { CheckoutPayPalDetailsContainer } from './CheckoutPayPalDetailsContainer'

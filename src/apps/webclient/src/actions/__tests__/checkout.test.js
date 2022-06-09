@@ -43,7 +43,6 @@ import {
   clearPayPalClientToken,
   setCurrentPaymentMethod,
   setPayPalDeviceData,
-  setPayPalNonce,
   firePayPalError,
   checkoutStepIndexReached,
   handlePromoCodeRemoved,
@@ -1082,48 +1081,6 @@ describe('checkout actions', () => {
           type: actionTypes.PAYMENT_SET_PAYPAL_DEVICE_DATA,
           deviceData
         })
-      })
-    })
-  })
-
-  describe('given setPayPalNonce action', () => {
-    const pricing = {
-      grossTotal: 28.00,
-      deliveryTotal: 2.99,
-      total: '34.48',
-    }
-
-    describe('when called', () => {
-      const nonce = 'fake-nonce'
-
-      beforeEach(() => {
-        jest.spyOn(checkoutActions, 'checkoutSignup')
-        jest.spyOn(checkoutActions, 'trackingOrderPlaceAttemptSucceeded')
-      })
-
-      afterEach(() => {
-        jest.clearAllMocks()
-      })
-
-      test('should dispatch PAYMENT_SET_PAYPAL_NONCE', () => {
-        setPayPalNonce(nonce, { pricing })(dispatch)
-
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
-          nonce
-        })
-      })
-
-      test('should dispatch trackingOrderPlaceAttemptSucceeded action', () => {
-        setPayPalNonce(nonce, { pricing })(dispatch)
-
-        expect(checkoutActions.trackingOrderPlaceAttemptSucceeded).toHaveBeenCalled()
-      })
-
-      test('should dispatch checkoutSignup action', () => {
-        setPayPalNonce(nonce, { pricing })(dispatch)
-
-        expect(checkoutActions.checkoutSignup).toHaveBeenCalled()
       })
     })
   })
