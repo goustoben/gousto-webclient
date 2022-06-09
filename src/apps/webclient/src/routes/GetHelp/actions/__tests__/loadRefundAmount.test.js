@@ -1,8 +1,8 @@
 import { safeJestMock } from '_testing/mocks'
 import * as authSelectors from 'selectors/auth'
 import * as userSelectors from 'selectors/user'
-import * as fetchRefundApi from 'apis/getHelp'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
+import { fetchRefundAmount } from '../../apis/fetchRefundAmount'
 import { loadRefundAmount } from '../loadRefundAmount'
 import * as getHelpSelectors from '../../selectors/selectors'
 import * as AutoAcceptEnabledFeature from '../../../../selectors/features'
@@ -10,22 +10,16 @@ import * as getHelpActionsUtils from '../utils'
 
 const getAccessToken = safeJestMock(authSelectors, 'getAccessToken')
 const getUserId = safeJestMock(userSelectors, 'getUserId')
-const fetchRefundAmount = safeJestMock(fetchRefundApi, 'fetchRefundAmount')
 const getOrderId = safeJestMock(getHelpSelectors, 'getOrderId')
 const getSelectedIngredients = safeJestMock(getHelpSelectors, 'getSelectedIngredients')
 const getIsAutoAcceptEnabled = safeJestMock(AutoAcceptEnabledFeature, 'getIsAutoAcceptEnabled')
+
+jest.mock('../../apis/fetchRefundAmount')
 
 const ACCESS_TOKEN = 'adfjlakjds13'
 const ACTION_TYPE = 'GET_HELP_LOAD_REFUND_AMOUNT'
 const AMOUNT = 2.4
 const LOW_AMOUNT = 1.9
-const INGREDIENT_UUID = [
-  '3c07d126-f655-437c-aa1d-c38dbbae0398',
-]
-const INGREDIENT_UUIDS = [
-  '3c07d126-f655-437c-aa1d-c38dbbae0398',
-  '488d5751-dcff-4985-88c0-bf745ff54904',
-]
 const ORDER_ID = '4455'
 const TYPE = 'credit'
 const USER_ID = '1234'
@@ -48,8 +42,11 @@ const RESPONSE_WITH_AUTO_ACCEPT_AMOUNT = {
   }
 }
 
+const SELECTED_INGREDIENTS_KEY_A = '385&3c07d126-f655-437c-aa1d-c38dbbae0398'
+const SELECTED_INGREDIENTS_KEY_B = '2223&488d5751-dcff-4985-88c0-bf745ff54904'
+
 const SELECTED_INGREDIENTS = {
-  '385&3c07d126-f655-437c-aa1d-c38dbbae0398': {
+  [SELECTED_INGREDIENTS_KEY_A]: {
     recipeId: '385',
     ingredientUuid: '3c07d126-f655-437c-aa1d-c38dbbae0398',
     label: '8ml soy sauce',
@@ -61,7 +58,7 @@ const SELECTED_INGREDIENTS = {
 }
 const MULTIPLE_SELECTED_INGREDIENTS = {
   ...SELECTED_INGREDIENTS,
-  '2223&488d5751-dcff-4985-88c0-bf745ff54904': {
+  [SELECTED_INGREDIENTS_KEY_B]: {
     recipeId: '2223',
     ingredientUuid: '488d5751-dcff-4985-88c0-bf745ff54904',
     label: '40g Cornish clotted cream',
@@ -71,6 +68,24 @@ const MULTIPLE_SELECTED_INGREDIENTS = {
     issueDescription: 'ssss'
   },
 }
+
+const INGREDIENTS = [
+  {
+    ingredient_uuid: SELECTED_INGREDIENTS[SELECTED_INGREDIENTS_KEY_A].ingredientUuid,
+    recipe_gousto_reference: SELECTED_INGREDIENTS[SELECTED_INGREDIENTS_KEY_A].recipeGoustoReference
+  },
+]
+
+const MULTIPLE_INGREDIENTS = [
+  {
+    ingredient_uuid: MULTIPLE_SELECTED_INGREDIENTS[SELECTED_INGREDIENTS_KEY_A].ingredientUuid,
+    recipe_gousto_reference: MULTIPLE_SELECTED_INGREDIENTS[SELECTED_INGREDIENTS_KEY_A].recipeGoustoReference
+  },
+  {
+    ingredient_uuid: MULTIPLE_SELECTED_INGREDIENTS[SELECTED_INGREDIENTS_KEY_B].ingredientUuid,
+    recipe_gousto_reference: MULTIPLE_SELECTED_INGREDIENTS[SELECTED_INGREDIENTS_KEY_B].recipeGoustoReference
+  },
+]
 
 const dispatch = jest.fn()
 const getState = jest.fn()
@@ -101,7 +116,7 @@ describe('loadRefundAmount', () => {
       {
         customer_id: Number(USER_ID),
         order_id: Number(ORDER_ID),
-        ingredient_ids: INGREDIENT_UUID,
+        ingredients: JSON.stringify(INGREDIENTS),
       }
     )
   })
@@ -169,7 +184,7 @@ describe('loadRefundAmount', () => {
           expect.objectContaining({
             dispatch,
             actionType: ACTION_TYPE,
-            errorMessage: `Failed to loadRefundAmount for orderId: ${ORDER_ID}, userId: ${USER_ID}, ingredientIds: ${INGREDIENT_UUID}`,
+            errorMessage: `Failed to loadRefundAmount for orderId: ${ORDER_ID}, userId: ${USER_ID}, ingredients: ${INGREDIENTS}`,
           })
         )
       })
@@ -242,7 +257,7 @@ describe('loadRefundAmount', () => {
             expect.objectContaining({
               dispatch,
               actionType: ACTION_TYPE,
-              errorMessage: `Failed to loadRefundAmount for orderId: ${ORDER_ID}, userId: ${USER_ID}, ingredientIds: ${INGREDIENT_UUIDS}`,
+              errorMessage: `Failed to loadRefundAmount for orderId: ${ORDER_ID}, userId: ${USER_ID}, ingredients: ${MULTIPLE_INGREDIENTS}`,
             })
           )
         })

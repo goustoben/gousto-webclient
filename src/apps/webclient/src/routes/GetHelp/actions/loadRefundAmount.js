@@ -1,6 +1,6 @@
 import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
-import { fetchRefundAmount } from 'apis/getHelp'
+import { fetchRefundAmount } from '../apis/fetchRefundAmount'
 import { getOrderId, getSelectedIngredients } from '../selectors/selectors'
 import { getIsAutoAcceptEnabled } from '../../../selectors/features'
 import { trackIngredientsAutoAcceptCheck } from './getHelp'
@@ -14,25 +14,33 @@ export const loadRefundAmount = () => async (dispatch, getState) => {
   const orderId = getOrderId(state)
   const selectedIngredients = getSelectedIngredients(state)
   const isAutoAcceptEnabled = getIsAutoAcceptEnabled(state)
-  const ingredientUuids = Object.keys(selectedIngredients).map(
-    key => selectedIngredients[key].ingredientUuid
+  const ingredients = Object.keys(selectedIngredients).map(
+    key => ({
+      ingredient_uuid: selectedIngredients[key].ingredientUuid,
+      recipe_gousto_reference: selectedIngredients[key].recipeGoustoReference
+    })
   )
+
   const body = {
     customer_id: Number(userId),
     order_id: Number(orderId),
-    ingredient_ids: ingredientUuids,
+    ingredients: JSON.stringify(ingredients),
   }
 
   const getPayload = async () => {
-    const response = await fetchRefundAmount(accessToken, body)
-    const { value, type, multiComplaintTotalValue } = response.data
+    const { data } = await fetchRefundAmount(accessToken, body)
+    const mappedResponse = {
+      ...data,
+      value: Number(data.value),
+      multiComplaintTotalValue: Number(data.multiComplaintTotalValue),
+    }
+    const { value, type, multiComplaintTotalValue } = mappedResponse
 
     const MAX_AUTO_ACCEPT_AMOUNT = 2.0
     const MAX_AUTO_ACCEPT_INGREDIENTS = 1
-
     const isAutoAccept = isAutoAcceptEnabled
       && value <= MAX_AUTO_ACCEPT_AMOUNT
-      && ingredientUuids.length <= MAX_AUTO_ACCEPT_INGREDIENTS
+      && ingredients.length <= MAX_AUTO_ACCEPT_INGREDIENTS
 
     const isMultiComplaint = Boolean(multiComplaintTotalValue)
 
@@ -50,6 +58,6 @@ export const loadRefundAmount = () => async (dispatch, getState) => {
     dispatch,
     actionType: actionTypes.GET_HELP_LOAD_REFUND_AMOUNT,
     getPayload,
-    errorMessage: `Failed to loadRefundAmount for orderId: ${orderId}, userId: ${userId}, ingredientIds: ${ingredientUuids}`
+    errorMessage: `Failed to loadRefundAmount for orderId: ${orderId}, userId: ${userId}, ingredients: ${ingredients}`
   })
 }
