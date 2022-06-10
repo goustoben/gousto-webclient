@@ -4,6 +4,18 @@ const fs = require('fs')
 // Must use an absolute dependency path, as module resolution won't have kicked in before this plugin is first parsed
 const commands = require('../../../src/modules/library/monorepo-build')
 
+const helpText = {
+  category: 'Gousto commands',
+  details: `
+    For workspace names, call "yarn workspaces list --json".\n
+    Plugin src: .yarn/plugins/gousto/monorepo-build'
+  `,
+  flags: {
+    since: 'Compare to git reference (required)',
+    workspace: 'Workspace name (required)'
+  }
+}
+
 module.exports = {
   name: '@gousto/monorepo-build',
   factory: (require) => {
@@ -58,12 +70,9 @@ module.exports = {
       ]
 
       static usage = Command.Usage({
-        category: 'Gousto commands',
+        category: helpText.category,
         description: 'Outputs changes required to build / test a given workspace, since a given commit',
-        details: `
-          For workspace names, call "yarn workspaces list --json".
-          Plugin src: .yarn/plugins/gousto/monorepo-build
-        `,
+        details: helpText.details,
         examples: [
           [
             'Get lint changes to a feature module',
@@ -83,11 +92,11 @@ module.exports = {
       // We don't mark flags as required as this will break --help
 
       since = Option.String('--since', {
-        description: 'Compare to git reference (required)'
+        description: helpText.flags.since
       })
 
       workspace = Option.String('--workspace', {
-        description: 'Workspace name (required)'
+        description: helpText.flags.workspace
       })
 
       async execute () {
@@ -99,8 +108,44 @@ module.exports = {
       }
     }
 
+    class MonorepoUnitTests extends MonorepoCommand {
+      static paths = [
+        [ 'monorepo-build', 'unit-tests' ]
+      ]
+
+      static usage = Command.Usage({
+        category: helpText.category,
+        description: 'Outputs whether a workspace requires unit tests, given changes since provided commit',
+        details: helpText.details,
+        examples: [
+          [
+            'Check whether we should unit-test the main webclient module',
+            'yarn monorepo-build unit-tests --workspace=webclient --since=REF'
+          ]
+        ]
+      })
+
+      // We don't mark flags as required as this will break --help
+
+      since = Option.String('--since', {
+        description: helpText.flags.since
+      })
+
+      workspace = Option.String('--workspace', {
+        description: helpText.flags.workspace
+      })
+
+      async execute () {
+        if (!this.since) throw new Error('--since required')
+        if (!this.workspace) throw new Error('--workspace required')
+
+        const ctx = await this.createCommandCtx()
+        return commands.unitTests(ctx)
+      }
+    }
+
     return {
-      commands: [ MonorepoLint ]
+      commands: [ MonorepoLint, MonorepoUnitTests ]
     }
   }
 }
