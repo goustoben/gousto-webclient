@@ -14,5 +14,5 @@ export const useIsPairingsEnabled = (): boolean | null => {
     userHasPairings ? 'etm_market_orderconfirmation_addingpairings_web_apr22' : null,
   )
 
-  return isFeatureEnabled
+  return isFeatureEnabled || false
 }
