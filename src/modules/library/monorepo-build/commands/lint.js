@@ -22,7 +22,7 @@ async function lint (ctx) {
     .filter(change => change.filepath.match(/[jt]s(x?)$/g))
     .map(change => change.relativePath)
 
-  // Only write to STDOUT if we have results. This enables us to do [ -f file ] based conditions
+  // Only write to STDOUT if we have results. This enables us to do [ -s file ] based conditions
   if (results.length) {
     const line = results.join(' ')
     return ctx.stdout(line)
