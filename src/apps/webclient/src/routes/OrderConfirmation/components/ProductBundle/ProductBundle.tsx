@@ -5,6 +5,7 @@ import {
   Button,
   ButtonColorVariant,
   ButtonSize,
+  Color,
   Display,
   FontFamily,
   Heading6,
@@ -86,7 +87,9 @@ const ProductBundle = ({ bundleProduct, getFilteredProducts }: Props) => {
                 <Heading6 className="bundleTitle" size={3}>
                   {bundleName}
                 </Heading6>
-                <Paragraph className={css.bundleDescription}>{bundleDescription}</Paragraph>
+                <Paragraph size={1} color={Color.ColdGrey_400} className={css.bundleDescription}>
+                  {bundleDescription}
+                </Paragraph>
               </button>
             </Box>
             {bundleProducts.map((product: BundleProduct) => (
