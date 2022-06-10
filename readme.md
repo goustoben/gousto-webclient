@@ -177,17 +177,6 @@ Gousto2-Frontend please see the [Detailed guide](docs/detailed-setup.md)
 
 ## Code analysis
 
-### Run code health locally
-Create a CircleCI access token (“Personal API Tokens” https://circleci.com/account/api) and set it as environment
-variable:
-```
-export CIRCLECI_ACCESS_TOKEN=XXXX
-```
-Then in `src` run:
-```
-./scripts/compare-code-health.sh
-```
-
 ### Webpack bundle analyzer
 
 In the webclient app folder, invoke `GW_ENABLE_BUNDLE_ANALYZER=1 yarn build`. It will

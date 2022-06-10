@@ -243,14 +243,13 @@ If you'd like to introduce prettier inside an unmigrated-yet route, please follo
 3. Invoke `prettier -w src`
 4. Review changes to catch any weirdness (due to automatic semicolon insertion
    or a human-visible change in a React component output)
-5. Invoke `./scripts/compare-code-health.sh`
-6. For each eslint warning, decide how to fix it:
+5. For each eslint warning, decide how to fix it:
    - bless: modify overrides in `.eslintrc.js` to say it's not an error
    - pacify: refactor code to make both prettier and eslint happy
    - suppress: add "// eslint-ignore-next-line <type>"
-7. For test coverage warnings (due to changing amount of lines and thus
+6. For test coverage warnings (due to changing amount of lines and thus
    percentages), find out how to increase the coverage
-8. Check that the app behaves the same
+7. Check that the app behaves the same
 
 *After* the merge into `develop`, add the commit's hash into `.git-blame-ignore-revs` so that the bulk change doesn't show up in people's `git blame` invocations. Unfortunately it requires two merges, because we haven't invented self-referencing commits yet.
 
