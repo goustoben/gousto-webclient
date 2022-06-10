@@ -3,13 +3,11 @@ import React from 'react'
 import { Box, Text, TextAlign } from '@gousto-internal/citrus-react'
 
 interface Props {
-  id: string
   children: React.ReactNode
 }
 
-export const FooterNotice = ({ id, children }: Props) => (
+export const FooterNotice = ({ children }: Props) => (
   <Box
-    id={id}
     paddingH={[3, 8, 8, 8]}
     paddingV={0}
     paddingBottom={4}

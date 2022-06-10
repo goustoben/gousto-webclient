@@ -227,14 +227,14 @@ export const Footer = ({
     </div>
   )
   const renderNo1Notice = () => (
-    <FooterNotice id="number-one-notice">
+    <FooterNotice>
       * Our ‘No.1 Recipe Box for Choice’ claim is based on Gousto having more recipes available on the weekly menu than other UK recipe boxes from 1st September 2021 to 6th January 2022. The full details of this comparison can be found here:&nbsp;
-      <a href="https://cook.gousto.co.uk/choice">Verification of choice</a>
+      <a href="https://cook.gousto.co.uk/choice/">Verification of choice</a>
     </FooterNotice>
   )
 
   const renderVerificationOfValueNotice = () => (
-    <FooterNotice id="verification-of-value-notice">
+    <FooterNotice>
       ** Our &apos;UK&apos;s best value recipe box&apos; claim is based on Gousto offering the cheapest price on standard box prices (i.e. with no applied offers or discounts) and include any delivery costs charged by each company. These cost comparisons are tracked on a monthly basis. The full details of this comparison can be found here:&nbsp;
       <a href="https://cook.gousto.co.uk/value/">Verification of value</a>
       .
