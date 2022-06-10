@@ -89,21 +89,15 @@ class Hero extends Component {
   }
 
   render() {
-    const { dataTesting, isNewHeroLabelAndFooterEnabled } = this.props
+    const { dataTesting } = this.props
 
     return (
       <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
         <div className={css.textContainer}>
           <div className={css.title}>
             <Heading type="h1" size="fontStyle4XL" hasMargin={false}>
-              {isNewHeroLabelAndFooterEnabled
-                ? homeConfig.hero.headerRedesign
-                : homeConfig.hero.header}
-              {isNewHeroLabelAndFooterEnabled && (
-                <>
-                  <span className={classNames(css.titleStar)}>*</span>
-                </>
-              )}
+              {homeConfig.hero.header}
+              <span className={classNames(css.titleStar)}>*</span>
             </Heading>
           </div>
           <div className={css.subTitle}>
@@ -124,7 +118,6 @@ class Hero extends Component {
 Hero.propTypes = {
   ctaUri: PropTypes.string.isRequired,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  isNewHeroLabelAndFooterEnabled: PropTypes.bool.isRequired,
   dataTesting: PropTypes.string,
   isAuthenticated: PropTypes.bool,
 }
