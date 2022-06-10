@@ -279,7 +279,8 @@ export const TheUltimateDateNightDuo = {
   id: 'dd21b3a4-0513-44b4-8a06-84dad98c2d4f',
   bundleName: 'The Ultimate Date Night Duo',
   bundleDescription: 'Upgrade your next date with this perfect pair',
-  bundleImage: '',
+  bundleImage:
+    'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/bundle_night_02-x400.jpg',
   bundlePrice: '11.99',
   bundleProducts: [
     {
@@ -521,7 +522,7 @@ export const BestEverBaconBaps = {
       id: '',
       sku: 'AP-CUS-BRE-10-P',
       title: 'Buttered Brioche Buns (2 x 68g)',
-      description: `Lorem Ipsum`,
+      description: `Two wonderfully golden butter and egg brioche buns.\n\nIngredients\nwheat flour (wheat flour, calcium carbonate, thiamin, iron, niacin), free range whole egg (12%), yeast, sugar, invert sugar syrup, rapeseed oil, concentrated butter (milk), water, fermented wheat flour, skimmed milk powder, wheat gluten, salt, milk protein, emulsifier  (mono & Di-glycerides of fatty acids), flavouring, colour (carotenes), potato dextrin, flour  treatment agent (ascorbic acid)\n\nSuitable for vegetarians\nConatins: wheat, egg, milk\n\nNutrition Typical Values per 100g:\nEnergy 1286kJ/305kcal, fat 7.4g of which saturates 2.2g, carbohydrate 46.6g, of which sugars 7.7g, fibre 2.8g, protein 11.5g, salt 0.85g\n\nStorage: keep refrigerated`,
       image:
         'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Brioche-x400.jpg',
       quantity: 1,
