@@ -2,8 +2,7 @@ import React from 'react'
 import Icon from 'components/Icon'
 
 export const hero = {
-  header: 'Endless choice in a recipe box',
-  headerRedesign: 'No.1 recipe box for choice', // TG-6137
+  header: 'No.1 recipe box for choice',
   subheader: 'Over 60 recipes every week',
 }
 
