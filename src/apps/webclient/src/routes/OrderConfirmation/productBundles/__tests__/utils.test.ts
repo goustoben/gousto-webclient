@@ -1,17 +1,5 @@
+import { bundles } from '../bundles'
 import { dateToMenuWeek, getBundles } from '../utils'
-
-jest.mock('../bundles', () => ({
-  bundles: [
-    {
-      menuWeek: '516',
-      bundles: [{ id: '123' }],
-    },
-    {
-      menuWeek: '517',
-      bundles: [{ id: '456' }],
-    },
-  ],
-}))
 
 describe('Product Bundles Utils', () => {
   describe('dateToMenuWeek', () => {
@@ -32,8 +20,12 @@ describe('Product Bundles Utils', () => {
 
   describe('getBundles', () => {
     const cases = [
-      ['2022-06-14T11:00:00Z', [{ id: '123' }]],
-      ['2022-06-21T11:00:00Z', [{ id: '456' }]],
+      ['2022-06-14T11:00:00Z', [...bundles[0].bundles]],
+      ['2022-06-21T11:00:00Z', [...bundles[1].bundles]],
+      ['2022-06-28T11:00:00Z', [...bundles[2].bundles]],
+      ['2022-07-05T11:00:00Z', [...bundles[3].bundles]],
+      ['2022-07-12T11:00:00Z', [...bundles[4].bundles]],
+      ['2022-07-19T11:00:00Z', [...bundles[5].bundles]],
       ['2022-06-23T11:00:00Z', []],
       ['', []],
     ]
