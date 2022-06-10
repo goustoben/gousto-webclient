@@ -1,31 +1,90 @@
-import { TestBundle1, TestBundle2 } from './bundlesData'
+import {
+  GirlsNightGoodies,
+  FathersDayTreat,
+  BirthdayPartyPack,
+  CocktailsOnTheCouch,
+  WimbledonWinners,
+  TheUltimateDateNightDuo,
+  FilmAndAFeast,
+  SeriouslyCheesyCroissants,
+  PicnicInThePark,
+  BestEverBaconBaps,
+  MakeYourOwnMovieNight,
+  StatesStyleBrunch,
+  MatchDayGoodies,
+} from './bundlesData'
 
 export const bundles = [
   {
     menuWeek: '516',
-    bundles: [
-      { ...TestBundle1, isNew: true },
-      { ...TestBundle2, isNew: true },
-    ],
+    bundles: [GirlsNightGoodies, FathersDayTreat, BirthdayPartyPack],
   },
   {
     menuWeek: '517',
-    bundles: [TestBundle1],
+    bundles: [
+      CocktailsOnTheCouch,
+      WimbledonWinners,
+      TheUltimateDateNightDuo,
+      FilmAndAFeast,
+      BirthdayPartyPack,
+    ],
   },
   {
     menuWeek: '518',
-    bundles: [{ ...TestBundle2, isNew: true }, TestBundle1],
+    bundles: [
+      { ...SeriouslyCheesyCroissants, isNew: true },
+      { ...WimbledonWinners, isNew: true },
+      { ...CocktailsOnTheCouch, isNew: true },
+      { ...PicnicInThePark, isNew: true },
+    ],
   },
   {
     menuWeek: '519',
-    bundles: [TestBundle1, TestBundle2],
+    bundles: [
+      { ...BestEverBaconBaps, isNew: true },
+      { ...TheUltimateDateNightDuo, isNew: true },
+      { ...MakeYourOwnMovieNight, isNew: true },
+      { ...StatesStyleBrunch, isNew: true },
+      { ...GirlsNightGoodies, isNew: true },
+      WimbledonWinners,
+    ],
   },
   {
     menuWeek: '520',
-    bundles: [TestBundle2, TestBundle1],
+    bundles: [
+      GirlsNightGoodies,
+      { ...FilmAndAFeast, isNew: true },
+      PicnicInThePark,
+      { ...MatchDayGoodies, isNew: true },
+      CocktailsOnTheCouch,
+    ],
   },
   {
     menuWeek: '521',
-    bundles: [TestBundle2],
+    bundles: [
+      TheUltimateDateNightDuo,
+      SeriouslyCheesyCroissants,
+      BirthdayPartyPack,
+      PicnicInThePark,
+      MakeYourOwnMovieNight,
+    ],
+  },
+  {
+    menuWeek: '515',
+    bundles: [
+      GirlsNightGoodies,
+      FathersDayTreat,
+      BirthdayPartyPack,
+      CocktailsOnTheCouch,
+      WimbledonWinners,
+      TheUltimateDateNightDuo,
+      FilmAndAFeast,
+      SeriouslyCheesyCroissants,
+      PicnicInThePark,
+      BestEverBaconBaps,
+      MakeYourOwnMovieNight,
+      StatesStyleBrunch,
+      { ...MatchDayGoodies, isNew: true },
+    ],
   },
 ]
