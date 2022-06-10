@@ -169,10 +169,8 @@
 /src/apps/webclient/src/routes/Signup/                                  @Gousto/squad-beetroots
 /src/apps/webclient/src/routes/Home/                                    @Gousto/squad-beetroots
 /src/apps/webclient/src/routes/Payment/                                 @Gousto/squad-beetroots
-/src/apps/webclient/src/routes/ShowcaseMenu/                            @Gousto/squad-beetroots
 /src/apps/webclient/src/layouts/CheckoutLayout/                         @Gousto/squad-beetroots
 /src/apps/webclient/src/config/checkout.js                              @Gousto/squad-beetroots
-/src/apps/webclient/src/config/promoCode.js                             @Gousto/squad-beetroots
 /src/apps/webclient/src/config/home.js                                  @Gousto/squad-beetroots
 /src/apps/webclient/src/config/signup.js                                @Gousto/squad-beetroots
 /src/apps/webclient/src/apis/checkout.js                                @Gousto/squad-beetroots
@@ -191,8 +189,6 @@
 /src/apps/webclient/src/validations/address.js                          @Gousto/squad-beetroots
 /src/apps/webclient/src/validations/delivery.js                         @Gousto/squad-beetroots
 /src/apps/webclient/src/validations/ruleMessages.js                     @Gousto/squad-beetroots
-/src/apps/webclient/src/validations/user.js                             @Gousto/squad-beetroots
-/src/apps/webclient/src/validations/userAsync.js                        @Gousto/squad-beetroots
 /src/apps/webclient/src/validations/util.js                             @Gousto/squad-beetroots
 /src/apps/webclient/src/utils/checkout.js                               @Gousto/squad-beetroots
 /src/apps/webclient/src/utils/forms.js                                  @Gousto/squad-beetroots
@@ -220,10 +216,8 @@
 /src/apps/webclient/src/reducers/__tests__/checkout.test.js             @Gousto/squad-beetroots
 /tests/e2e/pages/signup.js                                              @Gousto/squad-beetroots
 /tests/e2e/pages/home.js                                                @Gousto/squad-beetroots
-/tests/e2e/pages/checkoutErrorV2.js                                     @Gousto/squad-beetroots
 /tests/e2e/pages/checkoutV2.js                                          @Gousto/squad-beetroots
-/tests/e2e/tests/systemTests/errorFlows/signup/                         @Gousto/squad-beetroots
-/tests/e2e/tests/systemTests/flows/signup/                              @Gousto/squad-beetroots
+/tests/e2e/tests/systemTests/signupWithPaypal.js                        @Gousto/squad-beetroots
 /tests/regression/fixtures/payments/                                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                                    @Gousto/squad-beetroots
 /src/apps/webclient/src/middlewares/tracking/dataLayerTracker/          @Gousto/squad-beetroots
