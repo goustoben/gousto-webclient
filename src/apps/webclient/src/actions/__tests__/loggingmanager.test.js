@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import userActions from 'actions/user'
 import { triggerLoggingManagerEvent } from 'apis/loggingManager'
 import {
   EVENT_NAMES,
@@ -12,9 +13,14 @@ import {
 } from 'actions/loggingmanager'
 
 const MOCK_EVENT_ID = 'mock-event-id'
+const MOCK_AUTH_USER_ID = 'mock-auth-user-id'
 const MOCK_USER_ID = 'mock-user-id'
 const MOCK_ACCESS_TOKEN = 'mock-access-token'
 const MOCK_OCCURRED_AT = '2021-01-07T00:00:00.000Z'
+
+jest.mock('actions/user', () => ({
+  userLoadData: jest.fn(),
+}))
 
 jest.mock('apis/loggingManager', () => ({
   triggerLoggingManagerEvent: jest.fn(),
@@ -34,7 +40,7 @@ describe('trackUserFreeFoodPageView', () => {
       browser,
     }),
     auth: Immutable.fromJS({
-      id: MOCK_USER_ID,
+      id: MOCK_AUTH_USER_ID,
       accessToken: MOCK_ACCESS_TOKEN,
     }),
     user: Immutable.fromJS({
@@ -66,9 +72,9 @@ describe('trackUserFreeFoodPageView', () => {
         accessToken: MOCK_ACCESS_TOKEN,
         loggingManagerRequest: {
           name: 'rafPage-visited',
-          id: 'mock-event-id',
-          userId: 'mock-user-id',
-          authUserId: 'mock-user-id',
+          id: MOCK_EVENT_ID,
+          userId: MOCK_USER_ID,
+          authUserId: MOCK_AUTH_USER_ID,
           isAnonymousUser: undefined,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
@@ -93,7 +99,7 @@ describe('trackUserLogin', () => {
           browser,
         }),
         auth: Immutable.fromJS({
-          id: MOCK_USER_ID,
+          id: MOCK_AUTH_USER_ID,
           accessToken: MOCK_ACCESS_TOKEN,
         }),
       }
@@ -110,7 +116,7 @@ describe('trackUserLogin', () => {
         loggingManagerRequest: {
           name: eventName,
           id: MOCK_EVENT_ID,
-          authUserId: MOCK_USER_ID,
+          authUserId: MOCK_AUTH_USER_ID,
           isAnonymousUser: undefined,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
@@ -152,7 +158,7 @@ describe('trackUserAddRemoveRecipe', () => {
       browser,
     }),
     auth: Immutable.fromJS({
-      id: MOCK_USER_ID,
+      id: MOCK_AUTH_USER_ID,
       accessToken: MOCK_ACCESS_TOKEN,
     }),
   }
@@ -166,6 +172,9 @@ describe('trackUserAddRemoveRecipe', () => {
       beforeEach(async () => {
         state = {
           ...defaultState,
+          user: Immutable.fromJS({
+            id: MOCK_USER_ID,
+          }),
           basket: Immutable.fromJS({
             recipes: { recipeTest1: 2, recipeTest2: 1 },
             date: 'date-1',
@@ -205,7 +214,8 @@ describe('trackUserAddRemoveRecipe', () => {
           loggingManagerRequest: {
             name: 'basket-updated',
             id: MOCK_EVENT_ID,
-            authUserId: MOCK_USER_ID,
+            authUserId: MOCK_AUTH_USER_ID,
+            userId: MOCK_USER_ID,
             isAnonymousUser: undefined,
             occurredAt: MOCK_OCCURRED_AT,
             data: {
@@ -220,12 +230,65 @@ describe('trackUserAddRemoveRecipe', () => {
           }
         })
       })
+
+      test('triggerLoggingManagerEvent is called without userLoadData', () => {
+        expect(userActions.userLoadData).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('and user id is empty', () => {
+      beforeEach(async () => {
+        state = {
+          ...defaultState,
+          user: Immutable.fromJS({
+            id: '',
+          }),
+          basket: Immutable.fromJS({
+            recipes: { recipeTest1: 2, recipeTest2: 1 },
+            date: 'date-1',
+            slotId: 'slot-id-1',
+            chosenAddress: {
+              id: 'chosen-address-id-1',
+            }
+          }),
+          boxSummaryDeliveryDays: Immutable.fromJS({
+            'date-1': {
+              daySlots: [
+                {
+                  dayId: 'day-id-1',
+                  slotId: 'slot-id-1',
+                },
+                {
+                  dayId: 'day-id-2',
+                  slotId: 'slot-id-2',
+                },
+                {
+                  dayId: 'day-id-3',
+                  slotId: 'slot-id-3',
+                }
+              ]
+            }
+          }),
+        }
+
+        dispatch = jest.fn()
+        getState = jest.fn().mockReturnValue(state)
+
+        await trackUserAddRemoveRecipe()(dispatch, getState)
+      })
+
+      test('triggerLoggingManagerEvent is called with userLoadData', () => {
+        expect(userActions.userLoadData).toHaveBeenCalledTimes(1)
+      })
     })
 
     describe('and user is logged out', () => {
       beforeEach(async () => {
         state = {
           ...defaultState,
+          user: Immutable.fromJS({
+            id: '',
+          }),
           auth: Immutable.fromJS({
             ...state.auth,
             id: '',
@@ -357,7 +420,7 @@ describe('sendGoustoAppLinkSMS', () => {
         browser: 'mobile',
       }),
       auth: Immutable.fromJS({
-        id: MOCK_USER_ID,
+        id: MOCK_AUTH_USER_ID,
         accessToken: MOCK_ACCESS_TOKEN,
       })
     }
@@ -387,7 +450,7 @@ describe('sendGoustoAppLinkSMS', () => {
         loggingManagerRequest: {
           name: 'sendsmsapplink-appstore',
           id: MOCK_EVENT_ID,
-          authUserId: MOCK_USER_ID,
+          authUserId: MOCK_AUTH_USER_ID,
           isAnonymousUser: false,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
@@ -476,7 +539,7 @@ describe('trackUserFreeFoodLinkShare', () => {
       browser,
     }),
     auth: Immutable.fromJS({
-      id: MOCK_USER_ID,
+      id: MOCK_AUTH_USER_ID,
       accessToken: MOCK_ACCESS_TOKEN,
     }),
   }
@@ -499,7 +562,7 @@ describe('trackUserFreeFoodLinkShare', () => {
         loggingManagerRequest: {
           name: 'rafLink-shared',
           id: MOCK_EVENT_ID,
-          authUserId: MOCK_USER_ID,
+          authUserId: MOCK_AUTH_USER_ID,
           isAnonymousUser: undefined,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
@@ -585,11 +648,11 @@ describe('Track user`s signup events', () => {
           }),
         },
         auth: {
-          id: MOCK_USER_ID,
+          id: MOCK_AUTH_USER_ID,
           accessToken: MOCK_ACCESS_TOKEN,
           get: jest.fn().mockImplementation((key) => {
             if (key === 'id') {
-              return MOCK_USER_ID
+              return MOCK_AUTH_USER_ID
             } else if (key === 'accessToken') {
               return MOCK_ACCESS_TOKEN
             }
@@ -620,7 +683,7 @@ describe('Track user`s signup events', () => {
         loggingManagerRequest: {
           name: EVENT_NAMES.signupFinished,
           isAnonymousUser: false,
-          authUserId: MOCK_USER_ID,
+          authUserId: MOCK_AUTH_USER_ID,
           id: MOCK_EVENT_ID,
           occurredAt: MOCK_OCCURRED_AT,
           data: {
