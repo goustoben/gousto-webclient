@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import * as Redux from 'react-redux'
 
 import * as Auth from 'routes/Menu/domains/auth'
-import * as Basket from 'routes/Menu/domains/basket'
+import * as BasketHook from 'routes/Menu/domains/basket'
 import * as Menu from 'routes/Menu/domains/menu'
 
 import * as BasketActions from '../../../actions/basketRecipes'
@@ -26,13 +26,13 @@ const mockUp = ({
   const dispatch = jest.fn()
 
   jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
-  jest.spyOn(Basket, 'useBasket').mockImplementation(() => ({
+  jest.spyOn(BasketHook, 'useBasket').mockImplementation(() => ({
     numPortions,
     reachedLimit,
     canAddRecipes,
     getQuantitiesForRecipeId: () => quantity,
   }))
-  jest.spyOn(Menu, 'useStock').mockImplementation(() => ({
+  jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
     getStockForRecipe: () => stockLevel,
   }))
   jest.spyOn(Auth, 'useAuth').mockImplementation(() => ({ isAdmin }))

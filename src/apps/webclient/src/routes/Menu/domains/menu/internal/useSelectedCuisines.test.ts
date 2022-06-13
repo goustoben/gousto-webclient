@@ -4,7 +4,7 @@ jest.mock('containers/OptimizelyRollouts', () => ({
   ...jest.requireActual('containers/OptimizelyRollouts'),
   isOptimizelyFeatureEnabledFactory: jest.fn(),
   useIsOptimizelyFeatureEnabled: jest.fn(
-    () => (feature) => feature === 'turnips_personalised_signup_enabled',
+    () => (feature: string) => feature === 'turnips_personalised_signup_enabled',
   ),
 }))
 

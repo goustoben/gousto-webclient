@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import * as RecipeContext from 'routes/Menu/context/recipeContext'
-import * as MenuHook from 'routes/Menu/domains/menu'
+import * as BasketHook from 'routes/Menu/domains/basket'
 
 import { Image } from '../../Recipe'
 import { CookingTimeIcon } from '../../Recipe/CookingTimeIcon'
@@ -15,7 +15,7 @@ import css from './TileImage.css'
 
 describe('<TileImage />', () => {
   beforeEach(() => {
-    jest.spyOn(MenuHook, 'useStock').mockImplementation(() => ({
+    jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
       isRecipeOutOfStock: () => false,
     }))
     jest.spyOn(RecipeContext, 'useRecipeField').mockImplementation(() => '1234')

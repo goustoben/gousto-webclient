@@ -29,7 +29,9 @@ describe('getAlternativeOptionsForRecipe', () => {
       }),
     )
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
     test('they are marked so', () => {
@@ -40,8 +42,13 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isOutOfStock).toEqual(false)
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isOutOfStock).toEqual(true)
+      const recipe1 = options.find((o) => o.recipeId === RECIPE_ID_1)
+      const recipe2 = options.find((o) => o.recipeId === RECIPE_ID_2)
+
+      expect(recipe1).toBeTruthy()
+      expect(recipe2).toBeTruthy()
+      expect(recipe1!.isOutOfStock).toEqual(false)
+      expect(recipe2!.isOutOfStock).toEqual(true)
     })
   })
 
@@ -56,7 +63,9 @@ describe('getAlternativeOptionsForRecipe', () => {
       }),
     )
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
     test('they are marked so', () => {
@@ -67,8 +76,13 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isOutOfStock).toEqual(false)
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isOutOfStock).toEqual(false)
+      const recipe1 = options.find((o) => o.recipeId === RECIPE_ID_1)
+      const recipe2 = options.find((o) => o.recipeId === RECIPE_ID_2)
+
+      expect(recipe1).toBeTruthy()
+      expect(recipe2).toBeTruthy()
+      expect(recipe1!.isOutOfStock).toEqual(false)
+      expect(recipe2!.isOutOfStock).toEqual(false)
     })
   })
 
@@ -76,7 +90,9 @@ describe('getAlternativeOptionsForRecipe', () => {
     const mockStore = configureMockStore()
     const store = mockStore(createMockState())
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
     test('it is exposed in the options', () => {
@@ -87,8 +103,13 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).surcharge).toEqual(0.5)
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).surcharge).toEqual(null)
+      const recipe1 = options.find((o) => o.recipeId === RECIPE_ID_1)
+      const recipe2 = options.find((o) => o.recipeId === RECIPE_ID_2)
+
+      expect(recipe1).toBeTruthy()
+      expect(recipe2).toBeTruthy()
+      expect(recipe1!.surcharge).toEqual(0.5)
+      expect(recipe2!.surcharge).toEqual(null)
     })
   })
 
@@ -96,7 +117,9 @@ describe('getAlternativeOptionsForRecipe', () => {
     const mockStore = configureMockStore()
     const store = mockStore(createMockState())
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
     test('then it is exposed in the options', () => {
@@ -107,8 +130,13 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isOnDetailScreen).toEqual(true)
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isOnDetailScreen).toEqual(true)
+      const recipe1 = options.find((o) => o.recipeId === RECIPE_ID_1)
+      const recipe2 = options.find((o) => o.recipeId === RECIPE_ID_2)
+
+      expect(recipe1).toBeTruthy()
+      expect(recipe2).toBeTruthy()
+      expect(recipe1!.isOnDetailScreen).toEqual(true)
+      expect(recipe2!.isOnDetailScreen).toEqual(true)
     })
   })
 
@@ -116,7 +144,9 @@ describe('getAlternativeOptionsForRecipe', () => {
     const mockStore = configureMockStore()
     const store = mockStore(createMockState())
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
     test('it is marked as so in the options', () => {
@@ -127,8 +157,13 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isChecked).toEqual(true)
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isChecked).toEqual(false)
+      const recipe1 = options.find((o) => o.recipeId === RECIPE_ID_1)
+      const recipe2 = options.find((o) => o.recipeId === RECIPE_ID_2)
+
+      expect(recipe1).toBeTruthy()
+      expect(recipe2).toBeTruthy()
+      expect(recipe1!.isChecked).toEqual(true)
+      expect(recipe2!.isChecked).toEqual(false)
     })
   })
 
@@ -136,7 +171,9 @@ describe('getAlternativeOptionsForRecipe', () => {
     const mockStore = configureMockStore()
     const store = mockStore(createMockState())
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
     test('it is marked as so in the options', () => {
@@ -146,9 +183,13 @@ describe('getAlternativeOptionsForRecipe', () => {
         isOnDetailScreen: false,
         categoryId: COLLECTION_ID,
       })
+      const recipe1 = options.find((o) => o.recipeId === RECIPE_ID_1)
+      const recipe2 = options.find((o) => o.recipeId === RECIPE_ID_2)
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).isChecked).toEqual(false)
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).isChecked).toEqual(true)
+      expect(recipe1).toBeTruthy()
+      expect(recipe2).toBeTruthy()
+      expect(recipe1!.isChecked).toEqual(false)
+      expect(recipe2!.isChecked).toEqual(true)
     })
   })
 
@@ -156,7 +197,9 @@ describe('getAlternativeOptionsForRecipe', () => {
     const mockStore = configureMockStore()
     const store = mockStore(createMockState())
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
 
     test('They are exposed in the options', () => {
@@ -167,11 +210,15 @@ describe('getAlternativeOptionsForRecipe', () => {
         categoryId: COLLECTION_ID,
       })
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).recipeId).toEqual(RECIPE_ID_1)
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).recipeId).toEqual(RECIPE_ID_2)
+      const recipe1 = options.find((o) => o.recipeId === RECIPE_ID_1)
+      const recipe2 = options.find((o) => o.recipeId === RECIPE_ID_2)
 
-      expect(options.find((o) => o.recipeId === RECIPE_ID_1).recipeName).toEqual('Title ONE')
-      expect(options.find((o) => o.recipeId === RECIPE_ID_2).recipeName).toEqual('Title TWO')
+      expect(recipe1).toBeTruthy()
+      expect(recipe2).toBeTruthy()
+      expect(recipe1!.recipeId).toEqual(RECIPE_ID_1)
+      expect(recipe2!.recipeId).toEqual(RECIPE_ID_2)
+      expect(recipe1!.recipeName).toEqual('Title ONE')
+      expect(recipe2!.recipeName).toEqual('Title TWO')
     })
   })
 
@@ -190,7 +237,7 @@ describe('getAlternativeOptionsForRecipe', () => {
       const mockStore = configureMockStore()
       const store = mockStore(createMockState())
 
-      const wrapper = ({ children }) => (
+      const wrapper = ({ children }: { children: React.ReactNode }) => (
         <RecipeReferenceProvider value="123">
           <Provider store={store}>{children}</Provider>
         </RecipeReferenceProvider>
@@ -253,7 +300,7 @@ describe('getAlternativeOptionsForRecipe', () => {
       const mockStore = configureMockStore()
       const store = mockStore(createMockState())
 
-      const wrapper = ({ children }) => (
+      const wrapper = ({ children }: { children: React.ReactNode }) => (
         <RecipeReferenceProvider value="123">
           <Provider store={store}>{children}</Provider>
         </RecipeReferenceProvider>
@@ -308,7 +355,9 @@ describe('getAlternativeOptionsForRecipe', () => {
     })
     const store = mockStore(state)
 
-    const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
     const { result } = renderHook(
       () =>
         useAlternativeOptions({
@@ -332,7 +381,7 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 })
 
-function createMockState(args = {}) {
+function createMockState(args: any = {}) {
   const menuId = 'menu 1'
 
   const RECIPE_1 = Immutable.fromJS({

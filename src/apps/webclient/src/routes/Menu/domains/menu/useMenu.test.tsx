@@ -10,7 +10,8 @@ import { initialState as basketInitialState } from 'reducers/basket'
 
 import { useMenu } from './useMenu'
 
-const createMockStore = (valueOverrides) => {
+// TODO improve types
+const createMockStore = (valueOverrides: any) => {
   const initialState = {
     routing: {
       locationBeforeTransitions: {
@@ -41,7 +42,11 @@ const createMockStore = (valueOverrides) => {
   return store
 }
 
-const createMockCollection = (id, shortTitle, recipes) =>
+const createMockCollection = (
+  id: string,
+  shortTitle: string,
+  recipes: Immutable.Map<string, string>[],
+) =>
   Immutable.Map({
     id,
     published: true,
@@ -67,8 +72,8 @@ describe('menu domain / useMenu', () => {
     },
     menuRecipes: [RECIPE_1.get('id'), RECIPE_2.get('id'), RECIPE_3.get('id'), RECIPE_4.get('id')],
     menuCollections: {
-      [COLLECTION_A.get('id')]: COLLECTION_A,
-      [COLLECTION_B.get('id')]: COLLECTION_B,
+      [COLLECTION_A.get('id') as string]: COLLECTION_A,
+      [COLLECTION_B.get('id') as string]: COLLECTION_B,
     },
     menuRecipeStock: {
       [RECIPE_1.get('id')]: Immutable.fromJS({ 2: 0, 4: 0 }),
@@ -81,12 +86,14 @@ describe('menu domain / useMenu', () => {
     }),
   })
 
-  const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+  const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <Provider store={store}>{children}</Provider>
+  )
 
   test('getRecipesForCollectionId returns correct recipes', () => {
     const { result } = renderHook(() => useMenu(), { wrapper })
 
-    const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_B.get('id'))
+    const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_B.get('id') as string)
 
     expect(recipes).toEqual(
       Immutable.List([
@@ -108,7 +115,7 @@ describe('menu domain / useMenu', () => {
     test('getRecipesForCollectionId returns them at the end of the list', () => {
       const { result } = renderHook(() => useMenu(), { wrapper })
 
-      const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
+      const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id') as string)
 
       expect(recipes).toEqual(
         Immutable.List([
@@ -149,7 +156,7 @@ describe('getRecipesForCollectionId', () => {
     },
     menuRecipes: [RECIPE_1.get('id'), RECIPE_2.get('id'), RECIPE_3.get('id'), RECIPE_4.get('id')],
     menuCollections: {
-      [COLLECTION_A.get('id')]: COLLECTION_A,
+      [COLLECTION_A.get('id') as string]: COLLECTION_A,
     },
     menuRecipeStock: {
       [RECIPE_1.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
@@ -162,13 +169,15 @@ describe('getRecipesForCollectionId', () => {
     }),
   })
 
-  const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
+  const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <Provider store={store}>{children}</Provider>
+  )
 
   describe('when recipes order within collection is different from order in list of all menu recipes', () => {
     test('ensure the returned value respects the order in the collection', () => {
       const { result } = renderHook(() => useMenu(), { wrapper })
 
-      const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id'))
+      const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id') as string)
 
       expect(recipes).toEqual(
         Immutable.List([

@@ -4,7 +4,8 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { useRecipeId } from '../../../context/recipeContext'
-import { useGetAlternativeOptionsForRecipeLight, useStock } from '../../../domains/menu'
+import { useStock } from '../../../domains/basket'
+import { useGetAlternativeOptionsForRecipeLight } from '../../../domains/menu'
 
 import css from './VariantHeader.css'
 

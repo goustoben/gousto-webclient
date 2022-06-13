@@ -9,7 +9,7 @@ export function useSelectedCuisines() {
   }
 
   const storedCuisines = window.sessionStorage.getItem('selectedCuisines')
-  const selectedCuisines = storedCuisines ? JSON.parse(storedCuisines) : []
+  const selectedCuisines: string[] = storedCuisines ? JSON.parse(storedCuisines) : []
   const cuisines = selectedCuisines.map((name) => name.toLowerCase())
 
   if (cuisines.includes('none of these')) {

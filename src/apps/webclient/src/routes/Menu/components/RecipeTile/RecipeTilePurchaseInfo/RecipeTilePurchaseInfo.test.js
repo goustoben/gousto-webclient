@@ -3,6 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import * as RecipeContext from 'routes/Menu/context/recipeContext'
+import * as BasketHook from 'routes/Menu/domains/basket'
 import * as MenuHook from 'routes/Menu/domains/menu'
 
 import { useDeviceType } from '../../../../../hooks/useDeviceType'
@@ -264,7 +265,7 @@ const mockHooks = ({
   useRecipeField = '123',
 }) => {
   if (isRecipeOutOfStock !== undefined) {
-    jest.spyOn(MenuHook, 'useStock').mockImplementation(() => ({
+    jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
       isRecipeOutOfStock: () => isRecipeOutOfStock,
     }))
   }

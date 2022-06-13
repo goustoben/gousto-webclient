@@ -3,7 +3,8 @@ import React, { SyntheticEvent } from 'react'
 import classnames from 'classnames'
 
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
-import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
+import { useStock } from 'routes/Menu/domains/basket'
+import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
 
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useRecipeReference } from '../../context/recipeReferenceContext'
