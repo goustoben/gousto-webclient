@@ -63,21 +63,11 @@
 }
 
 .infoBoxDescriptionTitle {
-  font-size: sizeXL;
-}
-
-.infoBoxText {
-  composes: paragraphSM from 'styles/typography.css';
-  line-height: 1.4;
-
-  @media ScreenMDMax {
-    margin-bottom: SpacingXXS;
-    margin-top: SpacingMD;
-  }
+  composes: headerXL from 'styles/typography.css';
+  composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .additionalInfo {
-  composes: infoBoxText;
   composes: marginMDTop from 'sass-loader!styles/spacing.scss';
 }
 

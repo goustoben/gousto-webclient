@@ -17,8 +17,8 @@ export const allergenNamesInParentheses = (allergens) => {
   return allergenText
 }
 
-const Allergens = ({ allergens, inset }) => (
-  <div className={inset ? css.insetSection : css.section}>
+const Allergens = ({ allergens }) => (
+  <div className={css.insetSection}>
     <h1 className={css.heading}>Allergens</h1>
     {allergens.size > 0 ? (
       <dl>
@@ -35,11 +35,6 @@ const Allergens = ({ allergens, inset }) => (
 
 Allergens.propTypes = {
   allergens: PropTypes.instanceOf(Immutable.List).isRequired,
-  inset: PropTypes.bool,
-}
-
-Allergens.defaultProps = {
-  inset: true,
 }
 
 export { Allergens }

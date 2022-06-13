@@ -9,10 +9,10 @@ import css from './IngredientsList.css'
 
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1)
 
-export const IngredientsList = ({ ingredients, allergens, inset }) => (
+export const IngredientsList = ({ ingredients, allergens }) => (
   <div>
     {ingredients.size > 0 ? (
-      <div className={inset ? css.insetSection : css.section}>
+      <div className={css.insetSection}>
         <div className={css.heading}>Ingredients contain</div>
         {ingredients.toArray().map((ingredient) => {
           const subIngredients = ingredient.get('subIngredients')
@@ -42,9 +42,4 @@ export const IngredientsList = ({ ingredients, allergens, inset }) => (
 IngredientsList.propTypes = {
   ingredients: PropTypes.instanceOf(Immutable.List).isRequired,
   allergens: PropTypes.instanceOf(Immutable.List).isRequired,
-  inset: PropTypes.bool,
-}
-
-IngredientsList.defaultProps = {
-  inset: true,
 }
