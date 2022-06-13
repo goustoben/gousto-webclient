@@ -295,10 +295,9 @@ export const basketPostcodeChange = (postcode, forgetPrevPostcode = false) => (
         type: actionTypes.BASKET_POSTCODE_PENDING,
         pending: true,
       })
-      const today = moment().startOf('day')
       await dispatch(boxSummaryDeliveryDaysLoad(
-        today.toISOString(),
-        today.add(28, 'days') // calendar displays 4 weeks ahead
+        undefined, // if any other value is passed, 1st delivery day would be offset 1 day back, resulting in bug
+        moment().utc().startOf('day').add(28, 'days') // calendar displays 4 weeks ahead
           .toISOString()
       ))
       dispatch({
