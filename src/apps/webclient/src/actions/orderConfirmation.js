@@ -1,24 +1,24 @@
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 
+import { basketOrderLoad } from 'actions/basket'
+import {
+  productsLoadCategories,
+  productsLoadProducts,
+  productsLoadStock,
+  productsLoadRecipePairings,
+} from 'actions/products'
 import config from 'config/routes'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
+import { getOrderWhenStartDate } from 'routes/OrderConfirmation/utils/order'
 import logger from 'utils/logger'
 import { getUserOrderRecipeUuIds, getUserOrderRecipeIds } from 'utils/user'
-import {
-  basketDateChange,
-  basketNumPortionChange,
-  basketPostcodeChange,
-  basketChosenAddressChange,
-  basketOrderLoad,
-} from 'actions/basket'
-import * as orderV2 from 'routes/Menu/apis/orderV2'
-import { productsLoadCategories, productsLoadProducts, productsLoadStock, productsLoadRecipePairings } from 'actions/products'
-import { getOrderWhenStartDate } from 'routes/OrderConfirmation/utils/order'
-import { orderCheckPossibleDuplicate } from './order'
-import { getAuthUserId, getAccessToken } from '../selectors/auth'
+
 import { fetchSimpleMenu } from '../routes/Menu/fetchData/menuApi'
-import recipeActions from './recipes'
+import { getAuthUserId, getAccessToken } from '../selectors/auth'
 import { actionTypes } from './actionTypes'
+import { orderCheckPossibleDuplicate } from './order'
+import recipeActions from './recipes'
 
 export const orderConfirmationRedirect = (orderId, orderAction) => (dispatch) => {
   const confirmationUrl = config.client.orderConfirmation.replace(':orderId', orderId)
@@ -39,18 +39,12 @@ export const orderDetails = (orderId) => async (dispatch, getState) => {
     const immutableOrderDetails = Immutable.fromJS(order)
     const orderRecipeUuIds = getUserOrderRecipeUuIds(immutableOrderDetails)
     dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeUuIds))
-    await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, {reload: true}, menus))
+    await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, { reload: true }, menus))
 
     const orderRecipeIds = getUserOrderRecipeIds(immutableOrderDetails)
     const orderMenuStartDate = getOrderWhenStartDate(immutableOrderDetails)
     await dispatch(productsLoadRecipePairings(orderRecipeIds, orderMenuStartDate))
-
     dispatch(basketOrderLoad(orderId, immutableOrderDetails))
-    dispatch(basketDateChange(order.deliveryDate))
-    dispatch(basketNumPortionChange(order.box.numPortions, orderId))
-    dispatch(basketChosenAddressChange(order.shippingAddress))
-    await dispatch(basketPostcodeChange(order.shippingAddress.postcode))
-
     dispatch({
       type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
       orderId,
@@ -61,14 +55,12 @@ export const orderDetails = (orderId) => async (dispatch, getState) => {
   }
 }
 
-export const orderConfirmationProductTracking = (trackingData) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.BASKET_PRODUCT_TRACKING,
-      trackingData: { actionType: trackingData.eventName, trackingData }
-    })
-  }
-)
+export const orderConfirmationProductTracking = (trackingData) => (dispatch) => {
+  dispatch({
+    type: actionTypes.BASKET_PRODUCT_TRACKING,
+    trackingData: { actionType: trackingData.eventName, trackingData },
+  })
+}
 
 export const marketBundleTracking = (action, trackingData) => (dispatch) => {
   dispatch({
@@ -76,32 +68,30 @@ export const marketBundleTracking = (action, trackingData) => (dispatch) => {
     trackingData: {
       actionType: action,
       event_name: action,
-      event_properties: trackingData && trackingData
-    }
+      event_properties: trackingData && trackingData,
+    },
   })
 }
 
-export const orderConfirmationUpdateOrderTracking = () => (
-  (dispatch, getState) => {
-    const { basket, user } = getState()
-    const orderId = basket.get('orderId')
-    const basketOrderDetails = basket.get('orderDetails')
-    const prices = basketOrderDetails.get('prices')
-    const orderTotal = prices.get('total')
-    const promoCode = prices.get('promoCode')
-    const subscription = user.get('subscription')
-    const subscriptionActive = subscription.get('state') === 'active'
+export const orderConfirmationUpdateOrderTracking = () => (dispatch, getState) => {
+  const { basket, user } = getState()
+  const orderId = basket.get('orderId')
+  const basketOrderDetails = basket.get('orderDetails')
+  const prices = basketOrderDetails.get('prices')
+  const orderTotal = prices.get('total')
+  const promoCode = prices.get('promoCode')
+  const subscription = user.get('subscription')
+  const subscriptionActive = subscription.get('state') === 'active'
 
-    dispatch({
-      type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING,
-      trackingData: {
-        actionType: 'Order Edited',
-        order_id: orderId,
-        order_total: orderTotal,
-        promo_code: promoCode,
-        signup: false,
-        subscription_active: subscriptionActive,
-      },
-    })
-  }
-)
+  dispatch({
+    type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING,
+    trackingData: {
+      actionType: 'Order Edited',
+      order_id: orderId,
+      order_total: orderTotal,
+      promo_code: promoCode,
+      signup: false,
+      subscription_active: subscriptionActive,
+    },
+  })
+}

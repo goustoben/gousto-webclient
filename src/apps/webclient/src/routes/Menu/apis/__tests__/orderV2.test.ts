@@ -156,7 +156,7 @@ describe('orderApi', () => {
         const apiResponse = { data: [1, 2, 3] }
         ;(fetch as jest.Mock).mockResolvedValue(apiResponse)
 
-        const result = await updateOrder(dispatch, getState, orderId, { order: 'body' }, true)
+        const result = await updateOrder(dispatch, getState, orderId, { order: 'body' })
 
         expect(result).toEqual(apiResponse)
       })

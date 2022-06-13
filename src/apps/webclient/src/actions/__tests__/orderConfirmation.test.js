@@ -1,33 +1,22 @@
+import { safeJestMock } from '_testing/mocks'
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
-import { safeJestMock } from '_testing/mocks'
 
 import { actionTypes } from 'actions/actionTypes'
-import { redirect } from 'utils/window'
-import { fetchOrder } from 'routes/Menu/apis/orderV2'
-
-import {
-  basketOrderLoad,
-  basketDateChange,
-  basketNumPortionChange,
-  basketChosenAddressChange,
-  basketPostcodeChange,
-} from 'actions/basket'
-import recipes from 'actions/recipes'
+import { basketOrderLoad } from 'actions/basket'
 import { orderCheckPossibleDuplicate } from 'actions/order'
-import {
-  productsLoadProducts,
-  productsLoadRecipePairings,
-} from 'actions/products'
-
 import {
   orderDetails,
   orderConfirmationRedirect,
   orderConfirmationProductTracking,
   orderConfirmationUpdateOrderTracking,
 } from 'actions/orderConfirmation'
-
+import { productsLoadProducts, productsLoadRecipePairings } from 'actions/products'
+import recipes from 'actions/recipes'
 import { marketProductAdded, marketProductRemoved } from 'actions/trackingKeys'
+import { fetchOrder } from 'routes/Menu/apis/orderV2'
+import { redirect } from 'utils/window'
+
 import * as menuApis from '../../routes/Menu/fetchData/menuApi'
 
 jest.mock('apis/orders')
@@ -144,7 +133,10 @@ describe('orderConfirmation actions', () => {
       test('should fetch product recipe pairings for the given recipe ids and period whenStart in the order', async () => {
         await orderDetails('1234')(dispatch, getState)
 
-        expect(productsLoadRecipePairings).toHaveBeenCalledWith(['1234', '5678'], '2022-05-17T11:00:00Z')
+        expect(productsLoadRecipePairings).toHaveBeenCalledWith(
+          ['1234', '5678'],
+          '2022-05-17T11:00:00Z',
+        )
       })
     })
 
@@ -197,28 +189,6 @@ describe('orderConfirmation actions', () => {
             }),
           }),
         )
-      })
-
-      test('should call basket date change for the returned order', async () => {
-        await orderDetails(orderId)(dispatch, getState)
-        expect(basketDateChange).toHaveBeenCalledWith('2019-04-16 19:00:00')
-      })
-
-      test('should call basket num portion change for the returned order', async () => {
-        await orderDetails(orderId)(dispatch, getState)
-        expect(basketNumPortionChange).toHaveBeenCalledWith(4, orderId)
-      })
-
-      test('should call basket choosen address change for the returned order', async () => {
-        await orderDetails(orderId)(dispatch, getState)
-        expect(basketChosenAddressChange).toHaveBeenCalledWith({
-          postcode: 'AA1 2AA',
-        })
-      })
-
-      test('should call basket postcode change for the returned order', async () => {
-        await orderDetails(orderId)(dispatch, getState)
-        expect(basketPostcodeChange).toHaveBeenCalledWith('AA1 2AA')
       })
 
       test('should fetch the products for the returned menu data', async () => {
