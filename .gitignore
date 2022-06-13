@@ -35,6 +35,3 @@ lib
 !.yarn/versions
 package-lock.json
 
-# Libraries
-src/modules/library/**/dist
-
