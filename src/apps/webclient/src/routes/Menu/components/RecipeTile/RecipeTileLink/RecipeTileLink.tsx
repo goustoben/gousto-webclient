@@ -3,8 +3,9 @@ import React, { SyntheticEvent } from 'react'
 import { Box, Color, FontFamily, FontWeight, Icon, Text } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
 
-import css from 'routes/Menu/components/RecipeTile/RecipeTileLink/RecipeTileLink.css'
-import { useGetRecipeTileLinkData } from 'routes/Menu/components/RecipeTile/RecipeTileLink/hooks'
+import { useGetRecipeTileLinkData } from './hooks'
+
+import css from './RecipeTileLink.css'
 
 interface Props {
   isFineDineIn: boolean

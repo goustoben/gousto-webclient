@@ -4,7 +4,8 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
-import { RecipeTileLink } from 'routes/Menu/components/RecipeTile/RecipeTileLink'
+
+import { RecipeTileLink } from '../RecipeTileLink'
 
 const onClickTileMock = jest.fn()
 const mockedProps = {
