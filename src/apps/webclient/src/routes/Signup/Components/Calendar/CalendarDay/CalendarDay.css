@@ -30,6 +30,11 @@
   &:focus {
     outline: none;
   }
+
+  &:disabled {
+    border: none;
+    color: CG-200;
+  }
 }
 
 .selectedDay {
