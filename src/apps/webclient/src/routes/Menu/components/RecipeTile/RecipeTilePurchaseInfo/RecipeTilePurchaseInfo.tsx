@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import { useRecipeId, useRecipeIsFineDineIn } from 'routes/Menu/context/recipeContext'
-import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
+import { useStock } from 'routes/Menu/domains/basket'
+import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
 
 import { AddRecipeButton } from '../AddRecipeButton'
 import { useGetSurchargeForRecipeId } from '../Hooks'

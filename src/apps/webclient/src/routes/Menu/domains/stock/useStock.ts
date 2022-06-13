@@ -5,14 +5,16 @@ import { RootStateOrAny, useSelector } from 'react-redux'
 import menuConfig from 'config/menu'
 import { getStock } from 'selectors/root'
 
-import { useIsRecipeInBasket } from '../basket/internal/useIsRecipeInBasket'
-import { useNumPortions } from '../basket/internal/useNumPortions'
-import { useGetStockForRecipe, MenuRecipeStock } from './internal/useGetStockForRecipe'
+import { useGetStockForRecipe, MenuRecipeStock } from './useGetStockForRecipe'
 
-export const useStock = () => {
+export function useStockAPI({
+  numPortions,
+  isRecipeInBasket,
+}: {
+  numPortions: number
+  isRecipeInBasket: (recipeId: string) => boolean
+}) {
   const menuRecipeStock = useSelector<RootStateOrAny, MenuRecipeStock>(getStock)
-  const isRecipeInBasket = useIsRecipeInBasket()
-  const { numPortions } = useNumPortions()
 
   const getStockForRecipe = useGetStockForRecipe({ menuRecipeStock, numPortions })
 

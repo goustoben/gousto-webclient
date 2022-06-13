@@ -26,9 +26,10 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
     })
 
     test('it does not replace the recipe', () => {
-      expect(replacer({ recipe: RECIPE_1 })).toEqual({
+      expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
         originalId: RECIPE_1.get('id'),
+        reference: 'foo',
       })
     })
   })
@@ -41,9 +42,10 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
       dietaryClaims: null,
     })
     test('it replaces original recipe with that alternative', () => {
-      expect(replacer({ recipe: RECIPE_1 })).toEqual({
+      expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1_1,
         originalId: RECIPE_1_1.get('id'),
+        reference: 'foo',
       })
     })
   })
@@ -56,9 +58,10 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
       dietaryClaims: null,
     })
     test('it does not replace the recipe', () => {
-      expect(replacer({ recipe: RECIPE_1 })).toEqual({
+      expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
         originalId: RECIPE_1.get('id'),
+        reference: 'foo',
       })
     })
   })
@@ -71,9 +74,10 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
       dietaryClaims: null,
     })
     test('it does not replace recipe', () => {
-      expect(replacer({ recipe: RECIPE_1 })).toEqual({
+      expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
         originalId: RECIPE_1.get('id'),
+        reference: 'foo',
       })
     })
   })

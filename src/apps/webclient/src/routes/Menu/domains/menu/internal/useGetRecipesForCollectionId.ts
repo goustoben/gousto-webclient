@@ -15,10 +15,12 @@ import { getRecipeReferenceInjector } from './getRecipeReferenceInjector'
 import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
 import { useSelectedCuisines } from './useSelectedCuisines'
 
-const getDietaryClaimsInCollection = (menuCollections, collectionId) =>
-  menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
+const getDietaryClaimsInCollection = (
+  menuCollections: Immutable.Map<string, any>,
+  collectionId: string,
+) => menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
 
-export const useGetRecipesForCollectionId = (collections) => {
+export const useGetRecipesForCollectionId = (collections: Immutable.Map<string, any>) => {
   const recipes = useSelector(getCurrentMenuRecipes)
   const recipesInStock = useSelector(getInStockRecipes)
   const recipesVariants = useSelector(getCurrentMenuVariants)
@@ -30,7 +32,7 @@ export const useGetRecipesForCollectionId = (collections) => {
     [recipesInStock],
   )
 
-  const getRecipesForCollectionId = (collectionId) => {
+  const getRecipesForCollectionId = (collectionId: string) => {
     const recipeIdsInCollection = getRecipesInCollection(collections, collectionId)
     const dietaryClaims = getDietaryClaimsInCollection(collections, collectionId)
 
@@ -59,8 +61,10 @@ export const useGetRecipesForCollectionId = (collections) => {
     //  * ensure any remaining out of stock recipes are moved to the end of the list
 
     const originalRecipes = recipeIdsInCollection
-      .map((id) => recipes.find((other) => other.get('id') === id))
-      .filter((recipe) => Boolean(recipe))
+      .map((id: string) =>
+        recipes.find((other: Immutable.Map<string, string>) => other.get('id') === id),
+      )
+      .filter((recipe: Immutable.Map<string, string>) => Boolean(recipe))
       .map(recipeReferenceInjector)
       .map(selectedVariantReplacer)
       .map(outOfStockRecipeReplacer)

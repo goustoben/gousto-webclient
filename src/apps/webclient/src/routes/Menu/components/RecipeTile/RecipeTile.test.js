@@ -2,7 +2,7 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import * as MenuHooks from 'routes/Menu/domains/menu'
+import * as BasketHook from 'routes/Menu/domains/basket'
 
 import * as RecipeContext from '../../context/recipeContext'
 import { Title, BrandTag } from '../Recipe'
@@ -32,7 +32,7 @@ describe('RecipeTile', () => {
   const onClick = jest.fn()
   jest.spyOn(RecipeContext, 'useRecipeBrandAvailabilityTag').mockImplementation(() => true)
   jest.spyOn(RecipeContext, 'useRecipeIsFineDineIn').mockImplementation(() => false)
-  jest.spyOn(MenuHooks, 'useStock').mockImplementation(() => ({ isRecipeOutOfStock: jest.fn() }))
+  jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({ isRecipeOutOfStock: jest.fn() }))
 
   let wrapper
   let defaultProps

@@ -6,7 +6,8 @@ describe('getRecipeComparatorForOutOfStock', () => {
   const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
   const RECIPE_2 = Immutable.Map({ id: 'bbbb' })
 
-  const wrapRecipes = (recipes) => recipes.map((recipe) => ({ recipe }))
+  const wrapRecipes = (recipes: Immutable.Map<string, any>[]) =>
+    recipes.map((recipe) => ({ recipe }))
 
   describe('when there are no recipes in stock', () => {
     const comparator = getRecipeComparatorForOutOfStock()

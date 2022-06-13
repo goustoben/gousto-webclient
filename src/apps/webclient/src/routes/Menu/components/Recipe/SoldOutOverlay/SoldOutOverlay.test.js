@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import * as RecipeContext from '../../../context/recipeContext'
-import * as DomainMenu from '../../../domains/menu'
+import * as BasketHook from '../../../domains/basket'
 import { SoldOutOverlay } from './SoldOutOverlay'
 
 describe('<SoldOutOverlay', () => {
@@ -12,7 +12,7 @@ describe('<SoldOutOverlay', () => {
 
   describe('when a recipe has is in stock', () => {
     beforeEach(() => {
-      jest.spyOn(DomainMenu, 'useStock').mockImplementation(() => ({
+      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
         isRecipeOutOfStock: () => false,
       }))
 
@@ -26,7 +26,7 @@ describe('<SoldOutOverlay', () => {
 
   describe('when recipe is not in stock', () => {
     beforeEach(() => {
-      jest.spyOn(DomainMenu, 'useStock').mockImplementation(() => ({
+      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
         isRecipeOutOfStock: () => true,
       }))
 

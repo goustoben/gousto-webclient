@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { useSelector } from 'react-redux'
 
 import { getMenuCollections } from '../../selectors/collections'
@@ -6,7 +7,7 @@ import { useChangeCollectionById } from './internal/useChangeCollectionById'
 import { useCurrentCollection } from './internal/useCurrentCollection'
 import { useDisplayedCollections } from './internal/useDisplayedCollections'
 
-export const useAllCollections = () => useSelector(getMenuCollections)
+export const useAllCollections = (): Immutable.Map<string, any> => useSelector(getMenuCollections)
 
 export const useCollections = () => {
   const currentCollection = useCurrentCollection()

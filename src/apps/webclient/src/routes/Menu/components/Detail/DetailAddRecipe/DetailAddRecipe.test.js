@@ -2,14 +2,14 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import * as DomainMenu from '../../../domains/menu'
+import * as BasketHook from '../../../domains/basket'
 import { DetailAddRecipe } from './DetailAddRecipe'
 
 describe('DetailAddRecipe', () => {
   let wrapper
   describe('when isOutOfStock true', () => {
     beforeEach(() => {
-      jest.spyOn(DomainMenu, 'useStock').mockImplementation(() => ({
+      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
         isRecipeOutOfStock: () => true,
       }))
       wrapper = shallow(
@@ -23,7 +23,7 @@ describe('DetailAddRecipe', () => {
 
   describe('when isOutOfStock false', () => {
     beforeEach(() => {
-      jest.spyOn(DomainMenu, 'useStock').mockImplementation(() => ({
+      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
         isRecipeOutOfStock: () => false,
       }))
       wrapper = shallow(

@@ -47,7 +47,7 @@ type GetAlternativeOptionsForRecipe<T extends Recipe = Recipe> = (args: {
 }[]
 
 // eslint-disable-next-line no-unused-vars
-type UseAlternativeOptions = (args: { allCollections?: AllCollections }) => {
+type UseAlternativeOptions = (args?: { allCollections?: AllCollections }) => {
   getAlternativeOptionsForRecipe: GetAlternativeOptionsForRecipe
 }
 type AllCollections = Immutable.Map<string, CollectionImmutable>

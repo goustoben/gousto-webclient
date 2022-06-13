@@ -29,9 +29,10 @@ describe('getSelectedVariantsReplacer produces recipe replacer function that', (
       replacementMap: {},
     })
     test('return original recipe', () => {
-      expect(replacer({ recipe: RECIPE_1 })).toEqual({
+      expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
         originalId: RECIPE_1.get('id'),
+        reference: 'foo',
       })
     })
   })

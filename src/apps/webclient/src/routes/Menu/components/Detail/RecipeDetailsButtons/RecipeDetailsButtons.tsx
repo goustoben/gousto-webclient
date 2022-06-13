@@ -6,8 +6,7 @@ import { Button, Control, Segment } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
 
 import config from 'config/recipes'
-import { useBasket } from 'routes/Menu/domains/basket'
-import { useStock } from 'routes/Menu/domains/menu'
+import { useBasket, useStock } from 'routes/Menu/domains/basket'
 
 import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
