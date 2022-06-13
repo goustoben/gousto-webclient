@@ -151,7 +151,7 @@ const getRecipesV2 = createSelector(
   },
 )
 
-const getProductsV2 = createSelector([getBasketProducts], (products = []) =>
+export const getProductsV2 = createSelector([getBasketProducts], (products = []) =>
   products.reduce(
     (memo, quantity, productId) => [
       ...memo,
