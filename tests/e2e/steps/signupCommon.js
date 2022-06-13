@@ -62,6 +62,10 @@ module.exports = {
         await menu.section.recipes.addRecipes()
         done()
       })
+      .perform(done => {
+          menu.section.bottomBar.checkIfCheckoutButtonClickable()
+          done()
+       })
       .perform(function (done) {
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
