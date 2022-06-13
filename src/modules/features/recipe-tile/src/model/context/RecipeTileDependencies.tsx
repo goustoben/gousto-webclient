@@ -2,8 +2,10 @@ import React, { Provider, ReactElement } from "react";
 import { RecipeContextProvider } from "./recipe";
 import { UseBasketContextProvider } from "./useBasket";
 import { UseGetAlternativeOptionsForRecipeContextProvider } from "./useGetAlternativeOptionsForRecipe";
+import { UseGetSurchargeForRecipeIdContextProvider } from "./useGetSurchargeForRecipeId";
 import { UseSetBrowserCTAVisibilityContextProvider } from "./useSetBrowserCTAVisibility";
 import { UseStockContextProvider } from "./useStock";
+import { UseTrackingContextProvider } from "./useTracking";
 
 type ExtractValueTypeFromContextProvider<T> = T extends Provider<infer U>
   ? U
@@ -22,6 +24,8 @@ type RecipeTileDependenciesArgs = {
     typeof UseSetBrowserCTAVisibilityContextProvider
   >;
   recipe: ExtractValueTypeFromContextProvider<typeof RecipeContextProvider>;
+  useTracking: ExtractValueTypeFromContextProvider<typeof UseTrackingContextProvider>;
+  useGetSurchargeForRecipeId: ExtractValueTypeFromContextProvider<typeof UseGetSurchargeForRecipeIdContextProvider>
 };
 
 /**
@@ -37,6 +41,8 @@ export const RecipeTileDependencies = ({
   useBasket,
   useSetBrowserCTAVisibility,
   recipe,
+  useTracking,
+  useGetSurchargeForRecipeId,
 }: RecipeTileDependenciesArgs) => (
   // Each logical item uses its own provider to minimize re-renderings
   <UseStockContextProvider value={useStock}>
@@ -48,7 +54,11 @@ export const RecipeTileDependencies = ({
           value={useSetBrowserCTAVisibility}
         >
           <RecipeContextProvider value={recipe}>
-            {children}
+            <UseTrackingContextProvider value={useTracking}>
+              <UseGetSurchargeForRecipeIdContextProvider value={useGetSurchargeForRecipeId}>
+                {children}
+              </UseGetSurchargeForRecipeIdContextProvider>
+            </UseTrackingContextProvider>
           </RecipeContextProvider>
         </UseSetBrowserCTAVisibilityContextProvider>
       </UseBasketContextProvider>

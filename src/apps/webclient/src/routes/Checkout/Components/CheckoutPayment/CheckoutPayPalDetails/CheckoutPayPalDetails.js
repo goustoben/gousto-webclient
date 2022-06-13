@@ -84,14 +84,18 @@ class CheckoutPayPalDetails extends React.PureComponent {
       firePayPalError,
       trackFailedCheckoutFlow,
       trackSuccessfulCheckoutFlow,
+      submitCheckingRecaptcha,
     } = this.props
 
     try {
       const payload = await this.paypalCheckoutInstance.tokenizePayment(approveData)
       setPayPalNonce(payload.nonce)
-      trackSuccessfulCheckoutFlow('PayPal nonce fetched successfully')
+      trackSuccessfulCheckoutFlow(
+        'PayPal nonce is fetched successfully, proceed to submitting the form',
+      )
+      submitCheckingRecaptcha()
     } catch (error) {
-      trackFailedCheckoutFlow('Fetching PayPal nonce has been failed', error)
+      trackFailedCheckoutFlow('Fetching PayPal nonce has failed', error)
       firePayPalError(error)
     }
   }
@@ -196,6 +200,7 @@ CheckoutPayPalDetails.propTypes = {
   token: PropTypes.string,
   trackSuccessfulCheckoutFlow: PropTypes.func,
   trackFailedCheckoutFlow: PropTypes.func,
+  submitCheckingRecaptcha: PropTypes.func.isRequired,
 }
 
 CheckoutPayPalDetails.defaultProps = {

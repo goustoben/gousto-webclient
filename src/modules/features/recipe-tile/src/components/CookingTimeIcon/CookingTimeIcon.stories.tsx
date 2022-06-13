@@ -32,6 +32,8 @@ export default {
         useGetAlternativeOptionsForRecipe,
         useBasket,
         useSetBrowserCTAVisibility,
+        useTracking,
+        useGetSurchargeForRecipeId,
       } = getMocks({
         cookingTime: args.cookingTime,
       });
@@ -43,6 +45,8 @@ export default {
           useStock={useStock}
           useBasket={useBasket}
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
+          useTracking={useTracking}
+          useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
         >
           <Story />
         </RecipeTileDependencies>

@@ -31,10 +31,10 @@ describe('useIsPairingsEnabled', () => {
       expect(useIsOptimizelyFeatureEnabled).toBeCalledWith(null)
     })
 
-    test('useIsPairingsEnabled returns null', () => {
+    test('useIsPairingsEnabled returns false', () => {
       const { result } = renderHook(() => useIsPairingsEnabled())
 
-      expect(result.current).toBe(null)
+      expect(result.current).toBe(false)
     })
   })
 

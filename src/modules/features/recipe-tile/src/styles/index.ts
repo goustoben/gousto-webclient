@@ -4,11 +4,16 @@
  */
 export const colors = {
   black: '#333D47',
-  bluecheese: '#615cff',
-  white: '#ffffff',
+  blackberry: '#333D47',
+  bluebase: '#615CFF',
   blueberry: '#3E3AC2',
+  bluecheese: '#615cff',
+  mackerel: '#D2D6D9',
   oyster: '#C0C5C9',
+  white: '#ffffff',
 }
+
+const fontFamilyAxiformaBook = 'AxiformaBook,Helvetica,sans-serif'
 
 export const typography = {
   axiformaFontStack: 'Axiforma,Helvetica,sans-serif',
@@ -20,6 +25,10 @@ export const typography = {
   sizeXL: '20px',
   sizeXXL: '28px',
   sizeXXL2: '48px',
+  fontFamilyAxiformaBook,
+  fontStyleBody: `Medium ${fontFamilyAxiformaBook}`,
+  fontFamilyAxiformaSemiBold: 'AxiformaSemiBold,Helvetica,sans-serif',
+  avenirBookFontStack:  'AvenirBook,Helvetica,sans-serif',
 }
 
 export const screen = {
@@ -37,4 +46,10 @@ export const screen = {
   'screenLGMin': '(min-width: 1200px)',
   'screenLGMax': '(max-width: 1599px)',
   'screenXLMin': '(min-width: 1600px)',
+}
+
+export const zIndex = {
+  top: '10000',
+  modalBase: '20000',
+  modalTop: '20010',
 }

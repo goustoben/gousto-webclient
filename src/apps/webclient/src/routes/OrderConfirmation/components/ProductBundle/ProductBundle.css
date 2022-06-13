@@ -29,12 +29,6 @@
   }
 }
 
-.fourColumn {
-  @media ScreenSMMin {
-    width: calc(25% - 10px);
-  }
-}
-
 .productWrapper:hover {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
 }
@@ -52,9 +46,6 @@
 
 .bundleDescription {
   padding: 8px 0px 8px 0px;
-  color: DarkGrey;
-  line-height: 16px;
-  font-size: 12px;
 }
 
 .bundleImage {
@@ -71,10 +62,6 @@
   position: absolute;
   top: 0;
   left: 0;
-}
-
-.fadedImage {
-  opacity: 0.4;
 }
 
 .bundleContent {
@@ -100,16 +87,6 @@
   text-decoration: underline;
 }
 
-.productTitle {
-  font-family: avenirHeavyFontStack;
-  font-weight: 400;
-  margin-bottom: 5px;
-
-  @media FullWidthBreakpoint {
-    font-size: 0.75rem;
-  }
-}
-
 .bundlePrice {
   font-family: avenirHeavyFontStack;
   color: DarkGrey;
@@ -127,15 +104,6 @@
 
   @media FullWidthBreakpoint {
     width: 100%;
-  }
-}
-
-.recipeTagHolder {
-  position: absolute;
-  top: 0.5rem;
-
-  @media ScreenSMMin {
-    top: 1rem;
   }
 }
 

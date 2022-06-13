@@ -9,7 +9,7 @@ import {
 import { getEnvironment } from 'utils/isomorphicEnvironment'
 
 export const DATADOG_ENABLED_ENVS = ['production']
-export const DATADOG_CLIENT_SAMPLE_RATE = 25
+export const DATADOG_CLIENT_SAMPLE_RATE = 50
 
 export const getCommonConfig: () => Partial<LogsInitConfiguration & RumInitConfiguration> = () => ({
   site: 'datadoghq.eu',

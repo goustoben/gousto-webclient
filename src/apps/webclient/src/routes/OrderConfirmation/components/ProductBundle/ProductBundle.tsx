@@ -5,12 +5,14 @@ import {
   Button,
   ButtonColorVariant,
   ButtonSize,
+  Color,
   Display,
   FontFamily,
   Heading6,
   Image,
   ModalProvider,
   Paragraph,
+  Position,
 } from '@gousto-internal/citrus-react'
 import classnames from 'classnames'
 import { useDispatch } from 'react-redux'
@@ -20,6 +22,7 @@ import { marketBundleAdded, marketBundleDetails } from 'actions/trackingKeys'
 import { BundleProduct } from 'routes/OrderConfirmation/types'
 
 import { FakeDoorModal } from '../FakeDoorModal/FakeDoorModal'
+import { NewTag } from '../NewTag/NewTag'
 import { ProductBundleDetails } from '../ProductBundleDetails/ProductBundleDetails'
 
 import css from './ProductBundle.css'
@@ -31,6 +34,7 @@ interface Props {
     bundleName: string
     bundlePrice: string
     bundleProducts: BundleProduct[]
+    isNew?: boolean
   }
   getFilteredProducts: (categoryId: string) => void
 }
@@ -38,7 +42,8 @@ interface Props {
 const ProductBundle = ({ bundleProduct, getFilteredProducts }: Props) => {
   const [bundleDetailsToggle, setBundleDetailsToggle] = useState<boolean>(false)
   const [fakeDoorToggle, setFakeDoorToggle] = useState<boolean>(false)
-  const { bundleDescription, bundleImage, bundleName, bundlePrice, bundleProducts } = bundleProduct
+  const { bundleDescription, bundleImage, bundleName, bundlePrice, bundleProducts, isNew } =
+    bundleProduct
   const dispatch = useDispatch()
 
   const toggleDetailsModal = () => setBundleDetailsToggle(!bundleDetailsToggle)
@@ -54,6 +59,12 @@ const ProductBundle = ({ bundleProduct, getFilteredProducts }: Props) => {
     toggleFakeDoorModal()
   }
 
+  const renderNewTag = isNew && (
+    <Position position="absolute" top={['8px', '16px']}>
+      <NewTag />
+    </Position>
+  )
+
   return (
     <ModalProvider>
       <section className={css.productWrapper}>
@@ -64,6 +75,7 @@ const ProductBundle = ({ bundleProduct, getFilteredProducts }: Props) => {
             onClick={handleBundleDetailsPress}
           >
             <Image src={bundleImage} alt={bundleName} />
+            {renderNewTag}
           </button>
           <Box display={Display.Flex} className={css.bundleContent}>
             <Box className={css.bundleContentFirstColumn}>
@@ -75,7 +87,9 @@ const ProductBundle = ({ bundleProduct, getFilteredProducts }: Props) => {
                 <Heading6 className="bundleTitle" size={3}>
                   {bundleName}
                 </Heading6>
-                <Paragraph className={css.bundleDescription}>{bundleDescription}</Paragraph>
+                <Paragraph size={1} color={Color.ColdGrey_400} className={css.bundleDescription}>
+                  {bundleDescription}
+                </Paragraph>
               </button>
             </Box>
             {bundleProducts.map((product: BundleProduct) => (

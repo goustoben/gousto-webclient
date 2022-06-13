@@ -15,7 +15,7 @@ import { SectionHeader } from '../SectionHeader'
 import { SubmitButton } from '../SubmitButton'
 import { Checkout3DSModal } from './Checkout3DSModal'
 import { CheckoutCardDetails } from './CheckoutCardDetails'
-import { CheckoutPayPalDetailsWrapper } from './CheckoutPayPalDetails'
+import { CheckoutPayPalDetailsContainer } from './CheckoutPayPalDetails'
 import { PayPalConfirmation } from './PayPalConfirmation'
 import { PaymentFooter } from './PaymentFooter'
 import { PaymentMethodSelector } from './PaymentMethodSelector'
@@ -62,7 +62,7 @@ class CheckoutPayment extends React.Component {
     return !(formErrors && formErrors[sectionName])
   }
 
-  handleClick = () => {
+  submitCheckingRecaptcha = () => {
     const { recaptchaValue } = this.props
     const captchaPassed = recaptchaValue !== null
 
@@ -125,7 +125,7 @@ class CheckoutPayment extends React.Component {
   }
 
   handleSubmitFromCardDetails = () => {
-    this.handleClick()
+    this.submitCheckingRecaptcha()
   }
 
   handleFramesValidationChanged = (isValid) => {
@@ -199,7 +199,7 @@ class CheckoutPayment extends React.Component {
 
     const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : isPending
 
-    return <SubmitButton onClick={this.handleClick} isDisabled={isDisabled} />
+    return <SubmitButton onClick={this.submitCheckingRecaptcha} isDisabled={isDisabled} />
   }
 
   renderErrorMessage() {
@@ -231,9 +231,10 @@ class CheckoutPayment extends React.Component {
     const { paypalScriptsReady, currentPaymentMethod } = this.props
 
     return (
-      <CheckoutPayPalDetailsWrapper
+      <CheckoutPayPalDetailsContainer
         hide={currentPaymentMethod !== PaymentMethod.PayPal}
         paypalScriptsReady={paypalScriptsReady}
+        submitCheckingRecaptcha={this.submitCheckingRecaptcha}
       />
     )
   }

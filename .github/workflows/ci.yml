@@ -68,6 +68,7 @@ jobs:
         path: |
           **/node_modules
           src/apps/webclient/libs
+          src/modules/library/eslint-plugin-feature-modules
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}-${{ hashFiles('.yarn/releases/yarn-*') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -88,6 +89,8 @@ jobs:
         git diff --name-status ${{ steps.branch_point.outputs.REF }}
         echo "Webclient lint files:"
         yarn monorepo-build lint --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient
+        echo "Webclient unit tests?"
+        yarn monorepo-build unit-tests --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient
     - name: Lint (apps/webclient)
       working-directory: src/apps/webclient
       run: |
@@ -96,6 +99,7 @@ jobs:
         if [ -s lint-changes ]; then
           ./scripts/run-eslint-ci.sh $(cat lint-changes)
         fi
+        rm lint-changes
     - name: Lint (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run lint
     - name: Unit test (feature modules)
@@ -107,7 +111,13 @@ jobs:
     - name: Typecheck tests
       run: yarn workspace webclient typecheck:tests
     - name: Unit test (apps/webclient)
-      run: yarn workspace webclient test:jest:ci:coverage
+      run: |
+        # Optionally run Jest if required
+        yarn monorepo-build unit-tests --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient > unit-tests
+        if [ -s unit-tests ]; then
+          yarn workspace webclient test:jest:ci:coverage
+        fi
+        rm unit-tests
     - name: Compare code health
       run: git diff --name-status ${{ steps.branch_point.outputs.REF }} | node ./scripts/compare-code-health.js develop tmp/artifacts/code_health.json
       working-directory: src/apps/webclient

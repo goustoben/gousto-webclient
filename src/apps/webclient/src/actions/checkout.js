@@ -589,18 +589,10 @@ export function setPayPalDeviceData(deviceData) {
   }
 }
 
-export function setPayPalNonce(nonce, { pricing }) {
-  return (dispatch) => {
-    dispatch({
-      type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
-      nonce
-    })
-
-    dispatch(feLoggingLogEvent(logLevels.info, 'in setPayPalNonce: proceed to checkoutSignup'))
-    dispatch(checkoutActions.trackingOrderPlaceAttemptSucceeded({ pricing }))
-    dispatch(checkoutActions.checkoutSignup({ pricing }))
-  }
-}
+export const setPayPalNonce = (nonce) => ({
+  type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
+  nonce
+})
 
 export function firePayPalError(err) {
   return (dispatch) => {

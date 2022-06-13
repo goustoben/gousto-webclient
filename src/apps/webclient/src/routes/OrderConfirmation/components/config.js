@@ -575,6 +575,7 @@ export const mockBundlesData = [
     bundleImage:
       'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Bundle_DateNight_01.jpg',
     bundlePrice: '11.99',
+    isNew: true,
     bundleProducts: [
       {
         attributes: List([

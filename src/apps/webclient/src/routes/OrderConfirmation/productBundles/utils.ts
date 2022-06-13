@@ -6,6 +6,8 @@ export const dateToMenuWeek = (menuWeekStart: string): string => {
   const date = moment(menuWeekStart).format('YYYY/MM/DD')
 
   switch (date) {
+    case '2022/06/07':
+      return '515'
     case '2022/06/14':
       return '516'
     case '2022/06/21':

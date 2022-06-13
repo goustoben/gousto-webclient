@@ -26,14 +26,13 @@ import {
 import { ProductNavBarProvider } from '../../context/productsNavBarContext'
 import { useIsBundlesEnabled } from '../../hooks/useBundlesExperiment.hook'
 import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
-// import { getBundles } from '../../productBundles/utils'
+import { getBundles } from '../../productBundles/utils'
 import { getOrderWhenStartDate } from '../../selectors/orderDetails'
 import {
   getProductsRecipePairingsWithRecipes,
   getProductRecipePairingsTotalProducts,
 } from '../../selectors/recipePairings'
 import type { Category, FilteredProducts, NavCategories, NavCategory, Product } from '../../types'
-import { mockBundlesData } from '../config'
 import { MarketPresentation } from './Market.presentation'
 
 interface Props {
@@ -112,8 +111,7 @@ const Market = (props: Props) => {
 
   useEffect(() => {
     if (bundlesExperimentEnabled && pairingsExperimentEnabled === false) {
-      const productBundles = mockBundlesData // For testing on staging
-      // const productBundles = getBundles(orderWhenStartDate)
+      const productBundles = getBundles(orderWhenStartDate)
       if (productBundles.length > 0) {
         const occasions: NavCategories = {
           occasions: {

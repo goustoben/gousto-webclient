@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
+    "rootDir": "./src",
+    "module": "commonjs",
+    "target": "es2017",
+    "outDir": "./dist",
+  },
+  "exclude": [
+    "./src/rules/**/__tests__/**",
+  ],
+}

@@ -14,15 +14,14 @@ const VALIDATE_ORDER_BODY = {
 jest.mock('utils/fetch')
 fetch.mockResolvedValue(MOCK_RESPONSE)
 
-describe('getHelp API', () => {
-  // mock the environment and domain config used by these tests to generate endpoints
+describe('validateOrder', () => {
   withMockEnvironmentAndDomain('production', 'gousto.co.uk')
 
   let response
   beforeEach(() => {
     jest.clearAllMocks()
   })
-  describe('Given shouldShowEntryPointTooltip function is called with the correct payload', () => {
+  describe('Given validateOrder function is called with the correct payload', () => {
     beforeEach(async () => {
       response = await validateOrder(ACCESS_TOKEN, VALIDATE_ORDER_BODY)
     })
