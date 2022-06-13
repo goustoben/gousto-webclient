@@ -3,7 +3,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { Ingredient } from './Ingredient'
+import Image from 'components/Image'
+import Svg from 'components/Svg'
+
 import { IngredientImage } from './IngredientImage'
 
 describe('<Ingredient />', () => {
@@ -43,24 +45,24 @@ describe('<Ingredient />', () => {
     }
     ingredient = Immutable.fromJS(mutableIngredient)
 
-    wrapper = shallow(<Ingredient ingredient={ingredient} />)
+    wrapper = shallow(<IngredientImage ingredient={ingredient} />)
   })
 
-  test('should return a <div>', () => {
-    expect(wrapper.type()).toEqual('div')
+  test('should render an Image', () => {
+    expect(wrapper.find(Image).length).toEqual(1)
   })
 
-  test('should return a <span> with label', () => {
-    const label = wrapper.find('span')
-    expect(label.length).toEqual(1)
-    expect(label.getElement().props.children).toEqual(ingredient.get('label'))
-  })
+  test('should render the placeholder Svg if there is no image', () => {
+    mutableIngredient = {
+      media: {
+        images: [],
+      },
+      name: 'carrot',
+      label: 'one carrot',
+    }
+    ingredient = Immutable.fromJS(mutableIngredient)
 
-  test('should render an IngredientImage', () => {
-    expect(wrapper.find(IngredientImage).length).toEqual(1)
-  })
-
-  test('should render a span ingredient label', () => {
-    expect(wrapper.find('span').text()).toEqual(mutableIngredient.label)
+    wrapper = shallow(<IngredientImage ingredient={ingredient} />)
+    expect(wrapper.find(Svg).length).toEqual(1)
   })
 })

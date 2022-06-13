@@ -8,14 +8,14 @@ import css from './Ingredients.css'
 
 type IngredientsProps = {
   ingredients: Immutable.List<Immutable.Map<string, any>>
-  inset: boolean
 }
-const Ingredients = ({ ingredients, inset }: IngredientsProps) => (
+const Ingredients = ({ ingredients }: IngredientsProps) => (
   <div>
-    <div className={inset ? css.insetHeading : ''}>
-      <span className={css.heading}>In your box</span>
+    <div>
+      <div className={css.heading}>In your box</div>
       <div className={css.leadingText}>
-        Ingredients for 2 people
+        <p>For allergens see the &apos;Ingredients contain&apos; section</p>
+        <span>Ingredients for 2 people </span>
         <span className={css.highlightText}>(double for 4)</span>
       </div>
     </div>

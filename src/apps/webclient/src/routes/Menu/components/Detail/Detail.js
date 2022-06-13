@@ -112,8 +112,8 @@ export const Detail = (props) => {
               categoryId={currentCollectionId}
             />
           </div>
-          <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
-          <p className={css.infoBoxText}>{description}</p>
+          <div className={css.infoBoxDescriptionTitle}>Recipe details</div>
+          <p>{description}</p>
           <AttributeGrid />
           <RecipeDisclaimer recipeId={id} />
           {equipment && !!equipment.size && (

@@ -1,0 +1,15 @@
+@value size 125px;
+
+.image {
+  width: size;
+  height: size;
+  border-radius: 100%;
+}
+
+.placeholder {
+  width: size;
+  height: size;
+  opacity: 0.7;
+  padding: 20%;
+  padding-top: 15%;
+}
