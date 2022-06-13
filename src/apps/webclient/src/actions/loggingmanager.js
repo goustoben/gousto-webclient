@@ -2,6 +2,7 @@ import { triggerLoggingManagerEvent } from 'apis/loggingManager'
 import statusActions from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
 import { v4 as uuidv4 } from 'uuid'
+import { getUserId } from 'selectors/user'
 import userActions from './user'
 
 export const EVENT_NAMES = {
@@ -117,7 +118,7 @@ const trackUserAddRemoveRecipe = () => (
         .find(daySlot => daySlot.get('slotId') === basket.get('slotId', ''))
 
       if (foundDaySlot) {
-        if (!state.user.get('id', false)) {
+        if (!getUserId(state)) {
           await dispatch(userActions.userLoadData())
         }
 
@@ -127,6 +128,7 @@ const trackUserAddRemoveRecipe = () => (
           data: {
             device,
             ...recipes,
+            orderId: basket.get('orderId'),
             dayId: foundDaySlot.get('dayId'),
             slotId: basket.get('slotId'),
             addressId: basket.getIn(['chosenAddress', 'id']),
