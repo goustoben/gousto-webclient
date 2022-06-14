@@ -7,7 +7,7 @@ module.exports = {
   recommendationInStockRecipeThreshold: 4,
   legal: 'In addition to the recipe specific allergen information provided, due to production and packing methods Gousto boxes may also contain low levels of the following allergens: cereals containing gluten, crustaceans, eggs, fish, peanuts, soya, milk, nuts (almonds, hazelnuts, walnuts, cashews, pecan nuts, Brazil nuts, pistachio nuts, macadamia nuts), celery, sesame, sulphur dioxide and sulphites, lupin, molluscs, mustard',
   helmet: {
-    title: "This Week's Menu | Choose From Over 60 Recipes | Gousto",
+    title: "This Week's Menu | Choose From Over 75 Recipes | Gousto",
     meta: [
       {
         name: 'description',
