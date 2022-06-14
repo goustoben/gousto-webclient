@@ -2427,9 +2427,11 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": 12.1.2
     "@testing-library/react-hooks": ^3.4.2
+    "@types/react-lazyload": ^3.2.0
     immutable: 3.8.2
     react: 17.0.2
     react-dom: 17.0.2
+    react-lazyload: ^3.2.0
     react-redux: 7.2.4
     react-test-renderer: 16.13.1
     swr: ^1.1.2
@@ -5064,6 +5066,15 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 4d5730dffbef86c887cecad7e3cecda424ce6a64d0b5441c63b5b015d48219868660a2bb1aa15e897e565ad8867fa6b885d4358b04e1c4e589ba4c07c3fda55c
+  languageName: node
+  linkType: hard
+
+"@types/react-lazyload@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@types/react-lazyload@npm:3.2.0"
+  dependencies:
+    "@types/react": "*"
+  checksum: bb9399481be2b1f4eaef67d24497951a5e5d2a3cfef6a24157da71d2b8f0abbb0ab1d72a89c05705bb8b5dc1c980a0ee4af3d5c435a6533da240836e8fd410b8
   languageName: node
   linkType: hard
 
@@ -22625,6 +22636,16 @@ __metadata:
     react: ^0.14.0 || ^15.0.0 || ^16.0.0
     react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0
   checksum: 6a3cbace134bc7c77438e74b01d1dab2e96810bdfd739010afb6396995b24c908b125db98918394637c29eae080c55a2ac6726c804fa455832dd56935c8f9439
+  languageName: node
+  linkType: hard
+
+"react-lazyload@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "react-lazyload@npm:3.2.0"
+  peerDependencies:
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: 871a88c698a80c53ead85c293b493ac67c94e5980590094128c371e3f1e3d5bc17841ead1e7830771c87ece7fe677a6c9c323f3e6ce392a5f6f0328a36c38fe7
   languageName: node
   linkType: hard
 
