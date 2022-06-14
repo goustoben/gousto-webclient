@@ -4,9 +4,8 @@ import { trackAcceptIngredientsRefund } from 'actions/getHelp'
 import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
 import { sanitize } from 'utils/sanitizer'
-import { setComplaint } from 'apis/getHelp'
+import { setComplaint } from '../apis/ssrIngredients'
 import { getOrderId, getSelectedIngredients } from '../selectors/selectors'
-import { getCompensation } from '../selectors/compensationSelectors'
 import { asyncAndDispatch } from './utils'
 import { actionTypes } from './actionTypes'
 
@@ -16,7 +15,6 @@ export const createComplaint = (isAutoAccept) => async (dispatch, getState) => {
   const userId = getUserId(state)
   const orderId = getOrderId(state)
   const selectedIngredients = getSelectedIngredients(state)
-  const { amount, type } = getCompensation(state)
 
   const issues = Object.keys(selectedIngredients).map(key => {
     const {
@@ -28,17 +26,16 @@ export const createComplaint = (isAutoAccept) => async (dispatch, getState) => {
 
     return {
       category_id: Number(issueId),
-      ingredient_id: ingredientUuid,
+      ingredient_uuid: ingredientUuid,
       description: sanitize(issueDescription),
       recipe_gousto_reference: recipeGoustoReference,
+      portions: 2,
     }
   })
 
   const body = {
     customer_id: Number(userId),
     order_id: Number(orderId),
-    type,
-    value: amount,
     issues
   }
 

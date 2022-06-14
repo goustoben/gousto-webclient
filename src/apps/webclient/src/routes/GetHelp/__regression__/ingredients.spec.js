@@ -85,7 +85,7 @@ describe('Given the customer is logged in', () => {
           describe('And the credit is accepted', () => {
             beforeEach(() => {
               cy.fixture('getHelp/ssr/refund').as('refund')
-              cy.route('POST', /ssr\/v2\/refund/, '@refund')
+              cy.route('POST', /ssr\/v3\/refund/, '@refund')
 
               cy.wait('@valueRequest')
 
