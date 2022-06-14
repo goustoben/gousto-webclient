@@ -159,11 +159,6 @@ This makes it **your** responsibility to express your needs via either a typed i
 React context. If another team makes a change that "breaks" your code, because they couldn't use types to discover the
 dependency, that will be treated as  **your team's** problem. It will be **your team's** responsibility to fix forward.
 
-**UI:** a feature module should adhere to the following UI rules
-
-- Use Citrus over Zest
-- Use Storybook for UI & interaction testing
-
 ### Feature module boilerplate
 
 | File              | Purpose(s)                                                                              |

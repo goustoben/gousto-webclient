@@ -15,7 +15,7 @@ import { getCompensation, getIsMultiComplaints } from '../selectors/compensation
 import { actionTypes, trackingKeys } from './actionTypes'
 import { asyncAndDispatch } from './utils'
 import { transformRecipesWithIngredients } from './transformers/recipeTransform'
-import { validateOrder } from '../apis/validateOrder'
+import { validateOrder } from '../apis/ssrIngredients'
 
 export const SE_CATEGORY_HELP = 'help'
 

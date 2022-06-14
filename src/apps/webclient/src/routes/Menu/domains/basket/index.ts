@@ -1,4 +1,5 @@
 export { useBasket } from './useBasket'
+export { useStock } from './useStock'
 export { useIsRecipeInBasket } from './internal/useIsRecipeInBasket'
 export { NumberOfPortions } from './internal/types'
 export { useSupportedBoxTypes } from './internal/useSupportedBoxTypes'

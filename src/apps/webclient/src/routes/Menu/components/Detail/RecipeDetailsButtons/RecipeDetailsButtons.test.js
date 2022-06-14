@@ -6,8 +6,7 @@ import ReactDOM from 'react-dom'
 import * as Redux from 'react-redux'
 
 import * as Auth from 'routes/Menu/domains/auth'
-import * as Basket from 'routes/Menu/domains/basket'
-import * as Menu from 'routes/Menu/domains/menu'
+import * as BasketHook from 'routes/Menu/domains/basket'
 
 import * as BasketActions from '../../../actions/basketRecipes'
 import * as MenuRecipeDetailsActions from '../../../actions/menuRecipeDetails'
@@ -22,17 +21,22 @@ const mockUp = ({
   stockLevel = 1000,
   isAdmin = false,
   surchargePerPortion = null,
+  maxRecipesNum = 4,
 } = {}) => {
   const dispatch = jest.fn()
 
   jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
-  jest.spyOn(Basket, 'useBasket').mockImplementation(() => ({
+  jest.spyOn(BasketHook, 'useBasket').mockImplementation(() => ({
     numPortions,
     reachedLimit,
     canAddRecipes,
     getQuantitiesForRecipeId: () => quantity,
   }))
-  jest.spyOn(Menu, 'useStock').mockImplementation(() => ({
+  jest.spyOn(BasketHook, 'useSupportedBoxTypes').mockImplementation(() => ({
+    maxRecipesForPortion: () => maxRecipesNum,
+  }))
+
+  jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
     getStockForRecipe: () => stockLevel,
   }))
   jest.spyOn(Auth, 'useAuth').mockImplementation(() => ({ isAdmin }))
@@ -53,7 +57,12 @@ const mockUp = ({
 
   jest.spyOn(MenuRecipeDetailsActions, 'menuRecipeDetailVisibilityChange')
 
-  return { dispatch, basketRecipeAdd, basketRecipeRemove, menuBrowseCTAVisibilityChange }
+  return {
+    dispatch,
+    basketRecipeAdd,
+    basketRecipeRemove,
+    menuBrowseCTAVisibilityChange,
+  }
 }
 
 describe('the RecipeDetailsButtons component', () => {
@@ -255,6 +264,7 @@ describe('the RecipeDetailsButtons component', () => {
         describe('when the disable prop is false', () => {
           describe('and clicking to adding a recipe', () => {
             let basketRecipeAdd
+            const maxRecipesNum = 4
 
             beforeEach(() => {
               ;({ basketRecipeAdd } = mockUp())
@@ -264,7 +274,12 @@ describe('the RecipeDetailsButtons component', () => {
             test('then it adds the recipe', () => {
               buttonContent = wrapper.find('Segment').first()
               buttonContent.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(recipeId, view, { position, score })
+              expect(basketRecipeAdd).toHaveBeenCalledWith(
+                recipeId,
+                view,
+                { position, score },
+                maxRecipesNum,
+              )
             })
 
             test('then it closes the recipe', () => {
@@ -334,6 +349,7 @@ describe('the RecipeDetailsButtons component', () => {
         describe('When the stock is not null', () => {
           describe('and clicking to add a recipe', () => {
             let basketRecipeAdd
+            const maxRecipesNum = 4
 
             beforeEach(() => {
               ;({ basketRecipeAdd } = mockUp({ quantity: 2 }))
@@ -344,7 +360,12 @@ describe('the RecipeDetailsButtons component', () => {
               segmentRemove = wrapper.find('Segment').at(0)
               segmentAdd = wrapper.find('Segment').at(2)
               segmentAdd.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(recipeId, view, { position, score })
+              expect(basketRecipeAdd).toHaveBeenCalledWith(
+                recipeId,
+                view,
+                { position, score },
+                maxRecipesNum,
+              )
             })
           })
 

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { mount } from 'enzyme'
 
+import * as BasketHook from 'routes/Menu/domains/basket'
 import * as MenuHooks from 'routes/Menu/domains/menu'
 
 import * as RecipeContext from '../../../../context/recipeContext'
@@ -125,7 +126,7 @@ const mockHooks = ({
   }
 
   if (isRecipeOutOfStock !== undefined) {
-    jest.spyOn(MenuHooks, 'useStock').mockImplementation(() => ({
+    jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
       isRecipeOutOfStock: () => isRecipeOutOfStock,
     }))
   }

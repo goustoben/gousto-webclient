@@ -1,6 +1,8 @@
 import { UseTracking } from '../../model/context/useTracking'
 import { Recipe } from '../../model/recipe';
 
+const defaultRecipeImage300 = "https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/mood-image/3310---Battered-Fish-Salt--Vinegar-Chips--Mushy-Peas0494-1617814005204-x300.jpg"
+
 export const getMocks = ({
   alternativeCheckedIndex,
   alternativeOutOfStockFlags = [],
@@ -13,6 +15,7 @@ export const getMocks = ({
   surcharge = 0,
   isRecipeOutOfStock = false,
   isFineDineIn = false,
+  recipeImage300 = defaultRecipeImage300,
 }: {
   alternativeCheckedIndex?: number;
   alternativeOutOfStockFlags?: boolean[];
@@ -25,12 +28,34 @@ export const getMocks = ({
   surcharge?: number
   isRecipeOutOfStock?: boolean,
   isFineDineIn?: boolean,
+  recipeImage300?: string,
 }) => {
   const recipe: Recipe = {
     id: "12345",
     title,
     cookingTime,
     isFineDineIn,
+    media: {
+      images: [{
+        type: "homepage-image",
+        title: "home page image",
+        description: "Cool image",
+        urls: [
+          {
+            src: "https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/mood-image/3310---Battered-Fish-Salt--Vinegar-Chips--Mushy-Peas0494-1617814005204-x200.jpg",
+            width: 200,
+          },
+          {
+            src: "https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/mood-image/3310---Battered-Fish-Salt--Vinegar-Chips--Mushy-Peas0494-1617814005204-x50.jpg",
+            width: 50,
+          },
+          {
+            src: recipeImage300,
+            width: 300,
+          },
+        ],
+      }]
+    }
   };
 
   const useStock = () => ({
@@ -45,7 +70,7 @@ export const getMocks = ({
       isChecked: alternativeCheckedIndex === index ? true : false,
       isOnDetailScreen: false,
       isOutOfStock: Boolean(alternativeOutOfStockFlags[index]),
-      ...( alternativeSurcharges[index] && {surcharge: alternativeSurcharges[index]} ),
+      ...(alternativeSurcharges[index] && { surcharge: alternativeSurcharges[index] }),
     }));
 
   const useBasket = () => ({

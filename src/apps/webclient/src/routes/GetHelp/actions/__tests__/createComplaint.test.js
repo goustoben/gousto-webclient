@@ -1,13 +1,13 @@
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 import { client } from 'config/routes'
-import { setComplaint } from 'apis/getHelp'
 import { trackAcceptIngredientsRefund } from 'actions/getHelp'
 import { createComplaint } from '../createComplaint'
 import * as getHelpActionsUtils from '../utils'
+import { setComplaint } from '../../apis/ssrIngredients'
 
 jest.mock('react-router-redux')
-jest.mock('apis/getHelp')
+jest.mock('../../apis/ssrIngredients')
 jest.mock('actions/getHelp')
 
 const AMOUNT = 1.4
@@ -86,9 +86,10 @@ describe('Given createComplaint action is called', () => {
 
       return {
         category_id: Number(issueId),
-        ingredient_id: ingredientUuid,
+        ingredient_uuid: ingredientUuid,
         description: issueDescription,
         recipe_gousto_reference: recipeGoustoReference,
+        portions: 2
       }
     })
 
@@ -97,8 +98,6 @@ describe('Given createComplaint action is called', () => {
       {
         customer_id: Number(USER_ID),
         order_id: Number(ORDER_ID),
-        type: TYPE,
-        value: AMOUNT,
         issues,
       }
     )

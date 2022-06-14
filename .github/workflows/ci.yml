@@ -68,7 +68,6 @@ jobs:
         path: |
           **/node_modules
           src/apps/webclient/libs
-          src/modules/library/eslint-plugin-feature-modules
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/bower.json') }}-${{ hashFiles('.yarn/releases/yarn-*') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-

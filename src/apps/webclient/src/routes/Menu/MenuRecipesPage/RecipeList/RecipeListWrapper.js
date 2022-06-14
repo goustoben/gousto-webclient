@@ -7,8 +7,9 @@ import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
 
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
+import { useStock } from '../../domains/basket'
 import { useCurrentCollectionId } from '../../domains/collections'
-import { useMenu, useStock } from '../../domains/menu'
+import { useMenu } from '../../domains/menu'
 import { RecipeList } from './RecipeList'
 import { useSoldOutTracking } from './useSoldOutTracking'
 

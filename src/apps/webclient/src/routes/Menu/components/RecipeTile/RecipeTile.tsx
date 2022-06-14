@@ -2,12 +2,13 @@ import React, { SyntheticEvent } from 'react'
 
 import classnames from 'classnames'
 
-import { DeviceType, useDeviceType } from 'hooks/useDeviceType'
+import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
 import {
   RecipeTileLink,
   useGetRecipeTileLinkData,
 } from 'routes/Menu/components/RecipeTile/RecipeTileLink'
-import { useGetAlternativeOptionsForRecipeLight, useStock } from 'routes/Menu/domains/menu'
+import { useStock } from 'routes/Menu/domains/basket'
+import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
 
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useRecipeReference } from '../../context/recipeReferenceContext'

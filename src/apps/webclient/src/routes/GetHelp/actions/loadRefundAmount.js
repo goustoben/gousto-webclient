@@ -1,6 +1,6 @@
 import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
-import { fetchRefundAmount } from '../apis/fetchRefundAmount'
+import { fetchRefundAmount } from '../apis/ssrIngredients'
 import { getOrderId, getSelectedIngredients } from '../selectors/selectors'
 import { getIsAutoAcceptEnabled } from '../../../selectors/features'
 import { trackIngredientsAutoAcceptCheck } from './getHelp'
