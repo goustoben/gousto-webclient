@@ -2,7 +2,7 @@ import { safeJestMock } from '_testing/mocks'
 import * as authSelectors from 'selectors/auth'
 import * as userSelectors from 'selectors/user'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
-import { fetchRefundAmount } from '../../apis/fetchRefundAmount'
+import { fetchRefundAmount } from '../../apis/ssrIngredients'
 import { loadRefundAmount } from '../loadRefundAmount'
 import * as getHelpSelectors from '../../selectors/selectors'
 import * as AutoAcceptEnabledFeature from '../../../../selectors/features'
@@ -14,7 +14,7 @@ const getOrderId = safeJestMock(getHelpSelectors, 'getOrderId')
 const getSelectedIngredients = safeJestMock(getHelpSelectors, 'getSelectedIngredients')
 const getIsAutoAcceptEnabled = safeJestMock(AutoAcceptEnabledFeature, 'getIsAutoAcceptEnabled')
 
-jest.mock('../../apis/fetchRefundAmount')
+jest.mock('../../apis/ssrIngredients')
 
 const ACCESS_TOKEN = 'adfjlakjds13'
 const ACTION_TYPE = 'GET_HELP_LOAD_REFUND_AMOUNT'

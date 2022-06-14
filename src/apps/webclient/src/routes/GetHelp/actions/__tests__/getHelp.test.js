@@ -8,7 +8,7 @@ import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
 import * as menuApi from '../../apis/menu'
-import { validateOrder } from '../../apis/validateOrder'
+import { validateOrder } from '../../apis/ssrIngredients'
 import { trackingKeys } from '../actionTypes'
 import * as getHelpActionsUtils from '../utils'
 import {
@@ -55,7 +55,7 @@ jest.mock('apis/deliveries')
 jest.mock('apis/orders')
 jest.mock('../transformers/recipeTransform')
 jest.mock('routes/Menu/apis/orderV2')
-jest.mock('../../apis/validateOrder')
+jest.mock('../../apis/ssrIngredients')
 
 const applyDeliveryCompensation = safeJestMock(getHelpApi, 'applyDeliveryCompensation')
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
