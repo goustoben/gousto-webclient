@@ -6,7 +6,7 @@ import { Button, Control, Segment } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
 
 import config from 'config/recipes'
-import { useBasket, useStock, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
+import { useBasket, useStock } from 'routes/Menu/domains/basket'
 
 import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
@@ -43,8 +43,6 @@ export const RecipeDetailsButtons = ({
 }: ButtonsProps) => {
   const dispatch = useDispatch()
   const { numPortions, reachedLimit, getQuantitiesForRecipeId, canAddRecipes } = useBasket()
-  const { maxRecipesForPortion } = useSupportedBoxTypes()
-  const maxRecipesNum = maxRecipesForPortion(numPortions)
   const { getStockForRecipe } = useStock()
   const surchargePerPortion = useSurchargePerPortion({ recipeId, numPortions })
   const stock = getStockForRecipe(recipeId)
@@ -53,7 +51,7 @@ export const RecipeDetailsButtons = ({
   const handleAdd = useCallback(
     (isFirstInBatchOfSameRecipes: boolean) => {
       if (stock !== null && canAddRecipes) {
-        dispatch(basketRecipeAdd(recipeId, view, { position }, maxRecipesNum))
+        dispatch(basketRecipeAdd(recipeId, view, { position }))
 
         if (isFirstInBatchOfSameRecipes) {
           dispatch(menuRecipeDetailVisibilityChange())
@@ -67,7 +65,7 @@ export const RecipeDetailsButtons = ({
         dispatch(actions.menuBrowseCTAVisibilityChange(true))
       }
     },
-    [dispatch, stock, canAddRecipes, recipeId, view, position, maxRecipesNum],
+    [dispatch, stock, canAddRecipes, recipeId, view, position],
   )
 
   const handleRemove = useCallback(() => {

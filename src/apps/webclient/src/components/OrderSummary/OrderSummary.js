@@ -119,19 +119,17 @@ class OrderSummary extends PureComponent {
   }
 
   getRecipes = () => {
-    const { recipeItems, recipes } = this.props
+    const { recipeItems, recipes, numPortions } = this.props
     const recipesDetails = []
 
-    recipeItems.forEach((r) => {
-      const recipeId = r.get('itemableId')
-      const recipeQty = r.get('quantity')
+    recipeItems.forEach((recipeQty, recipeId) => {
       const recipe = recipes.get(recipeId, Immutable.Map())
 
       if (recipe.has('title') && recipe.has('media')) {
         recipesDetails.push({
           orderItemId: recipeId,
           title: recipe.get('title'),
-          numPortions: parseFloat(recipeQty),
+          numPortions: parseFloat(recipeQty) * numPortions,
           media: recipe.get('media'),
           url: recipe.get('url'),
         })
@@ -147,12 +145,18 @@ class OrderSummary extends PureComponent {
     return (
       <footer className={classnames(css.mobileOnly, css.footer)}>
         {orderSummaryOpen ? (
-          <a className={css.toggleLink} onClick={this.toggleDetailView}>
+          <a
+            className={css.toggleLink}
+            onClick={this.toggleDetailView}
+          >
             Hide order details
             <Icon name="fa-angle-up" className={css.footerIcon} />
           </a>
         ) : (
-          <a className={css.toggleLink} onClick={this.toggleDetailView}>
+          <a
+            className={css.toggleLink}
+            onClick={this.toggleDetailView}
+          >
             View order details
             <Icon name="fa-angle-down" className={css.footerIcon} />
           </a>
@@ -201,7 +205,7 @@ class OrderSummary extends PureComponent {
           className={classnames(
             css.details,
             { [css.slideUp]: !orderSummaryOpen && orderSummaryCollapsed },
-            { [css.mobileHide]: !orderSummaryOpen && orderSummaryCollapsed },
+            { [css.mobileHide]: !orderSummaryOpen && orderSummaryCollapsed }
           )}
         >
           {this.getRecipes().map((recipe) => (
@@ -247,7 +251,11 @@ class OrderSummary extends PureComponent {
               orderNumber={orderNumber}
             >
               {vatableItemsInOrder ? (
-                <p className={css.disclaimer}>{this.asterisk} These items include VAT at 20%</p>
+                <p className={css.disclaimer}>
+                  {this.asterisk}
+                  {' '}
+                  These items include VAT at 20%
+                </p>
               ) : null}
             </Receipt>
           </div>
