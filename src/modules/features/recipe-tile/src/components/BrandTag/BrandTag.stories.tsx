@@ -22,7 +22,7 @@ const getMocks = ({text = 'New', color = '#01A92B'}: GetMocksArgs) => {
   const recipe = {
     id: '12345',
     title: 'A Recipe Title',
-    media: { },
+    media: { images: [] },
     tagline: tag.slug,
   }
 

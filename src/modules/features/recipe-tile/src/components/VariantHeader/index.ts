@@ -1,0 +1,1 @@
+export { VariantHeader } from './VariantHeader'
