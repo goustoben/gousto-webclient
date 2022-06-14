@@ -19,7 +19,7 @@ export const items = [
   {
     key: 'itemRecipes',
     className: css.itemRecipes,
-    strongText: 'Over 75 recipes',
+    strongText: 'Over 60 recipes',
     normalText: 'changing weekly',
   },
   {
@@ -40,7 +40,7 @@ const goustoOnDemandItems = [
   {
     key: 'itemRecipes',
     className: css.itemRecipes,
-    strongText: '75+ recipes',
+    strongText: '60+ recipes',
     normalText: 'with a new menu every week',
   },
   {

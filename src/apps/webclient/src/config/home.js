@@ -3,7 +3,7 @@ import Icon from 'components/Icon'
 
 export const hero = {
   header: 'No.1 recipe box for choice',
-  subheader: 'Over 75 recipes every week',
+  subheader: 'Over 60 recipes every week',
 }
 
 export const CTA = {
@@ -67,7 +67,7 @@ export const getWhyGoustoConfig = () => ({
       title: 'Variety',
       img: require('routes/Home/WhyChooseGousto/variety.jpg'),
       list: [
-        '75+ recipes a week, cooked from 10 mins',
+        '60+ recipes a week, cooked from 10 mins',
         'Family classics, global cuisines plus Joe Wicks’s health range',
         'Tasty plant based and gluten free options too',
       ],
@@ -99,7 +99,7 @@ export const joeWicks =
 export const carousel = {
   title: 'Who says Tuesday can’t taste like Saturday?',
   subtitle:
-    'Tuck into our 75 dish menu, filled with global cuisines, family favourites and Joe Wicks approved healthy options. Meals for every appetite – sorted.',
+    'Tuck into our 60 dish menu, filled with global cuisines, family favourites and Joe Wicks approved healthy options. Meals for every appetite – sorted.',
 }
 export const seo = {
   title: 'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',
