@@ -27,7 +27,7 @@ import { ProductNavBarProvider } from '../../context/productsNavBarContext'
 import { useIsBundlesEnabled } from '../../hooks/useBundlesExperiment.hook'
 import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
 import { getBundles } from '../../productBundles/utils'
-import { getOrderWhenStartDate } from '../../selectors/orderDetails'
+import { getOrderWhenStartDateFormatted } from '../../selectors/orderDetails'
 import {
   getProductsRecipePairingsWithRecipes,
   getProductRecipePairingsTotalProducts,
@@ -72,7 +72,7 @@ const Market = (props: Props) => {
   const order = useSelector(getBasketOrderDetails)
   const productRecipePairings = useSelector(getProductsRecipePairingsWithRecipes)
   const productRecipePairingsTotalProducts = useSelector(getProductRecipePairingsTotalProducts)
-  const orderWhenStartDate = useSelector(getOrderWhenStartDate)
+  const orderWhenStartDate = useSelector(getOrderWhenStartDateFormatted)
 
   useEffect(() => {
     if (
