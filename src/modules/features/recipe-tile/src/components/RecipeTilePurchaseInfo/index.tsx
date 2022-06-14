@@ -27,13 +27,11 @@ import {
 } from "./styles";
 
 type RecipeTilePurchaseInfoProps = {
-  originalId: string;
   categoryId: string;
   fdiStyling?: boolean;
 };
 
 export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
-  originalId,
   categoryId,
   fdiStyling,
 }) => {
@@ -61,7 +59,6 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
 
   const alternatives = getAlternativeOptionsForRecipe({
     recipeId,
-    originalId,
     categoryId,
     isOnDetailScreen: false,
   });
@@ -110,7 +107,6 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
           // ) : (
           <SwapAlternativeOptions
             recipeId={recipeId}
-            originalId={originalId}
             categoryId={categoryId}
           />
           // )
@@ -121,7 +117,6 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
 };
 
 RecipeTilePurchaseInfo.propTypes = {
-  originalId: PropTypes.string.isRequired,
   categoryId: PropTypes.string.isRequired,
   fdiStyling: PropTypes.bool.isRequired,
 };

@@ -10,11 +10,11 @@ import css from './AlternativeOptionItem.css'
 type AlternativeOptionItemProps = {
   recipeId: string
   recipeName: string
-  changeCheckedRecipe: (recipeId: string, isOutOfStock: boolean) => void
+  changeCheckedRecipe: () => void
   isChecked: boolean
   isOnDetailScreen: boolean
   isOutOfStock: boolean
-  surcharge: number | null
+  surcharge?: number | null
 }
 
 export const AlternativeOptionItem = ({
@@ -24,14 +24,14 @@ export const AlternativeOptionItem = ({
   isChecked,
   isOnDetailScreen,
   isOutOfStock,
-  surcharge,
+  surcharge = null,
 }: AlternativeOptionItemProps) => (
   <li className={classnames(css.listItem, { [css.listItemChecked]: isChecked })}>
     <InputRadio
       id={recipeId}
       value={recipeId}
       name="variantList"
-      onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
+      onChange={changeCheckedRecipe}
       isChecked={isChecked}
     >
       <ItemContent

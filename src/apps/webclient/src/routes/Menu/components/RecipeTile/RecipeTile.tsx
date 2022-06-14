@@ -44,7 +44,6 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   }
 
   const alternatives = getAlternativeOptionsForRecipe({
-    originalId,
     recipeId,
     categoryId,
     isOnDetailScreen: false,
@@ -74,9 +73,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
     >
       {
         // mobile banner needs to sit outside of TileImage
-        deviceType === DeviceType.MOBILE && (
-          <VariantHeader categoryId={categoryId} originalId={originalId} />
-        )
+        deviceType === DeviceType.MOBILE && <VariantHeader categoryId={categoryId} />
       }
 
       <div
@@ -84,7 +81,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
           [css.recipeTileIsFineDineIn]: isFineDineIn,
         })}
       >
-        <TileImage categoryId={categoryId} originalId={originalId} />
+        <TileImage categoryId={categoryId} />
         <span
           className={classnames(css.recipeTagHolder, {
             [css.recipeTagHolderShifted]: showVariantHeader,

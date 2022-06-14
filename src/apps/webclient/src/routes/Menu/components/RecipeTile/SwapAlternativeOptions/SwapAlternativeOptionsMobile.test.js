@@ -2,7 +2,9 @@ import React from 'react'
 
 import { render, screen, fireEvent, cleanup } from '@testing-library/react'
 import Modal from 'react-modal'
+import { Provider } from 'react-redux'
 
+import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import * as Menu from 'routes/Menu/domains/menu'
 
 import * as RecipeAlternativeOptionsTracker from '../../RecipeAlternativeOptions/RecipeAlternativeOptions/useTracking'
@@ -34,6 +36,14 @@ describe('<SwapAlternativeOptionsMobile />', () => {
   let trackRecipeAlternativeOptionsMenuOpen
   let trackRecipeAlternativeOptionsMenuSwapRecipes
 
+  const store = createMockStore({})
+  const renderForTest = (categoryId = '111') =>
+    render(
+      <Provider store={store}>
+        <SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId={categoryId} />
+      </Provider>,
+    )
+
   beforeEach(() => {
     jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
 
@@ -54,28 +64,25 @@ describe('<SwapAlternativeOptionsMobile />', () => {
   })
 
   describe('when rendered initially', () => {
-    const renderOptions = () =>
-      render(<SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="111" />)
-
     test('should show only button', () => {
-      renderOptions()
+      renderForTest()
       const button = screen.getByRole('button')
       expect(button).toBeTruthy()
     })
 
     test('should not show expanded dropdown', () => {
-      renderOptions()
+      renderForTest()
       expect(screen.queryByRole('list')).not.toBeInTheDocument()
     })
 
     test('should show chevron icon pointing downwards', () => {
-      renderOptions()
+      renderForTest()
       const button = screen.getByRole('button')
       expect(button).toContainHTML('<span class="arrowDown" />')
     })
 
     test('should not fire any tracking events', () => {
-      renderOptions()
+      renderForTest()
       expect(trackRecipeAlternativeOptionsMenuOpen).not.toHaveBeenCalled()
       expect(trackRecipeAlternativeOptionsMenuSwapRecipes).not.toHaveBeenCalled()
     })
@@ -83,9 +90,8 @@ describe('<SwapAlternativeOptionsMobile />', () => {
 
   describe('when clicked on', () => {
     const renderExtendedDropdown = () => {
-      const renderedResults = render(
-        <SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="111" />,
-      )
+      const renderedResults = renderForTest()
+
       fireEvent.click(screen.getByRole('button'))
 
       return renderedResults
@@ -122,7 +128,7 @@ describe('<SwapAlternativeOptionsMobile />', () => {
 
   describe('when clicking on up chevron for opened dropdown', () => {
     test('should close the dropdown', () => {
-      render(<SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="111" />)
+      renderForTest()
       fireEvent.click(screen.getByRole('button'))
       expect(screen.queryByRole('list')).toBeInTheDocument()
       fireEvent.click(screen.getAllByRole('button')[0])
@@ -132,7 +138,7 @@ describe('<SwapAlternativeOptionsMobile />', () => {
 
   describe('when clicking on item from drop down', () => {
     test('should trigger recipe alternative options recipe swap event', () => {
-      render(<SwapAlternativeOptionsMobile recipeId="123" originalId="321" categoryId="cat111" />)
+      renderForTest('cat111')
       // Open dropdown
       fireEvent.click(screen.getByRole('button'))
       expect(trackRecipeAlternativeOptionsMenuSwapRecipes).not.toHaveBeenCalled()

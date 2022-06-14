@@ -27,7 +27,6 @@ const Template: ComponentStory<RecipeTilePurchaseInfoStory> = ({
 }: StoryArgs) => (
   <RecipeTilePurchaseInfo
     categoryId="some_category_id"
-    originalId="some_original_id"
     fdiStyling={fineDiningEnabled}
   />
 );
