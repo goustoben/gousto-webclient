@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import moment from 'moment'
 import { createSelector } from 'reselect'
 
 const getBasket = ({ basket }) => basket
@@ -13,6 +14,11 @@ export const getOrderNumPortion = createSelector(getBasket, (basket) =>
 
 export const getOrderWhenStartDate = createSelector(getBasket, (basket) =>
   basket.getIn(['orderDetails', 'period', 'whenStart'], ''),
+)
+
+export const getOrderWhenStartDateFormatted = createSelector(
+  getOrderWhenStartDate,
+  (orderWhenStartDate) => moment(orderWhenStartDate).format('YYYY/MM/DD'),
 )
 
 export const getOrderRecipes = createSelector(
