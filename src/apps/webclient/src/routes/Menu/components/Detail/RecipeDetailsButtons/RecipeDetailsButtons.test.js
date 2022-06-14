@@ -7,7 +7,6 @@ import * as Redux from 'react-redux'
 
 import * as Auth from 'routes/Menu/domains/auth'
 import * as BasketHook from 'routes/Menu/domains/basket'
-import * as Menu from 'routes/Menu/domains/menu'
 
 import * as BasketActions from '../../../actions/basketRecipes'
 import * as MenuRecipeDetailsActions from '../../../actions/menuRecipeDetails'
