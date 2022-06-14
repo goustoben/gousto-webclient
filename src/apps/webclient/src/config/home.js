@@ -67,7 +67,7 @@ export const getWhyGoustoConfig = () => ({
       title: 'Variety',
       img: require('routes/Home/WhyChooseGousto/variety.jpg'),
       list: [
-        '75 recipes a week, cooked from 10 mins',
+        '75+ recipes a week, cooked from 10 mins',
         'Family classics, global cuisines plus Joe Wicks’s health range',
         'Tasty plant based and gluten free options too',
       ],
