@@ -1,10 +1,11 @@
+import OrderSummary from 'OrderSummary'
 import { connect } from 'react-redux'
+
+import { actionTypes } from 'actions/actionTypes'
 import { basketProductRemove } from 'actions/basket'
 import { productDetailVisibilityChange } from 'actions/products'
-import { getUserOrderById } from 'utils/user'
-import OrderSummary from 'OrderSummary'
-import { actionTypes } from 'actions/actionTypes'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
+import { getUserOrderById } from 'utils/user'
 
 function mapStateToProps(state) {
   const orderId = state.basket.get('orderId')
@@ -19,7 +20,7 @@ function mapStateToProps(state) {
     numRecipes: parseFloat(order.getIn(['box', 'numRecipes'])),
     productItems: state.basket.get('products'),
     products: state.products,
-    recipeItems: state.basket.get('recipes'),
+    recipeItems: order.get('recipeItems'),
     recipes: state.recipes,
     shippingAddress: order.get('shippingAddress'),
     saveError: state.error.get(actionTypes.BASKET_CHECKOUT),
