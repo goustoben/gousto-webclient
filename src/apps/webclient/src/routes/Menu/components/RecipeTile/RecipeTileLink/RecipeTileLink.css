@@ -1,0 +1,64 @@
+@value color-S200 #A29EFF;
+@value color-S400 #615CFF;
+@value color-S600 #412dee;
+@value outline-broder-width: 0.1875rem;
+@value outline-border-radius: 0.1875rem;
+
+.recipeTileLink {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  border-bottom: 0.0625rem solid color-S400;
+
+  &:focus {
+    outline: none;
+    border: outline-broder-width solid color-S400;
+    border-radius: outline-border-radius;
+  }
+}
+
+.recipeTileLink.recipeTileFineDineInLink {
+  border-bottom-color: color-S200;
+
+  &:focus {
+    outline: none;
+    border: outline-broder-width solid color-S400;
+    border-radius: outline-border-radius;
+  }
+}
+
+.recipeTileLink:hover {
+  border-bottom-color: color-S600;
+
+  .recipeTileLinkText {
+    color: color-S600;
+  }
+}
+
+.recipeTileLink.recipeTileFineDineInLink:hover {
+  border-bottom-color: color-S400;
+
+  .recipeFineDineInTileLinkText {
+    color: color-S400;
+  }
+}
+
+.recipeTileLink .recipeTileLinkIcon {
+  color: color-S400;
+}
+.recipeTileLink:hover .recipeTileLinkIcon {
+  color: color-S600;
+}
+
+.recipeTileLink .recipeTileFineDineInLinkIcon {
+  color: color-S200;
+}
+.recipeTileLink:hover .recipeTileFineDineInLinkIcon {
+  color: color-S400;
+}

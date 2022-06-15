@@ -3,12 +3,16 @@ import React, { SyntheticEvent } from 'react'
 import classnames from 'classnames'
 
 import { useDeviceType, DeviceType } from 'hooks/useDeviceType'
+import {
+  RecipeTileLink,
+  useGetRecipeTileLinkData,
+} from 'routes/Menu/components/RecipeTile/RecipeTileLink'
 import { useStock } from 'routes/Menu/domains/basket'
 import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
 
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useRecipeReference } from '../../context/recipeReferenceContext'
-import { Title, BrandTag } from '../Recipe'
+import { BrandTag, Title } from '../Recipe'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
@@ -29,6 +33,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   currentCollectionId: categoryId,
   onClick,
 }) => {
+  const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)
@@ -99,7 +104,15 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
         >
           <BrandTag />
 
-          <Title className={css.recipeTileTitle} />
+          <Title
+            className={classnames(css.recipeTileTitle, {
+              [css.recipeTileWithLinkTitle]: isRecipeTileLinkVisible,
+            })}
+          />
+
+          {isRecipeTileLinkVisible && (
+            <RecipeTileLink isFineDineIn={isFineDineIn} onClickTile={handleOnClick} />
+          )}
 
           <RecipeTilePurchaseInfo
             originalId={originalId}

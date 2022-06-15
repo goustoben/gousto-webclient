@@ -11,9 +11,10 @@ import { RecipeTile } from './RecipeTile'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { TileImage } from './TileImage'
 
+const dispatchMock = jest.fn()
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useDispatch: jest.fn().mockImplementation(() => jest.fn()),
+  useDispatch: jest.fn().mockImplementation(() => dispatchMock),
   useSelector: jest.fn(),
 }))
 
@@ -26,6 +27,10 @@ jest.mock('routes/Menu/domains/menu/internal/useAlternativeOptions', () => ({
   useAlternativeOptions: () => ({
     getAlternativeOptionsForRecipe: () => [],
   }),
+}))
+
+jest.mock('containers/OptimizelyRollouts', () => ({
+  useIsOptimizelyFeatureEnabled: jest.fn().mockImplementation(() => true),
 }))
 
 describe('RecipeTile', () => {
