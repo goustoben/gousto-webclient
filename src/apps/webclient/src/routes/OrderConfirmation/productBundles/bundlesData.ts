@@ -398,7 +398,7 @@ export const SeriouslyCheesyCroissants = {
   bundleName: 'Seriously Cheesy Croissants',
   bundleDescription: 'Bag yourself a mouthwatering brunch',
   bundleImage:
-    'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/bundle_brunch_03-x400.jpg',
+    'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/bundle_brunch_03_v2-x400.jpg',
   bundlePrice: '4.45',
   bundleProducts: [
     {
@@ -426,7 +426,7 @@ export const SeriouslyCheesyCroissants = {
       description:
         'Extra cheese? Maybe for a snack or for some extra indulgence on top of dinner.\n\nIngredients\npasteurised cows milk, cream, salt, vegetarian rennet, lactic acid culture\n\nSuitable for vegetarians\nGluten free\nContains milk\n\nNutrition Typical Values per 100g:\nEnergy 1729kJ/417kcal, fat 36g of which saturates 24g, carbohydrate 0.5g, of which sugars 0g, fibre 0g, protein 24g, salt 1.8g\n\nStorage: keep refrigerated',
       image:
-        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Cheddar-cheese-on-background-x400.jpg',
+        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/40g-cheddar-cheese0282-copy-x400.jpg',
       quantity: 1,
       attributes: [],
     },
@@ -437,7 +437,7 @@ export const SeriouslyCheesyCroissants = {
       description:
         'Just as pigs come in all shapes and sizes, so does our jolly bacon. Our Double Smoked Dry Cured Streaky Bacon contains that perfect combination of tasty fat and lean meat that makes us starving for streaky. Streaky may be half the size but this porky treat still has double the flavour, sticking to our process of double smoking with oak wood and beech. Give our Outdoor Bred, RSPCA Assured British Bacon a try. Winner of 2 Great Taste Stars in 2021.\n\nIngredients\nBritish Pork (96%), sea salt, sugar, preservatives: potassium nitrate, sodium nitrite.\n\nNot suitable for vegetarians and vegans\nGluten free\nNo allergens\n\nNutrition Typical Values per 100g:\nEnergy 1213kJ/293kcal, fat 24.5g of which saturates 8.4g, carbohydrate 0.4g, of which sugars 0.4g, fibre 0g, protein 17.4g, salt 2.87g\n\nStorage: keep refrigerated',
       image:
-        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Bacon-1-x400.jpg',
+        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Jolly-Hog-bacon-135g---Cooked0219-copy-x400.jpg',
       quantity: 1,
       attributes: [
         {
@@ -515,7 +515,7 @@ export const BestEverBaconBaps = {
   bundleName: 'Best-ever Bacon Baps',
   bundleDescription: 'Give your Saturday some sizzle',
   bundleImage:
-    'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/bundle_brunch_02-x400.jpg',
+    'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/bundle_brunch_02_v2-x400.jpg',
   bundlePrice: '2.50',
   bundleProducts: [
     {
@@ -524,7 +524,7 @@ export const BestEverBaconBaps = {
       title: 'Buttered Brioche Buns (2 x 68g)',
       description: `Two wonderfully golden butter and egg brioche buns.\n\nIngredients\nwheat flour (wheat flour, calcium carbonate, thiamin, iron, niacin), free range whole egg (12%), yeast, sugar, invert sugar syrup, rapeseed oil, concentrated butter (milk), water, fermented wheat flour, skimmed milk powder, wheat gluten, salt, milk protein, emulsifier  (mono & Di-glycerides of fatty acids), flavouring, colour (carotenes), potato dextrin, flour  treatment agent (ascorbic acid)\n\nSuitable for vegetarians\nConatins: wheat, egg, milk\n\nNutrition Typical Values per 100g:\nEnergy 1286kJ/305kcal, fat 7.4g of which saturates 2.2g, carbohydrate 46.6g, of which sugars 7.7g, fibre 2.8g, protein 11.5g, salt 0.85g\n\nStorage: keep refrigerated`,
       image:
-        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Brioche-x400.jpg',
+        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/2-Brioche-buns0301-copy-x400.jpg',
       quantity: 1,
       attributes: [
         {
@@ -542,7 +542,7 @@ export const BestEverBaconBaps = {
       description:
         'Just as pigs come in all shapes and sizes, so does our jolly bacon. Our Double Smoked Dry Cured Streaky Bacon contains that perfect combination of tasty fat and lean meat that makes us starving for streaky. Streaky may be half the size but this porky treat still has double the flavour, sticking to our process of double smoking with oak wood and beech. Give our Outdoor Bred, RSPCA Assured British Bacon a try. Winner of 2 Great Taste Stars in 2021.\n\nIngredients\nBritish Pork (96%), sea salt, sugar, preservatives: potassium nitrate, sodium nitrite.\n\nNot suitable for vegetarians and vegans\nGluten free\nNo allergens\n\nNutrition Typical Values per 100g:\nEnergy 1213kJ/293kcal, fat 24.5g of which saturates 8.4g, carbohydrate 0.4g, of which sugars 0.4g, fibre 0g, protein 17.4g, salt 2.87g\n\nStorage: keep refrigerated',
       image:
-        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Bacon-1-x400.jpg',
+        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Jolly-Hog-bacon-135g---Cooked0219-copy-x400.jpg',
       quantity: 1,
       attributes: [
         {
@@ -620,7 +620,7 @@ export const StatesStyleBrunch = {
   bundleName: 'States-style Brunch',
   bundleDescription: 'Start your weekend the right way',
   bundleImage:
-    'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/bundle_brunch_01-x400.jpg',
+    'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/bundle_brunch_01_v2-x400.jpg',
   bundlePrice: '5.99',
   bundleProducts: [
     {
@@ -630,7 +630,7 @@ export const StatesStyleBrunch = {
       description:
         'Just as pigs come in all shapes and sizes, so does our jolly bacon. Our Double Smoked Dry Cured Streaky Bacon contains that perfect combination of tasty fat and lean meat that makes us starving for streaky. Streaky may be half the size but this porky treat still has double the flavour, sticking to our process of double smoking with oak wood and beech. Give our Outdoor Bred, RSPCA Assured British Bacon a try. Winner of 2 Great Taste Stars in 2021.\n\nIngredients\nBritish Pork (96%), sea salt, sugar, preservatives: potassium nitrate, sodium nitrite.\n\nNot suitable for vegetarians and vegans\nGluten free\nNo allergens\n\nNutrition Typical Values per 100g:\nEnergy 1213kJ/293kcal, fat 24.5g of which saturates 8.4g, carbohydrate 0.4g, of which sugars 0.4g, fibre 0g, protein 17.4g, salt 2.87g\n\nStorage: keep refrigerated',
       image:
-        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Bacon-1-x400.jpg',
+        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Jolly-Hog-bacon-135g---Cooked0219-copy-x400.jpg',
       quantity: 1,
       attributes: [
         {
@@ -648,7 +648,7 @@ export const StatesStyleBrunch = {
       description:
         'Hilltop Blossom Honey is gathered by bees from a wonderful mix of wild blossoms. This simple everyday honey is one of our best sellers and a favourite for honey lovers across the UK. Amber in colour and bursting with flavour it’s no wonder this honey was awarded a Great Taste award in 2021.\n\nIngredients\nblossom honey\n\nSuitable for vegetarians\nGluten free\nNo allergens\n\nNutrition Typical Values per 100g:\nEnergy 1416kJ/333kcal, fat 0.5g of which saturates 0.1g, carbohydrate 83g, of which sugars 70g, fibre 0.5g, protein 0.5g, salt 0.2g\n\nStorage: See back of label',
       image:
-        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Honey-on-background-x400.jpg',
+        'https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/product-image-landscape/Hilltop-Honey-25g0180-x400.jpg',
       quantity: 1,
       attributes: [
         {
