@@ -203,9 +203,10 @@
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0), Coconut);
 
   right: SpacingXXL;
-  @media ScreenSMMax {
+  @media ScreenXSMax {
     right: 0;
   }
+
   @media screen and (min-width: maxWidth) {
     right: calc((100% - maxWidth) / 2);
   }

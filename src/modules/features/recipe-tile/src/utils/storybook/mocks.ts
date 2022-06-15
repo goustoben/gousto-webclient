@@ -1,3 +1,4 @@
+import { UseRecipeBrand } from '../../model/context/useRecipeBrand';
 import { UseTracking } from '../../model/context/useTracking'
 import { Recipe } from '../../model/recipe';
 
@@ -16,6 +17,11 @@ export const getMocks = ({
   isRecipeOutOfStock = false,
   isFineDineIn = false,
   recipeImage300 = defaultRecipeImage300,
+  recipeTagText,
+  recipeTagColor,
+  recipeTagBackgroundColor,
+  brandTagText,
+  brandTagColor,
 }: {
   alternativeCheckedIndex?: number;
   alternativeOutOfStockFlags?: boolean[];
@@ -29,7 +35,12 @@ export const getMocks = ({
   isRecipeOutOfStock?: boolean,
   isFineDineIn?: boolean,
   recipeImage300?: string,
-}) => {
+  recipeTagText?: string,
+  recipeTagBackgroundColor?: string,
+  recipeTagColor?: string,
+  brandTagText?: string
+  brandTagColor?: string
+} = {}) => {
   const recipe: Recipe = {
     id: "12345",
     title,
@@ -55,7 +66,8 @@ export const getMocks = ({
           },
         ],
       }]
-    }
+    },
+    tagline: 'new-eme',
   };
 
   const useStock = () => ({
@@ -96,6 +108,26 @@ export const getMocks = ({
 
   const useGetSurchargeForRecipeId = () => surcharge
 
+  const useRecipeBrand: UseRecipeBrand = () => ({
+    useRecipeBrandAvailabilityTag: () => (recipeTagText ? {
+      slug: 'slug',
+      text: recipeTagText,
+      theme: {
+        name: 'boom',
+        color: recipeTagColor || 'white',
+        backgroundColor: recipeTagBackgroundColor || 'rgb(1, 169, 43)',
+      }
+    } : null),
+    useRecipeBrandTag: () => (brandTagText ? {
+      slug: 'slug',
+      text: brandTagText,
+      theme: {
+        name: 'boom',
+        color: brandTagColor || 'red',
+      }
+    } : null)
+  })
+
   return {
     recipe,
     useStock,
@@ -104,5 +136,6 @@ export const getMocks = ({
     useSetBrowserCTAVisibility,
     useTracking,
     useGetSurchargeForRecipeId,
+    useRecipeBrand,
   };
 };

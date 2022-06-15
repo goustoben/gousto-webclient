@@ -35,6 +35,7 @@ export default {
         useSetBrowserCTAVisibility,
         useTracking,
         useGetSurchargeForRecipeId,
+        useRecipeBrand,
       } = getMocks({
         title: args.title,
       });
@@ -48,6 +49,7 @@ export default {
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
           useTracking={useTracking}
           useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
+          useRecipeBrand={useRecipeBrand}
         >
           <Story />
         </RecipeTileDependencies>

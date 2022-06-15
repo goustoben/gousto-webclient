@@ -37,6 +37,7 @@ export default {
         useSetBrowserCTAVisibility,
         useTracking,
         useGetSurchargeForRecipeId,
+        useRecipeBrand,
       } = getMocks({
         numberOfAlternatives: args.hasVariants ? 3 : 0,
         isRecipeOutOfStock: args.isRecipeOutOfStock,
@@ -53,6 +54,7 @@ export default {
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
           useTracking={useTracking}
           useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
+          useRecipeBrand={useRecipeBrand}
         >
           <Story />
         </RecipeTileDependencies>

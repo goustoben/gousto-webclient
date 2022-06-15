@@ -77,6 +77,10 @@ const renderComponent = ({
         }),
       })}
       useGetSurchargeForRecipeId={() => 0}
+      useRecipeBrand={() => ({
+        useRecipeBrandAvailabilityTag: () => null,
+        useRecipeBrandTag: () => null,
+      })}
     >
       <TileImage categoryId="abcde" originalId="foo bar" />
     </RecipeTileDependencies>

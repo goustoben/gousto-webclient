@@ -36,6 +36,7 @@
 
 # squad-kales ownership
 /src/modules/features/recipe-tile/                                     @Gousto/squad-kales
+/src/apps/webclient/src/routes/Menu/components/CollectionsNav/         @Gousto/squad-kales
 /src/apps/webclient/src/routes/Menu/domains/brand/                     @Gousto/squad-kales
 /src/apps/webclient/src/routes/Menu/domains/basket/                    @Gousto/squad-kales
 /src/apps/webclient/src/routes/Menu/domains/collections/               @Gousto/squad-kales
