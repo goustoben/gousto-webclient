@@ -14,8 +14,7 @@ import { cssPositionTop, cssTextLeft, cssThemeBlue, cssVariantHeader } from "./s
 
 export const VariantHeader: React.FC<{
   categoryId: string;
-  originalId: string;
-}> = ({ categoryId, originalId }) => {
+}> = ({ categoryId }) => {
   const useStock = useStockHook();
   const useGetAlternativeOptionsForRecipe =
     useGetAlternativeOptionsForRecipeHook();
@@ -37,7 +36,6 @@ export const VariantHeader: React.FC<{
 
   const alternatives = getAlternativeOptionsForRecipe({
     recipeId,
-    originalId,
     categoryId,
     isOnDetailScreen: false,
   });
@@ -61,5 +59,4 @@ export const VariantHeader: React.FC<{
 
 VariantHeader.propTypes = {
   categoryId: PropTypes.string.isRequired,
-  originalId: PropTypes.string.isRequired,
 };

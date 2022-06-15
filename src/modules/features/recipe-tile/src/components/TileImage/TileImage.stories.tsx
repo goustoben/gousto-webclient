@@ -18,7 +18,6 @@ type TileImageStory = (
 const Template: ComponentStory<TileImageStory> = (_: StoryArgs) => (
   <TileImage
     categoryId="some_category_id"
-    originalId="some_original_id"
   />
 );
 

@@ -31,7 +31,6 @@ import { RecipeTag } from "../RecipeTag";
 
 type RecipeTileProps = {
   recipeId: string;
-  originalId: string;
   currentCollectionId: string;
   onClick: (
     recipeId: string,
@@ -40,12 +39,11 @@ type RecipeTileProps = {
   ) => void;
 };
 
-export const RecipeTile: React.FC<RecipeTileProps> = ({
+export const RecipeTile = ({
   recipeId,
-  originalId,
   currentCollectionId: categoryId,
   onClick,
-}) => {
+}: RecipeTileProps) => {
   const useGetAlternativeOptionsForRecipe =
     useGetAlternativeOptionsForRecipeHook();
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipe();
@@ -66,7 +64,6 @@ export const RecipeTile: React.FC<RecipeTileProps> = ({
   }
 
   const alternatives = getAlternativeOptionsForRecipe({
-    originalId,
     recipeId,
     categoryId,
     isOnDetailScreen: false,
@@ -100,7 +97,7 @@ export const RecipeTile: React.FC<RecipeTileProps> = ({
       {
         // mobile banner needs to sit outside of TileImage
         deviceType === DeviceType.MOBILE && (
-          <VariantHeader categoryId={categoryId} originalId={originalId} />
+          <VariantHeader categoryId={categoryId} />
         )
       }
 
@@ -110,7 +107,7 @@ export const RecipeTile: React.FC<RecipeTileProps> = ({
           isFineDineIn ? cssRecipeTileIsFineDineIn : null
         )}
       >
-        <TileImage categoryId={categoryId} originalId={originalId} />
+        <TileImage categoryId={categoryId} />
         <span
           css={css(
             cssRecipeTagHolder,
@@ -130,7 +127,6 @@ export const RecipeTile: React.FC<RecipeTileProps> = ({
           <Title />
 
           <RecipeTilePurchaseInfo
-            originalId={originalId}
             categoryId={categoryId}
             fdiStyling={isFineDineIn}
           />

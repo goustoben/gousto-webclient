@@ -82,7 +82,7 @@ const renderComponent = ({
         useRecipeBrandTag: () => null,
       })}
     >
-      <TileImage categoryId="abcde" originalId="foo bar" />
+      <TileImage categoryId="abcde" />
     </RecipeTileDependencies>
   );
 

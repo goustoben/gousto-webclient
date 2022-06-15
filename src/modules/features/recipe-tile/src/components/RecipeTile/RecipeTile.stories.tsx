@@ -37,7 +37,6 @@ type RecipeTileStory = (
 const Template: ComponentStory<RecipeTileStory> = (_: StoryArgs) => (
   <RecipeTile
   recipeId='recipe_one'
-  originalId='original_one'
   currentCollectionId='current_collection_one'
   onClick={() => {}}
   />

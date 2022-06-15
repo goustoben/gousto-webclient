@@ -51,7 +51,6 @@ describe("RecipeAlternativeOptions", () => {
             })}
           >
             <RecipeAlternativeOptions
-              originalId="recipe_1"
               recipeId="recipe_1"
               isOnDetailScreen
               categoryId="category_1"
@@ -72,9 +71,7 @@ describe("RecipeAlternativeOptions", () => {
 
       expect(getAlternativeOptionsForRecipe).toHaveBeenCalledWith({
         categoryId: "category_1",
-        closeOnSelection: false,
         isOnDetailScreen: true,
-        originalId: "recipe_1",
         recipeId: "recipe_1",
       });
     });
@@ -92,7 +89,6 @@ describe("RecipeAlternativeOptions", () => {
               })}
             >
               <RecipeAlternativeOptions
-                originalId="recipe_1"
                 recipeId="recipe_1"
                 isOnDetailScreen
                 categoryId="category_1"
@@ -127,7 +123,6 @@ describe("RecipeAlternativeOptions", () => {
               })}
             >
               <RecipeAlternativeOptions
-                originalId="recipe_1"
                 recipeId="recipe_1"
                 isOnDetailScreen
                 categoryId="category_1"
@@ -159,7 +154,6 @@ describe("RecipeAlternativeOptions", () => {
               })}
             >
               <RecipeAlternativeOptions
-                originalId="recipe_1"
                 recipeId="recipe_1"
                 isOnDetailScreen={false}
                 categoryId="category_1"
@@ -199,7 +193,6 @@ describe("RecipeAlternativeOptions", () => {
             })}
           >
             <RecipeAlternativeOptions
-              originalId="recipe_1"
               recipeId="recipe_1"
               isOnDetailScreen
               categoryId="category_1"
@@ -244,7 +237,6 @@ describe("RecipeAlternativeOptions", () => {
             })}
           >
             <RecipeAlternativeOptions
-              originalId="recipe_1"
               recipeId="recipe_1"
               isOnDetailScreen
               categoryId="category_1"

@@ -9,10 +9,7 @@ import { useGetAlternativeOptionsForRecipeLight } from '../../../domains/menu'
 
 import css from './VariantHeader.css'
 
-export const VariantHeader: React.FC<{
-  categoryId: string
-  originalId: string
-}> = ({ categoryId, originalId }) => {
+export const VariantHeader = ({ categoryId }: { categoryId: string }) => {
   const { isRecipeOutOfStock } = useStock()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
   const recipeId = useRecipeId()
@@ -29,7 +26,6 @@ export const VariantHeader: React.FC<{
 
   const alternatives = getAlternativeOptionsForRecipe({
     recipeId,
-    originalId,
     categoryId,
     isOnDetailScreen: false,
   })
@@ -51,5 +47,4 @@ export const VariantHeader: React.FC<{
 
 VariantHeader.propTypes = {
   categoryId: PropTypes.string.isRequired,
-  originalId: PropTypes.string.isRequired,
 }

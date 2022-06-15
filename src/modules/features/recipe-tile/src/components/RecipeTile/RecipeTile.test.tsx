@@ -29,7 +29,6 @@ const onClickAddRecipe = jest.fn();
 
 const defaultProps = {
   recipeId: "some_recipe_one",
-  originalId: "some Original ID",
   currentCollectionId: "some category ID",
   onClick: onClickAddRecipe,
 };
