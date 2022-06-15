@@ -4,7 +4,7 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 
-import { useDeviceType, DeviceType } from './useDeviceType'
+import { useDeviceType, DeviceType } from '../../utils/useDeviceType'
 
 import { CookingTimeIcon } from "../CookingTimeIcon/CookingTimeIcon";
 import { VariantHeader } from "../VariantHeader";

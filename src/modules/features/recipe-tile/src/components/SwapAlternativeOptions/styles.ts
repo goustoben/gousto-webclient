@@ -84,9 +84,6 @@ export const cssButton: CSSObject = {
   borderRadius: '3px',
   justifyContent: 'center',
   padding: '0',
-  [`@media ${screen.screenSMMin}`]: {
-    minWidth: '11.25rem',
-  }
 }
 
 export const cssDropWrapper: CSSObject = {
@@ -99,9 +96,6 @@ export const cssDropWrapper: CSSObject = {
 
   boxShadow: '0 4px 14px 0 rgba(51, 61, 71, 0.2)',
   padding: '1rem',
-  [`@media ${screen.screenSMMin}`]: {
-    paddingTop: '0',
-  }
 }
 
 export const cssIsExpanded: CSSObject = {
