@@ -26,7 +26,7 @@ describe('<TileImage />', () => {
   let wrapper
 
   test('should render one Recipe Image component', () => {
-    wrapper = shallow(<TileImage categoryId="abcde" originalId="foo bar" />)
+    wrapper = shallow(<TileImage categoryId="abcde" />)
 
     expect(wrapper.find(Image)).toHaveLength(1)
     expect(wrapper.find(Image).prop('lazy')).toBeTruthy()
@@ -40,16 +40,13 @@ describe('<TileImage />', () => {
   test('should contain one CookingTimeIcon component', () => {
     global.innerWidth = 1200
     const showDetailRecipe = jest.fn()
-    wrapper = shallow(
-      <TileImage categoryId="abcde" showDetailRecipe={showDetailRecipe} originalId="foo bar" />,
-    )
+    wrapper = shallow(<TileImage categoryId="abcde" showDetailRecipe={showDetailRecipe} />)
     expect(wrapper.find(CookingTimeIcon).length).toEqual(1)
   })
 
   test('should contain one VariantHeader component', () => {
-    wrapper = shallow(<TileImage categoryId="abcde" originalId="foo bar" />)
+    wrapper = shallow(<TileImage categoryId="abcde" />)
     expect(wrapper.find(VariantHeader).length).toEqual(1)
     expect(wrapper.find(VariantHeader).prop('categoryId')).toEqual('abcde')
-    expect(wrapper.find(VariantHeader).prop('originalId')).toEqual('foo bar')
   })
 })

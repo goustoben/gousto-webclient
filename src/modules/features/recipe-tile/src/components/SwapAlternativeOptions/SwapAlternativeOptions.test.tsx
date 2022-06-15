@@ -53,7 +53,6 @@ describe("<swapAlternativeOptions />", () => {
           >
             <SwapAlternativeOptions
               recipeId="123"
-              originalId="321"
               categoryId="111"
             />
           </UseTrackingContextProvider>
@@ -100,7 +99,6 @@ describe("<swapAlternativeOptions />", () => {
           >
             <SwapAlternativeOptions
               recipeId="123"
-              originalId="321"
               categoryId="111"
             />
           </UseTrackingContextProvider>
@@ -156,7 +154,6 @@ describe("<swapAlternativeOptions />", () => {
           >
             <SwapAlternativeOptions
               recipeId="123"
-              originalId="321"
               categoryId="111"
             />
           </UseTrackingContextProvider>
@@ -183,7 +180,6 @@ describe("<swapAlternativeOptions />", () => {
           >
             <SwapAlternativeOptions
               recipeId="123"
-              originalId="321"
               categoryId="cat111"
             />
           </UseTrackingContextProvider>

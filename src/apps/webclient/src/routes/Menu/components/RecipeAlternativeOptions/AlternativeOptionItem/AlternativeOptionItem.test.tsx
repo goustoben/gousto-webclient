@@ -145,12 +145,12 @@ describe('AlternativeOptionItem', () => {
       />,
     )
 
-    const changeRadio = wrapper.find(InputRadio).first().prop('onChange')
+    const changeRadio: () => void = wrapper.find(InputRadio).first().prop('onChange')
 
     test('should call changeCheckedRecipe', () => {
       changeRadio()
 
-      expect(changeCheckedRecipe).toHaveBeenCalledWith(recipeId, isOutOfStock)
+      expect(changeCheckedRecipe).toHaveBeenCalled()
     })
   })
 })

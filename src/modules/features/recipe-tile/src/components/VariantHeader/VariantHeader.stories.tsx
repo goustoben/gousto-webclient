@@ -13,7 +13,7 @@ type StoryArgs = {
 type VariantHeaderStory = (args: StoryArgs) => ReturnType<typeof VariantHeader>;
 
 const Template: ComponentStory<VariantHeaderStory> = (_: StoryArgs) => (
-  <VariantHeader categoryId="some_category_id" originalId="some_original_id" />
+  <VariantHeader categoryId="some_category_id" />
 );
 
 export const Simple = Template.bind({});

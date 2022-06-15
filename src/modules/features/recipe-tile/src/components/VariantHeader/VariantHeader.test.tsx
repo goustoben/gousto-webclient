@@ -38,7 +38,7 @@ describe("VariantHeader", () => {
     });
 
     test("then it should not render a header", () => {
-      render(<VariantHeader categoryId="123" originalId="123" />);
+      render(<VariantHeader categoryId="123" />);
       expect(screen.queryByText(/options/)).toBeFalsy();
     });
   });
@@ -55,7 +55,7 @@ describe("VariantHeader", () => {
         })
 
         test("then it should not render a header", () => {
-          render(<VariantHeader categoryId="123" originalId="123" />);
+          render(<VariantHeader categoryId="123" />);
           expect(screen.queryByText(/options/)).toBeFalsy();
         });
       });
@@ -72,7 +72,7 @@ describe("VariantHeader", () => {
         })
 
         test("then it should not render a header", () => {
-          render(<VariantHeader categoryId="123" originalId="123" />);
+          render(<VariantHeader categoryId="123" />);
           expect(screen.queryByText(/options/)).toBeFalsy();
         });
       });
@@ -99,7 +99,7 @@ describe("VariantHeader", () => {
         });
 
         test("then it should render the correct number of recipe variants on the header", () => {
-          render(<VariantHeader categoryId="123" originalId="123" />);
+          render(<VariantHeader categoryId="123" />);
           expect(screen.queryByText(/3 options available/)).toBeTruthy();
         });
       });
@@ -141,7 +141,7 @@ describe("VariantHeader", () => {
         })
 
         test("then it should render the correct number of recipe variants on the header", () => {
-          render(<VariantHeader categoryId="123" originalId="123" />);
+          render(<VariantHeader categoryId="123" />);
           expect(screen.queryByText(/6 options available/)).toBeTruthy();
         });
       });
@@ -168,7 +168,7 @@ describe("VariantHeader", () => {
         })
 
         test("then it should not render a header", () => {
-          render(<VariantHeader categoryId="123" originalId="123" />);
+          render(<VariantHeader categoryId="123" />);
           expect(screen.queryByText(/options/)).toBeFalsy();
         });
       });

@@ -29,7 +29,6 @@ const defaultGetAlternativeOptionsForRecipe = jest
 const defaultProps = {
   hasAlternativeOptions: false,
   categoryId: "some category ID",
-  originalId: "some Original ID",
   fdiStyling: false,
 };
 

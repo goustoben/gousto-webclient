@@ -12,9 +12,7 @@ import { useTrackingHook } from '../../../model/context/useTracking';
 
 type RecipeAlternativeOptionsProps = {
   recipeId: string
-  originalId: string
   categoryId?: string
-  closeOnSelection?: boolean
   isOnDetailScreen?: boolean
   /**
    * Optional Function to be called upon switching recipes.
@@ -24,9 +22,7 @@ type RecipeAlternativeOptionsProps = {
 
 export const RecipeAlternativeOptions = ({
   recipeId: currentRecipeId,
-  originalId,
   categoryId = undefined,
-  closeOnSelection = false,
   isOnDetailScreen = false,
   onChangeCheckedRecipe = null,
 }: RecipeAlternativeOptionsProps) => {
@@ -36,11 +32,9 @@ export const RecipeAlternativeOptions = ({
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipe();
 
   const recipeWithAlternativeOptions = getAlternativeOptionsForRecipe({
-    originalId,
     recipeId: currentRecipeId,
     isOnDetailScreen,
     categoryId,
-    closeOnSelection,
   })
 
   // alternative options include the recipe itself

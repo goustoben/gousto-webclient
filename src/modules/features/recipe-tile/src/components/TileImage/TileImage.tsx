@@ -22,8 +22,7 @@ const isOnBiggerScreen = (deviceType: string) =>
 
 export const TileImage: React.FC<{
   categoryId: string;
-  originalId: string;
-}> = ({ categoryId, originalId }) => {
+}> = ({ categoryId }) => {
   const deviceType = useDeviceType();
   const showVariantHeader = isOnBiggerScreen(deviceType);
 
@@ -38,7 +37,7 @@ export const TileImage: React.FC<{
       </div>
 
       {showVariantHeader && (
-        <VariantHeader categoryId={categoryId} originalId={originalId} />
+        <VariantHeader categoryId={categoryId} />
       )}
     </button>
   );

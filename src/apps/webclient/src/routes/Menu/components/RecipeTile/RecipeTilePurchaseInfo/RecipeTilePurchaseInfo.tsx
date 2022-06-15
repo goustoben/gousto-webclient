@@ -44,7 +44,6 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
 
   const alternatives = getAlternativeOptionsForRecipe({
     recipeId,
-    originalId,
     categoryId,
     isOnDetailScreen: false,
   })

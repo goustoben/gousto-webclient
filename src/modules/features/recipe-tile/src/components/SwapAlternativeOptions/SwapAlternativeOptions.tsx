@@ -17,9 +17,8 @@ const escapeKeyPressed = (e: React.KeyboardEvent) => {
 
 export const SwapAlternativeOptions: React.FC<{
   recipeId: string
-  originalId: string
   categoryId: string
-}> = ({ recipeId, originalId, categoryId }) => {
+}> = ({ recipeId, categoryId }) => {
   const [showDrop, setShowDrop] = useState(false)
   const useTracking = useTrackingHook()
   const { useTrackingSwapAlternativeOptions } = useTracking()
@@ -77,9 +76,7 @@ export const SwapAlternativeOptions: React.FC<{
         >
           <RecipeAlternativeOptions
             recipeId={recipeId}
-            originalId={originalId}
             categoryId={categoryId}
-            closeOnSelection
             onChangeCheckedRecipe={({ previousRecipeId, nextRecipeId }) => {
               trackRecipeAlternativeOptionsMenuSwapRecipes({
                 collectionId,
@@ -97,6 +94,5 @@ export const SwapAlternativeOptions: React.FC<{
 
 SwapAlternativeOptions.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  originalId: PropTypes.string.isRequired,
   categoryId: PropTypes.string.isRequired,
 }

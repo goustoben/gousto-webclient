@@ -8,7 +8,7 @@ type ItemContentProps = {
   recipeName: string
   isOnDetailScreen: boolean
   isOutOfStock: boolean
-  surcharge: number | null
+  surcharge?: number | null
 }
 
 export const ItemContent = ({
