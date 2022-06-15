@@ -36,3 +36,6 @@ c57dfd00365277e8daf72f539d677de976846f3a
 
 # [TECH-XXX] Sort imports with prettier (#5252)
 e8bde35eb3593fe334202e91b7867c4d486eda09
+
+# [ETM-213] Add order confirmation route to meet global linting standard
+d4eeb59d02aa681659c9ba7f8fa1e1249f4297f3
