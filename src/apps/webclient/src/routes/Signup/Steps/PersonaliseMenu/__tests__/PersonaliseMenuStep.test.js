@@ -3,6 +3,8 @@ import React from 'react'
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
 import { useDispatch } from 'react-redux'
 
+import { actionTypes } from 'actions/actionTypes'
+
 import { items } from '../../../Components/SellThePropositionPage/SellThePropositionPage'
 import { trackSignupPersonalisationComplete } from '../../../signupActions'
 import { PersonaliseMenuStep } from '../PersonaliseMenuStep'
@@ -164,6 +166,7 @@ describe('given the user is at the Personalise Menu Step', () => {
 
         expect(checkoutButton).not.toBeDisabled()
         expect(trackSignupPersonalisationComplete).toHaveBeenCalledWith(selected)
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.WIZARD_SEEN })
       })
     })
   })
