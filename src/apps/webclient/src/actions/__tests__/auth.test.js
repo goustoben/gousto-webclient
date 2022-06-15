@@ -5,7 +5,6 @@ import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
 import logger from 'utils/logger'
-import { trackUserLogin } from 'actions/loggingmanager'
 import { isServer } from '../../../server/utils/serverEnvironment'
 
 jest.mock('apis/auth')
@@ -31,10 +30,6 @@ jest.mock('moment', () => {
 
   return jest.fn(() => momentMethods)
 })
-
-jest.mock('actions/loggingmanager', () => ({
-  trackUserLogin: jest.fn()
-}))
 
 jest.mock('../../../server/utils/serverEnvironment')
 
@@ -303,7 +298,6 @@ describe('authIdentify', () => {
             ],
           },
         })
-        expect(trackUserLogin).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -325,7 +319,6 @@ describe('authIdentify', () => {
             ],
           },
         })
-        expect(trackUserLogin).toHaveBeenCalledTimes(1)
       })
     })
   })

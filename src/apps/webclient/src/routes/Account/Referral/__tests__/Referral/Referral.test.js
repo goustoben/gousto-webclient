@@ -28,9 +28,10 @@ describe('Referral', () => {
         )
       })
 
-      describe('componentDidMount', () => {
-        describe('when the free food page is loaded', () => {
-          test('then trackUserFreeFoodPageView should be called on mount', () => {
+      describe('UNSAFE_componentWillReceiveProps', () => {
+        describe('when the userId props updated', () => {
+          test('then trackUserFreeFoodPageView should be called', () => {
+            wrapper.setProps({ userId: '1' })
             expect(trackUserFreeFoodPageViewSpy).toHaveBeenCalled()
           })
         })
