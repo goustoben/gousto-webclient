@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 
-import { RecipeChangeHandler, makeOnCheckRecipe } from './useOnCheckRecipe'
+import { RecipeChangeHandler, makeOnCheckRecipe } from './useMakeOnCheckRecipe'
 
 jest.mock('routes/Menu/actions/menuRecipeDetails', () => ({
   selectRecipeVariant: (payload: any) => ({
@@ -13,7 +13,7 @@ jest.mock('routes/Menu/actions/menuRecipeDetails', () => ({
   }),
 }))
 
-describe('useOnCheckRecipe', () => {
+describe('useMakeOnCheckRecipe', () => {
   const args: {
     dispatch: Dispatch
     callback: RecipeChangeHandler | null

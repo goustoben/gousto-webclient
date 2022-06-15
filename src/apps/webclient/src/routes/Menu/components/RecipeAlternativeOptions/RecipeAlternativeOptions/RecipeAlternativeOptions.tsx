@@ -3,7 +3,7 @@ import React from 'react'
 import { useMenu } from 'routes/Menu/domains/menu'
 
 import { AlternativeOptionItem } from '../AlternativeOptionItem'
-import { RecipeChangeHandler, useOnCheckRecipe } from './useOnCheckRecipe'
+import { RecipeChangeHandler, useMakeOnCheckRecipe } from './useMakeOnCheckRecipe'
 import { useTrackVariantListDisplay } from './useTracking'
 
 import css from './RecipeAlternativeOptions.css'
@@ -34,7 +34,7 @@ export const RecipeAlternativeOptions = ({
     isOnDetailScreen,
     categoryId,
   })
-  const onChange = useOnCheckRecipe({
+  const onChange = useMakeOnCheckRecipe({
     originalId,
     currentRecipeId,
     categoryId,

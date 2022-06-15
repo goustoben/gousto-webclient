@@ -63,7 +63,7 @@ export function makeOnCheckRecipe(
   }
 }
 
-export function useOnCheckRecipe(args: OnCheckRecipeArgs) {
+export function useMakeOnCheckRecipe(args: OnCheckRecipeArgs) {
   const dispatch = useDispatch()
 
   return React.useCallback(

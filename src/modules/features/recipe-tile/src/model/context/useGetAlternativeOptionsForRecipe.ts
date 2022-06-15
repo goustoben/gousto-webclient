@@ -11,9 +11,9 @@ export type GetAlternativeOptionsForRecipe<T extends Recipe = Recipe> = (args: {
    * ID of recipe (alternative option) that is already selected
    */
   recipeId: string
+  isOnDetailScreen: boolean
 
   categoryId?: string
-  isOnDetailScreen: boolean
 }) => {
   // This is what would be fed into Alternative Option menu item
   recipeId: T['id']
