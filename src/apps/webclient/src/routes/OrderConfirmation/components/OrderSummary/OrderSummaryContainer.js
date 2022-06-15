@@ -6,7 +6,7 @@ import { productDetailVisibilityChange } from 'actions/products'
 import OrderSummary from 'components/OrderSummary'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 
-import { getOrderRecipeItems } from '../../selectors/orderDetails'
+import { getOrderRecipes } from '../../selectors/orderDetails'
 
 function mapStateToProps(state) {
   return {
@@ -19,7 +19,7 @@ function mapStateToProps(state) {
     numRecipes: parseFloat(state.basket.getIn(['orderDetails', 'box', 'numRecipes'])),
     productItems: state.basket.get('products'),
     products: state.products,
-    recipeItems: getOrderRecipeItems(state),
+    recipeItems: getOrderRecipes(state),
     recipes: state.recipes,
     shippingAddress: state.basket.getIn(['orderDetails', 'shippingAddress']),
     saveError: state.error.get(actionTypes.BASKET_CHECKOUT),

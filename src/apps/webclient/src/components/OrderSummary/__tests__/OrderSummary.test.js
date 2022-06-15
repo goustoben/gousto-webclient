@@ -16,10 +16,10 @@ describe('OrderSummary', () => {
       p1: { isVatable: true, title: 'p1 title', listPrice: '2.00' },
       p2: {},
     }),
-    recipeItems: Immutable.fromJS([
-      { itemableId: 1, quantity: 2 },
-      { itemableId: 2, quantity: 2 }
-    ]),
+    recipeItems: Immutable.fromJS({
+      r1: 2,
+      r2: 2,
+    }),
     productItems: Immutable.fromJS({
       p1: 3,
     }),

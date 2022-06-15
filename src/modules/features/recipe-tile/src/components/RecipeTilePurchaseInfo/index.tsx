@@ -33,7 +33,7 @@ type RecipeTilePurchaseInfoProps = {
 
 export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
   categoryId,
-  fdiStyling,
+  fdiStyling = false,
 }) => {
   const { id: recipeId, isFineDineIn } = useRecipe();
 

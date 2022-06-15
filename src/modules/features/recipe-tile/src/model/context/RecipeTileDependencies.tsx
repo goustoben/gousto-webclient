@@ -3,6 +3,8 @@ import { RecipeContextProvider } from "./recipe";
 import { UseBasketContextProvider } from "./useBasket";
 import { UseGetAlternativeOptionsForRecipeContextProvider } from "./useGetAlternativeOptionsForRecipe";
 import { UseGetSurchargeForRecipeIdContextProvider } from "./useGetSurchargeForRecipeId";
+import { UseRecipeBrandContextProvider } from "./useRecipeBrand";
+import { RecipeReferenceProvider } from "./useRecipeReference";
 import { UseSetBrowserCTAVisibilityContextProvider } from "./useSetBrowserCTAVisibility";
 import { UseStockContextProvider } from "./useStock";
 import { UseTrackingContextProvider } from "./useTracking";
@@ -26,6 +28,8 @@ type RecipeTileDependenciesArgs = {
   recipe: ExtractValueTypeFromContextProvider<typeof RecipeContextProvider>;
   useTracking: ExtractValueTypeFromContextProvider<typeof UseTrackingContextProvider>;
   useGetSurchargeForRecipeId: ExtractValueTypeFromContextProvider<typeof UseGetSurchargeForRecipeIdContextProvider>
+  useRecipeBrand: ExtractValueTypeFromContextProvider<typeof UseRecipeBrandContextProvider>
+  recipeReference?: ExtractValueTypeFromContextProvider<typeof RecipeReferenceProvider>;
 };
 
 /**
@@ -43,6 +47,8 @@ export const RecipeTileDependencies = ({
   recipe,
   useTracking,
   useGetSurchargeForRecipeId,
+  recipeReference = null,
+  useRecipeBrand,
 }: RecipeTileDependenciesArgs) => (
   // Each logical item uses its own provider to minimize re-renderings
   <UseStockContextProvider value={useStock}>
@@ -56,7 +62,11 @@ export const RecipeTileDependencies = ({
           <RecipeContextProvider value={recipe}>
             <UseTrackingContextProvider value={useTracking}>
               <UseGetSurchargeForRecipeIdContextProvider value={useGetSurchargeForRecipeId}>
-                {children}
+                <RecipeReferenceProvider value={recipeReference}>
+                  <UseRecipeBrandContextProvider value={useRecipeBrand}>
+                    {children}
+                  </UseRecipeBrandContextProvider>
+                </RecipeReferenceProvider>
               </UseGetSurchargeForRecipeIdContextProvider>
             </UseTrackingContextProvider>
           </RecipeContextProvider>

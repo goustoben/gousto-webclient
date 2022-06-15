@@ -66,6 +66,10 @@ const renderComponent = ({
         }),
       })}
       useGetSurchargeForRecipeId={() => surcharge}
+      useRecipeBrand={() => ({
+        useRecipeBrandAvailabilityTag: () => null,
+        useRecipeBrandTag: () => null,
+      })}
     >
       <RecipeTilePurchaseInfo {...defaultProps} />
     </RecipeTileDependencies>

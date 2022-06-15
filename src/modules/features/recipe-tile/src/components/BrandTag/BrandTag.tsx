@@ -1,8 +1,15 @@
 import React from 'react'
-import { useRecipeBrandTag } from './useRecipeBrandTag'
-import css from './BrandTag.css'
 
-const BrandTag = (props: any) => {
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
+
+import { useRecipeBrandHook } from '../../model/context/useRecipeBrand';
+import { cssBrandTag } from './styles';
+
+export const BrandTag = () => {
+  const useRecipeBrand = useRecipeBrandHook()
+  const { useRecipeBrandTag } = useRecipeBrand()
   const brandTag = useRecipeBrandTag()
 
   if (!brandTag) {
@@ -12,10 +19,11 @@ const BrandTag = (props: any) => {
   const { theme, text } = brandTag
 
   return (
-    <div className={css.brandTag} style={{ color: theme?.color }}>
+    <div
+      css={css(cssBrandTag)}
+      style={{ color: theme?.color }}
+    >
       {text}
     </div>
   )
 }
-
-export { BrandTag }
