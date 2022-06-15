@@ -1,8 +1,10 @@
 import React, { FC } from 'react'
 
+import { marketBundlesVariant } from 'actions/trackingKeys'
 import Loading from 'routes/Menu/Loading'
 import { GradientMarketplaceHeader } from 'routes/OrderConfirmation/components/GradientMarketplaceHeader'
 import { Bundle } from 'routes/OrderConfirmation/types'
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
 import { ProductBundle } from '../ProductBundle'
 
@@ -16,23 +18,27 @@ interface ProductListBundlesProps {
 const ProductListBundles: FC<ProductListBundlesProps> = ({
   products = null,
   getFilteredProducts,
-}) => (
-  <>
-    <GradientMarketplaceHeader />
-    {products ? (
-      <div data-testid="ProductListBundlesPresentation" className={css.productBundleList}>
-        {products.map((bundleProduct: Bundle) => (
-          <ProductBundle
-            key={bundleProduct.id}
-            bundleProduct={bundleProduct}
-            getFilteredProducts={getFilteredProducts}
-          />
-        ))}
-      </div>
-    ) : (
-      <Loading />
-    )}
-  </>
-)
+}) => {
+  if (products) invokeHotjarEvent(marketBundlesVariant)
+
+  return (
+    <>
+      <GradientMarketplaceHeader />
+      {products ? (
+        <div data-testid="ProductListBundlesPresentation" className={css.productBundleList}>
+          {products.map((bundleProduct: Bundle) => (
+            <ProductBundle
+              key={bundleProduct.id}
+              bundleProduct={bundleProduct}
+              getFilteredProducts={getFilteredProducts}
+            />
+          ))}
+        </div>
+      ) : (
+        <Loading />
+      )}
+    </>
+  )
+}
 
 export { ProductListBundles }
