@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { Heading } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
 
+import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
@@ -53,6 +54,7 @@ const PersonaliseMenuStep = () => {
   const handleCheckoutButtonClick = useCallback(() => {
     window.sessionStorage.setItem('selectedCuisines', JSON.stringify(selected))
 
+    dispatch({ type: actionTypes.WIZARD_SEEN })
     dispatch(trackSignupPersonalisationComplete(selected))
     dispatch(redirect(routes.client.menu))
   }, [selected, dispatch])
