@@ -22,18 +22,6 @@ export const openProductModalTracking = (trackingData) => (dispatch) => {
   )
 }
 
-export const trackPairingsData = (productsPerCategory, recipesPerCategory) => (dispatch) => {
-  dispatch({
-    type: actionTypes.TRACK_PAIRINGS_DATA,
-    trackingData: {
-      actionType: trackingKeys.pairingsLoaded,
-      event_name: trackingKeys.pairingsLoaded,
-      event_action: 'page_load',
-      pairingProperties: { productsPerCategory, recipesPerCategory }
-    }
-  })
-}
-
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
     const { user } = getState()

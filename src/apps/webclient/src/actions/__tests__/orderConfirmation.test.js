@@ -1,22 +1,17 @@
-import { safeJestMock } from '_testing/mocks'
-import Immutable from 'immutable'
-import { push } from 'react-router-redux'
-
 import { actionTypes } from 'actions/actionTypes'
 import { basketOrderLoad } from 'actions/basket'
 import { orderCheckPossibleDuplicate } from 'actions/order'
 import {
-  orderDetails,
-  orderConfirmationRedirect,
-  orderConfirmationProductTracking,
-  orderConfirmationUpdateOrderTracking,
+  orderConfirmationProductTracking, orderConfirmationRedirect, orderConfirmationUpdateOrderTracking, orderDetails
 } from 'actions/orderConfirmation'
-import { productsLoadProducts, productsLoadRecipePairings } from 'actions/products'
+import { productsLoadProducts } from 'actions/products'
 import recipes from 'actions/recipes'
 import { marketProductAdded, marketProductRemoved } from 'actions/trackingKeys'
+import Immutable from 'immutable'
+import { push } from 'react-router-redux'
 import { fetchOrder } from 'routes/Menu/apis/orderV2'
 import { redirect } from 'utils/window'
-
+import { safeJestMock } from '_testing/mocks'
 import * as menuApis from '../../routes/Menu/fetchData/menuApi'
 
 jest.mock('apis/orders')
@@ -36,7 +31,6 @@ jest.mock('actions/products', () => ({
   productsLoadProducts: jest.fn(),
   productsLoadStock: jest.fn(),
   productsLoadCategories: jest.fn(),
-  productsLoadRecipePairings: jest.fn(),
 }))
 
 jest.mock('actions/order', () => ({
@@ -113,12 +107,9 @@ describe('orderConfirmation actions', () => {
               id: '1234',
               whenCutoff: '2019-04-12 19:00:00',
               recipeItems: [
-                { recipeUuid: 'uuid-1', itemableId: '1234' },
-                { recipeUuid: 'uuid-2', itemableId: '5678' },
+                { recipeUuid: 'uuid-1'},
+                { recipeUuid: 'uuid-2' },
               ],
-              period: {
-                whenStart: '2022-05-17T11:00:00Z',
-              },
             },
           }),
         )
@@ -128,15 +119,6 @@ describe('orderConfirmation actions', () => {
         await orderDetails(orderId)(dispatch, getState)
 
         expect(recipes.recipesLoadFromMenuRecipesById).toHaveBeenCalledWith(['uuid-1', 'uuid-2'])
-      })
-
-      test('should fetch product recipe pairings for the given recipe ids and period whenStart in the order', async () => {
-        await orderDetails('1234')(dispatch, getState)
-
-        expect(productsLoadRecipePairings).toHaveBeenCalledWith(
-          ['1234', '5678'],
-          '2022-05-17T11:00:00Z',
-        )
       })
     })
 

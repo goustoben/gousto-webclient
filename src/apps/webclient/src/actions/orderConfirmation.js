@@ -1,21 +1,17 @@
-import Immutable from 'immutable'
-import { push } from 'react-router-redux'
-
 import { basketOrderLoad } from 'actions/basket'
 import {
   productsLoadCategories,
   productsLoadProducts,
-  productsLoadStock,
-  productsLoadRecipePairings,
+  productsLoadStock
 } from 'actions/products'
 import config from 'config/routes'
+import Immutable from 'immutable'
+import { push } from 'react-router-redux'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
-import { getOrderWhenStartDate } from 'routes/OrderConfirmation/utils/order'
 import logger from 'utils/logger'
-import { getUserOrderRecipeUuIds, getUserOrderRecipeIds } from 'utils/user'
-
+import { getUserOrderRecipeUuIds } from 'utils/user'
 import { fetchSimpleMenu } from '../routes/Menu/fetchData/menuApi'
-import { getAuthUserId, getAccessToken } from '../selectors/auth'
+import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { actionTypes } from './actionTypes'
 import { orderCheckPossibleDuplicate } from './order'
 import recipeActions from './recipes'
@@ -41,9 +37,6 @@ export const orderDetails = (orderId) => async (dispatch, getState) => {
     dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeUuIds))
     await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, { reload: true }, menus))
 
-    const orderRecipeIds = getUserOrderRecipeIds(immutableOrderDetails)
-    const orderMenuStartDate = getOrderWhenStartDate(immutableOrderDetails)
-    await dispatch(productsLoadRecipePairings(orderRecipeIds, orderMenuStartDate))
     dispatch(basketOrderLoad(orderId, immutableOrderDetails))
     dispatch({
       type: actionTypes.BASKET_ORDER_DETAILS_LOADED,

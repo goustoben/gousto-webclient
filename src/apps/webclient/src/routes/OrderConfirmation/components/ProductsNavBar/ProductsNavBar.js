@@ -3,6 +3,8 @@ import React from 'react'
 import { CollectionsNavigation, CollectionsNavigationItem } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
+import { ALL_PRODUCTS_CATEGORY_ID } from 'routes/OrderConfirmation/constants/categories'
+
 import { useProductNavBar } from '../../context/productsNavBarContext'
 
 const propTypes = {
@@ -18,9 +20,8 @@ const propTypes = {
 
 const getDefaultCategoryId = (categories) => {
   if (categories?.occasions) return categories.occasions.id
-  if (categories?.pairings) return categories.pairings.id
 
-  return categories['all-products'].id
+  return categories[ALL_PRODUCTS_CATEGORY_ID].id
 }
 
 const ProductsNavBar = ({ categories, onSelectCategory }) => {

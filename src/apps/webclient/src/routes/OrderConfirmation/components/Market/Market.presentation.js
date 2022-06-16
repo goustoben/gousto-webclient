@@ -10,12 +10,11 @@ import Overlay from 'components/Overlay'
 import CloseButton from 'components/Overlay/CloseButton'
 import config from 'config/products'
 
-import { OCCASIONS_CATEGORY_NAME, PAIRINGS_CATEGORY_NAME } from '../../constants/categories'
+import { OCCASIONS_CATEGORY_NAME } from '../../constants/categories'
 import { LoadingWrapper } from '../LoadingWrapper'
 import { OrderSummaryContainer } from '../OrderSummary/OrderSummaryContainer'
 import { ProductList } from '../ProductList'
 import { ProductListBundles } from '../ProductListBundles'
-import { ProductListPairings } from '../ProductListPairings'
 import { ProductsNavBar } from '../ProductsNavBar'
 import { ReferAFriend } from '../ReferAFriend'
 
@@ -118,7 +117,6 @@ const propTypes = {
   showOrderConfirmationReceipt: PropTypes.bool.isRequired,
   toggleAgeVerificationPopUp: PropTypes.func.isRequired,
   toggleOrderSummary: PropTypes.func.isRequired,
-  productRecipePairings: PropTypes.instanceOf(Immutable.List),
   isLoading: PropTypes.bool,
   trackingCategory: PropTypes.string,
 }
@@ -132,7 +130,6 @@ const defaultProps = {
   saveError: false,
   saveRequired: false,
   saving: false,
-  productRecipePairings: Immutable.Map({}),
   isLoading: false,
   trackingCategory: '',
 }
@@ -155,16 +152,11 @@ const MarketPresentation = ({
   showOrderConfirmationReceipt,
   toggleAgeVerificationPopUp,
   toggleOrderSummary,
-  productRecipePairings,
   isLoading,
   trackingCategory,
 }) => {
-  const showPairings = !isLoading && trackingCategory === PAIRINGS_CATEGORY_NAME
   const showOccasions = !isLoading && trackingCategory === OCCASIONS_CATEGORY_NAME
-  const showDefault =
-    !isLoading &&
-    trackingCategory !== PAIRINGS_CATEGORY_NAME &&
-    trackingCategory !== OCCASIONS_CATEGORY_NAME
+  const showDefault = !isLoading && trackingCategory !== OCCASIONS_CATEGORY_NAME
 
   return (
     <div className={css.marketPlaceWrapper} data-testid="MarketPresentation">
@@ -179,17 +171,6 @@ const MarketPresentation = ({
         >
           {productsLoadError && <Alert type="warning">{config.productsLoadErrorMessage}</Alert>}
           {isLoading && <LoadingWrapper />}
-          {showPairings && (
-            <ProductListPairings
-              productRecipePairings={productRecipePairings}
-              products={filteredProducts || products}
-              basket={basket}
-              ageVerified={ageVerified}
-              productsCategories={productsCategories}
-              toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-              trackingCategory={trackingCategory}
-            />
-          )}
           {showOccasions && (
             <ProductListBundles
               getFilteredProducts={getFilteredProducts}

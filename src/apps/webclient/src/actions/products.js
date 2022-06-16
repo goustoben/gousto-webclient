@@ -1,5 +1,4 @@
 import { push } from 'react-router-redux'
-import moment from 'moment'
 
 import {
   fetchProduct,
@@ -7,7 +6,6 @@ import {
   fetchProductCategories,
   fetchProductStock,
   fetchProducts,
-  fetchRecipePairingsProducts,
 } from 'apis/products'
 import { getProductsByCutoff, sortProductsByPrice } from 'utils/products'
 import logger from 'utils/logger'
@@ -199,24 +197,6 @@ export const productsLoadStock = (forceRefresh = false) => (
   }
 )
 
-export const productsLoadRecipePairings = (recipeIds, menuStartDate) => (
-  async (dispatch, getState) => {
-    if (Array.isArray(recipeIds) && recipeIds.length > 0 && moment(menuStartDate, 'YYYY-MM-DD').isValid()) {
-      dispatch(statusActions.pending(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, true))
-      try {
-        const { data: recipePairings, meta: { total: totalProducts } } = await fetchRecipePairingsProducts(getState().auth.get('accessToken'), recipeIds, menuStartDate)
-        dispatch({ type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, recipePairings })
-        dispatch({ type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS, totalProducts })
-      } catch (err) {
-        dispatch(statusActions.error(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, err.message))
-        logger.error(err)
-      } finally {
-        dispatch(statusActions.pending(actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE, false))
-      }
-    }
-  }
-)
-
 export const trackProductFiltering = (eventName, eventAction, eventType, primaryCategory, productsPerCategory) => ({
   type: actionTypes.PRODUCTS_FILTER_TRACKING,
   trackingData: {
@@ -237,7 +217,6 @@ export const productsActions = {
   productsLoadRandomProducts,
   productsLoadProductsById,
   productsLoadStock,
-  productsLoadRecipePairings,
   trackProductFiltering,
 }
 

@@ -249,44 +249,4 @@ describe('products reducer', () => {
       expect(Immutable.is(result, expectedState)).toEqual(true)
     })
   })
-
-  describe('PRODUCTS_RECIPE_PAIRINGS_RECIEVED', () => {
-    test('should load product recipe pairings into state', () => {
-      const recipePairing1 = {
-        recipeId: 1,
-        products: []
-      }
-
-      const recipePairing2 = {
-        recipeId: 2,
-        products: []
-      }
-      const action = {
-        type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-        recipePairings: [recipePairing1, recipePairing2]
-      }
-
-      const result = productsReducers.productRecipePairings(Immutable.Map({}), action)
-
-      const expectedState = Immutable.Map()
-        .set('1', Immutable.fromJS(recipePairing1))
-        .set('2', Immutable.fromJS(recipePairing2))
-
-      expect(Immutable.is(result, expectedState)).toEqual(true)
-    })
-  })
-
-  describe('PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS', () => {
-    test('should add product recipe pairings total products into state', () => {
-      const totalProducts = 5
-      const action = {
-        type: actionTypes.PRODUCTS_RECIPE_PAIRINGS_UPDATE_TOTAL_PRODUCTS,
-        totalProducts
-      }
-
-      const result = productsReducers.productRecipePairingsTotalProducts(0, action)
-
-      expect(result).toEqual(totalProducts)
-    })
-  })
 })
