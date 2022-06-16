@@ -19,6 +19,7 @@ import {
   fetchOrder,
   fetchUserOrders,
   cancelPendingOrders,
+  patchOrderProducts,
 } from '../orderV2'
 
 jest.mock('utils/fetch')
@@ -35,6 +36,7 @@ const getUpdateOrderProductItemsOrderV1 = safeJestMock(
   orderSelectors,
   'getUpdateOrderProductItemsOrderV1',
 )
+const getProductsV2 = safeJestMock(orderSelectors, 'getProductsV2')
 const dispatch = jest.fn()
 const getState = jest.fn()
 
@@ -154,7 +156,7 @@ describe('orderApi', () => {
         const apiResponse = { data: [1, 2, 3] }
         ;(fetch as jest.Mock).mockResolvedValue(apiResponse)
 
-        const result = await updateOrder(dispatch, getState, orderId, { order: 'body' }, true)
+        const result = await updateOrder(dispatch, getState, orderId, { order: 'body' })
 
         expect(result).toEqual(apiResponse)
       })
@@ -247,6 +249,104 @@ describe('orderApi', () => {
         })
         try {
           await updateOrder(dispatch, getState, orderId)
+        } catch (e) {
+          expect(e).toEqual(new Error('error'))
+        }
+      })
+    })
+  })
+
+  describe('PatchOrderProducts', () => {
+    beforeEach(() => {
+      getUserId.mockReturnValue(userId)
+      getAccessToken.mockReturnValue(accessToken)
+    })
+    describe('when using the V1 implementation', () => {
+      beforeEach(() => {
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => false)
+        getOrderForUpdateOrderV1.mockReturnValue({ order: 'v1 body' })
+        getUpdateOrderProductItemsOrderV1.mockReturnValue({ products: 'v2 body' })
+      })
+
+      test('should fetch the correct url', async () => {
+        await patchOrderProducts(dispatch, getState, orderId)
+
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(
+          accessToken,
+          `https://production-api.gousto.co.uk/order/${orderId}/update-items`,
+          { products: 'v2 body' },
+          'PUT',
+          undefined,
+          { 'Content-Type': 'application/json' },
+        )
+      })
+
+      test('should return the results of the fetch unchanged', async () => {
+        const apiResponse = { data: [1, 2, 3] }
+        ;(fetch as jest.Mock).mockResolvedValue(apiResponse)
+
+        const result = await patchOrderProducts(dispatch, getState, orderId)
+
+        expect(result).toEqual(apiResponse)
+      })
+
+      test('should update market place items', async () => {
+        const apiResponse = { data: [1, 2, 3] }
+        ;(fetch as jest.Mock).mockResolvedValue(apiResponse)
+
+        const result = await patchOrderProducts(dispatch, getState, orderId)
+
+        expect(result).toEqual(apiResponse)
+      })
+    })
+
+    describe('when using the V2 implementation', () => {
+      beforeEach(() => {
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => true)
+        getProductsV2.mockReturnValue([{ id: 1, type: 'product', meta: { quanity: 1 } }])
+        getOrderV2.mockReturnValue({ order: 'v2 body' })
+        ;(isomorphicFetch as jest.Mock).mockResolvedValue({
+          json: () => Promise.resolve({ data: [{ id: 1, type: 'product', meta: { quanity: 1 } }] }),
+        })
+      })
+
+      test('should fetch the correct url', async () => {
+        await patchOrderProducts(dispatch, getState, orderId)
+
+        expect(isomorphicFetch).toHaveBeenCalledTimes(1)
+        expect(isomorphicFetch).toHaveBeenCalledWith(
+          `https://production-api.gousto.co.uk/order/v2/orders/${orderId}/relationships/product`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+              'x-gousto-device-id': 'session-id',
+              'x-gousto-user-id': userId,
+            },
+            body: JSON.stringify({ data: [{ id: 1, type: 'product', meta: { quanity: 1 } }] }),
+            method: 'PATCH',
+          },
+        )
+      })
+
+      test('should handle error returned from core', async () => {
+        ;(isomorphicFetch as jest.Mock).mockResolvedValue({
+          json: () => Promise.resolve({ errors: { message: 'error' } }),
+        })
+        try {
+          await patchOrderProducts(dispatch, getState, orderId)
+        } catch (e) {
+          expect(e).toEqual(new Error('error'))
+        }
+      })
+
+      test('should handle system error', async () => {
+        ;(isomorphicFetch as jest.Mock).mockResolvedValue({
+          json: () => Promise.resolve({ errors: { message: 'error' } }),
+        })
+        try {
+          await patchOrderProducts(dispatch, getState, orderId)
         } catch (e) {
           expect(e).toEqual(new Error('error'))
         }
