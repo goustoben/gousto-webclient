@@ -7,7 +7,7 @@
     "jsx": "react",
     "lib": ["ES2015", "ES2015.Promise", "dom"],
     "outDir": "../lib/client",
-    "types": ["jest", "node"],
+    "types": ["jest", "node", "@emotion/react/types/css-prop"],
     "paths": {
       "_testing/*": ["./src/_testing/*"],
       "*": ["./src/components/*", "../libs/goustouicomponents/./*"],

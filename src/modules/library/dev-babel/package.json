@@ -1,4 +1,8 @@
 {
   "name": "@library/dev-babel",
-  "main": "index.ts"
+  "main": "index.ts",
+  "dependencies": {
+    "@emotion/babel-plugin": "^11.9.2",
+    "@emotion/babel-preset-css-prop": "^11.2.0"
+  }
 }

@@ -10,7 +10,9 @@ const base = {
     ],
     '@babel/preset-react',
     '@babel/preset-typescript',
+    // "@emotion/babel-preset-css-prop",
   ],
+  // "plugins": ["@emotion"]
 }
 
 module.exports = base
