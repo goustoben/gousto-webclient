@@ -6,18 +6,15 @@ import * as Redux from 'react-redux'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import { actionTypes } from 'actions/actionTypes'
 import { filterProductCategory } from 'actions/filters'
-import { trackPairingsData } from 'actions/tracking'
 import { marketCategory } from 'actions/trackingKeys'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
 
 import {
-  mockGetProductRecipePairingsState,
   mockMarketProducts,
   mockProducts,
-  mockProjectsCategories,
+  mockProductCategories,
   mockProductsStock,
   mockBundlesData,
 } from '../../config'
@@ -43,7 +40,6 @@ jest.mock('routes/OrderConfirmation/productBundles/utils', () => ({
 
 jest.mock('actions/products', () => ({
   ...jest.requireActual('actions/products'),
-  productsLoadRecipePairings: jest.fn(),
 }))
 
 jest.mock('actions/tracking', () => ({
@@ -68,10 +64,6 @@ jest.mock('../../ProductListBundles', () => ({
   ProductListBundles: jest.fn(() => 'ProductListBundles'),
 }))
 
-jest.mock('../../ProductListPairings', () => ({
-  ProductListPairings: jest.fn(() => 'ProductListPairings'),
-}))
-
 jest.mock('../../ReferAFriend', () => ({
   ReferAFriend: jest.fn(() => 'ReferAFriend'),
 }))
@@ -87,33 +79,18 @@ describe('Market', () => {
   const mockStore = configureMockStore()
   const state = {
     products: mockMarketProducts,
-    productsCategories: mockProjectsCategories,
-    productRecipePairings: mockGetProductRecipePairingsState(),
+    productsCategories: mockProductCategories,
     productsStock: mockProductsStock,
-    productRecipePairingsTotalProducts: 1,
-    menuRecipes: Immutable.fromJS(['2211']),
     basket: Immutable.fromJS({
       products: mockProducts,
       orderDetails: {
         period: {
           whenStart: '2022-05-17T11:00:00Z',
         },
-        recipeItems: [
-          {
-            recipeId: '2211',
-            title: 'Mock recipe title',
-            media: [],
-          },
-        ],
       },
       numPortions: 2,
     }),
-    recipes: Immutable.fromJS({
-      100: {},
-      200: {},
-      300: {},
-    }),
-    pending: Immutable.fromJS({ [actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE]: false }),
+    pending: Immutable.fromJS({}),
     error: Immutable.fromJS({}),
     auth: Immutable.fromJS({
       accessToken: 'test-access-token',
@@ -126,7 +103,6 @@ describe('Market', () => {
 
   test('should render MarketPresentation correctly', () => {
     ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
-    ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
 
     render(
       <Provider store={mockedStore}>
@@ -175,56 +151,6 @@ describe('Market', () => {
     )
   })
 
-  describe('Pairings Experiment', () => {
-    test('when user is not in experiment, should not render pairings or track pairings data', () => {
-      ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
-      ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
-
-      render(
-        <Provider store={mockedStore}>
-          <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-        </Provider>,
-      )
-
-      expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
-      expect(screen.queryByText(/^Pairings \(\d\)$/i)).not.toBeInTheDocument()
-      expect(screen.getByText('ProductList')).toBeInTheDocument()
-
-      expect(dispatch).not.toBeCalledWith(trackPairingsData)
-      expect(trackPairingsData).not.toBeCalled()
-    })
-
-    describe('when user is in experiment', () => {
-      test('should render pairings and track pairings data', () => {
-        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(true)
-        ;(trackPairingsData as jest.Mock).mockReturnValue(trackPairingsData)
-
-        render(
-          <Provider store={mockedStore}>
-            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-          </Provider>,
-        )
-
-        expect(screen.getByText('ProductListPairings')).toBeInTheDocument()
-        expect(screen.getByText(/^Pairings \(\d\)$/i)).toBeInTheDocument()
-        expect(screen.queryByText('ProductList')).not.toBeInTheDocument()
-
-        expect(dispatch).toBeCalledWith(trackPairingsData)
-        expect(trackPairingsData).toBeCalled()
-
-        fireEvent.click(screen.getByRole('button', { name: /^Pairings \(\d\)$/i }))
-        expect(filterProductCategory).toBeCalledWith(
-          marketCategory,
-          'clicked',
-          'secondary_action',
-          'Pairings',
-          expect.any(Number),
-          'pairings',
-        )
-      })
-    })
-  })
-
   describe('Bundles Experiment', () => {
     describe('When user is in experiment', () => {
       test('Should render Occasions category', () => {
@@ -238,7 +164,6 @@ describe('Market', () => {
         )
         expect(screen.queryByText(/^Occasions \(\d\)$/i)).toBeInTheDocument()
         expect(screen.queryByText('ProductListBundles')).toBeInTheDocument()
-        expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
       })
     })
 
@@ -254,7 +179,6 @@ describe('Market', () => {
         )
         expect(screen.queryByText(/^Occasions \(\d\)$/i)).not.toBeInTheDocument()
         expect(screen.queryByText('ProductListBundles')).not.toBeInTheDocument()
-        expect(screen.queryByText('ProductListPairings')).not.toBeInTheDocument()
       })
     })
   })

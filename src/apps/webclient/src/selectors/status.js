@@ -21,12 +21,3 @@ export const getBasketNotValidError = createGetErrorForActionType(actionTypes.BA
 export const getBasketSaveError = createGetErrorForActionType(actionTypes.BASKET_CHECKOUT)
 
 export const getBasketSavePending = createGetActionTypeIsPending(actionTypes.BASKET_CHECKOUT)
-
-export const getProductRecipePairingsPending = createGetActionTypeIsPending(
-  actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-  true,
-)
-
-export const getProductRecipePairingsError = createGetErrorForActionType(
-  actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE,
-)

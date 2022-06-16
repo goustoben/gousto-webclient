@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { filterProductCategory } from 'actions/filters'
-import { trackPairingsData } from 'actions/tracking'
 import { marketCategory } from 'actions/trackingKeys'
 import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { getBasketOrderDetails, getBasketSaveRequired } from 'selectors/basket'
@@ -18,21 +17,14 @@ import { getBasketSaveError, getBasketSavePending } from 'selectors/status'
 import {
   ALL_PRODUCTS_CATEGORY_NAME,
   ALL_PRODUCTS_CATEGORY_ID,
-  PAIRINGS_CATEGORY_NAME,
-  PAIRINGS_CATEGORY_ID,
   OCCASIONS_CATEGORY_NAME,
   OCCASIONS_CATEGORY_ID,
 } from '../../constants/categories'
 import { ProductNavBarProvider } from '../../context/productsNavBarContext'
 import { useIsBundlesEnabled } from '../../hooks/useBundlesExperiment.hook'
-import { useIsPairingsEnabled } from '../../hooks/usePairingsExperiment'
 import { getBundles } from '../../productBundles/utils'
 import { getOrderWhenStartDateFormatted } from '../../selectors/orderDetails'
-import {
-  getProductsRecipePairingsWithRecipes,
-  getProductRecipePairingsTotalProducts,
-} from '../../selectors/recipePairings'
-import type { Category, FilteredProducts, NavCategories, NavCategory, Product } from '../../types'
+import type { Category, FilteredProducts, NavCategories, NavCategory } from '../../types'
 import { MarketPresentation } from './Market.presentation'
 
 interface Props {
@@ -43,9 +35,7 @@ interface Props {
 const Market = (props: Props) => {
   const dispatch = useDispatch()
 
-  const [filteredProducts, setFilteredProducts] = useState<FilteredProducts | Product[] | null>(
-    null,
-  )
+  const [filteredProducts, setFilteredProducts] = useState<FilteredProducts | null>(null)
   const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState<boolean>(false)
   const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
     ALL_PRODUCTS_CATEGORY_NAME,
@@ -53,7 +43,6 @@ const Market = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const isOrderConfirmation = true
 
-  const pairingsExperimentEnabled = useIsPairingsEnabled()
   const bundlesExperimentEnabled = useIsBundlesEnabled()
   const [experimentCategories, setExperimentCategories] = useState<NavCategories | undefined>(
     undefined,
@@ -70,47 +59,11 @@ const Market = (props: Props) => {
   const basketSaveRequired = useSelector(getBasketSaveRequired)
   const basketSavePending = useSelector(getBasketSavePending)
   const order = useSelector(getBasketOrderDetails)
-  const productRecipePairings = useSelector(getProductsRecipePairingsWithRecipes)
-  const productRecipePairingsTotalProducts = useSelector(getProductRecipePairingsTotalProducts)
   const orderWhenStartDate = useSelector(getOrderWhenStartDateFormatted)
 
   useEffect(() => {
-    if (
-      pairingsExperimentEnabled === true &&
-      productRecipePairings.size > 0 &&
-      productRecipePairingsTotalProducts > 0
-    ) {
-      dispatch(trackPairingsData(productRecipePairingsTotalProducts, productRecipePairings.size))
-
-      const pairings: NavCategories = {
-        pairings: {
-          id: PAIRINGS_CATEGORY_ID,
-          label: PAIRINGS_CATEGORY_NAME,
-          count: productRecipePairingsTotalProducts,
-        },
-      }
-      setExperimentCategories({ ...pairings, ...categoriesForNavBar })
-    }
-  }, [
-    pairingsExperimentEnabled,
-    productRecipePairingsTotalProducts,
-    categoriesForNavBar,
-    productRecipePairings?.size,
-    dispatch,
-  ])
-
-  useEffect(() => {
-    if (pairingsExperimentEnabled === true) {
-      setTrackingCategoryTitle(PAIRINGS_CATEGORY_NAME)
-    }
-
-    if (pairingsExperimentEnabled !== null && bundlesExperimentEnabled !== null) {
-      setIsLoading(false)
-    }
-  }, [pairingsExperimentEnabled, bundlesExperimentEnabled])
-
-  useEffect(() => {
-    if (bundlesExperimentEnabled && pairingsExperimentEnabled === false) {
+    if (bundlesExperimentEnabled !== null) setIsLoading(false)
+    if (bundlesExperimentEnabled) {
       const productBundles = getBundles(orderWhenStartDate)
       if (productBundles.length > 0) {
         const occasions: NavCategories = {
@@ -125,7 +78,7 @@ const Market = (props: Props) => {
         setBundlesProducts(productBundles)
       }
     }
-  }, [bundlesExperimentEnabled, pairingsExperimentEnabled, categoriesForNavBar, orderWhenStartDate])
+  }, [bundlesExperimentEnabled, categoriesForNavBar, orderWhenStartDate])
 
   const toggleOrderSummary = () => {
     setIsOrderSummaryOpen(!isOrderSummaryOpen)
@@ -143,15 +96,11 @@ const Market = (props: Props) => {
     if (!Object.keys(products).length || !selectedFilterCategory) return
 
     let chosenCategoryProducts: FilteredProducts = {}
-    let numOfProducts = 0
 
     setTrackingCategoryTitle(selectedFilterCategory.label)
 
     if (categoryId === ALL_PRODUCTS_CATEGORY_ID) {
       chosenCategoryProducts = products
-      numOfProducts = Object.keys(products).length
-    } else if (categoryId === PAIRINGS_CATEGORY_ID) {
-      numOfProducts = productRecipePairingsTotalProducts
     } else {
       Object.keys(products).forEach((productId) => {
         const productCategories = products[productId].categories
@@ -166,9 +115,10 @@ const Market = (props: Props) => {
             }
           })
         }
-        numOfProducts = Object.keys(chosenCategoryProducts).length
       })
     }
+
+    const numOfProducts = Object.keys(chosenCategoryProducts).length
 
     dispatch(
       filterProductCategory(
@@ -207,7 +157,6 @@ const Market = (props: Props) => {
         toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
         bundlesProducts={bundlesProducts}
         trackingCategory={trackingCategoryTitle}
-        productRecipePairings={productRecipePairings}
         isLoading={isLoading}
       />
     </ProductNavBarProvider>

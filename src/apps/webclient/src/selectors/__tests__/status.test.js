@@ -4,8 +4,6 @@ import {
   getBasketNotValidError,
   createGetActionTypeIsPending,
   createGetErrorForActionType,
-  getProductRecipePairingsPending,
-  getProductRecipePairingsError,
 } from '../status'
 
 describe('status selectors', () => {
@@ -63,30 +61,6 @@ describe('status selectors', () => {
     test('then it should return a selector that when called, extracts the proper "pending" value', () => {
       expect(createGetActionTypeIsPending(actionTypes.PROMO_GET)(state)).toBe(false)
       expect(createGetActionTypeIsPending(actionTypes.BASKET_CHECKOUT)(state)).toBe(true)
-    })
-  })
-
-  describe('given getProductRecipePairingsPending is called', () => {
-    const state = {
-      pending: Immutable.Map({
-        [actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE]: false,
-      }),
-    }
-
-    test('then it should return a correct pending status', () => {
-      expect(getProductRecipePairingsPending(state)).toBe(false)
-    })
-  })
-
-  describe('given getProductRecipePairingsError is called', () => {
-    const state = {
-      error: Immutable.Map({
-        [actionTypes.PRODUCTS_RECIPE_PAIRINGS_RECIEVE]: 'some-error',
-      }),
-    }
-
-    test('then it should return a correct pending status', () => {
-      expect(getProductRecipePairingsError(state)).toBe('some-error')
     })
   })
 })

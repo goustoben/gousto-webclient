@@ -3,7 +3,7 @@ import config from 'config/products'
 import {
   withMockEnvironmentAndDomain
 } from '_testing/isomorphic-environment-test-utils'
-import { fetchProduct, fetchProductCategories, fetchProducts, fetchRandomProducts, fetchProductStock, fetchRecipePairingsProducts } from '../products'
+import { fetchProduct, fetchProductCategories, fetchProducts, fetchRandomProducts, fetchProductStock } from '../products'
 
 const mockFetchResult = { data: [1, 2, 3] }
 
@@ -18,8 +18,7 @@ jest.mock('utils/fetch', () => ({
 jest.mock('config/routes', () => ({
   products: {
     categories: '/categories',
-    getProducts: '/getProducts',
-    recipePairings: '/recipe_pairings'
+    getProducts: '/getProducts'
   },
   core: {
     productStock: '/productStock'
@@ -148,22 +147,6 @@ describe('products api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchProductStock('token')
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('fetchRecipePairingsProducts', () => {
-    const mockRecipeIds = ['1234', '5678']
-    const mockMenuStartDate = '2022-05-10T11:00:00Z'
-
-    test('should fetch the correct url', async () => {
-      await fetchRecipePairingsProducts('token', mockRecipeIds, mockMenuStartDate)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/recipe_pairings?recipeIds[]=1234&recipeIds[]=5678&menuStartDate=2022-05-10T11:00:00Z', {}, 'GET')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchRecipePairingsProducts('token', mockRecipeIds, mockMenuStartDate)
       expect(result).toEqual(mockFetchResult)
     })
   })
