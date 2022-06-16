@@ -19,14 +19,8 @@ export const basketUpdateProducts =
     const orderId = getBasketOrderId(state)
 
     try {
-      const marketPlaceUpdate = true
-      const { data: order } = await orderV2.updateOrder(
-        dispatch,
-        getState,
-        orderId,
-        null,
-        marketPlaceUpdate,
-      )
+      await orderV2.patchOrderProducts(dispatch, getState, orderId)
+      const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId)
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {

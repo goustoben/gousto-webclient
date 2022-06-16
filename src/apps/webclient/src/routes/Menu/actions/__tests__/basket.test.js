@@ -8,20 +8,24 @@ import * as trackingKeys from '../../../../actions/trackingKeys'
 import * as orderV2 from '../../apis/orderV2'
 import { basketUpdateProducts } from '../basket'
 
+jest.mock('utils/logger', () => ({
+  error: jest.fn(),
+}))
 describe('basketUpdateProducts', () => {
   let dispatch
   let getStateSpy
-  let updateOrderSpy
+  let patchOrderProductsSpy
+  let fetchOrderSpy
 
   beforeEach(() => {
     dispatch = jest.fn()
     getStateSpy = jest.fn().mockReturnValue({
       basket: Immutable.fromJS({
         orderId: '1234',
-        products: {
-          'product-1': 2,
-          'product-2': 1,
-        },
+        products: [
+          { itemableId: 'product-1', quantity: 2 },
+          { itemableId: 'product-2', quantity: 1 },
+        ],
       }),
       auth: Immutable.Map({ accessToken: '12234' }),
       temp: Immutable.Map({
@@ -29,7 +33,11 @@ describe('basketUpdateProducts', () => {
       }),
     })
 
-    updateOrderSpy = jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn())
+    patchOrderProductsSpy = jest.spyOn(orderV2, 'patchOrderProducts').mockImplementation(jest.fn())
+    fetchOrderSpy = jest.spyOn(orderV2, 'fetchOrder').mockImplementation(jest.fn())
+    jest.mock('utils/logger', () => ({
+      error: jest.fn(),
+    }))
   })
 
   afterEach(() => {
@@ -37,22 +45,30 @@ describe('basketUpdateProducts', () => {
   })
 
   describe('when update is successful', () => {
-    const order = {
-      id: '1234',
-      products: [
-        { id: 1, itemableId: 'product-1', quantity: 2 },
-        { id: 2, itemableId: 'product-2', quantity: 1 },
+    const orderProducts = {
+      data: [
+        { id: 'product-1', meta: { quantity: 2 } },
+        { id: 'product-2', meta: { quantity: 1 } },
       ],
     }
 
+    const order = {
+      data: {
+        id: '1234',
+        products: orderProducts.data,
+      },
+    }
+
     test('should call updateOrderItems api with products', async () => {
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+      patchOrderProductsSpy.mockReturnValue(Promise.resolve(orderProducts))
+      fetchOrderSpy.mockReturnValue(Promise.resolve(order))
 
       await basketUpdateProducts()(dispatch, getStateSpy)
     })
 
     test('should dispatch correct pending and action events for BASKET_CHECKOUT', async () => {
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+      patchOrderProductsSpy.mockReturnValue(Promise.resolve(orderProducts))
+      fetchOrderSpy.mockReturnValue(Promise.resolve(order))
 
       await basketUpdateProducts()(dispatch, getStateSpy)
 
@@ -63,10 +79,15 @@ describe('basketUpdateProducts', () => {
         value: true,
       })
       expect(dispatch).toBeCalledWith({
+        type: actionTypes.ERROR,
+        key: actionTypes.BASKET_CHECKOUT,
+        value: false,
+      })
+      expect(dispatch).toBeCalledWith({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {
           actionType: trackingKeys.checkOutBasketAttempt,
-          order,
+          order: order.data,
         },
       })
       expect(dispatch).toBeCalledWith({
@@ -77,20 +98,22 @@ describe('basketUpdateProducts', () => {
     })
 
     test('should dispatch BASKET_ORDER_DETAILS_LOADED action with the orderDetails', async () => {
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+      patchOrderProductsSpy.mockReturnValue(Promise.resolve(orderProducts))
+      fetchOrderSpy.mockReturnValue(Promise.resolve(order))
 
       await basketUpdateProducts()(dispatch, getStateSpy)
 
       expect(dispatch).toBeCalledTimes(7)
       expect(dispatch).toBeCalledWith({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
-        orderId: order.id,
-        orderDetails: Immutable.fromJS(order),
+        orderId: order.data.id,
+        orderDetails: Immutable.fromJS(order.data),
       })
     })
 
     test('should dispatch orderConfirmationUpdateOrderTrackingSpy if isOrderConfirmation true', async () => {
-      updateOrderSpy.mockReturnValue(Promise.resolve({ data: order }))
+      patchOrderProductsSpy.mockReturnValue(Promise.resolve(orderProducts))
+      fetchOrderSpy.mockReturnValue(Promise.resolve(order))
       const orderConfirmationUpdateOrderTrackingSpy = jest.spyOn(
         orderConfirmationActions,
         'orderConfirmationUpdateOrderTracking',
@@ -108,7 +131,7 @@ describe('basketUpdateProducts', () => {
 
     beforeEach(() => {
       dispatch = jest.fn()
-      updateOrderSpy.mockReturnValue(Promise.reject(new Error({ e: 'Error' })))
+      patchOrderProductsSpy.mockReturnValue(Promise.reject(new Error('Error')))
       loggerErrorSpy = jest.spyOn(utilsLogger, 'error')
     })
 
@@ -116,16 +139,16 @@ describe('basketUpdateProducts', () => {
       try {
         await basketUpdateProducts()(dispatch, getStateSpy)
       } catch (e) {
-        expect(updateOrderSpy).toHaveBeenCalledTimes(1)
+        expect(patchOrderProductsSpy).toHaveBeenCalledTimes(1)
         expect(dispatch).toBeCalledWith({
           type: actionTypes.ERROR,
           key: actionTypes.BASKET_CHECKOUT,
-          value: false,
+          value: true,
         })
         expect(dispatch).toBeCalledWith({
           type: actionTypes.PENDING,
           key: actionTypes.BASKET_CHECKOUT,
-          value: true,
+          value: false,
         })
       }
     })
@@ -137,7 +160,7 @@ describe('basketUpdateProducts', () => {
         expect(loggerErrorSpy).toHaveBeenCalledTimes(1)
         expect(loggerErrorSpy).toHaveBeenCalledWith({
           message: 'Error saving order',
-          errors: [new Error({ e: 'Error' })],
+          errors: [new Error('Error')],
         })
       }
     })
