@@ -1,8 +1,6 @@
 import React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx, CSSObject } from "@emotion/react";
+import { css, CSSObject } from "@emotion/react";
 
 import { useRecipe } from "../../model/context";
 import { screen, typography } from "../../styles";

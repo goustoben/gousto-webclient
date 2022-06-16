@@ -1,9 +1,7 @@
 import React, { SyntheticEvent } from "react";
 import PropTypes from "prop-types";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 
 import { useBasketHook } from "../../model/context/useBasket";
 import { useSetBrowserCTAVisibilityHook } from "../../model/context/useSetBrowserCTAVisibility";

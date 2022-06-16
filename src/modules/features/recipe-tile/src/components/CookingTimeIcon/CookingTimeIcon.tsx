@@ -1,8 +1,6 @@
 import React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 
 import { useRecipeCookingTime } from "../../model/recipe";
 import { getPercentageFromCookingTime } from "./getPercentageFromCookingTime";

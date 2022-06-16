@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react'
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 
 import PropTypes from 'prop-types'
 

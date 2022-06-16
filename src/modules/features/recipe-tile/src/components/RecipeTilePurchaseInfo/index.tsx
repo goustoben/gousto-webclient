@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 
 import { SwapAlternativeOptions } from "../SwapAlternativeOptions/SwapAlternativeOptions";
 import {
