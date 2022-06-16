@@ -5,7 +5,9 @@ import { mount } from 'enzyme'
 import * as Redux from 'react-redux'
 
 import { marketBundleTracking } from 'actions/orderConfirmation'
+import { marketBundleAdded } from 'actions/trackingKeys'
 import { mockBundlesData } from 'routes/OrderConfirmation/components/config'
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
 import { ProductBundle } from '..'
 
@@ -17,6 +19,10 @@ jest.mock('react-redux', () => ({
 jest.mock('actions/orderConfirmation', () => ({
   ...jest.requireActual('actions/orderConfirmation'),
   marketBundleTracking: jest.fn(),
+}))
+
+jest.mock('utils/hotjarUtils', () => ({
+  invokeHotjarEvent: jest.fn(),
 }))
 
 describe('<ProductBundle />', () => {
@@ -53,6 +59,7 @@ describe('<ProductBundle />', () => {
     test('Should open FakeDoorModal on clicking Add', () => {
       wrapper.find('button.css-e3js9t-Button').simulate('click')
       expect(dispatch).toBeCalledWith(marketBundleTracking)
+      expect(invokeHotjarEvent).toBeCalledWith(marketBundleAdded)
     })
   })
   describe('When product is missing image', () => {

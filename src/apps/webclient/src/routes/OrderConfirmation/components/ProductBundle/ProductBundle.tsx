@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux'
 import { marketBundleTracking } from 'actions/orderConfirmation'
 import { marketBundleAdded, marketBundleDetails } from 'actions/trackingKeys'
 import { BundleProduct } from 'routes/OrderConfirmation/types'
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
 import { FakeDoorModal } from '../FakeDoorModal/FakeDoorModal'
 import { NewTag } from '../NewTag/NewTag'
@@ -55,6 +56,7 @@ const ProductBundle = ({ bundleProduct, getFilteredProducts }: Props) => {
   }
 
   const handleFakeDoorPress = () => {
+    invokeHotjarEvent(marketBundleAdded)
     dispatch(marketBundleTracking(marketBundleAdded, bundleProduct))
     toggleFakeDoorModal()
   }
