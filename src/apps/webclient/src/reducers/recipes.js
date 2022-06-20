@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 
-const recipes = {
+export const recipesReducers = {
   recipes: (state = Immutable.Map({}), action) => {
     switch (action.type) {
     case actionTypes.RECIPES_RECEIVE: {
@@ -29,5 +29,3 @@ const recipes = {
     }
   },
 }
-
-export default recipes

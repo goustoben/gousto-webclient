@@ -1,4 +1,4 @@
-const config = {
+export const recipesConfig = {
   range: {
     imageTypes: [
       'range-main-image',
@@ -50,5 +50,3 @@ const config = {
   newRecipes: 'New recipes',
   recipeDetailViews: ['detail', 'fineDineInDetail'],
 }
-
-export default config

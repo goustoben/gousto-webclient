@@ -1,5 +1,5 @@
 import config from 'config'
-import MainLayout from 'layouts/MainLayout'
+import { MainLayout } from 'layouts/MainLayout'
 import { PrivacyStatement } from '../PrivacyStatement/PrivacyStatement'
 import { routes } from '../routes'
 const { match, createMemoryHistory } = require('react-router')

@@ -14,10 +14,10 @@ import {
 } from '@gousto-internal/citrus-react'
 import Loading from 'Loading'
 import { PricePerServingMessage } from 'PricePerServingMessage'
-import Receipt from 'Receipt'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
+import { Receipt } from 'components/Receipt'
 import { basketSum } from 'utils/basket'
 import { getSurchargeItems } from 'utils/pricing'
 

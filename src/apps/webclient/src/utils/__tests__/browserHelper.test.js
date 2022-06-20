@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import browserHelper, { canUseDom } from '../browserHelper'
+import { browserHelperUtils, canUseDom } from '../browserHelper'
 
 let windowSpy
 
@@ -33,7 +33,7 @@ describe('Browser Helper', () => {
     })
 
     test('should exist', () => {
-      expect(typeof browserHelper.isChrome).toBe('function')
+      expect(typeof browserHelperUtils.isChrome).toBe('function')
     })
 
     test('should return true if userAgent is chrome', () => {
@@ -41,7 +41,7 @@ describe('Browser Helper', () => {
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
       navigator.userAgent = chromeUserAgent
 
-      expect(browserHelper.isChrome()).toBe(true)
+      expect(browserHelperUtils.isChrome()).toBe(true)
     })
 
     test('should return false if userAgent is not chrome', () => {
@@ -49,7 +49,7 @@ describe('Browser Helper', () => {
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:62.0) Gecko/20100101 Firefox/62.0'
       navigator.userAgent = firefoxUserAgent
 
-      expect(browserHelper.isChrome()).toBe(false)
+      expect(browserHelperUtils.isChrome()).toBe(false)
     })
   })
 

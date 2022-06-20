@@ -1,7 +1,6 @@
 import auth from './auth'
 import basket from './basket'
 import { checkoutActions } from './checkout'
-import filters from './filters'
 import * as log from './log'
 import login from './login'
 import menu from './menu'
@@ -28,7 +27,6 @@ const actions = {
   ...basket,
   ...checkoutActions,
   ...collectionsLoadCollectionBySlug,
-  ...filters,
   ...log,
   ...login,
   ...menu,

@@ -4,7 +4,7 @@ import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponen
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
-import Receipt from 'components/Receipt'
+import { Receipt } from 'components/Receipt'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import { basketSum } from 'utils/basket'
 import { getSurchargeItems } from 'utils/pricing'

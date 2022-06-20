@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Icon from 'Icon'
+import { Icon } from 'components/Icon'
 import { Arrow } from 'Tutorial/Tooltip/Arrow'
 
 import { Tooltip } from 'Tutorial/Tooltip'

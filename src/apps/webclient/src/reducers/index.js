@@ -4,20 +4,20 @@ import { appBanner } from './appBanner'
 import { accountReducers } from './account'
 import auth from './auth'
 import basket from './basket'
-import boxSummary from './boxSummary'
+import { boxSummaryReducers } from './boxSummary'
 import { checkoutReducers } from './checkout'
 import content from './content'
 import { cookbookRecipes } from './cookbookRecipes'
 import { featuresReducers } from './features'
-import filters from './filters'
+import { filtersReducers } from './filters'
 import { loginReducers } from './login'
-import menu from './menu'
+import { menuReducers } from './menu'
 import { newsletterReducers } from './newsletter'
 import { payment } from './payment'
 import { persistReducers } from './persist'
 import { productsReducers } from './products'
 import { promosReducers } from './promos'
-import recipes from './recipes'
+import { recipesReducers } from './recipes'
 import { redirectReducers } from './redirect'
 import { serverErrorReducers } from './serverError'
 import { signup } from './signup'
@@ -29,7 +29,7 @@ import { trackingReducers } from './tracking'
 import { tutorial } from './tutorial'
 import user from './user'
 import { requestReducers } from './request'
-import collections from './collections'
+import { collectionsReducers } from './collections'
 import { cookiesReducers } from './cookies'
 import { onScreenRecoveryReducers } from './onScreenRecovery'
 import { getHelp } from './getHelp'
@@ -47,20 +47,20 @@ export const reducers = {
   ...accountReducers,
   ...auth,
   ...basket,
-  ...boxSummary,
+  ...boxSummaryReducers,
   ...checkoutReducers,
   ...checkoutUrgencyReducers,
-  ...collections,
+  ...collectionsReducers,
   ...cookbookRecipes,
   ...cookiesReducers,
   ...content,
   ...feedback,
   ...featuresReducers,
-  ...filters,
+  ...filtersReducers,
   ...loginReducers,
   logger,
   loggingManager,
-  ...menu,
+  ...menuReducers,
   menuService,
   myGousto,
   ...newsletterReducers,
@@ -68,7 +68,7 @@ export const reducers = {
   ...persistReducers,
   ...productsReducers,
   ...promosReducers,
-  ...recipes,
+  ...recipesReducers,
   ...redirectReducers,
   ...serverErrorReducers,
   ...signup,

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { onEnter } from 'utils/accessibility'
 
-import Icon from 'Icon'
+import { Icon } from 'components/Icon'
 import { Arrow } from './Arrow'
 
 import css from './Tooltip.css'

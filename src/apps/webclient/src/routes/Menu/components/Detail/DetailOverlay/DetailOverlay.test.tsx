@@ -6,7 +6,7 @@ import * as Redux from 'react-redux'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import Modal from 'components/Modal'
+import { Modal } from 'components/Modal'
 
 import { closeRecipeDetails } from '../../../actions/closeRecipeDetails'
 import { DetailContainer } from '../DetailContainer'

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 import Helmet from 'react-helmet'
 import { client } from 'config/routes'
-import MainLayout from 'layouts/MainLayout'
+import { MainLayout } from 'layouts/MainLayout'
 import { routes } from 'routes'
 
 import { ModernSlaveryStatement } from '../ModernSlaveryStatement'

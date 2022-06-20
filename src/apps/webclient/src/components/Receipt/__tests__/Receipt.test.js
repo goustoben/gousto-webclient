@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import Receipt from '../Receipt'
+import { Receipt } from '../Receipt'
 import { ReceiptLine } from '../ReceiptLine'
 import { DeliveryDetails } from '../DeliveryDetails'
 

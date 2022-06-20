@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { onEnter } from 'utils/accessibility'
 
-import Icon from 'Icon'
+import { Icon } from 'components/Icon'
 import { Spotlight } from 'Spotlight'
 import { Tooltip } from 'Tutorial/Tooltip'
 

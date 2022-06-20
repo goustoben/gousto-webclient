@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import menu, { menuInitialState } from 'reducers/menu'
+import { menuReducers, menuInitialState } from 'reducers/menu'
 import { isServer } from '../../../server/utils/serverEnvironment'
 import {
   clearSelectedRecipeVariants,
@@ -19,18 +19,18 @@ describe('menu reducer', () => {
 
   describe('menu', () => {
     test('initial state', () => {
-      expect(menu.menu(undefined, {})).toEqual(menuInitialState)
+      expect(menuReducers.menu(undefined, {})).toEqual(menuInitialState)
     })
 
     test('unknown actions', () => {
-      const result = menu.menu(menuInitialState, { type: 'unknown' })
+      const result = menuReducers.menu(menuInitialState, { type: 'unknown' })
 
       expect(result).toEqual(menuInitialState)
     })
 
     describe('MENU_FORCE_LOAD', () => {
       test('forceLoad set to true in the state', () => {
-        const result = menu.menu(menuInitialState, {
+        const result = menuReducers.menu(menuInitialState, {
           type: actionTypes.MENU_FORCE_LOAD,
           forceLoad: true
         })
@@ -41,7 +41,7 @@ describe('menu reducer', () => {
 
     describe('MENU_FETCH_PARAMS', () => {
       test('menuVariant and accessToken set to value received in the state', () => {
-        const result = menu.menu(menuInitialState, {
+        const result = menuReducers.menu(menuInitialState, {
           type: actionTypes.MENU_FETCH_PARAMS,
           accessToken: 'access-token',
           menuVariant: 'variant-b'
@@ -125,7 +125,7 @@ describe('menu reducer', () => {
             }
           ]
         }
-        const result = menu.menu(menuInitialState, {
+        const result = menuReducers.menu(menuInitialState, {
           type: actionTypes.MENU_SERVICE_DATA_RECEIVED,
           response: menuResponse
         })
@@ -152,7 +152,7 @@ describe('menu reducer', () => {
           menuVariants: {}
         })
 
-        const result = menu.menu(initialState, {
+        const result = menuReducers.menu(initialState, {
           type: actionTypes.MENU_SERVICE_DATA_RECEIVED,
           response: { data: [] }
         })
@@ -171,7 +171,7 @@ describe('menu reducer', () => {
         const action = selectRecipeVariantAction(recipeId, variantId, collectionId, false, false)
 
         test('should set selectedRecipeVariant entry to null', () => {
-          const result = menu.menu(menuInitialState, action)
+          const result = menuReducers.menu(menuInitialState, action)
 
           const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: { [recipeId]: variantId } })
 
@@ -185,7 +185,7 @@ describe('menu reducer', () => {
         const action = selectRecipeVariantAction(recipeId, variantId, collectionId, false, false)
 
         test('should set selectedRecipeVariant entry to the selected id', () => {
-          const result = menu.menu(menuInitialState, action)
+          const result = menuReducers.menu(menuInitialState, action)
 
           const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: { [recipeId]: variantId } })
 
@@ -208,7 +208,7 @@ describe('menu reducer', () => {
       test('should set selectedRecipeVariants to empty object', () => {
         const action = clearSelectedRecipeVariants()
 
-        const result = menu.menu(stateWithSelectedVariants, action)
+        const result = menuReducers.menu(stateWithSelectedVariants, action)
         expect(result).toEqual(expectedState)
       })
     })
@@ -219,7 +219,7 @@ describe('menu reducer', () => {
 
         const action = initSelectedRecipeVariantAction(selectedRecipeVariants)
 
-        const result = menu.menu(menuInitialState, action)
+        const result = menuReducers.menu(menuInitialState, action)
 
         const expectedState = menuInitialState.set('selectedRecipeVariants', selectedRecipeVariants)
 
@@ -229,7 +229,7 @@ describe('menu reducer', () => {
 
     describe('MENU_CALCULATE_TIME_TO_USABLE', () => {
       test('should set hasCalculatedTimeToUsable to true', () => {
-        const result = menu.menu(menuInitialState, trackTimeToUsable(123, 456))
+        const result = menuReducers.menu(menuInitialState, trackTimeToUsable(123, 456))
 
         expect(result.get('hasCalculatedTimeToUsable')).toBeTruthy()
       })
@@ -237,7 +237,7 @@ describe('menu reducer', () => {
 
     describe('MENU_PREFETCHED', () => {
       test('should set menuPrefetched to true', () => {
-        const result = menu.menu(menuInitialState, setMenuPrefetched(true))
+        const result = menuReducers.menu(menuInitialState, setMenuPrefetched(true))
 
         expect(result.get('menuPrefetched')).toBe(true)
       })
@@ -257,7 +257,7 @@ describe('menu reducer', () => {
 
         describe('when landing on the menu first', () => {
           beforeEach(() => {
-            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
+            result = menuReducers.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
           })
           // trigger first reducer action
           describe('and not going elsewhere', () => {
@@ -267,7 +267,7 @@ describe('menu reducer', () => {
           })
           describe('and user goes to a non menu page', () => {
             beforeEach(() => {
-              result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'PUSH' } })
+              result = menuReducers.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'PUSH' } })
             })
 
             test('should set to true', () => {
@@ -276,7 +276,7 @@ describe('menu reducer', () => {
           })
           describe('and user goes to the menu', () => {
             beforeEach(() => {
-              result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
+              result = menuReducers.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
             })
 
             // trigger secod reducer action
@@ -288,7 +288,7 @@ describe('menu reducer', () => {
 
         describe('when landing on the home page first', () => {
           beforeEach(() => {
-            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'POP' } })
+            result = menuReducers.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'POP' } })
           })
           // trigger first reducer action
           describe('and not going elsewhere', () => {
@@ -298,7 +298,7 @@ describe('menu reducer', () => {
           })
           describe('and go to the menu', () => {
             beforeEach(() => {
-              result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'PUSH' } })
+              result = menuReducers.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'PUSH' } })
             })
 
             // trigger secod reducer action
@@ -312,7 +312,7 @@ describe('menu reducer', () => {
       describe('when on the server', () => {
         beforeEach(() => {
           isServer.mockReturnValue(true)
-          result = menu.menu(result, {
+          result = menuReducers.menu(result, {
             type: '@@router/LOCATION_CHANGE',
             payload: { pathname: '/menu', action: 'POP' },
           })
@@ -332,7 +332,7 @@ describe('menu reducer', () => {
       })
 
       it('should set menuLoadingErrorMessage to the argument of action', () => {
-        result = menu.menu(result, menuLoadingError('cannot load menu'))
+        result = menuReducers.menu(result, menuLoadingError('cannot load menu'))
         expect(result.get('menuLoadingErrorMessage')).toBe('cannot load menu')
       })
     })
@@ -340,20 +340,20 @@ describe('menu reducer', () => {
 
   describe('menuCutoffUntil', () => {
     test('initial state', () => {
-      const result = menu.menuCutoffUntil('', {})
+      const result = menuReducers.menuCutoffUntil('', {})
 
       expect(result).toEqual('')
     })
 
     test('unknown actions', () => {
-      const result = menu.menuCutoffUntil('', { type: 'unknown' })
+      const result = menuReducers.menuCutoffUntil('', { type: 'unknown' })
 
       expect(result).toEqual('')
     })
 
     describe('MENU_CUTOFF_UNTIL_RECEIVE', () => {
       test('cutoffUntil set to value received in state', () => {
-        const result = menu.menuCutoffUntil('', {
+        const result = menuReducers.menuCutoffUntil('', {
           type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
           cutoffUntil: '2020-02-20'
         })
@@ -367,7 +367,7 @@ describe('menu reducer', () => {
     describe('when action type MENU_RECIPE_DETAIL_VISIBILITY_CHANGE', () => {
       test('should set menuRecipeDetails', () => {
         const recipeId = '123'
-        const result = menu.menuRecipeDetails(Immutable.Map({}), {
+        const result = menuReducers.menuRecipeDetails(Immutable.Map({}), {
           type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
           recipeId
         })
@@ -378,7 +378,7 @@ describe('menu reducer', () => {
       describe('when categoryId is defined in state and action does not have categoryId', () => {
         test('should set menuRecipeDetails', () => {
           const recipeId = '123'
-          const result = menu.menuRecipeDetails(Immutable.Map({ categoryId: 'category'}), {
+          const result = menuReducers.menuRecipeDetails(Immutable.Map({ categoryId: 'category'}), {
             type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
             recipeId
           })
@@ -395,7 +395,7 @@ describe('menu reducer', () => {
         const recipeId = '123'
         const categoryId = 'category1'
         const recipeReference = 'reference_to_123'
-        const result = menu.menuRecipeDetails(Immutable.Map({}), {
+        const result = menuReducers.menuRecipeDetails(Immutable.Map({}), {
           type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
           recipeId,
           categoryId,
@@ -412,7 +412,7 @@ describe('menu reducer', () => {
 
   describe('menuBoxPrices', () => {
     test('should return menuPrices', () => {
-      const result = menu.menuBoxPrices(Immutable.Map({}), {
+      const result = menuReducers.menuBoxPrices(Immutable.Map({}), {
         type: actionTypes.MENU_BOX_PRICES_RECEIVE,
         prices: {
           items: []
@@ -427,7 +427,7 @@ describe('menu reducer', () => {
   describe('menuSidesModalOpen', () => {
     describe('when MENU_OPEN_SIDES_MODAL action is sent', () => {
       test('should return menuSidesModalOpen as true', () => {
-        const result = menu.menuSidesModalOpen(Immutable.Map({}), {
+        const result = menuReducers.menuSidesModalOpen(Immutable.Map({}), {
           type: actionTypes.MENU_OPEN_SIDES_MODAL,
         })
 
@@ -437,7 +437,7 @@ describe('menu reducer', () => {
 
     describe('when MENU_CLOSE_SIDES_MODAL action is sent', () => {
       test('should return menuSidesModalOpen as false', () => {
-        const result = menu.menuSidesModalOpen(Immutable.Map({}), {
+        const result = menuReducers.menuSidesModalOpen(Immutable.Map({}), {
           type: actionTypes.MENU_CLOSE_SIDES_MODAL,
         })
 
@@ -448,7 +448,7 @@ describe('menu reducer', () => {
 
   describe('menuRecipes', () => {
     test('should return menuRecipes', () => {
-      const result = menu.menuRecipes(Immutable.List([]), {
+      const result = menuReducers.menuRecipes(Immutable.List([]), {
         type: actionTypes.RECIPES_RECEIVE,
         recipes: [{
           id: 1

@@ -1,2 +1,2 @@
 import { MainLayoutContainer } from './MainLayoutContainer'
-export default MainLayoutContainer
+export { MainLayoutContainer as MainLayout }

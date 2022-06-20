@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Modal from 'components/Modal'
+import { Modal } from 'components/Modal'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 import { getSurcharge } from 'utils/recipe'
 

@@ -6,7 +6,7 @@ import Immutable from 'immutable'
 import * as basketUtils from 'utils/basket'
 
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
-import BoxSummary from './BoxSummary'
+import { BoxSummary } from './BoxSummary'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
 

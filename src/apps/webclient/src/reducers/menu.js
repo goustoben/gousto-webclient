@@ -18,7 +18,7 @@ export const menuInitialState = Immutable.Map({
   menuLoadingErrorMessage: '',
 })
 
-const menu = {
+export const menuReducers = {
   menu: (state = menuInitialState, action) => {
     switch (action.type) {
     case actionTypes.MENU_FORCE_LOAD: {
@@ -259,6 +259,3 @@ const menu = {
   },
 
 }
-
-// eslint-disable-next-line import/no-default-export
-export default menu

@@ -4,7 +4,7 @@ import { LayoutContentWrapper } from 'goustouicomponents'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
-import Item from 'components/Item'
+import { Item } from 'components/Item'
 import { isAvailableRecipeList } from 'utils/recipe'
 
 import { UnavailableMessage } from '../UnavailableMessage'

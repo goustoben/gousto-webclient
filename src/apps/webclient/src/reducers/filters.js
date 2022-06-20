@@ -6,7 +6,7 @@ export const initialState = () => Immutable.Map({
 
 const previousState = initialState()
 
-const filters = {
+export const filtersReducers = {
   filters: (state, action) => {
     if (!state) {
       return initialState()
@@ -29,5 +29,3 @@ const filters = {
     }
   },
 }
-
-export default filters

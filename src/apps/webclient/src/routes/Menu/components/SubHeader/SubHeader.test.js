@@ -6,7 +6,7 @@ import sinon from 'sinon'
 import config from 'config/menu'
 
 import { DeliveryInfo } from './DeliveryInfo'
-import InfoToggle from './InfoToggle'
+import { InfoToggle } from './InfoToggle'
 import { SubHeader } from './SubHeader'
 
 jest.mock('containers/OptimizelyRollouts', () => ({

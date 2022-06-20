@@ -61,9 +61,3 @@ export const filterProductCategory = (eventName, eventAction, eventType, primary
     dispatch(trackProductFiltering(eventName, eventAction, eventType, primaryCategory, productsPerCategory))
   }
 )
-
-export default {
-  collectionFilterChange,
-  collectionFilterIdReceive,
-  changeCollectionById
-}

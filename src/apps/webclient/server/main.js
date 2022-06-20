@@ -18,7 +18,7 @@ const { FooterContainer } = require('Footer')
 const { Provider } = require('react-redux')
 const app = new Koa()
 
-const MainLayout = require('layouts/MainLayout').default
+const { MainLayout } = require('layouts/MainLayout')
 const ErrorPage = require('components/ErrorPage').default
 const { Page } = require('containers/Page')
 const { Helmet } = require('react-helmet')
