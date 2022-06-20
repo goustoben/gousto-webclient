@@ -107,36 +107,32 @@ class EditDate extends React.PureComponent {
 
     return (
       <div className={css.editDeliveryOuterContainer}>
-        <div className={css.editDeliveryInnerContainer}>
-          <div className={css.row}>
-            <div className={css.dropDownContainer}>
-              <DropdownInput
-                options={deliveryDaysOptions}
-                onChange={(dayId) => this.onDayChange(dayId, slotsOptions)}
-                className={css.daysDropDown}
-                value={selectedDeliveryDayId}
-              />
-            </div>
-            <div className={css.dropDownContainer}>
-              <DropdownInput
-                options={slotsOptions[selectedDeliveryDayId]}
-                onChange={(slotId) => this.onSlotChange(slotId)}
-                className={css.slotsDropDown}
-                value={selectedDeliverySlotId}
-              />
-            </div>
+        <div className={css.row}>
+          <div className={css.dropDownContainer}>
+            <DropdownInput
+              options={deliveryDaysOptions}
+              onChange={(dayId) => this.onDayChange(dayId, slotsOptions)}
+              value={selectedDeliveryDayId}
+            />
           </div>
-          <Button
-            onClick={() => this.onSubmitFunction()}
-            color="secondary"
-            width="full"
-            noDecoration
-            pending={isPendingUpdateDayAndSlot}
-            disabled={!canSubmit}
-          >
-            Set delivery slot
-          </Button>
+          <div className={css.dropDownContainer}>
+            <DropdownInput
+              options={slotsOptions[selectedDeliveryDayId]}
+              onChange={(slotId) => this.onSlotChange(slotId)}
+              value={selectedDeliverySlotId}
+            />
+          </div>
         </div>
+        <Button
+          onClick={() => this.onSubmitFunction()}
+          color="secondary"
+          width="full"
+          noDecoration
+          pending={isPendingUpdateDayAndSlot}
+          disabled={!canSubmit}
+        >
+          Set delivery slot
+        </Button>
       </div>
     )
   }
