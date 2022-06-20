@@ -1,5 +1,7 @@
 import { push } from 'react-router-redux'
 
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
+
 import { actionTypes } from '../../../actions/actionTypes'
 import * as trackingKeys from '../../../actions/trackingKeys'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
@@ -16,6 +18,11 @@ export const menuRecipeDetailVisibilityChange =
 
     // If the recipe is a side, then get the base recipe id associated with it and display that instead.
     const baseRecipeId = replaceSideRecipeIdWithBaseRecipeId(getState(), { recipeId })
+    const showRecipeDetails = Boolean(baseRecipeId)
+
+    if (showRecipeDetails) {
+      invokeHotjarEvent(trackingKeys.menuRecipeDetailsShown)
+    }
 
     dispatch({
       type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
@@ -25,7 +32,7 @@ export const menuRecipeDetailVisibilityChange =
       trackingData: {
         actionType: trackingKeys.changeMenuRecipeDetailVisibility,
         recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
-        show: Boolean(baseRecipeId),
+        show: showRecipeDetails,
       },
     })
   }
