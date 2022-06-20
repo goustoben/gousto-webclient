@@ -1,4 +1,4 @@
-# Development setup
+# Development guide
 
 This document is for engineers who would like to make changes to webclient, run it locally, and execute tests.
 
@@ -10,7 +10,8 @@ You should expect first-time-setup to take ~ 1 hour
 - [System pre-requisites](pre-requisites.md)
 - [Setup](setup.md)
 - [Running locally](running-locally.md)
-- [Local testing]
+- [Automated testing](automated-testing.md)
 - [Linting]
 - [Your first PR]
+- [Supporting code in Production]
 - [Code analysis]

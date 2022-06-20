@@ -3,7 +3,7 @@
 This chapter is about running automated tests on your code. It's assumed you've already followed the [setup](setup.md).
 
 - [Unit tests](#unit-tests)
-- [Regression tests]
+- [Regression tests](#regression-tests)
 - [End to end tests]
 
 ## Unit tests
@@ -54,6 +54,8 @@ yw gousto-regression test:debug:web
 yw gousto-regression test:debug:mobile
 ```
 
+These will run Cypress in "headed" mode. Skip the `:debug` for headless.
+
 ### Writing new regression tests
 
 Currently regression tests are only supported for the main webclient.
@@ -65,4 +67,40 @@ Regression tests can use a PageObject-style pattern; this is documented in the
 
 ## End to end suite
 
-( to do )
+We have an e2e suite written in Nightwatch and implemented in `tests/e2e`
+
+> ℹ️ The e2e suite tests webclient in a browser with non-stubbed API requests. It tests whether webclient works 'with'
+> its dependencies
+
+### Running locally
+
+You must first start the [static build](running-locally.md#static-build) on port 80. Then begin Chromedriver:
+
+```shell
+yw gousto-e2e chromedriver:start
+```
+
+In another tab begin the test suite:
+
+```shell
+yw gousto-e2e test
+```
+
+### Staging execution
+
+We run the e2e suite as part of the staging build, after deploying to the staging environment.
+
+These tests run with Datadog monitoring, under the application named **gousto-webclient E2E staging - test**. Datadog
+can inform you of any bad HTTP requests or JavaScript errors to help diagnose breakages in the pipeline.
+
+### Changing the e2e suite
+
+The e2e tests are found under `e2e/tests/systemTests`. Use the custom commands implemented in `e2e/commands`.
+
+You can run your e2e changes against the current staging webclient by pushing to the branch `e2e-manual`:
+
+```shell
+git commit -m "e2e suite changes"
+git checkout e2e-manual; git reset --hard (your branch); git push --force
+git checkout (your branch)
+```
