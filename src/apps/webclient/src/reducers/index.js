@@ -41,7 +41,7 @@ import { feedback } from './feedback'
 import { ribbonReducer } from './ribbonReducer'
 import { myGousto } from './myGousto'
 
-const reducers = {
+export const reducers = {
   ...abandonBasket,
   ...appBanner,
   ...accountReducers,
@@ -85,5 +85,3 @@ const reducers = {
   ...experimentsReducer,
   ...ribbonReducer,
 }
-
-export default reducers

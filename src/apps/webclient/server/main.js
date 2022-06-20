@@ -14,15 +14,15 @@ const koaStatic = require('koa-static')
 const koaMount = require('koa-mount')
 const bodyParser = require('koa-body')
 const { renderToString } = require('react-dom/server')
-const Footer = require('Footer').default
+const { FooterContainer } = require('Footer')
 const { Provider } = require('react-redux')
 const app = new Koa()
 
 const MainLayout = require('layouts/MainLayout').default
 const ErrorPage = require('components/ErrorPage').default
-const Page = require('containers/Page').default
+const { Page } = require('containers/Page')
 const { Helmet } = require('react-helmet')
-const GoustoHelmet = require('Helmet/GoustoHelmet').default
+const { GoustoHelmet } = require('Helmet/GoustoHelmet')
 
 const { clearPersistentStore } = require('middlewares/persist/persistStore')
 
@@ -30,9 +30,9 @@ const withStatic = process.env.withStatic === 'true'
 
 const uuidv1 = require('uuid/v1')
 const { loggerSetUuid } = require('actions/logger')
-const logger = require('./utils/logger').default
+const { logger } = require('./utils/logger')
 const addressLookupRoute = require('./routes/addressLookup').default
-const routes = require('./routes').default
+const { routes } = require('./routes')
 const htmlTemplate = require('./template')
 const { appsRedirect } = require('./middleware/apps')
 const { sessionMiddleware } = require('./middleware/tracking')
@@ -131,7 +131,7 @@ app.use(async (ctx, next) => {
     const { store } = configureHistoryAndStore(ctx.request.url)
     const reactHTML = (
       <Provider store={store}>
-        <Footer simple={Boolean(ctx.request.query.simple)} />
+        <FooterContainer simple={Boolean(ctx.request.query.simple)} />
       </Provider>
     )
     ctx.body = renderToString(reactHTML)

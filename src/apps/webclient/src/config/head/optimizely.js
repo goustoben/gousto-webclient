@@ -1,4 +1,4 @@
-export default {
+export const optimizelyConfig =  {
   local: '7728010866',
   staging: '7728010866',
   radishes: '14571110311',

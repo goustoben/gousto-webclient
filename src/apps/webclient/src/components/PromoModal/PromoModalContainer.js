@@ -1,11 +1,10 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { promoApply , promoToggleModalVisibility, promoResetGoustoOnDemandFlow } from 'actions/promos'
 import Immutable from 'immutable'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { basketPromoCodeChange } from 'actions/basket'
-import { promoToggleModalVisibility, promoResetGoustoOnDemandFlow } from 'actions/promos'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { PromoModal } from './PromoModal'
 import css from './PromoModal.css'
@@ -96,7 +95,7 @@ const mapStateToProps = (state) => {
 }
 
 export const PromoModalContainer = connect(mapStateToProps, {
-  promoApply: actions.promoApply,
+  promoApply,
   trackUTMAndPromoCode,
   closeModal: () => promoToggleModalVisibility(false),
   basketPromoCodeChange,

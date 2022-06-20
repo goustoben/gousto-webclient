@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import config from 'config/head/optimizely'
+import { optimizelyConfig } from 'config/head/optimizely'
 import { canUseWindow } from 'utils/browserEnvironment'
 const htmlTemplate = require('../template')
 
@@ -97,7 +97,7 @@ describe('htmlTemplate', () => {
 
   describe('optimizely', () => {
     // eslint-disable-next-line dot-notation
-    const TEST_ENVIRONMENT = config['local']
+    const TEST_ENVIRONMENT = optimizelyConfig['local']
     const CDN_OPTIMIZELY = `<script src="//cdn.optimizely.com/js/${TEST_ENVIRONMENT}.js" defer></script>`
     beforeEach(() => {
       helmetHead = {}

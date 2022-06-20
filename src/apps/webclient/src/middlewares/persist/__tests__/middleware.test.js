@@ -1,4 +1,4 @@
-import persistenceMiddleware from '../middleware'
+import { persistenceMiddleware } from '../middleware'
 import { persist } from '../persistStore'
 
 jest.mock('../persistStore')

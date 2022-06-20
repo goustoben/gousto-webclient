@@ -1,11 +1,10 @@
-import { promoActions } from 'actions/promos'
+import { promoApplyCheckoutCode } from 'actions/promos'
 import { trackPromocodeChange } from 'actions/checkout'
 
-const { promoApplyCheckoutCode } = promoActions
 const dispatchSpy = jest.fn()
 
 jest.mock('actions/checkout', () => ({
-  trackPromocodeChange: jest.fn()
+  trackPromocodeChange: jest.fn(),
 }))
 
 describe('promo actions', () => {
@@ -21,7 +20,7 @@ describe('promo actions', () => {
     test('should call basketPromoCodeChange', () => {
       expect(dispatchSpy.mock.calls[0][0]).toEqual({
         type: 'BASKET_PROMO_CODE_CHANGE',
-        promoCode: 'DTI-CHECKOUT30'
+        promoCode: 'DTI-CHECKOUT30',
       })
     })
 

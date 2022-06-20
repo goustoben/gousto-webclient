@@ -1,5 +1,5 @@
 import { addPrefix } from 'validations/util'
-import goustoStore from 'store'
+import { goustoStore } from 'store'
 import { getFormValues, getFormMeta, getFormSyncErrors } from 'redux-form'
 
 const rules = {

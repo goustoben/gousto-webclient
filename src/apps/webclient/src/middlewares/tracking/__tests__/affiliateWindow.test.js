@@ -1,4 +1,4 @@
-import affiliateWindow from 'middlewares/tracking/affiliateWindow'
+import { affiliateWindow } from 'middlewares/tracking/affiliateWindow'
 import { canUseWindow } from 'utils/browserEnvironment'
 
 jest.mock('utils/browserEnvironment')

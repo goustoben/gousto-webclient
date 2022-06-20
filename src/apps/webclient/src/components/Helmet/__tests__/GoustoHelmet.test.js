@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import sinon from 'sinon'
 
-import GoustoHelmet from 'Helmet/GoustoHelmet'
+import { GoustoHelmet } from 'Helmet/GoustoHelmet'
 import { CanonicalLink } from 'Helmet/CanonicalLink'
 import { Facebook } from 'Helmet/Facebook'
 import { OpenGraph } from 'Helmet/OpenGraph'

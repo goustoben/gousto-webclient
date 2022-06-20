@@ -2,12 +2,14 @@ import { fetchFeatures } from 'apis/fetchS3'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
 import { getUserToken, refreshUserToken, validateUserPassword, identifyUserUsingOAuth, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
-import logger from '../../utils/logger'
+import { logger } from '../../utils/logger'
 
 jest.mock('../../utils/logger', () => ({
-  error: jest.fn(),
-  notice: jest.fn(),
-  warning: jest.fn(),
+  logger: {
+    error: jest.fn(),
+    notice: jest.fn(),
+    warning: jest.fn(),
+  }
 }))
 
 jest.mock('apis/fetchS3', () => ({

@@ -50,7 +50,7 @@ function trackingMap(cases) {
   }
 }
 
-const Tracking = (action, state = {}, prevState = {}) => {
+export const snowplowV2Tracking = (action, state = {}, prevState = {}) => {
   if (canUseWindow()) {
     const pathname = getPathname(prevState)
 
@@ -86,5 +86,3 @@ const Tracking = (action, state = {}, prevState = {}) => {
     })(action, state, prevState, pathname)
   }
 }
-
-export default Tracking

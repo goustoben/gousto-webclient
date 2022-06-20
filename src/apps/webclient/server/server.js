@@ -1,5 +1,5 @@
 import { validateProcessEnv } from 'utils/processEnv'
-import logger from './utils/logger'
+import { logger } from './utils/logger'
 const { app } = require('./main')
 
 validateProcessEnv()

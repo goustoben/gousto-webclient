@@ -1,7 +1,7 @@
 import { auth } from './auth'
 import { user } from './user'
 
-export default {
+export const routes = {
   auth,
   user,
 }

@@ -1,5 +1,5 @@
 import moment from 'moment'
-import goustoStore from 'store'
+import { goustoStore } from 'store'
 import logger from './logger'
 import { cookieString } from './cookieString'
 import { canUseWindow } from './browserEnvironment'

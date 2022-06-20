@@ -1,1 +1,1 @@
-export { default } from './snowplowV2'
+export { snowplowV2Tracking } from './snowplowV2'

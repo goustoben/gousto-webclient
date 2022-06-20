@@ -1,9 +1,9 @@
-import config from 'config/head/optimizely'
+import { optimizelyConfig } from 'config/head/optimizely'
 import { getEnvironment } from '../../src/utils/isomorphicEnvironment'
 
-export default function optimizely(features) {
+export const optimizely = (features) => {
   let script = ''
-  const optimizelyScriptName = config[getEnvironment()]
+  const optimizelyScriptName = optimizelyConfig[getEnvironment()]
 
   if (optimizelyScriptName) {
     const featuresSerialised = JSON.stringify(features.toJS())

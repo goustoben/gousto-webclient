@@ -133,7 +133,7 @@ export const promoChange = code => (
   }
 )
 
-const promoGetFromLandingPage = landingUrl => (
+export const promoGetFromLandingPage = landingUrl => (
   async (dispatch, getState) => {
     let promocode
     let errored
@@ -214,7 +214,7 @@ export const promoApply = () => (
   }
 )
 
-const promoApplyCheckoutCode = () => (
+export const promoApplyCheckoutCode = () => (
   async (dispatch) => {
     const promoCode = 'DTI-CHECKOUT30'
 
@@ -242,20 +242,3 @@ export const promoResetGoustoOnDemandFlow = () => (
     dispatch(promoToggleModalVisibility(false))
   }
 )
-
-export const promoActions = {
-  promoChange,
-  promoApply,
-  promoCloseModal,
-  promoToggleModalVisibility,
-  promoAgeVerify,
-  promoGetFromLandingPage,
-  promoGet,
-  promoApplyCheckoutCode
-}
-
-// src/apps/webclient/legacy.js file uses the default export, and I'd rather not change
-// it.
-
-// eslint-disable-next-line import/no-default-export
-export default promoActions

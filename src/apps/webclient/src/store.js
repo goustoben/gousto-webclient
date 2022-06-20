@@ -3,18 +3,18 @@ import Immutable, { Iterable } from 'immutable'
 import thunk from 'redux-thunk'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
-import reducers from 'reducers'
+import { reducers } from 'reducers'
 import { reducer as reduxFormReducer } from 'redux-form'
 import { createLogger } from 'redux-logger'
-import trackingMiddleware from 'middlewares/tracking/middleware'
-import persistenceMiddleware from 'middlewares/persist/middleware'
+import { trackingMiddleware } from 'middlewares/tracking/middleware'
+import { persistenceMiddleware } from 'middlewares/persist/middleware'
 import snowplow from 'middlewares/tracking/snowplow'
-import snowplowV2 from 'middlewares/tracking/snowplow/V2'
+import { snowplowV2Tracking } from 'middlewares/tracking/snowplow/V2'
 import { optimizelyTracker } from 'middlewares/tracking/optimizely'
 import { gtmMiddleware } from 'middlewares/tracking/gtm'
-import affiliateWindow from 'middlewares/tracking/affiliateWindow'
+import { affiliateWindow } from 'middlewares/tracking/affiliateWindow'
 import { dataLayerTracker } from 'middlewares/tracking/dataLayerTracker'
-import persistenceConfig from 'config/storePersistence'
+import { persistenceConfig } from 'config/storePersistence'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvironment, isDev } from 'utils/isomorphicEnvironment'
 
@@ -31,7 +31,7 @@ class GoustoStore {
       routerMiddleware(history),
       trackingMiddleware(snowplow),
       trackingMiddleware(affiliateWindow),
-      trackingMiddleware(snowplowV2, 'v2'),
+      trackingMiddleware(snowplowV2Tracking, 'v2'),
       trackingMiddleware(gtmMiddleware, 'v2'),
       trackingMiddleware(dataLayerTracker, 'v2'),
       optimizelyTracker,
@@ -84,9 +84,7 @@ class GoustoStore {
   }
 }
 
-const goustoStore = new GoustoStore()
-
-export default goustoStore
+export const goustoStore = new GoustoStore()
 
 export const configureStore = (history, initialState, cookies) => goustoStore.configureStore(history, initialState, cookies)
 

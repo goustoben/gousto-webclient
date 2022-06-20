@@ -1,7 +1,7 @@
 const { newAssetPath, getAssetRootUrl } = require('utils/media')
 const { createWindowEnvConfig } = require('./utils/envConfigForClient')
 const { getServerEnvironment, getServerDomain } = require('./utils/serverEnvironment')
-const head = require('./head').default
+const { head } = require('./head')
 const encodeState = require('./encodeState')
 
 const preconnectDomains = [

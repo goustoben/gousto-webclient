@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { promoAgeVerify } from 'actions/promos'
 import { AgeVerify } from './AgeVerify'
 
 const mapStateToProps = state => ({
@@ -7,5 +7,5 @@ const mapStateToProps = state => ({
 })
 
 export const AgeVerifyContainer = connect(mapStateToProps, {
-  onChange: actions.promoAgeVerify,
+  onChange: promoAgeVerify,
 })(AgeVerify)

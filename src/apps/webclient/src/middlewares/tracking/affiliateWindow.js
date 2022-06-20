@@ -1,6 +1,6 @@
 import { canUseWindow } from 'utils/browserEnvironment'
 
-export default (action, state = {}) => {
+export const affiliateWindow = (action, state = {}) => {
   if (canUseWindow() && window.dataLayer) {
     if (action.asource === 'awin' || (Array.isArray(action.asource) && action.asource.includes('awin'))) {
       const event = {

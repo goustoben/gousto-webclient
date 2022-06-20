@@ -1,4 +1,4 @@
-export default (store) => {
+export const persistenceConfig = (store) => {
   let persistentCookies = {
     features: false,
     signup: {

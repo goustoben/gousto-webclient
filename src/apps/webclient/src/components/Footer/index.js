@@ -1,2 +1,1 @@
-import { FooterContainer } from './FooterContainer'
-export default FooterContainer
+export { FooterContainer } from './FooterContainer'
