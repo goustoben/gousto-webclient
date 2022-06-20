@@ -136,7 +136,6 @@ export class Menu extends React.PureComponent {
           <DetailRecipeMetaContainer query={query} />
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
-            <p className={css.legal}>{menu.legal}</p>
             {
               // overlay cannot be focused with keyboard, so it makes no sense
               // to add keyboard handling for it
