@@ -49,6 +49,16 @@ const defaultProps = {
   dataTesting: '',
 }
 
+const getRenderedValue = (option) => {
+  let result = option.label
+
+  if (typeof option.subLabel === 'string') {
+    result += ` ${option.subLabel}`
+  }
+
+  return result
+}
+
 export class DropdownInput extends React.Component {
   handleChange = (obj) => {
     const { onChange } = this.props
@@ -86,9 +96,7 @@ export class DropdownInput extends React.Component {
     options.map(
       (option) => (
         <option key={JSON.stringify(option.value)} value={JSON.stringify(option.value)} disabled={option.disabled}>
-          {option.label}
-          {' '}
-          {(typeof option.subLabel === 'string') ? option.subLabel : ''}
+          {getRenderedValue(option)}
         </option>
       )
     )
@@ -133,7 +141,8 @@ export class DropdownInput extends React.Component {
       placeholder: '',
       onMenuOpen: () => {
         onOpen()
-      }
+      },
+      valueRenderer: getRenderedValue
     }
 
     const ourProps = [
