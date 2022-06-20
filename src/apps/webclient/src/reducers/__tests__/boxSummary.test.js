@@ -1,11 +1,11 @@
 import { actionTypes } from 'actions/actionTypes'
-import boxSummaryReducer from 'reducers/boxSummary'
+import { boxSummaryReducers } from 'reducers/boxSummary'
 import Immutable from 'immutable'
 
 describe('boxSummary reducer', () => {
   describe('boxSummaryShow', () => {
     test('should handle initial state', () => {
-      const result = boxSummaryReducer.boxSummaryShow(undefined, {})
+      const result = boxSummaryReducers.boxSummaryShow(undefined, {})
       const expectedResult = Immutable.fromJS({ show: false, view: '', dismissed: false })
       expect(Immutable.is(result, expectedResult)).toEqual(true)
     })
@@ -13,7 +13,7 @@ describe('boxSummary reducer', () => {
     test('should handle unknown actions', () => {
       const state = Immutable.fromJS({ show: false, view: '' })
 
-      const result = boxSummaryReducer.boxSummaryShow(state, {
+      const result = boxSummaryReducers.boxSummaryShow(state, {
         type: 'unknown',
       })
 
@@ -22,7 +22,7 @@ describe('boxSummary reducer', () => {
 
     test('should handle BOXSUMMARY_VISIBILITY_CHANGE action types', () => {
       const state = Immutable.fromJS({ show: false, view: '', dismissed: false })
-      const result = boxSummaryReducer.boxSummaryShow(state, {
+      const result = boxSummaryReducers.boxSummaryShow(state, {
         type: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
         show: true,
         view: 'desktop',
@@ -38,7 +38,7 @@ describe('boxSummary reducer', () => {
       const initialState = Immutable.Map({})
       expect(
         Immutable.is(
-          boxSummaryReducer.boxSummaryDeliveryDays(undefined, {}),
+          boxSummaryReducers.boxSummaryDeliveryDays(undefined, {}),
           initialState,
         ),
       ).toEqual(true)
@@ -47,7 +47,7 @@ describe('boxSummary reducer', () => {
     test('should handle unknown actions', () => {
       const state = null
 
-      const result = boxSummaryReducer.boxSummaryDeliveryDays(state, {
+      const result = boxSummaryReducers.boxSummaryDeliveryDays(state, {
         type: 'unknown',
       })
 
@@ -56,7 +56,7 @@ describe('boxSummary reducer', () => {
 
     test('should handle BASKET_DELIVERY_DAYS_RECEIVE action types', () => {
       const days = Immutable.fromJS([true, true, true])
-      const result = boxSummaryReducer.boxSummaryDeliveryDays(null, {
+      const result = boxSummaryReducers.boxSummaryDeliveryDays(null, {
         type: actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE,
         days,
       })
@@ -66,14 +66,14 @@ describe('boxSummary reducer', () => {
   describe('boxSummaryDeliveryDaysErr', () => {
     test('should handle initial state', () => {
       expect(
-        boxSummaryReducer.boxSummaryDeliveryDaysErr(undefined, {}),
+        boxSummaryReducers.boxSummaryDeliveryDaysErr(undefined, {}),
       ).toEqual(null)
     })
 
     test('should handle unknown actions', () => {
       const state = null
 
-      const result = boxSummaryReducer.boxSummaryDeliveryDaysErr(state, {
+      const result = boxSummaryReducers.boxSummaryDeliveryDaysErr(state, {
         type: 'unknown',
       })
 
@@ -82,7 +82,7 @@ describe('boxSummary reducer', () => {
 
     test('should handle BASKET_DELIVERY_DAYS_RECEIVE_ERROR action types', () => {
       const err = Immutable.fromJS({ message: 'error' })
-      const result = boxSummaryReducer.boxSummaryDeliveryDaysErr(null, {
+      const result = boxSummaryReducers.boxSummaryDeliveryDaysErr(null, {
         type: actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE_ERROR,
         err,
       })
@@ -91,13 +91,13 @@ describe('boxSummary reducer', () => {
 
     test('should handle BASKET_DELIVERY_DAYS_RECEIVE action types', () => {
       const err = Immutable.fromJS({ message: 'error' })
-      let result = boxSummaryReducer.boxSummaryDeliveryDaysErr(null, {
+      let result = boxSummaryReducers.boxSummaryDeliveryDaysErr(null, {
         type: actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE_ERROR,
         err,
       })
       expect(result).toEqual(err)
 
-      result = boxSummaryReducer.boxSummaryDeliveryDaysErr(result, {
+      result = boxSummaryReducers.boxSummaryDeliveryDaysErr(result, {
         type: actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE,
       })
       expect(result).toEqual(null)

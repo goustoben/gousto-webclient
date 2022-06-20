@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { actionTypes } from '../actions/actionTypes'
 
-const collectionsReducer = {
+export const collectionsReducers = {
   collections: (state = Immutable.OrderedMap({}), action) => {
     switch (action.type) {
     case actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS: {
@@ -20,5 +20,3 @@ const collectionsReducer = {
     }
   },
 }
-
-export default collectionsReducer

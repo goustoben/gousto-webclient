@@ -34,7 +34,7 @@ function setFeatures(store, list, value) {
   store.dispatch(featuresSet(featuresArr))
 }
 
-const processFeaturesQuery = (query, store) => {
+export const processFeaturesQuery = (query, store) => {
   if (query && store) {
     const enabledFeatures = query['features[]']
     const disabledFeatures = query['disabledFeatures[]']
@@ -47,5 +47,3 @@ const processFeaturesQuery = (query, store) => {
     store.dispatch(featuresSet(featureValues))
   }
 }
-
-export default processFeaturesQuery

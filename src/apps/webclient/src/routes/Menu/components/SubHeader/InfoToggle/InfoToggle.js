@@ -9,7 +9,7 @@ const propTypes = {
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
 }
 
-class InfoToggle extends React.Component {
+export class InfoToggle extends React.Component {
   constructor() {
     super()
 
@@ -52,5 +52,3 @@ class InfoToggle extends React.Component {
 }
 
 InfoToggle.propTypes = propTypes
-
-export default InfoToggle

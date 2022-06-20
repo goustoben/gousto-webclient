@@ -1,12 +1,12 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
-import recipesReducer from 'reducers/recipes'
+import { recipesReducers } from 'reducers/recipes'
 
 describe('recipes reducer', () => {
   test('should handle initial state', () => {
     const initialState = Immutable.Map({})
     expect(
-      Immutable.is(recipesReducer.recipes(undefined, {}), initialState),
+      Immutable.is(recipesReducers.recipes(undefined, {}), initialState),
     ).toEqual(true)
   })
 
@@ -15,14 +15,14 @@ describe('recipes reducer', () => {
       1: { id: 1, title: 'recipe 1' },
       2: { id: 2, title: 'recipe 2' },
     })
-    const result = recipesReducer.recipes(state, { type: 'unknown' })
+    const result = recipesReducers.recipes(state, { type: 'unknown' })
 
     expect(Immutable.is(result, state)).toEqual(true)
   })
 
   describe('RECIPES_RECEIVE', () => {
     test('should load recipes into state', () => {
-      const result = recipesReducer.recipes(Immutable.Map({}), {
+      const result = recipesReducers.recipes(Immutable.Map({}), {
         type: actionTypes.RECIPES_RECEIVE,
         recipes: [
           { id: '1', title: 'recipe 1' },
@@ -55,7 +55,7 @@ describe('recipes reducer', () => {
           committed: false,
         },
       ]
-      const result = recipesReducer.recipesStock(Immutable.List([]), {
+      const result = recipesReducers.recipesStock(Immutable.List([]), {
         type: actionTypes.RECIPES_PERIOD_STOCK_RECEIVE,
         stock,
       })

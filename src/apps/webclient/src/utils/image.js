@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import config from 'config/recipes'
+import { recipesConfig } from 'config/recipes'
 
 export function getMenuRecipeImage(imageUrls, imageSize) {
   const imageSrc = imageUrls.reduce((reducedImage, newImage) => {
@@ -59,8 +59,8 @@ export function getRangeImages(recipe = Immutable.Map()) {
   const mediaImages = recipe.getIn(['media', 'images'], Immutable.List([]))
 
   return mediaImages.filter((image) => (
-    config.range.imageTypes.includes(image.get('type'))
+    recipesConfig.range.imageTypes.includes(image.get('type'))
   )).sortBy(image =>
-    config.range.imageTypes.indexOf(image.get('type'))
+    recipesConfig.range.imageTypes.indexOf(image.get('type'))
   )
 }

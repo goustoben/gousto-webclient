@@ -23,5 +23,3 @@ export async function fetchContentOnChange(pathname = '/', store) {
     await store.dispatch(contentLoadContentByPageSlug(slug, [variant]))
   }
 }
-
-export default fetchContentOnChange

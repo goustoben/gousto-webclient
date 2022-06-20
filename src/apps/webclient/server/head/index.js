@@ -1,18 +1,21 @@
 import { gtm } from './gtm'
 import { trustpilot } from './trustpilot'
 import { ribbon } from './ribbon'
+import { defaultMeta } from './defaultMeta'
+import { fbTracking } from './fbTracking'
+import { pingdom } from './pingdom'
+import { favicon } from './favicon'
+import { mobileMeta } from './mobileMeta'
+import { optimizely } from './optimizely'
 
-const head = {
+export const head = {
   gtm,
   trustpilot,
-  defaultMeta: require('./defaultMeta').default,
-  fbTracking: require('./fbTracking').default,
-  pingdom: require('./pingdom').default,
-  favicon: require('./favicon').default,
-  mobileMeta: require('./mobileMeta').default,
-  optimizely: require('./optimizely').default,
+  defaultMeta,
+  fbTracking,
+  pingdom,
+  favicon,
+  mobileMeta,
+  optimizely,
   ribbon
 }
-
-/* eslint-disable-next-line import/no-default-export */
-export default head

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import Item from 'Item'
+import { Item } from 'components/Item'
 
 export const ProductItem = ({ disclaimerKey, images, title, quantity, onImageClick, onRemove, available, gift, url }) => (
   <Item

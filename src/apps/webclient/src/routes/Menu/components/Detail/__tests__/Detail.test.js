@@ -200,8 +200,8 @@ describe('<Detail />', () => {
       wrapper.setProps({ isFineDineIn: true })
     })
 
-    test('should render Carousel', () => {
-      expect(wrapper.find('Carousel')).toHaveLength(1)
+    test('should render DetailCarousel', () => {
+      expect(wrapper.find('DetailCarousel')).toHaveLength(1)
     })
   })
 })

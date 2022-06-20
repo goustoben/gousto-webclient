@@ -3,7 +3,7 @@ import React from 'react'
 import { Route } from 'react-router'
 
 import config from 'config/routes'
-import MainLayout from 'layouts/MainLayout'
+import { MainLayout } from 'layouts/MainLayout'
 
 import { BoxPricesContainer } from './BoxPricesContainer'
 

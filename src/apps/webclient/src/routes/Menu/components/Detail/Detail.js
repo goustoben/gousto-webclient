@@ -11,7 +11,7 @@ import { Title } from '../Recipe'
 import { RecipeAlternativeOptions } from '../RecipeAlternativeOptions'
 import { RecipeTag } from '../RecipeTag'
 import { AttributeGrid } from './AttributeGrid'
-import Carousel from './Carousel'
+import { DetailCarousel } from './Carousel'
 import { DetailAddRecipe } from './DetailAddRecipe'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
 import { DetailImage as Image } from './DetailImage'
@@ -98,7 +98,7 @@ export const Detail = (props) => {
         </div>
         <div className={css.imageContainer}>
           {isFineDineIn ? (
-            <Carousel images={media} />
+            <DetailCarousel images={media} />
           ) : (
             <Image media={media} title={title} view={view} />
           )}

@@ -3,7 +3,7 @@ import koaWebpack from 'koa-webpack'
 import path from 'path'
 import { validateProcessEnv } from 'utils/processEnv'
 import { app } from '../main'
-import logger from '../utils/logger'
+import { logger } from '../utils/logger'
 
 function enableHmr(application) {
   koaWebpack({

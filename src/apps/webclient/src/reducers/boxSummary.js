@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 
-const boxSummary = {
+export const boxSummaryReducers = {
   boxSummaryShow: (state = Immutable.fromJS({ show: false, view: '', dismissed: false }), action) => {
     switch (action.type) {
     case actionTypes.BOXSUMMARY_VISIBILITY_CHANGE:
@@ -29,5 +29,3 @@ const boxSummary = {
     }
   },
 }
-
-export default boxSummary

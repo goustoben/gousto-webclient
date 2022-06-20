@@ -8,7 +8,7 @@ import config from 'config/menu'
 
 import { MenuDateRangeContainer } from '../MenuDateRange'
 import { DeliveryInfo } from './DeliveryInfo'
-import InfoToggle from './InfoToggle'
+import { InfoToggle } from './InfoToggle'
 
 import css from './SubHeader.css'
 

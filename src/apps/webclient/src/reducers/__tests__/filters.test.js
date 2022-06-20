@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
 
-import reducer from 'reducers/filters'
+import { filtersReducers } from 'reducers/filters'
 
 describe('filters reducer', () => {
   let state
@@ -11,7 +11,7 @@ describe('filters reducer', () => {
 
   test('it should return initial state', () => {
     state = undefined
-    const result = reducer.filters(state, null)
+    const result = filtersReducers.filters(state, null)
     expect(Immutable.is(initialState, result)).toBe(true)
   })
 
@@ -19,7 +19,7 @@ describe('filters reducer', () => {
     test('should handle unknown actions', () => {
       state = undefined
       const action = { type: 'NONE' }
-      const result = reducer.filters(state, action)
+      const result = filtersReducers.filters(state, action)
       expect(Immutable.is(initialState, result)).toBe(true)
     })
 
@@ -32,7 +32,7 @@ describe('filters reducer', () => {
       const expectedState = Immutable.Map({
         selectedCategory: 'all-products',
       })
-      const result = reducer.filters(state, action)
+      const result = filtersReducers.filters(state, action)
       expect(Immutable.is(expectedState, result)).toBe(true)
     })
   })

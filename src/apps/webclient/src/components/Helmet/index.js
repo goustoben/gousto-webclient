@@ -1,1 +1,1 @@
-export { default } from './GoustoHelmet'
+export { GoustoHelmet } from './GoustoHelmet'

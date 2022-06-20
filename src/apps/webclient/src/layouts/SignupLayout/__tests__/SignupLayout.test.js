@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { SignupLayout } from 'layouts/SignupLayout/SignupLayout'
 import { Header } from 'Header'
-import Footer from 'Footer'
+import { FooterContainer } from 'Footer'
 
 describe('SignupLayout', () => {
   let wrapper
@@ -21,8 +21,8 @@ describe('SignupLayout', () => {
     expect(wrapper.find(Header).length).toBe(1)
   })
 
-  test('should not return a <Footer>', () => {
-    expect(wrapper.find(Footer).length).toBe(0)
+  test('should not return a <FooterContainer>', () => {
+    expect(wrapper.find(FooterContainer).length).toBe(0)
   })
 
   test('should return a simple <Header>', () => {

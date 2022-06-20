@@ -37,7 +37,7 @@ const defaultProps = {
   variableWidth: false,
 }
 
-class Carousel extends React.PureComponent {
+export class Carousel extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -76,5 +76,3 @@ class Carousel extends React.PureComponent {
 
 Carousel.propTypes = propTypes
 Carousel.defaultProps = defaultProps
-
-export default Carousel

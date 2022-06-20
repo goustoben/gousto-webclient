@@ -13,7 +13,7 @@ import { CheckoutErrorModal } from './CheckooutErrorModal/CheckoutErrorModal'
 
 import css from './BoxSummary.css'
 
-class BoxSummary extends React.PureComponent {
+export class BoxSummary extends React.PureComponent {
   // eslint-disable-next-line react/static-property-placement
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
@@ -193,6 +193,3 @@ class BoxSummary extends React.PureComponent {
     )
   }
 }
-
-// eslint-disable-next-line import/no-default-export
-export default BoxSummary

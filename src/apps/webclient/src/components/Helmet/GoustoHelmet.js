@@ -28,7 +28,7 @@ const defaultProps = {
   }
 }
 
-const GoustoHelmet = ({ requestUrl, scripts: { other } }) => (
+export const GoustoHelmet = ({ requestUrl, scripts: { other } }) => (
   other ? (
     <span>
       <CanonicalLink href={generateHref(requestUrl)} />
@@ -42,5 +42,3 @@ const GoustoHelmet = ({ requestUrl, scripts: { other } }) => (
 
 GoustoHelmet.propTypes = propTypes
 GoustoHelmet.defaultProps = defaultProps
-
-export default GoustoHelmet

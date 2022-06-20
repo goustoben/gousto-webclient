@@ -6,7 +6,7 @@ import { getIsSignupReductionEnabled } from 'selectors/features'
 import routes from 'config/routes'
 import { getUserId } from 'selectors/user'
 import { trackUserLogin } from 'actions/loggingmanager'
-import Page from './Page'
+import { Page } from './Page'
 
 export function isRedirectEnabled(state) {
   const { locationBeforeTransitions } = state.routing || {}

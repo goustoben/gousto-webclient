@@ -1,3 +1,1 @@
-import BoxSummaryContainer from './BoxSummaryContainer'
-
-export { BoxSummaryContainer }
+export { BoxSummaryContainer } from './BoxSummaryContainer'

@@ -28,7 +28,7 @@ const quantityMessage = (gift, quantity, disclaimerKey, type) => {
   return null
 }
 
-const Item = ({
+export const Item = ({
   available,
   disclaimerKey,
   gift,
@@ -99,5 +99,3 @@ Item.defaultProps = {
   gift: false,
   url: null,
 }
-
-export default Item

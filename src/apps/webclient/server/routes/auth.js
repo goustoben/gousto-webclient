@@ -9,7 +9,7 @@ import {
 } from 'apis/auth'
 import { getEnvConfig } from 'utils/processEnv'
 import routes from 'config/routes'
-import logger from '../utils/logger'
+import { logger } from '../utils/logger'
 import {
   routeMatches,
   addSessionCookies,

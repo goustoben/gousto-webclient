@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import OrderSummary from 'OrderSummary'
-import Receipt from 'Receipt'
+import { Receipt } from 'components/Receipt'
 import { SaveButton } from 'OrderSummary/SaveButton'
 
 describe('OrderSummary', () => {

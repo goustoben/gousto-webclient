@@ -1,6 +1,6 @@
 import { canUseWindow, getWindow } from 'utils/browserEnvironment'
 
-export default (tracker, version) => ({ getState }) => (
+export const trackingMiddleware = (tracker, version) => ({ getState }) => (
   next => action => {
     // V2 tracker
     if (version === 'v2') {

@@ -3,7 +3,7 @@ import { validateRecaptchaUserToken } from 'apis/auth'
 import { referAFriend as sendReferalToCore } from 'apis/user'
 import routes from 'config/routes'
 import { getEnvConfig } from 'utils/processEnv'
-import logger from '../utils/logger'
+import { logger } from '../utils/logger'
 import { routeMatches, getCookieValue } from './utils'
 
 /**

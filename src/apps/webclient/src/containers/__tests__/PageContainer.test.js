@@ -5,7 +5,7 @@ import * as userSelectors from 'selectors/user'
 import { safeJestMock } from '_testing/mocks'
 import { redirect } from 'utils/window'
 import { isRedirectEnabled, PageContainer } from '../PageContainer'
-import Page from '../Page'
+import { Page } from '../Page'
 
 jest.mock('utils/window', () => ({
   documentLocation: jest.fn(),

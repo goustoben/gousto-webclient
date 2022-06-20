@@ -4,11 +4,16 @@ import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 import { forceCheck } from 'react-lazyload'
 
-import Menu from 'routes/Menu/Menu'
+import { Menu } from 'routes/Menu/Menu'
 
-jest.mock('layouts/MainLayout', () => 'MainLayout')
+jest.mock('layouts/MainLayout', () => ({
+  MainLayout: 'MainLayout',
+}))
+
 jest.mock('utils/browserHelper', () => ({
-  isChrome: () => {},
+  browserHelperUtils: {
+    isChrome: () => {},
+  },
 }))
 jest.mock('actions/order')
 jest.mock('./components/BoxSummary', () => ({

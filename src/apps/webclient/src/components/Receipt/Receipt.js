@@ -50,7 +50,7 @@ const defaultProps = {
   isGoustoOnDemandEnabled: false,
 }
 
-class Receipt extends React.Component {
+export class Receipt extends React.Component {
   dash = <span className={css.dash}>&mdash;</span>
 
   render() {
@@ -169,5 +169,3 @@ class Receipt extends React.Component {
 
 Receipt.propTypes = propTypes
 Receipt.defaultProps = defaultProps
-
-export default Receipt

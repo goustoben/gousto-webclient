@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { Button, Control, Segment } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
 
-import config from 'config/recipes'
+import { recipesConfig } from 'config/recipes'
 import { useBasket, useStock, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
 
 import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
@@ -26,7 +26,7 @@ type ButtonsProps = {
 const generateGetSurchargeGridClass =
   (surchargePerPortion: number | null, view: string) =>
   (className: string, ...otherClasses: string[]) => {
-    const viewsToExclude = config.recipeDetailViews
+    const viewsToExclude = recipesConfig.recipeDetailViews
 
     const shouldApplyClass = Boolean(surchargePerPortion && !viewsToExclude.includes(view))
     const otherClassNames = otherClasses.map((name) => css[name])
@@ -58,7 +58,7 @@ export const RecipeDetailsButtons = ({
         if (isFirstInBatchOfSameRecipes) {
           dispatch(menuRecipeDetailVisibilityChange())
         }
-      } else if (config.recipeDetailViews.includes(view)) {
+      } else if (recipesConfig.recipeDetailViews.includes(view)) {
         dispatch(menuRecipeDetailVisibilityChange())
         setTimeout(() => {
           dispatch(actions.menuBrowseCTAVisibilityChange(true))

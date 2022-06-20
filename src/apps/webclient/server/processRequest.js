@@ -13,18 +13,18 @@ const { syncHistoryWithStore } = require('react-router-redux')
 const { routes } = require('routes')
 const { configureStore } = require('store')
 const { Provider } = require('react-redux')
-const promoActions = require('actions/promos').default
+const { promoGetFromLandingPage } = require('actions/promos')
 const { Header } = require('Header/Header')
 const { clearPersistentStore } = require('middlewares/persist/persistStore')
 const { processCookies } = require('utils/processCookies')
 const basketActions = require('actions/basket').default
-const processFeaturesQuery = require('utils/processFeaturesQuery').default
+const { processFeaturesQuery } = require('utils/processFeaturesQuery')
 const { newAssetPath } = require('utils/media')
 const { authorise } = require('utils/clientAuthorise')
-const GoustoHelmet = require('Helmet/GoustoHelmet').default
-const fetchContentOnChange = require('routes/fetchContentOnChange').default
+const { GoustoHelmet } = require('Helmet/GoustoHelmet')
+const { fetchContentOnChange } = require('routes/fetchContentOnChange')
 const { loggerSetUuid } = require('actions/logger')
-const logger = require('./utils/logger').default
+const { logger } = require('./utils/logger')
 const encodeState = require('./encodeState')
 const processHeaders = require('./processHeaders')
 const htmlTemplate = require('./template')
@@ -200,7 +200,7 @@ async function processRequest(ctx, next) {
       }
       if (ctx.request.query.landingPagePath) {
         try {
-          await store.dispatch(promoActions.promoGetFromLandingPage(ctx.request.query.landingPagePath))
+          await store.dispatch(promoGetFromLandingPage(ctx.request.query.landingPagePath))
         } catch (e) {
           //
         }

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { H3 } from 'Page/Header'
 
-import InfoToggle from './InfoToggle'
+import { InfoToggle } from './InfoToggle'
 
 import css from './SubHeader.css'
 

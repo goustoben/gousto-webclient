@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Carousel from 'Carousel'
+import { Carousel } from 'Carousel'
 import Slider from 'react-slick'
 
 describe('Carousel', () => {

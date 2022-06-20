@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
-import SlickCarousel from 'components/Carousel'
+import { Carousel as SlickCarousel } from 'components/Carousel'
 
 import { DetailImage as Image } from '../DetailImage'
 import { Arrow } from './Arrow'
@@ -11,7 +11,7 @@ import { ContentMask } from './ContentMask'
 
 import css from './Carousel.css'
 
-const Carousel = ({ images, media, view, dots, arrows }) =>
+export const DetailCarousel = ({ images, media, view, dots, arrows }) =>
   images.size ? (
     <div className={css.carousel}>
       <SlickCarousel
@@ -39,7 +39,7 @@ const Carousel = ({ images, media, view, dots, arrows }) =>
     <Image media={media} />
   )
 
-Carousel.propTypes = {
+DetailCarousel.propTypes = {
   images: PropTypes.instanceOf(Immutable.List),
   media: PropTypes.instanceOf(Immutable.List),
   view: PropTypes.oneOf(['fineDineInDetail']),
@@ -47,12 +47,10 @@ Carousel.propTypes = {
   arrows: PropTypes.bool,
 }
 
-Carousel.defaultProps = {
+DetailCarousel.defaultProps = {
   images: Immutable.List([]),
   media: Immutable.List([]),
   view: 'fineDineInDetail',
   dots: true,
   arrows: true,
 }
-
-export default Carousel

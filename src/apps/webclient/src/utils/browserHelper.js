@@ -1,4 +1,4 @@
-export default class browserHelper {
+export class browserHelperUtils {
   static isChrome() {
     return (navigator && navigator.userAgent && navigator.userAgent.indexOf('Chrome/') !== -1)
   }

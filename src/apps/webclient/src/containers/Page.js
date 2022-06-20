@@ -9,7 +9,7 @@ import css from './Page.css'
 
 const imageUrl = require('media/photos/gousto-share-box.jpg')
 
-class Page extends React.PureComponent {
+export class Page extends React.PureComponent {
   static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus-3'
 
   componentDidMount() {
@@ -126,5 +126,3 @@ Page.defaultProps = {
   userId: null,
   goustoReference: null,
 }
-
-export default Page

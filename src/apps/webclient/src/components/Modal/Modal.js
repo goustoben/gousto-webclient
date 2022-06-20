@@ -4,7 +4,7 @@ import { Portal } from 'react-portal'
 import { useBrowserBack } from '../../hooks/useBrowserBack'
 import css from './Modal.css'
 
-const GoustoModal = (props) => {
+export const Modal = (props) => {
   const { children, isOpen, onBackCallback } = props
   useBrowserBack(onBackCallback)
 
@@ -17,14 +17,12 @@ const GoustoModal = (props) => {
   )
 }
 
-GoustoModal.propTypes = {
+Modal.propTypes = {
   children: PropTypes.node.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onBackCallback: PropTypes.func,
 }
 
-GoustoModal.defaultProps = {
+Modal.defaultProps = {
   onBackCallback: null,
 }
-
-export default GoustoModal

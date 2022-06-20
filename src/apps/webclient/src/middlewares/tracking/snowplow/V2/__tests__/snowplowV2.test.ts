@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import { canUseWindow } from 'utils/browserEnvironment'
 
-import * as snowplowV2 from '../snowplowV2'
+import { snowplowV2Tracking } from '../snowplowV2'
 
 const mockTrackEventWithData = jest.fn()
 
@@ -18,7 +18,7 @@ const mockState = {
   mock: 'state',
 }
 
-describe('snowplowV2', () => {
+describe('snowplowV2Tracking', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -29,7 +29,7 @@ describe('snowplowV2', () => {
     })
 
     test('invokes tracking fns', () => {
-      snowplowV2.default(mockAction, mockState, mockState)
+      snowplowV2Tracking(mockAction, mockState, mockState)
 
       expect(mockTrackEventWithData).toHaveBeenCalledWith(mockAction, mockState, mockState, '/')
     })
@@ -41,7 +41,7 @@ describe('snowplowV2', () => {
     })
 
     test('does not invoke tracking fns', () => {
-      snowplowV2.default(mockAction, mockState, mockState)
+      snowplowV2Tracking(mockAction, mockState, mockState)
 
       expect(mockTrackEventWithData).not.toHaveBeenCalled()
     })

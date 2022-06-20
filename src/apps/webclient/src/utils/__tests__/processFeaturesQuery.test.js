@@ -1,4 +1,4 @@
-import processFeaturesQuery from 'utils/processFeaturesQuery'
+import { processFeaturesQuery } from 'utils/processFeaturesQuery'
 
 describe('processfeaturesQuery', () => {
   let mockStore

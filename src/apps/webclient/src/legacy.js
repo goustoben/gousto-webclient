@@ -2,11 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import transit from 'transit-immutable-js'
 import { Provider } from 'react-redux'
-import Footer from 'Footer'
+import { FooterContainer } from 'Footer'
 import { Header } from 'Header'
 import actions from 'actions'
 import { getIsAuthenticated } from 'selectors/auth'
-import processFeaturesQuery from 'utils/processFeaturesQuery'
+import { processFeaturesQuery } from 'utils/processFeaturesQuery'
 import { processQuery } from 'utils/processQuery'
 import { loadFeatures } from 'utils/loadFeatures'
 import { loadVariants } from 'utils/loadVariants'
@@ -61,7 +61,7 @@ async function init() {
     const simple = document.location.pathname === '/join' || persist
     ReactDOM.render(
       <Provider store={store}>
-        <Footer simple={simple} />
+        <FooterContainer simple={simple} />
       </Provider>,
       footer
     )

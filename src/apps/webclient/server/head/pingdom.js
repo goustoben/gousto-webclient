@@ -2,7 +2,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function pingdom() {
+export const pingdom = () => {
   if (getRandomInt(0, 99) < 10) {
     return (
       `<script>
@@ -21,5 +21,3 @@ function pingdom() {
 
   return ''
 }
-
-export default pingdom

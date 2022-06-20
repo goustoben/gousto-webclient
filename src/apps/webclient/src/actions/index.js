@@ -1,14 +1,12 @@
 import auth from './auth'
 import basket from './basket'
 import { checkoutActions } from './checkout'
-import filters from './filters'
 import * as log from './log'
 import login from './login'
 import menu from './menu'
 import order from './order'
 import * as onScreenRecovery from './onScreenRecovery'
 import products from './products'
-import { promoActions } from './promos'
 import recipes from './recipes'
 import redirectActions from './redirect'
 import * as signup from './signup'
@@ -29,14 +27,12 @@ const actions = {
   ...basket,
   ...checkoutActions,
   ...collectionsLoadCollectionBySlug,
-  ...filters,
   ...log,
   ...login,
   ...menu,
   ...order,
   ...onScreenRecovery,
   ...products,
-  ...promoActions,
   ...recipes,
   ...redirectActions,
   ...signup,

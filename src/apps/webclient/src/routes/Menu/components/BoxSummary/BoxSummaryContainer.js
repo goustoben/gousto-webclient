@@ -18,7 +18,7 @@ import {
   shouldShowBoxSummary,
 } from '../../../../selectors/basket'
 import { getMenuBrowseCTAShow } from '../../../../selectors/root'
-import BoxSummaryDesktop from './BoxSummary'
+import { BoxSummary } from './BoxSummary'
 
 const mapStateToProps = (state) => ({
   isMobile: isMobile(getBrowserType(state)),
@@ -42,13 +42,11 @@ const BoxSummaryPure = (props) => {
   const { isPending } = usePricing()
 
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <BoxSummaryDesktop {...props} pricingPending={isPending} />
+  return <BoxSummary {...props} pricingPending={isPending} />
 }
 
-const BoxSummaryDesktopContainer = connect(mapStateToProps, {
+export const BoxSummaryContainer = connect(mapStateToProps, {
   boxDetailsVisibilityChange: boxSummaryVisibilityChange,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   boxSummaryNext,
 })(BoxSummaryPure)
-
-export default BoxSummaryDesktopContainer

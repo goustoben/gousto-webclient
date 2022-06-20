@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Footer from 'Footer'
+import { FooterContainer } from 'Footer'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
@@ -82,7 +82,7 @@ export class MainLayout extends React.Component {
         <MenuHeader />
         {children}
         <Div className={classNames({ [css.pullUp]: route.withRecipeBar })}>
-          <Footer type={route.footerType} />
+          <FooterContainer type={route.footerType} />
         </Div>
       </Div>
     )

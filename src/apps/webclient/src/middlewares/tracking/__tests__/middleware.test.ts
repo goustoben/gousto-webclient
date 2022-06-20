@@ -1,6 +1,6 @@
 import { canUseWindow, getWindow } from 'utils/browserEnvironment'
 
-import middleware from '../middleware'
+import { trackingMiddleware } from '../middleware'
 
 jest.mock('utils/browserEnvironment')
 
@@ -23,9 +23,9 @@ const mockTracker = jest.fn()
 
 let win: typeof window
 
-const invokeMiddleware = () => middleware(mockTracker)(mockStore)(mockNext)(mockAction)
+const invokeMiddleware = () => trackingMiddleware(mockTracker)(mockStore)(mockNext)(mockAction)
 
-describe('middleware', () => {
+describe('trackingMiddleware', () => {
   beforeAll(() => {
     win = window
   })

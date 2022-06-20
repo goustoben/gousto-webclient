@@ -7,8 +7,8 @@ import { forceCheck as forceCheckLazyload } from 'react-lazyload'
 import ErrorPage from 'components/ErrorPage'
 import { RibbonTrigger } from 'components/RibbonTrigger'
 import menu from 'config/menu'
-import MainLayout from 'layouts/MainLayout'
-import browserHelper from 'utils/browserHelper'
+import { MainLayout } from 'layouts/MainLayout'
+import { browserHelperUtils } from 'utils/browserHelper'
 
 import { BoxSummaryContainer } from './components/BoxSummary'
 import { DetailRecipeMetaContainer } from './components/RecipeMeta'
@@ -17,7 +17,7 @@ import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
 import css from './Menu.css'
 
-class Menu extends React.PureComponent {
+export class Menu extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -28,7 +28,7 @@ class Menu extends React.PureComponent {
   async componentDidMount() {
     this.setState({
       // eslint-disable-line react/no-did-mount-set-state
-      isChrome: browserHelper.isChrome(),
+      isChrome: browserHelperUtils.isChrome(),
     })
 
     const {
@@ -160,5 +160,3 @@ class Menu extends React.PureComponent {
 }
 Menu.propTypes = menuPropTypes
 Menu.defaultProps = defaultMenuPropTypes
-
-export default Menu

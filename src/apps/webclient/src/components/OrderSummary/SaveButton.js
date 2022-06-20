@@ -84,5 +84,3 @@ SaveButton.defaultProps = {
   onOrderConfirmationMobile: false,
   saving: false,
 }
-
-export default SaveButton
