@@ -610,6 +610,7 @@ describe('order actions', () => {
           newOrders: Immutable.Map({
             12345: Immutable.Map({
               deliverySlotId: 'deliverySlotId',
+              priceBreakdown: Immutable.Map({})
             })
           })
         }),
@@ -649,7 +650,11 @@ describe('order actions', () => {
         data: {
           deliveryDate: '01-01-2017',
           shouldCutoffAt: '29-12-2016',
-          humanDeliveryDate: 'Monday 1st January'
+          humanDeliveryDate: 'Monday 1st January',
+          prices: {
+            total: 21.00,
+            deliveryTotal: 0.00
+          }
         },
       }
 
@@ -686,6 +691,10 @@ describe('order actions', () => {
         shouldCutoffAt: '29-12-2016',
         deliverySlotStart: '05:00:00',
         deliverySlotEnd: '07:00:00',
+        priceBreakdown: {
+          netOrderPrice: 21,
+          grossShippingPrice: 0
+        },
         trackingData: {
           actionType: 'OrderDeliverySlot Saved',
           order_id: '12345',

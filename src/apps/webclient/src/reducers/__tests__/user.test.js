@@ -718,6 +718,7 @@ describe('User reducer', () => {
             humanDeliveryDay: 'something',
             deliverySlotStart: 'something',
             deliverySlotEnd: 'different',
+            priceBreakdown: {},
           },
         },
       })
@@ -730,6 +731,10 @@ describe('User reducer', () => {
         humanDeliveryDay: 'Saturday 3rd Feb',
         deliverySlotStart: '10:01:01',
         deliverySlotEnd: '12:02:02',
+        priceBreakdown: {
+          netOrderPrice: 21,
+          grossShippingPrice: 0
+        },
       })
       const expected = {
         newOrders: {
@@ -740,6 +745,10 @@ describe('User reducer', () => {
             humanDeliveryDay: 'Saturday 3rd Feb',
             deliverySlotStart: '10:01:01',
             deliverySlotEnd: '12:02:02',
+            priceBreakdown: {
+              netOrderPrice: 21,
+              grossShippingPrice: 0
+            },
           },
         },
       }
