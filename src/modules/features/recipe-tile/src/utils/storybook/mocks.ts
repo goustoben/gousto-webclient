@@ -22,6 +22,7 @@ export const getMocks = ({
   recipeTagBackgroundColor,
   brandTagText,
   brandTagColor,
+  isRecipeTileLinkVisible = false,
 }: {
   alternativeCheckedIndex?: number;
   alternativeOutOfStockFlags?: boolean[];
@@ -40,6 +41,7 @@ export const getMocks = ({
   recipeTagColor?: string,
   brandTagText?: string
   brandTagColor?: string
+  isRecipeTileLinkVisible?: boolean
 } = {}) => {
   const recipe: Recipe = {
     id: "12345",
@@ -128,6 +130,11 @@ export const getMocks = ({
     } : null)
   })
 
+  const useGetRecipeTileLinkData = () => ({
+    isRecipeTileLinkVisible,
+    dispatchTrackClickMoreRecipeDetails: () => {}
+  })
+
   return {
     recipe,
     useStock,
@@ -137,5 +144,6 @@ export const getMocks = ({
     useTracking,
     useGetSurchargeForRecipeId,
     useRecipeBrand,
+    useGetRecipeTileLinkData,
   };
 };

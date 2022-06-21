@@ -38,16 +38,7 @@ export default {
   component: Template,
   decorators: [
     (Story, { args }) => {
-      const {
-        recipe,
-        useStock,
-        useGetAlternativeOptionsForRecipe,
-        useBasket,
-        useSetBrowserCTAVisibility,
-        useTracking,
-        useGetSurchargeForRecipeId,
-        useRecipeBrand,
-      } = getMocks({
+      const mocks = getMocks({
         numberOfAlternatives: args.recipeTitles?.titles?.length || 2,
         alternativeTitles: args.recipeTitles?.titles,
         ...(args.recipeTitles?.titles?.length !== undefined &&
@@ -63,16 +54,7 @@ export default {
       });
 
       return (
-        <RecipeTileDependencies
-          recipe={recipe}
-          useGetAlternativeOptionsForRecipe={useGetAlternativeOptionsForRecipe}
-          useStock={useStock}
-          useBasket={useBasket}
-          useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
-          useTracking={useTracking}
-          useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
-          useRecipeBrand={useRecipeBrand}
-        >
+        <RecipeTileDependencies {...mocks}>
           <Story />
         </RecipeTileDependencies>
       );

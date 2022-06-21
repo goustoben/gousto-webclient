@@ -81,6 +81,10 @@ const renderComponent = ({
         useRecipeBrandAvailabilityTag: () => null,
         useRecipeBrandTag: () => null,
       })}
+      useGetRecipeTileLinkData= {() => ({
+        isRecipeTileLinkVisible: true,
+        dispatchTrackClickMoreRecipeDetails: jest.fn(),
+      })}
     >
       <TileImage categoryId="abcde" />
     </RecipeTileDependencies>
@@ -94,7 +98,7 @@ describe("<TileImage />", () => {
 
   test("should render one Recipe Image component (LazyWrapper)", () => {
     const { container } = renderComponent();
-    expect(container.getElementsByClassName("lazyload-wrapper").length).toBe(1);
+    expect(container.getElementsByClassName("lazyload-placeholder").length).toBe(1);
   });
 
   test("should contain one SoldOutOverlay component", () => {

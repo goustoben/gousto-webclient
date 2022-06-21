@@ -28,6 +28,7 @@ type StoryArgs = {
     outOfStockFlags: boolean[];
   };
   variantsCheckedIndex: number;
+  isRecipeTileLinkVisible: boolean;
 };
 
 type RecipeTileStory = (
@@ -58,6 +59,7 @@ export default {
         useTracking,
         useGetSurchargeForRecipeId,
         useRecipeBrand,
+        useGetRecipeTileLinkData,
       } = getMocks({
         isRecipeOutOfStock: args.isRecipeOutOfStock,
         cookingTime: args.cookingTime,
@@ -81,6 +83,7 @@ export default {
 
         brandTagText: args.brandTag,
         brandTagColor: args.brandTagColor,
+        isRecipeTileLinkVisible: args.isRecipeTileLinkVisible,
       });
 
       return (
@@ -93,6 +96,7 @@ export default {
           useTracking={useTracking}
           useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
           useRecipeBrand={useRecipeBrand}
+          useGetRecipeTileLinkData={useGetRecipeTileLinkData}
         >
           <Story />
         </RecipeTileDependencies>
@@ -218,6 +222,12 @@ export default {
         step: 1,
       },
       defaultValue: 0,
+    },
+
+    isRecipeTileLinkVisible: {
+      name: "Is RecipeTile link is visible",
+      control: "boolean",
+      defaultValue: false,
     },
   },
 } as ComponentMeta<RecipeTileStory>;

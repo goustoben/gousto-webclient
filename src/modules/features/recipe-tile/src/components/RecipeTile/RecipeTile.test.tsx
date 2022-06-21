@@ -92,6 +92,10 @@ const renderComponent = ({
           },
         })
       })}
+      useGetRecipeTileLinkData= {() => ({
+        isRecipeTileLinkVisible: true,
+        dispatchTrackClickMoreRecipeDetails: jest.fn(),
+      })}
     >
       <RecipeTile {...defaultProps} />
     </RecipeTileDependencies>
