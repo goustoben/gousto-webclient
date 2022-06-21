@@ -3,7 +3,8 @@ import React from 'react'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 
-import basketConfig from 'config/basket'
+import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
+import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
 
 import { ActionBarText } from './ActionBarText/ActionBarText'
 import { CircularProgressIndicator } from './CircularProgressIndicator/CircularProgressIndicator'
@@ -24,8 +25,11 @@ export const ActionBarPresentational = ({
   shouldAnimate,
   onAnimationEnd,
 }: Props) => {
-  const maxRecipes = basketConfig.maxRecipesNum
-  const maxRecipesNumAchieved = recipeCount === basketConfig.maxRecipesNum
+  const { maxRecipesForPortion } = useSupportedBoxTypes()
+  const { numPortions } = useNumPortions()
+  const maxRecipesNum = maxRecipesForPortion(numPortions)
+
+  const maxRecipesNumAchieved = recipeCount === maxRecipesNum
   const nextTierPricePerPortion = useSelector(createGetBestTierPricePerPortion())
 
   return (
@@ -42,11 +46,11 @@ export const ActionBarPresentational = ({
       <CircularProgressIndicator
         maxRecipesNumAchieved={maxRecipesNumAchieved}
         recipeCount={recipeCount}
-        maxRecipes={maxRecipes}
+        maxRecipesNum={maxRecipesNum}
       />
       <ActionBarText
         recipeCount={recipeCount}
-        maxRecipes={maxRecipes}
+        maxRecipesNum={maxRecipesNum}
         nextTierPricePerPortion={nextTierPricePerPortion}
         isInEmbeddedActionBar={variant === 'embedded'}
       />
