@@ -2,6 +2,7 @@ import React, { Provider, ReactElement } from "react";
 import { RecipeContextProvider } from "./recipe";
 import { UseBasketContextProvider } from "./useBasket";
 import { UseGetAlternativeOptionsForRecipeContextProvider } from "./useGetAlternativeOptionsForRecipe";
+import { UseGetRecipeTileLinkDataContextProvider } from "./useGetRecipeTileLinkData";
 import { UseGetSurchargeForRecipeIdContextProvider } from "./useGetSurchargeForRecipeId";
 import { UseRecipeBrandContextProvider } from "./useRecipeBrand";
 import { RecipeReferenceProvider } from "./useRecipeReference";
@@ -30,6 +31,7 @@ type RecipeTileDependenciesArgs = {
   useGetSurchargeForRecipeId: ExtractValueTypeFromContextProvider<typeof UseGetSurchargeForRecipeIdContextProvider>
   useRecipeBrand: ExtractValueTypeFromContextProvider<typeof UseRecipeBrandContextProvider>
   recipeReference?: ExtractValueTypeFromContextProvider<typeof RecipeReferenceProvider>;
+  useGetRecipeTileLinkData: ExtractValueTypeFromContextProvider<typeof UseGetRecipeTileLinkDataContextProvider>;
 };
 
 /**
@@ -49,6 +51,7 @@ export const RecipeTileDependencies = ({
   useGetSurchargeForRecipeId,
   recipeReference = null,
   useRecipeBrand,
+  useGetRecipeTileLinkData,
 }: RecipeTileDependenciesArgs) => (
   // Each logical item uses its own provider to minimize re-renderings
   <UseStockContextProvider value={useStock}>
@@ -64,7 +67,9 @@ export const RecipeTileDependencies = ({
               <UseGetSurchargeForRecipeIdContextProvider value={useGetSurchargeForRecipeId}>
                 <RecipeReferenceProvider value={recipeReference}>
                   <UseRecipeBrandContextProvider value={useRecipeBrand}>
-                    {children}
+                    <UseGetRecipeTileLinkDataContextProvider value={useGetRecipeTileLinkData}>
+                      {children}
+                    </UseGetRecipeTileLinkDataContextProvider>
                   </UseRecipeBrandContextProvider>
                 </RecipeReferenceProvider>
               </UseGetSurchargeForRecipeIdContextProvider>

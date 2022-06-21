@@ -7,7 +7,7 @@ import { css, jsx, CSSObject } from "@emotion/react";
 import { useRecipe } from "../../model/context";
 import { screen, typography } from "../../styles";
 
-const styles: CSSObject = {
+const defaultStyles: CSSObject = {
     marginBottom: "1rem",
     flex: 1,
     fontFamily: typography.axiformaFontStack,
@@ -19,8 +19,8 @@ const styles: CSSObject = {
     },
 };
 
-export function Title() {
+export function Title({styles}: {styles?: CSSObject[]} = {}) {
     const recipe = useRecipe();
 
-    return <h2 css={css(styles)}>{recipe.title}</h2>;
+    return <h2 css={css(defaultStyles, ...(styles || []))}>{recipe.title}</h2>;
 }

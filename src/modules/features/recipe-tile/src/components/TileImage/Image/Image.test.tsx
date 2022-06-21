@@ -82,7 +82,7 @@ describe("Recipe components > Image", () => {
       test("should render an img component correctly inside LazyLoad", () => {
         const { container } = renderComponent({ lazy: true });
         expect(
-          container.getElementsByClassName("lazyload-wrapper").length
+          container.getElementsByClassName("lazyload-placeholder").length
         ).toBe(1);
       });
     });

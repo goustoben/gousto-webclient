@@ -25,9 +25,12 @@ import {
   cssRecipeTileContainer,
   cssRecipeTileInfo,
   cssRecipeTileIsFineDineIn,
+  cssRecipeTileWithLinkTitle,
   cssVariantPushDown,
 } from "./styles";
 import { RecipeTag } from "../RecipeTag";
+import { useGetRecipeTileLinkDataHook } from "../../model/context/useGetRecipeTileLinkData";
+import { RecipeTileLink } from "../RecipeTileLink";
 
 type RecipeTileProps = {
   recipeId: string;
@@ -57,6 +60,8 @@ export const RecipeTile = ({
 
   const deviceType = useDeviceType();
   const recipeReference = useRecipeReference();
+  const useGetRecipeTileLinkData = useGetRecipeTileLinkDataHook()
+  const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData()
 
   // should never happen but caters for loading state
   if (categoryId === null) {
@@ -124,7 +129,14 @@ export const RecipeTile = ({
         >
           <BrandTag />
 
-          <Title />
+          <Title styles={isRecipeTileLinkVisible ? [cssRecipeTileWithLinkTitle] : []}/>
+
+          {isRecipeTileLinkVisible && (
+            <RecipeTileLink
+              isFineDineIn={Boolean(isFineDineIn)}
+              onClickTile={handleOnClick}
+            />
+          )}
 
           <RecipeTilePurchaseInfo
             categoryId={categoryId}

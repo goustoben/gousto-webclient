@@ -9,29 +9,33 @@
     "typecheck": "yarn run --top-level tsc --noEmit"
   },
   "peerDependencies": {
+    "@emotion/react": "^11.7.0",
+    "@gousto-internal/citrus-react": "^0.22.6",
     "immutable": "3.8.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-lazyload": "2.3.0",
     "react-redux": "7.2.4",
     "swr": "^1.1.2"
   },
   "devDependencies": {
+    "@emotion/react": "^11.7.0",
+    "@gousto-internal/citrus-react": "^0.22.6",
     "@library/nonjs-imports": "workspace:*",
     "@storybook/addon-controls": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "^3.4.2",
+    "@types/react-lazyload": "^3.2.0",
+    "@types/react-modal": "^3.13.1",
     "immutable": "3.8.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-lazyload": "2.3.0",
+    "react-modal": "^3.14.3",
     "react-redux": "7.2.4",
     "react-test-renderer": "16.13.1",
     "swr": "^1.1.2"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@types/react-lazyload": "^3.2.0",
-    "react-lazyload": "^3.2.0"
   }
 }

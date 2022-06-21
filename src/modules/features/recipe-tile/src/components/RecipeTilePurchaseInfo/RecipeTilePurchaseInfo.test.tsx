@@ -70,6 +70,10 @@ const renderComponent = ({
         useRecipeBrandAvailabilityTag: () => null,
         useRecipeBrandTag: () => null,
       })}
+      useGetRecipeTileLinkData= {() => ({
+        isRecipeTileLinkVisible: false,
+        dispatchTrackClickMoreRecipeDetails: jest.fn(),
+      })}
     >
       <RecipeTilePurchaseInfo {...defaultProps} />
     </RecipeTileDependencies>

@@ -131,3 +131,8 @@ export const cssRecipeTagHolderShifted: CSSObject = {
   position: 'absolute',
   top: '2.625rem',
 }
+
+export const cssRecipeTileWithLinkTitle: CSSObject = {
+  flex: 'auto',
+  marginBottom: '0',
+}
