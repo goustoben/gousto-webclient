@@ -1,5 +1,5 @@
-const { beginCreatingOrderWithoutSubscriptionButStopAtPayment } = require('../../steps/signupCommon')
-const { continueSignUpWithACreditCard } = require('../../steps/continueSignUpWithACreditCard')
+const { beginCreatingOrderWithoutSubscriptionButStopAtPayment } = require('../steps/signupCommon')
+const { continueSignUpWithACreditCard } = require('../steps/continueSignUpWithACreditCard')
 const faker = require("faker")
 
 module.exports = {
