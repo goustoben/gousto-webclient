@@ -1,0 +1,17 @@
+@value BreakpointToMedium from 'design-language/breakpoints.css';
+
+@value baseOffset 0.25rem;
+@value desktopOffset 0.5rem;
+
+.recipeTileBadge {
+  position: absolute;
+  bottom: baseOffset;
+  left: calc(baseOffset + desktopOffset);
+}
+
+@media BreakpointToMedium {
+  .recipeTileBadge {
+    left: calc(baseOffset * 2);
+  }
+}
+

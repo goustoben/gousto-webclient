@@ -5,6 +5,7 @@ import { Heading } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
 import { homeConfig } from 'config/home'
+import { HighlightChoiceBanner } from 'routes/Home/HighlightChoice'
 
 import { Benefits } from '../Benefits'
 import { CTAHomepageContainer } from '../CTA'
@@ -105,6 +106,9 @@ class Hero extends Component {
               {homeConfig.hero.subheader}
             </Heading>
           </div>
+
+          <HighlightChoiceBanner />
+
           {this.renderGetStarted(true)}
           <div role="img" aria-label="cooking image" className={css.processImage} />
         </div>

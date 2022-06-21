@@ -1,6 +1,8 @@
 import React, { Fragment, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Dropdown } from 'goustouicomponents'
+// eslint-disable-next-line import/no-unresolved
+import { formatDeliveryPrice } from 'utils/deliveryPrice'
 import {
   SubscriptionContext,
 } from '../../../../context'
@@ -42,7 +44,8 @@ const renderCurrentValue = ({ day, timeRange }) => (
 
 renderCurrentValue.propTypes = {
   day: PropTypes.string.isRequired,
-  timeRange: PropTypes.string.isRequired
+  timeRange: PropTypes.string.isRequired,
+  deliveryPrice: PropTypes.string.isRequired
 }
 
 export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
@@ -78,17 +81,18 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
     setShouldSubmit(true)
   }
 
-  const { day, timeRange, coreSlotId } = selectedCoreId
+  const { day, timeRange, coreSlotId, deliveryPrice } = selectedCoreId
     ? slots.find(({ coreSlotId: slotCoreSlotId }) => slotCoreSlotId === selectedCoreId)
     : currentDeliverySlot
 
   const options = slots.map(({
     coreSlotId: optionCoreSlotId,
     day: optionDay,
-    timeRange: optionTimeRange
+    timeRange: optionTimeRange,
+    deliveryPrice: optionDeliveryPrice
   }) => ({
     value: optionCoreSlotId,
-    text: `${optionDay} ${optionTimeRange}`
+    text: `${optionDay} ${optionTimeRange} ${formatDeliveryPrice(optionDeliveryPrice)}`
   }))
 
   const isCtaDisabled = coreSlotId === currentDeliverySlot.coreSlotId
@@ -100,7 +104,7 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
       instruction="Choose day and time"
       ctaText="Save day and time"
       isCtaDisabled={isCtaDisabled}
-      renderCurrentValue={renderCurrentValue({ day, timeRange })}
+      renderCurrentValue={renderCurrentValue({ day, timeRange, deliveryPrice })}
       onSubmit={onSubmit}
       onEditClick={trackSubscriptionSettingsChange({ settingName, action: 'edit' })}
       isMobile={isMobile}
@@ -115,7 +119,7 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
       { isLoaded ? (
         <Dropdown
           options={options}
-          value={{ text: `${day} ${timeRange}`, value: coreSlotId }}
+          value={{ text: `${day} ${timeRange} ${formatDeliveryPrice(deliveryPrice)}`, value: coreSlotId }}
           onChange={({ value }) => setSelectedCoreId(value)}
           name="Delivery day dropdown"
           isMobile={isMobile}

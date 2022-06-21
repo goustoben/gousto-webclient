@@ -5121,6 +5121,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-slick@npm:^0.23.8":
+  version: 0.23.8
+  resolution: "@types/react-slick@npm:0.23.8"
+  dependencies:
+    "@types/react": "*"
+  checksum: df71ab6b0f4d573add5c1e24b00885b94e1a3f1d78757cafa0f73a38c1c17e4ad46a75e450267e9f371a9d221e52ddaae5b59b4fd8ad9516676e8bca77c15709
+  languageName: node
+  linkType: hard
+
 "@types/react-syntax-highlighter@npm:11.0.5":
   version: 11.0.5
   resolution: "@types/react-syntax-highlighter@npm:11.0.5"
@@ -27360,6 +27369,7 @@ __metadata:
     "@types/react-dom": ^17.0.11
     "@types/react-modal": ^3.13.1
     "@types/react-router-redux": ^5.0.20
+    "@types/react-slick": ^0.23.8
     "@types/uuid": ^8.3.4
     "@typescript-eslint/eslint-plugin": ^5.12.1
     "@typescript-eslint/parser": ^5.12.1

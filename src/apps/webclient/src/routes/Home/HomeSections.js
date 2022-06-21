@@ -8,6 +8,7 @@ import routesConfig from 'config/routes'
 import { Carousel } from './Carousel'
 import { EmailForm } from './EmailForm'
 import { Hero } from './Hero'
+import { HighlightChoice } from './HighlightChoice'
 import { JoeWicks } from './JoeWicks'
 import { PriceComparisonTable } from './PriceComparisonTable'
 import { TrustPilot } from './TrustPilot'
@@ -48,6 +49,8 @@ class HomeSections extends Component {
       hero: (props) => (
         <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />
       ),
+      // eslint-disable-next-line react/no-unstable-nested-components
+      highlightChoice: () => <HighlightChoice />,
       // eslint-disable-next-line react/no-unstable-nested-components
       trustPilot: () => <TrustPilot />,
       // eslint-disable-next-line react/no-unstable-nested-components

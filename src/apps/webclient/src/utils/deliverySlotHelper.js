@@ -3,6 +3,8 @@ import moment from 'moment'
 import { createDisabledSlotId } from 'routes/Menu/selectors/boxSummary'
 import { formatDeliveryTime } from './deliverySlot'
 import { getLandingDay } from './deliveries'
+// eslint-disable-next-line import/no-unresolved
+import { formatDeliveryPrice } from './deliveryPrice'
 
 /**
  * `addDisabledSlotIds` uses `set` so it will change
@@ -59,7 +61,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
 
       return {
         label: formatDeliveryTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
-        subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
+        subLabel: formatDeliveryPrice(slot.get('deliveryPrice')),
         value: slot.get('id'),
         coreSlotId: slot.get('coreSlotId'),
         disabled: isSlotDisabled,

@@ -152,6 +152,7 @@ describe('Home', () => {
   describe('getModules', () => {
     const defaultHomeModules = [
       'hero',
+      'highlightChoice',
       'trustPilot',
       'priceComparisonTable',
       'whyChooseGousto',
