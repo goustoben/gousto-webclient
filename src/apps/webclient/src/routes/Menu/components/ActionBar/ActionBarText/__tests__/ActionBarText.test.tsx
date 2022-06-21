@@ -12,7 +12,7 @@ describe('ActionBarText', () => {
       rendered = render(
         <ActionBarText
           recipeCount={0}
-          maxRecipes={4}
+          maxRecipesNum={4}
           nextTierPricePerPortion={null}
           isInEmbeddedActionBar={false}
         />,
@@ -31,7 +31,7 @@ describe('ActionBarText', () => {
       rendered = render(
         <ActionBarText
           recipeCount={1}
-          maxRecipes={4}
+          maxRecipesNum={4}
           nextTierPricePerPortion={null}
           isInEmbeddedActionBar={false}
         />,
@@ -50,7 +50,7 @@ describe('ActionBarText', () => {
       rendered = render(
         <ActionBarText
           recipeCount={2}
-          maxRecipes={4}
+          maxRecipesNum={4}
           nextTierPricePerPortion="1.43"
           isInEmbeddedActionBar={false}
         />,
@@ -69,7 +69,7 @@ describe('ActionBarText', () => {
       rendered = render(
         <ActionBarText
           recipeCount={3}
-          maxRecipes={4}
+          maxRecipesNum={4}
           nextTierPricePerPortion="1.43"
           isInEmbeddedActionBar={false}
         />,
@@ -88,7 +88,7 @@ describe('ActionBarText', () => {
       rendered = render(
         <ActionBarText
           recipeCount={4}
-          maxRecipes={4}
+          maxRecipesNum={4}
           nextTierPricePerPortion="1.26"
           isInEmbeddedActionBar={false}
         />,

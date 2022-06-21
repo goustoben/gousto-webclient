@@ -7,20 +7,20 @@ import css from './CircularProgressIndicator.module.css'
 type Props = {
   maxRecipesNumAchieved: boolean
   recipeCount: number
-  maxRecipes: number
+  maxRecipesNum: number
 }
 
 export const CircularProgressIndicator = ({
   maxRecipesNumAchieved,
   recipeCount,
-  maxRecipes,
+  maxRecipesNum,
 }: Props) => {
   const svgViewBox = 32
   const center = svgViewBox / 2
   const strokeWidth = 2
   const radius = svgViewBox / 2 - 1
   const circumference = 2 * Math.PI * radius
-  const percentage = Math.min((recipeCount * circumference) / maxRecipes, circumference)
+  const percentage = Math.min((recipeCount * circumference) / maxRecipesNum, circumference)
 
   return (
     <div className={css.circularProgressIndicator}>
@@ -45,7 +45,7 @@ export const CircularProgressIndicator = ({
       >
         /
       </span>
-      <span>{maxRecipes}</span>
+      <span>{maxRecipesNum}</span>
     </div>
   )
 }

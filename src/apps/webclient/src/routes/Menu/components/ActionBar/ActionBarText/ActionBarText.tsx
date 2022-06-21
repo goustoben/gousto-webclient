@@ -18,14 +18,14 @@ const Success = ({ children }: FormatterProps) => <span className={css.success}>
 
 type Props = {
   recipeCount: number
-  maxRecipes: number
+  maxRecipesNum: number
   nextTierPricePerPortion: string | null
   isInEmbeddedActionBar: boolean
 }
 
 export const ActionBarText = ({
   recipeCount,
-  maxRecipes,
+  maxRecipesNum,
   nextTierPricePerPortion,
   isInEmbeddedActionBar,
 }: Props) => {
@@ -42,8 +42,8 @@ export const ActionBarText = ({
           <Bold>Add more recipes</Bold> to complete your box
         </Info>
       )
-    } else if (recipeCount < maxRecipes) {
-      const recipeCountDiff = maxRecipes - recipeCount
+    } else if (recipeCount < maxRecipesNum) {
+      const recipeCountDiff = maxRecipesNum - recipeCount
 
       return (
         <Info>
