@@ -124,6 +124,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
 
     const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
     const addressId = getState().user.getIn(['newOrders', orderId, 'shippingAddressId'])
+    const priceBreakdown = getState().user.getIn(['newOrders', orderId, 'priceBreakdown'])
     const trackingData = {
       order_id: orderId,
       original_deliveryslot_id: originalSlotId,
@@ -155,6 +156,11 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         deliverySlotStart: slot.get('deliveryStartTime'),
         deliverySlotEnd: slot.get('deliveryEndTime'),
         shouldCutoffAt: updatedOrder.shouldCutoffAt,
+        priceBreakdown: {
+          ...priceBreakdown.toJS(),
+          netOrderPrice: parseFloat(updatedOrder.prices.total),
+          grossShippingPrice: parseFloat(updatedOrder.prices.deliveryTotal),
+        },
         trackingData: {
           actionType: 'OrderDeliverySlot Saved',
           ...trackingData

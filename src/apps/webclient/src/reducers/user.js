@@ -176,6 +176,7 @@ const user = {
         deliverySlotStart: action.deliverySlotStart,
         deliverySlotEnd: action.deliverySlotEnd,
         shouldCutoffAt: action.shouldCutoffAt,
+        priceBreakdown: Immutable.fromJS(action.priceBreakdown)
       })
     }
 
