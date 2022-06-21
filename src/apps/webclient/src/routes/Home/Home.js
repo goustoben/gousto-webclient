@@ -60,6 +60,7 @@ class Home extends Component {
     [
       isSignupReductionEnabled && 'emailForm',
       'hero',
+      'highlightChoice',
       'trustPilot',
       priceComparisonTableToken,
       'whyChooseGousto',

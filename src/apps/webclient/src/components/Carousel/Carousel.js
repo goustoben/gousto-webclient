@@ -66,7 +66,7 @@ export class Carousel extends React.PureComponent {
           { 'carousel-dotted': settings.dots },
         )}
       >
-        <Slider {...settings}>
+        <Slider {...settings} lazyLoad="ondemand">
           {children}
         </Slider>
       </div>
