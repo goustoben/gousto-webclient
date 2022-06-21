@@ -2,6 +2,8 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 
+// eslint-disable-next-line import/no-unresolved
+import { formatDeliveryPrice } from 'utils/deliveryPrice'
 import { SubscriptionContext } from '../../../../../context/index'
 import { DeliveryDayAndTime } from '../DeliveryDayAndTime'
 
@@ -27,7 +29,8 @@ const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionTo
 const mockCurrentDeliverySlot = {
   coreSlotId: '1',
   day: 'Monday',
-  timeRange: '9am - 7pm'
+  timeRange: '9am - 7pm',
+  deliveryPrice: '1.99'
 }
 
 const mockSlots = [
@@ -35,7 +38,8 @@ const mockSlots = [
   {
     coreSlotId: '2',
     day: 'Tuesday',
-    timeRange: '10am - 12pm'
+    timeRange: '10am - 12pm',
+    deliveryPrice: '0.00'
   }
 ]
 
@@ -172,7 +176,7 @@ describe('DeliveryDayAndTime', () => {
           wrapper
             .find('[data-testing="delivery-day-and-time-toggle"]')
             .text()
-        ).toEqual(`${mockCurrentDeliverySlot.day} ${mockCurrentDeliverySlot.timeRange}`)
+        ).toEqual(`${mockCurrentDeliverySlot.day} ${mockCurrentDeliverySlot.timeRange} ${formatDeliveryPrice(mockCurrentDeliverySlot.deliveryPrice)}`)
       })
 
       test('Then the trackSubscriptionSettingsChange is called', () => {
@@ -206,7 +210,7 @@ describe('DeliveryDayAndTime', () => {
           const renderedOptions = wrapper.find('[data-testing="delivery-day-and-time-options"] li')
 
           renderedOptions.forEach((option, idx) => {
-            const expectedText = `${mockSlots[idx].day} ${mockSlots[idx].timeRange}`
+            const expectedText = `${mockSlots[idx].day} ${mockSlots[idx].timeRange} ${formatDeliveryPrice(mockSlots[idx].deliveryPrice)}`
 
             expect(option.text()).toEqual(expectedText)
           })
@@ -215,7 +219,7 @@ describe('DeliveryDayAndTime', () => {
         test('Then I can see the current selected option', () => {
           expect(
             getOptionByProp('aria-selected', true).text()
-          ).toEqual(`${mockCurrentDeliverySlot.day} ${mockCurrentDeliverySlot.timeRange}`)
+          ).toEqual(`${mockCurrentDeliverySlot.day} ${mockCurrentDeliverySlot.timeRange} ${formatDeliveryPrice(mockCurrentDeliverySlot.deliveryPrice)}`)
         })
 
         describe('And I select an option', () => {

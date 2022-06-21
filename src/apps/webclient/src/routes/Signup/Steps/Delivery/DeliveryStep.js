@@ -13,6 +13,8 @@ import { unbounce as unbounceRoutes } from 'config/routes'
 import { signupConfig } from 'config/signup'
 import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
 import { SocialBelongingBanner } from 'routes/Signup/SocialBelongingBanner'
+// eslint-disable-next-line import/no-unresolved
+import { formatDeliveryPrice } from 'utils/deliveryPrice'
 import {
   createNextDayDeliveryDays,
   generateNextDayDeliverySlots,
@@ -75,8 +77,7 @@ const getDeliveryDaysAndSlots = (
 
           let sublabel
           if (!options.isGoustoOnDemandEnabled) {
-            sublabel =
-              slot.get('deliveryPrice') === '0.00' ? 'Free' : `£${slot.get('deliveryPrice')}`
+            sublabel = formatDeliveryPrice(slot.get('deliveryPrice'))
           }
 
           return {

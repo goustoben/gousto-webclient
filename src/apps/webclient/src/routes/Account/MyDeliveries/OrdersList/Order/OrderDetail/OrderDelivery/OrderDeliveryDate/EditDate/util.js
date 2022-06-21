@@ -3,6 +3,8 @@ import moment from 'moment'
 import { getNDDFeatureValue } from 'selectors/features'
 import { createSelector } from 'reselect'
 import { getUserNewOrders } from 'selectors/user'
+// eslint-disable-next-line import/no-unresolved
+import { formatDeliveryPrice } from 'utils/deliveryPrice'
 
 export const DEFAULT_MESSAGE_ID = 'default-message'
 
@@ -119,7 +121,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
           value: slot.coreSlotId,
           uuid: slot.id,
           label: `${humanTimeFormat(slot.deliveryStartTime, 'hour')} - ${humanTimeFormat(slot.deliveryEndTime, 'hour')}`,
-          subLabel: slot.deliveryPrice === '0.00' ? 'Free' : `£${slot.deliveryPrice}`,
+          subLabel: formatDeliveryPrice(slot.deliveryPrice),
           isDefaultSlot: slot.isDefault,
         }
       ))
