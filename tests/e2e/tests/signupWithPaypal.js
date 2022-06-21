@@ -1,4 +1,4 @@
-const {beginSignUpButStopAtPayment} = require('../../steps/signupCommon')
+const {beginSignUpButStopAtPayment} = require('../steps/signupCommon')
 const faker = require("faker")
 
 module.exports = {

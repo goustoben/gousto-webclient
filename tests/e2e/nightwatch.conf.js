@@ -2,7 +2,7 @@ const { params, testSettings }  = require('./config');
 
 module.exports = {
   src_folders: [
-    'tests/systemTests'
+    'tests'
   ],
   output_folder: params.ARTIFACTS_PATH,
   custom_commands_path: './commands',

@@ -1,6 +1,6 @@
-const {beginSignUpButStopAtPayment} = require('../../steps/signupCommon')
+const {beginSignUpButStopAtPayment} = require('../steps/signupCommon')
 const faker = require("faker")
-const { continueSignUpWithACreditCard } = require('../../steps/continueSignUpWithACreditCard')
+const { continueSignUpWithACreditCard } = require('../steps/continueSignUpWithACreditCard')
 
 module.exports = {
   'Critical user journey': function (browser) {
