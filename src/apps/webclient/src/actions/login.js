@@ -16,6 +16,7 @@ import {
   feLoggingLogEvent,
   logLevels,
 } from 'actions/log'
+import { getFeLoggingCorrelationData } from 'selectors/checkout'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import statusActions from './status'
 import authActions from './auth'
@@ -91,10 +92,22 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
       if (rememberMe) {
         dispatch({ type: actionTypes.LOGIN_REMEMBER_ME })
       }
-      if (orderId) {
-        dispatch(feLoggingLogEvent(logLevels.info, 'Signup login attempt', { orderId }))
-      }
-      await dispatch(authActions.authAuthenticate(email, password, rememberMe, recaptchaToken))
+
+      const state = getState()
+      const correlationData = getFeLoggingCorrelationData(state)
+
+      const isSignupLogin = !!orderId
+      dispatch(feLoggingLogEvent(logLevels.info, 'Login attempt', { isSignupLogin }))
+      await dispatch(
+        authActions.authAuthenticate(
+          email,
+          password,
+          rememberMe,
+          recaptchaToken,
+          isSignupLogin,
+          correlationData,
+        ),
+      )
       await dispatch(authActions.authIdentify())
 
       const userRoles = getState().auth.get('roles', Immutable.List([]))

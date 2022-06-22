@@ -79,7 +79,10 @@ describe('login actions', () => {
       getState.mockReturnValue({
         auth: authState,
         user: userState,
-        request: requestState
+        request: requestState,
+        checkout: Immutable.fromJS({
+          goustoRef: '456',
+        }),
       })
       isActive.mockReturnValue(true)
     })
@@ -89,17 +92,31 @@ describe('login actions', () => {
         auth: authState,
         user: userState,
         routing: { locationBeforeTransitions: { pathname: '/menu' } },
+        checkout: Immutable.fromJS({
+          goustoRef: '456',
+        }),
       })
       documentLocation.mockReturnValueOnce({ pathname: '/menu' })
 
-      await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
+      await loginActions.loginUser({
+        email: 'email',
+        password: 'password',
+        rememberMe: true,
+      })(dispatch, getState)
 
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(dispatch.mock.calls[3][0]).toEqual({
         type: actionTypes.LOGIN_REMEMBER_ME,
       })
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith(
+        'email',
+        'password',
+        true,
+        null,
+        false,
+        { gousto_ref: '456', session_id: undefined },
+      )
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -112,7 +129,14 @@ describe('login actions', () => {
 
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true, recaptchaToken })(dispatch, getState)
 
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, recaptchaToken)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith(
+        'email',
+        'password',
+        true,
+        recaptchaToken,
+        false,
+        { gousto_ref: '456', session_id: undefined },
+      )
     })
 
     it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /home, no redirect', async () => {
@@ -120,7 +144,14 @@ describe('login actions', () => {
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith(
+        'email',
+        'password',
+        true,
+        null,
+        false,
+        { gousto_ref: '456', session_id: undefined },
+      )
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -134,7 +165,14 @@ describe('login actions', () => {
       await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith(
+        'email',
+        'password',
+        true,
+        null,
+        false,
+        { gousto_ref: '456', session_id: undefined },
+      )
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -154,7 +192,14 @@ describe('login actions', () => {
 
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith(
+        'email',
+        'password',
+        true,
+        null,
+        false,
+        { gousto_ref: '456', session_id: undefined },
+      )
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -254,7 +299,14 @@ describe('login actions', () => {
 
         expect(statusActions.pending).toHaveBeenCalledTimes(2)
         expect(statusActions.error).toHaveBeenCalledTimes(1)
-        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authActions.authAuthenticate).toHaveBeenCalledWith(
+          'email',
+          'password',
+          true,
+          null,
+          true,
+          { gousto_ref: '456', session_id: undefined },
+        )
         expect(authActions.authIdentify).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -283,7 +335,14 @@ describe('login actions', () => {
 
         expect(statusActions.pending).toHaveBeenCalledTimes(2)
         expect(statusActions.error).toHaveBeenCalledTimes(1)
-        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authActions.authAuthenticate).toHaveBeenCalledWith(
+          'email',
+          'password',
+          true,
+          null,
+          true,
+          { gousto_ref: '456', session_id: undefined },
+        )
         expect(authActions.authIdentify).toHaveBeenCalled()
         expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
         expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))

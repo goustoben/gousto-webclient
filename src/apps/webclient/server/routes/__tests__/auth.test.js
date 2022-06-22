@@ -9,6 +9,7 @@ jest.mock('../../utils/logger', () => ({
     error: jest.fn(),
     notice: jest.fn(),
     warning: jest.fn(),
+    info: jest.fn(),
   }
 }))
 
@@ -64,7 +65,7 @@ describe('auth', () => {
   })
 
   describe('login', () => {
-    const getLoginCtx = ({ username, password, rememberMe, recaptchaToken }) => (
+    const getLoginCtx = ({ username, password, rememberMe, recaptchaToken, isSignupLogin, correlationData }) => (
       Object.assign(getCtx(), {
         request: {
           body: {
@@ -72,6 +73,8 @@ describe('auth', () => {
             password,
             rememberMe,
             recaptchaToken,
+            isSignupLogin,
+            correlationData,
           },
           headers: {
             'user-agent': 'test',
@@ -106,7 +109,16 @@ describe('auth', () => {
 
       beforeEach(() => {
         [username, password, rememberMe] = ['test@test.com', 'pass1234', true]
-        ctx = getLoginCtx({ username, password, rememberMe })
+        ctx = getLoginCtx({
+          username,
+          password,
+          rememberMe,
+          isSignupLogin: false,
+          correlationData: {
+            session_id: '123',
+            gousto_ref: '456',
+          },
+        })
       })
 
       test('should request a user token using the request body variables', async () => {

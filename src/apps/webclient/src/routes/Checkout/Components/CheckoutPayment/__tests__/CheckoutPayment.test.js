@@ -29,6 +29,7 @@ describe('CheckoutPayment', () => {
   const submit = jest.fn()
   const submitOrder = jest.fn()
   const setCurrentPaymentMethod = jest.fn()
+  const feLoggingLogEvent = jest.fn()
 
   beforeEach(() => {
     useSelector.mockReturnValue(true)
@@ -43,6 +44,7 @@ describe('CheckoutPayment', () => {
         currentPaymentMethod={PaymentMethod.Card}
         setCurrentPaymentMethod={setCurrentPaymentMethod}
         submitOrder={submitOrder}
+        feLoggingLogEvent={feLoggingLogEvent}
       />,
     )
   })

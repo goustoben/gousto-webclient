@@ -5,6 +5,7 @@ import { HotjarTrigger } from 'HotjarTrigger'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { logLevels } from 'actions/log'
 import ReCAPTCHA from 'components/Recaptcha'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { PaymentMethod } from 'config/signup'
@@ -63,8 +64,13 @@ class CheckoutPayment extends React.Component {
   }
 
   submitCheckingRecaptcha = () => {
-    const { recaptchaValue } = this.props
+    const { feLoggingLogEvent, recaptchaValue } = this.props
     const captchaPassed = recaptchaValue !== null
+
+    feLoggingLogEvent(logLevels.info, 'submitCheckingRecaptcha', {
+      recaptchaElementExists: !!this.recaptchaElement,
+      recaptchaValue,
+    })
 
     if (this.recaptchaElement && !captchaPassed) {
       this.recaptchaElement.execute()
@@ -112,7 +118,11 @@ class CheckoutPayment extends React.Component {
   }
 
   handleRecaptchaChange = (value) => {
-    const { storeSignupRecaptchaToken } = this.props
+    const { feLoggingLogEvent, storeSignupRecaptchaToken } = this.props
+
+    feLoggingLogEvent(logLevels.info, 'handleRecaptchaChange', {
+      value,
+    })
 
     storeSignupRecaptchaToken(value)
     if (value !== null) {
@@ -326,6 +336,7 @@ CheckoutPayment.propTypes = {
   isFreeBox: PropTypes.bool,
   pricingHookResponse: PropTypes.object,
   signupLoginError: PropTypes.string,
+  feLoggingLogEvent: PropTypes.func.isRequired,
 }
 
 CheckoutPayment.defaultProps = {
