@@ -215,14 +215,14 @@ describe('Delivery Step', () => {
       const expectedOptions = [
         {
           label: '8am - 7pm',
-          subLabel: 'Free',
+          subLabel: '',
           value: '1',
           coreSlotId: '1',
           disabled: false,
         },
         {
           label: '8am - 12pm',
-          subLabel: '£2.99',
+          subLabel: '',
           value: '2',
           coreSlotId: '2',
           disabled: false,
@@ -255,14 +255,14 @@ describe('Delivery Step', () => {
         const expectedOptions = [
           {
             label: '8am - 7pm',
-            subLabel: 'Free',
+            subLabel: '',
             value: '1',
             coreSlotId: '1',
             disabled: false,
           },
           {
             label: '8am - 12pm',
-            subLabel: '£2.99',
+            subLabel: '',
             value: '2',
             coreSlotId: '2',
             disabled: true,

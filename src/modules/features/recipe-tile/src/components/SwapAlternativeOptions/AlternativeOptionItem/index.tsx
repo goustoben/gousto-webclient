@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/react";
 
 import { ItemContent } from './ItemContent'
 import { cssListItem, cssListItemChecked } from './styles';
-import { InputRadio } from './InputRadio';
+import { Radio } from '@gousto-internal/citrus-react';
 
 type AlternativeOptionItemProps = {
   recipeId: string
@@ -27,18 +27,18 @@ export const AlternativeOptionItem = ({
   surcharge = null,
 }: AlternativeOptionItemProps) => (
   <li css={css(cssListItem, isChecked ? cssListItemChecked : null)}>
-    <InputRadio
+    <Radio
       id={recipeId}
       value={recipeId}
       name="variantList"
       onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
-      isChecked={isChecked}
+      checked={isChecked}
     >
       <ItemContent
         recipeName={recipeName}
         isOutOfStock={isOutOfStock}
         surcharge={surcharge}
       />
-    </InputRadio>
+    </Radio>
   </li>
 )
