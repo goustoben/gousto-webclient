@@ -77,7 +77,7 @@ const getDeliveryDaysAndSlots = (
 
           let sublabel
           if (!options.isGoustoOnDemandEnabled) {
-            sublabel = formatDeliveryPrice(slot.get('deliveryPrice'))
+            sublabel = formatDeliveryPrice(slot.get('deliveryPrice'), '')
           }
 
           return {

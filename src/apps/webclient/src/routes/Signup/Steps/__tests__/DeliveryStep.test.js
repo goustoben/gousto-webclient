@@ -215,7 +215,7 @@ describe('Delivery Step', () => {
       const expectedOptions = [
         {
           label: '8am - 7pm',
-          subLabel: 'Free',
+          subLabel: '',
           value: '1',
           coreSlotId: '1',
           disabled: false,
@@ -255,7 +255,7 @@ describe('Delivery Step', () => {
         const expectedOptions = [
           {
             label: '8am - 7pm',
-            subLabel: 'Free',
+            subLabel: '',
             value: '1',
             coreSlotId: '1',
             disabled: false,
