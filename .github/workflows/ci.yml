@@ -99,14 +99,18 @@ jobs:
           ./scripts/run-eslint-ci.sh $(cat lint-changes)
         fi
         rm lint-changes
+    - name: Typecheck (feature modules)
+      run: yarn workspaces foreach --include '@features/*' --verbose run typecheck
     - name: Lint (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run lint
     - name: Unit test (feature modules)
       run: yarn workspaces foreach --include '@features/*' --verbose run test:unit
+    - name: Typecheck (libraries)
+      run: yarn workspaces foreach --include '@library/*' --verbose run typecheck
+    - name: Lint (libraries)
+      run: yarn workspaces foreach --include '@library/*' --verbose run lint
     - name: Unit test (libraries)
       run: yarn workspaces foreach --include '@library/*' --verbose run test:unit
-    - name: Typecheck (feature modules)
-      run: yarn workspaces foreach --include '@features/*' --verbose run typecheck
     - name: Typecheck tests
       run: yarn workspace webclient typecheck:tests
     - name: Unit test (apps/webclient)
