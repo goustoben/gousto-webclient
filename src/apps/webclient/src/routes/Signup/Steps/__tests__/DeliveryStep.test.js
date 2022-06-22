@@ -222,7 +222,7 @@ describe('Delivery Step', () => {
         },
         {
           label: '8am - 12pm',
-          subLabel: '£2.99',
+          subLabel: '',
           value: '2',
           coreSlotId: '2',
           disabled: false,
@@ -262,7 +262,7 @@ describe('Delivery Step', () => {
           },
           {
             label: '8am - 12pm',
-            subLabel: '£2.99',
+            subLabel: '',
             value: '2',
             coreSlotId: '2',
             disabled: true,
