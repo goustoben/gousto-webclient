@@ -5,13 +5,13 @@ import PropTypes from 'prop-types'
 
 import { useRecipeId } from '../../../context/recipeContext'
 import { useStock } from '../../../domains/basket'
-import { useGetAlternativeOptionsForRecipeLight } from '../../../domains/menu'
+import { useGetAlternativeOptionsForRecipe } from '../../../domains/menu'
 
 import css from './VariantHeader.css'
 
 export const VariantHeader = ({ categoryId }: { categoryId: string }) => {
   const { isRecipeOutOfStock } = useStock()
-  const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
+  const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipe()
   const recipeId = useRecipeId()
 
   if (!recipeId) {

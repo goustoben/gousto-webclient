@@ -1,12 +1,13 @@
 import * as Immutable from 'immutable'
-
-export type Recipe = {
-  id: string
-  coreRecipeId: string
-  displayName: string
-}
+import { Recipe } from "../types"
 
 export type RecipeImmutable = Immutable.Map<keyof Recipe, string>
+
+export type SelectedVariants = {
+  [collectionId: string]: {
+    [recipeReference: string]: string
+  }
+}
 
 export type RecipeVariants = {
   type: 'alternatives' | 'sides'

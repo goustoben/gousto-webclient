@@ -8,7 +8,7 @@ import {
   useGetRecipeTileLinkData,
 } from 'routes/Menu/components/RecipeTile/RecipeTileLink'
 import { useStock } from 'routes/Menu/domains/basket'
-import { useGetAlternativeOptionsForRecipeLight } from 'routes/Menu/domains/menu'
+import { useGetAlternativeOptionsForRecipe } from 'routes/Menu/domains/menu'
 
 import { useRecipeIsFineDineIn } from '../../context/recipeContext'
 import { useRecipeReference } from '../../context/recipeReferenceContext'
@@ -34,7 +34,7 @@ const RecipeTile: React.FC<RecipeTileProps> = ({
   onClick,
 }) => {
   const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData()
-  const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeLight()
+  const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipe()
   const { isRecipeOutOfStock } = useStock()
   const isOutOfStock = isRecipeOutOfStock(recipeId)
 

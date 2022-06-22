@@ -10,6 +10,7 @@ import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { useStock } from '../../domains/basket'
 import { useCurrentCollectionId } from '../../domains/collections'
 import { useMenu } from '../../domains/menu'
+import { useSelectedCuisines } from '../../hooks/useSelectedCuisines'
 import { RecipeList } from './RecipeList'
 import { useSoldOutTracking } from './useSoldOutTracking'
 
@@ -32,7 +33,9 @@ const RecipeListWrapper = (ownProps) => {
     dispatch,
   )
 
-  const { recipes } = getRecipesForCollectionId(currentCollectionId)
+  const selectedCuisines = useSelectedCuisines()
+
+  const { recipes } = getRecipesForCollectionId(currentCollectionId, { selectedCuisines })
   const shownRecipeIds = recipes.map(({ recipe }) => recipe.get('id')).toJS()
   const recipesIdsRef = useRef(shownRecipeIds)
 

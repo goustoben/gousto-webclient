@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { useRecipeReference } from 'routes/Menu/context/recipeReferenceContext'
 import { useMenu } from 'routes/Menu/domains/menu'
 
 import { AlternativeOptionItem } from '../AlternativeOptionItem'
@@ -34,6 +35,7 @@ export const RecipeAlternativeOptions = ({
     isOnDetailScreen,
     categoryId,
   })
+  const recipeReference = useRecipeReference()
   const onChange = useMakeOnCheckRecipe({
     originalId,
     currentRecipeId,
@@ -71,7 +73,7 @@ export const RecipeAlternativeOptions = ({
       {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
       <ul className={css.recipeListText}>
         {recipeWithAlternativeOptions.map(
-          ({ recipeReference, recipeId, recipeName, isChecked, isOutOfStock, surcharge }) => (
+          ({ recipeId, recipeName, isChecked, isOutOfStock, surcharge }) => (
             <AlternativeOptionItem
               key={recipeId}
               recipeId={recipeId}
