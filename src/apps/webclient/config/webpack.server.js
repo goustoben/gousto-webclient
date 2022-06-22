@@ -99,7 +99,8 @@ const config = {
   externals: [nodeExternals({
     // Workspaces are linked via node_modules, so need whitelisting
     whitelist: [
-      /^@features\/.+/
+      /^@features\/.+/,
+      /^@library\/.+/
     ]
   })],
   stats: {
