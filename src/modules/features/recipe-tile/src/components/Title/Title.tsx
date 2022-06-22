@@ -1,26 +1,30 @@
 import React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx, CSSObject } from "@emotion/react";
+import styled from "@emotion/styled";
+import { CSSObject } from "@emotion/react";
 
 import { useRecipe } from "../../model/context";
 import { screen, typography } from "../../styles";
 
 const defaultStyles: CSSObject = {
-    marginBottom: "1rem",
-    flex: 1,
-    fontFamily: typography.axiformaFontStack,
-    fontSize: typography.sizeXS,
-    fontWeight: 600,
-    lineHeight: 1.6,
-    [`@media ${screen.screenSMMin}`]: {
-      fontSize: typography.sizeMD,
-    },
+  marginBottom: "1rem",
+  flex: 1,
+  fontFamily: typography.axiformaFontStack,
+  fontSize: typography.sizeXS,
+  fontWeight: 600,
+  lineHeight: 1.6,
+  [`@media ${screen.screenSMMin}`]: {
+    fontSize: typography.sizeMD,
+  },
 };
 
-export function Title({styles}: {styles?: CSSObject[]} = {}) {
-    const recipe = useRecipe();
+const TileHeader = styled.h2((props: { styles: CSSObject[] }) => ({
+  ...defaultStyles,
+  ...Object.assign({}, ...props.styles),
+}));
 
-    return <h2 css={css(defaultStyles, ...(styles || []))}>{recipe.title}</h2>;
+export function Title({ styles }: { styles?: CSSObject[] } = {}) {
+  const recipe = useRecipe();
+
+  return <TileHeader styles={styles || []}>{recipe.title}</TileHeader>;
 }
