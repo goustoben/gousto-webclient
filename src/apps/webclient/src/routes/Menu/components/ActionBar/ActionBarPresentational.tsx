@@ -3,8 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 
-import { useNumPortions } from 'routes/Menu/domains/basket/internal/useNumPortions'
-import { useSupportedBoxTypes } from 'routes/Menu/domains/basket/internal/useSupportedBoxTypes'
+import { useBasket, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
 
 import { ActionBarText } from './ActionBarText/ActionBarText'
 import { CircularProgressIndicator } from './CircularProgressIndicator/CircularProgressIndicator'
@@ -26,7 +25,7 @@ export const ActionBarPresentational = ({
   onAnimationEnd,
 }: Props) => {
   const { maxRecipesForPortion } = useSupportedBoxTypes()
-  const { numPortions } = useNumPortions()
+  const { numPortions } = useBasket()
   const maxRecipesNum = maxRecipesForPortion(numPortions)
 
   const maxRecipesNumAchieved = recipeCount === maxRecipesNum
