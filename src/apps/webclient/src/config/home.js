@@ -77,7 +77,7 @@ export const getWhyGoustoConfig = () => ({
       img: require('routes/Home/WhyChooseGousto/quality.jpg'),
       list: [
         'Fresh ingredients from trusted suppliers',
-        '100% British fresh meat',
+        'We always buy high quality, 100% British fresh meat, where possible',
         'All recipes tried, tested and loved by our chefs and customers',
       ],
     },
