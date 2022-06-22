@@ -11,7 +11,7 @@ import { useTracking } from './tracking'
 
 import css from './CollectionLinkTile.css'
 
-const extractImageFromRecipe = (recipe: Immutable.Map<string, string>): string => {
+const extractImageFromRecipe = (recipe: Immutable.Map<string, unknown>): string => {
   const images = recipe.getIn(['media', 'images']) || Immutable.List()
   const imageUrls = findImageUrls(images)
   const imageURL = getDefaultImage(imageUrls)
@@ -31,7 +31,7 @@ const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
   const collectionName = collection.get('shortTitle')
 
   const { recipes } = getRecipesForCollectionId(collectionId)
-  const recipe = recipes.size ? recipes.first().recipe : null
+  const recipe = recipes.size ? recipes.first()!.recipe : null
 
   const onClick = useCallback(() => {
     if (!recipe) {
@@ -42,7 +42,7 @@ const CollectionLinkTile: React.FC<CollectionLinkProps> = ({ collection }) => {
 
     track({
       targetCollectionId: collectionId,
-      recipeId: recipe.get('id'),
+      recipeId: recipe.get('id') as string,
     })
   }, [collectionId, recipe, changeCollectionById, track])
 

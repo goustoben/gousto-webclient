@@ -5,14 +5,19 @@ const SORT_B_FIRST = 1
 const SORT_NO_SWAP = 0
 
 export const getRecipeComparatorForOutOfStock = (
-  recipesInStock: Immutable.Map<string, any>[] = [],
+  recipesInStockIds: Set<string>,
 ) => {
-  const recipesInStockIds = new Set(recipesInStock.map((recipe) => recipe.get('id')))
-
   return function comparator(
-    { recipe: recipeA }: { recipe: Immutable.Map<string, any> },
-    { recipe: recipeB }: { recipe: Immutable.Map<string, any> },
+    itemA?: { recipe: Immutable.Map<string, any> },
+    itemB?: { recipe: Immutable.Map<string, any> },
   ) {
+    if (!itemA || !itemB) {
+      return SORT_NO_SWAP
+    }
+
+    const { recipe: recipeA } = itemA
+    const { recipe: recipeB } = itemB
+
     const aInStock = recipesInStockIds.has(recipeA.get('id'))
     const bInStock = recipesInStockIds.has(recipeB.get('id'))
 

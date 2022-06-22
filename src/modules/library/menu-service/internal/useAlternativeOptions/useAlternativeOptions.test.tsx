@@ -10,10 +10,9 @@ import { useAlternativeOptions } from './useAlternativeOptions'
 const RECIPE_ID_1 = 'aaa'
 const RECIPE_ID_2 = 'bbb'
 const COLLECTION_ID = 'collection 1'
+const menuId = 'menu 1'
 
 function createMockState(args: any = {}) {
-  const menuId = 'menu 1'
-
   const RECIPE_1 = Immutable.fromJS({
     id: RECIPE_ID_1,
     coreRecipeId: RECIPE_ID_1,
@@ -56,7 +55,7 @@ function createMockState(args: any = {}) {
     }),
   })
 
-  const state = {
+  return {
     recipes: Immutable.fromJS({
       [RECIPE_ID_1]: RECIPE_1,
       [RECIPE_ID_2]: RECIPE_2,
@@ -106,8 +105,6 @@ function createMockState(args: any = {}) {
       }),
     }),
   }
-
-  return state
 }
 
 describe('getAlternativeOptionsForRecipe', () => {
@@ -115,20 +112,55 @@ describe('getAlternativeOptionsForRecipe', () => {
     jest.clearAllMocks()
   })
 
-  describe('when there is alternative option and it is out of stock', () => {
+  const initialArgs = {
+    menuRecipeStock: Immutable.Map(),
+    dietaryClaims: [] as string[]
+  }
+
+  function renderForTest({
+    changeInitialState,
+    allCollectionsOverride,
+    menuIdOverride = menuId,
+    numPortions = 2,
+  }: {
+    changeInitialState?: (args: typeof initialArgs) => typeof initialArgs,
+    allCollectionsOverride?: any,
+    menuIdOverride?: string,
+    numPortions?: number,
+  }) {
     const mockStore = configureMockStore()
-    const store = mockStore(
-      createMockState({
-        menuRecipeStock: Immutable.fromJS({
-          [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
-        }),
-      }),
+
+    const initialState = createMockState(
+      changeInitialState
+      ? changeInitialState(initialArgs)
+      : initialArgs
     )
+
+    const store = mockStore(initialState)
 
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <Provider store={store}>{children}</Provider>
     )
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
+
+    const allCollections = allCollectionsOverride
+      || initialState.menuCollections
+
+    return renderHook(() => useAlternativeOptions({
+      allCollections,
+      menuId: menuIdOverride,
+      numPortions
+    }), { wrapper })
+  }
+
+  describe('when there is alternative option and it is out of stock', () => {
+    const { result } = renderForTest({
+      changeInitialState: state => ({
+        ...state,
+        menuRecipeStock: Immutable.Map({
+          [RECIPE_ID_1]: Immutable.Map({ 2: 1000, 4: 1000 })
+        })
+      })
+    })
 
     test('they are marked so', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -148,20 +180,15 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('when there is alternative option and it is in stock', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore(
-      createMockState({
-        menuRecipeStock: Immutable.fromJS({
-          [RECIPE_ID_1]: { 2: 1000, 4: 1000 },
-          [RECIPE_ID_2]: { 2: 1000, 4: 1000 },
-        }),
-      }),
-    )
-
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <Provider store={store}>{children}</Provider>
-    )
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
+    const { result } = renderForTest({
+      changeInitialState: state => ({
+        ...state,
+        menuRecipeStock: Immutable.Map({
+          [RECIPE_ID_1]: Immutable.Map({ 2: 1000, 4: 1000 }),
+          [RECIPE_ID_2]: Immutable.Map({ 2: 1000, 4: 1000 })
+        })
+      })
+    })
 
     test('they are marked so', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -181,13 +208,9 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('when recipe has a surcharge', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore(createMockState())
+    const { result } = renderForTest({
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <Provider store={store}>{children}</Provider>
-    )
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
+    })
 
     test('it is exposed in the options', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -207,13 +230,9 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('when isOnDetailScreen flag is passed', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore(createMockState())
+    const { result } = renderForTest({
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <Provider store={store}>{children}</Provider>
-    )
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
+    })
 
     test('then it is exposed in the options', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -233,13 +252,9 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('when First recipe is marked as selected', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore(createMockState())
+    const { result } = renderForTest({
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <Provider store={store}>{children}</Provider>
-    )
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
+    })
 
     test('it is marked as so in the options', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -259,13 +274,9 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('when Second recipe is marked as selected', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore(createMockState())
+    const { result } = renderForTest({
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <Provider store={store}>{children}</Provider>
-    )
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
+    })
 
     test('it is marked as so in the options', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -284,13 +295,7 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('Recipe basic properties are propagated', () => {
-    const mockStore = configureMockStore()
-    const store = mockStore(createMockState())
-
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <Provider store={store}>{children}</Provider>
-    )
-    const { result } = renderHook(() => useAlternativeOptions(), { wrapper })
+    const { result } = renderForTest({ })
 
     test('They are exposed in the options', () => {
       const options = result.current.getAlternativeOptionsForRecipe({
@@ -312,22 +317,9 @@ describe('getAlternativeOptionsForRecipe', () => {
   })
 
   describe('when there are dietary claims for current collection', () => {
-    const mockStore = configureMockStore()
-    const state = createMockState({
-      dietaryClaims: ['gluten-free'],
+    const { result } = renderForTest({
+      changeInitialState: state => ({ ...state, dietaryClaims: ['gluten-free'] }),
     })
-    const store = mockStore(state)
-
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <Provider store={store}>{children}</Provider>
-    )
-    const { result } = renderHook(
-      () =>
-        useAlternativeOptions({
-          allCollections: state.menuCollections,
-        }),
-      { wrapper },
-    )
 
     test('The option does not contain affected items', () => {
       const options = result.current.getAlternativeOptionsForRecipe({

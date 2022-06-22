@@ -5,10 +5,58 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import { initialState as authInitialState } from 'reducers/auth'
-import { initialState as basketInitialState } from 'reducers/basket'
-
 import { useMenu } from './useMenu'
+
+const authInitialState = () => Immutable.fromJS({
+  accessToken: '',
+  hasRefreshCookie: false,
+  isAuthenticated: false,
+  isAdmin: false,
+  rememberMe: false,
+  email: '',
+  id: '',
+  name: '',
+  roles: [],
+  expiresAt: '',
+  isRecaptchaEnabled: false,
+  recaptcha: {
+    signupToken: null,
+  },
+})
+
+const basketInitialState = () => Immutable.fromJS({
+  address: null,
+  addressTypeEdited: false,
+  boxId: null,
+  collection: '',
+  chosenAddress: null,
+  currentMenuId: '',
+  date: '',
+  gifts: {},
+  limitReached: false,
+  numAdults: 0,
+  numPortions: 2,
+  orderId: '',
+  postcode: '',
+  prevDate: '',
+  prevPostcode: '',
+  prevSlotId: '',
+  prevAddress: null,
+  previewOrder: {},
+  products: {},
+  promoCode: '',
+  promoCodeApplied: false,
+  promoCodeUrl: '',
+  recipes: {},
+  hasAddedFirstRecipe: false,
+  slotId: '',
+  unsaved: false,
+  previewOrderId: '',
+  stepsOrder: [],
+  tariffId: null,
+  subscriptionOption: 'subscription',
+  surcharges: Immutable.List(),
+})
 
 // TODO improve types
 const createMockStore = (valueOverrides: any) => {
@@ -54,6 +102,10 @@ const createMockCollection = (
     recipesInCollection: Immutable.List(recipes.map((r) => r.get('id'))),
   })
 
+const menuId = 'menu-id-123'
+const numPortions = 2
+const selectedVariants = {}
+
 describe('menu domain / useMenu', () => {
   const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
   const RECIPE_2 = Immutable.Map({ id: 'bbbb' })
@@ -76,22 +128,26 @@ describe('menu domain / useMenu', () => {
       [COLLECTION_B.get('id') as string]: COLLECTION_B,
     },
     menuRecipeStock: {
-      [RECIPE_1.get('id')]: Immutable.fromJS({ 2: 0, 4: 0 }),
-      [RECIPE_2.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
-      [RECIPE_3.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
-      [RECIPE_4.get('id')]: Immutable.fromJS({ 2: 100, 4: 100 }),
+      [RECIPE_1.get('id')]: Immutable.Map({ 2: 0, 4: 0 }),
+      [RECIPE_2.get('id')]: Immutable.Map({ 2: 100, 4: 100 }),
+      [RECIPE_3.get('id')]: Immutable.Map({ 2: 100, 4: 100 }),
+      [RECIPE_4.get('id')]: Immutable.Map({ 2: 100, 4: 100 }),
     },
     menu: Immutable.fromJS({
       menuVariants: Immutable.fromJS({}),
     }),
   })
 
-  const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <Provider store={store}>{children}</Provider>
-  )
+  function renderForTest() {
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
+
+    return renderHook(() => useMenu({ menuId, numPortions, selectedVariants }), { wrapper })
+  }
 
   test('getRecipesForCollectionId returns correct recipes', () => {
-    const { result } = renderHook(() => useMenu(), { wrapper })
+    const { result } = renderForTest()
 
     const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_B.get('id') as string)
 
@@ -113,7 +169,7 @@ describe('menu domain / useMenu', () => {
 
   describe('when some Recipes are out of stock', () => {
     test('getRecipesForCollectionId returns them at the end of the list', () => {
-      const { result } = renderHook(() => useMenu(), { wrapper })
+      const { result } = renderForTest()
 
       const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id') as string)
 
@@ -169,13 +225,17 @@ describe('getRecipesForCollectionId', () => {
     }),
   })
 
-  const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <Provider store={store}>{children}</Provider>
-  )
+  function renderForTest() {
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <Provider store={store}>{children}</Provider>
+    )
+
+    return renderHook(() => useMenu({ menuId, numPortions, selectedVariants }), { wrapper })
+  }
 
   describe('when recipes order within collection is different from order in list of all menu recipes', () => {
     test('ensure the returned value respects the order in the collection', () => {
-      const { result } = renderHook(() => useMenu(), { wrapper })
+      const { result } = renderForTest()
 
       const { recipes } = result.current.getRecipesForCollectionId(COLLECTION_A.get('id') as string)
 

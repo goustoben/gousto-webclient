@@ -1,6 +1,6 @@
 // this file and associated test file are part of a Turnips experiment
 // personalised signup: re-order menu recipes according to cuisines selected by the user
-import { List, Map } from 'immutable'
+import Immutable from 'immutable'
 
 const cuisineMappings: Record<string, string> = {
   italian: 'italian',
@@ -31,20 +31,15 @@ const cuisineMappings: Record<string, string> = {
   moroccan: 'mediterranean',
 }
 
-type Recipe = { recipe: Map<string, unknown>; originalId: string }
-
-type ReturnType = {
-  orderedRecipes: List<Recipe>
-  trackingData: string[]
-}
+type Recipe = { recipe: Immutable.Map<string, unknown>; originalId: string }
 
 const findMatch = (recipeCuisine: string, selectedCuisines: string[]) =>
   selectedCuisines.some((selectedCuisine) => selectedCuisine === cuisineMappings[recipeCuisine])
 
-export const orderCollectionRecipesByCuisine = (
-  recipes: List<Recipe>,
+export function orderCollectionRecipesByCuisine(
+  recipes: Immutable.List<any>,
   selectedCuisines: string[],
-): ReturnType => {
+) {
   const topRecipes: Recipe[] = []
   const otherRecipes: Recipe[] = []
   const recipesAsPlainJS = recipes.toJS()
@@ -61,5 +56,8 @@ export const orderCollectionRecipesByCuisine = (
   })
   const trackingData = topRecipes.map((recipe) => recipe.originalId)
 
-  return { orderedRecipes: List([...topRecipes, ...otherRecipes]), trackingData }
+  return {
+    orderedRecipes: Immutable.List([...topRecipes, ...otherRecipes]),
+    trackingData
+  }
 }

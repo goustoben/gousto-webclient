@@ -2,6 +2,9 @@ import Immutable from 'immutable'
 
 import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
 
+const makeIds = (recipes: Immutable.Map<string, any>[]) =>
+  new Set(recipes.map(r => r.get('id')))
+
 describe('getRecipeComparatorForOutOfStock', () => {
   const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
   const RECIPE_2 = Immutable.Map({ id: 'bbbb' })
@@ -10,7 +13,7 @@ describe('getRecipeComparatorForOutOfStock', () => {
     recipes.map((recipe) => ({ recipe }))
 
   describe('when there are no recipes in stock', () => {
-    const comparator = getRecipeComparatorForOutOfStock()
+    const comparator = getRecipeComparatorForOutOfStock(makeIds([]))
 
     test('should return comparator that does not swap recipes', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(
@@ -23,7 +26,7 @@ describe('getRecipeComparatorForOutOfStock', () => {
   })
 
   describe('when all recipes are in stock', () => {
-    const comparator = getRecipeComparatorForOutOfStock([RECIPE_1, RECIPE_2])
+    const comparator = getRecipeComparatorForOutOfStock(makeIds([RECIPE_1, RECIPE_2]))
 
     test('should return comparator that does not swap recipes', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(
@@ -36,7 +39,7 @@ describe('getRecipeComparatorForOutOfStock', () => {
   })
 
   describe('when only part of recipes are in stock', () => {
-    const comparator = getRecipeComparatorForOutOfStock([RECIPE_2])
+    const comparator = getRecipeComparatorForOutOfStock(makeIds([RECIPE_2]))
 
     test('should return comparator that orders recipes such: the ones out of stock are the last', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(
@@ -52,7 +55,7 @@ describe('getRecipeComparatorForOutOfStock', () => {
     const RECIPE_3 = Immutable.Map({ id: 'cccc' })
     const RECIPE_4 = Immutable.Map({ id: 'dddd' })
 
-    const comparator = getRecipeComparatorForOutOfStock([RECIPE_1, RECIPE_3, RECIPE_4])
+    const comparator = getRecipeComparatorForOutOfStock(makeIds([RECIPE_1, RECIPE_3, RECIPE_4]))
 
     test('should return comparator that orders recipes so original order of recipes in stock is maintained', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2, RECIPE_3, RECIPE_4]).sort(comparator)).toEqual(

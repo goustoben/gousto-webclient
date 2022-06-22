@@ -1,4 +1,5 @@
-import { getDietaryTags } from 'utils/recipe'
+import Immutable from 'immutable'
+import { getDietaryClaimSlugs } from "../recipes/dietaryClaims"
 
 import { RecipeImmutable } from './types'
 
@@ -10,7 +11,7 @@ export const getRecipeAllergenInformation = (
   recipes: RecipeImmutable[],
 ): { containsGlutenOrDairy: boolean } => {
   const recipe = recipes.find((r) => r.get('id') === recipeId)
-  const dietaryTags: string[] = getDietaryTags(recipe)
+  const dietaryTags = getDietaryClaimSlugs(recipe)
   const hasGlutenOrDairyAllergens = Boolean(
     dietaryTags.find((tag) => tag === ALLERGEN_DAIRY_FREE || tag === ALLERGEN_GLUTEN_FREE),
   )

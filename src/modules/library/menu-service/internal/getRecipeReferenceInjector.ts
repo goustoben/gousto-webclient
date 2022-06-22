@@ -1,4 +1,4 @@
-import { ImmutableMap } from 'routes/Menu/types/immutableMap'
+import Immutable from 'immutable'
 
 /**
  * Prefix that identifies the Recipe Reference based on "family" fingerprint.
@@ -8,10 +8,6 @@ import { ImmutableMap } from 'routes/Menu/types/immutableMap'
 export const recipeReferencePrefix = 'recipe_family_reference_'
 
 type RecipeCounter = Record<string, number>
-
-type RecipesVariants = ImmutableMap<{
-  [recipeId: string]: ImmutableMap<{ alternatives: ImmutableMap<{ coreRecipeId: string }[]> }>
-}>
 
 /**
  * High order function to build a mapper that takes a Immutable `recipe` object
@@ -30,7 +26,7 @@ type RecipesVariants = ImmutableMap<{
 export const getRecipeReferenceInjector = ({
   recipesVariants,
 }: {
-  recipesVariants: RecipesVariants
+  recipesVariants: Immutable.Map<string, Immutable.Map<string, any>>
 }) => {
   // Statistics of occurrences for a given recipe "family" within currently
   // traversed list of recipes. E.g.: `{ 12345: 2 }` indicates the recipe 12345 occurred 2 times.
@@ -41,12 +37,16 @@ export const getRecipeReferenceInjector = ({
   // to other recipes from the same "family"
   const getRecipeFingerprint = (recipeId: string) => {
     const variantList = recipesVariants?.get(recipeId)
-    const alternatives = variantList?.get('alternatives')?.toJS() || []
+    const alternatives: { coreRecipeId: string }[] = variantList?.get('alternatives')?.toJS() || []
 
     return [recipeId, ...alternatives.map(({ coreRecipeId }) => coreRecipeId)].sort().join(',')
   }
 
-  return (recipe: ImmutableMap<{ id: string }>) => {
+  return function injector(recipe?: Immutable.Map<string, any>) {
+    if (!recipe) {
+      return recipe
+    }
+
     const hash = getRecipeFingerprint(recipe.get('id'))
     const counter = (recipeCounter[hash] || 0) + 1
     // eslint-disable-next-line no-param-reassign

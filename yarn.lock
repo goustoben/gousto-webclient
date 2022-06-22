@@ -2972,6 +2972,31 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@library/menu-service@workspace:*, @library/menu-service@workspace:src/modules/library/menu-service":
+  version: 0.0.0-use.local
+  resolution: "@library/menu-service@workspace:src/modules/library/menu-service"
+  dependencies:
+    "@library/nonjs-imports": "workspace:*"
+    "@testing-library/jest-dom": ^5.16.4
+    "@testing-library/react": 12.1.2
+    "@testing-library/react-hooks": ^3.4.2
+    immutable: 3.8.2
+    react: 17.0.2
+    react-redux: 7.2.4
+    react-test-renderer: 16.13.1
+    redux-mock-store: 1.1.1
+    reselect: 3.0.1
+    swr: ^1.1.2
+  peerDependencies:
+    immutable: 3.8.2
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-redux: 7.2.4
+    reselect: 3.0.1
+    swr: ^1.1.2
+  languageName: unknown
+  linkType: soft
+
 "@library/monorepo-build@workspace:src/modules/library/monorepo-build":
   version: 0.0.0-use.local
   resolution: "@library/monorepo-build@workspace:src/modules/library/monorepo-build"
@@ -27284,6 +27309,7 @@ __metadata:
     "@datadog/datadog-ci": ^0.17.12
     "@emotion/react": ^11.7.0
     "@gousto-internal/citrus-react": ^0.22.6
+    "@library/menu-service": "workspace:*"
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@sheerun/mutationobserver-shim": ^0.3.3

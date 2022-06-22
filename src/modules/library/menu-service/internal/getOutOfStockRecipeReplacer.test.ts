@@ -2,6 +2,9 @@ import Immutable from 'immutable'
 
 import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
 
+const makeIds = (recipes: Immutable.Map<string, any>[]) =>
+  new Set(recipes.map(r => r.get('id')))
+
 describe('getOutOfStockRecipeReplacer produces recipe replacer function that', () => {
   const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
   const RECIPE_1_1 = Immutable.Map({ id: 'bbbb' })
@@ -19,9 +22,9 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
 
   describe('when recipe with alternatives is in stock', () => {
     const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
+      recipes: Immutable.List([RECIPE_1, RECIPE_1_1, RECIPE_1_2]),
       recipesVariants: ALTERNATIVES,
-      recipesInStock: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
+      recipesInStockIds: makeIds([RECIPE_1, RECIPE_1_1, RECIPE_1_2]),
       dietaryClaims: null,
     })
 
@@ -36,9 +39,9 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
 
   describe('when recipe with alternatives is out of stock but one alternative is in stock', () => {
     const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
+      recipes: Immutable.List([RECIPE_1, RECIPE_1_1, RECIPE_1_2]),
       recipesVariants: ALTERNATIVES,
-      recipesInStock: [RECIPE_1_1, RECIPE_1_2],
+      recipesInStockIds: makeIds([RECIPE_1_1, RECIPE_1_2]),
       dietaryClaims: null,
     })
     test('it replaces original recipe with that alternative', () => {
@@ -52,9 +55,9 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
 
   describe('when recipe and all its alternatives are out of stock', () => {
     const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
+      recipes: Immutable.List([RECIPE_1, RECIPE_1_1, RECIPE_1_2]),
       recipesVariants: ALTERNATIVES,
-      recipesInStock: [],
+      recipesInStockIds: makeIds([]),
       dietaryClaims: null,
     })
     test('it does not replace the recipe', () => {
@@ -68,9 +71,9 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
 
   describe('when recipe is out of stock but does not have alternatives', () => {
     const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
+      recipes: Immutable.List([RECIPE_1, RECIPE_1_1, RECIPE_1_2]),
       recipesVariants: Immutable.Map(),
-      recipesInStock: [],
+      recipesInStockIds: makeIds([]),
       dietaryClaims: null,
     })
     test('it does not replace recipe', () => {
