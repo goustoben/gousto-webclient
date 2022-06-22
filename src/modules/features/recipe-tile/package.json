@@ -9,7 +9,9 @@
     "typecheck": "yarn run --top-level tsc --noEmit"
   },
   "peerDependencies": {
+    "@emotion/babel-plugin": "^11.9.2",
     "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.9.3",
     "@gousto-internal/citrus-react": "^0.22.6",
     "immutable": "3.8.2",
     "react": "17.0.2",
@@ -19,7 +21,9 @@
     "swr": "^1.1.2"
   },
   "devDependencies": {
+    "@emotion/babel-plugin": "^11.9.2",
     "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.9.3",
     "@gousto-internal/citrus-react": "^0.22.6",
     "@library/nonjs-imports": "workspace:*",
     "@storybook/addon-controls": "^6.4.19",

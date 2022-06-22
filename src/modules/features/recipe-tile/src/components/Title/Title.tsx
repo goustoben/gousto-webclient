@@ -24,7 +24,8 @@ const TileHeader = styled.h2((props: { styles: CSSObject[] }) => ({
 }));
 
 export function Title({ styles }: { styles?: CSSObject[] } = {}) {
-  const recipe = useRecipe();
+  // const recipe = useRecipe();
 
-  return <TileHeader styles={styles || []}>{recipe.title}</TileHeader>;
+  // return <TileHeader styles={styles || []}>{recipe.title}</TileHeader>;
+  return <TileHeader styles={styles || []}>Boom!</TileHeader>;
 }

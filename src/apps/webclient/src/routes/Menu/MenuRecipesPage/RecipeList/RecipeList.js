@@ -13,6 +13,8 @@ import { useTracking } from './useTracking'
 
 import css from './RecipeList.css'
 
+import { Title } from '@features/recipe-tile'
+
 export const buildTracker =
   ({ recipes, currentCollectionId, track }) =>
   () => {
@@ -38,6 +40,7 @@ export const RecipeList = ({
             showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
               <CollectionLink />
             )}
+          <Title />
           <RecipeReferenceProvider value={value.reference}>
             <RecipeContextProvider value={value.recipe}>
               <RecipeTile
