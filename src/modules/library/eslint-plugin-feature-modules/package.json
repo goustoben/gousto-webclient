@@ -1,0 +1,7 @@
+{
+  "name": "@library/eslint-plugin-feature-modules",
+  "main": "./src/index.js",
+  "scripts": {
+    "test:unit": "yarn run --top-level jest"
+  }
+}
