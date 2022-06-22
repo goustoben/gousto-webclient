@@ -33,8 +33,25 @@ export function resetUserPassword(password, passwordToken, version = 2) {
   }, 'POST', 'no-cache')
 }
 
-export function serverAuthenticate(email, password, rememberMe, recaptchaToken) {
-  return fetch(null, `${routes.auth.login}`, { grant_type: 'password', username: email, password, rememberMe, recaptchaToken }, 'POST', 'no-cache', {}, null, true)
+export function serverAuthenticate(email, password, rememberMe, recaptchaToken, isSignupLogin, correlationData) {
+  return fetch(
+    null,
+    `${routes.auth.login}`,
+    {
+      grant_type: 'password',
+      username: email,
+      password,
+      rememberMe,
+      recaptchaToken,
+      isSignupLogin,
+      correlationData,
+    },
+    'POST',
+    'no-cache',
+    {},
+    null,
+    true,
+  )
 }
 
 export function serverLogout() {

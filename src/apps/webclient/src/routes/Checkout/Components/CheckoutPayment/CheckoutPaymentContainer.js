@@ -10,6 +10,7 @@ import {
   trackingOrderPlaceAttemptFailed,
   setCurrentPaymentMethod,
 } from 'actions/checkout'
+import { feLoggingLogEvent } from 'actions/log'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
@@ -48,6 +49,7 @@ const mapDispatchToProps = {
   trackingOrderPlaceAttemptFailed,
   trackingOrderPlaceAttemptSucceeded,
   setCurrentPaymentMethod,
+  feLoggingLogEvent,
 }
 
 const ConnectedCheckoutPaymentContainer = connect(
