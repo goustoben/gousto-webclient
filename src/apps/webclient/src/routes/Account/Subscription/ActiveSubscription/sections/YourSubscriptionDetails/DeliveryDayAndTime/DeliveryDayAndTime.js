@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Dropdown } from 'goustouicomponents'
+import { Text } from '@gousto-internal/citrus-react'
 // eslint-disable-next-line import/no-unresolved
 import { formatDeliveryPrice } from 'utils/deliveryPrice'
 import {
@@ -25,7 +26,7 @@ import { trackSubscriptionSettingsChange } from '../../../../tracking'
 import css from './DeliveryDayAndTime.css'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 
-const renderCurrentValue = ({ day, timeRange }) => (
+const renderCurrentValue = ({ day, timeRange, deliveryPrice }) => (
   <Fragment>
     <p
       className={css.currentSetting}
@@ -39,6 +40,15 @@ const renderCurrentValue = ({ day, timeRange }) => (
     >
       {timeRange}
     </p>
+    <Text
+      className={css.currentSetting}
+      size={1}
+      data-testing="current-delivery-price"
+    >
+      { deliveryPrice === '0.00'
+        ? 'Free delivery'
+        : `£${deliveryPrice} delivery charge`}
+    </Text>
   </Fragment>
 )
 

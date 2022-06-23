@@ -13,13 +13,11 @@ import { ResubscriptionModal } from './ResubscriptionModal'
 import {
   yourSubscriptionDetailsSection,
   chefSelectsSettingsSection,
-  totalPriceSection,
   skipABoxSection,
   pauseSubscriptionSection
 } from '../subscriptionsSectionsContent'
 import { DietaryPreference } from './sections/ChefSelectsSettings/DietaryPreference'
 import { MealsPerBox } from './sections/ChefSelectsSettings/MealsPerBox'
-import { TotalPrice } from './sections/TotalPrice'
 
 const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscriptionFlow }) => (
   <Fragment>
@@ -49,6 +47,13 @@ const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscr
             isMobile={isMobile}
           />
         </Section>
+      </Column>
+      <Column
+        smallScreen={12}
+        mediumScreen={6}
+        largeScreen={6}
+        hasPaddingSmallScreen={false}
+      >
         <Section
           title={chefSelectsSettingsSection.title}
           subTitle={chefSelectsSettingsSection.subTitle}
@@ -62,20 +67,6 @@ const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscr
             accessToken={accessToken}
             isMobile={isMobile}
           />
-        </Section>
-      </Column>
-      <Column
-        smallScreen={12}
-        mediumScreen={6}
-        largeScreen={6}
-        hasPaddingSmallScreen={false}
-      >
-        <Section
-          title={totalPriceSection.title}
-          subTitle={totalPriceSection.subTitle}
-          testingSelector={totalPriceSection.testingSelector}
-        >
-          <TotalPrice />
         </Section>
       </Column>
     </Grid>
