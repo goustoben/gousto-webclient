@@ -1,8 +1,5 @@
 import React from "react";
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import { useRecipeBrandHook } from "../../model/context/useRecipeBrand";
 
@@ -12,6 +9,8 @@ const getTagStyle = (theme: { borderColor?: string }) => ({
   ...theme,
   border: theme.borderColor ? "1px solid" : "none",
 });
+
+const Container = styled.span(cssRecipeTag as any);
 
 export const RecipeTag: React.FC<{ type?: string }> = () => {
   const useRecipeBrand = useRecipeBrandHook();
@@ -24,9 +23,5 @@ export const RecipeTag: React.FC<{ type?: string }> = () => {
 
   const { theme, text } = brandTag;
 
-  return (
-    <span css={css(cssRecipeTag)} style={getTagStyle(theme)}>
-      {text}
-    </span>
-  );
+  return <Container style={getTagStyle(theme)}>{text}</Container>;
 };

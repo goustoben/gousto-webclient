@@ -1,8 +1,5 @@
 import React from "react";
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import { useDeviceType, DeviceType } from '../../utils/useDeviceType'
 
@@ -20,25 +17,28 @@ import {
 const isOnBiggerScreen = (deviceType: string) =>
   deviceType === DeviceType.DESKTOP || deviceType === DeviceType.TABLET;
 
-export const TileImage: React.FC<{
+const ImageWrapper = styled.button({...cssImageWrapper, label: '-TileImage'} as any)
+const ContentWrapper = styled.div(cssRecipeImageAndCookingTimeWrapper as any)
+
+export function TileImage({ categoryId } : {
   categoryId: string;
-}> = ({ categoryId }) => {
+}) {
   const deviceType = useDeviceType();
   const showVariantHeader = isOnBiggerScreen(deviceType);
 
   return (
-    <button type="button" css={css(cssImageWrapper)}>
+    <ImageWrapper>
       <SoldOutOverlay />
 
-      <div css={css(cssRecipeImageAndCookingTimeWrapper)}>
-        <Image lazy css={css(cssImageStyle)} />
+      <ContentWrapper>
+        <Image lazy styles={cssImageStyle} />
 
         <CookingTimeIcon />
-      </div>
+      </ContentWrapper>
 
       {showVariantHeader && (
         <VariantHeader categoryId={categoryId} />
       )}
-    </button>
+    </ImageWrapper>
   );
-};
+}

@@ -1,8 +1,5 @@
 import React, { SyntheticEvent } from "react";
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import {
   Box,
@@ -27,6 +24,30 @@ type RecipeTileLinkProps = {
   onClickTile: (e: SyntheticEvent) => void;
 };
 
+const StyledButton = styled.button(
+  (props: any) =>
+    ({
+      ...cssRecipeTileLink,
+      ...(props.isFineDineIn ? cssRecipeTileFineDineInLink : {}),
+    } as any)
+);
+
+const StyledText = styled(Text)(
+  (props: any) =>
+    ({
+      ...cssRecipeTileLinkText,
+      ...(props.isFineDineIn ? cssRecipeFineDineInTileLinkText : {}),
+    } as any)
+);
+
+const StyledIcon = styled(Icon)(
+  (props: any) =>
+    ({
+      ...cssRecipeTileLinkIcon,
+      ...(props.isFineDineIn ? cssRecipeTileFineDineInLinkIcon : {}),
+    } as any)
+);
+
 export function RecipeTileLink({
   isFineDineIn,
   onClickTile,
@@ -48,35 +69,22 @@ export function RecipeTileLink({
       paddingBottom={4}
       style={{ boxSizing: "content-box" }}
     >
-      <button
+      <StyledButton
         type="button"
         onClick={handleOnRecipeTileLinkClick}
-        css={css(
-          cssRecipeTileLink,
-          isFineDineIn ? cssRecipeTileFineDineInLink : null
-        )}
+        isFineDineIn={isFineDineIn}
       >
-        <Text
+        <StyledText
           fontFamily={FontFamily.UI}
           fontWeight={FontWeight.SemiBold}
           size={1}
-          css={css(
-            cssRecipeTileLinkText,
-            isFineDineIn ? cssRecipeFineDineInTileLinkText : null
-          )}
+          isFineDineIn={isFineDineIn}
           color={isFineDineIn ? Color.Secondary_200 : Color.Secondary_400}
         >
           More details
-        </Text>
-        <Icon
-          name="arrow_right"
-          size={4}
-          css={css(
-            cssRecipeTileLinkIcon,
-            isFineDineIn ? cssRecipeTileFineDineInLinkIcon : null
-          )}
-        />
-      </button>
+        </StyledText>
+        <StyledIcon name="arrow_right" size={4} isFineDineIn={isFineDineIn} />
+      </StyledButton>
     </Box>
   );
 }

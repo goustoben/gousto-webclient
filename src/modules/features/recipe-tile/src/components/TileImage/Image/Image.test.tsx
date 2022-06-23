@@ -37,7 +37,7 @@ const renderComponent = ({
     <RecipeContextProvider
       value={{ id: "1234", title: "A Really Nice Recipe", media: { images } }}
     >
-      <Image lazy={lazy} className={className} />
+      <Image lazy={lazy} styles={{ label: className }} />
     </RecipeContextProvider>
   );
 
@@ -68,7 +68,7 @@ describe("Recipe components > Image", () => {
       const image = screen.getByRole("img");
       expect(image).toBeInTheDocument();
       expect(image).toContainHTML('alt="A Really Nice Recipe"');
-      expect(image).toContainHTML(`class="${className}"`);
+      expect(image).toContainHTML(className);
       expect(image).toContainHTML('src="image-1-x150.jpg"');
       expect(image).toContainHTML(
         'sizes="(max-width: 500px) 400px, (max-width: 991px) 700px, 400px"'

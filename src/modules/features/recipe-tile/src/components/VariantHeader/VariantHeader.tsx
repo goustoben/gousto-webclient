@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import {
   useRecipe,
@@ -12,9 +9,16 @@ import {
 } from "../../model/context";
 import { cssPositionTop, cssTextLeft, cssThemeBlue, cssVariantHeader } from "./styles";
 
-export const VariantHeader: React.FC<{
+const VariantHeaderDiv = styled.div({
+  ...cssVariantHeader,
+  ...cssTextLeft,
+  ...cssThemeBlue,
+  ...cssPositionTop,
+} as any)
+
+export function VariantHeader({ categoryId }: {
   categoryId: string;
-}> = ({ categoryId }) => {
+}) {
   const useStock = useStockHook();
   const useGetAlternativeOptionsForRecipe =
     useGetAlternativeOptionsForRecipeHook();
@@ -48,15 +52,5 @@ export const VariantHeader: React.FC<{
   const alternativeCount = alternatives.length;
   const text = `${alternativeCount} options available`;
 
-  return (
-    <div
-      css={css(cssVariantHeader, cssTextLeft, cssThemeBlue, cssPositionTop)}
-    >
-      {text}
-    </div>
-  );
-};
-
-VariantHeader.propTypes = {
-  categoryId: PropTypes.string.isRequired,
-};
+  return <VariantHeaderDiv>{text}</VariantHeaderDiv>;
+}
