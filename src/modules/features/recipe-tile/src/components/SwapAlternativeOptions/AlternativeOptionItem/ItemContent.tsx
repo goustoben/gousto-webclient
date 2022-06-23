@@ -1,8 +1,6 @@
 import React from "react";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 import {
   cssExtraInformation,
   cssLabelContainer,
@@ -19,23 +17,33 @@ type ItemContentProps = {
   surcharge: number | null;
 };
 
-export const ItemContent = ({
+const LabelContainer = styled.div(cssLabelContainer as any)
+const TitleContainer = styled.div(cssTitleContainer as any)
+const Title = styled.span(cssTitleText as any)
+const ExtraInformation = styled.div(cssExtraInformation as any)
+const SurchargeAmountText = styled.span(cssSurchargeAmountText as any)
+const PerServingText = styled.span(cssPerServingText as any)
+const SoldOutText = styled.span(cssSoldOutText as any)
+
+export function ItemContent({
   recipeName,
   isOutOfStock,
   surcharge = null,
-}: ItemContentProps) => (
-  <div css={css(cssLabelContainer)}>
-    <div css={css(cssTitleContainer)}>
-      <span css={css(cssTitleText)}>{recipeName}</span>
-    </div>
-    {surcharge && !isOutOfStock && (
-      <div css={css(cssExtraInformation)}>
-        <span css={css(cssSurchargeAmountText)}>{`+£${surcharge.toFixed(
-          2
-        )}`}</span>
-        <span css={css(cssPerServingText)}>per serving</span>
-      </div>
-    )}
-    {isOutOfStock && <span css={css(cssSoldOutText)}>Sold out</span>}
-  </div>
-);
+}: ItemContentProps) {
+  return (
+    <LabelContainer>
+      <TitleContainer>
+        <Title>{recipeName}</Title>
+      </TitleContainer>
+      {surcharge && !isOutOfStock && (
+        <ExtraInformation>
+          <SurchargeAmountText>{`+£${surcharge.toFixed(
+            2
+          )}`}</SurchargeAmountText>
+          <PerServingText>per serving</PerServingText>
+        </ExtraInformation>
+      )}
+      {isOutOfStock && <SoldOutText>Sold out</SoldOutText>}
+    </LabelContainer>
+  );
+}

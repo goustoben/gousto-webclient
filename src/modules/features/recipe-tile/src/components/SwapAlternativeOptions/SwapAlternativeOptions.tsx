@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react'
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import PropTypes from 'prop-types'
 
@@ -15,10 +13,18 @@ const escapeKeyPressed = (e: React.KeyboardEvent) => {
   return e.type === 'keyup' && e.keyCode && e.keyCode === 27
 }
 
-export const SwapAlternativeOptions: React.FC<{
+const Button = styled.button(cssButton as any)
+const Chevron = styled.span(cssChevron as any)
+const DropDown = styled.div<{ showDrop: boolean }>(({ showDrop }) => ({
+  ...cssDropWrapper,
+  ...(showDrop ? cssIsExpanded : null)
+}) as any)
+const OuterWrapper = styled.div(cssOuterWrapper as any)
+
+export function SwapAlternativeOptions({ recipeId, categoryId }: {
   recipeId: string
   categoryId: string
-}> = ({ recipeId, categoryId }) => {
+}) {
   const [showDrop, setShowDrop] = useState(false)
   const useTracking = useTrackingHook()
   const { useTrackingSwapAlternativeOptions } = useTracking()
@@ -30,10 +36,9 @@ export const SwapAlternativeOptions: React.FC<{
   useClickOutside(selectRef, () => setShowDrop(false), [showDrop])
 
   return (
-    <div ref={selectRef} css={css(cssOuterWrapper)}>
-      <button
+    <OuterWrapper ref={selectRef}>
+      <Button
         type="button"
-        css={css(cssButton)}
         onClick={(e) => {
           e.stopPropagation();
           setShowDrop(!showDrop);
@@ -50,9 +55,7 @@ export const SwapAlternativeOptions: React.FC<{
           }
         }}
       >
-        <span
-          css={css(cssChevron)}
-        >
+        <Chevron>
           <svg
             width="18"
             height="18"
@@ -67,13 +70,10 @@ export const SwapAlternativeOptions: React.FC<{
               }
             />
           </svg>
-        </span>
-      </button>
+        </Chevron>
+      </Button>
       {showDrop && (
-        <div
-          css={css(cssDropWrapper, showDrop ? cssIsExpanded : null)}
-          aria-hidden={!showDrop}
-        >
+        <DropDown aria-hidden={!showDrop} showDrop={showDrop}>
           <RecipeAlternativeOptions
             recipeId={recipeId}
             categoryId={categoryId}
@@ -86,13 +86,9 @@ export const SwapAlternativeOptions: React.FC<{
               setShowDrop(false);
             }}
           />
-        </div>
+        </DropDown>
       )}
-    </div>
+    </OuterWrapper>
   );
 }
 
-SwapAlternativeOptions.propTypes = {
-  recipeId: PropTypes.string.isRequired,
-  categoryId: PropTypes.string.isRequired,
-}

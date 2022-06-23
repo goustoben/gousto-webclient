@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import { SwapAlternativeOptions } from "../SwapAlternativeOptions/SwapAlternativeOptions";
 import {
@@ -30,6 +28,38 @@ type RecipeTilePurchaseInfoProps = {
   categoryId: string;
   fdiStyling?: boolean;
 };
+
+const SurchargeDiv = styled.div<{
+  isFineDineIn: boolean;
+  surchargeOnTop: boolean;
+  fdiStyling: boolean;
+}>(
+  ({ isFineDineIn, surchargeOnTop, fdiStyling }) =>
+    ({
+      ...cssSurchargeInfo,
+      ...(isFineDineIn && fdiStyling ? cssSurchargeInfoIsFineDineIn : {}),
+      ...(surchargeOnTop ? cssSurchargeInfoRow : {}),
+    } as any)
+);
+
+const SurchargeAmount = styled.span(cssSurchargeAmountText as any);
+const PerServingText = styled.span<{ surchargeOnTop: boolean }>(
+  ({ surchargeOnTop }) =>
+    ({
+      ...cssPerServingText,
+      ...(surchargeOnTop ? cssSpaceLeft : {}),
+    } as any)
+);
+const PerText = styled.span(cssPerText as any);
+
+const ButtonsWrapper = styled.div(cssButtonsWrapper as any);
+const PurchaseInfoWrapper = styled.div<{ surchargeOnTop: boolean }>(
+  ({ surchargeOnTop }) =>
+    ({
+      ...cssPurchaseInfoWrapper,
+      ...(surchargeOnTop ? cssSurchargeOnTop : {}),
+    } as any)
+);
 
 export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
   categoryId,
@@ -69,33 +99,24 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
   const surchargeOnTop = hasAlternativeOptions;
 
   return (
-    <div
-      css={css(
-        cssPurchaseInfoWrapper,
-        surchargeOnTop ? cssSurchargeOnTop : null
-      )}
-    >
+    <PurchaseInfoWrapper surchargeOnTop={surchargeOnTop}>
       {surcharge ? (
-        <div
-          css={css(
-            cssSurchargeInfo,
-            isFineDineIn && fdiStyling ? cssSurchargeInfoIsFineDineIn : null,
-            surchargeOnTop ? cssSurchargeInfoRow : null
-          )}
+        <SurchargeDiv
+          surchargeOnTop={surchargeOnTop}
+          isFineDineIn={Boolean(isFineDineIn)}
+          fdiStyling={fdiStyling}
         >
-          <span css={css(cssSurchargeAmountText)}>
+          <SurchargeAmount>
             +£
             {surcharge.toFixed(2)}
-          </span>
-          <span
-            css={css(cssPerServingText, surchargeOnTop ? cssSpaceLeft : null)}
-          >
-            <span css={css(cssPerText)}>per</span>
+          </SurchargeAmount>
+          <PerServingText surchargeOnTop={surchargeOnTop}>
+            <PerText>per</PerText>
             serving
-          </span>
-        </div>
+          </PerServingText>
+        </SurchargeDiv>
       ) : null}
-      <div css={css(cssButtonsWrapper)}>
+      <ButtonsWrapper>
         <AddRecipeButton recipeId={recipeId} />
         {hasAlternativeOptions && (
           //   deviceType === DeviceType.MOBILE ? (
@@ -104,14 +125,11 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
           //     categoryId={categoryId}
           //   />
           // ) : (
-          <SwapAlternativeOptions
-            recipeId={recipeId}
-            categoryId={categoryId}
-          />
+          <SwapAlternativeOptions recipeId={recipeId} categoryId={categoryId} />
           // )
         )}
-      </div>
-    </div>
+      </ButtonsWrapper>
+    </PurchaseInfoWrapper>
   );
 };
 

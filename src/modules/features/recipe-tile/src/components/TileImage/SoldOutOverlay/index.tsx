@@ -1,13 +1,14 @@
 import React from 'react'
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import { useRecipe, useStockHook } from '../../../model/context'
 import { cssOverlay, cssOverlayText } from './styles';
 
-export const SoldOutOverlay: React.FC = () => {
+const OverlayDiv = styled.div(cssOverlay as any)
+const OverlayText = styled.span(cssOverlayText as any)
+
+export function SoldOutOverlay() {
   const useStock = useStockHook()
   const { isRecipeOutOfStock } = useStock()
   const { id: recipeId } = useRecipe()
@@ -23,8 +24,8 @@ export const SoldOutOverlay: React.FC = () => {
   }
 
   return (
-    <div css={css(cssOverlay)}>
-      <span css={css(cssOverlayText)}>This recipe is sold out for your delivery date</span>
-    </div>
+    <OverlayDiv>
+      <OverlayText>This recipe is sold out for your delivery date</OverlayText>
+    </OverlayDiv>
   )
 }

@@ -1,8 +1,5 @@
 import React from "react";
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import { useRecipeCookingTime } from "../../model/recipe";
 import { getPercentageFromCookingTime } from "./getPercentageFromCookingTime";
@@ -16,6 +13,16 @@ import {
   cssKeyframesProgress,
 } from "./styles";
 
+const OuterContainer = styled.div(cssCookingTimeIcon as any);
+const TimeContainer = styled.div(cssTime as any);
+
+const Svg = styled.svg(cssCircularChart as any);
+const PathOne = styled.path(cssCircularChartCircleBg as any);
+const PathTwo = styled.path({
+  ...cssCircularChartCircle,
+  ...cssKeyframesProgress,
+} as any);
+
 export const CookingTimeIcon = () => {
   const cookingTime = useRecipeCookingTime();
 
@@ -26,24 +33,21 @@ export const CookingTimeIcon = () => {
   const percentage = getPercentageFromCookingTime(cookingTime);
 
   return (
-    <div css={css(cssCookingTimeIcon)}>
-      <svg viewBox="0 0 36 36" css={css(cssCircularChart)}>
-        <path
-          css={css(cssCircularChartCircleBg)}
+    <OuterContainer>
+      <Svg viewBox="0 0 36 36">
+        <PathOne
           d="M18 2.0845
           a 15.9155 15.9155 0 0 1 0 31.831
           a 15.9155 15.9155 0 0 1 0 -31.831"
         />
-        <path
-          css={css(cssCircularChartCircle, cssKeyframesProgress)}
+        <PathTwo
           strokeDasharray={`${percentage}, 100`}
           d="M18 2.0845
           a 15.9155 15.9155 0 0 1 0 31.831
           a 15.9155 15.9155 0 0 1 0 -31.831"
         />
-      </svg>
-
-      <div css={css(cssTime)}>{cookingTime}</div>
-    </div>
+      </Svg>
+      <TimeContainer>{cookingTime}</TimeContainer>
+    </OuterContainer>
   );
 };

@@ -1,8 +1,5 @@
 import React from 'react'
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from '@emotion/styled'
 
 import { ItemContent } from './ItemContent'
 import { cssListItem, cssListItemChecked } from './styles';
@@ -18,6 +15,8 @@ type AlternativeOptionItemProps = {
   surcharge?: number | null
 }
 
+const ItemContainer = styled.li((props: any) => ({ ...cssListItem, ...(props.isChecked ? cssListItemChecked : {}) }) as any)
+
 export const AlternativeOptionItem = ({
   recipeId,
   recipeName,
@@ -26,7 +25,7 @@ export const AlternativeOptionItem = ({
   isOutOfStock,
   surcharge = null,
 }: AlternativeOptionItemProps) => (
-  <li css={css(cssListItem, isChecked ? cssListItemChecked : null)}>
+  <ItemContainer isChecked={isChecked}>
     <Radio
       id={recipeId}
       value={recipeId}
@@ -40,5 +39,5 @@ export const AlternativeOptionItem = ({
         surcharge={surcharge}
       />
     </Radio>
-  </li>
+  </ItemContainer>
 )

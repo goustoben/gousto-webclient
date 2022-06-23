@@ -1,8 +1,5 @@
 import React, { SyntheticEvent } from "react";
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import {
   useGetAlternativeOptionsForRecipeHook,
@@ -32,6 +29,29 @@ import { RecipeTag } from "../RecipeTag";
 import { useGetRecipeTileLinkDataHook } from "../../model/context/useGetRecipeTileLinkData";
 import { RecipeTileLink } from "../RecipeTileLink";
 
+const OuterContainer = styled.div(cssRecipeTile as any);
+const ImageContainer = styled.div(
+  (props: any) =>
+    ({
+      ...cssRecipeTileContainer,
+      ...(props.isFineDineIn ? cssRecipeTileIsFineDineIn : {}),
+    } as any)
+);
+const RecipeTagContaner = styled.span(
+  (props: any) =>
+    ({
+      ...cssRecipeTagHolder,
+      ...(props.showVariantHeader ? cssRecipeTagHolderShifted : {}),
+    } as any)
+);
+const BrandTagContainer = styled.div(
+  (props: any) =>
+    ({
+      ...cssRecipeTileInfo,
+      ...(props.mobileBannerShown ? cssVariantPushDown : {}),
+    } as any)
+);
+
 type RecipeTileProps = {
   recipeId: string;
   currentCollectionId: string;
@@ -60,8 +80,8 @@ export const RecipeTile = ({
 
   const deviceType = useDeviceType();
   const recipeReference = useRecipeReference();
-  const useGetRecipeTileLinkData = useGetRecipeTileLinkDataHook()
-  const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData()
+  const useGetRecipeTileLinkData = useGetRecipeTileLinkDataHook();
+  const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData();
 
   // should never happen but caters for loading state
   if (categoryId === null) {
@@ -88,10 +108,9 @@ export const RecipeTile = ({
     showVariantHeader && deviceType === DeviceType.MOBILE;
 
   return (
-    <div
+    <OuterContainer
       role="button"
       tabIndex={0}
-      css={css(cssRecipeTile)}
       data-testing={
         isOutOfStock ? "menuRecipeOutOfStock" : "menuRecipeViewDetails"
       }
@@ -106,30 +125,17 @@ export const RecipeTile = ({
         )
       }
 
-      <div
-        css={css(
-          cssRecipeTileContainer,
-          isFineDineIn ? cssRecipeTileIsFineDineIn : null
-        )}
-      >
+      <ImageContainer isFineDineIn={isFineDineIn}>
         <TileImage categoryId={categoryId} />
-        <span
-          css={css(
-            cssRecipeTagHolder,
-            showVariantHeader ? cssRecipeTagHolderShifted : null
-          )}
-        >
+        <RecipeTagContaner showVariantHeader={showVariantHeader}>
           <RecipeTag />
-        </span>
-        <div
-          css={css(
-            cssRecipeTileInfo,
-            mobileBannerShown ? cssVariantPushDown : null
-          )}
-        >
+        </RecipeTagContaner>
+        <BrandTagContainer mobileBannerShown={mobileBannerShown}>
           <BrandTag />
 
-          <Title styles={isRecipeTileLinkVisible ? [cssRecipeTileWithLinkTitle] : []}/>
+          <Title
+            styles={isRecipeTileLinkVisible ? [cssRecipeTileWithLinkTitle] : []}
+          />
 
           {isRecipeTileLinkVisible && (
             <RecipeTileLink
@@ -142,8 +148,8 @@ export const RecipeTile = ({
             categoryId={categoryId}
             fdiStyling={isFineDineIn}
           />
-        </div>
-      </div>
-    </div>
+        </BrandTagContainer>
+      </ImageContainer>
+    </OuterContainer>
   );
 };

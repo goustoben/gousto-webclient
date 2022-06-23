@@ -1,9 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import PropTypes from "prop-types";
-
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import { useBasketHook } from "../../model/context/useBasket";
 import { useSetBrowserCTAVisibilityHook } from "../../model/context/useSetBrowserCTAVisibility";
@@ -17,17 +14,31 @@ import {
   cssRemoveButtonLine,
 } from "./styles";
 
-const buttonClassNameToStyle = (key: ReturnType<typeof getRecipeButtonProps>['buttonClassName']) =>
+const buttonClassNameToStyle = (
+  key: ReturnType<typeof getRecipeButtonProps>["buttonClassName"]
+) =>
   ({
     addButton: cssAddButton,
     removeButton: cssRemoveButton,
   }[key] || cssAddButton);
 
-const lineClassNameToStyle = (key: ReturnType<typeof getRecipeButtonProps>['lineClassName']) =>
+const lineClassNameToStyle = (
+  key: ReturnType<typeof getRecipeButtonProps>["lineClassName"]
+) =>
   ({
     addButtonLine: cssAddButtonLine,
     removeButtonLine: cssRemoveButtonLine,
   }[key] || cssAddButton);
+
+const Button = styled.button(
+  (props: any) =>
+    buttonClassNameToStyle(props.buttonProps.buttonClassName) as any
+);
+const Container = styled.span(cssButtonText as any);
+const Line = styled.line(
+  (props: any) => lineClassNameToStyle(props.buttonProps.lineClassName) as any
+);
+const ButtonText = styled.span(cssHideOnMobile as any);
 
 export const AddRecipeButton: React.FC<{ recipeId: string }> = ({
   recipeId,
@@ -40,8 +51,8 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({
     reachedLimit,
     isRecipeInBasket,
   } = useBasket();
-  const useSetBrowserCTAVisibility = useSetBrowserCTAVisibilityHook()
-  const { setBrowserCTAVisible } = useSetBrowserCTAVisibility()
+  const useSetBrowserCTAVisibility = useSetBrowserCTAVisibilityHook();
+  const { setBrowserCTAVisible } = useSetBrowserCTAVisibility();
   const isInBasket = isRecipeInBasket(recipeId);
   const disabled = reachedLimit && !isInBasket;
 
@@ -72,8 +83,8 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({
   };
 
   return (
-    <button
-      css={css(buttonClassNameToStyle(buttonProps.buttonClassName))}
+    <Button
+      buttonProps={buttonProps}
       name="addRecipeButton"
       type="button"
       disabled={disabled}
@@ -82,7 +93,7 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({
       data-testing={disabled ? "menuRecipeAddDisabled" : "menuRecipeAdd"}
       aria-label={buttonProps.buttonText}
     >
-      <span css={css(cssButtonText)}>
+      <Container>
         <svg
           width="14"
           height="14"
@@ -90,8 +101,8 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <line
-            css={css(lineClassNameToStyle(buttonProps.lineClassName))}
+          <Line
+            buttonProps={buttonProps}
             y1="7"
             x2="14"
             y2="7"
@@ -101,9 +112,9 @@ export const AddRecipeButton: React.FC<{ recipeId: string }> = ({
             <line x1="7" y1="14" x2="7" stroke="white" strokeWidth="2" />
           )}
         </svg>
-        <span css={css(cssHideOnMobile)}>{buttonProps.buttonText}</span>
-      </span>
-    </button>
+        <ButtonText>{buttonProps.buttonText}</ButtonText>
+      </Container>
+    </Button>
   );
 };
 

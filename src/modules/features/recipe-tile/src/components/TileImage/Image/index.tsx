@@ -1,16 +1,20 @@
 import React from "react";
 import LazyLoad from "react-lazyload";
+import styled from "@emotion/styled";
+import { CSSObject } from "@emotion/react";
 
 import { useRecipe } from "../../../model/context";
 import { useRecipeImage } from "./useRecipeImage";
 
+const StyledImage = styled.img<{ styles: CSSObject }>(({ styles }) => ({ ...styles } as any))
+
 export const Image = ({
   lazy,
-  className,
+  styles,
   useHomepageImage = false,
 }: {
   lazy?: boolean;
-  className?: string;
+  styles?: CSSObject;
   useHomepageImage?: boolean;
 }) => {
   const { title } = useRecipe();
@@ -24,9 +28,9 @@ export const Image = ({
   const [image, srcSet] = recipeImage;
 
   const imageComponent = (
-    <img
+    <StyledImage
       alt={title}
-      className={className}
+      styles={styles || {}}
       src={image}
       srcSet={srcSet}
       sizes="(max-width: 500px) 400px, (max-width: 991px) 700px, 400px"
