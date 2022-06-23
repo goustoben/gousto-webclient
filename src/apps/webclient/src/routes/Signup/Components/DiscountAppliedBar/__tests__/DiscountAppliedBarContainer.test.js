@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
-import { DiscountAppliedBarContainer } from '../DiscountAppliedBarContainer'
+import { DiscountAppliedBarContainer } from '../LEGACY_DiscountAppliedBarContainer'
 
 describe('given DiscountAppliedBarContainer is rendered', () => {
   let wrapper
