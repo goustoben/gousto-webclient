@@ -5491,10 +5491,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/isomorphic-fetch@npm:0.0.35":
-  version: 0.0.35
-  resolution: "@types/isomorphic-fetch@npm:0.0.35"
-  checksum: ae57d2605d24f799fd3d838d59986e88e8a345c65c1751122f6b39b62de504e0a61cd62f04e6e157406c84cba60a6a39eb6d5d2c0a9e9ac153759d5354b5e7e9
+"@types/isomorphic-fetch@npm:0.0.36":
+  version: 0.0.36
+  resolution: "@types/isomorphic-fetch@npm:0.0.36"
+  checksum: 1ffaa1c97a019b1f7a682e2ae31bd4cc3f324198b422c62cece51b42d2750e0dde0c4df2320a52874d6c6019ee4b00ca2e736010d34b206a82e63ef82ef85bbe
   languageName: node
   linkType: hard
 
@@ -11528,7 +11528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"encoding@npm:^0.1.11, encoding@npm:^0.1.12":
+"encoding@npm:^0.1.12":
   version: 0.1.13
   resolution: "encoding@npm:0.1.13"
   dependencies:
@@ -16032,7 +16032,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-stream@npm:^1.0.0, is-stream@npm:^1.0.1, is-stream@npm:^1.1.0":
+"is-stream@npm:^1.0.0, is-stream@npm:^1.1.0":
   version: 1.1.0
   resolution: "is-stream@npm:1.1.0"
   checksum: 063c6bec9d5647aa6d42108d4c59723d2bd4ae42135a2d4db6eadbd49b7ea05b750fd69d279e5c7c45cf9da753ad2c00d8978be354d65aa9f6bb434969c6a2ae
@@ -16223,13 +16223,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isomorphic-fetch@npm:2.2.1":
-  version: 2.2.1
-  resolution: "isomorphic-fetch@npm:2.2.1"
+"isomorphic-fetch@npm:3.0.0":
+  version: 3.0.0
+  resolution: "isomorphic-fetch@npm:3.0.0"
   dependencies:
-    node-fetch: ^1.0.1
-    whatwg-fetch: ">=0.10.0"
-  checksum: bb5daa7c3785d6742f4379a81e55b549a469503f7c9bf9411b48592e86632cf5e8fe8ea878dba185c0f33eb7c510c23abdeb55aebfdf5d3c70f031ced68c5424
+    node-fetch: ^2.6.1
+    whatwg-fetch: ^3.4.1
+  checksum: e5ab79a56ce5af6ddd21265f59312ad9a4bc5a72cebc98b54797b42cb30441d5c5f8d17c5cd84a99e18101c8af6f90c081ecb8d12fd79e332be1778d58486d75
   languageName: node
   linkType: hard
 
@@ -19947,16 +19947,6 @@ __metadata:
     encoding:
       optional: true
   checksum: 8d816ffd1ee22cab8301c7756ef04f3437f18dace86a1dae22cf81db8ef29c0bf6655f3215cb0cdb22b420b6fe141e64b26905e7f33f9377a7fa59135ea3e10b
-  languageName: node
-  linkType: hard
-
-"node-fetch@npm:^1.0.1":
-  version: 1.7.3
-  resolution: "node-fetch@npm:1.7.3"
-  dependencies:
-    encoding: ^0.1.11
-    is-stream: ^1.0.1
-  checksum: 3bb0528c05d541316ebe52770d71ee25a6dce334df4231fd55df41a644143e07f068637488c18a5b0c43f05041dbd3346752f9e19b50df50569a802484544d5b
   languageName: node
   linkType: hard
 
@@ -27988,7 +27978,7 @@ __metadata:
     "@trivago/prettier-plugin-sort-imports": ^3.2.0
     "@types/classnames": 2.2.6
     "@types/enzyme": ^3.10.11
-    "@types/isomorphic-fetch": 0.0.35
+    "@types/isomorphic-fetch": 0.0.36
     "@types/jest": ^27.0.2
     "@types/node": ^16.10.2
     "@types/react": ^17.0.38
@@ -28030,7 +28020,7 @@ __metadata:
     ignore: ^5.1.8
     image-webpack-loader: 4.6.0
     immutable: 3.8.2
-    isomorphic-fetch: 2.2.1
+    isomorphic-fetch: 3.0.0
     jest: ^27.4.3
     jest-environment-node: ^27.2.5
     jest-fetch-mock: ^3.0.3
@@ -28365,7 +28355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:>=0.10.0":
+"whatwg-fetch@npm:^3.4.1":
   version: 3.6.2
   resolution: "whatwg-fetch@npm:3.6.2"
   checksum: ee976b7249e7791edb0d0a62cd806b29006ad7ec3a3d89145921ad8c00a3a67e4be8f3fb3ec6bc7b58498724fd568d11aeeeea1f7827e7e1e5eae6c8a275afed
