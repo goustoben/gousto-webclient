@@ -15,6 +15,9 @@ jobs:
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-18.04
     steps:
+
+    # Set up environment
+    # ============================================================================
     - name: Checkout
       uses: actions/checkout@v2
     - name: Checkout PR changes
@@ -77,6 +80,9 @@ jobs:
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: yarn install --immutable
+
+    # Debug
+    # ============================================================================
     - name: Debug differential build
       run: |
         # Print git state to confirm changes are as expected
@@ -91,6 +97,18 @@ jobs:
         yarn monorepo-build lint --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient
         echo "Webclient unit tests?"
         yarn monorepo-build unit-tests --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient
+
+    # Typecheck
+    # ============================================================================
+    - name: Typecheck (feature modules)
+      run: yarn workspaces foreach --include '@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run typecheck
+    - name: Typecheck (libraries)
+      run: yarn workspaces foreach --include '@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run typecheck
+    - name: Typecheck tests (apps/webclient)
+      run: yarn workspace webclient typecheck:tests
+
+    # Lint
+    # ============================================================================
     - name: Lint (apps/webclient)
       working-directory: src/apps/webclient
       run: |
@@ -100,20 +118,17 @@ jobs:
           ./scripts/run-eslint-ci.sh $(cat lint-changes)
         fi
         rm lint-changes
-    - name: Typecheck (feature modules)
-      run: yarn workspaces foreach --include '@features/*' --verbose run typecheck
     - name: Lint (feature modules)
-      run: yarn workspaces foreach --include '@features/*' --verbose run lint
-    - name: Unit test (feature modules)
-      run: yarn workspaces foreach --include '@features/*' --verbose run test:unit
-    - name: Typecheck (libraries)
-      run: yarn workspaces foreach --include '@library/*' --verbose run typecheck
+      run: yarn workspaces foreach --include '@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run lint
     - name: Lint (libraries)
-      run: yarn workspaces foreach --include '@library/*' --verbose run lint
+      run: yarn workspaces foreach --include '@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run lint
+
+    # Unit test
+    # ============================================================================
+    - name: Unit test (feature modules)
+      run: yarn workspaces foreach --include '@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run test:unit
     - name: Unit test (libraries)
-      run: yarn workspaces foreach --include '@library/*' --verbose run test:unit
-    - name: Typecheck tests
-      run: yarn workspace webclient typecheck:tests
+      run: yarn workspaces foreach --include '@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run test:unit
     - name: Unit test (apps/webclient)
       run: |
         # Optionally run Jest if required
@@ -122,6 +137,9 @@ jobs:
           yarn workspace webclient test:jest:ci:coverage
         fi
         rm unit-tests
+
+    # Code health
+    # ============================================================================
     - name: Compare code health
       run: git diff --name-status ${{ steps.branch_point.outputs.REF }} | node ./scripts/compare-code-health.js develop tmp/artifacts/code_health.json
       working-directory: src/apps/webclient
