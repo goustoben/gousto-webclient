@@ -40,7 +40,7 @@ export const RecipeList = ({
             showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
               <CollectionLink />
             )}
-          <Title />
+          <Title styles={[{ color: 'red' }]} />
           <RecipeReferenceProvider value={value.reference}>
             <RecipeContextProvider value={value.recipe}>
               <RecipeTile
