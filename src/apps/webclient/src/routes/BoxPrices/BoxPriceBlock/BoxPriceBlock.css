@@ -144,6 +144,10 @@
   composes: headerXL from 'styles/typography.css';
 }
 
+.boxSizeButtonActive {
+  border-radius: 3px;
+}
+
 .boxSizeButton:first-child {
   border-right: none;
 }
@@ -228,4 +232,12 @@
 
 .benefitContainer {
   margin-bottom: 1rem;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: no-wrap;
 }

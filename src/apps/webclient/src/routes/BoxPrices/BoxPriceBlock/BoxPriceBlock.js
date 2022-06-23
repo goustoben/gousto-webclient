@@ -20,8 +20,13 @@ const BoxPriceBlock = ({
   trackUTMAndPromoCode,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(2)
-  const boxTypeConfig = boxTypes[numPersons]
-  const { title, boxSizeTrackingValue } = boxTypeConfig
+  const { title, boxSizeTrackingValue } = boxTypes[numPersons]
+
+  const boxInfoCopy = boxInfo.slice()
+
+  if (boxSizeTrackingValue === 'large') {
+    boxInfoCopy.pop()
+  }
 
   return (
     <div className={numPersons === selectedBox ? css.containerActive : css.container}>
@@ -30,7 +35,7 @@ const BoxPriceBlock = ({
         <BoxPriceSuitableForSection numPersons={numPersons} />
         <p className={css.subhead}>Select number of recipes</p>
         <div className={css.buttonGroup}>
-          {boxInfo.map((item, index) => {
+          {boxInfoCopy.map((item, index) => {
             const numRecipes = item.num_portions
 
             return (

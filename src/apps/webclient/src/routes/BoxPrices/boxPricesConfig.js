@@ -10,7 +10,7 @@ export const cta = 'Build my box'
 // Note: the existing (pre-TG-4359) page's design is not flexible to support 5
 // recipes, so when moving to 5 recipes, this page should be revisited.
 export const numPersonsValues = ['2', '4']
-export const numPortionsValues = ['2', '3', '4']
+export const numPortionsValues = ['2', '3', '4', '5']
 
 export const boxTypes = {
   2: {
