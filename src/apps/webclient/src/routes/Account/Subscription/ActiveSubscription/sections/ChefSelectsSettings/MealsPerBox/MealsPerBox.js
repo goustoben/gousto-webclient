@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { RadioGroup, InputRadio } from 'goustouicomponents'
-
+import { Text } from '@gousto-internal/citrus-react'
+import css from './MealsPerBox.css'
 import {
   SubscriptionContext,
 } from '../../../../context'
@@ -10,6 +11,7 @@ import {
   getBoxPricesNumPortion,
   getIsBoxAndPricesLoaded,
   getDietaryPreference,
+  getTotalBoxPriceDiscounted
 } from '../../../../context/selectors/box'
 
 import { SettingSection } from '../../../../components/SettingSection'
@@ -29,6 +31,7 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
 
   const currentMealsPerBox = getMealsPerBox(state)
   const boxPrices = getBoxPricesNumPortion(state)
+  const totalBoxPrice = getTotalBoxPriceDiscounted(state)
   const dietaryPreference = getDietaryPreference(state)
 
   const [selectedMealsPerBox, setSelectedMealsPerBox] = useState(null)
@@ -66,11 +69,16 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
       ctaText="Save meals per box"
       isCtaDisabled={isCtaDisabled}
       renderCurrentValue={(
-        <p data-testing="current-meals-per-box">
-          {isBoxAndPricesLoaded ? (
-            `${MEALS_PER_BOX_MAP[selectedMealsPerBox || currentMealsPerBox]} meals (£${boxPrices[selectedMealsPerBox || currentMealsPerBox][dietaryPreference].pricePerPortionDiscounted} per serving)`
-          ) : null}
-        </p>
+        isBoxAndPricesLoaded ? (
+          <>
+            <p className={css.currentSetting} data-testing="current-meals-per-box">
+              {`${MEALS_PER_BOX_MAP[selectedMealsPerBox || currentMealsPerBox]} meals (£${boxPrices[selectedMealsPerBox || currentMealsPerBox][dietaryPreference].pricePerPortionDiscounted} per serving)`}
+            </p>
+            <Text size={1} data-testing="total-box-price">
+              {`Recipe box price £${totalBoxPrice}`}
+            </Text>
+          </>
+        ) : null
       )}
       onSubmit={onSubmit}
       onEditClick={trackSubscriptionSettingsChange({ settingName, action: 'edit' })}

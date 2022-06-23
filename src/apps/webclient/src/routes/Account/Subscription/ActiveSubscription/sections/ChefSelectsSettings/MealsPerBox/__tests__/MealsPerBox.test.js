@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils'
 import { SubscriptionContext } from '../../../../../context/index'
 import { MealsPerBox } from '../MealsPerBox'
 
-import { getMealsPerBox, getIsBoxAndPricesLoaded, getDietaryPreference, getBoxPricesNumPortion } from '../../../../../context/selectors/box'
+import { getMealsPerBox, getIsBoxAndPricesLoaded, getDietaryPreference, getBoxPricesNumPortion, getTotalBoxPriceDiscounted } from '../../../../../context/selectors/box'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
 import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
@@ -46,17 +46,17 @@ const mockDietaryPreference = 'vegetarian'
 const mockBoxPricesNumPortion = {
   2: {
     vegetarian: {
-      pricePerPortionDiscounted: '3.99'
+      pricePerPortionDiscounted: '3.99',
     }
   },
   3: {
     vegetarian: {
-      pricePerPortionDiscounted: '3.49'
+      pricePerPortionDiscounted: '3.49',
     }
   },
   4: {
     vegetarian: {
-      pricePerPortionDiscounted: '2.99'
+      pricePerPortionDiscounted: '2.99',
     }
   }
 }
@@ -125,6 +125,7 @@ describe('MealsPerBox', () => {
     beforeEach(() => {
       getIsBoxAndPricesLoaded.mockReturnValue(true)
       useUpdateSubscription.mockReturnValue([false, true, false])
+      getTotalBoxPriceDiscounted.mockReturnValue('30.15')
       getMealsPerBox.mockReturnValue(mockMealsPerBox)
       getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)
       getDietaryPreference.mockReturnValue(mockDietaryPreference)
@@ -140,6 +141,15 @@ describe('MealsPerBox', () => {
           .find('[data-testing="current-meals-per-box"]')
           .text()
       ).toEqual('2 meals (£3.99 per serving)')
+    })
+
+    test('Then I should see the total box price', () => {
+      expect(
+        wrapper
+          .find('[data-testing="total-box-price"]')
+          .at(0)
+          .text()
+      ).toEqual('Recipe box price £30.15')
     })
 
     describe('And I click "edit"', () => {

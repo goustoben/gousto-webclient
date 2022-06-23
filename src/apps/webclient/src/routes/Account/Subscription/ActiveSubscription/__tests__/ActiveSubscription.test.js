@@ -26,15 +26,11 @@ jest.mock('../sections/SkipABox', () => ({
   SkipABox: () => <div />
 }))
 
-jest.mock('../sections/TotalPrice', () => ({
-  TotalPrice: () => <div />
-}))
-
 jest.mock('../ResubscriptionModal', () => ({
   ResubscriptionModal: () => <div />
 }))
 
-const sections = ['your-subscription-details', 'chef-selects-settings', 'total-price', 'skip-a-box', 'pause-subscription']
+const sections = ['your-subscription-details', 'chef-selects-settings', 'skip-a-box', 'pause-subscription']
 
 describe('ActiveSubscription', () => {
   let wrapper

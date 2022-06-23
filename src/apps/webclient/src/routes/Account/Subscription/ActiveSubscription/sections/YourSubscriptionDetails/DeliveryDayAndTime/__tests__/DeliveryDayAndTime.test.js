@@ -164,6 +164,38 @@ describe('DeliveryDayAndTime', () => {
       ).toEqual(mockCurrentDeliverySlot.timeRange)
     })
 
+    describe('And I have a paid delivery slot', () => {
+      beforeEach(() => {
+        getCurrentDeliverySlot.mockReturnValue(mockSlots[0])
+
+        mountWithProps()
+      })
+      test('Then I should see the delivery price', () => {
+        expect(
+          wrapper
+            .find('[data-testing="current-delivery-price"]')
+            .at(0)
+            .text()
+        ).toEqual('£1.99 delivery charge')
+      })
+    })
+
+    describe('And I have a free delivery slot', () => {
+      beforeEach(() => {
+        getCurrentDeliverySlot.mockReturnValue(mockSlots[1])
+
+        mountWithProps()
+      })
+      test('Then I should see t free delivery', () => {
+        expect(
+          wrapper
+            .find('[data-testing="current-delivery-price"]')
+            .at(0)
+            .text()
+        ).toEqual('Free delivery')
+      })
+    })
+
     describe('And I click "edit"', () => {
       beforeEach(() => {
         act(() => {

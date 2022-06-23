@@ -25,12 +25,6 @@ export const chefSelectsSettingsSection = {
   testingSelector: 'chef-selects-settings-section'
 }
 
-export const totalPriceSection = {
-  title: 'Total price',
-  subTitle: null,
-  testingSelector: 'total-price-section'
-}
-
 export const skipABoxSection = {
   title: 'Skip a box?',
   subTitle: 'Need a break? No problem - we’re here to be as flexible as we can for you. You can skip as many boxes as you see fit.',
