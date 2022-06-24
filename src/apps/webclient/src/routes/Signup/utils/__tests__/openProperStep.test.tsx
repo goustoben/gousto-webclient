@@ -4,7 +4,6 @@ import configureMockStore from 'redux-mock-store'
 import { redirect } from 'actions/redirect'
 import { signupSetStep, signupStepsReceive } from 'actions/signup'
 import { openProperStep, OpenStepStore } from 'routes/Signup/utils/openProperStep'
-import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
 jest.mock('routes/Signup/utils/getSignupSteps', () => ({
   getSignupSteps: jest.fn(async () => List.of([{ slug: 'first step slug' }])),
@@ -25,9 +24,6 @@ jest.mock('actions/promos', () => ({
 }))
 jest.mock('routes/Signup/signupSelectors', () => ({
   getCurrentPromoCodeData: jest.fn().mockReturnValue(false),
-}))
-jest.mock('utils/hotjarUtils', () => ({
-  invokeHotjarEvent: jest.fn(),
 }))
 
 describe('Given openProperStep util function', () => {
@@ -64,13 +60,6 @@ describe('Given openProperStep util function', () => {
         expect(signupStepsReceive).toBeCalled()
         expect(redirect).toBeCalledTimes(0)
         expect(signupSetStep).toBeCalled()
-      })
-    })
-    describe('when shouldSkipWizardByFeature', () => {
-      test('should redirect to menu', async () => {
-        await openProperStep(mockedStore, {}, {}, { shouldSkipWizardByFeature: true })
-        expect(invokeHotjarEvent).toBeCalled()
-        expect(redirect).toBeCalled()
       })
     })
   })

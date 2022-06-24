@@ -61,9 +61,7 @@ interface FetchSignupDataParams {
    * Flags to consider.
    */
   options?: {
-    shouldSetStepFromParams?: boolean
     isGoustoOnDemandEnabled?: boolean
-    shouldSkipWizardByFeature?: boolean
   }
 }
 

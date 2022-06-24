@@ -60,23 +60,6 @@ describe('home actions', () => {
 
       expect(trackGetStarted).toHaveBeenCalledWith(sectionForTracking)
     })
-
-    describe('when isSkipWizardEnabled is on', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          ...defaultState,
-          features: Immutable.fromJS({
-            isSkipWizardEnabled: { value: true },
-          }),
-        })
-      })
-
-      test('then it should redirect to the menu instead', async () => {
-        await homeGetStarted(CTA_URI)(dispatchSpy, getState)
-
-        expect(redirect).toHaveBeenCalledWith('/menu')
-      })
-    })
   })
 
   describe('given applyPromoCodeAndShowModal is dispatched', () => {
