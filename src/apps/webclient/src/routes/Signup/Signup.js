@@ -23,11 +23,10 @@ import css from './Signup.css'
 
 const propTypes = {
   secondarySlug: PropTypes.string,
-  steps: PropTypes.instanceOf(Immutable.List),
+  stepNames: PropTypes.instanceOf(Immutable.List),
   goToStep: PropTypes.func,
   location: PropTypes.shape({
     query: PropTypes.shape({
-      steps: PropTypes.string,
       promo_code: PropTypes.string,
     }),
     pathname: PropTypes.string,
@@ -50,11 +49,10 @@ const propTypes = {
 
 const defaultProps = {
   secondarySlug: '',
-  steps: Immutable.List(),
+  stepNames: Immutable.List(),
   goToStep: () => {},
   location: {
     query: {
-      steps: '',
       promo_code: '',
     },
   },
@@ -96,10 +94,10 @@ class Signup extends PureComponent {
   }
 
   getSteps() {
-    const { steps } = this.props
+    const { stepNames } = this.props
 
-    const signupSteps = steps
-      .filter((step) => !!AVAILABLE_STEP_COMPONENTS[step])
+    const signupSteps = stepNames
+      .filter((stepName) => !!AVAILABLE_STEP_COMPONENTS[stepName])
       .map((stepName) => stepByName(stepName))
 
     if (signupSteps.size === 0) {

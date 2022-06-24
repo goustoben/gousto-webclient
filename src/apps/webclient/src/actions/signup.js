@@ -13,21 +13,21 @@ import logger from 'utils/logger'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
 
-export function signupStepsReceive(steps) {
+export function signupStepsReceive(stepNames) {
   return {
     type: actionTypes.SIGNUP_STEPS_RECEIVE,
-    steps,
+    stepNames,
   }
 }
 
 export function signupSetStep(step) {
   return (dispatch, getState) => {
     const signupState = getState().signup
-    const steps = signupState.getIn(['wizard', 'steps'])
+    const stepNames = signupState.getIn(['wizard', 'stepNames'])
 
     if (step) {
-      const newStepNumber = steps.findIndex(stepName => stepName === step.get('name'))
-      const isLastStep = newStepNumber === steps.size - 1
+      const newStepNumber = stepNames.findIndex(stepName => stepName === step.get('name'))
+      const isLastStep = newStepNumber === stepNames.size - 1
 
       dispatch({
         type: actionTypes.SIGNUP_STEP_SET,
@@ -90,7 +90,7 @@ export function signupNextStep(stepName) {
       const state = getState()
       const signupState = state.signup
       const isCurrentlyTheLastStep = signupState.getIn(['wizard', 'isLastStep'])
-      const lastWizardStep = signupState.getIn(['wizard', 'steps']).last()
+      const lastWizardStep = signupState.getIn(['wizard', 'stepNames']).last()
       const slug = step.get('slug')
       if (isCurrentlyTheLastStep && (step.get('name') === lastWizardStep || !slug)) {
         dispatch(signupTracking())
