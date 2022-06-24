@@ -88,7 +88,7 @@ export const signupConfig = {
     goustoOnDemandTitle: 'When do you want your box delivered?',
   },
   discountAppliedText: 'View this when you reach the checkout.',
-  sellThePropositionPagePath: 'about',
+  sellThePropositionPageSlug: 'about',
   checkAccountPageSlug,
   applyVoucherPageSlug,
   enterPromoCodeManuallyPageSlug,

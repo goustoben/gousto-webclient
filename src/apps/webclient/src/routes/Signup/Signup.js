@@ -142,7 +142,7 @@ class Signup extends PureComponent {
       isGoustoOnDemandEnabled,
     } = this.props
 
-    if (stepName === signupConfig.sellThePropositionPagePath) {
+    if (stepName === signupConfig.sellThePropositionPageSlug) {
       return <SellThePropositionPageContainer />
     }
 

@@ -95,7 +95,7 @@ export function signupNextStep(stepName) {
       if (isCurrentlyTheLastStep && (step.get('name') === lastWizardStep || !slug)) {
         dispatch(signupTracking())
 
-        const path = `${routes.client.signup}/${signupConfig.sellThePropositionPagePath}`
+        const path = `${routes.client.signup}/${signupConfig.sellThePropositionPageSlug}`
 
         return dispatch(redirect(path))
       }
