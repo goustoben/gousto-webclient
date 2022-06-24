@@ -45,7 +45,6 @@ const propTypes = {
   signupDismissDiscountAppliedBar: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
   isWizardWithoutImagesEnabled: PropTypes.bool,
-  shouldSkipWizardByFeature: PropTypes.bool,
   signupSetStep: PropTypes.func,
 }
 
@@ -70,7 +69,6 @@ const defaultProps = {
   signupDismissDiscountAppliedBar: () => {},
   isGoustoOnDemandEnabled: false,
   isWizardWithoutImagesEnabled: false,
-  shouldSkipWizardByFeature: false,
   signupSetStep: () => {},
 }
 
@@ -78,12 +76,9 @@ class Signup extends PureComponent {
   static fetchData = fetchSignupData
 
   componentDidMount() {
-    const { location, params, isGoustoOnDemandEnabled, shouldSkipWizardByFeature } = this.props
+    const { location, params } = this.props
     const { store } = this.context
-    openProperStep(store, location?.query, params, {
-      isGoustoOnDemandEnabled,
-      shouldSkipWizardByFeature,
-    }).then(() => {
+    openProperStep(store, location?.query, params).then(() => {
       // without forceUpdate new props.steps would not be applied
       this.forceUpdate()
     })

@@ -2,10 +2,8 @@ import actions from 'actions'
 import Immutable from 'immutable'
 import { Store } from 'redux'
 
-import { hotjarSkipWizard } from 'actions/trackingKeys'
 import routes from 'config/routes'
 import { getSignupSteps } from 'routes/Signup/utils/getSignupSteps'
-import { invokeHotjarEvent } from 'utils/hotjarUtils'
 import {
   canLandOnStepWithoutRedirecting,
   findStepBySlug,
@@ -29,11 +27,6 @@ export type OpenStepStore = {
  * Part of app store that is used by openProperStep.
  */
 type ApplicationStore = Store<OpenStepStore, any>
-
-const redirectToMenu = (store: ApplicationStore): void => {
-  invokeHotjarEvent(hotjarSkipWizard)
-  store.dispatch(actions.redirect(routes.client.menu))
-}
 
 const redirectToFirstStep = (
   store: ApplicationStore,
@@ -64,15 +57,7 @@ export const openProperStep = async (
      */
     stepName?: string
   } = {},
-  options: {
-    isGoustoOnDemandEnabled?: boolean
-    shouldSkipWizardByFeature?: boolean
-  } = {},
 ): Promise<void> => {
-  if (options.shouldSkipWizardByFeature && !options.isGoustoOnDemandEnabled) {
-    redirectToMenu(store)
-  }
-
   const steps = await getSignupSteps(store)
   store.dispatch(actions.signupStepsReceive(steps))
   const firstStep = stepByName(steps.first())

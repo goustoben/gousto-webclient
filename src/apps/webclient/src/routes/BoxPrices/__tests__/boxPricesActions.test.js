@@ -70,27 +70,6 @@ describe('boxPrices actions', () => {
         expect(basketNumPortionChange).toHaveBeenCalledWith(2)
         expect(signupNextStep).toHaveBeenCalledWith('postcode')
       })
-
-      describe('and when isSkipWizardEnabled is on', () => {
-        beforeEach(() => {
-          getState.mockReturnValue({
-            ...defaultState,
-            features: Immutable.fromJS({
-              isSkipWizardEnabled: { value: true },
-            }),
-          })
-        })
-
-        test('then it should redirect to the menu', async () => {
-          await boxPricesBoxSizeSelected(2)(dispatch, getState)
-
-          expect(applyPromoCodeAndShowModal).toHaveBeenCalled()
-          expect(trackClickBuildMyBox).toHaveBeenCalledWith('2 people', 'wizard')
-          expect(basketNumPortionChange).toHaveBeenCalledWith(2)
-          expect(signupNextStep).not.toHaveBeenCalled()
-          expect(redirect).toHaveBeenCalledWith('/menu')
-        })
-      })
     })
 
     describe('when postcode is selected', () => {
