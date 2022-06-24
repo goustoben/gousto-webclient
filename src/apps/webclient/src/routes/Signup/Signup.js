@@ -18,6 +18,7 @@ import { CheckAccountPageContainer } from './Components/CheckAccountPage'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 import { EnterPromoCodeManuallyPage } from './Components/EnterPromoCodeManuallyPage'
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
+import { getSignupSteps } from './utils/getSignupSteps'
 
 import css from './Signup.css'
 
@@ -45,6 +46,7 @@ const propTypes = {
   isGoustoOnDemandEnabled: PropTypes.bool,
   isWizardWithoutImagesEnabled: PropTypes.bool,
   signupSetStep: PropTypes.func,
+  signupStepsReceive: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -73,13 +75,21 @@ const defaultProps = {
 class Signup extends PureComponent {
   static fetchData = fetchSignupData
 
-  componentDidMount() {
-    const { location, params } = this.props
+  async componentDidMount() {
+    const { signupStepsReceive } = this.props
     const { store } = this.context
-    openProperStep(store, location?.query, params).then(() => {
-      // without forceUpdate new props.steps would not be applied
-      this.forceUpdate()
-    })
+
+    const stepNames = await getSignupSteps(store)
+    signupStepsReceive(stepNames)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location, params, stepNames } = this.props
+    const { store } = this.context
+
+    if (prevProps.stepNames !== stepNames && stepNames !== null) {
+      openProperStep(store, stepNames, location?.query, params)
+    }
   }
 
   getCurrentStepNumber(steps) {
@@ -131,6 +141,7 @@ class Signup extends PureComponent {
 
   render() {
     const {
+      stepNames,
       secondarySlug,
       promoModalVisible,
       promoBannerState,
@@ -154,6 +165,11 @@ class Signup extends PureComponent {
 
     if (secondarySlug === signupConfig.enterPromoCodeManuallyPageSlug) {
       return <EnterPromoCodeManuallyPage />
+    }
+
+    if (stepNames === null) {
+      // Still loading.
+      return null
     }
 
     const steps = this.getSteps()

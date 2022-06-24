@@ -3,7 +3,7 @@ import { actionTypes } from 'actions/actionTypes'
 
 const initialState = Immutable.fromJS({
   wizard: {
-    stepNames: [],
+    stepNames: null,
     currentStepName: '',
     currentStepNumber: 0,
     isLastStep: false,

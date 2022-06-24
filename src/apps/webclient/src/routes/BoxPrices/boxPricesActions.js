@@ -1,12 +1,10 @@
 import { basketNumPortionChange } from 'actions/basket'
 import { applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
-import { signupNextStep } from 'actions/signup'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import routesConfig from 'config/routes'
 import { getBasketPostcode } from 'selectors/basket'
 import { getPromoBannerState } from 'utils/home'
-import { findStepBySlug } from 'utils/signup'
 
 export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getState) => {
   const state = getState()
@@ -22,13 +20,10 @@ export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getStat
   if (destination === 'menu') {
     dispatch(redirect(routesConfig.client.menu))
   } else {
-    const destinationStep = findStepBySlug('postcode')
-
     if (canApplyPromo) {
       await dispatch(applyPromoCodeAndShowModal())
     }
-
-    dispatch(signupNextStep(destinationStep.get('name')))
+    dispatch(redirect(`${routesConfig.client.signup}/postcode`))
   }
 }
 
