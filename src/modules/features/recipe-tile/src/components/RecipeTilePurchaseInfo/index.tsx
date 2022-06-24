@@ -9,6 +9,7 @@ import {
   useRecipe,
   useStockHook,
 } from "../../model/context";
+import { useDeviceType, DeviceType } from "../../utils/useDeviceType";
 import { useGetSurchargeForRecipeIdHook } from "../../model/context/useGetSurchargeForRecipeId";
 import { AddRecipeButton } from "../AddRecipeButton";
 import {
@@ -27,6 +28,7 @@ import {
 type RecipeTilePurchaseInfoProps = {
   categoryId: string;
   fdiStyling?: boolean;
+  SwapAlternativeOptionsMobile?: React.FC<{}>,
 };
 
 const SurchargeDiv = styled.div<{
@@ -64,8 +66,10 @@ const PurchaseInfoWrapper = styled.div<{ surchargeOnTop: boolean }>(
 export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
   categoryId,
   fdiStyling = false,
+  SwapAlternativeOptionsMobile,
 }) => {
   const { id: recipeId, isFineDineIn } = useRecipe();
+  const deviceType = useDeviceType();
 
   const useGetAlternativeOptionsForRecipe =
     useGetAlternativeOptionsForRecipeHook();
@@ -118,16 +122,15 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
       ) : null}
       <ButtonsWrapper>
         <AddRecipeButton recipeId={recipeId} />
-        {hasAlternativeOptions && (
-          //   deviceType === DeviceType.MOBILE ? (
-          //   <SwapAlternativeOptionsMobile
-          //     recipeId={recipeId}
-          //     categoryId={categoryId}
-          //   />
-          // ) : (
-          <SwapAlternativeOptions recipeId={recipeId} categoryId={categoryId} />
-          // )
-        )}
+        {hasAlternativeOptions &&
+          (SwapAlternativeOptionsMobile && deviceType === DeviceType.MOBILE ? (
+            <SwapAlternativeOptionsMobile />
+          ) : (
+            <SwapAlternativeOptions
+              recipeId={recipeId}
+              categoryId={categoryId}
+            />
+          ))}
       </ButtonsWrapper>
     </PurchaseInfoWrapper>
   );

@@ -60,12 +60,14 @@ type RecipeTileProps = {
     currentCollectionId: string,
     recipeReference?: string | null
   ) => void;
+  SwapAlternativeOptionsMobile?: React.FC<{}>,
 };
 
 export const RecipeTile = ({
   recipeId,
   currentCollectionId: categoryId,
   onClick,
+  SwapAlternativeOptionsMobile,
 }: RecipeTileProps) => {
   const useGetAlternativeOptionsForRecipe =
     useGetAlternativeOptionsForRecipeHook();
@@ -147,6 +149,7 @@ export const RecipeTile = ({
           <RecipeTilePurchaseInfo
             categoryId={categoryId}
             fdiStyling={isFineDineIn}
+            SwapAlternativeOptionsMobile={SwapAlternativeOptionsMobile}
           />
         </BrandTagContainer>
       </ImageContainer>
