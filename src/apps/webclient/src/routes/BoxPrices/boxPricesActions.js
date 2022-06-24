@@ -1,16 +1,16 @@
-import routesConfig from 'config/routes'
 import { basketNumPortionChange } from 'actions/basket'
+import { applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { signupNextStep } from 'actions/signup'
-import { applyPromoCodeAndShowModal } from 'actions/home'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import { hotjarSkipWizard } from 'actions/trackingKeys'
-import { getBasketPostcode } from 'selectors/basket'
-import { getPromoBannerState } from 'utils/home'
-import { findStepBySlug } from 'utils/signup'
-import { invokeHotjarEvent } from 'utils/hotjarUtils'
+import routesConfig from 'config/routes'
 import { getIsSkipWizardEnabled } from 'routes/Signup/signupSelectors'
 import { getIsAuthenticated } from 'selectors/auth'
+import { getBasketPostcode } from 'selectors/basket'
+import { getPromoBannerState } from 'utils/home'
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
+import { findStepBySlug } from 'utils/signup'
 
 export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getState) => {
   const state = getState()
@@ -34,7 +34,7 @@ export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getStat
 
     const isSkipWizardEnabled = getIsSkipWizardEnabled(state)
     const isAuthenticated = getIsAuthenticated(state)
-    const shouldSkipWizardByFeature = (!isAuthenticated && isSkipWizardEnabled)
+    const shouldSkipWizardByFeature = !isAuthenticated && isSkipWizardEnabled
 
     if (shouldSkipWizardByFeature) {
       invokeHotjarEvent(hotjarSkipWizard)

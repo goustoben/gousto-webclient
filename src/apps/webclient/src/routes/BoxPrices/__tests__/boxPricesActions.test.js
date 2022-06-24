@@ -1,38 +1,40 @@
 import Immutable from 'immutable'
-import { boxPricesBoxSizeSelected } from 'actions/boxPrices'
+
 import { basketNumPortionChange } from 'actions/basket'
+import { applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { signupNextStep } from 'actions/signup'
 import { trackClickBuildMyBox } from 'actions/tracking'
-import { applyPromoCodeAndShowModal } from 'actions/home'
 import { getPromoBannerState } from 'utils/home'
 
+import { boxPricesBoxSizeSelected } from '../boxPricesActions'
+
 jest.mock('actions/basket', () => ({
-  basketNumPortionChange: jest.fn()
+  basketNumPortionChange: jest.fn(),
 }))
 
 jest.mock('actions/redirect', () => ({
-  redirect: jest.fn()
+  redirect: jest.fn(),
 }))
 
 jest.mock('actions/signup', () => ({
-  signupNextStep: jest.fn()
+  signupNextStep: jest.fn(),
 }))
 
 jest.mock('actions/tracking', () => ({
-  trackClickBuildMyBox: jest.fn()
+  trackClickBuildMyBox: jest.fn(),
 }))
 
 jest.mock('utils/home', () => ({
-  getPromoBannerState: jest.fn()
+  getPromoBannerState: jest.fn(),
 }))
 
 jest.mock('actions/home', () => ({
-  applyPromoCodeAndShowModal: jest.fn()
+  applyPromoCodeAndShowModal: jest.fn(),
 }))
 
 jest.mock('apis/boxPrices', () => ({
-  fetchBoxPrices: jest.fn()
+  fetchBoxPrices: jest.fn(),
 }))
 
 describe('boxPrices actions', () => {
@@ -40,14 +42,14 @@ describe('boxPrices actions', () => {
   const dispatch = jest.fn()
   const defaultState = {
     basket: Immutable.fromJS({
-      postcode: ''
+      postcode: '',
     }),
     auth: Immutable.fromJS({
-      isAuthenticated: false
-    })
+      isAuthenticated: false,
+    }),
   }
   getPromoBannerState.mockReturnValue({
-    canApplyPromo: true
+    canApplyPromo: true,
   })
 
   beforeEach(() => {
@@ -74,7 +76,7 @@ describe('boxPrices actions', () => {
           getState.mockReturnValue({
             ...defaultState,
             features: Immutable.fromJS({
-              isSkipWizardEnabled: { value: true }
+              isSkipWizardEnabled: { value: true },
             }),
           })
         })
@@ -95,11 +97,11 @@ describe('boxPrices actions', () => {
       beforeEach(() => {
         getState.mockReturnValue({
           basket: Immutable.fromJS({
-            postcode: 'W140EE'
+            postcode: 'W140EE',
           }),
           auth: Immutable.fromJS({
-            isAuthenticated: false
-          })
+            isAuthenticated: false,
+          }),
         })
       })
 
