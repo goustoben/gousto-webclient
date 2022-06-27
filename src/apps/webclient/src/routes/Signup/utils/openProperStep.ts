@@ -55,14 +55,14 @@ export const openProperStep = async (
     /**
      * Current step name.
      */
-    stepName?: string
+    secondarySlug?: string
   } = {},
 ): Promise<void> => {
   const steps = await getSignupSteps(store)
   store.dispatch(actions.signupStepsReceive(steps))
   const firstStep = stepByName(steps.first())
   const firstStepUrl = firstStep.get('slug')
-  const currentStep = params.stepName // step user just landed on
+  const currentStep = params.secondarySlug // step user just landed on
 
   if (!currentStep) {
     redirectToFirstStep(store, firstStepUrl, query.promo_code)

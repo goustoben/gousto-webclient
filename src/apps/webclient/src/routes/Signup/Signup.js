@@ -22,7 +22,7 @@ import { SellThePropositionPageContainer } from './Components/SellTheProposition
 import css from './Signup.css'
 
 const propTypes = {
-  stepName: PropTypes.string,
+  secondarySlug: PropTypes.string,
   steps: PropTypes.instanceOf(Immutable.List),
   goToStep: PropTypes.func,
   location: PropTypes.shape({
@@ -33,7 +33,7 @@ const propTypes = {
     pathname: PropTypes.string,
   }),
   params: PropTypes.shape({
-    stepName: PropTypes.string,
+    secondarySlug: PropTypes.string,
   }),
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
@@ -49,7 +49,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  stepName: '',
+  secondarySlug: '',
   steps: Immutable.List(),
   goToStep: () => {},
   location: {
@@ -59,7 +59,7 @@ const defaultProps = {
     },
   },
   params: {
-    stepName: '',
+    secondarySlug: '',
   },
   promoBannerState: {
     canApplyPromo: false,
@@ -85,8 +85,8 @@ class Signup extends PureComponent {
   }
 
   getCurrentStepNumber(steps) {
-    const { stepName } = this.props
-    const stepNumber = steps.findIndex((step) => step.get('slug') === stepName)
+    const { secondarySlug } = this.props
+    const stepNumber = steps.findIndex((step) => step.get('slug') === secondarySlug)
 
     if (stepNumber < 0) {
       return 0
@@ -133,7 +133,7 @@ class Signup extends PureComponent {
 
   render() {
     const {
-      stepName,
+      secondarySlug,
       promoModalVisible,
       promoBannerState,
       trackDiscountVisibility,
@@ -142,26 +142,26 @@ class Signup extends PureComponent {
       isGoustoOnDemandEnabled,
     } = this.props
 
-    if (stepName === signupConfig.sellThePropositionPageSlug) {
+    if (secondarySlug === signupConfig.sellThePropositionPageSlug) {
       return <SellThePropositionPageContainer />
     }
 
-    if (stepName === signupConfig.checkAccountPageSlug) {
+    if (secondarySlug === signupConfig.checkAccountPageSlug) {
       return <CheckAccountPageContainer />
     }
 
-    if (stepName === signupConfig.applyVoucherPageSlug) {
+    if (secondarySlug === signupConfig.applyVoucherPageSlug) {
       return <ApplyVoucherPageContainer />
     }
 
-    if (stepName === signupConfig.enterPromoCodeManuallyPageSlug) {
+    if (secondarySlug === signupConfig.enterPromoCodeManuallyPageSlug) {
       return <EnterPromoCodeManuallyPage />
     }
 
     const steps = this.getSteps()
     const stepNumber = this.getCurrentStepNumber(steps)
 
-    const currentStep = steps.find((step) => step.get('slug') === stepName) || steps.get(0)
+    const currentStep = steps.find((step) => step.get('slug') === secondarySlug) || steps.get(0)
     const currentStepName = currentStep.get('name')
 
     const { canApplyPromo, basketPromo } = promoBannerState

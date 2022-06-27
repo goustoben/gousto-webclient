@@ -121,11 +121,11 @@ describe('Signup', () => {
     })
   })
 
-  describe('when the step is "about" for Sell the Proposition page', () => {
+  describe('when the slug is "about" for Sell the Proposition page', () => {
     let wrapper
 
     beforeEach(() => {
-      wrapper = shallow(<Signup {...props} stepName="about" />, { context })
+      wrapper = shallow(<Signup {...props} secondarySlug="about" />, { context })
     })
 
     test('then it should render the separate Sell the proposition page', () => {

@@ -10,7 +10,7 @@ import { getPromoBannerState } from 'utils/home'
 import { Signup } from './Signup'
 
 const mapStateToProps = (state, ownProps) => ({
-  stepName: ownProps.params.stepName,
+  secondarySlug: ownProps.params.secondarySlug,
   steps: state.signup.getIn(['wizard', 'steps']),
   orderDiscount: state.promoStore.getIn([
     state.promoCurrent,

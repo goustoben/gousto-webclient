@@ -40,23 +40,23 @@ describe('Given openProperStep util function', () => {
     jest.clearAllMocks()
   })
   describe('when executed', () => {
-    describe('when stepName is undefined', () => {
+    describe('when secondarySlug is undefined', () => {
       test('should dispatch proper actions', async () => {
         await openProperStep(mockedStore)
         expect(signupStepsReceive).toBeCalled()
         expect(redirect).toBeCalled()
       })
     })
-    describe('when stepName is defined, but can not land on step without redirect', () => {
+    describe('when secondarySlug is defined, but can not land on step without redirect', () => {
       test('should dispatch proper actions', async () => {
-        await openProperStep(mockedStore, {}, { stepName: 'stepName' })
+        await openProperStep(mockedStore, {}, { secondarySlug: 'secondarySlug' })
         expect(signupStepsReceive).toBeCalled()
         expect(redirect).toBeCalled()
       })
     })
-    describe('when stepName is defined and can land on step without redirect', () => {
+    describe('when secondarySlug is defined and can land on step without redirect', () => {
       test('should dispatch proper actions', async () => {
-        await openProperStep(mockedStore, {}, { stepName: 'postcode' })
+        await openProperStep(mockedStore, {}, { secondarySlug: 'postcode' })
         expect(signupStepsReceive).toBeCalled()
         expect(redirect).toBeCalledTimes(0)
         expect(signupSetStep).toBeCalled()

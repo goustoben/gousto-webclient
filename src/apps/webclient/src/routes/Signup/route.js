@@ -9,7 +9,7 @@ import { SignupContainer } from './SignupContainer'
 
 export const Signup = (
   <Route component={SignupLayout}>
-    <Route path={`${client.signup}(/:stepName)`} component={SignupContainer} />
-    <Redirect from="/signup-2(/:stepName)" to="/signup" />
+    <Route path={`${client.signup}(/:secondarySlug)`} component={SignupContainer} />
+    <Redirect from="/signup-2(/:secondarySlug)" to="/signup" />
   </Route>
 )
