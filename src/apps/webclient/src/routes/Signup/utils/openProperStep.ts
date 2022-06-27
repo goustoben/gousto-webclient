@@ -31,12 +31,12 @@ type ApplicationStore = Store<OpenStepStore, any>
 
 const redirectToFirstStep = (
   store: ApplicationStore,
-  firstStepUrl: string,
+  firstStepSlug: string,
   promoCode?: string,
 ): void => {
   store.dispatch(
     actions.redirect(
-      `${routes.client.signup}/${firstStepUrl}${getPromocodeQueryParam(promoCode, '?')}`,
+      `${routes.client.signup}/${firstStepSlug}${getPromocodeQueryParam(promoCode, '?')}`,
     ),
   )
 }
@@ -61,17 +61,17 @@ export const openProperStep = async (
   } = {},
 ): Promise<void> => {
   const firstStep = stepByName(stepNames.first())
-  const firstStepUrl = firstStep.get('slug')
+  const firstStepSlug = firstStep.get('slug')
   const currentStep = params.secondarySlug // step user just landed on
 
   if (!currentStep) {
-    redirectToFirstStep(store, firstStepUrl, query.promo_code)
+    redirectToFirstStep(store, firstStepSlug, query.promo_code)
 
     return
   }
 
   if (!canLandOnStepWithoutRedirecting(currentStep)) {
-    redirectToFirstStep(store, firstStepUrl, query.promo_code)
+    redirectToFirstStep(store, firstStepSlug, query.promo_code)
 
     return
   }
