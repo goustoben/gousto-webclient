@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
+import { useWizardFiveRecipesEnabled } from 'hooks/useWizardFiveRecipesEnabled'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 
@@ -26,6 +27,7 @@ export const items = [
     key: 'itemSkip',
     className: css.itemSkip,
     strongText: 'Choose 2 to 4 recipes',
+    fiveRecipesStrongText: 'Choose 2 to 5 recipes',
     normalText: 'or skip a box',
   },
   {
@@ -47,6 +49,8 @@ const goustoOnDemandItems = [
     key: 'itemSelection',
     className: css.itemSelection,
     strongText: 'Choose 2, 3 or 4 recipes',
+    // TODO: additional check should we add 5 recipes for gousto on demand.
+    fiveRecipesStrongText: 'Choose 2, 3, 4 or 5 recipes',
     normalText: 'in your box',
   },
   {
@@ -64,6 +68,7 @@ const goustoOnDemandItems = [
 ]
 
 export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => {
+  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
   const displayedItems = isGoustoOnDemandEnabled ? goustoOnDemandItems : items
 
   return (
@@ -73,9 +78,12 @@ export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled
       headerText="Get your taste buds ready..."
     >
       <ul className={css.list}>
-        {displayedItems.map(({ key, className, strongText, normalText }) => (
+        {displayedItems.map(({ key, className, strongText, fiveRecipesStrongText, normalText }) => (
           <li key={key} className={classNames(css.item, className)}>
-            <span className={css.strong}>{strongText}</span> {normalText}
+            <span className={css.strong}>
+              {fiveRecipesStrongText && fiveRecipesEnabled ? fiveRecipesStrongText : strongText}
+            </span>{' '}
+            {normalText}
           </li>
         ))}
       </ul>
