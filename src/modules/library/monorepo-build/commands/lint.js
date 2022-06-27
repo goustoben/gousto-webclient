@@ -7,20 +7,20 @@
  *
  * @returns {Promise<void>}
  */
-async function lint (ctx) {
+async function lint(ctx) {
   const changes = ctx.localChanges()
 
   // If eslint config files are created / changed / deleted, we must re-validate everything
-  const ignoreFileChanged = changes.find(change => change.relativePath === '.eslintignore')
-  const rcFileChanged = changes.find(change => change.relativePath === '.eslintrc.js')
+  const ignoreFileChanged = changes.find((change) => change.relativePath === '.eslintignore')
+  const rcFileChanged = changes.find((change) => change.relativePath === '.eslintrc.js')
   if (ignoreFileChanged || rcFileChanged) {
     return ctx.stdout('.')
   }
 
   const results = changes
-    .filter(change => !change.deleted)
-    .filter(change => change.filepath.match(/[jt]s(x?)$/g))
-    .map(change => change.relativePath)
+    .filter((change) => !change.deleted)
+    .filter((change) => change.filepath.match(/[jt]s(x?)$/g))
+    .map((change) => change.relativePath)
 
   // Only write to STDOUT if we have results. This enables us to do [ -s file ] based conditions
   if (results.length) {
@@ -30,5 +30,5 @@ async function lint (ctx) {
 }
 
 module.exports = {
-  lint
+  lint,
 }

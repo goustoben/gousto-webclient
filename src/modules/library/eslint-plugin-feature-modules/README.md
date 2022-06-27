@@ -8,10 +8,10 @@ All you should have to do is run `yarn` at the root of the repository to install
 
 ## Current ruleset
 
-| Rule | Description | Type |
-|---|---|---|
-| avoidZest | Please use Citrus instead of Zest - https://github.com/Gousto/citrus | Error |
-| avoidImportFeatureIntoFeature | Importing features into other features is not allowed | Error |
+| Rule                          | Description                                                          | Type  |
+| ----------------------------- | -------------------------------------------------------------------- | ----- |
+| avoidZest                     | Please use Citrus instead of Zest - https://github.com/Gousto/citrus | Error |
+| avoidImportFeatureIntoFeature | Importing features into other features is not allowed                | Error |
 
 ## Adding a new rule
 
@@ -19,8 +19,8 @@ ESLint custom plugins use an AST to traverse the code and analyse it for problem
 
 To test your rule you have some options:
 
-    1. You can write tests using `ESLintUtils.RuleTester` (see `src/rules/__tests__/preventImport.test.ts`)
-    2. You can use [AST explorer](https://astexplorer.net/) to interactively test new rules
+1. You can write tests using `ESLintUtils.RuleTester` (see `src/rules/__tests__/preventImport.test.ts`)
+2. You can use [AST explorer](https://astexplorer.net/) to interactively test new rules
 
 We recommend using the explorer when working out your rule initially and writing a test for final & future validation.
 

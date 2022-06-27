@@ -7,7 +7,7 @@
  *
  * @returns {Promise<void>}
  */
-async function unitTests (ctx) {
+async function unitTests(ctx) {
   const changes = ctx.localChanges()
 
   if (changes.length) {
@@ -16,5 +16,5 @@ async function unitTests (ctx) {
 }
 
 module.exports = {
-  unitTests
+  unitTests,
 }

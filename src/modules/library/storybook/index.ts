@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/react/types'
 
-import path from 'path';
+import path from 'path'
 
 type WebpackFinal = StorybookConfig['webpackFinal']
 
@@ -8,24 +8,20 @@ type SassLoaderIncludePath = {
   path: string
 }
 
-export const generateWebpackFinal = (
-  { path }: SassLoaderIncludePath
-): WebpackFinal => {
+export const generateWebpackFinal = ({ path }: SassLoaderIncludePath): WebpackFinal => {
   return async (config) => {
     config.module?.rules.push({
       test: /\.scss$/,
       use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path
+      include: path,
     })
 
-    return config;
+    return config
   }
 }
 
 export const base: StorybookConfig = {
-  stories: [
-    `../src/modules/features/**/*.stories.*`,
-  ],
+  stories: [`../src/modules/features/**/*.stories.*`],
   addons: ['@storybook/addon-essentials'],
   framework: '@storybook/react',
   features: {

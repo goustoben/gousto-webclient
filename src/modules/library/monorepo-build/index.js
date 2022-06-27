@@ -3,5 +3,5 @@ const { unitTests } = require('./commands/unit-tests')
 
 module.exports = {
   lint,
-  unitTests
+  unitTests,
 }

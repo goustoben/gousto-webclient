@@ -1,0 +1,12 @@
+printWidth: 120
+semi: false
+trailingComma: 'all'
+singleQuote: true
+tabWidth: 2
+importOrder:
+  - '^react$'
+  - '<THIRD_PARTY_MODULES>'
+  - '^@(library|features)/.+$'
+  - '^[./].+(?<!.css)$'
+  - '^.+\\.css$'
+importOrderSeparation: true
