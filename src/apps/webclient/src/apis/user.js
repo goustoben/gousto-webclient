@@ -46,6 +46,10 @@ export function referralDetails(accessToken, reqData) {
   return fetch(accessToken, `${endpoint('core')}/user/current/referralDetails`, reqData, 'GET')
 }
 
+export function ledgerDetails(accessToken, reqData) {
+  return fetch(accessToken, `${endpoint('core')}/user/current/ledgerDetails`, reqData, 'GET')
+}
+
 export function referAFriend(accessToken, email) {
   return fetch(accessToken, `${endpoint('core')}/user/current/referral`, { emails: [email] }, 'POST')
 }

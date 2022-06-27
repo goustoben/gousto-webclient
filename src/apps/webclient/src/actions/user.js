@@ -344,7 +344,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
     dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, null))
     try {
       if (forceRefresh || getState().user.get('orders').find(order => order.get('id') === orderId) === undefined) {
-        const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId, 'shipping_address' )
+        const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId, 'shipping_address')
 
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
@@ -656,6 +656,10 @@ export function userFetchReferralOffer() {
 export const userGetReferralDetails = () => async (dispatch, getState) => {
   try {
     const accessToken = getState().auth.get('accessToken')
+    const { data: ledgerDetails } = await userApi.ledgerDetails(accessToken)
+
+    console.log(`Ledger details: ${JSON.stringify(ledgerDetails)}`)
+
     const { data } = await userApi.referralDetails(accessToken)
 
     dispatch(userLoadReferralDetails(data))
