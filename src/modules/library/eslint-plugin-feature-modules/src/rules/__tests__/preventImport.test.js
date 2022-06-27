@@ -15,9 +15,9 @@ ruleTester.run(`prevent-import: ${MessageIds.AvoidZest}`, preventImport, {
   invalid: [
     {
       code: 'import { Button } from "goustouicomponents"',
-      errors: [{ messageId: MessageIds.AvoidZest }]
+      errors: [{ messageId: MessageIds.AvoidZest }],
     },
-  ]
+  ],
 })
 
 ruleTester.run(`prevent-import: ${MessageIds.AvoidImportFeatureIntoFeature}`, preventImport, {
@@ -29,7 +29,7 @@ ruleTester.run(`prevent-import: ${MessageIds.AvoidImportFeatureIntoFeature}`, pr
   invalid: [
     {
       code: 'import { Test } from "@features/module"',
-      errors: [{ messageId: MessageIds.AvoidImportFeatureIntoFeature }]
-    }
-  ]
+      errors: [{ messageId: MessageIds.AvoidImportFeatureIntoFeature }],
+    },
+  ],
 })

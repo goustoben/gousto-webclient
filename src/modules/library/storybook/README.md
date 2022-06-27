@@ -47,6 +47,3 @@ In your feature-module `package.json`:
 ## Updating
 
 This shared storybook module is owned by Front-End Foundations. Please raise any changes through our squads slack channel: #squad-frontend-foundations
-
-
-

@@ -4,19 +4,19 @@ describe('Lint command', () => {
   const change = (relativePath) => ({
     deleted: false,
     filepath: 'src/module/' + relativePath,
-    relativePath
+    relativePath,
   })
 
   const deletion = (relativePath) => ({
     deleted: true,
     filepath: 'src/module/' + relativePath,
-    relativePath
+    relativePath,
   })
 
   describe('when there are no local changes', () => {
     const ctx = {
       localChanges: () => [],
-      stdout: jest.fn()
+      stdout: jest.fn(),
     }
 
     test('does not write to stdout', async () => {
@@ -27,10 +27,8 @@ describe('Lint command', () => {
 
   describe('When local .eslintignore is changed', () => {
     const ctx = {
-      localChanges: () => [
-        change('.eslintignore')
-      ],
-      stdout: jest.fn()
+      localChanges: () => [change('.eslintignore')],
+      stdout: jest.fn(),
     }
 
     test('will write a dot to stdout, forcing complete re-linting', async () => {
@@ -42,10 +40,8 @@ describe('Lint command', () => {
 
   describe('When local .eslintrc.js is changed', () => {
     const ctx = {
-      localChanges: () => [
-        deletion('.eslintrc.js')
-      ],
-      stdout: jest.fn()
+      localChanges: () => [deletion('.eslintrc.js')],
+      stdout: jest.fn(),
     }
 
     test('will write a dot to stdout, forcing complete re-linting', async () => {
@@ -66,9 +62,9 @@ describe('Lint command', () => {
         change('package.json'),
         change('tests/fixture.json'),
         deletion('deleted/react.js'),
-        deletion('deleted/picture.png')
+        deletion('deleted/picture.png'),
       ],
-      stdout: jest.fn()
+      stdout: jest.fn(),
     }
 
     let entries
