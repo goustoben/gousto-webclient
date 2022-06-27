@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { signupConfig } from 'config/signup'
+import { useWizardFiveRecipesEnabled } from 'hooks/useWizardFiveRecipesEnabled'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
@@ -24,6 +25,7 @@ export const BoxSizeStep = ({
   isLoadingPrices,
   goustoOnDemandCustomText,
 }) => {
+  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
   const handlePrimaryButtonClick = (value) => {
     numPortionChange(value)
@@ -35,31 +37,50 @@ export const BoxSizeStep = ({
   }
 
   const renderCarouselItems = () =>
-    boxSizeTypes.map(({ heading, suitableFor, ctaText, value }) => (
-      <div className={css.carouselItem} key={`box-size-for-${value}`}>
-        <h2 className={css.itemHeading}>{heading}</h2>
-        <p className={css.suitableTitle}>Suitable for:</p>
-        <ul className={css.list}>
-          {suitableFor.map((label) => (
-            <li key={`for-${label.charAt(0)}`} className={css.listItem}>
-              {label}
-            </li>
-          ))}
-        </ul>
-        <PrimaryButton
-          value={value}
-          onPrimaryButtonClick={handlePrimaryButtonClick}
-          ctaText={ctaText}
-        />
-      </div>
-    ))
+    boxSizeTypes.map(
+      ({
+        heading,
+        suitableFor,
+        recipeInfoTextStart,
+        recipeInfoStrongText,
+        recipeInfoTextEnd,
+        ctaText,
+        value,
+      }) => (
+        <div className={css.carouselItem} key={`box-size-for-${value}`}>
+          <h2 className={css.itemHeading}>{heading}</h2>
+          {fiveRecipesEnabled && (
+            <p className={css.suitableTitle}>
+              <span>{recipeInfoTextStart}</span>
+              <strong>{recipeInfoStrongText}</strong>
+              <span>{recipeInfoTextEnd}</span>
+            </p>
+          )}
+          <p className={css.suitableTitle}>Suitable for:</p>
+          <ul className={css.list}>
+            {suitableFor.map((label) => (
+              <li key={`for-${label.charAt(0)}`} className={css.listItem}>
+                {label}
+              </li>
+            ))}
+          </ul>
+          <PrimaryButton
+            value={value}
+            onPrimaryButtonClick={handlePrimaryButtonClick}
+            ctaText={ctaText}
+          />
+        </div>
+      ),
+    )
 
   return (
     <div className={signupCss.stepContainer} data-testing="signupBoxSizeStep">
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
           <Heading type="h1">{title}</Heading>
-          {isGoustoOnDemandEnabled ? null : <p className={css.subtitle}>{subtitle}</p>}
+          {isGoustoOnDemandEnabled || fiveRecipesEnabled ? null : (
+            <p className={css.subtitle}>{subtitle}</p>
+          )}
         </div>
         {isGoustoOnDemandEnabled ? (
           <GoustoOnDemandBoxSizeContent

@@ -64,12 +64,18 @@ export const signupConfig = {
     boxSizeTypes: [
       {
         heading: 'Regular box',
+        recipeInfoTextStart: 'You can choose from ',
+        recipeInfoStrongText: '2 to 5',
+        recipeInfoTextEnd: ' recipes per box.',
         suitableFor: ['2 adults (or 1 + leftovers)', '1 adult and 1-2 children'],
         ctaText: 'Choose regular box',
         value: 2,
       },
       {
         heading: 'Large box',
+        recipeInfoTextStart: 'You can choose from ',
+        recipeInfoStrongText: '2 to 4',
+        recipeInfoTextEnd: ' recipes per box.',
         suitableFor: ['4 adults (or 2-3 + leftovers)', '2 adults and 2-3 children'],
         ctaText: 'Choose large box',
         value: 4,
