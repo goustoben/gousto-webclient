@@ -4,6 +4,7 @@ import { CTA } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
 import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
+import { useWizardFiveRecipesEnabled } from 'hooks/useWizardFiveRecipesEnabled'
 import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
 import { Benefits } from 'routes/Home/Benefits'
 
@@ -20,11 +21,12 @@ const BoxPriceBlock = ({
   trackUTMAndPromoCode,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(2)
+  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
   const { title, boxSizeTrackingValue } = boxTypes[numPersons]
 
   const boxInfoCopy = boxInfo.slice()
 
-  if (boxSizeTrackingValue === 'large') {
+  if (boxSizeTrackingValue === 'large' || !fiveRecipesEnabled) {
     boxInfoCopy.pop()
   }
 
