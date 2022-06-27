@@ -136,10 +136,6 @@ module.exports = {
         done()
       })
       .perform(done => {
-        menu.section.boxSummaryDesktop.selectTuesdayAsDeliveryDay()
-        done()
-      })
-      .perform(done => {
         menu.section.menuContainer.clickContinueButton()
         done()
       })
