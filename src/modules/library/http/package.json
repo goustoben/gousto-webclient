@@ -1,0 +1,20 @@
+{
+  "name": "@library/http",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "test:unit": "yarn run --top-level jest",
+    "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
+    "typecheck": "yarn run --top-level tsc --noEmit --project tsconfig.json"
+  },
+  "devDependencies": {
+    "@library/dev-babel": "workspace:*",
+    "@types/isomorphic-fetch": "0.0.36",
+    "isomorphic-fetch": "3.0.0",
+    "qs": "6.5.2"
+  },
+  "peerDependencies": {
+    "isomorphic-fetch": "3.3.0",
+    "qs": "6.5.2"
+  }
+}

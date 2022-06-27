@@ -2978,6 +2978,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@library/http@workspace:src/modules/library/http":
+  version: 0.0.0-use.local
+  resolution: "@library/http@workspace:src/modules/library/http"
+  dependencies:
+    "@library/dev-babel": "workspace:*"
+    "@types/isomorphic-fetch": 0.0.36
+    isomorphic-fetch: 3.0.0
+    qs: 6.5.2
+  peerDependencies:
+    isomorphic-fetch: 3.3.0
+    qs: 6.5.2
+  languageName: unknown
+  linkType: soft
+
 "@library/menu-service@workspace:*, @library/menu-service@workspace:src/modules/library/menu-service":
   version: 0.0.0-use.local
   resolution: "@library/menu-service@workspace:src/modules/library/menu-service"
