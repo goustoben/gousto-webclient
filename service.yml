@@ -13,14 +13,6 @@ ecs:
           conditions:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
-        - priority: 92
-          conditions:
-            - field: host-header
-              value: "[environment]-www.[cloudformation_output_domain]"
-        - priority: 93
-          conditions:
-            - field: host-header
-              value: "www.[cloudformation_output_domain]"
 
   healthCheck:
     target : 'HTTP:80/ping'
