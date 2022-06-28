@@ -8,7 +8,7 @@
     "test:unit": "jest",
     "storybook": "start-storybook -p 6006",
     "prettier": "prettier -w ./src",
-    "lint": "eslint ."
+    "lint": "eslint ./src"
   },
   "workspaces": [
     "src/apps/webclient",
