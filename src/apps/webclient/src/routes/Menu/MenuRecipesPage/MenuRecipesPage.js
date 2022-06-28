@@ -8,6 +8,7 @@ import { AppModalContainer } from 'components/AppModal'
 import { CoronaVirusBanner } from 'components/CoronaVirusBanner'
 import menuConfig from 'config/menu'
 
+import { FiveRecipesAwarenessModal } from '../../../components/FiveRecipesAwareness'
 import Loading from '../Loading'
 import { CollectionsNavWrapper } from '../components/CollectionsNav'
 import { JustForYouTutorial } from '../components/JustForYouTutorial'
@@ -148,6 +149,7 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div data-testing="menuRecipes">
+        <FiveRecipesAwarenessModal />
         <div className={css.willFade}>{this.getMenuRecipeListContent()}</div>
       </div>
     )

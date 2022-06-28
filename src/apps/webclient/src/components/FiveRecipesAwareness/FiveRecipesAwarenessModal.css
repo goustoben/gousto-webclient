@@ -1,0 +1,94 @@
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value White, Coconut from 'styles/colors.css';
+@value CG-800 #516272;
+@value FontFamilyAxiformaSemiBold from 'design-language/typography.css';
+
+.containerForCredit {
+  display: flex;
+  align-items: center;
+  background-color: Coconut;
+}
+
+.containerForThankYou {
+  width: 88px;
+  padding: 10px;
+  background-color: CG-800;
+  color: White;
+}
+
+.creditCopy {
+  padding: 0px 8px;
+}
+
+.thankCopy {
+  display: block;
+  font-size: 20px;
+  padding-top: 4px;
+}
+
+.yesCopy {
+  font-family: FontFamilyAxiformaSemiBold;
+  font-size: 32px;
+  display: block;
+  padding-top: 12px;
+  padding-Bottom: 4px;
+}
+
+.happyWithChoiceCopy {
+  display: block;
+  padding: 16px 0;
+}
+
+/* On Chrome */
+.hideScroll > div::-webkit-scrollbar {
+  display: none;
+}
+/* For Firefox and IE */
+.hideScroll > div {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.container {
+  text-align: left;
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    max-width: 25.5rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 35rem;
+  }
+}
+
+.commonHeader {
+  composes: fontStyleL from 'design-language/typography.css';
+  composes: fontBold from 'design-language/typography.css';
+}
+
+.subHeader {
+  composes: commonHeader;
+  margin-bottom: 1rem;
+}
+
+.header {
+  width: 100%;
+  min-height: 10.25rem;
+}
+
+.contentContainer {
+  padding: 1rem 1rem 1.5rem;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+}
+
+.content {
+  composes: fontStyleBody from 'design-language/typography.css';
+}
+
+.strike {
+  text-decoration: line-through;
+}
