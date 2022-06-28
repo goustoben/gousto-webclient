@@ -9,6 +9,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:storybook/recommended',
     'plugin:import/typescript',
+    'plugin:jest/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,6 +23,7 @@ module.exports = {
     '@typescript-eslint',
     '@library/feature-modules',
     'immutable',
+    'jest',
   ],
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
