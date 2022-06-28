@@ -10,6 +10,7 @@ import { DeliveryCard } from 'routes/Checkout/Components/Delivery/DeliveryCard'
 import OrdersList from './OrdersList'
 import css from './MyDeliveries.css'
 import accountCss from '../Account/Account.css'
+import { FiveRecipesAwarenessBanner } from 'FiveRecipesAwareness/FiveRecipesAwarenessBanner/FiveRecipesAwarenessBanner'
 
 class MyDeliveries extends React.PureComponent {
   componentDidMount() {
@@ -126,6 +127,7 @@ class MyDeliveries extends React.PureComponent {
             <p className={css.subTitle}>
               Here you can manage all of your upcoming deliveries, select recipes, skip or cancel boxes as you need.
             </p>
+            <FiveRecipesAwarenessBanner />
             <CTA
               onClick={this.handleOrderAnotherBoxClick}
               variant="secondary"
