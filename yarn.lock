@@ -11957,6 +11957,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-immutable@npm:1.0.0":
+  version: 1.0.0
+  resolution: "eslint-plugin-immutable@npm:1.0.0"
+  checksum: cad83491b62f428c59f1f5987d5ebb3990131ede2a77630319625b383fcd64401f84f882964663993ab6f87621a5456a75cad06c48c3a6805c23a8f1cfbd5bd0
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-import@npm:2.25.4, eslint-plugin-import@npm:^2.25.4":
   version: 2.25.4
   resolution: "eslint-plugin-import@npm:2.25.4"
@@ -14182,6 +14189,7 @@ __metadata:
     "@typescript-eslint/parser": 5.10.2
     babel-jest: 27.5.0
     eslint: 8.8.0
+    eslint-plugin-immutable: 1.0.0
     eslint-plugin-import: 2.25.4
     eslint-plugin-jsx-a11y: 6.5.1
     eslint-plugin-react: 7.28.0

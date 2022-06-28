@@ -18,20 +18,31 @@ module.exports = {
     ecmaVersion: 2018,
     tsconfigRootDir: __dirname
   },
-  plugins: ['@typescript-eslint', '@library/feature-modules'],
+  plugins: [
+    '@typescript-eslint',
+    '@library/feature-modules',
+    'immutable',
+  ],
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     '@typescript-eslint/explicit-function-return-type': 'off',
+    // we'll restrict these to feature modules for now
     '@library/feature-modules/prevent-import': 0,
+    'immutable/no-let': 0,
+    'immutable/no-this': 0,
+    'immutable/no-mutation': 0
   },
   overrides: [
     {
       files: ['src/modules/features/**/*.{js,ts,tsx,jsx}'],
       rules: {
-        '@library/feature-modules/prevent-import': 2
+        '@library/feature-modules/prevent-import': 2,
+        'immutable/no-let': 2,
+        'immutable/no-this': 2,
+        'immutable/no-mutation': 2
       }
-    }
+    },
   ],
   settings: {
     react: {

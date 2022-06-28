@@ -1,0 +1,2 @@
+# The main Webclient app has it's own eslint configuration
+src/apps/webclient
