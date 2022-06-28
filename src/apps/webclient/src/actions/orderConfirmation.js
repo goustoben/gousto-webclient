@@ -22,7 +22,7 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (dispatch) =>
   dispatch(push(orderAction ? `${confirmationUrl}?order_action=${orderAction}` : confirmationUrl))
 }
 
-export const orderDetails = (orderId) => async (dispatch, getState) => {
+export const orderDetails = (orderId, addRecipe) => async (dispatch, getState) => {
   const accessToken = getAccessToken(getState())
   const userId = getAuthUserId(getState())
 
@@ -37,7 +37,7 @@ export const orderDetails = (orderId) => async (dispatch, getState) => {
     dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeUuIds))
     await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, { reload: true }, menus))
 
-    dispatch(basketOrderLoad(orderId, immutableOrderDetails))
+    dispatch(basketOrderLoad(orderId, addRecipe, immutableOrderDetails))
     dispatch({
       type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
       orderId,

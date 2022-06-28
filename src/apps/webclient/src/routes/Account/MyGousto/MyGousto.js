@@ -34,6 +34,7 @@ const propTypes = {
   track3dsCompliantClick: PropTypes.func,
   userReset3dsCompliantToken: PropTypes.func,
   pending: PropTypes.bool,
+  addRecipeToBasket: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -63,14 +64,14 @@ class MyGousto extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { userLoadOrders, userGetReferralDetails } = this.props
+    const { userLoadOrders, userGetReferralDetails, addRecipeToBasket } = this.props
     const { store } = this.context
 
     userLoadOrders()
     userGetReferralDetails()
 
     setTimeout(() => {
-      store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
+      store.dispatch(menuFetchData({ query: {}, params: {} }, false, true, undefined, {addRecipe: addRecipeToBasket}))
     }, 500)
   }
 

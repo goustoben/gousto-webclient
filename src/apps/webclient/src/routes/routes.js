@@ -40,7 +40,7 @@ const routes = (store) => (
     <Route component={MainLayout}>
       {Welcome(store)}
       {Account(store)}
-      {OrderConfirmationRoute(store)}
+      <OrderConfirmationRoute store={store} />
     </Route>
 
     {Checkout(store)}

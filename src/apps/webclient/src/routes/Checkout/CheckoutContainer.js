@@ -14,12 +14,10 @@ import {
 } from 'actions/checkout'
 import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
-import { usePricing } from 'routes/Menu/domains/pricing'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 
-import { Checkout } from './Checkout'
-import { useSubmitOrder } from './useSubmitOrder'
+import { CheckoutWrapper } from './CheckoutWrapper'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -33,14 +31,6 @@ function mapStateToProps(state, ownProps) {
     lastReachedStepIndex: getCheckoutLastReachedStepIndex(state),
     isGoustoOnDemandEnabled: getIsGoustoOnDemandEnabled(state),
   }
-}
-
-const CheckoutPure = (props) => {
-  const { pricing } = usePricing()
-  const submitOrder = useSubmitOrder()
-
-  /* eslint-disable react/jsx-props-no-spreading */
-  return <Checkout {...props} prices={pricing} submitOrder={submitOrder} />
 }
 
 const mapDispatchToProps = {
@@ -62,4 +52,4 @@ const mapDispatchToProps = {
   fetchGoustoRef,
 }
 
-export const CheckoutContainer = connect(mapStateToProps, mapDispatchToProps)(CheckoutPure)
+export const CheckoutContainer = connect(mapStateToProps, mapDispatchToProps)(CheckoutWrapper)

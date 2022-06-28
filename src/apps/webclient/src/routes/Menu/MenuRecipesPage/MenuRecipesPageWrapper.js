@@ -10,6 +10,7 @@ import { getUserId } from 'selectors/user'
 
 import { useDoubleDeckerNav } from '../../../hooks/useDoubleDeckerNav'
 import { checkQueryParams } from '../actions/menuRecipeDetails'
+import { useBasket } from '../domains/basket'
 import { useCurrentCollectionId } from '../domains/collections'
 import fetchData from '../fetchData'
 import { isMenuLoading, getMenuLoadingErrorMessage, getRecipeCount } from '../selectors/menu'
@@ -29,6 +30,7 @@ const MenuRecipesPageWrapper = (ownProps) => {
 
   const dispatch = useDispatch()
   const currentCollectionId = useCurrentCollectionId()
+  const { addRecipe } = useBasket()
 
   const stateRecipeCount = useSelector(getRecipeCount)
   const showLoading = useSelector(isMenuLoading)
@@ -69,6 +71,7 @@ const MenuRecipesPageWrapper = (ownProps) => {
       shouldShowCapacityInfo={showCapacityInfo}
       menuLoadingErrorMessage={menuLoadingErrorMessage}
       query={query}
+      addRecipe={addRecipe}
       // dispatches below
       checkQueryParams={actionDispatchers.checkQueryParams}
       basketOrderLoaded={actionDispatchers.basketOrderLoaded}

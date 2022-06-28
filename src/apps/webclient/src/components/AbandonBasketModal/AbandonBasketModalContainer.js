@@ -8,7 +8,7 @@ import { redirect } from 'actions/redirect'
 import { getUserOrders } from 'selectors/user'
 import { getNumPortions, getBasketRecipes, getBasketDate } from 'selectors/basket'
 import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
-import { AbandonBasketModal } from './AbandonBasketModal'
+import { AbandonBasketModalWrapper } from './AbandonBasketModalWrapper'
 
 const mapStateToProps = state => ({
   recipes: getRecipes(state),
@@ -27,4 +27,4 @@ export const AbandonBasketModalContainer = connect(
     trackAbandonBasketEligibility,
     trackAbandonBasketContinueToMenu
   }
-)(AbandonBasketModal)
+)(AbandonBasketModalWrapper)

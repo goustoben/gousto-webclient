@@ -34,6 +34,7 @@ jest.mock('../../actions/basketRecipes')
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
 }))
+const deps = { addRecipe: jest.fn() }
 
 describe('menu fetchData', () => {
   let state = {
@@ -108,6 +109,7 @@ describe('menu fetchData', () => {
 
     fetchMenus.mockReset()
     sendClientMetricMock.mockReset()
+    deps.addRecipe.mockClear()
   })
 
   describe('is pending', () => {
@@ -116,7 +118,7 @@ describe('menu fetchData', () => {
     })
 
     test('should not dispatch', async () => {
-      await fetchData({ query, params }, false, false)(dispatch, getState)
+      await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
       expect(dispatch).not.toHaveBeenCalled()
     })
@@ -139,7 +141,13 @@ describe('menu fetchData', () => {
       })
 
       test('should not dispatch', async () => {
-        await fetchData({ query, params: paramsWithoutOrderId }, force, false)(dispatch, getState)
+        await fetchData(
+          { query, params: paramsWithoutOrderId },
+          force,
+          false,
+          undefined,
+          deps,
+        )(dispatch, getState)
 
         expect(dispatch).not.toHaveBeenCalled()
       })
@@ -147,7 +155,7 @@ describe('menu fetchData', () => {
 
     describe('should fetch', () => {
       test('should dispatch pending action', async () => {
-        await fetchData({ query, params }, false, false)(dispatch, getState)
+        await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
         expect(dispatch.mock.calls[0]).toEqual([
           {
@@ -165,7 +173,13 @@ describe('menu fetchData', () => {
         }
 
         test('should dispatch error action', async () => {
-          await fetchData({ query: errorQuery, params }, false, false)(dispatch, getState)
+          await fetchData(
+            { query: errorQuery, params },
+            false,
+            false,
+            undefined,
+            deps,
+          )(dispatch, getState)
 
           expect(dispatch.mock.calls[2]).toEqual([
             {
@@ -188,7 +202,13 @@ describe('menu fetchData', () => {
             const menuLoadStockResult = Symbol('fake action creator result')
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
 
-            await fetchData({ query: noStockQuery, params }, false, false)(dispatch, getState)
+            await fetchData(
+              { query: noStockQuery, params },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(dispatch.mock.calls[3]).toEqual([menuLoadStockResult])
           })
@@ -217,7 +237,13 @@ describe('menu fetchData', () => {
               loadOrderId === orderId ? menuLoadOrderDetailsResult : undefined,
             )
 
-            await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
+            await fetchData(
+              { query, params: paramsWithOrderId },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(dispatch.mock.calls[3]).toEqual([menuLoadOrderDetailsResult])
           })
@@ -256,11 +282,13 @@ describe('menu fetchData', () => {
                 { query, params: paramsWithOrderId },
                 false,
                 false,
+                undefined,
+                deps,
               )(dispatch, getState)
 
-              expect(dispatch.mock.calls[4]).toEqual([{ recipeId: '200' }])
-              expect(dispatch.mock.calls[5]).toEqual([{ recipeId: '250' }])
-              expect(dispatch.mock.calls[6]).toEqual([{ recipeId: '250' }])
+              expect(deps.addRecipe.mock.calls[0][0]).toEqual('200')
+              expect(deps.addRecipe.mock.calls[1][0]).toEqual('250')
+              expect(deps.addRecipe.mock.calls[2][0]).toEqual('250')
             })
           })
 
@@ -271,7 +299,13 @@ describe('menu fetchData', () => {
 
             actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
 
-            await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
+            await fetchData(
+              { query, params: paramsWithOrderId },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(dispatch.mock.calls[4]).toEqual([menuLoadMenuResult])
           })
@@ -283,13 +317,25 @@ describe('menu fetchData', () => {
 
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
 
-            await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
+            await fetchData(
+              { query, params: paramsWithOrderId },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(dispatch.mock.calls[6]).toEqual([menuLoadStockResult])
           })
 
           test('should call sendClientMetric with correct details', async () => {
-            await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
+            await fetchData(
+              { query, params: paramsWithOrderId },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(sendClientMetricMock).toHaveBeenCalledWith('menu-edit-initiated', 1, 'Count')
           })
@@ -308,7 +354,7 @@ describe('menu fetchData', () => {
           })
 
           test('should dispatch basket reset action with default shipping address', async () => {
-            await fetchData({ query, params }, false, false)(dispatch, getState)
+            await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
             expect(dispatch.mock.calls[2]).toEqual([
               {
@@ -329,7 +375,7 @@ describe('menu fetchData', () => {
             })
 
             test('should dispatch basket reset action with first shipping address', async () => {
-              await fetchData({ query, params }, false, false)(dispatch, getState)
+              await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
               expect(dispatch.mock.calls[2]).toEqual([
                 {
@@ -361,7 +407,13 @@ describe('menu fetchData', () => {
               boxSummaryDeliveryDaysLoadResult,
             )
 
-            await fetchData({ query: queryWithSlots, params }, false, false)(dispatch, getState)
+            await fetchData(
+              { query: queryWithSlots, params },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
           })
 
           test('should dispatch menuLoadDays action', async () => {
@@ -373,7 +425,13 @@ describe('menu fetchData', () => {
           })
 
           test('should call setSlotFromIds', async () => {
-            await fetchData({ query: queryWithSlots, params }, false, false)(dispatch, getState)
+            await fetchData(
+              { query: queryWithSlots, params },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(setSlotFromIds).toHaveBeenCalledWith(
               queryWithSlots.slot_id,
@@ -391,7 +449,13 @@ describe('menu fetchData', () => {
             })
 
             test('should log the error', async () => {
-              await fetchData({ query: queryWithSlots, params }, false, false)(dispatch, getState)
+              await fetchData(
+                { query: queryWithSlots, params },
+                false,
+                false,
+                undefined,
+                deps,
+              )(dispatch, getState)
 
               expect(logger.error).toHaveBeenCalledWith({
                 message: `Debug fetchData: ${err.message}`,
@@ -413,7 +477,7 @@ describe('menu fetchData', () => {
 
               actions.userLoadOrders.mockReturnValue(userLoadOrdersResult)
 
-              await fetchData({ query, params }, false, false)(dispatch, getState)
+              await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
               expect(dispatch.mock.calls[2]).toEqual([userLoadOrdersResult])
             })
@@ -429,7 +493,7 @@ describe('menu fetchData', () => {
 
               actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
 
-              await fetchData({ query, params }, false, false)(dispatch, getState)
+              await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
               expect(dispatch.mock.calls[2]).toEqual([menuLoadDaysResult])
             })
@@ -441,7 +505,7 @@ describe('menu fetchData', () => {
                 boxSummaryDeliveryDaysLoadResult,
               )
 
-              await fetchData({ query, params }, false, false)(dispatch, getState)
+              await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
               expect(dispatch.mock.calls[3]).toEqual([boxSummaryDeliveryDaysLoadResult])
             })
@@ -450,7 +514,7 @@ describe('menu fetchData', () => {
               const date = '2019-01-01T00:00:00'
               getLandingDay.mockReturnValue({ date })
 
-              await fetchData({ query, params }, false, false)(dispatch, getState)
+              await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
               expect(dispatch.mock.calls[4][0]).toEqual({
                 type: actionTypes.BASKET_DATE_CHANGE,
                 date,
@@ -481,6 +545,8 @@ describe('menu fetchData', () => {
               { query: queryWithNumPortions, params },
               false,
               false,
+              undefined,
+              deps,
             )(dispatch, getState)
 
             expect(dispatch.mock.calls[5]).toEqual([basketNumPortionChangeResult])
@@ -498,7 +564,13 @@ describe('menu fetchData', () => {
           })
 
           test('should dispatch basketPostcodeChangePure', async () => {
-            await fetchData({ query: queryWithPostcode, params }, false, false)(dispatch, getState)
+            await fetchData(
+              { query: queryWithPostcode, params },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(dispatch.mock.calls[8]).toEqual([
               {
@@ -516,7 +588,7 @@ describe('menu fetchData', () => {
 
           actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
 
-          await fetchData({ query, params }, false, false)(dispatch, getState)
+          await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
           expect(dispatch.mock.calls[5]).toEqual([menuLoadMenuResult])
         })
@@ -527,7 +599,7 @@ describe('menu fetchData', () => {
           })
 
           await expect(
-            fetchData({ query, params }, false, false)(dispatch, getState),
+            fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState),
           ).rejects.toThrow()
         })
 
@@ -556,7 +628,13 @@ describe('menu fetchData', () => {
 
             actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
 
-            await fetchData({ query, params: {} }, false, false)(dispatch, getState)
+            await fetchData(
+              { query, params: {} },
+              false,
+              false,
+              undefined,
+              deps,
+            )(dispatch, getState)
 
             expect(actions.menuLoadMenu).toHaveBeenCalledWith('2020-02-12', false)
           })
@@ -601,6 +679,8 @@ describe('menu fetchData', () => {
               },
               false,
               false,
+              undefined,
+              deps,
             )(dispatch, getState)
             expect(actions.menuLoadMenu).toHaveBeenCalledWith('2020-10-12', false)
           })
@@ -620,7 +700,13 @@ describe('menu fetchData', () => {
             queryName === collectionName ? 'some-collection-name' : undefined,
           )
 
-          await fetchData({ query: queryWithCollection, params }, false, false)(dispatch, getState)
+          await fetchData(
+            { query: queryWithCollection, params },
+            false,
+            false,
+            undefined,
+            deps,
+          )(dispatch, getState)
 
           expect(selectCollection).toHaveBeenCalledWith('some-collection-name')
         })
@@ -647,7 +733,13 @@ describe('menu fetchData', () => {
             queryName === collectionName ? 'some-collection-name' : undefined,
           )
 
-          await fetchData({ query: queryWithCollection, params }, false, false)(dispatch, getState)
+          await fetchData(
+            { query: queryWithCollection, params },
+            false,
+            false,
+            undefined,
+            deps,
+          )(dispatch, getState)
 
           expect(selectCollection).toHaveBeenCalledWith('some-collection-name')
         })
@@ -664,7 +756,7 @@ describe('menu fetchData', () => {
 
         now.mockReturnValueOnce(firstTime).mockReturnValueOnce(secondTime).mockReturnValue(999999)
 
-        await fetchData({ query, params }, false, false)(dispatch, getState)
+        await fetchData({ query, params }, false, false, undefined, deps)(dispatch, getState)
 
         expect(menuLoadComplete).toHaveBeenCalledWith(expectedValue, true)
         expect(dispatch.mock.calls[9]).toEqual([menuLoadCompleteResult])
@@ -680,7 +772,13 @@ describe('menu fetchData', () => {
         orderId,
       }
 
-      await fetchData({ query, params: paramsWithOrderId })(dispatch, getState)
+      await fetchData(
+        { query, params: paramsWithOrderId },
+        undefined,
+        undefined,
+        undefined,
+        deps,
+      )(dispatch, getState)
 
       expect(fetchMenus).toHaveBeenCalled()
     })
@@ -695,8 +793,6 @@ describe('menu fetchData', () => {
       })
 
       test('fetchMenusWithUserId is not called when user logged out', async () => {
-        const menuServiceFeatureFlag = false
-
         const orderId = '123'
         const paramsWithOrderId = {
           ...params,
@@ -707,7 +803,8 @@ describe('menu fetchData', () => {
           { query, params: paramsWithOrderId },
           false,
           false,
-          menuServiceFeatureFlag,
+          undefined,
+          deps,
         )(dispatch, getState)
 
         expect(fetchMenusWithUserId).not.toHaveBeenCalled()
@@ -727,7 +824,13 @@ describe('menu fetchData', () => {
           orderId,
         }
 
-        await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
+        await fetchData(
+          { query, params: paramsWithOrderId },
+          false,
+          false,
+          undefined,
+          deps,
+        )(dispatch, getState)
 
         expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', query, 'test-id')
       })
@@ -752,6 +855,7 @@ describe('menu fetchData', () => {
           false,
           false,
           userMenuVariant,
+          deps,
         )(dispatch, getState)
 
         expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', query, 'menuA')

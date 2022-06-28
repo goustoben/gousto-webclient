@@ -71,6 +71,7 @@ const propTypes = {
   checkoutStepIndexReached: PropTypes.func,
   lastReachedStepIndex: PropTypes.number,
   isGoustoOnDemandEnabled: PropTypes.bool,
+  addRecipeToBasket: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -102,7 +103,7 @@ const defaultProps = {
 }
 
 class Checkout extends PureComponent {
-  static fetchData = async ({ store, query, params }) => {
+  static fetchData = async ({ store, query, params, addRecipeToBasket }) => {
     const firstStep = checkoutSteps[0]
     const currentStep = params && params.stepName
 
@@ -111,7 +112,7 @@ class Checkout extends PureComponent {
     }
 
     // defensive code to ensure menu load days works below for deeplinks
-    await store.dispatch(loadMenuServiceDataIfDeepLinked())
+    await store.dispatch(loadMenuServiceDataIfDeepLinked(false, addRecipeToBasket))
 
     if (
       !store.getState().boxSummaryDeliveryDays ||
@@ -163,9 +164,16 @@ class Checkout extends PureComponent {
 
   componentDidMount() {
     const { store } = this.context
-    const { query = {}, params = {}, trackSignupStep, changeRecaptcha, fetchGoustoRef } = this.props
+    const {
+      query = {},
+      params = {},
+      trackSignupStep,
+      changeRecaptcha,
+      fetchGoustoRef,
+      addRecipeToBasket,
+    } = this.props
 
-    Checkout.fetchData({ store, query, params })
+    Checkout.fetchData({ store, query, params, addRecipeToBasket })
       .then(() => {
         trackSignupStep(1)
       })

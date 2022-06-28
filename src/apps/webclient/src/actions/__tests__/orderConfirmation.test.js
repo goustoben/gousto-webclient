@@ -1,17 +1,22 @@
+import { safeJestMock } from '_testing/mocks'
+import Immutable from 'immutable'
+import { push } from 'react-router-redux'
+
 import { actionTypes } from 'actions/actionTypes'
 import { basketOrderLoad } from 'actions/basket'
 import { orderCheckPossibleDuplicate } from 'actions/order'
 import {
-  orderConfirmationProductTracking, orderConfirmationRedirect, orderConfirmationUpdateOrderTracking, orderDetails
+  orderConfirmationProductTracking,
+  orderConfirmationRedirect,
+  orderConfirmationUpdateOrderTracking,
+  orderDetails,
 } from 'actions/orderConfirmation'
 import { productsLoadProducts } from 'actions/products'
 import recipes from 'actions/recipes'
 import { marketProductAdded, marketProductRemoved } from 'actions/trackingKeys'
-import Immutable from 'immutable'
-import { push } from 'react-router-redux'
 import { fetchOrder } from 'routes/Menu/apis/orderV2'
 import { redirect } from 'utils/window'
-import { safeJestMock } from '_testing/mocks'
+
 import * as menuApis from '../../routes/Menu/fetchData/menuApi'
 
 jest.mock('apis/orders')
@@ -106,10 +111,7 @@ describe('orderConfirmation actions', () => {
             data: {
               id: '1234',
               whenCutoff: '2019-04-12 19:00:00',
-              recipeItems: [
-                { recipeUuid: 'uuid-1'},
-                { recipeUuid: 'uuid-2' },
-              ],
+              recipeItems: [{ recipeUuid: 'uuid-1' }, { recipeUuid: 'uuid-2' }],
             },
           }),
         )
@@ -154,10 +156,12 @@ describe('orderConfirmation actions', () => {
       })
 
       test('should call basket order load for the returned order', async () => {
-        await orderDetails(orderId)(dispatch, getState)
+        const addRecipe = jest.fn()
+        await orderDetails(orderId, addRecipe)(dispatch, getState)
 
         expect(basketOrderLoad).toHaveBeenCalledWith(
           orderId,
+          addRecipe,
           Immutable.Map({
             id: '1234',
             whenCutoff: '2019-04-12 19:00:00',

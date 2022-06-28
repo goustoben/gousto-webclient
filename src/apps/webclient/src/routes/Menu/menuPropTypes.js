@@ -16,6 +16,7 @@ export const menuPropTypes = {
   query: PropTypes.object,
   tariffId: PropTypes.number,
   isActionBarRedesignEnabled: PropTypes.bool,
+  addRecipeToBasket: PropTypes.func.isRequired,
 }
 
 export const defaultMenuPropTypes = {

@@ -1,18 +1,21 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import Immutable from 'immutable'
-import { ReactReduxContext } from 'react-redux'
-import moment from 'moment'
-import { Button } from 'goustouicomponents'
+
 import ModalPanel from 'Modal/ModalPanel'
-import { Item } from 'components/Item'
-import userActions from 'actions/user'
-import { menuLoadDays } from 'actions/menu'
+import { Button } from 'goustouicomponents'
+import Immutable from 'immutable'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import { ReactReduxContext } from 'react-redux'
+
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { menuLoadDays } from 'actions/menu'
 import { loadRecipes } from 'actions/recipes'
+import userActions from 'actions/user'
+import { Item } from 'components/Item'
+import { loadMenuServiceDataIfDeepLinked } from 'routes/Menu/fetchData/menuService'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
-import { loadMenuServiceDataIfDeepLinked } from 'routes/Menu/fetchData/menuService'
+
 import css from './AbandonBasketModal.css'
 
 const propTypes = {
@@ -26,7 +29,8 @@ const propTypes = {
   trackAbandonBasketContinueToMenu: PropTypes.func,
   redirect: PropTypes.func.isRequired,
   getAbandonBasketSessionState: PropTypes.func.isRequired,
-  basketRecipesClear: PropTypes.func.isRequired
+  basketRecipesClear: PropTypes.func.isRequired,
+  addRecipeToBasket: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -36,14 +40,14 @@ const defaultProps = {
   recipes: Immutable.Map(),
   orderDate: '',
   numPortions: 0,
-  trackAbandonBasketEligibility: () => { },
-  trackAbandonBasketContinueToMenu: () => { }
+  trackAbandonBasketEligibility: () => {},
+  trackAbandonBasketContinueToMenu: () => {},
 }
 
 const contextType = ReactReduxContext
 
 class AbandonBasketModal extends PureComponent {
-  static fetchData = async ({ store }) => {
+  static fetchData = async ({ store, addRecipeToBasket }) => {
     const state = store.getState()
     const promises = []
 
@@ -52,7 +56,7 @@ class AbandonBasketModal extends PureComponent {
 
       if (!getBoxSummaryDeliveryDays(state).size) {
         // defensive code to ensure menu load days works below for deeplinks
-        await store.dispatch(loadMenuServiceDataIfDeepLinked())
+        await store.dispatch(loadMenuServiceDataIfDeepLinked(false, addRecipeToBasket))
 
         await store.dispatch(menuLoadDays())
         await store.dispatch(boxSummaryDeliveryDaysLoad())
@@ -69,15 +73,15 @@ class AbandonBasketModal extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      showModal: false
+      showModal: false,
     }
   }
 
   async componentDidMount() {
-    const { getAbandonBasketSessionState } = this.props
+    const { getAbandonBasketSessionState, addRecipeToBasket } = this.props
     const { store } = this.context
 
-    await AbandonBasketModal.fetchData({ store })
+    await AbandonBasketModal.fetchData({ store, addRecipeToBasket })
     getAbandonBasketSessionState()
     this.setState({ showModal: this.showModal() })
     window.sessionStorage.setItem('isNotFirstLoadOfSession', true)
@@ -86,7 +90,7 @@ class AbandonBasketModal extends PureComponent {
   getConfirmedOrdersOnDay = () => {
     const { orders, orderDate } = this.props
 
-    return orders.filter(order => {
+    return orders.filter((order) => {
       const isDeliveryDateSame = moment(order.get('deliveryDate')).isSame(moment(orderDate), 'day')
       const hasRecipeItems = order.get('recipeItems').size > 0
 
@@ -95,7 +99,8 @@ class AbandonBasketModal extends PureComponent {
   }
 
   showModal = () => {
-    const { basketRecipes, orders, deliveryDays, orderDate, trackAbandonBasketEligibility } = this.props
+    const { basketRecipes, orders, deliveryDays, orderDate, trackAbandonBasketEligibility } =
+      this.props
 
     const recipesInBasket = basketRecipes.size > 0
     const confirmedOrderOnDay = this.getConfirmedOrdersOnDay()
@@ -126,7 +131,13 @@ class AbandonBasketModal extends PureComponent {
   }
 
   render() {
-    const { orderDate, basketRecipesClear, numPortions, redirect, trackAbandonBasketContinueToMenu } = this.props
+    const {
+      orderDate,
+      basketRecipesClear,
+      numPortions,
+      redirect,
+      trackAbandonBasketContinueToMenu,
+    } = this.props
     const { showModal } = this.state
     const recipeDetails = this.getBasketRecipeDetails()
     const isRecipeDetailAvailable = !!recipeDetails.length
@@ -137,11 +148,10 @@ class AbandonBasketModal extends PureComponent {
           <h2>We&#8217;ve saved your choices</h2>
           <div className={css.modalContentSubTitle}>
             The recipes you chose are still available for delivery on the
-            {moment(orderDate).format('Do MMMM')}
-            :
+            {moment(orderDate).format('Do MMMM')}:
           </div>
           <div className={css.modalContentRecipes}>
-            {recipeDetails.map(recipeDetail => (
+            {recipeDetails.map((recipeDetail) => (
               <Item
                 key={recipeDetail.get('title')}
                 type="recipe"

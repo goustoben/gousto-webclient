@@ -21,6 +21,7 @@ const propTypes = {
   redirectLoggedInUser: PropTypes.func,
   isSignupReductionEnabled: PropTypes.bool,
   pricePerServing: PropTypes.string,
+  addRecipeToBasket: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -41,12 +42,16 @@ class Home extends Component {
 
   componentDidMount() {
     const { store } = this.context
-    const { redirectLoggedInUser, pricePerServing } = this.props
+    const { redirectLoggedInUser, pricePerServing, addRecipeToBasket } = this.props
     redirectLoggedInUser()
     Home.fetchData({ store, options: { pricePerServing } })
 
     this.prefetchTimer = setTimeout(() => {
-      store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
+      store.dispatch(
+        menuFetchData({ query: {}, params: {} }, false, true, undefined, {
+          addRecipe: addRecipeToBasket,
+        }),
+      )
     }, 500)
   }
 

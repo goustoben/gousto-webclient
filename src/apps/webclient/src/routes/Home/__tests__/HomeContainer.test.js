@@ -45,7 +45,7 @@ describe('HomeContainer', () => {
     const expected = {
       isAuthenticated: false,
     }
-    expect(wrapper.find('Home').props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.find('HomeWrapper').props()).toEqual(expect.objectContaining(expected))
   })
 
   test('should pass pricePerServing', () => {
@@ -53,7 +53,7 @@ describe('HomeContainer', () => {
       pricePerServing: '2.98',
     }
 
-    expect(wrapper.find('Home').props()).toEqual(expect.objectContaining(expected))
+    expect(wrapper.find('HomeWrapper').props()).toEqual(expect.objectContaining(expected))
   })
 
   describe('getKnownVariant', () => {

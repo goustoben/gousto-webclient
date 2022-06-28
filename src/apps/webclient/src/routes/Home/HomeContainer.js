@@ -6,7 +6,7 @@ import { getPricePerServing } from 'routes/BoxPrices/boxPricesSelectors'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getIsSignupReductionEnabled } from 'selectors/features'
 
-import { Home } from './Home'
+import { HomeWrapper } from './HomeWrapper'
 
 export const getKnownVariant = (variant) =>
   knownVariants.includes(variant) ? variant : defaultVariant
@@ -25,6 +25,6 @@ const mapDispatchToProps = {
   redirectLoggedInUser: actions.redirectLoggedInUser,
 }
 
-const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(Home)
+const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeWrapper)
 
 export { HomeContainer }

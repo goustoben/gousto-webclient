@@ -34,6 +34,7 @@ export class MenuRecipesPage extends PureComponent {
       numPortions,
       checkQueryParams,
       fetchMenuData,
+      addRecipe,
     } = this.props
     // if server rendered
     if (orderId && orderId === storeOrderId) {
@@ -42,7 +43,7 @@ export class MenuRecipesPage extends PureComponent {
     const forceDataLoad = (storeOrderId && storeOrderId !== orderId) || query.reload
     // TODO: Add back logic to check what needs to be reloaded
     if (forceDataLoad) {
-      await fetchMenuData({ query, params }, forceDataLoad)
+      await fetchMenuData({ query, params }, forceDataLoad, undefined, undefined, { addRecipe })
     }
     if (orderId) {
       portionSizeSelectedTracking(numPortions, orderId)
@@ -51,14 +52,14 @@ export class MenuRecipesPage extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { loadOptimizelySDK, orderId, query, params, fetchMenuData } = this.props
+    const { loadOptimizelySDK, orderId, query, params, fetchMenuData, addRecipe } = this.props
 
     loadOptimizelySDK()
 
     // /menu-> /menu/:orderId
     const editingOrder = (prevProps.orderId || orderId) && prevProps.orderId !== orderId
     if (editingOrder) {
-      fetchMenuData({ query, params }, true)
+      fetchMenuData({ query, params }, true, undefined, undefined, { addRecipe })
     }
   }
 
@@ -178,6 +179,7 @@ MenuRecipesPage.propTypes = {
   loadOptimizelySDK: PropTypes.func.isRequired,
   menuLoadingErrorMessage: PropTypes.string,
   fetchMenuData: PropTypes.func.isRequired,
+  addRecipe: PropTypes.func.isRequired,
   isDoubleDeckerFeatureOn: PropTypes.bool,
 }
 

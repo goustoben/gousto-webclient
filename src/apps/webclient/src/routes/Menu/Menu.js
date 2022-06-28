@@ -44,6 +44,7 @@ export class Menu extends React.PureComponent {
       menuCalculateTimeToUsable,
       fetchData,
       applyPromoCodeAndShowModal,
+      addRecipeToBasket,
     } = this.props
 
     const forceDataLoad = Boolean(query.reload)
@@ -53,7 +54,9 @@ export class Menu extends React.PureComponent {
       basketNumPortionChange(query.num_portions)
     }
 
-    await fetchData({ query, params }, forceDataLoad)
+    await fetchData({ query, params }, forceDataLoad, undefined, undefined, {
+      addRecipe: addRecipeToBasket,
+    })
 
     const promises = []
 
@@ -88,6 +91,7 @@ export class Menu extends React.PureComponent {
       fetchData,
       disabled,
       menuLoadingBoxPrices,
+      addRecipeToBasket,
     } = this.props
     const isAdminQuery = !!(query && query['preview[auth_user_id]'])
 
@@ -95,7 +99,9 @@ export class Menu extends React.PureComponent {
       menuLoadBoxPrices()
     }
     if (!isAdminQuery && prevProps.isAuthenticated !== isAuthenticated) {
-      fetchData({ query, params }, false)
+      fetchData({ query, params }, false, {
+        addRecipe: addRecipeToBasket,
+      })
     }
     forceCheckLazyload()
   }
