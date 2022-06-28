@@ -99,7 +99,7 @@ export class Menu extends React.PureComponent {
       menuLoadBoxPrices()
     }
     if (!isAdminQuery && prevProps.isAuthenticated !== isAuthenticated) {
-      fetchData({ query, params }, false, {
+      fetchData({ query, params }, false, undefined, undefined, {
         addRecipe: addRecipeToBasket,
       })
     }
