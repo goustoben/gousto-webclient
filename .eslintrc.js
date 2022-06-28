@@ -43,6 +43,12 @@ module.exports = {
         'immutable/no-mutation': 2
       }
     },
+    {
+      files: ['src/modules/library/**/*.{js,ts,tsx,jsx}'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 0,
+      }
+    },
   ],
   settings: {
     react: {
