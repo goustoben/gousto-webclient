@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
+import { useWizardFiveRecipesEnabled } from 'hooks/useWizardFiveRecipesEnabled'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 
 import goustoBoxesImage from 'media/images/gousto-boxes.jpg'
@@ -34,6 +35,7 @@ const cuisines = [
 ]
 
 const PersonaliseMenuStep = () => {
+  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
   const [selected, setSelected] = useState([])
   const dispatch = useDispatch()
   const onSelect = useCallback(
@@ -94,9 +96,12 @@ const PersonaliseMenuStep = () => {
         </div>
         <div className={css.sellTheProposition}>
           <ul className={css.list}>
-            {items.map(({ key, className, strongText, normalText }) => (
+            {items.map(({ key, className, strongText, fiveRecipesStrongText, normalText }) => (
               <li key={key} className={classNames(css.item, className)}>
-                <span className={css.strong}>{strongText}</span> {normalText}
+                <span className={css.strong}>
+                  {fiveRecipesEnabled ? fiveRecipesStrongText : strongText}
+                </span>{' '}
+                {normalText}
               </li>
             ))}
           </ul>
