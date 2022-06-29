@@ -29,7 +29,7 @@ export const ActionBarPresentational = ({
   const maxRecipesNum = maxRecipesForPortion(numPortions)
 
   const maxRecipesNumAchieved = recipeCount === maxRecipesNum
-  const nextTierPricePerPortion = useSelector(createGetBestTierPricePerPortion())
+  const nextTierPricePerPortion = useSelector(createGetBestTierPricePerPortion(maxRecipesNum))
 
   return (
     <div
