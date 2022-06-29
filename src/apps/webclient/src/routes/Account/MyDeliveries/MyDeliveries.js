@@ -127,7 +127,6 @@ class MyDeliveries extends React.PureComponent {
             <p className={css.subTitle}>
               Here you can manage all of your upcoming deliveries, select recipes, skip or cancel boxes as you need.
             </p>
-            <FiveRecipesAwarenessBanner />
             <CTA
               onClick={this.handleOrderAnotherBoxClick}
               variant="secondary"
@@ -138,6 +137,7 @@ class MyDeliveries extends React.PureComponent {
             </CTA>
           </div>
         </div>
+          <FiveRecipesAwarenessBanner />
         {this.renderGoustoOnDemandBanner()}
         {this.renderOrders()}
       </div>
