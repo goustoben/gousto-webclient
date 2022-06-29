@@ -2966,6 +2966,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@library/auth@workspace:*, @library/auth@workspace:src/modules/library/auth":
+  version: 0.0.0-use.local
+  resolution: "@library/auth@workspace:src/modules/library/auth"
+  languageName: unknown
+  linkType: soft
+
 "@library/dev-babel@workspace:*, @library/dev-babel@workspace:src/modules/library/dev-babel":
   version: 0.0.0-use.local
   resolution: "@library/dev-babel@workspace:src/modules/library/dev-babel"
@@ -27999,6 +28005,7 @@ __metadata:
     "@datadog/datadog-ci": ^0.17.12
     "@emotion/react": ^11.7.0
     "@gousto-internal/citrus-react": ^0.22.6
+    "@library/auth": "workspace:*"
     "@library/menu-service": "workspace:*"
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
