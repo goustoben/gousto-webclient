@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import { Map } from 'immutable'
 import { useSelector, useDispatch } from 'react-redux'
 import { usePrevious } from 'react-use'
@@ -171,33 +173,36 @@ export const useAddRecipe = () => {
   const addValidRecipeToBasket = useAddValidRecipeToBasket()
   const dispatch = useDispatch()
 
-  return (
-    recipeId: string,
-    view?: string,
-    recipeInfo?: {
-      position: string
+  return React.useCallback(
+    (
+      recipeId: string,
+      view?: string,
+      recipeInfo?: {
+        position: string
+      },
+      maxRecipesNum?: number,
+      orderId?: string,
+    ) => {
+      const basketBreakingRules = {
+        errorTitle: 'Oven Ready meals',
+        recipeId,
+        rules: menuLimitsForBasket(recipeId),
+      }
+      const shouldCloseDetailsScreen = basketBreakingRules.rules.length && menuRecipeIdForDetails()
+
+      if (shouldCloseDetailsScreen) {
+        dispatch(menuRecipeDetailVisibilityChange())
+      }
+
+      if (basketBreakingRules.rules.length) {
+        dispatch(status.error(actionTypes.BASKET_NOT_VALID, basketBreakingRules))
+
+        return
+      }
+
+      addValidRecipeToBasket(recipeId, view, recipeInfo, maxRecipesNum, orderId)
+      dispatch(trackUserAddRemoveRecipe())
     },
-    maxRecipesNum?: number,
-    orderId?: string,
-  ) => {
-    const basketBreakingRules = {
-      errorTitle: 'Oven Ready meals',
-      recipeId,
-      rules: menuLimitsForBasket(recipeId),
-    }
-    const shouldCloseDetailsScreen = basketBreakingRules.rules.length && menuRecipeIdForDetails()
-
-    if (shouldCloseDetailsScreen) {
-      dispatch(menuRecipeDetailVisibilityChange())
-    }
-
-    if (basketBreakingRules.rules.length) {
-      dispatch(status.error(actionTypes.BASKET_NOT_VALID, basketBreakingRules))
-
-      return
-    }
-
-    addValidRecipeToBasket(recipeId, view, recipeInfo, maxRecipesNum, orderId)
-    dispatch(trackUserAddRemoveRecipe())
-  }
+    [dispatch, menuLimitsForBasket, addValidRecipeToBasket, menuRecipeIdForDetails],
+  )
 }
