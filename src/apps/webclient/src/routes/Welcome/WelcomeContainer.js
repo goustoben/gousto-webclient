@@ -7,7 +7,7 @@ import { trackWelcomeAppPromoClick, fetchData } from 'actions/welcome'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getHeaderDetails } from 'routes/OrderConfirmation/helper'
 
-import { Welcome } from './Welcome'
+import { WelcomeWrapper } from './WelcomeWrapper'
 
 function mapStateToProps(state, ownProps) {
   const { products, user, request } = state
@@ -32,6 +32,6 @@ const WelcomeContainer = connect(mapStateToProps, {
   userFetchReferralOffer,
   trackWelcomeAppPromoClick,
   fetchData,
-})(Welcome)
+})(WelcomeWrapper)
 
 export { WelcomeContainer }

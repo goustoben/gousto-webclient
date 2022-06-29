@@ -1,4 +1,7 @@
+import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
 import Immutable from 'immutable'
+
+import { actionTypes } from 'actions/actionTypes'
 import * as basket from 'actions/basket'
 import {
   basketReset,
@@ -17,23 +20,21 @@ import {
   basketDateChange,
   basketProductRemove,
 } from 'actions/basket'
-import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
-import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
-
-import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
+import * as basketUtils from 'utils/basket'
+
 import * as basketRecipesActions from '../../routes/Menu/actions/basketRecipes'
 import * as trackingActions from '../tracking'
 
 jest.mock('utils/basket')
 
 jest.mock('utils/logger', () => ({
-  error: jest.fn()
+  error: jest.fn(),
 }))
 
 jest.mock('actions/orderConfirmation', () => ({
-  orderConfirmationUpdateOrderTracking: jest.fn()
+  orderConfirmationUpdateOrderTracking: jest.fn(),
 }))
 
 const menuLoadMenu = safeJestMock(menuActions, 'menuLoadMenu')
@@ -58,8 +59,8 @@ describe('basket actions', () => {
     beforeEach(() => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
-          recipes: []
-        })
+          recipes: [],
+        }),
       })
     })
     test('should dispatch BASKET_ORDER_LOADED', () => {
@@ -84,7 +85,7 @@ describe('basket actions', () => {
           recipes: {
             1122: 1,
             1334: 3,
-          }
+          },
         }),
       })
 
@@ -100,7 +101,7 @@ describe('basket actions', () => {
           recipes: Immutable.Map({
             1122: 1,
             1334: 3,
-          })
+          }),
         },
       }
       await basketCheckoutClicked(section)(dispatch, getState)
@@ -147,7 +148,7 @@ describe('basket actions', () => {
         trackingData: {
           actionType: trackingKeys.selectBoxSize,
           boxSize: '4 people',
-          promoCode: 'test-promo-code'
+          promoCode: 'test-promo-code',
         },
       })
     })
@@ -173,8 +174,8 @@ describe('basket actions', () => {
         trackingData: {
           actionType: trackingKeys.selectPostcode,
           promoCode: 'test-promo-code',
-          postcode
-        }
+          postcode,
+        },
       })
     })
   })
@@ -182,7 +183,7 @@ describe('basket actions', () => {
   describe('basketCheckedOut', () => {
     const view = 'grid'
     const pricing = {
-      total: 'test-total'
+      total: 'test-total',
     }
     let getState
     beforeEach(() => {
@@ -194,9 +195,9 @@ describe('basket actions', () => {
           recipes: Immutable.Map({
             recipe_id_1: 1,
             recipe_id_2: 2,
-            recipe_id_3: 1
+            recipe_id_3: 1,
           }),
-        })
+        }),
       })
     })
 
@@ -216,7 +217,7 @@ describe('basket actions', () => {
     test('should dispatch trackingOrderCheckout', async () => {
       await basketCheckedOut({ view, pricing })(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith(trackingOrderCheckout({pricing}))
+      expect(dispatch).toHaveBeenCalledWith(trackingOrderCheckout({ pricing }))
     })
   })
 
@@ -267,7 +268,7 @@ describe('basket actions', () => {
     })
 
     test('should call basketProductAdd for each product in the given order if order is not already loaded', () => {
-      basketOrderItemsLoad('123')(dispatch, getStateSpy)
+      basketOrderItemsLoad('123', jest.fn())(dispatch, getStateSpy)
       expect(basketProductAddSpy).toHaveBeenCalledTimes(5)
       expect(basketProductAddSpy.mock.calls[0]).toEqual(['p2', null, '123'])
       expect(basketProductAddSpy.mock.calls[1]).toEqual(['p2', null, '123'])
@@ -277,15 +278,16 @@ describe('basket actions', () => {
     })
 
     test('should call basketRecipeAdd for each recipe set (total recipes / number portions ) in the given order if order is not already loaded', () => {
-      basketOrderItemsLoad('123')(dispatch, getStateSpy)
-      expect(basketRecipeAddSpy).toHaveBeenCalledTimes(3)
-      expect(basketRecipeAddSpy.mock.calls[0]).toEqual(['r1', null, undefined, undefined, '123'])
-      expect(basketRecipeAddSpy.mock.calls[1]).toEqual(['r2', null, undefined, undefined, '123'])
-      expect(basketRecipeAddSpy.mock.calls[2]).toEqual(['r2', null, undefined, undefined, '123'])
+      const addRecipe = jest.fn()
+      basketOrderItemsLoad('123', addRecipe)(dispatch, getStateSpy)
+      expect(addRecipe).toHaveBeenCalledTimes(3)
+      expect(addRecipe.mock.calls[0]).toEqual(['r1', null, undefined, undefined, '123'])
+      expect(addRecipe.mock.calls[1]).toEqual(['r2', null, undefined, undefined, '123'])
+      expect(addRecipe.mock.calls[2]).toEqual(['r2', null, undefined, undefined, '123'])
     })
 
     test('should call basketGiftAdd for each gift product in the given order if order is not already loaded', () => {
-      basketOrderItemsLoad('123')(dispatch, getStateSpy)
+      basketOrderItemsLoad('123', jest.fn())(dispatch, getStateSpy)
       expect(basketGiftAddSpy).toHaveBeenCalledTimes(2)
       expect(basketGiftAddSpy.mock.calls[0]).toEqual(['p1', 'Product'])
       expect(basketGiftAddSpy.mock.calls[1]).toEqual(['p1', 'Gift'])
@@ -307,8 +309,7 @@ describe('basket actions', () => {
         basket: Immutable.fromJS({
           orderId: '179',
         }),
-        filters: Immutable.fromJS({
-        }),
+        filters: Immutable.fromJS({}),
       })
     })
 
@@ -336,7 +337,7 @@ describe('basket actions', () => {
             recipes: Immutable.Map([['123', 1]]),
             numPortions: 2,
             limitReached: false,
-          })
+          }),
         })
 
         jest.spyOn(basketUtils, 'naiveLimitReached').mockReturnValue(true)
@@ -390,24 +391,26 @@ describe('basket actions', () => {
             '2020-02-13': Immutable.Map({
               id: 123,
               isDefault: true,
-              slots: Immutable.List([Immutable.Map({
-                isDefault: true,
-                id: 'slot-1-day-1',
-              })])
-            })
+              slots: Immutable.List([
+                Immutable.Map({
+                  isDefault: true,
+                  id: 'slot-1-day-1',
+                }),
+              ]),
+            }),
           }),
           user: Immutable.fromJS({
             orders: {
               12345: {
                 id: '12345',
-                deliveryDate: '2020-02-13 08:00:00'
+                deliveryDate: '2020-02-13 08:00:00',
               },
               12305: {
                 id: '12305',
-                deliveryDate: '2020-02-28 08:00:00'
-              }
-            }
-          })
+                deliveryDate: '2020-02-28 08:00:00',
+              },
+            },
+          }),
         })
       })
       test('should dispatch BASKET_SLOT_CHANGE', () => {
@@ -431,7 +434,7 @@ describe('basket actions', () => {
         basketSlotChange(slotId)(dispatch, getStateSpy)
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: actionTypes.BASKET_ID_CHANGE,
-          orderId: '12345'
+          orderId: '12345',
         })
       })
 
@@ -443,7 +446,7 @@ describe('basket actions', () => {
           trackingData: {
             actionType: trackingKeys.selectDeliverySlot,
             promoCode: 'test-promo-code',
-            deliverySlot: 'default'
+            deliverySlot: 'default',
           },
         })
       })
@@ -463,21 +466,21 @@ describe('basket actions', () => {
             '2020-02-13': Immutable.Map({
               id: 123,
               isDefault: true,
-              slots: Immutable.List()
-            })
+              slots: Immutable.List(),
+            }),
           }),
           user: Immutable.fromJS({
             orders: {
               12345: {
                 id: '12345',
-                deliveryDate: '2020-02-13 08:00:00'
+                deliveryDate: '2020-02-13 08:00:00',
               },
               12305: {
                 id: '12305',
-                deliveryDate: '2020-02-28 08:00:00'
-              }
-            }
-          })
+                deliveryDate: '2020-02-28 08:00:00',
+              },
+            },
+          }),
         })
       })
 
@@ -489,7 +492,7 @@ describe('basket actions', () => {
           trackingData: {
             actionType: trackingKeys.selectDeliverySlot,
             promoCode: 'test-promo-code',
-            deliverySlot: 'default'
+            deliverySlot: 'default',
           },
         })
       })
@@ -504,8 +507,8 @@ describe('basket actions', () => {
         expect(result).toEqual({
           type: actionTypes.BASKET_RESET,
           payload: {
-            chosenAddress: null
-          }
+            chosenAddress: null,
+          },
         })
       })
     })
@@ -518,8 +521,8 @@ describe('basket actions', () => {
         expect(result).toEqual({
           type: actionTypes.BASKET_RESET,
           payload: {
-            chosenAddress: address
-          }
+            chosenAddress: address,
+          },
         })
       })
     })
@@ -536,8 +539,8 @@ describe('basket actions', () => {
           prevPostcode: 'W140EE',
           postcode: '',
           prevAddress: { id: '12345' },
-          address: null
-        })
+          address: null,
+        }),
       }
       getStateSpy = jest.fn().mockReturnValue(state)
     })
@@ -574,33 +577,30 @@ describe('basket actions', () => {
         basket: Immutable.fromJS({
           prevSlotId: 'slot-124',
           numPortions: 2,
-          prevDate: '2020-03-30'
+          prevDate: '2020-03-30',
         }),
         boxSummaryDeliveryDays: Immutable.Map({
           '2020-02-13': Immutable.Map({
             id: 123,
             isDefault: true,
-            slots: [Immutable.Map({
-              isDefault: true,
-              id: 'slot-1-day-1',
-              whenCutoff: '2020-03-27T11:59:59+01:00'
-            })]
-
-          })
+            slots: [
+              Immutable.Map({
+                isDefault: true,
+                id: 'slot-1-day-1',
+                whenCutoff: '2020-03-27T11:59:59+01:00',
+              }),
+            ],
+          }),
         }),
         menuService: {
-          data: [
-            { id: '123',
-              ends_at: '2020-04-03T11:59:59+01:00'
-            }
-          ]
-        }
+          data: [{ id: '123', ends_at: '2020-04-03T11:59:59+01:00' }],
+        },
       })
     })
 
     test('should dispatch BASKET_DATE_CHANGE', () => {
       basketRestorePreviousDate()(dispatch, getStateSpy)
-      expect( dispatch.mock.calls[0][0]).toEqual({
+      expect(dispatch.mock.calls[0][0]).toEqual({
         type: actionTypes.BASKET_DATE_CHANGE,
         date: '2020-03-30',
       })
@@ -620,7 +620,7 @@ describe('basket actions', () => {
         type: actionTypes.TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE,
         trackingData: {
           actionType: 'undo_delivery_options_change',
-        }
+        },
       })
     })
   })
@@ -639,7 +639,7 @@ describe('basket actions', () => {
       const result = basketDateChange(date)
       expect(result).toEqual({
         date: '2020-05-02 00:00:00',
-        type: 'BASKET_DATE_CHANGE'
+        type: 'BASKET_DATE_CHANGE',
       })
     })
   })
@@ -655,9 +655,9 @@ describe('basket actions', () => {
             images: {},
             media: [],
             tags: [],
-            categories: []
-          }
-        })
+            categories: [],
+          },
+        }),
       })
     })
 
@@ -677,9 +677,9 @@ describe('basket actions', () => {
             productProperties: Immutable.fromJS({
               id: 'mock-product-id',
               title: 'mock-product-title',
-            })
-          }
-        }
+            }),
+          },
+        },
       }
 
       basketProductRemove('mock-product-id', 'mock-view')(dispatch, getStateSpy)
@@ -690,7 +690,7 @@ describe('basket actions', () => {
     test('should dispatch PRODUCTS_STOCK_CHANGE action', () => {
       const expected = {
         type: actionTypes.PRODUCTS_STOCK_CHANGE,
-        stock: {'mock-product-id': 1}
+        stock: { 'mock-product-id': 1 },
       }
 
       basketProductRemove('mock-product-id', 'mock-view')(dispatch, getStateSpy)

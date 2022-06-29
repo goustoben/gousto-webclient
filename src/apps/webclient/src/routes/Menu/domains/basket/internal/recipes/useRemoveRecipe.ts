@@ -11,6 +11,7 @@ import { getBasketRecipes } from 'selectors/basket'
 import { useNumPortions } from '../useNumPortions'
 import { useRecipeLimitReached } from '../useRecipeLimitReached'
 
+export type RemoveRecipeFn = ReturnType<typeof useRemoveRecipe>
 export const useRemoveRecipe = () => {
   const { numPortions } = useNumPortions()
   const menuRecipes = useSelector(getBasketRecipes)

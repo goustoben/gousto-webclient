@@ -164,7 +164,7 @@ const useValidateMenuLimitsForBasket = () => {
     return limitsReached.filter((item) => item !== null)
   }
 }
-
+export type AddRecipeFn = ReturnType<typeof useAddRecipe>
 export const useAddRecipe = () => {
   const menuLimitsForBasket = useValidateMenuLimitsForBasket()
   const menuRecipeIdForDetails = useSelector(getMenuRecipeIdForDetails)

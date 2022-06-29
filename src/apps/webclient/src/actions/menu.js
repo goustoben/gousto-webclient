@@ -32,7 +32,6 @@ import {
   basketSlotChange,
   basketChosenAddressChange,
 } from './basket'
-import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import tempActions from './temp'
 import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
@@ -226,7 +225,7 @@ export function menuLoadBoxPrices() {
   }
 }
 
-export function menuLoadOrderDetails(orderId) {
+export function menuLoadOrderDetails(orderId, addRecipe) {
   return async (dispatch, getState) => {
     try {
       await dispatch(statusActions.pending(actionTypes.LOADING_ORDER, true))
@@ -252,7 +251,7 @@ export function menuLoadOrderDetails(orderId) {
           const recipeInfo = undefined
           const maxRecipesNum = undefined
 
-          dispatch(basketRecipeAdd(recipe.recipeId, view, recipeInfo, maxRecipesNum, orderId))
+          addRecipe(recipe.recipeId, view, recipeInfo, maxRecipesNum, orderId)
         }
       })
 

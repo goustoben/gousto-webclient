@@ -16,6 +16,7 @@ const propTypes = {
   loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
   rateRecipeCount: PropTypes.number,
   userRecipeRatings: PropTypes.func.isRequired,
+  addRecipeToBasket: PropTypes.func.isRequired
 }
 
 const defaultProps = {
@@ -32,12 +33,13 @@ class Account extends React.PureComponent {
       checkCardExpiry,
       userLoadData,
       userRecipeRatings,
+      addRecipeToBasket,
     } = this.props
 
     Promise.all([
       userLoadData(),
       userRecipeRatings(),
-      loadMenuServiceDataIfDeepLinked(),
+      loadMenuServiceDataIfDeepLinked(false, addRecipeToBasket),
     ]).then(() => checkCardExpiry())
   }
 

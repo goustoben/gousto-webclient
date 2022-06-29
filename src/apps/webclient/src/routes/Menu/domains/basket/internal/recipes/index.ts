@@ -7,8 +7,8 @@ import { getBasketRecipes, getBasketPostcode } from 'selectors/basket'
 
 import { useIsRecipeInBasket } from '../useIsRecipeInBasket'
 import { sumQuantities, useRecipeLimitReached } from '../useRecipeLimitReached'
-import { useAddRecipe } from './useAddRecipe'
-import { useRemoveRecipe } from './useRemoveRecipe'
+import { useAddRecipe, AddRecipeFn } from './useAddRecipe'
+import { useRemoveRecipe, RemoveRecipeFn } from './useRemoveRecipe'
 
 /**
  * Users can add recipes if the basket has a postcode
@@ -53,4 +53,4 @@ const useBasketRecipes = () => {
   }
 }
 
-export { useBasketRecipes, useIsRecipeInBasket }
+export { useBasketRecipes, useIsRecipeInBasket, AddRecipeFn, RemoveRecipeFn }

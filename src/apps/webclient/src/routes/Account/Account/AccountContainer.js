@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import userActions from 'actions/user'
 import { userRecipeRatings } from '../../Ratings/actions/feedback'
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
-import Account from './Account'
+import { AccountWrapper } from './AccountWrapper'
 
 function mapStateToProps(state) {
   return {
@@ -19,6 +19,6 @@ const AccountContainer = connect(
     checkCardExpiry: userActions.checkCardExpiry,
     userRecipeRatings,
   }
-)(Account)
+)(AccountWrapper)
 
 export default AccountContainer

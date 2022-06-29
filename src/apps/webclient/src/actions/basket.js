@@ -14,7 +14,6 @@ import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import { boxSummaryDeliveryDaysLoad } from './boxSummary'
 import { actionTypes } from './actionTypes'
-import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import { trackingOrderCheckout } from './tracking'
 import { getIsAuthenticated } from '../selectors/auth'
 
@@ -169,7 +168,7 @@ export const basketProductAdd = (productId, view = null, force = false) => (
   }
 )
 
-export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 'recipe', 'gift'], view = null) => (
+export const basketOrderItemsLoad = (orderId, addRecipe, order = null, types = ['product', 'recipe', 'gift'], view = null) => (
   (dispatch, getState) => {
     const userOrder = order || getUserOrderById(orderId, getState().user.get('orders'))
 
@@ -192,7 +191,7 @@ export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 
             const recipeInfo = undefined
             const maxRecipesNum = undefined
 
-            dispatch(basketRecipeAdd(itemableId, view, recipeInfo, maxRecipesNum, orderId))
+            addRecipe(itemableId, view, recipeInfo, maxRecipesNum, orderId)
           }
           break
         }
@@ -212,12 +211,12 @@ export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 
   }
 )
 
-export const basketOrderLoad = (orderId, order = null) => (
+export const basketOrderLoad = (orderId, addRecipe, order = null) => (
   (dispatch, getState) => {
     if (getState().basket.get('orderId') !== orderId) {
       dispatch(basketReset())
       dispatch(basketIdChange(orderId))
-      dispatch(basketOrderItemsLoad(orderId, order))
+      dispatch(basketOrderItemsLoad(orderId, addRecipe, order))
       logger.info(`Basket loaded order: ${orderId}`)
     } else {
       logger.info(`Order already loaded into current basket: ${orderId}`)

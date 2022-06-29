@@ -41,7 +41,7 @@ describe('Given WelcomeContainer', () => {
       const expected = {
         isGoustoOnDemandEnabled: false,
       }
-      expect(wrapper.find('Welcome').props()).toEqual(expect.objectContaining(expected))
+      expect(wrapper.find('WelcomeWrapper').props()).toEqual(expect.objectContaining(expected))
     })
   })
 })

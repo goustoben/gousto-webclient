@@ -30,7 +30,7 @@ describe('router', () => {
             throw error
           }
           expect(renderProps.components[1].displayName).toEqual(
-            'withIsActionBarRedesignEnabled(Connect(Menu))',
+            'withIsActionBarRedesignEnabled(Connect(MenuWrapper))',
           )
           expect(renderProps.components[2]).toEqual(MenuRecipesPageWrapper)
         },
@@ -50,7 +50,7 @@ describe('router', () => {
             throw error
           }
           expect(renderProps.components[1].displayName).toEqual(
-            'withIsActionBarRedesignEnabled(Connect(Menu))',
+            'withIsActionBarRedesignEnabled(Connect(MenuWrapper))',
           )
           expect(renderProps.components[2]).toEqual(MenuRecipesPageWrapper)
         },

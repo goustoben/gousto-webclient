@@ -527,7 +527,6 @@ describe('menu actions', () => {
     let basketResetSpy
     let basketDateChangeSpy
     let basketNumPortionChangeSpy
-    let basketRecipeAddSpy
     let basketProductAddSpy
     let basketIdChangeSpy
     let basketOrderLoadedSpy
@@ -547,7 +546,6 @@ describe('menu actions', () => {
       basketResetSpy = jest.spyOn(BasketActions, 'basketReset').mockImplementation()
       basketDateChangeSpy = jest.spyOn(BasketActions, 'basketDateChange').mockImplementation()
       basketNumPortionChangeSpy = jest.spyOn(BasketActions, 'basketNumPortionChange').mockImplementation()
-      basketRecipeAddSpy = jest.spyOn(MenuBasketActions, 'basketRecipeAdd').mockImplementation()
       basketProductAddSpy = jest.spyOn(BasketActions, 'basketProductAdd').mockImplementation()
       basketIdChangeSpy = jest.spyOn(BasketActions, 'basketIdChange').mockImplementation()
       basketOrderLoadedSpy = jest.spyOn(BasketActions, 'basketOrderLoaded').mockImplementation()
@@ -608,17 +606,17 @@ describe('menu actions', () => {
             ]
           }
         })
-
-        await menuLoadOrderDetails('order_id')(dispatch, getState)
+        const addRecipe = jest.fn()
+        await menuLoadOrderDetails('order_id', addRecipe)(dispatch, getState)
 
         expect(fetchOrderSpy).toHaveBeenNthCalledWith(1, dispatch, getState, 'order_id', 'shipping_address')
         expect(statusActionsPendingSpy).toHaveBeenNthCalledWith(1, 'LOADING_ORDER', true)
         expect(basketResetSpy).toBeCalledTimes(1)
         expect(basketDateChangeSpy).toHaveBeenNthCalledWith(1, 'delivery_date')
         expect(basketNumPortionChangeSpy).toHaveBeenNthCalledWith(1, numPortions, 'order_id')
-        expect(basketRecipeAddSpy).toBeCalledTimes(2)
-        expect(basketRecipeAddSpy).toHaveBeenNthCalledWith(1, 'recipes_1', undefined, undefined, undefined, 'order_id')
-        expect(basketRecipeAddSpy).toHaveBeenNthCalledWith(2, 'recipes_2', undefined, undefined, undefined, 'order_id')
+        expect(addRecipe).toBeCalledTimes(2)
+        expect(addRecipe).toHaveBeenNthCalledWith(1, 'recipes_1', undefined, undefined, undefined, 'order_id')
+        expect(addRecipe).toHaveBeenNthCalledWith(2, 'recipes_2', undefined, undefined, undefined, 'order_id')
         expect(menuChangeRecipeStockSpy).toBeCalledTimes(2)
         expect(menuChangeRecipeStockSpy).toHaveBeenNthCalledWith(1, { recipes_1: { 2: 4 } })
         expect(menuChangeRecipeStockSpy).toHaveBeenNthCalledWith(2, { recipes_2: { 2: 4 } })

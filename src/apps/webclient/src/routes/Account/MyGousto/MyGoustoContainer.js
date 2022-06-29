@@ -9,7 +9,7 @@ import {
   getIsMyGoustoBannerAppAwarenessEnabled,
 } from 'selectors/features'
 import { track3dsCompliantClick } from './actions/tracking'
-import { MyGousto } from './MyGousto'
+import { MyGoustoWrapper } from './MyGoustoWrapper'
 import { trackClickRateRecipes } from '../../Ratings/actions/feedback'
 
 function mapStateToProps(state) {
@@ -36,6 +36,6 @@ const MyGoustoContainer = connect(mapStateToProps, {
   userCheck3dsCompliantToken,
   userReset3dsCompliantToken,
   track3dsCompliantClick,
-})(MyGousto)
+})(MyGoustoWrapper)
 
 export { MyGoustoContainer }
