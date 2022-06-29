@@ -4,17 +4,17 @@ import { use5RecipesAwareness } from '../use5RecipesAwareness'
 import css from './FiveRecipesAwarenessBanner.css'
 
 export const FiveRecipesAwarenessBanner = () => {
-  const { isEnabledOnMyDeliveriesPage, hasSeenOnMyDeliveries, setMyDeliveriesAsSeen, isNewUser } = use5RecipesAwareness()
+  const { isEnabledOnMyDeliveriesPage, hasClosedBanner, setBannerAsClosed, isNewUser, isIncludedIn5RecipeRollout } = use5RecipesAwareness()
   const [isOpen, updateIsOpen] = React.useState(false)
 
   React.useEffect(() => {
-    if (isEnabledOnMyDeliveriesPage && !hasSeenOnMyDeliveries) {
-      updateIsOpen(isEnabledOnMyDeliveriesPage && !hasSeenOnMyDeliveries)
+    if (isEnabledOnMyDeliveriesPage && !hasClosedBanner && isIncludedIn5RecipeRollout) {
+      updateIsOpen(isEnabledOnMyDeliveriesPage && !hasClosedBanner && isIncludedIn5RecipeRollout)
     }
-  }, [isEnabledOnMyDeliveriesPage, hasSeenOnMyDeliveries])
+  }, [isEnabledOnMyDeliveriesPage, hasClosedBanner, isIncludedIn5RecipeRollout])
 
   const onModalClose = () => {
-    setMyDeliveriesAsSeen()
+    setBannerAsClosed()
     updateIsOpen(false)
     sendClientMetric('my-deliveries-five-recipes-awareness-4M-2P', 1, 'Count')
   }
@@ -25,19 +25,28 @@ export const FiveRecipesAwarenessBanner = () => {
 
   return (
     <div className={css.container}>
+
     <div>
       <span className={css.infoIcon} />
     </div>
+    <div
+      className={css.closeButtonContainer}
+      role="button"
+      aria-label='close banner'
+      tabIndex={0}
+      onClick={() => onModalClose()}
+      onKeyPress={() => {}}
+    >
+    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path>
+    <title>Close Banner</title>
+    </svg>
+    </div>
+
     <div>
-      <p className={css.headerTitle}>We&apos;re full to the brim</p>
-      <p className={css.headerText}>We can&apos;t take new customer orders right now, we&apos;re so sorry.</p>
-      <ul className={css.bodyText}>
-        <li>
-          We&apos;re doing everything we can to get out more boxes.&nbsp;
-          <a href={'#'}>Read more</a>
-          .
-        </li>
-      </ul>
+      <h4 className={css.headerTitle}>5 recipes, here we come!</h4>
+      <p className={css.bodyText}>
+        Choose up to 5 recipes each week.
+      </p>
     </div>
   </div>
   )
