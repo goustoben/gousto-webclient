@@ -1,25 +1,21 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
-import { useBasket, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
-
-// Default number is 4, it cannot be less.
-const DEFAULT_MAX_RECIPES_NUM = 4
+import { useBasket } from 'routes/Menu/domains/basket'
 
 export const useWizardFiveRecipesEnabled = () => {
   const fiveRecipesExperimentEnabled = useIsOptimizelyFeatureEnabled(
     'beetroots_five_recipes_web_enabled',
   )
-  // FYI: not sure about this one
-  // does BE responding positive to prospects already???
   const { isAuthenticated } = useAuth()
-  const { maxRecipesForPortion } = useSupportedBoxTypes()
   const { numPortions } = useBasket()
 
-  const maxRecipesNum = maxRecipesForPortion(numPortions)
-  const fiveRecipesEnabled = !isAuthenticated && fiveRecipesExperimentEnabled
+  // FYI: This should be used only on BoxSizeStep
+  const isFiveRecipesEnabledBoxSize = !isAuthenticated && fiveRecipesExperimentEnabled
+  // FYI: This should be used at any other step except BoxSize
+  const isFiveRecipesEnabled = isFiveRecipesEnabledBoxSize && numPortions === 2
 
   return {
-    maxRecipesNum: fiveRecipesEnabled ? maxRecipesNum : DEFAULT_MAX_RECIPES_NUM,
-    fiveRecipesEnabled,
+    isFiveRecipesEnabledBoxSize,
+    isFiveRecipesEnabled,
   }
 }

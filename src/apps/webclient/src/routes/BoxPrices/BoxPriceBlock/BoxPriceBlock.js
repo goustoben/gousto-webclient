@@ -21,12 +21,12 @@ const BoxPriceBlock = ({
   trackUTMAndPromoCode,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(2)
-  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
+  const { isFiveRecipesEnabled } = useWizardFiveRecipesEnabled()
   const { title, boxSizeTrackingValue } = boxTypes[numPersons]
 
   const boxInfoCopy = boxInfo.slice()
 
-  if (boxSizeTrackingValue === 'large' || !fiveRecipesEnabled) {
+  if (boxSizeTrackingValue === 'large' || !isFiveRecipesEnabled) {
     boxInfoCopy.pop()
   }
 

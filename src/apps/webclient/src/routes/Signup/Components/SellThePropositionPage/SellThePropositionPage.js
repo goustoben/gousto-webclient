@@ -68,7 +68,7 @@ const goustoOnDemandItems = [
 ]
 
 export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => {
-  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
+  const { isFiveRecipesEnabled } = useWizardFiveRecipesEnabled()
   const displayedItems = isGoustoOnDemandEnabled ? goustoOnDemandItems : items
 
   return (
@@ -81,7 +81,7 @@ export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled
         {displayedItems.map(({ key, className, strongText, fiveRecipesStrongText, normalText }) => (
           <li key={key} className={classNames(css.item, className)}>
             <span className={css.strong}>
-              {fiveRecipesStrongText && fiveRecipesEnabled ? fiveRecipesStrongText : strongText}
+              {fiveRecipesStrongText && isFiveRecipesEnabled ? fiveRecipesStrongText : strongText}
             </span>{' '}
             {normalText}
           </li>

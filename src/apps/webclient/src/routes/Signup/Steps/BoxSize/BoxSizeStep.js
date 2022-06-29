@@ -25,7 +25,7 @@ export const BoxSizeStep = ({
   isLoadingPrices,
   goustoOnDemandCustomText,
 }) => {
-  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
+  const { isFiveRecipesEnabledBoxSize } = useWizardFiveRecipesEnabled()
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
   const handlePrimaryButtonClick = (value) => {
     numPortionChange(value)
@@ -49,7 +49,7 @@ export const BoxSizeStep = ({
       }) => (
         <div className={css.carouselItem} key={`box-size-for-${value}`}>
           <h2 className={css.itemHeading}>{heading}</h2>
-          {fiveRecipesEnabled && (
+          {isFiveRecipesEnabledBoxSize && (
             <p className={css.suitableTitle}>
               <span>{recipeInfoTextStart}</span>
               <strong>{recipeInfoStrongText}</strong>
@@ -78,7 +78,7 @@ export const BoxSizeStep = ({
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
           <Heading type="h1">{title}</Heading>
-          {isGoustoOnDemandEnabled || fiveRecipesEnabled ? null : (
+          {isGoustoOnDemandEnabled || isFiveRecipesEnabledBoxSize ? null : (
             <p className={css.subtitle}>{subtitle}</p>
           )}
         </div>

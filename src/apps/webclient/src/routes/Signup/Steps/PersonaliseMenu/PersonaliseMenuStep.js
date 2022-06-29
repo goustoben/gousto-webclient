@@ -35,7 +35,7 @@ const cuisines = [
 ]
 
 const PersonaliseMenuStep = () => {
-  const { fiveRecipesEnabled } = useWizardFiveRecipesEnabled()
+  const { isFiveRecipesEnabled } = useWizardFiveRecipesEnabled()
   const [selected, setSelected] = useState([])
   const dispatch = useDispatch()
   const onSelect = useCallback(
@@ -99,7 +99,7 @@ const PersonaliseMenuStep = () => {
             {items.map(({ key, className, strongText, fiveRecipesStrongText, normalText }) => (
               <li key={key} className={classNames(css.item, className)}>
                 <span className={css.strong}>
-                  {fiveRecipesEnabled ? fiveRecipesStrongText : strongText}
+                  {isFiveRecipesEnabled ? fiveRecipesStrongText : strongText}
                 </span>{' '}
                 {normalText}
               </li>
