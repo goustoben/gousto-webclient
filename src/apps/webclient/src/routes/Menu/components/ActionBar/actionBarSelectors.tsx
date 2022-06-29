@@ -3,17 +3,15 @@ import { createSelector } from 'reselect'
 import { getMenuBoxPrices } from 'routes/BoxPrices/boxPricesSelectors'
 import { getNumPortions } from 'selectors/basket'
 
-export const createGetBestTierPricePerPortion = () =>
+export const createGetBestTierPricePerPortion = (maxRecipesNum = 4) =>
   createSelector(getMenuBoxPrices, getNumPortions, (menuBoxPrices, numPortions): string | null => {
     if (!menuBoxPrices) {
       return null
     }
 
-    const numRecipes = 4
-
     return menuBoxPrices.getIn([
       numPortions.toString(),
-      numRecipes.toString(),
+      maxRecipesNum.toString(),
       'gourmet',
       'pricePerPortionDiscounted',
     ])
