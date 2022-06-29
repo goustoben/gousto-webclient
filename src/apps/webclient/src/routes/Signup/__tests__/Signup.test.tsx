@@ -46,7 +46,6 @@ describe('Signup (newer tests)', () => {
     })
 
     test('then it should set correct step names', () => {
-      expect(1).toBe(1)
       expect(signupStepsReceive).toHaveBeenCalledWith(Immutable.List(signupConfig.defaultSteps))
     })
   })
