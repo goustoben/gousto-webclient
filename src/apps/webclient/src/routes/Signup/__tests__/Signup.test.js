@@ -1,3 +1,4 @@
+// See note in Signup.test.tsx
 import React from 'react'
 
 import actions from 'actions'
