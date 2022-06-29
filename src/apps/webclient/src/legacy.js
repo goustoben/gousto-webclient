@@ -18,6 +18,11 @@ import { browserHistory } from 'react-router'
 import { browserType } from 'client/browserType'
 import { configureStore } from './store'
 
+/**
+ * The legacy bundle is loaded into G2FE pages to support rendering
+ * the header and footer.
+ */
+
 let loaded = false
 
 window.__LEGACY__ = true // eslint-disable-line

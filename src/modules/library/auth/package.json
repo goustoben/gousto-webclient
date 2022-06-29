@@ -1,0 +1,9 @@
+{
+  "name": "@library/auth",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
+    "typecheck": "yarn run --top-level tsc --noEmit --project tsconfig.json"
+  }
+}

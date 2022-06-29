@@ -15,6 +15,7 @@ import { loadVariants } from 'utils/loadVariants'
 import { featuresLoadedFromStore } from 'utils/featuresLoadedFromStore'
 import actions from 'actions'
 import { docReady } from 'utils/docReady'
+import { subscribeState } from 'utils/subscribeState'
 import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import { browserType } from 'client/browserType'
@@ -52,6 +53,8 @@ window.docReady(() => {
   initializePerformanceTrackerSender(store)
 
   initializeDatadog()
+
+  subscribeState(store)
 
   const reactRootDOM = document.getElementById('react-root')
 
