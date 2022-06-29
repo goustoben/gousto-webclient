@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import { basketNumPortionChange } from 'actions/basket'
 import { applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
-import { signupNextStep } from 'actions/signup'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
 
@@ -15,10 +14,6 @@ jest.mock('actions/basket', () => ({
 
 jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),
-}))
-
-jest.mock('actions/signup', () => ({
-  signupNextStep: jest.fn(),
 }))
 
 jest.mock('actions/tracking', () => ({
@@ -68,7 +63,7 @@ describe('boxPrices actions', () => {
         expect(applyPromoCodeAndShowModal).toHaveBeenCalled()
         expect(trackClickBuildMyBox).toHaveBeenCalledWith('2 people', 'wizard')
         expect(basketNumPortionChange).toHaveBeenCalledWith(2)
-        expect(signupNextStep).toHaveBeenCalledWith('postcode')
+        expect(redirect).toHaveBeenCalledWith('/signup/postcode')
       })
     })
 
