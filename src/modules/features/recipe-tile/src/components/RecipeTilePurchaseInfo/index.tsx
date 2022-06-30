@@ -26,6 +26,7 @@ import {
 } from "./styles";
 
 type RecipeTilePurchaseInfoProps = {
+  originalId: string;
   categoryId: string;
   fdiStyling?: boolean;
   SwapAlternativeOptionsMobile?: React.FC<{}>,
@@ -64,6 +65,7 @@ const PurchaseInfoWrapper = styled.div<{ surchargeOnTop: boolean }>(
 );
 
 export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
+  originalId,
   categoryId,
   fdiStyling = false,
   SwapAlternativeOptionsMobile,
@@ -127,6 +129,7 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
             <SwapAlternativeOptionsMobile />
           ) : (
             <SwapAlternativeOptions
+              originalId={originalId}
               recipeId={recipeId}
               categoryId={categoryId}
             />

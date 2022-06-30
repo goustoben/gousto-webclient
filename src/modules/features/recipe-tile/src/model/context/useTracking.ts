@@ -16,7 +16,7 @@ export type UseTracking = () => {
     view,
   }: {
     hasAlternativeOptions: boolean
-    view: string
+    view: 'details' | 'grid'
   }) => void,
 
   useTrackingSwapAlternativeOptions: () => ({

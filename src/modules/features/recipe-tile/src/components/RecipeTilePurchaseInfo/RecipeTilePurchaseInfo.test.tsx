@@ -30,6 +30,7 @@ const defaultProps = {
   hasAlternativeOptions: false,
   categoryId: "some category ID",
   fdiStyling: false,
+  originalId: "reciep_one"
 };
 
 const renderComponent = ({
@@ -74,6 +75,7 @@ const renderComponent = ({
         isRecipeTileLinkVisible: false,
         dispatchTrackClickMoreRecipeDetails: jest.fn(),
       })}
+      useMakeOnCheckRecipe={() => () => () => {}}
     >
       <RecipeTilePurchaseInfo {...defaultProps} />
     </RecipeTileDependencies>

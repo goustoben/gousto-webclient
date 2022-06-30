@@ -7,10 +7,13 @@ import { AlternativeOptionItem } from "../AlternativeOptionItem";
 import { useGetAlternativeOptionsForRecipeHook } from "../../../model/context";
 import { cssRecipeList, cssRecipeListText, cssVariantsTitle } from "./styles";
 import { useTrackingHook } from "../../../model/context/useTracking";
+import { useMakeOnCheckRecipeHook } from "../../../model/context/useMakeOnCheckRecipe";
+import { useRecipeReference } from "../../../model/context/useRecipeReference";
 
 type RecipeAlternativeOptionsProps = {
   recipeId: string;
-  categoryId?: string;
+  originalId: string;
+  categoryId: string;
   isOnDetailScreen?: boolean;
   /**
    * Optional Function to be called upon switching recipes.
@@ -26,7 +29,8 @@ const RecipeListText = styled.ul(cssRecipeListText as any)
 
 export function RecipeAlternativeOptions({
   recipeId: currentRecipeId,
-  categoryId = undefined,
+  originalId,
+  categoryId,
   isOnDetailScreen = false,
   onChangeCheckedRecipe = null,
 }: RecipeAlternativeOptionsProps) {
@@ -53,6 +57,18 @@ export function RecipeAlternativeOptions({
     view: isOnDetailScreen ? "details" : "grid",
   });
 
+  const useMakeOnCheckRecipe = useMakeOnCheckRecipeHook()
+  const onChangeFactory = useMakeOnCheckRecipe({
+    originalId,
+    currentRecipeId,
+    categoryId,
+    isOnDetailScreen,
+    closeOnSelection: false,
+    onChangeCheckedRecipe,
+  })
+  const recipeReference = useRecipeReference()
+
+
   const preventPropagation = (e: React.SyntheticEvent) => e.stopPropagation();
 
   if (!hasAlternativeOptions) {
@@ -74,7 +90,6 @@ export function RecipeAlternativeOptions({
           ({
             recipeId,
             recipeName,
-            changeCheckedRecipe,
             isChecked,
             isOutOfStock,
             surcharge,
@@ -83,16 +98,7 @@ export function RecipeAlternativeOptions({
               key={recipeId}
               recipeId={recipeId}
               recipeName={recipeName}
-              changeCheckedRecipe={(...args) => {
-                if (onChangeCheckedRecipe) {
-                  onChangeCheckedRecipe({
-                    nextRecipeId: recipeId,
-                    previousRecipeId: currentRecipeId,
-                  });
-                }
-
-                return changeCheckedRecipe(...args);
-              }}
+              changeCheckedRecipe={onChangeFactory(recipeReference, recipeId, isOutOfStock)}
               isChecked={isChecked}
               isOnDetailScreen={isOnDetailScreen}
               isOutOfStock={isOutOfStock}

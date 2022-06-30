@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import { CollectionLink } from '../../components/CollectionLink'
-import { RecipeTile } from '../../components/RecipeTile'
+import { RecipeTileBridge } from '../../components/RecipeTile'
 import { CollectionId } from '../../domains/collections'
 import { buildTracker, RecipeList } from './RecipeList'
 
@@ -34,7 +34,7 @@ describe('RecipeList', () => {
           showDetailRecipe={showDetailRecipe}
         />,
       )
-      expect(wrapper.find(RecipeTile).exists()).toBe(false)
+      expect(wrapper.find(RecipeTileBridge).exists()).toBe(false)
     })
   })
 

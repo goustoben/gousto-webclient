@@ -3,10 +3,9 @@ import React, { useEffect } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
-import { CollectionLink } from '../../components/CollectionLink'
-import { RecipeTile } from '../../components/RecipeTile'
-import { RecipeContextProvider } from '../../context/recipeContext'
-import { RecipeReferenceProvider } from '../../context/recipeReferenceContext'
+import { CollectionLink } from 'routes/Menu/components/CollectionLink'
+import { RecipeTileBridge } from 'routes/Menu/components/RecipeTile/RecipeTileBridge'
+
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
 import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
 import { useTracking } from './useTracking'
@@ -20,12 +19,7 @@ export const buildTracker =
     track(currentCollectionId, recipeIds.toJS())
   }
 
-export const RecipeList = ({
-  recipes,
-  currentCollectionId,
-  isDietaryCollectionLinksEnabled,
-  showDetailRecipe,
-}) => {
+export const RecipeList = ({ recipes, currentCollectionId, isDietaryCollectionLinksEnabled }) => {
   const track = useTracking()
 
   useEffect(() => buildTracker({ recipes, currentCollectionId, track })(), [])
@@ -38,16 +32,13 @@ export const RecipeList = ({
             showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
               <CollectionLink />
             )}
-          <RecipeReferenceProvider value={value.reference}>
-            <RecipeContextProvider value={value.recipe}>
-              <RecipeTile
-                recipeId={value.recipe.get('id')}
-                originalId={value.originalId}
-                currentCollectionId={currentCollectionId}
-                onClick={showDetailRecipe}
-              />
-            </RecipeContextProvider>
-          </RecipeReferenceProvider>
+
+          <RecipeTileBridge
+            recipeReference={value.reference}
+            recipe={value.recipe}
+            originalId={value.originalId}
+            collectionId={currentCollectionId}
+          />
         </React.Fragment>
       ))}
       <CTAToAllRecipes />
@@ -59,7 +50,6 @@ RecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   currentCollectionId: PropTypes.string.isRequired,
   isDietaryCollectionLinksEnabled: PropTypes.bool,
-  showDetailRecipe: PropTypes.func.isRequired,
 }
 
 RecipeList.defaultProps = {

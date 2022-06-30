@@ -85,6 +85,7 @@ const renderComponent = ({
         isRecipeTileLinkVisible: true,
         dispatchTrackClickMoreRecipeDetails: jest.fn(),
       })}
+      useMakeOnCheckRecipe={() => () => () => {}}
     >
       <TileImage categoryId="abcde" />
     </RecipeTileDependencies>

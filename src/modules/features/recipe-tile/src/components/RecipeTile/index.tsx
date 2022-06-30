@@ -37,7 +37,7 @@ const ImageContainer = styled.div(
       ...(props.isFineDineIn ? cssRecipeTileIsFineDineIn : {}),
     } as any)
 );
-const RecipeTagContaner = styled.span(
+const RecipeTagContainer = styled.span(
   (props: any) =>
     ({
       ...cssRecipeTagHolder,
@@ -53,18 +53,18 @@ const BrandTagContainer = styled.div(
 );
 
 type RecipeTileProps = {
-  recipeId: string;
+  originalId: string;
   currentCollectionId: string;
   onClick: (
     recipeId: string,
     currentCollectionId: string,
     recipeReference?: string | null
   ) => void;
-  SwapAlternativeOptionsMobile?: React.FC<{}>,
+  SwapAlternativeOptionsMobile?: React.FC<{}>;
 };
 
 export const RecipeTile = ({
-  recipeId,
+  originalId,
   currentCollectionId: categoryId,
   onClick,
   SwapAlternativeOptionsMobile,
@@ -76,9 +76,8 @@ export const RecipeTile = ({
   const useStock = useStockHook();
   const { isRecipeOutOfStock } = useStock();
 
+  const { isFineDineIn, id: recipeId } = useRecipe();
   const isOutOfStock = isRecipeOutOfStock(recipeId);
-
-  const { isFineDineIn } = useRecipe();
 
   const deviceType = useDeviceType();
   const recipeReference = useRecipeReference();
@@ -129,9 +128,9 @@ export const RecipeTile = ({
 
       <ImageContainer isFineDineIn={isFineDineIn}>
         <TileImage categoryId={categoryId} />
-        <RecipeTagContaner showVariantHeader={showVariantHeader}>
+        <RecipeTagContainer showVariantHeader={showVariantHeader}>
           <RecipeTag />
-        </RecipeTagContaner>
+        </RecipeTagContainer>
         <BrandTagContainer mobileBannerShown={mobileBannerShown}>
           <BrandTag />
 
@@ -147,6 +146,7 @@ export const RecipeTile = ({
           )}
 
           <RecipeTilePurchaseInfo
+            originalId={originalId}
             categoryId={categoryId}
             fdiStyling={isFineDineIn}
             SwapAlternativeOptionsMobile={SwapAlternativeOptionsMobile}

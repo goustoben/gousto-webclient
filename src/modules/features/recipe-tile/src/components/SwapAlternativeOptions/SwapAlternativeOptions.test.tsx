@@ -5,6 +5,8 @@ import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { SwapAlternativeOptions } from "./SwapAlternativeOptions";
 import { UseGetAlternativeOptionsForRecipeContextProvider } from "../../model/context";
 import { UseTrackingContextProvider } from "../../model/context/useTracking";
+import { UseMakeOnCheckRecipeContextProvider } from "../../model/context/useMakeOnCheckRecipe";
+import { RecipeReferenceProvider } from "../../model/context/useRecipeReference";
 
 const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => [
   {
@@ -51,10 +53,13 @@ describe("<swapAlternativeOptions />", () => {
               useTrackingSwapAlternativeOptions,
             })}
           >
-            <SwapAlternativeOptions
-              recipeId="123"
-              categoryId="111"
-            />
+            <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+              <SwapAlternativeOptions
+                recipeId="123"
+                originalId="123"
+                categoryId="111"
+              />
+            </UseMakeOnCheckRecipeContextProvider>
           </UseTrackingContextProvider>
         </UseGetAlternativeOptionsForRecipeContextProvider>
       );
@@ -97,10 +102,13 @@ describe("<swapAlternativeOptions />", () => {
               useTrackingSwapAlternativeOptions,
             })}
           >
-            <SwapAlternativeOptions
-              recipeId="123"
-              categoryId="111"
-            />
+            <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+              <SwapAlternativeOptions
+                recipeId="123"
+                originalId="123"
+                categoryId="111"
+              />
+            </UseMakeOnCheckRecipeContextProvider>
           </UseTrackingContextProvider>
         </UseGetAlternativeOptionsForRecipeContextProvider>
       );
@@ -152,10 +160,13 @@ describe("<swapAlternativeOptions />", () => {
               useTrackingSwapAlternativeOptions,
             })}
           >
-            <SwapAlternativeOptions
-              recipeId="123"
-              categoryId="111"
-            />
+            <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+              <SwapAlternativeOptions
+                recipeId="123"
+                originalId="123"
+                categoryId="111"
+              />
+            </UseMakeOnCheckRecipeContextProvider>
           </UseTrackingContextProvider>
         </UseGetAlternativeOptionsForRecipeContextProvider>
       );
@@ -168,6 +179,7 @@ describe("<swapAlternativeOptions />", () => {
 
   describe("when clicking on item from drop down", () => {
     test("should trigger recipe alternative options recipe swap event", () => {
+      const onChange = jest.fn()
       render(
         <UseGetAlternativeOptionsForRecipeContextProvider
           value={() => getAlternativeOptionsForRecipe}
@@ -178,28 +190,27 @@ describe("<swapAlternativeOptions />", () => {
               useTrackingSwapAlternativeOptions,
             })}
           >
-            <SwapAlternativeOptions
-              recipeId="123"
-              categoryId="cat111"
-            />
+            <RecipeReferenceProvider value="recipe_ref_one">
+              <UseMakeOnCheckRecipeContextProvider value={() => () => onChange}>
+                <SwapAlternativeOptions
+                  recipeId="123"
+                  originalId="123"
+                  categoryId="cat111"
+                />
+              </UseMakeOnCheckRecipeContextProvider>
+            </RecipeReferenceProvider>
           </UseTrackingContextProvider>
         </UseGetAlternativeOptionsForRecipeContextProvider>
       );
       // Open dropdown
       fireEvent.click(screen.getByRole("button"));
       expect(
-        trackRecipeAlternativeOptionsMenuSwapRecipes
+        onChange
       ).not.toHaveBeenCalled();
 
       // Pick second item on the list
       fireEvent.click(screen.getAllByRole("radio")[1]);
-      expect(trackRecipeAlternativeOptionsMenuSwapRecipes).toHaveBeenCalledWith(
-        {
-          collectionId: "cat111",
-          nextRecipeId: "222",
-          previousRecipeId: "123",
-        }
-      );
+      expect(onChange).toHaveBeenCalledWith("222", false);
     });
   });
 });

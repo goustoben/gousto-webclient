@@ -21,8 +21,9 @@ const DropDown = styled.div<{ showDrop: boolean }>(({ showDrop }) => ({
 }) as any)
 const OuterWrapper = styled.div(cssOuterWrapper as any)
 
-export function SwapAlternativeOptions({ recipeId, categoryId }: {
+export function SwapAlternativeOptions({ recipeId, originalId, categoryId }: {
   recipeId: string
+  originalId: string
   categoryId: string
 }) {
   const [showDrop, setShowDrop] = useState(false)
@@ -76,6 +77,7 @@ export function SwapAlternativeOptions({ recipeId, categoryId }: {
         <DropDown aria-hidden={!showDrop} showDrop={showDrop}>
           <RecipeAlternativeOptions
             recipeId={recipeId}
+            originalId={originalId}
             categoryId={categoryId}
             onChangeCheckedRecipe={({ previousRecipeId, nextRecipeId }) => {
               trackRecipeAlternativeOptionsMenuSwapRecipes({

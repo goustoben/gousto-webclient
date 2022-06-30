@@ -83,7 +83,8 @@ export const cssButton: CSSObject = {
   backgroundColor: colors.white,
   borderRadius: '3px',
   justifyContent: 'center',
-  padding: '0',
+  paddingTop: '0.375rem',
+  paddingButtom: '0.375rem',
 }
 
 export const cssDropWrapper: CSSObject = {

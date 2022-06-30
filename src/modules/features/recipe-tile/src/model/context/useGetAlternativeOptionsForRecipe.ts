@@ -18,8 +18,6 @@ export type GetAlternativeOptionsForRecipe<T extends Recipe = Recipe> = (args: {
   // This is what would be fed into Alternative Option menu item
   recipeId: T['id']
   recipeName: string
-  // eslint-disable-next-line no-unused-vars
-  changeCheckedRecipe: (checkedRecipeId: Recipe['id'], isOutOfStock: boolean) => void
   isChecked: boolean
   isOnDetailScreen: boolean
   isOutOfStock: boolean

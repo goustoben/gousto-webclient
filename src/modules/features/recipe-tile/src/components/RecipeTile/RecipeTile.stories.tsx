@@ -1,23 +1,23 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { RecipeTile } from '.';
+import { RecipeTile } from ".";
 import { RecipeTileDependencies } from "../../model/context";
 import { getMocks } from "../../utils/storybook/mocks";
 
 type StoryArgs = {
-  cookingTime: number
-  imageUrl: string
-  isRecipeOutOfStock: boolean
-  recipeTag?: string
-  recipeTagColor?: string
-  recipeTagBackgroundColor?: string
-  brandTag?: string
-  brandTagColor?: string
-  isFineDineIn?: boolean
-  isRecipeInBasket?: boolean
-  recipeTitle: string
-  surcharge: number
-  hasAlternatives: boolean
+  cookingTime: number;
+  imageUrl: string;
+  isRecipeOutOfStock: boolean;
+  recipeTag?: string;
+  recipeTagColor?: string;
+  recipeTagBackgroundColor?: string;
+  brandTag?: string;
+  brandTagColor?: string;
+  isFineDineIn?: boolean;
+  isRecipeInBasket?: boolean;
+  recipeTitle: string;
+  surcharge: number;
+  hasAlternatives: boolean;
   variantsTitles: {
     titles: string[];
   };
@@ -31,15 +31,13 @@ type StoryArgs = {
   isRecipeTileLinkVisible: boolean;
 };
 
-type RecipeTileStory = (
-  args: StoryArgs
-) => ReturnType<typeof RecipeTile>;
+type RecipeTileStory = (args: StoryArgs) => ReturnType<typeof RecipeTile>;
 
 const Template: ComponentStory<RecipeTileStory> = (_: StoryArgs) => (
   <RecipeTile
-  recipeId='recipe_one'
-  currentCollectionId='current_collection_one'
-  onClick={() => {}}
+    originalId="recipe_one"
+    currentCollectionId="current_collection_one"
+    onClick={() => {}}
   />
 );
 
@@ -70,16 +68,23 @@ export default {
         isFineDineIn: args.isFineDineIn,
         isRecipeInBasket: args.isRecipeInBasket,
 
-        title: args.hasAlternatives ? args.variantsTitles?.titles[args.variantsCheckedIndex] : args.recipeTitle,
-        numberOfAlternatives: args.hasAlternatives ? args.variantsTitles?.titles?.length || 2 : 0,
+        title: args.hasAlternatives
+          ? args.variantsTitles?.titles[args.variantsCheckedIndex]
+          : args.recipeTitle,
+        numberOfAlternatives: args.hasAlternatives
+          ? args.variantsTitles?.titles?.length || 2
+          : 0,
         alternativeTitles: args.variantsTitles?.titles,
         ...(args.variantsTitles?.titles?.length !== undefined &&
           args.variantsCheckedIndex < args.variantsTitles?.titles?.length && {
             alternativeCheckedIndex: args.variantsCheckedIndex,
           }),
         alternativeSurcharges: args.variantsSurcharges?.surcharges,
-        alternativeOutOfStockFlags: args.variantsOutOfStockFlags?.outOfStockFlags,
-        surcharge: args.hasAlternatives ? args.variantsSurcharges?.surcharges[args.variantsCheckedIndex] : args.surcharge,
+        alternativeOutOfStockFlags:
+          args.variantsOutOfStockFlags?.outOfStockFlags,
+        surcharge: args.hasAlternatives
+          ? args.variantsSurcharges?.surcharges[args.variantsCheckedIndex]
+          : args.surcharge,
 
         brandTagText: args.brandTag,
         brandTagColor: args.brandTagColor,
@@ -97,6 +102,7 @@ export default {
           useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
           useRecipeBrand={useRecipeBrand}
           useGetRecipeTileLinkData={useGetRecipeTileLinkData}
+          useMakeOnCheckRecipe={() => () => () => {}}
         >
           <Story />
         </RecipeTileDependencies>
@@ -105,41 +111,41 @@ export default {
   ],
   argTypes: {
     recipeTag: {
-      name: 'Recipe Tag text',
-      control: 'text',
-      defaultValue: 'New',
+      name: "Recipe Tag text",
+      control: "text",
+      defaultValue: "New",
     },
     recipeTagBackgroundColor: {
-      name: 'Recipe Tag background color',
+      name: "Recipe Tag background color",
       control: {
-        type: 'color'
+        type: "color",
       },
-      defaultValue: 'green',
+      defaultValue: "green",
     },
     recipeTagColor: {
-      name: 'Recipe Tag text color',
+      name: "Recipe Tag text color",
       control: {
-        type: 'color'
+        type: "color",
       },
-      defaultValue: 'white',
+      defaultValue: "white",
     },
 
     brandTag: {
-      name: 'Brand Tag text',
-      control: 'text',
-      defaultValue: '10-minute',
+      name: "Brand Tag text",
+      control: "text",
+      defaultValue: "10-minute",
     },
     brandTagColor: {
-      name: 'Brand Tag text color',
+      name: "Brand Tag text color",
       control: {
-        type: 'color'
+        type: "color",
       },
-      defaultValue: 'rgb(26, 128, 135)',
+      defaultValue: "rgb(26, 128, 135)",
     },
 
     isFineDineIn: {
-      name: 'Fine Dine In',
-      control: 'boolean',
+      name: "Fine Dine In",
+      control: "boolean",
       defaultValue: false,
     },
 
@@ -156,7 +162,8 @@ export default {
     imageUrl: {
       name: "URL to big recipe image (300)",
       control: "text",
-      defaultValue: "https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/mood-image/3310---Battered-Fish-Salt--Vinegar-Chips--Mushy-Peas0494-1617814005204-x300.jpg",
+      defaultValue:
+        "https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/mood-image/3310---Battered-Fish-Salt--Vinegar-Chips--Mushy-Peas0494-1617814005204-x300.jpg",
     },
     isRecipeOutOfStock: {
       name: "Is the recipe out of stock",
