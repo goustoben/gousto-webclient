@@ -1,10 +1,10 @@
 import Immutable from 'immutable'
 
 import { basketNumPortionChange } from 'actions/basket'
-import { applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { signupNextStep } from 'actions/signup'
 import { trackClickBuildMyBox } from 'actions/tracking'
+import { applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
 import { getPromoBannerState } from 'utils/home'
 
 import { boxPricesBoxSizeSelected } from '../boxPricesActions'
@@ -29,7 +29,7 @@ jest.mock('utils/home', () => ({
   getPromoBannerState: jest.fn(),
 }))
 
-jest.mock('actions/home', () => ({
+jest.mock('routes/Home/homeActions', () => ({
   applyPromoCodeAndShowModal: jest.fn(),
 }))
 

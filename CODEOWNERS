@@ -190,8 +190,6 @@
 /src/apps/webclient/src/actions/checkout.js                             @Gousto/squad-beetroots
 /src/apps/webclient/src/actions/promos.js                               @Gousto/squad-beetroots
 /src/apps/webclient/src/actions/signup.js                               @Gousto/squad-beetroots
-/src/apps/webclient/src/actions/home.js                                 @Gousto/squad-beetroots
-/src/apps/webclient/src/actions/__tests__/home.test.js                  @Gousto/squad-beetroots
 /src/apps/webclient/src/actions/__tests__/checkout.test.js              @Gousto/squad-beetroots
 /src/apps/webclient/src/actions/__tests__/signup.test.js                @Gousto/squad-beetroots
 /src/apps/webclient/src/validations/card-checkout.js                    @Gousto/squad-beetroots

@@ -2,11 +2,11 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 
-import { applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { promo } from 'config/home'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
 import { getPromoBannerText } from 'selectors/features'
 import { getPromoBannerState } from 'utils/home'
 

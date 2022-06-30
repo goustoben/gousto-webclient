@@ -1,13 +1,17 @@
+import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
-import { promoChange, promoToggleModalVisibility } from 'actions/promos'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 import { getPromoBannerState } from 'utils/home'
 import logger from 'utils/logger'
-import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 
-const getIsTestAllocationFactoryEnabled = isOptimizelyFeatureEnabledFactory('beetroots_test_allocation_factory_web')
+const getIsTestAllocationFactoryEnabled = isOptimizelyFeatureEnabledFactory(
+  'beetroots_test_allocation_factory_web',
+)
 
-const getIsTwoMonthPromoCodeEnabled = isOptimizelyFeatureEnabledFactory('beetroots_two_month_promo_code_web_enabled')
+const getIsTwoMonthPromoCodeEnabled = isOptimizelyFeatureEnabledFactory(
+  'beetroots_two_month_promo_code_web_enabled',
+)
 
 export const applyPromoCodeAndShowModal = () => async (dispatch, getState) => {
   const state = getState()
