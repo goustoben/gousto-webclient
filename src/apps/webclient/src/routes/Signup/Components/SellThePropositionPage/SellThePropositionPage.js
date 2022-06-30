@@ -15,12 +15,14 @@ export const items = [
     key: 'itemValue',
     className: css.itemValue,
     strongText: 'Greater value',
+    fiveRecipesStrongText: 'Greater value',
     normalText: 'the more recipes you add',
   },
   {
     key: 'itemRecipes',
     className: css.itemRecipes,
     strongText: 'Over 75 recipes',
+    fiveRecipesStrongText: 'Over 75 recipes',
     normalText: 'changing weekly',
   },
   {
@@ -34,6 +36,7 @@ export const items = [
     key: 'itemDietary',
     className: css.itemDietary,
     strongText: 'Meals for every appetite',
+    fiveRecipesStrongText: 'Meals for every appetite',
     normalText: 'and dietary need',
   },
 ]
