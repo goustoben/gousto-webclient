@@ -4,14 +4,14 @@ import { use5RecipesAwareness } from '../use5RecipesAwareness'
 import css from './FiveRecipesAwarenessBanner.css'
 
 export const FiveRecipesAwarenessBanner = () => {
-  const { isEnabledOnMyDeliveriesPage, hasClosedBanner, setBannerAsClosed, isNewUser, isIncludedIn5RecipeRollout } = use5RecipesAwareness()
+  const { isEnabled, hasClosedBanner, setBannerAsClosed, isNewUser } = use5RecipesAwareness()
   const [isOpen, updateIsOpen] = React.useState(false)
 
   React.useEffect(() => {
-    if (isEnabledOnMyDeliveriesPage && !hasClosedBanner && isIncludedIn5RecipeRollout) {
-      updateIsOpen(isEnabledOnMyDeliveriesPage && !hasClosedBanner && isIncludedIn5RecipeRollout)
+    if (isEnabled && !hasClosedBanner) {
+      updateIsOpen(isEnabled && !hasClosedBanner)
     }
-  }, [isEnabledOnMyDeliveriesPage, hasClosedBanner, isIncludedIn5RecipeRollout])
+  }, [isEnabled, hasClosedBanner])
 
   const onModalClose = () => {
     setBannerAsClosed()
@@ -25,7 +25,6 @@ export const FiveRecipesAwarenessBanner = () => {
 
   return (
     <div className={css.container}>
-
     <div>
       <span className={css.infoIcon} />
     </div>

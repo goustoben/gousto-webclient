@@ -20,27 +20,14 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
 
   afterEach(jest.clearAllMocks)
 
-  describe('when the user does not have a two portion subscription', () => {
+  describe('when the user does not have a two portion subscription or is not part of 5 recipe rollout', () => {
     it('should not render', () => {
       use5RecipesAwarenessSpy.mockReturnValue({
-        isEnabledOnMyDeliveriesPage: false,
+        isEnabled: false,
         hasClosedBanner: false,
-        isIncludedIn5RecipeRollout: true
       })
 
       render(<FiveRecipesAwarenessBanner  />)
-      expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-    })
-  })
-  describe('when the user is not included in the five recipe rollout', () => {
-    it('should not render', () => {
-      use5RecipesAwarenessSpy.mockReturnValue({
-        isEnabledOnMyDeliveriesPage: true,
-        hasClosedBanner: false,
-        isIncludedIn5RecipeRollout: false
-      })
-
-      render(<FiveRecipesAwarenessBanner />)
       expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     })
   })
@@ -49,9 +36,8 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
     describe('when the user has not previously closed the banner', () => {
       beforeEach(() => {
         use5RecipesAwarenessSpy.mockReturnValue({
-          isEnabledOnMyDeliveriesPage: true,
+          isEnabled: true,
           hasClosedBanner: false,
-          isIncludedIn5RecipeRollout: true,
           setBannerAsClosed: jest.fn(),
         })
         render(<FiveRecipesAwarenessBanner />)
@@ -76,8 +62,7 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
     describe('when the user has previously closed the banner', () => {
       it('should not render', () => {
         use5RecipesAwarenessSpy.mockReturnValue({
-          isEnabledOnMyDeliveriesPage: true,
-          isIncludedIn5RecipeRollout: true,
+          isEnabled: true,
           hasClosedBanner: true,
         })
 

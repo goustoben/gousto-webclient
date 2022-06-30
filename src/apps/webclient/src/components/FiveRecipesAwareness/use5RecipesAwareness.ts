@@ -67,18 +67,11 @@ const useCanOrder5Recipes = () => {
 }
 
 export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_seen_on_menu'
-export const HAS_SEEN_ON_MY_DELIVERIES_NAME = 'gousto_five_recipes_awareness_seen_on_my_deliveries'
 export const HAS_CLOSED_BANNER = 'gousto_five_recipes_banner_closed'
 
 
 export const OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW =
-'radishes_five_recipes_awareness_subscribed_web_enabled'
-
-export const OPTIMIZELY_ENABLED_MY_DELIVERIES_PAGE =
-'radishes_five_recipes_awareness_my_deliveries_web_enabled'
-
-export const OPTIMIZELY_ENABLED_FIVE_RECIPES_ROLLOUT = 'radishes_five_recipe_basket_web_rollout'
-
+  'radishes_five_recipes_awareness_subscribed_web_enabled'
 
 export const use5RecipesAwareness = () => {
   const isAuthenticated = useSelector(getIsAuthenticated)
@@ -98,26 +91,26 @@ export const use5RecipesAwareness = () => {
 
   const hasSubscriptionFor2People4Recipes = useHasSubscriptionFor2People4Recipes()
   const isEnabledForSubscriptionUser = useIsOptimizelyFeatureEnabled(
+<<<<<<< HEAD
     canOrder5Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
   )
   const isUserIncludedIn5RecipeRollout = useIsOptimizelyFeatureEnabled(
     hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLED_FIVE_RECIPES_ROLLOUT : null,
+=======
+    hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
+>>>>>>> 67cb46271 (updates based on simplified business logic)
   )
 
   const isEnabled = Boolean(isEnabledForSubscriptionUser)
-  const isEnabledOnMyDeliveriesPage = Boolean(isEnabledForMyDeliveriesPage)
-  const isIncludedIn5RecipeRollout = Boolean(isUserIncludedIn5RecipeRollout)
 
   return {
     isEnabled,
-    isEnabledOnMyDeliveriesPage,
-    isIncludedIn5RecipeRollout,
     isNewUser,
     userSeenOnMenu,
-    userClosedBanner,
     hasSeenOnMenu: Boolean(userSeenOnMenu),
-    hasClosedBanner: Boolean(userClosedBanner),
     setMenuAsSeen,
+    userClosedBanner,
+    hasClosedBanner: Boolean(userClosedBanner),
     setBannerAsClosed,
     maxRecipes: isEnabled && !userSeenOnMenu ? 5 : 4,
   }
