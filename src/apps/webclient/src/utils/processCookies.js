@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
 import { appBannerDismiss } from 'actions/appBanner'
 import { basketAddressChange, basketChosenAddressChange, basketDateChange, basketNumPortionChange, basketPostcodeChangePure, basketPreviewOrderChange, basketPromoCodeChange, basketPromoCodeUrlChange, basketRecipesInitialise, basketSetSubscriptionOption, basketSignupCollectionReceive, basketSlotChange, basketStepsOrderReceive } from 'actions/basket'
-import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
 import { promoAgeVerify } from 'actions/promos'
 import authActions from 'actions/auth'
@@ -71,7 +70,6 @@ const processCookies = (cookies, store) => {
   }
 
   const postcode = getCookieStoreValue(cookies, 'basket_postcode')
-  let signupSteps = getCookieStoreValue(cookies, 'signup_wizard_steps')
   const address = getCookieStoreValue(cookies, 'basket_address')
   const date = getCookieStoreValue(cookies, 'basket_date')
   const slotId = getCookieStoreValue(cookies, 'basket_slotId')
@@ -236,15 +234,6 @@ const processCookies = (cookies, store) => {
         message: 'error parsing tutorials cookie value',
         errors: [e],
       })
-    }
-  }
-
-  if (signupSteps) {
-    try {
-      signupSteps = JSON.parse(signupSteps)
-      store.dispatch(signupStepsReceive(signupSteps))
-    } catch (err) {
-      logger.error({ message: 'error parsing signup steps cookie value', errors: [err] })
     }
   }
 

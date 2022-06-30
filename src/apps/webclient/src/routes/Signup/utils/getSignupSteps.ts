@@ -7,11 +7,11 @@ import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
 
 import { isOptimizelyFeatureEnabledFactory } from '../../../containers/OptimizelyRollouts'
 
-const isPersonaliseSignUpEnabled = isOptimizelyFeatureEnabledFactory(
+const getIsPersonaliseSignUpEnabled = isOptimizelyFeatureEnabledFactory(
   'turnips_personalised_signup_enabled',
 )
 
-const isBoxSizeRecommenderEnabled = isOptimizelyFeatureEnabledFactory(
+const getIsBoxSizeRecommenderEnabled = isOptimizelyFeatureEnabledFactory(
   'beetroots_box_size_recommender_web_enabled',
 )
 
@@ -22,20 +22,20 @@ const isBoxSizeRecommenderEnabled = isOptimizelyFeatureEnabledFactory(
 export const getSignupSteps = async (store: Store<any>): Promise<List<SignupSteps>> => {
   let resultSteps: List<SignupSteps>
 
-  const isBoxSizeRecommenderExperimentEnabled = await isBoxSizeRecommenderEnabled(
+  const isBoxSizeRecommenderEnabled = await getIsBoxSizeRecommenderEnabled(
     store.dispatch,
     store.getState,
   )
-  const isPersonaliseSignUpExperimentEnabled = await isPersonaliseSignUpEnabled(
+  const isPersonaliseSignUpEnabled = await getIsPersonaliseSignUpEnabled(
     store.dispatch,
     store.getState,
   )
 
-  if (isBoxSizeRecommenderExperimentEnabled && isPersonaliseSignUpExperimentEnabled) {
+  if (isBoxSizeRecommenderEnabled && isPersonaliseSignUpEnabled) {
     resultSteps = Immutable.List(signupConfig.boxSizeRecommenderWithPersonalizeMenuSteps)
-  } else if (isBoxSizeRecommenderExperimentEnabled) {
+  } else if (isBoxSizeRecommenderEnabled) {
     resultSteps = Immutable.List(signupConfig.boxSizeRecommenderSteps)
-  } else if (isPersonaliseSignUpExperimentEnabled) {
+  } else if (isPersonaliseSignUpEnabled) {
     resultSteps = Immutable.List(signupConfig.personaliseMenuSteps)
   } else {
     resultSteps = Immutable.List(signupConfig.defaultSteps)

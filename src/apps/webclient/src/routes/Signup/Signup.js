@@ -18,22 +18,22 @@ import { CheckAccountPageContainer } from './Components/CheckAccountPage'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 import { EnterPromoCodeManuallyPage } from './Components/EnterPromoCodeManuallyPage'
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
+import { getSignupSteps } from './utils/getSignupSteps'
 
 import css from './Signup.css'
 
 const propTypes = {
-  stepName: PropTypes.string,
-  steps: PropTypes.instanceOf(Immutable.List),
+  secondarySlug: PropTypes.string,
+  stepNames: PropTypes.instanceOf(Immutable.List),
   goToStep: PropTypes.func,
   location: PropTypes.shape({
     query: PropTypes.shape({
-      steps: PropTypes.string,
       promo_code: PropTypes.string,
     }),
     pathname: PropTypes.string,
   }),
   params: PropTypes.shape({
-    stepName: PropTypes.string,
+    secondarySlug: PropTypes.string,
   }),
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
@@ -46,20 +46,20 @@ const propTypes = {
   isGoustoOnDemandEnabled: PropTypes.bool,
   isWizardWithoutImagesEnabled: PropTypes.bool,
   signupSetStep: PropTypes.func,
+  signupStepsReceive: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
-  stepName: '',
-  steps: Immutable.List(),
+  secondarySlug: null,
+  stepNames: null,
   goToStep: () => {},
   location: {
     query: {
-      steps: '',
       promo_code: '',
     },
   },
   params: {
-    stepName: '',
+    secondarySlug: '',
   },
   promoBannerState: {
     canApplyPromo: false,
@@ -75,18 +75,26 @@ const defaultProps = {
 class Signup extends PureComponent {
   static fetchData = fetchSignupData
 
-  componentDidMount() {
-    const { location, params } = this.props
+  async componentDidMount() {
+    const { signupStepsReceive } = this.props
     const { store } = this.context
-    openProperStep(store, location?.query, params).then(() => {
-      // without forceUpdate new props.steps would not be applied
-      this.forceUpdate()
-    })
+
+    const stepNames = await getSignupSteps(store)
+    signupStepsReceive(stepNames)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location, params, stepNames } = this.props
+    const { store } = this.context
+
+    if (prevProps.stepNames !== stepNames && stepNames !== null) {
+      openProperStep(store, stepNames, location?.query, params)
+    }
   }
 
   getCurrentStepNumber(steps) {
-    const { stepName } = this.props
-    const stepNumber = steps.findIndex((step) => step.get('slug') === stepName)
+    const { secondarySlug } = this.props
+    const stepNumber = steps.findIndex((step) => step.get('slug') === secondarySlug)
 
     if (stepNumber < 0) {
       return 0
@@ -96,10 +104,10 @@ class Signup extends PureComponent {
   }
 
   getSteps() {
-    const { steps } = this.props
+    const { stepNames } = this.props
 
-    const signupSteps = steps
-      .filter((step) => !!AVAILABLE_STEP_COMPONENTS[step])
+    const signupSteps = stepNames
+      .filter((stepName) => !!AVAILABLE_STEP_COMPONENTS[stepName])
       .map((stepName) => stepByName(stepName))
 
     if (signupSteps.size === 0) {
@@ -133,7 +141,8 @@ class Signup extends PureComponent {
 
   render() {
     const {
-      stepName,
+      stepNames,
+      secondarySlug,
       promoModalVisible,
       promoBannerState,
       trackDiscountVisibility,
@@ -142,26 +151,31 @@ class Signup extends PureComponent {
       isGoustoOnDemandEnabled,
     } = this.props
 
-    if (stepName === signupConfig.sellThePropositionPagePath) {
+    if (secondarySlug === signupConfig.sellThePropositionPageSlug) {
       return <SellThePropositionPageContainer />
     }
 
-    if (stepName === signupConfig.checkAccountPageSlug) {
+    if (secondarySlug === signupConfig.checkAccountPageSlug) {
       return <CheckAccountPageContainer />
     }
 
-    if (stepName === signupConfig.applyVoucherPageSlug) {
+    if (secondarySlug === signupConfig.applyVoucherPageSlug) {
       return <ApplyVoucherPageContainer />
     }
 
-    if (stepName === signupConfig.enterPromoCodeManuallyPageSlug) {
+    if (secondarySlug === signupConfig.enterPromoCodeManuallyPageSlug) {
       return <EnterPromoCodeManuallyPage />
+    }
+
+    if (stepNames === null) {
+      // Still loading.
+      return null
     }
 
     const steps = this.getSteps()
     const stepNumber = this.getCurrentStepNumber(steps)
 
-    const currentStep = steps.find((step) => step.get('slug') === stepName) || steps.get(0)
+    const currentStep = steps.find((step) => step.get('slug') === secondarySlug) || steps.get(0)
     const currentStepName = currentStep.get('name')
 
     const { canApplyPromo, basketPromo } = promoBannerState

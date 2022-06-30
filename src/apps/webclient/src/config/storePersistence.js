@@ -1,11 +1,6 @@
 export const persistenceConfig = (store) => {
   let persistentCookies = {
     features: false,
-    signup: {
-      wizard: {
-        steps: false,
-      },
-    },
     tracking: false,
     promoAgeVerified: false,
     variants: false,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import { applyPromoCodeAndShowModal } from 'actions/home'
+import { applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
 import { withIsActionBarRedesignEnabled } from 'routes/Menu/components/withIsActionBarRedesignEnabled'
 
 import { MenuWrapper } from './MenuWrapper'

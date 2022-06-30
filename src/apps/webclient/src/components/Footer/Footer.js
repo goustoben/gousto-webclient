@@ -235,7 +235,7 @@ export const Footer = ({
 
   const renderVerificationOfValueNotice = () => (
     <FooterNotice>
-      ** Our &apos;UK&apos;s best value recipe box&apos; claim is based on Gousto offering the cheapest price on standard box prices (i.e. with no applied offers or discounts) and include any delivery costs charged by each company. These cost comparisons are tracked on a monthly basis. The full details of this comparison can be found here:&nbsp;
+      ** Our &apos;UK&apos;s best value recipe box&apos; claim is based on Gousto offering the cheapest price based on the average price of all recipes available on a set week. The comparison includes any applicable premium recipe surcharges and delivery costs, and is applied to the full meal price. The full details of this comparison can be found here:&nbsp;
       <a href="https://cook.gousto.co.uk/value/">Verification of value</a>
       .
     </FooterNotice>

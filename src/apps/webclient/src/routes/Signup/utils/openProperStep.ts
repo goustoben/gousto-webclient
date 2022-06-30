@@ -3,13 +3,14 @@ import Immutable from 'immutable'
 import { Store } from 'redux'
 
 import routes from 'config/routes'
-import { getSignupSteps } from 'routes/Signup/utils/getSignupSteps'
 import {
   canLandOnStepWithoutRedirecting,
   findStepBySlug,
   getPromocodeQueryParam,
   stepByName,
 } from 'utils/signup'
+
+import { SignupSteps } from '../constants/SignupSteps'
 
 /**
  * DO NOT import anywhere, type is exported for tests.
@@ -30,12 +31,12 @@ type ApplicationStore = Store<OpenStepStore, any>
 
 const redirectToFirstStep = (
   store: ApplicationStore,
-  firstStepUrl: string,
+  firstStepSlug: string,
   promoCode?: string,
 ): void => {
   store.dispatch(
     actions.redirect(
-      `${routes.client.signup}/${firstStepUrl}${getPromocodeQueryParam(promoCode, '?')}`,
+      `${routes.client.signup}/${firstStepSlug}${getPromocodeQueryParam(promoCode, '?')}`,
     ),
   )
 }
@@ -45,6 +46,7 @@ const redirectToFirstStep = (
  */
 export const openProperStep = async (
   store: ApplicationStore,
+  stepNames: Immutable.List<SignupSteps>,
   query: {
     /**
      * Optional promo code provided.
@@ -55,23 +57,21 @@ export const openProperStep = async (
     /**
      * Current step name.
      */
-    stepName?: string
+    secondarySlug?: string
   } = {},
 ): Promise<void> => {
-  const steps = await getSignupSteps(store)
-  store.dispatch(actions.signupStepsReceive(steps))
-  const firstStep = stepByName(steps.first())
-  const firstStepUrl = firstStep.get('slug')
-  const currentStep = params.stepName // step user just landed on
+  const firstStep = stepByName(stepNames.first())
+  const firstStepSlug = firstStep.get('slug')
+  const currentStep = params.secondarySlug // step user just landed on
 
   if (!currentStep) {
-    redirectToFirstStep(store, firstStepUrl, query.promo_code)
+    redirectToFirstStep(store, firstStepSlug, query.promo_code)
 
     return
   }
 
   if (!canLandOnStepWithoutRedirecting(currentStep)) {
-    redirectToFirstStep(store, firstStepUrl, query.promo_code)
+    redirectToFirstStep(store, firstStepSlug, query.promo_code)
 
     return
   }

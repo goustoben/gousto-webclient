@@ -54,7 +54,7 @@ interface FetchSignupDataParams {
    * Additional params what would be used based on FetchSignupDataParams["options"] flags
    */
   params?: {
-    stepName?: string
+    secondarySlug?: string
     pathname?: string
   }
   /**
@@ -78,7 +78,10 @@ export const fetchSignupData = async ({
   options = {},
 }: FetchSignupDataParams): Promise<void> => {
   await loadMenuDays(store)
-  if (options.isGoustoOnDemandEnabled && params.stepName !== signupConfig.checkAccountPageSlug) {
+  if (
+    options.isGoustoOnDemandEnabled &&
+    params.secondarySlug !== signupConfig.checkAccountPageSlug
+  ) {
     await loadBoxPricesAndPromoCode(store)
   }
 }

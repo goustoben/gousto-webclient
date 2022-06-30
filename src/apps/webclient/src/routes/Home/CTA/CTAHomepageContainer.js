@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { homeGetStarted } from 'actions/home'
+import { homeGetStarted } from 'routes/Home/homeActions'
 
 import { CTA } from './CTA'
 

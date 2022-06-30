@@ -1,9 +1,10 @@
 import Immutable from 'immutable'
-import { homeGetStarted, applyPromoCodeAndShowModal } from 'actions/home'
+
+import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
+import { homeGetStarted, applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
 import { getPromoBannerState } from 'utils/home'
-import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
@@ -29,7 +30,7 @@ jest.mock('utils/home', () => ({
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
-  getProtocol: () => 'https:'
+  getProtocol: () => 'https:',
 }))
 
 const defaultState = {

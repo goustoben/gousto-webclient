@@ -3,7 +3,6 @@ import basket from './basket'
 import { checkoutActions } from './checkout'
 import { collectionsLoadCollectionBySlug } from './collections'
 import { deliveriesActions } from './deliveries'
-import { homeActions } from './home'
 import * as log from './log'
 import login from './login'
 import menu from './menu'
@@ -43,7 +42,6 @@ const actions = {
   ...user,
   ...deliveriesActions,
   ...welcome,
-  ...homeActions,
 }
 
 export default actions
