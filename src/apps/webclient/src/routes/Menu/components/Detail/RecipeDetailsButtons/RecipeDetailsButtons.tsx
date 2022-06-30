@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux'
 import { recipesConfig } from 'config/recipes'
 import { useBasket, useStock, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
 
-import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { Surcharge } from './Surcharge'
 import { useSurchargePerPortion } from './useSurchargePerPortion'
@@ -18,7 +17,7 @@ import css from './RecipeDetailsButtons.css'
 type ButtonsProps = {
   buttonText?: string
   isOutOfStock?: boolean
-  position?: number
+  position?: string
   recipeId: string
   view: string
 }
@@ -37,12 +36,19 @@ const generateGetSurchargeGridClass =
 export const RecipeDetailsButtons = ({
   buttonText = 'Add recipe',
   isOutOfStock = false,
-  position = 0,
+  position = '',
   recipeId,
   view,
 }: ButtonsProps) => {
   const dispatch = useDispatch()
-  const { numPortions, reachedLimit, getQuantitiesForRecipeId, canAddRecipes } = useBasket()
+  const {
+    numPortions,
+    reachedLimit,
+    getQuantitiesForRecipeId,
+    canAddRecipes,
+    addRecipe,
+    removeRecipe,
+  } = useBasket()
   const { maxRecipesForPortion } = useSupportedBoxTypes()
   const maxRecipesNum = maxRecipesForPortion(numPortions)
   const { getStockForRecipe } = useStock()
@@ -53,7 +59,7 @@ export const RecipeDetailsButtons = ({
   const handleAdd = useCallback(
     (isFirstInBatchOfSameRecipes: boolean) => {
       if (stock !== null && canAddRecipes) {
-        dispatch(basketRecipeAdd(recipeId, view, { position }, maxRecipesNum))
+        addRecipe(recipeId, view, { position }, maxRecipesNum)
 
         if (isFirstInBatchOfSameRecipes) {
           dispatch(menuRecipeDetailVisibilityChange())
@@ -67,12 +73,12 @@ export const RecipeDetailsButtons = ({
         dispatch(actions.menuBrowseCTAVisibilityChange(true))
       }
     },
-    [dispatch, stock, canAddRecipes, recipeId, view, position, maxRecipesNum],
+    [dispatch, stock, canAddRecipes, recipeId, view, position, maxRecipesNum, addRecipe],
   )
 
   const handleRemove = useCallback(() => {
-    dispatch(basketRecipeRemove(recipeId, view, position))
-  }, [dispatch, recipeId, view, position])
+    removeRecipe(recipeId, view, position)
+  }, [recipeId, view, position, removeRecipe])
 
   const getSegments = (disabled: boolean) => {
     const getSurchargeGridClass = generateGetSurchargeGridClass(surchargePerPortion, view)
