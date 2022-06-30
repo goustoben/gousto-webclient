@@ -1,7 +1,9 @@
 import React from 'react'
 
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
-import { useDispatch } from 'react-redux'
+import Immutable from 'immutable'
+import { Provider, useDispatch } from 'react-redux'
+import configureStore from 'redux-mock-store'
 
 import { actionTypes } from 'actions/actionTypes'
 
@@ -17,7 +19,22 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }))
+jest.mock('hooks/useWizardFiveRecipesEnabled', () => ({
+  useWizardFiveRecipesEnabled: jest.fn().mockReturnValueOnce(false).mockRejectedValueOnce(true),
+}))
+
 const dispatch = jest.fn()
+const store = configureStore()
+const mockedStore = store({
+  auth: Immutable.fromJS({}),
+  basket: Immutable.fromJS({}),
+  menu: Immutable.fromJS({
+    menuLimits: [],
+  }),
+  menuRecipeDetails: Immutable.fromJS({}),
+  tracking: Immutable.fromJS({}),
+  menuCollections: Immutable.fromJS({}),
+})
 
 describe('given the user is at the Personalise Menu Step', () => {
   beforeEach(() => {
@@ -33,7 +50,11 @@ describe('given the user is at the Personalise Menu Step', () => {
     let renderedPersonaliseMenuStep
 
     beforeEach(() => {
-      renderedPersonaliseMenuStep = render(<PersonaliseMenuStep />)
+      renderedPersonaliseMenuStep = render(
+        <Provider store={mockedStore}>
+          <PersonaliseMenuStep />
+        </Provider>,
+      )
     })
 
     test('it has the correct title and instructions', () => {

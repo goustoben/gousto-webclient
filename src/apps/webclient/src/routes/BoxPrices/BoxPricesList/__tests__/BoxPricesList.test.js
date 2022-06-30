@@ -25,6 +25,13 @@ describe('Given BoxPriceList component', () => {
     const mockStore = configureMockStore()
     const mockedStore = mockStore({
       auth: Immutable.fromJS({}),
+      basket: Immutable.fromJS({}),
+      menu: Immutable.fromJS({
+        menuLimits: [],
+      }),
+      menuRecipeDetails: Immutable.fromJS({}),
+      tracking: Immutable.fromJS({}),
+      menuCollections: Immutable.fromJS({}),
     })
 
     wrapper = mount(
