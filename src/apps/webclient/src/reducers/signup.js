@@ -3,7 +3,7 @@ import { actionTypes } from 'actions/actionTypes'
 
 const initialState = Immutable.fromJS({
   wizard: {
-    steps: Immutable.List(),
+    stepNames: null,
     currentStepName: '',
     currentStepNumber: 0,
     isLastStep: false,
@@ -19,7 +19,7 @@ const signup = {
   signup: (state = initialState, action) => {
     switch (action.type) {
     case actionTypes.SIGNUP_STEPS_RECEIVE: {
-      return state.setIn(['wizard', 'steps'], Immutable.fromJS(action.steps))
+      return state.setIn(['wizard', 'stepNames'], Immutable.fromJS(action.stepNames))
     }
 
     case actionTypes.SIGNUP_STEP_SET: {

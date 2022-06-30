@@ -1,3 +1,4 @@
+// See note in Signup.test.tsx
 import React from 'react'
 
 import actions from 'actions'
@@ -5,6 +6,7 @@ import { shallow } from 'enzyme'
 import { StepIndicator } from 'goustouicomponents'
 import Immutable from 'immutable'
 
+import { signupConfig } from 'config/signup'
 import { Signup } from 'routes/Signup/Signup'
 
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
@@ -37,6 +39,8 @@ describe('Signup', () => {
     promoBannerState: {
       canApplyPromo: true,
     },
+    signupStepsReceive: jest.fn(),
+    stepNames: Immutable.List(signupConfig.defaultSteps),
   }
 
   beforeEach(() => {
@@ -121,11 +125,11 @@ describe('Signup', () => {
     })
   })
 
-  describe('when the step is "about" for Sell the Proposition page', () => {
+  describe('when the slug is "about" for Sell the Proposition page', () => {
     let wrapper
 
     beforeEach(() => {
-      wrapper = shallow(<Signup {...props} stepName="about" />, { context })
+      wrapper = shallow(<Signup {...props} secondarySlug="about" />, { context })
     })
 
     test('then it should render the separate Sell the proposition page', () => {

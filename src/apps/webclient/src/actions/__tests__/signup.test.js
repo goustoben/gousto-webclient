@@ -1,11 +1,9 @@
 import Immutable from 'immutable'
-
-import { basketPostcodeChange } from 'actions/basket'
-import { actionTypes } from 'actions/actionTypes'
 import { push } from 'react-router-redux'
-import { stepByName } from 'utils/signup'
+
+import { actionTypes } from 'actions/actionTypes'
+import { basketPostcodeChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
-import { trackUTMAndPromoCode } from 'actions/tracking'
 import {
   signupStepsReceive,
   signupCookForKidsChange,
@@ -18,8 +16,11 @@ import {
   trackSocialBelongingBannerAppearance,
   signupGetCountByPostcode,
 } from 'actions/signup'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import { fetchCountByPostcode } from 'apis/signup'
+import { signupConfig } from 'config/signup'
 import logger from 'utils/logger'
+import { stepByName } from 'utils/signup'
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
@@ -64,13 +65,15 @@ describe('signup actions', () => {
 
   describe('signupStepsReceive', () => {
     test('should return a SIGNUP_STEPS_RECEIVE action', () => {
-      expect(signupStepsReceive('a').type).toEqual(
+      expect(signupStepsReceive(signupConfig.defaultSteps).type).toEqual(
         actionTypes.SIGNUP_STEPS_RECEIVE,
       )
     })
 
     test('should return a SIGNUP_STEPS_RECEIVE action with the steps argument mapped through to the steps property', () => {
-      expect(signupStepsReceive('a').steps).toEqual('a')
+      expect(signupStepsReceive(signupConfig.defaultSteps).stepNames).toEqual(
+        signupConfig.defaultSteps,
+      )
     })
   })
 
@@ -98,10 +101,7 @@ describe('signup actions', () => {
         error: Immutable.Map({}),
       })
 
-      await signupChangePostcode(postcode, nextStepName)(
-        dispatch,
-        getState,
-      )
+      await signupChangePostcode(postcode, nextStepName)(dispatch, getState)
 
       expect(basketPostcodeChange).toHaveBeenCalledWith(postcode)
     })
@@ -114,10 +114,7 @@ describe('signup actions', () => {
           }),
         })
 
-        await signupChangePostcode(postcode, nextStepName)(
-          dispatch,
-          getState,
-        )
+        await signupChangePostcode(postcode, nextStepName)(dispatch, getState)
 
         expect(stepByName).not.toHaveBeenCalled()
       })
@@ -129,17 +126,19 @@ describe('signup actions', () => {
       getState.mockReturnValue({
         signup: Immutable.fromJS({
           wizard: {
-            steps: [['delivery', 'welcome', 'finish']],
+            stepNames: [['delivery', 'welcome', 'finish']],
           },
         }),
         error: Immutable.Map({
           [actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE]: false,
         }),
       })
-      stepByName.mockReturnValue(Immutable.Map({
-        name: 'welcome',
-        slug: 'welcome',
-      }))
+      stepByName.mockReturnValue(
+        Immutable.Map({
+          name: 'welcome',
+          slug: 'welcome',
+        }),
+      )
     })
 
     test('should persist query parameters through signup', () => {
@@ -147,7 +146,7 @@ describe('signup actions', () => {
       getState.mockReturnValue({
         signup: Immutable.fromJS({
           wizard: {
-            steps: [['delivery', 'welcome', 'finish']],
+            stepNames: [['delivery', 'welcome', 'finish']],
           },
         }),
         routing: {
@@ -173,7 +172,7 @@ describe('signup actions', () => {
         getState.mockReturnValue({
           signup: Immutable.fromJS({
             wizard: {
-              steps: [['delivery', 'welcome', 'finish']],
+              stepNames: [['delivery', 'welcome', 'finish']],
               isLastStep: false,
             },
           }),
@@ -191,15 +190,17 @@ describe('signup actions', () => {
         getState.mockReturnValue({
           signup: Immutable.fromJS({
             wizard: {
-              steps: ['delivery', 'welcome', 'finish'],
+              stepNames: ['delivery', 'welcome', 'finish'],
               isLastStep: true,
             },
           }),
         })
-        stepByName.mockReturnValue(Immutable.Map({
-          name: 'finish',
-          slug: 'finish',
-        }))
+        stepByName.mockReturnValue(
+          Immutable.Map({
+            name: 'finish',
+            slug: 'finish',
+          }),
+        )
 
         signupNextStep('finish')(dispatch, getState)
 
@@ -273,11 +274,8 @@ describe('signup actions', () => {
       getState.mockReturnValue({
         signup: Immutable.fromJS({
           wizard: {
-            steps: [
-              {name: 'stepName', slug: 'step-slug'},
-              {name: 'secondStepName', slug: 'step-2-slug'}
-            ]
-          }
+            stepNames: [['stepName', 'secondStepName']],
+          },
         }),
       })
     })
@@ -285,7 +283,7 @@ describe('signup actions', () => {
     test('should dispatch the SIGNUP_STEP_SET action', () => {
       const step = Immutable.Map({
         name: 'stepName',
-        slug: 'step-slug'
+        slug: 'step-slug',
       })
       signupSetStep(step)(dispatch, getState)
 
@@ -297,7 +295,7 @@ describe('signup actions', () => {
         trackingData: {
           type: 'SIGNUP_STEP_SET',
           step: 'step-slug',
-          stepName: 'stepName'
+          stepName: 'stepName',
         },
       })
     })
@@ -358,7 +356,7 @@ describe('signup actions', () => {
           wizard: {
             district: 'District',
             amountOfCustomers: 100,
-          }
+          },
         }),
         basket: Immutable.fromJS({
           promoCode: 'promo1',
@@ -396,14 +394,15 @@ describe('signup actions', () => {
           }),
         })
         fetchCountByPostcode.mockResolvedValue(
-          new Promise(resolve => {
+          new Promise((resolve) => {
             resolve({
               data: {
                 count: 100,
                 district: 'district',
               },
             })
-          }))
+          }),
+        )
       })
 
       test('then it should dispatch correct data', async () => {

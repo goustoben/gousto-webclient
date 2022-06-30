@@ -2,14 +2,14 @@ import Immutable, { List } from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
 import { redirect } from 'actions/redirect'
-import { signupSetStep, signupStepsReceive } from 'actions/signup'
+import { signupSetStep } from 'actions/signup'
+import { signupConfig } from 'config/signup'
 import { openProperStep, OpenStepStore } from 'routes/Signup/utils/openProperStep'
 
 jest.mock('routes/Signup/utils/getSignupSteps', () => ({
   getSignupSteps: jest.fn(async () => List.of([{ slug: 'first step slug' }])),
 }))
 jest.mock('actions/signup', () => ({
-  signupStepsReceive: jest.fn(),
   signupSetStep: jest.fn(),
 }))
 jest.mock('actions/menu', () => ({
@@ -40,26 +40,35 @@ describe('Given openProperStep util function', () => {
     jest.clearAllMocks()
   })
   describe('when executed', () => {
-    describe('when stepName is undefined', () => {
+    describe('when secondarySlug is undefined', () => {
       test('should dispatch proper actions', async () => {
-        await openProperStep(mockedStore)
-        expect(signupStepsReceive).toBeCalled()
-        expect(redirect).toBeCalled()
+        await openProperStep(mockedStore, Immutable.List(signupConfig.defaultSteps))
+        expect(redirect).toHaveBeenCalledWith('/signup/box-size')
       })
     })
-    describe('when stepName is defined, but can not land on step without redirect', () => {
+    describe('when secondarySlug is defined, but can not land on step without redirect', () => {
       test('should dispatch proper actions', async () => {
-        await openProperStep(mockedStore, {}, { stepName: 'stepName' })
-        expect(signupStepsReceive).toBeCalled()
-        expect(redirect).toBeCalled()
+        await openProperStep(
+          mockedStore,
+          Immutable.List(signupConfig.defaultSteps),
+          {},
+          { secondarySlug: 'unrecognized-step-slug' },
+        )
+        expect(redirect).toHaveBeenCalledWith('/signup/box-size')
       })
     })
-    describe('when stepName is defined and can land on step without redirect', () => {
+    describe('when secondarySlug is defined and can land on step without redirect', () => {
       test('should dispatch proper actions', async () => {
-        await openProperStep(mockedStore, {}, { stepName: 'postcode' })
-        expect(signupStepsReceive).toBeCalled()
+        await openProperStep(
+          mockedStore,
+          Immutable.List(signupConfig.defaultSteps),
+          {},
+          { secondarySlug: 'postcode' },
+        )
         expect(redirect).toBeCalledTimes(0)
-        expect(signupSetStep).toBeCalled()
+        expect(signupSetStep).toHaveBeenCalledWith(
+          Immutable.Map({ name: 'postcode', slug: 'postcode' }),
+        )
       })
     })
   })
