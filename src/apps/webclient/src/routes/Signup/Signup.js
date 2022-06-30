@@ -50,8 +50,8 @@ const propTypes = {
 }
 
 const defaultProps = {
-  secondarySlug: '',
-  stepNames: Immutable.List(),
+  secondarySlug: null,
+  stepNames: null,
   goToStep: () => {},
   location: {
     query: {
