@@ -6,6 +6,7 @@ import { shallow } from 'enzyme'
 import { StepIndicator } from 'goustouicomponents'
 import Immutable from 'immutable'
 
+import { signupConfig } from 'config/signup'
 import { Signup } from 'routes/Signup/Signup'
 
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
@@ -38,6 +39,8 @@ describe('Signup', () => {
     promoBannerState: {
       canApplyPromo: true,
     },
+    signupStepsReceive: jest.fn(),
+    stepNames: Immutable.List(signupConfig.defaultSteps),
   }
 
   beforeEach(() => {
