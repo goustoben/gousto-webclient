@@ -3,7 +3,7 @@
 .container {
   composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
   background: #DFF4FF;
-  width: 70%
+  width: 70%;
   border-radius: 3px;
   border: 1px solid #73D1FC;
   padding: 16px 14px;
