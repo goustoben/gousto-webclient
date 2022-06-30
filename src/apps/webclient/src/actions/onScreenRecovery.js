@@ -10,6 +10,7 @@ import userActions from './user'
 import statusActions from './status'
 
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
+import { trackOrderCancelled } from './loggingmanager'
 
 const SERVER_ERROR_500 = 500
 
@@ -152,9 +153,11 @@ export const cancelPendingOrder = (variation = 'default') => (
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
     const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
+    const orderDate = getState().onScreenRecovery.get('orderDate').split(' ')[0]
 
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
+      dispatch(trackOrderCancelled({ orderId, deliveryDate: orderDate }))
     } catch (err) {
       logger.error(err)
     } finally {

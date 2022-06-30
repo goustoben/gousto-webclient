@@ -10,6 +10,7 @@ import {
   trackUserFreeFoodLinkShare,
   trackSignupStarted,
   trackSignupFinished,
+  trackOrderCancelled,
 } from 'actions/loggingmanager'
 
 const MOCK_EVENT_ID = 'mock-event-id'
@@ -692,6 +693,56 @@ describe('Track user`s signup events', () => {
           },
         }
       })
+    })
+  })
+})
+
+describe('trackOrderCancelled', () => {
+  let getState
+  let dispatch
+  const browser = 'browser'
+  const orderId = 'fake-414'
+  const deliveryDate = '2022-07-06 00:00:00'
+
+  afterEach(() => {
+    triggerLoggingManagerEvent.mockReset()
+  })
+
+  beforeEach(async () => {
+    const state = {
+      request: Immutable.fromJS({
+        browser,
+      }),
+      auth: Immutable.fromJS({
+        id: MOCK_AUTH_USER_ID,
+        accessToken: MOCK_ACCESS_TOKEN,
+      }),
+      user: Immutable.fromJS({
+        id: MOCK_USER_ID,
+      }),
+    }
+    dispatch = jest.fn()
+    getState = jest.fn().mockReturnValue(state)
+
+    await trackOrderCancelled({ orderId, deliveryDate })(dispatch, getState)
+  })
+
+  test('loggingManager should be triggered with exact args', () => {
+    expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+      accessToken: MOCK_ACCESS_TOKEN,
+      loggingManagerRequest: {
+        name: EVENT_NAMES.orderCancelled,
+        isAnonymousUser: undefined,
+        authUserId: MOCK_AUTH_USER_ID,
+        id: MOCK_EVENT_ID,
+        occurredAt: MOCK_OCCURRED_AT,
+        userId: MOCK_USER_ID,
+        data: {
+          device: 'browser',
+          orderId,
+          deliveryDate,
+        },
+      }
     })
   })
 })

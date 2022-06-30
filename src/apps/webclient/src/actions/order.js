@@ -10,6 +10,7 @@ import { orderTrackingActions } from 'config/order'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
 import { getOrderForUpdateOrderV1 } from 'routes/Menu/selectors/order'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
+import { trackOrderCancelled } from 'actions/loggingmanager'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
@@ -376,6 +377,10 @@ export const orderCancel = (orderId, deliveryDayId, variation) => (
     }
   })
 
+/**
+ * Param orderId has a date format, ex "29-06-2022"
+ * @param {date} orderId
+ */
 export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
   async (dispatch, getState) => {
     const showAllCancelledModalIfNecessary = () => {
@@ -423,6 +428,8 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
 
       dispatch(userActions.userOpenCloseOrderCard(orderId, true))
       showAllCancelledModalIfNecessary()
+
+      dispatch(trackOrderCancelled({ deliveryDate: orderId }))
     } catch (err) {
       dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, { error: err.message, orderId }))
     } finally {
@@ -492,7 +499,7 @@ export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispat
       type: actionTypes.CANCEL_MULTIPLE_BOXES_ERROR,
     })
   } finally {
-    cancelledOrders.forEach(({ isProjected, id, deliveryDayId }) => {
+    cancelledOrders.forEach(({ isProjected, id, deliveryDayId, deliveryDay }) => {
       dispatch({
         type: isProjected
           ? actionTypes.PROJECTED_ORDER_CANCEL
@@ -509,6 +516,9 @@ export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispat
           ],
         }
       })
+
+      const orderCancelledPayload = isProjected ? { deliveryDate: deliveryDay } : { orderId: id, deliveryDate: deliveryDay }
+      dispatch(trackOrderCancelled(orderCancelledPayload))
     })
 
     if (cancelledOrders.length) {
