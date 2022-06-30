@@ -3,21 +3,13 @@ import styled from "@emotion/styled";
 
 import {
   Box,
-  Color,
   FontFamily,
   FontWeight,
   Icon,
   Text,
 } from "@gousto-internal/citrus-react";
 import { useGetRecipeTileLinkDataHook } from "../../model/context/useGetRecipeTileLinkData";
-import {
-  cssRecipeFineDineInTileLinkText,
-  cssRecipeTileFineDineInLink,
-  cssRecipeTileFineDineInLinkIcon,
-  cssRecipeTileLink,
-  cssRecipeTileLinkIcon,
-  cssRecipeTileLinkText,
-} from "./styles";
+import { cssRecipeTileLink, cssFineDineIn } from "./styles";
 
 type RecipeTileLinkProps = {
   isFineDineIn: boolean;
@@ -28,23 +20,7 @@ const StyledButton = styled.button(
   (props: any) =>
     ({
       ...cssRecipeTileLink,
-      ...(props.isFineDineIn ? cssRecipeTileFineDineInLink : {}),
-    } as any)
-);
-
-const StyledText = styled(Text)(
-  (props: any) =>
-    ({
-      ...cssRecipeTileLinkText,
-      ...(props.isFineDineIn ? cssRecipeFineDineInTileLinkText : {}),
-    } as any)
-);
-
-const StyledIcon = styled(Icon)(
-  (props: any) =>
-    ({
-      ...cssRecipeTileLinkIcon,
-      ...(props.isFineDineIn ? cssRecipeTileFineDineInLinkIcon : {}),
+      ...(props.isFineDineIn ? cssFineDineIn : {}),
     } as any)
 );
 
@@ -74,16 +50,14 @@ export function RecipeTileLink({
         onClick={handleOnRecipeTileLinkClick}
         isFineDineIn={isFineDineIn}
       >
-        <StyledText
+        <Text
           fontFamily={FontFamily.UI}
           fontWeight={FontWeight.SemiBold}
           size={1}
-          isFineDineIn={isFineDineIn}
-          color={isFineDineIn ? Color.Secondary_200 : Color.Secondary_400}
         >
           More details
-        </StyledText>
-        <StyledIcon name="arrow_right" size={4} isFineDineIn={isFineDineIn} />
+        </Text>
+        <Icon name="arrow_right" size={4} style={{ color: "inherit" }} />
       </StyledButton>
     </Box>
   );

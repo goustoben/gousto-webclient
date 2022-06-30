@@ -1,12 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 
-import { useDispatch } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
 
-import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { useStock } from '../../domains/basket'
 import { useCurrentCollectionId } from '../../domains/collections'
 import { useMenu } from '../../domains/menu'
@@ -15,7 +11,6 @@ import { RecipeList } from './RecipeList'
 import { useSoldOutTracking } from './useSoldOutTracking'
 
 const RecipeListWrapper = (ownProps) => {
-  const dispatch = useDispatch()
   const currentCollectionId = useCurrentCollectionId()
   const { getRecipesForCollectionId } = useMenu()
   const { getOutOfStockRecipeIds } = useStock()
@@ -23,14 +18,6 @@ const RecipeListWrapper = (ownProps) => {
 
   const isDietaryCollectionLinksEnabled = useIsOptimizelyFeatureEnabled(
     'kales_dietary_category_links',
-  )
-
-  const actionDispatchers = bindActionCreators(
-    {
-      showDetailRecipe,
-      trackSoldOutRecipes,
-    },
-    dispatch,
   )
 
   const selectedCuisines = useSelectedCuisines()
@@ -56,7 +43,6 @@ const RecipeListWrapper = (ownProps) => {
       {...ownProps}
       currentCollectionId={currentCollectionId}
       recipes={recipes}
-      showDetailRecipe={actionDispatchers.showDetailRecipe}
       isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
     />
   )

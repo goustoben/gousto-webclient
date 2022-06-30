@@ -5,6 +5,7 @@ import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { UseGetAlternativeOptionsForRecipeContextProvider } from "../../../model/context";
 import { UseTrackingContextProvider } from "../../../model/context/useTracking";
 import { RecipeAlternativeOptions } from ".";
+import { UseMakeOnCheckRecipeContextProvider } from "../../../model/context/useMakeOnCheckRecipe";
 
 describe("RecipeAlternativeOptions", () => {
   const useTrackingSwapAlternativeOptions = () => ({
@@ -50,12 +51,15 @@ describe("RecipeAlternativeOptions", () => {
               useTrackingSwapAlternativeOptions,
             })}
           >
-            <RecipeAlternativeOptions
-              recipeId="recipe_1"
-              isOnDetailScreen
-              categoryId="category_1"
-              onChangeCheckedRecipe={() => {}}
-            />
+            <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+              <RecipeAlternativeOptions
+                recipeId="recipe_1"
+                originalId="recipe_1"
+                isOnDetailScreen
+                categoryId="category_1"
+                onChangeCheckedRecipe={() => {}}
+              />
+            </UseMakeOnCheckRecipeContextProvider>
           </UseTrackingContextProvider>
         </UseGetAlternativeOptionsForRecipeContextProvider>
       );
@@ -77,6 +81,8 @@ describe("RecipeAlternativeOptions", () => {
     });
 
     describe("when user click on option item", () => {
+      const onChange = jest.fn()
+
       const renderRecipeAlternativeOptionsAndPickAnOption = () => {
         render(
           <UseGetAlternativeOptionsForRecipeContextProvider
@@ -88,12 +94,15 @@ describe("RecipeAlternativeOptions", () => {
                 useTrackingSwapAlternativeOptions,
               })}
             >
-              <RecipeAlternativeOptions
-                recipeId="recipe_1"
-                isOnDetailScreen
-                categoryId="category_1"
-                onChangeCheckedRecipe={() => {}}
-              />
+              <UseMakeOnCheckRecipeContextProvider value={() => () => onChange}>
+                <RecipeAlternativeOptions
+                  recipeId="recipe_1"
+                  originalId="recipe_1"
+                  isOnDetailScreen
+                  categoryId="category_1"
+                  onChangeCheckedRecipe={() => {}}
+                />
+              </UseMakeOnCheckRecipeContextProvider>
             </UseTrackingContextProvider>
           </UseGetAlternativeOptionsForRecipeContextProvider>
         );
@@ -104,7 +113,7 @@ describe("RecipeAlternativeOptions", () => {
 
       test("it should call the handler from the hook", () => {
         renderRecipeAlternativeOptionsAndPickAnOption();
-        expect(changeCheckedRecipeTwo).toHaveBeenCalled();
+        expect(onChange).toHaveBeenCalled();
       });
     });
 
@@ -122,12 +131,15 @@ describe("RecipeAlternativeOptions", () => {
                 useTrackingSwapAlternativeOptions,
               })}
             >
-              <RecipeAlternativeOptions
-                recipeId="recipe_1"
-                isOnDetailScreen
-                categoryId="category_1"
-                onChangeCheckedRecipe={() => {}}
-              />
+              <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+                <RecipeAlternativeOptions
+                  recipeId="recipe_1"
+                  originalId="recipe_1"
+                  isOnDetailScreen
+                  categoryId="category_1"
+                  onChangeCheckedRecipe={() => {}}
+                />
+              </UseMakeOnCheckRecipeContextProvider>
             </UseTrackingContextProvider>
           </UseGetAlternativeOptionsForRecipeContextProvider>
         );
@@ -153,12 +165,15 @@ describe("RecipeAlternativeOptions", () => {
                 useTrackingSwapAlternativeOptions,
               })}
             >
-              <RecipeAlternativeOptions
-                recipeId="recipe_1"
-                isOnDetailScreen={false}
-                categoryId="category_1"
-                onChangeCheckedRecipe={() => {}}
-              />
+              <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+                <RecipeAlternativeOptions
+                  recipeId="recipe_1"
+                  originalId="recipe_1"
+                  isOnDetailScreen={false}
+                  categoryId="category_1"
+                  onChangeCheckedRecipe={() => {}}
+                />
+              </UseMakeOnCheckRecipeContextProvider>
             </UseTrackingContextProvider>
           </UseGetAlternativeOptionsForRecipeContextProvider>
         );
@@ -192,12 +207,15 @@ describe("RecipeAlternativeOptions", () => {
               useTrackingSwapAlternativeOptions,
             })}
           >
-            <RecipeAlternativeOptions
-              recipeId="recipe_1"
-              isOnDetailScreen
-              categoryId="category_1"
-              onChangeCheckedRecipe={() => {}}
-            />
+            <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+              <RecipeAlternativeOptions
+                recipeId="recipe_1"
+                originalId="recipe_1"
+                isOnDetailScreen
+                categoryId="category_1"
+                onChangeCheckedRecipe={() => {}}
+              />
+            </UseMakeOnCheckRecipeContextProvider>
           </UseTrackingContextProvider>
         </UseGetAlternativeOptionsForRecipeContextProvider>
       );
@@ -236,12 +254,15 @@ describe("RecipeAlternativeOptions", () => {
               useTrackingSwapAlternativeOptions,
             })}
           >
-            <RecipeAlternativeOptions
-              recipeId="recipe_1"
-              isOnDetailScreen
-              categoryId="category_1"
-              onChangeCheckedRecipe={() => {}}
-            />
+            <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
+              <RecipeAlternativeOptions
+                recipeId="recipe_1"
+                originalId="recipe_1"
+                isOnDetailScreen
+                categoryId="category_1"
+                onChangeCheckedRecipe={() => {}}
+              />
+            </UseMakeOnCheckRecipeContextProvider>
           </UseTrackingContextProvider>
         </UseGetAlternativeOptionsForRecipeContextProvider>
       );

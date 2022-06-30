@@ -1,3 +1,4 @@
+import { UseMakeOnCheckRecipe } from '../../model/context/useMakeOnCheckRecipe';
 import { UseRecipeBrand } from '../../model/context/useRecipeBrand';
 import { UseTracking } from '../../model/context/useTracking'
 import { Recipe } from '../../model/recipe';
@@ -135,6 +136,8 @@ export const getMocks = ({
     dispatchTrackClickMoreRecipeDetails: () => {}
   })
 
+  const useMakeOnCheckRecipe: UseMakeOnCheckRecipe = (() => () => () => () => {}) as UseMakeOnCheckRecipe
+
   return {
     recipe,
     useStock,
@@ -145,5 +148,6 @@ export const getMocks = ({
     useGetSurchargeForRecipeId,
     useRecipeBrand,
     useGetRecipeTileLinkData,
+    useMakeOnCheckRecipe,
   };
 };

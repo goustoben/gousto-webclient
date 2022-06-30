@@ -3,7 +3,6 @@ import { colors, typography } from "../../../styles"
 
 export const cssItem: CSSObject = {
   textAlign: 'left',
-  boxSizing: 'content-box',
 
   '& > label': {
     marginBottom: '0',
@@ -67,7 +66,7 @@ export const cssLabelContainer: CSSObject = {
   cursor: 'pointer',
   margin: '0',
   display: 'flex',
-  width: 'calc(100% - 1.5rem)',
+  width: 'calc(100% - 0.5rem)',
   justifyContent: 'space-between',
   lineHeight: '1.3',
   marginLeft: '0.25rem',

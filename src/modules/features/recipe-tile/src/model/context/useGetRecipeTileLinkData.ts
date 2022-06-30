@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 
 type UseGetRecipeTileLinkData = () => {
-  isRecipeTileLinkVisible: boolean
+  isRecipeTileLinkVisible: boolean | null
   dispatchTrackClickMoreRecipeDetails: () => void
 }
 

@@ -4,6 +4,7 @@ import { UseBasketContextProvider } from "./useBasket";
 import { UseGetAlternativeOptionsForRecipeContextProvider } from "./useGetAlternativeOptionsForRecipe";
 import { UseGetRecipeTileLinkDataContextProvider } from "./useGetRecipeTileLinkData";
 import { UseGetSurchargeForRecipeIdContextProvider } from "./useGetSurchargeForRecipeId";
+import { UseMakeOnCheckRecipeContextProvider } from "./useMakeOnCheckRecipe";
 import { UseRecipeBrandContextProvider } from "./useRecipeBrand";
 import { RecipeReferenceProvider } from "./useRecipeReference";
 import { UseSetBrowserCTAVisibilityContextProvider } from "./useSetBrowserCTAVisibility";
@@ -32,6 +33,7 @@ type RecipeTileDependenciesArgs = {
   useRecipeBrand: ExtractValueTypeFromContextProvider<typeof UseRecipeBrandContextProvider>
   recipeReference?: ExtractValueTypeFromContextProvider<typeof RecipeReferenceProvider>;
   useGetRecipeTileLinkData: ExtractValueTypeFromContextProvider<typeof UseGetRecipeTileLinkDataContextProvider>;
+  useMakeOnCheckRecipe: ExtractValueTypeFromContextProvider<typeof UseMakeOnCheckRecipeContextProvider>;
 };
 
 /**
@@ -52,6 +54,7 @@ export const RecipeTileDependencies = ({
   recipeReference = null,
   useRecipeBrand,
   useGetRecipeTileLinkData,
+  useMakeOnCheckRecipe,
 }: RecipeTileDependenciesArgs) => (
   // Each logical item uses its own provider to minimize re-renderings
   <UseStockContextProvider value={useStock}>
@@ -68,7 +71,9 @@ export const RecipeTileDependencies = ({
                 <RecipeReferenceProvider value={recipeReference}>
                   <UseRecipeBrandContextProvider value={useRecipeBrand}>
                     <UseGetRecipeTileLinkDataContextProvider value={useGetRecipeTileLinkData}>
-                      {children}
+                      <UseMakeOnCheckRecipeContextProvider value={useMakeOnCheckRecipe}>
+                        {children}
+                      </UseMakeOnCheckRecipeContextProvider>
                     </UseGetRecipeTileLinkDataContextProvider>
                   </UseRecipeBrandContextProvider>
                 </RecipeReferenceProvider>

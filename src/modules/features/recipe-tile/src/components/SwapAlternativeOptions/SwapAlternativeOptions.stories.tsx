@@ -20,7 +20,7 @@ type StoryArgs = {
 type SwapAlternativeOptionsStory = (args: StoryArgs) => ReturnType<typeof SwapAlternativeOptions>;
 
 const Template: ComponentStory<SwapAlternativeOptionsStory> = (_: StoryArgs) => (
-  <SwapAlternativeOptions recipeId="some_recipe_id" categoryId="some_category_id" />
+  <SwapAlternativeOptions recipeId="some_recipe_id" originalId="some_recipe_id" categoryId="some_category_id" />
 );
 
 export const Desktop = Template.bind({});

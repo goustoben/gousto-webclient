@@ -28,7 +28,7 @@ const defaultGetAlternativeOptionsForRecipe = jest
 const onClickAddRecipe = jest.fn();
 
 const defaultProps = {
-  recipeId: "some_recipe_one",
+  originalId: "some_recipe_one",
   currentCollectionId: "some category ID",
   onClick: onClickAddRecipe,
 };
@@ -45,7 +45,7 @@ const renderComponent = ({
   render(
     <RecipeTileDependencies
       recipe={{
-        id: "111",
+        id: "some_recipe_one",
         title: "cool test recipe title",
         isFineDineIn: false,
         tagline: "new-eme",
@@ -90,12 +90,13 @@ const renderComponent = ({
             color: "red",
             borderColor: "red",
           },
-        })
+        }),
       })}
-      useGetRecipeTileLinkData= {() => ({
+      useGetRecipeTileLinkData={() => ({
         isRecipeTileLinkVisible: true,
         dispatchTrackClickMoreRecipeDetails: jest.fn(),
       })}
+      useMakeOnCheckRecipe={() => () => () => {}}
     >
       <RecipeTile {...defaultProps} />
     </RecipeTileDependencies>

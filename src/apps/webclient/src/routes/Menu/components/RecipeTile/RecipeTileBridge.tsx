@@ -1,0 +1,122 @@
+import React, { useCallback } from 'react'
+
+import { Map } from 'immutable'
+import { useDispatch } from 'react-redux'
+
+import { RecipeTile as RecipeTileV2, RecipeTileDependencies } from '@features/recipe-tile'
+
+import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
+import { useMakeOnCheckRecipe } from 'routes/Menu/components/RecipeAlternativeOptions/RecipeAlternativeOptions/useMakeOnCheckRecipe'
+import { useTrackVariantListDisplay } from 'routes/Menu/components/RecipeAlternativeOptions/RecipeAlternativeOptions/useTracking'
+import { useGetSurchargeForRecipeId } from 'routes/Menu/components/RecipeTile/Hooks'
+import { useGetRecipeTileLinkData } from 'routes/Menu/components/RecipeTile/RecipeTileLink'
+import { SwapAlternativeOptionsMobile } from 'routes/Menu/components/RecipeTile/SwapAlternativeOptions'
+import {
+  useRecipeBrandAvailabilityTag,
+  useRecipeBrandTag,
+  RecipeContextProvider,
+} from 'routes/Menu/context/recipeContext'
+import { useBasket, useStock } from 'routes/Menu/domains/basket'
+import {
+  useSetBrowserCTAVisibility,
+  useGetAlternativeOptionsForRecipe,
+} from 'routes/Menu/domains/menu'
+
+import { RecipeReferenceProvider } from '../../context/recipeReferenceContext'
+import { useTracking as useTrackSwapAlternativeOptions } from './SwapAlternativeOptions/useTracking'
+
+type RecipeTileBridgeProps = {
+  recipeReference: string | null
+  recipe: Map<string, string>
+  originalId: string
+  collectionId: string
+}
+
+/**
+ *
+ * Integrate the `RecipeTile` from the `recipe-tile` module into WebClient.
+ *
+ * ------
+ *
+ * **Context**
+ *
+ * As part of wider modularisatiom initiative `RecipeTile` compoenent was pulled
+ * into it own "feature" module.
+ *
+ * While refactoring the `RecipeTile` related code into new place, some of
+ * related complex logic was left in the WebClient. As it relies on patterns
+ * and frameworks that were deliberately abandoned by new `RecipeTile` module:
+ * global redux store, Immutable.js, enzyma etc.
+ *
+ * To ensure the new `RecipeTile` has access to that logic a pattern of hooks
+ * "injection" was addopted. In which the complex logic is wrapped into hooks,
+ * which are "injected" into `RecipeTile` module as React Contexts.
+ *
+ * There are quite a few such "contexts", hence the `RecipeTileBridge` component
+ * with aim to abstract away "wiring" module based `RecipeTile` into the WebClient.
+ *
+ */
+export const RecipeTileBridge = ({
+  recipeReference,
+  recipe,
+  originalId,
+  collectionId,
+}: RecipeTileBridgeProps) => {
+  const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } =
+    useTrackSwapAlternativeOptions()
+
+  const dispatch = useDispatch()
+  const onClick = useCallback((...args) => dispatch(showDetailRecipe(...args)), [dispatch])
+
+  const useTracking = useCallback(
+    () => ({
+      useTrackVariantListDisplay,
+      useTrackingSwapAlternativeOptions: () => ({
+        trackRecipeAlternativeOptionsMenuOpen,
+        trackRecipeAlternativeOptionsMenuSwapRecipes,
+      }),
+    }),
+    [trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes],
+  )
+
+  const useRecipeBrand = useCallback(
+    () => ({
+      useRecipeBrandAvailabilityTag,
+      useRecipeBrandTag,
+    }),
+    [],
+  )
+
+  return (
+    <RecipeReferenceProvider value={recipeReference}>
+      <RecipeContextProvider value={recipe}>
+        <RecipeTileDependencies
+          recipe={recipe.toJS()}
+          useGetAlternativeOptionsForRecipe={useGetAlternativeOptionsForRecipe}
+          useStock={useStock}
+          useBasket={useBasket}
+          useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
+          useTracking={useTracking}
+          recipeReference={recipeReference}
+          useGetSurchargeForRecipeId={useGetSurchargeForRecipeId}
+          useRecipeBrand={useRecipeBrand}
+          useGetRecipeTileLinkData={useGetRecipeTileLinkData}
+          useMakeOnCheckRecipe={useMakeOnCheckRecipe}
+        >
+          <RecipeTileV2
+            originalId={originalId}
+            currentCollectionId={collectionId}
+            onClick={onClick}
+            SwapAlternativeOptionsMobile={() => (
+              <SwapAlternativeOptionsMobile
+                recipeId={recipe.get('id')}
+                originalId={originalId}
+                categoryId={collectionId}
+              />
+            )}
+          />
+        </RecipeTileDependencies>
+      </RecipeContextProvider>
+    </RecipeReferenceProvider>
+  )
+}
