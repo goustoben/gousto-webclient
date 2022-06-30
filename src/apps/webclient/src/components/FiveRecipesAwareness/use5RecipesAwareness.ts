@@ -8,6 +8,7 @@ import { getIsAuthenticated, getAccessToken } from 'selectors/auth'
 import { useIsOptimizelyFeatureEnabled } from '../../containers/OptimizelyRollouts/useOptimizely.hook'
 import { buildSubscriptionQueryUrl } from '../../routes/Account/apis/subscription'
 import { getFetcher } from '../../routes/Menu/apis/fetch'
+import { useSupportedBoxTypes } from '../../routes/Menu/domains/basket'
 import { getUserId } from '../../selectors/user'
 
 type Time = string
@@ -47,24 +48,21 @@ const useSubscription = () => {
   const parametersForFetcher =
     accessToken && userId ? [url, queryString, accessToken, userId] : null
 
-  return useSWR<Subscription>(parametersForFetcher, getFetcher, {
+  const { data: response } = useSWR<Subscription>(parametersForFetcher, getFetcher, {
     shouldRetryOnError: false,
   })
+
+  return response?.data?.subscription
 }
 
-const useHasSubscriptionFor2People4Recipes = () => {
-  const TWO_PORTIONS_BOX = 2
-  const FOUR_RECIPES_BOX = 4
-  const { data: request } = useSubscription()
+const useCanOrder5Recipes = () => {
+  const { maxRecipesForPortion } = useSupportedBoxTypes()
+  const subscription = useSubscription()
 
-  return (
-    request &&
-    request?.data?.subscription?.numPortions === TWO_PORTIONS_BOX &&
-    request?.data?.subscription?.numRecipes === FOUR_RECIPES_BOX
-  )
+  return maxRecipesForPortion(subscription?.numPortions) >= 5
 }
 
-export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_seen_on_menu'
+export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_modal_seen_on_menu'
 
 export const OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW =
   'radishes_five_recipes_awareness_subscribed_web_enabled'
@@ -79,19 +77,17 @@ export const use5RecipesAwareness = () => {
   )
   const setMenuAsSeen = () => setHasSeenOnMenuValue(true)
 
-  const hasSubscriptionFor2People4Recipes = useHasSubscriptionFor2People4Recipes()
+  const canOrder5Recipes = useCanOrder5Recipes()
   const isEnabledForSubscriptionUser = useIsOptimizelyFeatureEnabled(
-    hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
+    canOrder5Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
   )
 
-  const isEnabled = Boolean(isEnabledForSubscriptionUser)
+  const isEnabled = canOrder5Recipes && Boolean(isEnabledForSubscriptionUser)
 
   return {
     isEnabled,
     isNewUser,
-    userSeenOnMenu,
     hasSeenOnMenu: Boolean(userSeenOnMenu),
     setMenuAsSeen,
-    maxRecipes: isEnabled && !userSeenOnMenu ? 5 : 4,
   }
 }

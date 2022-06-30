@@ -7,7 +7,7 @@ import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 
 import headerImage from 'media/images/five-recipes/five-recipes.png'
 
-import { use5RecipesAwareness } from './use5RecipesAwareness'
+import { use5RecipesAwareness } from '../use5RecipesAwareness'
 
 import css from './FiveRecipesAwarenessModal.css'
 
