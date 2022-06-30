@@ -308,6 +308,7 @@ describe('onScreenRecovery', () => {
         onScreenRecovery: Immutable.Map({
           orderId: '64521',
           deliveryDayId: '123',
+          orderDate: '2019-11-17 00:00:00',
         }),
         user: Immutable.fromJS({
           newOrders: {
@@ -347,7 +348,8 @@ describe('onScreenRecovery', () => {
         state.onScreenRecovery = Immutable.Map({
           orderId: '64521',
           deliveryDayId: '123',
-          forceRefresh: true
+          forceRefresh: true,
+          orderDate: '2019-11-17 00:00:00',
         })
         getStateSpy.mockReturnValue(state)
       })
@@ -363,7 +365,8 @@ describe('onScreenRecovery', () => {
         state.onScreenRecovery = Immutable.Map({
           orderId: '64521',
           deliveryDayId: '123',
-          forceRefresh: false
+          forceRefresh: false,
+          orderDate: '2019-11-17 00:00:00',
         })
         getStateSpy.mockReturnValue(state)
       })
@@ -539,6 +542,7 @@ describe('onScreenRecovery', () => {
             onScreenRecovery: Immutable.Map({
               orderId: '12223',
               orderType: 'pending',
+              orderDate: '2019-11-17 00:00:00',
             }),
             user: Immutable.Map()
           })
@@ -881,7 +885,8 @@ describe('onScreenRecovery', () => {
         onScreenRecovery: Immutable.Map({
           orderId: '1234',
           deliveryDayId: '567',
-          orderType: 'pending'
+          orderType: 'pending',
+          orderDate: '2019-11-17 00:00:00',
         }),
         user: Immutable.Map()
       })

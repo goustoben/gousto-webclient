@@ -15,6 +15,7 @@ export const EVENT_NAMES = {
   rafLinkShared: 'rafLink-shared',
   signupStarted: 'signup_started',
   signupFinished: 'signup_finished',
+  orderCancelled: 'order_cancelled',
 }
 
 const generateLoggingManagerRequest = ({ loggingManagerEvent }) => {
@@ -277,7 +278,31 @@ const trackSignupFinished = ({ email }) => (
       accessToken,
       loggingManagerRequest,
     })
-    triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
+  }
+)
+
+const trackOrderCancelled = ({ deliveryDate, orderId }) => (
+  async (dispatch, getState) => {
+    const { device, accessToken, ...params } = getParams(getState())
+    const eventName = EVENT_NAMES.orderCancelled
+
+    const loggingManagerEvent = {
+      eventName,
+      ...params,
+      data: { device },
+    }
+
+    if (deliveryDate) {
+      loggingManagerEvent.data = { ...loggingManagerEvent.data, deliveryDate }
+    }
+
+    if (orderId) {
+      loggingManagerEvent.data = { ...loggingManagerEvent.data, orderId }
+    }
+
+    const loggingManagerRequest = generateLoggingManagerRequest({ loggingManagerEvent })
+
+    await triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
   }
 )
 
@@ -289,4 +314,5 @@ export {
   trackUserFreeFoodLinkShare,
   trackSignupStarted,
   trackSignupFinished,
+  trackOrderCancelled,
 }
