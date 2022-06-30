@@ -21,7 +21,7 @@ export const useRemoveRecipe = () => {
   const dispatch = useDispatch()
 
   return useCallback(
-    (recipeId: string, view?: string, position?: number | null) => {
+    (recipeId: string, view?: string, position?: string) => {
       dispatch({
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId,

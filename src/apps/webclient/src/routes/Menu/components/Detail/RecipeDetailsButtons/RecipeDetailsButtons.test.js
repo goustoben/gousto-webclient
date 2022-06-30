@@ -26,11 +26,16 @@ const mockUp = ({
   const dispatch = jest.fn()
 
   jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
+  const addRecipe = jest.fn()
+  const removeRecipe = jest.fn()
+
   jest.spyOn(BasketHook, 'useBasket').mockImplementation(() => ({
     numPortions,
     reachedLimit,
     canAddRecipes,
     getQuantitiesForRecipeId: () => quantity,
+    addRecipe,
+    removeRecipe,
   }))
 
   jest.spyOn(BasketHook, 'useSupportedBoxTypes').mockImplementation(() => ({
@@ -63,6 +68,8 @@ const mockUp = ({
     basketRecipeAdd,
     basketRecipeRemove,
     menuBrowseCTAVisibilityChange,
+    addRecipe,
+    removeRecipe,
   }
 }
 
@@ -264,18 +271,17 @@ describe('the RecipeDetailsButtons component', () => {
       describe('when the stock is not null', () => {
         describe('when the disable prop is false', () => {
           describe('and clicking to adding a recipe', () => {
-            let basketRecipeAdd
+            let addRecipe
             const maxRecipesNum = 4
 
             beforeEach(() => {
-              ;({ basketRecipeAdd } = mockUp())
+              ;({ addRecipe } = mockUp())
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
-
             test('then it adds the recipe', () => {
               buttonContent = wrapper.find('Segment').first()
               buttonContent.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(
+              expect(addRecipe).toHaveBeenCalledWith(
                 recipeId,
                 view,
                 { position, score },
@@ -349,11 +355,11 @@ describe('the RecipeDetailsButtons component', () => {
       describe('When the button is not disabled', () => {
         describe('When the stock is not null', () => {
           describe('and clicking to add a recipe', () => {
-            let basketRecipeAdd
+            let addRecipe
             const maxRecipesNum = 4
 
             beforeEach(() => {
-              ;({ basketRecipeAdd } = mockUp({ quantity: 2 }))
+              ;({ addRecipe } = mockUp({ quantity: 2 }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
 
@@ -361,7 +367,7 @@ describe('the RecipeDetailsButtons component', () => {
               segmentRemove = wrapper.find('Segment').at(0)
               segmentAdd = wrapper.find('Segment').at(2)
               segmentAdd.simulate('click')
-              expect(basketRecipeAdd).toHaveBeenCalledWith(
+              expect(addRecipe).toHaveBeenCalledWith(
                 recipeId,
                 view,
                 { position, score },
@@ -371,16 +377,16 @@ describe('the RecipeDetailsButtons component', () => {
           })
 
           describe('When clicking to remove a recipe', () => {
-            let basketRecipeRemove
+            let removeRecipe
 
             beforeEach(() => {
-              ;({ basketRecipeRemove } = mockUp({ quantity: 2 }))
+              ;({ removeRecipe } = mockUp({ quantity: 2 }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
             test('then it should remove the recipe', () => {
               segmentRemove = wrapper.find('Segment').at(0)
               segmentRemove.simulate('click')
-              expect(basketRecipeRemove).toHaveBeenCalledWith(recipeId, view, position)
+              expect(removeRecipe).toHaveBeenCalledWith(recipeId, view, position)
             })
           })
         })
@@ -402,15 +408,16 @@ describe('the RecipeDetailsButtons component', () => {
           })
 
           describe('When clicking to remove a recipe', () => {
-            let basketRecipeRemove
+            let removeRecipe
 
             beforeEach(() => {
-              ;({ basketRecipeRemove } = mockUp({ quantity: 2, stockLevel: null }))
+              ;({ removeRecipe } = mockUp({ quantity: 2, stockLevel: null }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
             test('then it should remove the recipe', () => {
+              segmentRemove = wrapper.find('Segment').at(0)
               segmentRemove.simulate('click')
-              expect(basketRecipeRemove).toHaveBeenCalledWith(recipeId, view, position)
+              expect(removeRecipe).toHaveBeenCalledWith(recipeId, view, position)
             })
           })
         })
