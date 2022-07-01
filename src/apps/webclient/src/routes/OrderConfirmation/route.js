@@ -2,23 +2,19 @@ import React from 'react'
 
 import { Route } from 'react-router'
 
-import config from 'config/routes'
+import { client } from 'config/routes'
 import { checkValidSession } from 'utils/routes'
 
 import { OrderConfirmationWrapper } from './OrderConfirmationWrapper'
 
 const OrderConfirmationRoute = (store) => {
-  const onEnterHandler = (routes, replace, next) => {
-    const redirectTo = config.client.orderConfirmation
-
-    checkValidSession(store, redirectTo)(routes, replace, next)
-  }
+  const { orderConfirmation, home } = client
 
   return (
     <Route
-      path={config.client.orderConfirmation}
+      path={orderConfirmation}
       component={OrderConfirmationWrapper}
-      onEnter={onEnterHandler}
+      onEnter={checkValidSession(store, home, true)}
     />
   )
 }
