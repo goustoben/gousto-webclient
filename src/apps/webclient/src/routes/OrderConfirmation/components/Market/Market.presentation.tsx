@@ -2,8 +2,6 @@ import React from 'react'
 
 import classnames from 'classnames'
 import { Alert } from 'goustouicomponents'
-import Immutable from 'immutable'
-import PropTypes from 'prop-types'
 
 import { SaveButton } from 'components/OrderSummary/SaveButton'
 import Overlay from 'components/Overlay'
@@ -11,6 +9,11 @@ import CloseButton from 'components/Overlay/CloseButton'
 import config from 'config/products'
 
 import { OCCASIONS_CATEGORY_NAME } from '../../constants/categories'
+import type { Basket } from '../../types/basket'
+import type { Bundle } from '../../types/bundles'
+import type { NavigationCategories } from '../../types/navigationCategory'
+import type { ProductCategories } from '../../types/productCategory'
+import type { Products } from '../../types/products'
 import { LoadingWrapper } from '../LoadingWrapper'
 import { OrderSummaryContainer } from '../OrderSummary/OrderSummaryContainer'
 import { ProductList } from '../ProductList'
@@ -20,141 +23,49 @@ import { ReferAFriend } from '../ReferAFriend'
 
 import css from './Market.css'
 
-const filteredProductPropType = PropTypes.objectOf(
-  PropTypes.shape({
-    id: PropTypes.string,
-    title: PropTypes.string,
-    listPrice: PropTypes.string,
-    images: PropTypes.instanceOf(Immutable.Map),
-    ageRestricted: PropTypes.bool,
-    quantity: PropTypes.number,
-  }),
-)
-
-const productPropType = PropTypes.arrayOf(
-  PropTypes.shape({
-    id: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    listPrice: PropTypes.string,
-    isVatable: PropTypes.bool,
-    isForSale: PropTypes.bool,
-    ageRestricted: PropTypes.bool,
-    boxLimit: PropTypes.number,
-    alwaysOnMenu: PropTypes.bool,
-    volume: PropTypes.number,
-    zone: PropTypes.string,
-    createdAt: PropTypes.string,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string,
-        title: PropTypes.string,
-        boxLimit: PropTypes.number,
-        isDefault: PropTypes.bool,
-        recentlyAdded: PropTypes.bool,
-        hidden: PropTypes.bool,
-        pivot: PropTypes.shape({
-          createdAt: PropTypes.string,
-        }),
-      }),
-    ),
-    tags: PropTypes.arrayOf(PropTypes.string),
-    images: PropTypes.objectOf(
-      PropTypes.shape({
-        src: PropTypes.string,
-        url: PropTypes.string,
-        width: PropTypes.number,
-      }),
-    ),
-  }),
-)
-
-const propTypes = {
-  ageVerified: PropTypes.bool,
-  basket: PropTypes.instanceOf(Immutable.Map).isRequired,
-  bundlesProducts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      bundleName: PropTypes.string,
-      bundleDescription: PropTypes.string,
-      bundleImage: PropTypes.string,
-      bundlePrice: PropTypes.string,
-      bundlesProducts: PropTypes.arrayOf(productPropType),
-    }),
-  ),
-  categoriesForNavBar: PropTypes.objectOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      label: PropTypes.string,
-      count: PropTypes.number,
-    }),
-  ).isRequired,
-  filteredProducts: PropTypes.oneOfType([productPropType, filteredProductPropType]),
-  getFilteredProducts: PropTypes.func.isRequired,
-  isOrderSummaryOpen: PropTypes.bool,
-  onOrderSave: PropTypes.func.isRequired,
-  products: PropTypes.objectOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      listPrice: PropTypes.string,
-      images: PropTypes.objectOf(
-        PropTypes.shape({
-          src: PropTypes.string,
-          url: PropTypes.string,
-          width: PropTypes.number,
-        }),
-      ),
-      ageRestricted: PropTypes.bool,
-      quantity: PropTypes.number,
-    }),
-  ).isRequired,
-  productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
-  productsLoadError: PropTypes.bool,
-  saveError: PropTypes.bool,
-  saveRequired: PropTypes.bool,
-  saving: PropTypes.bool,
-  showOrderConfirmationReceipt: PropTypes.bool.isRequired,
-  toggleAgeVerificationPopUp: PropTypes.func.isRequired,
-  toggleOrderSummary: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
-  trackingCategory: PropTypes.string,
-}
-
-const defaultProps = {
-  ageVerified: false,
-  bundlesProducts: null,
-  filteredProducts: null,
-  isOrderSummaryOpen: false,
-  productsLoadError: false,
-  saveError: false,
-  saveRequired: false,
-  saving: false,
-  isLoading: false,
-  trackingCategory: '',
+type Props = {
+  ageVerified: boolean
+  basket: Basket
+  bundlesProducts: Bundle[] | null
+  categoriesForNavBar: NavigationCategories
+  filteredProducts: Products | null
+  getFilteredProducts: (arg: string) => void
+  isOrderSummaryOpen: boolean
+  onOrderSave: () => void
+  products: Products
+  productsCategories: ProductCategories
+  productsLoadError: boolean
+  saveError: boolean
+  saveRequired: boolean
+  saving: boolean
+  showOrderConfirmationReceipt: boolean
+  toggleAgeVerificationPopUp: () => void
+  toggleOrderSummary: () => void
+  isLoading: boolean
+  trackingCategory: string
 }
 
 const MarketPresentation = ({
-  ageVerified,
+  ageVerified = false,
   basket,
-  bundlesProducts,
+  bundlesProducts = null,
   categoriesForNavBar,
-  filteredProducts,
+  filteredProducts = null,
   getFilteredProducts,
-  isOrderSummaryOpen,
+  isOrderSummaryOpen = false,
   onOrderSave,
   products,
   productsCategories,
   productsLoadError,
-  saveError,
-  saveRequired,
-  saving,
+  saveError = false,
+  saveRequired = false,
+  saving = false,
   showOrderConfirmationReceipt,
   toggleAgeVerificationPopUp,
   toggleOrderSummary,
-  isLoading,
-  trackingCategory,
-}) => {
+  isLoading = false,
+  trackingCategory = '',
+}: Props) => {
   const showOccasions = !isLoading && trackingCategory === OCCASIONS_CATEGORY_NAME
   const showDefault = !isLoading && trackingCategory !== OCCASIONS_CATEGORY_NAME
 
@@ -222,8 +133,5 @@ const MarketPresentation = ({
     </div>
   )
 }
-
-MarketPresentation.propTypes = propTypes
-MarketPresentation.defaultProps = defaultProps
 
 export { MarketPresentation }

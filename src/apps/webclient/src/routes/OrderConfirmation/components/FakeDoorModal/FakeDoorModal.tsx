@@ -22,11 +22,12 @@ import { marketBundleTracking } from 'actions/orderConfirmation'
 import { marketBundleBrowseItems, marketBundleClose } from 'actions/trackingKeys'
 import { ALL_PRODUCTS_CATEGORY_ID } from 'routes/OrderConfirmation/constants/categories'
 import { useProductNavBar } from 'routes/OrderConfirmation/context/productsNavBarContext'
-import { BundleProduct } from 'routes/OrderConfirmation/types'
+
+import type { BundleProduct } from '../../types/bundles'
 
 import css from './FakeDoorModal.css'
 
-interface Props {
+type Props = {
   bundleName: string
   bundleProducts: BundleProduct[]
   getFilteredProducts: (categoryId: string) => void

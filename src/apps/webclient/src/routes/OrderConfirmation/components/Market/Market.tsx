@@ -24,10 +24,12 @@ import { ProductNavBarProvider } from '../../context/productsNavBarContext'
 import { useIsBundlesEnabled } from '../../hooks/useBundlesExperiment.hook'
 import { getBundles } from '../../productBundles/utils'
 import { getOrderWhenStartDateFormatted } from '../../selectors/orderDetails'
-import type { Category, FilteredProducts, NavCategories, NavCategory } from '../../types'
+import type { NavigationCategory, NavigationCategories } from '../../types/navigationCategory'
+import type { ProductCategory } from '../../types/productCategory'
+import type { Products } from '../../types/products'
 import { MarketPresentation } from './Market.presentation'
 
-interface Props {
+type Props = {
   ageVerified: boolean
   toggleAgeVerificationPopUp: () => void
 }
@@ -35,7 +37,7 @@ interface Props {
 const Market = (props: Props) => {
   const dispatch = useDispatch()
 
-  const [filteredProducts, setFilteredProducts] = useState<FilteredProducts | null>(null)
+  const [filteredProducts, setFilteredProducts] = useState<Products | null>(null)
   const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState<boolean>(false)
   const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
     ALL_PRODUCTS_CATEGORY_NAME,
@@ -44,14 +46,14 @@ const Market = (props: Props) => {
   const isOrderConfirmation = true
 
   const bundlesExperimentEnabled = useIsBundlesEnabled()
-  const [experimentCategories, setExperimentCategories] = useState<NavCategories | undefined>(
-    undefined,
-  )
+  const [experimentCategories, setExperimentCategories] = useState<
+    NavigationCategories | undefined
+  >(undefined)
 
   const [bundlesProducts, setBundlesProducts] = useState<any>(null)
 
   const basket = useSelector(getBasket)
-  const categoriesForNavBar: NavCategories = useSelector(getCategoriesForNavBar)
+  const categoriesForNavBar: NavigationCategories = useSelector(getCategoriesForNavBar)
   const products = useSelector(getProductsForMarket)
   const productsCategories = useSelector(getProductCategories)
   const productsLoadError = useSelector(getProductsLoadError)
@@ -66,7 +68,7 @@ const Market = (props: Props) => {
     if (bundlesExperimentEnabled) {
       const productBundles = getBundles(orderWhenStartDate)
       if (productBundles.length > 0) {
-        const occasions: NavCategories = {
+        const occasions: NavigationCategories = {
           occasions: {
             id: OCCASIONS_CATEGORY_ID,
             label: OCCASIONS_CATEGORY_NAME,
@@ -89,13 +91,13 @@ const Market = (props: Props) => {
   }
 
   const getFilteredProducts = (categoryId: string) => {
-    const selectedFilterCategory: NavCategory = experimentCategories
+    const selectedFilterCategory: NavigationCategory = experimentCategories
       ? experimentCategories[categoryId]
       : categoriesForNavBar[categoryId]
 
     if (!Object.keys(products).length || !selectedFilterCategory) return
 
-    let chosenCategoryProducts: FilteredProducts = {}
+    let chosenCategoryProducts: Products = {}
 
     setTrackingCategoryTitle(selectedFilterCategory.label)
 
@@ -106,7 +108,7 @@ const Market = (props: Props) => {
         const productCategories = products[productId].categories
 
         if (productCategories) {
-          productCategories.forEach((category: Category) => {
+          productCategories.forEach((category: ProductCategory) => {
             const productProps = products[productId]
 
             if (categoryId === category.id) {
