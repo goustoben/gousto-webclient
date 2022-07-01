@@ -59,7 +59,11 @@ const useCanOrder5Recipes = () => {
   const { maxRecipesForPortion } = useSupportedBoxTypes()
   const subscription = useSubscription()
 
-  return maxRecipesForPortion(subscription?.numPortions) >= 5
+  return (
+    subscription &&
+    subscription?.numPortions &&
+    maxRecipesForPortion(subscription?.numPortions) >= 5
+  )
 }
 
 export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_modal_seen_on_menu'
@@ -82,7 +86,7 @@ export const use5RecipesAwareness = () => {
     canOrder5Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
   )
 
-  const isEnabled = canOrder5Recipes && Boolean(isEnabledForSubscriptionUser)
+  const isEnabled = Boolean(canOrder5Recipes && isEnabledForSubscriptionUser)
 
   return {
     isEnabled,
