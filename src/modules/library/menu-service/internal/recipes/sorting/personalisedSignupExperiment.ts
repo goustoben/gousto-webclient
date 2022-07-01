@@ -1,6 +1,6 @@
 // this file and associated test file are part of a Turnips experiment
 // personalised signup: re-order menu recipes according to cuisines selected by the user
-import Immutable from 'immutable'
+import { TransformedRecipe } from '../../transformer';
 
 const cuisineMappings: Record<string, string> = {
   italian: 'italian',
@@ -31,33 +31,38 @@ const cuisineMappings: Record<string, string> = {
   moroccan: 'mediterranean',
 }
 
-type Recipe = { recipe: Immutable.Map<string, unknown>; originalId: string }
+type Recipe = { 
+  recipe: TransformedRecipe;
+  originalId: string;
+  reference: string;
+}
 
 const findMatch = (recipeCuisine: string, selectedCuisines: string[]) =>
   selectedCuisines.some((selectedCuisine) => selectedCuisine === cuisineMappings[recipeCuisine])
 
 export function orderCollectionRecipesByCuisine(
-  recipes: Immutable.List<any>,
+  recipes: Recipe[],
   selectedCuisines: string[],
 ) {
   const topRecipes: Recipe[] = []
   const otherRecipes: Recipe[] = []
-  const recipesAsPlainJS = recipes.toJS()
 
-  recipesAsPlainJS.forEach((args: Recipe) => {
+  recipes.forEach((args) => {
     const { recipe, originalId } = args
-    const recipeCuisine = recipe.toJS().cuisine.toLowerCase()
+    const recipeCuisine = recipe.cuisine.toLowerCase()
     const match = findMatch(recipeCuisine, selectedCuisines)
+
     if (match && topRecipes.length < 25) {
       topRecipes.push({ ...args, recipe, originalId })
     } else {
       otherRecipes.push({ ...args, recipe, originalId })
     }
   })
+
   const trackingData = topRecipes.map((recipe) => recipe.originalId)
 
   return {
-    orderedRecipes: Immutable.List([...topRecipes, ...otherRecipes]),
+    orderedRecipes: [...topRecipes, ...otherRecipes],
     trackingData
   }
 }

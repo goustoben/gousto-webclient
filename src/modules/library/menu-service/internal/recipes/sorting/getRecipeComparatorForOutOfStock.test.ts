@@ -1,15 +1,14 @@
-import Immutable from 'immutable'
-
+import { TransformedRecipe } from '../../transformer'
 import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
 
-const makeIds = (recipes: Immutable.Map<string, any>[]) =>
-  new Set(recipes.map(r => r.get('id')))
+const makeIds = (recipes: { id: string }[]) =>
+  new Set(recipes.map(r => r.id))
 
 describe('getRecipeComparatorForOutOfStock', () => {
-  const RECIPE_1 = Immutable.Map({ id: 'aaaa' })
-  const RECIPE_2 = Immutable.Map({ id: 'bbbb' })
+  const RECIPE_1 = { id: 'aaaa' } as TransformedRecipe
+  const RECIPE_2 = { id: 'bbbb' } as TransformedRecipe
 
-  const wrapRecipes = (recipes: Immutable.Map<string, any>[]) =>
+  const wrapRecipes = (recipes: TransformedRecipe[]) =>
     recipes.map((recipe) => ({ recipe }))
 
   describe('when there are no recipes in stock', () => {
@@ -52,8 +51,8 @@ describe('getRecipeComparatorForOutOfStock', () => {
   })
 
   describe('when only part of recipes are in stock', () => {
-    const RECIPE_3 = Immutable.Map({ id: 'cccc' })
-    const RECIPE_4 = Immutable.Map({ id: 'dddd' })
+    const RECIPE_3 = { id: 'cccc' } as TransformedRecipe
+    const RECIPE_4 = { id: 'dddd' } as TransformedRecipe
 
     const comparator = getRecipeComparatorForOutOfStock(makeIds([RECIPE_1, RECIPE_3, RECIPE_4]))
 
