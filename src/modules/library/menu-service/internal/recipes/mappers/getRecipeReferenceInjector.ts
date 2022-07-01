@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import { TransformedRecipe } from '../../transformer'
 
 /**
  * Prefix that identifies the Recipe Reference based on "family" fingerprint.
@@ -42,12 +43,8 @@ export const getRecipeReferenceInjector = ({
     return [recipeId, ...alternatives.map(({ coreRecipeId }) => coreRecipeId)].sort().join(',')
   }
 
-  return function injector(recipe?: Immutable.Map<string, any>) {
-    if (!recipe) {
-      return recipe
-    }
-
-    const hash = getRecipeFingerprint(recipe.get('id'))
+  return function injector(recipe: TransformedRecipe) {
+    const hash = getRecipeFingerprint(recipe.id)
     const counter = (recipeCounter[hash] || 0) + 1
     // eslint-disable-next-line no-param-reassign
     recipeCounter[hash] = counter
