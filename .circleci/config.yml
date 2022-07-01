@@ -1,28 +1,32 @@
 ---
 version: 2.1
 
-gousto_platform_image: &gousto_platform_image
-  - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
-    aws_auth:
-      aws_access_key_id: $AWS_ERC_ACCESS_KEY
-      aws_secret_access_key: $AWS_ERC_SECRET_KEY
-    environment:
-      BODA: true
+executors:
+  gousto_platform_image:
+    docker:
+      - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
+        aws_auth:
+          aws_access_key_id: $AWS_ERC_ACCESS_KEY
+          aws_secret_access_key: $AWS_ERC_SECRET_KEY
+        environment:
+          BODA: true
 
-gousto_node_image: &gousto_node_image
-  - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circlecinode-image/node14:latest
-    aws_auth:
-      aws_access_key_id: $AWS_ERC_ACCESS_KEY
-      aws_secret_access_key: $AWS_ERC_SECRET_KEY
+  gousto_node_image:
+    docker:
+      - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circlecinode-image/node14:latest
+        aws_auth:
+          aws_access_key_id: $AWS_ERC_ACCESS_KEY
+          aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
-circleci_node_image: &circleci_node_image
-  - image: cimg/node:14.18.1
-    user: root
+  circleci_node_image:
+    docker:
+      - image: cimg/node:14.18.1
+        user: root
 
-circleci_node_browsers_image:
-  &circleci_node_browsers_image #image has browser dependencies installed, but not browsers themselves
-  - image: cimg/node:14.18.1-browsers
-    user: root
+  circleci_node_browsers_image:
+    docker:
+      - image: cimg/node:14.18.1-browsers
+        user: root
 
 orbs:
   browser-tools: circleci/browser-tools@1.1.3
@@ -30,7 +34,7 @@ orbs:
 
 commands:
   gzip:
-    description: "Apply gzip compression to text files"
+    description: 'Apply gzip compression to text files'
     parameters:
       target:
         type: string
@@ -40,7 +44,7 @@ commands:
       - run: echo "Size after compression - $(du -sh << parameters.target >>)"
 
   upload-to-s3:
-    description: "Upload public dir to S3 bucket"
+    description: 'Upload public dir to S3 bucket'
     parameters:
       bucket:
         type: string
@@ -86,7 +90,7 @@ commands:
 
 jobs:
   setup-ci-variables-scripts:
-    docker: *gousto_platform_image #stock image missing /gousto directory
+    executor: gousto_platform_image #stock image missing /gousto directory
     resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
@@ -115,8 +119,8 @@ jobs:
             - mnt/ramdisk/yarn.lock
 
   install-dependencies:
-    docker: *gousto_node_image
-    resource_class: large
+    executor: gousto_node_image
+    resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
       - setup_remote_docker
@@ -143,11 +147,11 @@ jobs:
             - mnt/ramdisk/.yarn
 
   test-typecheck-and-report:
-    docker: *circleci_node_image
+    executor: circleci_node_image
     resource_class: medium+
     working_directory: ~/project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
-      TZ: "Europe/London"
+      TZ: 'Europe/London'
     steps:
       - attach_workspace:
           at: ~/project
@@ -171,11 +175,11 @@ jobs:
             - mnt/ramdisk/src/apps/webclient/coverage/coverage-summary.json
 
   eslint-generate-report:
-    docker: *circleci_node_image
+    executor: circleci_node_image
     resource_class: medium
     working_directory: /mnt/ramdisk
     environment:
-      TZ: "Europe/London"
+      TZ: 'Europe/London'
     steps:
       - attach_workspace:
           at: /
@@ -192,11 +196,11 @@ jobs:
             - mnt/ramdisk/src/apps/webclient/eslint-results.json
 
   publish-code-health:
-    docker: *circleci_node_image
+    executor: circleci_node_image
     resource_class: medium
     working_directory: /mnt/ramdisk
     environment:
-      TZ: "Europe/London"
+      TZ: 'Europe/London'
     steps:
       - attach_workspace:
           at: /
@@ -211,7 +215,7 @@ jobs:
           path: /tmp/artifacts
 
   build-webclient:
-    docker: *circleci_node_image
+    executor: circleci_node_image
     resource_class: large
     working_directory: /mnt/ramdisk
     steps:
@@ -232,12 +236,12 @@ jobs:
             - root/.circlerc
 
   upload-source-maps-to-datadog:
-    docker: *circleci_node_image
+    executor: circleci_node_image
     working_directory: /mnt/ramdisk
     parameters:
       env:
         type: enum
-        enum: ["staging", "production"]
+        enum: ['staging', 'production']
       top_level_domain:
         type: string
         default: .co.uk
@@ -250,7 +254,7 @@ jobs:
           command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}" ASSET_URL_PREFIX="https://<< parameters.env >>-assets.gousto<< parameters.top_level_domain >>/build/${BUILD_JOB_BUILD_NUM}/" yarn datadog:upload-sourcemaps
 
   upload-assets-to-s3:
-    docker: *gousto_platform_image
+    executor: gousto_platform_image
     resource_class: medium
     working_directory: /mnt/ramdisk
     parameters:
@@ -278,7 +282,7 @@ jobs:
           bucket: ${ASSETS_BUCKET}/${BUILD_JOB_BUILD_NUM}/
 
   create-and-upload-webclient-docker-image-to-ecr:
-    docker: *gousto_platform_image #stock image missing boto
+    executor: gousto_platform_image #stock image missing boto
     resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
@@ -291,7 +295,7 @@ jobs:
           no_output_timeout: 20m
 
   test-e2e:
-    docker: *circleci_node_browsers_image
+    executor: circleci_node_browsers_image
     resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
@@ -347,7 +351,7 @@ jobs:
       test_node_options:
         type: string
         default: --max-http-header-size=1000000
-    docker: *circleci_node_browsers_image
+    executor: circleci_node_browsers_image
     resource_class: large
     working_directory: /mnt/ramdisk
     parallelism: 5
@@ -414,7 +418,7 @@ jobs:
           destination: ./
 
   deploy-infrastructure-and-webclient-image:
-    docker: *gousto_platform_image #stock image missing boto
+    executor: gousto_platform_image #stock image missing boto
     resource_class: medium
     working_directory: /mnt/ramdisk
     steps:
@@ -574,8 +578,8 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - create-and-upload-webclient-docker-image-to-ecr
-            - "Upload static assets to staging S3 /build/BUILD_NUMBER"
-            - "Upload static assets to production S3 /build/BUILD_NUMBER"
+            - 'Upload static assets to staging S3 /build/BUILD_NUMBER'
+            - 'Upload static assets to production S3 /build/BUILD_NUMBER'
 
       - test-e2e:
           context: gousto-beta-aws-app-circleci
