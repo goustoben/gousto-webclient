@@ -18,11 +18,12 @@ import { fromJS } from 'immutable'
 import { getAllergenListFromAttributes } from 'components/Product/Detail/Detail'
 import { Divider } from 'routes/Account/Subscription/components/Divider'
 import { SubIngredients } from 'routes/Menu/components/Detail/SubIngredients'
-import { BundleProduct } from 'routes/OrderConfirmation/types'
+
+import type { BundleProduct } from '../../types/bundles'
 
 import css from './ProductBundleDetails.css'
 
-interface Props {
+type Props = {
   bundleDescription: string
   bundleImage: string
   bundleName: string

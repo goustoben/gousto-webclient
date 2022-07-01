@@ -1,29 +1,36 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
-import { Map } from 'immutable'
+import { shallow, ShallowWrapper } from 'enzyme'
+import Immutable from 'immutable'
 
 import { ALL_PRODUCTS_CATEGORY_NAME } from '../../../constants/categories'
 import { MarketPresentation } from '../Market.presentation'
 
 describe('<MarketPresentation />', () => {
   const DEFAULT_PROPS = {
-    basket: Map(),
-    categoriesForNavBar: [],
+    ageVerified: false,
+    basket: Immutable.fromJS({}),
+    categoriesForNavBar: {},
     getFilteredProducts: jest.fn(),
     onOrderSave: jest.fn(),
     products: {},
-    productsCategories: Map(),
-    productsLoadError: null,
+    filteredProducts: {},
+    productsCategories: Immutable.fromJS({}),
+    productsLoadError: false,
     selectedCategory: '',
     showOrderConfirmationReceipt: false,
     toggleAgeVerificationPopUp: jest.fn(),
     toggleOrderSummary: jest.fn(),
     trackingCategory: ALL_PRODUCTS_CATEGORY_NAME,
     isLoading: false,
+    bundlesProducts: [],
+    isOrderSummaryOpen: false,
+    saveError: false,
+    saveRequired: false,
+    saving: false,
   }
 
-  let wrapper
+  let wrapper: ShallowWrapper
 
   beforeEach(() => {
     wrapper = shallow(<MarketPresentation {...DEFAULT_PROPS} />)

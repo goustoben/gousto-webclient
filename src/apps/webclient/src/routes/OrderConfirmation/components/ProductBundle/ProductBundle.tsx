@@ -19,16 +19,16 @@ import { useDispatch } from 'react-redux'
 
 import { marketBundleTracking } from 'actions/orderConfirmation'
 import { marketBundleAdded, marketBundleDetails } from 'actions/trackingKeys'
-import { BundleProduct } from 'routes/OrderConfirmation/types'
 import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
+import type { BundleProduct } from '../../types/bundles'
 import { FakeDoorModal } from '../FakeDoorModal/FakeDoorModal'
 import { NewTag } from '../NewTag/NewTag'
 import { ProductBundleDetails } from '../ProductBundleDetails/ProductBundleDetails'
 
 import css from './ProductBundle.css'
 
-interface Props {
+type Props = {
   bundleProduct: {
     bundleImage: string
     bundleDescription: string

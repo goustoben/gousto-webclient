@@ -3,14 +3,14 @@ import React, { FC } from 'react'
 import { marketBundlesVariant } from 'actions/trackingKeys'
 import Loading from 'routes/Menu/Loading'
 import { GradientMarketplaceHeader } from 'routes/OrderConfirmation/components/GradientMarketplaceHeader'
-import { Bundle } from 'routes/OrderConfirmation/types'
 import { invokeHotjarEvent } from 'utils/hotjarUtils'
 
+import type { Bundle } from '../../types/bundles'
 import { ProductBundle } from '../ProductBundle'
 
 import css from './ProductListBundles.css'
 
-interface ProductListBundlesProps {
+type ProductListBundlesProps = {
   products: Bundle[] | null
   getFilteredProducts: (categoryId: string) => void
 }
