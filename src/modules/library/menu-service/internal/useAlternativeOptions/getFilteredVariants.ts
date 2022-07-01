@@ -1,11 +1,12 @@
 import Immutable from 'immutable'
 import { getDietaryClaimSlugs } from "../recipes/dietaryClaims"
+import { TransformedRecipe } from '../transformer'
 
 export function getFilteredVariants(
   variants: Immutable.Map<string, Immutable.Map<string, any>>,
   recipeId: string,
-  menuRecipes: Immutable.List<Immutable.Map<string, any>>,
-  collectionDietaryClaims: Immutable.List<string> | null,
+  menuRecipes: TransformedRecipe[],
+  collectionDietaryClaims: string[],
 ) {
   if (!variants) {
     return null
@@ -29,19 +30,24 @@ export function getFilteredVariants(
     return null
   }
 
-  if (!collectionDietaryClaims || !collectionDietaryClaims.size) {
+  if (!collectionDietaryClaims || !collectionDietaryClaims.length) {
     return { type: 'alternatives', alternatives, variantsList: alternatives }
   }
 
   const alternativesDietaryClaims = alternatives.filter((variant) => {
-    const matchingRecipe = menuRecipes.find((recipe) => recipe?.get('id') === variant?.get('coreRecipeId'))
-    const variantRecipeDietaryAttributes = getDietaryClaimSlugs(matchingRecipe)
+    const matchingRecipe = menuRecipes.find((recipe) => recipe.id === variant?.get('coreRecipeId'))
 
-    if (!variantRecipeDietaryAttributes || !variantRecipeDietaryAttributes.size) {
+    if (!matchingRecipe) {
       return false
     }
 
-    return collectionDietaryClaims.every((claim) => variantRecipeDietaryAttributes.includes(claim!))
+    const variantDietaryClaims = getDietaryClaimSlugs(matchingRecipe)
+
+    if (!variantDietaryClaims || !variantDietaryClaims.length) {
+      return false
+    }
+
+    return collectionDietaryClaims.every((claim) => variantDietaryClaims.includes(claim))
   })
 
   return {

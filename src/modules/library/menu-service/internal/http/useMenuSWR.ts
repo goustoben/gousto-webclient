@@ -1,20 +1,20 @@
 import { BareFetcher } from 'swr'
-import { MenuAPIQueryData, MenuAPIResponse } from './response'
+import { MenuAPIQueryData, MenuAPIResponse } from './types'
 import { useHTTPGet } from './useHTTPGet'
 
 export type UseMenuSWRArgs = {
-  accessToken: string;
-  authUserId: string;
+  accessToken: string
+  authUserId: string
 
   // getFetcher needs to be passed in, because it currently lives in webclient main module
   // this will allow us to reduce the amount of work needed for this initial implementation
-  getFetcher: BareFetcher<MenuAPIResponse>;
+  getFetcher: BareFetcher<MenuAPIResponse>
 
   // endpointUrl is passed in so we don't need to use the endpoint() function from webclient
   // (same reason as getFetcher)
-  endpointUrl: string;
+  endpointUrl: string
 
-  requestData: MenuAPIQueryData;
+  requestData: MenuAPIQueryData
 }
 
 const successReturn = (response: MenuAPIResponse) => ({
@@ -53,7 +53,7 @@ export function useMenuSWR({ accessToken, authUserId, endpointUrl, getFetcher, r
     // TODO is this correct?
     immutable: true,
 
-    requestData
+    requestData,
   })
 
   if (error) {

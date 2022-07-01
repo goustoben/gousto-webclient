@@ -1,106 +1,99 @@
-import { useMemo } from 'react'
-
-import Immutable from 'immutable'
-
+import { useCallback, useMemo } from 'react'
+import { getMenuIdForDate } from './date/getMenuIdForDate'
+import { useMenuService, UseMenuSWRArgs } from './http'
+import { TransformedRecipe, transformMenu } from './transformer'
 import { use_legacy_InStockRecipeIds } from './stock'
-import { use_legacy_CurrentMenuRecipes, use_legacy_CurrentMenuVariants } from './recipes'
+import { getOutOfStockRecipeReplacer, getRecipeReferenceInjector, getSelectedVariantsReplacer } from './recipes/mappers'
+import { getRecipeComparatorForOutOfStock, orderCollectionRecipesByCuisine } from './recipes/sorting'
+import { use_legacy_CurrentMenuVariants } from './recipes'
+import { UseMenuDependencies } from './types'
 
-import { orderCollectionRecipesByCuisine } from './recipes/personalisedSignupExperiment'
-import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
-import { getRecipeComparatorForOutOfStock } from './getRecipeComparatorForOutOfStock'
-import { getRecipeReferenceInjector } from './getRecipeReferenceInjector'
-import { getSelectedVariantsReplacer } from './getSelectedVariantsReplacer'
-// import { useSelectedCuisines } from './useSelectedCuisines'
-import { SelectedVariants } from "./useAlternativeOptions/types"
-
-const getRecipesInCollection = (
-  menuCollections: Immutable.Map<string, any>,
-  collectionId: string,
-): Immutable.List<string> => menuCollections.getIn([collectionId, 'recipesInCollection'], Immutable.List())
-
-const getDietaryClaimsInCollection = (
-  menuCollections: Immutable.Map<string, any>,
-  collectionId: string,
-) => menuCollections.getIn([collectionId, 'requirements', 'dietary_claims'], null)
+/**
+ * This function will take a `TransformedRecipe | undefined` and will change the type to a `TransformedRecipe` if applicable
+ */
+function recipeIsTruthy(recipe: TransformedRecipe | undefined): recipe is TransformedRecipe {
+  return Boolean(recipe)
+}
 
 type GetRecipeForCollectionIdArgs = {
   selectedCuisines?: string[]
 }
 
 export function useGetRecipesForCollectionId(
-  menuId: string,
-  selectedRecipeVariants: SelectedVariants,
-  collections: Immutable.Map<string, any>,
-  numPortions: number,
+  requestArgs: UseMenuSWRArgs,
+  date: string,
+  { numPortions, selectedRecipeVariants }: UseMenuDependencies,
 ) {
-  const recipes = use_legacy_CurrentMenuRecipes()
+  const menuServiceData = useMenuService(requestArgs)
   const recipesInStockIds = use_legacy_InStockRecipeIds({ numPortions })
-  const recipesVariants = use_legacy_CurrentMenuVariants(menuId)
-  // const selectedCuisines = useSelectedCuisines()
+  const recipesVariants = use_legacy_CurrentMenuVariants('menu-id-JAMES-CHANGE-THIS!!!!')
 
   const recipeComparatorForOutOfStock = useMemo(
     () => getRecipeComparatorForOutOfStock(recipesInStockIds),
     [recipesInStockIds],
   )
 
-  const getRecipesForCollectionId = (
-    collectionId: string,
-    args: GetRecipeForCollectionIdArgs = {}
-  ) => {
-    const recipeIdsInCollection = getRecipesInCollection(collections, collectionId)
-    const dietaryClaims = getDietaryClaimsInCollection(collections, collectionId)
-
-    if (!recipeIdsInCollection || !recipes.size) {
-      return {
-        recipes: Immutable.List<{
-                  recipe: Immutable.Map<string, string>;
-                  originalId: string;
-                  reference: string;
-                }>()
+  return useCallback(
+    (collectionId: string, args: GetRecipeForCollectionIdArgs) => {
+      if (!menuServiceData) {
+        return []
       }
-    }
 
-    const selectedVariantReplacer = getSelectedVariantsReplacer({
-      recipes,
-      replacementMap: (selectedRecipeVariants || {})[collectionId] || {},
-    })
+      const menuId = getMenuIdForDate(menuServiceData, date)
 
-    const outOfStockRecipeReplacer = getOutOfStockRecipeReplacer({
-      recipesInStockIds,
-      recipes,
-      recipesVariants,
-      dietaryClaims,
-    })
+      const menu = menuServiceData.data.find((m) => m.id === menuId)
 
-    const recipeReferenceInjector = getRecipeReferenceInjector({ recipesVariants })
+      if (!menu) {
+        return []
+      }
 
-    // The order of mappers below matters:
-    //  * ensure the recipes are wrapped in an envelop with additional meta data: originalId and reference
-    //  * ensure we prefer to show variants customer explicitly picked
-    //  * ensure any out of stock recipes are replaced by in stock alternatives
-    //  * ensure any remaining out of stock recipes are moved to the end of the list
+      const { collections, recipes } = transformMenu(menuServiceData, menu)
 
-    const originalRecipes = recipeIdsInCollection
-      .map((id?: string) =>
-        recipes.find((other?: Immutable.Map<string, string>) => other?.get('id') === id),
-      )
-      .filter((recipe?: Immutable.Map<string, string>) => Boolean(recipe))
-      .map(recipeReferenceInjector)
-      .map(selectedVariantReplacer)
-      .map(outOfStockRecipeReplacer)
+      const collection = collections.find((c) => c.id === collectionId)
 
-    const resultingRecipes = originalRecipes.sort(recipeComparatorForOutOfStock)
+      if (!collection) {
+        return []
+      }
 
-    if (args.selectedCuisines) {
-      const { orderedRecipes } = orderCollectionRecipesByCuisine(resultingRecipes as Immutable.List<any>, args.selectedCuisines)
+      const recipeIds = collection.recipesInCollection
 
-      return { recipes: orderedRecipes }
-    }
+      if (!recipeIds || recipeIds.length === 0) {
+        return []
+      }
 
-    return { recipes: resultingRecipes }
-  }
+      const dietaryClaims = collection.requirements.dietary_claims
 
-  return {
-    getRecipesForCollectionId,
-  }
+      const selectedVariantReplacer = getSelectedVariantsReplacer({
+        recipes,
+        replacementMap: (selectedRecipeVariants || {})[collectionId] || {},
+      })
+
+      const outOfStockRecipeReplacer = getOutOfStockRecipeReplacer({
+        recipesInStockIds,
+        recipes,
+        recipesVariants,
+        dietaryClaims,
+      })
+
+      const recipeReferenceInjector = getRecipeReferenceInjector({ recipesVariants })
+
+      const unsortedRecipes = recipeIds
+        .map((id) => recipes.find((other) => other.id === id))
+        .filter(recipeIsTruthy)
+        .map(recipeReferenceInjector)
+        .map(selectedVariantReplacer)
+        .map(outOfStockRecipeReplacer)
+
+      const sortedRecipes = unsortedRecipes.sort(recipeComparatorForOutOfStock)
+
+      if (args.selectedCuisines) {
+        const { orderedRecipes } = orderCollectionRecipesByCuisine(sortedRecipes, args.selectedCuisines)
+
+        return orderedRecipes
+      }
+
+      return sortedRecipes
+    },
+    [menuServiceData, date, recipeComparatorForOutOfStock, recipesInStockIds, recipesVariants, selectedRecipeVariants],
+  )
 }

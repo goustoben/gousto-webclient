@@ -95,7 +95,7 @@ export function recipeTransformer({
     shelfLifeDays: normalisedAttributes.shelf_life
       ? shelfLifeTransformer(normalisedAttributes.shelf_life.min_days, normalisedAttributes.shelf_life.max_days)
       : '',
-    dietaryClaims: normalisedAttributes.dietary_claims,
+    dietaryClaims: normalisedAttributes.dietary_claims as { slug: string }[],
     isFineDineIn: isFineDineInTransformer(normalisedAttributes),
     title: normalisedAttributes.name,
     promotions: promotionsTransformer(normalisedAttributes),
