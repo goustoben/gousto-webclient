@@ -199,6 +199,34 @@ jobs:
           name: Typecheck tests (apps/webclient)
           working_directory: src/apps/webclient
           command: yarn typecheck:tests
+
+  unit-test:
+    executor: circleci_node_image
+    resource_class: medium+
+    working_directory: ~/mnt/ramdisk # /mnt/ramdisk doesn't have enough memory to run this job
+    parallelism: 5
+    environment:
+      TZ: 'Europe/London'
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Unit test (feature modules)
+          command: source ~/root/.circlerc && yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
+      - run:
+          name: Unit test (libraries)
+          command: source ~/root/.circlerc && yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
+      - run:
+          name: Unit test (apps/webclient)
+          command: |
+            source ~/root/.circlerc && yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
+            if [ -s unit-tests ]; then
+              TESTS=$(circleci tests glob **/*.test.{js,ts,jsx,tsx} | circleci tests split)
+              yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent
+            fi
+            rm unit-tests
+
   test-typecheck-and-report:
     executor: circleci_node_image
     resource_class: medium+
@@ -495,6 +523,11 @@ workflows:
           requires:
             - setup-ci-variables-scripts
       - type-check:
+          context: gousto-beta-aws-app-circleci
+          <<: *filter-feature-branches
+          requires:
+            - install-dependencies
+      - unit-test:
           context: gousto-beta-aws-app-circleci
           <<: *filter-feature-branches
           requires:
