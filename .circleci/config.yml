@@ -463,6 +463,16 @@ jobs:
 
 workflows:
   version: 2
+  feature-branch:
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+          <<: *filter-feature-branches
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          <<: *filter-feature-branches
+          requires:
+            - setup-ci-variables-scripts
 
   e2e-manual:
     when:
