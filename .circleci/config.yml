@@ -1,6 +1,22 @@
 ---
 version: 2.1
 
+# Hooks
+filter-feature-branches: &filter-feature-branches
+  filters:
+    branches:
+      ignore:
+        - /^env-.*/
+        - master
+        - e2e-manual
+        - develop
+
+filter-lower-env: &filter-lower-env
+  filters:
+    branches:
+      only:
+        - /^env-.*/
+
 executors:
   gousto_platform_image:
     docker:
@@ -453,53 +469,35 @@ workflows:
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+          <<: *filter-lower-env
       - install-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-scripts
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+          <<: *filter-lower-env
       - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+          <<: *filter-lower-env
       - upload-assets-to-s3:
           context: gousto-beta-aws-app-circleci
           env: ${ENVIRONMENT}
           requires:
             - build-webclient
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+          <<: *filter-lower-env
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-webclient
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+          <<: *filter-lower-env
       - deploy-infrastructure-and-webclient-image:
           name: deploy-infrastructure-and-webclient-image-to-lower-environment
           context: gousto-beta-aws-app-circleci
           requires:
             - create-and-upload-webclient-docker-image-to-ecr
             - upload-assets-to-s3
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+          <<: *filter-lower-env
 
   staging-environment:
     when:
