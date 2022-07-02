@@ -538,7 +538,6 @@ jobs:
           command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
 
 workflows:
-  version: 2
   feature-branch:
     jobs:
       - setup-ci-variables-scripts:
