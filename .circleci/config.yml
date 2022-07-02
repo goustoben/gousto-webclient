@@ -115,6 +115,12 @@ jobs:
           name: Download platform deploy scripts and set the ENVIRONMENT variable from the branch name
           command: /gousto/platform-setup.sh
       - setup_remote_docker
+      - run:
+          name: Get branch point, exported as BRANCH_POINT
+          command: |
+            BRANCH_POINT=$(git merge-base $CIRCLE_BRANCH develop)
+            [[ -z BRANCH_POINT ]] && echo "No branching point found; if develop has drifted by >100 commits then rebase the PR branch" && circleci step halt
+            echo export BRANCH_POINT=$BRANCH_POINT >> ~/.circlerc
       - persist_to_workspace:
           root: /
           paths:
