@@ -7,6 +7,8 @@ import { PROTOCOL_PREFIX } from '../src/config/service-environment/service-envir
 
 configureDDTracer()
 
+// Test comment
+
 const Koa = require('koa')
 const React = require('react')
 const convert = require('koa-convert')
