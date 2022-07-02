@@ -146,9 +146,19 @@ jobs:
           name: Setup Github SSH access
           command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
       - codeartifact_authenticate
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-develop-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
           command: yarn install --immutable
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - .yarn/cache
       - codeartifact_cleanup
       - persist_to_workspace:
           root: /
