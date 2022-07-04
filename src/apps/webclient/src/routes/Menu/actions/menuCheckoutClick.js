@@ -17,7 +17,7 @@ export const isOrderApiCreateEnabled = async () => true
 export const isOrderApiUpdateEnabled = async () => false
 
 export const checkoutBasket =
-  ({ section, view, pricing }) =>
+  ({ section, view, pricing, removeRecipe }) =>
   async (dispatch, getState) => {
     const state = getState()
     const isAuthenticated = getIsAuthenticated(state)
@@ -25,7 +25,7 @@ export const checkoutBasket =
     const rules = validateMenuLimitsForBasket(state)
     const transactionalOrderForNonLoggedInUser = isTransactionalOrder && !isAuthenticated
 
-    dispatch(boxSummaryVisibilityChange(false))
+    dispatch(boxSummaryVisibilityChange(false, removeRecipe))
     dispatch(basketCheckedOut({ view, pricing }))
     dispatch(basketCheckoutClicked(section))
 

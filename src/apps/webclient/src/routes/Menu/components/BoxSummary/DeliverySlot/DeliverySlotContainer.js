@@ -12,7 +12,7 @@ import { getFullScreenBoxSummary } from 'selectors/features'
 import { getLoadingStateForOrder } from 'selectors/user'
 import { getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 
-import { DeliverySlot } from './DeliverySlot'
+import { DeliverySlotWrapper } from './DeliverySlotWrapper'
 
 function mapStateToProps(state) {
   const isAuthenticated = getIsAuthenticated(state)
@@ -45,6 +45,6 @@ const DeliverySlotContainer = connect(mapStateToProps, {
   clearPostcode: actions.basketPostcodeClear,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   boxSummaryNext,
-})(DeliverySlot)
+})(DeliverySlotWrapper)
 
 export { DeliverySlotContainer }

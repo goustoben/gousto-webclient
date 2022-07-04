@@ -11,9 +11,9 @@ import { getOkRecipeIds, getUnavailableRecipeIds } from 'routes/Menu/selectors/b
 import { getBasketSlotId } from 'selectors/basket'
 import { getFullScreenBoxSummary } from 'selectors/features'
 
-import { basketRecipeRemove } from '../../../actions/basketRecipes'
 import { checkoutBasket } from '../../../actions/menuCheckoutClick'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
+import { useBasket } from '../../../domains/basket'
 import { Details } from './Details'
 
 const mapStateToProps = (state) => ({
@@ -34,6 +34,7 @@ const DetailsPure = (props) => {
   const { isPending, pricing } = usePricing()
   const { isPortionSizeAllowedByRecipeCount, maxRecipesForPortion, minRecipesForPortion } =
     useSupportedBoxTypes()
+  const { removeRecipe } = useBasket()
 
   return (
     <Details
@@ -43,6 +44,7 @@ const DetailsPure = (props) => {
       isPortionSizeAllowedByRecipeCount={isPortionSizeAllowedByRecipeCount}
       maxRecipesForPortion={maxRecipesForPortion}
       minRecipesForPortion={minRecipesForPortion}
+      onRemove={removeRecipe}
     />
   )
 }
@@ -51,7 +53,6 @@ const DetailsContainer = connect(mapStateToProps, {
   basketNumPortionChange: actions.basketNumPortionChange,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   basketPostcodeChange: actions.basketPostcodeChange,
-  onRemove: basketRecipeRemove,
   clearSlot: actions.basketSlotClear,
   basketRestorePreviousDate: actions.basketRestorePreviousDate,
   showRecipeDetailsOnClick: menuRecipeDetailVisibilityChange,

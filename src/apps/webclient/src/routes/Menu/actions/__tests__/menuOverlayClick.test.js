@@ -11,6 +11,7 @@ describe('given menuOverlayClick action is called', () => {
   let state
   const dispatch = jest.fn()
   const getState = () => state
+  const removeRecipeFromBasket = jest.fn()
 
   beforeEach(() => {
     state = {
@@ -37,13 +38,15 @@ describe('given menuOverlayClick action is called', () => {
     })
 
     test('then boxSummaryVisibilityChange should be dispatched 1st', () => {
-      menuOverlayClick()(dispatch, getState)
+      menuOverlayClick(removeRecipeFromBasket)(dispatch, getState)
 
-      expect(dispatch.mock.calls[0]).toEqual([['boxSummaryVisibilityChange', [false]]])
+      expect(dispatch.mock.calls[0]).toEqual([
+        ['boxSummaryVisibilityChange', [false, removeRecipeFromBasket]],
+      ])
     })
 
     test('then basketRestorePreviousValues should be dispatched 2nd', () => {
-      menuOverlayClick()(dispatch, getState)
+      menuOverlayClick(removeRecipeFromBasket)(dispatch, getState)
 
       expect(dispatch.mock.calls[1]).toEqual([['basketRestorePreviousValues', []]])
     })
@@ -65,7 +68,7 @@ describe('given menuOverlayClick action is called', () => {
       })
 
       test('then menuBrowseCTAVisibilityChange should be dispatched 1st', () => {
-        menuOverlayClick()(dispatch, getState)
+        menuOverlayClick(removeRecipeFromBasket)(dispatch, getState)
 
         expect(dispatch.mock.calls[0]).toEqual([['menuBrowseCTAVisibilityChange', [false]]])
       })
@@ -77,7 +80,7 @@ describe('given menuOverlayClick action is called', () => {
       })
 
       test('then nothing should be dispatched', () => {
-        menuOverlayClick()(dispatch, getState)
+        menuOverlayClick(removeRecipeFromBasket)(dispatch, getState)
 
         expect(dispatch).not.toHaveBeenCalled()
       })

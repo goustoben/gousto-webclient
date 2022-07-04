@@ -94,6 +94,7 @@ class Details extends React.Component {
       shouldDisplayFullScreenBoxSummary,
       maxRecipesForPortion,
       minRecipesForPortion,
+      removeRecipeFromBasket,
     } = this.props
 
     const {
@@ -153,7 +154,7 @@ class Details extends React.Component {
             <Button
               color="secondary"
               onClick={() => {
-                boxSummaryVisibilityChange(false)
+                boxSummaryVisibilityChange(false, removeRecipeFromBasket)
               }}
               width="full"
             >
@@ -191,7 +192,7 @@ class Details extends React.Component {
             ctaText={ctaText}
             view={view}
             onClick={() => {
-              boxSummaryVisibilityChange(false)
+              boxSummaryVisibilityChange(false, removeRecipeFromBasket)
             }}
           />
         </LayoutContentWrapper>
@@ -230,6 +231,7 @@ Details.propTypes = {
   unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
   showRecipeDetailsOnClick: PropTypes.func,
   shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
+  removeRecipeFromBasket: PropTypes.func.isRequired,
 }
 
 Details.defaultProps = {
