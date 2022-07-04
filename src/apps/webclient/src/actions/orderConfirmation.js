@@ -10,6 +10,7 @@ import { push } from 'react-router-redux'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
 import logger from 'utils/logger'
 import { getUserOrderRecipeUuIds } from 'utils/user'
+import { invokeHotjarEvent } from 'utils/hotjarUtils'
 import { fetchSimpleMenu } from '../routes/Menu/fetchData/menuApi'
 import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { actionTypes } from './actionTypes'
@@ -25,6 +26,7 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (dispatch) =>
 export const orderDetails = (orderId, addRecipe) => async (dispatch, getState) => {
   const accessToken = getAccessToken(getState())
   const userId = getAuthUserId(getState())
+  const FIVE_RECIPES_ORDER_HOTJAR_SURVEY_NAME = 'menu_5recipes_order_confirmation'
 
   try {
     dispatch(productsLoadCategories())
@@ -36,6 +38,12 @@ export const orderDetails = (orderId, addRecipe) => async (dispatch, getState) =
     const orderRecipeUuIds = getUserOrderRecipeUuIds(immutableOrderDetails)
     dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeUuIds))
     await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, { reload: true }, menus))
+
+    const isFiveRecipesOrder = immutableOrderDetails && immutableOrderDetails.get('recipeItems').size > 4
+
+    if (isFiveRecipesOrder) {
+      invokeHotjarEvent(FIVE_RECIPES_ORDER_HOTJAR_SURVEY_NAME)
+    }
 
     dispatch(basketOrderLoad(orderId, addRecipe, immutableOrderDetails))
     dispatch({

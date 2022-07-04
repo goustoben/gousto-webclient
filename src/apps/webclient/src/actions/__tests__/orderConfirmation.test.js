@@ -136,6 +136,7 @@ describe('orderConfirmation actions', () => {
               box: {
                 numPortions: 4,
               },
+              recipeItems: {},
               shippingAddress: {
                 postcode: 'AA1 2AA',
               },
@@ -170,6 +171,7 @@ describe('orderConfirmation actions', () => {
             box: Immutable.Map({
               numPortions: 4,
             }),
+            recipeItems: Immutable.Map({}),
             shippingAddress: Immutable.Map({
               postcode: 'AA1 2AA',
             }),
