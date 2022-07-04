@@ -221,8 +221,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      - export_circlerc_vars:
-          circlerc_path: ~/root/.circlerc
+      - export_circlerc_vars
       - run:
           name: Typecheck (feature modules)
           command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run typecheck
@@ -245,8 +244,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      - export_circlerc_vars:
-          circlerc_path: ~/root/.circlerc
+      - export_circlerc_vars
       - run:
           name: Unit test (feature modules)
           command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
@@ -274,8 +272,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /
-      - export_circlerc_vars:
-          circlerc_path: ~/root/.circlerc
+      - export_circlerc_vars
       - run:
           name: Lint (feature modules)
           command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run lint
