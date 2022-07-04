@@ -8,7 +8,6 @@ import { withIsActionBarRedesignEnabled } from 'routes/Menu/components/withIsAct
 
 import { MenuWrapper } from './MenuWrapper'
 import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable'
-import { menuOverlayClick } from './actions/menuOverlayClick'
 import fetchData from './fetchData'
 
 function mapStateToProps(state, ownProps) {
@@ -34,7 +33,6 @@ const mapDispatchToProps = {
   menuLoadDays: actions.menuLoadDays,
   loginVisibilityChange: actions.loginVisibilityChange,
   basketNumPortionChange: actions.basketNumPortionChange,
-  onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,
   menuCalculateTimeToUsable,
   fetchData,
