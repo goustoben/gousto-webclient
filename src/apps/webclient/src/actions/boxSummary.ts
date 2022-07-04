@@ -1,48 +1,68 @@
+import moment from 'moment'
+import { push } from 'react-router-redux'
+import { Dispatch } from 'redux'
+
+import * as trackingKeys from 'actions/trackingKeys'
 import { fetchDeliveryDays } from 'apis/deliveries'
+import { getIsAuthenticated } from 'selectors/auth'
 import { getBasketRecipes, getBasketPostcode, getBasketSlotId } from 'selectors/basket'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
-import { getIsAuthenticated } from 'selectors/auth'
-import moment from 'moment'
 import { okRecipes, basketSum } from 'utils/basket'
+import {
+  getAvailableDeliveryDays,
+  getLandingDay,
+  transformDaySlotLeadTimesToMockSlots,
+  getDeliveryTariffId,
+  getNDDFeatureFlagVal,
+  getCutoffForFirstAvailableDate,
+} from 'utils/deliveries'
 import logger from 'utils/logger'
-import { push } from 'react-router-redux'
-import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal, getCutoffForFirstAvailableDate } from 'utils/deliveries'
-import * as trackingKeys from 'actions/trackingKeys'
-import { basketRecipeRemove } from 'routes/Menu/actions/basketRecipes'
-import status from './status'
-import { menuLoadMenu, menuLoadStock } from './menu'
+
+import { RemoveRecipeFn } from '../routes/Menu/domains/basket/index'
+import { actionTypes } from './actionTypes'
 import {
   basketAddressChange,
   basketDateChange,
   basketPostcodeChange,
   basketSlotChange,
 } from './basket'
-import { actionTypes } from './actionTypes'
+import { menuLoadMenu, menuLoadStock } from './menu'
+import status from './status'
 
-export const basketDeliveryDaysReceive = (days) => ({
+type State = any
+type GetState = () => State
+
+export const basketDeliveryDaysReceive = (days: any) => ({
   type: actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE,
   days,
 })
 
-export const boxSummaryDeliverySlotChosen = ({ date, slotId, displayMenuForFirstWeekOnly }) => (
-  async (dispatch, getState) => {
+export const boxSummaryDeliverySlotChosen =
+  ({
+    date,
+    slotId,
+    displayMenuForFirstWeekOnly,
+  }: {
+    date: any
+    slotId: any
+    displayMenuForFirstWeekOnly?: any
+  }) =>
+  async (dispatch: Dispatch<any>, getState: GetState) => {
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, true))
     dispatch(basketDateChange(date))
     dispatch(basketSlotChange(slotId))
 
-    const cutoffDateTime = displayMenuForFirstWeekOnly ? getCutoffForFirstAvailableDate(getState()) : null
-
-    await Promise.all([
-      dispatch(menuLoadMenu(cutoffDateTime)),
-      dispatch(menuLoadStock()),
-    ])
+    const cutoffDateTime = displayMenuForFirstWeekOnly
+      ? getCutoffForFirstAvailableDate(getState())
+      : null
+    await Promise.all([dispatch(menuLoadMenu(cutoffDateTime)), dispatch(menuLoadStock())])
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, false))
   }
-)
 
-export const boxSummaryVisibilityChange = (show) => (
-  (dispatch, getState) => {
+export const boxSummaryVisibilityChange =
+  (show: boolean, removeRecipe: RemoveRecipeFn) =>
+  (dispatch: Dispatch<any>, getState: GetState) => {
     const state = getState()
     const basketRecipes = state.basket.get('recipes')
     const amountOfRecipesInBasket = basketSum(basketRecipes)
@@ -53,7 +73,7 @@ export const boxSummaryVisibilityChange = (show) => (
         trackingData: {
           actionType: type,
           recipes_added: amountOfRecipesInBasket,
-        }
+        },
       })
     }
 
@@ -67,12 +87,17 @@ export const boxSummaryVisibilityChange = (show) => (
       },
     })
     if (!show) {
-      const okRecipeIds = okRecipes(basketRecipes, state.menuRecipes, state.menuRecipeStock, state.basket.get('numPortions'))
+      const okRecipeIds = okRecipes(
+        basketRecipes,
+        state.menuRecipes,
+        state.menuRecipeStock,
+        state.basket.get('numPortions'),
+      )
       basketRecipes
-        .filter((amount, recipeId) => !okRecipeIds.has(recipeId))
-        .forEach((amount, recipeId) => {
+        .filter((amount: any, recipeId: string) => !okRecipeIds.has(recipeId))
+        .forEach((amount: any, recipeId: string) => {
           for (let x = 0; x < amount; x++) {
-            dispatch(basketRecipeRemove(recipeId))
+            removeRecipe(recipeId)
           }
         })
     }
@@ -89,14 +114,20 @@ export const boxSummaryVisibilityChange = (show) => (
         const tempDate = state.temp.get('date', landing.date)
         const tempSlotId = state.temp.get('slotId', landing.slotId)
 
-        dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
+        dispatch(
+          boxSummaryDeliverySlotChosen({
+            date: tempDate,
+            slotId: tempSlotId,
+            displayMenuForFirstWeekOnly: undefined,
+          }),
+        )
       }
     }
   }
-)
 
-export const boxSummaryDeliveryDaysLoad = (cutoffDatetimeFrom, cutoffDatetimeUntil) => (
-  async (dispatch, getState) => {
+export const boxSummaryDeliveryDaysLoad =
+  (cutoffDatetimeFrom?: any, cutoffDatetimeUntil?: any) =>
+  async (dispatch: Dispatch<any>, getState: GetState) => {
     const state = getState()
     const { auth, basket, menuCutoffUntil, user } = state
 
@@ -111,29 +142,42 @@ export const boxSummaryDeliveryDaysLoad = (cutoffDatetimeFrom, cutoffDatetimeUnt
 
     try {
       const accessToken = auth.get('accessToken')
-      const cutoffDatetimeFromFormatted = moment.utc(cutoffDatetimeFrom).startOf('day').toISOString()
+      const cutoffDatetimeFromFormatted = moment
+        .utc(cutoffDatetimeFrom)
+        .startOf('day')
+        .toISOString()
       const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(state))
-      let { data: days } = await fetchDeliveryDays(accessToken, cutoffDatetimeFromFormatted, cutoffUntil, isNDDExperiment, deliveryTariffId, postcode)
+      let { data: days } = await fetchDeliveryDays(
+        accessToken,
+        cutoffDatetimeFromFormatted,
+        cutoffUntil,
+        isNDDExperiment,
+        deliveryTariffId,
+        postcode,
+      )
 
       if (isNDDExperiment) {
         days = transformDaySlotLeadTimesToMockSlots(days)
       }
 
-      const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom, getUsersOrdersDaySlotLeadTimeIds(state))
+      const availableDeliveryDays = getAvailableDeliveryDays(
+        days,
+        cutoffDatetimeFrom,
+        getUsersOrdersDaySlotLeadTimeIds(state),
+      )
 
       dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
-    } catch (err) {
+    } catch (err: any) {
       if (err.message !== 'do-not-deliver') {
-        logger.error(err)
+        ;(logger as any).error(err)
       }
 
       dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, err.message))
     }
   }
-)
 
-export const boxSummaryNext = () => (
-  (dispatch, getState) => {
+export const boxSummaryNext =
+  (removeRecipe: RemoveRecipeFn) => (dispatch: Dispatch<any>, getState: GetState) => {
     const state = getState()
     const landing = getLandingDay(state, { useCurrentSlot: true })
 
@@ -146,18 +190,27 @@ export const boxSummaryNext = () => (
     if (basketPostcode && !state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE)) {
       if (tempOrderId) {
         dispatch(push(`/menu/${tempOrderId}`))
-        dispatch(boxSummaryVisibilityChange(false))
+        dispatch(boxSummaryVisibilityChange(false, removeRecipe))
       } else {
-        dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
+        dispatch(
+          boxSummaryDeliverySlotChosen({
+            date: tempDate,
+            slotId: tempSlotId,
+            displayMenuForFirstWeekOnly: undefined,
+          }),
+        )
         if (getBasketRecipes(state).size === 0) {
-          dispatch(boxSummaryVisibilityChange(false))
+          dispatch(boxSummaryVisibilityChange(false, removeRecipe))
         }
       }
     } else {
       const tempPostcode = state.temp.get('postcode', '')
       let shippingDefault
       if (state.user.get('shippingAddresses')) {
-        shippingDefault = state.user.get('shippingAddresses').filter(address => address.get('shippingDefault')).first()
+        shippingDefault = state.user
+          .get('shippingAddresses')
+          .filter((address: any) => address.get('shippingDefault'))
+          .first()
       }
 
       const chosenAddress = state.basket.get('chosenAddress') || shippingDefault
@@ -171,12 +224,11 @@ export const boxSummaryNext = () => (
       }
     }
   }
-)
 
-export const trackingUnavailableRecipeList = (unavailableRecipeList) => ({
+export const trackingUnavailableRecipeList = (unavailableRecipeList: any) => ({
   type: actionTypes.TRACKING_UNAVAILABLE_RECIPE_LIST,
   trackingData: {
     actionType: trackingKeys.unavailableRecipeList,
-    unavailableRecipeList: unavailableRecipeList.keySeq().toArray()
-  }
+    unavailableRecipeList: unavailableRecipeList.keySeq().toArray(),
+  },
 })

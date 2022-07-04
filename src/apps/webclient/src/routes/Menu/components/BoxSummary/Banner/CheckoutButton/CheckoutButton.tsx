@@ -61,7 +61,7 @@ export const CheckoutButton = ({
   const menuRecipes = useSelector(getMenuRecipeIds)
   const stock = useSelector(getStock)
 
-  const { numPortions } = useBasket()
+  const { numPortions, removeRecipe } = useBasket()
 
   const numRecipes = basketSum(okRecipes(recipes, menuRecipes, stock, numPortions))
 
@@ -75,9 +75,9 @@ export const CheckoutButton = ({
   const handleClick = useCallback(
     (e) => {
       e.stopPropagation()
-      dispatch(checkoutBasket({ section, view, pricing }))
+      dispatch(checkoutBasket({ section, view, pricing, removeRecipe }))
     },
-    [dispatch, section, view, pricing],
+    [dispatch, section, view, pricing, removeRecipe],
   )
 
   // CheckoutCounter should change background color when the button is hovered.

@@ -33,6 +33,7 @@ class DeliverySlot extends React.PureComponent {
       deliveryDays: deliveryDaysProps,
       userHasAvailableSlots,
       userOrderLoadingState,
+      removeRecipeFromBasket,
     } = this.props
 
     const datesOfDisabledSlots = disabledSlots.map((date) => date.slice(0, 10))
@@ -126,7 +127,7 @@ class DeliverySlot extends React.PureComponent {
           <Button
             className="boxSummaryContinueButton"
             width="full"
-            onClick={() => boxSummaryNext(numPortions)}
+            onClick={() => boxSummaryNext(removeRecipeFromBasket)}
             pending={menuPending || menuFetchDataPending}
             disabled={(!tempOrderId && !chosen) || !hasActiveSlotsForSelectedDate}
             data-testing="boxSummaryContinueButton"
@@ -158,6 +159,7 @@ DeliverySlot.propTypes = {
   userOrders: PropTypes.instanceOf(Immutable.Map),
   userHasAvailableSlots: PropTypes.bool.isRequired,
   userOrderLoadingState: PropTypes.bool.isRequired,
+  removeRecipeFromBasket: PropTypes.func.isRequired,
 }
 
 DeliverySlot.defaultProps = {

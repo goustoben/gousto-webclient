@@ -67,11 +67,15 @@ describe('menuCheckoutClick', () => {
 
     test('should dispatch boxSummaryVisibilityChange with false', async () => {
       const boxSummaryVisibilityChangeMock = jest.fn()
+      const removeRecipeMock = jest.fn()
       boxSummaryVisibilityChangeSpy.mockReturnValue(boxSummaryVisibilityChangeMock)
 
-      await checkoutBasket({ section, view, pricing })(dispatch, getState)
+      await checkoutBasket({ section, view, pricing, removeRecipe: removeRecipeMock })(
+        dispatch,
+        getState,
+      )
 
-      expect(boxSummaryVisibilityChangeSpy).toHaveBeenCalledWith(false)
+      expect(boxSummaryVisibilityChangeSpy).toHaveBeenCalledWith(false, removeRecipeMock)
       expect(dispatch).toHaveBeenCalledWith(boxSummaryVisibilityChangeMock)
     })
 
