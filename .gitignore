@@ -22,6 +22,7 @@ yarn-error.log
 .idea
 src/apps/webclient/config/env.json
 lib
+junit.xml
 
 # Yarn
 # This is the recommended configuration for non-zero-installs.

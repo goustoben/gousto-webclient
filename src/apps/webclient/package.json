@@ -163,6 +163,7 @@
     "jest": "^27.4.3",
     "jest-environment-node": "^27.2.5",
     "jest-fetch-mock": "^3.0.3",
+    "jest-junit": "^14.0.0",
     "jest-localstorage-mock": "^2.4.21",
     "jsdom": "11.3.0",
     "json5": "^2.2.0",
