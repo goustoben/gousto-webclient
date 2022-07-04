@@ -23,7 +23,6 @@ yarn-error.log
 src/apps/webclient/config/env.json
 lib
 junit.xml
-test-results
 
 # Yarn
 # This is the recommended configuration for non-zero-installs.
