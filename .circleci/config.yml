@@ -111,7 +111,7 @@ commands:
         type: string
         default: ~/.circlerc
     steps:
-      - source << parameters.circlerc_path >> >> $BASH_ENV
+      - run: source << parameters.circlerc_path >> >> $BASH_ENV
 
 jobs:
   setup-ci-variables-scripts:
