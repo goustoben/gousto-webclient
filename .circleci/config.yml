@@ -258,11 +258,11 @@ jobs:
             yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
             if [ -s unit-tests ]; then
               TESTS=$(circleci tests glob **/*.test.{js,ts,jsx,tsx} | circleci tests split --split-by=timings)
-              yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters jest-junit
+              yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit
             fi
             rm unit-tests
       - store_test_results:
-          path: src/apps/webclient/junit.xml
+          path: src/apps/webclient
 
   lint:
     executor: circleci_node_image
