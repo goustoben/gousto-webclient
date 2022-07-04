@@ -104,6 +104,15 @@ commands:
           name: Clear npm config
           command: npm config delete //gousto-472493421475.d.codeartifact.eu-west-1.amazonaws.com/npm/proxy-repository/
 
+  export_circlerc_vars:
+    description: Exports environment variables from .circlerc to BASH_ENV. Can be run once at the start of the job
+    parameters:
+      circlerc_path:
+        type: string
+        default: ~/.circlerc
+    steps:
+      - source << parameters.circlerc_path >> >> $BASH_ENV
+
 jobs:
   setup-ci-variables-scripts:
     executor: gousto_platform_image #stock image missing /gousto directory
@@ -187,18 +196,19 @@ jobs:
       - checkout
       - attach_workspace:
           at: /
+      - export_circlerc_vars
       - run:
           name: Branch history
-          command: source ~/.circlerc && git log -n 100 --oneline --graph $BRANCH_POINT develop | cat
+          command: git log -n 100 --oneline --graph $BRANCH_POINT develop | cat
       - run:
           name: Changed files
-          command: source ~/.circlerc && git diff --name-status $BRANCH_POINT | cat
+          command: git diff --name-status $BRANCH_POINT | cat
       - run:
           name: Webclient lint files
-          command: source ~/.circlerc && yarn monorepo-build lint --since=$BRANCH_POINT --workspace=webclient
+          command: yarn monorepo-build lint --since=$BRANCH_POINT --workspace=webclient
       - run:
           name: Webclient unit tests
-          command: source ~/.circlerc && yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient
+          command: yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient
 
   type-check:
     executor: circleci_node_image
@@ -211,12 +221,14 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
+      - export_circlerc_vars:
+          circlerc_path: ~/root/.circlerc
       - run:
           name: Typecheck (feature modules)
-          command: source ~/root/.circlerc && yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run typecheck
+          command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run typecheck
       - run:
           name: Typecheck (libraries)
-          command: source ~/root/.circlerc && yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run typecheck
+          command: yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run typecheck
       - run:
           name: Typecheck tests (apps/webclient)
           working_directory: src/apps/webclient
@@ -233,16 +245,18 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
+      - export_circlerc_vars:
+          circlerc_path: ~/root/.circlerc
       - run:
           name: Unit test (feature modules)
-          command: source ~/root/.circlerc && yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
+          command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
       - run:
           name: Unit test (libraries)
-          command: source ~/root/.circlerc && yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
+          command: yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
       - run:
           name: Unit test (apps/webclient)
           command: |
-            source ~/root/.circlerc && yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
+            yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
             if [ -s unit-tests ]; then
               TESTS=$(circleci tests glob **/*.test.{js,ts,jsx,tsx} | circleci tests split)
               yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent
@@ -260,17 +274,19 @@ jobs:
       - checkout
       - attach_workspace:
           at: /
+      - export_circlerc_vars:
+          circlerc_path: ~/root/.circlerc
       - run:
           name: Lint (feature modules)
-          command: source /root/.circlerc && yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run lint
+          command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run lint
       - run:
           name: Lint (libraries)
-          command: source /root/.circlerc && yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run lint
+          command: yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run lint
       - run:
           name: Lint (apps/webclient)
           working_directory: /mnt/ramdisk/src/apps/webclient
           command: |
-            source /root/.circlerc && yarn monorepo-build lint --since=$BRANCH_POINT --workspace=webclient > lint-changes
+            yarn monorepo-build lint --since=$BRANCH_POINT --workspace=webclient > lint-changes
             if [ -s lint-changes ]; then
               ./scripts/run-eslint-ci.sh $(cat lint-changes)
             fi
