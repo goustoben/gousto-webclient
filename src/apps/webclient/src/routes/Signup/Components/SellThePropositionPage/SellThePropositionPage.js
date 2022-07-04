@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { useWizardFiveRecipesEnabled } from 'hooks/useWizardFiveRecipesEnabled'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 
@@ -71,7 +71,7 @@ const goustoOnDemandItems = [
 ]
 
 export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => {
-  const { isFiveRecipesEnabled } = useWizardFiveRecipesEnabled()
+  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled()
   const displayedItems = isGoustoOnDemandEnabled ? goustoOnDemandItems : items
 
   return (

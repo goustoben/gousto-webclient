@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { signupConfig } from 'config/signup'
-import { useWizardFiveRecipesEnabled } from 'hooks/useWizardFiveRecipesEnabled'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
@@ -25,7 +25,7 @@ export const BoxSizeStep = ({
   isLoadingPrices,
   goustoOnDemandCustomText,
 }) => {
-  const { isFiveRecipesEnabledBoxSize } = useWizardFiveRecipesEnabled()
+  const { isFiveRecipesEnabledBoxSize } = useIsFiveRecipesEnabled()
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
   const handlePrimaryButtonClick = (value) => {
     numPortionChange(value)

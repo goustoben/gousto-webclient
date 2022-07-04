@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
-import { useWizardFiveRecipesEnabled } from 'hooks/useWizardFiveRecipesEnabled'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 
 import goustoBoxesImage from 'media/images/gousto-boxes.jpg'
@@ -35,7 +35,7 @@ const cuisines = [
 ]
 
 const PersonaliseMenuStep = () => {
-  const { isFiveRecipesEnabled } = useWizardFiveRecipesEnabled()
+  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled()
   const [selected, setSelected] = useState([])
   const dispatch = useDispatch()
   const onSelect = useCallback(

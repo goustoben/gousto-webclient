@@ -2,7 +2,7 @@ import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
 import { useBasket } from 'routes/Menu/domains/basket'
 
-export const useWizardFiveRecipesEnabled = () => {
+export const useIsFiveRecipesEnabled = () => {
   const fiveRecipesExperimentEnabled = useIsOptimizelyFeatureEnabled(
     'beetroots_five_recipes_web_enabled',
   )

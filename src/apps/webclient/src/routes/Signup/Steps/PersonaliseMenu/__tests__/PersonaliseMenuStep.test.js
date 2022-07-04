@@ -19,8 +19,11 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }))
-jest.mock('hooks/useWizardFiveRecipesEnabled', () => ({
-  useWizardFiveRecipesEnabled: jest.fn().mockReturnValueOnce(false).mockRejectedValueOnce(true),
+jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
+  useIsFiveRecipesEnabled: jest.fn().mockImplementation(() => ({
+    isFiveRecipesEnabledBoxSize: false,
+    isFiveRecipesEnabled: false,
+  })),
 }))
 
 const dispatch = jest.fn()
