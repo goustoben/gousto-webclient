@@ -9,12 +9,12 @@ export const cssCookingTimeIcon: CSSObject = {
   height: '32px',
   borderRadius: '50%',
   backgroundColor: 'rgba(255, 255, 255, 0.75)',
-  padding: '0px',
+  padding: '3px',
 
   [`@media ${screen.screenSMMin}`]: {
     width: '40px',
     height: '40px',
-    padding: '0px',
+    padding: '4px',
   },
 }
 
@@ -49,10 +49,13 @@ export const cssTime: CSSObject = {
   fontSize: '12px',
   fill: colors.black,
   color: colors.black,
+  padding: '3px',
+  
   [`@media ${screen.screenSMMin}`]: {
     width: '40px',
     height: '40px',
     fontSize: '13px',
+    padding: '4px'
   },
 }
 
