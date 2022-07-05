@@ -10,6 +10,7 @@ import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
 import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
+import { useBasket } from 'routes/Menu/domains/basket'
 
 import goustoBoxesImage from 'media/images/gousto-boxes.jpg'
 
@@ -35,7 +36,8 @@ const cuisines = [
 ]
 
 const PersonaliseMenuStep = () => {
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled()
+  const { numPortions } = useBasket()
+  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numPortions)
   const [selected, setSelected] = useState([])
   const dispatch = useDispatch()
   const onSelect = useCallback(

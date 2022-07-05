@@ -21,26 +21,33 @@ const menuBoxesByPortionSize = (
 
 export const useSupportedBoxTypes = () => {
   const menuBox = useMenuBox()
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled()
+  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabled()
 
-  const maxRecipesForPortion = (portionSize = 2) =>
-    menuBox
+  /**
+   * Please read description inside function
+   */
+  const maxRecipesForPortion = (portionSize = 2) => {
+    const maxRecipesForPortionDefault = menuBox
       ? Math.max(
           ...menuBoxesByPortionSize(menuBox, portionSize).map(
             (box) => box.attributes.number_of_recipes,
           ),
         )
       : DEFAULT_MAX_RECIPES
-  /**
-   * FYI: this is just for A/B test https://gousto.atlassian.net/browse/TG-6597
-   * Basically we need to restrict 50% of prospects to having 4 recipes, not 5
-   * When experiment will be finished Beetroots will simply delete following lines:
-   * 41, 42, 43. and all useIsFiveRecipesEnabled() in this file.
-   * Even useIsFiveRecipesEnabled() hook will be deleted.
-   */
-  const experimentMaxRecipesForPortion = isFiveRecipesEnabled
-    ? maxRecipesForPortion
-    : () => DEFAULT_MAX_RECIPES
+
+    /**
+     * FYI: this is just for A/B test https://gousto.atlassian.net/browse/TG-6597
+     * Basically we need to restrict 50% of prospects to having 4 recipes, not 5
+     * When experiment will be finished Beetroots will simply delete following lines:
+     * 41, 42, 43. and all useIsFiveRecipesEnabled() in this file.
+     * Even useIsFiveRecipesEnabled() hook will be deleted.
+     */
+    const maxRecipesForPortionExperiment = isFiveRecipesExperimentEnabled
+      ? maxRecipesForPortionDefault
+      : DEFAULT_MAX_RECIPES
+
+    return maxRecipesForPortionExperiment
+  }
 
   const minRecipesForPortion = (portionSize = 2) =>
     menuBox
@@ -62,7 +69,8 @@ export const useSupportedBoxTypes = () => {
   return {
     allowedPortionSizes,
     isPortionSizeAllowedByRecipeCount,
-    maxRecipesForPortion: experimentMaxRecipesForPortion,
+    maxRecipesForPortion,
+    // maxRecipesForPortion: experimentMaxRecipesForPortion,
     minRecipesForPortion,
   }
 }

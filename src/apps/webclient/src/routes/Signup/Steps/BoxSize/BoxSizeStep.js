@@ -8,6 +8,7 @@ import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { signupConfig } from 'config/signup'
 import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
+import { useBasket } from 'routes/Menu/domains/basket'
 
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
 import { PrimaryButton } from './PrimaryButton'
@@ -25,7 +26,8 @@ export const BoxSizeStep = ({
   isLoadingPrices,
   goustoOnDemandCustomText,
 }) => {
-  const { isFiveRecipesEnabledBoxSize } = useIsFiveRecipesEnabled()
+  const { numPortions } = useBasket()
+  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabled(numPortions)
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
   const handlePrimaryButtonClick = (value) => {
     numPortionChange(value)
@@ -49,7 +51,7 @@ export const BoxSizeStep = ({
       }) => (
         <div className={css.carouselItem} key={`box-size-for-${value}`}>
           <h2 className={css.itemHeading}>{heading}</h2>
-          {isFiveRecipesEnabledBoxSize && (
+          {isFiveRecipesExperimentEnabled && (
             <p className={css.suitableTitle}>
               <span>{recipeInfoTextStart}</span>
               <strong>{recipeInfoStrongText}</strong>
@@ -78,7 +80,7 @@ export const BoxSizeStep = ({
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
           <Heading type="h1">{title}</Heading>
-          {isGoustoOnDemandEnabled || isFiveRecipesEnabledBoxSize ? null : (
+          {isGoustoOnDemandEnabled || isFiveRecipesExperimentEnabled ? null : (
             <p className={css.subtitle}>{subtitle}</p>
           )}
         </div>

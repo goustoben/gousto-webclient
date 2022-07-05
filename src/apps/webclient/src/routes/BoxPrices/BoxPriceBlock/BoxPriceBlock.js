@@ -7,6 +7,7 @@ import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
 import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
 import { Benefits } from 'routes/Home/Benefits'
+import { useBasket } from 'routes/Menu/domains/basket'
 
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
@@ -21,7 +22,8 @@ const BoxPriceBlock = ({
   trackUTMAndPromoCode,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(2)
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled()
+  const { numPortions } = useBasket()
+  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numPortions)
   const { title, boxSizeTrackingValue } = boxTypes[numPersons]
 
   const boxInfoCopy = boxInfo.slice()

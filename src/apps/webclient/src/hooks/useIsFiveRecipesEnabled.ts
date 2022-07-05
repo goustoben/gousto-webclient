@@ -1,21 +1,20 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
-import { useBasket } from 'routes/Menu/domains/basket'
 
-export const useIsFiveRecipesEnabled = () => {
-  const fiveRecipesExperimentEnabled = useIsOptimizelyFeatureEnabled(
-    'beetroots_five_recipes_web_enabled',
-  )
+export const useIsFiveRecipesEnabled = (numPortions?: number) => {
+  const fiveRecipesExperimentEnabled =
+    useIsOptimizelyFeatureEnabled('beetroots_five_recipes_web_enabled') || false
   const { isAuthenticated } = useAuth()
-  const { numPortions } = useBasket()
 
   // FYI: This should be used only on BoxSizeStep
-  const isFiveRecipesEnabledBoxSize = !isAuthenticated && fiveRecipesExperimentEnabled
+  const isFiveRecipesExperimentEnabled = !isAuthenticated && fiveRecipesExperimentEnabled
   // FYI: This should be used at any other step except BoxSize
-  const isFiveRecipesEnabled = isFiveRecipesEnabledBoxSize && numPortions === 2
+  const isFiveRecipesEnabled = numPortions
+    ? isFiveRecipesExperimentEnabled && numPortions === 2
+    : false
 
   return {
-    isFiveRecipesEnabledBoxSize,
+    isFiveRecipesExperimentEnabled,
     isFiveRecipesEnabled,
   }
 }
