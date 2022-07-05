@@ -6,6 +6,10 @@ import classNames from 'classnames'
 import humanTimeFormat from 'utils/timeFormat'
 
 import ImmutablePropTypes from 'react-immutable-proptypes'
+
+import {
+  FiveRecipesAwarenessOrderListBanner
+} from '../../../../../components/FiveRecipesAwareness/OrderListBanner/FiveRecipesAwarenessOrderListBanner'
 import OrderCollage from './OrderCollage'
 import OrderDate from './OrderDate'
 import OrderTime from './OrderTime'
@@ -75,6 +79,7 @@ class Order extends React.PureComponent {
             <div className={css.orderMain}>
               <div className={css.orderColLeft}>
                 <div className={css.orderSummaryContainer}>
+                  <FiveRecipesAwarenessOrderListBanner orderState={orderState} />
                   {originalDeliveryDay !== null ? (
                     <OrderRescheduledNotification
                       oldDeliveryDay={originalDeliveryDay}
