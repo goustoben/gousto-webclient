@@ -32,6 +32,8 @@ const BoxPriceBlock = ({
     boxInfoCopy.pop()
   }
 
+  const recipesLeftTrackingIndex = boxSizeTrackingValue !== 'large' && isFiveRecipesEnabled ? 3 : 2
+
   return (
     <div className={numPersons === selectedBox ? css.containerActive : css.container}>
       <div className={css.carouselItem}>
@@ -60,9 +62,9 @@ const BoxPriceBlock = ({
             )
           })}
         </div>
-        {2 - selectedIndex > 0 ? (
+        {recipesLeftTrackingIndex - selectedIndex > 0 ? (
           <div className={css.selectDescription}>
-            {`Select ${2 - selectedIndex} more recipe${
+            {`Select ${recipesLeftTrackingIndex - selectedIndex} more recipe${
               selectedIndex === 1 ? '' : 's'
             } for the best price`}
           </div>
