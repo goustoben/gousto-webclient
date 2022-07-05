@@ -42,9 +42,18 @@ const useBasketRecipes = () => {
 
   const recipeCount = sumQuantities(recipeQuantities)
 
+  const swapRecipes = useCallback(
+    (oldRecipeId: string, newRecipeId: string, view?: string) => {
+      removeRecipe(oldRecipeId, view)
+      addRecipe(newRecipeId, view)
+    },
+    [removeRecipe, addRecipe],
+  )
+
   return {
     addRecipe,
     removeRecipe,
+    swapRecipes,
     canAddRecipes,
     reachedLimit,
     recipeCount,
