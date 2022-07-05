@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import { MenuAPIResponseDataItem } from '../../http'
 import { TransformedRecipe } from '../../transformer'
 
 /**
@@ -19,16 +19,18 @@ type RecipeCounter = Record<string, number>
  *    `reference` - an identifier to refer to the recipe within context of the list the recipe belongs to
  * (e.g. list of recipes in particular category).
  *
- * @param `recipesVariants` - an Immutable object that holds information about all variants indexed by recipeIds
- *
  * Important: The resulting "injector" function is "stateful" and should be used only within single logical
  * list of recipes. For instance for recipes in single collection.
  */
 export const getRecipeReferenceInjector = ({
-  recipesVariants,
+  menu,
 }: {
-  recipesVariants: Immutable.Map<string, Immutable.Map<string, any>>
+  menu: MenuAPIResponseDataItem
 }) => {
+  const {
+    relationships: { recipe_options: { data: menuVariantGroups } }
+  } = menu
+
   // Statistics of occurrences for a given recipe "family" within currently
   // traversed list of recipes. E.g.: `{ 12345: 2 }` indicates the recipe 12345 occurred 2 times.
   const recipeCounter: RecipeCounter = {}
@@ -36,11 +38,18 @@ export const getRecipeReferenceInjector = ({
   // Function to map given recipeId to the hash that identifies the recipe's "family"
   // and place of that family within context of current list of recipes and relatively
   // to other recipes from the same "family"
-  const getRecipeFingerprint = (recipeId: string) => {
-    const variantList = recipesVariants?.get(recipeId)
-    const alternatives: { coreRecipeId: string }[] = variantList?.get('alternatives')?.toJS() || []
+  const getRecipeFingerprint = (recipeCoreId: string) => {
+    const recipeVariantGroup = menuVariantGroups.find(group => group.core_recipe_id === recipeCoreId)
 
-    return [recipeId, ...alternatives.map(({ coreRecipeId }) => coreRecipeId)].sort().join(',')
+    if (!recipeVariantGroup) {
+      // TODO error handling here? wasn't handled in previous impl
+      return ''
+    }
+
+    return [
+      recipeCoreId,
+      ...recipeVariantGroup.relationships.map(r => r.data.core_recipe_id)
+    ].sort().join(',')
   }
 
   return function injector(recipe: TransformedRecipe) {

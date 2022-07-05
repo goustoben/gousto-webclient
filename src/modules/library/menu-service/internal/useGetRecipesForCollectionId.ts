@@ -73,7 +73,7 @@ export function useGetRecipesForCollectionId(
         dietaryClaims: collection.requirements.dietary_claims,
       })
 
-      const recipeReferenceInjector = getRecipeReferenceInjector({ recipesVariants })
+      const recipeReferenceInjector = getRecipeReferenceInjector({ menu })
 
       const unsortedRecipes = recipeIds
         .map((id) => recipes.find((other) => other.id === id))
