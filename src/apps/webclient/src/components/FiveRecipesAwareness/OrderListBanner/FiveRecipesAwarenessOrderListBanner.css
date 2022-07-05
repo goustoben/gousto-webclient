@@ -1,0 +1,37 @@
+@value BreakpointFromLarge from 'design-language/breakpoints.module.css';
+
+.fiveRecipesContainer {
+  composes: marginXXSTop marginSMRight marginSMBottom marginZeroLeft from 'sass-loader!styles/spacing.scss';
+  height: 20px;
+  padding-right: 1px;
+  padding-top: 4px;
+  padding-bottom: 25px;
+  width: 278px;
+  font-style: normal;
+  background-color: #DFF4FF;
+  position: relative;
+}
+
+.fiveRecipesText {
+  font-family: 'Axiforma';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: #212930;
+}
+
+@media BreakpointFromLarge {
+  .leftArrow:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid #DFF4FF;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    left: -20px;
+  }
+}
