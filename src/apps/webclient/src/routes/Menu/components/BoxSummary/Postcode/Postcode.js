@@ -134,7 +134,7 @@ class Postcode extends React.PureComponent {
           </Heading>
           <div className={css.row}>
             <p className={css.leadingText}>
-              We deliver for free up to 7 days a week depending on where you live
+              We deliver up to 7 days a week depending on where you live
             </p>
           </div>
           {addresses ? this.savedAddresses() : this.noSavedAddresses()}
