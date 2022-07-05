@@ -36,6 +36,9 @@ export const BasketValidationErrorModal = ({
 }) => {
   const { swapRecipes } = useBasket()
   const onSwapClick = useCallback(() => {
+    if (recipeToAdd === null || recipeToRemove === null) {
+      return
+    }
     swapRecipes(recipeToAdd, recipeToRemove, 'swapModal')
     clearBasketNotValidError()
   }, [clearBasketNotValidError, swapRecipes, recipeToAdd, recipeToRemove])

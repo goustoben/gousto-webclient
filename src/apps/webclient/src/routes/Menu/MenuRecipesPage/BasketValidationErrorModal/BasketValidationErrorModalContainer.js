@@ -17,8 +17,8 @@ const mapStateToProps = (state) => {
     brokenRulesToDisplay: hasBasketError
       ? getFormatedRulesMessage(state, basketRuleBroken.rules)
       : [],
-    recipeToRemove: basketRuleBroken.rules[0].items[0],
-    recipeToAdd: basketRuleBroken.recipeId,
+    recipeToRemove: hasBasketError ? basketRuleBroken.rules[0].items[0] : null,
+    recipeToAdd: hasBasketError ? basketRuleBroken.recipeId : null,
   }
 }
 
