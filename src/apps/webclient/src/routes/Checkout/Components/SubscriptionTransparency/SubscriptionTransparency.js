@@ -2,44 +2,31 @@ import React from 'react'
 
 import {
   Box,
-  Color,
-  Icon,
-  IconVariant,
-  Text,
-  FontFamily,
-  Space,
   Display,
   JustifyContent,
   AlignItems,
+  FlexDirection,
 } from '@gousto-internal/citrus-react'
+import { TickText } from 'TickText'
+import config from 'config'
 
 export const SubscriptionTransparency = () => (
-  <Box width="100%" display={Display.Flex} justifyContent={JustifyContent.Center}>
-    <Box
-      display={Display.Flex}
-      justifyContent={JustifyContent.Center}
-      AlignItems={AlignItems.Center}
-      paddingH={['0.75rem', 0]}
+  <Box
+    width="100%"
+    display={Display.Flex}
+    alignItems={AlignItems.Center}
+    justifyContent={JustifyContent.Center}
+    flexDirection={FlexDirection.Column}
+  >
+    <TickText
       maxWidth="72%"
-      flexGrow={0}
-      data-testing="container"
-    >
-      <Box>
-        <Icon name="tick" variant={IconVariant.Confirmation} />
-        <Space size={1} direction="horizontal" />
-      </Box>
-
-      <Text size={2} textAlign="center">
-        <Text
-          fontWeight={FontFamily.Bold}
-          color={Color.Success_600}
-          display="inline-block"
-          data-testing="highlighted"
-        >
-          No commitment. No cancellation fees.
-        </Text>{' '}
-        Skip a box or cancel your subscription online at anytime.
-      </Text>
-    </Box>
+      highlightedText="No commitment. No cancellation fees."
+      ordinaryText="Skip a box or cancel your subscription online at anytime."
+    />
+    <TickText
+      maxWidth="72%"
+      highlightedText="Free delivery on your first box"
+      ordinaryText={`(usually ${config.deliveryPriceConfig.deliveryPriceFormatted}) as a welcome treat.`}
+    />
   </Box>
 )

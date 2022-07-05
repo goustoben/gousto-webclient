@@ -87,7 +87,7 @@ export const getWhyGoustoConfig = () => ({
       list: [
         'Easy-to-follow recipe cards',
         'Precise ingredients with zero food waste',
-        'Free, contactless delivery, any day you like',
+        'Delivered to your door, 7 days a week',
       ],
     },
   ],

@@ -155,7 +155,7 @@ class PromoCode extends PureComponent {
           status={status}
           validationMessage={hasError && checkoutConfig.errorMessage.invalidPromocode}
         />
-        <Space size={5} />
+        <Space size={2} />
       </>
     )
   }

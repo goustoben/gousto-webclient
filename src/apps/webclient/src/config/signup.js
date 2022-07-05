@@ -79,7 +79,7 @@ export const signupConfig = {
   postCodeStep: {
     title: 'Where would you like your boxes delivered?',
     goustoOnDemandTitle: 'Where would you like your box delivered?',
-    reminder: 'Free UK delivery, 7 days a week',
+    reminder: 'Delivered to your door, 7 days a week',
     doNotDeliverErrorMessage: 'Sorry, it looks like we don’t currently deliver to your area.',
     genericErrorMessage: 'Please enter a valid postcode'
   },

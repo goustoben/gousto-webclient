@@ -13,4 +13,5 @@ export default {
   routes: require('./routes'),
   signup: require('./signup'),
   template: require('./template'),
+  deliveryPriceConfig: require('./deliveryPrice').deliveryPriceConfig
 }
