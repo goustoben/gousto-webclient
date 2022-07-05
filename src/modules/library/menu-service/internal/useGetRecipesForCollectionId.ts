@@ -61,8 +61,6 @@ export function useGetRecipesForCollectionId(
         return []
       }
 
-      const dietaryClaims = collection.requirements.dietary_claims
-
       const selectedVariantReplacer = getSelectedVariantsReplacer({
         recipes,
         replacementMap: (selectedRecipeVariants || {})[collectionId] || {},
@@ -72,7 +70,7 @@ export function useGetRecipesForCollectionId(
         recipesInStockIds,
         recipes,
         recipesVariants,
-        dietaryClaims,
+        dietaryClaims: collection.requirements.dietary_claims,
       })
 
       const recipeReferenceInjector = getRecipeReferenceInjector({ recipesVariants })

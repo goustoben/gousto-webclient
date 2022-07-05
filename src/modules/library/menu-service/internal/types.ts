@@ -1,22 +1,6 @@
-export type RecipeVariantLink = {
-  displayName: string
-  alternatives: {
-    id: string
-    coreRecipeId: string
-    displayName: string
-  }[]
-}
+import { SelectedVariants } from "./useAlternativeOptions/types";
 
-export type Recipe = {
-  id: string
-  coreRecipeId: string
-  displayName: string
-  meals: [
-    {
-      numPortions: number
-      surcharge: {
-        listPrice: number
-      }
-    }
-  ]
+export type UseMenuDependencies = {
+  selectedRecipeVariants: SelectedVariants,
+  numPortions: number,
 }
