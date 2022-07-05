@@ -89,19 +89,12 @@ export const use5RecipesAwareness = () => {
   )
   const setBannerAsClosed = () => setUserClosedBanner(true)
 
-  const hasSubscriptionFor2People4Recipes = useHasSubscriptionFor2People4Recipes()
+  const canOrder5Recipes = useCanOrder5Recipes()
   const isEnabledForSubscriptionUser = useIsOptimizelyFeatureEnabled(
-<<<<<<< HEAD
-    canOrder5Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
-  )
-  const isUserIncludedIn5RecipeRollout = useIsOptimizelyFeatureEnabled(
-    hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLED_FIVE_RECIPES_ROLLOUT : null,
-=======
     hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
->>>>>>> 67cb46271 (updates based on simplified business logic)
   )
 
-  const isEnabled = Boolean(isEnabledForSubscriptionUser)
+  const isEnabled = canOrder5Recipes && Boolean(isEnabledForSubscriptionUser)
 
   return {
     isEnabled,
