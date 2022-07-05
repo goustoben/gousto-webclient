@@ -2,7 +2,15 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
+import { useBasket } from 'routes/Menu/domains/basket'
+
 import { BasketValidationErrorModal } from '../BasketValidationErrorModal'
+
+jest.mock('routes/Menu/domains/basket', () => ({
+  useBasket: jest.fn().mockReturnValue({
+    swapRecipes: jest.fn(),
+  }),
+}))
 
 describe('BasketValidationErrorModal', () => {
   let wrapper
@@ -12,8 +20,8 @@ describe('BasketValidationErrorModal', () => {
       title: '',
       shouldShow: true,
       shouldShowSwapButton: false,
-      basketRecipeSwap: () => {},
       closeModal: () => {},
+      clearBasketNotValidError: () => {},
       brokenRulesToDisplay: [
         {
           description: 'Only 1 oven ready meal is available per order',
@@ -62,7 +70,6 @@ describe('BasketValidationErrorModal', () => {
         title: '',
         shouldShow: true,
         shouldShowSwapButton: false,
-        basketRecipeSwap: () => {},
         closeModal: closeModalFunction,
         brokenRulesToDisplay: [
           {
@@ -100,14 +107,13 @@ describe('BasketValidationErrorModal', () => {
   })
 
   describe('When showSwapButton is true', () => {
-    const basketRecipeSwap = jest.fn()
     beforeEach(() => {
       props = {
         title: '',
         shouldShow: true,
         shouldShowSwapButton: true,
-        basketRecipeSwap,
         closeModal: () => {},
+        clearBasketNotValidError: () => {},
         brokenRulesToDisplay: [
           {
             description: 'Only 1 oven ready meal is available per order',
@@ -138,8 +144,9 @@ describe('BasketValidationErrorModal', () => {
 
     describe('when click on close button', () => {
       test('should trigger recipe swap from Swap button', () => {
+        const { swapRecipes } = useBasket()
         wrapper.find('.basketErrorModalSwapButton').simulate('click')
-        expect(basketRecipeSwap).toHaveBeenCalled()
+        expect(swapRecipes).toHaveBeenCalled()
       })
     })
   })
