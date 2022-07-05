@@ -1,22 +1,21 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
+import { render } from '@testing-library/react'
 
 import { SubscriptionTransparency } from '../SubscriptionTransparency'
 
 describe('SubscriptionTransparency', () => {
-  let wrapper
+  let rendered
 
   beforeEach(() => {
-    wrapper = shallow(<SubscriptionTransparency />)
+    rendered = render(<SubscriptionTransparency />)
   })
 
   test('should be rendered properly', () => {
-    expect(
-      wrapper.text().includes('Skip a box or cancel your subscription online at anytime.'),
-    ).toBe(true)
+    const { getByText, findByTestId } = rendered
+    expect(getByText('Skip a box or cancel your subscription online at anytime.')).toBeDefined()
 
-    expect(wrapper.find({ 'data-testing': 'highlighted' }).exists()).toBeTruthy()
-    expect(wrapper.find({ 'data-testing': 'container' }).exists()).toBeTruthy()
+    expect(findByTestId('highlighted')).toBeDefined()
+    expect(findByTestId('container')).toBeDefined()
   })
 })

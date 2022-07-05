@@ -16,15 +16,22 @@ const allBenefits = [
     normalText: 'pause or cancel for free anytime',
   },
   {
-    id: 'freeDelivery',
+    id: 'everydayDelivery',
     iconClassName: css.truckIcon,
-    ariaLabel: 'Free contactless delivery icon',
+    ariaLabel: 'Contactless delivery icon',
     highlightedText: 'Free UK delivery',
     normalText: ', 7 days a week',
   },
+  {
+    id: 'paidDelivery',
+    iconClassName: css.truckIcon,
+    ariaLabel: 'Contactless delivery icon',
+    highlightedText: 'Delivered 7 days a week.',
+    normalText: 'Prices exclude delivery. ',
+  },
 ]
 
-export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody }) => {
+export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody, isReverted }) => {
   const benefits = allBenefits.filter((benefit) => benefit.id === byId)
 
   const isTestAllocationHookEnabled = useIsOptimizelyFeatureEnabled(
@@ -37,6 +44,7 @@ export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody }) => {
         [css.isCentered]: isCentered,
         [css.fontStyleS]: fontStyleS,
         [css.fontStyleBody]: fontStyleBody,
+        [css.isReverted]: isReverted,
       })}
     >
       <div>
@@ -45,7 +53,7 @@ export const Benefits = ({ byId, isCentered, fontStyleS, fontStyleBody }) => {
             <div className={classNames(css.icon, iconClassName)} />
             <div className={css.text}>
               <span className={css.highlight}>{highlightedText}</span>
-              {normalText}
+              <span>{normalText}</span>
             </div>
           </div>
         ))}
@@ -72,10 +80,12 @@ Benefits.propTypes = {
   isCentered: PropTypes.bool,
   fontStyleS: PropTypes.bool,
   fontStyleBody: PropTypes.bool,
+  isReverted: PropTypes.bool,
 }
 
 Benefits.defaultProps = {
   isCentered: false,
   fontStyleS: false,
   fontStyleBody: false,
+  isReverted: false,
 }

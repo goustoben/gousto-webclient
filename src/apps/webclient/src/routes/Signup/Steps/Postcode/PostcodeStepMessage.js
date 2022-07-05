@@ -15,7 +15,7 @@ export const PostcodeStepMessage = ({
   isWizardWithoutImagesEnabled,
 }) => {
   if (isGoustoOnDemandEnabled && !deliveryDaysError) {
-    return <Benefits isCentered byId="freeDelivery" fontStyleBody />
+    return <Benefits isCentered byId="everydayDelivery" fontStyleBody />
   }
   let text
   if (deliveryDaysError === 'do-not-deliver') {

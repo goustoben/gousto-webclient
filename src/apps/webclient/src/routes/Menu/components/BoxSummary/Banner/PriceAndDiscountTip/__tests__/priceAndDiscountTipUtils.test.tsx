@@ -288,14 +288,14 @@ describe('priceAndDiscountTipUtils', () => {
           discountKind: 'percentage',
           discountAmount: '60.0000',
         }),
-      ).toEqual('60% off your box')
+      ).toEqual('60%')
       expect(
         formatDiscountTip({
           isDiscountEnabled: true,
           discountKind: 'flat',
           discountAmount: '40.0000',
         }),
-      ).toEqual('£40 off your box')
+      ).toEqual('£40')
     })
   })
 })

@@ -137,26 +137,6 @@ describe('DeliverySlot logic', () => {
       expect(wrapper.find('DeliverySupportingText').prop('doesDateHaveDisabledSlots')).toBe(true)
     })
 
-    test('should show free delivery available reminder', () => {
-      wrapper = shallow(
-        <DeliverySlot
-          deliveryDays={deliveryDays}
-          disabledSlots={disabledSlots}
-          isAuthenticated={isAuthenticated}
-          isSubscriptionActive={isSubscriptionActive}
-          tempDate="2019-03-03"
-          clearPostcode={jest.fn()}
-          getBoxSummaryTextProps={getBoxSummaryTextProps}
-          basketRestorePreviousValues={() => {}}
-          boxSummaryNext={() => {}}
-          numPortions={2}
-        />,
-      )
-      expect(wrapper.find('.highlightText').text()).toContain(
-        'Free delivery available, 7 days a week',
-      )
-    })
-
     test('should NOT show limited availability text when doesDateHaveDisabledSlots is true, user is logged in but subscription is ACTIVE', () => {
       wrapper = shallow(
         <DeliverySlot

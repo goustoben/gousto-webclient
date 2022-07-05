@@ -1,4 +1,4 @@
-@value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
+@value BreakpointFromMedium, BreakpointToMedium, BreakpointToLarge from 'design-language/breakpoints.css';
 @value FontStyleBody from 'design-language/typography.css';
 @value iconSize 1.5rem;
 
@@ -44,6 +44,34 @@
 .text {
   margin-left: 0.5rem;
   text-align: left;
+}
+
+.isReverted {
+  .row {
+    align-items: center;
+
+    @media BreakpointToLarge {
+      line-height: 1.2rem;
+      min-height: 1.2rem;
+    }
+  }
+
+  .text {
+    display: flex;
+    flex-direction: row-reverse;
+
+    span {
+      white-space: nowrap;
+
+      &:last-child {
+        margin-right: 3px;
+      }
+    }
+
+    @media BreakpointToLarge {
+      flex-direction: column-reverse;
+    }
+  }
 }
 
 .icon {

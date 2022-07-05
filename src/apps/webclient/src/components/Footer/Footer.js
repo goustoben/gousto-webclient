@@ -241,6 +241,12 @@ export const Footer = ({
     </FooterNotice>
   )
 
+  const renderDeliveryNotice = () => (
+    <FooterNotice>
+      † Price excludes {config.deliveryPriceConfig.deliveryPriceFormatted} delivery fee
+    </FooterNotice>
+  )
+
   const renderSimpleFooter = () => (
     <div>
       {renderSimpleList()}
@@ -255,6 +261,7 @@ export const Footer = ({
       {copyright && renderCopyright()}
       {isOnLandingPage && renderNo1Notice()}
       {isOnLandingPage && renderVerificationOfValueNotice()}
+      {isOnLandingPage && renderDeliveryNotice()}
     </div>
   )
 

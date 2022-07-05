@@ -16,7 +16,7 @@ const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
     <Fragment>
       Impressively easy meals from just{' '}
       <span className={css.pricePerServing}>
-        {pricePerServing ? formatPrice(pricePerServing) : ''} per serving
+        {pricePerServing ? formatPrice(pricePerServing) : ''} per serving<sup>†</sup>
       </span>
       . All of the flavour, none of the fuss.
     </Fragment>
