@@ -67,9 +67,9 @@ export function useGetRecipesForCollectionId(
       })
 
       const outOfStockRecipeReplacer = getOutOfStockRecipeReplacer({
+        menu,
         recipesInStockIds,
         recipes,
-        recipesVariants,
         dietaryClaims: collection.requirements.dietary_claims,
       })
 

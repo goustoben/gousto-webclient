@@ -26,7 +26,5 @@ export type MenuAPIResponseRelationshipRecipeOptions = {
   attributes: {
     short_display_name: string
   }
-  relationships: {
-    type: MenuAPIResponseRelationshipRecipeOptionAlternative[]
-  }
+  relationships: MenuAPIResponseRelationshipRecipeOptionAlternative[]
 }

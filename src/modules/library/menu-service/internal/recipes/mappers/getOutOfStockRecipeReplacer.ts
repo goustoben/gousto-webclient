@@ -1,16 +1,19 @@
-import Immutable from 'immutable'
+import { MenuAPIResponseDataItem } from '../../http'
 import { TransformedRecipe } from '../../transformer'
 
-import { getFilteredVariants } from '../../useAlternativeOptions/getFilteredVariants'
+import { getVariantsForRecipe } from '../../recipeOptions'
 
+/**
+ * out-of-stock recipes should be replaced with an in-stock variant, if possible
+ */
 export function getOutOfStockRecipeReplacer({
+  menu,
   recipes,
-  recipesVariants,
   recipesInStockIds,
   dietaryClaims,
 }: {
+  menu: MenuAPIResponseDataItem,
   recipes: TransformedRecipe[]
-  recipesVariants: Immutable.Map<string, any>
   recipesInStockIds: Set<string>
   dietaryClaims: string[]
 }) {
@@ -27,18 +30,18 @@ export function getOutOfStockRecipeReplacer({
       return wrapRecipe(recipe, reference)
     }
 
-    const recipesAlternatives = getFilteredVariants(recipesVariants, recipe.id, recipes, dietaryClaims)
+    const recipesAlternatives = getVariantsForRecipe(menu, recipe.id, recipes, dietaryClaims)
 
     if (!recipesAlternatives || recipesAlternatives.type !== 'alternatives' || !recipesAlternatives.alternatives) {
       return wrapRecipe(recipe, reference)
     }
 
     const recipeAlternativeWhichIsInStock = recipesAlternatives.alternatives.find((r) =>
-      recipesInStockIds.has(r?.get('coreRecipeId')),
+      recipesInStockIds.has(r.coreRecipeId),
     )
 
     if (recipeAlternativeWhichIsInStock) {
-      const alternative = recipes.find((r) => r.id === recipeAlternativeWhichIsInStock.get('coreRecipeId'))
+      const alternative = recipes.find((r) => r.id === recipeAlternativeWhichIsInStock.coreRecipeId)
 
       if (alternative) {
         return wrapRecipe(alternative, reference)
