@@ -25,27 +25,35 @@ const Lines = ({ numRecipes }: Props) => {
   const canCheckout = numRecipes >= basketConfig.minRecipesNum
   const { isDiscountEnabled } = discountDescriptor
 
-  if (canCheckout) {
+  if (canCheckout && !isPending && pricing && pricing.grossTotal) {
     return (
       <>
         <div>
           <Price pricing={pricing} isPending={isPending} />
         </div>
-        <div className={css.bold}>{isDiscountEnabled ? discountTip : 'Free UK delivery'}</div>
+        {isDiscountEnabled && <div className={css.bold}>{discountTip} off your box</div>}
+        {!isDiscountEnabled && <div className={css.includingDelivery}> incl. delivery </div>}
+      </>
+    )
+  } else if (canCheckout) {
+    return (
+      <>
+        <div>
+          <Price pricing={pricing} isPending={isPending} />
+        </div>
       </>
     )
   } else if (isDiscountEnabled) {
     return (
       <>
-        <div className={classNames(css.bold)}>{discountTip}</div>
-        <div>+ Free UK delivery</div>
+        <div className={classNames(css.bold, css.discountApplied)}>{discountTip} off</div>
+        <div>your Gousto box</div>
       </>
     )
   } else {
     return (
       <>
-        <div className={classNames(css.bold)}>Free UK delivery,</div>
-        <div>7 days a week</div>
+        <div className={classNames(css.bold, css.viewBasket)}>View Basket</div>
       </>
     )
   }

@@ -4,7 +4,6 @@ import { Alert, Button, Heading, LayoutContentWrapper, Segment } from 'goustouic
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
-import { reminder } from 'config/freeDelivery'
 import { getDeliveryDaysAndSlots } from 'utils/deliverySlotHelper'
 
 import { DatePickerContainer } from './DatePicker'
@@ -117,12 +116,6 @@ class DeliverySlot extends React.PureComponent {
             </Alert>
           </div>
         )}
-        <div className={css.row}>
-          <p className={css.highlightText}>
-            <span className={css.tick} />
-            {reminder}
-          </p>
-        </div>
         <div className={shouldDisplayFullScreenBoxSummary && css.stickyButton}>
           <Button
             className="boxSummaryContinueButton"
