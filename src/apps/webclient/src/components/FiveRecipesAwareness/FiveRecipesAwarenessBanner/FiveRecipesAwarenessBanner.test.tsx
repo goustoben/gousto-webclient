@@ -6,8 +6,8 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
 
 import { JestSpyInstance } from '../../../types/jest'
+import * as FiveRecipeHooks from '../use5RecipesAwareness'
 import { FiveRecipesAwarenessBanner } from './FiveRecipesAwarenessBanner'
-import * as FiveRecipeHooks from '.././use5RecipesAwareness'
 
 describe('<FiveRecipesAwarenessBanner /> ', () => {
   let use5RecipesAwarenessSpy: JestSpyInstance<typeof FiveRecipeHooks.use5RecipesAwareness>
@@ -27,7 +27,7 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
         hasClosedBanner: false,
       })
 
-      render(<FiveRecipesAwarenessBanner  />)
+      render(<FiveRecipesAwarenessBanner />)
       expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     })
   })
@@ -42,13 +42,13 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
         })
         render(<FiveRecipesAwarenessBanner />)
       })
-      
+
       it('should render the banner and they can close it by clicking the close icon', () => {
         expect(screen.queryByRole('heading')).toHaveTextContent(/5 recipes, here we come!/)
         fireEvent.click(screen.getByTitle('Close Banner'))
         expect(screen.queryByRole('heading')).not.toBeInTheDocument()
       })
-      
+
       it('should send a client metric `my-deliveries-five-recipes-awareness-4M-2P`', () => {
         fireEvent.click(screen.getByTitle('Close Banner'))
         expect(sendClientMetricSpy).toHaveBeenCalledWith(
@@ -69,7 +69,6 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
         render(<FiveRecipesAwarenessBanner />)
         expect(screen.queryByRole('heading')).not.toBeInTheDocument()
       })
-
     })
   })
 })
