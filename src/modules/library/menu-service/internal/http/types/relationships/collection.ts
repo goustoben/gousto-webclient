@@ -13,7 +13,7 @@ export type MenuAPIResponseRelationshipCollection = {
   }
 
   // TODO is this still needed?
-  meta: {
+  meta?: {
     thumbnail: string
   }
 }

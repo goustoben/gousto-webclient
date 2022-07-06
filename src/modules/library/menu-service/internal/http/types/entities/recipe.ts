@@ -74,11 +74,11 @@ export type MenuAPIResponseIncludedRecipe = {
     dietary_claims: NameAndSlug[]
     recipe_developer: { name: string } // TODO shall we remove this?
     name: string
-    surcharges: PortionBasedValues<number>
+    surcharges: PortionBasedValues<number | null>
     dish_types: { name: string }[]
     chef_prepared: boolean
     ingredient_preparation: {
-      time: PortionBasedValues<number>
+      time: PortionBasedValues<number | null>
     }
     rating: {
       average: number

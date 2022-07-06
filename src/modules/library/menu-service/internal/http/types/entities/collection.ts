@@ -11,9 +11,9 @@ export type MenuAPIResponseIncludedCollection = {
     meta_description: any // TODO what type is this?
     short_title: string
     colour: string
-    schedule_end: string
+    schedule_end: string | null
     slug: string
-    schedule_start: string
+    schedule_start: string | null
     order: number
     requirements?: {
       dietary_claims: string[]
