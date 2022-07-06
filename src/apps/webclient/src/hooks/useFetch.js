@@ -45,6 +45,10 @@ export const useFetch = ({
 
           const json = await res.json()
 
+          if (json.errors && json.errors.length >= 1) {
+            throw new Error(Array(json.errors).toString())
+          }
+
           setFetchResponse(json)
         } catch (error) {
           setFetchError(error)

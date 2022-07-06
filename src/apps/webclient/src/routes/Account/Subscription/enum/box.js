@@ -10,3 +10,10 @@ export const MEALS_PER_BOX_MAP = {
   3: '3',
   4: '4'
 }
+
+export const MEALS_PER_BOX_MAP_5R = {
+  2: '2',
+  3: '3',
+  4: '4',
+  5: '5'
+}
