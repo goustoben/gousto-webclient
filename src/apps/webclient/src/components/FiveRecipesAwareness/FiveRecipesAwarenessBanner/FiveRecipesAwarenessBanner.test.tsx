@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { FiveRecipesAwarenessBanner } from '.'
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent } from '@testing-library/react'
 
@@ -8,6 +7,7 @@ import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
 
 import { JestSpyInstance } from '../../../types/jest'
 import * as FiveRecipeHooks from '../use5RecipesAwareness'
+import { FiveRecipesAwarenessBanner } from './FiveRecipesAwarenessBanner'
 
 describe('<FiveRecipesAwarenessBanner /> ', () => {
   let use5RecipesAwarenessSpy: JestSpyInstance<typeof FiveRecipeHooks.use5RecipesAwareness>
