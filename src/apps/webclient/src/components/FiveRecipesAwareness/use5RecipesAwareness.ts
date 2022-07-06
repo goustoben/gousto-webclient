@@ -67,8 +67,8 @@ const useCanOrder5Recipes = () => {
 }
 
 export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_modal_seen_on_menu'
-export const HAS_CLOSED_BANNER_MY_DELIVERIES_STORAGE_NAME = 'gousto_five_recipes_banner_closed_on_my_deliveries'
-
+export const HAS_CLOSED_BANNER_MY_DELIVERIES_STORAGE_NAME =
+  'gousto_five_recipes_banner_closed_on_my_deliveries'
 
 export const OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW =
   'radishes_five_recipes_awareness_subscribed_web_enabled'
