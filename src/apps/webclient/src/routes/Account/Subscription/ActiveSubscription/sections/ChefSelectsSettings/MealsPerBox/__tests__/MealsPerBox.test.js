@@ -1,11 +1,18 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import { act } from 'react-dom/test-utils'
+import { render, screen, fireEvent } from '@testing-library/react'
 
 import { SubscriptionContext } from '../../../../../context/index'
 import { MealsPerBox } from '../MealsPerBox'
 
-import { getMealsPerBox, getIsBoxAndPricesLoaded, getDietaryPreference, getBoxPricesNumPortion, getTotalBoxPriceDiscounted } from '../../../../../context/selectors/box'
+import {
+  getMealsPerBox,
+  getIsBoxAndPricesLoaded,
+  getDietaryPreference,
+  getBoxPricesNumPortion,
+  getTotalBoxPriceDiscounted,
+  getNumPortions,
+} from '../../../../../context/selectors/box'
+import { useFiveRecipeSubscriptionOption } from '../../../../../hooks/useFiveRecipeSubscriptionOption'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
 import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
@@ -13,32 +20,35 @@ import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
 jest.mock('../../../../../tracking')
 jest.mock('../../../../../context/selectors/box')
 jest.mock('../../../../../hooks/useUpdateSubscription')
+jest.mock('../../../../../hooks/useFiveRecipeSubscriptionOption')
 
 const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
 const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
 
-let wrapper
-
 const mountWithProps = (props) => {
-  wrapper = mount(
+  render(
     <MealsPerBox accessToken="foo" isMobile={false} {...props} />,
     {
       wrappingComponent: SubscriptionContext.Provider,
       wrappingComponentProps: { value: { state: {}, dispatch: 'MOCK_DISPATCH' } }
     }
   )
-
-  wrapper.update()
 }
 
-const clickEdit = () => {
-  act(() => {
-    wrapper
-      .find('[data-testing="meals-per-box-cta"]')
-      .simulate('click')
-  })
+const getCTA = () => (
+  screen.getByRole('button', { name: 'Save meals per box' })
+)
 
-  wrapper.update()
+const clickEdit = () => {
+  fireEvent.click(
+    screen.getByText('Edit')
+  )
+}
+
+const clickCTA = () => {
+  fireEvent.click(
+    getCTA()
+  )
 }
 
 const mockMealsPerBox = '2'
@@ -66,6 +76,7 @@ const EXPECTED_RADIOS = ['2 meals (£3.99 per serving)', '3 meals (£3.49 per se
 describe('MealsPerBox', () => {
   beforeEach(() => {
     jest.resetAllMocks()
+    useFiveRecipeSubscriptionOption.mockReturnValue(null)
     trackSubscriptionSettingsChangeSpy.mockReturnValue(() => { })
   })
 
@@ -76,8 +87,6 @@ describe('MealsPerBox', () => {
       getMealsPerBox.mockReturnValue(undefined)
       getBoxPricesNumPortion.mockReturnValue(undefined)
       getDietaryPreference.mockReturnValue(undefined)
-
-      mountWithProps()
     })
 
     describe('And I browse on a mobile device', () => {
@@ -86,21 +95,21 @@ describe('MealsPerBox', () => {
       })
 
       describe('And I click "edit"', () => {
-        beforeEach(() => {
-          clickEdit()
-        })
-
         test('Then I should see the expanded text', () => {
+          clickEdit()
+
           expect(
-            wrapper
-              .find('[data-testing="expanded-text"]')
-              .exists()
-          ).toBeTruthy()
+            screen.queryByText('Please select your meals per box.')
+          ).toBeInTheDocument()
         })
       })
     })
 
     describe('And I don\'t browse on a mobile device', () => {
+      beforeEach(() => {
+        mountWithProps({ isMobile: false })
+      })
+
       describe('And I click "edit"', () => {
         beforeEach(() => {
           clickEdit()
@@ -108,14 +117,16 @@ describe('MealsPerBox', () => {
 
         test('Then I should not see the expanded text', () => {
           expect(
-            wrapper
-              .find('[data-testing="expanded-text"]')
-              .exists()
-          ).toBeFalsy()
+            screen.queryByText('Please select your meals per box.')
+          ).not.toBeInTheDocument()
         })
 
         test('Then the Radios are not rendered', () => {
-          expect(wrapper.find('RadioGroup').exists()).toBeFalsy()
+          const renderedRadios = screen.queryAllByLabelText((content) => (
+            EXPECTED_RADIOS.includes(content)
+          ))
+
+          expect(renderedRadios).toHaveLength(0)
         })
       })
     })
@@ -133,84 +144,50 @@ describe('MealsPerBox', () => {
       mountWithProps()
     })
 
-    test('Then I should see the meals per box', () => {
-      expect.assertions(1)
-
-      expect(
-        wrapper
-          .find('[data-testing="current-meals-per-box"]')
-          .text()
-      ).toEqual('2 meals (£3.99 per serving)')
-    })
-
     test('Then I should see the total box price', () => {
       expect(
-        wrapper
-          .find('[data-testing="total-box-price"]')
-          .at(0)
-          .text()
-      ).toEqual('Recipe box price £30.15')
+        screen.queryByText('Recipe box price £30.15')
+      ).toBeInTheDocument()
     })
 
     describe('And I click "edit"', () => {
       beforeEach(() => {
-        act(() => {
-          clickEdit()
-        })
+        clickEdit()
       })
 
       test('Then the CTA should be disabled by default', () => {
-        expect(
-          wrapper
-            .find('[data-testing="meals-per-box-save-cta"]')
-            .prop('disabled')
-        ).toBeTruthy()
+        const button = getCTA()
+
+        expect(button).toHaveAttribute('disabled')
       })
 
       test('Then I can see the current selected radio', () => {
-        const selectedRadioText = wrapper.find('.inputRadioLabelChecked').text()
+        const input = screen.getByLabelText('2 meals (£3.99 per serving)', { selector: 'input' })
 
-        expect(selectedRadioText).toEqual('2 meals (£3.99 per serving)')
+        expect(input).toHaveAttribute('checked')
       })
 
       test('Then the expected Radios are rendered', () => {
-        expect.assertions(EXPECTED_RADIOS.length)
+        const renderedRadios = screen.getAllByLabelText((content) => (
+          EXPECTED_RADIOS.includes(content)
+        ))
 
-        const renderedRadios = wrapper.find('[data-testing="meals-per-box-radios"] label')
-
-        renderedRadios.forEach((radio, idx) => {
-          const expectedText = EXPECTED_RADIOS[idx]
-
-          expect(radio.text()).toEqual(expectedText)
-        })
+        expect(renderedRadios).toHaveLength(EXPECTED_RADIOS.length)
       })
 
       describe('And I select a Radio', () => {
         beforeEach(() => {
-          act(() => {
-            wrapper
-              .find('RadioGroup')
-              .simulate('change', {
-                target: {
-                  value: '4'
-                }
-              })
-          })
-
-          wrapper.update()
+          fireEvent.click(
+            screen.getByLabelText('4 meals (£2.99 per serving)', { selector: 'input' })
+          )
         })
 
         describe('And I click "Save meals per box"', () => {
           describe('And the update is successful', () => {
             beforeEach(() => {
               useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
-              act(() => {
-                wrapper
-                  .find('[data-testing="meals-per-box-save-cta"]')
-                  .simulate('click')
-              })
 
-              wrapper.update()
+              clickCTA()
             })
 
             test('Then useUpdateSubscription should be invoked', () => {
@@ -244,13 +221,7 @@ describe('MealsPerBox', () => {
           describe('And the update errors', () => {
             beforeEach(() => {
               useUpdateSubscription.mockReturnValue([false, false, true])
-              act(() => {
-                wrapper
-                  .find('[data-testing="meals-per-box-save-cta"]')
-                  .simulate('click')
-              })
-
-              wrapper.update()
+              clickCTA()
             })
 
             test('Then useSubscriptionToast is invoked', () => {
@@ -258,6 +229,24 @@ describe('MealsPerBox', () => {
             })
           })
         })
+      })
+    })
+
+    describe('When rockets_enable_five_recipes_subs flag is set', () => {
+      test('Then 5th recipe is rendered', () => {
+        getNumPortions.mockReturnValue(mockMealsPerBox)
+        getBoxPricesNumPortion.mockReturnValue({
+          ...mockBoxPricesNumPortion,
+          5: {
+            vegetarian: {
+              pricePerPortionDiscounted: '5.99',
+            },
+          },
+        })
+        useFiveRecipeSubscriptionOption.mockReturnValue(true)
+
+        mountWithProps()
+        expect(screen.getByLabelText('5 meals (£5.99 per serving)')).toBeInTheDocument()
       })
     })
   })

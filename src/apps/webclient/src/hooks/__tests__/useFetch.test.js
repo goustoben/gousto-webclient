@@ -162,5 +162,25 @@ describe('useFetch', () => {
       expect(fetchResponse).toEqual(undefined)
       expect(fetchError).toEqual(AUTH_ERROR)
     })
+
+    test('error response not thrown by global.fetch', async () => {
+      global.fetch.mockResponse(JSON.stringify({
+        status: 'error',
+        errors: ['error one', 'error two']
+      }))
+
+      const { result, waitForNextUpdate } = renderHook(
+        () => useFetch({ url: URL }),
+        fetchWrapper,
+      )
+
+      await waitForNextUpdate()
+
+      const [isFetchLoading, fetchResponse, fetchError] = result.current
+
+      expect(isFetchLoading).toBe(false)
+      expect(fetchResponse).toBe(undefined)
+      expect(fetchError).toEqual(new Error('error one,error two'))
+    })
   })
 })
