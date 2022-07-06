@@ -66,8 +66,8 @@ const useCanOrder5Recipes = () => {
   )
 }
 
-export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_seen_on_menu'
-export const HAS_CLOSED_BANNER = 'gousto_five_recipes_banner_closed'
+export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_modal_seen_on_menu'
+export const HAS_CLOSED_BANNER_MY_DELIVERIES_STORAGE_NAME = 'gousto_five_recipes_banner_closed_on_my_deliveries'
 
 
 export const OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW =
@@ -84,27 +84,25 @@ export const use5RecipesAwareness = () => {
   const setMenuAsSeen = () => setHasSeenOnMenuValue(true)
 
   const [userClosedBanner, setUserClosedBanner] = useLocalStorage<null | boolean>(
-    HAS_CLOSED_BANNER,
+    HAS_CLOSED_BANNER_MY_DELIVERIES_STORAGE_NAME,
     null,
   )
   const setBannerAsClosed = () => setUserClosedBanner(true)
 
   const canOrder5Recipes = useCanOrder5Recipes()
   const isEnabledForSubscriptionUser = useIsOptimizelyFeatureEnabled(
-    hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
+    canOrder5Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
   )
 
-  const isEnabled = canOrder5Recipes && Boolean(isEnabledForSubscriptionUser)
+  const isEnabled = Boolean(canOrder5Recipes && isEnabledForSubscriptionUser)
 
   return {
     isEnabled,
     isNewUser,
-    userSeenOnMenu,
     hasSeenOnMenu: Boolean(userSeenOnMenu),
     setMenuAsSeen,
     userClosedBanner,
     hasClosedBanner: Boolean(userClosedBanner),
     setBannerAsClosed,
-    maxRecipes: isEnabled && !userSeenOnMenu ? 5 : 4,
   }
 }
