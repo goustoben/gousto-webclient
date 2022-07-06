@@ -7,7 +7,7 @@ import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
 
 import { JestSpyInstance } from '../../../types/jest'
 import * as FiveRecipeHooks from '../use5RecipesAwareness'
-import { FiveRecipesAwarenessBanner } from '../../../components/FiveRecipesAwareness/FiveRecipesAwarenessBanner/FiveRecipesAwarenessBanner'
+import { FiveRecipesAwarenessBanner } from './FiveRecipesAwarenessBanner'
 
 describe('<FiveRecipesAwarenessBanner /> ', () => {
   let use5RecipesAwarenessSpy: JestSpyInstance<typeof FiveRecipeHooks.use5RecipesAwareness>
