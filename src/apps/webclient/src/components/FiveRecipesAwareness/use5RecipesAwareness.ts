@@ -71,6 +71,9 @@ export const HAS_SEEN_ON_MENU_STORAGE_NAME = 'gousto_five_recipes_awareness_moda
 export const OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW =
   'radishes_five_recipes_awareness_subscribed_web_enabled'
 
+  export const OPTIMIZELY_ENABLED_MY_DELIVERIES_PAGE =
+  'radishes_five_recipes_awareness_my_deliveries_web_enabled'
+
 export const use5RecipesAwareness = () => {
   const isAuthenticated = useSelector(getIsAuthenticated)
   const isNewUser = !isAuthenticated
@@ -85,13 +88,22 @@ export const use5RecipesAwareness = () => {
   const isEnabledForSubscriptionUser = useIsOptimizelyFeatureEnabled(
     canOrder5Recipes ? OPTIMIZELY_ENABLED_SUBSCRIBED_FLOW : null,
   )
+  // const isEnabledForMyDeliveriesPage = useIsOptimizelyFeatureEnabled(
+  //   hasSubscriptionFor2People4Recipes ? OPTIMIZELY_ENABLED_MY_DELIVERIES_PAGE : null,
+  // )
 
   const isEnabled = Boolean(canOrder5Recipes && isEnabledForSubscriptionUser)
 
   return {
     isEnabled,
+    // isEnabledOnMyDeliveriesPage,
     isNewUser,
+    // userSeenOnMenu,
+    // userSeenOnMyDeliveries,
     hasSeenOnMenu: Boolean(userSeenOnMenu),
+    // hasSeenOnMyDeliveries: Boolean(userSeenOnMyDeliveries),
     setMenuAsSeen,
+    // setMyDeliveriesAsSeen,
+    maxRecipes: isEnabled && !userSeenOnMenu ? 5 : 4,
   }
 }
