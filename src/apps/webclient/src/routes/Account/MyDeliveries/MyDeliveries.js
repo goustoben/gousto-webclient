@@ -137,7 +137,7 @@ class MyDeliveries extends React.PureComponent {
             </CTA>
           </div>
         </div>
-          <FiveRecipesAwarenessBanner />
+        <FiveRecipesAwarenessBanner />
         {this.renderGoustoOnDemandBanner()}
         {this.renderOrders()}
       </div>
