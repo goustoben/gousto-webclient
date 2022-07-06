@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { RadioGroup, InputRadio } from 'goustouicomponents'
+import { actionTypes } from 'routes/Account/Subscription/context/reducers'
 
 import {
   SubscriptionContext,
@@ -13,8 +14,7 @@ import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 import { BOX_SIZES } from '../../../../enum/box'
 
 export const BoxSize = ({ accessToken, isMobile }) => {
-  const context = useContext(SubscriptionContext)
-  const { state } = context
+  const { state, dispatch } = useContext(SubscriptionContext)
 
   const isLoaded = getIsBoxLoaded(state)
   const currentBoxSize = getNumPortions(state)
@@ -46,6 +46,14 @@ export const BoxSize = ({ accessToken, isMobile }) => {
   const isCtaDisabled = selectedBoxSize === currentBoxSize
     || !selectedBoxSize
 
+  const onChange = ({ target: { value } }) => {
+    dispatch({
+      type: actionTypes.UPDATE_FOUR_BY_FIVE_MODAL,
+      data: { selectedBoxSize: value }
+    })
+    setSelectedBoxSize(value)
+  }
+
   return (
     <SettingSection
       icon="servings"
@@ -75,7 +83,7 @@ export const BoxSize = ({ accessToken, isMobile }) => {
         <RadioGroup
           name="box-size-radios"
           testingSelector="box-size-radios"
-          onChange={({ target: { value } }) => setSelectedBoxSize(value)}
+          onChange={onChange}
         >
           {BOX_SIZES.map(boxSize => (
             <InputRadio

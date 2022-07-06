@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
-
 import { SubscriptionContext } from '../../../../../context/index'
 import { BoxSize } from '../BoxSize'
 
@@ -18,13 +17,14 @@ const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionTo
 const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
 
 let wrapper
+const dispatch = jest.fn()
 
 const mountWithProps = (props) => {
   wrapper = mount(
     <BoxSize accessToken="foo" isMobile={false} {...props} />,
     {
       wrappingComponent: SubscriptionContext.Provider,
-      wrappingComponentProps: { value: { state: {}, dispatch: 'MOCK_DISPATCH' } }
+      wrappingComponentProps: { value: { state: {}, dispatch } }
     }
   )
 
@@ -166,6 +166,13 @@ describe('BoxSize', () => {
           })
 
           wrapper.update()
+        })
+
+        test('Then dispatch is called', () => {
+          expect(dispatch).toHaveBeenLastCalledWith({
+            type: 'UPDATE_FOUR_BY_FIVE_MODAL',
+            data: { selectedBoxSize: '4' }
+          })
         })
 
         describe('And I click "Save box size"', () => {
