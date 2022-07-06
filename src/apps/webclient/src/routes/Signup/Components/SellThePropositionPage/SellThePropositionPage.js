@@ -53,7 +53,6 @@ const goustoOnDemandItems = [
     key: 'itemSelection',
     className: css.itemSelection,
     strongText: 'Choose 2, 3 or 4 recipes',
-    // TODO: additional check should we add 5 recipes for gousto on demand.
     fiveRecipesStrongText: 'Choose 2, 3, 4 or 5 recipes',
     normalText: 'in your box',
   },
@@ -72,8 +71,8 @@ const goustoOnDemandItems = [
 ]
 
 export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => {
-  const { numRecipes } = useBasket()
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numRecipes)
+  const { numPortions } = useBasket()
+  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numPortions)
   const displayedItems = isGoustoOnDemandEnabled ? goustoOnDemandItems : items
 
   return (
