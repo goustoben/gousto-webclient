@@ -21,10 +21,19 @@ export const reduceBoxData = (state, data) => {
       requestState: {
         isLoaded: true,
         isLoading: false
-      }
+      },
+      showFourByFiveModal: false,
     }
   }
 }
+
+export const reduceFourByFiveModal = (state, data) => ({
+  ...state,
+  box: {
+    ...state.box,
+    showFourByFiveModal: Number(data.selectedBoxSize) === 4 && Number(state.box.mealsPerBox.currentValue) === 5
+  }
+})
 
 export const reduceBoxPricesData = (state, data) => {
   if (!data) {

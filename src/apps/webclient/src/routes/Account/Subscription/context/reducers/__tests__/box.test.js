@@ -1,4 +1,4 @@
-import { reduceBoxData, reduceBoxPricesData } from '../box'
+import { reduceBoxData, reduceBoxPricesData, reduceFourByFiveModal } from '../box'
 
 let result
 
@@ -63,7 +63,8 @@ describe('box reducers', () => {
               requestState: {
                 isLoaded: true,
                 isLoading: false
-              }
+              },
+              showFourByFiveModal: false,
             },
           })
         })
@@ -107,6 +108,34 @@ describe('box reducers', () => {
             },
           })
         })
+      })
+    })
+  })
+
+  describe('reduceFourByFiveModal', () => {
+    it('returns box state with showFourByFiveModal set to True if "mealsPerBox" is 5 and "selectedBoxSize" is 4', () => {
+      expect(
+        reduceFourByFiveModal(
+          { box: { mealsPerBox: { currentValue: 5 } } },
+          { selectedBoxSize: 4 }
+        )).toEqual({
+        box: {
+          mealsPerBox: { currentValue: 5, },
+          showFourByFiveModal: true,
+        }
+      })
+    })
+
+    it('returns box state with showFourByFiveModal set to False if "mealsPerBox" is not 5', () => {
+      expect(
+        reduceFourByFiveModal(
+          { box: { mealsPerBox: { currentValue: 4 } } },
+          { selectedBoxSize: 4 }
+        )).toEqual({
+        box: {
+          mealsPerBox: { currentValue: 4, },
+          showFourByFiveModal: false,
+        }
       })
     })
   })
