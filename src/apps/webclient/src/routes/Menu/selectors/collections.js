@@ -17,7 +17,11 @@ const isCollectionDefault = (collection) => Boolean(collection.get('default'))
 const isCollectionRecommendations = (collection) =>
   getCollectionSlug(collection) === 'recommendations'
 
-export const getMenuCollections = (state) => state.menuCollections
+export const getMenuCollections = (state) => {
+  console.log('getMenuCollections', state)
+
+  return state.menuCollections
+}
 export const getMenuRecipeStock = (state) => state.menuRecipeStock
 export const getCollectionSlugFromQuery = (state) => {
   if (
@@ -53,6 +57,7 @@ export const getDisplayedCollections = createSelector(
   getNumPortions,
   getRecommendationsCollection,
   (menuCollections, menuRecipeStock, numPortions, recommendations) => {
+    console.log('getDisplayedCollections', menuCollections)
     const collections = menuCollections.filter(
       (collection) =>
         isCollectionPublished(collection) &&
