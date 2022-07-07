@@ -1,1 +1,1 @@
-export { transformMenu, TransformedRecipe, TransformedCollection } from './transformMenu'
+export { transformMenuForDate, TransformedRecipe, TransformedCollection } from './transformMenu'
