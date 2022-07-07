@@ -9,12 +9,14 @@ import { getVariantsForRecipe } from '../../recipeOptions'
 export function getOutOfStockRecipeReplacer({
   menu,
   recipes,
-  recipesInStockIds,
+  isRecipeInStock,
+  numPortions,
   dietaryClaims,
 }: {
-  menu: MenuAPIResponseDataItem,
+  menu: MenuAPIResponseDataItem
   recipes: TransformedRecipe[]
-  recipesInStockIds: Set<string>
+  isRecipeInStock: (coreRecipeId: string, numPortions: number) => boolean
+  numPortions: number
   dietaryClaims: string[]
 }) {
   const wrapRecipe = (recipe: TransformedRecipe, reference: string) => ({
@@ -26,7 +28,7 @@ export function getOutOfStockRecipeReplacer({
   return (item: { recipe: TransformedRecipe; reference: string }) => {
     const { recipe, reference } = item
 
-    if (recipesInStockIds.has(recipe.id)) {
+    if (isRecipeInStock(recipe.id, numPortions)) {
       return wrapRecipe(recipe, reference)
     }
 
@@ -37,7 +39,7 @@ export function getOutOfStockRecipeReplacer({
     }
 
     const recipeAlternativeWhichIsInStock = recipesAlternatives.alternatives.find((r) =>
-      recipesInStockIds.has(r.coreRecipeId),
+      isRecipeInStock(r.coreRecipeId, numPortions),
     )
 
     if (recipeAlternativeWhichIsInStock) {

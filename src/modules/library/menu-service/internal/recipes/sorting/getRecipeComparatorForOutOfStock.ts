@@ -5,7 +5,8 @@ const SORT_B_FIRST = 1
 const SORT_NO_SWAP = 0
 
 export const getRecipeComparatorForOutOfStock = (
-  recipesInStockIds: Set<string>,
+  isRecipeInStock: (coreRecipeId: string, numPortions: number) => boolean,
+  numPortions: number
 ) => {
   return function comparator(
     itemA?: { recipe: TransformedRecipe },
@@ -18,8 +19,8 @@ export const getRecipeComparatorForOutOfStock = (
     const { recipe: recipeA } = itemA
     const { recipe: recipeB } = itemB
 
-    const aInStock = recipesInStockIds.has(recipeA.id)
-    const bInStock = recipesInStockIds.has(recipeB.id)
+    const aInStock = isRecipeInStock(recipeA.id, numPortions)
+    const bInStock = isRecipeInStock(recipeB.id, numPortions)
 
     if (aInStock && !bInStock) {
       return SORT_A_FIRST

@@ -1,6 +1,5 @@
-import { SelectedVariants } from "./useAlternativeOptions/types";
-
 export type UseMenuDependencies = {
-  selectedRecipeVariants: SelectedVariants,
+  selectedRecipeVariants: Record<string, Record<string, string>>,
   numPortions: number,
+  isRecipeInStock: (coreRecipeId: string, numPortions: number) => boolean
 }
