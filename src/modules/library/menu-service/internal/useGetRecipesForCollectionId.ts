@@ -1,11 +1,8 @@
 import { useCallback, useMemo } from 'react'
-import { getMenuIdForDate } from './date/getMenuIdForDate'
 import { useMenuService, UseMenuSWRArgs } from './http'
-import { TransformedRecipe, transformMenu } from './transformer'
-import { use_legacy_InStockRecipeIds } from './stock'
+import { TransformedRecipe, transformMenuForDate } from './transformer'
 import { getOutOfStockRecipeReplacer, getRecipeReferenceInjector, getSelectedVariantsReplacer } from './recipes/mappers'
 import { getRecipeComparatorForOutOfStock, orderCollectionRecipesByCuisine } from './recipes/sorting'
-import { use_legacy_CurrentMenuVariants } from './recipes'
 import { UseMenuDependencies } from './types'
 
 /**
@@ -22,41 +19,28 @@ type GetRecipeForCollectionIdArgs = {
 export function useGetRecipesForCollectionId(
   requestArgs: UseMenuSWRArgs,
   date: string,
-  { numPortions, selectedRecipeVariants }: UseMenuDependencies,
+  { numPortions, selectedRecipeVariants, isRecipeInStock }: UseMenuDependencies,
 ) {
   const menuServiceData = useMenuService(requestArgs)
-  const recipesInStockIds = use_legacy_InStockRecipeIds({ numPortions })
-  const recipesVariants = use_legacy_CurrentMenuVariants('menu-id-JAMES-CHANGE-THIS!!!!')
 
   const recipeComparatorForOutOfStock = useMemo(
-    () => getRecipeComparatorForOutOfStock(recipesInStockIds),
-    [recipesInStockIds],
+    () => getRecipeComparatorForOutOfStock(isRecipeInStock, numPortions),
+    [isRecipeInStock, numPortions],
   )
 
   return useCallback(
     (collectionId: string, args: GetRecipeForCollectionIdArgs) => {
-      if (!menuServiceData) {
-        return []
-      }
-
-      const menuId = getMenuIdForDate(menuServiceData, date)
-
-      const menu = menuServiceData.data.find((m) => m.id === menuId)
-
+      const { menu, collections, recipes } = transformMenuForDate(menuServiceData, date)
       if (!menu) {
         return []
       }
 
-      const { collections, recipes } = transformMenu(menuServiceData, menu)
-
       const collection = collections.find((c) => c.id === collectionId)
-
       if (!collection) {
         return []
       }
 
       const recipeIds = collection.recipesInCollection
-
       if (!recipeIds || recipeIds.length === 0) {
         return []
       }
@@ -68,7 +52,8 @@ export function useGetRecipesForCollectionId(
 
       const outOfStockRecipeReplacer = getOutOfStockRecipeReplacer({
         menu,
-        recipesInStockIds,
+        isRecipeInStock,
+        numPortions,
         recipes,
         dietaryClaims: collection.requirements.dietary_claims,
       })
@@ -92,6 +77,6 @@ export function useGetRecipesForCollectionId(
 
       return sortedRecipes
     },
-    [menuServiceData, date, recipeComparatorForOutOfStock, recipesInStockIds, recipesVariants, selectedRecipeVariants],
+    [menuServiceData, isRecipeInStock, numPortions, date, recipeComparatorForOutOfStock, selectedRecipeVariants],
   )
 }
