@@ -34,7 +34,7 @@
 /src/apps/webclient/server/ @Gousto/frontend-foundations
 /src/apps/webclient/**tests**/.eslintrc @Gousto/frontend-foundations
 /src/apps/webclient/src/routes/index.js @Gousto/frontend-foundations
-/src/apps/webclient/src/\_testing/ @Gousto/frontend-foundations
+/src/apps/webclient/src/_testing/ @Gousto/frontend-foundations
 /src/apps/webclient/src/store.js @Gousto/frontend-foundations
 /tests/regression/cypress.json @Gousto/frontend-foundations
 
@@ -122,8 +122,7 @@
 /src/apps/webclient/src/apis/**tests**/products.test.js @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/**tests**/products.test.js @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/products.js @Gousto/squad-radishes
-src/apps/webclient/src/components/FiveRecipesAwareness/\*
-@Gousto/squad-radishes
+src/apps/webclient/src/components/FiveRecipesAwareness/ @Gousto/squad-radishes
 
 # squad-haricots ownership
 
