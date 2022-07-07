@@ -28,8 +28,9 @@ const mockedStore = store({
 
 const signupGoToMenu = jest.fn()
 
-const useIsFiveRecipesEnabledUnknown: unknown = useIsFiveRecipesEnabled
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabledUnknown as jest.Mock
+const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
+  typeof useIsFiveRecipesEnabled
+>
 
 describe('Given: SellThePropositionPage', () => {
   describe('When: 5 recipes turned off', () => {

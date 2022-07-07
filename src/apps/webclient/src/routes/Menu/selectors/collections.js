@@ -53,7 +53,6 @@ export const getDisplayedCollections = createSelector(
   getNumPortions,
   getRecommendationsCollection,
   (menuCollections, menuRecipeStock, numPortions, recommendations) => {
-    console.log(recommendations)
     const collections = menuCollections.filter(
       (collection) =>
         isCollectionPublished(collection) &&

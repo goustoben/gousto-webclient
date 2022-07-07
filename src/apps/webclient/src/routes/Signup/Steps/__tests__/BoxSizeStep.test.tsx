@@ -32,8 +32,9 @@ const numPortionChangeTracking = jest.fn()
 const trackSignupWizardAction = jest.fn()
 const next = jest.fn()
 
-const useIsFiveRecipesEnabledUnknown: unknown = useIsFiveRecipesEnabled
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabledUnknown as jest.Mock
+const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
+  typeof useIsFiveRecipesEnabled
+>
 
 describe('given the user is at the Box Size Step', () => {
   describe('When: five recipes disabled', () => {
