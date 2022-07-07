@@ -1,9 +1,9 @@
-import * as Immutable from 'immutable'
+import { TransformedRecipe } from '../transformer'
 
-export function formatRecipeTitle(recipe: Immutable.Map<string, any>) {
-  const title = recipe.get('title')
-  const boxType = recipe.get('boxType', '')
-  const dietType = recipe.get('dietType', '')
+export function formatRecipeTitle(recipe: TransformedRecipe) {
+  const title = recipe.title
+  const boxType = recipe.boxType || ''
+  const dietType = recipe.dietType || ''
 
   if (dietType.toLowerCase() === 'vegan') {
     return `${title} (V)`
