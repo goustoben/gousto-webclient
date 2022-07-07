@@ -1,3 +1,5 @@
+// FYI: this will remove after 5 recipes experiment
+import Immutable from 'immutable'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import configureMockStore from 'redux-mock-store'
 
@@ -8,6 +10,8 @@ export const createMockBasketStore = (
 ) => {
   const initialState = {
     basket: valueOverrides ? basketInitialState().merge(valueOverrides) : basketInitialState(),
+    // FYI: this will remove after 5 recipes experiment
+    auth: Immutable.fromJS({}),
   }
 
   const mockStore = configureMockStore()

@@ -7,6 +7,12 @@ import {
 } from '../boxPricesSelectors'
 import menuBoxPrices from './__mocks__/menuBoxPrices.json'
 
+// FYI: this will remove after 5 recipes experiment
+jest.mock('routes/BoxPrices/boxPricesConfig', () => ({
+  numPersonsValues: ['2', '4'],
+  numPortionsValues: ['2', '3', '4'],
+}))
+
 describe('boxPricesSelectors', () => {
   let state
 

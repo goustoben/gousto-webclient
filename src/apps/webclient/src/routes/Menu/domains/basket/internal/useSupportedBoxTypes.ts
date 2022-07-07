@@ -70,7 +70,6 @@ export const useSupportedBoxTypes = () => {
     allowedPortionSizes,
     isPortionSizeAllowedByRecipeCount,
     maxRecipesForPortion,
-    // maxRecipesForPortion: experimentMaxRecipesForPortion,
     minRecipesForPortion,
   }
 }
