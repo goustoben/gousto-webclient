@@ -16,7 +16,7 @@ export const FiveRecipesAwarenessBanner = () => {
     }
   }, [isEnabled, hasClosedBanner])
 
-  const onModalClose = () => {
+  const onBannerClose = () => {
     setBannerAsClosed()
     updateIsOpen(false)
     sendClientMetric('my-deliveries-five-recipes-awareness-4M-2P', 1, 'Count')
@@ -36,7 +36,7 @@ export const FiveRecipesAwarenessBanner = () => {
         role="button"
         aria-label="close banner"
         tabIndex={0}
-        onClick={() => onModalClose()}
+        onClick={() => onBannerClose()}
         onKeyPress={() => {}}
       >
         <svg
