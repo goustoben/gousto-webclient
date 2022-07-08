@@ -51,6 +51,7 @@ describe("<swapAlternativeOptions />", () => {
             value={() => ({
               useTrackVariantListDisplay: () => {},
               useTrackingSwapAlternativeOptions,
+              track: () => {},
             })}
           >
             <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
@@ -100,6 +101,7 @@ describe("<swapAlternativeOptions />", () => {
             value={() => ({
               useTrackVariantListDisplay: () => {},
               useTrackingSwapAlternativeOptions,
+              track: () => {},
             })}
           >
             <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
@@ -158,6 +160,7 @@ describe("<swapAlternativeOptions />", () => {
             value={() => ({
               useTrackVariantListDisplay: () => {},
               useTrackingSwapAlternativeOptions,
+              track: () => {},
             })}
           >
             <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
@@ -188,6 +191,7 @@ describe("<swapAlternativeOptions />", () => {
             value={() => ({
               useTrackVariantListDisplay: () => {},
               useTrackingSwapAlternativeOptions,
+              track: () => {},
             })}
           >
             <RecipeReferenceProvider value="recipe_ref_one">

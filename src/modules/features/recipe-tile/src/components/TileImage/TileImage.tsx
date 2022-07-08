@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { useDeviceType, DeviceType } from '../../utils/useDeviceType'
 
 import { CookingTimeIcon } from "../CookingTimeIcon/CookingTimeIcon";
+import { LikeDislikeButtons } from '../LikeDislikeButtons/LikeDislikeButtons';
 import { VariantHeader } from "../VariantHeader";
 
 import { Image } from "./Image";
@@ -34,6 +35,7 @@ export function TileImage({ categoryId } : {
         <Image lazy styles={cssImageStyle} />
 
         <CookingTimeIcon />
+        <LikeDislikeButtons />
       </ContentWrapper>
 
       {showVariantHeader && (
