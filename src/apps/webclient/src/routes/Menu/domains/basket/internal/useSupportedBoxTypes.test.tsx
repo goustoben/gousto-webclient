@@ -7,7 +7,7 @@ import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import { Provider } from 'react-redux'
 
-import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
+import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 
 import { useMenuBox } from './useMenuBox'
@@ -16,8 +16,8 @@ import { useSupportedBoxTypes } from './useSupportedBoxTypes'
 jest.mock('./useMenuBox')
 
 const useMenuBoxMock = useMenuBox as jest.MockedFunction<typeof useMenuBox>
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
-  typeof useIsFiveRecipesEnabled
+const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabledForProspects as jest.MockedFunction<
+  typeof useIsFiveRecipesEnabledForProspects
 >
 
 const store = createMockStore()
@@ -25,8 +25,8 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
   <Provider store={store}>{children}</Provider>
 )
 
-jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
-  useIsFiveRecipesEnabled: jest.fn(),
+jest.mock('hooks/useIsFiveRecipesEnabledForProspects', () => ({
+  useIsFiveRecipesEnabledForProspects: jest.fn(),
 }))
 
 describe('useSupportedBoxTypes', () => {

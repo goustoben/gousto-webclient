@@ -1,7 +1,7 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
 
-export const useIsFiveRecipesEnabled = (numPortions?: number) => {
+export const useIsFiveRecipesEnabledForProspects = (numPortions?: number) => {
   const fiveRecipesExperimentEnabled =
     useIsOptimizelyFeatureEnabled('beetroots_five_recipes_web_enabled') || false
   const { isAuthenticated } = useAuth()

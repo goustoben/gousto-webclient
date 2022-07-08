@@ -5,12 +5,12 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 
-import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
+import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
 
 import { BoxSizeStep } from '../BoxSize/BoxSizeStep'
 
-jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
-  useIsFiveRecipesEnabled: jest.fn(),
+jest.mock('hooks/useIsFiveRecipesEnabledForProspects', () => ({
+  useIsFiveRecipesEnabledForProspects: jest.fn(),
 }))
 
 const store = configureStore()
@@ -32,8 +32,8 @@ const numPortionChangeTracking = jest.fn()
 const trackSignupWizardAction = jest.fn()
 const next = jest.fn()
 
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
-  typeof useIsFiveRecipesEnabled
+const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabledForProspects as jest.MockedFunction<
+  typeof useIsFiveRecipesEnabledForProspects
 >
 
 describe('given the user is at the Box Size Step', () => {

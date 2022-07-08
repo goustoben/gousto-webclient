@@ -6,12 +6,12 @@ import * as Redux from 'react-redux'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
+import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
 
 import { BoxPriceBlock } from '../BoxPriceBlock'
 
-jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
-  useIsFiveRecipesEnabled: jest.fn(),
+jest.mock('hooks/useIsFiveRecipesEnabledForProspects', () => ({
+  useIsFiveRecipesEnabledForProspects: jest.fn(),
 }))
 
 jest.mock('routes/Menu/domains/basket', () => ({
@@ -58,8 +58,8 @@ const store = mockStore({
   ribbon: Immutable.fromJS({}),
 })
 
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
-  typeof useIsFiveRecipesEnabled
+const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabledForProspects as jest.MockedFunction<
+  typeof useIsFiveRecipesEnabledForProspects
 >
 
 describe('Given BoxPriceBlock', () => {
