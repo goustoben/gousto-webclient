@@ -75,6 +75,7 @@ const renderComponent = ({
           trackRecipeAlternativeOptionsMenuOpen: () => false,
           trackRecipeAlternativeOptionsMenuSwapRecipes: () => false,
         }),
+        track: () => {},
       })}
       useGetSurchargeForRecipeId={() => 0}
       useRecipeBrand={() => ({

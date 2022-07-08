@@ -49,6 +49,7 @@ describe("RecipeAlternativeOptions", () => {
             value={() => ({
               useTrackVariantListDisplay: () => {},
               useTrackingSwapAlternativeOptions,
+              track: () => {},
             })}
           >
             <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
@@ -92,6 +93,7 @@ describe("RecipeAlternativeOptions", () => {
               value={() => ({
                 useTrackVariantListDisplay: () => {},
                 useTrackingSwapAlternativeOptions,
+                track: () => {},
               })}
             >
               <UseMakeOnCheckRecipeContextProvider value={() => () => onChange}>
@@ -129,6 +131,7 @@ describe("RecipeAlternativeOptions", () => {
               value={() => ({
                 useTrackVariantListDisplay,
                 useTrackingSwapAlternativeOptions,
+                track: () => {},
               })}
             >
               <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
@@ -163,6 +166,7 @@ describe("RecipeAlternativeOptions", () => {
               value={() => ({
                 useTrackVariantListDisplay,
                 useTrackingSwapAlternativeOptions,
+                track: () => {},
               })}
             >
               <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
@@ -205,6 +209,7 @@ describe("RecipeAlternativeOptions", () => {
             value={() => ({
               useTrackVariantListDisplay: jest.fn(),
               useTrackingSwapAlternativeOptions,
+              track: () => {},
             })}
           >
             <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>
@@ -252,6 +257,7 @@ describe("RecipeAlternativeOptions", () => {
             value={() => ({
               useTrackVariantListDisplay: jest.fn(),
               useTrackingSwapAlternativeOptions,
+              track: () => {},
             })}
           >
             <UseMakeOnCheckRecipeContextProvider value={() => () => () => {}}>

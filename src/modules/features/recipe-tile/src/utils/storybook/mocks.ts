@@ -24,6 +24,7 @@ export const getMocks = ({
   brandTagText,
   brandTagColor,
   isRecipeTileLinkVisible = false,
+  onTrack = () => { },
 }: {
   alternativeCheckedIndex?: number;
   alternativeOutOfStockFlags?: boolean[];
@@ -43,6 +44,7 @@ export const getMocks = ({
   brandTagText?: string
   brandTagColor?: string
   isRecipeTileLinkVisible?: boolean
+  onTrack?: () => void
 } = {}) => {
   const recipe: Recipe = {
     id: "12345",
@@ -106,7 +108,8 @@ export const getMocks = ({
     useTrackingSwapAlternativeOptions: () => ({
       trackRecipeAlternativeOptionsMenuOpen: () => false,
       trackRecipeAlternativeOptionsMenuSwapRecipes: () => false,
-    })
+    }),
+    track: onTrack,
   })
 
   const useGetSurchargeForRecipeId = () => surcharge
@@ -133,10 +136,10 @@ export const getMocks = ({
 
   const useGetRecipeTileLinkData = () => ({
     isRecipeTileLinkVisible,
-    dispatchTrackClickMoreRecipeDetails: () => {}
+    dispatchTrackClickMoreRecipeDetails: () => { }
   })
 
-  const useMakeOnCheckRecipe: UseMakeOnCheckRecipe = (() => () => () => () => {}) as UseMakeOnCheckRecipe
+  const useMakeOnCheckRecipe: UseMakeOnCheckRecipe = (() => () => () => () => { }) as UseMakeOnCheckRecipe
 
   return {
     recipe,

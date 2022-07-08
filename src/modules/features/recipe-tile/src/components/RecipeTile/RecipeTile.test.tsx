@@ -70,6 +70,7 @@ const renderComponent = ({
           trackRecipeAlternativeOptionsMenuOpen: () => false,
           trackRecipeAlternativeOptionsMenuSwapRecipes: () => false,
         }),
+        track: () => {},
       })}
       useGetSurchargeForRecipeId={() => surcharge}
       useRecipeBrand={() => ({
@@ -141,6 +142,14 @@ describe("RecipeTile", () => {
     test("should contain an RecipeTilePurchaseInfo ", () => {
       renderComponent();
       expect(screen.getByText("Add recipe")).toBeInTheDocument();
+    });
+
+    test("should not contain Like and Dislike buttons as the feature flag is false", () => {
+      renderComponent();
+      const likeButton = screen.queryByRole('button', { name: 'thumb-up'});
+      const dislikeButton = screen.queryByRole('button', { name: 'thumb-down'});
+      expect(likeButton).not.toBeInTheDocument();
+      expect(dislikeButton).not.toBeInTheDocument();
     });
   });
 

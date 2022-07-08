@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import { RecipeTile as RecipeTileV2, RecipeTileDependencies } from '@features/recipe-tile'
 
+import { actionTypes } from 'actions/actionTypes'
 import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
 import { useMakeOnCheckRecipe } from 'routes/Menu/components/RecipeAlternativeOptions/RecipeAlternativeOptions/useMakeOnCheckRecipe'
 import { useTrackVariantListDisplay } from 'routes/Menu/components/RecipeAlternativeOptions/RecipeAlternativeOptions/useTracking'
@@ -75,8 +76,16 @@ export const RecipeTileBridge = ({
         trackRecipeAlternativeOptionsMenuOpen,
         trackRecipeAlternativeOptionsMenuSwapRecipes,
       }),
+      track: (actionType: string, trackingPayload: any) =>
+        dispatch({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType,
+            ...trackingPayload,
+          },
+        }),
     }),
-    [trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes],
+    [dispatch, trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes],
   )
 
   const useRecipeBrand = useCallback(

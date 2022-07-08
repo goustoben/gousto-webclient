@@ -4,11 +4,13 @@ type TrackRecipeAlternativeOptionsMenuOpen = (args: {
   recipeId: string
   collectionId: string
 }) => void
+
 type TrackRecipeAlternativeOptionsMenuSwapRecipes = (args: {
   nextRecipeId: string
   previousRecipeId: string
   collectionId: string
 }) => void
+
 
 export type UseTracking = () => {
   useTrackVariantListDisplay: ({
@@ -22,7 +24,9 @@ export type UseTracking = () => {
   useTrackingSwapAlternativeOptions: () => ({
     trackRecipeAlternativeOptionsMenuOpen: TrackRecipeAlternativeOptionsMenuOpen,
     trackRecipeAlternativeOptionsMenuSwapRecipes: TrackRecipeAlternativeOptionsMenuSwapRecipes,
-  })
+  }),
+
+  track: <TPayload>(actionType: string, trackingPayload: TPayload) => void,
 }
 
 const UseTrackingContext = createContext<UseTracking | null>(null)
