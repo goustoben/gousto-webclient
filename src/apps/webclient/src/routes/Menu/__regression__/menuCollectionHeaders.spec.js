@@ -30,8 +30,12 @@ describe('MenuCollectionHeaders', () => {
       cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveries'])
       cy.wait('@getDeliveries')
       cy.applyPromoCode()
-      cy.get('[data-testing="waveLinkHeader"]').click()
-      cy.url().should('include', 'collection=healthy-choices')
+      cy.get('body').then(($body) => {
+        if ($body.find('[data-testing="waveLinkHeader"]').length) {
+          cy.get('[data-testing="waveLinkHeader"]').click()
+          cy.url().should('include', 'collection=healthy-choices')
+        }
+      })
     })
   })
 })
