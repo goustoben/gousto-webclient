@@ -29,7 +29,7 @@ function renderForTest(args: Partial<Parameters<typeof useMenuSWR>[0]> = {}) {
     return renderHook(() => useMenuSWR(requestArgs))
 }
 
-describe('menu-service > useMenuSWR', () => {
+describe('api-menu-service > useMenuSWR', () => {
   const endpointUrl = 'endpoint-url'
   const getFetcher = () => ({} as any)
 
@@ -185,7 +185,7 @@ describe('menu-service > useMenuSWR', () => {
 
     test('should call useHTTPGet with requestData', () => {
       renderForTest({ requestData })
-  
+
       expect(useHTTPGetMock).toHaveBeenCalledWith(expect.objectContaining({
           requestData
       }))

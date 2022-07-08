@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import {
   useMenu as useMenuBase,
   useGetAlternativeOptionsForRecipeLight,
-} from '@library/menu-service'
+} from '@library/api-menu-service'
 
 import { getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
