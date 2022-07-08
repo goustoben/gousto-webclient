@@ -2,15 +2,25 @@ import { BareFetcher } from 'swr'
 import { StockAPIData, StockAPIResponse } from './response'
 import { useHTTPGet } from './useHTTPGet'
 
+/**
+ * Arguments to be used when making the HTTP query.
+ */
 export type UseStockSWRArgs = {
+  accessToken: string;
+  authUserId: string;
+
   // getFetcher needs to be passed in, because it currently lives in webclient main module
   // this will allow us to reduce the amount of work needed for this initial implementation
   getFetcher: BareFetcher<StockAPIResponse>;
 
-  // coreUrl is passed in so we don't need to use the endpoint() function from webclient
-  // (same reason as getFetcher)
+  /**
+   * coreUrl is passed in so we don't need to use the endpoint() function from webclient
+   */
   coreUrl: string;
 
+  /**
+   * The delivery day ID to query for
+   */
   deliveryDayId: string | null;
 }
 
@@ -40,12 +50,15 @@ const errorReturn = (error: Error) => ({
  * @param {string} args.coreUrl - Base core URL
  * @param {BaseFetcher<StockAPIResponse>} args.getFetcher - Fetcher for use in SWR (passed in for compatibility with webclient)
  */
-export function useStockSWR({ deliveryDayId, coreUrl, getFetcher }: UseStockSWRArgs) {
+export function useStockSWR({ accessToken, authUserId, deliveryDayId, coreUrl, getFetcher }: UseStockSWRArgs) {
   const url = deliveryDayId
     ? `${coreUrl}/delivery_day/${deliveryDayId}/stock`
     : null
 
   const { data: response, error } = useHTTPGet<StockAPIResponse>({
+    accessToken,
+    authUserId,
+
     url,
     getFetcher,
 
