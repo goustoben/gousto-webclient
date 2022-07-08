@@ -7,7 +7,8 @@ import {
   getIsBoxPricesLoaded,
   getIsBoxAndPricesLoaded,
   getPricePerPortionDiscounted,
-  getTotalBoxPriceDiscounted
+  getTotalBoxPriceDiscounted,
+  getShowFourByFiveModal
 } from '../box'
 
 describe('box selectors', () => {
@@ -26,7 +27,8 @@ describe('box selectors', () => {
         requestState: {
           isLoaded: true,
           isLoading: false
-        }
+        },
+        showFourByFiveModal: false,
       },
       boxPrices: {
         2: {
@@ -119,6 +121,12 @@ describe('box selectors', () => {
   describe('getIsBoxAndPricesLoaded', () => {
     test('should return true', () => {
       expect(getIsBoxAndPricesLoaded(contextState)).toEqual(true)
+    })
+  })
+
+  describe('getShowFourByFiveModal', () => {
+    test('should return false', () => {
+      expect(getShowFourByFiveModal(contextState)).toEqual(false)
     })
   })
 
