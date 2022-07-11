@@ -6,13 +6,17 @@ const cropsTransformer = (media: RecipeImage['crops']) =>
     width: url.width,
   }))
 
-export const mediaTransformer = (images: RecipeImage[], title: string) => {
-  const imagesMap = images.map((image) => ({
+export type TransformedRecipeImage = {
+  type: string
+  title: string | null
+  description: string | null
+  urls: ReturnType<typeof cropsTransformer>
+}
+
+export const mediaTransformer = (images: RecipeImage[], title: string): TransformedRecipeImage[] =>
+  images.map((image) => ({
     type: image.type,
     urls: cropsTransformer(image.crops),
     title: image.title || title,
     description: image.description,
   }))
-
-  return imagesMap
-}

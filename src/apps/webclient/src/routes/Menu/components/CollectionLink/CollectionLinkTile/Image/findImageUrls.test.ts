@@ -1,9 +1,11 @@
-import Immutable from 'immutable'
+import { TransformedRecipeImage } from '@library/api-menu-service'
 
 import { findImageUrls } from './findImageUrls'
 
 describe('Recipe components > Image > findImage', () => {
-  const moodImage = Immutable.fromJS({
+  const moodImage = {
+    title: null,
+    description: null,
     type: 'mood-image',
     urls: [
       {
@@ -11,9 +13,11 @@ describe('Recipe components > Image > findImage', () => {
         width: 50,
       },
     ],
-  })
+  }
 
-  const homePageImage = Immutable.fromJS({
+  const homePageImage = {
+    title: null,
+    description: null,
     type: 'homepage-image',
     urls: [
       {
@@ -21,29 +25,35 @@ describe('Recipe components > Image > findImage', () => {
         width: 50,
       },
     ],
-  })
+  }
 
-  let images
+  let images: TransformedRecipeImage[]
 
   beforeEach(() => {
-    images = Immutable.List([homePageImage, moodImage])
+    images = [homePageImage, moodImage]
   })
 
   describe('when useHomepageImage prop is true', () => {
     const useHomepageImage = true
     test('should return the homepage image urls', () => {
       const result = findImageUrls(images, useHomepageImage)
-      expect(result).toEqual(homePageImage.get('urls'))
+      expect(result).toEqual(homePageImage.urls)
     })
 
     describe('when homepageImage has no urls', () => {
       beforeEach(() => {
-        images = Immutable.List([homePageImage.set('urls', Immutable.List()), moodImage])
+        images = [
+          {
+            ...homePageImage,
+            urls: [],
+          },
+          moodImage,
+        ]
       })
 
       test('should return the mood image urls', () => {
         const result = findImageUrls(images, useHomepageImage)
-        expect(result).toEqual(moodImage.get('urls'))
+        expect(result).toEqual(moodImage.urls)
       })
     })
   })
@@ -53,17 +63,17 @@ describe('Recipe components > Image > findImage', () => {
     (useHomepageImage) => {
       test('should return the mood image urls', () => {
         const result = findImageUrls(images, useHomepageImage)
-        expect(result).toEqual(moodImage.get('urls'))
+        expect(result).toEqual(moodImage.urls)
       })
 
       describe('when there is no moodImage', () => {
         beforeEach(() => {
-          images = Immutable.List([homePageImage])
+          images = [homePageImage]
         })
 
         test('should return the first urls from first image', () => {
           const result = findImageUrls(images, useHomepageImage)
-          expect(result).toEqual(homePageImage.get('urls'))
+          expect(result).toEqual(homePageImage.urls)
         })
       })
     },

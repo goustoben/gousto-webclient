@@ -16,6 +16,12 @@ type GetRecipeForCollectionIdArgs = {
   selectedCuisines?: string[]
 }
 
+type RecipePair = {
+  recipe: TransformedRecipe
+  originalId: string
+  reference: string
+}
+
 export function useGetRecipesForCollectionId(
   requestArgs: UseMenuSWRArgs,
   date: string,
@@ -29,7 +35,7 @@ export function useGetRecipesForCollectionId(
   )
 
   return useCallback(
-    (collectionId: string, args?: GetRecipeForCollectionIdArgs) => {
+    (collectionId: string, args?: GetRecipeForCollectionIdArgs): RecipePair[] => {
       if (!menuServiceData) {
         return []
       }
