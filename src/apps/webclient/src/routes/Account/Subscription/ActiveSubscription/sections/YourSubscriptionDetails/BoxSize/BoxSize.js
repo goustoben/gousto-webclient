@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { RadioGroup, InputRadio } from 'goustouicomponents'
+import { RadioGroup } from '@gousto-internal/citrus-react'
 import { actionTypes } from 'routes/Account/Subscription/context/reducers'
 
 import {
   SubscriptionContext,
 } from '../../../../context'
-import { getNumPortions, getIsBoxLoaded } from '../../../../context/selectors/box'
+import { getNumPortions, getIsBoxLoaded, getSelectedBoxSize, getSubscriptionSettingsUnsupported } from '../../../../context/selectors/box'
 import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
@@ -18,12 +18,11 @@ export const BoxSize = ({ accessToken, isMobile }) => {
 
   const isLoaded = getIsBoxLoaded(state)
   const currentBoxSize = getNumPortions(state)
+  const selectedBoxSize = getSelectedBoxSize(state)
+  const isUnsupported = getSubscriptionSettingsUnsupported(state)
 
-  const [selectedBoxSize, setSelectedBoxSize] = useState(null)
   const [shouldSubmit, setShouldSubmit] = useState(false)
-
   const settingName = 'box_size'
-
   const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
     trigger: {
@@ -42,17 +41,13 @@ export const BoxSize = ({ accessToken, isMobile }) => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()
     setShouldSubmit(true)
   }
-
-  const isCtaDisabled = selectedBoxSize === currentBoxSize
-    || !selectedBoxSize
-
-  const onChange = ({ target: { value } }) => {
+  const updateSelectedBoxSize = (boxSize) => {
     dispatch({
-      type: actionTypes.UPDATE_FOUR_BY_FIVE_MODAL,
-      data: { selectedBoxSize: value }
+      type: actionTypes.UPDATE_SELECTED_BOX_SIZE,
+      data: { numPortions: boxSize }
     })
-    setSelectedBoxSize(value)
   }
+  const isCtaDisabled = selectedBoxSize === currentBoxSize || !selectedBoxSize
 
   return (
     <SettingSection
@@ -61,6 +56,13 @@ export const BoxSize = ({ accessToken, isMobile }) => {
       instruction="Choose box size"
       ctaText="Save box size"
       isCtaDisabled={isCtaDisabled}
+      onChildrenRender={(collapseSection) => {
+        if (!isUnsupported) {
+          return
+        }
+        // a workaround to close the <ExpandableSection /> when external state changes
+        collapseSection()
+      }}
       renderCurrentValue={(
         <p data-testing="current-box-size">
           {selectedBoxSize || currentBoxSize}
@@ -73,33 +75,25 @@ export const BoxSize = ({ accessToken, isMobile }) => {
       isMobile={isMobile}
       testingSelector="box-size"
     >
-      { isMobile ? (
+      {isMobile ? (
         <p data-testing="expanded-text">
           Please select your box size.
         </p>
       ) : null}
 
-      { isLoaded ? (
+      {isLoaded ? (
         <RadioGroup
+          outline
+          defaultValue={selectedBoxSize}
           name="box-size-radios"
           testingSelector="box-size-radios"
-          onChange={onChange}
-        >
-          {BOX_SIZES.map(boxSize => (
-            <InputRadio
-              id={`box-size-${boxSize}-radio`}
-              key={`box-size-${boxSize}`}
-              name={`box-size-${boxSize}-radio`}
-              value={boxSize}
-              variant="tile"
-              isChecked={boxSize === (selectedBoxSize || currentBoxSize)}
-            >
-              {boxSize}
-              {' '}
-              people
-            </InputRadio>
-          ))}
-        </RadioGroup>
+          onChange={({ target: { value } }) => updateSelectedBoxSize(value)}
+          options={BOX_SIZES.map((boxSize) => ({
+            label: `${boxSize} people`,
+            name: boxSize,
+            value: boxSize,
+          }))}
+        />
       ) : null}
     </SettingSection>
   )

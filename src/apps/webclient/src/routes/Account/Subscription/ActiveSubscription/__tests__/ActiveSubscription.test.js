@@ -2,6 +2,10 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { ActiveSubscription } from '../ActiveSubscription'
 
+jest.mock('../sections/YourSubscriptionDetails/FourPersonBoxWithFiveMealsModal', () => ({
+  FourPersonBoxWithFiveMealsModal: () => <div />
+}))
+
 jest.mock('../sections/YourSubscriptionDetails/DeliveryDayAndTime', () => ({
   DeliveryDayAndTime: () => <div />
 }))
