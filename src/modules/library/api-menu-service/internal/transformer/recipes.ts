@@ -1,11 +1,9 @@
-import { MenuAPIResponseDataItem } from '../../http/response'
-import { ingredientTransformer } from './ingredientTransformer'
+import { MenuAPIResponseDataItem } from '../http'
 import { mediaTransformer } from './mediaTransformer'
 import {
   allergensTransformer,
   basicsTransformer,
   equipmentTransformer,
-  formatIngredients,
   micronutrientsTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
@@ -36,7 +34,7 @@ export function recipeTransformer({
     chefPrepared: normalisedAttributes.chef_prepared,
     cookingTime: normalisedAttributes.prep_times.for2,
     cookingTimeFamily: normalisedAttributes.prep_times.for4,
-    coreRecipeId: normalisedAttributes.core_recipe_id.toString(),
+    coreRecipeId: normalisedAttributes.core_recipe_id.toString() as string,
     cuisine: normalisedAttributes.cuisine ? normalisedAttributes.cuisine.name : '',
     description: normalisedAttributes.description,
     dietType: normalisedAttributes.diet_type ? normalisedAttributes.diet_type.slug : '',
