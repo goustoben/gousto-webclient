@@ -11,8 +11,14 @@ describe('getRecipeComparatorForOutOfStock', () => {
   const wrapRecipes = (recipes: TransformedRecipe[]) =>
     recipes.map((recipe) => ({ recipe }))
 
+  const makeComparator = (inStockIds: Set<string>, numPortions = 4) => {
+    const isRecipeInStock = (id: string) => inStockIds.has(id)
+
+    return getRecipeComparatorForOutOfStock(isRecipeInStock, numPortions)
+  }
+
   describe('when there are no recipes in stock', () => {
-    const comparator = getRecipeComparatorForOutOfStock(makeIds([]))
+    const comparator = makeComparator(makeIds([]))
 
     test('should return comparator that does not swap recipes', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(
@@ -25,7 +31,7 @@ describe('getRecipeComparatorForOutOfStock', () => {
   })
 
   describe('when all recipes are in stock', () => {
-    const comparator = getRecipeComparatorForOutOfStock(makeIds([RECIPE_1, RECIPE_2]))
+    const comparator = makeComparator(makeIds([RECIPE_1, RECIPE_2]))
 
     test('should return comparator that does not swap recipes', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(
@@ -38,7 +44,7 @@ describe('getRecipeComparatorForOutOfStock', () => {
   })
 
   describe('when only part of recipes are in stock', () => {
-    const comparator = getRecipeComparatorForOutOfStock(makeIds([RECIPE_2]))
+    const comparator = makeComparator(makeIds([RECIPE_2]))
 
     test('should return comparator that orders recipes such: the ones out of stock are the last', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2]).sort(comparator)).toEqual(
@@ -54,7 +60,7 @@ describe('getRecipeComparatorForOutOfStock', () => {
     const RECIPE_3 = { id: 'cccc' } as TransformedRecipe
     const RECIPE_4 = { id: 'dddd' } as TransformedRecipe
 
-    const comparator = getRecipeComparatorForOutOfStock(makeIds([RECIPE_1, RECIPE_3, RECIPE_4]))
+    const comparator = makeComparator(makeIds([RECIPE_1, RECIPE_3, RECIPE_4]))
 
     test('should return comparator that orders recipes so original order of recipes in stock is maintained', () => {
       expect(wrapRecipes([RECIPE_1, RECIPE_2, RECIPE_3, RECIPE_4]).sort(comparator)).toEqual(

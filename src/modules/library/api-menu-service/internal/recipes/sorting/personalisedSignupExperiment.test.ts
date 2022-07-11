@@ -40,12 +40,12 @@ describe('orderCollectionRecipesByCuisine', () => {
     const selectedCuisines = ['mediterranean', 'east asian']
 
     const orderedRecipes = [
-      { recipe: recipes[1].recipe, originalId: recipes[1].originalId },
-      { recipe: recipes[3].recipe, originalId: recipes[3].originalId },
-      { recipe: recipes[5].recipe, originalId: recipes[5].originalId },
-      { recipe: recipes[0].recipe, originalId: recipes[0].originalId },
-      { recipe: recipes[2].recipe, originalId: recipes[2].originalId },
-      { recipe: recipes[4].recipe, originalId: recipes[4].originalId },
+      { recipe: recipes[1].recipe, originalId: recipes[1].originalId, reference: recipes[1].reference },
+      { recipe: recipes[3].recipe, originalId: recipes[3].originalId, reference: recipes[3].reference },
+      { recipe: recipes[5].recipe, originalId: recipes[5].originalId, reference: recipes[5].reference },
+      { recipe: recipes[0].recipe, originalId: recipes[0].originalId, reference: recipes[0].reference },
+      { recipe: recipes[2].recipe, originalId: recipes[2].originalId, reference: recipes[2].reference },
+      { recipe: recipes[4].recipe, originalId: recipes[4].originalId, reference: recipes[4].reference },
     ]
     const trackingData = ['bbbb', 'dddd', 'ffff']
     expect(orderCollectionRecipesByCuisine(recipes, selectedCuisines)).toEqual({

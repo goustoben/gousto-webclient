@@ -18,11 +18,11 @@ describe('getVariantsForRecipe', () => {
       const transformedRecipes: TransformedRecipe[] = [
         {
           id: RECIPE_CORE_ID_1,
-          dietaryClaims: ['gluten-free'],
+          dietaryClaims: [ { slug: 'gluten-free' }],
         } as unknown as TransformedRecipe,
         {
-          id: RECIPE_CORE_ID_1,
-          dietaryClaims: ['gluten-free'],
+          id: RECIPE_CORE_ID_2,
+          dietaryClaims: [ { slug: 'gluten-free' }],
         } as unknown as TransformedRecipe,
       ]
 
@@ -30,7 +30,6 @@ describe('getVariantsForRecipe', () => {
         const result = getVariantsForRecipe(MENU_1, RECIPE_CORE_ID_1, transformedRecipes, collectionDietaryClaims)
 
         const expectedAlternatives = [
-          { id: RECIPE_UUID_1, coreRecipeId: RECIPE_CORE_ID_1, displayName: RECIPE_NAME_1 },
           { id: RECIPE_UUID_2, coreRecipeId: RECIPE_CORE_ID_2, displayName: RECIPE_NAME_2 },
         ]
 
@@ -46,10 +45,10 @@ describe('getVariantsForRecipe', () => {
       const transformedRecipes: TransformedRecipe[] = [
         {
           id: RECIPE_CORE_ID_1,
-          dietaryClaims: ['gluten-free'],
+          dietaryClaims: [ { slug: 'gluten-free' }],
         } as unknown as TransformedRecipe,
         {
-          id: RECIPE_CORE_ID_1,
+          id: RECIPE_CORE_ID_2,
           dietaryClaims: [],
         } as unknown as TransformedRecipe,
       ]
@@ -57,7 +56,7 @@ describe('getVariantsForRecipe', () => {
       test('should return all recipes which match', () => {
         const result = getVariantsForRecipe(MENU_1, RECIPE_CORE_ID_1, transformedRecipes, collectionDietaryClaims)
 
-        const expectedAlternatives = [{ id: RECIPE_UUID_1, coreRecipeId: RECIPE_CORE_ID_1, displayName: RECIPE_NAME_1 }]
+        const expectedAlternatives = []
 
         expect(result).toEqual({
           type: 'alternatives',
@@ -69,16 +68,16 @@ describe('getVariantsForRecipe', () => {
   })
 
   describe('when collection has no dietary claims', () => {
-    const collectionDietaryClaims = []
+    const collectionDietaryClaims: string[] = []
 
     const transformedRecipes: TransformedRecipe[] = [
       {
         id: RECIPE_CORE_ID_1,
-        dietaryClaims: ['gluten-free'],
+        dietaryClaims: [ { slug: 'gluten-free' }],
       } as unknown as TransformedRecipe,
       {
-        id: RECIPE_CORE_ID_1,
-        dietaryClaims: ['gluten-free'],
+        id: RECIPE_CORE_ID_2,
+        dietaryClaims: [ { slug: 'gluten-free' }],
       } as unknown as TransformedRecipe,
     ]
 
@@ -86,7 +85,6 @@ describe('getVariantsForRecipe', () => {
       const result = getVariantsForRecipe(MENU_1, RECIPE_CORE_ID_1, transformedRecipes, collectionDietaryClaims)
 
       const expectedAlternatives = [
-        { id: RECIPE_UUID_1, coreRecipeId: RECIPE_CORE_ID_1, displayName: RECIPE_NAME_1 },
         { id: RECIPE_UUID_2, coreRecipeId: RECIPE_CORE_ID_2, displayName: RECIPE_NAME_2 },
       ]
 

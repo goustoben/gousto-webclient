@@ -36,7 +36,8 @@ describe('mediaTransformer', () => {
     }]
 
     const expectedFormat = [{
-      title: 'Warming Chicken Bhuna, Rice & Naan',
+      title: 'image title',
+      description: 'image description',
       type: 'mood-image',
       urls: [
         {

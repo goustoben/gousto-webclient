@@ -83,6 +83,19 @@ export const MENU_1: MenuAPIResponseDataItem = {
   relationships: {
     recipe_options: {
       data: [
+        // recipes from menu service are linked both ways
+        makeRelationshipRecipeOptions({
+          id: RECIPE_UUID_1,
+          coreRecipeId: RECIPE_CORE_ID_1,
+          shortDisplayName: RECIPE_NAME_1,
+          others: [
+            {
+              id: RECIPE_UUID_2,
+              coreRecipeId: RECIPE_CORE_ID_2,
+              shortDisplayName: RECIPE_NAME_2,
+            },
+          ],
+        }),
         makeRelationshipRecipeOptions({
           id: RECIPE_UUID_2,
           coreRecipeId: RECIPE_CORE_ID_2,
@@ -182,14 +195,14 @@ export const MOCK_MENU_RESPONSE: MenuAPIResponse = {
       makeIncludedRecipe({
         id: RECIPE_UUID_1,
         coreRecipeId: RECIPE_CORE_ID_1,
-        name: 'Mock Recipe Number One',
+        name: RECIPE_NAME_1,
         dietaryClaims: [{ name: 'gluten free', slug: 'gluten-free' }],
-        surcharge: 2
+        surcharge: 200
       }),
       makeIncludedRecipe({
         id: RECIPE_UUID_2,
         coreRecipeId: RECIPE_CORE_ID_2,
-        name: 'Mock Recipe Number Two',
+        name: RECIPE_NAME_2,
       }),
       COLLECTION_ALL_RECIPES,
       COLLECTION_GLUTEN_FREE,

@@ -1,39 +1,59 @@
-import Immutable from 'immutable'
 import { TransformedRecipe } from '../../transformer'
+import { getVariantsForRecipe } from '../../recipeOptions'
 
 import { getOutOfStockRecipeReplacer } from './getOutOfStockRecipeReplacer'
 
-const makeIds = (recipes: { id: string }[]) =>
-  new Set(recipes.map(r => r.id))
+const getVariantsForRecipeMock = getVariantsForRecipe as jest.MockedFunction<typeof getVariantsForRecipe>
 
-const makeRecipe = (id: string): TransformedRecipe => ({
-  id
-}) as TransformedRecipe
+const makeIds = (recipes: { id: string }[]) => new Set(recipes.map((r) => r.id))
+
+const makeRecipe = (id: string): TransformedRecipe =>
+  ({
+    id,
+  } as TransformedRecipe)
+
+jest.mock('../../recipeOptions')
 
 describe('getOutOfStockRecipeReplacer produces recipe replacer function that', () => {
   const RECIPE_1 = makeRecipe('aaaa')
   const RECIPE_1_1 = makeRecipe('bbbb')
   const RECIPE_1_2 = makeRecipe('cccc')
 
-  const ALTERNATIVES = Immutable.fromJS({
-    [RECIPE_1.id]: {
-      type: 'alternatives',
-      alternatives: [
-        { id: RECIPE_1_1.id, coreRecipeId: RECIPE_1_1.id },
-        { id: RECIPE_1_2.id, coreRecipeId: RECIPE_1_2.id },
-      ],
-    },
-  })
+  const ALTERNATIVES: NonNullable<ReturnType<typeof getVariantsForRecipe>>['alternatives'] = [
+    { id: RECIPE_1_1.id, displayName: 'r1', coreRecipeId: RECIPE_1_1.id },
+    { id: RECIPE_1_2.id, displayName: 'r2', coreRecipeId: RECIPE_1_2.id },
+  ]
 
-  describe('when recipe with alternatives is in stock', () => {
-    const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
-      recipesVariants: ALTERNATIVES,
-      recipesInStockIds: makeIds([RECIPE_1, RECIPE_1_1, RECIPE_1_2]),
-      dietaryClaims: [],
+  const makeReplacer = (
+    recipes: TransformedRecipe[],
+    inStockIds: Set<string>,
+    dietaryClaims: string[] = [],
+    numPortions = 4,
+    alternatives = ALTERNATIVES,
+  ) => {
+    const isRecipeInStock = (id: string) => inStockIds.has(id)
+
+    getVariantsForRecipeMock.mockReturnValue({
+      type: 'alternatives',
+      alternatives,
+      variantsList: alternatives
     })
 
+    return getOutOfStockRecipeReplacer({
+      menu: {} as any,
+      recipes,
+      numPortions,
+      dietaryClaims,
+      isRecipeInStock,
+    })
+  }
+
+  describe('when recipe with alternatives is in stock', () => {
+    const inStockIds = makeIds([RECIPE_1, RECIPE_1_1, RECIPE_1_2])
+
     test('it does not replace the recipe', () => {
+      const replacer = makeReplacer([RECIPE_1, RECIPE_1_1, RECIPE_1_2], inStockIds)
+
       expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
         originalId: RECIPE_1.id,
@@ -43,13 +63,11 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
   })
 
   describe('when recipe with alternatives is out of stock but one alternative is in stock', () => {
-    const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
-      recipesVariants: ALTERNATIVES,
-      recipesInStockIds: makeIds([RECIPE_1_1, RECIPE_1_2]),
-      dietaryClaims: [],
-    })
+    const inStockIds = makeIds([RECIPE_1_1, RECIPE_1_2])
+
     test('it replaces original recipe with that alternative', () => {
+      const replacer = makeReplacer([RECIPE_1, RECIPE_1_1, RECIPE_1_2], inStockIds)
+
       expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1_1,
         originalId: RECIPE_1_1.id,
@@ -59,13 +77,11 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
   })
 
   describe('when recipe and all its alternatives are out of stock', () => {
-    const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
-      recipesVariants: ALTERNATIVES,
-      recipesInStockIds: makeIds([]),
-      dietaryClaims: [],
-    })
+    const inStockIds = makeIds([])
+
     test('it does not replace the recipe', () => {
+      const replacer = makeReplacer([RECIPE_1, RECIPE_1_1, RECIPE_1_2], inStockIds)
+
       expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
         originalId: RECIPE_1.id,
@@ -75,13 +91,12 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
   })
 
   describe('when recipe is out of stock but does not have alternatives', () => {
-    const replacer = getOutOfStockRecipeReplacer({
-      recipes: [RECIPE_1, RECIPE_1_1, RECIPE_1_2],
-      recipesVariants: Immutable.Map(),
-      recipesInStockIds: makeIds([]),
-      dietaryClaims: [],
-    })
+    const inStockIds = makeIds([])
+    const alternatives = []
+
     test('it does not replace recipe', () => {
+      const replacer = makeReplacer([RECIPE_1, RECIPE_1_1, RECIPE_1_2], inStockIds, [], 4, alternatives)
+
       expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
         originalId: RECIPE_1.id,

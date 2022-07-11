@@ -56,7 +56,5 @@ const transformMenuCollections = (menu: MenuAPIResponseDataItem, normalisedData:
   return formattedData
 }
 
-const collectionsTransformer = (menuServiceData: MenuServiceData, activeMenu: MenuAPIResponseDataItem) =>
+export const collectionsTransformer = (menuServiceData: MenuServiceData, activeMenu: MenuAPIResponseDataItem) =>
   transformMenuCollections(activeMenu, menuServiceData)
-
-export { collectionsTransformer }

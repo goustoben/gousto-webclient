@@ -1,5 +1,6 @@
 import { MenuAPIResponseDataItem, MenuServiceData } from '../http'
 import { collectionsTransformer } from './collections'
+import { TransformedCollection } from './transformMenu'
 
 describe('collectionTransformer', () => {
   const menuServiceResponse: MenuServiceData = {
@@ -449,11 +450,11 @@ describe('collectionTransformer', () => {
         },
       },
     },
-    box: {}
+    box: {},
   }
 
   test('should transform data into format expected by UI', () => {
-    const expectedFormat = [
+    const expectedFormat: TransformedCollection[] = [
       {
         colour: '#D8A958',
         description: "All the week's chicken recipes",
@@ -462,11 +463,15 @@ describe('collectionTransformer', () => {
         published: true,
         shortTitle: 'Chicken',
         slug: 'chicken',
-        requirements: {},
+        requirements: {
+          dietary_claims: [],
+        },
         recipesInCollection: ['2106'],
         isFeaturedCategory: false,
         featuredCategoryOrder: 0,
         carouselConfig: null,
+        thumbnail: undefined,
+        properties: undefined,
       },
       {
         colour: '#6ACBB8',
@@ -476,11 +481,15 @@ describe('collectionTransformer', () => {
         published: true,
         shortTitle: '10-Minute Meals',
         slug: '10-minute-meals',
-        requirements: {},
+        requirements: {
+          dietary_claims: [],
+        },
         recipesInCollection: [],
         isFeaturedCategory: false,
         featuredCategoryOrder: 0,
         carouselConfig: null,
+        thumbnail: undefined,
+        properties: undefined,
       },
     ]
 
@@ -489,20 +498,20 @@ describe('collectionTransformer', () => {
   })
 
   describe('when menu does not have relationships', () => {
-    test('should return undefined', () => {
+    test('should return empty collections', () => {
       const newMenu: MenuAPIResponseDataItem = {
         ...menuServiceResponse.data[0],
         relationships: {} as any,
       }
 
       const result = collectionsTransformer(menuServiceResponse, newMenu)
-      expect(result).toEqual(undefined)
+      expect(result).toEqual([])
     })
   })
 
   describe('when menu has featured categories', () => {
     test('should return feature category options', () => {
-      const expectedFormat = [
+      const expectedFormat: TransformedCollection[] = [
         {
           colour: '#D8A958',
           description: "All the week's chicken recipes",
@@ -511,10 +520,15 @@ describe('collectionTransformer', () => {
           published: true,
           shortTitle: 'Chicken',
           slug: 'chicken',
-          requirements: {},
+          requirements: {
+            dietary_claims: []
+          },
           recipesInCollection: ['2106'],
           isFeaturedCategory: true,
           featuredCategoryOrder: 0,
+          carouselConfig: undefined,
+          thumbnail: undefined,
+          properties: undefined,
         },
         {
           colour: '#6ACBB8',
@@ -524,10 +538,15 @@ describe('collectionTransformer', () => {
           published: true,
           shortTitle: '10-Minute Meals',
           slug: '10-minute-meals',
-          requirements: {},
+          requirements: {
+            dietary_claims: []
+          },
           recipesInCollection: [],
           isFeaturedCategory: true,
           featuredCategoryOrder: 1,
+          carouselConfig: undefined,
+          thumbnail: undefined,
+          properties: undefined,
         },
       ]
       const newMenu: MenuAPIResponseDataItem = {
@@ -555,7 +574,7 @@ describe('collectionTransformer', () => {
 
     describe('when feature categories does not have metadata', () => {
       test('should return categoryDetails as undefined', () => {
-        const expectedFormat = [
+        const expectedFormat: TransformedCollection[] = [
           {
             colour: '#D8A958',
             description: "All the week's chicken recipes",
@@ -564,11 +583,15 @@ describe('collectionTransformer', () => {
             published: true,
             shortTitle: 'Chicken',
             slug: 'chicken',
-            requirements: {},
+            requirements: {
+              dietary_claims: []
+            },
             recipesInCollection: ['2106'],
             isFeaturedCategory: true,
             featuredCategoryOrder: 0,
-            categoryDetails: undefined,
+            carouselConfig: undefined,
+            thumbnail: undefined,
+            properties: undefined,
           },
           {
             colour: '#6ACBB8',
@@ -578,11 +601,15 @@ describe('collectionTransformer', () => {
             published: true,
             shortTitle: '10-Minute Meals',
             slug: '10-minute-meals',
-            requirements: {},
+            requirements: {
+              dietary_claims: []
+            },
             recipesInCollection: [],
             isFeaturedCategory: true,
             featuredCategoryOrder: 1,
-            categoryDetails: undefined,
+            carouselConfig: undefined,
+            thumbnail: undefined,
+            properties: undefined,
           },
         ]
         const newMenu: MenuAPIResponseDataItem = {
@@ -617,7 +644,7 @@ describe('collectionTransformer', () => {
           styleSlug: 'default',
         }
 
-        const expectedFormat = [
+        const expectedFormat: TransformedCollection[] = [
           {
             colour: '#D8A958',
             description: "All the week's chicken recipes",
@@ -626,11 +653,15 @@ describe('collectionTransformer', () => {
             published: true,
             shortTitle: 'Chicken',
             slug: 'chicken',
-            requirements: {},
+            requirements: {
+              dietary_claims: []
+            },
             recipesInCollection: ['2106'],
             isFeaturedCategory: true,
             featuredCategoryOrder: 0,
             carouselConfig: meta,
+            thumbnail: undefined,
+            properties: undefined,
           },
         ]
         const newMenu: MenuAPIResponseDataItem = {

@@ -28,24 +28,13 @@ export function getVariantsForRecipe(
     displayName: recipe.data.attributes.short_display_name
   }))
 
-  // return the main recipe followed by the variants
-  const alternatives = [
-    {
-      id: recipeVariantGroup.id,
-      coreRecipeId: recipeVariantGroup.core_recipe_id,
-      displayName: recipeVariantGroup.attributes.short_display_name
-    },
-
-    ...variantRecipes
-  ]
-
   // all recipes must match the dietary claims in the collection
   // return early if there are none to match
   if (!collectionDietaryClaims || !collectionDietaryClaims.length) {
-    return { type: 'alternatives', alternatives, variantsList: alternatives }
+    return { type: 'alternatives', alternatives: variantRecipes, variantsList: variantRecipes }
   }
 
-  const alternativesDietaryClaims = alternatives.filter((variant) => {
+  const alternativesDietaryClaims = variantRecipes.filter((variant) => {
     const matchingRecipe = menuRecipes.find((recipe) => recipe.id === variant.coreRecipeId)
 
     if (!matchingRecipe) {

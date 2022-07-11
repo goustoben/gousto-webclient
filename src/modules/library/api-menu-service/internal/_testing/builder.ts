@@ -8,12 +8,12 @@ export function makeIncludedRecipe({
   coreRecipeId = '123',
   name = 'Italian-Style Plant-Based Burger With Olive & Basil Tapenade',
   dietaryClaims = [],
-  surcharge = null
+  surcharge = null,
 }: {
   id?: string
   coreRecipeId?: string
-  name?: string,
-  dietaryClaims?: { name: string, slug: string }[],
+  name?: string
+  dietaryClaims?: { name: string; slug: string }[]
   surcharge?: number | null
 }): MenuAPIResponseIncludedRecipe {
   return {
@@ -150,10 +150,15 @@ export function makeIncludedRecipe({
       recipe_developer: {
         name: 'redacted',
       },
-      surcharges: {
-        for2: surcharge,
-        for4: surcharge,
-      },
+      surcharges: surcharge
+        ? {
+            for2: { name: '', price: { value: surcharge, currency: 'GBP' } },
+            for4: { name: '', price: { value: surcharge, currency: 'GBP' } },
+          }
+        : {
+            for2: null,
+            for4: null,
+          },
       dish_types: [
         {
           name: 'Burger',
