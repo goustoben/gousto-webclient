@@ -7,7 +7,7 @@
   "scripts": {
     "test:unit": "jest",
     "storybook": "start-storybook -p 6006",
-    "prettier": "prettier -w ./src"
+    "prettier": "prettier -w ./src/modules"
   },
   "workspaces": [
     "src/apps/webclient",
