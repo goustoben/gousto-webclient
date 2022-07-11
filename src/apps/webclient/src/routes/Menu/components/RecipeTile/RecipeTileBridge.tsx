@@ -18,10 +18,7 @@ import {
   RecipeContextProvider,
 } from 'routes/Menu/context/recipeContext'
 import { useBasket, useStock } from 'routes/Menu/domains/basket'
-import {
-  useSetBrowserCTAVisibility,
-  useGetAlternativeOptionsForRecipe,
-} from 'routes/Menu/domains/menu'
+import { useSetBrowserCTAVisibility, useMenu } from 'routes/Menu/domains/menu'
 
 import { RecipeReferenceProvider } from '../../context/recipeReferenceContext'
 import { useTracking as useTrackSwapAlternativeOptions } from './SwapAlternativeOptions/useTracking'
@@ -63,6 +60,22 @@ export const RecipeTileBridge = ({
   originalId,
   collectionId,
 }: RecipeTileBridgeProps) => {
+  const { getOptionsForRecipe } = useMenu()
+
+  const useGetOptionsForRecipe = useCallback(
+    () =>
+      (args: {
+        recipeId: string
+        isOnDetailScreen: boolean
+
+        categoryId?: string
+      }) =>
+        getOptionsForRecipe(args.recipeId, args.categoryId, {
+          isOnDetailScreen: args.isOnDetailScreen,
+        }),
+    [getOptionsForRecipe],
+  )
+
   const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } =
     useTrackSwapAlternativeOptions()
 
@@ -101,7 +114,7 @@ export const RecipeTileBridge = ({
       <RecipeContextProvider value={recipe}>
         <RecipeTileDependencies
           recipe={recipe.toJS()}
-          useGetAlternativeOptionsForRecipe={useGetAlternativeOptionsForRecipe}
+          useGetAlternativeOptionsForRecipe={useGetOptionsForRecipe}
           useStock={useStock}
           useBasket={useBasket}
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}

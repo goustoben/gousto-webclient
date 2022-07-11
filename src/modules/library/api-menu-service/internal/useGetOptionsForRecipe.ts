@@ -23,13 +23,17 @@ export function useGetOptionsForRecipe(
   return useCallback(
     (
       coreRecipeId: string,
-      collectionId: string,
+      collectionId?: string,
       { isOnDetailScreen = false }: GetOptionsForRecipeArgs = { isOnDetailScreen: false },
     ) => {
       if (!collectionId) {
         throw new Error(
           `Failed to obtain collectionId while determining Alternative Options for ${coreRecipeId} recipe`,
         )
+      }
+
+      if (!menuServiceData) {
+        return []
       }
 
       const { menu, collections, recipes } = transformMenuForDate(menuServiceData, date)

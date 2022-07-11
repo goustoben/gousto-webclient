@@ -9,11 +9,11 @@ import * as Menu from 'routes/Menu/domains/menu'
 import { RecipeAlternativeOptions } from './RecipeAlternativeOptions'
 import * as Tracking from './useTracking'
 
-function mockUseMenu(getAlternativeOptionsForRecipe: jest.Mock) {
+function mockUseMenu(getOptionsForRecipe: jest.Mock) {
   const getRecipesForCollectionId = jest.fn().mockReturnValue([])
 
   jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({
-    getAlternativeOptionsForRecipe,
+    getOptionsForRecipe,
     getRecipesForCollectionId,
   }))
 }
