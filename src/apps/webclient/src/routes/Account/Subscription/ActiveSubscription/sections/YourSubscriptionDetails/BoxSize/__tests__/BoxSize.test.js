@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils'
 import { SubscriptionContext } from '../../../../../context/index'
 import { BoxSize } from '../BoxSize'
 
-import { getNumPortions, getIsBoxLoaded } from '../../../../../context/selectors/box'
+import { getNumPortions, getIsBoxLoaded, getSelectedBoxSize } from '../../../../../context/selectors/box'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
 import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
@@ -15,16 +15,16 @@ jest.mock('../../../../../hooks/useUpdateSubscription')
 
 const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
 const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
+const dispatch = jest.fn().mockResolvedValue()
 
 let wrapper
-const dispatch = jest.fn()
 
-const mountWithProps = (props) => {
+const mountWithProps = (props, state = {}) => {
   wrapper = mount(
     <BoxSize accessToken="foo" isMobile={false} {...props} />,
     {
       wrappingComponent: SubscriptionContext.Provider,
-      wrappingComponentProps: { value: { state: {}, dispatch } }
+      wrappingComponentProps: { value: { state, dispatch } }
     }
   )
 
@@ -42,6 +42,7 @@ const clickEdit = () => {
 }
 
 const mockBoxSize = '2'
+const mockSelectedBoxSize = '4'
 
 const EXPECTED_RADIOS = ['2 people', '4 people']
 
@@ -56,6 +57,7 @@ describe('BoxSize', () => {
       getIsBoxLoaded.mockReturnValue(false)
       useUpdateSubscription.mockReturnValue([])
       getNumPortions.mockReturnValue(undefined)
+      getSelectedBoxSize.mockReturnValue(undefined)
 
       mountWithProps()
     })
@@ -106,13 +108,12 @@ describe('BoxSize', () => {
       getIsBoxLoaded.mockReturnValue(true)
       useUpdateSubscription.mockReturnValue([false, true, false])
       getNumPortions.mockReturnValue(mockBoxSize)
+      getSelectedBoxSize.mockReturnValue(mockBoxSize)
 
       mountWithProps()
     })
 
     test('Then I should see the box size', () => {
-      expect.assertions(1)
-
       expect(
         wrapper
           .find('[data-testing="current-box-size"]')
@@ -136,103 +137,92 @@ describe('BoxSize', () => {
       })
 
       test('Then I can see the current selected radio', () => {
-        const selectedRadioText = wrapper.find('.inputRadioLabelChecked').text()
+        const selectedRadioText = wrapper.find(`input[value="${mockBoxSize}"]`).closest('label').text().trim()
 
         expect(selectedRadioText).toEqual('2 people')
       })
 
       test('Then the expected Radios are rendered', () => {
-        expect.assertions(EXPECTED_RADIOS.length)
-
-        const renderedRadios = wrapper.find('[data-testing="box-size-radios"] label')
+        const renderedRadios = wrapper.find('[data-testing="box-size-radios"]')
 
         renderedRadios.forEach((radio, idx) => {
           const expectedText = EXPECTED_RADIOS[idx]
 
-          expect(radio.text()).toEqual(expectedText)
+          expect(radio.closest('label').text()).toEqual(expectedText)
         })
       })
 
       describe('And I select a Radio', () => {
-        beforeEach(() => {
-          act(() => {
-            wrapper
-              .find('RadioGroup')
-              .simulate('change', {
-                target: {
-                  value: '4'
-                }
-              })
-          })
-
+        test('Then the dispatch function is invoked with selected radio button value', () => {
+          wrapper
+            .find('input[value="4"]')
+            .simulate('change', {
+              target: {
+                value: '4'
+              }
+            })
           wrapper.update()
-        })
 
-        test('Then dispatch is called', () => {
-          expect(dispatch).toHaveBeenLastCalledWith({
-            type: 'UPDATE_FOUR_BY_FIVE_MODAL',
-            data: { selectedBoxSize: '4' }
+          expect(dispatch).toHaveBeenCalledWith({
+            type: 'UPDATE_SELECTED_BOX_SIZE',
+            data: {
+              numPortions: '4',
+            },
           })
         })
+      })
+    })
+  })
 
-        describe('And I click "Save box size"', () => {
-          describe('And the update is successful', () => {
-            beforeEach(() => {
-              useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
-              act(() => {
-                wrapper
-                  .find('[data-testing="box-size-save-cta"]')
-                  .simulate('click')
-              })
+  describe('Given state has changed', () => {
+    beforeEach(() => {
+      getIsBoxLoaded.mockReturnValue(true)
+      getNumPortions.mockReturnValue(mockBoxSize)
+      getSelectedBoxSize.mockReturnValue(mockSelectedBoxSize)
+    })
 
-              wrapper.update()
-            })
+    describe('When response is successful', () => {
+      beforeEach(() => {
+        useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
+        mountWithProps()
+        wrapper
+          .find('[data-testing="box-size-save-cta"]')
+          .simulate('click')
+      })
 
-            test('Then useUpdateSubscription should be invoked', () => {
-              const mockCalls = useUpdateSubscription.mock.calls
-              const [lastMockArgs] = mockCalls[mockCalls.length - 1]
+      test('Then useUpdateSubscription should be invoked', () => {
+        const mockCalls = useUpdateSubscription.mock.calls
+        const [lastMockArgs] = mockCalls[mockCalls.length - 1]
 
-              expect(lastMockArgs.data).toEqual({
-                num_portions: '4'
-              })
-
-              expect(lastMockArgs.trigger.shouldRequest).toBeTruthy()
-            })
-
-            test('Then the trackSubscriptionSettingsChange is invoked as expected', () => {
-              expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
-                action: 'update', settingName: 'box_size'
-              })
-            })
-
-            describe('And the update is a successful', () => {
-              beforeEach(() => {
-                useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
-              })
-
-              test('Then useSubscriptionToast is invoked', () => {
-                expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
-              })
-            })
-          })
-
-          describe('And the update errors', () => {
-            beforeEach(() => {
-              useUpdateSubscription.mockReturnValue([false, false, true])
-              act(() => {
-                wrapper
-                  .find('[data-testing="box-size-save-cta"]')
-                  .simulate('click')
-              })
-
-              wrapper.update()
-            })
-
-            test('Then useSubscriptionToast is invoked', () => {
-              expect(useSubscriptionToastSpy).toHaveBeenCalledWith(false, true)
-            })
-          })
+        expect(lastMockArgs.data).toEqual({
+          num_portions: '4'
         })
+        expect(lastMockArgs.trigger.shouldRequest).toBeTruthy()
+      })
+
+      test('Then useSubscriptionToast is invoked', () => {
+        expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
+      })
+
+      test('Then the trackSubscriptionSettingsChange is invoked as expected', () => {
+        expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+          action: 'update', settingName: 'box_size'
+        })
+      })
+    })
+
+    describe('When response is not successful', () => {
+      beforeEach(() => {
+        useUpdateSubscription.mockReturnValue([false, false, true])
+      })
+
+      test('Then useSubscriptionToast is invoked', () => {
+        mountWithProps()
+        wrapper
+          .find('[data-testing="box-size-save-cta"]')
+          .simulate('click')
+
+        expect(useSubscriptionToastSpy).toHaveBeenCalledWith(false, true)
       })
     })
   })
