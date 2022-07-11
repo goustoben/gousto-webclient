@@ -65,7 +65,7 @@ const BoxPriceBlock = ({
         {recipesLeftTrackingIndex - selectedIndex > 0 ? (
           <div className={css.selectDescription}>
             {`Select ${recipesLeftTrackingIndex - selectedIndex} more recipe${
-              selectedIndex === 1 ? '' : 's'
+              selectedIndex === 2 ? '' : 's'
             } for the best price`}
           </div>
         ) : (
