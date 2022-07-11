@@ -1,7 +1,7 @@
-import { MenuAPIResponseIncludedIngredient } from "../http"
-import { allergensTransformer, imageUrlMap} from './recipeHelpers'
+import { MenuAPIResponseIncludedIngredient } from '../http'
+import { allergensTransformer, imageUrlMap } from './recipeHelpers'
 
-const images = (ingredient) => {
+const images = (ingredient: MenuAPIResponseIncludedIngredient) => {
   if (ingredient && ingredient.attributes && ingredient.attributes.images && ingredient.attributes.images.length > 0) {
     const image = ingredient.attributes.images[0]
 
@@ -10,8 +10,8 @@ const images = (ingredient) => {
         title: image.title || '',
         description: image.title || '',
         type: image.type || '',
-        urls: imageUrlMap(image.crops)
-      }
+        urls: imageUrlMap(image.crops),
+      },
     ]
   }
 
@@ -24,7 +24,7 @@ const ingredientTransformer = (ingredient: MenuAPIResponseIncludedIngredient) =>
   label: ingredient.label,
   name: ingredient.attributes.name,
   media: {
-    images: images(ingredient)
+    images: images(ingredient),
   },
   subIngredients: ingredient.attributes.sub_ingredients || '',
 })
