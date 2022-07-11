@@ -8,11 +8,11 @@ import {
   reduceSubscriptionPageData,
   reduceSubscriptionUpdateData,
   reduceSubscriptionStatusUpdate,
-  reduceSubscriptionHideResubscriptionModal
+  reduceSubscriptionHideResubscriptionModal,
 } from '../subscription'
 import { reduceCurrentUserData } from '../currentUser'
 import { reduceLoadingState } from '../loading'
-import { reduceBoxPricesData } from '../box'
+import { reduceBoxPricesData, reduceFourByFiveModal } from '../box'
 import { reduceOrdersData } from '../orders'
 
 jest.mock('../subscription')
@@ -129,6 +129,19 @@ describe('SubscriptionReducer', () => {
 
     test('Then reduceOrdersData is invoked as expected', () => {
       expect(reduceOrdersData).toHaveBeenCalledWith(mockState, mockData)
+    })
+  })
+
+  describe('Given UPDATE_FOUR_BY_FIVE_MODAL action is received', () => {
+    beforeEach(() => {
+      SubscriptionReducer(mockState, {
+        type: actionTypes.UPDATE_FOUR_BY_FIVE_MODAL,
+        data: mockData
+      })
+    })
+
+    test('Then reduceOrdersData is invoked as expected', () => {
+      expect(reduceFourByFiveModal).toHaveBeenCalledWith(mockState, mockData)
     })
   })
 

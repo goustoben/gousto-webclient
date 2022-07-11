@@ -84,7 +84,7 @@ const BoxPriceBlock = ({
           </div>
         </div>
         <div className={css.benefitContainer}>
-          <Benefits byId="freeDelivery" isCentered fontStyleS />
+          <Benefits byId="paidDelivery" isCentered fontStyleS isReverted />
         </div>
         <div className={css.ctaContainer}>
           <CTA isFullWidth onClick={() => boxPricesBoxSizeSelected(numPersons)}>

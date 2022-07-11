@@ -5,16 +5,16 @@ export const cssCookingTimeIcon: CSSObject = {
   position: 'absolute',
   bottom: '0.75rem',
   left: '0.75rem',
-  width: '32px',
-  height: '32px',
+  width: '36px',
+  height: '36px',
   borderRadius: '50%',
   backgroundColor: 'rgba(255, 255, 255, 0.75)',
-  padding: '0px',
+  padding: '3px',
 
   [`@media ${screen.screenSMMin}`]: {
     width: '40px',
     height: '40px',
-    padding: '0px',
+    padding: '4px',
   },
 }
 
@@ -41,18 +41,21 @@ export const cssTime: CSSObject = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '32px',
-  height: '32px',
+  width: '36px',
+  height: '36px',
   top: 0,
   left: 0,
   fontWeight: 600,
   fontSize: '12px',
   fill: colors.black,
   color: colors.black,
+  padding: '3px',
+  
   [`@media ${screen.screenSMMin}`]: {
     width: '40px',
     height: '40px',
     fontSize: '13px',
+    padding: '4px'
   },
 }
 

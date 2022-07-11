@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { StockAPIResponse } from "./response"
+import { StockAPIResponse } from './response'
 import { useHTTPGet } from './useHTTPGet'
 import { useStockSWR } from './useStockSWR'
 
@@ -7,16 +7,18 @@ jest.mock('./useHTTPGet')
 
 const useHTTPGetMock = useHTTPGet as jest.MockedFn<typeof useHTTPGet>
 
-function setHTTPGetMock({ data, error }: { data?: any, error?: any }) {
+function setHTTPGetMock({ data, error }: { data?: any; error?: any }) {
   useHTTPGetMock.mockReturnValue({
     data,
     error,
     isValidating: false,
-    mutate: (() => { }) as any,
+    mutate: (() => {}) as any,
   })
 }
 
 describe('recipe-tile > api > useStockSWR', () => {
+  const accessToken = 'access-token'
+  const authUserId = 'auth-user-id'
   const coreUrl = 'core-url'
   const getFetcher = () => ({} as any)
 
@@ -29,12 +31,12 @@ describe('recipe-tile > api > useStockSWR', () => {
     const deliveryDayId = null
 
     test('should pass null url to useHTTPGet', () => {
-      renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+      renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
       expect(useHTTPGetMock).toHaveBeenCalledWith(
         expect.objectContaining({
           url: null,
-        })
+        }),
       )
     })
   })
@@ -50,19 +52,19 @@ describe('recipe-tile > api > useStockSWR', () => {
       })
 
       test('should return error', () => {
-        const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+        const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
         expect(result.current.error).toEqual(error)
       })
 
       test('should return empty stock', () => {
-        const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+        const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
         expect(result.current.stock).toEqual({})
       })
 
       test('should return pending false', () => {
-        const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+        const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
         expect(result.current.isPending).toEqual(false)
       })
@@ -79,19 +81,19 @@ describe('recipe-tile > api > useStockSWR', () => {
         })
 
         test('should return pending true', () => {
-          const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+          const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
           expect(result.current.isPending).toEqual(true)
         })
 
         test('should return empty stock', () => {
-          const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+          const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
           expect(result.current.stock).toEqual({})
         })
 
         test('should return null error', () => {
-          const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+          const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
           expect(result.current.error).toEqual(null)
         })
@@ -110,7 +112,7 @@ describe('recipe-tile > api > useStockSWR', () => {
                   number: 100,
                   period_id: 5,
                   slot_number: '7',
-                }
+                },
               },
               meta: [],
             },
@@ -121,19 +123,19 @@ describe('recipe-tile > api > useStockSWR', () => {
           })
 
           test('should return pending false', () => {
-            const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+            const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
             expect(result.current.isPending).toEqual(false)
           })
 
           test('should return stock from response', () => {
-            const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+            const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
             expect(result.current.stock).toEqual(data.result.data)
           })
 
           test('should return null error', () => {
-            const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+            const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
             expect(result.current.error).toEqual(null)
           })
@@ -154,23 +156,21 @@ describe('recipe-tile > api > useStockSWR', () => {
           })
 
           test('should return pending false', () => {
-            const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+            const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
             expect(result.current.isPending).toEqual(false)
           })
 
           test('should return empty stock', () => {
-            const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+            const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
             expect(result.current.stock).toEqual({})
           })
 
           test('should return error', () => {
-            const { result } = renderHook(() => useStockSWR({ deliveryDayId, getFetcher, coreUrl }))
+            const { result } = renderHook(() => useStockSWR({ accessToken, authUserId, deliveryDayId, getFetcher, coreUrl }))
 
-            expect(result.current.error).toEqual(
-              status
-            )
+            expect(result.current.error).toEqual(status)
           })
         })
       })

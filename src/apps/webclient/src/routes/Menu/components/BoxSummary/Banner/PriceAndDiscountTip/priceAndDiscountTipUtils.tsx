@@ -128,10 +128,7 @@ export const formatDiscountTip = (discountDescriptor: DiscountDescriptor): strin
     return null
   }
   const formattedAmount = Math.ceil(parseFloat(discountAmount as string))
-  const discountTip =
-    discountKind === 'flat'
-      ? `£${formattedAmount} off your box`
-      : `${formattedAmount}% off your box`
+  const discountTip = discountKind === 'flat' ? `£${formattedAmount}` : `${formattedAmount}%`
 
   return discountTip
 }

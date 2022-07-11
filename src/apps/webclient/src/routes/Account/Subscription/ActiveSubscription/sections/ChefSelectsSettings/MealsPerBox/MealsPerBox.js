@@ -1,7 +1,7 @@
+
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { RadioGroup, InputRadio } from 'goustouicomponents'
-import { Text } from '@gousto-internal/citrus-react'
+import { Text, RadioGroup } from '@gousto-internal/citrus-react'
 import css from './MealsPerBox.css'
 import {
   SubscriptionContext,
@@ -11,7 +11,8 @@ import {
   getBoxPricesNumPortion,
   getIsBoxAndPricesLoaded,
   getDietaryPreference,
-  getTotalBoxPriceDiscounted
+  getTotalBoxPriceDiscounted,
+  getNumPortions
 } from '../../../../context/selectors/box'
 
 import { SettingSection } from '../../../../components/SettingSection'
@@ -20,15 +21,16 @@ import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
+import { useFiveRecipeSubscriptionOption } from '../../../../hooks/useFiveRecipeSubscriptionOption'
 
-import { MEALS_PER_BOX_MAP } from '../../../../enum/box'
+import { MEALS_PER_BOX_MAP, MEALS_PER_BOX_MAP_5R } from '../../../../enum/box'
 
 export const MealsPerBox = ({ accessToken, isMobile }) => {
   const context = useContext(SubscriptionContext)
   const { state } = context
 
   const isBoxAndPricesLoaded = getIsBoxAndPricesLoaded(state)
-
+  const currentBoxSize = getNumPortions(state)
   const currentMealsPerBox = getMealsPerBox(state)
   const boxPrices = getBoxPricesNumPortion(state)
   const totalBoxPrice = getTotalBoxPriceDiscounted(state)
@@ -38,6 +40,10 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
   const [shouldSubmit, setShouldSubmit] = useState(false)
 
   const settingName = 'meals_per_box'
+
+  const mealsPerBoxMap = useFiveRecipeSubscriptionOption() && currentBoxSize === '2'
+    ? MEALS_PER_BOX_MAP_5R
+    : MEALS_PER_BOX_MAP
 
   const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
@@ -72,7 +78,7 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
         isBoxAndPricesLoaded ? (
           <>
             <p className={css.currentSetting} data-testing="current-meals-per-box">
-              {`${MEALS_PER_BOX_MAP[selectedMealsPerBox || currentMealsPerBox]} meals (£${boxPrices[selectedMealsPerBox || currentMealsPerBox][dietaryPreference].pricePerPortionDiscounted} per serving)`}
+              {`${mealsPerBoxMap[selectedMealsPerBox || currentMealsPerBox]} meals (£${boxPrices[selectedMealsPerBox || currentMealsPerBox][dietaryPreference].pricePerPortionDiscounted} per serving)`}
             </p>
             <Text size={1} data-testing="total-box-price">
               {`Recipe box price £${totalBoxPrice}`}
@@ -92,28 +98,21 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
           </p>
         ) : null
       }
-
       {
-        isBoxAndPricesLoaded ? (
-          <RadioGroup
-            name="meals-per-box-radios"
-            testingSelector="meals-per-box-radios"
-            onChange={({ target: { value } }) => setSelectedMealsPerBox(value)}
-          >
-            {Object.keys(MEALS_PER_BOX_MAP).map(mealsPerBox => (
-              <InputRadio
-                id={`${mealsPerBox}-meals-radio`}
-                key={mealsPerBox}
-                name={`${mealsPerBox}-meals-radio`}
-                value={mealsPerBox}
-                variant="tile"
-                isChecked={mealsPerBox === (selectedMealsPerBox || currentMealsPerBox)}
-              >
-                {`${mealsPerBox} meals (£${boxPrices[mealsPerBox][dietaryPreference].pricePerPortionDiscounted} per serving)`}
-              </InputRadio>
-            ))}
-          </RadioGroup>
-        ) : null
+        isBoxAndPricesLoaded
+          ? (
+            <RadioGroup
+              outline
+              defaultValue={selectedMealsPerBox || currentMealsPerBox}
+              onChange={({ target: { value } }) => setSelectedMealsPerBox(value)}
+              options={ Object.keys(mealsPerBoxMap).map((mealsPerBox) => ({
+                label: `${mealsPerBox} meals (£${boxPrices[mealsPerBox][dietaryPreference].pricePerPortionDiscounted} per serving)`,
+                name: mealsPerBox,
+                value: mealsPerBox,
+              }))}
+            />
+          )
+          : null
       }
     </SettingSection>
   )

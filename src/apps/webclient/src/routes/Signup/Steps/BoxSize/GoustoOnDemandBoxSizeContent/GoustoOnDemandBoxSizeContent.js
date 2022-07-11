@@ -62,7 +62,7 @@ export const GoustoOnDemandBoxSizeContent = ({
           )
         })}
       </div>
-      <Benefits isCentered byId="freeDelivery" fontStyleBody />
+      <Benefits isCentered byId="everydayDelivery" fontStyleBody />
     </div>
   )
 }

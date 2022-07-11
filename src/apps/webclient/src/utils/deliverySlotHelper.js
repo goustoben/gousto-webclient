@@ -61,7 +61,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
 
       return {
         label: formatDeliveryTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
-        subLabel: formatDeliveryPrice(slot.get('deliveryPrice')),
+        subLabel: isAuthenticated ? formatDeliveryPrice(slot.get('deliveryPrice')) : '',
         value: slot.get('id'),
         coreSlotId: slot.get('coreSlotId'),
         disabled: isSlotDisabled,

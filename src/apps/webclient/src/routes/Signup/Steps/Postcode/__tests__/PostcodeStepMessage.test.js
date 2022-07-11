@@ -17,7 +17,7 @@ describe('PostcodeStepMessage', () => {
   })
 
   test('renders correctly', () => {
-    expect(wrapper.find('.bodyText').text()).toBe('<Svg />Free UK delivery, 7 days a week')
+    expect(wrapper.find('.bodyText').text()).toBe('<Svg />Delivered to your door, 7 days a week')
   })
 
   describe('when deliveryDaysError is set', () => {

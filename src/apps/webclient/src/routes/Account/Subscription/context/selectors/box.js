@@ -33,6 +33,11 @@ export const getIsBoxPricesLoaded = createSelector(
   ({ requestState }) => Boolean((requestState || {}).isLoaded)
 )
 
+export const getShowFourByFiveModal = createSelector(
+  getBox,
+  ({ showFourByFiveModal }) => showFourByFiveModal
+)
+
 export const getPricePerPortionDiscounted = createSelector(
   getDietaryPreference,
   getMealsPerBox,

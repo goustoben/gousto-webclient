@@ -6,7 +6,7 @@ import {
 } from './subscription'
 
 import { reduceCurrentUserData } from './currentUser'
-import { reduceBoxPricesData } from './box'
+import { reduceBoxPricesData, reduceFourByFiveModal } from './box'
 import { reduceLoadingState } from './loading'
 import { reduceOrdersData } from './orders'
 
@@ -26,6 +26,7 @@ export const actionTypes = {
   BOX_PRICES_DATA_RECEIVED: 'BOX_PRICES_DATA_RECEIVED',
   ORDERS_DATA_RECEIVED: 'ORDERS_DATA_RECEIVED',
   SUBSCRIPTION_HIDE_RESUBSCRIPTION_MODAL: 'SUBSCRIPTION_HIDE_RESUBSCRIPTION_MODAL',
+  UPDATE_FOUR_BY_FIVE_MODAL: 'UPDATE_FOUR_BY_FIVE_MODAL',
 }
 
 export const SubscriptionReducer = (state, action) => {
@@ -61,6 +62,9 @@ export const SubscriptionReducer = (state, action) => {
 
   case actionTypes.SUBSCRIPTION_HIDE_RESUBSCRIPTION_MODAL:
     return reduceSubscriptionHideResubscriptionModal(state)
+
+  case actionTypes.UPDATE_FOUR_BY_FIVE_MODAL:
+    return reduceFourByFiveModal(state, data)
 
   default:
     return state

@@ -1,6 +1,8 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value FS-800 #008610;
 @value FS-200 #9CDC9E;
+@value CG-800 #333D47;
+@value W-0 #FFFFFF;
 
 .priceAndDiscountTip {
   color: FS-200;
@@ -17,9 +19,26 @@
 
     /* Space between the information and the arrow. */
     margin-right: 1rem;
+
+    .includingDelivery {
+      color: CG-800;
+    }
   }
 }
 
 .bold {
   composes: fontSemiBold from 'design-language/typography.css';
+}
+
+.discountApplied {
+  font-size: 1rem;
+}
+
+.viewBasket {
+  color: CG-800;
+  font-size: 0.9rem;
+}
+
+.includingDelivery {
+  color: W-0;
 }

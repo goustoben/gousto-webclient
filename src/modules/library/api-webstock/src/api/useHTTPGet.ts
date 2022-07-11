@@ -1,7 +1,8 @@
 import useSWR, { BareFetcher } from 'swr'
-import { useAuth } from '../../utils/auth'
 
 type UseHTTPGetArgs<TResponse> = {
+  accessToken: string;
+  authUserId: string;
   getFetcher: BareFetcher<TResponse>;
   immutable?: boolean;
   url: string | null;
@@ -18,8 +19,7 @@ type UseHTTPGetArgs<TResponse> = {
  * @param {BaseFetcher<StockAPIResponse>} args.getFetcher - Fetcher for use in SWR (passed in for compatibility with webclient)
  */
 export function useHTTPGet<TResponse>(args: UseHTTPGetArgs<TResponse>) {
-  const { getFetcher, immutable = false, url } = args
-  const { accessToken, authUserId } = useAuth()
+  const { accessToken, authUserId, getFetcher, immutable = false, url } = args
 
   const shouldFetch = url !== null
 
@@ -27,9 +27,7 @@ export function useHTTPGet<TResponse>(args: UseHTTPGetArgs<TResponse>) {
   const requestParameters = null
 
   return useSWR<TResponse>(
-    shouldFetch
-      ? [ url, requestParameters, accessToken, authUserId ]
-      : null,
+    shouldFetch ? [url, requestParameters, accessToken, authUserId] : null,
 
     getFetcher,
 
@@ -37,6 +35,6 @@ export function useHTTPGet<TResponse>(args: UseHTTPGetArgs<TResponse>) {
       revalidateIfStale: !immutable,
       revalidateOnFocus: !immutable,
       revalidateOnReconnect: !immutable,
-    }
+    },
   )
 }

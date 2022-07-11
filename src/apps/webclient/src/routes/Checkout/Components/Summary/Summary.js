@@ -11,9 +11,13 @@ import {
   Icon,
   IconVariant,
   Space,
+  FontWeight,
+  TextAlign,
 } from '@gousto-internal/citrus-react'
 import Loading from 'Loading'
 import { PricePerServingMessage } from 'PricePerServingMessage'
+import { TickText } from 'TickText'
+import config from 'config'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
@@ -34,7 +38,6 @@ const propTypes = {
   isLoading: PropTypes.bool,
   showPromocode: PropTypes.bool,
   isGoustoOnDemandEnabled: PropTypes.bool,
-  totalToPay: PropTypes.string,
 }
 
 const defaultProps = {
@@ -43,13 +46,11 @@ const defaultProps = {
   isLoading: false,
   showPromocode: true,
   isGoustoOnDemandEnabled: false,
-  totalToPay: '',
 }
 
 class Summary extends PureComponent {
   render() {
-    const { prices, basketRecipes, isLoading, showPromocode, isGoustoOnDemandEnabled, totalToPay } =
-      this.props
+    const { prices, basketRecipes, isLoading, showPromocode, isGoustoOnDemandEnabled } = this.props
     const numRecipes = basketSum(basketRecipes)
 
     return (
@@ -105,6 +106,13 @@ class Summary extends PureComponent {
                 isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
               />
               {showPromocode && <PromoCode />}
+              <TickText
+                textAlign={TextAlign.Left}
+                fontWeight={FontWeight.Normal}
+                tickPadding={2}
+                highlightedText="Nice!"
+                ordinaryText={`You get free delivery on your first box (usually ${config.deliveryPriceConfig.deliveryPriceFormatted}) as a welcome treat.`}
+              />
             </Box>
           </>
         )}
