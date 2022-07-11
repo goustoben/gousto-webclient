@@ -72,7 +72,6 @@ const goustoOnDemandItems = [
 
 export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => {
   const { numPortions } = useBasket()
-  console.log('5REC', useIsFiveRecipesEnabledForProspects(numPortions))
   const { isFiveRecipesEnabled } = useIsFiveRecipesEnabledForProspects(numPortions)
   const displayedItems = isGoustoOnDemandEnabled ? goustoOnDemandItems : items
 

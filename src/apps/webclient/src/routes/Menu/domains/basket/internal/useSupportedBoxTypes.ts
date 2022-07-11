@@ -44,8 +44,17 @@ export const useSupportedBoxTypes = () => {
      * Even useIsFiveRecipesEnabledForProspects() hook will be deleted.
      */
     if (!isAuthenticated) {
+      console.log('5RECIPES:useSupportedBoxTypes():isAuthenticated', isAuthenticated)
+      console.log(
+        '5RECIPES:useSupportedBoxTypes():5REC A/B',
+        isFiveRecipesExperimentEnabled ? maxRecipesForPortionDefault : DEFAULT_MAX_RECIPES,
+      )
+
       return isFiveRecipesExperimentEnabled ? maxRecipesForPortionDefault : DEFAULT_MAX_RECIPES
     }
+
+    console.log('5RECIPES:useSupportedBoxTypes():isAuthenticated', isAuthenticated)
+    console.log('5RECIPES:useSupportedBoxTypes() Continuing with radishes flow')
 
     return maxRecipesForPortionDefault
   }
