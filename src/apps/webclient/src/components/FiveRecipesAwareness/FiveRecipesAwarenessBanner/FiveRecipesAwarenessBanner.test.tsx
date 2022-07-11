@@ -46,8 +46,8 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
       it('should render the banner', () => {
         expect(screen.queryByRole('heading')).toHaveTextContent(/5 recipes, here we come!/)
       })
-      
-      it('the banner can be removed by clicking the close icon', () => {
+
+      it('can close the banner by clicking the close icon', () => {
         fireEvent.click(screen.getByTitle('Close Banner'))
         expect(screen.queryByRole('heading')).not.toBeInTheDocument()
       })
