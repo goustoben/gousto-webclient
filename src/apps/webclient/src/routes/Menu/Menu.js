@@ -13,6 +13,7 @@ import { browserHelperUtils } from 'utils/browserHelper'
 import { BoxSummaryContainer } from './components/BoxSummary'
 import { DetailRecipeMetaContainer } from './components/RecipeMeta'
 import { RecipesInBasketProgress } from './components/RecipesInBasketProgress'
+import { MenuQueryContextProvider } from './context/menuQueryContext'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
 import css from './Menu.css'
@@ -136,30 +137,32 @@ export class Menu extends React.PureComponent {
     }
 
     return (
-      <MainLayout route={{ withRecipeBar: true }}>
-        <div data-testing="menuContainer">
-          <Helmet title={menu.helmet.title} meta={menu.helmet.meta} style={menu.helmet.style} />
-          <DetailRecipeMetaContainer query={query} />
-          <div className={classnames(css.container, overlayShowCSS)}>
-            {children}
-            {
-              // overlay cannot be focused with keyboard, so it makes no sense
-              // to add keyboard handling for it
-            }
-            {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <div
-              className={showOverlay ? css.greyOverlayShow : css.greyOverlay}
-              onClick={onOverlayClick}
+      <MenuQueryContextProvider query={query}>
+        <MainLayout route={{ withRecipeBar: true }}>
+          <div data-testing="menuContainer">
+            <Helmet title={menu.helmet.title} meta={menu.helmet.meta} style={menu.helmet.style} />
+            <DetailRecipeMetaContainer query={query} />
+            <div className={classnames(css.container, overlayShowCSS)}>
+              {children}
+              {
+                // overlay cannot be focused with keyboard, so it makes no sense
+                // to add keyboard handling for it
+              }
+              {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+              <div
+                className={showOverlay ? css.greyOverlayShow : css.greyOverlay}
+                onClick={onOverlayClick}
+              />
+            </div>
+            <BoxSummaryContainer />
+            <RecipesInBasketProgress
+              isAuthenticated={isAuthenticated}
+              isActionBarRedesignEnabled={isActionBarRedesignEnabled}
             />
           </div>
-          <BoxSummaryContainer />
-          <RecipesInBasketProgress
-            isAuthenticated={isAuthenticated}
-            isActionBarRedesignEnabled={isActionBarRedesignEnabled}
-          />
-        </div>
-        <RibbonTrigger name="menu" />
-      </MainLayout>
+          <RibbonTrigger name="menu" />
+        </MainLayout>
+      </MenuQueryContextProvider>
     )
   }
 }
