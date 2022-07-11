@@ -5,5 +5,10 @@ export type MenuAPIResponseRelationshipRecipe = {
   id: string
   type: 'recipe'
   core_recipe_id: string
-  meta: { core_recipe_id: string }
+  meta: {
+    core_recipe_id: string
+
+    availability?: string
+    tagline?: string
+  }
 }

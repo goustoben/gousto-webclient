@@ -4,7 +4,8 @@ describe('ingredientTransformer', () => {
   test('should return recipe data', () => {
     const menuServiceIngredient = {
       id: '488d5751-dcff-4985-88c0-bf745ff54904',
-      type: 'ingredient',
+      published_at: '',
+      type: 'ingredient' as const,
       attributes: {
         net_weight_mg: 40000,
         sub_ingredients: "Cornish cow's milk (100%)",
@@ -108,11 +109,12 @@ describe('ingredientTransformer', () => {
   test('if no images returns an empty array', () => {
     const menuServiceIngredient = {
       id: '488d5751-dcff-4985-88c0-bf745ff54904',
-      type: 'ingredient',
+      type: 'ingredient' as const,
+      published_at: '',
       attributes: {
         net_weight_mg: 40000,
         sub_ingredients: "Cornish cow's milk (100%)",
-        images: null,
+        images: [],
         label: 'Clotted cream (v) (40g)',
         allergens: [
           {

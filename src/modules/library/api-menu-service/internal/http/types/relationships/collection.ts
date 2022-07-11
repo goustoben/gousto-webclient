@@ -23,5 +23,7 @@ export type MenuAPIResponseRelationshipCollection = {
  */
 export type MenuApiResponseRelationshipFeaturedCategory = {
   id: string
-  meta: any // TODO what type is this?
+  type: string
+
+  meta?: any // TODO what type is this?
 }

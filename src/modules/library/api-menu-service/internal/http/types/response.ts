@@ -54,7 +54,7 @@ export type MenuAPIResponseDataItem = {
       data: MenuAPIResponseRelationshipRecipe
     }
     debut_recipes: {
-      data: unknown[]
+      data: { core_recipe_id: string }[]
     }
     recipe_options: {
       data: MenuAPIResponseRelationshipRecipeOptions[]

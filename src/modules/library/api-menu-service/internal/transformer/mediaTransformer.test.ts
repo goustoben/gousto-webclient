@@ -1,8 +1,11 @@
+import { RecipeImage } from "../http"
 import { mediaTransformer } from './mediaTransformer'
 
 describe('mediaTransformer', () => {
   test('should return recipe data', () => {
-    const menuServiceRecipeMedia = [{
+    const menuServiceRecipeMedia: RecipeImage[] = [{
+      title: 'image title',
+      description: 'image description',
       type: 'mood-image',
       crops: [
         {

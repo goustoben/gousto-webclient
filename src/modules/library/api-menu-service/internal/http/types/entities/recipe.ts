@@ -1,10 +1,10 @@
-type County = { name: string; alpha2: string }
-type NameAndSlug = { name: string; slug: string }
+export type Country = { name: string; alpha2: string }
+export type NameAndSlug = { name: string; slug: string }
 
-type Allergen = NameAndSlug & {
+export type Allergen = NameAndSlug & {
   contain_type: 'contains' | string
 }
-type NutritionalInfo = {
+export type NutritionalInfo = {
   fibre_mg: number
   protein_mg: number
   net_weight_mg: number
@@ -17,7 +17,13 @@ type NutritionalInfo = {
   energy_kcal: number
 }
 
-type Image = {
+export type Micronutrient = {
+  name: string
+  nrv_percent: number
+  content: { amount: number; unit: string }
+}
+
+export type RecipeImage = {
   type: 'mood-image' | string
   title: string | null
   description: string | null
@@ -30,6 +36,14 @@ type Image = {
 type PortionBasedValues<TValue> = {
   for2: TValue
   for4: TValue
+}
+
+export type RecipePortionSurcharge = {
+  name: string
+  price: {
+    value: number
+    currency: string
+  }
 }
 
 type RecipeIngredientRelationship = {
@@ -46,35 +60,40 @@ export type MenuAPIResponseIncludedRecipe = {
   type: 'recipe'
   id: string
   attributes: {
-    country: County
+    core_recipe_id: string
+    gousto_reference: number
+
+    country: Country
     basics: NameAndSlug[]
     health_attributes: NameAndSlug[]
     spice_level: { name: string }
-    core_recipe_id: string
     description: string
     shelf_life: { min_days: number; max_days: number }
     food_brand: NameAndSlug
     box_type: NameAndSlug
-    country_secondary: County
-    gousto_reference: number
-    difficulty_level: { id: string; name: string }
-    roundel: any // TODO what type is this?
+    country_secondary: Country | null
+    difficulty_level: { id: string; name: string } | null
+    roundel: NameAndSlug | null
+    partnership: NameAndSlug | null
+
+    allergens: Allergen[]
+    diet_type: NameAndSlug
+    dietary_claims: NameAndSlug[]
+    five_a_day: number
     nutritional_information: {
       per_100g: NutritionalInfo
       per_portion: NutritionalInfo
+
+      micronutrients?: Micronutrient[]
     }
-    images: Image[]
-    partnership: any // TODO what type is this?
-    five_a_day: number
+
+    images: RecipeImage[]
     cuisine: NameAndSlug
     equipment: { name: string }[]
-    diet_type: NameAndSlug
     prep_times: PortionBasedValues<number>
-    allergens: Allergen[]
-    dietary_claims: NameAndSlug[]
     recipe_developer: { name: string } // TODO shall we remove this?
     name: string
-    surcharges: PortionBasedValues<number | null>
+    surcharges: PortionBasedValues<RecipePortionSurcharge | null>
     dish_types: { name: string }[]
     chef_prepared: boolean
     ingredient_preparation: {
@@ -85,6 +104,16 @@ export type MenuAPIResponseIncludedRecipe = {
       count: number
       love_count: number
     }
+
+    // optional below
+    health?: {
+      claims: {
+        slug: string
+        disclaimer: string
+      }[]
+    }
+
+    promotions?: { slug: string }[] // TODO what is this?
   }
   relationships: {
     ingredients: {

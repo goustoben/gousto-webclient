@@ -29,7 +29,11 @@ export function useGetRecipesForCollectionId(
   )
 
   return useCallback(
-    (collectionId: string, args: GetRecipeForCollectionIdArgs) => {
+    (collectionId: string, args?: GetRecipeForCollectionIdArgs) => {
+      if (!menuServiceData) {
+        return []
+      }
+
       const { menu, collections, recipes } = transformMenuForDate(menuServiceData, date)
       if (!menu) {
         return []
@@ -69,7 +73,7 @@ export function useGetRecipesForCollectionId(
 
       const sortedRecipes = unsortedRecipes.sort(recipeComparatorForOutOfStock)
 
-      if (args.selectedCuisines) {
+      if (args?.selectedCuisines) {
         const { orderedRecipes } = orderCollectionRecipesByCuisine(sortedRecipes, args.selectedCuisines)
 
         return orderedRecipes

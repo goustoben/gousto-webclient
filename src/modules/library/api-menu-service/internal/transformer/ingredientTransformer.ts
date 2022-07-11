@@ -1,3 +1,4 @@
+import { MenuAPIResponseIncludedIngredient } from "../http"
 import { allergensTransformer, imageUrlMap} from './recipeHelpers'
 
 const images = (ingredient) => {
@@ -17,7 +18,7 @@ const images = (ingredient) => {
   return []
 }
 
-const ingredientTransformer = (ingredient) => ({
+const ingredientTransformer = (ingredient: MenuAPIResponseIncludedIngredient) => ({
   allergens: allergensTransformer(ingredient.attributes.allergens),
   id: ingredient.id,
   label: ingredient.label,

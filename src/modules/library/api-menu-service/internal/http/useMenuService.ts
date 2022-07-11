@@ -1,7 +1,7 @@
 import { UseMenuSWRArgs } from './useMenuSWR'
 import { useNormalisedData } from './useNormalisedData'
 
-export type MenuServiceData = ReturnType<typeof useNormalisedData>
+export type MenuServiceData = NonNullable<ReturnType<typeof useNormalisedData>>
 
 /**
  * Get the menu service data

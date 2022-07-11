@@ -39,7 +39,7 @@ describe('promotionsTransformer', () => {
     test('should return promotions from attributes', () => {
       const expected = ['some-promotion-name', 'another-cool-promotion']
 
-      const result = promotionsTransformer(attributes)
+      const result = promotionsTransformer(attributes as any)
       expect(result).toEqual(expected)
     })
   })
@@ -50,7 +50,7 @@ describe('promotionsTransformer', () => {
     test('should return empty array', () => {
       const expected = []
 
-      const result = promotionsTransformer(attributes)
+      const result = promotionsTransformer(attributes as any)
       expect(result).toEqual(expected)
     })
   })

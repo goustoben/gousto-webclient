@@ -1,4 +1,4 @@
-import { MenuAPIResponseDataItem } from '../http'
+import { MenuAPIResponseDataItem, MenuAPIResponseIncludedRecipe, MenuAPIResponseRelationshipRecipe } from '../http'
 import { mediaTransformer } from './mediaTransformer'
 import {
   allergensTransformer,
@@ -20,12 +20,12 @@ export function recipeTransformer({
   activeMenu,
   recipeMeta,
 }: {
-  normalisedAttributes: Record<string, any>,
+  normalisedAttributes: MenuAPIResponseIncludedRecipe['attributes'],
   individualRecipeId: string,
   finalIngredients: unknown,
   isFeaturedRecipe: boolean,
   activeMenu: MenuAPIResponseDataItem,
-  recipeMeta: any,
+  recipeMeta: MenuAPIResponseRelationshipRecipe['meta'],
 }) {
   return {
     allergens: allergensTransformer(normalisedAttributes.allergens),
@@ -34,7 +34,7 @@ export function recipeTransformer({
     chefPrepared: normalisedAttributes.chef_prepared,
     cookingTime: normalisedAttributes.prep_times.for2,
     cookingTimeFamily: normalisedAttributes.prep_times.for4,
-    coreRecipeId: normalisedAttributes.core_recipe_id.toString() as string,
+    coreRecipeId: normalisedAttributes.core_recipe_id.toString(),
     cuisine: normalisedAttributes.cuisine ? normalisedAttributes.cuisine.name : '',
     description: normalisedAttributes.description,
     dietType: normalisedAttributes.diet_type ? normalisedAttributes.diet_type.slug : '',
