@@ -7,8 +7,8 @@ import { Buttons } from 'routes/Checkout/Components/RecipeSummary/Buttons/Button
 
 describe('<Buttons />', () => {
   let qty
-  let onAdd
-  let onRemove
+  let addRecipe
+  let removeRecipe
   let recipeId
   let numPortions
   let limitReached
@@ -19,12 +19,12 @@ describe('<Buttons />', () => {
     recipeId = 1
     numPortions = 2
     limitReached = false
-    onAdd = sinon.spy()
-    onRemove = sinon.spy()
+    addRecipe = sinon.spy()
+    removeRecipe = sinon.spy()
     wrapper = shallow(
       <Buttons
-        onAdd={onAdd}
-        onRemove={onRemove}
+        addRecipe={addRecipe}
+        removeRecipe={removeRecipe}
         numPortions={numPortions}
         limitReached={limitReached}
         qty={qty}
@@ -53,8 +53,8 @@ describe('<Buttons />', () => {
     test('should return 1 <Segment> when qty is greater than 0 when showControl is false', () => {
       wrapper = shallow(
         <Buttons
-          onAdd={onAdd}
-          onRemove={onRemove}
+          addRecipe={addRecipe}
+          removeRecipe={removeRecipe}
           numPortions={numPortions}
           limitReached={limitReached}
           qty={2}
@@ -69,8 +69,8 @@ describe('<Buttons />', () => {
     test('should return 3 <Segment> when qty is greater than 0 when showControl is true', () => {
       wrapper = shallow(
         <Buttons
-          onAdd={onAdd}
-          onRemove={onRemove}
+          addRecipe={addRecipe}
+          removeRecipe={removeRecipe}
           numPortions={numPortions}
           limitReached={limitReached}
           qty={2}
@@ -83,12 +83,12 @@ describe('<Buttons />', () => {
     })
   })
 
-  describe('onAdd and onRemove control', () => {
-    test('should NOT call onAdd when a <Button> is clicked with qty > 2 and basket limit reached', () => {
+  describe('addRecipe and removeRecipe control', () => {
+    test('should NOT call addRecipe when a <Button> is clicked with qty > 2 and basket limit reached', () => {
       wrapper = mount(
         <Buttons
-          onAdd={onAdd}
-          onRemove={onRemove}
+          addRecipe={addRecipe}
+          removeRecipe={removeRecipe}
           numPortions={numPortions}
           limitReached
           qty={2}
@@ -97,14 +97,14 @@ describe('<Buttons />', () => {
         />,
       )
 
-      expect(onAdd.called).not.toBe(true)
+      expect(addRecipe.called).not.toBe(true)
     })
 
-    test('should NOT call onAdd when a <Button> is clicked with qty > 0 and out of stock', () => {
+    test('should NOT call addRecipe when a <Button> is clicked with qty > 0 and out of stock', () => {
       wrapper = mount(
         <Buttons
-          onAdd={onAdd}
-          onRemove={onRemove}
+          addRecipe={addRecipe}
+          removeRecipe={removeRecipe}
           numPortions={numPortions}
           limitReached={false}
           outOfstock
@@ -117,14 +117,14 @@ describe('<Buttons />', () => {
         node.simulate('click')
       })
 
-      expect(onAdd.called).not.toBe(true)
+      expect(addRecipe.called).not.toBe(true)
     })
 
-    test('should call onAdd and onRemove when a <Button> is clicked with qty value', () => {
+    test('should call addRecipe and removeRecipe when a <Button> is clicked with qty value', () => {
       wrapper = mount(
         <Buttons
-          onAdd={onAdd}
-          onRemove={onRemove}
+          addRecipe={addRecipe}
+          removeRecipe={removeRecipe}
           numPortions={numPortions}
           limitReached={limitReached}
           qty={2}
@@ -136,14 +136,14 @@ describe('<Buttons />', () => {
         node.simulate('click')
       })
 
-      expect(onRemove.calledOnce).toBe(true)
+      expect(removeRecipe.calledOnce).toBe(true)
     })
 
-    test('should call only onAdd when a <Button> is clicked with qty value 1', () => {
+    test('should call only addRecipe when a <Button> is clicked with qty value 1', () => {
       wrapper = mount(
         <Buttons
-          onAdd={onAdd}
-          onRemove={onRemove}
+          addRecipe={addRecipe}
+          removeRecipe={removeRecipe}
           numPortions={numPortions}
           limitReached={limitReached}
           qty={1}
@@ -155,7 +155,7 @@ describe('<Buttons />', () => {
         node.simulate('click')
       })
 
-      expect(onRemove.called).toBe(false)
+      expect(removeRecipe.called).toBe(false)
     })
   })
 })
