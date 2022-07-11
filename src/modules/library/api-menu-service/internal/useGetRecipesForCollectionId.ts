@@ -6,6 +6,8 @@ import { getRecipeComparatorForOutOfStock, orderCollectionRecipesByCuisine } fro
 import { UseMenuDependencies } from './types'
 
 /**
+ * TypeScript Type guard (for `TransformedRecipe` type)
+ *
  * This function will take a `TransformedRecipe | undefined` and will change the type to a `TransformedRecipe` if applicable
  */
 function recipeIsTruthy(recipe: TransformedRecipe | undefined): recipe is TransformedRecipe {

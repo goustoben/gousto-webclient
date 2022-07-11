@@ -7,13 +7,7 @@ type ModifiedFeaturedCategory = MenuApiResponseRelationshipFeaturedCategory & {
 }
 
 const transformMenuCollections = (menu: MenuAPIResponseDataItem, normalisedData: MenuServiceData) => {
-  if (
-    !normalisedData ||
-    !menu ||
-    !menu.relationships ||
-    !menu.relationships.collections ||
-    !menu.relationships.collections.data
-  ) {
+  if (!normalisedData || !menu?.relationships?.collections?.data) {
     return []
   }
 
