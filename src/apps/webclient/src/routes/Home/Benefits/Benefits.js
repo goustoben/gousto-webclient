@@ -19,7 +19,7 @@ const allBenefits = [
     id: 'everydayDelivery',
     iconClassName: css.truckIcon,
     ariaLabel: 'Contactless delivery icon',
-    highlightedText: 'Free UK delivery',
+    highlightedText: 'Delivered to your door',
     normalText: ', 7 days a week',
   },
   {
