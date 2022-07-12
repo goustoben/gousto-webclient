@@ -4,15 +4,18 @@ import { render, screen, fireEvent, cleanup } from '@testing-library/react'
 import * as Redux from 'react-redux'
 
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
-import * as Menu from 'routes/Menu/domains/menu'
+import { useMenu } from 'routes/Menu/domains/menu'
 
 import { RecipeAlternativeOptions } from './RecipeAlternativeOptions'
 import * as Tracking from './useTracking'
 
+jest.mock('routes/Menu/domains/menu')
+const useMenuMock = useMenu as jest.MockedFunction<typeof useMenu>
+
 function mockUseMenu(getOptionsForRecipe: jest.Mock) {
   const getRecipesForCollectionId = jest.fn().mockReturnValue([])
 
-  jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({
+  useMenuMock.mockImplementation(() => ({
     getOptionsForRecipe,
     getRecipesForCollectionId,
   }))
@@ -70,10 +73,8 @@ describe('RecipeAlternativeOptions', () => {
       expect(items[0]).toHaveTextContent(/Test Recipe One/)
       expect(items[1]).toHaveTextContent(/Test Recipe Two/)
 
-      expect(getAlternativeOptionsForRecipe).toHaveBeenCalledWith({
-        categoryId: 'category_1',
+      expect(getAlternativeOptionsForRecipe).toHaveBeenCalledWith('recipe_1', 'category_1', {
         isOnDetailScreen: true,
-        recipeId: 'recipe_1',
       })
     })
 

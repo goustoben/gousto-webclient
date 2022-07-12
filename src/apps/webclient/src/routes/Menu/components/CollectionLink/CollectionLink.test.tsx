@@ -4,9 +4,11 @@ import { render, screen } from '@testing-library/react'
 import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 
+import { Recipe } from '@library/api-menu-service'
+
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import * as Collections from 'routes/Menu/domains/collections'
-import * as Menu from 'routes/Menu/domains/menu'
+import { useMenu } from 'routes/Menu/domains/menu'
 import { MenuCollection } from 'routes/Menu/types'
 
 import { createCollectionFromDefaultValues } from '../../domains/collections/internal/utils'
@@ -32,6 +34,9 @@ const collectionThree = createCollectionFromDefaultValues({
   slug: 'foo',
 })
 
+jest.mock('routes/Menu/domains/menu')
+const useMenuMock = useMenu as jest.MockedFunction<typeof useMenu>
+
 describe('CollectionLink', () => {
   beforeEach(() => {
     jest
@@ -46,21 +51,33 @@ describe('CollectionLink', () => {
           changeCollectionById: (_a: string) => {},
         } as any),
     )
-    jest.spyOn(Menu, 'useMenu').mockImplementation(
-      () =>
-        ({
-          getRecipesForCollectionId: (_a: string) => ({
-            recipes: Immutable.List([
-              {
-                recipe: Immutable.Map({
-                  id: 'recipe-one',
-                }),
-                originalId: 'recipe-one',
-              },
-            ]),
-          }),
-        } as any),
-    )
+    useMenuMock.mockReturnValue({
+      getRecipesForCollectionId: (_a: string) => [
+        {
+          recipe: {
+            id: 'recipe-one',
+            media: {
+              images: [
+                {
+                  title: '',
+                  description: '',
+                  type: 'mood-image',
+                  urls: [
+                    {
+                      width: 200,
+                      src: '',
+                    },
+                  ],
+                },
+              ],
+            },
+          } as Recipe,
+          originalId: 'recipe-one',
+          reference: 'recipe-one',
+        },
+      ],
+      getOptionsForRecipe: () => [],
+    })
   })
 
   afterEach(() => {

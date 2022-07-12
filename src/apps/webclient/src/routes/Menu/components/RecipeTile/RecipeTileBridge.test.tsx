@@ -5,6 +5,8 @@ import Immutable from 'immutable'
 
 import { RecipeTile, RecipeTileDependencies } from '@features/recipe-tile'
 
+import { useMenu } from 'routes/Menu/domains/menu'
+
 import { RecipeTileBridge } from './RecipeTileBridge'
 
 jest.mock('react-redux', () => ({
@@ -24,6 +26,14 @@ jest.mock('@features/recipe-tile', () => ({
   RecipeTileDependencies: jest.fn().mockImplementation(({ children }) => <>{children}</>),
 }))
 
+jest.mock('routes/Menu/domains/menu')
+const useMenuMock = useMenu as jest.MockedFunction<typeof useMenu>
+
+useMenuMock.mockReturnValue({
+  getRecipesForCollectionId: () => [],
+  getOptionsForRecipe: () => [],
+})
+
 describe('RecipeTileBridge', () => {
   describe('when executed', () => {
     it('renders a recipe tile', () => {
@@ -33,7 +43,6 @@ describe('RecipeTileBridge', () => {
           recipe={Immutable.fromJS({ id: 'some reference ' })}
           originalId="original_recipe_id"
           collectionId="collection_identificator"
-          showDetailRecipe={jest.fn()}
         />,
       )
 

@@ -1,12 +1,13 @@
 import React from 'react'
 
 import { render, screen, fireEvent } from '@testing-library/react'
-import Immutable from 'immutable'
 import { Provider } from 'react-redux'
+
+import { Recipe } from '@library/api-menu-service'
 
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 import * as Collections from 'routes/Menu/domains/collections'
-import * as Menu from 'routes/Menu/domains/menu'
+import { useMenu } from 'routes/Menu/domains/menu'
 
 import { createCollectionFromDefaultValues } from '../../../domains/collections/internal/utils'
 import { CollectionLinkTile } from './CollectionLinkTile'
@@ -22,6 +23,9 @@ const defaultCollection = createCollectionFromDefaultValues({
 
 const recipeId = 'recipe-id-1'
 
+jest.mock('routes/Menu/domains/menu')
+const useMenuMock = useMenu as jest.MockedFunction<typeof useMenu>
+
 describe('CollectionLinkTile', () => {
   const track = jest.fn()
   const changeCollectionById = jest.fn()
@@ -35,35 +39,33 @@ describe('CollectionLinkTile', () => {
 
     jest.spyOn(Tracking, 'useTracking').mockImplementation(() => track as any)
 
-    jest.spyOn(Menu, 'useMenu').mockImplementation(
-      () =>
-        ({
-          getRecipesForCollectionId: () => ({
-            recipes: Immutable.List([
-              {
-                recipe: Immutable.fromJS({
-                  id: recipeId,
-                  media: {
-                    images: [
-                      {
-                        type: 'mood-image',
-                        title: 'Nice image',
-                        urls: [
-                          {
-                            src: 'https://production-media.gousto.co.uk/cms/mood-image/1457-Butternut-Squash--Coconut-Dal-x700.jpg',
-                            width: 700,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                }),
-              },
-              'recipe2',
-            ]),
-          }),
-        } as any),
-    )
+    useMenuMock.mockReturnValue({
+      getRecipesForCollectionId: () => [
+        {
+          recipe: {
+            id: recipeId,
+            media: {
+              images: [
+                {
+                  type: 'mood-image',
+                  title: 'Nice image',
+                  description: null,
+                  urls: [
+                    {
+                      src: 'https://production-media.gousto.co.uk/cms/mood-image/1457-Butternut-Squash--Coconut-Dal-x700.jpg',
+                      width: 700,
+                    },
+                  ],
+                },
+              ],
+            },
+          } as unknown as Recipe, // TODO use builder,
+          originalId: recipeId,
+          reference: recipeId,
+        },
+      ],
+      getOptionsForRecipe: () => [],
+    })
   })
 
   afterEach(() => {
@@ -100,7 +102,7 @@ describe('CollectionLinkTile', () => {
     test('number of recipes in collection should be displayed', () => {
       renderForTest()
 
-      const recipeNumbers = screen.getByText('(2)')
+      const recipeNumbers = screen.getByText('(1)')
       expect(recipeNumbers).toBeTruthy()
     })
 
@@ -140,12 +142,11 @@ describe('CollectionLinkTile', () => {
               changeCollectionById: (_a: string) => {},
             } as any),
         )
-        jest.spyOn(Menu, 'useMenu').mockImplementation(
-          () =>
-            ({
-              getRecipesForCollectionId: (_a: string) => ({ recipes: Immutable.List() }),
-            } as any),
-        )
+
+        useMenuMock.mockReturnValue({
+          getRecipesForCollectionId: () => [],
+          getOptionsForRecipe: () => [],
+        })
       })
 
       afterEach(() => {

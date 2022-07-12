@@ -137,8 +137,8 @@ export class Menu extends React.PureComponent {
     }
 
     return (
-      <MenuQueryContextProvider query={query}>
-        <MainLayout route={{ withRecipeBar: true }}>
+      <MainLayout route={{ withRecipeBar: true }}>
+        <MenuQueryContextProvider query={query}>
           <div data-testing="menuContainer">
             <Helmet title={menu.helmet.title} meta={menu.helmet.meta} style={menu.helmet.style} />
             <DetailRecipeMetaContainer query={query} />
@@ -161,8 +161,8 @@ export class Menu extends React.PureComponent {
             />
           </div>
           <RibbonTrigger name="menu" />
-        </MainLayout>
-      </MenuQueryContextProvider>
+        </MenuQueryContextProvider>
+      </MainLayout>
     )
   }
 }
