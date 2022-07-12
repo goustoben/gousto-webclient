@@ -21,7 +21,7 @@
               "marketing_do_allow_phone": "0",
               "marketing_do_allow_thirdparty": "0",
               "tariff": "20170712",
-              "age_verified": "0",
+              "age_verified": "1",
               "vip": "0",
               "status": "active",
               "referral_link": "https://staging-frontend.gousto.info/this-weeks-recipes?promo_code=ELLIE17247344",

@@ -4,17 +4,17 @@
     "data": {
       "id": "13526239",
       "user_id": "17247344",
-      "default": "0",
+      "default": false,
       "updated_at": "2020-01-22 12:59:53",
       "created_at": "2020-01-14 03:15:26",
-      "state": "committed",
-      "phase": "delivered",
+      "state": "pending",
+      "phase": "open",
       "prices": {
         "price_per_portion": "3.56",
         "price_per_portion_discounted": "2.67",
-        "product_total": "0.00",
+        "product_total": "11.75",
         "recipe_total": "42.75",
-        "surcharge_total": "0.00",
+        "surcharge_total": "4.99",
         "recipe_total_discounted": "32.07",
         "recipe_discount": "10.68",
         "flat_discount_applied": false,
@@ -239,80 +239,105 @@
         }
       ],
       "product_items": [
-
+        {
+          "id": "241479943",
+          "created_at": "2022-05-20 20:20:59",
+          "updated_at": "2022-05-20 20:20:59",
+          "deleted_at": null,
+          "quantity": "1",
+          "order_id": "13722513",
+          "list_price": "10.99",
+          "is_vatable": "1",
+          "serialised_item": null,
+          "itemable_type": "Product",
+          "itemable_id": "58740ef6-0d1c-11ea-b31e-02319c58c40c",
+          "title": "Seedlip - Spice (200ml)",
+          "is_gift": "0",
+          "product_id": "58740ef6-0d1c-11ea-b31e-02319c58c40c",
+          "recipe_id": null,
+          "recipe_uuid": null,
+          "media": [
+            {
+              "title": "Seedlip - Spice (200ml)",
+              "description": "To add bright flavours to all that bold richness of our North Carolina recipes, crack open a juicy, fruity Hepcat Session IPA from Gipsy Hill to sip alongside.\n\nIngredients\nwater, acidualted malt, cara munich T2, cara gold, detrine malt, light munich malt, naked malted oats, cara ruby, extra pale ale malt, hops\n\nAllergens\nwheat (gluten), barley (gluten), oat (gluten\n\nNutrition typical Values per 100ml:\nenergy 177KJ\/43Kcal, fat 0g of which saturates 0g, carbohydrates 0g of which sugars 0g, fibre 0, protein 0g, alcohol 3.6",
+              "type": "product-image",
+              "urls": [
+                {
+                  "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-staging-media/cms/product-image-landscape/Seedlip---Spice-200ml-x200.jpg",
+                  "width": "200"
+                },
+                {
+                  "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-staging-media/cms/product-image-landscape/Seedlip---Spice-200ml-x300.jpg",
+                  "width": "300"
+                },
+                {
+                  "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-staging-media/cms/product-image-landscape/Seedlip---Spice-200ml-x600.jpg",
+                  "width": "600"
+                },
+                {
+                  "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-staging-media/cms/product-image-landscape/Seedlip---Spice-200ml-x1500.jpg",
+                  "width": "1500"
+                }
+              ]
+            }
+          ]
+        }
       ],
       "gift_items": [
 
       ],
       "box": {
-        "num_portions": "4",
-        "num_recipes": "3",
-        "box_type": "vegetarian",
-        "price": "42.75",
-        "sku": "SKU-VEG-3-4"
+        "num_portions": "2",
+        "num_recipes": "4",
+        "box_type": "gourmet",
+        "price": "34.99",
+        "sku": "SKU-GMT-4-2"
       },
-      "period_id": "315",
+      "period_id": "436",
       "period": {
-        "id": 315,
-        "when_start": "2020-01-21T12:00:00+00:00",
-        "when_cutoff": "2020-01-28T11:59:59+00:00"
+        "id": 436,
+        "when_start": "2022-05-17T12:00:00+01:00",
+        "when_cutoff": "2022-05-24T11:59:59+01:00"
       },
-      "is_current_period": false,
-      "delivery_day_id": "1994",
-      "delivery_slot_id": "6",
-      "delivery_date": "2020-01-25 00:00:00",
+      "is_current_period": true,
+      "delivery_day_id": "2848",
+      "delivery_slot_id": "11",
+      "delivery_date": "2022-05-24 00:00:00",
       "delivery_slot": {
-        "id": "6",
-        "default_day": "Saturday",
-        "number": "2",
-        "cutoff_day": "Wednesday",
+        "id": "11",
+        "default_day": "Tuesday",
+        "number": "4",
+        "cutoff_day": "Saturday",
         "cutoff_time": "11:59:59",
         "delivery_start": "08:00:00",
-        "delivery_end": "19:00:00",
-        "human_delivery_day_time": "Saturday 08:00 - 19:00",
+        "delivery_end": "18:59:59",
+        "human_delivery_day_time": "Tuesday 08:00 - 18:59",
         "premium": false,
         "default": true,
         "deprecated": false
       },
       "premium_delivery": false,
       "delivery_charge": "0.00",
-      "human_delivery_date": "Saturday 25th January",
-      "when_cutoff": "2020-01-22 11:59:59",
-      "when_live": "2020-01-14 12:00:00",
+      "human_delivery_date": "Tuesday 24th May",
+      "when_cutoff": "2022-05-21 11:59:59",
+      "when_live": "2022-05-03 12:00:00",
       "original_delivery_day": null,
       "packer": "Jessica",
-      "number": "45",
+      "number": "17",
       "surcharges": [
-
+        {
+          "id": "241479641",
+          "recipe_item_id": "4265",
+          "title": "Premium recipe surcharge",
+          "list_price": "4.99"
+        }
       ],
-      "should_cutoff_at": "2020-01-22 11:59:59",
+      "should_cutoff_at": "2022-05-21 11:59:59",
       "is_express": false,
-      "day_slot_lead_time_id": null,
-      "shipping_address": {
-        "id": "34005976",
-        "deleted": false,
-        "user_id": "17247344",
-        "name": "My Address",
-        "companyname": "Gousto",
-        "line1": "Gousto Shepherds Building",
-        "line2": "Unit 1.8/1.9",
-        "line3": "Charecroft Way",
-        "town": "London",
-        "county": null,
-        "postcode": "SW4 1AA",
-        "delivery_instructions": "Front garden - inside the gate behind bins",
-        "shipping_default": true,
-        "billing_default": false,
-        "state": "unset",
-        "premium_delivery": true
-      }
+      "day_slot_lead_time_id": null
     },
-    "meta": {
-      "offset": 0,
-      "limit": 0,
-      "count": 46,
-      "committed": 45,
-      "total": 46
-    }
+    "meta": [
+
+    ]
   }
 }
