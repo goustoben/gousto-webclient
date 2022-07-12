@@ -64,7 +64,7 @@ export const FiveRecipesAwarenessModal = ({
               <h4 className={css.subHeader}>Hungry for 5 recipes?</h4>
               <p className={css.content}>
                 Monday to Friday, we got you! Give our new feature a try and add a 5th recipe to
-                your next Gousto for only
+                your next Gousto box for only
                 <strong>{pricePerServing}</strong>
               </p>
               <CTA size="medium" onClick={onModalClose} variant="primary" isFullWidth>
