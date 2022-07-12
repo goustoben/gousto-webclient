@@ -35,10 +35,13 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
   describe('when the user has a two portion subscription and is eligible for five recipes', () => {
     describe('when the user has not previously closed the banner', () => {
       beforeEach(() => {
+        let hasClosedBanner = false
         use5RecipesAwarenessSpy.mockReturnValue({
           isEnabled: true,
-          hasClosedBanner: false,
-          setBannerAsClosed: jest.fn(),
+          hasClosedBanner,
+          setBannerAsClosed: jest.fn(() => {
+            hasClosedBanner = true
+          }),
         })
         render(<FiveRecipesAwarenessBanner />)
       })
