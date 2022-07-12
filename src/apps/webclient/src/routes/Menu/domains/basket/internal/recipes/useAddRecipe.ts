@@ -17,8 +17,8 @@ import { getBasketRecipes, isFirstRecipeAdded, getBasketSlotId } from 'selectors
 import { getUTMAndPromoCode } from 'selectors/tracking'
 
 import { useStock } from '../../useStock'
+import { useRecipeLimitReached } from '../limits'
 import { useNumPortions } from '../useNumPortions'
-import { useRecipeLimitReached } from '../useRecipeLimitReached'
 
 const useAddValidRecipeToBasket = () => {
   const menuRecipes = useSelector(getBasketRecipes)

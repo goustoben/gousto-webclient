@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux'
 
 import { getBasketRecipes, getBasketPostcode } from 'selectors/basket'
 
+import { useRecipeLimitReached, useRemoveRecipesOverLimit, sumQuantities } from '../limits'
 import { useIsRecipeInBasket } from '../useIsRecipeInBasket'
-import { sumQuantities, useRecipeLimitReached } from '../useRecipeLimitReached'
 import { useAddRecipe, AddRecipeFn } from './useAddRecipe'
 import { useRemoveRecipe, RemoveRecipeFn } from './useRemoveRecipe'
 
@@ -19,11 +19,7 @@ const useCanAddRecipes = () => {
   return Boolean(postcode)
 }
 
-const useRecipeQuantities = (): Map<string, number> => {
-  const recipesFromState = useSelector(getBasketRecipes)
-
-  return recipesFromState
-}
+const useRecipeQuantities = (): Map<string, number> => useSelector(getBasketRecipes)
 
 const useBasketRecipes = () => {
   const recipeQuantities = useRecipeQuantities()
@@ -49,6 +45,8 @@ const useBasketRecipes = () => {
     },
     [removeRecipe, addRecipe],
   )
+
+  useRemoveRecipesOverLimit(recipeQuantities)
 
   return {
     addRecipe,
