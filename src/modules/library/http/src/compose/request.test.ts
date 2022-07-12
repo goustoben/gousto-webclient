@@ -144,7 +144,8 @@ describe('composeRequest (composing request middleware)', () => {
     it('mutates passed requestConfig using all the middlewares', () => {
       const req: RequestConfig = {
         host: 'unset',
-        method: 'GET'
+        method: 'GET',
+        paths: []
       }
 
       composed(req, testCtx, testInput)

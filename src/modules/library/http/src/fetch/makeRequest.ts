@@ -12,7 +12,8 @@ export async function makeRequest<Input, Output>(
 
   const defaultRequest: RequestConfig = {
     host: ctx.apiUrl,
-    method: 'GET'
+    method: 'GET',
+    paths: []
   }
 
   const req = await reduceRequest(defaultRequest, ctx, input)

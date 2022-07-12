@@ -20,7 +20,8 @@ jest.mock('./url', () => ({
 describe('makeRequest', () => {
   const requestOptions: RequestConfig = {
     host: 'https://makeRequest.test',
-    method: 'DELETE'
+    method: 'DELETE',
+    paths: []
   }
 
   const requestMiddleware = jest.fn(
