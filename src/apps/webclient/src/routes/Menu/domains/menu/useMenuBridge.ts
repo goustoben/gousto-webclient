@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { useMenu as useMenuBase } from '@library/api-menu-service'
 
+import endpoint from 'config/endpoint'
 import { getFetcher } from 'routes/Menu/apis/fetch'
 import { getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
 import { getAccessToken, getAuthUserId } from 'selectors/auth'
@@ -26,14 +27,14 @@ export function useMenu() {
     accessToken,
     authUserId,
     getFetcher,
-    endpointUrl: '',
+    endpointUrl: `${endpoint('menu')}/menus`,
     requestData,
   }
 
   const deps: Parameters<typeof useMenuBase>[2] = {
     selectedRecipeVariants: selectedVariants,
     numPortions,
-    isRecipeInStock: () => false,
+    isRecipeInStock: () => true,
   }
 
   return useMenuBase(requestArgs, date, deps)
