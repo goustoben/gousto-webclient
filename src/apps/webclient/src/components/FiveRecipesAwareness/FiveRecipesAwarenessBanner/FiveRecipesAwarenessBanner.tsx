@@ -8,21 +8,13 @@ import css from './FiveRecipesAwarenessBanner.css'
 
 export const FiveRecipesAwarenessBanner = () => {
   const { isEnabled, hasClosedBanner, setBannerAsClosed } = use5RecipesAwareness()
-  const [isOpen, updateIsOpen] = React.useState(false)
-
-  React.useEffect(() => {
-    if (isEnabled && !hasClosedBanner) {
-      updateIsOpen(isEnabled && !hasClosedBanner)
-    }
-  }, [isEnabled, hasClosedBanner])
 
   const onBannerClose = () => {
     setBannerAsClosed()
-    updateIsOpen(false)
     sendClientMetric('my-deliveries-five-recipes-awareness-4M-2P', 1, 'Count')
   }
 
-  if (!isOpen) {
+  if (!isEnabled || hasClosedBanner) {
     return null
   }
 
