@@ -59,6 +59,7 @@ export const SaveButton = ({ saveRequired, onClick, saving, onOrderConfirmationM
             onClick={onClick}
             pending={saving}
             width="full"
+            data-testing="updateOrder"
           >
             Update Order
           </Button>
