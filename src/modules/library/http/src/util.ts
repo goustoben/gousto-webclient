@@ -1,3 +1,5 @@
+import { ProviderTypes, Provider, HttpCtx } from './types'
+
 /**
  * Operate on a value that may or may not be a promise, only yielding the thread if necessary
  *
@@ -12,5 +14,17 @@ export function withResolved<T, U>(
     return value.then(callback)
   } else {
     return callback(value)
+  }
+}
+
+export function fromProvider<Input, T extends ProviderTypes>(
+  provider: Provider<Input, T>,
+  input: Input,
+  ctx: HttpCtx
+): T | Promise<T> {
+  if (typeof provider === 'function') {
+    return provider(input, ctx)
+  } else {
+    return provider
   }
 }
