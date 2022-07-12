@@ -2,13 +2,10 @@
 
 .fiveRecipesContainer {
   composes: marginXXSTop marginSMRight marginSMBottom marginZeroLeft from 'sass-loader!styles/spacing.scss';
-  height: 20px;
   padding-right: 1px;
   padding-top: 4px;
-  padding-bottom: 25px;
-  width: 269px;
+  padding-bottom: 1px;
   font-style: normal;
-  background-color: #DFF4FF;
   position: relative;
 }
 
