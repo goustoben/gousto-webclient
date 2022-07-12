@@ -27,6 +27,7 @@
     "build": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production run-p -l build:server build:client",
     "generate-libphonenumber-metadata": "libphonenumber-metadata-generator src/utils/phoneNumber/phone-metadata.json --countries GB --extended",
     "test:jest": "jest",
+    "test:unit": "yarn test:jest:ci",
     "test:jest:ci": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent",
     "test:jest:one:watch": "jest --watch",
     "test:jest:watch": "jest --watchAll",
