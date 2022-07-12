@@ -95,17 +95,13 @@ jobs:
         git diff --name-status ${{ steps.branch_point.outputs.REF }}
         echo "Webclient lint files:"
         yarn monorepo-build lint --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient
-        echo "Webclient unit tests?"
-        yarn monorepo-build unit-tests --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient
 
-    # Typecheck
+    # Type check
     # ============================================================================
-    - name: Typecheck (feature modules)
-      run: yarn workspaces foreach --include '@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run typecheck
-    - name: Typecheck (libraries)
-      run: yarn workspaces foreach --include '@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run typecheck
-    - name: Typecheck tests (apps/webclient)
-      run: yarn workspace webclient typecheck:tests
+    - name: Typecheck
+      run: yarn workspaces foreach --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run typecheck
+    - name: Typecheck tests
+      run: yarn workspaces foreach --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run typecheck:tests
 
     # Lint
     # ============================================================================
@@ -118,25 +114,21 @@ jobs:
           ./scripts/run-eslint-ci.sh $(cat lint-changes)
         fi
         rm lint-changes
+    # Yarn bug https://github.com/yarnpkg/berry/issues/3930: --since requires the --recursive flag
     - name: Lint (feature modules)
-      run: yarn workspaces foreach --include '@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run lint
+      run: yarn workspaces foreach --include='@features/*' --from='@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run lint
     - name: Lint (libraries)
-      run: yarn workspaces foreach --include '@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run lint
+      run: yarn workspaces foreach --include='@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run lint
 
     # Unit test
     # ============================================================================
-    - name: Unit test (feature modules)
-      run: yarn workspaces foreach --include '@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run test:unit
     - name: Unit test (libraries)
-      run: yarn workspaces foreach --include '@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run test:unit
+      run: yarn workspaces foreach --include='@library/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run test:unit
+    - name: Unit test (feature modules)
+      run: yarn workspaces foreach --include='@features/*' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run test:unit
     - name: Unit test (apps/webclient)
-      run: |
-        # Optionally run Jest if required
-        yarn monorepo-build unit-tests --since=${{ steps.branch_point.outputs.REF }} --workspace=webclient > unit-tests
-        if [ -s unit-tests ]; then
-          yarn workspace webclient test:jest:ci:coverage
-        fi
-        rm unit-tests
+      # Do not run webclient unit tests if only feature modules / their dependencies have changed
+      run: yarn workspaces foreach --include='webclient' --from='{@library/*,webclient}' --since=${{ steps.branch_point.outputs.REF }} --recursive --verbose run test:unit
 
     # Code health
     # ============================================================================
