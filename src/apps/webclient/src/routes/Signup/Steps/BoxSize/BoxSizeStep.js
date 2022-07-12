@@ -7,6 +7,7 @@ import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { signupConfig } from 'config/signup'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
+import { useBasket } from 'routes/Menu/domains/basket'
 
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
 import { PrimaryButton } from './PrimaryButton'
@@ -25,9 +26,12 @@ export const BoxSizeStep = ({
   goustoOnDemandCustomText,
 }) => {
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
+  const { setNumPortions } = useBasket()
+
   const handlePrimaryButtonClick = (value) => {
     numPortionChange(value)
     numPortionChangeTracking(value)
+    setNumPortions(value)
     trackSignupWizardAction(completeWizardBoxSize, {
       box_size: value,
     })

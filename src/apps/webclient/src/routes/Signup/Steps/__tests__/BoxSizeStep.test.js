@@ -2,8 +2,11 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
+import { useBasket } from 'routes/Menu/domains/basket'
+
 import { BoxSizeStep } from '../BoxSize/BoxSizeStep'
 
+jest.mock('routes/Menu/domains/basket')
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
   useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
@@ -15,8 +18,13 @@ describe('given the user is at the Box Size Step', () => {
   const numPortionChangeTracking = jest.fn()
   const trackSignupWizardAction = jest.fn()
   const next = jest.fn()
+  const setNumPortionsSpy = jest.fn()
 
   beforeEach(() => {
+    useBasket.mockReturnValue({
+      setNumPortions: setNumPortionsSpy,
+    })
+
     wrapper = shallow(
       <BoxSizeStep
         numPortionChange={numPortionChange}
@@ -41,6 +49,7 @@ describe('given the user is at the Box Size Step', () => {
     })
 
     test('then proper amount of portions are set correctly', () => {
+      expect(setNumPortionsSpy).toHaveBeenCalledWith(2)
       expect(numPortionChange).toHaveBeenCalledWith(2)
       expect(numPortionChangeTracking).toHaveBeenCalledWith(2)
       expect(trackSignupWizardAction).toHaveBeenCalledWith('complete_wizard_box_size', {
