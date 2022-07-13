@@ -12,7 +12,7 @@ import { Title } from './Title'
 const recipe: Recipe = {
   id: 'recipe-id-1',
   title: 'Lemony Chicken Milanese With Spaghetti and Tomato Sauce',
-}
+} as Recipe
 
 describe('Title', () => {
   test('should render title correctly', () => {

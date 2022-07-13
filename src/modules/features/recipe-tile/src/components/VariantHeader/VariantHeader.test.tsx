@@ -6,6 +6,7 @@ import {
   useStockHook,
 } from "../../model/context";
 import { VariantHeader } from "./VariantHeader";
+import { Recipe } from "@library/api-menu-service";
 
 jest.mock("../../model/context");
 
@@ -194,6 +195,6 @@ const mockHooks = ({
   }
 
   if (recipeId !== undefined) {
-    useRecipeMock.mockImplementation(() => ({ id: recipeId, title: "A Recipe Title" }));
+    useRecipeMock.mockImplementation(() => ({ id: recipeId, title: "A Recipe Title" } as Recipe));
   }
 };

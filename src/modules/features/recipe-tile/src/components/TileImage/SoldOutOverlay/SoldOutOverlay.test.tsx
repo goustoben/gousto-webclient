@@ -7,10 +7,11 @@ import {
   RecipeContextProvider,
   UseStockContextProvider,
 } from "../../../model/context";
+import { Recipe } from "@library/api-menu-service";
 
 const renderComponent = (isRecipeOutOfStock: boolean) =>
   render(
-    <RecipeContextProvider value={{ id: "recipe_one", title: "Test recipe" }}>
+    <RecipeContextProvider value={{ id: "recipe_one", title: "Test recipe" } as Recipe}>
       <UseStockContextProvider
         value={() => ({
           isRecipeOutOfStock: () => isRecipeOutOfStock,

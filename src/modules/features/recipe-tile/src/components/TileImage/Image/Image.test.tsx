@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen, cleanup } from '@testing-library/react'
 
-import { TransformedRecipeImage } from '@library/api-menu-service'
+import { Recipe, TransformedRecipeImage } from '@library/api-menu-service'
 
 import { Image } from '.'
 import { RecipeContextProvider } from '../../../model/context'
@@ -35,7 +35,7 @@ const renderComponent = ({
   lazy = false,
 }: { images?: TransformedRecipeImage[]; className?: string; lazy?: boolean } = {}) =>
   render(
-    <RecipeContextProvider value={{ id: '1234', title: 'A Really Nice Recipe', media: { images } }}>
+    <RecipeContextProvider value={{ id: '1234', title: 'A Really Nice Recipe', media: { images } } as Recipe}>
       <Image lazy={lazy} styles={{ label: className }} />
     </RecipeContextProvider>,
   )
