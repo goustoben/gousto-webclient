@@ -132,7 +132,7 @@ export const RecipeTileBridge = ({
             onClick={onClick}
             SwapAlternativeOptionsMobile={() => (
               <SwapAlternativeOptionsMobile
-                recipeId={recipe.get('id')}
+                recipeId={recipe.id}
                 originalId={originalId}
                 categoryId={collectionId}
               />

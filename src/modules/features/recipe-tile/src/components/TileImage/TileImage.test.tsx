@@ -2,11 +2,12 @@ import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen, cleanup } from "@testing-library/react";
 
+import { TransformedRecipeImage } from '@library/api-menu-service'
+
 import { RecipeTileDependencies } from "../../model/context";
-import { Image } from "../../model/recipe";
 import { TileImage } from "./TileImage";
 
-const images: Image[] = [
+const images: TransformedRecipeImage[] = [
   {
     type: "homepage-image",
     title: "home page image",
