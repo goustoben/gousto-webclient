@@ -10,7 +10,7 @@ import { useSelectedCuisines } from '../../hooks/useSelectedCuisines'
 import { RecipeList } from './RecipeList'
 import { useSoldOutTracking } from './useSoldOutTracking'
 
-const RecipeListWrapper = (ownProps) => {
+const RecipeListWrapper = (ownProps: any) => {
   const currentCollectionId = useCurrentCollectionId()
   const { getRecipesForCollectionId } = useMenu()
   const { getOutOfStockRecipeIds } = useStock()
@@ -22,8 +22,8 @@ const RecipeListWrapper = (ownProps) => {
 
   const selectedCuisines = useSelectedCuisines()
 
-  const { recipes } = getRecipesForCollectionId(currentCollectionId, { selectedCuisines })
-  const shownRecipeIds = recipes.map(({ recipe }) => recipe.get('id')).toJS()
+  const recipes = getRecipesForCollectionId(currentCollectionId, { selectedCuisines })
+  const shownRecipeIds = recipes.map(({ recipe }) => recipe.id)
   const recipesIdsRef = useRef(shownRecipeIds)
 
   if (!areEqualArrays(recipesIdsRef.current, shownRecipeIds)) {

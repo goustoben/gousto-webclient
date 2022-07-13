@@ -1,14 +1,24 @@
 import React from 'react'
 
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 
 import { useDoubleDeckerNav } from 'hooks/useDoubleDeckerNav'
 import { useMenu } from 'routes/Menu/domains/menu'
 
 import css from './CollectionItem.css'
 
-const CollectionItem = ({
+type CollectionItemProps = {
+  collectionId: string
+  dataId: string
+  className: string
+  onClick(...args: unknown[]): unknown
+  identifier: string
+  element(...args: unknown[]): unknown
+  children: React.ReactNode
+  slug: string
+}
+
+export function CollectionItem({
   collectionId,
   className,
   dataId,
@@ -17,9 +27,9 @@ const CollectionItem = ({
   element,
   children,
   slug,
-}) => {
+}: CollectionItemProps) {
   const { getRecipesForCollectionId } = useMenu()
-  const count = getRecipesForCollectionId(collectionId).recipes.size
+  const count = getRecipesForCollectionId(collectionId).length
   const doubleDeckerExperimentEnabled = useDoubleDeckerNav()
 
   return (
@@ -43,16 +53,3 @@ const CollectionItem = ({
     </div>
   )
 }
-
-CollectionItem.propTypes = {
-  collectionId: PropTypes.string.isRequired,
-  dataId: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  identifier: PropTypes.string.isRequired,
-  element: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  slug: PropTypes.string.isRequired,
-}
-
-export { CollectionItem }

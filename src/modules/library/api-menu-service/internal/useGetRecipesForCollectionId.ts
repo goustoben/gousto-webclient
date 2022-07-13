@@ -15,7 +15,7 @@ function recipeIsTruthy(recipe: TransformedRecipe | undefined): recipe is Transf
 }
 
 type GetRecipeForCollectionIdArgs = {
-  selectedCuisines?: string[]
+  selectedCuisines?: string[] | null
 }
 
 type RecipePair = {
@@ -37,8 +37,8 @@ export function useGetRecipesForCollectionId(
   )
 
   return useCallback(
-    (collectionId: string, args?: GetRecipeForCollectionIdArgs): RecipePair[] => {
-      if (!menuServiceData) {
+    (collectionId: string | null, args?: GetRecipeForCollectionIdArgs): RecipePair[] => {
+      if (!menuServiceData || !collectionId) {
         return []
       }
 
