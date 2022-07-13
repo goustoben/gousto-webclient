@@ -138,7 +138,7 @@ export class Menu extends React.PureComponent {
 
     return (
       <MainLayout route={{ withRecipeBar: true }}>
-        <MenuQueryContextProvider query={query}>
+        <MenuQueryContextProvider value={query}>
           <div data-testing="menuContainer">
             <Helmet title={menu.helmet.title} meta={menu.helmet.meta} style={menu.helmet.style} />
             <DetailRecipeMetaContainer query={query} />
