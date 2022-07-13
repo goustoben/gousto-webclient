@@ -52,7 +52,7 @@ describe('CollectionLink', () => {
         } as any),
     )
     useMenuMock.mockReturnValue({
-      getRecipesForCollectionId: (_a: string) => [
+      getRecipesForCollectionId: () => [
         {
           recipe: {
             id: 'recipe-one',
