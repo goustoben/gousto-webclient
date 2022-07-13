@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 
-import Immutable from 'immutable'
-import PropTypes from 'prop-types'
+import { RecipeOptionPair } from '@library/api-menu-service'
 
 import { CollectionLink } from 'routes/Menu/components/CollectionLink'
 import { RecipeTileBridge } from 'routes/Menu/components/RecipeTile/RecipeTileBridge'
@@ -13,13 +12,31 @@ import { useTracking } from './useTracking'
 import css from './RecipeList.css'
 
 export const buildTracker =
-  ({ recipes, currentCollectionId, track }) =>
+  ({
+    recipes,
+    currentCollectionId,
+    track,
+  }: {
+    recipes: RecipeOptionPair[]
+    currentCollectionId: string
+    track: ReturnType<typeof useTracking>
+  }) =>
   () => {
-    const recipeIds = recipes.map(({ recipe }) => recipe.get('id'))
-    track(currentCollectionId, recipeIds.toJS())
+    const recipeIds = recipes.map(({ recipe }) => recipe.id)
+    track(currentCollectionId, recipeIds)
   }
 
-export const RecipeList = ({ recipes, currentCollectionId, isDietaryCollectionLinksEnabled }) => {
+type RecipeListProps = {
+  recipes: RecipeOptionPair[]
+  currentCollectionId: string
+  isDietaryCollectionLinksEnabled?: boolean
+}
+
+export const RecipeList = ({
+  recipes,
+  currentCollectionId,
+  isDietaryCollectionLinksEnabled = false,
+}: RecipeListProps) => {
   const track = useTracking()
 
   useEffect(() => buildTracker({ recipes, currentCollectionId, track })(), [])
@@ -44,14 +61,4 @@ export const RecipeList = ({ recipes, currentCollectionId, isDietaryCollectionLi
       <CTAToAllRecipes />
     </div>
   )
-}
-
-RecipeList.propTypes = {
-  recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-  currentCollectionId: PropTypes.string.isRequired,
-  isDietaryCollectionLinksEnabled: PropTypes.bool,
-}
-
-RecipeList.defaultProps = {
-  isDietaryCollectionLinksEnabled: false,
 }

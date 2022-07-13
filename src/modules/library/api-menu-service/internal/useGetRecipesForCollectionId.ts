@@ -18,7 +18,7 @@ type GetRecipeForCollectionIdArgs = {
   selectedCuisines?: string[] | null
 }
 
-type RecipePair = {
+export type RecipeOptionPair = {
   recipe: TransformedRecipe
   originalId: string
   reference: string
@@ -37,7 +37,7 @@ export function useGetRecipesForCollectionId(
   )
 
   return useCallback(
-    (collectionId: string | null, args?: GetRecipeForCollectionIdArgs): RecipePair[] => {
+    (collectionId: string | null, args?: GetRecipeForCollectionIdArgs): RecipeOptionPair[] => {
       if (!menuServiceData || !collectionId) {
         return []
       }

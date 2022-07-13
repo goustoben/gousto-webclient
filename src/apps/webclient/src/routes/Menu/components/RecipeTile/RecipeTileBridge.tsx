@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react'
 
-import { Map } from 'immutable'
+import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
 
 import { RecipeTile as RecipeTileV2, RecipeTileDependencies } from '@features/recipe-tile'
+import { Recipe } from '@library/api-menu-service'
 
 import { actionTypes } from 'actions/actionTypes'
 import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
@@ -25,7 +26,7 @@ import { useTracking as useTrackSwapAlternativeOptions } from './SwapAlternative
 
 type RecipeTileBridgeProps = {
   recipeReference: string | null
-  recipe: Map<string, string>
+  recipe: Recipe
   originalId: string
   collectionId: string
 }
@@ -111,9 +112,9 @@ export const RecipeTileBridge = ({
 
   return (
     <RecipeReferenceProvider value={recipeReference}>
-      <RecipeContextProvider value={recipe}>
+      <RecipeContextProvider value={Immutable.fromJS(recipe)}>
         <RecipeTileDependencies
-          recipe={recipe.toJS()}
+          recipe={recipe}
           useGetAlternativeOptionsForRecipe={useGetOptionsForRecipe}
           useStock={useStock}
           useBasket={useBasket}
