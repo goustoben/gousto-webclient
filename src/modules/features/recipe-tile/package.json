@@ -8,10 +8,12 @@
     "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
     "typecheck": "yarn run --top-level tsc --noEmit"
   },
+  "dependencies": {
+    "@library/api-menu-service": "workspace:*"
+  },
   "peerDependencies": {
     "@emotion/react": "^11.7.0",
     "@gousto-internal/citrus-react": "^0.22.6",
-    "@library/api-menu-service": "workspace:*",
     "immutable": "3.8.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
