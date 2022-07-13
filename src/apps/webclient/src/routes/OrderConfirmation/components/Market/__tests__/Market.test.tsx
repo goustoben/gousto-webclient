@@ -9,14 +9,12 @@ import configureMockStore from 'redux-mock-store'
 import { filterProductCategory } from 'actions/filters'
 import { marketCategory } from 'actions/trackingKeys'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
-import { useIsBundlesEnabled } from 'routes/OrderConfirmation/hooks/useBundlesExperiment.hook'
 
 import {
   mockMarketProducts,
   mockProducts,
   mockProductCategories,
   mockProductsStock,
-  mockBundlesData,
 } from '../../config'
 import { Market } from '../Market'
 
@@ -28,14 +26,6 @@ jest.mock('react-redux', () => ({
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
   useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
-}))
-
-jest.mock('routes/OrderConfirmation/hooks/useBundlesExperiment.hook', () => ({
-  useIsBundlesEnabled: jest.fn().mockReturnValue(false),
-}))
-
-jest.mock('routes/OrderConfirmation/productBundles/utils', () => ({
-  getBundles: jest.fn().mockReturnValue(mockBundlesData),
 }))
 
 jest.mock('actions/products', () => ({
@@ -58,10 +48,6 @@ jest.mock('../../OrderSummary/OrderSummaryContainer', () => ({
 
 jest.mock('../../ProductList', () => ({
   ProductList: jest.fn(() => 'ProductList'),
-}))
-
-jest.mock('../../ProductListBundles', () => ({
-  ProductListBundles: jest.fn(() => 'ProductListBundles'),
 }))
 
 jest.mock('../../ReferAFriend', () => ({
@@ -149,37 +135,5 @@ describe('Market', () => {
       expect.any(Number),
       'all-products',
     )
-  })
-
-  describe('Bundles Experiment', () => {
-    describe('When user is in experiment', () => {
-      test('Should render Occasions category', () => {
-        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
-        ;(useIsBundlesEnabled as jest.Mock).mockReturnValue(true)
-
-        render(
-          <Provider store={mockedStore}>
-            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-          </Provider>,
-        )
-        expect(screen.queryByText(/^Occasions \(\d\)$/i)).toBeInTheDocument()
-        expect(screen.queryByText('ProductListBundles')).toBeInTheDocument()
-      })
-    })
-
-    describe('When user not in experiment', () => {
-      test('Should not render Occasions category', () => {
-        ;(useIsOptimizelyFeatureEnabled as jest.Mock).mockReturnValue(false)
-        ;(useIsBundlesEnabled as jest.Mock).mockReturnValue(false)
-
-        render(
-          <Provider store={mockedStore}>
-            <Market ageVerified toggleAgeVerificationPopUp={jest.fn()} />
-          </Provider>,
-        )
-        expect(screen.queryByText(/^Occasions \(\d\)$/i)).not.toBeInTheDocument()
-        expect(screen.queryByText('ProductListBundles')).not.toBeInTheDocument()
-      })
-    })
   })
 })

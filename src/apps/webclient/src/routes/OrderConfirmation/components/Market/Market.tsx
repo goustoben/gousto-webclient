@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,16 +14,7 @@ import {
 import { getBasket, getProductCategories } from 'selectors/root'
 import { getBasketSaveError, getBasketSavePending } from 'selectors/status'
 
-import {
-  ALL_PRODUCTS_CATEGORY_NAME,
-  ALL_PRODUCTS_CATEGORY_ID,
-  OCCASIONS_CATEGORY_NAME,
-  OCCASIONS_CATEGORY_ID,
-} from '../../constants/categories'
-import { ProductNavBarProvider } from '../../context/productsNavBarContext'
-import { useIsBundlesEnabled } from '../../hooks/useBundlesExperiment.hook'
-import { getBundles } from '../../productBundles/utils'
-import { getOrderWhenStartDateFormatted } from '../../selectors/orderDetails'
+import { ALL_PRODUCTS_CATEGORY_NAME, ALL_PRODUCTS_CATEGORY_ID } from '../../constants/categories'
 import type { NavigationCategory, NavigationCategories } from '../../types/navigationCategory'
 import type { ProductCategory } from '../../types/productCategory'
 import type { Products } from '../../types/products'
@@ -42,15 +33,6 @@ const Market = (props: Props) => {
   const [trackingCategoryTitle, setTrackingCategoryTitle] = useState<string>(
     ALL_PRODUCTS_CATEGORY_NAME,
   )
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const isOrderConfirmation = true
-
-  const bundlesExperimentEnabled = useIsBundlesEnabled()
-  const [experimentCategories, setExperimentCategories] = useState<
-    NavigationCategories | undefined
-  >(undefined)
-
-  const [bundlesProducts, setBundlesProducts] = useState<any>(null)
 
   const basket = useSelector(getBasket)
   const categoriesForNavBar: NavigationCategories = useSelector(getCategoriesForNavBar)
@@ -61,39 +43,17 @@ const Market = (props: Props) => {
   const basketSaveRequired = useSelector(getBasketSaveRequired)
   const basketSavePending = useSelector(getBasketSavePending)
   const order = useSelector(getBasketOrderDetails)
-  const orderWhenStartDate = useSelector(getOrderWhenStartDateFormatted)
-
-  useEffect(() => {
-    if (bundlesExperimentEnabled !== null) setIsLoading(false)
-    if (bundlesExperimentEnabled) {
-      const productBundles = getBundles(orderWhenStartDate)
-      if (productBundles.length > 0) {
-        const occasions: NavigationCategories = {
-          occasions: {
-            id: OCCASIONS_CATEGORY_ID,
-            label: OCCASIONS_CATEGORY_NAME,
-            count: productBundles.length,
-          },
-        }
-        setExperimentCategories({ ...occasions, ...categoriesForNavBar })
-        setTrackingCategoryTitle(OCCASIONS_CATEGORY_NAME)
-        setBundlesProducts(productBundles)
-      }
-    }
-  }, [bundlesExperimentEnabled, categoriesForNavBar, orderWhenStartDate])
 
   const toggleOrderSummary = () => {
     setIsOrderSummaryOpen(!isOrderSummaryOpen)
   }
 
   const onOrderSave = () => {
-    dispatch(basketUpdateProducts(isOrderConfirmation))
+    dispatch(basketUpdateProducts(true))
   }
 
   const getFilteredProducts = (categoryId: string) => {
-    const selectedFilterCategory: NavigationCategory = experimentCategories
-      ? experimentCategories[categoryId]
-      : categoriesForNavBar[categoryId]
+    const selectedFilterCategory: NavigationCategory = categoriesForNavBar[categoryId]
 
     if (!Object.keys(products).length || !selectedFilterCategory) return
 
@@ -139,29 +99,25 @@ const Market = (props: Props) => {
   const { ageVerified, toggleAgeVerificationPopUp } = props
 
   return (
-    <ProductNavBarProvider>
-      <MarketPresentation
-        ageVerified={ageVerified}
-        basket={basket}
-        categoriesForNavBar={experimentCategories || categoriesForNavBar}
-        filteredProducts={filteredProducts}
-        getFilteredProducts={getFilteredProducts}
-        isOrderSummaryOpen={isOrderSummaryOpen}
-        toggleOrderSummary={toggleOrderSummary}
-        onOrderSave={onOrderSave}
-        products={products}
-        productsCategories={productsCategories}
-        productsLoadError={productsLoadError}
-        saveError={basketSaveError}
-        saveRequired={basketSaveRequired}
-        saving={basketSavePending}
-        showOrderConfirmationReceipt={!!order}
-        toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-        bundlesProducts={bundlesProducts}
-        trackingCategory={trackingCategoryTitle}
-        isLoading={isLoading}
-      />
-    </ProductNavBarProvider>
+    <MarketPresentation
+      ageVerified={ageVerified}
+      basket={basket}
+      categoriesForNavBar={categoriesForNavBar}
+      filteredProducts={filteredProducts}
+      getFilteredProducts={getFilteredProducts}
+      isOrderSummaryOpen={isOrderSummaryOpen}
+      toggleOrderSummary={toggleOrderSummary}
+      onOrderSave={onOrderSave}
+      products={products}
+      productsCategories={productsCategories}
+      productsLoadError={productsLoadError}
+      saveError={basketSaveError}
+      saveRequired={basketSaveRequired}
+      saving={basketSavePending}
+      showOrderConfirmationReceipt={!!order}
+      toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+      trackingCategory={trackingCategoryTitle}
+    />
   )
 }
 

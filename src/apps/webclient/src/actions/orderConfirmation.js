@@ -63,17 +63,6 @@ export const orderConfirmationProductTracking = (trackingData) => (dispatch) => 
   })
 }
 
-export const marketBundleTracking = (action, trackingData) => (dispatch) => {
-  dispatch({
-    type: actionTypes.BUNDLE_PRODUCT_TRACKING,
-    trackingData: {
-      actionType: action,
-      event_name: action,
-      event_properties: trackingData && trackingData,
-    },
-  })
-}
-
 export const orderConfirmationUpdateOrderTracking = () => (dispatch, getState) => {
   const { basket, user } = getState()
   const orderId = basket.get('orderId')
