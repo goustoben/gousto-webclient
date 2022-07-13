@@ -19,7 +19,7 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }))
 
-jest.mock('../DetailAddRecipe', () => ({
+jest.mock('./DetailAddRecipe', () => ({
   DetailAddRecipe: () => <div />,
 }))
 
