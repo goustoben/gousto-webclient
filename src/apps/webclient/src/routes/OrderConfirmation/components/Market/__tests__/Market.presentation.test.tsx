@@ -22,8 +22,6 @@ describe('<MarketPresentation />', () => {
     toggleAgeVerificationPopUp: jest.fn(),
     toggleOrderSummary: jest.fn(),
     trackingCategory: ALL_PRODUCTS_CATEGORY_NAME,
-    isLoading: false,
-    bundlesProducts: [],
     isOrderSummaryOpen: false,
     saveError: false,
     saveRequired: false,
@@ -82,22 +80,6 @@ describe('<MarketPresentation />', () => {
 
       test('does not render ReferAFriend component', () => {
         expect(wrapper.find('.orderDetails Connect(ReferAFriend)').exists()).toBe(false)
-      })
-    })
-
-    describe('when isLoading is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          isLoading: true,
-        })
-      })
-
-      test('does not render the product list', () => {
-        expect(wrapper.find('ProductList').exists()).toBe(false)
-      })
-
-      test('renders the loading icon', () => {
-        expect(wrapper.find('LoadingWrapper').exists()).toBe(true)
       })
     })
   })
