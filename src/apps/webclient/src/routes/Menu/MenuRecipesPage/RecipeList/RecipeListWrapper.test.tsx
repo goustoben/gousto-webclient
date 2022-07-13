@@ -1,9 +1,11 @@
 import React from 'react'
 
-import { mount } from 'enzyme'
+import { mount, ReactWrapper } from 'enzyme'
 import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
+
+import { useMenu } from 'routes/Menu/domains/menu'
 
 import { RecipeList } from './RecipeList'
 import { RecipeListWrapper } from './RecipeListWrapper'
@@ -20,17 +22,13 @@ jest.mock('../../domains/collections', () => ({
   useCollections: () => ({ currentCollectionId: '1', changeCollectionById: 3 }),
   useCurrentCollectionId: () => '3',
 }))
-jest.mock('../../domains/menu', () => ({
-  useMenu: () => ({
-    getRecipesForCollectionId: jest.fn(() => ({ recipes: Immutable.List([]) })),
-  }),
-  useStock: () => ({
-    getOutOfStockRecipeIds: jest.fn(() => null),
-  }),
-}))
+
+jest.mock('routes/Menu/domains/menu')
+const useMenuMock = useMenu as jest.MockedFunction<typeof useMenu>
 
 describe('RecipeListWrapper', () => {
-  let wrapper
+  let wrapper: ReactWrapper
+
   const recipeId = 'recipe one'
   const mockStore = configureMockStore()
   const store = mockStore({
@@ -67,6 +65,13 @@ describe('RecipeListWrapper', () => {
     boxSummaryDeliveryDays: Immutable.Map({
       '2018-05-04': Immutable.Map({ id: 'mockDeliveryDayId' }),
     }),
+  })
+
+  beforeEach(() => {
+    useMenuMock.mockReturnValue({
+      getRecipesForCollectionId: () => [],
+      getOptionsForRecipe: () => [],
+    })
   })
 
   describe('when rendered', () => {

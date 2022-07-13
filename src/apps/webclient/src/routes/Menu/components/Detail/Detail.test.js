@@ -4,14 +4,14 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
-import { Title } from '../../Recipe'
-import { RecipeAlternativeOptions } from '../../RecipeAlternativeOptions'
-import { AttributeGrid } from '../AttributeGrid'
-import { Detail } from '../Detail'
-import { DetailAllergenIngredientsContainer } from '../DetailAllergenIngredients'
-import { DetailContainer } from '../DetailContainer'
-import { DetailIngredientsContainer } from '../DetailIngredients'
-import { DetailPerPortionContainer } from '../DetailPerPortion'
+import { Title } from '../Recipe'
+import { RecipeAlternativeOptions } from '../RecipeAlternativeOptions'
+import { AttributeGrid } from './AttributeGrid'
+import { Detail } from './Detail'
+import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
+import { DetailContainer } from './DetailContainer'
+import { DetailIngredientsContainer } from './DetailIngredients'
+import { DetailPerPortionContainer } from './DetailPerPortion'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -21,13 +21,6 @@ jest.mock('react-redux', () => ({
 
 jest.mock('../DetailAddRecipe', () => ({
   DetailAddRecipe: () => <div />,
-}))
-
-jest.mock('routes/Menu/domains/menu', () => ({
-  ...jest.requireActual('routes/Menu/domains/menu'),
-  useStock: () => ({
-    isRecipeOutOfStock: () => false,
-  }),
 }))
 
 describe('<Detail />', () => {
