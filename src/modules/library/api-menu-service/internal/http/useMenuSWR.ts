@@ -19,19 +19,19 @@ export type UseMenuSWRArgs = {
 
 const successReturn = (response: MenuAPIResponse) => ({
   isPending: false,
-  response: response.result,
+  response,
   error: null,
 })
 
 const pendingReturn = () => ({
   isPending: true,
-  response: {} as MenuAPIResponse['result'],
+  response: {} as MenuAPIResponse,
   error: null,
 })
 
 const errorReturn = (error: Error) => ({
   isPending: false,
-  response: {} as MenuAPIResponse['result'],
+  response: {} as MenuAPIResponse,
   error,
 })
 

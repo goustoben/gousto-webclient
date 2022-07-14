@@ -87,6 +87,5 @@ export type MenuAPIResponseResult = {
  * This represents the return shape of the /menus endpoint
  */
 export type MenuAPIResponse = {
-  result: MenuAPIResponseResult
   status: 'ok'
-}
+} & MenuAPIResponseResult
