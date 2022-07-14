@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { NumberOfPortions, UseStockDependencies } from '../types'
+import { UseStockDependencies } from '../types'
 import { useGetStockForRecipe } from './getStockForRecipe'
 
 export function useIsRecipeInStock(
@@ -9,7 +9,7 @@ export function useIsRecipeInStock(
   const minimumThreshold = deps.minimumThreshold || 0
 
   return useCallback(
-    (recipeId: string, numPortions: NumberOfPortions) => {
+    (recipeId: string, numPortions: 2 | 4) => {
       const recipeStockCount = getStockForRecipe(recipeId, numPortions)
 
       return recipeStockCount > minimumThreshold

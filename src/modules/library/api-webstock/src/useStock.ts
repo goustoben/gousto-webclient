@@ -1,3 +1,4 @@
+import React from 'react'
 import { useStockSWR, UseStockSWRArgs } from './api'
 import { UseStockDependencies } from './types'
 import { useGetStockForRecipe } from './utils/getStockForRecipe'
@@ -22,6 +23,11 @@ export function useStock(swrArgs: UseStockSWRArgs, deps: UseStockDependencies) {
 
   const isRecipeInStock = useIsRecipeInStock(deps, getStockForRecipe)
 
+  const isRecipeOutOfStock = React.useCallback(
+    (recipeId: string, numPortions: 2 | 4) => !isRecipeInStock(recipeId, numPortions),
+    [isRecipeInStock],
+  )
+
   return {
     /**
      * Get the stock count for a specific recipe
@@ -42,5 +48,15 @@ export function useStock(swrArgs: UseStockSWRArgs, deps: UseStockDependencies) {
      * @returns `true` if in stock, otherwise `false`.
      */
     isRecipeInStock,
+
+    /**
+     * See if a recipe is out of stock, according to the `minimumThreshold` value.
+     *
+     * @param recipeId - The recipe to query
+     * @param numPortions - The number of portions the user has selected
+     *
+     * @returns `true` if out of stock, otherwise `false`.
+     */
+    isRecipeOutOfStock,
   }
 }

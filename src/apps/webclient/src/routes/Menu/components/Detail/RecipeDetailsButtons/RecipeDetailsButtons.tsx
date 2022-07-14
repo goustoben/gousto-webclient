@@ -6,7 +6,8 @@ import { Button, Control, Segment } from 'goustouicomponents'
 import { useDispatch } from 'react-redux'
 
 import { recipesConfig } from 'config/recipes'
-import { useBasket, useStock, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
+import { useBasket, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
+import { useStock } from 'routes/Menu/domains/stock'
 
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { Surcharge } from './Surcharge'
@@ -53,7 +54,7 @@ export const RecipeDetailsButtons = ({
   const maxRecipesNum = maxRecipesForPortion(numPortions)
   const { getStockForRecipe } = useStock()
   const surchargePerPortion = useSurchargePerPortion({ recipeId, numPortions })
-  const stock = getStockForRecipe(recipeId)
+  const stock = getStockForRecipe(recipeId, numPortions)
   const qty = getQuantitiesForRecipeId(recipeId)
 
   const handleAdd = useCallback(

@@ -2,17 +2,29 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
+import { useBasket } from 'routes/Menu/domains/basket'
+import { useStock } from 'routes/Menu/domains/stock'
+
 import * as RecipeContext from '../../../context/recipeContext'
-import * as BasketHook from '../../../domains/basket'
 import { SoldOutOverlay } from './SoldOutOverlay'
+
+jest.mock('routes/Menu/domains/stock')
+const useStockMock = useStock
+
+jest.mock('routes/Menu/domains/basket')
+const useBasketMock = useBasket
 
 describe('<SoldOutOverlay', () => {
   let wrapper
-  beforeEach(() => jest.spyOn(RecipeContext, 'useRecipeId').mockImplementation(() => 'recipe ID'))
+  beforeEach(() => {
+    jest.spyOn(RecipeContext, 'useRecipeId').mockImplementation(() => 'recipe ID')
+
+    useBasketMock.mockReturnValue({ numPortions: 2 })
+  })
 
   describe('when a recipe has is in stock', () => {
     beforeEach(() => {
-      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
+      useStockMock.mockImplementation(() => ({
         isRecipeOutOfStock: () => false,
       }))
 
@@ -26,8 +38,8 @@ describe('<SoldOutOverlay', () => {
 
   describe('when recipe is not in stock', () => {
     beforeEach(() => {
-      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
-        isRecipeOutOfStock: () => true,
+      useStockMock.mockImplementation(() => ({
+        isRecipeOutOfStock: () => false,
       }))
 
       wrapper = shallow(<SoldOutOverlay />)

@@ -18,8 +18,9 @@ import {
   useRecipeBrandTag,
   RecipeContextProvider,
 } from 'routes/Menu/context/recipeContext'
-import { useBasket, useStock } from 'routes/Menu/domains/basket'
+import { useBasket } from 'routes/Menu/domains/basket'
 import { useSetBrowserCTAVisibility, useMenu } from 'routes/Menu/domains/menu'
+import { useStock } from 'routes/Menu/domains/stock'
 
 import { RecipeReferenceProvider } from '../../context/recipeReferenceContext'
 import { useTracking as useTrackSwapAlternativeOptions } from './SwapAlternativeOptions/useTracking'
