@@ -1,0 +1,1 @@
+export { FreqIncNotification } from './FreqIncNotification'

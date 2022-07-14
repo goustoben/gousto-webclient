@@ -14,6 +14,7 @@ import { HeaderContainer } from './Header'
 import { ReferAFriend } from './ReferAFriend'
 import { PaymentDetailsNotification } from './PaymentDetailsNotification'
 import css from './MyGousto.css'
+import { FreqIncNotification } from "./FreqIncNotification";
 
 const propTypes = {
   userLoadOrders: PropTypes.func.isRequired,
@@ -129,7 +130,7 @@ class MyGousto extends React.PureComponent {
       <div>
         <Helmet title="My Gousto Account | View Your Most Recent Deliveries and Recipes" />
         <div className={css.wrapper}>
-          {isCardTokenNotCompliantFor3ds && (
+          {true && (
             <PaymentDetailsNotification track3dsCompliantClick={track3dsCompliantClick} />
           )}
           <div className={css.notificationContent}>
@@ -138,6 +139,9 @@ class MyGousto extends React.PureComponent {
           </div>
           <div className={css.notificationContent}>
             <Notification card={card} orders={orders} />
+          </div>
+          <div className={css.notificationContent}>
+            <FreqIncNotification />
           </div>
         </div>
         <Section title={headerTitle} largeTitle alternateColour hasPaddingBottom={false}>

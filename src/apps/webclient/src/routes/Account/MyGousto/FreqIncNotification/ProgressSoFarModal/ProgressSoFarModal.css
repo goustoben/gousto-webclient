@@ -1,0 +1,76 @@
+@value ScreenXXSMin from 'styles/screenSizes.css';
+@value Kale, Coconut, Bluecheese, BluecheeseLight from 'styles/colors.css';
+
+.progressSoFarWrapper {
+  background-color: Kale;
+  padding: 3rem;
+}
+
+.progressSoFar {
+  padding: 1.5rem 2.5rem;
+  border-radius: 0.5rem;
+  background-color: Coconut;
+}
+
+.progressSoFar .progressBarSection {
+}
+
+.progressSoFar .progressBarSection > .progressBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.progressSoFar .superBig {
+  font-size: 4rem;
+  font-weight: bolder;
+}
+
+.progressSoFar .counter {
+  margin: 1.5rem 0 0.5rem 0;
+}
+.progressSoFar .progressBarSection > .progressBar > div {
+  height: 0.5rem;
+  width: 3rem;
+  margin: 0.5rem 0.1rem;
+  background-color: BluecheeseLight;
+}
+
+.progressSoFar .progressBarSection > .progressBar > div.filled {
+  background-color: Bluecheese;
+}
+
+.progressSoFar .progressBarSection > .progressBar > div.selected:after {
+  content: '';
+  position: relative;
+  width: 100%;
+  left: 45%;
+  top: -0.75rem;
+  width: 0;
+  height: 0;
+  border-left: 0.25rem solid transparent;
+  border-right: 0.25rem solid transparent;
+  border-bottom: 0.25rem solid Bluecheese;
+
+}
+.progressSoFar .progressBarSection > .progressBarLabel {
+  display: flex;
+  flex-direction: row-reverse;
+  color: Bluecheese;
+}
+
+
+.modalContent {
+  padding: 1.5rem;
+  width: 100%;
+  composes: fontStyleBodyL from 'design-language/typography.css';
+}
+
+.disableScroll > div {
+  @media ScreenXXSMin {
+    overflow: hidden;
+  }
+}
+
+.bold {
+  composes: fontBold from 'design-language/typography.css';
+}

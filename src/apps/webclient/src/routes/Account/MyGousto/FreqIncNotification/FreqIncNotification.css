@@ -1,0 +1,45 @@
+@value ScreenXXSMax from 'styles/screenSizes.css';
+
+.alertContent {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+
+  @media ScreenXXSMax {
+    flex-direction: column;
+  }
+}
+
+.notificationContainer {
+  max-width: 29rem;
+  padding-right: 1rem;
+
+  @media ScreenXXSMax {
+    margin-bottom: 1rem;
+  }
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 13.75rem;
+  height: 6rem;
+
+  @media ScreenXXSMax {
+    margin-left: -2rem;
+  }
+}
+
+.header {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  margin-bottom: 0.25rem;
+}
+
+.messageContainer {
+  composes: fontStyleBody from 'design-language/typography.css';
+}
+
+.fullWidth {
+  width: 100%;
+}
