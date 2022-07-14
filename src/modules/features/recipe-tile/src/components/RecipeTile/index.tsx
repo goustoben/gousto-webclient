@@ -28,6 +28,7 @@ import {
 import { RecipeTag } from "../RecipeTag";
 import { useGetRecipeTileLinkDataHook } from "../../model/context/useGetRecipeTileLinkData";
 import { RecipeTileLink } from "../RecipeTileLink";
+import { useBasketHook } from "../../model/context/useBasket";
 
 const OuterContainer = styled.div(cssRecipeTile as any);
 const ImageContainer = styled.div(
@@ -76,8 +77,11 @@ export const RecipeTile = ({
   const useStock = useStockHook();
   const { isRecipeOutOfStock } = useStock();
 
+  const useBasket = useBasketHook();
+  const { numPortions } = useBasket();
+
   const { isFineDineIn, id: recipeId } = useRecipe();
-  const isOutOfStock = isRecipeOutOfStock(recipeId);
+  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions);
 
   const deviceType = useDeviceType();
   const recipeReference = useRecipeReference();

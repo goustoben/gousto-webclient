@@ -24,6 +24,7 @@ import {
   cssSurchargeInfoRow,
   cssSurchargeOnTop,
 } from "./styles";
+import { useBasketHook } from "../../model/context/useBasket";
 
 type RecipeTilePurchaseInfoProps = {
   originalId: string;
@@ -80,6 +81,9 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
   const useStock = useStockHook();
   const { isRecipeOutOfStock } = useStock();
 
+  const useBasket = useBasketHook();
+  const { numPortions } = useBasket();
+
   const useGetSurchargeForRecipeId = useGetSurchargeForRecipeIdHook();
   const surcharge = useGetSurchargeForRecipeId(recipeId);
 
@@ -87,7 +91,7 @@ export const RecipeTilePurchaseInfo: React.FC<RecipeTilePurchaseInfoProps> = ({
     return null;
   }
 
-  const isOutOfStock = isRecipeOutOfStock(recipeId);
+  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions);
 
   if (isOutOfStock) {
     return null;
