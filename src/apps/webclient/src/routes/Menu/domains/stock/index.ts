@@ -1,1 +1,1 @@
-export { useStockAPI } from './useStock'
+export { useStock } from './useStockBridge'

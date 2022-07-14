@@ -8,6 +8,7 @@ import { getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
 import { getAccessToken, getAuthUserId } from 'selectors/auth'
 import { getNumPortions, getBasketDate } from 'selectors/basket'
 
+import { useStock } from '../stock'
 import { useMenuRequestArgs } from './internal/query'
 
 /**
@@ -20,6 +21,8 @@ export function useMenu() {
   const numPortions = useSelector(getNumPortions)
   const selectedVariants = useSelector(getSelectedRecipeVariants)
   const date = useSelector(getBasketDate)
+
+  const { isRecipeInStock } = useStock()
 
   const requestData = useMenuRequestArgs()
 
@@ -34,7 +37,7 @@ export function useMenu() {
   const deps: Parameters<typeof useMenuBase>[2] = {
     selectedRecipeVariants: selectedVariants,
     numPortions,
-    isRecipeInStock: () => true,
+    isRecipeInStock,
   }
 
   return useMenuBase(requestArgs, date, deps)
