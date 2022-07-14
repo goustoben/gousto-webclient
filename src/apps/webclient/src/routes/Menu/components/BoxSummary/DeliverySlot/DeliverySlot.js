@@ -14,7 +14,6 @@ import css from './DeliverySlot.css'
 class DeliverySlot extends React.PureComponent {
   render = () => {
     const {
-      numPortions,
       disabledSlots,
       isAuthenticated,
       isSubscriptionActive,
@@ -144,7 +143,6 @@ DeliverySlot.propTypes = {
   isSubscriptionActive: PropTypes.string,
   menuFetchDataPending: PropTypes.bool,
   menuPending: PropTypes.bool,
-  numPortions: PropTypes.number.isRequired,
   shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
   tempDate: PropTypes.string,
   tempOrderId: PropTypes.string,
