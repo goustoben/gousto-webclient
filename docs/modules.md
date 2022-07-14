@@ -63,6 +63,16 @@ to reduce deploy times.
 Because of this, all the actual compilation logic for the bundles lives inside the `webclient` Webpack config. Any other
 `.babelrc` or similar files you see are (currently) just for local development tools. The same applies for `tsconfig.json`.
 
+## Dependencies within modules
+
+To add a dependency to a feature module or library, you need to do three things
+
+1. Add it as a `dependency` to `webclient`
+2. Add it as a `peerDependency` to your module
+3. Add it as a `devDependency` to your module also
+
+To understand why, you have to understand how we currently compile dependencies.
+
 ### node_modules and dependencies
 
 | ⚠️️ | This area is subject to change as the modularisation initiative continues |
@@ -100,7 +110,7 @@ apps/webclient                                                  apps/webclient/n
 ```
 
 To make this relationship clear, feature modules will refer to these dependencies via `peerDependencies`. It's important
-to be clear, though, that webpack doesn't "know" about peer dependencies. It just follows `require` statements in the
+to be clear, though, that **webpack doesn't "know" about peer dependencies**. It just follows `require` statements in the
 code it's given.
 
 At some point we'll implement "partial builds" where modules are compiled in isolation, with the ability to inject

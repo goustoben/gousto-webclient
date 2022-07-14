@@ -1,5 +1,5 @@
 import { Provider, RequestMiddleware } from '../types'
-import { fromProvider, withResolved } from '../util'
+import { withResolved } from '../util'
 
 /**
  * Add a sub-path to the request using a provider (a string, or function returning string)
@@ -9,8 +9,8 @@ import { fromProvider, withResolved } from '../util'
  *  addPath(payload => payload.customerID)
  */
 export function addPath<Input>(stringProvider: Provider<Input, string>): RequestMiddleware<Input> {
-  return function pathMiddleware(req, ctx, input) {
-    const provided = fromProvider(stringProvider, input, ctx)
+  return function pathMiddleware(req, input) {
+    const provided = typeof stringProvider === 'function' ? stringProvider(input) : stringProvider
 
     return withResolved(provided, value => {
       req.paths.push(value)

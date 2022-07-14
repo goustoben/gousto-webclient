@@ -1,5 +1,5 @@
 import { Rec, TypeAssert } from '../test-utils'
-import { HttpCtx, RequestConfig, RequestMiddleware } from '../types'
+import { RequestConfig, RequestMiddleware } from '../types'
 import { composeRequest } from './request'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -110,14 +110,14 @@ const request5TypeSpecific: TypeAssert<
 
 describe('composeRequest (composing request middleware)', () => {
   const setHost = jest.fn(
-    (req: RequestConfig, ctx: HttpCtx, input: unknown) => {
+    (req: RequestConfig, input: unknown) => {
       req.host = 'setHost'
       return req
     }
   )
 
   const setHeader = jest.fn(
-    (req: RequestConfig, ctx: HttpCtx, input: unknown) => {
+    (req: RequestConfig, input: unknown) => {
       req.headers = {
         test: 'setHeader'
       }
@@ -126,14 +126,13 @@ describe('composeRequest (composing request middleware)', () => {
   )
 
   const setPath = jest.fn(
-    (req: RequestConfig, ctx: HttpCtx, input: unknown) => {
+    (req: RequestConfig, input: unknown) => {
       req.paths = ['setPath']
       return req
     }
   )
 
   const composed = composeRequest(setHost, setHeader, setPath)
-  const testCtx: HttpCtx = {} as any
   const testInput = {}
 
   it('returns a function with stacktrace name "composedMiddleware"', () => {
@@ -148,7 +147,7 @@ describe('composeRequest (composing request middleware)', () => {
         paths: []
       }
 
-      composed(req, testCtx, testInput)
+      composed(req, testInput)
 
       expect(req).toStrictEqual({
         host: 'setHost',
@@ -160,16 +159,10 @@ describe('composeRequest (composing request middleware)', () => {
       })
     })
 
-    it('passes the context object to each middleware', () => {
-      expect(setHost.mock.calls[0][1]).toBe(testCtx)
-      expect(setHeader.mock.calls[0][1]).toBe(testCtx)
-      expect(setPath.mock.calls[0][1]).toBe(testCtx)
-    })
-
     it('passes the input value to each middleware', () => {
-      expect(setHost.mock.calls[0][2]).toBe(testInput)
-      expect(setHeader.mock.calls[0][2]).toBe(testInput)
-      expect(setPath.mock.calls[0][2]).toBe(testInput)
+      expect(setHost.mock.calls[0][1]).toBe(testInput)
+      expect(setHeader.mock.calls[0][1]).toBe(testInput)
+      expect(setPath.mock.calls[0][1]).toBe(testInput)
     })
   })
 })

@@ -2,14 +2,6 @@
  * Request configuration
  * ============================================================================
  */
-
-export type HttpCtx = {
-  apiUrl: string,
-  authToken?: string,
-  authUserId?: string,
-  sessionId?: string
-}
-
 export type RequestConfig = RequestInit & {
   headers?: Dict
   host: string
@@ -41,7 +33,7 @@ export type Method =
 
 export type Dict = Record<string, string>
 export type ProviderTypes = Dict | string
-export type Provider<Input, T extends ProviderTypes> = T | ((i: Input, ctx: HttpCtx) => T | Promise<T>)
+export type Provider<Input, T extends ProviderTypes> = T | ((i: Input) => T | Promise<T>)
 
 /**
  * Middleware
@@ -53,7 +45,6 @@ export type Provider<Input, T extends ProviderTypes> = T | ((i: Input, ctx: Http
 
 export type RequestMiddleware<Input> = (
   req: RequestConfig,
-  ctx: HttpCtx,
   i: Input
 ) => RequestConfig | Promise<RequestConfig>
 
