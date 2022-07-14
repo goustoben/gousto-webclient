@@ -24,6 +24,10 @@ export function useNormalisedData(requestArgs: UseMenuSWRArgs) {
       return null
     }
 
+    if (!response) {
+      return null
+    }
+
     const { included = [], data, meta } = response
 
     const normalised = {
