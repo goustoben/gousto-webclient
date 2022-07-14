@@ -54,6 +54,7 @@
     "@features/recipe-tile": "workspace:*",
     "@gousto-internal/citrus-react": "^0.22.6",
     "@library/api-menu-service": "workspace:*",
+    "@library/api-webstock": "workspace:*",
     "@library/auth": "workspace:*",
     "@optimizely/optimizely-sdk": "^4.1.0",
     "actual": "0.4.0",
