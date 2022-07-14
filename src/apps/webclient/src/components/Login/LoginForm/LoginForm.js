@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import ReCAPTCHA from 'components/Recaptcha'
-import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
 import { isSecretPingdomEmail } from 'utils/recaptcha'
 import { CTA, InputField } from 'goustouicomponents'
 import CheckBox from 'Form/CheckBox'
-import Form from 'Form'
+import Form from 'components/Form'
 import config from 'config'
 import classNames from 'classnames'
+import { Recaptcha } from 'components/Recaptcha'
 import css from './LoginForm.css'
 
 class LoginForm extends React.PureComponent {
@@ -199,12 +198,7 @@ class LoginForm extends React.PureComponent {
             isRecaptchaEnabled
             && (
               <div>
-                <ReCAPTCHA
-                  ref={this.setCaptchaRef}
-                  sitekey={getRecaptchaPublicKey()}
-                  size="invisible"
-                  onChange={this.captchaChanges}
-                />
+                <Recaptcha ref={this.setCaptchaRef} onChange={this.captchaChanges} />
               </div>
             )
           }

@@ -1,15 +1,14 @@
 import React from 'react'
 
 import { Box, Text, Icon, Space, Display } from '@gousto-internal/citrus-react'
-import { HotjarTrigger } from 'HotjarTrigger'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { logLevels } from 'actions/log'
-import ReCAPTCHA from 'components/Recaptcha'
+import { HotjarTrigger } from 'components/HotjarTrigger'
+import { Recaptcha } from 'components/Recaptcha'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { PaymentMethod } from 'config/signup'
-import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
 
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
@@ -125,7 +124,11 @@ class CheckoutPayment extends React.Component {
     })
 
     storeSignupRecaptchaToken(value)
-    if (value !== null) {
+
+    if (value === null) {
+      // here execution delayed because for some reason it doesn't work if the method execute() is called right away
+      setTimeout(() => this.recaptchaElement.execute(), 0)
+    } else {
       this.processSignup()
     }
   }
@@ -286,12 +289,7 @@ class CheckoutPayment extends React.Component {
         <div className={css.row}>
           {!prerender && isRecaptchaEnabled && (
             <div className={css.recaptchaContainer}>
-              <ReCAPTCHA
-                ref={this.setRecaptchaElement}
-                sitekey={getRecaptchaPublicKey()}
-                onChange={this.handleRecaptchaChange}
-                size="invisible"
-              />
+              <Recaptcha ref={this.setRecaptchaElement} onChange={this.handleRecaptchaChange} />
             </div>
           )}
         </div>
