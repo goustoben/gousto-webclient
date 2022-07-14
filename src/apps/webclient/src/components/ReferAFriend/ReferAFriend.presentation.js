@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Form from 'Form'
+import Form from 'components/Form'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
 import InputError from 'Form/InputError'
-import ReCAPTCHA from 'components/Recaptcha'
 import { getRecaptchaRAFPublicKey } from 'utils/isomorphicEnvironment'
+import { Recaptcha } from 'components/Recaptcha'
 import css from './ReferAFriend.css'
 
 const propTypes = {
@@ -53,10 +53,9 @@ const ReferAFriendPresentation = ({
                 isRecaptchaEnabled
                 && (
                   <div>
-                    <ReCAPTCHA
+                    <Recaptcha
                       ref={refCaptcha}
                       sitekey={getRecaptchaRAFPublicKey()}
-                      size="invisible"
                       onChange={captchaChanges}
                     />
                   </div>
