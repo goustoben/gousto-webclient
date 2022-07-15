@@ -56,6 +56,7 @@ const renderComponent = ({
         removeRecipe: jest.fn(),
         reachedLimit: true,
         isRecipeInBasket: () => false,
+        numPortions: 2,
       })}
       useSetBrowserCTAVisibility={() => ({
         setBrowserCTAVisible: () => false,

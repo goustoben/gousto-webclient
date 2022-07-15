@@ -96,7 +96,7 @@ export const getMocks = ({
     removeRecipe: () => false,
     reachedLimit: false,
     isRecipeInBasket: () => isRecipeInBasket,
-    numPortions: 2,
+    numPortions: 2 as 2 | 4,
   })
 
   const useSetBrowserCTAVisibility = () => ({
