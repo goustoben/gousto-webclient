@@ -2,6 +2,15 @@
 version: 2.1
 
 # Hooks
+filter-feature-branches: &filter-feature-branches
+  filters:
+    branches:
+      ignore:
+        - /^env-.*/
+        - master
+        - e2e-manual
+        - develop
+
 filter-lower-env: &filter-lower-env
   filters:
     branches:
@@ -518,6 +527,21 @@ jobs:
           command: python ./ci_scripts/deploy_service.py --service webclient
 
 workflows:
+  feature-branch:
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+          <<: *filter-feature-branches
+      - debug-differential-build:
+          context: gousto-beta-aws-app-circleci
+          <<: *filter-feature-branches
+          requires:
+            - setup-ci-variables-scripts
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          <<: *filter-feature-branches
+          requires:
+            - setup-ci-variables-scripts
 
   e2e-manual:
     when:
