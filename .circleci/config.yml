@@ -257,10 +257,11 @@ jobs:
           # RUN ALL UNIT TESTS FOR WEBCLIENT
           command: |
             yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
-            [ ! -s unit-tests ] && circleci step halt
+            if [ -s unit-tests ]; then
             TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed /node_modules/d | circleci tests split)
             JEST_JUNIT_OUTPUT_DIR="./test-results"
             yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit
+            fi
             rm unit-tests
       - store_test_results:
           path: ~/mnt/ramdisk/src/apps/webclient/test-results
@@ -683,6 +684,21 @@ workflows:
           requires:
             - setup-ci-variables-scripts
 
+      - type-check:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
+      - unit-test:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
+      - lint:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
       - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -708,16 +724,6 @@ workflows:
           requires:
             - build-webclient
 
-      - test-typecheck-and-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-
-      - eslint-generate-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-
       - test-regression:
           name: test-regression-web
           platform: web
@@ -731,12 +737,6 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
-
-      - publish-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-typecheck-and-report
-            - eslint-generate-report
 
       - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
