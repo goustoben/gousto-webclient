@@ -518,7 +518,6 @@ jobs:
           command: python ./ci_scripts/deploy_service.py --service webclient
 
 workflows:
-  version: 2
 
   e2e-manual:
     when:
