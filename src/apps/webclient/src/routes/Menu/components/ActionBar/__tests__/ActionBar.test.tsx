@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { useMedia } from 'react-use'
 
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
-import { useBasket } from 'routes/Menu/domains/basket'
+import { useBasket, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getDomain } from 'utils/isomorphicEnvironment'
 
@@ -25,6 +25,9 @@ jest.mock('utils/isomorphicEnvironment')
 jest.mock('routes/Menu/domains/basket')
 
 const useBasketMock = useBasket as jest.MockedFunction<typeof useBasket>
+const useSupportedBoxTypesMock = useSupportedBoxTypes as jest.MockedFunction<
+  typeof useSupportedBoxTypes
+>
 
 describe('ActionBar', () => {
   let rendered: RenderResult
@@ -47,6 +50,13 @@ describe('ActionBar', () => {
     useBasketMock.mockReturnValue({
       recipeCount: 0,
     } as any)
+
+    useSupportedBoxTypesMock.mockReturnValue({
+      maxRecipesForPortion: () => 4,
+      allowedPortionSizes: () => [2, 4],
+      minRecipesForPortion: () => 2,
+      isPortionSizeAllowedByRecipeCount: () => true,
+    })
 
     rendered = render(
       <Provider store={mockedStore}>
