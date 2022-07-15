@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { useMedia } from 'react-use'
 
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
+import { useBasket } from 'routes/Menu/domains/basket'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getDomain } from 'utils/isomorphicEnvironment'
 
@@ -21,13 +22,14 @@ jest.mock('react-use', () => ({
 jest.mock('utils/browserEnvironment')
 jest.mock('utils/isomorphicEnvironment')
 
+jest.mock('routes/Menu/domains/basket')
+
+const useBasketMock = useBasket as jest.MockedFunction<typeof useBasket>
+
 describe('ActionBar', () => {
   let rendered: RenderResult
 
   const state = {
-    basket: Immutable.fromJS({
-      recipes: [],
-    }),
     features: Immutable.fromJS({}),
     pending: Immutable.fromJS({}),
     auth: Immutable.fromJS({
@@ -40,6 +42,11 @@ describe('ActionBar', () => {
   beforeEach(() => {
     ;(canUseWindow as jest.Mock).mockReturnValue(false)
     ;(getDomain as jest.Mock).mockReturnValue('gousto.local')
+
+    // TODO create a builder rather than casting mocks to `any`
+    useBasketMock.mockReturnValue({
+      recipeCount: 0,
+    } as any)
 
     rendered = render(
       <Provider store={mockedStore}>
@@ -57,12 +64,13 @@ describe('ActionBar', () => {
   describe('when numRecipes change', () => {
     describe('when on mobile', () => {
       test('then it should animate', () => {
-        const newStore = createMockStore({
-          ...state,
-          basket: Immutable.fromJS({
-            recipes: [1],
-          }),
-        })
+        const newStore = createMockStore(state)
+
+        // TODO create a builder rather than casting mocks to `any`
+        useBasketMock.mockReturnValue({
+          recipeCount: 1,
+        } as any)
+
         const { rerender, getByTestId } = rendered
 
         rerender(
@@ -90,12 +98,12 @@ describe('ActionBar', () => {
       })
 
       test('then it should set the new value immediately', () => {
-        const newStore = createMockStore({
-          ...state,
-          basket: Immutable.fromJS({
-            recipes: [1],
-          }),
-        })
+        const newStore = createMockStore(state)
+
+        // TODO create a builder rather than casting mocks to `any`
+        useBasketMock.mockReturnValue({
+          recipeCount: 1,
+        } as any)
         const { rerender, getByTestId } = rendered
 
         rerender(

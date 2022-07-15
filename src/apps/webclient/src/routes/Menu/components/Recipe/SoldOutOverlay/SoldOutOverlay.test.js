@@ -22,7 +22,7 @@ describe('<SoldOutOverlay', () => {
     useBasketMock.mockReturnValue({ numPortions: 2 })
   })
 
-  describe('when a recipe has is in stock', () => {
+  describe('when a recipe is in stock', () => {
     beforeEach(() => {
       useStockMock.mockImplementation(() => ({
         isRecipeOutOfStock: () => false,
@@ -39,7 +39,7 @@ describe('<SoldOutOverlay', () => {
   describe('when recipe is not in stock', () => {
     beforeEach(() => {
       useStockMock.mockImplementation(() => ({
-        isRecipeOutOfStock: () => false,
+        isRecipeOutOfStock: () => true,
       }))
 
       wrapper = shallow(<SoldOutOverlay />)
