@@ -17,7 +17,7 @@ export function useStock() {
     const date = getBasketDate(state as any)
     const boxSummaryDeliveryDays = getBoxSummaryDeliveryDays(state as any)
 
-    return boxSummaryDeliveryDays.getIn([date, 'id'])
+    return boxSummaryDeliveryDays.getIn([date, 'coreDayId'])
   })
 
   const coreUrl = endpoint('core') || ''
