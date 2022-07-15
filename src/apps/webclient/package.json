@@ -33,6 +33,7 @@
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent --coverage",
+    "test:jest:ci:coverage:circle": "JEST_JUNIT_OUTPUT_DIR='./test-results' jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "eslint": "eslint .",
     "eslint:ci": "eslint --format=json",
@@ -42,8 +43,7 @@
     "typecheck:tests": "tsc -p ./tsconfig.tests.json",
     "datadog:upload-sourcemaps": "datadog-ci sourcemaps upload $BUILD_DIR --service gousto-webclient --release-version $CIRCLE_BUILD_NUM --minified-path-prefix $ASSET_URL_PREFIX",
     "datadog:upload-report:e2e": "datadog-ci junit upload --service gousto-webclient ../../../tests/e2e/reports",
-    "prettier": "prettier -w ./",
-    "echo-tests": "echo $TESTS"
+    "prettier": "prettier -w ./"
   },
   "dependencies": {
     "@axe-core/react": "^4.1.1",
