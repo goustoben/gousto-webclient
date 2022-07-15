@@ -50,7 +50,7 @@ orbs:
 
 commands:
   gzip:
-    description: 'Apply gzip compression to text files'
+    description: "Apply gzip compression to text files"
     parameters:
       target:
         type: string
@@ -60,7 +60,7 @@ commands:
       - run: echo "Size after compression - $(du -sh << parameters.target >>)"
 
   upload-to-s3:
-    description: 'Upload public dir to S3 bucket'
+    description: "Upload public dir to S3 bucket"
     parameters:
       bucket:
         type: string
@@ -206,9 +206,6 @@ jobs:
       - run:
           name: Webclient lint files
           command: yarn monorepo-build lint --since=$BRANCH_POINT --workspace=webclient
-      - run:
-          name: Webclient unit tests
-          command: yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient
 
   type-check:
     executor: circleci_node_image
@@ -216,22 +213,18 @@ jobs:
     working_directory: /mnt/ramdisk
     parallelism: 5
     environment:
-      TZ: 'Europe/London'
+      TZ: "Europe/London"
     steps:
       - checkout
       - attach_workspace:
           at: /
       - export_circlerc_vars
       - run:
-          name: Typecheck (feature modules)
-          command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run typecheck
-      - run:
-          name: Typecheck (libraries)
-          command: yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run typecheck
+          name: Typecheck
+          command: yarn workspaces foreach --since=$BRANCH_POINT --recursive --verbose run typecheck
       - run:
           name: Typecheck tests (apps/webclient)
-          working_directory: src/apps/webclient
-          command: yarn typecheck:tests
+          command: yarn workspace webclient typecheck:tests
 
   unit-test:
     executor: circleci_node_image
@@ -239,7 +232,7 @@ jobs:
     working_directory: ~/mnt/ramdisk # /mnt/ramdisk doesn't have enough memory to run this job
     parallelism: 5
     environment:
-      TZ: 'Europe/London'
+      TZ: "Europe/London"
     steps:
       - checkout
       - attach_workspace:
@@ -248,19 +241,15 @@ jobs:
           circlerc_path: ~/root/.circlerc
       - run:
           name: Unit test (feature modules)
-          command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
+          command: yarn workspaces foreach --include='@features/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
       - run:
           name: Unit test (libraries)
-          command: yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
+          command: yarn workspaces foreach --include='@library/*' --since=$BRANCH_POINT --recursive --verbose run test:unit
       - run:
           name: Unit test (apps/webclient)
+          # Do not run webclient unit tests if only feature modules / their dependencies have changed
           command: |
-            yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
-            if [ -s unit-tests ]; then
-              TESTS=$(circleci tests glob **/*.test.{js,ts,jsx,tsx} | circleci tests split --split-by=timings --timings-type=classname)
-              yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit
-            fi
-            rm unit-tests
+            yarn workspaces foreach --include='webclient' --from='{@library/*,webclient}' --since=$BRANCH_POINT --recursive --verbose run test:unit
       - store_test_results:
           path: src/apps/webclient/junit.xml
 
@@ -270,7 +259,7 @@ jobs:
     working_directory: /mnt/ramdisk
     parallelism: 5
     environment:
-      TZ: 'Europe/London'
+      TZ: "Europe/London"
     steps:
       - checkout
       - attach_workspace:
@@ -278,10 +267,10 @@ jobs:
       - export_circlerc_vars
       - run:
           name: Lint (feature modules)
-          command: yarn workspaces foreach --include '@features/*' --since=$BRANCH_POINT --recursive --verbose run lint
+          command: yarn workspaces foreach --include='@features/*' --since=$BRANCH_POINT --recursive --verbose run lint
       - run:
           name: Lint (libraries)
-          command: yarn workspaces foreach --include '@library/*' --since=$BRANCH_POINT --recursive --verbose run lint
+          command: yarn workspaces foreach --include='@library/*' --since=$BRANCH_POINT --recursive --verbose run lint
       - run:
           name: Lint (apps/webclient)
           working_directory: /mnt/ramdisk/src/apps/webclient
@@ -297,16 +286,16 @@ jobs:
     resource_class: medium+
     working_directory: ~/project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
-      TZ: 'Europe/London'
+      TZ: "Europe/London"
     steps:
       - attach_workspace:
           at: ~/project
       - run:
           name: Typecheck (feature modules)
-          command: yarn workspaces foreach --include '@features/*' --verbose run typecheck
+          command: yarn workspaces foreach --include='@features/*' --verbose run typecheck
       - run:
           name: Unit test (feature modules)
-          command: yarn workspaces foreach --include '@features/*' --verbose run test:unit
+          command: yarn workspaces foreach --include='@features/*' --verbose run test:unit
       - run:
           name: Test, gather coverage (apps/webclient)
           working_directory: src/apps/webclient
@@ -325,13 +314,13 @@ jobs:
     resource_class: medium
     working_directory: /mnt/ramdisk
     environment:
-      TZ: 'Europe/London'
+      TZ: "Europe/London"
     steps:
       - attach_workspace:
           at: /
       - run:
           name: Lint (modules)
-          command: yarn workspaces foreach --include '@features/*' --verbose run lint
+          command: yarn workspaces foreach --include='@features/*' --verbose run lint
       - run:
           name: Lint & gather report (apps/webclient)
           working_directory: src/apps/webclient
@@ -346,7 +335,7 @@ jobs:
     resource_class: medium
     working_directory: /mnt/ramdisk
     environment:
-      TZ: 'Europe/London'
+      TZ: "Europe/London"
     steps:
       - attach_workspace:
           at: /
@@ -387,7 +376,7 @@ jobs:
     parameters:
       env:
         type: enum
-        enum: ['staging', 'production']
+        enum: ["staging", "production"]
       top_level_domain:
         type: string
         default: .co.uk
@@ -735,8 +724,8 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - create-and-upload-webclient-docker-image-to-ecr
-            - 'Upload static assets to staging S3 /build/BUILD_NUMBER'
-            - 'Upload static assets to production S3 /build/BUILD_NUMBER'
+            - "Upload static assets to staging S3 /build/BUILD_NUMBER"
+            - "Upload static assets to production S3 /build/BUILD_NUMBER"
 
       - test-e2e:
           context: gousto-beta-aws-app-circleci
