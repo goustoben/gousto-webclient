@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 
 import { RecipeOptionPair } from '@library/api-menu-service'
 
@@ -32,6 +32,15 @@ type RecipeListProps = {
   isDietaryCollectionLinksEnabled?: boolean
 }
 
+/**
+ * How many recipes to render immediately
+ */
+const IMMEDIATE_RENDER_COUNT = 15
+/**
+ * How long to wait before loading the rest
+ */
+const RENDER_REMAINING_TIME_MS = 1000
+
 export const RecipeList = ({
   recipes,
   currentCollectionId,
@@ -41,9 +50,27 @@ export const RecipeList = ({
 
   useEffect(() => buildTracker({ recipes, currentCollectionId, track })(), [])
 
+  const [recipesToRender, setRecipesToRender] = React.useState<RecipeOptionPair[]>([])
+
+  useLayoutEffect(() => {
+    if (recipes.length <= IMMEDIATE_RENDER_COUNT) {
+      setRecipesToRender(recipes)
+    }
+
+    setRecipesToRender(recipes.slice(0, IMMEDIATE_RENDER_COUNT))
+
+    const renderRest = setTimeout(() => {
+      setRecipesToRender(recipes)
+    }, RENDER_REMAINING_TIME_MS)
+
+    return () => {
+      clearTimeout(renderRest)
+    }
+  }, [recipes])
+
   return (
     <div className={css.emeRecipeList}>
-      {recipes.map((value, index) => (
+      {recipesToRender.map((value, index) => (
         <React.Fragment key={value.reference}>
           {isDietaryCollectionLinksEnabled &&
             showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
