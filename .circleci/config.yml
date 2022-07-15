@@ -356,11 +356,12 @@ jobs:
     steps:
       - attach_workspace:
           at: /
+      - export_circlerc_vars
       - run: echo $ENVIRONMENT
       - run:
           name: Build webclient
           working_directory: src/apps/webclient
-          command: source ~/.circlerc && CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
+          command: CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM} npm run build
       - run:
           name: Persist CIRCLE_BUILD_NUM for s3 upload and sourcemaps jobs
           command: echo BUILD_JOB_BUILD_NUM=$CIRCLE_BUILD_NUM >> ~/.circlerc
@@ -383,10 +384,17 @@ jobs:
     steps:
       - attach_workspace:
           at: /
+      - export_circlerc_vars
       - run:
           name: Upload sourcemaps to datadog
           working_directory: src/apps/webclient
-          command: source ~/.circlerc && DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}" ASSET_URL_PREFIX="https://<< parameters.env >>-assets.gousto<< parameters.top_level_domain >>/build/${BUILD_JOB_BUILD_NUM}/" yarn datadog:upload-sourcemaps
+          command: |
+            DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}"
+            DATADOG_SITE="datadoghq.eu"
+            BUILD_DIR="./public"
+            CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}"
+            ASSET_URL_PREFIX="https://<< parameters.env >>-assets.gousto<< parameters.top_level_domain >>/build/${BUILD_JOB_BUILD_NUM}/"
+            yarn datadog:upload-sourcemaps
 
   upload-assets-to-s3:
     executor: gousto_platform_image
@@ -398,6 +406,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /
+      - export_circlerc_vars
       # The build puts its results into `dist` for server, and into `public`
       # for client.  The asset files in the latter are a superset of the ones
       # in former, except for the icon files.  We need those to appear at the
@@ -412,7 +421,7 @@ jobs:
       - run:
           name: Set assets bucket variable
           command: |
-            echo 'source ~/.circlerc && export ASSETS_BUCKET=s3://s3-gousto-<< parameters.env >>-assets/build' >> $BASH_ENV
+            echo 'export ASSETS_BUCKET=s3://s3-gousto-<< parameters.env >>-assets/build' >> $BASH_ENV
       - upload-to-s3:
           bucket: ${ASSETS_BUCKET}/${BUILD_JOB_BUILD_NUM}/
 
@@ -424,9 +433,10 @@ jobs:
       - setup_remote_docker
       - attach_workspace:
           at: /
+      - export_circlerc_vars
       - run:
           name: Create and upload webclient docker image to ECR
-          command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
+          command: python ./ci_scripts/create_image.py --name webclient
           no_output_timeout: 20m
 
   test-e2e:
@@ -436,6 +446,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /
+      - export_circlerc_vars
       - run:
           name: Install CI dependencies
           command: apt-get -y update && apt-get -y install jq
@@ -449,7 +460,7 @@ jobs:
       - run:
           name: Lease CI node access to public ALB
           working_directory: scripts
-          command: source ~/.circlerc && ./lease-access.sh
+          command: ./lease-access.sh
       - run:
           name: Find Datadog RUM sessions for E2E tests here ⬇️
           command: echo "https://datadoghq.eu/rum/explorer?query=%40application.id%3A7eaa558f-a187-40c5-b743-9fd52d7aff3a&tab=session&from_ts=1640000000000&to_ts=1740000000000&live=true"
@@ -560,9 +571,10 @@ jobs:
       - checkout # Required for BODA
       - attach_workspace:
           at: /
+      - export_circlerc_vars
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
-          command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
+          command: python ./ci_scripts/deploy_service.py --service webclient
 
 workflows:
   feature-branch:
