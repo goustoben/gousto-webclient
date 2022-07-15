@@ -35,7 +35,7 @@ type RecipeListProps = {
 /**
  * How many recipes to render immediately
  */
-const IMMEDIATE_RENDER_COUNT = 15
+const IMMEDIATE_RENDER_COUNT = 40
 /**
  * How long to wait before loading the rest
  */
