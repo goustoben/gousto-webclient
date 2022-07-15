@@ -249,9 +249,21 @@ jobs:
           name: Unit test (apps/webclient)
           # Do not run webclient unit tests if only feature modules / their dependencies have changed
           command: |
-            yarn workspaces foreach --include='webclient' --from='{@library/*,webclient}' --since=$BRANCH_POINT --recursive --verbose run test:unit
+            TESTS=$(circleci tests glob **/*.test.{js,ts,jsx,tsx} | circleci tests split --split-by=timings --timings-type=classname)
+            JEST_JUNIT_OUTPUT_DIR="./test-results"
+            yarn workspaces foreach --include='webclient' --from='{@library/*,webclient}' --since=$BRANCH_POINT --recursive --verbose run test:unit $TESTS --coverage --reporters=default --reporters=jest-junit
+
+          ## RUN ALL UNIT TESTS FOR WEBCLIENT
+          # command: |
+          #   yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
+          #   if [ -s unit-tests ]; then
+          # TESTS=$(circleci tests glob **/*.test.{js,ts,jsx,tsx} | circleci tests split --split-by=timings --timings-type=classname)
+          # JEST_JUNIT_OUTPUT_DIR="./test-results"
+          #     yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit
+          #   fi
+          #   rm unit-tests
       - store_test_results:
-          path: src/apps/webclient/junit.xml
+          path: src/apps/webclient/test-results
 
   lint:
     executor: circleci_node_image
