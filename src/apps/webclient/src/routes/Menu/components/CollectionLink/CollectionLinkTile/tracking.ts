@@ -10,23 +10,18 @@ export const useTracking = () => {
   const dispatch = useDispatch()
   const { currentCollectionId } = useCollections()
 
-  const track = ({
-    targetCollectionId,
-    recipeId,
-  }: {
-    targetCollectionId: string
-    recipeId: string
-  }) => {
-    dispatch({
-      type: actionTypes.TRACKING,
-      trackingData: {
-        actionType: trackingKeys.kales_clickDietaryCollectionLink,
-        currentCollectionId,
-        targetCollectionId,
-        recipeId,
-      },
-    })
-  }
-
-  return useCallback(track, [dispatch, currentCollectionId])
+  return useCallback(
+    ({ targetCollectionId, recipeId }: { targetCollectionId: string; recipeId: string }) => {
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: trackingKeys.kales_clickDietaryCollectionLink,
+          currentCollectionId,
+          targetCollectionId,
+          recipeId,
+        },
+      })
+    },
+    [dispatch, currentCollectionId],
+  )
 }

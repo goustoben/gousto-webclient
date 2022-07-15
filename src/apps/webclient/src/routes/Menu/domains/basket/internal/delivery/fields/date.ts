@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 
@@ -11,12 +11,9 @@ const useCurrentSlotId = () => useSelector<RootStateOrAny, string>(getBasketSlot
 const useChangeFunctions = () => {
   const dispatch = useDispatch()
 
-  const changeDate = useMemo(() => (date: string) => dispatch(basketDateChange(date)), [dispatch])
+  const changeDate = useCallback((date: string) => dispatch(basketDateChange(date)), [dispatch])
 
-  const changeSlot = useMemo(
-    () => (slotId: string) => dispatch(basketSlotChange(slotId)),
-    [dispatch],
-  )
+  const changeSlot = useCallback((slotId: string) => dispatch(basketSlotChange(slotId)), [dispatch])
 
   return { changeDate, changeSlot }
 }

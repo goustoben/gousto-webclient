@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 
@@ -17,23 +17,25 @@ const useStateAddress = () =>
 const useCurrentAddress = () => {
   const address = useStateAddress()
 
-  if (!address) {
-    return null
-  }
+  const addressId = address?.get('id') || null
+  const addressPostcode = address?.get('postcode') || null
 
-  return {
-    id: address.get('id'),
-    postcode: address.get('postcode'),
-  }
+  return useMemo(
+    () =>
+      addressId && addressPostcode
+        ? {
+            id: addressId,
+            postcode: addressPostcode,
+          }
+        : null,
+    [addressId, addressPostcode],
+  )
 }
 
 const useChangeAddress = () => {
   const dispatch = useDispatch()
 
-  return useMemo(
-    () => (address: Address) => dispatch(basketChosenAddressChange(address)),
-    [dispatch],
-  )
+  return useCallback((address: Address) => dispatch(basketChosenAddressChange(address)), [dispatch])
 }
 
 /**
