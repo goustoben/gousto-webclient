@@ -647,7 +647,7 @@ workflows:
 
   staging-environment:
     when:
-      equal: [develop, << pipeline.git.branch >>]
+      equal: [port-gha-to-circle-test-develop, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
@@ -677,54 +677,54 @@ workflows:
           requires:
             - install-dependencies
 
-      - upload-source-maps-to-datadog:
-          env: production
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - build-webclient
+      # - upload-source-maps-to-datadog:
+      #     env: production
+      #     context: gousto-prod-aws-app-circleci
+      #     requires:
+      #       - build-webclient
 
-      - upload-assets-to-s3:
-          name: Upload static assets to staging S3 /build/BUILD_NUMBER
-          env: staging
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
+      # - upload-assets-to-s3:
+      #     name: Upload static assets to staging S3 /build/BUILD_NUMBER
+      #     env: staging
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - build-webclient
 
-      - upload-assets-to-s3:
-          name: Upload static assets to production S3 /build/BUILD_NUMBER
-          env: production
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - build-webclient
+      # - upload-assets-to-s3:
+      #     name: Upload static assets to production S3 /build/BUILD_NUMBER
+      #     env: production
+      #     context: gousto-prod-aws-app-circleci
+      #     requires:
+      #       - build-webclient
 
-      - test-regression:
-          name: test-regression-web
-          platform: web
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
+      # - test-regression:
+      #     name: test-regression-web
+      #     platform: web
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - install-dependencies
 
-      - test-regression:
-          name: test-regression-mobile
-          platform: mobile
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
+      # - test-regression:
+      #     name: test-regression-mobile
+      #     platform: mobile
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - install-dependencies
 
-      - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
+      # - create-and-upload-webclient-docker-image-to-ecr:
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - build-webclient
 
-      - deploy-infrastructure-and-webclient-image:
-          name: deploy-infrastructure-and-webclient-image-to-staging
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - create-and-upload-webclient-docker-image-to-ecr
-            - "Upload static assets to staging S3 /build/BUILD_NUMBER"
-            - "Upload static assets to production S3 /build/BUILD_NUMBER"
+      # - deploy-infrastructure-and-webclient-image:
+      #     name: deploy-infrastructure-and-webclient-image-to-staging
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - create-and-upload-webclient-docker-image-to-ecr
+      #       - "Upload static assets to staging S3 /build/BUILD_NUMBER"
+      #       - "Upload static assets to production S3 /build/BUILD_NUMBER"
 
-      - test-e2e:
+      # - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
             - deploy-infrastructure-and-webclient-image-to-staging
