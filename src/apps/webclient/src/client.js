@@ -1,3 +1,4 @@
+// import './wdyr'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import React from 'react'
@@ -23,7 +24,6 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { initializeDatadog } from './middlewares/datadog/initialize'
 import { configureStore } from './store'
 import { initializePerformanceTrackerSender } from './performanceTracker/initializePerformanceTrackerSender'
-
 docReady('docReady', window)
 
 let initialState = {}
@@ -44,7 +44,7 @@ window.docReady(() => {
   clientAuthorise(store)
   const query = queryString.parse(window.location.search)
   processFeaturesQuery(query, store)
-  processQuery(query, store, {hashTag: window.location.hash})
+  processQuery(query, store, { hashTag: window.location.hash })
 
   refresh(store)
 
@@ -60,12 +60,8 @@ window.docReady(() => {
 
   if (reactRootDOM && !(initialState.serverError && initialState.serverError === '500')) {
     ReactDOM.render(
-      <AppContainer
-        history={history}
-        routes={routes(store)}
-        store={store}
-      />,
-      reactRootDOM
+      <AppContainer history={history} routes={routes(store)} store={store} />,
+      reactRootDOM,
     )
 
     window.clientRenderStarted = true
@@ -84,10 +80,10 @@ window.onhashchange = () => {
 
 window.__store__ = store // eslint-disable-line no-underscore-dangle
 
-window.__loadFeatures__ = features => loadFeatures(features, store) // eslint-disable-line no-underscore-dangle
+window.__loadFeatures__ = (features) => loadFeatures(features, store) // eslint-disable-line no-underscore-dangle
 
-window.__loadVariants__ = variants => loadVariants(variants, store) // eslint-disable-line no-underscore-dangle
+window.__loadVariants__ = (variants) => loadVariants(variants, store) // eslint-disable-line no-underscore-dangle
 
-window.__featuresLoadedFromStore__ = features => featuresLoadedFromStore(features, store) // eslint-disable-line no-underscore-dangle
+window.__featuresLoadedFromStore__ = (features) => featuresLoadedFromStore(features, store) // eslint-disable-line no-underscore-dangle
 
 window.__authRefresh__ = refresh // eslint-disable-line no-underscore-dangle

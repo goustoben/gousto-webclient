@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import actions from 'actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -42,15 +42,19 @@ const MenuRecipesPageWrapper = (ownProps) => {
   const showCapacityInfo = useSelector(shouldShowCapacityInfo)
   const menuLoadingErrorMessage = useSelector(getMenuLoadingErrorMessage)
   const isDoubleDeckerFeatureOn = useDoubleDeckerNav()
-  const actionDispatchers = bindActionCreators(
-    {
-      checkQueryParams,
-      basketOrderLoaded: actions.basketOrderLoaded,
-      portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
-      loadOptimizelySDK,
-      fetchMenuData: fetchData,
-    },
-    dispatch,
+  const actionDispatchers = useMemo(
+    () =>
+      bindActionCreators(
+        {
+          checkQueryParams,
+          basketOrderLoaded: actions.basketOrderLoaded,
+          portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
+          loadOptimizelySDK,
+          fetchMenuData: fetchData,
+        },
+        dispatch,
+      ),
+    [dispatch],
   )
 
   useHotjarIdentify()

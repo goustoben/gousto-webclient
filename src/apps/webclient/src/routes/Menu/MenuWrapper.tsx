@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { useDispatch } from 'react-redux'
 
@@ -11,6 +11,8 @@ const MenuWrapper = (ownProps: any) => {
   const dispatch = useDispatch()
   const { addRecipe, removeRecipe } = useBasket()
 
+  const memQuery = useMemo(() => ownProps.query, [])
+
   const onOverlayClick = React.useCallback(() => {
     dispatch(menuOverlayClick(removeRecipe))
   }, [dispatch, removeRecipe])
@@ -21,8 +23,11 @@ const MenuWrapper = (ownProps: any) => {
       {...ownProps}
       addRecipeToBasket={addRecipe}
       onOverlayClick={onOverlayClick}
+      query={memQuery}
     />
   )
 }
+
+MenuWrapper.whyDidYouRender = true
 
 export { MenuWrapper }

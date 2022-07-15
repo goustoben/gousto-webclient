@@ -35,83 +35,98 @@ const useAddValidRecipeToBasket = () => {
 
   const dispatch = useDispatch()
 
-  return (
-    recipeId: string,
-    view?: string,
-    recipeInfo?: {
-      position: string
-    },
-    maxRecipesNum?: number,
-    orderId?: string,
-  ) => {
-    const outOfStock = isRecipeOutOfStock(recipeId, numPortions)
-    if (reachedLimit || outOfStock) {
-      return
-    }
+  return React.useCallback(
+    (
+      recipeId: string,
+      view?: string,
+      recipeInfo?: {
+        position: string
+      },
+      maxRecipesNum?: number,
+      orderId?: string,
+    ) => {
+      const outOfStock = isRecipeOutOfStock(recipeId, numPortions)
+      if (reachedLimit || outOfStock) {
+        return
+      }
 
-    if (recipeInfo) {
-      Object.assign(recipeInfo, { collection })
-    }
+      if (recipeInfo) {
+        Object.assign(recipeInfo, { collection })
+      }
 
-    if (!orderId && !firstRecipeAdded) {
-      sendClientMetric('menu-first-recipe-add', 1, 'Count')
-    }
+      if (!orderId && !firstRecipeAdded) {
+        sendClientMetric('menu-first-recipe-add', 1, 'Count')
+      }
 
-    dispatch({
-      type: actionTypes.BASKET_RECIPE_ADD,
-      recipeId,
-      ...recipeInfo,
-      orderId,
-      trackingData: {
-        actionType: trackingKeys.addRecipe,
+      dispatch({
+        type: actionTypes.BASKET_RECIPE_ADD,
         recipeId,
-        view,
-        position: recipeInfo && recipeInfo.position,
-        collection,
-        recipe_count: menuRecipes.size + 1, // The action is performed in the same time so the size is not updated yet
-      },
-    })
-
-    dispatch({
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: {
-        [recipeId]: {
-          [numPortions]: -1,
-        },
-      },
-    })
-
-    if (reachedLimit) {
-      dispatch({
-        type: actionTypes.BASKET_LIMIT_REACHED,
-        limitReached: reachedLimit,
+        ...recipeInfo,
+        orderId,
         trackingData: {
-          actionType: trackingKeys.basketLimit,
-          limitReached: reachedLimit,
+          actionType: trackingKeys.addRecipe,
+          recipeId,
           view,
-          source: actionTypes.RECIPE_ADDED,
+          position: recipeInfo && recipeInfo.position,
+          collection,
+          recipe_count: menuRecipes.size + 1, // The action is performed in the same time so the size is not updated yet
         },
       })
-    }
 
-    let recipesCount = 0
-
-    menuRecipes.forEach((count = 0) => {
-      recipesCount += count
-    })
-
-    if (prevRecipes && prevRecipes.size < 2 && recipesCount > 1 && slotId) {
       dispatch({
-        type: actionTypes.BASKET_ELIGIBLE_TRACK,
-        trackingData: {
-          actionType: trackingKeys.basketEligible,
-          ...UTM,
-          promoCode,
-          menuRecipes,
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: {
+          [recipeId]: {
+            [numPortions]: -1,
+          },
         },
       })
-    }
-  }
+
+      if (reachedLimit) {
+        dispatch({
+          type: actionTypes.BASKET_LIMIT_REACHED,
+          limitReached: reachedLimit,
+          trackingData: {
+            actionType: trackingKeys.basketLimit,
+            limitReached: reachedLimit,
+            view,
+            source: actionTypes.RECIPE_ADDED,
+          },
+        })
+      }
+
+      let recipesCount = 0
+
+      menuRecipes.forEach((count = 0) => {
+        recipesCount += count
+      })
+
+      if (prevRecipes && prevRecipes.size < 2 && recipesCount > 1 && slotId) {
+        dispatch({
+          type: actionTypes.BASKET_ELIGIBLE_TRACK,
+          trackingData: {
+            actionType: trackingKeys.basketEligible,
+            ...UTM,
+            promoCode,
+            menuRecipes,
+          },
+        })
+      }
+    },
+    [
+      numPortions,
+      reachedLimit,
+      UTM,
+      collection,
+      dispatch,
+      firstRecipeAdded,
+      isRecipeOutOfStock,
+      menuRecipes,
+      prevRecipes,
+      promoCode,
+      slotId,
+    ],
+  )
 }
 
 type menuLimitsForBasketType = {
@@ -129,42 +144,47 @@ const useValidateMenuLimitsForBasket = () => {
   const basketRecipes: Map<string, number> = useSelector(getBasketRecipes)
   const menuLimitsForBasket: menuLimitsForBasketType = useSelector(getMenuLimitsForBasket)
 
-  return (recipeId: string) => {
-    const limitsReached = menuLimitsForBasket.map((limit) => {
-      const { name, limitProps, items } = limit
+  return React.useCallback(
+    (recipeId: string) => {
+      const limitsReached = menuLimitsForBasket.map((limit) => {
+        const { name, limitProps, items } = limit
 
-      if (recipeId && !items.some((item) => item?.core_recipe_id === recipeId)) {
-        return null
-      }
-
-      const recipesInBasketIds = basketRecipes.keySeq().toArray()
-      const recipesFromLimitInBasket =
-        recipesInBasketIds &&
-        recipesInBasketIds.filter((recipe) => items.some((item) => item?.core_recipe_id === recipe))
-      // we set the count to 1 if we trigger the validation at add and 0 if we do it at checkout
-      let count = recipeId ? 1 : 0
-
-      if (recipesFromLimitInBasket) {
-        recipesFromLimitInBasket.forEach((recipe) => {
-          if (basketRecipes.get(recipe)) {
-            count += basketRecipes.get(recipe)
-          }
-        })
-      }
-
-      if (count > limitProps.value) {
-        return {
-          name,
-          message: limitProps.description,
-          items: recipesFromLimitInBasket,
+        if (recipeId && !items.some((item) => item?.core_recipe_id === recipeId)) {
+          return null
         }
-      }
 
-      return null
-    })
+        const recipesInBasketIds = basketRecipes.keySeq().toArray()
+        const recipesFromLimitInBasket =
+          recipesInBasketIds &&
+          recipesInBasketIds.filter((recipe) =>
+            items.some((item) => item?.core_recipe_id === recipe),
+          )
+        // we set the count to 1 if we trigger the validation at add and 0 if we do it at checkout
+        let count = recipeId ? 1 : 0
 
-    return limitsReached.filter((item) => item !== null)
-  }
+        if (recipesFromLimitInBasket) {
+          recipesFromLimitInBasket.forEach((recipe) => {
+            if (basketRecipes.get(recipe)) {
+              count += basketRecipes.get(recipe)
+            }
+          })
+        }
+
+        if (count > limitProps.value) {
+          return {
+            name,
+            message: limitProps.description,
+            items: recipesFromLimitInBasket,
+          }
+        }
+
+        return null
+      })
+
+      return limitsReached.filter((item) => item !== null)
+    },
+    [basketRecipes, menuLimitsForBasket],
+  )
 }
 export type AddRecipeFn = ReturnType<typeof useAddRecipe>
 export const useAddRecipe = () => {

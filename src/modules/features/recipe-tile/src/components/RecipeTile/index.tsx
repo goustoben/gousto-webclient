@@ -1,20 +1,16 @@
-import React, { SyntheticEvent } from "react";
-import styled from "@emotion/styled";
+import React, { SyntheticEvent, useCallback } from 'react'
+import styled from '@emotion/styled'
 
-import {
-  useGetAlternativeOptionsForRecipeHook,
-  useRecipe,
-  useStockHook,
-} from "../../model/context";
+import { useGetAlternativeOptionsForRecipeHook, useRecipe, useStockHook } from '../../model/context'
 
-import { useRecipeReference } from "../../model/context/useRecipeReference";
+import { useRecipeReference } from '../../model/context/useRecipeReference'
 
-import { DeviceType, useDeviceType } from "../../utils/useDeviceType";
-import { VariantHeader } from "../VariantHeader";
-import { TileImage } from "../TileImage/TileImage";
-import { BrandTag } from "../BrandTag";
-import { Title } from "../Title";
-import { RecipeTilePurchaseInfo } from "../RecipeTilePurchaseInfo";
+import { DeviceType, useDeviceType } from '../../utils/useDeviceType'
+import { VariantHeader } from '../VariantHeader'
+import { TileImage } from '../TileImage/TileImage'
+import { BrandTag } from '../BrandTag'
+import { Title } from '../Title'
+import { RecipeTilePurchaseInfo } from '../RecipeTilePurchaseInfo'
 import {
   cssRecipeTagHolder,
   cssRecipeTagHolderShifted,
@@ -24,45 +20,41 @@ import {
   cssRecipeTileIsFineDineIn,
   cssRecipeTileWithLinkTitle,
   cssVariantPushDown,
-} from "./styles";
-import { RecipeTag } from "../RecipeTag";
-import { useGetRecipeTileLinkDataHook } from "../../model/context/useGetRecipeTileLinkData";
-import { RecipeTileLink } from "../RecipeTileLink";
-import { useBasketHook } from "../../model/context/useBasket";
+} from './styles'
+import { RecipeTag } from '../RecipeTag'
+import { useGetRecipeTileLinkDataHook } from '../../model/context/useGetRecipeTileLinkData'
+import { RecipeTileLink } from '../RecipeTileLink'
+import { useBasketHook } from '../../model/context/useBasket'
 
-const OuterContainer = styled.div(cssRecipeTile as any);
+const OuterContainer = styled.div(cssRecipeTile as any)
 const ImageContainer = styled.div(
   (props: any) =>
     ({
       ...cssRecipeTileContainer,
       ...(props.isFineDineIn ? cssRecipeTileIsFineDineIn : {}),
-    } as any)
-);
+    } as any),
+)
 const RecipeTagContainer = styled.span(
   (props: any) =>
     ({
       ...cssRecipeTagHolder,
       ...(props.showVariantHeader ? cssRecipeTagHolderShifted : {}),
-    } as any)
-);
+    } as any),
+)
 const BrandTagContainer = styled.div(
   (props: any) =>
     ({
       ...cssRecipeTileInfo,
       ...(props.mobileBannerShown ? cssVariantPushDown : {}),
-    } as any)
-);
+    } as any),
+)
 
 type RecipeTileProps = {
-  originalId: string;
-  currentCollectionId: string;
-  onClick: (
-    recipeId: string,
-    currentCollectionId: string,
-    recipeReference?: string | null
-  ) => void;
-  SwapAlternativeOptionsMobile?: React.FC<{}>;
-};
+  originalId: string
+  currentCollectionId: string
+  onClick: (recipeId: string, currentCollectionId: string, recipeReference?: string | null) => void
+  SwapAlternativeOptionsMobile?: React.FC<{}>
+}
 
 export const RecipeTile = ({
   originalId,
@@ -70,64 +62,61 @@ export const RecipeTile = ({
   onClick,
   SwapAlternativeOptionsMobile,
 }: RecipeTileProps) => {
-  const useGetAlternativeOptionsForRecipe =
-    useGetAlternativeOptionsForRecipeHook();
-  const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipe();
+  const useGetAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeHook()
+  const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipe()
 
-  const useStock = useStockHook();
-  const { isRecipeOutOfStock } = useStock();
+  const useStock = useStockHook()
+  const { isRecipeOutOfStock } = useStock()
 
-  const useBasket = useBasketHook();
-  const { numPortions } = useBasket();
+  const useBasket = useBasketHook()
+  const { numPortions } = useBasket()
 
-  const { isFineDineIn, id: recipeId } = useRecipe();
-  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions);
+  const { isFineDineIn, id: recipeId } = useRecipe()
+  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions)
 
-  const deviceType = useDeviceType();
-  const recipeReference = useRecipeReference();
-  const useGetRecipeTileLinkData = useGetRecipeTileLinkDataHook();
-  const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData();
+  const deviceType = useDeviceType()
+  const recipeReference = useRecipeReference()
+  const useGetRecipeTileLinkData = useGetRecipeTileLinkDataHook()
+  const { isRecipeTileLinkVisible } = useGetRecipeTileLinkData()
+
+  const handleOnClick = useCallback(
+    (e: SyntheticEvent) => {
+      e.stopPropagation()
+      onClick(recipeId, categoryId, recipeReference)
+    },
+    [onClick, recipeId, categoryId, recipeReference],
+  )
 
   // should never happen but caters for loading state
   if (categoryId === null) {
-    return null;
+    return null
   }
 
   const alternatives = getAlternativeOptionsForRecipe({
     recipeId,
     categoryId,
     isOnDetailScreen: false,
-  });
-
-  const handleOnClick = (e: SyntheticEvent) => {
-    e.stopPropagation();
-    onClick(recipeId, categoryId, recipeReference);
-  };
+  })
 
   // alternative options include the recipe itself
-  const hasAlternatives = alternatives.length > 1;
+  const hasAlternatives = alternatives.length > 1
 
-  const showVariantHeader = hasAlternatives && !isOutOfStock;
+  const showVariantHeader = hasAlternatives && !isOutOfStock
 
-  const mobileBannerShown =
-    showVariantHeader && deviceType === DeviceType.MOBILE;
+  const mobileBannerShown = showVariantHeader && deviceType === DeviceType.MOBILE
 
   return (
     <OuterContainer
       role="button"
       tabIndex={0}
-      data-testing={
-        isOutOfStock ? "menuRecipeOutOfStock" : "menuRecipeViewDetails"
-      }
+      data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
       data-testing-id={recipeId}
       onClick={handleOnClick}
       onKeyPress={handleOnClick}
     >
       {
         // mobile banner needs to sit outside of TileImage
-        deviceType === DeviceType.MOBILE && (
-          <VariantHeader categoryId={categoryId} />
-        )
+        deviceType === DeviceType.MOBILE && <VariantHeader categoryId={categoryId} />
       }
 
       <ImageContainer isFineDineIn={isFineDineIn}>
@@ -138,15 +127,10 @@ export const RecipeTile = ({
         <BrandTagContainer mobileBannerShown={mobileBannerShown}>
           <BrandTag />
 
-          <Title
-            styles={isRecipeTileLinkVisible ? [cssRecipeTileWithLinkTitle] : []}
-          />
+          <Title styles={isRecipeTileLinkVisible ? [cssRecipeTileWithLinkTitle] : []} />
 
           {isRecipeTileLinkVisible && (
-            <RecipeTileLink
-              isFineDineIn={Boolean(isFineDineIn)}
-              onClickTile={handleOnClick}
-            />
+            <RecipeTileLink isFineDineIn={Boolean(isFineDineIn)} onClickTile={handleOnClick} />
           )}
 
           <RecipeTilePurchaseInfo
@@ -158,5 +142,7 @@ export const RecipeTile = ({
         </BrandTagContainer>
       </ImageContainer>
     </OuterContainer>
-  );
-};
+  )
+}
+
+RecipeTile.whyDidYouRender = true

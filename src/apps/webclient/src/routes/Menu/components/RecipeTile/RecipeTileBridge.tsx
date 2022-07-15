@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
 import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
@@ -31,6 +31,8 @@ type RecipeTileBridgeProps = {
   originalId: string
   collectionId: string
 }
+
+const vpp = () => null
 
 /**
  *
@@ -111,11 +113,14 @@ export const RecipeTileBridge = ({
     [],
   )
 
+  const memRecipeImmutable = useMemo(() => Immutable.fromJS(recipe), [recipe.id])
+  const memRecipe = useMemo(() => recipe, [recipe.id])
+
   return (
     <RecipeReferenceProvider value={recipeReference}>
-      <RecipeContextProvider value={Immutable.fromJS(recipe)}>
+      <RecipeContextProvider value={memRecipeImmutable}>
         <RecipeTileDependencies
-          recipe={recipe}
+          recipe={memRecipe}
           useGetAlternativeOptionsForRecipe={useGetOptionsForRecipe}
           useStock={useStock}
           useBasket={useBasket}
@@ -131,13 +136,14 @@ export const RecipeTileBridge = ({
             originalId={originalId}
             currentCollectionId={collectionId}
             onClick={onClick}
-            SwapAlternativeOptionsMobile={() => (
-              <SwapAlternativeOptionsMobile
-                recipeId={recipe.id}
-                originalId={originalId}
-                categoryId={collectionId}
-              />
-            )}
+            SwapAlternativeOptionsMobile={vpp}
+            // SwapAlternativeOptionsMobile={() => (
+            //   <SwapAlternativeOptionsMobile
+            //     recipeId={recipe.id}
+            //     originalId={originalId}
+            //     categoryId={collectionId}
+            //   />
+            // )}
           />
         </RecipeTileDependencies>
       </RecipeContextProvider>

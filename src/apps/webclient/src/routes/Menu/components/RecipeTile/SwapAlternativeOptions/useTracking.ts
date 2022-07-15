@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import { useDispatch } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
@@ -22,31 +24,37 @@ type TrackEventArguments = (
 export const useTracking = () => {
   const dispatch = useDispatch()
 
-  const trackEvent = (trackingData: TrackEventArguments) => {
-    dispatch({
-      type: actionTypes.TRACKING,
-      trackingData,
-    })
-  }
+  const trackEvent = useCallback(
+    (trackingData: TrackEventArguments) => {
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData,
+      })
+    },
+    [dispatch],
+  )
 
-  const trackRecipeAlternativeOptionsMenuOpen: TrackRecipeAlternativeOptionsMenuOpen = ({
-    recipeId,
-    collectionId,
-  }) =>
-    trackEvent({
-      event: 'recipe-alternative-options-menu-open',
-      recipeId,
-      collectionId,
-    })
+  const trackRecipeAlternativeOptionsMenuOpen: TrackRecipeAlternativeOptionsMenuOpen = useCallback(
+    ({ recipeId, collectionId }) =>
+      trackEvent({
+        event: 'recipe-alternative-options-menu-open',
+        recipeId,
+        collectionId,
+      }),
+    [trackEvent],
+  )
 
   const trackRecipeAlternativeOptionsMenuSwapRecipes: TrackRecipeAlternativeOptionsMenuSwapRecipes =
-    ({ previousRecipeId, nextRecipeId, collectionId }) =>
-      trackEvent({
-        event: 'recipe-alternative-options-menu-swap-recipes',
-        collectionId,
-        previousRecipeId,
-        nextRecipeId,
-      })
+    useCallback(
+      ({ previousRecipeId, nextRecipeId, collectionId }) =>
+        trackEvent({
+          event: 'recipe-alternative-options-menu-swap-recipes',
+          collectionId,
+          previousRecipeId,
+          nextRecipeId,
+        }),
+      [trackEvent],
+    )
 
   return {
     trackRecipeAlternativeOptionsMenuOpen,
