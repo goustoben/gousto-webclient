@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
 import { useMenu } from 'routes/Menu/domains/menu'
+import { useStock } from 'routes/Menu/domains/stock'
 
 import { RecipeList } from './RecipeList'
 import { RecipeListWrapper } from './RecipeListWrapper'
@@ -25,6 +26,9 @@ jest.mock('../../domains/collections', () => ({
 
 jest.mock('routes/Menu/domains/menu')
 const useMenuMock = useMenu as jest.MockedFunction<typeof useMenu>
+
+jest.mock('routes/Menu/domains/stock')
+const useStockMock = useStock as jest.MockedFunction<typeof useStock>
 
 describe('RecipeListWrapper', () => {
   let wrapper: ReactWrapper
@@ -71,6 +75,12 @@ describe('RecipeListWrapper', () => {
     useMenuMock.mockReturnValue({
       getRecipesForCollectionId: () => [],
       getOptionsForRecipe: () => [],
+    })
+
+    useStockMock.mockReturnValue({
+      getStockForRecipe: () => 1000,
+      isRecipeInStock: () => true,
+      isRecipeOutOfStock: () => false,
     })
   })
 

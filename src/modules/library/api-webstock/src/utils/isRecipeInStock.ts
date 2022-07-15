@@ -9,7 +9,7 @@ export function useIsRecipeInStock(
   const minimumThreshold = deps.minimumThreshold || 0
 
   return useCallback(
-    (recipeId: string, numPortions: 2 | 4) => {
+    (recipeId: string, numPortions: number) => {
       const recipeStockCount = getStockForRecipe(recipeId, numPortions)
 
       return recipeStockCount > minimumThreshold

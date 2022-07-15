@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react'
 
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
+import { useStock } from 'routes/Menu/domains/stock'
 
-import { useStock } from '../../domains/basket'
 import { useCurrentCollectionId } from '../../domains/collections'
 import { useMenu } from '../../domains/menu'
 import { useSelectedCuisines } from '../../hooks/useSelectedCuisines'
@@ -13,7 +13,7 @@ import { useSoldOutTracking } from './useSoldOutTracking'
 const RecipeListWrapper = (ownProps: any) => {
   const currentCollectionId = useCurrentCollectionId()
   const { getRecipesForCollectionId } = useMenu()
-  const { getOutOfStockRecipeIds } = useStock()
+  const { isRecipeOutOfStock } = useStock()
   const { trackSoldOutRecipes } = useSoldOutTracking()
 
   const isDietaryCollectionLinksEnabled = useIsOptimizelyFeatureEnabled(
@@ -33,9 +33,9 @@ const RecipeListWrapper = (ownProps: any) => {
   // to avoid eslint react-hooks/use-exhaustive-deps rule we have to introduce a new variable
   const recipeIds = recipesIdsRef.current
   useEffect(() => {
-    const soldOutRecipes = getOutOfStockRecipeIds(recipeIds)
+    const soldOutRecipes = recipeIds.filter((r) => isRecipeOutOfStock(r, 2))
     trackSoldOutRecipes(soldOutRecipes)
-  }, [recipeIds, getOutOfStockRecipeIds, trackSoldOutRecipes])
+  }, [recipeIds, isRecipeOutOfStock, trackSoldOutRecipes])
 
   return (
     <RecipeList

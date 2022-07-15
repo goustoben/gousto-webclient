@@ -24,7 +24,7 @@ export function useStock(swrArgs: UseStockSWRArgs, deps: UseStockDependencies) {
   const isRecipeInStock = useIsRecipeInStock(deps, getStockForRecipe)
 
   const isRecipeOutOfStock = React.useCallback(
-    (recipeId: string, numPortions: 2 | 4) => !isRecipeInStock(recipeId, numPortions),
+    (recipeId: string, numPortions: number) => !isRecipeInStock(recipeId, numPortions),
     [isRecipeInStock],
   )
 
