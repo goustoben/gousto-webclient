@@ -324,6 +324,41 @@ jobs:
           name: Typecheck tests (apps/webclient)
           command: yarn workspace webclient typecheck:tests
 
+  unit-test:
+    executor: circleci_node_image
+    resource_class: xlarge
+    working_directory: ~/mnt/ramdisk # /mnt/ramdisk doesn't have enough memory to run this job
+    parallelism: 5
+    parameters:
+      differential:
+        type: boolean
+        default: false
+    environment:
+      TZ: "Europe/London"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - export_circlerc_vars:
+          circlerc_path: ~/root/.circlerc
+      - export_differential_build_flags:
+          differential: << parameters.differential >>
+      - run:
+          name: Unit test (feature modules)
+          command: yarn workspaces foreach --include='@features/*' $SINCE_FLAG $RECURSIVE_FLAG --verbose run test:unit
+      - run:
+          name: Unit test (libraries)
+          command: yarn workspaces foreach --include='@library/*' $SINCE_FLAG $RECURSIVE_FLAG --verbose run test:unit
+      - run:
+          name: Unit test (apps/webclient)
+          # Note - test:jest:ci:coverage:circle is a temporary script to ensure no side-effects on current GHA
+          # Do not run webclient unit tests if only feature modules / their dependencies have changed
+          command: >-
+            TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed '/node_modules/d;/libs/d' | circleci tests split)
+            yarn workspaces foreach --include='webclient' $WEBCLIENT_FROM_FLAG $SINCE_FLAG $RECURSIVE_FLAG --verbose run test:jest:ci:coverage:circle
+      - store_test_results:
+          path: ~/mnt/ramdisk/src/apps/webclient/test-results
+
   build-webclient:
     executor: circleci_node_image
     resource_class: large
@@ -568,6 +603,12 @@ workflows:
           requires:
             - setup-ci-variables-scripts
       - type-check:
+          context: gousto-beta-aws-app-circleci
+          differential: true
+          <<: *filter-feature-branches
+          requires:
+            - install-dependencies
+      - unit-test:
           context: gousto-beta-aws-app-circleci
           differential: true
           <<: *filter-feature-branches
