@@ -42,7 +42,8 @@
     "typecheck:tests": "tsc -p ./tsconfig.tests.json",
     "datadog:upload-sourcemaps": "datadog-ci sourcemaps upload $BUILD_DIR --service gousto-webclient --release-version $CIRCLE_BUILD_NUM --minified-path-prefix $ASSET_URL_PREFIX",
     "datadog:upload-report:e2e": "datadog-ci junit upload --service gousto-webclient ../../../tests/e2e/reports",
-    "prettier": "prettier -w ./"
+    "prettier": "prettier -w ./",
+    "echo-tests": "echo $TESTS"
   },
   "dependencies": {
     "@axe-core/react": "^4.1.1",
