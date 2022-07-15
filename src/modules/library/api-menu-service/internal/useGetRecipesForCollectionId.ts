@@ -1,9 +1,17 @@
 import { useCallback, useMemo } from 'react'
 import { useMenuService, UseMenuSWRArgs } from './http'
-import { TransformedRecipe, transformMenuForDate } from './transformer'
-import { getOutOfStockRecipeReplacer, getRecipeReferenceInjector, getSelectedVariantsReplacer } from './recipes/mappers'
-import { getRecipeComparatorForOutOfStock, orderCollectionRecipesByCuisine } from './recipes/sorting'
+import { TransformedRecipe } from './transformer'
+import {
+  getOutOfStockRecipeReplacer,
+  getRecipeReferenceInjector,
+  getSelectedVariantsReplacer,
+} from './recipes/mappers'
+import {
+  getRecipeComparatorForOutOfStock,
+  orderCollectionRecipesByCuisine,
+} from './recipes/sorting'
 import { UseMenuDependencies } from './types'
+import { useTransformedMenuForDate } from './transformer/useTransformedMenus'
 
 /**
  * TypeScript Type guard (for `TransformedRecipe` type)
@@ -30,6 +38,7 @@ export function useGetRecipesForCollectionId(
   { numPortions, selectedRecipeVariants, isRecipeInStock }: UseMenuDependencies,
 ) {
   const menuServiceData = useMenuService(requestArgs)
+  const { menu, collections, recipes } = useTransformedMenuForDate(menuServiceData, date)
 
   const recipeComparatorForOutOfStock = useMemo(
     () => getRecipeComparatorForOutOfStock(isRecipeInStock, numPortions),
@@ -42,7 +51,6 @@ export function useGetRecipesForCollectionId(
         return []
       }
 
-      const { menu, collections, recipes } = transformMenuForDate(menuServiceData, date)
       if (!menu) {
         return []
       }
@@ -82,13 +90,25 @@ export function useGetRecipesForCollectionId(
       const sortedRecipes = unsortedRecipes.sort(recipeComparatorForOutOfStock)
 
       if (args?.selectedCuisines) {
-        const { orderedRecipes } = orderCollectionRecipesByCuisine(sortedRecipes, args.selectedCuisines)
+        const { orderedRecipes } = orderCollectionRecipesByCuisine(
+          sortedRecipes,
+          args.selectedCuisines,
+        )
 
         return orderedRecipes
       }
 
       return sortedRecipes
     },
-    [menuServiceData, isRecipeInStock, numPortions, date, recipeComparatorForOutOfStock, selectedRecipeVariants],
+    [
+      menuServiceData,
+      menu,
+      collections,
+      recipes,
+      isRecipeInStock,
+      numPortions,
+      recipeComparatorForOutOfStock,
+      selectedRecipeVariants,
+    ],
   )
 }

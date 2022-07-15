@@ -3,7 +3,7 @@ import { useMenuService, UseMenuSWRArgs } from './http'
 import { getVariantsForRecipe } from './recipeOptions'
 import { getSurchargeForRecipe } from './recipes/surcharge'
 import { formatRecipeTitle } from './recipes/title'
-import { transformMenuForDate } from './transformer'
+import { useTransformedMenuForDate } from './transformer/useTransformedMenus'
 import { UseMenuDependencies } from './types'
 
 const compareCoreRecipeIds = (a: { coreRecipeId: string }, b: { coreRecipeId: string }) =>
@@ -19,6 +19,7 @@ export function useGetOptionsForRecipe(
   { numPortions, isRecipeInStock }: UseMenuDependencies,
 ) {
   const menuServiceData = useMenuService(requestArgs)
+  const { menu, collections, recipes } = useTransformedMenuForDate(menuServiceData, date)
 
   return useCallback(
     (
@@ -36,7 +37,6 @@ export function useGetOptionsForRecipe(
         return []
       }
 
-      const { menu, collections, recipes } = transformMenuForDate(menuServiceData, date)
       if (!menu) {
         return []
       }
@@ -86,6 +86,6 @@ export function useGetOptionsForRecipe(
         }
       })
     },
-    [menuServiceData, isRecipeInStock, numPortions, date],
+    [menuServiceData, collections, menu, recipes, isRecipeInStock, numPortions],
   )
 }

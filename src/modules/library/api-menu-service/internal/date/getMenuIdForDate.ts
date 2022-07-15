@@ -1,6 +1,6 @@
 import { MenuServiceData } from '../http'
 
-export function getMenuIdForDate(menuServiceData: MenuServiceData, date: string) {
+export function getMenuIdForDate(menuServiceData: MenuServiceData | null, date: string) {
   if (!menuServiceData) {
     return null
   }

@@ -3,7 +3,6 @@ import { collectionsTransformer } from './collections'
 import { ingredientTransformer } from './ingredientTransformer'
 import { recipeTransformer } from './recipes'
 import { formatIngredients } from './recipeHelpers'
-import { getMenuIdForDate } from '../date/getMenuIdForDate'
 
 function transformRecipes(menuServiceData: MenuServiceData, menu: MenuAPIResponseDataItem) {
   if (!menuServiceData) {
@@ -45,42 +44,12 @@ export type TransformedCollection = Unpacked<ReturnType<typeof collectionsTransf
 /**
  * Transforms and flattens the menu service response into an easier-to-query format
  */
-function transformMenu(menuServiceData: MenuServiceData, menu: MenuAPIResponseDataItem) {
+export function transformMenu(menuServiceData: MenuServiceData, menu: MenuAPIResponseDataItem) {
   const transformedCollections: TransformedCollection[] = collectionsTransformer(menuServiceData, menu)
   const transformedRecipes: TransformedRecipe[] = transformRecipes(menuServiceData, menu)
 
   return {
     collections: transformedCollections,
     recipes: transformedRecipes,
-  }
-}
-
-export function transformMenuForDate(menuServiceData: MenuServiceData, date: string) {
-  if (!menuServiceData) {
-    return {
-      menu: null,
-      collections: [] as TransformedCollection[],
-      recipes: [] as TransformedRecipe[],
-    }
-  }
-
-  const menuId = getMenuIdForDate(menuServiceData, date)
-
-  const menu = menuServiceData.data.find((m) => m.id === menuId)
-
-  if (!menu) {
-    return {
-      menu: null,
-      collections: [] as TransformedCollection[],
-      recipes: [] as TransformedRecipe[],
-    }
-  }
-
-  const { collections, recipes } = transformMenu(menuServiceData, menu)
-
-  return {
-    menu,
-    collections,
-    recipes
   }
 }
