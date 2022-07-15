@@ -672,10 +672,10 @@ workflows:
           requires:
             - install-dependencies
 
-      - build-webclient:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
+      # - build-webclient:
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - install-dependencies
 
       # - upload-source-maps-to-datadog:
       #     env: production
@@ -725,9 +725,9 @@ workflows:
       #       - "Upload static assets to production S3 /build/BUILD_NUMBER"
 
       # - test-e2e:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - deploy-infrastructure-and-webclient-image-to-staging
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - deploy-infrastructure-and-webclient-image-to-staging
 
   production-environment:
     when:
