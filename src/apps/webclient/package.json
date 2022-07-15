@@ -33,7 +33,7 @@
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci --detectOpenHandles --forceExit --logHeapUsage --silent --coverage",
-    "test:jest:ci:coverage:circle": "JEST_JUNIT_OUTPUT_DIR='./test-results' jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit",
+    "test:jest:ci:coverage:circle": "JEST_JUNIT_CLASSNAME='{filename}' JEST_JUNIT_OUTPUT_DIR='./test-results' jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "eslint": "eslint .",
     "eslint:ci": "eslint --format=json",
