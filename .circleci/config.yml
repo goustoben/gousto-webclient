@@ -255,13 +255,12 @@ jobs:
           #   yarn workspaces foreach --include='webclient' --from='{@library/*,webclient}' --since=$BRANCH_POINT --recursive --verbose run test:jest $TESTS --coverage --reporters=default --reporters=jest-junit
 
           # RUN ALL UNIT TESTS FOR WEBCLIENT
-          command: >-
+          command: |
             yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
-            if [ -s unit-tests ]; then
-              TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed /node_modules/d | circleci tests split)
-              JEST_JUNIT_OUTPUT_DIR="./test-results"
-              yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit
-            fi
+            [ ! -s unit-tests ] && circleci step halt
+            TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed /node_modules/d | circleci tests split)
+            JEST_JUNIT_OUTPUT_DIR="./test-results"
+            yarn test:jest $TESTS --ci --detectOpenHandles --forceExit --silent --coverage --reporters=default --reporters=jest-junit
             rm unit-tests
       - store_test_results:
           path: ~/mnt/ramdisk/src/apps/webclient/test-results
