@@ -129,6 +129,9 @@ commands:
             - run:
                 name: Exporting --from flag (for webclient upstream changes)
                 command: echo 'export WEBCLIENT_FROM_FLAG="--from={@library/*,webclient}"' >> $BASH_ENV
+            - run:
+                name: Exporting --recursive flag (for webclient upstream changes)
+                command: echo 'export RECURSIVE_FLAG="--recursive"' >> $BASH_ENV
       - unless:
           condition: << parameters.differential >>
           steps:
@@ -248,7 +251,7 @@ jobs:
           differential: << parameters.differential >>
       - run:
           name: Typecheck
-          command: yarn workspaces foreach $SINCE_FLAG --recursive --verbose run typecheck
+          command: yarn workspaces foreach $SINCE_FLAG $RECURSIVE_FLAG --verbose run typecheck
       - run:
           name: Typecheck tests (apps/webclient)
           command: yarn workspace webclient typecheck:tests
@@ -274,17 +277,17 @@ jobs:
           differential: << parameters.differential >>
       - run:
           name: Unit test (feature modules)
-          command: yarn workspaces foreach --include='@features/*' $SINCE_FLAG --recursive --verbose run test:unit
+          command: yarn workspaces foreach --include='@features/*' $SINCE_FLAG $RECURSIVE_FLAG --verbose run test:unit
       - run:
           name: Unit test (libraries)
-          command: yarn workspaces foreach --include='@library/*' $SINCE_FLAG --recursive --verbose run test:unit
+          command: yarn workspaces foreach --include='@library/*' $SINCE_FLAG $RECURSIVE_FLAG --verbose run test:unit
       - run:
           name: Unit test (apps/webclient)
           # Note - test:jest:ci:coverage:circle is a temporary script to ensure no side-effects on current GHA
           # Do not run webclient unit tests if only feature modules / their dependencies have changed
           command: >-
             TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed '/node_modules/d;/libs/d' | circleci tests split)
-            yarn workspaces foreach --include='webclient' $WEBCLIENT_FROM_FLAG $SINCE_FLAG --recursive --verbose run test:jest:ci:coverage:circle
+            yarn workspaces foreach --include='webclient' $WEBCLIENT_FROM_FLAG $SINCE_FLAG $RECURSIVE_FLAG --verbose run test:jest:ci:coverage:circle
       - store_test_results:
           path: ~/mnt/ramdisk/src/apps/webclient/test-results
 
@@ -308,19 +311,26 @@ jobs:
           differential: << parameters.differential >>
       - run:
           name: Lint (feature modules)
-          command: yarn workspaces foreach --include='@features/*' $SINCE_FLAG --recursive --verbose run lint
+          command: yarn workspaces foreach --include='@features/*' $SINCE_FLAG $RECURSIVE_FLAG --verbose run lint
       - run:
           name: Lint (libraries)
-          command: yarn workspaces foreach --include='@library/*' $SINCE_FLAG --recursive --verbose run lint
-      - run:
-          name: Lint (apps/webclient)
-          working_directory: /mnt/ramdisk/src/apps/webclient
-          command: |
-            yarn monorepo-build lint $SINCE_FLAG --workspace=webclient > lint-changes
-            if [ -s lint-changes ]; then
-              ./scripts/run-eslint-ci.sh $(cat lint-changes)
-            fi
-            rm lint-changes
+          command: yarn workspaces foreach --include='@library/*' $SINCE_FLAG $RECURSIVE_FLAG --verbose run lint
+      - when:
+          condition: << parameters.differential >>
+          steps:
+            - run:
+                name: Lint (apps/webclient)
+                working_directory: /mnt/ramdisk/src/apps/webclient
+                command: |
+                  yarn monorepo-build lint $SINCE_FLAG --workspace=webclient > lint-changes
+                  if [ -s lint-changes ]; then
+                    ./scripts/run-eslint-ci.sh $(cat lint-changes)
+                  fi
+                  rm lint-changes
+      - unless:
+          condition: << parameters.differential >>
+          steps:
+            - run: yarn workspace webclient eslint
 
   build-webclient:
     executor: circleci_node_image
