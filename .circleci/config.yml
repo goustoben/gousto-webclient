@@ -251,10 +251,10 @@ jobs:
           command: >-
             TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed /node_modules/d | circleci tests split)
             JEST_JUNIT_OUTPUT_DIR="./test-results"
-            yarn workspaces foreach --include='webclient' --from='{@library/*,webclient}' --since=$BRANCH_POINT --recursive --verbose run test:unit $TESTS --coverage --reporters=default --reporters=jest-junit
+            yarn workspaces foreach --include='webclient' --from='{@library/*,webclient}' --since=$BRANCH_POINT --recursive --verbose run test:jest $TESTS --coverage --reporters=default --reporters=jest-junit
 
           ## RUN ALL UNIT TESTS FOR WEBCLIENT
-          # command: |
+          # command: >-
           #   yarn monorepo-build unit-tests --since=$BRANCH_POINT --workspace=webclient > unit-tests
           #   if [ -s unit-tests ]; then
           # TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed /node_modules/d | circleci tests split)
