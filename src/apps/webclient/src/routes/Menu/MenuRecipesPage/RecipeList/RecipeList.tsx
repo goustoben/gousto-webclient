@@ -89,3 +89,5 @@ export const RecipeList = ({
     </div>
   )
 }
+
+RecipeList.whyDidYouRender = true

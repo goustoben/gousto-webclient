@@ -29,6 +29,8 @@ export function CollectionItem({
   slug,
 }: CollectionItemProps) {
   const { getRecipesForCollectionId } = useMenu()
+
+  // No selectedVariants as they do not influence counter
   const count = getRecipesForCollectionId(collectionId).length
   const doubleDeckerExperimentEnabled = useDoubleDeckerNav()
 
