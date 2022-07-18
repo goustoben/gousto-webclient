@@ -24,6 +24,7 @@ function recipeIsTruthy(recipe: TransformedRecipe | undefined): recipe is Transf
 
 type GetRecipeForCollectionIdArgs = {
   selectedCuisines?: string[] | null
+  selectedRecipeVariants?: Record<string, Record<string, string>>,
 }
 
 export type RecipeOptionPair = {
@@ -35,10 +36,12 @@ export type RecipeOptionPair = {
 export function useGetRecipesForCollectionId(
   requestArgs: UseMenuSWRArgs,
   date: string,
-  { numPortions, selectedRecipeVariants, isRecipeInStock }: UseMenuDependencies,
+  { numPortions, isRecipeInStock }: UseMenuDependencies,
 ) {
   const menuServiceData = useMenuService(requestArgs)
   const { menu, collections, recipes } = useTransformedMenuForDate(menuServiceData, date)
+
+  // VPP TODO memoise recipeReferenceInjector
 
   const recipeComparatorForOutOfStock = useMemo(
     () => getRecipeComparatorForOutOfStock(isRecipeInStock, numPortions),
@@ -67,7 +70,7 @@ export function useGetRecipesForCollectionId(
 
       const selectedVariantReplacer = getSelectedVariantsReplacer({
         recipes,
-        replacementMap: (selectedRecipeVariants || {})[collectionId] || {},
+        replacementMap: (args?.selectedRecipeVariants || {})[collectionId] || {},
       })
 
       const outOfStockRecipeReplacer = getOutOfStockRecipeReplacer({
@@ -108,7 +111,6 @@ export function useGetRecipesForCollectionId(
       isRecipeInStock,
       numPortions,
       recipeComparatorForOutOfStock,
-      selectedRecipeVariants,
     ],
   )
 }

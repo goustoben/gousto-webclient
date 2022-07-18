@@ -36,6 +36,8 @@ type CollectionLinkProps = {
 export function CollectionLinkTile({ collection }: CollectionLinkProps) {
   const track = useTracking()
   const { changeCollectionById } = useCollections()
+
+  // No selectedVariants as they do not influence counter
   const { getRecipesForCollectionId } = useMenu()
   const collectionId = collection.get('id')
   const collectionName = collection.get('shortTitle')

@@ -32,8 +32,6 @@ type RecipeTileBridgeProps = {
   collectionId: string
 }
 
-const vpp = () => null
-
 /**
  *
  * Integrate the `RecipeTile` from the `recipe-tile` module into WebClient.
@@ -136,17 +134,19 @@ export const RecipeTileBridge = ({
             originalId={originalId}
             currentCollectionId={collectionId}
             onClick={onClick}
-            SwapAlternativeOptionsMobile={vpp}
-            // SwapAlternativeOptionsMobile={() => (
-            //   <SwapAlternativeOptionsMobile
-            //     recipeId={recipe.id}
-            //     originalId={originalId}
-            //     categoryId={collectionId}
-            //   />
-            // )}
+            // SwapAlternativeOptionsMobile={vpp}
+            SwapAlternativeOptionsMobile={() => (
+              <SwapAlternativeOptionsMobile
+                recipeId={recipe.id}
+                originalId={originalId}
+                categoryId={collectionId}
+              />
+            )}
           />
         </RecipeTileDependencies>
       </RecipeContextProvider>
     </RecipeReferenceProvider>
   )
 }
+
+RecipeTileBridge.whyDidYouRender = true

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { memo, useCallback, useEffect, useLayoutEffect } from 'react'
 
 import { RecipeOptionPair } from '@library/api-menu-service'
 
@@ -52,9 +52,16 @@ export const RecipeList = ({
 
   const [recipesToRender, setRecipesToRender] = React.useState<RecipeOptionPair[]>([])
 
+  // Indicate that initial staged rendering already completed
+  // and when there are re-renderings, it should be done for all recipes.
+  // React would take care of diffing recipes individually
+  const hasCompletedRendering = recipesToRender.length === recipes.length
+
   useLayoutEffect(() => {
-    if (recipes.length <= IMMEDIATE_RENDER_COUNT) {
+    if (recipes.length <= IMMEDIATE_RENDER_COUNT || hasCompletedRendering) {
       setRecipesToRender(recipes)
+
+      return
     }
 
     setRecipesToRender(recipes.slice(0, IMMEDIATE_RENDER_COUNT))
@@ -66,26 +73,59 @@ export const RecipeList = ({
     return () => {
       clearTimeout(renderRest)
     }
-  }, [recipes])
+  }, [recipes, hasCompletedRendering])
+
+  const renderRecipe = useCallback(
+    (value: RecipeOptionPair, index: number) => (
+      <RecipeListItemMemoised
+        key={value.reference}
+        recipe={value.recipe}
+        reference={value.reference}
+        originalId={value.originalId}
+        index={index}
+        currentCollectionId={currentCollectionId}
+        isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
+      />
+    ),
+    [currentCollectionId, isDietaryCollectionLinksEnabled],
+  )
 
   return (
     <div className={css.emeRecipeList}>
-      {recipesToRender.map((value, index) => (
-        <React.Fragment key={value.reference}>
-          {isDietaryCollectionLinksEnabled &&
-            showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
-              <CollectionLink />
-            )}
-
-          <RecipeTileBridge
-            recipeReference={value.reference}
-            recipe={value.recipe}
-            originalId={value.originalId}
-            collectionId={currentCollectionId}
-          />
-        </React.Fragment>
-      ))}
+      {recipesToRender.map(renderRecipe)}
       <CTAToAllRecipes />
     </div>
   )
 }
+
+const RecipeListItem = ({
+  recipe,
+  reference,
+  originalId,
+  index,
+  currentCollectionId,
+  isDietaryCollectionLinksEnabled,
+}: {
+  recipe: RecipeOptionPair['recipe']
+  reference: RecipeOptionPair['reference']
+  originalId: RecipeOptionPair['originalId']
+  index: number
+  currentCollectionId: string
+  isDietaryCollectionLinksEnabled: boolean
+}) => (
+  <React.Fragment>
+    {isDietaryCollectionLinksEnabled &&
+      showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
+        <CollectionLink />
+      )}
+
+    <RecipeTileBridge
+      recipeReference={reference}
+      recipe={recipe}
+      originalId={originalId}
+      collectionId={currentCollectionId}
+    />
+  </React.Fragment>
+)
+
+const RecipeListItemMemoised = memo(RecipeListItem) as any

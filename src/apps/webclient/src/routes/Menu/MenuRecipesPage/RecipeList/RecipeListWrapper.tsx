@@ -1,8 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
+
+import { useSelector } from 'react-redux'
 
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
 import { useStock } from 'routes/Menu/domains/stock'
+import { getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
 
 import { useCurrentCollectionId } from '../../domains/collections'
 import { useMenu } from '../../domains/menu'
@@ -15,6 +18,7 @@ const RecipeListWrapper = (ownProps: any) => {
   const { getRecipesForCollectionId } = useMenu()
   const { isRecipeOutOfStock } = useStock()
   const { trackSoldOutRecipes } = useSoldOutTracking()
+  const selectedVariants = useSelector(getSelectedRecipeVariants)
 
   const isDietaryCollectionLinksEnabled = useIsOptimizelyFeatureEnabled(
     'kales_dietary_category_links',
@@ -22,7 +26,15 @@ const RecipeListWrapper = (ownProps: any) => {
 
   const selectedCuisines = useSelectedCuisines()
 
-  const recipes = getRecipesForCollectionId(currentCollectionId, { selectedCuisines })
+  const recipes = useMemo(
+    () =>
+      getRecipesForCollectionId(currentCollectionId, {
+        selectedCuisines,
+        selectedRecipeVariants: selectedVariants,
+      }),
+    [getRecipesForCollectionId, currentCollectionId, selectedCuisines, selectedVariants],
+  )
+
   const shownRecipeIds = recipes.map(({ recipe }) => recipe.id)
   const recipesIdsRef = useRef(shownRecipeIds)
 
@@ -47,5 +59,7 @@ const RecipeListWrapper = (ownProps: any) => {
     />
   )
 }
+
+RecipeListWrapper.whyDidYouRender = true
 
 export { RecipeListWrapper }
