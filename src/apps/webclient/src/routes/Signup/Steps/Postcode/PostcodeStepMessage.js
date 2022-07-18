@@ -4,8 +4,8 @@ import Svg from 'Svg'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import { signupConfig } from 'config/signup'
 import { Benefits } from 'routes/Home/Benefits'
+import { signupConfig } from 'routes/Signup/signupConfig'
 
 import postcodeCss from './PostcodeStep.css'
 

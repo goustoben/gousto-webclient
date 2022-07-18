@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 import { onEnter } from 'utils/accessibility'
 
 import { useDiscountAppliedData } from './discountAppliedBarHooks'

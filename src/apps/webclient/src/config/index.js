@@ -11,7 +11,7 @@ export default {
   recipes: require('./recipes').default,
   referral: require('./referral'),
   routes: require('./routes'),
-  signup: require('./signup'),
+  signup: require('routes/Signup/signupConfig'),
   template: require('./template'),
   deliveryPriceConfig: require('./deliveryPrice').deliveryPriceConfig
 }

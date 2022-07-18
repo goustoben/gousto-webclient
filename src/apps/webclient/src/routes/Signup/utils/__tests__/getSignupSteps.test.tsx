@@ -23,7 +23,7 @@ jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
 }))
 
-jest.mock('config/signup', () => ({
+jest.mock('routes/Signup/signupConfig', () => ({
   signupConfig: {
     defaultSteps: ['availableStep1', 'availableStep2', 'unavailableStep'],
   },

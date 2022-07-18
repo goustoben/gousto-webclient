@@ -9,7 +9,7 @@ import {
 } from 'actions/tracking'
 import { placeOrder } from 'actions/trackingKeys'
 import customersApi, { customerSignup } from 'apis/customers'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 import { deliveryTariffTypes } from 'utils/deliveries'
 
 import { trackCheckoutUrgencyAction, userSubscribe } from '../checkoutActions'

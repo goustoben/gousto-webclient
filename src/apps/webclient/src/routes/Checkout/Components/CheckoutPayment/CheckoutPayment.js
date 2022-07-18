@@ -8,7 +8,7 @@ import { logLevels } from 'actions/log'
 import { HotjarTrigger } from 'components/HotjarTrigger'
 import { Recaptcha } from 'components/Recaptcha'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'

@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 
 export const initialState = () => Immutable.Map({
   challengeUrl: null,

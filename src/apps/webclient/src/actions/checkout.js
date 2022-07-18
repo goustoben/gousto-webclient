@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { getFormSyncErrors } from 'redux-form'
 
 import { gaTrackingConfig } from 'config/head/gaTracking'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 import { checkoutConfig } from 'config/checkout'
 
 import logger from 'utils/logger'
@@ -58,6 +58,7 @@ import loginActions from './login'
 import statusActions from './status'
 import tempActions from './temp'
 import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
+
 export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
 
 const { pending, error } = statusActions
@@ -567,7 +568,7 @@ export function setCurrentPaymentMethod(paymentMethod, options = {}) {
     const state = getState()
 
     if (paymentMethod === PaymentMethod.PayPal && state.checkout.get('paypalErrors').size && !state.checkout.get('paypalErrorsReported')) {
-      dispatch( { type: actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED})
+      dispatch({ type: actionTypes.CHECKOUT_PAYPAL_ERRORS_REPORTED })
       dispatch(feLoggingLogEvent(logLevels.info, 'PayPal signup attempt failed because of init issue'))
     }
 

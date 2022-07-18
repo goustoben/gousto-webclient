@@ -2,8 +2,8 @@ import actions from 'actions'
 import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
-import { trackSignupWizardAction } from 'actions/signup'
 import { getNumPersonsToBoxDescriptors } from 'routes/BoxPrices/boxPricesSelectors'
+import { trackSignupWizardAction } from 'routes/Signup/signupActions'
 import { getCurrentPromoCodeCustomText1 } from 'routes/Signup/signupSelectors'
 
 import { BoxSizeStep } from './BoxSizeStep'

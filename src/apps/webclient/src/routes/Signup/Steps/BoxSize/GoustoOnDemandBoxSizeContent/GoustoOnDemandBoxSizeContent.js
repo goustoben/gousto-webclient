@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import { signupConfig } from 'config/signup'
 import { BoxPriceSuitableForSection } from 'routes/BoxPrices/BoxPriceBlock/BoxPriceSuitableForSection'
 import { BoxPricesTabs } from 'routes/BoxPrices/BoxPricesTabs'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 import { Benefits } from 'routes/Home/Benefits'
+import { signupConfig } from 'routes/Signup/signupConfig'
 
 import { PrimaryButton } from '../PrimaryButton'
 import { PricePerNRecipesTable } from './PricePerNRecipesTable'

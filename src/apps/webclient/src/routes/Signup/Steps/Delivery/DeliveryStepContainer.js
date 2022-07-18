@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
-import { trackSignupWizardAction, trackSocialBelongingBannerAppearance } from 'actions/signup'
 import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
+import {
+  trackSignupWizardAction,
+  trackSocialBelongingBannerAppearance,
+} from 'routes/Signup/signupActions'
 import { isNextDayDeliveryPaintedDoorFeatureEnabled } from 'selectors/features'
 import { getLandingDay } from 'utils/deliveries'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'

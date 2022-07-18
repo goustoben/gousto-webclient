@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { signupGoToMenu } from 'actions/signup'
+import { signupGoToMenu } from 'routes/Signup/signupActions'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 
 import { SellThePropositionPage } from './SellThePropositionPage'

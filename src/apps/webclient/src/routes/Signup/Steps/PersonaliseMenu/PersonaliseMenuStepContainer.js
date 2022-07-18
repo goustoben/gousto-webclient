@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { trackSignupWizardAction } from 'actions/signup'
+import { trackSignupWizardAction } from 'routes/Signup/signupActions'
 
 import { PersonaliseMenuStep } from './PersonaliseMenuStep'
 
