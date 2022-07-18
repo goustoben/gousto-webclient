@@ -145,4 +145,4 @@ export const RecipeTile = ({
   )
 }
 
-// RecipeTile.whyDidYouRender = true
+RecipeTile.whyDidYouRender = true
