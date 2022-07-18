@@ -32,14 +32,6 @@ type RecipeListProps = {
   isDietaryCollectionLinksEnabled?: boolean
 }
 
-// function usePrevious(value) {
-//   const ref = useRef()
-//   useEffect(() => {
-//     ref.current = value
-//   })
-//   return ref.current
-// }
-
 /**
  * How many recipes to render immediately
  */
@@ -48,15 +40,6 @@ const IMMEDIATE_RENDER_COUNT = 15
  * How long to wait before loading the rest
  */
 const RENDER_REMAINING_TIME_MS = 1000
-
-function usePrevious(value: any) {
-  const ref = React.useRef()
-  React.useEffect(() => {
-    ref.current = value
-  })
-
-  return ref.current
-}
 
 export const RecipeList = ({
   recipes,
@@ -68,15 +51,14 @@ export const RecipeList = ({
   useEffect(() => buildTracker({ recipes, currentCollectionId, track })(), [])
 
   const [recipesToRender, setRecipesToRender] = React.useState<RecipeOptionPair[]>([])
-  // const prevRecipes = usePrevious(recipesToRender)
 
-  const prevRecipes = usePrevious(recipes) as any
+  // Indicate that initial staged rendering already completed
+  // and when there are re-renderings, it should be done for all recipes.
+  // React would take care of diffing recipes individually
+  const hasCompletedRendering = recipesToRender.length === recipes.length
 
   useLayoutEffect(() => {
-    // Exit early if recipes = last recieps
-    // if (prevRecipes?.length === recipes.length) return
-
-    if (recipes.length <= IMMEDIATE_RENDER_COUNT || prevRecipes?.length === recipes.length) {
+    if (recipes.length <= IMMEDIATE_RENDER_COUNT || hasCompletedRendering) {
       setRecipesToRender(recipes)
 
       return
@@ -91,12 +73,12 @@ export const RecipeList = ({
     return () => {
       clearTimeout(renderRest)
     }
-  }, [recipes])
+  }, [recipes, hasCompletedRendering])
 
-  const vpp = useCallback(
+  const renderRecipe = useCallback(
     (value: RecipeOptionPair, index: number) => (
       <RecipeListItemMemoised
-        key={value.originalId}
+        key={value.reference}
         recipe={value.recipe}
         reference={value.reference}
         originalId={value.originalId}
@@ -110,7 +92,7 @@ export const RecipeList = ({
 
   return (
     <div className={css.emeRecipeList}>
-      {recipesToRender.map(vpp)}
+      {recipesToRender.map(renderRecipe)}
       <CTAToAllRecipes />
     </div>
   )
@@ -146,10 +128,4 @@ const RecipeListItem = ({
   </React.Fragment>
 )
 
-RecipeListItem.whyDidYouRender = true
-
 const RecipeListItemMemoised = memo(RecipeListItem) as any
-
-RecipeListItemMemoised.whyDidYouRender = true
-
-RecipeList.whyDidYouRender = true
