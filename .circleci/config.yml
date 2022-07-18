@@ -354,7 +354,7 @@ jobs:
           # Note - test:jest:ci:coverage:circle is a temporary script to ensure no side-effects on current GHA
           # Do not run webclient unit tests if only feature modules / their dependencies have changed
           command: >-
-            TESTS=$(circleci tests glob "./src/**/*.test.{js,ts,jsx,tsx}" | sed '/node_modules/d;/libs/d' | circleci tests split --split-by=timings --timings-type=classname)
+            TESTS=$(circleci tests glob "./src/apps/webclient/**/*.test.{js,ts,jsx,tsx}" | sed '/node_modules/d;/libs/d' | circleci tests split --split-by=timings --timings-type=classname)
             yarn workspaces foreach --include='webclient' $WEBCLIENT_FROM_FLAG $SINCE_FLAG $RECURSIVE_FLAG --verbose run test:jest:ci:coverage:circle
       - store_test_results:
           path: ~/mnt/ramdisk/src/apps/webclient/test-results
