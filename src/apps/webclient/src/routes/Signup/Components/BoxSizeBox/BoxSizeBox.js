@@ -7,7 +7,7 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 
 import { DiscountAppliedNotice } from '../DiscountAppliedNotice/DiscountAppliedNotice'
 

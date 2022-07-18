@@ -1,4 +1,5 @@
 import { checkoutUrgencyReducers } from 'routes/Checkout/checkoutUrgencyReducers'
+import { signupReducers } from 'routes/Signup/signupReducers'
 import { abandonBasket } from './abandonBasket'
 import { appBanner } from './appBanner'
 import { accountReducers } from './account'
@@ -20,7 +21,6 @@ import { promosReducers } from './promos'
 import { recipesReducers } from './recipes'
 import { redirectReducers } from './redirect'
 import { serverErrorReducers } from './serverError'
-import { signup } from './signup'
 import status from './status'
 import subscription from './subscription'
 import subscriptionPause from './subscriptionPause'
@@ -71,7 +71,7 @@ export const reducers = {
   ...recipesReducers,
   ...redirectReducers,
   ...serverErrorReducers,
-  ...signup,
+  ...signupReducers,
   ...status,
   ...subscription,
   ...subscriptionPause,

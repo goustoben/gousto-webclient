@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 
 import { PaymentMethodListItem } from './PaymentMethodListItem'
 

@@ -11,7 +11,7 @@ import {
 } from 'actions/trackingKeys'
 import { CTA, Modal } from 'goustouicomponents'
 import headerImage from 'media/images/discount-modal-header.jpg'
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 import { EnterPromoCodeManuallyButton } from './EnterPromoCodeManuallyButton'
 import { AgeVerifyContainer } from './AgeVerify'
 import css from './PromoModal.css'

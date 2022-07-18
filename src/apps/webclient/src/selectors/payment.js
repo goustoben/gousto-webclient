@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 import routes from 'config/routes'
 import { getPreviewOrderId } from 'selectors/basket'
 

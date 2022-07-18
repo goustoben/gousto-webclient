@@ -5,7 +5,7 @@ import { menuLoadBoxPrices, menuLoadDays } from 'actions/menu'
 import { promoGet } from 'actions/promos'
 import { fetchSignupData, GetSignupDataStore } from 'routes/Signup/utils/fetchSignupData'
 
-jest.mock('actions/signup', () => ({
+jest.mock('routes/Signup/signupActions', () => ({
   signupStepsReceive: jest.fn(),
   signupSetStep: jest.fn(),
 }))

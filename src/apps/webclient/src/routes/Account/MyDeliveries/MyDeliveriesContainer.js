@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import actions from 'actions/user'
-import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
+import { signupSetGoustoOnDemandEnabled } from 'routes/Signup/signupActions'
 import {
   didErrorFetchingPendingOrders,
   didErrorFetchingProjectedOrders,

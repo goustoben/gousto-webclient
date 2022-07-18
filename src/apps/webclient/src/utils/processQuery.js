@@ -4,7 +4,7 @@ import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { setAffiliateSource, setAwinClickChecksum, setTapjoyData, setRoktData } from 'actions/tracking'
-import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
+import { signupSetGoustoOnDemandEnabled } from 'routes/Signup/signupActions'
 import { getIsAuthenticated } from 'selectors/auth'
 
 export async function processQuery(query, store, { hashTag = '', }) {

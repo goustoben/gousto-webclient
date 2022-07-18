@@ -5,8 +5,8 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import { signupConfig } from 'config/signup'
 import { Signup } from 'routes/Signup/Signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 
 // In the ideal world the tests in Signup.js should be replaced.  In their
 // current form they don't work, because with the way enzyme passes the
@@ -19,6 +19,8 @@ import { Signup } from 'routes/Signup/Signup'
 // The scope of the current task doesn't include fixing this long-standing
 // issue; on the other hand compare-code-health forces one to increase the unit
 // test coverage; so here is a minimal test to address that.
+// NOTE: to check tests mentioned above, look into git blame of that line. Tests are removed for now due to prettier
+// and eslint errors.
 describe('Signup (newer tests)', () => {
   const mockStore = configureMockStore()
   const mockedStore = mockStore({

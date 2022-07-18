@@ -1,5 +1,5 @@
 import { actionTypes } from 'actions/actionTypes'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 import { payment, initialState } from '../payment'
 
 describe('Payment state', () => {

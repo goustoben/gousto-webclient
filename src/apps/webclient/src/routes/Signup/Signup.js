@@ -7,11 +7,11 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { ReactReduxContext } from 'react-redux'
 
-import { signupConfig } from 'config/signup'
 import { AVAILABLE_STEP_COMPONENTS } from 'routes/Signup/constants/AvailableStepComponents'
+import { signupConfig } from 'routes/Signup/signupConfig'
+import { stepByName } from 'routes/Signup/signupUtils'
 import { fetchSignupData } from 'routes/Signup/utils/fetchSignupData'
 import { openProperStep } from 'routes/Signup/utils/openProperStep'
-import { stepByName } from 'utils/signup'
 
 import { ApplyVoucherPageContainer } from './Components/ApplyVoucherPage'
 import { CheckAccountPageContainer } from './Components/CheckAccountPage'
