@@ -17,7 +17,9 @@ describe('given DiscountAppliedBarContainer is rendered', () => {
     }),
     basket: Immutable.fromJS({}),
     error: Immutable.fromJS({}),
-    signup: Immutable.fromJS({}),
+    signup: Immutable.fromJS({
+      isDiscountAppliedBarDismissed: false,
+    }),
   })
 
   beforeEach(() => {
