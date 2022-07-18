@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useCallback, useEffect, useLayoutEffect } from 'react'
 
 import { RecipeOptionPair } from '@library/api-menu-service'
 
@@ -32,6 +32,32 @@ type RecipeListProps = {
   isDietaryCollectionLinksEnabled?: boolean
 }
 
+// function usePrevious(value) {
+//   const ref = useRef()
+//   useEffect(() => {
+//     ref.current = value
+//   })
+//   return ref.current
+// }
+
+/**
+ * How many recipes to render immediately
+ */
+const IMMEDIATE_RENDER_COUNT = 15
+/**
+ * How long to wait before loading the rest
+ */
+const RENDER_REMAINING_TIME_MS = 1000
+
+function usePrevious(value: any) {
+  const ref = React.useRef()
+  React.useEffect(() => {
+    ref.current = value
+  })
+
+  return ref.current
+}
+
 export const RecipeList = ({
   recipes,
   currentCollectionId,
@@ -41,19 +67,50 @@ export const RecipeList = ({
 
   useEffect(() => buildTracker({ recipes, currentCollectionId, track })(), [])
 
+  const [recipesToRender, setRecipesToRender] = React.useState<RecipeOptionPair[]>([])
+  // const prevRecipes = usePrevious(recipesToRender)
+
+  const prevRecipes = usePrevious(recipes) as any
+
+  useLayoutEffect(() => {
+    // Exit early if recipes = last recieps
+    // if (prevRecipes?.length === recipes.length) return
+
+    if (recipes.length <= IMMEDIATE_RENDER_COUNT || prevRecipes?.length === recipes.length) {
+      setRecipesToRender(recipes)
+
+      return
+    }
+
+    setRecipesToRender(recipes.slice(0, IMMEDIATE_RENDER_COUNT))
+
+    const renderRest = setTimeout(() => {
+      setRecipesToRender(recipes)
+    }, RENDER_REMAINING_TIME_MS)
+
+    return () => {
+      clearTimeout(renderRest)
+    }
+  }, [recipes])
+
+  const vpp = useCallback(
+    (value: RecipeOptionPair, index: number) => (
+      <RecipeListItemMemoised
+        key={value.originalId}
+        recipe={value.recipe}
+        reference={value.reference}
+        originalId={value.originalId}
+        index={index}
+        currentCollectionId={currentCollectionId}
+        isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
+      />
+    ),
+    [currentCollectionId, isDietaryCollectionLinksEnabled],
+  )
+
   return (
     <div className={css.emeRecipeList}>
-      {recipes.map((value, index) => (
-        <RecipeListItemMemoised
-          key={value.reference}
-          recipe={value.recipe}
-          reference={value.reference}
-          originalId={value.originalId}
-          index={index}
-          currentCollectionId={currentCollectionId}
-          isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
-        />
-      ))}
+      {recipesToRender.map(vpp)}
       <CTAToAllRecipes />
     </div>
   )
@@ -91,6 +148,8 @@ const RecipeListItem = ({
 
 RecipeListItem.whyDidYouRender = true
 
-const RecipeListItemMemoised = memo(RecipeListItem)
+const RecipeListItemMemoised = memo(RecipeListItem) as any
+
+RecipeListItemMemoised.whyDidYouRender = true
 
 RecipeList.whyDidYouRender = true
