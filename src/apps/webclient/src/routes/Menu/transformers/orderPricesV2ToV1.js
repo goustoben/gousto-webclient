@@ -21,6 +21,7 @@ export const transformOrderPricesV2ToOrderV1 = (response) => {
       totalDiscount: prices.total_discount,
       recipeTotalDiscounted: prices.recipe_total_discounted,
       items: Array(prices.surcharge_count).fill({ type: 'Surcharge' }),
+      isDeliveryFree: prices.is_delivery_free,
     },
   }
 }

@@ -52,6 +52,7 @@ class Summary extends PureComponent {
   render() {
     const { prices, basketRecipes, isLoading, showPromocode, isGoustoOnDemandEnabled } = this.props
     const numRecipes = basketSum(basketRecipes)
+    const isDeliveryFree = prices?.isDeliveryFree
 
     return (
       <Box bg={Color.White} paddingH={6} paddingV={6} data-testing="checkoutOrderSummary">
@@ -104,15 +105,18 @@ class Summary extends PureComponent {
                 extrasTotalPrice={prices?.productTotal}
                 isReceiptInCheckout
                 isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+                isDeliveryFree={isDeliveryFree}
               />
               {showPromocode && <PromoCode />}
-              <TickText
-                textAlign={TextAlign.Left}
-                fontWeight={FontWeight.Normal}
-                tickPadding={2}
-                highlightedText="Nice!"
-                ordinaryText={`You get free delivery on your first box (usually ${config.deliveryPriceConfig.deliveryPriceFormatted}) as a welcome treat.`}
-              />
+              {isDeliveryFree && (
+                <TickText
+                  textAlign={TextAlign.Left}
+                  fontWeight={FontWeight.Normal}
+                  tickPadding={2}
+                  highlightedText="Nice!"
+                  ordinaryText={`You get free delivery on your first box (usually ${config.deliveryPriceConfig.deliveryPriceFormatted}) as a welcome treat.`}
+                />
+              )}
             </Box>
           </>
         )}

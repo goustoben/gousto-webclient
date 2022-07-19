@@ -1,12 +1,22 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
+
 import classNames from 'classnames'
-import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
+import {
+  formatPrice,
+  formatLabelPlural,
+  formatDashOrPrice,
+  formatDeliveryTotal,
+  formatRecipeDiscount,
+} from 'utils/format'
 import { formatOrderPrice } from 'utils/pricing'
-import css from './Receipt.css'
-import { ReceiptLine } from './ReceiptLine'
+
 import { DeliveryDetails } from './DeliveryDetails'
+import { ReceiptLine } from './ReceiptLine'
+
+import css from './Receipt.css'
 
 const propTypes = {
   prices: PropTypes.instanceOf(Object),
@@ -27,6 +37,7 @@ const propTypes = {
   orderNumber: PropTypes.string,
   isReceiptInCheckout: PropTypes.bool,
   isGoustoOnDemandEnabled: PropTypes.bool,
+  isDeliveryFree: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -48,10 +59,11 @@ const defaultProps = {
   orderNumber: '',
   isReceiptInCheckout: false,
   isGoustoOnDemandEnabled: false,
+  isDeliveryFree: null,
 }
 
 export class Receipt extends React.Component {
-  dash = <span className={css.dash}>&mdash;</span>
+  dash = (<span className={css.dash}>&mdash;</span>)
 
   render() {
     const {
@@ -73,21 +85,27 @@ export class Receipt extends React.Component {
       deliverySlot,
       children,
       isGoustoOnDemandEnabled,
+      isDeliveryFree,
     } = this.props
     const showRecipeDiscount = parseFloat(recipeDiscountAmount) > 0 ? true : null
     const showExtrasTotalPrice = parseFloat(extrasTotalPrice) > 0 ? true : null
-    const showFreeDelivery = parseFloat(deliveryTotalPrice) === 0 ? true : null
     const showSurchargeTotalPrice = surcharges.length > 0 && surchargeTotal !== '0.00'
-    const deliveryLineStyleForCheckout = showFreeDelivery ? 'checkoutPrimary' : 'checkoutNormal'
-    const deliveryLineStyleDefault = showFreeDelivery ? 'primary' : 'normal'
-    const deliveryLineStyle = isReceiptInCheckout ? deliveryLineStyleForCheckout : deliveryLineStyleDefault
+    const deliveryLineStyleForCheckout = isDeliveryFree ? 'checkoutPrimary' : 'checkoutNormal'
+    const deliveryLineStyleDefault = isDeliveryFree ? 'primary' : 'normal'
+    const deliveryLineStyle = isReceiptInCheckout
+      ? deliveryLineStyleForCheckout
+      : deliveryLineStyleDefault
     const totalPrice = isGoustoOnDemandEnabled
       ? formatOrderPrice(totalToPay)
       : formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)
 
     return (
       <div className={classNames(css.row, { [css.rowInCheckout]: isReceiptInCheckout })}>
-        {showTitleSection && <div className={css.row}><p className={css.titleSection}>Order Summary</p></div>}
+        {showTitleSection && (
+          <div className={css.row}>
+            <p className={css.titleSection}>Order Summary</p>
+          </div>
+        )}
         <ReceiptLine
           label={formatLabelPlural('Recipe', numRecipes)}
           lineStyle={isReceiptInCheckout ? 'checkoutNormal' : 'normal'}
@@ -132,7 +150,7 @@ export class Receipt extends React.Component {
           lineStyle={deliveryLineStyle}
           isReceiptInCheckout={isReceiptInCheckout}
         >
-          {formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}
+          {formatDeliveryTotal(isDeliveryFree, deliveryTotalPrice, this.dash)}
         </ReceiptLine>
         <ReceiptLine
           label="Total"
@@ -145,11 +163,7 @@ export class Receipt extends React.Component {
         </ReceiptLine>
         {shippingAddress && (
           <ReceiptLine label="Delivery" showLineAbove>
-            <DeliveryDetails
-              address={shippingAddress}
-              date={deliveryDate}
-              slot={deliverySlot}
-            />
+            <DeliveryDetails address={shippingAddress} date={deliveryDate} slot={deliverySlot} />
           </ReceiptLine>
         )}
         {orderNumber && (
