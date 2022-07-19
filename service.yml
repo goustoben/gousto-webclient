@@ -110,3 +110,14 @@ environments:
       service:
         desiredCount: 4
         maxCount: 16
+### SRE.LOADTEST.SCALER START 2022-07-19T08:14:25.171478
+
+  - name: sprouts
+    datadog: true
+    ecs:
+      memory: 2048
+      cpu: 1024
+      service:
+        desiredCount: 4
+        maxCount: 16
+### SRE.LOADTEST.SCALER STOP 2022-07-19T08:14:25.171478
