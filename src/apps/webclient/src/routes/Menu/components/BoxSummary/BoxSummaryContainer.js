@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, boxSummaryNext } from 'actions/boxSummary'
+import { useBasket } from 'routes/Menu/domains/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { getBrowserType } from 'selectors/browser'
@@ -40,9 +41,10 @@ const mapStateToProps = (state) => ({
 
 const BoxSummaryPure = (props) => {
   const { isPending } = usePricing()
+  const { removeRecipe } = useBasket()
 
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <BoxSummary {...props} pricingPending={isPending} />
+  return <BoxSummary {...props} pricingPending={isPending} removeRecipe={removeRecipe} />
 }
 
 export const BoxSummaryContainer = connect(mapStateToProps, {
