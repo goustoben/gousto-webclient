@@ -43,12 +43,6 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
-  kales_dietary_category_links: {
-    id: 'kales_dietary_category_links',
-    name: 'Kales Dietary Category Links',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
   etm_market_orderconfirmation_bundlesfakedoor_web_may22: {
     id: 'etm_market_orderconfirmation_bundlesfakedoor_web_may22',
     name: 'Mandarins - Marketplace product bundles',
@@ -77,38 +71,39 @@ const sentCache = new Map()
 const createKey = (featureName, authUserId, sessionId) =>
   [featureName, authUserId, sessionId].join(':')
 
-export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId, userIdForOptimizely) =>
-  (dispatch) => {
-    if (!featureName) {
-      return null
-    }
-
-    const experimentData = getConfig(featureName)
-    if (experimentData) {
-      const key = createKey(featureName, authUserId, sessionId)
-      if (sentCache.has(key) && sentCache.get(key) === isOptimizelyFeatureEnabled) {
+export const trackExperimentInSnowplow =
+  (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId, userIdForOptimizely) =>
+    (dispatch) => {
+      if (!featureName) {
         return null
       }
 
-      sentCache.set(key, isOptimizelyFeatureEnabled)
+      const experimentData = getConfig(featureName)
+      if (experimentData) {
+        const key = createKey(featureName, authUserId, sessionId)
+        if (sentCache.has(key) && sentCache.get(key) === isOptimizelyFeatureEnabled) {
+          return null
+        }
 
-      const trackingData = {
-        actionType: optimizelyRolloutsExperiment,
-        experiment_id: experimentData.id,
-        experiment_name: experimentData.name,
-        variation_name: isOptimizelyFeatureEnabled
-          ? experimentData.variationName
-          : experimentData.defaultName,
-        user_logged_in: Boolean(authUserId),
-        session_id: sessionId,
-        user_id_for_optimizely: userIdForOptimizely,
+        sentCache.set(key, isOptimizelyFeatureEnabled)
+
+        const trackingData = {
+          actionType: optimizelyRolloutsExperiment,
+          experiment_id: experimentData.id,
+          experiment_name: experimentData.name,
+          variation_name: isOptimizelyFeatureEnabled
+            ? experimentData.variationName
+            : experimentData.defaultName,
+          user_logged_in: Boolean(authUserId),
+          session_id: sessionId,
+          user_id_for_optimizely: userIdForOptimizely,
+        }
+
+        dispatch({
+          type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
+          trackingData,
+        })
       }
 
-      dispatch({
-        type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
-        trackingData,
-      })
+      return null
     }
-
-    return null
-  }

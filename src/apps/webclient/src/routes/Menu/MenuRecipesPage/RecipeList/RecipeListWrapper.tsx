@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useMemo } from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
 import { useStock } from 'routes/Menu/domains/stock'
 import { getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
@@ -19,10 +18,6 @@ const RecipeListWrapper = (ownProps: any) => {
   const { isRecipeOutOfStock } = useStock()
   const { trackSoldOutRecipes } = useSoldOutTracking()
   const selectedVariants = useSelector(getSelectedRecipeVariants)
-
-  const isDietaryCollectionLinksEnabled = useIsOptimizelyFeatureEnabled(
-    'kales_dietary_category_links',
-  )
 
   const selectedCuisines = useSelectedCuisines()
 
@@ -55,7 +50,6 @@ const RecipeListWrapper = (ownProps: any) => {
       {...ownProps}
       currentCollectionId={currentCollectionId}
       recipes={recipes}
-      isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
     />
   )
 }

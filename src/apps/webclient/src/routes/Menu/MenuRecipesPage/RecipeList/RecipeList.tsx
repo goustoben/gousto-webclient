@@ -2,11 +2,9 @@ import React, { memo, useCallback, useEffect, useLayoutEffect } from 'react'
 
 import { RecipeOptionPair } from '@library/api-menu-service'
 
-import { CollectionLink } from 'routes/Menu/components/CollectionLink'
 import { RecipeTileBridge } from 'routes/Menu/components/RecipeTile/RecipeTileBridge'
 
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
-import { showDietaryCollectionLinks } from './showDietaryCollectionLinks'
 import { useTracking } from './useTracking'
 
 import css from './RecipeList.css'
@@ -29,7 +27,6 @@ export const buildTracker =
 type RecipeListProps = {
   recipes: RecipeOptionPair[]
   currentCollectionId: string
-  isDietaryCollectionLinksEnabled?: boolean
 }
 
 /**
@@ -41,11 +38,7 @@ const IMMEDIATE_RENDER_COUNT = 40
  */
 const RENDER_REMAINING_TIME_MS = 1000
 
-export const RecipeList = ({
-  recipes,
-  currentCollectionId,
-  isDietaryCollectionLinksEnabled = false,
-}: RecipeListProps) => {
+export const RecipeList = ({ recipes, currentCollectionId }: RecipeListProps) => {
   const track = useTracking()
 
   useEffect(() => buildTracker({ recipes, currentCollectionId, track })(), [])
@@ -61,7 +54,7 @@ export const RecipeList = ({
     if (recipes.length <= IMMEDIATE_RENDER_COUNT || hasCompletedRendering) {
       setRecipesToRender(recipes)
 
-      return
+      return () => {}
     }
 
     setRecipesToRender(recipes.slice(0, IMMEDIATE_RENDER_COUNT))
@@ -76,18 +69,16 @@ export const RecipeList = ({
   }, [recipes, hasCompletedRendering])
 
   const renderRecipe = useCallback(
-    (value: RecipeOptionPair, index: number) => (
+    (value: RecipeOptionPair) => (
       <RecipeListItemMemoised
         key={value.reference}
         recipe={value.recipe}
         reference={value.reference}
         originalId={value.originalId}
-        index={index}
         currentCollectionId={currentCollectionId}
-        isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
       />
     ),
-    [currentCollectionId, isDietaryCollectionLinksEnabled],
+    [currentCollectionId],
   )
 
   return (
@@ -102,23 +93,14 @@ const RecipeListItem = ({
   recipe,
   reference,
   originalId,
-  index,
   currentCollectionId,
-  isDietaryCollectionLinksEnabled,
 }: {
   recipe: RecipeOptionPair['recipe']
   reference: RecipeOptionPair['reference']
   originalId: RecipeOptionPair['originalId']
-  index: number
   currentCollectionId: string
-  isDietaryCollectionLinksEnabled: boolean
 }) => (
   <React.Fragment>
-    {isDietaryCollectionLinksEnabled &&
-      showDietaryCollectionLinks({ collectionId: currentCollectionId, atIndex: index }) && (
-        <CollectionLink />
-      )}
-
     <RecipeTileBridge
       recipeReference={reference}
       recipe={recipe}

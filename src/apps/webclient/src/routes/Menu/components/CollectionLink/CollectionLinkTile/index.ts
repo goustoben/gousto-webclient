@@ -1,1 +1,0 @@
-export { CollectionLinkTile } from './CollectionLinkTile'

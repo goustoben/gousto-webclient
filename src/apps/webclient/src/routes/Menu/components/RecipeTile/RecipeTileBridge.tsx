@@ -134,7 +134,6 @@ export const RecipeTileBridge = ({
             originalId={originalId}
             currentCollectionId={collectionId}
             onClick={onClick}
-            // SwapAlternativeOptionsMobile={vpp}
             SwapAlternativeOptionsMobile={() => (
               <SwapAlternativeOptionsMobile
                 recipeId={recipe.id}
