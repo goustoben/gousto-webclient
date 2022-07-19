@@ -8,7 +8,7 @@ import {
   findStepBySlug,
   getPromocodeQueryParam,
   stepByName,
-} from 'utils/signup'
+} from 'routes/Signup/signupUtils'
 
 import { SignupSteps } from '../constants/SignupSteps'
 

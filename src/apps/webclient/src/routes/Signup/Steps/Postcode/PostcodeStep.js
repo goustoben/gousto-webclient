@@ -6,7 +6,7 @@ import { Heading } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 
 import { Button } from '../../Button'
 import { Image } from '../../Image'

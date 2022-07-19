@@ -2,12 +2,12 @@ import Immutable from 'immutable'
 import { processQuery } from 'utils/processQuery'
 import logger from 'utils/logger'
 import { basketPromoCodeChange } from 'actions/basket'
-import { signupSetGoustoOnDemandEnabled } from 'actions/signup'
+import { signupSetGoustoOnDemandEnabled } from 'routes/Signup/signupActions'
 import { promoApply, promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { setAffiliateSource, setTapjoyData, setRoktData } from 'actions/tracking'
 import axe from '@axe-core/react'
 
-jest.mock('actions/signup',() => ({
+jest.mock('routes/Signup/signupActions',() => ({
   signupSetGoustoOnDemandEnabled: jest.fn(),
 }))
 

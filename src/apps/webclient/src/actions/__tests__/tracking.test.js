@@ -38,7 +38,7 @@ import {
   checkoutClickContinueToPayment,
   clickCheckoutSecurely,
 } from 'actions/trackingKeys'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 import logger from 'utils/logger'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvironment, getProtocol } from 'utils/isomorphicEnvironment'

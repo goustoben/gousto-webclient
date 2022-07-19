@@ -17,7 +17,7 @@ import {
 } from 'actions/tracking'
 import { placeOrder } from 'actions/trackingKeys'
 import { customerSignup } from 'apis/customers'
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import {
   accountFormName,

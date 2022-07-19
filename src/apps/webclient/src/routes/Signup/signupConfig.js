@@ -1,10 +1,11 @@
 import { SignupSteps } from 'routes/Signup/constants/SignupSteps'
-import twoPersonBoxImg from 'media/images/box-prices/two-person-box.jpg'
+
 import fourPersonBoxImg from 'media/images/box-prices/four-person-box.jpg'
+import twoPersonBoxImg from 'media/images/box-prices/two-person-box.jpg'
 
 export const PaymentMethod = {
   Card: 'Card',
-  PayPal: 'PayPal'
+  PayPal: 'PayPal',
 }
 
 const checkAccountPageSlug = 'start'
@@ -21,14 +22,24 @@ export const signupConfig = {
    * 4. Map step to component in "AvailableStepComponents.ts" file.
    */
   defaultSteps: [SignupSteps.BOX_SIZE, SignupSteps.POSTCODE, SignupSteps.DELIVERY],
-  personaliseMenuSteps: [SignupSteps.BOX_SIZE, SignupSteps.POSTCODE, SignupSteps.DELIVERY, SignupSteps.PERSONALISE_MENU],
-  boxSizeRecommenderSteps: [SignupSteps.NUMBER_OF_PEOPLE, SignupSteps.BOX_SIZE_RECOMMENDER, SignupSteps.POSTCODE, SignupSteps.DELIVERY],
+  personaliseMenuSteps: [
+    SignupSteps.BOX_SIZE,
+    SignupSteps.POSTCODE,
+    SignupSteps.DELIVERY,
+    SignupSteps.PERSONALISE_MENU,
+  ],
+  boxSizeRecommenderSteps: [
+    SignupSteps.NUMBER_OF_PEOPLE,
+    SignupSteps.BOX_SIZE_RECOMMENDER,
+    SignupSteps.POSTCODE,
+    SignupSteps.DELIVERY,
+  ],
   boxSizeRecommenderWithPersonalizeMenuSteps: [
     SignupSteps.NUMBER_OF_PEOPLE, // box size recommender experiment step
     SignupSteps.BOX_SIZE_RECOMMENDER, // box size recommender experiment step
     SignupSteps.POSTCODE,
     SignupSteps.DELIVERY,
-    SignupSteps.PERSONALISE_MENU // personalize menu experiment step
+    SignupSteps.PERSONALISE_MENU, // personalize menu experiment step
   ],
   steps: [
     { name: SignupSteps.BOX_SIZE, slug: 'box-size' },
@@ -52,11 +63,13 @@ export const signupConfig = {
     cta: 'Select',
     boxSize: {
       2: {
-        description: 'This smaller box is packed with enough pre-measured ingredients for each recipe to feed 2 people.',
+        description:
+          'This smaller box is packed with enough pre-measured ingredients for each recipe to feed 2 people.',
         image: twoPersonBoxImg,
       },
       4: {
-        description: 'This larger box is packed with enough pre-measured ingredients for each recipe to feed 4 people.',
+        description:
+          'This larger box is packed with enough pre-measured ingredients for each recipe to feed 4 people.',
         image: fourPersonBoxImg,
       },
     },
@@ -81,7 +94,7 @@ export const signupConfig = {
     goustoOnDemandTitle: 'Where would you like your box delivered?',
     reminder: 'Delivered to your door, 7 days a week',
     doNotDeliverErrorMessage: 'Sorry, it looks like we don’t currently deliver to your area.',
-    genericErrorMessage: 'Please enter a valid postcode'
+    genericErrorMessage: 'Please enter a valid postcode',
   },
   deliveryOptionsStep: {
     title: 'When would you like your first box delivered?',

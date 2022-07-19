@@ -2,13 +2,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { CTA } from 'goustouicomponents'
-import ReCAPTCHA from 'components/Recaptcha'
-import { getRecaptchaPublicKey } from 'utils/isomorphicEnvironment'
-import Input from 'Form/Input'
+import Input from 'components/Form/Input'
 import configAuth from 'config/auth'
 import Content from 'containers/Content'
-import InputError from 'Form/InputError'
+import InputError from 'components/Form/InputError'
 import { PageContent } from 'Page'
+import { Recaptcha } from 'components/Recaptcha'
 import css from './ResetPassword.css'
 import { FormAlert } from './FormAlert'
 
@@ -137,12 +136,7 @@ export class ResetPassword extends React.PureComponent {
           {
             isRecaptchaEnabled
             && (
-              <ReCAPTCHA
-                ref={el => { this.recaptchaElement = el }}
-                sitekey={getRecaptchaPublicKey()}
-                size="invisible"
-                onChange={this.captchaChanges}
-              />
+              <Recaptcha ref={el => { this.recaptchaElement = el }} onChange={this.captchaChanges} />
             )
           }
         </PageContent>

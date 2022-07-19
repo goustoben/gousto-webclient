@@ -1,7 +1,7 @@
 import isomorphicFetch from 'isomorphic-fetch'
 
 import { composeRequest, composeHttp, composeParser } from '../compose'
-import { HttpCtx, RequestConfig } from '../types'
+import { RequestConfig } from '../types'
 import { makeRequest } from './makeRequest'
 import { getUrl } from './url'
 
@@ -25,7 +25,7 @@ describe('makeRequest', () => {
   }
 
   const requestMiddleware = jest.fn(
-    (req: RequestConfig, ctx: HttpCtx, input: unknown) => requestOptions
+    (req: RequestConfig, input: unknown) => requestOptions
   )
 
   const responseMiddleware = jest.fn((_: Response) => 'reducedResponse')
@@ -35,33 +35,24 @@ describe('makeRequest', () => {
     composeParser(responseMiddleware)
   )
 
-  const httpCtx = {
-    apiUrl: 'https://apiUrl.test'
-  }
-
   const payload = {
     foo: 'bar'
   }
 
   let result: string
   beforeAll(async () => {
-    result = await makeRequest(httpCtx, endpointConfig, payload)
+    result = await makeRequest(endpointConfig, payload)
   })
 
   describe('reducing the request', () => {
     it('passes a request with default host and method', () => {
       const [defaultRequest] = requestMiddleware.mock.calls[0]
-      expect(defaultRequest.host).toBe(httpCtx.apiUrl)
+      expect(defaultRequest.host).toBe('defaultVal')
       expect(defaultRequest.method).toBe('GET')
     })
 
-    it('passes the provided context', () => {
-      const [_, ctx] = requestMiddleware.mock.calls[0]
-      expect(ctx).toBe(httpCtx)
-    })
-
     it('passes the provided input', () => {
-      const [_, __, input] = requestMiddleware.mock.calls[0]
+      const [_, input] = requestMiddleware.mock.calls[0]
       expect(input).toBe(payload)
     })
   })

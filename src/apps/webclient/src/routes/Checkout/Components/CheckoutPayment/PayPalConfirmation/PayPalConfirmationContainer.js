@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import { setCurrentPaymentMethod } from 'actions/checkout'
-import { PaymentMethod } from 'config/signup'
 import { isSubmitting } from 'routes/Checkout/utils/state'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 
 import { PayPalConfirmation } from './PayPalConfirmation'
 

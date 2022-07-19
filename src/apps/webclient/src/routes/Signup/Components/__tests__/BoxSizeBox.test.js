@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 
 import { BoxSizeBox } from '../BoxSizeBox/BoxSizeBox'
 

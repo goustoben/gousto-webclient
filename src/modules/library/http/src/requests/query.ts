@@ -1,5 +1,5 @@
 import { Dict, RequestMiddleware, Provider } from '../types'
-import { fromProvider, withResolved } from '../util'
+import { withResolved } from '../util'
 
 /**
  * Set a query parameter for a key using a provider (a string or function returning string)
@@ -9,8 +9,8 @@ import { fromProvider, withResolved } from '../util'
  *  setQueryParam('foo', payload => payload.requestID)
  */
 export function setQueryParam<Input>(key: string, stringProvider: Provider<Input, string>): RequestMiddleware<Input> {
-  return function queryMiddleware(req, ctx, input) {
-    const provided = fromProvider(stringProvider, input, ctx)
+  return function queryMiddleware(req, input) {
+    const provided = typeof stringProvider === 'function' ? stringProvider(input) : stringProvider
 
     return withResolved(provided, value => {
       req.queryParams = req.queryParams || {}
@@ -32,8 +32,8 @@ export function setQueryParam<Input>(key: string, stringProvider: Provider<Input
  *   setQueryParams(payload => payload)
  */
 export function setQueryParams<Input>(dictProvider: Provider<Input, Dict>): RequestMiddleware<Input> {
-  return function queryMiddleware(req, ctx, input) {
-    const provided = fromProvider(dictProvider, input, ctx)
+  return function queryMiddleware(req, input) {
+    const provided = typeof dictProvider === 'function' ? dictProvider(input) : dictProvider
 
     return withResolved(provided, value => {
       req.queryParams = req.queryParams || {}

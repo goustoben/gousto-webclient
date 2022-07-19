@@ -139,7 +139,7 @@ describe('BoxSize', () => {
       test('Then I can see the current selected radio', () => {
         const selectedRadioText = wrapper.find(`input[value="${mockBoxSize}"]`).closest('label').text().trim()
 
-        expect(selectedRadioText).toEqual('2 people')
+        expect(selectedRadioText).toEqual('2 peopleChoose 2 to 5 recipes')
       })
 
       test('Then the expected Radios are rendered', () => {

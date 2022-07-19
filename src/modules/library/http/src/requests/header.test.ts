@@ -1,9 +1,7 @@
-import { HttpCtx, RequestConfig } from '../types'
+import { RequestConfig } from '../types'
 import { setHeader, setHeaders } from './header'
 
 describe('header request middlewares', () => {
-  const ctx = {} as HttpCtx
-
   let req: RequestConfig
   beforeEach(() => {
     req = {} as RequestConfig
@@ -12,7 +10,7 @@ describe('header request middlewares', () => {
   describe('setHeader (single)', () => {
     it('can set a static header', () => {
       const middleware = setHeader('foo', 'bar')
-      const result = middleware(req, ctx, undefined) as RequestConfig
+      const result = middleware(req, undefined) as RequestConfig
       expect(result.headers).toStrictEqual({
         foo: 'bar'
       })
@@ -22,9 +20,9 @@ describe('header request middlewares', () => {
       const fn = jest.fn((_: Record<string, unknown>) => 'bar')
       const middleware = setHeader('foo', fn)
       const payload = { input: 'test' }
-      const result = middleware(req, ctx, payload) as RequestConfig
+      const result = middleware(req, payload) as RequestConfig
 
-      expect(fn).toHaveBeenCalledWith(payload, ctx)
+      expect(fn).toHaveBeenCalledWith(payload)
       expect(result.headers).toStrictEqual({
         foo: 'bar'
       })
@@ -34,9 +32,9 @@ describe('header request middlewares', () => {
       const fn = jest.fn((_: Record<string, unknown>) => Promise.resolve('bar'))
       const middleware = setHeader('foo', fn)
       const payload = { input: 'test' }
-      const result = middleware(req, ctx, payload) as Promise<RequestConfig>
+      const result = middleware(req, payload) as Promise<RequestConfig>
 
-      expect(fn).toHaveBeenCalledWith(payload, ctx)
+      expect(fn).toHaveBeenCalledWith(payload)
       expect(result).toBeInstanceOf(Promise)
       expect((await result).headers).toStrictEqual({
         foo: 'bar'
@@ -49,7 +47,7 @@ describe('header request middlewares', () => {
         beta: 'preserved'
       }
       const middleware = setHeader('alpha', 'updated')
-      const result = middleware(req, ctx, undefined) as RequestConfig
+      const result = middleware(req, undefined) as RequestConfig
 
       expect(result.headers).toStrictEqual({
         alpha: 'updated',
@@ -64,7 +62,7 @@ describe('header request middlewares', () => {
         foo: 'bar',
         baz: 'bam'
       })
-      const result = middleware(req, ctx, undefined) as RequestConfig
+      const result = middleware(req, undefined) as RequestConfig
 
       expect(result.headers).toStrictEqual({
         foo: 'bar',
@@ -79,8 +77,9 @@ describe('header request middlewares', () => {
       }))
       const middleware = setHeaders(fn)
       const payload = { input: 'test' }
-      const result = middleware(req, ctx, payload) as RequestConfig
+      const result = middleware(req, payload) as RequestConfig
 
+      expect(fn).toHaveBeenCalledWith(payload)
       expect(result.headers).toStrictEqual({
         foo: 'bar',
         baz: 'bam'
@@ -94,8 +93,9 @@ describe('header request middlewares', () => {
       }))
       const middleware = setHeaders(fn)
       const payload = { input: 'test' }
-      const result = middleware(req, ctx, payload) as Promise<RequestConfig>
+      const result = middleware(req, payload) as Promise<RequestConfig>
 
+      expect(fn).toHaveBeenCalledWith(payload)
       expect(result).toBeInstanceOf(Promise)
       expect((await result).headers).toStrictEqual({
         foo: 'bar',
@@ -111,7 +111,7 @@ describe('header request middlewares', () => {
       const middleware = setHeaders({
         alpha: 'updated'
       })
-      const result = middleware(req, ctx, undefined) as RequestConfig
+      const result = middleware(req, undefined) as RequestConfig
 
       expect(result.headers).toStrictEqual({
         alpha: 'updated',

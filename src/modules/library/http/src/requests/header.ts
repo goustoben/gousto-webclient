@@ -1,5 +1,5 @@
 import { Dict, RequestMiddleware, Provider } from '../types'
-import { fromProvider, withResolved } from '../util'
+import { withResolved } from '../util'
 
 /**
  * Add a header for the given key using a provider (a string or function returning string)
@@ -8,8 +8,8 @@ import { fromProvider, withResolved } from '../util'
  *  setHeader('baz', payload => payload.bazHeader)
  */
 export function setHeader<Input>(key: string, stringProvider: Provider<Input, string>): RequestMiddleware<Input> {
-  return function headerMiddleware(req, ctx, input) {
-    const provided = fromProvider(stringProvider, input, ctx)
+  return function headerMiddleware(req, input) {
+    const provided = typeof stringProvider === 'function' ? stringProvider(input) : stringProvider
 
     return withResolved(provided, value => {
       req.headers = req.headers || {}
@@ -32,8 +32,8 @@ export function setHeader<Input>(key: string, stringProvider: Provider<Input, st
  *  })
  */
 export function setHeaders<Input>(dictProvider: Provider<Input, Dict>): RequestMiddleware<Input> {
-  return function headerMiddleware(req, ctx, input) {
-    const provided = fromProvider(dictProvider, input, ctx)
+  return function headerMiddleware(req, input) {
+    const provided = typeof dictProvider === 'function' ? dictProvider(input) : dictProvider
 
     return withResolved(provided, value => {
       req.headers = req.headers || {}

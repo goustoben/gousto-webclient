@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { RadioGroup } from '@gousto-internal/citrus-react'
+import { RadioGroup, Box, Space, Text, FlexDirection, AlignItems } from '@gousto-internal/citrus-react'
 import { actionTypes } from 'routes/Account/Subscription/context/reducers'
 
 import {
@@ -49,6 +49,29 @@ export const BoxSize = ({ accessToken, isMobile }) => {
   }
   const isCtaDisabled = selectedBoxSize === currentBoxSize || !selectedBoxSize
 
+  const options = BOX_SIZES.map(boxSize => (
+    {
+      name: `box-size-${boxSize}-radio`,
+
+      label: () => (
+        <Box flexGrow={1} display="flex" flexDirection={FlexDirection.Row}>
+          <Space size={2} direction="horizontal" />
+          <Box display="flex" flexGrow={1} flexDirection={FlexDirection.Column}>
+            <Text>
+              {`${boxSize} people`}
+            </Text>
+          </Box>
+          <Box display="flex" flexDirection={FlexDirection.Column} alignItems={AlignItems.FlexEnd}>
+            <Text>
+              Choose 2 to {boxSize === '2' ? '5' : '4'} recipes
+            </Text>
+          </Box>
+        </Box>
+      ),
+      value: boxSize,
+    }
+  ))
+
   return (
     <SettingSection
       icon="servings"
@@ -88,11 +111,7 @@ export const BoxSize = ({ accessToken, isMobile }) => {
           name="box-size-radios"
           testingSelector="box-size-radios"
           onChange={({ target: { value } }) => updateSelectedBoxSize(value)}
-          options={BOX_SIZES.map((boxSize) => ({
-            label: `${boxSize} people`,
-            name: boxSize,
-            value: boxSize,
-          }))}
+          options={options}
         />
       ) : null}
     </SettingSection>

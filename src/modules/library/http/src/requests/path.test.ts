@@ -1,9 +1,7 @@
-import { HttpCtx, RequestConfig } from '../types'
+import { RequestConfig } from '../types'
 import { addPath } from './path'
 
 describe('path request middleware', () => {
-  const ctx = {} as HttpCtx
-
   let req: RequestConfig
   beforeEach(() => {
     req = {
@@ -13,7 +11,7 @@ describe('path request middleware', () => {
 
   it('can set a static path', () => {
     const middleware = addPath('second')
-    const result = middleware(req, ctx, undefined) as RequestConfig
+    const result = middleware(req, undefined) as RequestConfig
     expect(result.paths).toStrictEqual(['first', 'second'])
   })
 
@@ -21,7 +19,9 @@ describe('path request middleware', () => {
     const fn = jest.fn((_: Record<string, unknown>) => 'second')
     const middleware = addPath(fn)
     const payload = {}
-    const result = middleware(req, ctx, payload) as RequestConfig
+    const result = middleware(req, payload) as RequestConfig
+
+    expect(fn).toHaveBeenCalledWith(payload)
     expect(result.paths).toStrictEqual(['first', 'second'])
   })
 
@@ -29,8 +29,9 @@ describe('path request middleware', () => {
     const fn = jest.fn((_: Record<string, unknown>) => Promise.resolve('second'))
     const middleware = addPath(fn)
     const payload = {}
-    const result = middleware(req, ctx, payload) as Promise<RequestConfig>
+    const result = middleware(req, payload) as Promise<RequestConfig>
 
+    expect(fn).toHaveBeenCalledWith(payload)
     expect(result).toBeInstanceOf(Promise)
     expect((await result).paths).toStrictEqual(['first', 'second'])
   })

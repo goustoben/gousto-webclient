@@ -23,6 +23,7 @@ export const orderV2PricesFixture = {
         vat_charged: '0.00',
         total_discount: '9.99',
         total: '15.00',
+        is_delivery_free: true,
       },
     },
     relationships: {},
@@ -39,6 +40,7 @@ Object {
     "deliveryTotal": "0.00",
     "flatDiscountApplied": false,
     "grossTotal": "24.99",
+    "isDeliveryFree": true,
     "items": Array [
       Object {
         "type": "Surcharge",

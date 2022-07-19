@@ -2,14 +2,14 @@ import Immutable, { List } from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
 import { redirect } from 'actions/redirect'
-import { signupSetStep } from 'actions/signup'
-import { signupConfig } from 'config/signup'
+import { signupSetStep } from 'routes/Signup/signupActions'
+import { signupConfig } from 'routes/Signup/signupConfig'
 import { openProperStep, OpenStepStore } from 'routes/Signup/utils/openProperStep'
 
 jest.mock('routes/Signup/utils/getSignupSteps', () => ({
   getSignupSteps: jest.fn(async () => List.of([{ slug: 'first step slug' }])),
 }))
-jest.mock('actions/signup', () => ({
+jest.mock('routes/Signup/signupActions', () => ({
   signupSetStep: jest.fn(),
 }))
 jest.mock('actions/menu', () => ({

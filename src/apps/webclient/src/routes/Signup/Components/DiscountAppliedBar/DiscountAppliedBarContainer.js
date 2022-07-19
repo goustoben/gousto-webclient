@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import { signupDismissDiscountAppliedBar } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
+import { signupDismissDiscountAppliedBar } from 'routes/Signup/signupActions'
 import { getPromoBannerState } from 'utils/home'
 
 import { DiscountAppliedBar } from './DiscountAppliedBar'

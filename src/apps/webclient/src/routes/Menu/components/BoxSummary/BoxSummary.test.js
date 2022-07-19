@@ -43,6 +43,7 @@ describe('<BoxSummary />', () => {
   }
 
   let boxDetailsVisibilityChangeSpy
+  let removeRecipeSpy
 
   describe('rendering', () => {
     beforeEach(() => {
@@ -85,11 +86,13 @@ describe('<BoxSummary />', () => {
         jest.spyOn(basketUtils, 'basketSum').mockImplementation(() => false)
         jest.spyOn(basketUtils, 'okRecipes').mockImplementation(() => false)
         boxDetailsVisibilityChangeSpy = jest.fn()
+        removeRecipeSpy = jest.fn()
         wrapper = shallow(
           <BoxSummary
             {...defaultProps}
             boxDetailsVisibilityChange={boxDetailsVisibilityChangeSpy}
             shouldShowBoxSummary
+            removeRecipe={removeRecipeSpy}
           />,
         )
       })
@@ -98,7 +101,7 @@ describe('<BoxSummary />', () => {
         jest.resetAllMocks()
       })
       test('should call boxDetailsVisibilityChange', () => {
-        expect(boxDetailsVisibilityChangeSpy).toHaveBeenCalledWith(true)
+        expect(boxDetailsVisibilityChangeSpy).toHaveBeenCalledWith(true, removeRecipeSpy)
       })
     })
 
