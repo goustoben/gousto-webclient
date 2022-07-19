@@ -1,4 +1,11 @@
-import { formatPrice, getFirstPartPostcode, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
+import {
+  formatPrice,
+  getFirstPartPostcode,
+  formatLabelPlural,
+  formatDashOrPrice,
+  formatDeliveryTotal,
+  formatRecipeDiscount,
+} from 'utils/format'
 
 describe('formatPrice', () => {
   test('should return string with £ sign appended before price & fixed at 2 decimal points', () => {
@@ -46,14 +53,14 @@ describe('getFirstPartPostcode', () => {
   describe('formatDeliveryTotal', () => {
     describe('when deliveryTotalPrice is set', () => {
       test('should return formatted delivery price if deliveryTotalPrice > 0', () => {
-        expect(formatDeliveryTotal({ deliveryTotal: '2.99' }, '2.99')).toEqual('£2.99')
+        expect(formatDeliveryTotal(false, '2.99')).toEqual('£2.99')
       })
       test('should return Free if deliveryTotalPrice = 0', () => {
-        expect(formatDeliveryTotal({ deliveryTotal: '0.00' }, '0.00')).toEqual('FREE')
+        expect(formatDeliveryTotal(true, '0.00')).toEqual('FREE')
       })
     })
     test('should return no price indicator if deliveryTotalPrice is not set', () => {
-      expect(JSON.stringify(formatDeliveryTotal({ deliveryTotal: '' }, ''))).toContain('£')
+      expect(JSON.stringify(formatDeliveryTotal(false, ''))).toContain('£')
     })
   })
 

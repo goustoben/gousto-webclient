@@ -40,6 +40,7 @@ const pricingMockedResponse = {
         amount_off: '0.00',
         percentage_off: '60.00',
         promo_code: 'DTI-SB-63',
+        is_delivery_free: true,
         is_promo_code_valid: true,
         per_portion: '5.00',
         per_portion_discounted: '2.00',

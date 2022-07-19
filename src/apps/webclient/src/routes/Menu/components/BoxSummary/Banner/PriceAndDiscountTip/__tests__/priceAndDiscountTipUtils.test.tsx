@@ -113,6 +113,7 @@ describe('priceAndDiscountTipUtils', () => {
         recipeTotalDiscounted: '14.99',
         items: [],
         promoCode: 'TEST-10',
+        isDeliveryFree: true,
       }
       test('then it should extract amount and say kind is flat', () => {
         expect(getDiscountFromPricing(pricing)).toEqual({
@@ -143,6 +144,7 @@ describe('priceAndDiscountTipUtils', () => {
         recipeTotalDiscounted: '29.99',
         items: [],
         promoCode: 'DTI-SB-6030',
+        isDeliveryFree: true,
       }
 
       test('then it should extract amount and say kind is percentage', () => {
@@ -174,6 +176,7 @@ describe('priceAndDiscountTipUtils', () => {
         recipeTotalDiscounted: '49.99',
         items: [],
         promoCode: 'DTI-SB-6030',
+        isDeliveryFree: true,
       }
 
       test('then it should say the discount is not enabled', () => {

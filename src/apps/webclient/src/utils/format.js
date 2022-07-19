@@ -33,9 +33,9 @@ export const formatDashOrPrice = (price, numRecipes, prices, dash = null) => {
   return formatPrice(price)
 }
 
-export const formatDeliveryTotal = (prices, deliveryTotalPrice, dash = null) => {
+export const formatDeliveryTotal = (isDeliveryFree, deliveryTotalPrice, dash = null) => {
   if (deliveryTotalPrice) {
-    return parseFloat(deliveryTotalPrice) > 0 ? formatPrice(deliveryTotalPrice) : 'FREE'
+    return !isDeliveryFree ? formatPrice(deliveryTotalPrice) : 'FREE'
   }
 
   return (
