@@ -1,5 +1,4 @@
 import { useCallback } from 'react'
-import { useNormalisedData } from "./http/useNormalisedData"
 import { getVariantsForRecipe } from './recipeOptions'
 import { getSurchargeForRecipe } from './recipes/surcharge'
 import { formatRecipeTitle } from './recipes/title'
@@ -14,7 +13,6 @@ type GetOptionsForRecipeArgs = {
 }
 
 export function useGetOptionsForRecipe(
-  menuServiceData: ReturnType<typeof useNormalisedData>['data'],
   { menu, collections, recipes }: ReturnType<typeof useTransformedMenuForDate>,
   { numPortions, isRecipeInStock }: UseMenuDependencies,
 ) {
@@ -28,10 +26,6 @@ export function useGetOptionsForRecipe(
         throw new Error(
           `Failed to obtain collectionId while determining Alternative Options for ${coreRecipeId} recipe`,
         )
-      }
-
-      if (!menuServiceData) {
-        return []
       }
 
       if (!menu) {
@@ -83,6 +77,6 @@ export function useGetOptionsForRecipe(
         }
       })
     },
-    [menuServiceData, collections, menu, recipes, isRecipeInStock, numPortions],
+    [collections, menu, recipes, isRecipeInStock, numPortions],
   )
 }

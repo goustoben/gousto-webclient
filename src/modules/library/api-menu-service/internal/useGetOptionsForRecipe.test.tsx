@@ -2,11 +2,21 @@ import { renderHook } from '@testing-library/react-hooks'
 
 import { useGetOptionsForRecipe } from './useGetOptionsForRecipe'
 import { UseMenuSWRArgs } from './http'
-import { COLLECTION_ALL_RECIPES_ID, COLLECTION_GLUTEN_FREE_ID, MENU_1_DATES, MOCK_MENU_RESPONSE, RECIPE_CORE_ID_1, RECIPE_CORE_ID_2, RECIPE_NAME_1, RECIPE_NAME_2 } from './_testing/mocks'
+import {
+  COLLECTION_ALL_RECIPES_ID,
+  COLLECTION_GLUTEN_FREE_ID,
+  MENU_1_DATES,
+  MOCK_MENU_RESPONSE,
+  RECIPE_CORE_ID_1,
+  RECIPE_CORE_ID_2,
+  RECIPE_NAME_1,
+  RECIPE_NAME_2,
+} from './_testing/mocks'
 import { UseMenuDependencies } from './types'
 import { useMenuSWR } from './http/useMenuSWR'
+import { useMenu } from './useMenu'
 
-const useMenuSWRMock = useMenuSWR as jest.MockedFunction<typeof useMenuSWR>;
+const useMenuSWRMock = useMenuSWR as jest.MockedFunction<typeof useMenuSWR>
 
 jest.mock('./http/useMenuSWR')
 
@@ -16,22 +26,20 @@ describe('useGetOptionsForRecipe', () => {
     authUserId: 'auth-user-id',
     getFetcher: () => MOCK_MENU_RESPONSE,
     endpointUrl: 'menus-endpoint',
-    requestData: {
-
-    },
+    requestData: {},
   }
 
   const isRecipeInStock = jest.fn()
   const numPortions = 2
 
-  function renderForTest(selectedRecipeVariants: UseMenuDependencies["selectedRecipeVariants"] = {}) {
-    useMenuSWRMock.mockReturnValue({ error: null, isPending: false, response: MOCK_MENU_RESPONSE.result })
+  function renderForTest() {
+    useMenuSWRMock.mockReturnValue({ error: null, isPending: false, response: MOCK_MENU_RESPONSE })
 
-    return renderHook(() => useGetOptionsForRecipe(
-      requestArgs,
-      MENU_1_DATES.middle,
-      { numPortions, selectedRecipeVariants, isRecipeInStock }
-    ))
+    const { result } = renderHook(() =>
+      useMenu(requestArgs, MENU_1_DATES.middle, { numPortions, isRecipeInStock }),
+    )
+
+    return result.current.getOptionsForRecipe
   }
 
   beforeEach(() => {
@@ -42,18 +50,18 @@ describe('useGetOptionsForRecipe', () => {
 
   describe('when there is an in-stock alternative', () => {
     test('should return correct values', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID)
+      const options = getOptionsForRecipe(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID)
 
       const expected: typeof options = [
         {
           recipeId: RECIPE_CORE_ID_1,
-          recipeName: RECIPE_NAME_1 + " (V)",
+          recipeName: RECIPE_NAME_1 + ' (V)',
           isOnDetailScreen: false,
           isChecked: true,
           isOutOfStock: false,
-          surcharge: 1
+          surcharge: 1,
         },
         {
           recipeId: RECIPE_CORE_ID_2,
@@ -61,8 +69,8 @@ describe('useGetOptionsForRecipe', () => {
           isOnDetailScreen: false,
           isChecked: false,
           isOutOfStock: false,
-          surcharge: null
-        }
+          surcharge: null,
+        },
       ]
 
       expect(options).toEqual(expected)
@@ -81,9 +89,9 @@ describe('useGetOptionsForRecipe', () => {
     })
 
     test('should mark stock correctly in result', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID)
+      const options = getOptionsForRecipe(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID)
 
       expect(options).toHaveLength(2)
       expect(options[0].isOutOfStock).toEqual(false)
@@ -95,9 +103,9 @@ describe('useGetOptionsForRecipe', () => {
     const selectedRecipeId = RECIPE_CORE_ID_1
 
     test('should mark isChecked correctly in result', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(selectedRecipeId, COLLECTION_ALL_RECIPES_ID)
+      const options = getOptionsForRecipe(selectedRecipeId, COLLECTION_ALL_RECIPES_ID)
 
       expect(options).toHaveLength(2)
       expect(options[0].isChecked).toEqual(true)
@@ -109,9 +117,11 @@ describe('useGetOptionsForRecipe', () => {
     const isOnDetailScreen = true
 
     test('should mark isOnDetailScreen correctly in result', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID, { isOnDetailScreen })
+      const options = getOptionsForRecipe(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID, {
+        isOnDetailScreen,
+      })
 
       expect(options).toHaveLength(2)
       expect(options[0].isOnDetailScreen).toEqual(true)
@@ -123,9 +133,11 @@ describe('useGetOptionsForRecipe', () => {
     const isOnDetailScreen = false
 
     test('should mark isOnDetailScreen correctly in result', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID, { isOnDetailScreen })
+      const options = getOptionsForRecipe(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID, {
+        isOnDetailScreen,
+      })
 
       expect(options).toHaveLength(2)
       expect(options[0].isOnDetailScreen).toEqual(false)
@@ -137,9 +149,11 @@ describe('useGetOptionsForRecipe', () => {
     const isOnDetailScreen = false
 
     test('should mark isOnDetailScreen correctly in result', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID, { isOnDetailScreen })
+      const options = getOptionsForRecipe(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID, {
+        isOnDetailScreen,
+      })
 
       expect(options).toHaveLength(2)
       expect(options[0].isOnDetailScreen).toEqual(false)
@@ -152,9 +166,9 @@ describe('useGetOptionsForRecipe', () => {
     const glutenFreeRecipeId = RECIPE_CORE_ID_1
 
     test('should only return matching recipes', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(RECIPE_CORE_ID_1, COLLECTION_GLUTEN_FREE_ID)
+      const options = getOptionsForRecipe(RECIPE_CORE_ID_1, COLLECTION_GLUTEN_FREE_ID)
 
       expect(options).toHaveLength(1)
       expect(options[0].recipeId).toEqual(glutenFreeRecipeId)
@@ -166,11 +180,11 @@ describe('useGetOptionsForRecipe', () => {
     const recipeIdWithSurcharge = RECIPE_CORE_ID_1
 
     test('should only return matching recipes', () => {
-      const { result } = renderForTest()
+      const getOptionsForRecipe = renderForTest()
 
-      const options = result.current(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID)
+      const options = getOptionsForRecipe(RECIPE_CORE_ID_1, COLLECTION_ALL_RECIPES_ID)
 
-      const recipeWithSurcharge = options.find(r => r.recipeId === recipeIdWithSurcharge)
+      const recipeWithSurcharge = options.find((r) => r.recipeId === recipeIdWithSurcharge)
       expect(recipeWithSurcharge).toBeTruthy
       expect(recipeWithSurcharge!.surcharge).toEqual(1)
     })

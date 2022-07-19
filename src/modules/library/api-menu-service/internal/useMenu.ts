@@ -13,7 +13,7 @@ export function useMenu(
   const menuData = useTransformedMenuForDate(menuServiceData, date)
 
   const getRecipesForCollectionId = useGetRecipesForCollectionId(menuServiceData, menuData, deps)
-  const getOptionsForRecipe = useGetOptionsForRecipe(menuServiceData, menuData, deps)
+  const getOptionsForRecipe = useGetOptionsForRecipe(menuData, deps)
 
   return {
     getRecipesForCollectionId,
