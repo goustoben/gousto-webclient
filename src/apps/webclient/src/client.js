@@ -1,4 +1,3 @@
-//import './wdyr'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import React from 'react'

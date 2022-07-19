@@ -147,5 +147,3 @@ export const RecipeTileBridge = ({
     </RecipeReferenceProvider>
   )
 }
-
-RecipeTileBridge.whyDidYouRender = true

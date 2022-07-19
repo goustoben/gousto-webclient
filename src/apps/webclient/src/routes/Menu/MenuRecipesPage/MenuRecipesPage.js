@@ -198,4 +198,3 @@ MenuRecipesPage.defaultProps = {
   isDoubleDeckerFeatureOn: false,
 }
 MenuRecipesPage.contextType = ReactReduxContext
-MenuRecipesPage.whyDidYouRender = true

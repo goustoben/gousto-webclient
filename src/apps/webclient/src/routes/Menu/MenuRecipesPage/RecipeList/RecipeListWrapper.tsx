@@ -54,6 +54,4 @@ const RecipeListWrapper = (ownProps: any) => {
   )
 }
 
-RecipeListWrapper.whyDidYouRender = true
-
 export { RecipeListWrapper }
