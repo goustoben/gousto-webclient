@@ -9,7 +9,7 @@ export function useMenu(
   date: string,
   deps: UseMenuDependencies
 ) {
-  const { data: menuServiceData } = useMenuService(requestArgs)
+  const { data: menuServiceData, isPending } = useMenuService(requestArgs)
   const menuData = useTransformedMenuForDate(menuServiceData, date)
 
   const getRecipesForCollectionId = useGetRecipesForCollectionId(menuServiceData, menuData, deps)
@@ -18,6 +18,7 @@ export function useMenu(
   return {
     getRecipesForCollectionId,
     getOptionsForRecipe,
+    isPending,
     menuRecipes: menuData.recipes
   }
 }
