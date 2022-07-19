@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react'
-import { useMenuService, UseMenuSWRArgs } from './http'
 import { TransformedRecipe } from './transformer'
 import {
   getOutOfStockRecipeReplacer,
@@ -12,6 +11,7 @@ import {
 } from './recipes/sorting'
 import { UseMenuDependencies } from './types'
 import { useTransformedMenuForDate } from './transformer/useTransformedMenus'
+import { useNormalisedData } from "./http/useNormalisedData"
 
 /**
  * TypeScript Type guard (for `TransformedRecipe` type)
@@ -34,13 +34,10 @@ export type RecipeOptionPair = {
 }
 
 export function useGetRecipesForCollectionId(
-  requestArgs: UseMenuSWRArgs,
-  date: string,
+  menuServiceData: ReturnType<typeof useNormalisedData>,
+  { menu, collections, recipes }: ReturnType<typeof useTransformedMenuForDate>,
   { numPortions, isRecipeInStock }: UseMenuDependencies,
 ) {
-  const menuServiceData = useMenuService(requestArgs)
-  const { menu, collections, recipes } = useTransformedMenuForDate(menuServiceData, date)
-
   // VPP TODO memoise recipeReferenceInjector
 
   const recipeComparatorForOutOfStock = useMemo(

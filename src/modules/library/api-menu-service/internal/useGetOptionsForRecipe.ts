@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from 'react'
-import { useMenuService, UseMenuSWRArgs } from './http'
+import { useCallback } from 'react'
+import { useNormalisedData } from "./http/useNormalisedData"
 import { getVariantsForRecipe } from './recipeOptions'
 import { getSurchargeForRecipe } from './recipes/surcharge'
 import { formatRecipeTitle } from './recipes/title'
@@ -14,13 +14,10 @@ type GetOptionsForRecipeArgs = {
 }
 
 export function useGetOptionsForRecipe(
-  requestArgs: UseMenuSWRArgs,
-  date: string,
+  menuServiceData: ReturnType<typeof useNormalisedData>,
+  { menu, collections, recipes }: ReturnType<typeof useTransformedMenuForDate>,
   { numPortions, isRecipeInStock }: UseMenuDependencies,
 ) {
-  const menuServiceData = useMenuService(requestArgs)
-  const { menu, collections, recipes } = useTransformedMenuForDate(menuServiceData, date)
-
   return useCallback(
     (
       coreRecipeId: string,

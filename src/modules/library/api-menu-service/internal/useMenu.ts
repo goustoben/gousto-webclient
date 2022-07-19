@@ -1,4 +1,5 @@
-import { UseMenuSWRArgs } from './http'
+import { useMenuService, UseMenuSWRArgs } from './http'
+import { useTransformedMenuForDate } from "./transformer/useTransformedMenus";
 import { UseMenuDependencies } from './types'
 import { useGetOptionsForRecipe } from './useGetOptionsForRecipe';
 import { useGetRecipesForCollectionId } from './useGetRecipesForCollectionId'
@@ -8,12 +9,15 @@ export function useMenu(
     date: string,
     deps: UseMenuDependencies
 ) {
-  const getRecipesForCollectionId = useGetRecipesForCollectionId(requestArgs, date, deps)
+  const menuServiceData = useMenuService(requestArgs)
+  const menuData = useTransformedMenuForDate(menuServiceData, date)
 
-  const getOptionsForRecipe = useGetOptionsForRecipe(requestArgs, date, deps)
+  const getRecipesForCollectionId = useGetRecipesForCollectionId(menuServiceData, menuData, deps)
+  const getOptionsForRecipe = useGetOptionsForRecipe(menuServiceData, menuData, deps)
 
   return {
     getRecipesForCollectionId,
-    getOptionsForRecipe
+    getOptionsForRecipe,
+    menuRecipes: menuData.recipes
   }
 }
