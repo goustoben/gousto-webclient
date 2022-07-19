@@ -168,4 +168,3 @@ export class Menu extends React.PureComponent {
 }
 Menu.propTypes = menuPropTypes
 Menu.defaultProps = defaultMenuPropTypes
-Menu.whyDidYouRender = true

@@ -44,6 +44,4 @@ const MenuWrapper = (ownProps: any) => {
   )
 }
 
-MenuWrapper.whyDidYouRender = true
-
 export { MenuWrapper }

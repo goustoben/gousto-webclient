@@ -89,6 +89,4 @@ const MenuRecipesPageWrapper = (ownProps) => {
   )
 }
 
-MenuRecipesPageWrapper.whyDidYouRender = true
-
 export { MenuRecipesPageWrapper }

@@ -43,6 +43,4 @@ const MenuContainer = withIsActionBarRedesignEnabled(
   connect(mapStateToProps, mapDispatchToProps)(MenuWrapper),
 )
 
-MenuContainer.whyDidYouRender = true
-
 export { MenuContainer }

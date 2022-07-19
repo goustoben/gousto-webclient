@@ -144,5 +144,3 @@ export const RecipeTile = ({
     </OuterContainer>
   )
 }
-
-RecipeTile.whyDidYouRender = true
