@@ -30,6 +30,7 @@ export class BoxSummary extends React.PureComponent {
     pricingPending: PropTypes.bool,
     shouldShowBoxSummary: PropTypes.bool,
     shouldMenuBrowseCTAShow: PropTypes.bool,
+    removeRecipe: PropTypes.func.isRequired,
   }
 
   // eslint-disable-next-line react/static-property-placement
@@ -55,12 +56,13 @@ export class BoxSummary extends React.PureComponent {
       orderSaveError,
       boxDetailsVisibilityChange,
       shouldShowBoxSummary,
+      removeRecipe,
     } = this.props
 
     window.document.addEventListener('click', this.handleClick, false)
 
     if ((hasUnavailableRecipes && orderSaveError === 'no-stock') || shouldShowBoxSummary) {
-      boxDetailsVisibilityChange(true)
+      boxDetailsVisibilityChange(true, removeRecipe)
     }
 
     if (this.handleError().showTooltip) {
@@ -79,7 +81,7 @@ export class BoxSummary extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { boxDetailsVisibilityChange } = this.props
+    const { boxDetailsVisibilityChange, removeRecipe } = this.props
 
     window.document.removeEventListener('click', this.handleClick, false)
 
@@ -87,7 +89,7 @@ export class BoxSummary extends React.PureComponent {
       clearTimeout(this.hideTooltipDelay)
     }
 
-    boxDetailsVisibilityChange(false)
+    boxDetailsVisibilityChange(false, removeRecipe)
   }
 
   handleClick = (e) => {
@@ -120,13 +122,13 @@ export class BoxSummary extends React.PureComponent {
   }
 
   open = () => {
-    const { boxDetailsVisibilityChange } = this.props
-    boxDetailsVisibilityChange(true)
+    const { boxDetailsVisibilityChange, removeRecipe } = this.props
+    boxDetailsVisibilityChange(true, removeRecipe)
   }
 
   close = () => {
-    const { boxDetailsVisibilityChange, basketRestorePreviousValues } = this.props
-    boxDetailsVisibilityChange(false)
+    const { boxDetailsVisibilityChange, basketRestorePreviousValues, removeRecipe } = this.props
+    boxDetailsVisibilityChange(false, removeRecipe)
     basketRestorePreviousValues()
   }
 
