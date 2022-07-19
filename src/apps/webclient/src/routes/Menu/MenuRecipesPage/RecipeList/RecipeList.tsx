@@ -1,10 +1,9 @@
-import React, { memo, useCallback, useEffect, useLayoutEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 import { RecipeOptionPair } from '@library/api-menu-service'
 
-import { RecipeTileBridge } from 'routes/Menu/components/RecipeTile/RecipeTileBridge'
-
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
+import { RecipeListItem } from './RecipeListItem'
 import { useTracking } from './useTracking'
 
 import css from './RecipeList.css'
@@ -70,7 +69,7 @@ export const RecipeList = ({ recipes, currentCollectionId }: RecipeListProps) =>
 
   const renderRecipe = useCallback(
     (value: RecipeOptionPair) => (
-      <RecipeListItemMemoised
+      <RecipeListItem
         key={value.reference}
         recipe={value.recipe}
         reference={value.reference}
@@ -88,26 +87,3 @@ export const RecipeList = ({ recipes, currentCollectionId }: RecipeListProps) =>
     </div>
   )
 }
-
-const RecipeListItem = ({
-  recipe,
-  reference,
-  originalId,
-  currentCollectionId,
-}: {
-  recipe: RecipeOptionPair['recipe']
-  reference: RecipeOptionPair['reference']
-  originalId: RecipeOptionPair['originalId']
-  currentCollectionId: string
-}) => (
-  <React.Fragment>
-    <RecipeTileBridge
-      recipeReference={reference}
-      recipe={recipe}
-      originalId={originalId}
-      collectionId={currentCollectionId}
-    />
-  </React.Fragment>
-)
-
-const RecipeListItemMemoised = memo(RecipeListItem) as any
