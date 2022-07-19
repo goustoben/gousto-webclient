@@ -32,7 +32,7 @@ type RecipeListProps = {
 /**
  * How many recipes to render immediately
  */
-const IMMEDIATE_RENDER_COUNT = 40
+const IMMEDIATE_RENDER_COUNT = 20
 /**
  * How long to wait before loading the rest
  */
@@ -50,7 +50,7 @@ export const RecipeList = ({ recipes, currentCollectionId }: RecipeListProps) =>
   // React would take care of diffing recipes individually
   const hasCompletedRendering = recipesToRender.length === recipes.length
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (recipes.length <= IMMEDIATE_RENDER_COUNT || hasCompletedRendering) {
       setRecipesToRender(recipes)
 
