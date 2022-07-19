@@ -12,7 +12,8 @@ const menuBoxesByPortionSize = (
   type: string
   id: string
   attributes: { number_of_portions: number; number_of_recipes: number }
-}[] => Object.values(menuBox || {}).filter((box) => box.attributes.number_of_portions === portionSize)
+}[] =>
+  Object.values(menuBox || {}).filter((box) => box.attributes.number_of_portions === portionSize)
 
 /**
  * Hook interface for supported Box types from Menu API box response.
