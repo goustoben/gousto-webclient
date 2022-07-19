@@ -18,6 +18,8 @@ function mockUseMenu(getOptionsForRecipe: jest.Mock) {
   useMenuMock.mockImplementation(() => ({
     getOptionsForRecipe,
     getRecipesForCollectionId,
+    menuRecipes: [],
+    isPending: false,
   }))
 }
 

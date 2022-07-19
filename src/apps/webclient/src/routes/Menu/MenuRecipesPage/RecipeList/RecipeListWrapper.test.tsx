@@ -79,6 +79,7 @@ describe('RecipeListWrapper', () => {
       getRecipesForCollectionId: () => [],
       getOptionsForRecipe: () => [],
       menuRecipes: [],
+      isPending: false,
     })
 
     useStockMock.mockReturnValue({

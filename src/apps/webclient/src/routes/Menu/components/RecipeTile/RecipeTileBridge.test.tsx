@@ -33,6 +33,7 @@ useMenuMock.mockReturnValue({
   getRecipesForCollectionId: () => [],
   getOptionsForRecipe: () => [],
   menuRecipes: [],
+  isPending: false,
 })
 
 describe('RecipeTileBridge', () => {

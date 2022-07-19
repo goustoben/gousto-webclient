@@ -1,10 +1,6 @@
 {
   "extends": "../../../../tsconfig.json",
-  "include": [
-    "./src"
-  ],
+  "include": ["./index.ts", "./internal"],
   // "files" overrides top-level excludes
-  "files": [
-    "./node_modules/@library/nonjs-imports/index.d.ts"
-  ]
+  "files": ["./node_modules/@library/nonjs-imports/index.d.ts"]
 }
