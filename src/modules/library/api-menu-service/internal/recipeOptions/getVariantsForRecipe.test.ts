@@ -18,11 +18,11 @@ describe('getVariantsForRecipe', () => {
       const transformedRecipes: TransformedRecipe[] = [
         {
           id: RECIPE_CORE_ID_1,
-          dietaryClaims: [ { slug: 'gluten-free' }],
+          dietaryClaims: [{ slug: 'gluten-free' }],
         } as unknown as TransformedRecipe,
         {
           id: RECIPE_CORE_ID_2,
-          dietaryClaims: [ { slug: 'gluten-free' }],
+          dietaryClaims: [{ slug: 'gluten-free' }],
         } as unknown as TransformedRecipe,
       ]
 
@@ -45,7 +45,7 @@ describe('getVariantsForRecipe', () => {
       const transformedRecipes: TransformedRecipe[] = [
         {
           id: RECIPE_CORE_ID_1,
-          dietaryClaims: [ { slug: 'gluten-free' }],
+          dietaryClaims: [{ slug: 'gluten-free' }],
         } as unknown as TransformedRecipe,
         {
           id: RECIPE_CORE_ID_2,
@@ -56,12 +56,10 @@ describe('getVariantsForRecipe', () => {
       test('should return all recipes which match', () => {
         const result = getVariantsForRecipe(MENU_1, RECIPE_CORE_ID_1, transformedRecipes, collectionDietaryClaims)
 
-        const expectedAlternatives = []
-
         expect(result).toEqual({
           type: 'alternatives',
-          alternatives: expectedAlternatives,
-          variantsList: expectedAlternatives,
+          alternatives: [],
+          variantsList: [],
         })
       })
     })
@@ -73,11 +71,11 @@ describe('getVariantsForRecipe', () => {
     const transformedRecipes: TransformedRecipe[] = [
       {
         id: RECIPE_CORE_ID_1,
-        dietaryClaims: [ { slug: 'gluten-free' }],
+        dietaryClaims: [{ slug: 'gluten-free' }],
       } as unknown as TransformedRecipe,
       {
         id: RECIPE_CORE_ID_2,
-        dietaryClaims: [ { slug: 'gluten-free' }],
+        dietaryClaims: [{ slug: 'gluten-free' }],
       } as unknown as TransformedRecipe,
     ]
 

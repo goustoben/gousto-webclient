@@ -189,32 +189,30 @@ export const MENU_1: MenuAPIResponseDataItem = {
 }
 
 export const MOCK_MENU_RESPONSE: MenuAPIResponse = {
-  result: {
-    data: [MENU_1],
-    included: [
-      makeIncludedRecipe({
-        id: RECIPE_UUID_1,
-        coreRecipeId: RECIPE_CORE_ID_1,
-        name: RECIPE_NAME_1,
-        dietaryClaims: [{ name: 'gluten free', slug: 'gluten-free' }],
-        surcharge: 200
-      }),
-      makeIncludedRecipe({
-        id: RECIPE_UUID_2,
-        coreRecipeId: RECIPE_CORE_ID_2,
-        name: RECIPE_NAME_2,
-      }),
-      COLLECTION_ALL_RECIPES,
-      COLLECTION_GLUTEN_FREE,
-    ],
-    meta: {
-      recommendations: {
-        limit: 15,
-        tutorial: 'jfy',
-        enabled: true,
-        name: 'Chosen For You',
-        version: 'rouxcommender/v2',
-      },
+  data: [MENU_1],
+  included: [
+    makeIncludedRecipe({
+      id: RECIPE_UUID_1,
+      coreRecipeId: RECIPE_CORE_ID_1,
+      name: RECIPE_NAME_1,
+      dietaryClaims: [{ name: 'gluten free', slug: 'gluten-free' }],
+      surcharge: 200
+    }),
+    makeIncludedRecipe({
+      id: RECIPE_UUID_2,
+      coreRecipeId: RECIPE_CORE_ID_2,
+      name: RECIPE_NAME_2,
+    }),
+    COLLECTION_ALL_RECIPES,
+    COLLECTION_GLUTEN_FREE,
+  ],
+  meta: {
+    recommendations: {
+      limit: 15,
+      tutorial: 'jfy',
+      enabled: true,
+      name: 'Chosen For You',
+      version: 'rouxcommender/v2',
     },
   },
   status: 'ok',

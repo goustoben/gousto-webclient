@@ -45,13 +45,11 @@ describe('promotionsTransformer', () => {
   })
 
   describe('when attributes has no promotions', () => {
-    const attributes = { }
+    const attributes = {}
 
     test('should return empty array', () => {
-      const expected = []
-
       const result = promotionsTransformer(attributes as any)
-      expect(result).toEqual(expected)
+      expect(result).toEqual([])
     })
   })
 })
@@ -61,12 +59,12 @@ describe('surchargeTransformer', () => {
     const surcharge = 399
     const result = surchargeTransformer(surcharge)
     const expectedPrice = 3.99
-    expect(result).toEqual({listPrice: expectedPrice})
+    expect(result).toEqual({ listPrice: expectedPrice })
   })
 })
 
 describe('isNewTransformer', () => {
-  let debutRecipes
+  let debutRecipes: any
   const recipeId = '1234'
   describe('when there is no debut recipes', () => {
     beforeEach(() => {

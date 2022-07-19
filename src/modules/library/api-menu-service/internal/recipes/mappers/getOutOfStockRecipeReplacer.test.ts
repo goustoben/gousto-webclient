@@ -8,9 +8,9 @@ const getVariantsForRecipeMock = getVariantsForRecipe as jest.MockedFunction<typ
 const makeIds = (recipes: { id: string }[]) => new Set(recipes.map((r) => r.id))
 
 const makeRecipe = (id: string): TransformedRecipe =>
-  ({
-    id,
-  } as TransformedRecipe)
+({
+  id,
+} as TransformedRecipe)
 
 jest.mock('../../recipeOptions')
 
@@ -92,10 +92,9 @@ describe('getOutOfStockRecipeReplacer produces recipe replacer function that', (
 
   describe('when recipe is out of stock but does not have alternatives', () => {
     const inStockIds = makeIds([])
-    const alternatives = []
 
     test('it does not replace recipe', () => {
-      const replacer = makeReplacer([RECIPE_1, RECIPE_1_1, RECIPE_1_2], inStockIds, [], 4, alternatives)
+      const replacer = makeReplacer([RECIPE_1, RECIPE_1_1, RECIPE_1_2], inStockIds, [], 4, [])
 
       expect(replacer({ recipe: RECIPE_1, reference: 'foo' })).toEqual({
         recipe: RECIPE_1,
