@@ -65,6 +65,7 @@ describe('CollectionLinkTile', () => {
         },
       ],
       getOptionsForRecipe: () => [],
+      menuRecipes: [],
     })
   })
 
@@ -146,6 +147,7 @@ describe('CollectionLinkTile', () => {
         useMenuMock.mockReturnValue({
           getRecipesForCollectionId: () => [],
           getOptionsForRecipe: () => [],
+          menuRecipes: [],
         })
       })
 

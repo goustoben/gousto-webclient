@@ -77,6 +77,7 @@ describe('CollectionLink', () => {
         },
       ],
       getOptionsForRecipe: () => [],
+      menuRecipes: [],
     })
   })
 

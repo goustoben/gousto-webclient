@@ -32,6 +32,7 @@ const useMenuMock = useMenu as jest.MockedFunction<typeof useMenu>
 useMenuMock.mockReturnValue({
   getRecipesForCollectionId: () => [],
   getOptionsForRecipe: () => [],
+  menuRecipes: [],
 })
 
 describe('RecipeTileBridge', () => {

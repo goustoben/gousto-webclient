@@ -69,12 +69,16 @@ describe('RecipeListWrapper', () => {
     boxSummaryDeliveryDays: Immutable.Map({
       '2018-05-04': Immutable.Map({ id: 'mockDeliveryDayId' }),
     }),
+    menu: Immutable.Map({
+      selectedRecipeVariants: {},
+    }),
   })
 
   beforeEach(() => {
     useMenuMock.mockReturnValue({
       getRecipesForCollectionId: () => [],
       getOptionsForRecipe: () => [],
+      menuRecipes: [],
     })
 
     useStockMock.mockReturnValue({
