@@ -22,7 +22,7 @@ const equipmentTransformer = (equipmentArray: { name: string }[]) => equipmentAr
 
 const formatIngredients = (
   normalisedRelationships: MenuAPIResponseIncludedRecipe['relationships'],
-  normalisedData: MenuServiceData,
+  normalisedData: MenuServiceData['data'],
 ) => {
   if (!normalisedData) {
     return []

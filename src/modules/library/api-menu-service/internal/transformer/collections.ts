@@ -6,7 +6,7 @@ type ModifiedFeaturedCategory = MenuApiResponseRelationshipFeaturedCategory & {
   index: number
 }
 
-const transformMenuCollections = (menu: MenuAPIResponseDataItem, normalisedData: MenuServiceData) => {
+const transformMenuCollections = (menu: MenuAPIResponseDataItem, normalisedData: MenuServiceData['data']) => {
   if (!normalisedData || !menu?.relationships?.collections?.data) {
     return []
   }
@@ -56,5 +56,5 @@ const transformMenuCollections = (menu: MenuAPIResponseDataItem, normalisedData:
   return formattedData
 }
 
-export const collectionsTransformer = (menuServiceData: MenuServiceData, activeMenu: MenuAPIResponseDataItem) =>
+export const collectionsTransformer = (menuServiceData: MenuServiceData['data'], activeMenu: MenuAPIResponseDataItem) =>
   transformMenuCollections(activeMenu, menuServiceData)

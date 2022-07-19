@@ -4,7 +4,7 @@ import { ingredientTransformer } from './ingredientTransformer'
 import { recipeTransformer } from './recipes'
 import { formatIngredients } from './recipeHelpers'
 
-function transformRecipes(menuServiceData: MenuServiceData, menu: MenuAPIResponseDataItem) {
+function transformRecipes(menuServiceData: MenuServiceData['data'], menu: MenuAPIResponseDataItem) {
   if (!menuServiceData) {
     return []
   }
@@ -44,7 +44,7 @@ export type TransformedCollection = Unpacked<ReturnType<typeof collectionsTransf
 /**
  * Transforms and flattens the menu service response into an easier-to-query format
  */
-export function transformMenu(menuServiceData: MenuServiceData, menu: MenuAPIResponseDataItem) {
+export function transformMenu(menuServiceData: MenuServiceData['data'], menu: MenuAPIResponseDataItem) {
   const transformedCollections: TransformedCollection[] = collectionsTransformer(menuServiceData, menu)
   const transformedRecipes: TransformedRecipe[] = transformRecipes(menuServiceData, menu)
 

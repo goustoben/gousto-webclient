@@ -19,7 +19,7 @@ const getIdForRow = (row: MenuAPIResponseIncludedItem) =>
 export function useNormalisedData(requestArgs: UseMenuSWRArgs) {
   const { response, isPending, error } = useMenuSWR(requestArgs)
 
-  return useMemo(() => {
+  const data = useMemo(() => {
     if (isPending || error) {
       return null
     }
@@ -50,4 +50,6 @@ export function useNormalisedData(requestArgs: UseMenuSWRArgs) {
 
     return normalised
   }, [response, isPending, error])
+
+  return { data, isPending, error }
 }

@@ -34,7 +34,7 @@ export type RecipeOptionPair = {
 }
 
 export function useGetRecipesForCollectionId(
-  menuServiceData: ReturnType<typeof useNormalisedData>,
+  menuServiceData: ReturnType<typeof useNormalisedData>['data'],
   { menu, collections, recipes }: ReturnType<typeof useTransformedMenuForDate>,
   { numPortions, isRecipeInStock }: UseMenuDependencies,
 ) {

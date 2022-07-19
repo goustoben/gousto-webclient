@@ -3,7 +3,7 @@ import { getMenuIdForDate } from "../date/getMenuIdForDate"
 import { useNormalisedData } from '../http/useNormalisedData'
 import { transformMenu } from "./transformMenu"
 
-export function useTransformedMenus(menuServiceData: ReturnType<typeof useNormalisedData>) {
+export function useTransformedMenus(menuServiceData: ReturnType<typeof useNormalisedData>['data']) {
   return useMemo(() => {
     if (!menuServiceData) {
       return []
@@ -23,7 +23,7 @@ export function useTransformedMenus(menuServiceData: ReturnType<typeof useNormal
   }, [menuServiceData])
 }
 
-export function useTransformedMenuForDate(menuServiceData: ReturnType<typeof useNormalisedData>, date: string) {
+export function useTransformedMenuForDate(menuServiceData: ReturnType<typeof useNormalisedData>['data'], date: string) {
   const menus = useTransformedMenus(menuServiceData)
 
   return useMemo(() => {
@@ -31,14 +31,14 @@ export function useTransformedMenuForDate(menuServiceData: ReturnType<typeof use
 
     if (!id) {
       return {
-        menu : null,
+        menu: null,
         collections: [],
         recipes: [],
       };
     }
 
     return menus.find(m => m.menu) || {
-      menu : null,
+      menu: null,
       collections: [],
       recipes: [],
     }

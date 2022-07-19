@@ -5,11 +5,11 @@ import { useGetOptionsForRecipe } from './useGetOptionsForRecipe';
 import { useGetRecipesForCollectionId } from './useGetRecipesForCollectionId'
 
 export function useMenu(
-    requestArgs: UseMenuSWRArgs,
-    date: string,
-    deps: UseMenuDependencies
+  requestArgs: UseMenuSWRArgs,
+  date: string,
+  deps: UseMenuDependencies
 ) {
-  const menuServiceData = useMenuService(requestArgs)
+  const { data: menuServiceData } = useMenuService(requestArgs)
   const menuData = useTransformedMenuForDate(menuServiceData, date)
 
   const getRecipesForCollectionId = useGetRecipesForCollectionId(menuServiceData, menuData, deps)

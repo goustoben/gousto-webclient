@@ -14,7 +14,7 @@ type GetOptionsForRecipeArgs = {
 }
 
 export function useGetOptionsForRecipe(
-  menuServiceData: ReturnType<typeof useNormalisedData>,
+  menuServiceData: ReturnType<typeof useNormalisedData>['data'],
   { menu, collections, recipes }: ReturnType<typeof useTransformedMenuForDate>,
   { numPortions, isRecipeInStock }: UseMenuDependencies,
 ) {
