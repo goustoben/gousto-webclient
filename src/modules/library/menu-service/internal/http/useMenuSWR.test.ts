@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { MenuAPIQueryData, MenuAPIResponse } from './response'
+import { MenuAPIQueryData, MenuAPIResponse } from './types'
 import { useHTTPGet } from './useHTTPGet'
 import { useMenuSWR } from './useMenuSWR'
 
@@ -7,26 +7,26 @@ jest.mock('./useHTTPGet')
 
 const useHTTPGetMock = useHTTPGet as jest.MockedFn<typeof useHTTPGet>
 
-function setHTTPGetMock({ data, error }: { data?: any, error?: any }) {
+function setHTTPGetMock({ data, error }: { data?: any; error?: any }) {
   useHTTPGetMock.mockReturnValue({
     data,
     error,
     isValidating: false,
-    mutate: (() => { }) as any,
+    mutate: (() => {}) as any,
   })
 }
 
 function renderForTest(args: Partial<Parameters<typeof useMenuSWR>[0]> = {}) {
-    const requestArgs = {
-        endpointUrl: 'endpoint-url',
-        accessToken: 'access-token',
-        authUserId: 'auth-user-id',
-        requestData: {},
-        getFetcher: () => ({} as any),
-        ...args
-    }
+  const requestArgs = {
+    endpointUrl: 'endpoint-url',
+    accessToken: 'access-token',
+    authUserId: 'auth-user-id',
+    requestData: {},
+    getFetcher: () => ({} as any),
+    ...args,
+  }
 
-    return renderHook(() => useMenuSWR(requestArgs))
+  return renderHook(() => useMenuSWR(requestArgs))
 }
 
 describe('menu-service > useMenuSWR', () => {
@@ -97,18 +97,11 @@ describe('menu-service > useMenuSWR', () => {
       describe('when status is ok', () => {
         const data: MenuAPIResponse = {
           status: 'ok',
-          result: {
-            data: {
-              '1234': {
-                committed: '0',
-                recipe_id: 1234,
-                family_number: 100,
-                number: 100,
-                period_id: 5,
-                slot_number: '7',
-              }
-            },
-            meta: [],
+          data: [],
+          included: [],
+          meta: {
+            recommendations: {} as any,
+            isPreviewMenu: false,
           },
         }
 
@@ -125,7 +118,7 @@ describe('menu-service > useMenuSWR', () => {
         test('should return stock from response', () => {
           const { result } = renderForTest()
 
-          expect(result.current.response).toEqual(data.result)
+          expect(result.current.response).toEqual(data)
         })
 
         test('should return null error', () => {
@@ -139,10 +132,9 @@ describe('menu-service > useMenuSWR', () => {
         const status = 'SOME_NOT_OK_STATUS' as any
         const data: MenuAPIResponse = {
           status,
-          result: {
-            data: {},
-            meta: [],
-          },
+          data: [],
+          included: [],
+          meta: {} as any,
         }
 
         beforeEach(() => {
@@ -164,9 +156,7 @@ describe('menu-service > useMenuSWR', () => {
         test('should return error', () => {
           const { result } = renderForTest()
 
-          expect(result.current.error).toEqual(
-            status
-          )
+          expect(result.current.error).toEqual(status)
         })
       })
     })
@@ -174,21 +164,23 @@ describe('menu-service > useMenuSWR', () => {
 
   describe('when requestData provided', () => {
     const requestData: MenuAPIQueryData = {
-        include: 'ingredients',
-        addAlternatives: true,
-        tasteProfileId: 'taste-profile-id',
-        'preview[auth_user_id]': '12345',
-        'preview[expiry]': 'abcdef',
-        'preview[menu_id]': '100',
-        'preview[signature]': 'ghjkl',
+      include: 'ingredients',
+      addAlternatives: true,
+      tasteProfileId: 'taste-profile-id',
+      'preview[auth_user_id]': '12345',
+      'preview[expiry]': 'abcdef',
+      'preview[menu_id]': '100',
+      'preview[signature]': 'ghjkl',
     }
 
     test('should call useHTTPGet with requestData', () => {
       renderForTest({ requestData })
-  
-      expect(useHTTPGetMock).toHaveBeenCalledWith(expect.objectContaining({
-          requestData
-      }))
+
+      expect(useHTTPGetMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          requestData,
+        }),
+      )
     })
   })
 })

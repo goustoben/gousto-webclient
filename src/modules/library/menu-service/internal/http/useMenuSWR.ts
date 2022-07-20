@@ -1,5 +1,5 @@
 import { BareFetcher } from 'swr'
-import { MenuAPIQueryData, MenuAPIResponse } from './response'
+import { MenuAPIQueryData, MenuAPIResponse } from './types'
 import { useHTTPGet } from './useHTTPGet'
 
 export type UseMenuSWRArgs = {
@@ -19,19 +19,19 @@ export type UseMenuSWRArgs = {
 
 const successReturn = (response: MenuAPIResponse) => ({
   isPending: false,
-  response: response.result,
+  response: response,
   error: null,
 })
 
 const pendingReturn = () => ({
   isPending: true,
-  response: {} as MenuAPIResponse['result'],
+  response: {} as MenuAPIResponse,
   error: null,
 })
 
 const errorReturn = (error: Error) => ({
   isPending: false,
-  response: {} as MenuAPIResponse['result'],
+  response: {} as MenuAPIResponse,
   error,
 })
 
