@@ -12,6 +12,7 @@ import { FiveRecipesAwarenessModal } from '../../../components/FiveRecipesAwaren
 import Loading from '../Loading'
 import { CollectionsNavWrapper } from '../components/CollectionsNav'
 import { JustForYouTutorial } from '../components/JustForYouTutorial'
+import { LikeDislikeTutorial } from '../components/LikeDislikeTutorial'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import { SubHeaderContainer } from '../components/SubHeader'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
@@ -69,6 +70,7 @@ export class MenuRecipesPage extends PureComponent {
     return (
       <>
         {!isLoading && <JustForYouTutorial />}
+        {!isLoading && <LikeDislikeTutorial />}
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
         <MenuSidesModalContainer />
