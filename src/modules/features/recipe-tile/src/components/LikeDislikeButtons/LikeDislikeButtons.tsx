@@ -51,7 +51,7 @@ export const LikeDislikeButtons = () => {
   const useTracking = useTrackingHook()
   const { track } = useTracking()
   const { id: recipeId } = useRecipe()
-
+  
   const handleOnClickLike = useCallback((e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
     e.stopPropagation()
     const action: Action = { type: 'like' }
@@ -77,7 +77,7 @@ export const LikeDislikeButtons = () => {
   }
 
   return (
-    <LikeDislikeButtonsWrapper>
+    <LikeDislikeButtonsWrapper data-like-dislike-buttons='like-dislike-buttons' >
         <DislikeButton onClick={handleOnClickDislike} isDislikeSelected={state.selected === 'dislike'} />
         <LikeButton onClick={handleOnClickLike} isLikeSelected={state.selected === 'like'} />
     </LikeDislikeButtonsWrapper>
