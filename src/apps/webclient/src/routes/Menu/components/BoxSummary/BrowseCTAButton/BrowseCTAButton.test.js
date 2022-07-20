@@ -3,7 +3,12 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Button, Segment } from 'goustouicomponents'
 
-import { BrowseCTAButton } from '../BrowseCTAButton/BrowseCTAButton'
+import { useBasket } from 'routes/Menu/domains/basket'
+
+import { BrowseCTAButton } from './BrowseCTAButton'
+
+jest.mock('routes/Menu/domains/basket')
+const useBasketMock = useBasket
 
 describe('BrowseCTAButton', () => {
   let boxDetailsVisibilityChange
@@ -13,6 +18,10 @@ describe('BrowseCTAButton', () => {
   beforeEach(() => {
     boxDetailsVisibilityChange = jest.fn()
     menuBrowseCTAVisibilityChange = jest.fn()
+
+    useBasketMock.mockReturnValue({
+      removeRecipe: jest.fn(),
+    })
   })
 
   test('should return a Button', () => {
