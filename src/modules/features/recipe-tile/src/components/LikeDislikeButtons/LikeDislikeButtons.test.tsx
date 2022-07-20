@@ -5,13 +5,12 @@ import { LikeDislikeButtons } from "./LikeDislikeButtons";
 import  { isLikeDislikeFeatureEnabled } from './isLikeDislikeFeatureEnabled'
 import { RecipeContextProvider } from "../../model/context";
 import { UseTrackingContextProvider } from "../../model/context/useTracking";
-import { Recipe } from "@library/api-menu-service";
 
 jest.mock('./isLikeDislikeFeatureEnabled');
 
 const renderComponent = () =>
   render(
-    <RecipeContextProvider value={{ id: 'some_id', title: 'Test recipe title' } as Recipe}>
+    <RecipeContextProvider value={{ id: 'some_id', title: 'Test recipe title' }}>
       <UseTrackingContextProvider
         value={() => ({
           useTrackVariantListDisplay: () => {},
@@ -28,7 +27,7 @@ describe("LikeDislikeButtons", () => {
   beforeEach(() => {
     (isLikeDislikeFeatureEnabled as jest.Mock).mockReturnValue(true);
   })
-
+  
   afterEach(() => {
     cleanup();
     jest.clearAllMocks();

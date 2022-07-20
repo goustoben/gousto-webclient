@@ -1,22 +1,19 @@
 import React from 'react'
 
-import { useBasket } from 'routes/Menu/domains/basket'
-import { useStock } from 'routes/Menu/domains/stock'
-
 import { useRecipeId } from '../../../context/recipeContext'
+import { useStock } from '../../../domains/basket'
 
 import css from './SoldOutOverlay.css'
 
-export const SoldOutOverlay = () => {
+export const SoldOutOverlay: React.FC = () => {
   const { isRecipeOutOfStock } = useStock()
-  const { numPortions } = useBasket()
   const recipeId = useRecipeId()
 
   if (!recipeId) {
     return null
   }
 
-  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions)
+  const isOutOfStock = isRecipeOutOfStock(recipeId)
 
   if (!isOutOfStock) {
     return null

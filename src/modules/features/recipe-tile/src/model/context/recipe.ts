@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 
-import { Recipe } from '@library/api-menu-service'
+import { Recipe } from '../recipe'
 
 const RecipeContext = createContext<Recipe>(null as unknown as Recipe)
 RecipeContext.displayName = 'RecipeContext'

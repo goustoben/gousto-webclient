@@ -1,11 +1,11 @@
-import { TransformedRecipeImage } from "@library/api-menu-service"
+import { Image } from '../../../model/recipe'
 
 const ImageTypes = {
   HomepageImage: 'homepage-image',
   MoodImage: 'mood-image',
 }
 
-export const findImageUrls = (recipeImages: TransformedRecipeImage[], useHomepageImage = false) => {
+export const findImageUrls = (recipeImages: Image[], useHomepageImage = false) => {
   const homepageImage = recipeImages.find((image) => image.type === ImageTypes.HomepageImage)
 
   if (useHomepageImage && homepageImage !== undefined) {

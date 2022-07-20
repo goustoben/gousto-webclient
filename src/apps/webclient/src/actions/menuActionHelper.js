@@ -1,5 +1,6 @@
 import { activeMenuForDate } from 'routes/Menu/selectors/menu'
 import { collectionsTransformer } from 'apis/transformers/collections'
+import { recipesTransformer } from 'apis/transformers/recipes'
 import { locationQuery } from '../selectors/routing'
 import { actionTypes } from './actionTypes'
 
@@ -68,8 +69,10 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date) => {
 
   const activeMenu = activeMenuForDate(menuServiceData, date)
   const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
+  const transformedRecipes = recipesTransformer(activeMenu, menuServiceData)
 
   dispatch(menuCollectionsReceive(transformedCollections))
+  dispatch(menuReceiveMenu(transformedRecipes))
   dispatch(basketCurrentMenuIdChange(activeMenu))
 }
 

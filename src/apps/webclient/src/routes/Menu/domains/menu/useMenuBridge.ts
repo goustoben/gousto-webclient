@@ -1,41 +1,39 @@
 import { useSelector } from 'react-redux'
 
-import { useMenu as useMenuBase } from '@library/api-menu-service'
+import {
+  useMenu as useMenuBase,
+  useGetAlternativeOptionsForRecipeLight,
+} from '@library/menu-service'
 
-import endpoint from 'config/endpoint'
-import { getFetcher } from 'routes/Menu/apis/fetch'
-import { getAccessToken, getAuthUserId } from 'selectors/auth'
-import { getNumPortions, getBasketDate } from 'selectors/basket'
-
-import { useStock } from '../stock'
-import { useMenuRequestArgs } from './internal/query'
+import { getSelectedRecipeVariants } from 'routes/Menu/selectors/variants'
+import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 
 /**
  * Bridge hook for interfacing between webclient and the menu-service module
  * to be removed later in the epic
  */
 export function useMenu() {
-  const accessToken = useSelector(getAccessToken)
-  const authUserId = useSelector(getAuthUserId)
   const numPortions = useSelector(getNumPortions)
-  const date = useSelector(getBasketDate)
+  const selectedVariants = useSelector(getSelectedRecipeVariants)
+  const menuId = useSelector(getBasketMenuId)
 
-  const { isRecipeInStock } = useStock()
-
-  const requestData = useMenuRequestArgs()
-
-  const requestArgs: Parameters<typeof useMenuBase>[0] = {
-    accessToken,
-    authUserId,
-    getFetcher,
-    endpointUrl: `${endpoint('menu')}/menus`,
-    requestData,
-  }
-
-  const deps: Parameters<typeof useMenuBase>[2] = {
+  return useMenuBase({
     numPortions,
-    isRecipeInStock,
-  }
+    selectedVariants,
+    menuId,
+  })
+}
 
-  return useMenuBase(requestArgs, date, deps)
+/**
+ * Bridge hook for interfacing between webclient and the menu-service module
+ * to be removed later in the epic
+ */
+export function useGetAlternativeOptionsForRecipe() {
+  const numPortions = useSelector(getNumPortions)
+  const menuId = useSelector(getBasketMenuId)
+
+  return useGetAlternativeOptionsForRecipeLight({
+    numPortions,
+    menuId,
+  })
 }

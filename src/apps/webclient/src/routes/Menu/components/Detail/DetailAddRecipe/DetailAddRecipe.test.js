@@ -2,26 +2,16 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import { useBasket } from '../../../domains/basket'
-import { useStock } from '../../../domains/stock'
+import * as BasketHook from '../../../domains/basket'
 import { DetailAddRecipe } from './DetailAddRecipe'
-
-jest.mock('../../../domains/stock')
-const useStockMock = useStock
-
-jest.mock('../../../domains/basket')
-const useBasketMock = useBasket
 
 describe('DetailAddRecipe', () => {
   let wrapper
   describe('when isOutOfStock true', () => {
     beforeEach(() => {
-      useBasketMock.mockReturnValue({
-        numPortions: 2,
-      })
-      useStockMock.mockReturnValue({
-        isRecipeInStock: () => false,
-      })
+      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
+        isRecipeOutOfStock: () => true,
+      }))
       wrapper = shallow(
         <DetailAddRecipe id="1" originalId="2" view="grid" position={0} buttonText="Add recipe" />,
       )
@@ -33,9 +23,9 @@ describe('DetailAddRecipe', () => {
 
   describe('when isOutOfStock false', () => {
     beforeEach(() => {
-      useStockMock.mockReturnValue({
-        isRecipeInStock: () => true,
-      })
+      jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
+        isRecipeOutOfStock: () => false,
+      }))
       wrapper = shallow(
         <DetailAddRecipe id="1" originalId="2" view="grid" position={0} buttonText="Add recipe" />,
       )

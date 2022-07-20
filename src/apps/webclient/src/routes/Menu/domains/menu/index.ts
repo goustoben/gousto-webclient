@@ -1,2 +1,2 @@
 export { useSetBrowserCTAVisibility } from './internal/browserCTA'
-export { useMenu } from './useMenuBridge'
+export { useMenu, useGetAlternativeOptionsForRecipe } from './useMenuBridge'

@@ -4,7 +4,7 @@ import { NumberOfPortions, STOCK_LEVEL_MAX, STOCK_LEVEL_NONE } from '../types'
 
 export function useGetStockForRecipe(stockPending: boolean, stock: StockAPIData) {
   return useCallback(
-    (recipeId: string, numPortions: number) => {
+    (recipeId: string, numPortions: NumberOfPortions) => {
       if (stockPending || !stock) {
         return STOCK_LEVEL_MAX
       }

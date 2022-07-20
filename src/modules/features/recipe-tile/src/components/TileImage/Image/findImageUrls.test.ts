@@ -1,8 +1,8 @@
-import { TransformedRecipeImage } from '@library/api-menu-service'
+import { Image } from '../../../model/recipe'
 import { findImageUrls } from './findImageUrls'
 
 describe('Recipe components > Image > findImage', () => {
-  const moodImage: TransformedRecipeImage = {
+  const moodImage: Image = {
     type: 'mood-image',
     title: 'Mood image',
     description: 'Some cool mood image',
@@ -14,7 +14,7 @@ describe('Recipe components > Image > findImage', () => {
     ],
   }
 
-  const homePageImage: TransformedRecipeImage = {
+  const homePageImage: Image = {
     type: 'homepage-image',
     title: 'HomePage Image',
     description: 'Some cool image',
@@ -26,7 +26,7 @@ describe('Recipe components > Image > findImage', () => {
     ],
   }
 
-  let images: TransformedRecipeImage[]
+  let images: Image[]
 
   beforeEach(() => {
     images = [homePageImage, moodImage]

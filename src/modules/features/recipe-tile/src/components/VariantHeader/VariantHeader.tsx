@@ -8,7 +8,6 @@ import {
   useGetAlternativeOptionsForRecipeHook,
 } from "../../model/context";
 import { cssPositionTop, cssTextLeft, cssThemeBlue, cssVariantHeader } from "./styles";
-import { useBasketHook } from "../../model/context/useBasket";
 
 const VariantHeaderDiv = styled.div({
   ...cssVariantHeader,
@@ -20,9 +19,6 @@ const VariantHeaderDiv = styled.div({
 export function VariantHeader({ categoryId }: {
   categoryId: string;
 }) {
-  const useBasket = useBasketHook();
-  const { numPortions } = useBasket();
-
   const useStock = useStockHook();
   const useGetAlternativeOptionsForRecipe =
     useGetAlternativeOptionsForRecipeHook();
@@ -36,7 +32,7 @@ export function VariantHeader({ categoryId }: {
     return null;
   }
 
-  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions);
+  const isOutOfStock = isRecipeOutOfStock(recipeId);
 
   if (isOutOfStock) {
     return null;

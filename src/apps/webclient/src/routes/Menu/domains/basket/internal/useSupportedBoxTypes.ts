@@ -1,5 +1,3 @@
-import { useCallback } from 'react'
-
 import { useMenuBox, MenuBox } from './useMenuBox'
 
 const DEFAULT_MAX_RECIPES = 4
@@ -12,8 +10,7 @@ const menuBoxesByPortionSize = (
   type: string
   id: string
   attributes: { number_of_portions: number; number_of_recipes: number }
-}[] =>
-  Object.values(menuBox || {}).filter((box) => box.attributes.number_of_portions === portionSize)
+}[] => Object.values(menuBox).filter((box) => box.attributes.number_of_portions === portionSize)
 
 /**
  * Hook interface for supported Box types from Menu API box response.
@@ -23,45 +20,31 @@ const menuBoxesByPortionSize = (
 export const useSupportedBoxTypes = () => {
   const menuBox = useMenuBox()
 
-  const maxRecipesForPortion = useCallback(
-    (portionSize = 2) => {
-      const max = Math.max(
-        ...menuBoxesByPortionSize(menuBox, portionSize).map(
-          (box) => box.attributes.number_of_recipes,
-        ),
-      )
+  const maxRecipesForPortion = (portionSize = 2) =>
+    menuBox
+      ? Math.max(
+          ...menuBoxesByPortionSize(menuBox, portionSize).map(
+            (box) => box.attributes.number_of_recipes,
+          ),
+        )
+      : DEFAULT_MAX_RECIPES
 
-      return menuBox ? max : DEFAULT_MAX_RECIPES
-    },
-    [menuBox],
-  )
+  const minRecipesForPortion = (portionSize = 2) =>
+    menuBox
+      ? Math.min(
+          ...menuBoxesByPortionSize(menuBox, portionSize).map(
+            (box) => box.attributes.number_of_recipes,
+          ),
+        )
+      : DEFAULT_MIN_RECIPES
 
-  const minRecipesForPortion = useCallback(
-    (portionSize = 2) => {
-      const min = Math.min(
-        ...menuBoxesByPortionSize(menuBox, portionSize).map(
-          (box) => box.attributes.number_of_recipes,
-        ),
-      )
+  const isPortionSizeAllowedByRecipeCount = (recipeCount: number, portionSize: number): boolean =>
+    recipeCount <= maxRecipesForPortion(portionSize)
 
-      return menuBox ? min : DEFAULT_MIN_RECIPES
-    },
-    [menuBox],
-  )
-
-  const isPortionSizeAllowedByRecipeCount = useCallback(
-    (recipeCount: number, portionSize: number): boolean =>
-      recipeCount <= maxRecipesForPortion(portionSize),
-    [maxRecipesForPortion],
-  )
-
-  const allowedPortionSizes = useCallback((): number[] => {
-    const arr = Array.from(
-      new Set(Object.values(menuBox).map((box) => box.attributes.number_of_portions)),
-    )
-
-    return menuBox ? arr : []
-  }, [menuBox])
+  const allowedPortionSizes = (): number[] =>
+    menuBox
+      ? Array.from(new Set(Object.values(menuBox).map((box) => box.attributes.number_of_portions)))
+      : []
 
   return {
     allowedPortionSizes,

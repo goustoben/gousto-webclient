@@ -3,7 +3,6 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { RecipeTileDependencies } from "../../model/context";
 import { RecipeTile } from ".";
-import { Recipe } from "@library/api-menu-service";
 
 const defaultGetAlternativeOptionsForRecipe = jest
   .fn()
@@ -50,7 +49,7 @@ const renderComponent = ({
         title: "cool test recipe title",
         isFineDineIn: false,
         tagline: "new-eme",
-      } as Recipe}
+      }}
       useGetAlternativeOptionsForRecipe={() => getAlternativeOptionsForRecipe}
       useStock={() => ({
         isRecipeOutOfStock: () => isRecipeOutOfStock,
@@ -61,7 +60,6 @@ const renderComponent = ({
         removeRecipe: jest.fn(),
         reachedLimit: true,
         isRecipeInBasket: () => false,
-        numPortions: 2,
       })}
       useSetBrowserCTAVisibility={() => ({
         setBrowserCTAVisible: () => false,

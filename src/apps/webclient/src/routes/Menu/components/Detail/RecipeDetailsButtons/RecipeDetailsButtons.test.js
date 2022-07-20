@@ -7,14 +7,10 @@ import * as Redux from 'react-redux'
 
 import * as Auth from 'routes/Menu/domains/auth'
 import * as BasketHook from 'routes/Menu/domains/basket'
-import { useStock } from 'routes/Menu/domains/stock'
 
 import * as MenuRecipeDetailsActions from '../../../actions/menuRecipeDetails'
 import { RecipeDetailsButtons } from './RecipeDetailsButtons'
 import * as UseSurchargePerPortion from './useSurchargePerPortion'
-
-jest.mock('routes/Menu/domains/stock')
-const useStockMock = useStock
 
 const mockUp = ({
   numPortions = 2,
@@ -45,7 +41,7 @@ const mockUp = ({
     maxRecipesForPortion: () => maxRecipesNum,
   }))
 
-  useStockMock.mockImplementation(() => ({
+  jest.spyOn(BasketHook, 'useStock').mockImplementation(() => ({
     getStockForRecipe: () => stockLevel,
   }))
   jest.spyOn(Auth, 'useAuth').mockImplementation(() => ({ isAdmin }))

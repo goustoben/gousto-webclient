@@ -19,7 +19,6 @@ describe("AddRecipeButton", () => {
             removeRecipe: jest.fn(),
             reachedLimit: false,
             isRecipeInBasket: () => false,
-            numPortions: 2,
           })}
         >
           <UseSetBrowserCTAVisibilityContextProvider
@@ -53,7 +52,6 @@ describe("AddRecipeButton", () => {
               removeRecipe,
               reachedLimit: true,
               isRecipeInBasket: () => false,
-              numPortions: 2,
             })}
           >
             <UseSetBrowserCTAVisibilityContextProvider
@@ -87,7 +85,6 @@ describe("AddRecipeButton", () => {
               removeRecipe,
               reachedLimit: false,
               isRecipeInBasket: () => false,
-              numPortions: 2,
             })}
           >
             <UseSetBrowserCTAVisibilityContextProvider
@@ -121,7 +118,6 @@ describe("AddRecipeButton", () => {
               removeRecipe,
               reachedLimit: false,
               isRecipeInBasket: () => true,
-              numPortions: 2,
             })}
           >
             <UseSetBrowserCTAVisibilityContextProvider

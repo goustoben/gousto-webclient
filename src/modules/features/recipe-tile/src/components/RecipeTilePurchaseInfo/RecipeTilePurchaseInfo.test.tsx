@@ -4,7 +4,6 @@ import { render, screen, cleanup } from "@testing-library/react";
 
 import { RecipeTilePurchaseInfo } from '.'
 import { RecipeTileDependencies } from '../../model/context';
-import { Recipe } from "@library/api-menu-service";
 
 const defaultGetAlternativeOptionsForRecipe = jest
   .fn()
@@ -45,7 +44,7 @@ const renderComponent = ({
 } = {}) =>
   render(
     <RecipeTileDependencies
-      recipe={{ id: "111", title: "test recipe" } as Recipe}
+      recipe={{ id: "111", title: "test recipe" }}
       useGetAlternativeOptionsForRecipe={() => getAlternativeOptionsForRecipe}
       useStock={() => ({
         isRecipeOutOfStock: () => isRecipeOutOfStock,
@@ -56,7 +55,6 @@ const renderComponent = ({
         removeRecipe: jest.fn(),
         reachedLimit: true,
         isRecipeInBasket: () => false,
-        numPortions: 2,
       })}
       useSetBrowserCTAVisibility={() => ({
         setBrowserCTAVisible: () => false,

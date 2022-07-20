@@ -1,0 +1,10 @@
+{
+  "extends": "../../../../tsconfig.json",
+  "include": [
+    "./src"
+  ],
+  // "files" overrides top-level excludes
+  "files": [
+    "./node_modules/@library/nonjs-imports/index.d.ts"
+  ]
+}

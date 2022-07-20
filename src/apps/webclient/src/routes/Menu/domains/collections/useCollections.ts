@@ -1,5 +1,3 @@
-import { useCallback } from 'react'
-
 import Immutable from 'immutable'
 import { useSelector } from 'react-redux'
 
@@ -17,14 +15,11 @@ export const useCollections = () => {
   const displayedCollections = useDisplayedCollections()
   const changeCollectionById = useChangeCollectionById()
 
-  const getCollectionBySlug = useCallback(
-    (slug: string, { visibleOnly = false }) => {
-      const collectionList = visibleOnly ? displayedCollections : allCollections
+  const getCollectionBySlug = (slug: string, { visibleOnly = false }) => {
+    const collectionList = visibleOnly ? displayedCollections : allCollections
 
-      return collectionList.find((c: MenuCollection) => c?.get('slug') === slug) || null
-    },
-    [allCollections, displayedCollections],
-  )
+    return collectionList.find((c: MenuCollection) => c?.get('slug') === slug) || null
+  }
 
   return {
     currentCollection,

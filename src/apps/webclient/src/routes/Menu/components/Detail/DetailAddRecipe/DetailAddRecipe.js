@@ -2,18 +2,15 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 
-import { useBasket } from 'routes/Menu/domains/basket'
-
 import { useRecipeField } from '../../../context/recipeContext'
-import { useStock } from '../../../domains/stock'
+import { useStock } from '../../../domains/basket'
 import { RecipeDetailsButtons } from '../RecipeDetailsButtons'
 
 import css from './DetailAddRecipe.css'
 
 const DetailAddRecipe = ({ id, view, position }) => {
-  const { numPortions } = useBasket()
-  const { isRecipeInStock } = useStock()
-  const isOutOfStock = !isRecipeInStock(id, numPortions)
+  const { isRecipeOutOfStock } = useStock()
+  const isOutOfStock = isRecipeOutOfStock(id)
   const isChefPrepared = useRecipeField('chefPrepared', false)
   const buttonText = isChefPrepared ? 'Add meal' : 'Add recipe'
 
