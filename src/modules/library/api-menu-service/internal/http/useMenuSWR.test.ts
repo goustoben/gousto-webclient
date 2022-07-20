@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { MenuAPIQueryData, MenuAPIResponse, MenuAPIResponseDataItem } from './types'
+import { MenuAPIQueryData, MenuAPIResponse } from './types'
 import { useHTTPGet } from './useHTTPGet'
 import { useMenuSWR } from './useMenuSWR'
 
@@ -99,7 +99,10 @@ describe('api-menu-service > useMenuSWR', () => {
           status: 'ok',
           data: [],
           included: [],
-          meta: {} as any,
+          meta: {
+            recommendations: {} as any,
+            isPreviewMenu: false,
+          },
         }
 
         beforeEach(() => {
