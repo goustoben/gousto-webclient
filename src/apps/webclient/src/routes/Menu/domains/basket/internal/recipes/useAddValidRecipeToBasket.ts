@@ -39,7 +39,7 @@ export const useAddValidRecipeToBasket = () => {
       maxRecipesNum?: number,
       orderId?: string,
     ) => {
-      const outOfStock = isRecipeOutOfStock(recipeId)
+      const outOfStock = isRecipeOutOfStock(recipeId, numPortions)
       if (reachedLimit || outOfStock) {
         return
       }
