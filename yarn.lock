@@ -2434,6 +2434,7 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.7.0
     "@gousto-internal/citrus-react": ^0.22.6
+    "@library/api-menu-service": "workspace:*"
     "@library/nonjs-imports": "workspace:*"
     "@storybook/addon-controls": ^6.4.19
     "@storybook/addon-essentials": ^6.4.19
@@ -2453,6 +2454,7 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.7.0
     "@gousto-internal/citrus-react": ^0.22.6
+    "@library/api-menu-service": "workspace:*"
     immutable: 3.8.2
     react: 17.0.2
     react-dom: 17.0.2
@@ -3043,7 +3045,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@library/api-webstock@workspace:src/modules/library/api-webstock":
+"@library/api-menu-service@workspace:*, @library/api-menu-service@workspace:src/modules/library/api-menu-service":
+  version: 0.0.0-use.local
+  resolution: "@library/api-menu-service@workspace:src/modules/library/api-menu-service"
+  dependencies:
+    "@library/nonjs-imports": "workspace:*"
+    "@testing-library/jest-dom": ^5.16.4
+    "@testing-library/react": 12.1.2
+    "@testing-library/react-hooks": ^3.4.2
+    immutable: 3.8.2
+    react: 17.0.2
+    react-redux: 7.2.4
+    react-test-renderer: 16.13.1
+    redux-mock-store: 1.1.1
+    reselect: 3.0.1
+    swr: ^1.1.2
+  peerDependencies:
+    immutable: 3.8.2
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-redux: 7.2.4
+    reselect: 3.0.1
+    swr: ^1.1.2
+  languageName: unknown
+  linkType: soft
+
+"@library/api-webstock@workspace:*, @library/api-webstock@workspace:src/modules/library/api-webstock":
   version: 0.0.0-use.local
   resolution: "@library/api-webstock@workspace:src/modules/library/api-webstock"
   dependencies:
@@ -3089,31 +3116,6 @@ __metadata:
   peerDependencies:
     isomorphic-fetch: 3.3.0
     qs: 6.5.2
-  languageName: unknown
-  linkType: soft
-
-"@library/menu-service@workspace:*, @library/menu-service@workspace:src/modules/library/menu-service":
-  version: 0.0.0-use.local
-  resolution: "@library/menu-service@workspace:src/modules/library/menu-service"
-  dependencies:
-    "@library/nonjs-imports": "workspace:*"
-    "@testing-library/jest-dom": ^5.16.4
-    "@testing-library/react": 12.1.2
-    "@testing-library/react-hooks": ^3.4.2
-    immutable: 3.8.2
-    react: 17.0.2
-    react-redux: 7.2.4
-    react-test-renderer: 16.13.1
-    redux-mock-store: 1.1.1
-    reselect: 3.0.1
-    swr: ^1.1.2
-  peerDependencies:
-    immutable: 3.8.2
-    react: 17.0.2
-    react-dom: 17.0.2
-    react-redux: 7.2.4
-    reselect: 3.0.1
-    swr: ^1.1.2
   languageName: unknown
   linkType: soft
 
@@ -6599,6 +6601,17 @@ __metadata:
   peerDependencies:
     webpack: ^3.0.0 || ^4.0.0
   checksum: 8f09bdfaccbde24c1684daf4df79611e0addf744f5fe9ce4e856989cb2666e196e7073809b111b26a369738ffb82b8c1c653d9c7bcc72b6e455fe627913fc2a1
+  languageName: node
+  linkType: hard
+
+"@welldone-software/why-did-you-render@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "@welldone-software/why-did-you-render@npm:7.0.1"
+  dependencies:
+    lodash: ^4
+  peerDependencies:
+    react: ^16 || ^17 || ^18
+  checksum: 0bfc59f1f8613e7dc5fbf189305e88b01c50ee278df2c9b69082ed6abcf8d71758eb468d027235916c6126934a755d6547e9704883007236544763fffad6f48c
   languageName: node
   linkType: hard
 
@@ -18780,7 +18793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21, lodash@npm:>=3.5 <5, lodash@npm:^4.0.0, lodash@npm:^4.17.10, lodash@npm:^4.17.11, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.5, lodash@npm:^4.6.1, lodash@npm:^4.7.0":
+"lodash@npm:4.17.21, lodash@npm:>=3.5 <5, lodash@npm:^4, lodash@npm:^4.0.0, lodash@npm:^4.17.10, lodash@npm:^4.17.11, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.5, lodash@npm:^4.6.1, lodash@npm:^4.7.0":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -28308,8 +28321,9 @@ __metadata:
     "@emotion/styled": ^11.9.3
     "@features/recipe-tile": "workspace:*"
     "@gousto-internal/citrus-react": ^0.22.6
+    "@library/api-menu-service": "workspace:*"
+    "@library/api-webstock": "workspace:*"
     "@library/auth": "workspace:*"
-    "@library/menu-service": "workspace:*"
     "@optimizely/optimizely-sdk": ^4.1.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@sheerun/mutationobserver-shim": ^0.3.3
@@ -28331,6 +28345,7 @@ __metadata:
     "@types/uuid": ^8.3.4
     "@typescript-eslint/eslint-plugin": ^5.12.1
     "@typescript-eslint/parser": ^5.12.1
+    "@welldone-software/why-did-you-render": ^7.0.1
     "@wojtekmaj/enzyme-adapter-react-17": ^0.6.2
     actual: 0.4.0
     airbnb-prop-types: ^2.16.0

@@ -43,24 +43,6 @@ describe('loadMenuCollectionsWithMenuService', () => {
     })
   })
 
-  test('calls menuReceiveMenu with recipes', async () => {
-    const getState = () => ({
-      menuService: {
-        data: [ 'some element' ]
-      },
-    })
-
-    const dispatch = jest.fn()
-    const background = true
-
-    await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', background)
-
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'RECIPES_RECEIVE',
-      recipes: 'mock recipe'
-    })
-  })
-
   describe('when menuservice is undefined', () => {
     const getState = () => ({
       menuService: undefined

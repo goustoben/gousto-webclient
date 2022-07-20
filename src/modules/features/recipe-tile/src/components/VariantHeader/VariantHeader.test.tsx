@@ -6,8 +6,11 @@ import {
   useStockHook,
 } from "../../model/context";
 import { VariantHeader } from "./VariantHeader";
+import { Recipe } from "@library/api-menu-service";
+import { useBasketHook } from "../../model/context/useBasket";
 
 jest.mock("../../model/context");
+jest.mock('../../model/context/useBasket')
 
 const useRecipeMock = useRecipe as jest.MockedFunction<typeof useRecipe>;
 
@@ -19,6 +22,8 @@ const useGetAlternativeOptionsForRecipeHookMock =
 const useStockHookMock = useStockHook as jest.MockedFunction<
   typeof useStockHook
 >;
+
+const useBasketHookMock = useBasketHook as jest.MockedFunction<typeof useBasketHook>;
 
 const recipeId = 'recipe one'
 
@@ -194,6 +199,15 @@ const mockHooks = ({
   }
 
   if (recipeId !== undefined) {
-    useRecipeMock.mockImplementation(() => ({ id: recipeId, title: "A Recipe Title" }));
+    useRecipeMock.mockImplementation(() => ({ id: recipeId, title: "A Recipe Title" } as Recipe));
   }
+
+  useBasketHookMock.mockReturnValue(() => ({
+    addRecipe: jest.fn(),
+    removeRecipe: jest.fn(),
+    canAddRecipes: true,
+    isRecipeInBasket: () => false,
+    reachedLimit: false,
+    numPortions: 2,
+  }))
 };

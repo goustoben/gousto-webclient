@@ -24,3 +24,5 @@ src/_testing/generate-endpoint-test-cases.ts
 !src/performanceTracker/**/*
 !src/routes/Menu/**/*
 !src/routes/OrderConfirmation/**/*
+
+client.js

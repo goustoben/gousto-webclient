@@ -2,11 +2,12 @@ import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen, cleanup } from "@testing-library/react";
 
+import { Recipe, TransformedRecipeImage } from '@library/api-menu-service'
+
 import { RecipeTileDependencies } from "../../model/context";
-import { Image } from "../../model/recipe";
 import { TileImage } from "./TileImage";
 
-const images: Image[] = [
+const images: TransformedRecipeImage[] = [
   {
     type: "homepage-image",
     title: "home page image",
@@ -52,7 +53,7 @@ const renderComponent = ({
         title: "test recipe",
         media: { images },
         cookingTime,
-      }}
+      } as Recipe}
       useGetAlternativeOptionsForRecipe={() =>
         defaultGetAlternativeOptionsForRecipe
       }
@@ -65,6 +66,7 @@ const renderComponent = ({
         removeRecipe: jest.fn(),
         reachedLimit: true,
         isRecipeInBasket: () => false,
+        numPortions: 2,
       })}
       useSetBrowserCTAVisibility={() => ({
         setBrowserCTAVisible: () => false,

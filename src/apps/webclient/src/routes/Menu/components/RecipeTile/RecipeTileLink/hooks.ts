@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { useDispatch } from 'react-redux'
 
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
@@ -11,8 +13,12 @@ export function useGetRecipeTileLinkData() {
     'beetroots_recipe_card_link_web_enabled',
   )
 
+  const dispatchTrackClickMoreRecipeDetails = React.useCallback(() => {
+    dispatch(trackClickMoreRecipeDetails())
+  }, [dispatch])
+
   return {
     isRecipeTileLinkVisible: !isAuthenticated && isRecipeCardLinkEnabled,
-    dispatchTrackClickMoreRecipeDetails: () => dispatch(trackClickMoreRecipeDetails()),
+    dispatchTrackClickMoreRecipeDetails,
   }
 }

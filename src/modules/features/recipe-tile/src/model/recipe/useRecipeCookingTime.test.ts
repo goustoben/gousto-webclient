@@ -1,8 +1,8 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { Recipe } from ".";
 import { useRecipe } from "../context/recipe"
 import { useRecipeCookingTime } from './useRecipeCookingTime'
 import { useBasketHook } from "../context/useBasket"
+import { Recipe } from "@library/api-menu-service";
 
 jest.mock('../context/recipe')
 jest.mock('../context/useBasket')
@@ -26,7 +26,7 @@ describe('useRecipeCookingTime', () => {
   describe('when there is a recipe in context', () => {
     const familyNumPortion = 4
     const defaultNumPortion = 2
-    const recipe: Recipe = { id: '123', title: "A Recipe Title", cookingTimeFamily: 30, cookingTime: 20 }
+    const recipe: Recipe = { id: '123', title: "A Recipe Title", cookingTimeFamily: 30, cookingTime: 20 } as Recipe
 
     describe('when number of portions is for family', () => {
       beforeEach(() => {

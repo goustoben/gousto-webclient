@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 
 type UseStock = () => {
-  isRecipeOutOfStock: (recipeId: string) => boolean,
+  isRecipeOutOfStock: (recipeId: string, numPortions: 2 | 4) => boolean,
 }
 
 const UseStockContext = createContext<UseStock | null>(null)

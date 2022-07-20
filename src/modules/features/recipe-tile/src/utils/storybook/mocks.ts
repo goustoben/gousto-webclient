@@ -1,7 +1,7 @@
+import { Recipe } from "@library/api-menu-service";
 import { UseMakeOnCheckRecipe } from '../../model/context/useMakeOnCheckRecipe';
 import { UseRecipeBrand } from '../../model/context/useRecipeBrand';
 import { UseTracking } from '../../model/context/useTracking'
-import { Recipe } from '../../model/recipe';
 
 const defaultRecipeImage300 = "https://s3-eu-west-1.amazonaws.com/s3-gousto-production-media/cms/mood-image/3310---Battered-Fish-Salt--Vinegar-Chips--Mushy-Peas0494-1617814005204-x300.jpg"
 
@@ -73,7 +73,7 @@ export const getMocks = ({
       }]
     },
     tagline: 'new-eme',
-  };
+  } as Recipe;
 
   const useStock = () => ({
     isRecipeOutOfStock: () => isRecipeOutOfStock,
@@ -96,7 +96,7 @@ export const getMocks = ({
     removeRecipe: () => false,
     reachedLimit: false,
     isRecipeInBasket: () => isRecipeInBasket,
-    numPortions: 2,
+    numPortions: 2 as 2 | 4,
   })
 
   const useSetBrowserCTAVisibility = () => ({

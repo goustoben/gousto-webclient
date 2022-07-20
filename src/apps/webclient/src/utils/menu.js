@@ -1,4 +1,4 @@
-import { recipeReferencePrefix } from '@library/menu-service'
+import { recipeReferencePrefix } from '@library/api-menu-service'
 
 export const isRecipeInBasket = (recipe, basketRecipes) => basketRecipes.has(recipe.get('id'))
 

@@ -1,3 +1,4 @@
+import { renderHook } from '@testing-library/react-hooks'
 import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
 import { push } from 'react-router-redux'
@@ -73,11 +74,17 @@ describe('useChangeCollectionById', () => {
     mockedUseCollectionQuerySlug.mockReturnValue(null)
   })
 
+  const renderForTest = () => renderHook(() => useChangeCollectionById())
+
   describe('when no collection found for id', () => {
     const collectionId = '999'
 
     test('should not dispatch', () => {
-      useChangeCollectionById()(collectionId)
+      const {
+        result: { current },
+      } = renderForTest()
+
+      current(collectionId)
 
       expect(dispatch).not.toHaveBeenCalled()
     })
@@ -87,7 +94,11 @@ describe('useChangeCollectionById', () => {
     const collectionId = anotherCollection.get('id')
 
     test('should dispatch push for new location', () => {
-      useChangeCollectionById()(collectionId)
+      const {
+        result: { current },
+      } = renderForTest()
+
+      current(collectionId)
 
       const options = Object.create({})
       options.query = {
@@ -97,7 +108,11 @@ describe('useChangeCollectionById', () => {
     })
 
     test('should dispatch tracking event with correct ids', () => {
-      useChangeCollectionById()(collectionId)
+      const {
+        result: { current },
+      } = renderForTest()
+
+      current(collectionId)
 
       expect(dispatch).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -126,7 +141,11 @@ describe('useChangeCollectionById', () => {
       })
 
       test('should dispatch tracking event with correct ids', () => {
-        useChangeCollectionById()(collectionId)
+        const {
+          result: { current },
+        } = renderForTest()
+
+        current(collectionId)
 
         expect(dispatch).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -156,7 +175,12 @@ describe('useChangeCollectionById', () => {
       })
 
       test('should not dispatch push', () => {
-        useChangeCollectionById()(collectionId)
+        const {
+          result: { current },
+        } = renderForTest()
+
+        current(collectionId)
+
         expect(dispatch).not.toHaveBeenCalledWith(
           expect.objectContaining(
             push(

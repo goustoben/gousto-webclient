@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
-import { Map } from 'immutable'
+import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
 
 import { RecipeTile as RecipeTileV2, RecipeTileDependencies } from '@features/recipe-tile'
+import { Recipe } from '@library/api-menu-service'
 
 import { actionTypes } from 'actions/actionTypes'
 import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
@@ -17,18 +18,16 @@ import {
   useRecipeBrandTag,
   RecipeContextProvider,
 } from 'routes/Menu/context/recipeContext'
-import { useBasket, useStock } from 'routes/Menu/domains/basket'
-import {
-  useSetBrowserCTAVisibility,
-  useGetAlternativeOptionsForRecipe,
-} from 'routes/Menu/domains/menu'
+import { useBasket } from 'routes/Menu/domains/basket'
+import { useSetBrowserCTAVisibility, useMenu } from 'routes/Menu/domains/menu'
+import { useStock } from 'routes/Menu/domains/stock'
 
 import { RecipeReferenceProvider } from '../../context/recipeReferenceContext'
 import { useTracking as useTrackSwapAlternativeOptions } from './SwapAlternativeOptions/useTracking'
 
 type RecipeTileBridgeProps = {
   recipeReference: string | null
-  recipe: Map<string, string>
+  recipe: Recipe
   originalId: string
   collectionId: string
 }
@@ -63,6 +62,22 @@ export const RecipeTileBridge = ({
   originalId,
   collectionId,
 }: RecipeTileBridgeProps) => {
+  const { getOptionsForRecipe } = useMenu()
+
+  const useGetOptionsForRecipe = useCallback(
+    () =>
+      (args: {
+        recipeId: string
+        isOnDetailScreen: boolean
+
+        categoryId?: string
+      }) =>
+        getOptionsForRecipe(args.recipeId, args.categoryId, {
+          isOnDetailScreen: args.isOnDetailScreen,
+        }),
+    [getOptionsForRecipe],
+  )
+
   const { trackRecipeAlternativeOptionsMenuOpen, trackRecipeAlternativeOptionsMenuSwapRecipes } =
     useTrackSwapAlternativeOptions()
 
@@ -96,12 +111,15 @@ export const RecipeTileBridge = ({
     [],
   )
 
+  const memRecipeImmutable = useMemo(() => Immutable.fromJS(recipe), [recipe.id])
+  const memRecipe = useMemo(() => recipe, [recipe.id])
+
   return (
     <RecipeReferenceProvider value={recipeReference}>
-      <RecipeContextProvider value={recipe}>
+      <RecipeContextProvider value={memRecipeImmutable}>
         <RecipeTileDependencies
-          recipe={recipe.toJS()}
-          useGetAlternativeOptionsForRecipe={useGetAlternativeOptionsForRecipe}
+          recipe={memRecipe}
+          useGetAlternativeOptionsForRecipe={useGetOptionsForRecipe}
           useStock={useStock}
           useBasket={useBasket}
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
@@ -118,7 +136,7 @@ export const RecipeTileBridge = ({
             onClick={onClick}
             SwapAlternativeOptionsMobile={() => (
               <SwapAlternativeOptionsMobile
-                recipeId={recipe.get('id')}
+                recipeId={recipe.id}
                 originalId={originalId}
                 categoryId={collectionId}
               />

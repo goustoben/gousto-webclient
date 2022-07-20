@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 
+import { Recipe } from '@library/api-menu-service'
+
 import { RecipeContextProvider, useRecipe } from '.'
-import { Recipe } from "../recipe"
 
 describe('RecipeContext', () => {
   describe('useRecipe', () => {
@@ -20,7 +21,7 @@ describe('RecipeContext', () => {
       const recipe: Recipe = {
         id: 'recipe-id',
         title: "A Recipe Title"
-      }
+      } as unknown as Recipe
 
       const wrapper: React.FC = ({ children }) => (
         <RecipeContextProvider value={recipe}>{children}</RecipeContextProvider>

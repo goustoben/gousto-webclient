@@ -13,7 +13,7 @@ import * as Tracker from './useTracking'
 
 Modal.setAppElement(document.body)
 
-const getAlternativeOptionsForRecipe = jest.fn().mockImplementation(() => [
+const getOptionsForRecipe = jest.fn().mockImplementation(() => [
   {
     recipeId: '111',
     recipeName: 'Test Recipe One',
@@ -45,7 +45,7 @@ describe('<SwapAlternativeOptionsMobile />', () => {
     )
 
   beforeEach(() => {
-    jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({ getAlternativeOptionsForRecipe }))
+    jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({ getOptionsForRecipe }))
 
     trackRecipeAlternativeOptionsMenuOpen = jest.fn()
     trackRecipeAlternativeOptionsMenuSwapRecipes = jest.fn()

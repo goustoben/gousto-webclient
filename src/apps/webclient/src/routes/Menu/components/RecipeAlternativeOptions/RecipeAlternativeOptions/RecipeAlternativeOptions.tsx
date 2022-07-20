@@ -29,11 +29,9 @@ export const RecipeAlternativeOptions = ({
   isOnDetailScreen = false,
   onChangeCheckedRecipe = null,
 }: RecipeAlternativeOptionsProps) => {
-  const { getAlternativeOptionsForRecipe } = useMenu()
-  const recipeWithAlternativeOptions = getAlternativeOptionsForRecipe({
-    recipeId: currentRecipeId,
+  const { getOptionsForRecipe } = useMenu()
+  const recipeWithAlternativeOptions = getOptionsForRecipe(currentRecipeId, categoryId, {
     isOnDetailScreen,
-    categoryId,
   })
   const recipeReference = useRecipeReference()
   const onChange = useMakeOnCheckRecipe({
