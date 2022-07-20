@@ -5,7 +5,7 @@ import { RequestConfig } from '../types'
 export function getUrl(req: RequestConfig) {
   let url = req.host
 
-  if (req.paths && req.paths.length) {
+  if (req.paths.length) {
     url += '/' + req.paths.join('/')
   }
 

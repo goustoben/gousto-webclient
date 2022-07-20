@@ -108,44 +108,8 @@ module.exports = {
       }
     }
 
-    class MonorepoUnitTests extends MonorepoCommand {
-      static paths = [
-        [ 'monorepo-build', 'unit-tests' ]
-      ]
-
-      static usage = Command.Usage({
-        category: helpText.category,
-        description: 'Outputs whether a workspace requires unit tests, given changes since provided commit',
-        details: helpText.details,
-        examples: [
-          [
-            'Check whether we should unit-test the main webclient module',
-            'yarn monorepo-build unit-tests --workspace=webclient --since=REF'
-          ]
-        ]
-      })
-
-      // We don't mark flags as required as this will break --help
-
-      since = Option.String('--since', {
-        description: helpText.flags.since
-      })
-
-      workspace = Option.String('--workspace', {
-        description: helpText.flags.workspace
-      })
-
-      async execute () {
-        if (!this.since) throw new Error('--since required')
-        if (!this.workspace) throw new Error('--workspace required')
-
-        const ctx = await this.createCommandCtx()
-        return commands.unitTests(ctx)
-      }
-    }
-
     return {
-      commands: [ MonorepoLint, MonorepoUnitTests ]
+      commands: [ MonorepoLint ]
     }
   }
 }

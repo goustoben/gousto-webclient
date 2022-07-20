@@ -1,0 +1,9 @@
+{
+  "status": "ok",
+  "result": {
+      "data": {
+          "balance": "0.00"
+      },
+      "meta": []
+  }
+}

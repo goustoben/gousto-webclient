@@ -5,6 +5,7 @@ import { SettingSection } from '../SettingSection'
 
 const mockOnSubmit = jest.fn()
 const mockOnEditClick = jest.fn()
+const mockOnChildrenRender = jest.fn()
 
 const mockProps = {
   icon: 'calendar',
@@ -14,7 +15,8 @@ const mockProps = {
   onSubmit: mockOnSubmit,
   onEditClick: mockOnEditClick,
   instructions: 'Instructions',
-  testingSelector: 'day-time-settings'
+  testingSelector: 'day-time-settings',
+  onChildrenRender: mockOnChildrenRender
 }
 
 let wrapper
@@ -109,6 +111,24 @@ describe('Given SettingSection is rendered', () => {
       test('Then the section is collapsed', () => {
         expect(wrapper.find('section').prop('aria-expanded')).toEqual(false)
       })
+
+      test('Then onChildrenRendered callback is invoked', () => {
+        expect(mockOnChildrenRender).toHaveBeenCalledWith(expect.any(Function), true)
+      })
+
+      describe('And collapseSection callback is invoked', () => {
+        beforeEach(() => {
+          mockOnChildrenRender.mock.calls[0][0]()
+        })
+
+        test('Then expanded section collapses', () => {
+          expect(wrapper.find('section').prop('aria-expanded')).toEqual(false)
+        })
+      })
     })
+  })
+
+  test('When section is not expanded the onChildrenRendered callback is not invoked', () => {
+    expect(mockOnChildrenRender).not.toHaveBeenCalled()
   })
 })

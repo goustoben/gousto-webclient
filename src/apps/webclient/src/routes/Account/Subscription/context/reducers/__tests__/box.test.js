@@ -1,4 +1,9 @@
-import { reduceBoxData, reduceBoxPricesData, reduceFourByFiveModal } from '../box'
+import {
+  reduceBoxData,
+  reduceBoxPricesData,
+  reduceSelectedBoxSize,
+  reduceSwitchToFourMealsPerBox
+} from '../box'
 
 let result
 
@@ -59,12 +64,13 @@ describe('box reducers', () => {
             box: {
               dietaryPreference: { currentValue: 'gourmet' },
               mealsPerBox: { currentValue: '3' },
+              boxSize: { currentValue: '2', },
               numPortions: '2',
               requestState: {
                 isLoaded: true,
                 isLoading: false
               },
-              showFourByFiveModal: false,
+              subscriptionSettingsUnsupported: false,
             },
           })
         })
@@ -112,30 +118,58 @@ describe('box reducers', () => {
     })
   })
 
-  describe('reduceFourByFiveModal', () => {
-    it('returns box state with showFourByFiveModal set to True if "mealsPerBox" is 5 and "selectedBoxSize" is 4', () => {
+  describe('reduceSelectedBoxSize', () => {
+    it('returns state with subscriptionSettingsUnsupported set to True if "mealsPerBox" is 5 and "numPortions" is 4', () => {
       expect(
-        reduceFourByFiveModal(
-          { box: { mealsPerBox: { currentValue: 5 } } },
-          { selectedBoxSize: 4 }
+        reduceSelectedBoxSize(
+          { box: { mealsPerBox: { currentValue: '5' } } },
+          { numPortions: 4 }
         )).toEqual({
         box: {
-          mealsPerBox: { currentValue: 5, },
-          showFourByFiveModal: true,
+          mealsPerBox: { currentValue: '5', },
+          boxSize: { currentValue: '4', },
+          subscriptionSettingsUnsupported: true
         }
       })
     })
 
-    it('returns box state with showFourByFiveModal set to False if "mealsPerBox" is not 5', () => {
+    it.each([2, 3, 4])('returns state with subscriptionSettingsUnsupported set to False if "mealsPerBox" is %s and "numPortions" is 4', (mealsPerBox) => {
       expect(
-        reduceFourByFiveModal(
-          { box: { mealsPerBox: { currentValue: 4 } } },
-          { selectedBoxSize: 4 }
+        reduceSelectedBoxSize(
+          { box: { mealsPerBox: { currentValue: String(mealsPerBox) } } },
+          { numPortions: 4 }
         )).toEqual({
         box: {
-          mealsPerBox: { currentValue: 4, },
-          showFourByFiveModal: false,
+          mealsPerBox: { currentValue: String(mealsPerBox) },
+          boxSize: { currentValue: '4', },
+          subscriptionSettingsUnsupported: false
         }
+      })
+    })
+
+    it('returns state with subscriptionSettingsUnsupported set to False if "mealsPerBox" is 5 and "numPortions" is 2', () => {
+      expect(
+        reduceSelectedBoxSize(
+          { box: { mealsPerBox: { currentValue: '5' } } },
+          { numPortions: 2 }
+        )).toEqual({
+        box: {
+          mealsPerBox: { currentValue: '5' },
+          boxSize: { currentValue: '2', },
+          subscriptionSettingsUnsupported: false
+        }
+      })
+    })
+  })
+
+  describe('reduceSwitchToFourMealsPerBox', () => {
+    it('returns state with mealsPerBox set to 4', () => {
+      expect(reduceSwitchToFourMealsPerBox({ box: {} })).toEqual({
+        box: {
+          mealsPerBox: { currentValue: '4' },
+          boxSize: { currentValue: '2' },
+          subscriptionSettingsUnsupported: false,
+        },
       })
     })
   })

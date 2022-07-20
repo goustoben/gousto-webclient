@@ -26,8 +26,8 @@ const propTypes = {
   limitReached: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.shape({
-      value: PropTypes.string,
       type: PropTypes.string,
+      value: PropTypes.number,
     }),
   ]).isRequired,
   ageVerified: PropTypes.bool,
@@ -201,7 +201,10 @@ class Product extends PureComponent {
     const productDetails = this.getProductDetails()
 
     return (
-      <section className={`${css.productWrapper} ${css[numberOfColumnClass]}`}>
+      <section
+        className={`${css.productWrapper} ${css[numberOfColumnClass]}`}
+        data-testing="marketProduct"
+      >
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}

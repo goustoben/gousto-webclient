@@ -1,1 +1,0 @@
-export { ProductListBundles } from './ProductListBundles'

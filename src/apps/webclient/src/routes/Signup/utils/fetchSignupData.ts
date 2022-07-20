@@ -4,7 +4,7 @@ import { Store } from 'redux'
 
 import { menuLoadBoxPrices } from 'actions/menu'
 import { promoGet } from 'actions/promos'
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'routes/Signup/signupConfig'
 import { getCurrentPromoCodeData } from 'routes/Signup/signupSelectors'
 import { getPromoCode } from 'selectors/basket'
 
@@ -45,7 +45,7 @@ const loadBoxPricesAndPromoCode = async (store: ApplicationStore): Promise<void>
   }
 }
 
-interface FetchSignupDataParams {
+type FetchSignupDataParams = {
   /**
    * Application redux store.
    */

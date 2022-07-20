@@ -3,9 +3,19 @@ import { createSelector } from 'reselect'
 export const getBox = ({ box }) => (box || {})
 export const getBoxPrices = ({ boxPrices }) => (boxPrices || {})
 
+export const getSubscriptionSettingsUnsupported = createSelector(
+  getBox,
+  ({ subscriptionSettingsUnsupported }) => !!subscriptionSettingsUnsupported
+)
+
 export const getNumPortions = createSelector(
   getBox,
   ({ numPortions }) => numPortions
+)
+
+export const getSelectedBoxSize = createSelector(
+  getBox,
+  ({ boxSize }) => (boxSize || {}).currentValue
 )
 
 export const getDietaryPreference = createSelector(
@@ -23,6 +33,11 @@ export const getMealsPerBox = createSelector(
   ({ mealsPerBox }) => (mealsPerBox || {}).currentValue
 )
 
+export const getNumRecipes = createSelector(
+  getBox,
+  ({ numRecipes }) => numRecipes
+)
+
 export const getBoxPricesNumPortion = createSelector(
   [getBoxPrices, getNumPortions],
   (boxPrices, numPortions) => (boxPrices || {})[numPortions]
@@ -31,11 +46,6 @@ export const getBoxPricesNumPortion = createSelector(
 export const getIsBoxPricesLoaded = createSelector(
   getBoxPrices,
   ({ requestState }) => Boolean((requestState || {}).isLoaded)
-)
-
-export const getShowFourByFiveModal = createSelector(
-  getBox,
-  ({ showFourByFiveModal }) => showFourByFiveModal
 )
 
 export const getPricePerPortionDiscounted = createSelector(

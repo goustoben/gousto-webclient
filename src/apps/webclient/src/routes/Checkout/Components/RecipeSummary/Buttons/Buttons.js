@@ -70,16 +70,16 @@ class Buttons extends React.Component {
   }
 
   handleAdd = () => {
-    const { stock, onAdd, recipeId, view } = this.props
+    const { stock, addRecipe, recipeId, view } = this.props
     if (stock !== null) {
-      onAdd(recipeId, view)
+      addRecipe(recipeId, view)
     }
   }
 
   handleRemove = () => {
-    const { qty, view, recipeId, onRemove } = this.props
+    const { qty, view, recipeId, removeRecipe } = this.props
     if (qty > 1) {
-      onRemove(recipeId, view)
+      removeRecipe(recipeId, view)
     }
   }
 
@@ -147,8 +147,6 @@ class Buttons extends React.Component {
 }
 
 Buttons.propTypes = {
-  onAdd: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
   limitReached: PropTypes.bool.isRequired,
   recipeId: PropTypes.string.isRequired,
   qty: PropTypes.number.isRequired,
@@ -158,6 +156,8 @@ Buttons.propTypes = {
   disabled: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
   stock: PropTypes.number,
   showControl: PropTypes.bool,
+  addRecipe: PropTypes.func.isRequired,
+  removeRecipe: PropTypes.func.isRequired,
 }
 
 Buttons.defaultProps = {

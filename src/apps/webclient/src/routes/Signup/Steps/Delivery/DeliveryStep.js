@@ -10,9 +10,9 @@ import PropTypes from 'prop-types'
 import { completeWizardDeliveryDay } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { unbounce as unbounceRoutes } from 'config/routes'
-import { signupConfig } from 'config/signup'
 import { Calendar } from 'routes/Signup/Components/Calendar/Calendar'
 import { SocialBelongingBanner } from 'routes/Signup/SocialBelongingBanner'
+import { signupConfig } from 'routes/Signup/signupConfig'
 import {
   createNextDayDeliveryDays,
   generateNextDayDeliverySlots,

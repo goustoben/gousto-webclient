@@ -20,7 +20,7 @@ import statusActions from 'actions/status'
 import { userSubscribe } from 'routes/Checkout/checkoutActions'
 
 import routes from 'config/routes'
-import { PaymentMethod } from 'config/signup'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 import { basketResetPersistent } from 'utils/basket'

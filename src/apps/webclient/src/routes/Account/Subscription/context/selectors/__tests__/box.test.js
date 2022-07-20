@@ -8,7 +8,8 @@ import {
   getIsBoxAndPricesLoaded,
   getPricePerPortionDiscounted,
   getTotalBoxPriceDiscounted,
-  getShowFourByFiveModal
+  getSelectedBoxSize,
+  getSubscriptionSettingsUnsupported
 } from '../box'
 
 describe('box selectors', () => {
@@ -24,11 +25,14 @@ describe('box selectors', () => {
         mealsPerBox: {
           currentValue: '2'
         },
+        boxSize: {
+          currentValue: '4'
+        },
         requestState: {
           isLoaded: true,
           isLoading: false
         },
-        showFourByFiveModal: false,
+        subscriptionSettingsUnsupported: true,
       },
       boxPrices: {
         2: {
@@ -43,7 +47,7 @@ describe('box selectors', () => {
           isLoaded: true,
           isLoading: false
         }
-      },
+      }
     }
   })
 
@@ -105,7 +109,7 @@ describe('box selectors', () => {
 
   describe('getBoxPricesNumPortion', () => {
     test('should return mealsPerBox currentValue', () => {
-      expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99', recipeTotalDiscounted: '24.59' }}})
+      expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99', recipeTotalDiscounted: '24.59' } } })
     })
 
     describe('When getBoxPricesNumPortion is not defined', () => {
@@ -113,7 +117,7 @@ describe('box selectors', () => {
         contextState.getBoxPricesNumPortion = undefined
       })
       test('should reselect from box prices', () => {
-        expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99', recipeTotalDiscounted: '24.59' }}})
+        expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99', recipeTotalDiscounted: '24.59' } } })
       })
     })
   })
@@ -121,12 +125,6 @@ describe('box selectors', () => {
   describe('getIsBoxAndPricesLoaded', () => {
     test('should return true', () => {
       expect(getIsBoxAndPricesLoaded(contextState)).toEqual(true)
-    })
-  })
-
-  describe('getShowFourByFiveModal', () => {
-    test('should return false', () => {
-      expect(getShowFourByFiveModal(contextState)).toEqual(false)
     })
   })
 
@@ -175,6 +173,22 @@ describe('box selectors', () => {
       test('should return false', () => {
         expect(getIsBoxAndPricesLoaded(contextState)).toEqual(false)
       })
+    })
+  })
+
+  describe('getSelectedBoxSize', () => {
+    test('should return box.boxSize.currentValue', () => {
+      expect(getSelectedBoxSize(contextState)).toEqual('4')
+    })
+  })
+
+  describe('getSubscriptionSettingsUnsupported', () => {
+    test('should return box.subscriptionSettingsUnsupported', () => {
+      expect(getSubscriptionSettingsUnsupported(contextState)).toBe(true)
+    })
+
+    test('should return false if box.subscriptionSettingsUnsupported does not exist', () => {
+      expect(getSubscriptionSettingsUnsupported({ box: {} })).toBe(false)
     })
   })
 })

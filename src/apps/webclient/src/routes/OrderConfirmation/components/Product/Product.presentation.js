@@ -46,7 +46,7 @@ const ProductPresentation = ({
   ageVerificationPending,
   inProgress,
 }) => (
-  <div className={css.productDetails}>
+  <div className={css.productDetails} data-testing="productItem">
     <button
       type="button"
       className={classnames(css.resetButtonStyle, css.productImage)}

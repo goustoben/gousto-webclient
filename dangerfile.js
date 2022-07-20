@@ -212,6 +212,27 @@ const createGetOwners = () => {
   return getOwner
 }
 
+const warnWhenPRHasTooManyModifications = async () => {
+  const modificationsThreshold = 800
+  const filesChangedThreshold = 50
+
+  const linesOfCodeYarnLock = await danger.git.linesOfCode('yarn.lock')
+  const modifications = danger.github.pr.additions + danger.github.pr.deletions
+  const modificationWithoutLockFiles = modifications - linesOfCodeYarnLock
+  const filesChanged = danger.github.pr.changed_files
+
+  if (
+    modificationWithoutLockFiles > modificationsThreshold ||
+    filesChanged > filesChangedThreshold
+  ) {
+    warn(
+      `:orange_circle: Woah! This pull request exceeds our reccomended threshold of ${modificationsThreshold} lines modified, or ${filesChangedThreshold} files changed. Reducing the size will speed up the time it takes to review.`
+    )
+  }
+  return
+};
+warnWhenPRHasTooManyModifications()
+
 // eslint-disable-next-line no-unused-vars
 const checkCodeOwnersOfChangedFiles = () => {
   const getOwner = createGetOwners()

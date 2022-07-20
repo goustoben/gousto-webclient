@@ -3,8 +3,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { PaymentMethod } from 'config/signup'
 import { SubmitButton } from 'routes/Checkout/Components/SubmitButton'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 
 import { ErrorMessage } from '../../ErrorMessage'
 import { Checkout3DSModal } from '../Checkout3DSModal'

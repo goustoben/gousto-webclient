@@ -1,5 +1,5 @@
-
 import Immutable from 'immutable'
+
 import { addDisabledSlotIds, getDeliveryDaysAndSlots } from '../deliverySlotHelper'
 
 describe('Delivery Slot Helper', () => {
@@ -15,22 +15,22 @@ describe('Delivery Slot Helper', () => {
             deliveryStartTime: '18:00:00',
             deliveryEndTime: '22:00:00',
             id: 'testSlotId1',
-            disabledSlotId: '2019-03-03_18-22'
+            disabledSlotId: '2019-03-03_18-22',
           },
           {
             deliveryStartTime: '08:00:00',
             deliveryEndTime: '12:00:00',
             id: 'testSlotId2',
-            disabledSlotId: '2019-03-03_08-12'
+            disabledSlotId: '2019-03-03_08-12',
           },
           {
             deliveryStartTime: '08:00:00',
             deliveryEndTime: '19:00:00',
             id: 'testSlotId3',
-            disabledSlotId: '2019-03-03_08-19'
-          }
-        ]
-      }
+            disabledSlotId: '2019-03-03_08-19',
+          },
+        ],
+      },
     })
   })
 
@@ -52,15 +52,15 @@ describe('Delivery Slot Helper', () => {
           {
             deliveryStartTime: '18:00:00',
             id: 'testSlotId1',
-            disabledSlotId: '2019-03-03_18-22'
+            disabledSlotId: '2019-03-03_18-22',
           },
           {
             deliveryEndTime: '12:00:00',
             id: 'testSlotId2',
-            disabledSlotId: '2019-03-03_08-12'
-          }
-        ]
-      }
+            disabledSlotId: '2019-03-03_08-12',
+          },
+        ],
+      },
     })
     const result = addDisabledSlotIds(deliveryDays)
     const slots = result.get('aaa').get('slots')
@@ -89,28 +89,56 @@ describe('Delivery Slot Helper', () => {
                 deliveryStartTime: '08:00:00',
                 deliveryEndTime: '19:00:00',
                 id: '123sddrdfst456',
-                disabledSlotId: '2019-03-03_08-19'
+                disabledSlotId: '2019-03-03_08-19',
+                deliveryPrice: '0.00',
               }),
               Immutable.Map({
                 deliveryStartTime: '18:00:00',
                 deliveryEndTime: '22:00:00',
                 id: '987sddrdfst456',
-                disabledSlotId: '2019-03-03_18-22'
-              })
-            ])
-          })
-        ])
+                disabledSlotId: '2019-03-03_18-22',
+                deliveryPrice: '1.99',
+              }),
+            ]),
+          }),
+        ]),
       }
     })
 
     describe('when slot is in disabled list', () => {
-      test('should return a disabled slot, user logged in and subscription paused', () => {
-        const result = getDeliveryDaysAndSlots(dateToCheck, props)
-        const slotToCheck = result.slots[dateToCheck][0]
-        expect(slotToCheck.disabled).toEqual(true)
+      describe('when user is logged in and subscription paused', () => {
+        test('should return a disabled slot', () => {
+          const result = getDeliveryDaysAndSlots(dateToCheck, props)
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.disabled).toEqual(true)
+        })
+
+        test('should return delivery time label', () => {
+          const result = getDeliveryDaysAndSlots(dateToCheck, props)
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.label).toEqual('8am - 7pm ')
+        })
+
+        test('should return delivery price subLabel as empty string', () => {
+          const result = getDeliveryDaysAndSlots(dateToCheck, props)
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.subLabel).toEqual('')
+        })
+
+        test('should return delivery time label', () => {
+          const result = getDeliveryDaysAndSlots(dateToCheck, props)
+          const slotToCheck = result.slots[dateToCheck][1]
+          expect(slotToCheck.label).toEqual('6pm - 10pm ')
+        })
+
+        test('should return delivery price subLabel as £1.99', () => {
+          const result = getDeliveryDaysAndSlots(dateToCheck, props)
+          const slotToCheck = result.slots[dateToCheck][1]
+          expect(slotToCheck.subLabel).toEqual('£1.99')
+        })
       })
 
-      describe('when user logged out', () => {
+      describe('when user NOT logged in', () => {
         let result
         beforeEach(() => {
           const newProps = { ...props, isAuthenticated: false }
@@ -121,6 +149,16 @@ describe('Delivery Slot Helper', () => {
           const slotToCheck = result.slots[dateToCheck][0]
           expect(slotToCheck.disabled).toEqual(true)
         })
+
+        test('should return delivery time', () => {
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.label).toEqual('8am - 7pm ')
+        })
+
+        test('should return delivery price as empty string', () => {
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.subLabel).toEqual('')
+        })
       })
     })
     describe('when slot is NOT in disabled list', () => {
@@ -128,6 +166,18 @@ describe('Delivery Slot Helper', () => {
         const result = getDeliveryDaysAndSlots(dateToCheck, props)
         const slotToCheck = result.slots[dateToCheck][1]
         expect(slotToCheck.disabled).toEqual(false)
+      })
+
+      test('should return delivery time', () => {
+        const result = getDeliveryDaysAndSlots(dateToCheck, props)
+        const slotToCheck = result.slots[dateToCheck][1]
+        expect(slotToCheck.label).toEqual('6pm - 10pm ')
+      })
+
+      test('should return delivery price', () => {
+        const result = getDeliveryDaysAndSlots(dateToCheck, props)
+        const slotToCheck = result.slots[dateToCheck][1]
+        expect(slotToCheck.subLabel).toEqual('£1.99')
       })
 
       describe('when user has order with recipes', () => {
@@ -139,13 +189,15 @@ describe('Delivery Slot Helper', () => {
               1234: {
                 id: '1234',
                 deliveryDate: '2019-03-03',
-                recipeItems: [{
-                  id: 1,
-                },
-                {
-                  id: 2,
-                }]
-              }
+                recipeItems: [
+                  {
+                    id: 1,
+                  },
+                  {
+                    id: 2,
+                  },
+                ],
+              },
             }),
           }
           result = getDeliveryDaysAndSlots(dateToCheck, newProps)
@@ -164,8 +216,8 @@ describe('Delivery Slot Helper', () => {
               1234: {
                 id: '1234',
                 deliveryDate: '2019-03-03',
-                recipeItems: []
-              }
+                recipeItems: [],
+              },
             }),
           }
           result = getDeliveryDaysAndSlots(dateToCheck, newProps)

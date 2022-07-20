@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { signupConfig } from 'config/signup'
+import { signupConfig } from 'config/signup' // THIS WAS ADDED
 import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 import { useBasket } from 'routes/Menu/domains/basket'
@@ -29,9 +29,12 @@ export const BoxSizeStep = ({
   const { numPortions } = useBasket()
   const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabledForProspects(numPortions)
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
+  const { setNumPortions } = useBasket()
+
   const handlePrimaryButtonClick = (value) => {
     numPortionChange(value)
     numPortionChangeTracking(value)
+    setNumPortions(value)
     trackSignupWizardAction(completeWizardBoxSize, {
       box_size: value,
     })

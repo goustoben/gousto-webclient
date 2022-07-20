@@ -8,10 +8,10 @@ import { withResolved } from '../util'
 export function composeRequest<In>(
   ...middlewares: RequestMiddleware<In>[]
 ): RequestMiddleware<In> {
-  return function composedMiddleware(req, ctx, input) {
+  return function composedMiddleware(req, input) {
     let acc: RequestConfig | Promise<RequestConfig> = req
     for (const middleware of middlewares) {
-      acc = withResolved(acc, (value) => middleware(value, ctx, input))
+      acc = withResolved(acc, (value) => middleware(value, input))
     }
     return acc
   }

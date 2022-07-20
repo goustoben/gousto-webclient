@@ -40,7 +40,7 @@ export const Item = ({
   type,
   url,
 }) => (
-  <div className={available ? css.item : css.itemUnavailable}>
+  <div className={available ? css.item : css.itemUnavailable} data-testing={`item-${type}`}>
     <GoustoImage onClick={onImageClick} media={media} title={title} className={classnames(css.img, { [css.pointer]: isFunction(onImageClick) })} />
 
     <div className={classnames(css.details, { [css.detailsExtraPadding]: !!onRemove })}>
@@ -69,6 +69,7 @@ export const Item = ({
         onKeyDown={onEnter(onRemove)}
         role="button"
         tabIndex="0"
+        data-testing={`item-${type}-minus`}
       />
     ) : null}
   </div>

@@ -22,7 +22,8 @@ export const SettingSection = ({
   title,
   instruction,
   testingSelector,
-  isCtaDisabled
+  isCtaDisabled,
+  onChildrenRender
 }) => (
   <ExpandableSection
     allowOverflow
@@ -46,6 +47,12 @@ export const SettingSection = ({
       const handleCollapseAndSubmit = (e) => {
         collapseSection(e)
         onSubmit()
+      }
+
+      if (isExpanded) {
+        onChildrenRender(() => {
+          collapseSection({ preventDefault: () => { } })
+        }, isExpanded)
       }
 
       return (
@@ -84,10 +91,12 @@ SettingSection.propTypes = {
   instruction: PropTypes.string.isRequired,
   testingSelector: PropTypes.string,
   isCtaDisabled: PropTypes.bool,
+  onChildrenRender: PropTypes.func
 }
 
 SettingSection.defaultProps = {
   isMobile: false,
   testingSelector: '',
   isCtaDisabled: false,
+  onChildrenRender: () => {}
 }

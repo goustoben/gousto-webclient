@@ -10,6 +10,7 @@ const CloseButton = ({ onClose }) => (
     role="button"
     tabIndex={0}
     onKeyPress={onEnter(onClose)}
+    data-testing="closeButton"
   />
 )
 

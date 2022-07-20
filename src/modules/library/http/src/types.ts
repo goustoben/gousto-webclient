@@ -2,18 +2,12 @@
  * Request configuration
  * ============================================================================
  */
-
-export type HttpCtx = {
-  authToken?: string
-  apiUrl: string
-}
-
 export type RequestConfig = RequestInit & {
   headers?: Dict
   host: string
   method: Method
-  paths?: string[]
-  queryParams?: DictNullable
+  paths: string[]
+  queryParams?: Dict
 }
 
 export type HttpConfig<Input, Piped, Output> = {
@@ -38,15 +32,8 @@ export type Method =
   | 'PATCH'
 
 export type Dict = Record<string, string>
-export type DictNullable = Record<string, string | null>
-
-export type Provider<Input, T> = (
-  i: Input,
-  ctx: HttpCtx
-) => T | null | Promise<T | null>
-
-export type StringProvider<Input> = Provider<Input, string>
-export type DictProvider<Input> = Provider<Input, Dict>
+export type ProviderTypes = Dict | string
+export type Provider<Input, T extends ProviderTypes> = T | ((i: Input) => T | Promise<T>)
 
 /**
  * Middleware
@@ -58,7 +45,6 @@ export type DictProvider<Input> = Provider<Input, Dict>
 
 export type RequestMiddleware<Input> = (
   req: RequestConfig,
-  ctx: HttpCtx,
   i: Input
 ) => RequestConfig | Promise<RequestConfig>
 

@@ -97,12 +97,14 @@ describe('DeliverySlot logic', () => {
             deliveryEndTime: '19:00:00',
             id: '123sddrdfst456',
             disabledSlotId: '2019-03-03_08-19',
+            deliveryPrice: '0.00',
           }),
           Immutable.Map({
             deliveryStartTime: '18:00:00',
             deliveryEndTime: '22:00:00',
             id: '987sddrdfst456',
             disabledSlotId: '2019-03-03_18-22',
+            deliveryPrice: '1.99',
           }),
         ]),
       }),
@@ -119,6 +121,61 @@ describe('DeliverySlot logic', () => {
   })
 
   describe('Render Function', () => {
+    test('should render the tile text', () => {
+      wrapper = shallow(
+        <DeliverySlot
+          deliveryDays={deliveryDays}
+          disabledSlots={disabledSlots}
+          isAuthenticated={isAuthenticated}
+          isSubscriptionActive="active"
+          tempDate="2019-03-03"
+          clearPostcode={jest.fn()}
+          getBoxSummaryTextProps={getBoxSummaryTextProps}
+          basketRestorePreviousValues={() => {}}
+          boxSummaryNext={() => {}}
+          numPortions={2}
+        />,
+      )
+      expect(wrapper.find('.leadingText').text()).toBe(
+        'Our menus change weekly. Please select a date so we can show you the latest recipes',
+      )
+    })
+
+    test('should have slot props with disabled slots', () => {
+      wrapper = shallow(
+        <DeliverySlot
+          deliveryDays={deliveryDays}
+          disabledSlots={disabledSlots}
+          isAuthenticated={isAuthenticated}
+          isSubscriptionActive="active"
+          tempDate="2019-03-03"
+          clearPostcode={jest.fn()}
+          getBoxSummaryTextProps={getBoxSummaryTextProps}
+          basketRestorePreviousValues={() => {}}
+          boxSummaryNext={() => {}}
+          numPortions={2}
+        />,
+      )
+      expect(wrapper.find('Connect(DatePicker)').prop('slots')).toStrictEqual({
+        '2019-03-03': [
+          {
+            coreSlotId: undefined,
+            disabled: true,
+            label: '8am - 7pm ',
+            subLabel: '',
+            value: '123sddrdfst456',
+          },
+          {
+            coreSlotId: undefined,
+            disabled: false,
+            label: '6pm - 10pm ',
+            subLabel: '£1.99',
+            value: '987sddrdfst456',
+          },
+        ],
+      })
+    })
+
     test('should show limited availability text when doesDateHaveDisabledSlots is true, user is logged in and subscription is inactive', () => {
       wrapper = shallow(
         <DeliverySlot

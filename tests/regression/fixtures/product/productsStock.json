@@ -1,0 +1,104 @@
+{
+  "status": "ok",
+  "meta": [],
+  "result": {
+    "data": {
+      "f3200818-12b9-11ea-a064-02319c58c40c": {
+        "product_id": "f3200818-12b9-11ea-a064-02319c58c40c",
+        "number": 10
+      },
+      "58740ef6-0d1c-11ea-b31e-02319c58c40c": {
+        "product_id": "58740ef6-0d1c-11ea-b31e-02319c58c40c",
+        "number": 10
+      },
+      "76912dcc-465e-11e9-aeec-02492a0dc9b6": {
+        "product_id": "76912dcc-465e-11e9-aeec-02492a0dc9b6",
+        "number": 10
+      },
+      "8c2d6088-465e-11e9-96a2-06ad4debd0fa": {
+        "product_id": "8c2d6088-465e-11e9-96a2-06ad4debd0fa",
+        "number": 10
+      },
+      "e0bf69e2-beb3-11e5-b57b-02fada0dd3b9": {
+        "product_id": "e0bf69e2-beb3-11e5-b57b-02fada0dd3b9",
+        "number": 10
+      },
+      "fa783c66-f756-11e5-8600-02787aad01f3": {
+        "product_id": "fa783c66-f756-11e5-8600-02787aad01f3",
+        "number": 10
+      },
+      "9efbffd0-465e-11e9-8fe5-020d33bb681c": {
+        "product_id": "9efbffd0-465e-11e9-8fe5-020d33bb681c",
+        "number": 10
+      },
+      "3a77cc3c-0563-11ea-9ed6-06e13e5a979a": {
+        "product_id": "3a77cc3c-0563-11ea-9ed6-06e13e5a979a",
+        "number": 10
+      },
+      "e7bcb1f0-ba86-11e9-9ec6-06d827794ae0": {
+        "product_id": "e7bcb1f0-ba86-11e9-9ec6-06d827794ae0",
+        "number": 10
+      },
+      "b5d42e5e-ffe4-11e9-8705-06be524fd222": {
+        "product_id": "b5d42e5e-ffe4-11e9-8705-06be524fd222",
+        "number": 10
+      },
+      "f13a03b8-d3a9-11e9-8b8e-0698dfab389a": {
+        "product_id": "f13a03b8-d3a9-11e9-8b8e-0698dfab389a",
+        "number": 10
+      },
+      "2d2071fe-8162-11e9-9d23-06a3e3476ad2": {
+        "product_id": "2d2071fe-8162-11e9-9d23-06a3e3476ad2",
+        "number": 10
+      },
+      "168f260c-d3af-11e9-b591-0609fbeb0c44": {
+        "product_id": "168f260c-d3af-11e9-b591-0609fbeb0c44",
+        "number": 10
+      },
+      "268ab050-ffd1-11e9-ab00-02c58c8bcbea": {
+        "product_id": "268ab050-ffd1-11e9-ab00-02c58c8bcbea",
+        "number": 10
+      },
+      "9a6f4402-d3aa-11e9-ac38-0609fbeb0c44": {
+        "product_id": "9a6f4402-d3aa-11e9-ac38-0609fbeb0c44",
+        "number": 10
+      },
+      "b5c6bbe0-d3af-11e9-acf1-0698dfab389a": {
+        "product_id": "b5c6bbe0-d3af-11e9-acf1-0698dfab389a",
+        "number": 10
+      },
+      "f46d536a-ffd6-11e9-b140-02c58c8bcbea": {
+        "product_id": "f46d536a-ffd6-11e9-b140-02c58c8bcbea",
+        "number": 10
+      },
+      "800a0f7a-ad67-11e9-8aeb-028ecab2f72c": {
+        "product_id": "800a0f7a-ad67-11e9-8aeb-028ecab2f72c",
+        "number": 10
+      },
+      "1253bc8e-ad61-11e9-8ce2-06ba16bc62ee": {
+        "product_id": "1253bc8e-ad61-11e9-8ce2-06ba16bc62ee",
+        "number": 10
+      },
+      "e2353dda-e42e-11e8-befc-02dbf738d01a": {
+        "product_id": "e2353dda-e42e-11e8-befc-02dbf738d01a",
+        "number": 10
+      },
+      "ed62fe7a-53fa-11e6-8d07-023d2759e21d": {
+        "product_id": "ed62fe7a-53fa-11e6-8d07-023d2759e21d",
+        "number": 10
+      },
+      "10f2e24c-ead3-11e5-b543-02216daf9ab9": {
+        "product_id": "10f2e24c-ead3-11e5-b543-02216daf9ab9",
+        "number": 10
+      },
+      "1d05ea96-de72-11e6-ac5e-02272d35a40b": {
+        "product_id": "1d05ea96-de72-11e6-ac5e-02272d35a40b",
+        "number": 10
+      },
+      "e018ac74-beb3-11e5-be84-02fada0dd3b9": {
+        "product_id": "e018ac74-beb3-11e5-be84-02fada0dd3b9",
+        "number": 0
+      }
+    }
+  }
+}

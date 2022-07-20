@@ -11,6 +11,7 @@ import {
   getBoxPricesNumPortion,
   getTotalBoxPriceDiscounted,
   getNumPortions,
+  getNumRecipes,
 } from '../../../../../context/selectors/box'
 import { useFiveRecipeSubscriptionOption } from '../../../../../hooks/useFiveRecipeSubscriptionOption'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
@@ -24,16 +25,15 @@ jest.mock('../../../../../hooks/useFiveRecipeSubscriptionOption')
 
 const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
 const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
-
-const mountWithProps = (props) => {
+const dispatch = jest.fn().mockReturnValue()
+const state = { box: {} }
+const mountWithProps = (props) =>
   render(
-    <MealsPerBox accessToken="foo" isMobile={false} {...props} />,
-    {
-      wrappingComponent: SubscriptionContext.Provider,
-      wrappingComponentProps: { value: { state: {}, dispatch: 'MOCK_DISPATCH' } }
-    }
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <SubscriptionContext.Provider value={{ state, dispatch }}>
+      <MealsPerBox accessToken="foo" isMobile={false} {...props} />
+    </SubscriptionContext.Provider>,
   )
-}
 
 const getCTA = () => (
   screen.getByRole('button', { name: 'Save meals per box' })
@@ -87,6 +87,7 @@ describe('MealsPerBox', () => {
       getMealsPerBox.mockReturnValue(undefined)
       getBoxPricesNumPortion.mockReturnValue(undefined)
       getDietaryPreference.mockReturnValue(undefined)
+      getNumRecipes.mockReturnValue(undefined)
     })
 
     describe('And I browse on a mobile device', () => {
@@ -132,12 +133,70 @@ describe('MealsPerBox', () => {
     })
   })
 
+  describe('Given state has changed with successful update', () => {
+    beforeEach(() => {
+      getIsBoxAndPricesLoaded.mockReturnValue(true)
+      useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
+      getTotalBoxPriceDiscounted.mockReturnValue('30.15')
+      getMealsPerBox.mockReturnValue('4')
+      getNumRecipes.mockReturnValue(2)
+      getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)
+      getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)
+      getDietaryPreference.mockReturnValue(mockDietaryPreference)
+      mountWithProps()
+      clickEdit()
+      clickCTA()
+    })
+
+    test('Then useUpdateSubscription should be invoked', () => {
+      const mockCalls = useUpdateSubscription.mock.calls
+      const [lastMockArgs] = mockCalls[mockCalls.length - 1]
+
+      expect(lastMockArgs.data).toEqual({
+        num_recipes: '4'
+      })
+      expect(lastMockArgs.trigger.shouldRequest).toBeTruthy()
+    })
+
+    test('Then the trackSubscriptionSettingsChange is invoked as expected', () => {
+      expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+        action: 'update', settingName: 'meals_per_box'
+      })
+    })
+
+    test('Then useSubscriptionToast is invoked', () => {
+      expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
+    })
+  })
+
+  describe('Given state has changed with unsuccessful update', () => {
+    beforeEach(() => {
+      getIsBoxAndPricesLoaded.mockReturnValue(true)
+      useUpdateSubscription.mockReturnValue([false, false, true])
+      getTotalBoxPriceDiscounted.mockReturnValue('30.15')
+      getMealsPerBox.mockReturnValue('4')
+      getNumRecipes.mockReturnValue(2)
+      getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)
+      getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)
+      getDietaryPreference.mockReturnValue(mockDietaryPreference)
+      mountWithProps()
+      clickEdit()
+      clickCTA()
+    })
+
+    test('Then useSubscriptionToast is invoked', () => {
+      expect(useSubscriptionToastSpy).toHaveBeenCalledWith(false, true)
+    })
+  })
+
   describe('Given data is loaded', () => {
     beforeEach(() => {
       getIsBoxAndPricesLoaded.mockReturnValue(true)
       useUpdateSubscription.mockReturnValue([false, true, false])
       getTotalBoxPriceDiscounted.mockReturnValue('30.15')
       getMealsPerBox.mockReturnValue(mockMealsPerBox)
+      getNumRecipes.mockReturnValue(mockMealsPerBox)
+      getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)
       getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)
       getDietaryPreference.mockReturnValue(mockDietaryPreference)
 
@@ -175,59 +234,14 @@ describe('MealsPerBox', () => {
         expect(renderedRadios).toHaveLength(EXPECTED_RADIOS.length)
       })
 
-      describe('And I select a Radio', () => {
-        beforeEach(() => {
-          fireEvent.click(
-            screen.getByLabelText('4 meals (£2.99 per serving)', { selector: 'input' })
-          )
-        })
+      test('should dispatch UPDATE_SELECTED_MEALS_PER_BOX action', () => {
+        fireEvent.click(
+          screen.getByLabelText('4 meals (£2.99 per serving)', { selector: 'input' })
+        )
 
-        describe('And I click "Save meals per box"', () => {
-          describe('And the update is successful', () => {
-            beforeEach(() => {
-              useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
-
-              clickCTA()
-            })
-
-            test('Then useUpdateSubscription should be invoked', () => {
-              const mockCalls = useUpdateSubscription.mock.calls
-              const [lastMockArgs] = mockCalls[mockCalls.length - 1]
-
-              expect(lastMockArgs.data).toEqual({
-                num_recipes: '4'
-              })
-
-              expect(lastMockArgs.trigger.shouldRequest).toBeTruthy()
-            })
-
-            test('Then the trackSubscriptionSettingsChange is invoked as expected', () => {
-              expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
-                action: 'update', settingName: 'meals_per_box'
-              })
-            })
-
-            describe('And the update is a successful', () => {
-              beforeEach(() => {
-                useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
-              })
-
-              test('Then useSubscriptionToast is invoked', () => {
-                expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
-              })
-            })
-          })
-
-          describe('And the update errors', () => {
-            beforeEach(() => {
-              useUpdateSubscription.mockReturnValue([false, false, true])
-              clickCTA()
-            })
-
-            test('Then useSubscriptionToast is invoked', () => {
-              expect(useSubscriptionToastSpy).toHaveBeenCalledWith(false, true)
-            })
-          })
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'UPDATE_SELECTED_MEALS_PER_BOX',
+          data: { numRecipes: '4' }
         })
       })
     })
@@ -247,6 +261,22 @@ describe('MealsPerBox', () => {
 
         mountWithProps()
         expect(screen.getByLabelText('5 meals (£5.99 per serving)')).toBeInTheDocument()
+      })
+
+      test('Then 5th recipe is not rendered', () => {
+        getNumPortions.mockReturnValue(mockMealsPerBox)
+        getBoxPricesNumPortion.mockReturnValue({
+          ...mockBoxPricesNumPortion,
+          5: {
+            vegetarian: {
+              pricePerPortionDiscounted: '5.99',
+            },
+          },
+        })
+        useFiveRecipeSubscriptionOption.mockReturnValue(false)
+
+        mountWithProps()
+        expect(screen.queryByText('5 meals (£5.99 per serving)')).not.toBeInTheDocument()
       })
     })
   })

@@ -1,0 +1,363 @@
+{
+  "status": "ok",
+  "result": {
+      "data": {
+          "user": {
+              "id": "17247344",
+              "email": "bc0aab4e300a7c7aa82f50ad64ae82df@gousto.info",
+              "gender": "female",
+              "salutation": "Miss.",
+              "name_first": "Gousto",
+              "name_last": "User",
+              "phone": "01234567890",
+              "phone_country_code": "44",
+              "phone_alternate": null,
+              "when_birth": null,
+              "deleted": false,
+              "gousto_reference": "17265206",
+              "marketing_do_allow_email": "0",
+              "marketing_do_allow_sms": "0",
+              "marketing_do_allow_post": "0",
+              "marketing_do_allow_phone": "0",
+              "marketing_do_allow_thirdparty": "0",
+              "tariff": "20170712",
+              "age_verified": "1",
+              "vip": "0",
+              "status": "active",
+              "referral_link": "https://staging-frontend.gousto.info/this-weeks-recipes?promo_code=ELLIE17247344",
+              "delivery_tariff_id": "9037a447-e11a-4960-ae69-d89a029569af",
+              "shipping_address_id": "34005976",
+              "shipping_address": {
+                  "id": "34005976",
+                  "deleted": false,
+                  "user_id": "17247344",
+                  "name": "My Address",
+                  "companyname": "Gousto",
+                  "line1": "Gousto Shepherds Building",
+                  "line2": "Unit 1.8/1.9",
+                  "line3": "Charecroft Way",
+                  "town": "London",
+                  "county": null,
+                  "postcode": "SW4 1AA",
+                  "delivery_instructions": "Front garden - inside the gate behind bins",
+                  "shipping_default": true,
+                  "billing_default": false,
+                  "state": "unset",
+                  "premium_delivery": true
+              },
+              "billing_address_id": "34005998",
+              "billing_address": {
+                  "id": "34005998",
+                  "deleted": false,
+                  "user_id": "17247344",
+                  "name": "My Address",
+                  "companyname": "Gousto",
+                  "line1": "Gousto Shepherds Building",
+                  "line2": "Unit 1.8/1.9",
+                  "line3": "Charecroft Way",
+                  "town": "London",
+                  "county": null,
+                  "postcode": "SW4 1AA",
+                  "delivery_instructions": null,
+                  "shipping_default": false,
+                  "billing_default": true,
+                  "state": "unset",
+                  "premium_delivery": true
+              },
+              "subscription": {
+                  "user_id": "17247344",
+                  "created_at": "2018-11-19 17:04:56",
+                  "box": null,
+                  "state": "active",
+                  "state_reason": null,
+                  "interval": "1",
+                  "deliveryslot": {
+                      "default_day": "6",
+                      "number": "2"
+                  }
+              },
+              "referral-code": "ELLIE17247344",
+              "card": {
+                  "last_four_digits": "8084",
+                  "expiring": false,
+                  "expiry_date": "2021-03"
+              },
+              "is_partial": false
+          },
+          "referral-code": "ELLIE17247344",
+          "rules-codes-used": {
+              "513987": {
+                  "code": "MARK323236",
+                  "rule_title": "30.00% off whole order",
+                  "consumed": true,
+                  "nth_order_values": [
+                      "1"
+                  ]
+              }
+          },
+          "rules-codes": [
+              {
+                  "code": "(no voucher code)",
+                  "expires_at": null,
+                  "rules": [
+                      {
+                          "prs_id": 2507234,
+                          "title": "25.00% off whole order",
+                          "has_been_used": true,
+                          "orders": {
+                              "40": {
+                                  "id": "13526239",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2020-01-25T00:00:00+00:00"
+                              },
+                              "39": {
+                                  "id": "13128664",
+                                  "discount": "£7.93",
+                                  "delivered_at": "2020-01-11T00:00:00+00:00"
+                              },
+                              "38": {
+                                  "id": "13035536",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2020-01-04T00:00:00+00:00"
+                              },
+                              "37": {
+                                  "id": "12787783",
+                                  "discount": "£7.93",
+                                  "delivered_at": "2019-12-14T00:00:00+00:00"
+                              },
+                              "36": {
+                                  "id": "12675442",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-12-07T00:00:00+00:00"
+                              },
+                              "35": {
+                                  "id": "12550861",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-11-30T00:00:00+00:00"
+                              },
+                              "34": {
+                                  "id": "12425247",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-11-23T00:00:00+00:00"
+                              },
+                              "33": {
+                                  "id": "12290005",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-11-16T00:00:00+00:00"
+                              },
+                              "32": {
+                                  "id": "12158925",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-11-10T00:00:00+00:00"
+                              },
+                              "31": {
+                                  "id": "11954945",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-10-27T00:00:00+01:00"
+                              },
+                              "30": {
+                                  "id": "11127284",
+                                  "discount": "£7.93",
+                                  "delivered_at": "2019-09-14T00:00:00+01:00"
+                              },
+                              "29": {
+                                  "id": "11024308",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-09-07T00:00:00+01:00"
+                              },
+                              "28": {
+                                  "id": "10849431",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-08-24T00:00:00+01:00"
+                              },
+                              "27": {
+                                  "id": "10678538",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-08-10T00:00:00+01:00"
+                              },
+                              "26": {
+                                  "id": "10597023",
+                                  "discount": "£7.93",
+                                  "delivered_at": "2019-08-03T00:00:00+01:00"
+                              },
+                              "25": {
+                                  "id": "10515256",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-07-27T00:00:00+01:00"
+                              },
+                              "24": {
+                                  "id": "10431631",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-07-20T00:00:00+01:00"
+                              },
+                              "23": {
+                                  "id": "10344876",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-07-13T00:00:00+01:00"
+                              },
+                              "22": {
+                                  "id": "10254773",
+                                  "discount": "£7.49",
+                                  "delivered_at": "2019-07-06T00:00:00+01:00"
+                              },
+                              "21": {
+                                  "id": "10164668",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-06-29T00:00:00+01:00"
+                              },
+                              "20": {
+                                  "id": "10066007",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-06-22T00:00:00+01:00"
+                              },
+                              "19": {
+                                  "id": "9967696",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-06-15T00:00:00+01:00"
+                              },
+                              "18": {
+                                  "id": "9774263",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-06-01T00:00:00+01:00"
+                              },
+                              "17": {
+                                  "id": "9676423",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-05-25T00:00:00+01:00"
+                              },
+                              "16": {
+                                  "id": "9574250",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-05-18T00:00:00+01:00"
+                              },
+                              "15": {
+                                  "id": "9476970",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-05-11T00:00:00+01:00"
+                              },
+                              "14": {
+                                  "id": "9431968",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-05-04T00:00:00+01:00"
+                              },
+                              "13": {
+                                  "id": "9275010",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-04-27T00:00:00+01:00"
+                              },
+                              "12": {
+                                  "id": "9181881",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-04-20T00:00:00+01:00"
+                              },
+                              "11": {
+                                  "id": "9079975",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-04-13T00:00:00+01:00"
+                              },
+                              "10": {
+                                  "id": "8978630",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-04-06T00:00:00+01:00"
+                              },
+                              "9": {
+                                  "id": "8871989",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-03-30T00:00:00+00:00"
+                              },
+                              "8": {
+                                  "id": "8759943",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-03-23T00:00:00+00:00"
+                              },
+                              "7": {
+                                  "id": "8642536",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-03-16T00:00:00+00:00"
+                              },
+                              "6": {
+                                  "id": "8519747",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-03-09T00:00:00+00:00"
+                              },
+                              "5": {
+                                  "id": "8399388",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-03-02T00:00:00+00:00"
+                              },
+                              "4": {
+                                  "id": "8284309",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-02-23T00:00:00+00:00"
+                              },
+                              "3": {
+                                  "id": "8157532",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-02-16T00:00:00+00:00"
+                              },
+                              "2": {
+                                  "id": "8195764",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-02-09T00:00:00+00:00"
+                              },
+                              "1": {
+                                  "id": "7756233",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-01-26T00:00:00+00:00"
+                              },
+                              "0": {
+                                  "id": "7756254",
+                                  "discount": "£10.68",
+                                  "delivered_at": "2019-01-19T00:00:00+00:00"
+                              }
+                          },
+                          "added_to_account": "2019-01-11T14:58:56+00:00",
+                          "consumed": false
+                      }
+                  ]
+              },
+              {
+                  "code": "MARK323236",
+                  "expires_at": "2018-12-19T17:04:56+00:00",
+                  "rules": [
+                      {
+                          "prs_id": 2412570,
+                          "title": "60.00% off whole order for customers first box",
+                          "has_been_used": true,
+                          "orders": [
+                              {
+                                  "id": "7184674",
+                                  "discount": "£25.65",
+                                  "delivered_at": "2018-11-24T00:00:00+00:00"
+                              }
+                          ],
+                          "added_to_account": "2018-11-19T17:04:56+00:00",
+                          "consumed": true
+                      },
+                      {
+                          "prs_id": 2412571,
+                          "title": "30.00% off whole order",
+                          "has_been_used": true,
+                          "orders": {
+                              "1": {
+                                  "id": "7329129",
+                                  "discount": "£12.82",
+                                  "delivered_at": "2018-12-08T00:00:00+00:00"
+                              },
+                              "0": {
+                                  "id": "7300356",
+                                  "discount": "£12.82",
+                                  "delivered_at": "2018-12-01T00:00:00+00:00"
+                              }
+                          },
+                          "added_to_account": "2018-11-19T17:04:56+00:00",
+                          "consumed": true
+                      }
+                  ]
+              }
+          ],
+          "is_duplicate": "0"
+      },
+      "meta": []
+  }
+}

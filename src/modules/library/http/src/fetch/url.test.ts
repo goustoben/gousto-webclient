@@ -5,7 +5,8 @@ describe('fetchConfig utils', () => {
   describe('getUrl', () => {
     const bareRequest: RequestConfig = {
       host: 'https://test-api.gousto.info',
-      method: 'GET'
+      method: 'GET',
+      paths: []
     }
 
     it('includes host', () => {
@@ -23,10 +24,7 @@ describe('fetchConfig utils', () => {
       })
 
       it('ignores empty path arrays', () => {
-        const url = getUrl({
-          ...bareRequest,
-          paths: []
-        })
+        const url = getUrl(bareRequest)
         expect(url).toBe('https://test-api.gousto.info')
       })
     })
@@ -50,12 +48,12 @@ describe('fetchConfig utils', () => {
         expect(url).toBe('https://test-api.gousto.info')
       })
 
-      it('serialises null values as "key="', () => {
+      it('serialises empty values as "key="', () => {
         const url = getUrl({
           ...bareRequest,
           queryParams: {
-            foo: null,
-            bar: null
+            foo: '',
+            bar: ''
           }
         })
         expect(url).toBe('https://test-api.gousto.info?foo=&bar=')

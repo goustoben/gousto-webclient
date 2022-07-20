@@ -1,0 +1,20 @@
+{
+  "status": "ok",
+  "result": {
+      "data": {
+          "title": "Invite your friends to try out Gousto!",
+          "first_box_discount_formatted": "65%",
+          "credit_formatted": "\u00a320",
+          "first_month_discount_formatted": "30%",
+          "description": "",
+          "details": [
+              "Invite your friends to try Gousto. We\u2019ll pop \u00a320 in your account and your friends will get 65% off their first box and 30% off all other boxes in their first month.",
+              "You can refer up to 20 friends every month. That\u2019s \u00a3400 worth of Gousto credit to use on recipes and goodies from the Gousto market.",
+              "Your credit shows up once your friend\u2019s first box is delivered. See full T&Cs [tc]here[\/tc]."
+          ],
+          "expiry": null,
+          "code": "MARK323236"
+      },
+      "meta": []
+  }
+}

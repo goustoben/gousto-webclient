@@ -12,7 +12,7 @@ import {
 } from '../subscription'
 import { reduceCurrentUserData } from '../currentUser'
 import { reduceLoadingState } from '../loading'
-import { reduceBoxPricesData, reduceFourByFiveModal } from '../box'
+import { reduceBoxPricesData, reduceSelectedBoxSize, reduceSelectedMealsPerBox, reduceSwitchToFourMealsPerBox } from '../box'
 import { reduceOrdersData } from '../orders'
 
 jest.mock('../subscription')
@@ -132,16 +132,42 @@ describe('SubscriptionReducer', () => {
     })
   })
 
-  describe('Given UPDATE_FOUR_BY_FIVE_MODAL action is received', () => {
+  describe('Given UPDATE_SELECTED_BOX_SIZE action is received', () => {
     beforeEach(() => {
       SubscriptionReducer(mockState, {
-        type: actionTypes.UPDATE_FOUR_BY_FIVE_MODAL,
+        type: actionTypes.UPDATE_SELECTED_BOX_SIZE,
         data: mockData
       })
     })
 
-    test('Then reduceOrdersData is invoked as expected', () => {
-      expect(reduceFourByFiveModal).toHaveBeenCalledWith(mockState, mockData)
+    test('Then reduceSelectedBoxSize is invoked as expected', () => {
+      expect(reduceSelectedBoxSize).toHaveBeenCalledWith(mockState, mockData)
+    })
+  })
+
+  describe('Given UPDATE_SELECTED_MEALS_PER_BOX action is received', () => {
+    beforeEach(() => {
+      SubscriptionReducer(mockState, {
+        type: actionTypes.UPDATE_SELECTED_MEALS_PER_BOX,
+        data: mockData
+      })
+    })
+
+    test('Then reduceSelectedMealsPerBox is invoked as expected', () => {
+      expect(reduceSelectedMealsPerBox).toHaveBeenCalledWith(mockState, mockData)
+    })
+  })
+
+  describe('Given SWITCH_TO_FOUR_MEALS_PER_BOX action is received', () => {
+    beforeEach(() => {
+      SubscriptionReducer(mockState, {
+        type: actionTypes.SWITCH_TO_FOUR_MEALS_PER_BOX,
+        data: mockData
+      })
+    })
+
+    test('Then reduceSwitchToFourMealsPerBox is invoked as expected', () => {
+      expect(reduceSwitchToFourMealsPerBox).toHaveBeenCalledWith(mockState)
     })
   })
 

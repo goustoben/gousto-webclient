@@ -37,7 +37,7 @@ const Detail = ({
   const allergens = getAllergenListFromAttributes(attributes)
 
   return (
-    <div role="button" tabIndex={0} className={css.fullHeight} onClick={() => onVisibilityChange()} onKeyDown={onEnter(onVisibilityChange)}>
+    <div role="button" tabIndex={0} className={css.fullHeight} onClick={() => onVisibilityChange()} onKeyDown={onEnter(onVisibilityChange)} data-testing="productDetail">
       <div role="button" tabIndex={0} className={css.container} onClick={(e) => e.stopPropagation()}>
         <ModalTitle className={css.productDetailsTitle}>
           {title}

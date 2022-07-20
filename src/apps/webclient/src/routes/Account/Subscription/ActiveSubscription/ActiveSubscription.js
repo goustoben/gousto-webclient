@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Column } from 'goustouicomponents'
+import { ModalProvider } from '@gousto-internal/citrus-react'
+
 import { Section } from '../components/Section'
 import { Divider } from '../components/Divider'
 import { DeliveryDayAndTime } from './sections/YourSubscriptionDetails/DeliveryDayAndTime'
@@ -18,9 +20,13 @@ import {
 } from '../subscriptionsSectionsContent'
 import { DietaryPreference } from './sections/ChefSelectsSettings/DietaryPreference'
 import { MealsPerBox } from './sections/ChefSelectsSettings/MealsPerBox'
+import { FourPersonBoxWithFiveMealsModal } from './sections/YourSubscriptionDetails/FourPersonBoxWithFiveMealsModal'
 
 const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscriptionFlow }) => (
   <Fragment>
+    <ModalProvider>
+      <FourPersonBoxWithFiveMealsModal accessToken={accessToken} />
+    </ModalProvider>
     <ResubscriptionModal />
     <Grid>
       <Column
