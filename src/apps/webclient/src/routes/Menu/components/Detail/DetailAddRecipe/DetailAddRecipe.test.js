@@ -2,16 +2,23 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
+import { useBasket } from '../../../domains/basket'
 import { useStock } from '../../../domains/stock'
 import { DetailAddRecipe } from './DetailAddRecipe'
 
 jest.mock('../../../domains/stock')
 const useStockMock = useStock
 
+jest.mock('../../../domains/basket')
+const useBasketMock = useBasket
+
 describe('DetailAddRecipe', () => {
   let wrapper
   describe('when isOutOfStock true', () => {
     beforeEach(() => {
+      useBasketMock.mockReturnValue({
+        numPortions: 2,
+      })
       useStockMock.mockReturnValue({
         isRecipeInStock: () => false,
       })
