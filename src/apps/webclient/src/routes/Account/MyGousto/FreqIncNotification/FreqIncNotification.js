@@ -6,10 +6,11 @@ import { client } from 'config/routes'
 import { Section } from 'routes/Account/MyGousto/Section'
 import { Alert } from 'routes/Checkout/Components/Alert'
 import { click3dsReenterCardDetails, click3dsUpdateInfo } from 'actions/trackingKeys'
+import Immutable from 'immutable'
 import { ProgressSoFarModal } from './ProgressSoFarModal'
 import css from './FreqIncNotification.css'
 
-export const FreqIncNotification = () => {
+export const FreqIncNotification = ({ data }) => {
   const [showModal, setShowModal] = useState(false)
   const toggleModal = (type) => () => {
     setShowModal(!showModal)
@@ -26,11 +27,16 @@ export const FreqIncNotification = () => {
           </div>
         </Alert>
       </Section>
-      <ProgressSoFarModal isOpen={showModal} toggleModal={toggleModal} />
+      <ProgressSoFarModal data={data} isOpen={showModal} toggleModal={toggleModal} />
     </Fragment>
   )
 }
 
 FreqIncNotification.propTypes = {
   track3dsCompliantClick: PropTypes.func.isRequired,
+  data: PropTypes.instanceOf(Immutable.Map),
+}
+
+FreqIncNotification.defaultProps = {
+  data: Immutable.Map(),
 }

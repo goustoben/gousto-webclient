@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { userGetReferralDetails, userCheck3dsCompliantToken, userReset3dsCompliantToken } from 'actions/user'
+import { userGetReferralDetails, userCheck3dsCompliantToken, userReset3dsCompliantToken, userGetFrequencyProgress } from 'actions/user'
 import { redirect } from 'actions/redirect'
 import { getBrowserType } from 'selectors/browser'
 import {
@@ -18,6 +18,7 @@ function mapStateToProps(state) {
     orders: state.user.get('orders'),
     nameFirst: state.user.get('nameFirst'),
     referralDetails: state.user.get('referralDetails'),
+    frequencyProgressData: state.user.get('frequencyProgressData'),
     isCustomNoticeEnabled: getIsCustomNoticeEnabled(state),
     isMobileViewport: getBrowserType(state) === 'mobile',
     showAppAwareness: getIsMyGoustoBannerAppAwarenessEnabled(state),
@@ -31,6 +32,7 @@ function mapStateToProps(state) {
 const MyGoustoContainer = connect(mapStateToProps, {
   userLoadOrders: actions.userLoadOrders,
   userGetReferralDetails,
+  userGetFrequencyProgress,
   redirect,
   trackClickRateRecipes,
   userCheck3dsCompliantToken,

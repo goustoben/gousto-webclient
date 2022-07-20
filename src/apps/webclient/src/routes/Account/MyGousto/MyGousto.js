@@ -14,7 +14,7 @@ import { HeaderContainer } from './Header'
 import { ReferAFriend } from './ReferAFriend'
 import { PaymentDetailsNotification } from './PaymentDetailsNotification'
 import css from './MyGousto.css'
-import { FreqIncNotification } from "./FreqIncNotification";
+import { FreqIncNotification } from './FreqIncNotification'
 
 const propTypes = {
   userLoadOrders: PropTypes.func.isRequired,
@@ -35,6 +35,8 @@ const propTypes = {
   track3dsCompliantClick: PropTypes.func,
   userReset3dsCompliantToken: PropTypes.func,
   pending: PropTypes.bool,
+  userGetFrequencyProgress: PropTypes.func.isRequired,
+  frequencyProgressData: PropTypes.instanceOf(Immutable.Map)
 }
 
 const defaultProps = {
@@ -53,6 +55,7 @@ const defaultProps = {
   track3dsCompliantClick: () => {},
   userReset3dsCompliantToken: () => {},
   pending: false,
+  frequencyProgressData: Immutable.Map()
 }
 
 class MyGousto extends React.PureComponent {
@@ -64,11 +67,12 @@ class MyGousto extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { userLoadOrders, userGetReferralDetails } = this.props
+    const { userLoadOrders, userGetReferralDetails, userGetFrequencyProgress } = this.props
     const { store } = this.context
 
     userLoadOrders()
     userGetReferralDetails()
+    userGetFrequencyProgress()
 
     setTimeout(() => {
       store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
@@ -122,6 +126,7 @@ class MyGousto extends React.PureComponent {
       trackClickRateRecipes,
       track3dsCompliantClick,
       isCardTokenNotCompliantFor3ds,
+      frequencyProgressData,
     } = this.props
     const headerTitle = `Hello ${nameFirst},`
     const showAppAwarenessBanner = !isMobileViewport && showAppAwareness
@@ -141,7 +146,7 @@ class MyGousto extends React.PureComponent {
             <Notification card={card} orders={orders} />
           </div>
           <div className={css.notificationContent}>
-            <FreqIncNotification />
+            <FreqIncNotification data={frequencyProgressData} />
           </div>
         </div>
         <Section title={headerTitle} largeTitle alternateColour hasPaddingBottom={false}>

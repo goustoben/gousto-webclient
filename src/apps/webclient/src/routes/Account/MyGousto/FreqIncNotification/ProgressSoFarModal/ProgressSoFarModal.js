@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 import Overlay from 'Overlay'
 import {CTA, Modal, ModalHeader} from 'goustouicomponents'
+import {ProgressSoFar} from 'PrgogressSoFar/ProgressSoFar'
 import css from './ProgressSoFarModal.css'
-import {click3dsUpdateInfo} from "actions/trackingKeys";
-import {ProgressSoFar} from "PrgogressSoFar/ProgressSoFar";
 
-export const ProgressSoFarModal = ({ isOpen, toggleModal }) => {
-  const cells = [['filled'],['filled'],[],[],[],[],['selected']];
+export const ProgressSoFarModal = ({ isOpen, toggleModal, data }) => {
+  const { target, progress, promotionAmount, endOfSecondMonth } = data && data.toJS()
 
   return (
     <Overlay open={isOpen} from="top">
@@ -18,18 +18,17 @@ export const ProgressSoFarModal = ({ isOpen, toggleModal }) => {
           isOpen={isOpen}
           handleClose={toggleModal()}
           variant="floating"
-          animated={true}
+          animated
         >
-
           <div className={css.progressSoFarWrapper}>
-            <ProgressSoFar />
+            <ProgressSoFar total={target} completed={progress} discount={promotionAmount} />
           </div>
 
           <div className={css.modalContent}>
-            <h3>Fancy 10% off for a month?</h3>
+            <h3>Fancy {promotionAmount} off for a month?</h3>
             <p>
-              <span className={css.bold}>Order 4 boxes</span> before [end_date] and we’ll give you
-              <span className={css.bold}>10% off all your boxes</span>
+              <span className={css.bold}>Order {target - progress} boxes</span> before {endOfSecondMonth} and we’ll give you
+              <span className={css.bold}> {promotionAmount} off all your boxes </span>
               that are delivered the following month.
             </p>
             <CTA variant="primary" isFullWidth size="big">Done</CTA>
@@ -43,9 +42,11 @@ export const ProgressSoFarModal = ({ isOpen, toggleModal }) => {
 ProgressSoFarModal.propTypes = {
   isOpen: PropTypes.bool,
   toggleModal: PropTypes.func,
+  data: PropTypes.instanceOf(Immutable.Map)
 }
 
 ProgressSoFarModal.defaultProps = {
   isOpen: false,
   toggleModal: () => {},
+  data: Immutable.Map()
 }
