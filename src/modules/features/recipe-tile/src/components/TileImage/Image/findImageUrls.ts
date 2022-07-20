@@ -1,4 +1,4 @@
-import { TransformedRecipeImage } from "@library/api-menu-service"
+import { TransformedRecipeImage } from "@library/menu-service"
 
 const ImageTypes = {
   HomepageImage: 'homepage-image',

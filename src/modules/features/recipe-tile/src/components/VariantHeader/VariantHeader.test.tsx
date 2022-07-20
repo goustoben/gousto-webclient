@@ -6,7 +6,7 @@ import {
   useStockHook,
 } from "../../model/context";
 import { VariantHeader } from "./VariantHeader";
-import { Recipe } from "@library/api-menu-service";
+import { Recipe } from "@library/menu-service";
 import { useBasketHook } from "../../model/context/useBasket";
 
 jest.mock("../../model/context");

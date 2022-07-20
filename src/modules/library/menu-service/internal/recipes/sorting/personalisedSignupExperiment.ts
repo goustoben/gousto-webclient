@@ -31,7 +31,7 @@ const cuisineMappings: Record<string, string> = {
   moroccan: 'mediterranean',
 }
 
-type Recipe = { 
+type Recipe = {
   recipe: TransformedRecipe;
   originalId: string;
   reference: string;

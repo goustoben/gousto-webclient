@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useRecipe } from "../context/recipe"
 import { useRecipeCookingTime } from './useRecipeCookingTime'
 import { useBasketHook } from "../context/useBasket"
-import { Recipe } from "@library/api-menu-service";
+import { Recipe } from "@library/menu-service";
 
 jest.mock('../context/recipe')
 jest.mock('../context/useBasket')

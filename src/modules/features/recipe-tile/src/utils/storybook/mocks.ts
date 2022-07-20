@@ -1,4 +1,4 @@
-import { Recipe } from "@library/api-menu-service";
+import { Recipe } from "@library/menu-service";
 import { UseMakeOnCheckRecipe } from '../../model/context/useMakeOnCheckRecipe';
 import { UseRecipeBrand } from '../../model/context/useRecipeBrand';
 import { UseTracking } from '../../model/context/useTracking'

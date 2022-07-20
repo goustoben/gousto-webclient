@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
-import { Recipe } from '@library/api-menu-service'
+import { Recipe } from '@library/menu-service'
 
 import { RecipeContextProvider } from '../../model/context'
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 
-import { Recipe } from '@library/api-menu-service'
+import { Recipe } from '@library/menu-service'
 
 import { RecipeContextProvider, useRecipe } from '.'
 

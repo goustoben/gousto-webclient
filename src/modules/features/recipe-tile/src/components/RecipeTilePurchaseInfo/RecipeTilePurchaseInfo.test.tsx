@@ -4,7 +4,7 @@ import { render, screen, cleanup } from "@testing-library/react";
 
 import { RecipeTilePurchaseInfo } from '.'
 import { RecipeTileDependencies } from '../../model/context';
-import { Recipe } from "@library/api-menu-service";
+import { Recipe } from "@library/menu-service";
 
 const defaultGetAlternativeOptionsForRecipe = jest
   .fn()

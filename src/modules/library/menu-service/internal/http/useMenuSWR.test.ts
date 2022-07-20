@@ -29,7 +29,7 @@ function renderForTest(args: Partial<Parameters<typeof useMenuSWR>[0]> = {}) {
   return renderHook(() => useMenuSWR(requestArgs))
 }
 
-describe('api-menu-service > useMenuSWR', () => {
+describe('menu-service > useMenuSWR', () => {
   const endpointUrl = 'endpoint-url'
   const getFetcher = () => ({} as any)
 

@@ -5,7 +5,7 @@ import { LikeDislikeButtons } from "./LikeDislikeButtons";
 import  { isLikeDislikeFeatureEnabled } from './isLikeDislikeFeatureEnabled'
 import { RecipeContextProvider } from "../../model/context";
 import { UseTrackingContextProvider } from "../../model/context/useTracking";
-import { Recipe } from "@library/api-menu-service";
+import { Recipe } from "@library/menu-service";
 
 jest.mock('./isLikeDislikeFeatureEnabled');
 

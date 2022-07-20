@@ -1,4 +1,4 @@
-# @library/api-menu-service
+# @library/menu-service
 
 This is the new **menu-service** feature module. It's owned by **@squad-kales**.
 
@@ -8,6 +8,6 @@ Adding the dependency:
 ```json
 "dependencies": {
   ...
-  "@library/api-menu-service": "workspace:*"
+  "@library/menu-service": "workspace:*"
 }
 ```

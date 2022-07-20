@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
 
 import { RecipeTile as RecipeTileV2, RecipeTileDependencies } from '@features/recipe-tile'
-import { Recipe } from '@library/api-menu-service'
+import { Recipe } from '@library/menu-service'
 
 import { actionTypes } from 'actions/actionTypes'
 import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'

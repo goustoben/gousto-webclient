@@ -1,4 +1,4 @@
-import { useMenu as useMenuBase } from '@library/api-menu-service'
+import { useMenu as useMenuBase } from '@library/menu-service'
 
 import { MenuQueryParams, useMenuQueryParams } from 'routes/Menu/context/menuQueryContext'
 

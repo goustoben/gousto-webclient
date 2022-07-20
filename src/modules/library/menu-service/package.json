@@ -1,5 +1,5 @@
 {
-  "name": "@library/api-menu-service",
+  "name": "@library/menu-service",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {

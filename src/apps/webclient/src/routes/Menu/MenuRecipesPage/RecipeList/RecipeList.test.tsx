@@ -1,4 +1,4 @@
-import { Recipe } from '@library/api-menu-service'
+import { Recipe } from '@library/menu-service'
 
 import { buildTracker } from './RecipeList'
 

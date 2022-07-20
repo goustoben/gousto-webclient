@@ -1,4 +1,4 @@
-import { TransformedRecipeImage } from '@library/api-menu-service'
+import { TransformedRecipeImage } from '@library/menu-service'
 import { findImageUrls } from './findImageUrls'
 
 describe('Recipe components > Image > findImage', () => {

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 
-import { useMenu as useMenuBase } from '@library/api-menu-service'
+import { useMenu as useMenuBase } from '@library/menu-service'
 
 import endpoint from 'config/endpoint'
 import { getFetcher } from 'routes/Menu/apis/fetch'

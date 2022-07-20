@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { RecipeTileDependencies } from "../../model/context";
 import { RecipeTile } from ".";
-import { Recipe } from "@library/api-menu-service";
+import { Recipe } from "@library/menu-service";
 
 const defaultGetAlternativeOptionsForRecipe = jest
   .fn()

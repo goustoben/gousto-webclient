@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import { RecipeOptionPair } from '@library/api-menu-service'
+import { RecipeOptionPair } from '@library/menu-service'
 
 import { RecipeTileBridge } from 'routes/Menu/components/RecipeTile/RecipeTileBridge'
 

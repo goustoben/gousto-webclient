@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
 
-import { useGetOptionsForRecipe } from './useGetOptionsForRecipe'
 import { UseMenuSWRArgs } from './http'
 import {
   COLLECTION_ALL_RECIPES_ID,
@@ -12,7 +11,6 @@ import {
   RECIPE_NAME_1,
   RECIPE_NAME_2,
 } from './_testing/mocks'
-import { UseMenuDependencies } from './types'
 import { useMenuSWR } from './http/useMenuSWR'
 import { useMenu } from './useMenu'
 

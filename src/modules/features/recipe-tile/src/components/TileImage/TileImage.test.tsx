@@ -2,7 +2,7 @@ import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen, cleanup } from "@testing-library/react";
 
-import { Recipe, TransformedRecipeImage } from '@library/api-menu-service'
+import { Recipe, TransformedRecipeImage } from '@library/menu-service'
 
 import { RecipeTileDependencies } from "../../model/context";
 import { TileImage } from "./TileImage";

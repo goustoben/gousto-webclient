@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 
-import { RecipeOptionPair } from '@library/api-menu-service'
+import { RecipeOptionPair } from '@library/menu-service'
 
 import { CTAToAllRecipes } from '../CTAToAllRecipes'
 import { RecipeListItem } from './RecipeListItem'

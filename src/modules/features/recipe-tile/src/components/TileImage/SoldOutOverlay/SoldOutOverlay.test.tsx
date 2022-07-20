@@ -4,7 +4,7 @@ import { render, screen, cleanup } from '@testing-library/react'
 
 import { SoldOutOverlay } from '.'
 import { RecipeContextProvider, UseStockContextProvider } from '../../../model/context'
-import { Recipe } from '@library/api-menu-service'
+import { Recipe } from '@library/menu-service'
 import { UseBasketContextProvider } from '../../../model/context/useBasket'
 
 const renderComponent = (isRecipeOutOfStock: boolean) =>
