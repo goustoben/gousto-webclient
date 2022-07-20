@@ -13,7 +13,6 @@ import { actionTypes } from '../actionTypes'
 import * as trackingKeys from '../trackingKeys'
 import statusActions from '../status'
 import * as BasketActions from '../basket'
-import * as MenuBasketActions from '../../routes/Menu/actions/basketRecipes'
 import tempActions from '../temp'
 import * as ProductActions from '../products'
 import menuActions, {

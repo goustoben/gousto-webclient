@@ -24,7 +24,6 @@ import * as menuActions from 'actions/menu'
 import * as trackingKeys from 'actions/trackingKeys'
 import * as basketUtils from 'utils/basket'
 
-import * as basketRecipesActions from '../../routes/Menu/actions/basketRecipes'
 import * as trackingActions from '../tracking'
 
 jest.mock('utils/basket')
@@ -223,7 +222,6 @@ describe('basket actions', () => {
 
   describe('basketOrderItemsLoad', () => {
     let basketProductAddSpy
-    let basketRecipeAddSpy
     let basketGiftAddSpy
     beforeEach(() => {
       getStateSpy = () => ({
@@ -262,7 +260,6 @@ describe('basket actions', () => {
       })
 
       basketProductAddSpy = jest.spyOn(basket, 'basketProductAdd')
-      basketRecipeAddSpy = safeJestMock(basketRecipesActions, 'basketRecipeAdd')
       basketGiftAddSpy = jest.spyOn(basket, 'basketGiftAdd')
       dispatch = jest.fn()
     })
@@ -277,7 +274,7 @@ describe('basket actions', () => {
       expect(basketProductAddSpy.mock.calls[4]).toEqual(['p3', null, '123'])
     })
 
-    test('should call basketRecipeAdd for each recipe set (total recipes / number portions ) in the given order if order is not already loaded', () => {
+    test('should call addRecipe for each recipe set (total recipes / number portions ) in the given order if order is not already loaded', () => {
       const addRecipe = jest.fn()
       basketOrderItemsLoad('123', addRecipe)(dispatch, getStateSpy)
       expect(addRecipe).toHaveBeenCalledTimes(3)
@@ -296,7 +293,6 @@ describe('basket actions', () => {
     test('should NOT call basketProductAdd, basketRecipeAdd, or basketGiftAdd if order is already loaded', () => {
       basketOrderItemsLoad('456')(dispatch, getStateSpy)
       expect(basketProductAddSpy).not.toHaveBeenCalled()
-      expect(basketRecipeAddSpy).not.toHaveBeenCalled()
       expect(basketGiftAddSpy).not.toHaveBeenCalled()
     })
   })
