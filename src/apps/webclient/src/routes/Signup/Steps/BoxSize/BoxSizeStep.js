@@ -5,10 +5,10 @@ import PropTypes from 'prop-types'
 
 import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { signupConfig } from 'config/signup' // THIS WAS ADDED
 import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 import { useBasket } from 'routes/Menu/domains/basket'
+import { signupConfig } from 'routes/Signup/signupConfig'
 
 import { GoustoOnDemandBoxSizeContent } from './GoustoOnDemandBoxSizeContent'
 import { PrimaryButton } from './PrimaryButton'
