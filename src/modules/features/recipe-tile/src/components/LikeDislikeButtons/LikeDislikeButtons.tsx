@@ -78,12 +78,9 @@ export const LikeDislikeButtons = () => {
   }
 
   return (
-    <LikeDislikeButtonsWrapper>
-      <DislikeButton
-        onClick={handleOnClickDislike}
-        isDislikeSelected={state.selected === 'dislike'}
-      />
-      <LikeButton onClick={handleOnClickLike} isLikeSelected={state.selected === 'like'} />
+    <LikeDislikeButtonsWrapper data-like-dislike-buttons='like-dislike-buttons' >
+        <DislikeButton onClick={handleOnClickDislike} isDislikeSelected={state.selected === 'dislike'} />
+        <LikeButton onClick={handleOnClickLike} isLikeSelected={state.selected === 'like'} />
     </LikeDislikeButtonsWrapper>
   )
 }
