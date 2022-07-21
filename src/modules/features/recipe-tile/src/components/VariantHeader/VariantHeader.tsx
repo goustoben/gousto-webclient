@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
 import {
@@ -8,6 +7,7 @@ import {
   useGetAlternativeOptionsForRecipeHook,
 } from "../../model/context";
 import { cssPositionTop, cssTextLeft, cssThemeBlue, cssVariantHeader } from "./styles";
+import { useBasketHook } from "../../model/context/useBasket";
 
 const VariantHeaderDiv = styled.div({
   ...cssVariantHeader,
@@ -19,6 +19,9 @@ const VariantHeaderDiv = styled.div({
 export function VariantHeader({ categoryId }: {
   categoryId: string;
 }) {
+  const useBasket = useBasketHook();
+  const { numPortions } = useBasket();
+
   const useStock = useStockHook();
   const useGetAlternativeOptionsForRecipe =
     useGetAlternativeOptionsForRecipeHook();
@@ -32,7 +35,7 @@ export function VariantHeader({ categoryId }: {
     return null;
   }
 
-  const isOutOfStock = isRecipeOutOfStock(recipeId);
+  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions);
 
   if (isOutOfStock) {
     return null;
