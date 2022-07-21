@@ -2,16 +2,16 @@ import React from "react";
 
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
+import { Recipe } from "@library/menu-service";
 
 import { RecipeContextProvider } from "../../model/context";
-import { Recipe } from "../../model/recipe";
 
 import { Title } from "./Title";
 
 const recipe: Recipe = {
   id: "recipe-id-1",
   title: "Lemony Chicken Milanese With Spaghetti and Tomato Sauce",
-};
+} as Recipe;
 
 describe("Title", () => {
   test("should render title correctly", () => {

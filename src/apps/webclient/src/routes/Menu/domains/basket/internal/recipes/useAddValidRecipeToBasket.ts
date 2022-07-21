@@ -7,10 +7,10 @@ import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import { useCurrentCollectionId } from 'routes/Menu/domains/collections'
+import { useStock } from 'routes/Menu/domains/stock'
 import { getBasketRecipes, isFirstRecipeAdded, getBasketSlotId } from 'selectors/basket'
 import { getUTMAndPromoCode } from 'selectors/tracking'
 
-import { useStock } from '../../useStock'
 import { useRecipeLimitReached } from '../limits'
 import { useNumPortions } from '../useNumPortions'
 
@@ -39,7 +39,7 @@ export const useAddValidRecipeToBasket = () => {
       maxRecipesNum?: number,
       orderId?: string,
     ) => {
-      const outOfStock = isRecipeOutOfStock(recipeId)
+      const outOfStock = isRecipeOutOfStock(recipeId, numPortions)
       if (reachedLimit || outOfStock) {
         return
       }

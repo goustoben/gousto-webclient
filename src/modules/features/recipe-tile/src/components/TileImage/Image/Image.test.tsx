@@ -3,10 +3,10 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen, cleanup } from "@testing-library/react";
 
 import { Image } from ".";
-import { Image as ImageType } from "../../../model/recipe";
 import { RecipeContextProvider } from "../../../model/context";
+import { Recipe, TransformedRecipeImage } from "@library/menu-service";
 
-const defaultImages: ImageType[] = [
+const defaultImages: TransformedRecipeImage[] = [
   {
     type: "homepage-image",
     title: "home page image",
@@ -32,10 +32,10 @@ const renderComponent = ({
   className,
   images = defaultImages,
   lazy = false,
-}: { images?: ImageType[]; className?: string; lazy?: boolean } = {}) =>
+}: { images?: TransformedRecipeImage[]; className?: string; lazy?: boolean } = {}) =>
   render(
     <RecipeContextProvider
-      value={{ id: "1234", title: "A Really Nice Recipe", media: { images } }}
+      value={{ id: "1234", title: "A Really Nice Recipe", media: { images } } as Recipe}
     >
       <Image lazy={lazy} styles={{ label: className }} />
     </RecipeContextProvider>
