@@ -65,14 +65,14 @@ export const RecipeTile = ({
   const useGetAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipeHook()
   const getAlternativeOptionsForRecipe = useGetAlternativeOptionsForRecipe()
 
-  const useStock = useStockHook()
-  const { isRecipeOutOfStock } = useStock()
-
   const useBasket = useBasketHook()
   const { numPortions } = useBasket()
 
-  const { isFineDineIn, id: recipeId } = useRecipe()
-  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions)
+  const useStock = useStockHook();
+  const { isRecipeOutOfStock } = useStock();
+
+  const { isFineDineIn, id: recipeId } = useRecipe();
+  const isOutOfStock = isRecipeOutOfStock(recipeId, numPortions);
 
   const deviceType = useDeviceType()
   const recipeReference = useRecipeReference()

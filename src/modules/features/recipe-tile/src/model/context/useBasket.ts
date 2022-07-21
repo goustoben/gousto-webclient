@@ -6,7 +6,7 @@ type UseBasket = () => {
   removeRecipe: (recipeId: string) => void
   reachedLimit: boolean
   isRecipeInBasket: (recipeId: string) => boolean
-  numPortions: 2 | 4
+  numPortions: number
 }
 
 const UseBasketContext = createContext<UseBasket | null>(null)

@@ -10,7 +10,6 @@ import { DeliveryCard } from 'routes/Checkout/Components/Delivery/DeliveryCard'
 import OrdersList from './OrdersList'
 import css from './MyDeliveries.css'
 import accountCss from '../Account/Account.css'
-import { FiveRecipesAwarenessBanner } from '../../../components/FiveRecipesAwareness/FiveRecipesAwarenessBanner/FiveRecipesAwarenessBanner'
 
 class MyDeliveries extends React.PureComponent {
   componentDidMount() {
@@ -137,7 +136,6 @@ class MyDeliveries extends React.PureComponent {
             </CTA>
           </div>
         </div>
-        <FiveRecipesAwarenessBanner />
         {this.renderGoustoOnDemandBanner()}
         {this.renderOrders()}
       </div>

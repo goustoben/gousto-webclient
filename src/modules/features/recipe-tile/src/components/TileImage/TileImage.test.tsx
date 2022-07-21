@@ -6,6 +6,7 @@ import { Recipe, TransformedRecipeImage } from '@library/menu-service'
 
 import { RecipeTileDependencies } from "../../model/context";
 import { TileImage } from "./TileImage";
+import { Recipe, TransformedRecipeImage } from "@library/menu-service";
 
 const images: TransformedRecipeImage[] = [
   {

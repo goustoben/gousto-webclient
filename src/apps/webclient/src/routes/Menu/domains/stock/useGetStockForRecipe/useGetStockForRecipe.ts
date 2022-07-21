@@ -9,6 +9,9 @@ type UseGetStockForRecipeArgs = {
   numPortions: number
 }
 
+/**
+ * Get the stock level for a given `recipeId` or `null` if stock level data is not available.
+ */
 export const useGetStockForRecipe = ({ menuRecipeStock, numPortions }: UseGetStockForRecipeArgs) =>
   useCallback(
     /**
