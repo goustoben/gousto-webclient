@@ -9,11 +9,11 @@ type UseGetStockForRecipeArgs = {
   numPortions: number
 }
 
-export const useGetStockForRecipe = ({
-  menuRecipeStock,
-  numPortions,
-}: UseGetStockForRecipeArgs) => {
-  const getStockForRecipe = useCallback(
+/**
+ * Get the stock level for a given `recipeId` or `null` if stock level data is not available.
+ */
+export const useGetStockForRecipe = ({ menuRecipeStock, numPortions }: UseGetStockForRecipeArgs) =>
+  useCallback(
     /**
      * Get the stock level for a given `recipeId` or `null` if stock level data is not available.
      */
@@ -35,6 +35,3 @@ export const useGetStockForRecipe = ({
     },
     [numPortions, menuRecipeStock],
   )
-
-  return getStockForRecipe
-}

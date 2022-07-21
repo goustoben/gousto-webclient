@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useRecipeId } from '../../../context/recipeContext'
-import { useStock } from '../../../domains/basket'
+import { useStock } from '../../../domains/stock'
 
 import css from './SoldOutOverlay.css'
 
