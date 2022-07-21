@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
 
 import { useStock } from '../../domains/basket'
@@ -16,13 +15,16 @@ const RecipeListWrapper = (ownProps) => {
   const { getOutOfStockRecipeIds } = useStock()
   const { trackSoldOutRecipes } = useSoldOutTracking()
 
-  const isDietaryCollectionLinksEnabled = useIsOptimizelyFeatureEnabled(
-    'kales_dietary_category_links',
-  )
-
   const selectedCuisines = useSelectedCuisines()
 
-  const { recipes } = getRecipesForCollectionId(currentCollectionId, { selectedCuisines })
+  const recipes = useMemo(
+    () =>
+      getRecipesForCollectionId(currentCollectionId, {
+        selectedCuisines,
+      }),
+    [getRecipesForCollectionId, currentCollectionId, selectedCuisines],
+  )
+
   const shownRecipeIds = recipes.map(({ recipe }) => recipe.get('id')).toJS()
   const recipesIdsRef = useRef(shownRecipeIds)
 
@@ -43,7 +45,6 @@ const RecipeListWrapper = (ownProps) => {
       {...ownProps}
       currentCollectionId={currentCollectionId}
       recipes={recipes}
-      isDietaryCollectionLinksEnabled={isDietaryCollectionLinksEnabled}
     />
   )
 }
