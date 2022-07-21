@@ -25,7 +25,7 @@ const RecipeListWrapper = (ownProps) => {
     [getRecipesForCollectionId, currentCollectionId, selectedCuisines],
   )
 
-  const shownRecipeIds = recipes.map(({ recipe }) => recipe.get('id')).toJS()
+  const shownRecipeIds = recipes.recipes.map(({ recipe }) => recipe.get('id')).toJS()
   const recipesIdsRef = useRef(shownRecipeIds)
 
   if (!areEqualArrays(recipesIdsRef.current, shownRecipeIds)) {
@@ -44,7 +44,7 @@ const RecipeListWrapper = (ownProps) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...ownProps}
       currentCollectionId={currentCollectionId}
-      recipes={recipes}
+      recipes={recipes.recipes}
     />
   )
 }

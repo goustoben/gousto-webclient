@@ -61,6 +61,7 @@
 /src/apps/webclient/src/routes/Menu/MenuRecipesPage/                   @Gousto/squad-kales
 
 # squad-radishes ownership
+/src/apps/webclient/src/components/FiveRecipesAwareness                @Gousto/squad-radishes
 /src/apps/webclient/src/components/FiveRecipesPaintedDoorTest          @Gousto/squad-radishes
 /src/apps/webclient/src/routes/Menu/                                   @Gousto/squad-radishes
 /src/apps/webclient/src/config/collections.js                          @Gousto/squad-radishes
