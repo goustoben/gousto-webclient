@@ -1,40 +1,37 @@
-import React, { SyntheticEvent } from "react";
-import styled from "@emotion/styled";
+import React, { SyntheticEvent, useCallback } from 'react'
+import styled from '@emotion/styled'
 
-import {
-  Box,
-  FontFamily,
-  FontWeight,
-  Icon,
-  Text,
-} from "@gousto-internal/citrus-react";
-import { useGetRecipeTileLinkDataHook } from "../../model/context/useGetRecipeTileLinkData";
-import { cssRecipeTileLink, cssFineDineIn } from "./styles";
+import { Box, FontFamily, FontWeight, Icon, Text } from '@gousto-internal/citrus-react'
+import { useGetRecipeTileLinkDataHook } from '../../model/context/useGetRecipeTileLinkData'
+import { cssRecipeTileLink, cssFineDineIn } from './styles'
 
 type RecipeTileLinkProps = {
-  isFineDineIn: boolean;
-  onClickTile: (e: SyntheticEvent) => void;
-};
+  isFineDineIn: boolean
+  onClickTile: (e: SyntheticEvent) => void
+}
 
 const StyledButton = styled.button(
   (props: any) =>
     ({
       ...cssRecipeTileLink,
       ...(props.isFineDineIn ? cssFineDineIn : {}),
-    } as any)
-);
+    } as any),
+)
 
-export function RecipeTileLink({
-  isFineDineIn,
-  onClickTile,
-}: RecipeTileLinkProps) {
-  const useGetRecipeTileLinkData = useGetRecipeTileLinkDataHook();
-  const { dispatchTrackClickMoreRecipeDetails } = useGetRecipeTileLinkData();
+const boxStyle = { boxSizing: 'content-box' } as const
+const iconStyle = { color: 'inherit' }
 
-  const handleOnRecipeTileLinkClick = (e: SyntheticEvent) => {
-    dispatchTrackClickMoreRecipeDetails();
-    onClickTile(e);
-  };
+export function RecipeTileLink({ isFineDineIn, onClickTile }: RecipeTileLinkProps) {
+  const useGetRecipeTileLinkData = useGetRecipeTileLinkDataHook()
+  const { dispatchTrackClickMoreRecipeDetails } = useGetRecipeTileLinkData()
+
+  const handleOnRecipeTileLinkClick = useCallback(
+    (e: SyntheticEvent) => {
+      dispatchTrackClickMoreRecipeDetails()
+      onClickTile(e)
+    },
+    [dispatchTrackClickMoreRecipeDetails, onClickTile],
+  )
 
   return (
     <Box
@@ -43,22 +40,14 @@ export function RecipeTileLink({
       flexBasis="100%"
       borderBottomWidth={1}
       paddingBottom={4}
-      style={{ boxSizing: "content-box" }}
+      style={boxStyle}
     >
-      <StyledButton
-        type="button"
-        onClick={handleOnRecipeTileLinkClick}
-        isFineDineIn={isFineDineIn}
-      >
-        <Text
-          fontFamily={FontFamily.UI}
-          fontWeight={FontWeight.SemiBold}
-          size={1}
-        >
+      <StyledButton type="button" onClick={handleOnRecipeTileLinkClick} isFineDineIn={isFineDineIn}>
+        <Text fontFamily={FontFamily.UI} fontWeight={FontWeight.SemiBold} size={1}>
           More details
         </Text>
-        <Icon name="arrow_right" size={4} style={{ color: "inherit" }} />
+        <Icon name="arrow_right" size={4} style={iconStyle} />
       </StyledButton>
     </Box>
-  );
+  )
 }
