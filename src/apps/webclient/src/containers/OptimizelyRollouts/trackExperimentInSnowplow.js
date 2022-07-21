@@ -43,12 +43,6 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
-  kales_dietary_category_links: {
-    id: 'kales_dietary_category_links',
-    name: 'Kales Dietary Category Links',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
   etm_market_orderconfirmation_bundlesfakedoor_web_may22: {
     id: 'etm_market_orderconfirmation_bundlesfakedoor_web_may22',
     name: 'Mandarins - Marketplace product bundles',
