@@ -54,7 +54,7 @@ export const RecipeDetailsButtons = ({
   const maxRecipesNum = maxRecipesForPortion(numPortions)
   const { getStockForRecipe } = useStock()
   const surchargePerPortion = useSurchargePerPortion({ recipeId, numPortions })
-  const stock = getStockForRecipe(recipeId)
+  const stock = getStockForRecipe(recipeId, numPortions)
   const qty = getQuantitiesForRecipeId(recipeId)
 
   const handleAdd = useCallback(
