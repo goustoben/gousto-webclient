@@ -35,7 +35,9 @@ const renderComponent = ({
   lazy = false,
 }: { images?: TransformedRecipeImage[]; className?: string; lazy?: boolean } = {}) =>
   render(
-    <RecipeContextProvider value={{ id: '1234', title: 'A Really Nice Recipe', media: { images } } as Recipe}>
+    <RecipeContextProvider
+      value={{ id: "1234", title: "A Really Nice Recipe", media: { images } } as Recipe}
+    >
       <Image lazy={lazy} styles={{ label: className }} />
     </RecipeContextProvider>,
   )

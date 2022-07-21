@@ -3,9 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { useBasket } from 'routes/Menu/domains/basket'
+import { useStock } from 'routes/Menu/domains/stock'
 
 import { useRecipeField } from '../../../context/recipeContext'
-import { useStock } from '../../../domains/stock'
 import { RecipeDetailsButtons } from '../RecipeDetailsButtons'
 
 import css from './DetailAddRecipe.css'
