@@ -17,7 +17,6 @@ import { getLandingDay } from 'utils/deliveries'
 import logger from 'utils/logger'
 
 import { safeJestMock } from '../../../../_testing/mocks'
-import * as basketRecipesActions from '../../actions/basketRecipes'
 import * as clientMetrics from '../../apis/clientMetrics'
 import fetchData from '../fetchData'
 import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
@@ -30,7 +29,6 @@ jest.mock('performance-now')
 jest.mock('selectors/features')
 jest.mock('actions/menu')
 jest.mock('../menuApi')
-jest.mock('../../actions/basketRecipes')
 jest.mock('utils/configFromWindow', () => ({
   getClientEnvironment: () => 'local',
 }))
@@ -73,7 +71,6 @@ describe('menu fetchData', () => {
 
   // we need to manually set up mocks for the thunks, because we don't want mocks around the non-thunk actions
   // otherwise they will just be stubs rather than returning { type: ..., ... } objects
-  const basketRecipeAddSpy = safeJestMock(basketRecipesActions, 'basketRecipeAdd')
   actions.menuLoadStock = jest.fn()
   actions.menuLoadOrderDetails = jest.fn()
   actions.menuLoadMenu = jest.fn()
@@ -103,7 +100,6 @@ describe('menu fetchData', () => {
     actions.menuLoadDays.mockReset()
     boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReset()
     actions.basketNumPortionChange.mockReset()
-    basketRecipeAddSpy.mockReset()
 
     actions.userLoadOrders.mockReset()
 
@@ -259,7 +255,7 @@ describe('menu fetchData', () => {
               )
             })
 
-            test('should dispatch basketRecipeAdd for each previous recipe', async () => {
+            test('should call addRecipe for each previous recipe', async () => {
               // this test requires some horrible setup because it checks the same value twice
               // which means we have to manually simulate some state changes
               const menuLoadOrderDetailsResult = Symbol('fake action creator result')
@@ -276,7 +272,6 @@ describe('menu fetchData', () => {
               })
 
               // just make it return an object with the recipe id to make for easier assertions
-              basketRecipeAddSpy.mockImplementation((recipeId) => ({ recipeId }))
 
               await fetchData(
                 { query, params: paramsWithOrderId },

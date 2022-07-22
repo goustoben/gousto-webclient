@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
 
 import { useAuth } from '../../auth'
@@ -13,7 +15,8 @@ const menuBoxesByPortionSize = (
   type: string
   id: string
   attributes: { number_of_portions: number; number_of_recipes: number }
-}[] => Object.values(menuBox).filter((box) => box.attributes.number_of_portions === portionSize)
+}[] =>
+  Object.values(menuBox || {}).filter((box) => box.attributes.number_of_portions === portionSize)
 
 /**
  * Hook interface for supported Box types from Menu API box response.
@@ -28,44 +31,57 @@ export const useSupportedBoxTypes = () => {
   /**
    * Please read description inside function
    */
-  const maxRecipesForPortion = (portionSize = 2) => {
-    const maxRecipesForPortionDefault = menuBox
-      ? Math.max(
-          ...menuBoxesByPortionSize(menuBox, portionSize).map(
-            (box) => box.attributes.number_of_recipes,
-          ),
-        )
-      : DEFAULT_MAX_RECIPES
+  const maxRecipesForPortion = useCallback(
+    (portionSize = 2) => {
+      const maxRecipesForPortionDefault = menuBox
+        ? Math.max(
+            ...menuBoxesByPortionSize(menuBox, portionSize).map(
+              (box) => box.attributes.number_of_recipes,
+            ),
+          )
+        : DEFAULT_MAX_RECIPES
 
-    /**
-     * FYI: this is just for A/B test https://gousto.atlassian.net/browse/TG-6597
-     * Basically we need to restrict 50% of prospects to having 4 recipes, not 5
-     * When experiment will be finished Beetroots will simply delete following lines
-     * Even useIsFiveRecipesEnabledForProspects() hook will be deleted.
-     */
-    if (!isAuthenticated) {
-      return isFiveRecipesExperimentEnabled ? maxRecipesForPortionDefault : DEFAULT_MAX_RECIPES
-    }
+      /**
+       * FYI: this is just for A/B test https://gousto.atlassian.net/browse/TG-6597
+       * Basically we need to restrict 50% of prospects to having 4 recipes, not 5
+       * When experiment will be finished Beetroots will simply delete following lines
+       * Even useIsFiveRecipesEnabledForProspects() hook will be deleted.
+       */
+      if (!isAuthenticated) {
+        return isFiveRecipesExperimentEnabled ? maxRecipesForPortionDefault : DEFAULT_MAX_RECIPES
+      }
 
-    return maxRecipesForPortionDefault
-  }
+      return maxRecipesForPortionDefault
+    },
+    [isFiveRecipesExperimentEnabled, isAuthenticated, menuBox],
+  )
 
-  const minRecipesForPortion = (portionSize = 2) =>
-    menuBox
-      ? Math.min(
-          ...menuBoxesByPortionSize(menuBox, portionSize).map(
-            (box) => box.attributes.number_of_recipes,
-          ),
-        )
-      : DEFAULT_MIN_RECIPES
+  const minRecipesForPortion = useCallback(
+    (portionSize = 2) => {
+      const min = Math.min(
+        ...menuBoxesByPortionSize(menuBox, portionSize).map(
+          (box) => box.attributes.number_of_recipes,
+        ),
+      )
 
-  const isPortionSizeAllowedByRecipeCount = (recipeCount: number, portionSize: number): boolean =>
-    recipeCount <= maxRecipesForPortion(portionSize)
+      return menuBox ? min : DEFAULT_MIN_RECIPES
+    },
+    [menuBox],
+  )
 
-  const allowedPortionSizes = (): number[] =>
-    menuBox
-      ? Array.from(new Set(Object.values(menuBox).map((box) => box.attributes.number_of_portions)))
-      : []
+  const isPortionSizeAllowedByRecipeCount = useCallback(
+    (recipeCount: number, portionSize: number): boolean =>
+      recipeCount <= maxRecipesForPortion(portionSize),
+    [maxRecipesForPortion],
+  )
+
+  const allowedPortionSizes = useCallback((): number[] => {
+    const arr = Array.from(
+      new Set(Object.values(menuBox).map((box) => box.attributes.number_of_portions)),
+    )
+
+    return menuBox ? arr : []
+  }, [menuBox])
 
   return {
     allowedPortionSizes,

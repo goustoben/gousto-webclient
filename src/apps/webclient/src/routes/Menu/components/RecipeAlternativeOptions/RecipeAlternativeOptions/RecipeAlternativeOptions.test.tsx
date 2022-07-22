@@ -15,6 +15,7 @@ function mockUseMenu(getAlternativeOptionsForRecipe: jest.Mock) {
   jest.spyOn(Menu, 'useMenu').mockImplementation(() => ({
     getAlternativeOptionsForRecipe,
     getRecipesForCollectionId,
+    isPending: false,
   }))
 }
 

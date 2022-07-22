@@ -1,6 +1,6 @@
 @value Coconut, Pomegranate, White, Bluecheese, Blackberry from 'styles/colors.css';
 @value SpacingXS, SpacingLG, SpacingXXL from 'sass-loader!styles/spacing.scss';
-@value ScreenMDMax, ScreenSMMin, ScreenSMMax, ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenMDMax, ScreenSMMin, ScreenSMMax, ScreenXSMax, ScreenXXSMax from 'styles/screenSizes.css';
 @value bodyFontStackNormal, axiformaFontStack, sizeXS from 'styles/typography.css';
 
 @value maxWidth 1540px;
@@ -45,6 +45,9 @@
 .doubleDeckerNavBarContainer {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding-bottom: 0.5rem;
+  @media ScreenXXSMax {
+    height: 86px;
+  }
 }
 
 @keyframes navBarTransition {

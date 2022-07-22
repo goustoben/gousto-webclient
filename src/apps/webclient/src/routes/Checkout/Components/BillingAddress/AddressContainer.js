@@ -8,7 +8,7 @@ import {
   registerField,
 } from 'redux-form'
 
-import { checkoutAddressLookup } from 'actions/checkout'
+import { checkoutAddressLookup } from 'routes/Checkout/checkoutActions'
 
 import { Address } from '../Address'
 

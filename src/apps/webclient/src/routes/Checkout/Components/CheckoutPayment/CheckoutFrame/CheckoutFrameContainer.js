@@ -1,15 +1,15 @@
 import { connect } from 'react-redux'
 import { getFormValues, change } from 'redux-form'
 
+import { trackFailedCheckoutFlow } from 'actions/log'
 import {
   fireCheckoutError,
   checkoutClearErrors,
   fireCheckoutPendingEvent,
   trackingCardTokenizationSuccessfully,
   trackingCardTokenizationFailed,
-} from 'actions/checkout'
-import { trackFailedCheckoutFlow } from 'actions/log'
-import { hasCheckoutError } from 'selectors/checkout'
+} from 'routes/Checkout/checkoutActions'
+import { hasCheckoutError } from 'routes/Checkout/checkoutSelectors'
 
 import { sectionName, deliveryAddressSectionName } from '../config'
 import { CheckoutFrame } from './CheckoutFrame'

@@ -5,12 +5,7 @@ import { isLikeDislikeFeatureEnabled } from './isLikeDislikeFeatureEnabled'
 import { useRecipe } from '../../model/context'
 import { useTrackingHook } from '../../model/context/useTracking'
 
-import { 
-  cssLikeDislikeButtons, 
-  cssLikeButton, 
-  cssDislikeButton, 
-  cssThumb
-} from './styles'
+import { cssLikeDislikeButtons, cssLikeButton, cssDislikeButton, cssThumb } from './styles'
 
 const LikeDislikeButtonsWrapper = styled.div(cssLikeDislikeButtons as any)
 const Like = styled.div(cssLikeButton as any)
@@ -52,32 +47,38 @@ export const LikeDislikeButtons = () => {
   const { track } = useTracking()
   const { id: recipeId } = useRecipe()
 
-  const handleOnClickLike = useCallback((e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
-    e.stopPropagation()
-    const action: Action = { type: 'like' }
-    dispatch(action)
-    track(TRACKING_EVENT_KEY, {
-      recipeId,
-      likeDislikeStatus: reducer(state, action).selected,
-    })
-  }, [ track, recipeId, state ])
+  const handleOnClickLike = useCallback(
+    (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
+      e.stopPropagation()
+      const action: Action = { type: 'like' }
+      dispatch(action)
+      track(TRACKING_EVENT_KEY, {
+        recipeId,
+        likeDislikeStatus: reducer(state, action).selected,
+      })
+    },
+    [track, recipeId, state],
+  )
 
-  const handleOnClickDislike = useCallback((e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
-    e.stopPropagation()
-    const action: Action = { type: 'dislike' }
-    dispatch(action)
-    track(TRACKING_EVENT_KEY, {
-      recipeId,
-      likeDislikeStatus: reducer(state, action).selected,
-    })
-  }, [ track, recipeId, state ])
+  const handleOnClickDislike = useCallback(
+    (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
+      e.stopPropagation()
+      const action: Action = { type: 'dislike' }
+      dispatch(action)
+      track(TRACKING_EVENT_KEY, {
+        recipeId,
+        likeDislikeStatus: reducer(state, action).selected,
+      })
+    },
+    [track, recipeId, state],
+  )
 
   if (!isLikeDislikeFeatureEnabled()) {
     return null
   }
 
   return (
-    <LikeDislikeButtonsWrapper>
+    <LikeDislikeButtonsWrapper data-like-dislike-buttons='like-dislike-buttons' >
         <DislikeButton onClick={handleOnClickDislike} isDislikeSelected={state.selected === 'dislike'} />
         <LikeButton onClick={handleOnClickLike} isLikeSelected={state.selected === 'like'} />
     </LikeDislikeButtonsWrapper>
@@ -137,4 +138,3 @@ export const DislikeButton = ({ onClick, isDislikeSelected }: DislikeButtonProps
     </Dislike>
   )
 }
-

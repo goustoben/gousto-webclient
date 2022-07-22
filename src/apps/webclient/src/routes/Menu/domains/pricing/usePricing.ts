@@ -29,6 +29,7 @@ export type Pricing = {
   total: string | null
   totalDiscount: string | null
   vatCharged: string | null
+  isDeliveryFree: boolean | null
 }
 
 const useGetPricing = (shouldFetch: boolean): { error: Error | null; data: Pricing | null } => {

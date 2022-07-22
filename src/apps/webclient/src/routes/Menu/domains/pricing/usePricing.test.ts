@@ -74,6 +74,7 @@ describe('usePricing', () => {
         flatDiscountApplied: false,
         grossTotal: '29.99',
         items: [],
+        isDeliveryFree: true,
         percentageOff: '60.00',
         pricePerPortion: '5.00',
         pricePerPortionDiscounted: '2.00',

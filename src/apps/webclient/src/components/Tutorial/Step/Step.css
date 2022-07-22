@@ -1,10 +1,14 @@
 @value Bluecheese from 'styles/colors.css';
 
 .cta {
-  margin-top: 20px;
+  margin-top: 10px;
   color: Bluecheese;
   font-weight: 600;
   cursor: pointer;
+}
+
+.ctaText {
+  margin-bottom: 0em;
 }
 
 .tooltip {

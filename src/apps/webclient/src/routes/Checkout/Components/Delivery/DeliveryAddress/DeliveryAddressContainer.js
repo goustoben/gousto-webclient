@@ -11,8 +11,8 @@ import {
   untouch,
 } from 'redux-form'
 
-import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
+import { trackCheckoutButtonPressed } from 'routes/Checkout/checkoutActions'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 

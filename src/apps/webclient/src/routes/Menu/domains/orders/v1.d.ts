@@ -84,6 +84,7 @@ type Prices = {
   total: string
   totalDiscount: string
   promoCode: string | null
+  isDeliveryFree: boolean
 }
 
 type GiftItem = {

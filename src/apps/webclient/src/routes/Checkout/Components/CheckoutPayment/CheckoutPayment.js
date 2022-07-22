@@ -262,6 +262,7 @@ class CheckoutPayment extends React.Component {
       hotjarTriggerName,
       isGoustoOnDemandEnabled,
       isFreeBox,
+      pricingHookResponse: { pricing },
     } = this.props
     const sectionSubtitle =
       isGoustoOnDemandEnabled && isFreeBox ? (
@@ -295,7 +296,10 @@ class CheckoutPayment extends React.Component {
         </div>
         {isPayPalReady && <PayPalConfirmation />}
         {this.renderOuterContent()}
-        <PaymentFooter isGoustoOnDemandEnabled={isGoustoOnDemandEnabled} />
+        <PaymentFooter
+          isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
+          isDeliveryFree={pricing?.isDeliveryFree}
+        />
         <Checkout3DSModal />
         {!prerender && <HotjarTrigger name={hotjarTriggerName} shouldInvoke />}
         {!prerender && <RibbonTriggerContainer name="checkout-payment" />}

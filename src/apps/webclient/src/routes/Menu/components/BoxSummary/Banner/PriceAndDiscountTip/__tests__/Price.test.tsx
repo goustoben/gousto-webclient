@@ -38,6 +38,7 @@ describe('Price', () => {
       totalDiscount: '14.99',
       recipeTotalDiscounted: '10.00',
       items: [],
+      isDeliveryFree: true,
     }
 
     beforeEach(() => {
@@ -71,6 +72,7 @@ describe('Price', () => {
       recipeTotalDiscounted: '24.99',
       items: [],
       promoCode: null,
+      isDeliveryFree: true,
     }
 
     beforeEach(() => {

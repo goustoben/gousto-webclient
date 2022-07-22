@@ -224,6 +224,7 @@ export const transformOrderV2ToOrderV1 = (order: AnyObject, included: Included[]
       vatCharged: prices.vat_charged,
       total: prices.total,
       totalDiscount: prices.total_discount,
+      isDeliveryFree: prices.is_delivery_free,
     },
     period,
     originalDeliveryDay,

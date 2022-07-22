@@ -28,6 +28,7 @@ export function useMenu({
   return {
     getRecipesForCollectionId,
     getAlternativeOptionsForRecipe,
+    isPending: false,
   }
 }
 

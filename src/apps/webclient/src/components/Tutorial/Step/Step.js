@@ -72,7 +72,7 @@ export class Step extends PureComponent {
             {children}
             <div role="button" tabIndex={0} className={css.cta} onClick={next} onKeyDown={onEnter(next)} data-testing="tutorialStepCta">
               {(last) ? (
-                <p>OK</p>
+                <p className={css.ctaText}>OK</p>
               ) : (
                 <p>
                   NEXT

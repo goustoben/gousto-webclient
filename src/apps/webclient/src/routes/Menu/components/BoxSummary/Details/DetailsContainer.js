@@ -45,6 +45,7 @@ const DetailsPure = (props) => {
       maxRecipesForPortion={maxRecipesForPortion}
       minRecipesForPortion={minRecipesForPortion}
       onRemove={removeRecipe}
+      removeRecipeFromBasket={removeRecipe}
     />
   )
 }

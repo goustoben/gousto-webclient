@@ -8,7 +8,6 @@ import * as Redux from 'react-redux'
 import * as Auth from 'routes/Menu/domains/auth'
 import * as BasketHook from 'routes/Menu/domains/basket'
 
-import * as BasketActions from '../../../actions/basketRecipes'
 import * as MenuRecipeDetailsActions from '../../../actions/menuRecipeDetails'
 import { RecipeDetailsButtons } from './RecipeDetailsButtons'
 import * as UseSurchargePerPortion from './useSurchargePerPortion'
@@ -50,12 +49,6 @@ const mockUp = ({
     .spyOn(UseSurchargePerPortion, 'useSurchargePerPortion')
     .mockImplementation(() => surchargePerPortion)
 
-  const basketRecipeAdd = jest.fn()
-  jest.spyOn(BasketActions, 'basketRecipeAdd').mockImplementation(basketRecipeAdd)
-
-  const basketRecipeRemove = jest.fn()
-  jest.spyOn(BasketActions, 'basketRecipeRemove').mockImplementation(basketRecipeRemove)
-
   const menuBrowseCTAVisibilityChange = jest.fn()
   jest
     .spyOn(actions, 'menuBrowseCTAVisibilityChange')
@@ -65,8 +58,6 @@ const mockUp = ({
 
   return {
     dispatch,
-    basketRecipeAdd,
-    basketRecipeRemove,
     menuBrowseCTAVisibilityChange,
     addRecipe,
     removeRecipe,
@@ -300,17 +291,17 @@ describe('the RecipeDetailsButtons component', () => {
 
       describe('When the stock is null', () => {
         describe('and clicking to add a recipe', () => {
-          let basketRecipeAdd
+          let addRecipe
 
           beforeEach(() => {
-            ;({ basketRecipeAdd } = mockUp({ stockLevel: null }))
+            ;({ addRecipe } = mockUp({ stockLevel: null }))
             wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
           })
 
           test('then the recipe is not added', () => {
             buttonContent = wrapper.find('Segment').first()
             buttonContent.simulate('click')
-            expect(basketRecipeAdd).not.toHaveBeenCalled()
+            expect(addRecipe).not.toHaveBeenCalled()
           })
         })
       })
@@ -393,17 +384,17 @@ describe('the RecipeDetailsButtons component', () => {
 
         describe('When stock is null', () => {
           describe('and clicking to add a recipe', () => {
-            let basketRecipeAdd
+            let addRecipe
 
             beforeEach(() => {
-              ;({ basketRecipeAdd } = mockUp({ quantity: 2, stockLevel: null }))
+              ;({ addRecipe } = mockUp({ quantity: 2, stockLevel: null }))
               wrapper = shallow(<RecipeDetailsButtons {...buttonsProps} />)
             })
 
             test('then the recipe is not added', () => {
               segmentAdd = wrapper.find('Segment').at(2)
               segmentAdd.simulate('click')
-              expect(basketRecipeAdd).not.toHaveBeenCalled()
+              expect(addRecipe).not.toHaveBeenCalled()
             })
           })
 
