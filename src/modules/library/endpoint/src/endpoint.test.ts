@@ -1,9 +1,6 @@
-import { ServiceName } from './types'
+import { browserEnvironment, configFromWindow, processEnv } from '@library/environment'
 
-// pull into env lib
-import * as browserEnv from 'utils/browserEnvironment'
-import { getClientEnvironment, getClientDomain } from 'utils/configFromWindow'
-import { getEnvConfig } from 'utils/processEnv'
+import { ServiceName } from './types'
 
 import endpoint from './endpoint'
 import * as serviceUtils from './service-manifest'
@@ -67,8 +64,8 @@ describe('endpoint()', () => {
   }
 
   beforeAll(() => {
-    getWindowSpy = jest.spyOn(browserEnv, 'getWindow')
-    canUseWindowSpy = jest.spyOn(browserEnv, 'canUseWindow')
+    getWindowSpy = jest.spyOn(browserEnvironment, 'getWindow')
+    canUseWindowSpy = jest.spyOn(browserEnvironment, 'canUseWindow')
     serviceManifestSpy = jest.spyOn(serviceUtils, 'getServiceManifest')
   })
 
@@ -121,8 +118,8 @@ describe('endpoint()', () => {
     ])(
       'should return the correct endpoint for the client, %s, %s, %s, %i = %s',
       (env, domain, serviceName, version, expectation) => {
-        ;(getClientEnvironment as jest.Mock).mockReturnValue(env)
-        ;(getClientDomain as jest.Mock).mockReturnValue(domain)
+        (configFromWindow.getClientEnvironment as jest.Mock).mockReturnValue(env)
+        ;(configFromWindow.getClientDomain as jest.Mock).mockReturnValue(domain)
         expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
       },
     )
@@ -153,7 +150,7 @@ describe('endpoint()', () => {
       const serviceName = 'auth'
       const version = 1
       const expectation = 'http://production-auth.gousto.co.uk'
-      ;(getEnvConfig as jest.Mock).mockReturnValue({
+      ;(processEnv.getEnvConfig as jest.Mock).mockReturnValue({
         ENVIRONMENT: environment,
         DOMAIN: domain,
       })
@@ -186,7 +183,7 @@ describe('endpoint()', () => {
     ])(
       'should return the correct endpoint for %s, %s, %s, %i = %s',
       (environment, serviceDomain, serviceName, version, expectation) => {
-        ;(getEnvConfig as jest.Mock).mockReturnValue({
+        (processEnv.getEnvConfig as jest.Mock).mockReturnValue({
           ENVIRONMENT: environment,
           DOMAIN: serviceDomain,
         })
@@ -196,7 +193,7 @@ describe('endpoint()', () => {
     )
 
     it('should throw if it cannot find the service', () => {
-      ;(getEnvConfig as jest.Mock).mockReturnValue({
+      (processEnv.getEnvConfig as jest.Mock).mockReturnValue({
         ENVIRONMENT: 'staging',
         DOMAIN: 'gousto.info',
       })
@@ -205,7 +202,7 @@ describe('endpoint()', () => {
     })
 
     it('should throw if it cannot find the service majorVersion', () => {
-      ;(getEnvConfig as jest.Mock).mockReturnValue({
+      (processEnv.getEnvConfig as jest.Mock).mockReturnValue({
         ENVIRONMENT: 'staging',
       })
       expect(() => endpoint('auth', 999)).toThrow(

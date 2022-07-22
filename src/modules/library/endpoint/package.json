@@ -6,5 +6,8 @@
     "test:unit": "yarn run --top-level jest",
     "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
     "typecheck": "yarn run --top-level tsc --noEmit --project tsconfig.json"
+  },
+  "dependencies": {
+    "@library/environment": "workspace:*"
   }
 }

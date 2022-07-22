@@ -1,3 +1,5 @@
+import { browserEnvironment, isomorphicEnvironment } from '@library/environment'
+
 import { findServiceVersion } from './find-service-version'
 import {
   PROTOCOL_PREFIX,
@@ -8,10 +10,6 @@ import {
 } from './types'
 import { getServiceManifest } from './service-manifest'
 import { serviceUrl } from './service-url'
-
-// pull into env lib
-import { canUseWindow } from 'utils/browserEnvironment'
-import { getEnvironment, getDomain, isDev } from 'utils/isomorphicEnvironment'
 
 export const buildServiceUrlProperties = (
   serviceName: ServiceName,
@@ -31,7 +29,7 @@ function getServiceUrl(
   serviceEnvironment: ServiceEnvironment,
 ) {
   const { basePath } = findServiceVersion(serviceName, version, getServiceManifest())
-  const isPublic = canUseWindow() || isDev()
+  const isPublic = browserEnvironment.canUseWindow() || isomorphicEnvironment.isDev()
 
   return serviceUrl(
     buildServiceUrlProperties(
@@ -62,9 +60,9 @@ function endpointAdapter(getServiceEnvironment: () => ServiceEnvironment) {
 }
 
 const getServiceEnvironment = (): ServiceEnvironment => ({
-  environmentName: getEnvironment(),
-  protocol: canUseWindow() ? PROTOCOL_PREFIX.HTTPS : PROTOCOL_PREFIX.HTTP,
-  serviceDomain: getDomain() as Domain,
+  environmentName: isomorphicEnvironment.getEnvironment(),
+  protocol: browserEnvironment.canUseWindow() ? PROTOCOL_PREFIX.HTTPS : PROTOCOL_PREFIX.HTTP,
+  serviceDomain: isomorphicEnvironment.getDomain() as Domain,
 })
 
 const endpoint = endpointAdapter(getServiceEnvironment)

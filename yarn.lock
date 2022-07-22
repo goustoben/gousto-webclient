@@ -3075,6 +3075,14 @@ __metadata:
 "@library/endpoint@workspace:src/modules/library/endpoint":
   version: 0.0.0-use.local
   resolution: "@library/endpoint@workspace:src/modules/library/endpoint"
+  dependencies:
+    "@library/environment": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@library/environment@workspace:*, @library/environment@workspace:src/modules/library/environment":
+  version: 0.0.0-use.local
+  resolution: "@library/environment@workspace:src/modules/library/environment"
   languageName: unknown
   linkType: soft
 

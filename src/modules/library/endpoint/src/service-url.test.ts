@@ -5,8 +5,7 @@ import {
 } from './types'
 import * as ServiceUrlNS from './service-url'
 
-// pull into env lib
-import * as browserEnv from 'utils/browserEnvironment'
+import { browserEnv } from '@library/environment'
 
 const { serviceUrl } = ServiceUrlNS
 
