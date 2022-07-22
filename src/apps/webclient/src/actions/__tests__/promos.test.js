@@ -1,9 +1,9 @@
 import { promoApplyCheckoutCode } from 'actions/promos'
-import { trackPromocodeChange } from 'actions/checkout'
+import { trackPromocodeChange } from 'routes/Checkout/checkoutActions'
 
 const dispatchSpy = jest.fn()
 
-jest.mock('actions/checkout', () => ({
+jest.mock('routes/Checkout/checkoutActions', () => ({
   trackPromocodeChange: jest.fn(),
 }))
 

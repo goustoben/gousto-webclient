@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { isValid } from 'redux-form'
 
 import { actionTypes } from 'actions/actionTypes'
-import { trackCheckoutButtonPressed, validatePassword } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
+import { trackCheckoutButtonPressed, validatePassword } from 'routes/Checkout/checkoutActions'
+import { accountFormName, getPasswordValue } from 'routes/Checkout/checkoutSelectors'
 import * as stateUtils from 'routes/Checkout/utils/state'
-import { accountFormName, getPasswordValue } from 'selectors/checkout'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 
 import { AboutYou } from './AboutYou'

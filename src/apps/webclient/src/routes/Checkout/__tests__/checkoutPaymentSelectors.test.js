@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
-import { PaymentMethod } from 'routes/Signup/signupConfig'
+
+import routes from 'config/routes'
 import {
   getCurrentPaymentMethod,
   getPayPalClientToken,
@@ -14,9 +15,8 @@ import {
   getPayPalPaymentDetails,
   getPaymentAuthData,
   getPaymentData,
-} from 'selectors/payment'
-
-import routes from 'config/routes'
+} from 'routes/Checkout/checkoutPaymentSelectors'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 
 describe('payment selectors', () => {
   let state = {}
@@ -30,10 +30,10 @@ describe('payment selectors', () => {
             payment: {
               payment_provider: 'checkout',
               active: 1,
-              token: 'test-token'
-            }
-          }
-        }
+              token: 'test-token',
+            },
+          },
+        },
       },
       payment: Immutable.fromJS({
         challengeUrl: 'https://bank.uk/3dschallenge',
@@ -44,16 +44,16 @@ describe('payment selectors', () => {
         paypalDeviceData: deviceData,
       }),
       basket: Immutable.fromJS({
-        previewOrderId: 'fake-order-id'
+        previewOrderId: 'fake-order-id',
       }),
       checkout: Immutable.fromJS({
-        goustoRef: 'fake-gousto-ref'
+        goustoRef: 'fake-gousto-ref',
       }),
       pricing: Immutable.fromJS({
         prices: Immutable.fromJS({
-          total: 24.99
-        })
-      })
+          total: 24.99,
+        }),
+      }),
     }
   })
 
@@ -267,7 +267,7 @@ describe('payment selectors', () => {
           '3ds': true,
           success_url: `http://localhost${routes.client.payment.success}`,
           failure_url: `http://localhost${routes.client.payment.failure}`,
-          decoupled: true
+          decoupled: true,
         }
 
         const result = getPaymentAuthData(state, { pricing })
@@ -286,7 +286,7 @@ describe('payment selectors', () => {
           '3ds': true,
           success_url: `http://localhost${routes.client.payment.success}`,
           failure_url: `http://localhost${routes.client.payment.failure}`,
-          decoupled: true
+          decoupled: true,
         }
 
         const result = getPaymentAuthData(state, { pricing })
@@ -322,7 +322,7 @@ describe('payment selectors', () => {
           order_id: 'fake-order-id',
           gousto_ref: 'fake-gousto-ref',
           card_token: 'test-nonce',
-          device_data: deviceData
+          device_data: deviceData,
         }
 
         const result = getPaymentData(state)

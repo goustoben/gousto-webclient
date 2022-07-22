@@ -1,6 +1,6 @@
 import { actionTypes } from 'actions/actionTypes'
+import { payment, initialState } from 'routes/Checkout/checkoutPaymentReducers'
 import { PaymentMethod } from 'routes/Signup/signupConfig'
-import { payment, initialState } from '../payment'
 
 describe('Payment state', () => {
   const challengeUrl = 'https://bank.uk/3dschallenge'
@@ -49,13 +49,10 @@ describe('Payment state', () => {
 
     beforeEach(() => {
       state = initialState()
-      result = payment(
-        state,
-        {
-          type: actionTypes.PAYMENT_SHOW_MODAL,
-          challengeUrl,
-        }
-      )
+      result = payment(state, {
+        type: actionTypes.PAYMENT_SHOW_MODAL,
+        challengeUrl,
+      })
     })
 
     test('should show modal', () => {
@@ -72,9 +69,7 @@ describe('Payment state', () => {
     let result
 
     beforeEach(() => {
-      state = initialState()
-        .set('isModalVisible', true)
-        .set('challengeUrl', challengeUrl)
+      state = initialState().set('isModalVisible', true).set('challengeUrl', challengeUrl)
       result = payment(state, { type: actionTypes.PAYMENT_HIDE_MODAL })
     })
 
@@ -99,7 +94,7 @@ describe('Payment state', () => {
 
       result = payment(state, {
         type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
-        paymentMethod: PaymentMethod.PayPal
+        paymentMethod: PaymentMethod.PayPal,
       })
     })
 
@@ -126,7 +121,7 @@ describe('Payment state', () => {
 
       result = payment(state, {
         type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
-        token
+        token,
       })
     })
 
@@ -145,7 +140,7 @@ describe('Payment state', () => {
 
       result = payment(state, {
         type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
-        nonce
+        nonce,
       })
     })
 
@@ -164,7 +159,7 @@ describe('Payment state', () => {
 
       result = payment(state, {
         type: actionTypes.PAYMENT_SET_PAYPAL_DEVICE_DATA,
-        deviceData
+        deviceData,
       })
     })
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { Route } from 'react-router'
 
 import config from 'config/routes'
-import { CheckoutLayout } from 'layouts/CheckoutLayout'
+import { CheckoutLayout } from 'routes/Checkout/CheckoutLayout'
 import { checkGuest } from 'utils/routes'
 
 import { CheckoutContainer } from './CheckoutContainer'

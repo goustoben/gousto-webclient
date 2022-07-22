@@ -2,9 +2,9 @@ import React, { useCallback } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { checkPaymentAuth } from 'actions/checkout'
+import { checkPaymentAuth } from 'routes/Checkout/checkoutActions'
+import { getChallengeUrl, isModalOpen } from 'routes/Checkout/checkoutPaymentSelectors'
 import { usePricing } from 'routes/Menu/domains/pricing'
-import { getChallengeUrl, isModalOpen } from 'selectors/payment'
 
 import { Checkout3DSModal } from './Checkout3DSModal'
 

@@ -1,4 +1,4 @@
-import { emailValidator, phoneValidator } from 'utils/forms'
+import { emailValidator, phoneValidator } from 'routes/Checkout/checkoutFormUtils'
 
 describe('given form utils', () => {
   describe('emailValidator', () => {
@@ -81,4 +81,3 @@ describe('given form utils', () => {
     })
   })
 })
-

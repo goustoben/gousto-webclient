@@ -2,13 +2,13 @@
 import { actionTypes } from 'actions/actionTypes'
 import { basketCheckedOut, basketCheckoutClicked, basketProceedToCheckout } from 'actions/basket'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
-import { checkoutTransactionalOrder as checkoutTransactionalOrderV1 } from 'actions/checkout'
 import { orderUpdate } from 'actions/order'
 import status from 'actions/status'
+import { checkoutTransactionalOrder as checkoutTransactionalOrderV1 } from 'routes/Checkout/checkoutActions'
 import { sendUpdateOrder } from 'routes/Menu/actions/order'
 import { getIsAuthenticated } from 'selectors/auth'
+import { isBasketTransactionalOrder } from 'selectors/basket'
 
-import { isBasketTransactionalOrder } from '../../../selectors/basket'
 import { validateMenuLimitsForBasket } from '../selectors/menu'
 import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 

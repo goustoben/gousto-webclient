@@ -1,40 +1,37 @@
 import Immutable from 'immutable'
-import { PaymentMethod } from 'routes/Signup/signupConfig'
+
 import routes from 'config/routes'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
 import { getPreviewOrderId } from 'selectors/basket'
 
-export const getCurrentPaymentMethod = state => state.payment.get('paymentMethod')
+export const getCurrentPaymentMethod = (state) => state.payment.get('paymentMethod')
 
-export const getPayPalClientToken = state => state.payment.get('paypalClientToken')
+export const getPayPalClientToken = (state) => state.payment.get('paypalClientToken')
 
-export const getCardToken = state => Immutable.fromJS(state.form.payment.values.payment).get('token')
+export const getCardToken = (state) =>
+  Immutable.fromJS(state.form.payment.values.payment).get('token')
 
-export const getChallengeUrl = state => state.payment.get('challengeUrl')
+export const getChallengeUrl = (state) => state.payment.get('challengeUrl')
 
-export const isModalOpen = state => state.payment.get('isModalVisible')
+export const isModalOpen = (state) => state.payment.get('isModalVisible')
 
-export const isPayPalReady = state => (
-  getCurrentPaymentMethod(state) === PaymentMethod.PayPal
-    && !!state.payment.get('paypalNonce')
-)
+export const isPayPalReady = (state) =>
+  getCurrentPaymentMethod(state) === PaymentMethod.PayPal && !!state.payment.get('paypalNonce')
 
-export const isCardPayment = state => (
-  getCurrentPaymentMethod(state) === PaymentMethod.Card
-)
+export const isCardPayment = (state) => getCurrentPaymentMethod(state) === PaymentMethod.Card
 
-export const getCanSubmitPaymentDetails = state => (
+export const getCanSubmitPaymentDetails = (state) =>
   getCurrentPaymentMethod(state) === PaymentMethod.Card || isPayPalReady(state)
-)
 
-export const getPaymentProvider = state => (isCardPayment(state) ? 'checkout' : 'paypal')
+export const getPaymentProvider = (state) => (isCardPayment(state) ? 'checkout' : 'paypal')
 
-export const getCardPaymentDetails = state => ({
+export const getCardPaymentDetails = (state) => ({
   payment_provider: 'checkout',
   active: 1,
   card_token: getCardToken(state),
 })
 
-export const getPayPalPaymentDetails = state => ({
+export const getPayPalPaymentDetails = (state) => ({
   payment_provider: 'paypal',
   active: 1,
   token: state.payment.get('paypalNonce'),
@@ -54,11 +51,11 @@ export const getPaymentAuthData = (state, { pricing }) => {
     '3ds': true,
     success_url: window.location.origin + success,
     failure_url: window.location.origin + failure,
-    decoupled: true
+    decoupled: true,
   }
 }
 
-export const getPaymentData = state => {
+export const getPaymentData = (state) => {
   const { checkout } = state
   const result = {
     order_id: getPreviewOrderId(state),

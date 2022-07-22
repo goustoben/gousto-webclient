@@ -1,12 +1,21 @@
+/**
+ * DO NOT WRITE ADDITIONAL TESTS IN THAT FILE, write them in "checkoutActions.test.js" in same directory.
+ *
+ * This file contains tests for some actions from checkoutActions.js.
+ *
+ * Files "checkoutActions2.tests.js" and "checkoutActions.test.js" are not merged together as there are
+ * a lot of issues with mocking application parts that are relevant in one file and not needed in another.
+ *
+ * Ideally, these 2 files should be merged, yet it takes too much effort to restructure merged file for almost no
+ * benefit.
+ */
+
 /* eslint-disable import/no-named-as-default-member */
 import Immutable from 'immutable'
-import * as cookieHelper from 'utils/cookieHelper2'
-import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchReference } from 'apis/customers'
-import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
 
 import { actionTypes } from 'actions/actionTypes'
 import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
+import statusActions from 'actions/status'
 import {
   trackAffiliatePurchase,
   trackUTMAndPromoCode,
@@ -16,17 +25,11 @@ import {
   clearRoktData,
 } from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
-import statusActions from 'actions/status'
-import { userSubscribe } from 'routes/Checkout/checkoutActions'
-
+import { fetchAddressByPostcode } from 'apis/addressLookup'
+import { fetchReference } from 'apis/customers'
 import routes from 'config/routes'
-import { PaymentMethod } from 'routes/Signup/signupConfig'
-
-import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
-import { basketResetPersistent } from 'utils/basket'
-import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
-
 import {
+  userSubscribe,
   checkoutActions,
   trackPurchase,
   checkPaymentAuth,
@@ -47,25 +50,34 @@ import {
   checkoutStepIndexReached,
   handlePromoCodeRemoved,
   handleCheckoutError,
-  fetchGoustoRef, checkoutCardAuthorisation
-} from 'actions/checkout'
+  fetchGoustoRef,
+  checkoutCardAuthorisation,
+} from 'routes/Checkout/checkoutActions'
+import {
+  authPayment,
+  checkPayment,
+  fetchPayPalToken,
+  signupPayment,
+} from 'routes/Checkout/checkoutPaymentsApis'
+import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
+import { PaymentMethod } from 'routes/Signup/signupConfig'
+import { basketResetPersistent } from 'utils/basket'
+import * as cookieHelper from 'utils/cookieHelper2'
+import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
-  getProtocol: () => 'http:'
+  getProtocol: () => 'http:',
 }))
 
 jest.mock('utils/basket', () => ({
-  basketResetPersistent: jest.fn()
+  basketResetPersistent: jest.fn(),
 }))
 jest.mock('utils/deliveries')
 
 jest.mock('actions/login')
 jest.mock('actions/menu')
 
-jest.mock('routes/Checkout/checkoutActions', () => ({
-  userSubscribe: jest.fn()
-}))
 jest.mock('actions/basket')
 jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),
@@ -89,112 +101,129 @@ jest.mock('routes/Menu/actions/checkout', () => ({
   checkoutCreatePreviewOrder: jest.fn(),
 }))
 jest.mock('apis/customers', () => ({
-  fetchReference: jest.fn(() => Promise.resolve({
-    status: 'ok',
-    data: {
-      goustoRef: '105979923'
-    }
-  })),
-}))
-jest.mock('apis/payments', () => ({
-  authPayment: jest.fn(() => Promise.resolve({
-    status: 'ok',
-    data: {
-      id: 'da850c38-c077-41cf-b860-0100ee48c0f1',
-      cardToken: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
-      reference: 'pay_4b55m3huev2e3pfyu5mixqecwq',
-      status: 'challenge-pending',
-      value: 3448,
-      message: 'Requested redirect link for 3ds authorisation',
-      responsePayload: {
-        transactionId: 'pay_4b55m3huev2e3pfyu5mixqecwq',
-        reference: 'da850c38-c077-41cf-b860-0100ee48c0f1',
-        redirectLink: 'https://bank.uk/3dschallenge',
-        message: 'Requested redirect link for 3ds authorisation',
-        paymentStatus: 'challenge-pending',
+  fetchReference: jest.fn(() =>
+    Promise.resolve({
+      status: 'ok',
+      data: {
+        goustoRef: '105979923',
       },
-      createdAt: '2020-07-20 14:52:09.661152+00:00',
-      updatedAt: '2020-07-20 14:52:10.242845+00:00',
-    }
-  })),
-  checkPayment: jest.fn((sessionId) => Promise.resolve({
-    status: 'ok',
-    data: sessionId === 'success_session_id'
-      ? {
-        id: 'pay_556fkurbopnu3ckcpk7h4a5wfi',
-        amount: 3448,
-        approved: true,
-        status: 'Authorized',
-        sourceId: 'src_qvgsjghtdjjuhdznipp5najdza',
-        source: {
-          id: 'src_qvgsjghtdjjuhdznipp5najdza',
-          type: 'card',
-          billingAddress: {
-            addressLine1: 'FLAT 15, MORRIS HOUSE',
-            addressLine2: 'SWAINSON ROAD',
-            city: 'LONDON',
-            zip: 'W3 7UP'
-          },
-          expiryMonth: 10,
-          expiryYear: 2020,
-          name: 'test test',
-          scheme: 'Visa',
-          last4: '4242',
-          fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
-          bin: '424242',
-          cardType: 'Credit',
-          cardCategory: 'Consumer',
-          issuer: 'JPMORGAN CHASE BANK NA',
-          issuerCountry: 'US',
-          productId: 'A',
-          productType: 'Visa Traditional',
-          avsCheck: 'S',
-          cvvCheck: 'Y',
-          payouts: true,
-          fastFunds: 'd'
-        }
-      }
-      : {
-        id: 'pay_4b55m3huev2e3pfyu5mixqecwq',
-        amount: 3448,
-        approved: false,
-        status: 'Declined',
-        sourceId: '',
-        source: {
-          type: 'card',
-          billingAddress: {
-            addressLine1: 'FLAT 15, MORRIS HOUSE',
-            addressLine2: 'SWAINSON ROAD',
-            city: 'LONDON',
-            zip: 'W3 7UP'
-          },
-          expiryMonth: 10,
-          expiryYear: 2020,
-          name: 'test test',
-          scheme: 'Visa',
-          last4: '4242',
-          fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
-          bin: '424242',
-          cardType: 'Credit',
-          cardCategory: 'Consumer',
-          issuer: 'JPMORGAN CHASE BANK NA',
-          issuerCountry: 'US',
-          productId: 'A',
-          productType: 'Visa Traditional'
-        }
-      }
-  })),
-  fetchPayPalToken: jest.fn(() => Promise.resolve({
-    data: {
-      clientToken: 'fake-client-token'
-    }
-  })),
-  signupPayment: jest.fn(() => Promise.resolve({
-    data: {
-      status: 'authorized',
-      value: 2499,
-    }
-  }))
+    }),
+  ),
+}))
+jest.mock('routes/Checkout/checkoutActions', () => ({
+  ...jest.requireActual('routes/Checkout/checkoutActions'),
+  userSubscribe: jest.fn(),
+}))
+
+jest.mock('routes/Checkout/checkoutPaymentsApis', () => ({
+  ...jest.requireActual('routes/Checkout/checkoutPaymentsApis'),
+  authPayment: jest.fn(() =>
+    Promise.resolve({
+      status: 'ok',
+      data: {
+        id: 'da850c38-c077-41cf-b860-0100ee48c0f1',
+        cardToken: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
+        reference: 'pay_4b55m3huev2e3pfyu5mixqecwq',
+        status: 'challenge-pending',
+        value: 3448,
+        message: 'Requested redirect link for 3ds authorisation',
+        responsePayload: {
+          transactionId: 'pay_4b55m3huev2e3pfyu5mixqecwq',
+          reference: 'da850c38-c077-41cf-b860-0100ee48c0f1',
+          redirectLink: 'https://bank.uk/3dschallenge',
+          message: 'Requested redirect link for 3ds authorisation',
+          paymentStatus: 'challenge-pending',
+        },
+        createdAt: '2020-07-20 14:52:09.661152+00:00',
+        updatedAt: '2020-07-20 14:52:10.242845+00:00',
+      },
+    }),
+  ),
+  checkPayment: jest.fn((sessionId) =>
+    Promise.resolve({
+      status: 'ok',
+      data:
+        sessionId === 'success_session_id'
+          ? {
+              id: 'pay_556fkurbopnu3ckcpk7h4a5wfi',
+              amount: 3448,
+              approved: true,
+              status: 'Authorized',
+              sourceId: 'src_qvgsjghtdjjuhdznipp5najdza',
+              source: {
+                id: 'src_qvgsjghtdjjuhdznipp5najdza',
+                type: 'card',
+                billingAddress: {
+                  addressLine1: 'FLAT 15, MORRIS HOUSE',
+                  addressLine2: 'SWAINSON ROAD',
+                  city: 'LONDON',
+                  zip: 'W3 7UP',
+                },
+                expiryMonth: 10,
+                expiryYear: 2020,
+                name: 'test test',
+                scheme: 'Visa',
+                last4: '4242',
+                fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
+                bin: '424242',
+                cardType: 'Credit',
+                cardCategory: 'Consumer',
+                issuer: 'JPMORGAN CHASE BANK NA',
+                issuerCountry: 'US',
+                productId: 'A',
+                productType: 'Visa Traditional',
+                avsCheck: 'S',
+                cvvCheck: 'Y',
+                payouts: true,
+                fastFunds: 'd',
+              },
+            }
+          : {
+              id: 'pay_4b55m3huev2e3pfyu5mixqecwq',
+              amount: 3448,
+              approved: false,
+              status: 'Declined',
+              sourceId: '',
+              source: {
+                type: 'card',
+                billingAddress: {
+                  addressLine1: 'FLAT 15, MORRIS HOUSE',
+                  addressLine2: 'SWAINSON ROAD',
+                  city: 'LONDON',
+                  zip: 'W3 7UP',
+                },
+                expiryMonth: 10,
+                expiryYear: 2020,
+                name: 'test test',
+                scheme: 'Visa',
+                last4: '4242',
+                fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
+                bin: '424242',
+                cardType: 'Credit',
+                cardCategory: 'Consumer',
+                issuer: 'JPMORGAN CHASE BANK NA',
+                issuerCountry: 'US',
+                productId: 'A',
+                productType: 'Visa Traditional',
+              },
+            },
+    }),
+  ),
+  fetchPayPalToken: jest.fn(() =>
+    Promise.resolve({
+      data: {
+        clientToken: 'fake-client-token',
+      },
+    }),
+  ),
+  signupPayment: jest.fn(() =>
+    Promise.resolve({
+      data: {
+        status: 'authorized',
+        value: 2499,
+      },
+    }),
+  ),
 }))
 
 const createState = (stateOverrides) => ({
@@ -216,8 +245,8 @@ const createState = (stateOverrides) => ({
     postcode: 'W6 0DH',
     prevPostcode: 'OX18 1EN',
     chosenAddress: {
-      id: '123456'
-    }
+      id: '123456',
+    },
   }),
   boxSummaryDeliveryDays: Immutable.fromJS({
     '2016-11-21': {
@@ -257,7 +286,7 @@ const createState = (stateOverrides) => ({
         account: {
           email: 'test@test.com',
         },
-      }
+      },
     },
     delivery: {
       values: {
@@ -275,9 +304,9 @@ const createState = (stateOverrides) => ({
           token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
           postcode: 'w37un',
           houseNo: '1',
-        })
-      }
-    }
+        }),
+      },
+    },
   },
   menuBoxPrices: Immutable.fromJS({
     2: {
@@ -301,14 +330,14 @@ const createState = (stateOverrides) => ({
   }),
   payment: Immutable.fromJS({
     paymentNonce: 'sdfgs8sdfg',
-    paymentMethod: PaymentMethod.Card
+    paymentMethod: PaymentMethod.Card,
   }),
   request: Immutable.fromJS({
     browser: 'desktop',
   }),
   features: Immutable.fromJS({
     ndd: {
-      value: deliveryTariffTypes.NON_NDD
+      value: deliveryTariffTypes.NON_NDD,
     },
     isPromoCodeValidationEnabled: {
       value: false,
@@ -330,7 +359,7 @@ describe('checkout actions', () => {
     getState.mockReturnValue(createState())
     addressCollection = [{ 1: 'a' }, { 2: 'b' }]
     fetchAddressByPostcode.mockReturnValue(
-      new Promise(resolve => {
+      new Promise((resolve) => {
         resolve({ data: { results: addressCollection } })
       }),
     )
@@ -338,80 +367,87 @@ describe('checkout actions', () => {
       Immutable.Map({
         coreSlotId: '4',
         id: '3e977c1e-a778-11e6-aa8b-080027596944',
-        daySlotLeadTimeId: ''
+        daySlotLeadTimeId: '',
       }),
     )
     getDeliveryTariffId.mockReturnValue('')
 
-    userSubscribe.mockReturnValue(() => Promise.resolve({
-      status: 'ok',
-      data: {
-        orderId: '18057148',
-        customer: {
-          id: '41892653',
-          authUserId: '1bc752cc-98d0-4937-a2a6-6e9cad21749d',
-          email: 'john.doe@test.com',
-          nameFirst: 'John',
-          nameLast: 'Doe',
-          phone: '07503075906',
-          goustoReference: 2007339011,
-          cancelled: false,
-          createdAt: '2020-07-20T15:59:27+01:00',
-          vip: false,
-          marketingDoAllowThirdparty: false,
-          marketingDoAllowEmail: false,
-          marketingDoAllowSms: false,
-          marketingDoAllowPost: false,
-          marketingDoAllowPhone: false,
-          shippingAddressId: '84350206',
-          billingAddressId: '84350207',
-          deliveryTariffId: '9037a447-e11a-4960-ae69-d89a029569af',
-          salutation: { id: 1, label: 'Miss.', slug: 'miss' }
-        },
-        addresses: {
-          billingAddress: {
-            id: '84350207',
-            customerId: '41892653',
-            name: 'My Address',
-            companyName: '',
-            line1: 'FLAT 15, MORRIS HOUSE',
-            line2: 'SWAINSON ROAD',
-            line3: '',
-            town: 'LONDON',
-            county: 'MIDDLESEX',
-            postcode: 'W3 7UP',
-            deliveryInstructions: '',
-            state: 'unset',
-            type: 'billing',
-            deleted: false
+    userSubscribe.mockReturnValue(() =>
+      Promise.resolve({
+        status: 'ok',
+        data: {
+          orderId: '18057148',
+          customer: {
+            id: '41892653',
+            authUserId: '1bc752cc-98d0-4937-a2a6-6e9cad21749d',
+            email: 'john.doe@test.com',
+            nameFirst: 'John',
+            nameLast: 'Doe',
+            phone: '07503075906',
+            goustoReference: 2007339011,
+            cancelled: false,
+            createdAt: '2020-07-20T15:59:27+01:00',
+            vip: false,
+            marketingDoAllowThirdparty: false,
+            marketingDoAllowEmail: false,
+            marketingDoAllowSms: false,
+            marketingDoAllowPost: false,
+            marketingDoAllowPhone: false,
+            shippingAddressId: '84350206',
+            billingAddressId: '84350207',
+            deliveryTariffId: '9037a447-e11a-4960-ae69-d89a029569af',
+            salutation: { id: 1, label: 'Miss.', slug: 'miss' },
           },
-          shippingAddress: {
-            id: '84350206',
-            customerId: '41892653',
-            name: 'My Address',
-            companyName: '',
-            line1: 'FLAT 15, MORRIS HOUSE',
-            line2: 'SWAINSON ROAD',
-            line3: '',
-            town: 'LONDON',
-            county: 'MIDDLESEX',
-            postcode: 'W3 7UP',
-            deliveryInstructions: 'Front Porch',
-            state: 'unset',
-            type: 'shipping',
-            deleted: false
-          }
+          addresses: {
+            billingAddress: {
+              id: '84350207',
+              customerId: '41892653',
+              name: 'My Address',
+              companyName: '',
+              line1: 'FLAT 15, MORRIS HOUSE',
+              line2: 'SWAINSON ROAD',
+              line3: '',
+              town: 'LONDON',
+              county: 'MIDDLESEX',
+              postcode: 'W3 7UP',
+              deliveryInstructions: '',
+              state: 'unset',
+              type: 'billing',
+              deleted: false,
+            },
+            shippingAddress: {
+              id: '84350206',
+              customerId: '41892653',
+              name: 'My Address',
+              companyName: '',
+              line1: 'FLAT 15, MORRIS HOUSE',
+              line2: 'SWAINSON ROAD',
+              line3: '',
+              town: 'LONDON',
+              county: 'MIDDLESEX',
+              postcode: 'W3 7UP',
+              deliveryInstructions: 'Front Porch',
+              state: 'unset',
+              type: 'shipping',
+              deleted: false,
+            },
+          },
+          subscription: {
+            id: '36613038',
+            stateReason: null,
+            interval: {
+              id: '1',
+              slug: 'weekly',
+              title: 'Weekly',
+              description: 'Our most popular option!',
+            },
+            status: { id: 1, slug: 'active' },
+            box: { id: '18', portions: 2, recipes: 4 },
+            slot: null,
+          },
         },
-        subscription: {
-          id: '36613038',
-          stateReason: null,
-          interval: { id: '1', slug: 'weekly', title: 'Weekly', description: 'Our most popular option!' },
-          status: { id: 1, slug: 'active' },
-          box: { id: '18', portions: 2, recipes: 4 },
-          slot: null
-        }
-      }
-    }))
+      }),
+    )
   })
 
   afterEach(() => {
@@ -445,10 +481,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutError('CARD_TOKENIZATION_FAILED')(dispatch, getState)
 
-      expect(statusActions.error).toHaveBeenCalledWith(
-        'CARD_TOKENIZATION_FAILED',
-        true,
-      )
+      expect(statusActions.error).toHaveBeenCalledWith('CARD_TOKENIZATION_FAILED', true)
     })
 
     test('should dispatch an error with an error value', async () => {
@@ -457,10 +490,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutError('CARD_TOKENIZATION_FAILED', errorText)(dispatch, getState)
 
-      expect(statusActions.error).toHaveBeenCalledWith(
-        'CARD_TOKENIZATION_FAILED',
-        errorText,
-      )
+      expect(statusActions.error).toHaveBeenCalledWith('CARD_TOKENIZATION_FAILED', errorText)
     })
   })
 
@@ -478,7 +508,7 @@ describe('checkout actions', () => {
 
   describe('checkoutSignup', () => {
     const pricing = {
-      grossTotal: 28.00,
+      grossTotal: 28.0,
       deliveryTotal: 2.99,
       total: '34.48',
     }
@@ -490,6 +520,7 @@ describe('checkout actions', () => {
       jest.spyOn(checkoutActions, 'clearGoustoRef')
       jest.spyOn(checkoutActions, 'checkoutCardAuthorisation')
       jest.spyOn(checkoutActions, 'checkoutSignupPayment')
+      jest.spyOn(checkoutActions, 'userSubscribe')
     })
 
     afterEach(() => {
@@ -517,7 +548,7 @@ describe('checkout actions', () => {
     test('should init subscribe user', async () => {
       await checkoutActions.checkoutSignup({ pricing })(dispatch, getState)
 
-      expect(userSubscribe).toHaveBeenCalled()
+      expect(checkoutActions.userSubscribe).toHaveBeenCalled()
     })
 
     test('should init checkout payment signup flow', async () => {
@@ -540,11 +571,13 @@ describe('checkout actions', () => {
 
     describe('when PayPal payment method selected', () => {
       beforeEach(() => {
-        getState.mockReturnValue(createState({
-          payment: Immutable.fromJS({
-            paymentMethod: PaymentMethod.PayPal,
-          })
-        }))
+        getState.mockReturnValue(
+          createState({
+            payment: Immutable.fromJS({
+              paymentMethod: PaymentMethod.PayPal,
+            }),
+          }),
+        )
       })
 
       test('should not init card authorisation', async () => {
@@ -579,18 +612,19 @@ describe('checkout actions', () => {
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
-          goustoRef: '105979923'
+          goustoRef: '105979923',
         })
       })
     })
 
     describe('when gousto reference has been already retrieved', () => {
       beforeEach(() => {
-        const checkoutState = createState()
-          .checkout.set('goustoRef', '105979923')
-        getState.mockReturnValue(createState({
-          checkout: checkoutState
-        }))
+        const checkoutState = createState().checkout.set('goustoRef', '105979923')
+        getState.mockReturnValue(
+          createState({
+            checkout: checkoutState,
+          }),
+        )
       })
 
       test('should not retrieve new reference', async () => {
@@ -604,7 +638,7 @@ describe('checkout actions', () => {
 
         expect(dispatch).not.toHaveBeenCalledWith({
           type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
-          goustoRef: expect.any(String)
+          goustoRef: expect.any(String),
         })
       })
     })
@@ -612,7 +646,7 @@ describe('checkout actions', () => {
 
   describe('checkPaymentAuth', () => {
     const pricing = {
-      grossTotal: 28.00,
+      grossTotal: 28.0,
       deliveryTotal: 2.99,
       total: '34.48',
     }
@@ -661,11 +695,16 @@ describe('checkout actions', () => {
       })
 
       test('should trigger signup error', () => {
-        expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed')
+        expect(statusActions.error).toHaveBeenCalledWith(
+          actionTypes.CHECKOUT_SIGNUP,
+          '3ds-challenge-failed',
+        )
       })
 
       test('should not trigger 3ds_success event', () => {
-        expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeSuccessful)
+        expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(
+          trackingKeys.signupChallengeSuccessful,
+        )
       })
 
       test('should trigger 3ds_failed event', () => {
@@ -684,20 +723,21 @@ describe('checkout actions', () => {
 
   describe('checkoutCardAuthorisation', () => {
     const pricing = {
-      grossTotal: 28.00,
+      grossTotal: 28.0,
       deliveryTotal: 2.99,
       total: '34.48',
     }
 
-    const checkoutState = createState()
-      .checkout.set('goustoRef', '105979923')
+    const checkoutState = createState().checkout.set('goustoRef', '105979923')
 
     beforeEach(() => {
       jest.spyOn(checkoutActions, 'clearGoustoRef')
 
-      getState.mockReturnValue(createState({
-        checkout: checkoutState
-      }))
+      getState.mockReturnValue(
+        createState({
+          checkout: checkoutState,
+        }),
+      )
     })
 
     afterEach(() => {
@@ -739,7 +779,10 @@ describe('checkout actions', () => {
     test('should not clear gousto reference', async () => {
       await checkoutCardAuthorisation({ pricing })(dispatch, getState)
 
-      expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      expect(dispatch).not.toHaveBeenCalledWith({
+        type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+        goustoRef: null,
+      })
     })
 
     describe('when auth payment request failed', () => {
@@ -757,7 +800,7 @@ describe('checkout actions', () => {
 
   describe('checkoutSignupPayment', () => {
     const pricing = {
-      grossTotal: 28.00,
+      grossTotal: 28.0,
       deliveryTotal: 2.99,
       total: '34.48',
     }
@@ -765,11 +808,12 @@ describe('checkout actions', () => {
     beforeEach(() => {
       jest.spyOn(checkoutActions, 'checkoutPostSignup')
 
-      const checkoutState = createState()
-        .checkout.set('goustoRef', '105979923')
-      getState.mockReturnValue(createState({
-        checkout: checkoutState
-      }))
+      const checkoutState = createState().checkout.set('goustoRef', '105979923')
+      getState.mockReturnValue(
+        createState({
+          checkout: checkoutState,
+        }),
+      )
     })
 
     afterEach(() => {
@@ -813,14 +857,14 @@ describe('checkout actions', () => {
 
     const pricing = {
       total: 31.99,
-      grossTotal: 28.00,
+      grossTotal: 28.0,
       deliveryTotal: 2.99,
     }
 
     beforeEach(() => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
-          promoCode: 'TEST123'
+          promoCode: 'TEST123',
         }),
       })
     })
@@ -851,7 +895,7 @@ describe('checkout actions', () => {
 
         expect(ga).toHaveBeenCalledWith('gousto.ec:setAction', 'purchase', {
           id: 'test-order-id',
-          revenue: 28.00,
+          revenue: 28.0,
           shipping: 2.99,
           coupon: 'TEST123',
         })
@@ -885,7 +929,7 @@ describe('checkout actions', () => {
 
   describe('checkoutPostSignup', () => {
     const pricing = {
-      grossTotal: 28.00,
+      grossTotal: 28.0,
       deliveryTotal: 2.99,
       total: '34.48',
     }
@@ -942,10 +986,12 @@ describe('checkout actions', () => {
           position: 'first',
         }
 
-        expect(trackCheckoutButtonPressed('DeliveryAddress Confirmed', { position: 'first' })).toEqual({
+        expect(
+          trackCheckoutButtonPressed('DeliveryAddress Confirmed', { position: 'first' }),
+        ).toEqual({
           type: 'TRACKING',
           trackingData,
-          gtmEvent: trackingData
+          gtmEvent: trackingData,
         })
       })
 
@@ -958,7 +1004,7 @@ describe('checkout actions', () => {
         expect(trackCheckoutButtonPressed('NextCTA Clicked')).toEqual({
           type: 'TRACKING',
           trackingData,
-          gtmEvent: trackingData
+          gtmEvent: trackingData,
         })
       })
     })
@@ -972,8 +1018,8 @@ describe('checkout actions', () => {
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
           actionType: 'Promocode Applied',
-          promocode: 'promo'
-        }
+          promocode: 'promo',
+        },
       })
     })
 
@@ -984,8 +1030,8 @@ describe('checkout actions', () => {
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
           actionType: 'Promocode Removed',
-          promocode: 'promo'
-        }
+          promocode: 'promo',
+        },
       })
     })
   })
@@ -998,7 +1044,7 @@ describe('checkout actions', () => {
         expect(fetchPayPalToken).toHaveBeenCalled()
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
-          token: 'fake-client-token'
+          token: 'fake-client-token',
         })
       })
     })
@@ -1023,7 +1069,7 @@ describe('checkout actions', () => {
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
-          token: null
+          token: null,
         })
       })
     })
@@ -1036,7 +1082,7 @@ describe('checkout actions', () => {
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
-          paymentMethod: PaymentMethod.Card
+          paymentMethod: PaymentMethod.Card,
         })
       })
     })
@@ -1061,7 +1107,9 @@ describe('checkout actions', () => {
 
     describe('when payment method is PayPal, but it was failed to init', () => {
       test('PayPal failed attempt should be reported', () => {
-        getState.mockReturnValue(createState({ checkout: Immutable.fromJS({ paypalErrors: { Error: true } }) }))
+        getState.mockReturnValue(
+          createState({ checkout: Immutable.fromJS({ paypalErrors: { Error: true } }) }),
+        )
 
         setCurrentPaymentMethod(PaymentMethod.PayPal)(dispatch, getState)
 
@@ -1079,7 +1127,7 @@ describe('checkout actions', () => {
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYPAL_DEVICE_DATA,
-          deviceData
+          deviceData,
         })
       })
     })
@@ -1104,7 +1152,7 @@ describe('checkout actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
-        stepIndex: 1
+        stepIndex: 1,
       })
     })
   })
@@ -1145,7 +1193,7 @@ describe('checkout actions', () => {
       expect(trackCheckoutError).toHaveBeenCalledWith(
         actionTypes.CHECKOUT_PAYMENT,
         paymentError.code,
-        initiator
+        initiator,
       )
     })
 

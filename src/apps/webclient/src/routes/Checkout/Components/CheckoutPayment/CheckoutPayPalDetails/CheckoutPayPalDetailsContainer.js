@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 
+import { trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } from 'actions/log'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import {
   firePayPalError,
   clearPayPalErrors,
   setPayPalDeviceData,
   setPayPalNonce,
-} from 'actions/checkout'
-import { trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } from 'actions/log'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { getPayPalClientToken, isPayPalReady } from 'selectors/payment'
+} from 'routes/Checkout/checkoutActions'
+import { getPayPalClientToken, isPayPalReady } from 'routes/Checkout/checkoutPaymentSelectors'
 
 import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
 

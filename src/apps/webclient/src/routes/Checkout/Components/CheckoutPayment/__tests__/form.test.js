@@ -1,6 +1,6 @@
-import { addressRules } from 'validations/address'
-import { validationRules } from 'validations/card-checkout'
 import { addPrefix } from 'validations/util'
+
+import { addressRules, validationRules } from 'routes/Checkout/checkoutValidations'
 
 import { getValidationRules } from '../form'
 

@@ -1,5 +1,9 @@
 import { actionTypes } from 'actions/actionTypes'
-import { inferCardType, translateCheckoutErrorToMessageCode } from '../checkout'
+import {
+  inferCardType,
+  translateCheckoutErrorToMessageCode,
+  getUrlParams,
+} from 'routes/Checkout/checkoutUtils'
 
 describe('utils/checkout', () => {
   describe('inferCardType', () => {
@@ -77,7 +81,39 @@ describe('utils/checkout', () => {
           const messageCode = translateCheckoutErrorToMessageCode(errorName, errorValue)
           expect(messageCode).toBe(expectedMessageCode)
         })
-      }
+      },
     )
+  })
+
+  describe('getUrlParams', () => {
+    describe('when URL does not contain any params', () => {
+      it('should return empty object', () => {
+        const expected = {}
+
+        const result = getUrlParams('https://gousto.co.uk/')
+
+        expect(result).toEqual(expected)
+      })
+    })
+
+    describe('when URL does contain one params', () => {
+      it('should return object with hey/value', () => {
+        const expected = { foo: 'bar' }
+
+        const result = getUrlParams('https://gousto.co.uk/?foo=bar')
+
+        expect(result).toEqual(expected)
+      })
+    })
+
+    describe('when URL does contain several params', () => {
+      it('should return object with hey/value', () => {
+        const expected = { param1: 'value1', param2: '123' }
+
+        const result = getUrlParams('https://gousto.co.uk/?param1=value1&param2=123')
+
+        expect(result).toEqual(expected)
+      })
+    })
   })
 })

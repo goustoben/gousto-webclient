@@ -10,8 +10,8 @@ import {
   AlignItems,
 } from '@gousto-internal/citrus-react'
 
-import { checkoutConfig } from 'config/checkout'
 import configRoutes from 'config/routes'
+import { checkoutConfig } from 'routes/Checkout/checkoutConstants'
 
 export const TermsAndConditions = () => (
   <Box

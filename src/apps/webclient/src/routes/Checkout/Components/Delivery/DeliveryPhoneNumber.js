@@ -4,7 +4,7 @@ import { ReduxFormInput } from 'Form/ReduxFormInput'
 import PropTypes from 'prop-types'
 import { Field } from 'redux-form'
 
-import { phoneValidator } from 'utils/forms'
+import { phoneValidator } from 'routes/Checkout/checkoutFormUtils'
 
 import checkoutCss from '../../Checkout.css'
 import css from './Delivery.css'

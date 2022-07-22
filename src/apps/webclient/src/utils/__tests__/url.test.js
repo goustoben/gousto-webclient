@@ -1,4 +1,4 @@
-import { addUserIdToUrl, slugify, getUrlParams } from 'utils/url'
+import { addUserIdToUrl, slugify } from 'utils/url'
 
 describe('URL utils',() => {
   describe('slugify', () => {
@@ -53,38 +53,6 @@ describe('URL utils',() => {
 
       test('user_id is not added to the url', () => {
         expect(result).toBe(URL)
-      })
-    })
-  })
-
-  describe('getUrlParams', () => {
-    describe('when URL does not contain any params', () => {
-      it('should return empty object', () => {
-        const expected = {}
-
-        const result = getUrlParams('https://gousto.co.uk/')
-
-        expect(result).toEqual(expected)
-      })
-    })
-
-    describe('when URL does contain one params', () => {
-      it('should return object with hey/value', () => {
-        const expected = { foo: 'bar' }
-
-        const result = getUrlParams('https://gousto.co.uk/?foo=bar')
-
-        expect(result).toEqual(expected)
-      })
-    })
-
-    describe('when URL does contain several params', () => {
-      it('should return object with hey/value', () => {
-        const expected = { param1: 'value1', param2: '123' }
-
-        const result = getUrlParams('https://gousto.co.uk/?param1=value1&param2=123')
-
-        expect(result).toEqual(expected)
       })
     })
   })

@@ -10,7 +10,7 @@ jest.mock('apis/log', () => ({
   log: jest.fn(() => Promise.resolve()),
 }))
 
-jest.mock('selectors/checkout', () => ({
+jest.mock('routes/Checkout/checkoutSelectors', () => ({
   getFeLoggingCorrelationData: jest.fn(() => ({
     session_id: 'fake_session_id',
     gousto_ref: 'fake_gousto_ref',

@@ -3,7 +3,7 @@ import React from 'react'
 import { Button, Segment, Control, Tooltip } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
-import { checkoutConfig } from 'config/checkout'
+import { checkoutConfig } from 'routes/Checkout/checkoutConstants'
 
 import css from './Buttons.css'
 

@@ -5,16 +5,16 @@ import { connect } from 'react-redux'
 
 import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
+import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import {
   fetchPayPalClientToken,
   trackCheckoutButtonPressed,
   clearPayPalClientToken,
   checkoutStepIndexReached,
   fetchGoustoRef,
-} from 'actions/checkout'
-import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
-import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
-import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
+} from 'routes/Checkout/checkoutActions'
+import { getCheckoutLastReachedStepIndex } from 'routes/Checkout/checkoutSelectors'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 
 import { CheckoutWrapper } from './CheckoutWrapper'

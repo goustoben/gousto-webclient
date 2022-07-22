@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { getFormValues, isInvalid, submit } from 'redux-form'
 
+import { deliveryFormName } from 'routes/Checkout/checkoutSelectors'
 import { getBrowserType } from 'selectors/browser'
-import { deliveryFormName } from 'selectors/checkout'
 
 import { SubmitButton } from './SubmitButton'
 

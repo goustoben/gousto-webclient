@@ -1,5 +1,5 @@
+import { saveBasket } from 'routes/Checkout/checkoutApis'
 import { fetch } from 'utils/fetch'
-import { saveBasket } from '../checkout'
 
 const mockFetchResult = { data: [1, 2, 3] }
 
@@ -8,7 +8,7 @@ jest.mock('utils/fetch', () => ({
     const getData = async () => ({ data: [1, 2, 3] })
 
     return getData()
-  })
+  }),
 }))
 
 describe('checkout api', () => {

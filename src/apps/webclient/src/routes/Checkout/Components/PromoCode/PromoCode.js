@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { InputField, Space, FormFieldStatus } from '@gousto-internal/citrus-react'
 import PropTypes from 'prop-types'
 
-import { checkoutConfig } from 'config/checkout'
+import { checkoutConfig } from 'routes/Checkout/checkoutConstants'
 
 const propTypes = {
   promoCode: PropTypes.string,

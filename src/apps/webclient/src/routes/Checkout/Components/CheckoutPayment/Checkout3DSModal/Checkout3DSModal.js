@@ -4,7 +4,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import PropTypes from 'prop-types'
 
 import Overlay from 'components/Overlay'
-import { getUrlParams } from 'utils/url'
+import { getUrlParams } from 'routes/Checkout/checkoutUtils'
 
 import css from './Checkout3DSModal.css'
 
