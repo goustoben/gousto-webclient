@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { checkoutConfig } from 'config/checkout'
+import { checkoutConfig } from 'routes/Checkout/checkoutConstants'
 import { Button } from 'goustouicomponents'
 import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'

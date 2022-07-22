@@ -4,7 +4,7 @@ import { getFormValues, submit, getFormMeta } from 'redux-form'
 
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { deliveryFormName } from 'selectors/checkout'
+import { deliveryFormName } from 'routes/Checkout/checkoutSelectors'
 
 import { Delivery } from './Delivery'
 

@@ -12,7 +12,7 @@ export const checkoutConfig = {
   tooltip: {
     security: 'The 3-digit security code is found on the back of the card',
     outOfstock: 'You got the last one',
-    limitReached: 'You\'ve run out of space in your box!',
+    limitReached: "You've run out of space in your box!",
   },
   errorMessage: {
     invalidPromocode: 'This discount code is not valid',
@@ -26,7 +26,7 @@ export const checkoutConfig = {
       header: 'Cannot connect to PayPal',
       message: 'Click the PayPal button below to try again or select card payment above.',
     },
-    'postcodeInvalid': {
+    postcodeInvalid: {
       header: 'Invalid postcode',
       message: 'Enter a valid postcode, for example, W3 7UP.',
     },
@@ -37,11 +37,13 @@ export const checkoutConfig = {
     },
     'payment-failure': {
       header: 'Payment failed',
-      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
+      message:
+        'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
     'gousto-on-demand-payment-failure': {
       header: 'Payment failed',
-      message: 'Try again or use a different card. If you’re still experiencing difficulties, contact your bank.',
+      message:
+        'Try again or use a different card. If you’re still experiencing difficulties, contact your bank.',
     },
     'user-promo-invalid': {
       header: 'Discount removed',
@@ -49,12 +51,14 @@ export const checkoutConfig = {
     },
     'gousto-on-demand-user-promo-invalid': {
       header: 'Offer could not be applied',
-      message: 'It looks like you already have a Gousto account. Log in with your Gousto email to add this offer to your account.',
+      message:
+        'It looks like you already have a Gousto account. Log in with your Gousto email to add this offer to your account.',
       showLoginCTA: true,
     },
     'offer-has-been-used': {
       header: 'Offer has already been used',
-      message: 'It looks like your offer has already been used. If this doesn’t look right, contact the person / organisation who gave you the offer.',
+      message:
+        'It looks like your offer has already been used. If this doesn’t look right, contact the person / organisation who gave you the offer.',
     },
     'out-of-stock': {
       header: 'Cannot create order',
@@ -66,49 +70,59 @@ export const checkoutConfig = {
     },
     '3ds-challenge-failed': {
       header: 'Payment failed',
-      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
+      message:
+        'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
     'gousto-on-demand-3ds-challenge-failed': {
       header: 'Payment failed',
-      message: 'Try again or use a different card. If you’re still experiencing difficulties, contact your bank.',
+      message:
+        'Try again or use a different card. If you’re still experiencing difficulties, contact your bank.',
     },
     'valid-card-details-not-provided': {
       header: 'Payment failed',
-      message: 'Please check your card details and try again.'
+      message: 'Please check your card details and try again.',
     },
     '422-insufficient-funds': {
       header: 'Insufficient funds',
-      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+      message:
+        'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
     'gousto-on-demand-422-insufficient-funds': {
       header: 'Insufficient funds',
-      message: 'Use a different card. If you’re still experiencing difficulties, contact your bank or try again later.',
+      message:
+        'Use a different card. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
     '422-declined-do-not-honour': {
       header: 'Bank declined payment',
-      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+      message:
+        'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
     'gousto-on-demand-422-declined-do-not-honour': {
       header: 'Bank declined payment',
-      message: 'Use a different card. If you’re still experiencing difficulties, contact your bank or try again later.',
+      message:
+        'Use a different card. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
     'signup-payments-payment-failure': {
       header: 'Payment failed',
-      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
+      message:
+        'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
     'signup-payments-insufficient-funds': {
       header: 'Insufficient funds',
-      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+      message:
+        'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
     'signup-payments-declined-do-not-honour': {
       header: 'Bank declined payment',
-      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+      message:
+        'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
     'signup-payments-challenge-failed': {
       header: 'Payment failed',
-      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
+      message:
+        'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
-    'generic': {
+    generic: {
       header: 'An error occurred',
       message: 'Click "Start your subscription" to try again.',
     },

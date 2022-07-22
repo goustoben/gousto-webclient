@@ -1,5 +1,5 @@
 import { log } from 'apis/log'
-import { getFeLoggingCorrelationData } from 'selectors/checkout'
+import { getFeLoggingCorrelationData } from 'routes/Checkout/checkoutSelectors'
 import logger from 'utils/logger'
 
 export const logLevels = {

@@ -1,9 +1,9 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
-import { deliveryValidations } from 'validations/delivery'
 
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
+import { deliveryValidations } from 'routes/Checkout/checkoutValidations'
 
 import { DeliveryContainer, addInitialValues, validationMessages } from '../../Components/Delivery'
 import { formContainer } from '../../Components/formContainer'

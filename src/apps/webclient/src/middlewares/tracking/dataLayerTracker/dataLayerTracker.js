@@ -1,8 +1,9 @@
 import { actionTypes } from 'actions/actionTypes'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
+// eslint-disable-next-line import/no-unresolved
 import { checkoutSteps } from 'routes/Checkout/checkoutConfig'
+import { getCurrentPaymentMethod } from 'routes/Checkout/checkoutPaymentSelectors'
 import { getBasketRecipes } from 'selectors/basket'
-import { getCurrentPaymentMethod } from 'selectors/payment'
 import { canUseWindow } from 'utils/browserEnvironment'
 import logger from 'utils/logger'
 

@@ -16,7 +16,7 @@ import {
   feLoggingLogEvent,
   logLevels,
 } from 'actions/log'
-import { getFeLoggingCorrelationData } from 'selectors/checkout'
+import { getFeLoggingCorrelationData } from 'routes/Checkout/checkoutSelectors'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import statusActions from './status'
 import authActions from './auth'

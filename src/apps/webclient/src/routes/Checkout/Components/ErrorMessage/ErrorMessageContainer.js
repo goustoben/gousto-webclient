@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
+import { translateCheckoutErrorToMessageCode } from 'routes/Checkout/checkoutUtils'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
-import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
 
 import { isSubmitting } from '../../utils/state'
 import { ErrorMessage } from './ErrorMessage'

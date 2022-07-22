@@ -1,14 +1,13 @@
-import { fetch } from 'utils/fetch'
-import {
-  withMockEnvironmentAndDomain
-} from '_testing/isomorphic-environment-test-utils'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+
 import {
   authPayment,
   checkPayment,
   fetchPayPalToken,
   signupPayment,
   get3DSCompliantToken,
-} from '../payments'
+} from 'routes/Checkout/checkoutPaymentsApis'
+import { fetch } from 'utils/fetch'
 
 const mockPaymentAuthResponse = {
   status: 'ok',
@@ -28,7 +27,7 @@ const mockPaymentAuthResponse = {
     },
     createdAt: '2020-07-15 09:17:15.974891+00:00',
     updatedAt: '2020-07-15 09:17:19.217302+00:00',
-  }
+  },
 }
 const mockPaymentCheckResponse = {
   status: 'ok',
@@ -37,32 +36,32 @@ const mockPaymentCheckResponse = {
     amount: 3499,
     approved: true,
     status: 'Authorized',
-    sourceId: 'src_hu7vs255rzwebo2nnccyugkiv4'
-  }
+    sourceId: 'src_hu7vs255rzwebo2nnccyugkiv4',
+  },
 }
 const mockPayPalTokenResponse = {
   status: 'ok',
   data: {
-    clientToken: 'dashdasdfaskdfajs'
-  }
+    clientToken: 'dashdasdfaskdfajs',
+  },
 }
 const mockSignupPaymentResponse = {
   status: 'ok',
   data: {
     amount: 2499,
-    status: 'authorized'
-  }
+    status: 'authorized',
+  },
 }
 
 const mock3dsCompliantTokenResponse = {
   status: 'ok',
   data: {
-    displayModal: true
-  }
+    displayModal: true,
+  },
 }
 
 jest.mock('utils/fetch', () => ({
-  fetch: jest.fn().mockImplementation( (token, url) => {
+  fetch: jest.fn().mockImplementation((token, url) => {
     const getData = async () => {
       if (url.indexOf('/token') >= 0) {
         return mockPayPalTokenResponse
@@ -80,11 +79,11 @@ jest.mock('utils/fetch', () => ({
     }
 
     return getData()
-  })
+  }),
 }))
 
 describe('Payments API', () => {
-  const expectedHeaders = { 'Content-Type': 'application/json'}
+  const expectedHeaders = { 'Content-Type': 'application/json' }
   const sessionId = 'session_id'
 
   // mock the environment and domain config used by these tests to generate endpoints
@@ -111,7 +110,14 @@ describe('Payments API', () => {
 
     test('should send payment auth request', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/payment-auth?session_id=session_id', request, 'POST', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
+        'https://production-api.gousto.co.uk/payments/v1/payments/payment-auth?session_id=session_id',
+        request,
+        'POST',
+        undefined,
+        expectedHeaders,
+      )
     })
 
     test('should return the results of the fetch unchanged', () => {
@@ -129,7 +135,14 @@ describe('Payments API', () => {
 
     test('should fetch payment auth request status', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, `https://production-api.gousto.co.uk/payments/v1/payments/payments/${checkoutSessionId}?session_id=session_id`, null, 'GET', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
+        `https://production-api.gousto.co.uk/payments/v1/payments/payments/${checkoutSessionId}?session_id=session_id`,
+        null,
+        'GET',
+        undefined,
+        expectedHeaders,
+      )
     })
 
     test('should return the results of the fetch unchanged', () => {
@@ -145,7 +158,14 @@ describe('Payments API', () => {
       await fetchPayPalToken()
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, expectedUrl, expectedQueryParams, 'GET', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
+        expectedUrl,
+        expectedQueryParams,
+        'GET',
+        undefined,
+        expectedHeaders,
+      )
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -166,7 +186,14 @@ describe('Payments API', () => {
       await signupPayment(request, 'paypal', sessionId)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/signup-payments?provider=paypal&session_id=session_id', request, 'POST', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
+        'https://production-api.gousto.co.uk/payments/v1/payments/signup-payments?provider=paypal&session_id=session_id',
+        request,
+        'POST',
+        undefined,
+        expectedHeaders,
+      )
     })
 
     test('should return the results of the fetch unchanged', async () => {

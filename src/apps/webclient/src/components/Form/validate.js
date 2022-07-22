@@ -1,5 +1,5 @@
 import validator from 'validator'
-import { ruleMessages } from 'validations/ruleMessages'
+import { ruleMessages } from 'routes/Checkout/checkoutValidations'
 
 const mergeErrorMessages = (errors, fieldPath, value) => {
   if (typeof fieldPath === 'string') {

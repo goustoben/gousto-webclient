@@ -1,4 +1,4 @@
-import { deliveryValidations } from 'validations/delivery'
+import { deliveryValidations } from 'routes/Checkout/checkoutValidations'
 
 const formValues = {
   delivery: {
@@ -7,8 +7,8 @@ const formValues = {
   },
   customAddressType: {
     delivery: {
-      addressType: 'Other'
-    }
+      addressType: 'Other',
+    },
   },
 }
 
@@ -16,9 +16,9 @@ function getRules() {
   return {
     rules: [
       { name: 'isLength', options: { min: 5 } },
-      { name: 'isLength', options: { max: 32 } }
+      { name: 'isLength', options: { max: 32 } },
     ],
-    field: 'delivery instruction'
+    field: 'delivery instruction',
   }
 }
 
@@ -60,8 +60,8 @@ describe('When deliveryValidations is called', () => {
   describe('And delivery instruction option is default', () => {
     const values = {
       delivery: {
-        deliveryInstruction: 'Please select an option'
-      }
+        deliveryInstruction: 'Please select an option',
+      },
     }
 
     beforeEach(() => {
