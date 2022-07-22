@@ -3072,6 +3072,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@library/endpoint@workspace:src/modules/library/endpoint":
+  version: 0.0.0-use.local
+  resolution: "@library/endpoint@workspace:src/modules/library/endpoint"
+  languageName: unknown
+  linkType: soft
+
 "@library/eslint-plugin-feature-modules@workspace:*, @library/eslint-plugin-feature-modules@workspace:src/modules/library/eslint-plugin-feature-modules":
   version: 0.0.0-use.local
   resolution: "@library/eslint-plugin-feature-modules@workspace:src/modules/library/eslint-plugin-feature-modules"

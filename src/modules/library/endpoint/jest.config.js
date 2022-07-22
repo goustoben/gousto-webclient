@@ -1,4 +1,4 @@
 module.exports = {
-  displayName: '@library/eslint-plugin-feature-modules',
+  displayName: '@library/endpoint',
   rootDir: './',
 }
