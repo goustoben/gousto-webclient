@@ -52,6 +52,7 @@ export type ServiceName =
   | 'userfeedback'
   | 'webclient'
   | 'workable'
+  | 'streakPromo'
 
 export type ServiceManifest = {
   [key in ServiceName]: ServiceVersion[]

@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Overlay from 'Overlay'
+import moment from 'moment'
 import {CTA, Modal, ModalHeader} from 'goustouicomponents'
 import {ProgressSoFar} from 'PrgogressSoFar/ProgressSoFar'
 import css from './ProgressSoFarModal.css'
 
 export const ProgressSoFarModal = ({ isOpen, toggleModal, data }) => {
   const { target, progress, promotionAmount, endOfSecondMonth } = data && data.toJS()
+  const endOfSecondMonthFormatted = moment(endOfSecondMonth, "YYYY-MM-DD").format("Do MMMM YYYY")
 
   return (
     <Overlay open={isOpen} from="top">
@@ -27,7 +29,7 @@ export const ProgressSoFarModal = ({ isOpen, toggleModal, data }) => {
           <div className={css.modalContent}>
             <h3>Fancy {promotionAmount} off for a month?</h3>
             <p>
-              <span className={css.bold}>Order {target - progress} boxes</span> before {endOfSecondMonth} and we’ll give you
+              <span className={css.bold}>Order {target - progress} boxes</span> before {endOfSecondMonthFormatted} and we’ll give you
               <span className={css.bold}> {promotionAmount} off all your boxes </span>
               that are delivered the following month.
             </p>

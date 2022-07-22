@@ -4,6 +4,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 
 import * as userApi from 'apis/user'
+import * as streakPromoApi from 'apis/streakPromo'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
 import { get3DSCompliantToken } from 'apis/payments'
@@ -671,8 +672,8 @@ export const userGetReferralDetails = () => async (dispatch, getState) => {
 
 export const userGetFrequencyProgress = () => async (dispatch, getState) => {
   try {
-    // const accessToken = getState().auth.get('accessToken')
-    // const { data } = await userApi.referralDetails(accessToken)
+    //const accessToken = getState().auth.get('accessToken')
+    //const { data } = await streakPromoApi.getFrequencyProgress(accessToken)
 
     const data = {
       progress: 5,
@@ -680,7 +681,7 @@ export const userGetFrequencyProgress = () => async (dispatch, getState) => {
       endOfSecondMonth: '2022-07-12',
       endOfThirdMonth: '2022-08-11',
       promotionAmount: '5%'
-    }
+    } 
 
     dispatch(userLoadFrequencyProgress(data))
   } catch (err) {

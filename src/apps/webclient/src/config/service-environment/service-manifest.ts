@@ -242,6 +242,13 @@ export const serviceManifest: ServiceManifest = {
       basePath: '/workable/v1',
     },
   ],
+  streakPromo: [
+    {
+      majorVersion: 1,
+      version: 'v1',
+      basePath: '/streakpromo/v1',
+    },
+  ],
 }
 
 export const getServiceManifest = () => serviceManifest
