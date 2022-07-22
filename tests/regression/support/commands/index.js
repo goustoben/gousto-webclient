@@ -3,6 +3,7 @@ function setLoginCookies() {
   const expiry = { expires_at: '2030-01-31T22:15:01.593Z' }
   const refresh = { refresh_token: "5lJLjJ67tJ5n8RIW2ZYohXTes4F47qEMtzZSI4HM" }
   const remember = { remember_me: true }
+  // const likeDislikeTutorial = { v1_tutorial_viewed: 'likedislikerecipes' }
 
   const encode = cookieValue => encodeURIComponent(JSON.stringify(cookieValue))
 
@@ -10,6 +11,7 @@ function setLoginCookies() {
   document.cookie = `v1_oauth_expiry=${encode(expiry)};path=/`
   document.cookie = `v1_oauth_refresh=${encode(refresh)};path=/`
   document.cookie = `v1_oauth_remember=${encode(remember)};path=/`
+  // document.cookie = `v1_tutorial_viewed=${encode(likeDislikeTutorial)};path=/`
 }
 // // ***********************************************
 // // For examples of custom
@@ -99,6 +101,10 @@ Cypress.Commands.add('applyPromoCode', () => {
   cy.get('[data-testing="promoModalButton"]').click()
 })
 
+Cypress.Commands.add('dismissTutorial', () => {
+  cy.get('[data-testing="tutorialStepCta"]').click()
+})
+
 Cypress.Commands.add('dismissPromoModal', () => {
   cy.get('[data-testing="promoModalButton"]').click()
 })
@@ -111,6 +117,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     cy.get("[href='/menu']").first().click()
     cy.wait(['@getPromoCode'])
     cy.dismissPromoModal()
+    cy.dismissTutorial()
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
@@ -121,6 +128,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     cy.get("[href='/menu'] > li").first().click()
     cy.wait(['@getPromoCode'])
     cy.dismissPromoModal()
+    cy.dismissTutorial()
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()

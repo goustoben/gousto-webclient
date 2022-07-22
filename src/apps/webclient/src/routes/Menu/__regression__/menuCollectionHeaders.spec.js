@@ -30,6 +30,7 @@ describe('MenuCollectionHeaders', () => {
       cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveries'])
       cy.wait('@getDeliveries')
       cy.applyPromoCode()
+      cy.dismissTutorial()
       cy.get('body').then(($body) => {
         if ($body.find('[data-testing="waveLinkHeader"]').length) {
           cy.get('[data-testing="waveLinkHeader"]').click()
