@@ -21,16 +21,10 @@ const BoxPriceBlock = ({
   selectedBox,
   trackUTMAndPromoCode,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState(2)
+  const [selectedIndex, setSelectedIndex] = useState(boxInfo.length - 1)
   const { numPortions } = useBasket()
   const { isFiveRecipesEnabled } = useIsFiveRecipesEnabledForProspects(numPortions)
   const { title, boxSizeTrackingValue } = boxTypes[numPersons]
-
-  const boxInfoCopy = boxInfo.slice()
-
-  if (boxSizeTrackingValue === 'large' || !isFiveRecipesEnabled) {
-    boxInfoCopy.pop()
-  }
 
   const recipesLeftTrackingIndex = boxSizeTrackingValue !== 'large' && isFiveRecipesEnabled ? 3 : 2
 
@@ -41,7 +35,7 @@ const BoxPriceBlock = ({
         <BoxPriceSuitableForSection numPersons={numPersons} />
         <p className={css.subhead}>Select number of recipes</p>
         <div className={css.buttonGroup}>
-          {boxInfoCopy.map((item, index) => {
+          {boxInfo.map((item, index) => {
             const numRecipes = item.num_portions
 
             return (
