@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 import { getBasketRecipes, getBasketPostcode } from 'selectors/basket'
 
-import { useRecipeLimitReached, useRemoveRecipesOverLimit, sumQuantities } from '../limits'
+import { useRecipeLimitReached, sumQuantities } from '../limits'
 import { useIsRecipeInBasket } from '../useIsRecipeInBasket'
 import { useAddRecipe, AddRecipeFn } from './useAddRecipe'
 import { useRemoveRecipe, RemoveRecipeFn } from './useRemoveRecipe'
@@ -46,7 +46,7 @@ const useBasketRecipes = () => {
     [removeRecipe, addRecipe],
   )
 
-  useRemoveRecipesOverLimit(recipeQuantities)
+  // useRemoveRecipesOverLimit(recipeQuantities)
 
   return {
     addRecipe,
