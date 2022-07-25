@@ -129,19 +129,3 @@ export const translateCheckoutErrorToMessageCode = (
     }
   }
 }
-
-/**
- * Checks that order is fully discounted when promo code is valid.
- *
- * @param {Pricing} pricing
- * @returns `True` if order has 100% discount and promo code is valid
- */
-export const isOrderFullyDiscounted = (pricing) => {
-  const result = pricing
-    ? parseInt(pricing.percentageOff, 10) === 100 &&
-      pricing.totalDiscount === pricing.recipeTotal &&
-      pricing.promoCodeValid
-    : false
-
-  return result
-}

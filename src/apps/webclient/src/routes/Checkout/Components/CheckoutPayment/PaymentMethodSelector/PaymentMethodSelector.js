@@ -13,7 +13,6 @@ export const PaymentMethodSelector = ({
   currentPaymentMethod,
   setCurrentPaymentMethod,
   isPayPalReady,
-  isPayPalEligible,
 }) => {
   const methodDescriptors = [
     {
@@ -28,10 +27,7 @@ export const PaymentMethodSelector = ({
         fileName: 'payment-method-4-cards',
       },
     },
-  ]
-
-  if (isPayPalEligible) {
-    methodDescriptors.push({
+    {
       paymentMethod: PaymentMethod.PayPal,
       leftItem: {
         itemType: 'svg',
@@ -44,8 +40,8 @@ export const PaymentMethodSelector = ({
         text: 'Connected',
         hide: !isPayPalReady,
       },
-    })
-  }
+    },
+  ]
 
   return (
     <ul className={classNames(css.paymentMethods, { [css.hide]: isPayPalReady })}>
@@ -65,5 +61,4 @@ PaymentMethodSelector.propTypes = {
   currentPaymentMethod: PropTypes.string.isRequired,
   setCurrentPaymentMethod: PropTypes.func.isRequired,
   isPayPalReady: PropTypes.bool.isRequired,
-  isPayPalEligible: PropTypes.bool.isRequired,
 }

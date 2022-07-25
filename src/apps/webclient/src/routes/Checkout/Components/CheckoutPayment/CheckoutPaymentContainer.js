@@ -12,7 +12,6 @@ import {
   setCurrentPaymentMethod,
 } from 'routes/Checkout/checkoutActions'
 import { getCurrentPaymentMethod, isPayPalReady } from 'routes/Checkout/checkoutPaymentSelectors'
-import { isOrderFullyDiscounted } from 'routes/Checkout/checkoutUtils'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
@@ -62,14 +61,12 @@ const Plain = (props) => {
   const pricingHookResponse = usePricing()
   const { pricing } = pricingHookResponse
   const isFreeBox = pricing ? formatOrderPrice(pricing.total) === 'FREE' : false
-  const isFullyDiscounted = isOrderFullyDiscounted(pricing)
 
   return (
     <ConnectedCheckoutPaymentContainer
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
       isFreeBox={isFreeBox}
-      isFullyDiscounted={isFullyDiscounted}
       pricingHookResponse={pricingHookResponse}
     />
   )
