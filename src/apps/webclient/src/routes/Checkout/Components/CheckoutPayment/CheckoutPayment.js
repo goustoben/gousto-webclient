@@ -262,6 +262,7 @@ class CheckoutPayment extends React.Component {
       hotjarTriggerName,
       isGoustoOnDemandEnabled,
       isFreeBox,
+      isFullyDiscounted,
       pricingHookResponse: { pricing },
     } = this.props
     const sectionSubtitle =
@@ -271,6 +272,7 @@ class CheckoutPayment extends React.Component {
           <span className={css.bold}>If you don’t add these, no payment will be taken.</span>
         </span>
       ) : null
+    const isPayPalEligible = !(isFreeBox && isFullyDiscounted) // PayPay does not support £0.00 orders with 100% discount so PayPal can't be used as a payment method
 
     return (
       <div
@@ -283,6 +285,7 @@ class CheckoutPayment extends React.Component {
             currentPaymentMethod={currentPaymentMethod}
             setCurrentPaymentMethod={setCurrentPaymentMethod}
             isPayPalReady={isPayPalReady}
+            isPayPalEligible={isPayPalEligible}
           />
         )}
         {this.renderCardContent()}
@@ -294,7 +297,7 @@ class CheckoutPayment extends React.Component {
             </div>
           )}
         </div>
-        {isPayPalReady && <PayPalConfirmation />}
+        {isPayPalEligible && isPayPalReady && <PayPalConfirmation />}
         {this.renderOuterContent()}
         <PaymentFooter
           isGoustoOnDemandEnabled={isGoustoOnDemandEnabled}
@@ -336,9 +339,11 @@ CheckoutPayment.propTypes = {
   hotjarTriggerName: PropTypes.string,
   isGoustoOnDemandEnabled: PropTypes.bool,
   isFreeBox: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
   pricingHookResponse: PropTypes.object,
   signupLoginError: PropTypes.string,
   feLoggingLogEvent: PropTypes.func.isRequired,
+  isFullyDiscounted: PropTypes.bool,
 }
 
 CheckoutPayment.defaultProps = {
@@ -365,6 +370,7 @@ CheckoutPayment.defaultProps = {
   hotjarTriggerName: '',
   isGoustoOnDemandEnabled: false,
   isFreeBox: false,
+  isFullyDiscounted: false,
   // eslint-disable-next-line react/forbid-prop-types
   pricingHookResponse: {},
   signupLoginError: null,
