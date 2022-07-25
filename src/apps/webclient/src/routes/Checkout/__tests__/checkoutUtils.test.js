@@ -3,6 +3,7 @@ import {
   inferCardType,
   translateCheckoutErrorToMessageCode,
   getUrlParams,
+  isOrderFullyDiscounted,
 } from 'routes/Checkout/checkoutUtils'
 
 describe('utils/checkout', () => {
@@ -113,6 +114,47 @@ describe('utils/checkout', () => {
         const result = getUrlParams('https://gousto.co.uk/?param1=value1&param2=123')
 
         expect(result).toEqual(expected)
+      })
+    })
+  })
+
+  describe('isOrderFullyDiscounted', () => {
+    const defaultState = {
+      percentageOff: 100,
+      totalDiscount: '23',
+      recipeTotal: '23',
+      promoCodeValid: true,
+    }
+
+    describe('when percentageOff is not 100', () => {
+      test('then order is not fully discounted', () => {
+        const result = isOrderFullyDiscounted({ ...defaultState, percentageOff: 99 })
+
+        expect(result).toBe(false)
+      })
+    })
+
+    describe('when promo code is not valid', () => {
+      test('then order is not fully discounted', () => {
+        const result = isOrderFullyDiscounted({ ...defaultState, promoCodeValid: false })
+
+        expect(result).toBe(false)
+      })
+    })
+
+    describe('when percentageOff is 100 and promoCode is valid and recipeTotal equals totalDiscount', () => {
+      test('then order is fully discounted', () => {
+        const result = isOrderFullyDiscounted(defaultState)
+
+        expect(result).toBe(true)
+      })
+    })
+
+    describe('when pricing object is undefined', () => {
+      test('then order is not fully discounted', () => {
+        const result = isOrderFullyDiscounted()
+
+        expect(result).toBe(false)
       })
     })
   })
