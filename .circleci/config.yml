@@ -412,6 +412,9 @@ jobs:
       - store_artifacts:
           path: /mnt/ramdisk/tests/regression/videos
           destination: ./
+      - store_artifacts:
+          path: /mnt/ramdisk/tests/regression/screenshots
+          destination: ./
 
   deploy-infrastructure-and-webclient-image:
     docker: *gousto_platform_image #stock image missing boto
