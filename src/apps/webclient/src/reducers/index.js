@@ -18,6 +18,7 @@ import { persistReducers } from './persist'
 import { productsReducers } from './products'
 import { promosReducers } from './promos'
 import recipes from './recipes'
+import frequencyIncPromo from './frequencyIncPromo'
 import { redirectReducers } from './redirect'
 import { serverErrorReducers } from './serverError'
 import { signup } from './signup'
@@ -69,6 +70,7 @@ const reducers = {
   ...productsReducers,
   ...promosReducers,
   ...recipes,
+  ...frequencyIncPromo,
   ...redirectReducers,
   ...serverErrorReducers,
   ...signup,

@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
 import { appBannerDismiss } from 'actions/appBanner'
+import { frequencyIncPromoModalViewed } from 'actions/frequencyIncPromo'
 import { basketAddressChange, basketChosenAddressChange, basketDateChange, basketNumPortionChange, basketPostcodeChangePure, basketPreviewOrderChange, basketPromoCodeChange, basketPromoCodeUrlChange, basketRecipesInitialise, basketSetSubscriptionOption, basketSignupCollectionReceive, basketSlotChange, basketStepsOrderReceive } from 'actions/basket'
 import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
@@ -87,6 +88,7 @@ const processCookies = (cookies, store) => {
   let tracking = getCookieStoreValue(cookies, 'tracking')
   const cookiePolicy = get(cookies, 'cookie_policy_v2')
   const appBannerDismissed = get(cookies, 'app_banner_dismissed')
+  const frequencyIncPromoModalIsViewed = get(cookies, 'frequency_inc_promo_modal_viewed')
 
   let features = getCookieStoreValue(cookies, 'features')
   let variants = getCookieStoreValue(cookies, 'variants')
@@ -108,6 +110,10 @@ const processCookies = (cookies, store) => {
 
   if (appBannerDismissed) {
     store.dispatch(appBannerDismiss())
+  }
+
+  if (frequencyIncPromoModalIsViewed) {
+    store.dispatch(frequencyIncPromoModalViewed())
   }
 
   if (promoCode) {

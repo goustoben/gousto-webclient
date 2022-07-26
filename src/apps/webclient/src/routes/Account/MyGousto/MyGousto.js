@@ -5,6 +5,7 @@ import Link from 'Link'
 import Helmet from 'react-helmet'
 import { ReactReduxContext } from 'react-redux'
 import menuFetchData from 'routes/Menu/fetchData'
+import { frequencyIncPromoModalViewed } from 'actions/frequencyIncPromo'
 import { Notification } from './Notification'
 import { CustomNotice } from './CustomNotice'
 import { AppAwarenessBanner } from './AppAwarenessBanner'
@@ -35,8 +36,9 @@ const propTypes = {
   track3dsCompliantClick: PropTypes.func,
   userReset3dsCompliantToken: PropTypes.func,
   pending: PropTypes.bool,
-  userGetFrequencyProgress: PropTypes.func.isRequired,
-  frequencyProgressData: PropTypes.instanceOf(Immutable.Map)
+  getFrequencyIncPromoProgress: PropTypes.func.isRequired,
+  frequencyProgress: PropTypes.instanceOf(Immutable.Map),
+  isFrequencyModalViewed: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -55,24 +57,28 @@ const defaultProps = {
   track3dsCompliantClick: () => {},
   userReset3dsCompliantToken: () => {},
   pending: false,
-  frequencyProgressData: Immutable.Map()
+  frequencyProgress: Immutable.Map(),
+  isFrequencyModalViewed: false
 }
 
 class MyGousto extends React.PureComponent {
   constructor(props) {
     super(props)
+
     this.state = {
-      is3dsTokenFetched: false
+      is3dsTokenFetched: false,
+      showFrequencyModal: false,
+      showFrequencyBanner: false,
     }
   }
 
   componentDidMount() {
-    const { userLoadOrders, userGetReferralDetails, userGetFrequencyProgress } = this.props
+    const { userLoadOrders, userGetReferralDetails, getFrequencyIncPromoProgress } = this.props
     const { store } = this.context
 
     userLoadOrders()
     userGetReferralDetails()
-    userGetFrequencyProgress()
+    getFrequencyIncPromoProgress()
 
     setTimeout(() => {
       store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
@@ -81,7 +87,17 @@ class MyGousto extends React.PureComponent {
 
   componentDidUpdate(_en, _prevProps, _prevState) {
     const { userCheck3dsCompliantToken, goustoRef, pending, isCardTokenNotCompliantFor3ds } = this.props
-    const { is3dsTokenFetched } = this.state
+    const { isFrequencyModalViewed, frequencyProgress} = this.props
+    const { is3dsTokenFetched, showFrequencyModal } = this.state
+
+    const hasFrequencyProgressData = frequencyProgress?.size > 0
+    const isFrequencyModalFirstDemonstration = isFrequencyModalViewed === false && hasFrequencyProgressData
+    const isFrequencyModalDemonstrated = isFrequencyModalViewed === true && hasFrequencyProgressData
+
+    this.setState({
+      showFrequencyModal: showFrequencyModal || isFrequencyModalFirstDemonstration,
+      showFrequencyBanner: isFrequencyModalDemonstrated,
+    })
 
     if (!isCardTokenNotCompliantFor3ds && goustoRef && !pending && !is3dsTokenFetched) {
       this.setState({
@@ -112,6 +128,17 @@ class MyGousto extends React.PureComponent {
     }
   }
 
+  updateShowFrequencyModal(value) {
+    const { store } = this.context
+    const { showFrequencyModal: wasVisible } = this.state
+    this.setState({
+      showFrequencyModal: value
+    })
+    if (value === false && wasVisible) {
+      store.dispatch(frequencyIncPromoModalViewed())
+    }
+  }
+
   render() {
     const {
       card,
@@ -126,8 +153,9 @@ class MyGousto extends React.PureComponent {
       trackClickRateRecipes,
       track3dsCompliantClick,
       isCardTokenNotCompliantFor3ds,
-      frequencyProgressData,
+      frequencyProgress
     } = this.props
+    const { showFrequencyModal, showFrequencyBanner } = this.state
     const headerTitle = `Hello ${nameFirst},`
     const showAppAwarenessBanner = !isMobileViewport && showAppAwareness
 
@@ -146,7 +174,12 @@ class MyGousto extends React.PureComponent {
             <Notification card={card} orders={orders} />
           </div>
           <div className={css.notificationContent}>
-            <FreqIncNotification data={frequencyProgressData} />
+            <FreqIncNotification
+              frequencyProgress={frequencyProgress}
+              showBanner={showFrequencyBanner}
+              showModal={showFrequencyModal}
+              updateShowModal={(v) => this.updateShowFrequencyModal(v)}
+            />
           </div>
         </div>
         <Section title={headerTitle} largeTitle alternateColour hasPaddingBottom={false}>

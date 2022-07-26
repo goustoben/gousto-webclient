@@ -7,8 +7,8 @@ import {CTA, Modal, ModalHeader} from 'goustouicomponents'
 import {ProgressSoFar} from 'PrgogressSoFar/ProgressSoFar'
 import css from './ProgressSoFarModal.css'
 
-export const ProgressSoFarModal = ({ isOpen, toggleModal, data }) => {
-  const { target, progress, promotionAmount, endOfSecondMonth } = data && data.toJS()
+export const ProgressSoFarModal = ({ isOpen, toggleModal, frequencyProgress }) => {
+  const { target, progress, promotionAmount, endOfSecondMonth } = frequencyProgress?.toJS() || {}
   const endOfSecondMonthFormatted = moment(endOfSecondMonth, "YYYY-MM-DD").format("Do MMMM YYYY")
 
   return (
@@ -33,7 +33,7 @@ export const ProgressSoFarModal = ({ isOpen, toggleModal, data }) => {
               <span className={css.bold}> {promotionAmount} off all your boxes </span>
               that are delivered the following month.
             </p>
-            <CTA variant="primary" isFullWidth size="big">Done</CTA>
+            <CTA variant="primary" onClick={toggleModal()} isFullWidth size="big">Done</CTA>
           </div>
         </Modal>
       </div>
@@ -44,11 +44,11 @@ export const ProgressSoFarModal = ({ isOpen, toggleModal, data }) => {
 ProgressSoFarModal.propTypes = {
   isOpen: PropTypes.bool,
   toggleModal: PropTypes.func,
-  data: PropTypes.instanceOf(Immutable.Map)
+  frequencyProgress: PropTypes.instanceOf(Immutable.Map)
 }
 
 ProgressSoFarModal.defaultProps = {
   isOpen: false,
   toggleModal: () => {},
-  data: Immutable.Map()
+  frequencyProgress: Immutable.Map()
 }
