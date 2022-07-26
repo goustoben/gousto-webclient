@@ -54,6 +54,7 @@ const overrideForLoggingManager = ({ environmentName, serviceDomain }: ServiceUr
 }
 
 export function serviceOverrides(serviceUrlProperties: ServiceUrlProperties): string | undefined {
+  console.log('serviceUrlProperties', serviceUrlProperties)
   switch (true) {
     case isWebclientProductionService(serviceUrlProperties):
       return webClientHost(serviceUrlProperties)

@@ -5,7 +5,7 @@ import {
 } from './types'
 import * as ServiceUrlNS from './service-url'
 
-import { browserEnv } from '@library/environment'
+import { browserEnvironment } from '@library/environment'
 
 const { serviceUrl } = ServiceUrlNS
 
@@ -16,7 +16,7 @@ type ServiceDefinitionTestExpectation = ServiceUrlProperties & {
 describe('serviceUrl', () => {
   let canUseWindowSpy: jest.SpyInstance
   beforeAll(() => {
-    canUseWindowSpy = jest.spyOn(browserEnv, 'canUseWindow')
+    canUseWindowSpy = jest.spyOn(browserEnvironment, 'canUseWindow')
   })
   beforeEach(() => {
     jest.resetAllMocks()

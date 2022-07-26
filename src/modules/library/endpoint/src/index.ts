@@ -1,3 +1,1 @@
-export function example() {
-  return ''
-}
+export { endpoint } from './endpoint'

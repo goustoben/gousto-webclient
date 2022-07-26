@@ -67,5 +67,6 @@ const getServiceEnvironment = (): ServiceEnvironment => ({
 
 const endpoint = endpointAdapter(getServiceEnvironment)
 
-// eslint-disable-next-line import/no-default-export
-export default endpoint
+export {
+  endpoint,
+}

@@ -9,5 +9,12 @@
   },
   "dependencies": {
     "@library/environment": "workspace:*"
+  },
+  "devDependencies": {
+    "@library/dev-babel": "workspace:*"
+  },
+  "peerDependencies": {
+    "jsdom": "20.0.0",
+    "ts-jest": "28.0.7"
   }
 }

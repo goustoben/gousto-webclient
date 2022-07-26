@@ -2,19 +2,22 @@ import { browserEnvironment, configFromWindow, processEnv } from '@library/envir
 
 import { ServiceName } from './types'
 
-import endpoint from './endpoint'
+import { endpoint } from './endpoint'
 import * as serviceUtils from './service-manifest'
 
-jest.mock('utils/processEnv', () => ({
-  ...jest.requireActual('utils/processEnv'),
-  getEnvConfig: jest.fn(),
+jest.mock('@library/environment', () => ({
+  ...jest.requireActual('@library/environment'),
+  processEnv: {
+    getEnvConfig: jest.fn(),
+  },
+  configFromWindow: {
+    getClientEnvironment: jest.fn(),
+    getClientDomain: jest.fn(),
+  }
 }))
-
-jest.mock('utils/configFromWindow')
 
 describe('endpoint()', () => {
   let serviceManifestSpy: jest.SpyInstance
-  let getWindowSpy: jest.SpyInstance
   let canUseWindowSpy: jest.SpyInstance
 
   const stubServiceManifest = {
@@ -64,7 +67,6 @@ describe('endpoint()', () => {
   }
 
   beforeAll(() => {
-    getWindowSpy = jest.spyOn(browserEnvironment, 'getWindow')
     canUseWindowSpy = jest.spyOn(browserEnvironment, 'canUseWindow')
     serviceManifestSpy = jest.spyOn(serviceUtils, 'getServiceManifest')
   })
@@ -119,7 +121,7 @@ describe('endpoint()', () => {
       'should return the correct endpoint for the client, %s, %s, %s, %i = %s',
       (env, domain, serviceName, version, expectation) => {
         (configFromWindow.getClientEnvironment as jest.Mock).mockReturnValue(env)
-        ;(configFromWindow.getClientDomain as jest.Mock).mockReturnValue(domain)
+        (configFromWindow.getClientDomain as jest.Mock).mockReturnValue(domain)
         expect(endpoint(serviceName as ServiceName, version)).toEqual(expectation)
       },
     )

@@ -1,4 +1,6 @@
 module.exports = {
-  displayName: '@library/endpoint',
+  testEnvironment: 'jsdom',
+  preset: 'ts-jest',
+  displayName: '@library/environment',
   rootDir: './',
 }

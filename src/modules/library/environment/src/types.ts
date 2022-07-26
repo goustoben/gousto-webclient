@@ -54,3 +54,9 @@ export enum ENVIRONMENT_NAMES {
   staging = 'staging',
   local = 'local',
 }
+
+declare global {
+  interface Window {
+    __config__: WindowEnvConfig
+  }
+}
