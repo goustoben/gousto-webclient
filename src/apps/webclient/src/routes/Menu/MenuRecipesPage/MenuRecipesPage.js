@@ -70,7 +70,7 @@ export class MenuRecipesPage extends PureComponent {
     return (
       <>
         {!isLoading && <JustForYouTutorial />}
-        {/* {!isLoading && <LikeDislikeTutorial />} */}
+        {!isLoading && <LikeDislikeTutorial />}
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
         <MenuSidesModalContainer />
