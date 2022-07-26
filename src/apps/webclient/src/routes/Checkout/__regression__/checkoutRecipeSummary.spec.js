@@ -8,12 +8,12 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       cy.stubAll3rdParties()
       setMocks({ validPostcode: true })
       cy.intercept('/order/preview').as('preview')
-      cy.intercept('/delivery_day/2093/stock').as('stock')
+      cy.intercept('/delivery_day/**').as('deliveryDay')
       cy.intercept('deliveries/v1.0/**').as('deliveries')
       goToCheckout()
       addRecipeDispatch()
       showOrderSummary()
-      cy.wait(['@preview', '@stock', '@deliveries'])
+      cy.wait(['@preview', '@deliveryDay', '@deliveries'])
     })
 
     it('Then the recipe summary should be visible', () => {
