@@ -448,6 +448,32 @@ workflows:
           requires:
             - install-dependencies
 
+  regression-manual:
+    when:
+      equal: [regression-manual, << pipeline.git.branch >>]
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+
+      - test-regression:
+          name: test-regression-web
+          platform: web
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
+      - test-regression:
+          name: test-regression-mobile
+          platform: mobile
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
   lower-environment:
     jobs:
       - setup-ci-variables-scripts:
