@@ -2,7 +2,6 @@ import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
 
 export const useIsFiveRecipesEnabledForProspects = (numPortions?: number) => {
-  console.count('useIsFiveRecipesEnabledForProspects # calls')
   const fiveRecipesExperimentEnabled = useIsOptimizelyFeatureEnabled(
     'beetroots_five_recipes_web_enabled',
   )
@@ -28,4 +27,4 @@ export const useSaveFiveRecipesEnabledLoadHack = () => {
   }
 }
 
-export const getFiveRecipesEnabledLS = () => cache.get('fiveRecipesEnabled') ?? false
+export const getFiveRecipesEnabledFromCache = () => cache.get('fiveRecipesEnabled') ?? false

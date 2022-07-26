@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { getFiveRecipesEnabledLS } from 'hooks/useIsFiveRecipesEnabledForProspects'
+import { getFiveRecipesEnabledFromCache } from 'hooks/useIsFiveRecipesEnabledForProspects'
 
 import { useAuth } from '../../auth'
 import { useMenuBox, MenuBox } from './useMenuBox'
@@ -25,9 +25,8 @@ const menuBoxesByPortionSize = (
 
 export const useSupportedBoxTypes = () => {
   const menuBox = useMenuBox()
-  const isFiveRecipesExperimentEnabled = getFiveRecipesEnabledLS()
+  const isFiveRecipesExperimentEnabled = getFiveRecipesEnabledFromCache()
   const { isAuthenticated } = useAuth()
-  console.count('useSupportedBoxTypes # of calls')
 
   /**
    * Please read description inside function

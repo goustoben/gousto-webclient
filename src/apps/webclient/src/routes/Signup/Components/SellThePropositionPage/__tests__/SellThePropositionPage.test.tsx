@@ -11,6 +11,7 @@ import { SellThePropositionPage } from '../SellThePropositionPage'
 
 jest.mock('hooks/useIsFiveRecipesEnabledForProspects', () => ({
   useIsFiveRecipesEnabledForProspects: jest.fn(),
+  getFiveRecipesEnabledFromCache: jest.fn(),
 }))
 
 const store = configureStore()
