@@ -2,6 +2,7 @@ import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
 
 export const useIsFiveRecipesEnabledForProspects = (numPortions?: number) => {
+  console.count('useIsFiveRecipesEnabledForProspects # calls')
   const fiveRecipesExperimentEnabled = useIsOptimizelyFeatureEnabled(
     'beetroots_five_recipes_web_enabled',
   )
@@ -16,21 +17,15 @@ export const useIsFiveRecipesEnabledForProspects = (numPortions?: number) => {
   }
 }
 
+const cache = new Map<string, boolean>()
+
 export const useSaveFiveRecipesEnabledLoadHack = () => {
   const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabledForProspects()
-  const fiveRecipesEnabledLS = window.localStorage.getItem('fiveRecipesEnabled') ?? false
-  const fiveRecipesEnabled = (fiveRecipesEnabledLS && JSON.parse(fiveRecipesEnabledLS)) ?? false
+  const fiveRecipesEnabled = cache.get('fiveRecipesEnabled') ?? false
 
   if (isFiveRecipesExperimentEnabled !== fiveRecipesEnabled) {
-    window.localStorage.setItem(
-      'fiveRecipesEnabled',
-      JSON.stringify(isFiveRecipesExperimentEnabled),
-    )
+    cache.set('fiveRecipesEnabled', isFiveRecipesExperimentEnabled)
   }
 }
 
-export const getFiveRecipesEnabledLS = () => {
-  const fiveRecipesEnabledLS = window.localStorage.getItem('fiveRecipesEnabled') ?? false
-
-  return (fiveRecipesEnabledLS && JSON.parse(fiveRecipesEnabledLS)) ?? false
-}
+export const getFiveRecipesEnabledLS = () => cache.get('fiveRecipesEnabled') ?? false
