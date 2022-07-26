@@ -2,12 +2,14 @@ import React from 'react'
 
 import { useDispatch } from 'react-redux'
 
+import { useSaveFiveRecipesEnabledLoadHack } from 'hooks/useIsFiveRecipesEnabledForProspects'
 import { useBasket } from 'routes/Menu/domains/basket'
 
 import { Menu } from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
 
 const MenuWrapper = (ownProps: any) => {
+  useSaveFiveRecipesEnabledLoadHack()
   const dispatch = useDispatch()
   const { addRecipe, removeRecipe } = useBasket()
 

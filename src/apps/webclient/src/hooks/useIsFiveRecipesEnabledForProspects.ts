@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
 
@@ -9,14 +7,30 @@ export const useIsFiveRecipesEnabledForProspects = (numPortions?: number) => {
   )
   const { isAuthenticated } = useAuth()
 
-  return useMemo(() => {
-    const isFiveRecipesExperimentEnabled = !isAuthenticated && !!fiveRecipesExperimentEnabled
-    const isFiveRecipesEnabled =
-      !!numPortions && isFiveRecipesExperimentEnabled && numPortions === 2
+  const isFiveRecipesExperimentEnabled = !isAuthenticated && !!fiveRecipesExperimentEnabled
+  const isFiveRecipesEnabled = !!numPortions && isFiveRecipesExperimentEnabled && numPortions === 2
 
-    return {
-      isFiveRecipesEnabled,
-      isFiveRecipesExperimentEnabled,
-    }
-  }, [isAuthenticated, numPortions, fiveRecipesExperimentEnabled])
+  return {
+    isFiveRecipesEnabled,
+    isFiveRecipesExperimentEnabled,
+  }
+}
+
+export const useSaveFiveRecipesEnabledLoadHack = () => {
+  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabledForProspects()
+  const fiveRecipesEnabledLS = window.localStorage.getItem('fiveRecipesEnabled') ?? false
+  const fiveRecipesEnabled = (fiveRecipesEnabledLS && JSON.parse(fiveRecipesEnabledLS)) ?? false
+
+  if (isFiveRecipesExperimentEnabled !== fiveRecipesEnabled) {
+    window.localStorage.setItem(
+      'fiveRecipesEnabled',
+      JSON.stringify(isFiveRecipesExperimentEnabled),
+    )
+  }
+}
+
+export const getFiveRecipesEnabledLS = () => {
+  const fiveRecipesEnabledLS = window.localStorage.getItem('fiveRecipesEnabled') ?? false
+
+  return (fiveRecipesEnabledLS && JSON.parse(fiveRecipesEnabledLS)) ?? false
 }

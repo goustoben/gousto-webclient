@@ -1,5 +1,8 @@
 import { useCallback } from 'react'
 
+import { getFiveRecipesEnabledLS } from 'hooks/useIsFiveRecipesEnabledForProspects'
+
+import { useAuth } from '../../auth'
 import { useMenuBox, MenuBox } from './useMenuBox'
 
 const DEFAULT_MAX_RECIPES = 4
@@ -22,19 +25,36 @@ const menuBoxesByPortionSize = (
 
 export const useSupportedBoxTypes = () => {
   const menuBox = useMenuBox()
-  console.count('ZALUPA')
+  const isFiveRecipesExperimentEnabled = getFiveRecipesEnabledLS()
+  const { isAuthenticated } = useAuth()
+  console.count('useSupportedBoxTypes # of calls')
 
+  /**
+   * Please read description inside function
+   */
   const maxRecipesForPortion = useCallback(
     (portionSize = 2) => {
-      const max = Math.max(
-        ...menuBoxesByPortionSize(menuBox, portionSize).map(
-          (box) => box.attributes.number_of_recipes,
-        ),
-      )
+      const maxRecipesForPortionDefault = menuBox
+        ? Math.max(
+            ...menuBoxesByPortionSize(menuBox, portionSize).map(
+              (box) => box.attributes.number_of_recipes,
+            ),
+          )
+        : DEFAULT_MAX_RECIPES
 
-      return menuBox ? max : DEFAULT_MAX_RECIPES
+      /**
+       * FYI: this is just for A/B test https://gousto.atlassian.net/browse/TG-6597
+       * Basically we need to restrict 50% of prospects to having 4 recipes, not 5
+       * When experiment will be finished Beetroots will simply delete following lines
+       * Even useIsFiveRecipesEnabledForProspects() hook will be deleted.
+       */
+      if (!isAuthenticated) {
+        return isFiveRecipesExperimentEnabled ? maxRecipesForPortionDefault : DEFAULT_MAX_RECIPES
+      }
+
+      return maxRecipesForPortionDefault
     },
-    [menuBox],
+    [isFiveRecipesExperimentEnabled, isAuthenticated, menuBox],
   )
 
   const minRecipesForPortion = useCallback(
