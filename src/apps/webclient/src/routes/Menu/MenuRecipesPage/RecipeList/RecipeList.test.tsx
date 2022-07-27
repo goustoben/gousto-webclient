@@ -1,3 +1,5 @@
+import * as Immutable from 'immutable'
+
 import { Recipe } from '@library/menu-service'
 
 import { buildTracker } from './RecipeList'
@@ -11,14 +13,9 @@ jest.mock('react-redux', () => ({
 describe('buildTracker', () => {
   it('builds a function that passes the collection and recipes IDs to the tracker', () => {
     const dummyTracker = jest.fn()
-    const recipes = [1, 2, 3, 4].map((i) => ({
-      recipe: { id: `${i}` } as Recipe,
-      reference: `${i}`,
-      originalId: `${i}`,
-    }))
 
     const tracker = buildTracker({
-      recipes,
+      recipes: Immutable.List([1, 2, 3, 4].map((i) => ({ recipe: Immutable.Map({ id: `${i}` }) }))),
       currentCollectionId: 'some_collection_id',
       track: dummyTracker,
     })

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { useMedia } from 'react-use'
 
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
+import { useBasket, useSupportedBoxTypes } from 'routes/Menu/domains/basket'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { getDomain } from 'utils/isomorphicEnvironment'
 
@@ -20,6 +21,7 @@ jest.mock('react-use', () => ({
 
 jest.mock('utils/browserEnvironment')
 jest.mock('utils/isomorphicEnvironment')
+jest.mock('routes/Menu/domains/basket')
 
 describe('ActionBar', () => {
   let rendered: RenderResult
@@ -40,6 +42,8 @@ describe('ActionBar', () => {
   beforeEach(() => {
     ;(canUseWindow as jest.Mock).mockReturnValue(false)
     ;(getDomain as jest.Mock).mockReturnValue('gousto.local')
+    ;(useBasket as jest.Mock).mockReturnValue({ recipeCount: 0, numPortions: 2 })
+    ;(useSupportedBoxTypes as jest.Mock).mockReturnValue({ maxRecipesForPortion: () => 100 })
 
     rendered = render(
       <Provider store={mockedStore}>
@@ -57,6 +61,7 @@ describe('ActionBar', () => {
   describe('when numRecipes change', () => {
     describe('when on mobile', () => {
       test('then it should animate', () => {
+        ;(useBasket as jest.Mock).mockReturnValue({ recipeCount: 1, numPortions: 2 })
         const newStore = createMockStore({
           ...state,
           basket: Immutable.fromJS({
