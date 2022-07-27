@@ -108,7 +108,6 @@ jobs:
   setup-ci-variables-scripts:
     executor: gousto_platform_image #stock image missing /gousto directory
     resource_class: medium
-    working_directory: /mnt/ramdisk
     steps:
       - checkout
       - run:
@@ -119,27 +118,13 @@ jobs:
           root: /
           paths:
             - root/.circlerc
-            - mnt/ramdisk/.yarn
-            - mnt/ramdisk/ci_scripts
-            - mnt/ramdisk/cloudformation
-            - mnt/ramdisk/images
-            - mnt/ramdisk/package.json
-            - mnt/ramdisk/scripts
-            - mnt/ramdisk/setup
-            - mnt/ramdisk/src
-            - mnt/ramdisk/tests
-            - mnt/ramdisk/.eslintrc.js
-            - mnt/ramdisk/.yarnrc.yml
-            - mnt/ramdisk/service.yml
-            - mnt/ramdisk/tsconfig.json
-            - mnt/ramdisk/yarn.lock
 
   install-dependencies:
     executor: gousto_node_image
     resource_class: medium
-    working_directory: /mnt/ramdisk
     steps:
       - setup_remote_docker
+      - checkout
       - attach_workspace:
           at: /
       - run:
@@ -163,24 +148,16 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - mnt/ramdisk/node_modules # Also contains .yarn-state.yml
-            # Workspace node_modules
-            - mnt/ramdisk/src
-            - mnt/ramdisk/tests
-            # Regression test Cypress binary
-            - root/.cache/Cypress
-            # Yarn install-state.gz
-            - mnt/ramdisk/.yarn
+            - ~/project
 
   test-typecheck-and-report:
     executor: circleci_node_image
     resource_class: medium+
-    working_directory: ~/project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       - run:
           name: Typecheck (feature modules)
           command: yarn workspaces foreach --include '@features/*' --verbose run typecheck
@@ -196,19 +173,18 @@ jobs:
           working_directory: src/apps/webclient
           command: yarn typecheck:tests
       - persist_to_workspace:
-          root: ~/project
+          root: /
           paths:
-            - mnt/ramdisk/src/apps/webclient/coverage/coverage-summary.json
+            - ~/project/src/apps/webclient/coverage/coverage-summary.json
 
   eslint-generate-report:
     executor: circleci_node_image
     resource_class: medium
-    working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - run:
           name: Lint (modules)
           command: yarn workspaces foreach --include '@features/*' --verbose run lint
@@ -219,17 +195,16 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - mnt/ramdisk/src/apps/webclient/eslint-results.json
+            - ~/project/src/apps/webclient/eslint-results.json
 
   publish-code-health:
     executor: circleci_node_image
     resource_class: medium
-    working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - run:
           name: Setup output folder
           command: mkdir /tmp/artifacts
@@ -238,17 +213,15 @@ jobs:
           working_directory: src/apps/webclient
           command: node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
       - store_artifacts:
-          path: /tmp/artifacts
+          path: ~/project/tmp/artifacts
 
   build-webclient:
     executor: circleci_node_image
     resource_class: large
-    working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - export_circlerc_vars
-      - run: echo $ENVIRONMENT
       - run:
           name: Build webclient
           working_directory: src/apps/webclient
@@ -259,12 +232,12 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - mnt/ramdisk/src
+            - ~/project/src/apps/webclient/dist
+            - ~/project/src/apps/webclient/public
             - root/.circlerc
 
   upload-source-maps-to-datadog:
     executor: circleci_node_image
-    working_directory: /mnt/ramdisk
     parameters:
       env:
         type: enum
@@ -274,7 +247,7 @@ jobs:
         default: .co.uk
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - export_circlerc_vars
       - run:
           name: Upload sourcemaps to datadog
@@ -290,13 +263,12 @@ jobs:
   upload-assets-to-s3:
     executor: gousto_platform_image
     resource_class: medium
-    working_directory: /mnt/ramdisk
     parameters:
       env:
         type: string
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - export_circlerc_vars
       # The build puts its results into `dist` for server, and into `public`
       # for client.  The asset files in the latter are a superset of the ones
@@ -319,11 +291,10 @@ jobs:
   create-and-upload-webclient-docker-image-to-ecr:
     executor: gousto_platform_image #stock image missing boto
     resource_class: medium
-    working_directory: /mnt/ramdisk
     steps:
       - setup_remote_docker
       - attach_workspace:
-          at: /
+          at: ~/
       - export_circlerc_vars
       - run:
           name: Create and upload webclient docker image to ECR
@@ -333,10 +304,9 @@ jobs:
   test-e2e:
     executor: circleci_node_browsers_image
     resource_class: medium
-    working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - export_circlerc_vars
       - run:
           name: Install CI dependencies
@@ -390,11 +360,10 @@ jobs:
         default: --max-http-header-size=1000000
     executor: circleci_node_browsers_image
     resource_class: large
-    working_directory: /mnt/ramdisk
     parallelism: 5
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - run:
           name: Set env file
           command: mv src/apps/webclient/server/.env.regression src/apps/webclient/server/.env
@@ -460,11 +429,10 @@ jobs:
   deploy-infrastructure-and-webclient-image:
     executor: gousto_platform_image #stock image missing boto
     resource_class: medium
-    working_directory: /mnt/ramdisk
     steps:
       - checkout # Required for BODA
       - attach_workspace:
-          at: /
+          at: ~/
       - export_circlerc_vars
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
