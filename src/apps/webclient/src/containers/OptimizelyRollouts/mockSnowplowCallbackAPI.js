@@ -1,12 +1,12 @@
-export const mockSnowplowCallbackAPI = () => {
+export const mockSnowplowCallbackAPI = (returnedId) => {
   // See documentation link in getSnowplowDomainUserId().
-  window.snowplow = jest.fn((callback) => {
+  window.snowplow = jest.fn((callback, ...args) => {
     const cf = {
       getDomainUserId() {
-        return 'snowplowUserId'
+        return returnedId
       }
     }
     const trackerHolder = { cf }
-    callback.apply(trackerHolder)
+    callback.call(trackerHolder, ...args)
   })
 }

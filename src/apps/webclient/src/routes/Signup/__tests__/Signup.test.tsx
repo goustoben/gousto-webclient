@@ -7,6 +7,11 @@ import configureMockStore from 'redux-mock-store'
 
 import { Signup } from 'routes/Signup/Signup'
 import { signupConfig } from 'routes/Signup/signupConfig'
+import { getSignupSteps } from 'routes/Signup/utils/getSignupSteps'
+
+jest.mock('../utils/getSignupSteps', () => ({
+  getSignupSteps: jest.fn(),
+}))
 
 // In the ideal world the tests in Signup.js should be replaced.  In their
 // current form they don't work, because with the way enzyme passes the
@@ -40,6 +45,10 @@ describe('Signup (newer tests)', () => {
   describe('given Signup is rendered', () => {
     const signupStepsReceive = jest.fn()
     beforeEach(() => {
+      ;(getSignupSteps as jest.MockedFunction<typeof getSignupSteps>).mockResolvedValueOnce(
+        Immutable.List(signupConfig.defaultSteps),
+      )
+
       render(
         <Provider store={mockedStore}>
           <Signup promoModalVisible={false} signupStepsReceive={signupStepsReceive} />
@@ -47,7 +56,7 @@ describe('Signup (newer tests)', () => {
       )
     })
 
-    test('then it should set correct step names', () => {
+    test('then it should set correct step names', async () => {
       expect(signupStepsReceive).toHaveBeenCalledWith(Immutable.List(signupConfig.defaultSteps))
     })
   })

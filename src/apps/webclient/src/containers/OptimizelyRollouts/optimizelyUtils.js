@@ -1,38 +1,23 @@
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import { getAuthUserId } from 'selectors/auth'
-import { canUseWindow } from 'utils/browserEnvironment'
+import logger from 'utils/logger'
+import { getSnowplowDomainUserId } from 'containers/OptimizelyRollouts/getSnowplowDomainUserId'
+import {feLoggingLogEvent, logLevels} from 'actions/log'
+
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
-import { getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
-
-export const getSnowplowDomainUserId = () => {
-  if (!canUseWindow() || !window.snowplow) {
-    return Promise.resolve(null)
-  }
-
-  // https://docs.snowplowanalytics.com/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/javascript-tracker-v3/advanced-usage/tracker-callbacks/
-
-  return new Promise((resolve, reject) => {
-    // Note: must use `function()` instead of an arrow function syntax because
-    // the API returns the tracker holder in `this`.
-    window.snowplow(function callback() {
-      // Corresponds to 'cf' defined in the Snowplow tag in GTM.
-      // https://tagmanager.google.com/#/container/accounts/13119862/containers/669372/workspaces/1000271/tags
-      const tracker = this.cf
-
-      if (!tracker) {
-        reject(new Error('No snowplow tracker'))
-      }
-
-      const domainUserId = tracker.getDomainUserId()
-
-      resolve(domainUserId)
-    })
-  })
-}
+import { getOptimizelyInstance, hasValidInstance, timeout } from './optimizelySDK'
 
 export const getUserIdForOptimizely = async (userId) => {
-  const userIdForOptimizely = userId || await getSnowplowDomainUserId()
+  let userIdForOptimizely = userId
+
+  if (!userIdForOptimizely) {
+    try {
+      userIdForOptimizely = await getSnowplowDomainUserId()
+    } catch (error) {
+      logger.error({message: error.message})
+    }
+  }
 
   return userIdForOptimizely
 }
@@ -43,14 +28,19 @@ export const isOptimizelyFeatureEnabledFactory = (name) =>
     const userId = getAuthUserId(getState())
     const sessionId = get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false)
     const userIdForOptimizely = await getUserIdForOptimizely(userId)
-
     if (!userIdForOptimizely) {
+      dispatch(feLoggingLogEvent(logLevels.error, `Optimizely factory method: experiment ${name} allocation failed because of snowplow`))
+
       return false
     }
 
     const optimizelyInstance = await getOptimizelyInstance()
 
+    await optimizelyInstance.onReady({timeout})
+
     if (!hasValidInstance()) {
+      dispatch(feLoggingLogEvent(logLevels.error, `Optimizely factory method: experiment ${name} allocation failed because of Optimizely`))
+
       return false
     }
 
