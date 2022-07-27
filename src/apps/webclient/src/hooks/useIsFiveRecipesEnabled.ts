@@ -1,4 +1,5 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { BoxType, getBoxTypeNameByPortionSize } from 'routes/BoxPrices/boxPricesConfig'
 import { useAuth } from 'routes/Menu/domains/auth'
 
 export const useIsProspect = () => {
@@ -16,7 +17,9 @@ export const useIsProspect = () => {
 export const useIsFiveRecipesEnabled = (numPortions?: number) => {
   const isFiveRecipesExperimentEnabled =
     useIsOptimizelyFeatureEnabled('beetroots_five_recipes_web_enabled') ?? false
-  const isFiveRecipesEnabled = !!numPortions && isFiveRecipesExperimentEnabled && numPortions === 2
+  const boxType = getBoxTypeNameByPortionSize(numPortions)
+  const isFiveRecipesEnabled =
+    !!numPortions && isFiveRecipesExperimentEnabled && boxType === BoxType.Regular
 
   return {
     isFiveRecipesEnabled,
@@ -39,11 +42,12 @@ const cache = new Map<string, boolean>()
  * And save this value to Map declared outside of hooks. (you can find Map above)
  */
 export const useSaveFiveRecipesEnabledLoadHack = () => {
+  const isProspect = useIsProspect()
   const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabled()
   const fiveRecipesEnabled = cache.get('fiveRecipesEnabled') ?? false
 
   if (isFiveRecipesExperimentEnabled !== fiveRecipesEnabled) {
-    cache.set('fiveRecipesEnabled', isFiveRecipesExperimentEnabled)
+    cache.set('fiveRecipesEnabled', isProspect && isFiveRecipesExperimentEnabled)
   }
 }
 
