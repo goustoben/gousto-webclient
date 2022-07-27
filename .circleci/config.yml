@@ -148,7 +148,7 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - ~/project
+            - project
 
   test-typecheck-and-report:
     executor: circleci_node_image
@@ -175,7 +175,7 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - ~/project/src/apps/webclient/coverage/coverage-summary.json
+            - project/src/apps/webclient/coverage/coverage-summary.json
 
   eslint-generate-report:
     executor: circleci_node_image
@@ -195,7 +195,7 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - ~/project/src/apps/webclient/eslint-results.json
+            - project/src/apps/webclient/eslint-results.json
 
   publish-code-health:
     executor: circleci_node_image
@@ -213,7 +213,7 @@ jobs:
           working_directory: src/apps/webclient
           command: node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
       - store_artifacts:
-          path: ~/project/tmp/artifacts
+          path: project/tmp/artifacts
 
   build-webclient:
     executor: circleci_node_image
@@ -232,8 +232,8 @@ jobs:
       - persist_to_workspace:
           root: /
           paths:
-            - ~/project/src/apps/webclient/dist
-            - ~/project/src/apps/webclient/public
+            - project/src/apps/webclient/dist
+            - project/src/apps/webclient/public
             - root/.circlerc
 
   upload-source-maps-to-datadog:
@@ -415,15 +415,15 @@ jobs:
           working_directory: << parameters.test_directory >>
           command: yarn report
       - store_test_results:
-          path: /mnt/ramdisk/tests/regression/test_results/cypress
+          path: ~/project/tests/regression/test_results/cypress
       - store_artifacts:
-          path: /mnt/ramdisk/tests/regression/reports/html
+          path: ~/project/tests/regression/reports/html
           destination: ./
       - store_artifacts:
-          path: /mnt/ramdisk/tests/regression/videos
+          path: ~/project/tests/regression/videos
           destination: ./
       - store_artifacts:
-          path: /mnt/ramdisk/tests/regression/screenshots
+          path: ~/project/tests/regression/screenshots
           destination: ./
 
   deploy-infrastructure-and-webclient-image:
@@ -603,7 +603,7 @@ workflows:
 
   production-environment:
     when:
-      equal: [TECH-10-remove-circle-ramdisk, << pipeline.git.branch >>]
+      equal: [master, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-prod-aws-app-circleci
