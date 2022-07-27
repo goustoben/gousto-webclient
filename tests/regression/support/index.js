@@ -32,6 +32,14 @@ Cypress.on('test:after:run', (test, runnable) => {
   }
 })
 
+Cypress.on('window:before:load', win => {
+  win.snowplow = (_callback, resolve) => {
+    if (typeof resolve === 'function') {
+      resolve(null)
+    }
+  }
+})
+
 cy.bots = {
   checkoutAccountBot,
   loginFormBot,
