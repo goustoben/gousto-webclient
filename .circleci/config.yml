@@ -664,6 +664,29 @@ workflows:
           requires:
             - install-dependencies
 
+  test-staging-workflow:
+    when:
+      equal: [TECH-10-port-gha-to-circle, << pipeline.git.branch >>]
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+      - type-check:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+      - unit-test:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+      - lint:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
   e2e-manual:
     when:
       equal: [e2e-manual, << pipeline.git.branch >>]
