@@ -4,6 +4,7 @@ import { get } from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { renderHook } from '@testing-library/react-hooks'
 import * as ActionsLog from 'actions/log'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
 import {
   useSetupOptimizelyOverride,
   useIsOptimizelyFeatureEnabled,
@@ -21,6 +22,8 @@ jest.mock('react-redux', () => ({
 }))
 jest.mock('utils/cookieHelper2')
 jest.mock('./trackExperimentInSnowplow')
+
+const expectedDomainUserId = 'expectedDomainUserId'
 
 describe('useOptimizely', () => {
   let state = {}
@@ -130,6 +133,8 @@ describe('useOptimizely', () => {
   })
 
   describe('useUserIdForOptimizely', () => {
+    withMockEnvironmentAndDomain('local', 'gousto.local')
+
     describe('when user and snowplow user id are not present', () => {
       beforeEach(() => {
         window.snowplow = null
@@ -155,7 +160,7 @@ describe('useOptimizely', () => {
           ...state,
           auth: Immutable.fromJS({ id: undefined })
         }
-        mockSnowplowCallbackAPI()
+        mockSnowplowCallbackAPI(expectedDomainUserId)
       })
 
       describe('and no auth user id is present', () => {
@@ -166,7 +171,7 @@ describe('useOptimizely', () => {
 
           const userID = result.current
 
-          expect(userID).toBe('snowplowUserId')
+          expect(userID).toBe(expectedDomainUserId)
         })
       })
 
@@ -269,7 +274,6 @@ describe('useOptimizely', () => {
           expect(isEnabled).toBe(null)
           expect(getOptimizelyInstanceSpy).toBeCalled()
           expect(isFeatureEnabled).not.toBeCalled()
-          expect(dispatch).not.toBeCalled()
         })
       })
 
@@ -392,7 +396,7 @@ describe('useOptimizely', () => {
       beforeEach(() => {
         goustoSessionId = 'session_id'
         hasValidInstanceSpy.mockReturnValue(true)
-        mockSnowplowCallbackAPI()
+        mockSnowplowCallbackAPI(expectedDomainUserId)
       })
 
       describe('when client has a valid overwrite cookie', () => {
@@ -473,7 +477,7 @@ describe('useOptimizely', () => {
           const isEnabled = result.current
 
           expect(isEnabled).toBe(false)
-          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
+          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', expectedDomainUserId)
         })
 
         it('should track experiment in snowplow', async () => {
@@ -487,7 +491,7 @@ describe('useOptimizely', () => {
             false,
             '',
             'session_id',
-            'snowplowUserId',
+            expectedDomainUserId,
           ])
         })
       })
@@ -505,7 +509,7 @@ describe('useOptimizely', () => {
           const isEnabled = result.current
 
           expect(isEnabled).toBe(true)
-          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
+          expect(isFeatureEnabled).toHaveBeenCalledWith('flag', expectedDomainUserId)
         })
 
         it('should track experiment in snowplow', async () => {
@@ -519,7 +523,7 @@ describe('useOptimizely', () => {
             true,
             '',
             'session_id',
-            'snowplowUserId',
+            expectedDomainUserId,
           ])
         })
       })
@@ -529,7 +533,7 @@ describe('useOptimizely', () => {
       let useGetOptimizelyOverride
 
       beforeEach(() => {
-        mockSnowplowCallbackAPI()
+        mockSnowplowCallbackAPI(expectedDomainUserId)
         useGetOptimizelyOverride = jest.spyOn(OptimizelyHook, 'useGetOptimizelyOverride')
         useGetOptimizelyOverride.mockReturnValue([false])
         feLoggingLogEvent = jest.spyOn(ActionsLog, 'feLoggingLogEvent')
@@ -550,7 +554,7 @@ describe('useOptimizely', () => {
       let useGetOptimizelyOverride
 
       beforeEach(() => {
-        mockSnowplowCallbackAPI()
+        mockSnowplowCallbackAPI(expectedDomainUserId)
         useGetOptimizelyOverride = jest.spyOn(OptimizelyHook, 'useGetOptimizelyOverride')
         useGetOptimizelyOverride.mockReturnValue([true])
         feLoggingLogEvent = jest.spyOn(ActionsLog, 'feLoggingLogEvent')
