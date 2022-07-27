@@ -4,7 +4,7 @@ import { CTA } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
 import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
-import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
 import { Benefits } from 'routes/Home/Benefits'
 import { useBasket } from 'routes/Menu/domains/basket'
@@ -23,7 +23,7 @@ const BoxPriceBlock = ({
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(boxInfo.length - 1)
   const { numPortions } = useBasket()
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabledForProspects(numPortions)
+  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numPortions)
   const { title, boxSizeTrackingValue } = boxTypes[numPersons]
 
   const recipesLeftTrackingIndex = boxSizeTrackingValue !== 'large' && isFiveRecipesEnabled ? 3 : 2

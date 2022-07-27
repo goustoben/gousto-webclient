@@ -7,7 +7,7 @@ import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import { Provider } from 'react-redux'
 
-import { getFiveRecipesEnabledFromCache } from 'hooks/useIsFiveRecipesEnabledForProspects'
+import { getFiveRecipesEnabledFromCache } from 'hooks/useIsFiveRecipesEnabled'
 import { createMockStore } from 'routes/Menu/_testing/createMockStore'
 
 import { useMenuBox } from './useMenuBox'
@@ -25,7 +25,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
   <Provider store={store}>{children}</Provider>
 )
 
-jest.mock('hooks/useIsFiveRecipesEnabledForProspects', () => ({
+jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
   getFiveRecipesEnabledFromCache: jest.fn(),
 }))
 

@@ -5,12 +5,12 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 
-import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 
 import { SellThePropositionPage } from '../SellThePropositionPage'
 
-jest.mock('hooks/useIsFiveRecipesEnabledForProspects', () => ({
-  useIsFiveRecipesEnabledForProspects: jest.fn(),
+jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
+  useIsFiveRecipesEnabled: jest.fn(),
   getFiveRecipesEnabledFromCache: jest.fn(),
 }))
 
@@ -29,8 +29,8 @@ const mockedStore = store({
 
 const signupGoToMenu = jest.fn()
 
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabledForProspects as jest.MockedFunction<
-  typeof useIsFiveRecipesEnabledForProspects
+const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
+  typeof useIsFiveRecipesEnabled
 >
 
 describe('Given: SellThePropositionPage', () => {

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { useSaveFiveRecipesEnabledLoadHack } from 'hooks/useIsFiveRecipesEnabledForProspects'
+import { useSaveFiveRecipesEnabledLoadHack } from 'hooks/useIsFiveRecipesEnabled'
 import { useBasket } from 'routes/Menu/domains/basket'
 
 import { Menu } from './Menu'

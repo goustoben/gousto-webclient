@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { BoxDescriptorsPropType } from 'routes/BoxPrices/boxPricesPropTypes'
 import { useBasket } from 'routes/Menu/domains/basket'
 import { signupConfig } from 'routes/Signup/signupConfig'
@@ -27,7 +27,7 @@ export const BoxSizeStep = ({
   goustoOnDemandCustomText,
 }) => {
   const { numPortions } = useBasket()
-  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabledForProspects(numPortions)
+  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabled(numPortions)
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
   const { setNumPortions } = useBasket()
 

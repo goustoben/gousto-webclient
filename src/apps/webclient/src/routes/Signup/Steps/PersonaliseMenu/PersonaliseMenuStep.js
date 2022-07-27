@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
-import { useIsFiveRecipesEnabledForProspects } from 'hooks/useIsFiveRecipesEnabledForProspects'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
 import { useBasket } from 'routes/Menu/domains/basket'
 
@@ -37,7 +37,7 @@ const cuisines = [
 
 const PersonaliseMenuStep = () => {
   const { numPortions } = useBasket()
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabledForProspects(numPortions)
+  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numPortions)
   const [selected, setSelected] = useState([])
   const dispatch = useDispatch()
   const onSelect = useCallback(
