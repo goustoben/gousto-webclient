@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
+
 import { actionTypes } from 'actions/actionTypes'
-import { checkoutReducers } from '../checkout'
+import { checkoutReducers } from 'routes/Checkout/checkoutReducers'
 
 describe('checkout reducer', () => {
   describe('given CHECKOUT_ERRORS_CLEAR action type', () => {
@@ -51,11 +52,11 @@ describe('checkout reducer', () => {
     test('should set goustoRef', () => {
       const action = {
         type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
-        goustoRef: 1234567
+        goustoRef: 1234567,
       }
 
       const initialState = Immutable.Map({
-        goustoRef: null
+        goustoRef: null,
       })
 
       const result = checkoutReducers.checkout(initialState, action)
@@ -79,7 +80,7 @@ describe('checkout reducer', () => {
         errors: {
           'generic-error': 'Generic error',
           'paypal-error': 'Payment failed',
-        }
+        },
       })
 
       const result = checkoutReducers.checkout(state, action)
@@ -109,12 +110,12 @@ describe('checkout reducer', () => {
 
   describe('given CHECKOUT_STEP_INDEX_REACHED action type', () => {
     const state = Immutable.fromJS({
-      lastReachedStepIndex: 1
+      lastReachedStepIndex: 1,
     })
 
     let action = {
       type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
-      stepIndex: 2
+      stepIndex: 2,
     }
 
     describe('when the step is further than the lastReachedStepIndex', () => {
@@ -144,8 +145,8 @@ describe('checkout reducer', () => {
     const state = Immutable.fromJS({
       passwordInfo: {
         errorCodes: [],
-        value: password
-      }
+        value: password,
+      },
     })
 
     const action = {

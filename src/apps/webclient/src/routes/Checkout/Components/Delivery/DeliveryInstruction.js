@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Field } from 'redux-form'
 
-import { checkoutConfig } from 'config/checkout'
+import { checkoutConfig } from 'routes/Checkout/checkoutConstants'
 
 import checkoutCss from '../../Checkout.css'
 import css from './Delivery.css'

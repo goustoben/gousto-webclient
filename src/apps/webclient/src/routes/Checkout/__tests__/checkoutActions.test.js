@@ -1,3 +1,9 @@
+/**
+ * This file contains tests for some actions from checkoutActions.js.
+ * Tests for other actions not included in that test file are placed in "checkoutActions2.test.js".
+ */
+
+/* eslint-disable import/no-named-as-default-member */
 import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
@@ -9,10 +15,9 @@ import {
 } from 'actions/tracking'
 import { placeOrder } from 'actions/trackingKeys'
 import customersApi, { customerSignup } from 'apis/customers'
+import { trackCheckoutUrgencyAction, userSubscribe } from 'routes/Checkout/checkoutActions'
 import { PaymentMethod } from 'routes/Signup/signupConfig'
 import { deliveryTariffTypes } from 'utils/deliveries'
-
-import { trackCheckoutUrgencyAction, userSubscribe } from '../checkoutActions'
 
 jest.mock('actions/tracking', () => ({
   trackFirstPurchase: jest.fn(() => ({ action: 'track_first_purchase' })),

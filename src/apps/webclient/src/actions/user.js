@@ -6,13 +6,13 @@ import { datadogRum } from '@datadog/browser-rum'
 import * as userApi from 'apis/user'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as orderV2 from 'routes/Menu/apis/orderV2'
-import { get3DSCompliantToken } from 'apis/payments'
+import { get3DSCompliantToken } from 'routes/Checkout/checkoutPaymentsApis'
 import * as prospectApi from 'apis/prospect'
 
 import {
   accountFormName,
   deliveryFormName,
-} from 'selectors/checkout'
+} from 'routes/Checkout/checkoutSelectors'
 import {
   getIsGoustoOnDemandEnabled,
 } from 'selectors/features'

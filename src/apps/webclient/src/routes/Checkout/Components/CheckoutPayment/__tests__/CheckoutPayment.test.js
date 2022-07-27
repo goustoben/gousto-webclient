@@ -226,4 +226,17 @@ describe('CheckoutPayment', () => {
       expect(wrapper.find('SubscriptionTransparency').exists()).toBeFalsy()
     })
   })
+
+  describe('when box is FREE and fully discounted', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isFullyDiscounted: true,
+        isFreeBox: true,
+      })
+    })
+
+    test('then PayPal should not be an eligible payment method', () => {
+      expect(wrapper.find('PaymentMethodSelector').prop('isPayPalEligible')).toBe(false)
+    })
+  })
 })

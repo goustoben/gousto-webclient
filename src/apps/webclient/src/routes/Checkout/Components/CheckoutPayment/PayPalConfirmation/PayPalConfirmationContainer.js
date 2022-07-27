@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { setCurrentPaymentMethod } from 'actions/checkout'
+import { setCurrentPaymentMethod } from 'routes/Checkout/checkoutActions'
 import { isSubmitting } from 'routes/Checkout/utils/state'
 import { PaymentMethod } from 'routes/Signup/signupConfig'
 

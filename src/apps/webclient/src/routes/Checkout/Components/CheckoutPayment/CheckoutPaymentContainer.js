@@ -4,17 +4,18 @@ import { connect } from 'react-redux'
 import { getFormAsyncErrors, getFormSyncErrors, touch } from 'redux-form'
 
 import { storeSignupRecaptchaToken } from 'actions/auth'
+import { feLoggingLogEvent } from 'actions/log'
 import {
   trackingOrderPlaceAttemptSucceeded,
   trackingOrderPlaceAttempt,
   trackingOrderPlaceAttemptFailed,
   setCurrentPaymentMethod,
-} from 'actions/checkout'
-import { feLoggingLogEvent } from 'actions/log'
+} from 'routes/Checkout/checkoutActions'
+import { getCurrentPaymentMethod, isPayPalReady } from 'routes/Checkout/checkoutPaymentSelectors'
+import { isOrderFullyDiscounted } from 'routes/Checkout/checkoutUtils'
 import { usePricing } from 'routes/Menu/domains/pricing'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
-import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
 import { getSignupLoginError } from 'selectors/status'
 import { formatOrderPrice } from 'utils/pricing'
 
@@ -61,12 +62,14 @@ const Plain = (props) => {
   const pricingHookResponse = usePricing()
   const { pricing } = pricingHookResponse
   const isFreeBox = pricing ? formatOrderPrice(pricing.total) === 'FREE' : false
+  const isFullyDiscounted = isOrderFullyDiscounted(pricing)
 
   return (
     <ConnectedCheckoutPaymentContainer
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
       isFreeBox={isFreeBox}
+      isFullyDiscounted={isFullyDiscounted}
       pricingHookResponse={pricingHookResponse}
     />
   )

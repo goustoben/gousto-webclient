@@ -71,7 +71,7 @@ describe('Social Referral Helper', () => {
 
     test('should return the correct referral code with default offer when no raf offer is provided', () => {
       expect(getMessage()).toEqual(
-        'I love Gousto and I think you will too! Use my link to get an exclusive 60% off your first box, PLUS 30% off for a whole month. \r\n'
+        'I love Gousto and I think you will too! Use my link to get an exclusive 100% off your first box, PLUS 30% off for a whole month. \r\n'
       )
     })
   })

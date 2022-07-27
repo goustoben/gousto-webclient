@@ -3,7 +3,7 @@ import React from 'react'
 import { Icon, IconVariant, Box, Color } from '@gousto-internal/citrus-react'
 
 import { client } from 'config/routes'
-import { emailValidator } from 'utils/forms'
+import { emailValidator } from 'routes/Checkout/checkoutFormUtils'
 
 import css from './AboutYou.css'
 

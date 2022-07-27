@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+
 import { Header } from 'Header'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+
 import css from './CheckoutLayout.css'
 
 export class CheckoutLayout extends React.PureComponent {
@@ -12,13 +14,15 @@ export class CheckoutLayout extends React.PureComponent {
       <span>
         <Helmet
           title="Food Boxes | Get Fresh Food &amp; Ingredients Delivered | Gousto"
-          style={[{
-            cssText: `
+          style={[
+            {
+              cssText: `
               #react-root {
                 height: 100%;
               }
             `,
-          }]}
+            },
+          ]}
         />
 
         <div className={css.layoutContainer}>

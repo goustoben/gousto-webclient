@@ -187,7 +187,7 @@ module.exports = {
             setCardNumber: function (browser) {
               this
                 .waitForElementVisible('@cardNumber')
-                .setValue('@cardNumber', '4485040371536584')
+                .setValue('@cardNumber', '4543474002249996')
 
               browser.keys(browser.Keys.TAB)
             },
@@ -196,9 +196,9 @@ module.exports = {
               browser.keys('25')
             },
             setCardSecurityCode: function (browser) {
-              browser.keys('100')
+              browser.keys('956')
             },
-            changeCardSecurityCode: function (browser, cvv = '100') {
+            changeCardSecurityCode: function (browser, cvv = '956') {
               this
                 .waitForElementVisible('@cardCvv')
                 .setValue('@cardCvv', '')
