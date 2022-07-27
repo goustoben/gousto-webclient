@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
+import { useStock } from 'routes/Menu/domains/stock'
 
-import { useStock } from '../../domains/basket'
 import { useCurrentCollectionId } from '../../domains/collections'
 import { useMenu } from '../../domains/menu'
 import { useSelectedCuisines } from '../../hooks/useSelectedCuisines'
