@@ -12,11 +12,16 @@ module.exports = {
     const signup = browser.page.signup()
     const checkout = browser.page.checkoutV2()
     const cookiePolicy = browser.page.cookiePolicy()
+    const likeDislike = browser.page.likeDislikeTutorial()
 
     browser
       .logJourneyStep('Begin sign-up but stop at payment')
       .url(home.api.launchUrl)
       .trackDatadog()
+      .perform(done => {
+        likeDislike.section.likeDislikeTutorial.dismissLikeDislikeTutorialIfPresent()
+        done()
+      })
       .perform(function (done) {
         cookiePolicy.section.cookiePolicyBanner.dismissCookieBannerIfPresent()
         done()
@@ -106,6 +111,7 @@ module.exports = {
     const promoModal = shared.section.body
     const checkout = browser.page.checkoutV2()
     const cookiePolicy = browser.page.cookiePolicy()
+    const likeDislike = browser.page.likeDislikeTutorial()
 
     browser
       .logJourneyStep('Begin creating order without subscription (transactional order) but stop at payment')
@@ -113,6 +119,10 @@ module.exports = {
       .trackDatadog()
       .perform(done => {
         promoModal.submitPromo()
+        done()
+      })
+      .perform(done => {
+        likeDislike.section.likeDislikeTutorial.dismissLikeDislikeTutorialIfPresent()
         done()
       })
       .perform(done => {
