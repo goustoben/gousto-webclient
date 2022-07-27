@@ -7,11 +7,9 @@ describe('Given I’m a gousto logged-out website visitor', () => {
     before(() => {
       cy.stubAll3rdParties()
       setMocks({ validPostcode: true })
-      cy.intercept('/order/preview').as('preview')
       goToCheckout()
       addRecipeDispatch()
       showOrderSummary()
-      cy.get('[data-testid="offer_percentage"]').should('be.visible')
     })
 
     it('Then the recipe summary should be visible', () => {
