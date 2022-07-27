@@ -1,7 +1,4 @@
-/**
- * FYI: This fail will be rolled back to prev .ts version after
- * 5 recipes experiment
- */
+// FYI: this will be rolled back after the 5 recipes for prospects experiment
 import React from 'react'
 
 import { renderHook } from '@testing-library/react-hooks'

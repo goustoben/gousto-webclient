@@ -82,7 +82,7 @@ describe('given the user is at the Box Size Step', () => {
     })
 
     describe('when the user chooses the box size', () => {
-      test('then proper amount of portions are set correctly regular box', () => {
+      test('then the correct amount of portion sizes are shown for the regular box', () => {
         const button = screen.getByRole('button', {
           name: 'Choose regular box',
         })
@@ -102,7 +102,7 @@ describe('given the user is at the Box Size Step', () => {
         expect(next).toHaveBeenCalledWith()
       })
 
-      test('then proper amount of portions are set correctly large box', () => {
+      test('then the correct amount of portion sizes are shown for the large box', () => {
         const button = screen.getByRole('button', {
           name: 'Choose large box',
         })

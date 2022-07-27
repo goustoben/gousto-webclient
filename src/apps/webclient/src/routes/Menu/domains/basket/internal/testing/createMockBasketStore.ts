@@ -1,4 +1,4 @@
-// FYI: this will remove after 5 recipes experiment
+// FYI: this will be removed after the 5 recipes for prospects experiment
 import Immutable from 'immutable'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import configureMockStore from 'redux-mock-store'
@@ -19,7 +19,7 @@ export const createMockBasketStore = (
   }> = {},
 ) => {
   const initialState = {
-    // FYI: this will remove after 5 recipes experiment
+    // FYI: this will be removed after the 5 recipes for prospects experiment
     auth: Immutable.fromJS({}),
     basket: basketOverrides ? basketInitialState().merge(basketOverrides) : basketInitialState(),
     tracking: tracking ? trackingInitialState.merge(tracking) : trackingInitialState,
