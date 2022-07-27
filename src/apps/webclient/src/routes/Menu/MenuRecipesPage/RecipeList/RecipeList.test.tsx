@@ -1,7 +1,5 @@
 import * as Immutable from 'immutable'
 
-import { Recipe } from '@library/menu-service'
-
 import { buildTracker } from './RecipeList'
 
 jest.mock('react-redux', () => ({
