@@ -12,19 +12,35 @@ export const cta = 'Build my box'
 export const numPersonsValues = ['2', '4']
 export const numPortionsValues = ['2', '3', '4', '5']
 
+export const BoxType = {
+  Regular: 'regular',
+  Large: 'large',
+}
+
+export const getBoxTypeNameByPortionSize = (numPersons) => {
+  switch (numPersons) {
+    case 2:
+      return BoxType.Regular
+    case 4:
+      return BoxType.Large
+    default:
+      return BoxType.Regular
+  }
+}
+
 export const boxTypes = {
   2: {
     title: 'Regular box',
     subhead: 'Our regular box is suitable for:',
     suitable: ['2 adults (or 1 + leftovers)', '1 adult and 1-2 children'],
-    boxSizeTrackingValue: 'regular',
+    boxSizeTrackingValue: BoxType.Regular,
     value: 2,
   },
   4: {
     title: 'Large box',
     subhead: 'Our large box is suitable for:',
     suitable: ['4 adults (or 2-3 + leftovers)', '2 adults and 2-3 children'],
-    boxSizeTrackingValue: 'large',
+    boxSizeTrackingValue: BoxType.Large,
     value: 4,
   },
 }

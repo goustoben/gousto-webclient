@@ -2,7 +2,6 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 
-import { boxTypes } from 'routes/BoxPrices/boxPricesConfig'
 import { withError } from 'utils/withError'
 
 import { BoxPriceBlock } from '../BoxPriceBlock'
@@ -20,20 +19,12 @@ const BoxPricesList = ({
     {Object.entries(numPersonsToBoxDescriptors).map(([numPersonsStr, boxDescriptors]) => {
       const key = `box-type-${numPersonsStr}`
       const numPersons = parseInt(numPersonsStr, 10)
-      const boxDescriptorsCopy = boxDescriptors.slice()
-      const { boxSizeTrackingValue } = boxTypes[numPersons]
-
-      if (boxSizeTrackingValue === 'large') {
-        boxDescriptorsCopy.pop()
-      }
-
-      console.log('BoxPrice', boxDescriptorsCopy, boxTypes[numPersons])
 
       return (
         <BoxPriceBlock
           key={key}
           numPersons={numPersons}
-          boxInfo={boxDescriptorsCopy}
+          boxInfo={boxDescriptors}
           boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
           selectedBox={selectedBox}
           trackUTMAndPromoCode={trackUTMAndPromoCode}

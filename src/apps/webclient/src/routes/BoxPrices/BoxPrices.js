@@ -3,10 +3,30 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
-import { seo } from 'routes/BoxPrices/boxPricesConfig'
+import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 
 import { BoxPricesComponent } from './BoxPricesComponent'
+import { boxTypes, BoxType, seo } from './boxPricesConfig'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
+
+const useGetNumPersonsToBoxDescriptorsForFiveRecipes = (numPersonsToBoxDescriptors) => {
+  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabled()
+  const boxDescriptorsCopy = { ...numPersonsToBoxDescriptors }
+
+  Object.keys(boxDescriptorsCopy).forEach((numPersons) => {
+    const boxDescriptor = boxDescriptorsCopy[numPersons]
+    const { boxSizeTrackingValue } = boxTypes[numPersons]
+
+    if (
+      boxSizeTrackingValue === BoxType.Large ||
+      (boxSizeTrackingValue === BoxType.Regular && !isFiveRecipesExperimentEnabled)
+    ) {
+      boxDescriptorsCopy[numPersons] = boxDescriptor.slice(0, -1)
+    }
+  })
+
+  return boxDescriptorsCopy
+}
 
 const BoxPrices = ({
   boxPricesBoxSizeSelected,
@@ -16,6 +36,9 @@ const BoxPrices = ({
   trackUTMAndPromoCode,
   menuLoadBoxPrices,
 }) => {
+  const updatedNumPersonsToBoxDescriptors = useGetNumPersonsToBoxDescriptorsForFiveRecipes(
+    numPersonsToBoxDescriptors,
+  )
   useEffect(() => {
     menuLoadBoxPrices()
   }, [menuLoadBoxPrices])
@@ -27,7 +50,7 @@ const BoxPrices = ({
         error={error}
         loading={loading}
         boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
-        numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
+        numPersonsToBoxDescriptors={updatedNumPersonsToBoxDescriptors}
         trackUTMAndPromoCode={trackUTMAndPromoCode}
       />
     </div>

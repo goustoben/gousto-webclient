@@ -4,10 +4,8 @@ import { CTA } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
 import { boxPricesClickRecipeNumber } from 'actions/trackingKeys'
-import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
 import { Benefits } from 'routes/Home/Benefits'
-import { useBasket } from 'routes/Menu/domains/basket'
 
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import { BoxPriceSuitableForSection } from './BoxPriceSuitableForSection'
@@ -21,12 +19,9 @@ const BoxPriceBlock = ({
   selectedBox,
   trackUTMAndPromoCode,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState(boxInfo.length - 1)
-  const { numPortions } = useBasket()
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numPortions)
+  const recipesLeftTrackingIndex = boxInfo.length - 1
+  const [selectedIndex, setSelectedIndex] = useState(recipesLeftTrackingIndex)
   const { title, boxSizeTrackingValue } = boxTypes[numPersons]
-
-  const recipesLeftTrackingIndex = boxSizeTrackingValue !== 'large' && isFiveRecipesEnabled ? 3 : 2
 
   return (
     <div className={numPersons === selectedBox ? css.containerActive : css.container}>
@@ -59,7 +54,7 @@ const BoxPriceBlock = ({
         {recipesLeftTrackingIndex - selectedIndex > 0 ? (
           <div className={css.selectDescription}>
             {`Select ${recipesLeftTrackingIndex - selectedIndex} more recipe${
-              selectedIndex === 2 ? '' : 's'
+              selectedIndex === recipesLeftTrackingIndex - 1 ? '' : 's'
             } for the best price`}
           </div>
         ) : (
