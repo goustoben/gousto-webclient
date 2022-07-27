@@ -6,7 +6,7 @@ filter-lower-env: &filter-lower-env
   filters:
     branches:
       only:
-        - /^env-.*/
+        - TECH-10-remove-circle-ramdisk
 
 executors:
   gousto_platform_image:
@@ -441,7 +441,7 @@ jobs:
 workflows:
   e2e-manual:
     when:
-      equal: [e2e-manual, << pipeline.git.branch >>]
+      equal: [TECH-10-remove-circle-ramdisk, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
@@ -458,7 +458,7 @@ workflows:
 
   regression-manual:
     when:
-      equal: [regression-manual, << pipeline.git.branch >>]
+      equal: [TECH-10-remove-circle-ramdisk, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
@@ -508,17 +508,17 @@ workflows:
           requires:
             - build-webclient
           <<: *filter-lower-env
-      - deploy-infrastructure-and-webclient-image:
-          name: deploy-infrastructure-and-webclient-image-to-lower-environment
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - create-and-upload-webclient-docker-image-to-ecr
-            - upload-assets-to-s3
-          <<: *filter-lower-env
+      # - deploy-infrastructure-and-webclient-image:
+      #     name: deploy-infrastructure-and-webclient-image-to-lower-environment
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - create-and-upload-webclient-docker-image-to-ecr
+      #       - upload-assets-to-s3
+      #     <<: *filter-lower-env
 
   staging-environment:
     when:
-      equal: [develop, << pipeline.git.branch >>]
+      equal: [TECH-10-remove-circle-ramdisk, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
@@ -546,12 +546,12 @@ workflows:
           requires:
             - build-webclient
 
-      - upload-assets-to-s3:
-          name: Upload static assets to production S3 /build/BUILD_NUMBER
-          env: production
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - build-webclient
+      # - upload-assets-to-s3:
+      #     name: Upload static assets to production S3 /build/BUILD_NUMBER
+      #     env: production
+      #     context: gousto-prod-aws-app-circleci
+      #     requires:
+      #       - build-webclient
 
       - test-typecheck-and-report:
           context: gousto-beta-aws-app-circleci
@@ -588,28 +588,28 @@ workflows:
           requires:
             - build-webclient
 
-      - deploy-infrastructure-and-webclient-image:
-          name: deploy-infrastructure-and-webclient-image-to-staging
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - create-and-upload-webclient-docker-image-to-ecr
-            - "Upload static assets to staging S3 /build/BUILD_NUMBER"
-            - "Upload static assets to production S3 /build/BUILD_NUMBER"
+      # - deploy-infrastructure-and-webclient-image:
+      #     name: deploy-infrastructure-and-webclient-image-to-staging
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #       - create-and-upload-webclient-docker-image-to-ecr
+      #       - "Upload static assets to staging S3 /build/BUILD_NUMBER"
+      #       - "Upload static assets to production S3 /build/BUILD_NUMBER"
 
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy-infrastructure-and-webclient-image-to-staging
+            - create-and-upload-webclient-docker-image-to-ecr
 
   production-environment:
     when:
-      equal: [master, << pipeline.git.branch >>]
+      equal: [TECH-10-remove-circle-ramdisk, << pipeline.git.branch >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-prod-aws-app-circleci
 
-      - deploy-infrastructure-and-webclient-image:
-          name: deploy-infrastructure-and-webclient-image-to-production
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts
+      # - deploy-infrastructure-and-webclient-image:
+      #     name: deploy-infrastructure-and-webclient-image-to-production
+      #     context: gousto-prod-aws-app-circleci
+      #     requires:
+      #       - setup-ci-variables-scripts
