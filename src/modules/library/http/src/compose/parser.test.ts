@@ -195,6 +195,13 @@ describe('composeParser', () => {
     status: 500
   }
 
+  const badJSON: any = {
+    status: 200,
+    async json() {
+      return JSON.parse('badJSON')
+    }
+  }
+
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -269,8 +276,21 @@ describe('composeParser', () => {
       expect(isInYorkshire).toStrictEqual(['YO15 4SU', true])
     })
 
-    it('errors are bubbled up', () => {
-      expect(() => parser(badResponse)).toThrowError('Bad response')
+    describe('error handling', () => {
+      it('errors are bubbled up', () => {
+        expect(() => parser(badResponse)).toThrowError('Bad response')
+      })
+
+      it('rejections are bubbled up', async () => {
+        await expect(() => parser(badJSON)).rejects.toThrow('Unexpected token b in JSON at position 0')
+      })
+
+      it('an error will skip subsequent parsers', () => {
+        try {
+          parser(badResponse)
+        } catch (e) {}
+        expect(responseToRecord).not.toHaveBeenCalled()
+      })
     })
 
     describe('promise handling', () => {
@@ -283,7 +303,7 @@ describe('composeParser', () => {
         expect(resolved).toBe(yorkshireData)
       })
 
-      it('if an async parser is passed, piped value is resolved first', async () => {
+      it('if an async parser is passed, piped value is resolved before passing on to other parsers', async () => {
         const asyncParser = composeParser(
           validateResponse,
           responseToRecord,

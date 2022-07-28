@@ -1,10 +1,10 @@
-# Pricing domain
+# Menu `pricing` domain
 
 This is a hook-based API for interacting with pricing
 
-If you're using this, don't import from any file other than `index.ts`.
-
 ## Usage
+
+**⚠️ usage info ⚠️:** if you are using this, don't import from any other route besides the one below. Do not import from `/internal/`!
 
 ```ts
 import { usePricing } from 'routes/Menu/domains/pricing'

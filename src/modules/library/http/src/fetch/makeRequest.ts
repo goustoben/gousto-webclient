@@ -1,14 +1,13 @@
 import isomorphicFetch from 'isomorphic-fetch'
 
 import { getUrl } from './url'
-import { HttpConfig, RequestConfig } from '../types'
+import { RequestConfig, RequestMiddleware, ResponseMiddleware } from '../types'
 
 export async function makeRequest<Input, Output>(
-  config: HttpConfig<Input, Response, Output>,
+  reduceRequest: RequestMiddleware<Input>,
+  reduceResponse: ResponseMiddleware<Response, Output>,
   input: Input
 ): Promise<Output> {
-  const { reduceRequest, reduceResponse } = config
-
   const defaultRequest: RequestConfig = {
     host: 'defaultVal', // todo fetch from library
     method: 'GET',
