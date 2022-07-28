@@ -189,12 +189,6 @@
 /src/apps/webclient/src/utils/home.js                                   @Gousto/squad-beetroots
 /src/apps/webclient/src/selectors/tracking.js                           @Gousto/squad-beetroots
 /src/apps/webclient/src/selectors/__tests__/tracking.test.js            @Gousto/squad-beetroots
-/src/apps/webclient/src/reducers/checkout.js                            @Gousto/squad-beetroots
-/src/apps/webclient/src/reducers/payment.js                             @Gousto/squad-beetroots
-/src/apps/webclient/src/reducers/signup.js                              @Gousto/squad-beetroots
-/src/apps/webclient/src/hooks/useIsFiveRecipesEnabled.ts    @Gousto/squad-beetroots
-/src/apps/webclient/src/reducers/__tests__/payment.test.js              @Gousto/squad-beetroots
-/src/apps/webclient/src/reducers/__tests__/checkout.test.js             @Gousto/squad-beetroots
 /tests/e2e/pages/signup.js                                              @Gousto/squad-beetroots
 /tests/e2e/pages/home.js                                                @Gousto/squad-beetroots
 /tests/e2e/pages/checkoutV2.js                                          @Gousto/squad-beetroots
