@@ -1,14 +1,14 @@
-# Basket
+# Menu `basket` domain
 
 This is a hook-based API for interacting with the basket on the menu.
 
 The basket represents an in-progress order, and so it also contains delivery information.
 
-If you're using this, don't import from any file other than `index.js`.
-
 **todo:** recipes, promo code, "num recipes" (?), products
 
 ## Usage
+
+**⚠️ usage info ⚠️:** if you are using this, don't import from any other route besides the one below. Do not import from `/internal/`!
 
 ```ts
 import { useBasket } from 'routes/Menu/domains/basket'
@@ -26,13 +26,13 @@ You can
 ```ts
 const { canAddRecipes, addRecipe } = useBasket()
 
-const onClick = () => {
+const onClick = React.useCallback(() => {
   if (!canAddRecipes) {
     return
   }
 
-  addRecipe(props.recipeId, 'grid')
-}
+  addRecipe(recipeId, 'grid')
+}, [ canAddRecipes, addRecipe, recipeId ])
 
 return (
   <button disabled={!canAddRecipes} onClick={onClick}>
@@ -86,7 +86,16 @@ return <span>Menu ID for basket: {menuId}</span>
 ```ts
 const { setNumPortions, numPortions } = useBasket()
 
-const change = () => setNumPortions(2)
+const change = React.useCallback(
+  () => setNumPortions(2),
+  [ setNumPortions ],
+)
 
 return <span>{numPortions} portions</span>
 ```
+
+## Future Improvements
+
+- Convert the rest of Webclient to use this
+- Port over any currently unported functionality
+- Move internal state to a React Context rather than having it in Redux store

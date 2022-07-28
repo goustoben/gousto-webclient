@@ -41,6 +41,7 @@ const WaveLinkHeader = ({ headerAttributes, onClick }) => {
               style={{
                 width: headerImage[0].width,
                 height: headerImage[0].height,
+                zIndex: 1,
               }}
             />
           )}

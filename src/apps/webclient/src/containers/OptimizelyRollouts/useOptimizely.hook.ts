@@ -161,7 +161,16 @@ export const useIsOptimizelyFeatureEnabled = (name: string | null) => {
        */
       optimizelyInstance.onReady({ timeout }).then(() => {
         // if optimizely instance is not valid, we can't check if the feature is enabled
-        if (!hasValidInstance()) return
+        if (!hasValidInstance()) {
+          dispatch(
+            feLoggingLogEvent(
+              logLevels.error,
+              `Optimizely hook method: experiment ${name} allocation failed because of Optimizely`,
+            ),
+          )
+
+          return
+        }
 
         // if we have unmounted the component we don't want to do anything
         if (!getIsMounted()) return

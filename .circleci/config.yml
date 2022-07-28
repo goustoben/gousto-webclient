@@ -412,6 +412,9 @@ jobs:
       - store_artifacts:
           path: /mnt/ramdisk/tests/regression/videos
           destination: ./
+      - store_artifacts:
+          path: /mnt/ramdisk/tests/regression/screenshots
+          destination: ./
 
   deploy-infrastructure-and-webclient-image:
     docker: *gousto_platform_image #stock image missing boto
@@ -441,6 +444,32 @@ workflows:
             - setup-ci-variables-scripts
 
       - test-e2e:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
+  regression-manual:
+    when:
+      equal: [regression-manual, << pipeline.git.branch >>]
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+
+      - test-regression:
+          name: test-regression-web
+          platform: web
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
+      - test-regression:
+          name: test-regression-mobile
+          platform: mobile
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
