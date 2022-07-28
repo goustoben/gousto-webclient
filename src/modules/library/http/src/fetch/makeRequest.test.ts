@@ -1,6 +1,5 @@
 import isomorphicFetch from 'isomorphic-fetch'
 
-import { composeRequest, composeHttp, composeParser } from '../compose'
 import { RequestConfig } from '../types'
 import { makeRequest } from './makeRequest'
 import { getUrl } from './url'
@@ -30,10 +29,6 @@ describe('makeRequest', () => {
 
   const responseMiddleware = jest.fn((_: Response) => 'reducedResponse')
 
-  const endpointConfig = composeHttp(
-    composeRequest(requestMiddleware),
-    composeParser(responseMiddleware)
-  )
 
   const payload = {
     foo: 'bar'
@@ -41,7 +36,7 @@ describe('makeRequest', () => {
 
   let result: string
   beforeAll(async () => {
-    result = await makeRequest(endpointConfig, payload)
+    result = await makeRequest(requestMiddleware, responseMiddleware, payload)
   })
 
   describe('reducing the request', () => {

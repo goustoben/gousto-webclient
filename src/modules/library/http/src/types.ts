@@ -10,10 +10,7 @@ export type RequestConfig = RequestInit & {
   queryParams?: Dict
 }
 
-export type HttpConfig<Input, Piped, Output> = {
-  reduceRequest: RequestMiddleware<Input>
-  reduceResponse: ResponseMiddleware<Piped, Output>
-}
+export type Fetcher<Input, Output> = (i: Input) => Promise<Output>
 
 /**
  * Config parameters
