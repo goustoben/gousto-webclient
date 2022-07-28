@@ -19,7 +19,7 @@ import {
 } from 'utils/deliveries'
 import logger from 'utils/logger'
 
-import { RemoveRecipeFn } from '../routes/Menu/domains/basket/index'
+import { RemoveRecipeFn } from '../routes/Menu/domains/basket'
 import { actionTypes } from './actionTypes'
 import {
   basketAddressChange,

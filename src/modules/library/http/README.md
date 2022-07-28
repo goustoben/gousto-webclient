@@ -1,16 +1,18 @@
 # @library/http
 
-This is a library for defining, composing and making HTTP requests. It's written to support the new feature modules but
-can also be called within the main webclient.
+This is a library for making HTTP requests. It's written to support the new feature modules, but can also be called
+within the main webclient.
 
-[this library is wip]
-
-- ✏️ Describe how your backend APIs want to be called
-- 🎵 Compose a parser function to extract the exact data you want
-- ➡️ Make your requests with either plain functions or React hooks
-- 🔨 Integrate with caches like SWR
+_This library is work-in-progress_
 
 It's owned by frontend foundations
+
+## What can I do with this?
+
+- 📖 Declare how your backend APIs want to be called
+- 🎵 Compose parsers to extract the exact data you want
+- 📦 Package them together into fetcher functions
+- 🚚 Pass these into caching frameworks like [SWR](https://swr.vercel.app/)
 
 ## Installing
 
@@ -24,5 +26,5 @@ Add the following peer dependency ([why?](../../../../docs/modules.md#production
 
 ## Documentation
 
-- [User guide](user-guide.md)
-- [Developer guide](dev-guide.md)
+- [User guide](docs/user-guide.md)
+- [Request middlewares](docs/requests.md)

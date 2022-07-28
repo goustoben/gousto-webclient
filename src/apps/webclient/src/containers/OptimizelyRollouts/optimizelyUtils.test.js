@@ -2,66 +2,19 @@ import { Map } from 'immutable'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import { canUseWindow } from 'utils/browserEnvironment'
-import {
-  getSnowplowDomainUserId,
-  isOptimizelyFeatureEnabledFactory,
-} from './optimizelyUtils'
+import { withMockEnvironmentAndDomain } from '_testing/isomorphic-environment-test-utils'
+import { isOptimizelyFeatureEnabledFactory } from './optimizelyUtils'
 import * as snowplow from './trackExperimentInSnowplow'
 import * as optimizelySdk from './optimizelySDK'
 import { mockSnowplowCallbackAPI } from './mockSnowplowCallbackAPI'
 
 jest.mock('utils/browserEnvironment')
 
-let win
-
-describe('getSnowplowDomainUserId', () => {
-  beforeAll(() => {
-    win = global.window
-  })
-
-  afterAll(() => {
-    global.window = win
-  })
-
-  describe('when window is not available', () => {
-    beforeEach(() => {
-      canUseWindow.mockReturnValue(false)
-    })
-
-    test('resolves null', async () => {
-      expect(getSnowplowDomainUserId()).resolves.toEqual(null)
-    })
-  })
-
-  describe('when window.snowplow is not available', () => {
-    beforeEach(() => {
-      global.window = {}
-    })
-
-    test('resolves null', async () => {
-      const result = await getSnowplowDomainUserId()
-      expect(result).toEqual(null)
-    })
-  })
-
-  describe('when window and window.snowplow exist', () => {
-    beforeEach(() => {
-      global.window = {
-        snowplow: () => {}
-      }
-
-      canUseWindow.mockReturnValue(true)
-    })
-
-    // Validating that canUseWindow works as expected
-    // Domain owners should add tests to cover this behaviour
-    test('returns *something*', () => {
-      expect(getSnowplowDomainUserId()).resolves.toBeDefined()
-    })
-  })
-})
+const expectedDomainUserId = 'expectedDomainUserId'
 
 describe('isOptimizelyFeatureEnabledFactory', () => {
+  withMockEnvironmentAndDomain('local', 'gousto.local')
+
   let cookieGetSpy
   let hasValidInstanceSpy
   let getOptimizelyInstanceSpy
@@ -70,11 +23,12 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
   const isFeatureEnabled = jest.fn()
+  const onReady = jest.fn()
 
   beforeEach(() => {
     canUseWindow.mockReturnValue(true)
     hasValidInstanceSpy = jest.spyOn(optimizelySdk, 'hasValidInstance')
-    getOptimizelyInstanceSpy = jest.spyOn(optimizelySdk, 'getOptimizelyInstance').mockResolvedValue({ isFeatureEnabled })
+    getOptimizelyInstanceSpy = jest.spyOn(optimizelySdk, 'getOptimizelyInstance').mockResolvedValue({ isFeatureEnabled, onReady })
 
     cookieGetSpy = jest.spyOn(cookieHelper, 'get')
     trackExperimentInSnowplowSpy = jest.spyOn(snowplow, 'trackExperimentInSnowplow')
@@ -174,7 +128,7 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
       cookieGetSpy.mockReturnValue('session_id')
       hasValidInstanceSpy.mockReturnValue(true)
 
-      mockSnowplowCallbackAPI()
+      mockSnowplowCallbackAPI(expectedDomainUserId)
     })
 
     describe('when the feature is not enabled', () => {
@@ -183,8 +137,8 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
 
         const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
-        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
-        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', false, undefined, 'session_id', 'snowplowUserId')
+        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', expectedDomainUserId)
+        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', false, undefined, 'session_id', expectedDomainUserId)
         expect(isEnabled).toBe(false)
       })
     })
@@ -195,8 +149,8 @@ describe('isOptimizelyFeatureEnabledFactory', () => {
 
         const isEnabled = await isOptimizelyFeatureEnabledFactory('flag')(dispatch, getState)
 
-        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', 'snowplowUserId')
-        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, undefined, 'session_id', 'snowplowUserId')
+        expect(isFeatureEnabled).toHaveBeenCalledWith('flag', expectedDomainUserId)
+        expect(trackExperimentInSnowplowSpy).toBeCalledWith('flag', true, undefined, 'session_id', expectedDomainUserId)
         expect(isEnabled).toBe(true)
       })
     })
