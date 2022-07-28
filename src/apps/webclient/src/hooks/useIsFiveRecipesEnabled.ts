@@ -29,7 +29,7 @@ export const useIsFiveRecipesEnabled = () => {
  * After adding optimizely useSupportedBoxTypes calls increase to 15K on initial load and about 1.5K on add recipe click.
  * Because of this transition to menu from wizard took 5s+ and add recipe 2s+ delays.
  */
-const cache = new Map<string, boolean>()
+let fiveRecipesEnabledCached = false
 
 /**
  * This work around getting isFiveRecipesExperimentEnabled on one of the top levels of menu page.
@@ -38,10 +38,9 @@ const cache = new Map<string, boolean>()
 export const useSaveFiveRecipesEnabledLoadHack = () => {
   const isProspect = useIsProspect()
   const isFiveRecipesExperimentEnabled = useIsFiveRecipesExperimentEnabled()
-  const fiveRecipesEnabled = cache.get('fiveRecipesEnabled') ?? false
 
-  if (isFiveRecipesExperimentEnabled !== fiveRecipesEnabled) {
-    cache.set('fiveRecipesEnabled', isProspect && isFiveRecipesExperimentEnabled)
+  if (isFiveRecipesExperimentEnabled !== fiveRecipesEnabledCached) {
+    fiveRecipesEnabledCached = isProspect && isFiveRecipesExperimentEnabled
   }
 }
 
@@ -49,4 +48,4 @@ export const useSaveFiveRecipesEnabledLoadHack = () => {
  * Instead of calling useIsFiveRecipesEnabled hook directly in useSupportedBoxTypes and increasing render time.
  * This cache getter should be used.
  */
-export const getFiveRecipesEnabledFromCache = () => cache.get('fiveRecipesEnabled') ?? false
+export const getFiveRecipesEnabledFromCache = () => fiveRecipesEnabledCached
