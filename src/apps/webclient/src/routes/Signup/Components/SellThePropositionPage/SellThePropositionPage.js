@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
 import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
-import { useBasket } from 'routes/Menu/domains/basket'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 
 import css from './SellThePropositionPage.css'
@@ -71,8 +70,7 @@ const goustoOnDemandItems = [
 ]
 
 export const SellThePropositionPage = ({ signupGoToMenu, isGoustoOnDemandEnabled }) => {
-  const { numPortions } = useBasket()
-  const { isFiveRecipesEnabled } = useIsFiveRecipesEnabled(numPortions)
+  const isFiveRecipesEnabled = useIsFiveRecipesEnabled()
   const displayedItems = isGoustoOnDemandEnabled ? goustoOnDemandItems : items
 
   return (

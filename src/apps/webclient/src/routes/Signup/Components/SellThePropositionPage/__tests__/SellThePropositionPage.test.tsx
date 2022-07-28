@@ -30,17 +30,12 @@ const mockedStore = store({
 
 const signupGoToMenu = jest.fn()
 
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
-  typeof useIsFiveRecipesEnabled
->
+const useIsFiveRecipesEnabledMock = jest.mocked(useIsFiveRecipesEnabled)
 
 describe('Given: SellThePropositionPage', () => {
   describe('When: 5 recipes turned off', () => {
     beforeEach(() => {
-      useIsFiveRecipesEnabledMock.mockImplementation(() => ({
-        isFiveRecipesExperimentEnabled: false,
-        isFiveRecipesEnabled: false,
-      }))
+      useIsFiveRecipesEnabledMock.mockReturnValue(false)
 
       render(
         <Provider store={mockedStore}>
@@ -86,10 +81,7 @@ describe('Given: SellThePropositionPage', () => {
 
   describe('When: 5 recipes turned on', () => {
     beforeEach(() => {
-      useIsFiveRecipesEnabledMock.mockImplementation(() => ({
-        isFiveRecipesExperimentEnabled: true,
-        isFiveRecipesEnabled: true,
-      }))
+      useIsFiveRecipesEnabledMock.mockReturnValue(true)
 
       render(
         <Provider store={mockedStore}>

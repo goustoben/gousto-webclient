@@ -1,24 +1,24 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useIsProspect } from 'hooks/useIsProspect'
 import { BoxType, getBoxTypeNameByPortionSize } from 'routes/BoxPrices/boxPricesConfig'
+import { useBasket } from 'routes/Menu/domains/basket'
 
 /**
- * Both return values required, but for different components.
- * e.g. isFiveRecipesExperimentEnabled is used to check only feature flag.
- * On the other hand isFiveRecipesEnabled is used to check not only experiment, but
- * also to ensure that regular had been selected.
+ * isFiveRecipesExperimentEnabled is used to check only feature flag.
  */
-export const useIsFiveRecipesEnabled = (numPortions?: number) => {
-  const isFiveRecipesExperimentEnabled =
-    useIsOptimizelyFeatureEnabled('beetroots_five_recipes_web_enabled') ?? false
-  const boxType = getBoxTypeNameByPortionSize(numPortions)
-  const isFiveRecipesEnabled =
-    !!numPortions && isFiveRecipesExperimentEnabled && boxType === BoxType.Regular
+export const useIsFiveRecipesExperimentEnabled = () =>
+  useIsOptimizelyFeatureEnabled('beetroots_five_recipes_web_enabled') ?? false
 
-  return {
-    isFiveRecipesEnabled,
-    isFiveRecipesExperimentEnabled,
-  }
+/**
+ * isFiveRecipesEnabled is used to check not only experiment, but
+ * also to ensure that regular box had been selected.
+ */
+export const useIsFiveRecipesEnabled = () => {
+  const { numPortions } = useBasket()
+  const isFiveRecipesExperimentEnabled = useIsFiveRecipesExperimentEnabled()
+  const boxType = getBoxTypeNameByPortionSize(numPortions)
+
+  return isFiveRecipesExperimentEnabled && boxType === BoxType.Regular
 }
 
 /**
@@ -37,7 +37,7 @@ const cache = new Map<string, boolean>()
  */
 export const useSaveFiveRecipesEnabledLoadHack = () => {
   const isProspect = useIsProspect()
-  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabled()
+  const isFiveRecipesExperimentEnabled = useIsFiveRecipesExperimentEnabled()
   const fiveRecipesEnabled = cache.get('fiveRecipesEnabled') ?? false
 
   if (isFiveRecipesExperimentEnabled !== fiveRecipesEnabled) {

@@ -5,15 +5,13 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 
-import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
+import { useIsFiveRecipesExperimentEnabled } from 'hooks/useIsFiveRecipesEnabled'
 import { useBasket } from 'routes/Menu/domains/basket'
 
 import { BoxSizeStep } from '../BoxSize/BoxSizeStep'
 
 jest.mock('routes/Menu/domains/basket')
-jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
-  useIsFiveRecipesEnabled: jest.fn(),
-}))
+jest.mock('hooks/useIsFiveRecipesEnabled')
 
 const store = configureStore()
 const mockedStore = store({
@@ -35,9 +33,7 @@ const trackSignupWizardAction = jest.fn()
 const next = jest.fn()
 const setNumPortionsSpy = jest.fn()
 
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
-  typeof useIsFiveRecipesEnabled
->
+const useIsFiveRecipesEnabledMock = jest.mocked(useIsFiveRecipesExperimentEnabled)
 const useBasketUnknown = useBasket as unknown
 type useBasketMockReturn = {
   setNumPortions: jest.MockedFunction<typeof setNumPortionsSpy>
@@ -51,10 +47,7 @@ describe('given the user is at the Box Size Step', () => {
       useBasketMock.mockReturnValue({
         setNumPortions: setNumPortionsSpy,
       })
-      useIsFiveRecipesEnabledMock.mockImplementation(() => ({
-        isFiveRecipesExperimentEnabled: false,
-        isFiveRecipesEnabled: false,
-      }))
+      useIsFiveRecipesEnabledMock.mockReturnValue(false)
 
       render(
         <Provider store={mockedStore}>
@@ -126,10 +119,7 @@ describe('given the user is at the Box Size Step', () => {
 
   describe('When: five recipes enabled', () => {
     beforeEach(() => {
-      useIsFiveRecipesEnabledMock.mockImplementation(() => ({
-        isFiveRecipesExperimentEnabled: true,
-        isFiveRecipesEnabled: true,
-      }))
+      useIsFiveRecipesEnabledMock.mockReturnValue(true)
 
       render(
         <Provider store={mockedStore}>

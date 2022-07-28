@@ -3,14 +3,14 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
-import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
+import { useIsFiveRecipesExperimentEnabled } from 'hooks/useIsFiveRecipesEnabled'
 
 import { BoxPricesComponent } from './BoxPricesComponent'
 import { boxTypes, BoxType, seo } from './boxPricesConfig'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 
 const useGetNumPersonsToBoxDescriptorsForFiveRecipes = (numPersonsToBoxDescriptors) => {
-  const { isFiveRecipesExperimentEnabled } = useIsFiveRecipesEnabled()
+  const isFiveRecipesExperimentEnabled = useIsFiveRecipesExperimentEnabled()
   const boxDescriptorsCopy = { ...numPersonsToBoxDescriptors }
 
   Object.keys(boxDescriptorsCopy).forEach((numPersons) => {

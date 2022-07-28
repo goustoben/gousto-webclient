@@ -20,10 +20,7 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }))
 jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
-  useIsFiveRecipesEnabled: jest.fn().mockImplementation(() => ({
-    isFiveRecipesExperimentEnabled: false,
-    isFiveRecipesEnabled: false,
-  })),
+  useIsFiveRecipesEnabled: jest.fn().mockReturnValue(false),
   getFiveRecipesEnabledFromCache: jest.fn(),
   useIsProspect: jest.fn(),
 }))

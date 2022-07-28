@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
-import { getFiveRecipesEnabledFromCache, useIsProspect } from 'hooks/useIsFiveRecipesEnabled'
+import { getFiveRecipesEnabledFromCache } from 'hooks/useIsFiveRecipesEnabled'
+import { useIsProspect } from 'hooks/useIsProspect'
 
 import { useMenuBox, MenuBox } from './useMenuBox'
 
@@ -44,7 +45,6 @@ export const useSupportedBoxTypes = () => {
        * FYI: this is just for A/B test https://gousto.atlassian.net/browse/TG-6597
        * Basically we need to restrict 50% of prospects to having 4 recipes, not 5
        * When experiment will be finished Beetroots will simply delete following lines
-       * Even useIsFiveRecipesEnabled() hook will be deleted.
        */
       if (isProspect) {
         return isFiveRecipesExperimentEnabled ? maxRecipesForPortionDefault : DEFAULT_MAX_RECIPES
