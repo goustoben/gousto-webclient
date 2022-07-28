@@ -65,6 +65,10 @@ jest.mock('utils/logger', () => ({
   warning: jest.fn(),
 }))
 
+jest.mock('apis/fetchS3', () => ({
+  fetchFeatures: jest.fn().mockResolvedValue({ data: { isRecaptchaEnabled: true } }),
+}))
+
 describe('Given Checkout component', () => {
   let wrapper
   let mockedStore
@@ -74,7 +78,6 @@ describe('Given Checkout component', () => {
   let fetchPayPalClientToken
   let trackSuccessfulCheckoutFlow
   let trackFailedCheckoutFlow
-  let changeRecaptcha
   let fetchGoustoRef
 
   beforeEach(() => {
@@ -127,7 +130,6 @@ describe('Given Checkout component', () => {
     fetchPayPalClientToken = jest.fn()
     trackSuccessfulCheckoutFlow = jest.fn()
     trackFailedCheckoutFlow = jest.fn()
-    changeRecaptcha = jest.fn()
     fetchGoustoRef = jest.fn()
 
     onCheckoutSpy = jest.fn()
@@ -148,7 +150,6 @@ describe('Given Checkout component', () => {
         fetchPayPalClientToken={fetchPayPalClientToken}
         trackSuccessfulCheckoutFlow={trackSuccessfulCheckoutFlow}
         trackFailedCheckoutFlow={trackFailedCheckoutFlow}
-        changeRecaptcha={changeRecaptcha}
         fetchGoustoRef={fetchGoustoRef}
         store={mockedStore}
       />,
@@ -373,10 +374,6 @@ describe('Given Checkout component', () => {
 
       expect(wrapper.state().paypalScriptsReady).toBe(true)
       expect(wrapper.state().isCreatingPreviewOrder).toBe(false)
-    })
-
-    test('should call changeRecaptcha', () => {
-      expect(changeRecaptcha).toHaveBeenCalled()
     })
 
     test('should fetch gousto_ref', () => {

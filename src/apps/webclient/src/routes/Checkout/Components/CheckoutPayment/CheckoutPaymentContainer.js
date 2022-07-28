@@ -14,7 +14,7 @@ import {
 import { getCurrentPaymentMethod, isPayPalReady } from 'routes/Checkout/checkoutPaymentSelectors'
 import { isOrderFullyDiscounted } from 'routes/Checkout/checkoutUtils'
 import { usePricing } from 'routes/Menu/domains/pricing'
-import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
+import { getSignupRecaptchaToken } from 'selectors/auth'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
 import { getSignupLoginError } from 'selectors/status'
 import { formatOrderPrice } from 'utils/pricing'
@@ -32,7 +32,6 @@ export const mapStateToProps = (state) => {
       ...getFormSyncErrors(sectionName)(state),
       ...getFormAsyncErrors(sectionName)(state),
     },
-    isRecaptchaEnabled: getIsRecaptchaEnabled(state),
     recaptchaValue: getSignupRecaptchaToken(state),
     sectionName,
     currentPaymentMethod: getCurrentPaymentMethod(state),

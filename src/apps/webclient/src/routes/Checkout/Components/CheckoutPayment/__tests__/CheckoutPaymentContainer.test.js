@@ -47,7 +47,6 @@ describe('CheckoutPaymentContainer', () => {
     test('then proper parameters should be returned', () => {
       const expected = {
         isGoustoOnDemandEnabled: false,
-        isRecaptchaEnabled: true,
         recaptchaValue: 'token',
         hotjarTriggerName: 'psd2_modal',
         sectionName: 'payment',

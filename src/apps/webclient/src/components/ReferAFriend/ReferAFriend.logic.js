@@ -7,8 +7,6 @@ import { isSecretPingdomEmail } from 'utils/recaptcha'
 import { ReferAFriendPresentation } from './ReferAFriend.presentation'
 
 const propTypes = {
-  changeRecaptcha: PropTypes.func.isRequired,
-  isRecaptchaEnabled: PropTypes.bool.isRequired,
   userReferAFriend: PropTypes.func.isRequired,
   trackingReferFriendSocialSharing: PropTypes.func.isRequired,
 }
@@ -28,11 +26,6 @@ class ReferAFriend extends PureComponent {
     }
   }
 
-  async componentDidMount() {
-    const { changeRecaptcha } = this.props
-    await changeRecaptcha()
-  }
-
   captchaChanges = (value) => {
     // only call referAFriend callback if the captcha value isn't null (otherwise this is being called due to the captcha expiring)
     const callback = value === null ? undefined : this.processReferAFriend
@@ -44,14 +37,12 @@ class ReferAFriend extends PureComponent {
 
   captchaNeedsExecuting = () => {
     const { email, recaptchaToken } = this.state
-    const { isRecaptchaEnabled } = this.props
 
-    const featureFlagIsOff = isRecaptchaEnabled === false
     const secretEmailEntered = isSecretPingdomEmail(email)
 
     // prevent errors from breaking the page if the captcha isn't loaded for whatever reason
     const captchaElementNotOnPage = !this.recaptchaElement
-    if (featureFlagIsOff || secretEmailEntered || captchaElementNotOnPage) {
+    if (secretEmailEntered || captchaElementNotOnPage) {
       return false
     }
 
@@ -112,12 +103,10 @@ class ReferAFriend extends PureComponent {
 
   render() {
     const { isEmailSent, email, errorMessage } = this.state
-    const { isRecaptchaEnabled } = this.props
 
     return (
       <ReferAFriendPresentation
         captchaChanges={this.captchaChanges}
-        isRecaptchaEnabled={isRecaptchaEnabled}
         isEmailSent={isEmailSent}
         handleSubmit={this.handleSubmit}
         handleEmailChange={this.handleEmailChange}

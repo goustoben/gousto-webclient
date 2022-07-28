@@ -3,7 +3,6 @@ import React from 'react'
 import actions from 'actions'
 import { connect } from 'react-redux'
 
-import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
@@ -43,7 +42,6 @@ const mapDispatchToProps = {
   trackCheckoutButtonPressed,
   trackSuccessfulCheckoutFlow,
   trackFailedCheckoutFlow,
-  changeRecaptcha,
   trackUTMAndPromoCode,
   fetchPayPalClientToken,
   clearPayPalClientToken,

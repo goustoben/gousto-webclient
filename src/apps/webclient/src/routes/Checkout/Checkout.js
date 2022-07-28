@@ -55,7 +55,6 @@ const propTypes = {
   trackCheckoutButtonPressed: PropTypes.func,
   trackSuccessfulCheckoutFlow: PropTypes.func,
   trackFailedCheckoutFlow: PropTypes.func,
-  changeRecaptcha: PropTypes.func,
   fetchGoustoRef: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
   fetchPayPalClientToken: PropTypes.func,
@@ -77,7 +76,6 @@ const propTypes = {
 const defaultProps = {
   params: {},
   redirect: () => {},
-  changeRecaptcha: () => {},
   fetchGoustoRef: () => {},
   submitOrder: () => {},
   trackSignupStep: () => {},
@@ -168,7 +166,6 @@ class Checkout extends PureComponent {
       query = {},
       params = {},
       trackSignupStep,
-      changeRecaptcha,
       fetchGoustoRef,
       addRecipeToBasket,
     } = this.props
@@ -186,7 +183,6 @@ class Checkout extends PureComponent {
     this.loadCheckoutScript()
     this.loadPayPalScripts()
 
-    changeRecaptcha()
     fetchGoustoRef()
   }
 
