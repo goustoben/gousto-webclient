@@ -83,9 +83,9 @@ export const use5RecipesAwareness = () => {
   )
   const setMenuAsSeen = () => setHasSeenOnMenuValue(true)
 
-  const [userClosedBanner, setUserClosedBanner] = useLocalStorage<null | boolean>(
+  const [userClosedBanner, setUserClosedBanner] = useLocalStorage<boolean>(
     HAS_CLOSED_BANNER_MY_DELIVERIES_STORAGE_NAME,
-    null,
+    false,
   )
   const setBannerAsClosed = () => setUserClosedBanner(true)
 
