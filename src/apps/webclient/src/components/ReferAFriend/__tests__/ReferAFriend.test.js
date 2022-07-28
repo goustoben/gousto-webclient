@@ -3,12 +3,10 @@ import { shallow } from 'enzyme'
 import { ReferAFriend } from '../ReferAFriend.logic'
 
 describe('Refer A Friend Logic', () => {
-  const changeRecaptcha = jest.fn()
   const userReferAFriend = jest.fn()
   const trackingReferFriendSocialSharing = jest.fn()
   const buildReferAFriend = (props = {}) => {
     const baseProps = {
-      changeRecaptcha,
       userReferAFriend,
       trackingReferFriendSocialSharing,
       isRecaptchaEnabled: false,
@@ -24,10 +22,6 @@ describe('Refer A Friend Logic', () => {
 
     beforeAll(() => {
       wrapper = buildReferAFriend()
-    })
-
-    test('should fetch recaptcha', () => {
-      expect(changeRecaptcha).toHaveBeenCalled()
     })
 
     test('should call userReferAFriend action with the email', () => {

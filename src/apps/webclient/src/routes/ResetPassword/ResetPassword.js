@@ -19,14 +19,11 @@ const propTypes = {
   }).isRequired,
   errorResetPassword: PropTypes.string,
   authResetPassword: PropTypes.func,
-  isRecaptchaEnabled: PropTypes.bool.isRequired,
-  changeRecaptcha: PropTypes.func
 }
 
 const defaultProps = {
   errorResetPassword: null,
   authResetPassword: () => {},
-  changeRecaptcha: () => {}
 }
 export class ResetPassword extends React.PureComponent {
   static isPasswordLengthValid = (passwordValue) => (
@@ -40,11 +37,6 @@ export class ResetPassword extends React.PureComponent {
       isPasswordLengthError: false,
       recaptchaValue: null,
     }
-  }
-
-  componentDidMount() {
-    const { changeRecaptcha } = this.props
-    changeRecaptcha()
   }
 
   handlePasswordChange(passwordValue) {
@@ -96,7 +88,7 @@ export class ResetPassword extends React.PureComponent {
   }
 
   render() {
-    const { errorResetPassword, isRecaptchaEnabled } = this.props
+    const { errorResetPassword } = this.props
     const { isPasswordLengthError, passwordValue } = this.state
     const isInputValueEmpty = passwordValue.length === 0
 
@@ -133,12 +125,7 @@ export class ResetPassword extends React.PureComponent {
               Reset Password
             </CTA>
           </div>
-          {
-            isRecaptchaEnabled
-            && (
-              <Recaptcha ref={el => { this.recaptchaElement = el }} onChange={this.captchaChanges} />
-            )
-          }
+          <Recaptcha ref={el => { this.recaptchaElement = el }} onChange={this.captchaChanges} />
         </PageContent>
       </div>
     )

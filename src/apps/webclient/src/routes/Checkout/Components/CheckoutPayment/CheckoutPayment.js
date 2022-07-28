@@ -258,7 +258,6 @@ class CheckoutPayment extends React.Component {
       isPayPalReady,
       currentPaymentMethod,
       setCurrentPaymentMethod,
-      isRecaptchaEnabled,
       hotjarTriggerName,
       isGoustoOnDemandEnabled,
       isFreeBox,
@@ -291,7 +290,7 @@ class CheckoutPayment extends React.Component {
         {this.renderCardContent()}
         {this.renderPaypalContent()}
         <div className={css.row}>
-          {!prerender && isRecaptchaEnabled && (
+          {!prerender && (
             <div className={css.recaptchaContainer}>
               <Recaptcha ref={this.setRecaptchaElement} onChange={this.handleRecaptchaChange} />
             </div>
@@ -329,7 +328,6 @@ CheckoutPayment.propTypes = {
   reloadCheckoutScript: PropTypes.func,
   paypalScriptsReady: PropTypes.bool,
   isPayPalReady: PropTypes.bool,
-  isRecaptchaEnabled: PropTypes.bool,
   recaptchaValue: PropTypes.string,
   submitOrder: PropTypes.func,
   storeSignupRecaptchaToken: PropTypes.func,
@@ -361,7 +359,6 @@ CheckoutPayment.defaultProps = {
   reloadCheckoutScript: () => {},
   paypalScriptsReady: false,
   isPayPalReady: false,
-  isRecaptchaEnabled: false,
   recaptchaValue: '',
   submitOrder: () => {},
   storeSignupRecaptchaToken: () => {},

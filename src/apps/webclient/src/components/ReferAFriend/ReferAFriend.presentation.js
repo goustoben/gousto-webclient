@@ -10,7 +10,6 @@ import css from './ReferAFriend.css'
 
 const propTypes = {
   captchaChanges: PropTypes.func.isRequired,
-  isRecaptchaEnabled: PropTypes.bool.isRequired,
   isEmailSent: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleEmailChange: PropTypes.func.isRequired,
@@ -23,7 +22,6 @@ const propTypes = {
 const ReferAFriendPresentation = ({
   captchaChanges,
   isEmailSent,
-  isRecaptchaEnabled,
   handleSubmit,
   handleEmailChange,
   email,
@@ -49,18 +47,13 @@ const ReferAFriendPresentation = ({
                 />
                 <InputError>{errorMessage}</InputError>
               </div>
-              {
-                isRecaptchaEnabled
-                && (
-                  <div>
-                    <Recaptcha
-                      ref={refCaptcha}
-                      sitekey={getRecaptchaRAFPublicKey()}
-                      onChange={captchaChanges}
-                    />
-                  </div>
-                )
-              }
+              <div>
+                <Recaptcha
+                  ref={refCaptcha}
+                  sitekey={getRecaptchaRAFPublicKey()}
+                  onChange={captchaChanges}
+                />
+              </div>
               <div className={css.button}>
                 <Button
                   onClick={handleSubmit}

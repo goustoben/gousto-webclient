@@ -29,11 +29,6 @@ class LoginForm extends React.PureComponent {
     this.setState({ remember: rememberMeDefault })
   }
 
-  async componentDidMount() {
-    const { changeRecaptcha } = this.props
-    await changeRecaptcha()
-  }
-
   UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.statusText) {
       this.setState({
@@ -115,15 +110,13 @@ class LoginForm extends React.PureComponent {
 
   captchaNeedsExecuting = () => {
     const { email, recaptchaValue } = this.state
-    const { isRecaptchaEnabled } = this.props
 
-    const featureFlagIsOff = isRecaptchaEnabled === false
     const secretEmailEntered = isSecretPingdomEmail(email)
 
     // prevent errors from breaking the page if the captcha isn't loaded for whatever reason
     const captchaElementNotOnPage = !this.recaptchaElement
 
-    if (featureFlagIsOff || secretEmailEntered || captchaElementNotOnPage) {
+    if (secretEmailEntered || captchaElementNotOnPage) {
       return false
     }
 
@@ -137,7 +130,7 @@ class LoginForm extends React.PureComponent {
   }
 
   renderLoginForm = () => {
-    const { isAuthenticating, isRecaptchaEnabled, statusText, showAppAwareness } = this.props
+    const { isAuthenticating, statusText, showAppAwareness } = this.props
     const { remember, showValidationError } = this.state
 
     return (
@@ -194,14 +187,9 @@ class LoginForm extends React.PureComponent {
               </div>
             )
           }
-          {
-            isRecaptchaEnabled
-            && (
-              <div>
-                <Recaptcha ref={this.setCaptchaRef} onChange={this.captchaChanges} />
-              </div>
-            )
-          }
+          <div>
+            <Recaptcha ref={this.setCaptchaRef} onChange={this.captchaChanges} />
+          </div>
           <CTA
             testingSelector="loginFormSubmit"
             onClick={this.handleSubmit}
@@ -227,10 +215,8 @@ class LoginForm extends React.PureComponent {
 }
 
 LoginForm.propTypes = {
-  changeRecaptcha: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
-  isRecaptchaEnabled: PropTypes.bool.isRequired,
   showAppAwareness: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   rememberMeDefault: PropTypes.bool,
@@ -241,7 +227,6 @@ LoginForm.propTypes = {
 }
 
 LoginForm.defaultProps = {
-  changeRecaptcha: () => { },
   isAuthenticated: false,
   isAuthenticating: false,
   rememberMeDefault: false,
