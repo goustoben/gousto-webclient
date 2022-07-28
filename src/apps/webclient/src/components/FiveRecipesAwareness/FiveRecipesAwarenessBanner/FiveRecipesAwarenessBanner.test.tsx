@@ -26,7 +26,7 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
         isEnabled: false,
         hasClosedBanner: false,
       })
-
+      
       render(<FiveRecipesAwarenessBanner />)
       expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     })
@@ -34,14 +34,14 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
 
   describe('when the user has a two portion subscription and is eligible for five recipes', () => {
     describe('when the user has not previously closed the banner', () => {
+      let setBannerAsClosedMock: jest.Mock
       beforeEach(() => {
-        let hasClosedBanner = false
+        const hasClosedBanner = false
+        setBannerAsClosedMock = jest.fn()
         use5RecipesAwarenessSpy.mockReturnValue({
           isEnabled: true,
           hasClosedBanner,
-          setBannerAsClosed: jest.fn(() => {
-            hasClosedBanner = true
-          }),
+          setBannerAsClosed: setBannerAsClosedMock,
         })
         render(<FiveRecipesAwarenessBanner />)
       })
@@ -52,7 +52,7 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
 
       it('can close the banner by clicking the close icon', () => {
         fireEvent.click(screen.getByTitle('Close Banner'))
-        expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+        expect(setBannerAsClosedMock).toHaveBeenCalled()
       })
 
       it('should send a client metric `my-deliveries-five-recipes-awareness-4M-2P`', () => {
