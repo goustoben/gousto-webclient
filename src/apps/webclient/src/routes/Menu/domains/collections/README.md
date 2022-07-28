@@ -1,10 +1,12 @@
-# Collections domain
+# Menu `collections` domain
 
 This is a hook-based API for interacting with collections on the menu.
 
 If you're using this, don't import from any file other than `index.js`.
 
 ## Usage
+
+**⚠️ usage info ⚠️:** if you are using this, don't import from any other route besides the one below. Do not import from `/internal/`!
 
 ```ts
 import { useCollections } from 'routes/Menu/domains/collections'
@@ -41,7 +43,12 @@ This can be used to change the currently selected collection
 ```ts
 const { changeCollectionById } = useCollections()
 
-const onClick = () => {
+const onClick = React.useCallback(() => {
   changeCollectionById(someTargetCollectionId)
-}
+}, [ changeCollectionById, someTargetCollectionId ])
 ```
+
+## Future Improvements
+
+- Create a React Context to store data rather than relying on Redux
+- Move the `getCollections` part info `menu-service` (as the data lives there) and just treat this module as a 'current collection' state manager

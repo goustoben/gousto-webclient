@@ -5,7 +5,8 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 
 import { createMockBasketStore } from '../testing/createMockBasketStore'
-import { useBasketRecipes, useIsRecipeInBasket } from './index'
+import { useIsRecipeInBasket } from '../useIsRecipeInBasket'
+import { useBasketRecipes } from './index'
 
 jest.mock('routes/Menu/domains/basket/internal/recipes/useAddRecipe', () => ({
   useAddRecipe: jest

@@ -7,11 +7,15 @@ import { getBasketRecipes, getBasketPostcode } from 'selectors/basket'
 
 import { useRecipeLimitReached, useRemoveRecipesOverLimit, sumQuantities } from '../limits'
 import { useIsRecipeInBasket } from '../useIsRecipeInBasket'
-import { useAddRecipe, AddRecipeFn } from './useAddRecipe'
-import { useRemoveRecipe, RemoveRecipeFn } from './useRemoveRecipe'
+import { useAddRecipe } from './useAddRecipe'
+import { useRemoveRecipe } from './useRemoveRecipe'
 
 /**
- * Users can add recipes if the basket has a postcode
+ * Can recipes be added to the basket at this point?
+ *
+ * Requires a postcode to be set
+ *
+ * @returns
  */
 const useCanAddRecipes = () => {
   const postcode = useSelector(getBasketPostcode)
@@ -19,9 +23,22 @@ const useCanAddRecipes = () => {
   return Boolean(postcode)
 }
 
+/**
+ * Get the recipes currently in the basket
+ *
+ * @returns a `Map<string, number>` where the key is the recipe ID and the value is the number of that recipe in basket
+ */
 const useRecipeQuantities = (): Map<string, number> => useSelector(getBasketRecipes)
 
-const useBasketRecipes = () => {
+/**
+ * Entrypoint for the `basket recipes` information
+ *
+ * @returns addRecipe - add a recipe to the basket
+ * @returns removeRecipe - remove a recipe from the basket
+ * @returns swapRecipe - replace a recipe in the basket
+ *
+ */
+export const useBasketRecipes = () => {
   const recipeQuantities = useRecipeQuantities()
 
   const getQuantitiesForRecipeId = useCallback(
@@ -59,5 +76,3 @@ const useBasketRecipes = () => {
     isRecipeInBasket,
   }
 }
-
-export { useBasketRecipes, useIsRecipeInBasket, AddRecipeFn, RemoveRecipeFn }
