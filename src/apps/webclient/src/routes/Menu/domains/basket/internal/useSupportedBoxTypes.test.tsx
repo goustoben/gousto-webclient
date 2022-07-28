@@ -13,7 +13,7 @@ import { useSupportedBoxTypes } from './useSupportedBoxTypes'
 jest.mock('./useMenuBox')
 
 const useMenuBoxMock = useMenuBox as jest.MockedFunction<typeof useMenuBox>
-const useIsFiveRecipesEnabledMock = getFiveRecipesEnabledFromCache as jest.MockedFunction<
+const getFiveRecipesEnabledFromCacheMock = getFiveRecipesEnabledFromCache as jest.MockedFunction<
   typeof getFiveRecipesEnabledFromCache
 >
 
@@ -24,6 +24,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 
 jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
   getFiveRecipesEnabledFromCache: jest.fn(),
+  useIsProspect: jest.fn(),
 }))
 
 describe('useSupportedBoxTypes', () => {
@@ -65,10 +66,7 @@ describe('useSupportedBoxTypes', () => {
         attributes: { number_of_portions: 2, number_of_recipes: 5 },
       },
     })
-    useIsFiveRecipesEnabledMock.mockReturnValue({
-      isFiveRecipesEnabled: true,
-      isFiveRecipesExperimentEnabled: true,
-    })
+    getFiveRecipesEnabledFromCacheMock.mockReturnValue(true)
   })
 
   describe('allowedPortionSizes ', () => {
@@ -95,10 +93,7 @@ describe('useSupportedBoxTypes', () => {
 
     describe('when five recipes experiment disables 5 recipes for prospects', () => {
       beforeEach(() => {
-        useIsFiveRecipesEnabledMock.mockReturnValue({
-          isFiveRecipesEnabled: false,
-          isFiveRecipesExperimentEnabled: false,
-        })
+        getFiveRecipesEnabledFromCacheMock.mockReturnValue(false)
       })
 
       it('returns max recipe limit when 5 recipes disabled', () => {

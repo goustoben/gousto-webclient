@@ -141,7 +141,6 @@ describe('given the user is at the Box Size Step', () => {
           />
         </Provider>,
       )
-      screen.logTestingPlaygroundURL()
     })
 
     test('then the component renders correctly', () => {

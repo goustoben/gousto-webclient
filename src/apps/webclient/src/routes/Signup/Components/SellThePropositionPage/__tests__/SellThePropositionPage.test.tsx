@@ -12,6 +12,7 @@ import { SellThePropositionPage } from '../SellThePropositionPage'
 jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
   useIsFiveRecipesEnabled: jest.fn(),
   getFiveRecipesEnabledFromCache: jest.fn(),
+  useIsProspect: jest.fn(),
 }))
 
 const store = configureStore()
@@ -46,7 +47,6 @@ describe('Given: SellThePropositionPage', () => {
           <SellThePropositionPage signupGoToMenu={signupGoToMenu} />
         </Provider>,
       )
-      screen.logTestingPlaygroundURL()
     })
 
     test('renders correctly', () => {

@@ -80,7 +80,6 @@ describe('Given BoxPriceBlock', () => {
         />
       </Provider>,
     )
-    screen.logTestingPlaygroundURL()
   })
 
   test('should be rendered correctly', () => {

@@ -25,6 +25,7 @@ jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
     isFiveRecipesEnabled: false,
   })),
   getFiveRecipesEnabledFromCache: jest.fn(),
+  useIsProspect: jest.fn(),
 }))
 
 const dispatch = jest.fn()
